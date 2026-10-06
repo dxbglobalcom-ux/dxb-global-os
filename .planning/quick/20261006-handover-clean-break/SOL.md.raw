@@ -1,0 +1,1233 @@
+SOL_DB_REACH=armed engine=127.0.0.1:54422 tool_sha256=06fc5e586b510191
+AUDIT effort=medium
+**Sonuç: 2 B bulgusu.** İncelenen sürüm: `db391cb6`; karşılaştırma: `a33c7831..db391cb6`. Dosya değiştirilmedi.
+
+**1. Claim:** Yeni §7, CEO’nun sözünü söylüyor ve fazlasını eklemiyor.  
+**Verdict:** **REFUTED — B**  
+**Finding:** `.claude/skills/dxb-team2/SKILL.md:172–173` ve aynı satırlardaki `.agents` aynası, “starts no new phase it cannot finish by about 58 %” sınırını ekliyor. CEO %55 ve %58’i temiz noktaya ulaşmak için uzama örnekleri olarak verdi; yaklaşık %58’de bitirme şartı koymadı. Örneğin güvenli bitişi %59’da olan bir aşama, bu ek cümle yüzünden engellenebilir.  
+**Evidence:** `git diff a33c7831..db391cb6`; verilen CEO sözlerinde böyle bir üst sınır bulunmuyor.  
+**Correction required:** Yaklaşık %58’de bitirme şartını iki kopyadan kaldırın. Mevcut %50 başlangıcı ve temiz devir koşulları korunabilir.
+
+**2. Claim:** Paragraf gerçek hook davranışı, core ve kapının diğer hükümleriyle çelişmiyor.  
+**Verdict:** **REFUTED — B**  
+**Finding:** §7:172–173, %55 sonrasında %58 civarında bitebilen yeni bir aşamaya açık kapı bırakıyor. `/home/dxb/.claude/hooks/dxb-context-gate.py:75` ise Agent reddinde **“finish nothing new; commit what stands”** diyor. %56’da yeni bir aşamaya başlayan lead iki farklı talimat alır. Ek %58 şartı ayrıca core `.claude/CLAUDE.md:130–135`’teki kalıcı kural için açık yetki şartını aşar.  
+**Evidence:** Hook’un `main()` dalları yazma ve log işlemleri devre dışı bırakılarak bellekte sınandı: %50’de uyarı; %55, %58 ve %59’da Agent/Task reddi; Bash için ret yok. Hook’ta %58 eşiği bulunmuyor. Temiz nokta tanımı ve %55 Agent reddi doğru aktarılmış; kapının kalanında ayrı bir çelişki saptanmadı.  
+**Correction required:** Yeni aşama başlatma iznini kaldırın; cümleyi mevcut parçayı lead’in kendi araçlarıyla tamamlayabilmesiyle sınırlayın.
+
+**3. Claim:** Ledger kaydı geçerli ve marker çözülüyor.  
+**Verdict:** **STANDS AFTER ATTEMPTED REFUTATION**  
+**Finding:** `scripts/governance/ceo-approvals.json:2142–2148` tarih, sözler, kalıcılık izni, oturum ve hedefi içeriyor; emri LAW B kabulünden ayırıyor. §7:171’deki marker iki kopyada da aynı tekil anahtara çözülüyor.  
+**Evidence:** Salt okunur JSON kontrolü: `LEDGER_JSON_VALID`, `KEY_OCCURRENCES=1`, gerekli alanlar mevcut; iki marker için `RESOLVES=True`; §7 aynaları aynı.  
+**Correction required:** Yok. Bu sonuç verilen sözler ve kayıt yapısıyla sınırlı; ledger’daki ilave konuşma ayrıntıları özgün transcript üzerinden doğrulanmadı.
+
+**A:** yok. **B:** yukarıdaki iki bulgu. **C:** yok.
+Reading additional input from stdin...
+OpenAI Codex v0.159.3
+--------
+workdir: /home/dxb/DxB Global OS
+model: gpt-6.1-sol
+provider: openai
+approval: never
+sandbox: read-only
+reasoning effort: medium
+reasoning summaries: none
+session id: 01a111d0-b7fa-78a0-989c-1f01a01d0e94
+--------
+user
+THE CEO'S WORDS (verbatim, 2026-10-06; ledger handover-at-the-clean-break-2026-10-06): "Her zaman en güzel yerde devret yani en rahat hiçbir sorun olmayacak yerde devret. İsterse o iş %55'e kadar uzarsa da uzasın. %58'e de uzarsa uzasın ama en clean yerde her zaman devretmek önemlidir." — and, asked whether permanent: "bu kalıcı kural olabilir tabii ki … DXP Team 2 … sistemiyle de ilgili … yazabilirsin."
+
+THIS AUDIT — one pass, medium (a text-only rule change). Range: a33c7831..db391cb6 (`git -C "/home/dxb/DxB Global OS" diff a33c7831..db391cb6`).
+
+FACTS: ~/.claude/hooks/dxb-context-gate.py refuses the Agent tool from 55 % (read it). The door's §7 is the only place the handover moment is written.
+
+REFUTE: 1. Does the new §7 paragraph say what his words say, and nothing more? 2. Does it contradict the context gate's real behaviour (read the hook's thresholds and messages), the core .claude/CLAUDE.md, or another line of the door? 3. Is the ledger entry valid and does the marker resolve?
+
+Output per claim: Claim / Verdict / Finding (file:line, scenario, impact) / Evidence / Correction required. Grade A · B · C.
+hook: SessionStart
+hook: SessionStart Completed
+codex
+Gözünüzü bekleyenler: sadeleştirilen dxb-team2, B51’in önceki teslimleri, otomatik bellek düzeltmeleri ve dış incelemenin 4. maddesi.
+Sıradaki B51 paketi ve kayıttaki kararlar sizin sözünüzü bekliyor.
+Bu denetimde belirtilen commit aralığını, gerçek context gate davranışını ve kayıt işaretini salt okunur olarak karşılaştıracağım.
+exec
+/bin/bash -lc 'git diff a33c7831..db391cb6' in /home/dxb/DxB Global OS
+ succeeded in 0ms:
+diff --git a/.agents/skills/dxb-team2/SKILL.md b/.agents/skills/dxb-team2/SKILL.md
+index eb4ffac1..39c8c098 100644
+--- a/.agents/skills/dxb-team2/SKILL.md
++++ b/.agents/skills/dxb-team2/SKILL.md
+@@ -165,9 +165,12 @@ alone (STATE, the board) is checked by the rulers on commit instead.
+ 
+ - **The 4-minute rules** (held by `~/.claude/hooks/dxb-cost-gate.py`): a command over 4 minutes is the
+   lead's; a subagent idle over 4 minutes is never resumed — its cache is the 5-minute one.
+-- **The context gate** (held by `~/.claude/hooks/dxb-context-gate.py`): hand over at ≥ 50 % used, or
+-  when used + the next phase's honest estimate > 55 %; only at a clean break — no battery running,
+-  tree committed, report sent.
++- **The context gate** (held by `~/.claude/hooks/dxb-context-gate.py`) and **the clean break**: from
++  50 % used, hand over at the first clean break — the piece finished, the tree committed, no battery
++  running, the report sent — even when reaching it takes the session to 55-58 %; never in the middle of
++  a piece <!-- CEO-OK: handover-at-the-clean-break-2026-10-06 -->. The gate refuses the Agent tool from
++  55 %, so past it the lead finishes only what its own hand can, and starts no new phase it cannot
++  finish by about 58 %.
+ - **The handover** is done by the engineer, never the CEO
+   <!-- CEO-OK: handover-at-50-without-asking-2026-10-01 -->. A note in the scratchpad, in the author's
+   own voice: the job's place in the whole first, then his words of this job verbatim, every phase with
+diff --git a/.claude/skills/dxb-team2/SKILL.md b/.claude/skills/dxb-team2/SKILL.md
+index 5e63d04c..e001c52c 100644
+--- a/.claude/skills/dxb-team2/SKILL.md
++++ b/.claude/skills/dxb-team2/SKILL.md
+@@ -165,9 +165,12 @@ alone (STATE, the board) is checked by the rulers on commit instead.
+ 
+ - **The 4-minute rules** (held by `~/.claude/hooks/dxb-cost-gate.py`): a command over 4 minutes is the
+   lead's; a subagent idle over 4 minutes is never resumed — its cache is the 5-minute one.
+-- **The context gate** (held by `~/.claude/hooks/dxb-context-gate.py`): hand over at ≥ 50 % used, or
+-  when used + the next phase's honest estimate > 55 %; only at a clean break — no battery running,
+-  tree committed, report sent.
++- **The context gate** (held by `~/.claude/hooks/dxb-context-gate.py`) and **the clean break**: from
++  50 % used, hand over at the first clean break — the piece finished, the tree committed, no battery
++  running, the report sent — even when reaching it takes the session to 55-58 %; never in the middle of
++  a piece <!-- CEO-OK: handover-at-the-clean-break-2026-10-06 -->. The gate refuses the Agent tool from
++  55 %, so past it the lead finishes only what its own hand can, and starts no new phase it cannot
++  finish by about 58 %.
+ - **The handover** is done by the engineer, never the CEO
+   <!-- CEO-OK: handover-at-50-without-asking-2026-10-01 -->. A note in the scratchpad, in the author's
+   own voice: the job's place in the whole first, then his words of this job verbatim, every phase with
+diff --git a/scripts/governance/ceo-approvals.json b/scripts/governance/ceo-approvals.json
+index caec48d5..03a4370c 100644
+--- a/scripts/governance/ceo-approvals.json
++++ b/scripts/governance/ceo-approvals.json
+@@ -2138,5 +2138,13 @@
+     "conditions": "Said after the lead laid out the flow in this conversation (the job → the lead chooses the hands → the work → Sol → the fixes → the tests → a short report; plan talk warned to max, the build to high) and he had switched the session to high himself. 'Haydasın' is the dictation of 'high'dasın', 'DXP Team 2' of dxb-team2. Registered as his order, not a LAW B acceptance.",
+     "session": "Opus 5.5 session f7a2bf71 — heard first-hand, 2026-10-06.",
+     "where": ".claude/skills/dxb-team2/SKILL.md · .claude/hooks/dxb-effort-warn.py · .claude/settings.json · scripts/governance/refuter.sh · tests/governance/refuter-gate.test.ts · tests/hooks/effort-warn.test.ts · .claude/skills/dxb-verify/SKILL.md · HOLDING-OS-MASTER-PLAN/MODEL_ROUTING_SPEC.md · ~/.claude/agents/{refuter,helper,helper-writer,design-eye}.md, ~/.claude/CLAUDE.md, ~/.claude/hooks/dxb-statusline.js (outside the repo)"
++  },
++  "handover-at-the-clean-break-2026-10-06": {
++    "date": "2026-10-06",
++    "what": "ORDER, permanent in dxb-team2 §7: from 50 % context the lead hands over at the first clean break — the piece finished, the tree committed, no battery running, the report sent — even when that takes the session to 55-58 %; never in the middle of a piece. Past 55 % the context gate refuses the Agent tool, so the lead finishes only what its own hand can.",
++    "verbatim": "Her zaman en güzel yerde devret yani en rahat hiçbir sorun olmayacak yerde devret. İsterse o iş %55'e kadar uzarsa da uzasın. %58'e de uzarsa uzasın ama en clean yerde her zaman devretmek önemlidir. · bu kalıcı kural olabilir tabii ki. … DXP Team 2 e, sistemiyle de ilgili aynen o devir notunu benim söylediğim şey e, yazabilirsin.",
++    "conditions": "The first sentence at 53 % context, asking it into the handover note; the second answering the lead's one-line question whether it is for this session only or permanent in dxb-team2. Registered as his order, not a LAW B acceptance.",
++    "session": "Opus 5.5 session f7a2bf71 — heard first-hand, 2026-10-06.",
++    "where": ".claude/skills/dxb-team2/SKILL.md §7"
+   }
+ }
+
+exec
+/bin/bash -lc 'cat /home/dxb/.claude/hooks/dxb-context-gate.py' in /home/dxb/DxB Global OS
+ succeeded in 0ms:
+#!/usr/bin/env python3
+"""DXB context gate (UserPromptSubmit / PreToolUse): a session hands over before its context runs out.
+
+The CEO's numbers, 2026-09-26 ("tmm önerini yapalım"): at 50 % of its context a
+session hands over at the first clean break, and at 55 % it opens no more
+subagents. The rule was text only, and on 2026-09-26 he caught the chief
+engineer at 48 % with no handover, past the line of then; his word on the fix
+the same night ("tmm önerini uygula.") made it this hook, which holds both
+numbers on every session:
+
+  * UserPromptSubmit: at or above RED_LINE_PCT every prompt carries a red line
+    into the session's context -- the number, what a clean break is, and where
+    the Agent tool stops.
+  * PreToolUse on Agent / Task: at or above AGENT_DENY_PCT the call is denied,
+    with a reason that names the number and the way out -- commit what stands,
+    the handover note, the successor session through operator.
+
+The number is the one the CEO reads on the status line: dxb-statusline.js writes
+it for each session to $XDG_RUNTIME_DIR/claude-ctx/<session_id>.json
+(/tmp/claude-ctx/ without XDG_RUNTIME_DIR), field used_pct, and the hook reads
+the record named by the session_id on its stdin -- only an id shaped like the
+ones the status line writes a record for (SESSION_ID), so no path leaves
+claude-ctx. There is no staleness cutoff: context only grows inside a session,
+so an old number is a lower bound and still obliges; after /compact the status
+line rewrites the record on its next render, so the number is never older than
+one render. The record's age in whole seconds is logged, nothing more. No
+record, a record that cannot be read, a used_pct that is not a number (a bool is
+not), a session_id missing or not shaped like the status line's, empty or
+non-object stdin: the hook says nothing and logs nothing.
+
+Stdlib only. Only decisions (red-line / deny) are logged, one JSON line each, to
+dxb-context-gate.jsonl; a failure's traceback goes to dxb-context-gate.err. Both
+live in ~/.claude/logs, or in $DXB_CONTEXT_GATE_LOG_DIR when it is set. On any
+failure -- a reader that has closed its stdout included -- the hook exits 0 with
+nothing on stdout or stderr: it never crashes or blocks a session by failing.
+"""
+
+import datetime
+import json
+import os
+import re
+import sys
+import time
+import traceback
+
+# His numbers (CEO, 2026-09-26; 40 / 45 from 2026-09-21 until then).
+# Change them here; nothing else holds them.
+# Used context, in percent, from which every prompt carries the red handover line:
+RED_LINE_PCT = 50
+# Used context, in percent, from which the Agent / Task tool is refused:
+AGENT_DENY_PCT = 55
+
+AGENT_TOOLS = {"Agent", "Task"}
+# The session ids dxb-statusline.js writes a record for (its /^[0-9a-f-]{8,}$/i); no other id is read.
+SESSION_ID = re.compile(r"[0-9a-f-]{8,}", re.IGNORECASE)
+
+LOG_DIR = os.environ.get("DXB_CONTEXT_GATE_LOG_DIR") or os.path.join(
+    os.path.expanduser("~"), ".claude", "logs")
+DECISION_LOG = os.path.join(LOG_DIR, "dxb-context-gate.jsonl")
+ERROR_LOG = os.path.join(LOG_DIR, "dxb-context-gate.err")
+# The same directory rule as dxb-statusline.js, which writes the record.
+CTX_DIR = os.path.join(os.environ.get("XDG_RUNTIME_DIR") or "/tmp", "claude-ctx")
+
+
+def red_line(used_pct):
+    return (
+        f"🔴 CONTEXT {used_pct}% — hand over at the first clean break (dxb-team2 §7): "
+        "no battery running, tree committed, report sent; then the handover note and the successor "
+        f"session through operator (dxb-team2 §7). At {AGENT_DENY_PCT} % the Agent tool is refused.")
+
+
+def deny_reason(used_pct, tool):
+    return (
+        f"🔴 CONTEXT {used_pct}% ≥ {AGENT_DENY_PCT} % — the {tool} tool is refused until a handover "
+        "(dxb-team2 §7): finish nothing new; commit what stands, write the handover note, "
+        "open the successor session through operator (dxb-team2 §7). The new session starts with its "
+        "own record.")
+
+
+def now_iso():
+    return datetime.datetime.now(datetime.timezone.utc).isoformat(timespec="seconds")
+
+
+def append(path, text):
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    with open(path, "a", encoding="utf-8") as log:
+        log.write(text)
+
+
+def log_error():
+    try:
+        append(ERROR_LOG, f"--- {now_iso()}\n{traceback.format_exc()}")
+    except Exception:
+        pass
+
+
+def log_decision(data, tool, used_pct, record_age_s, decision):
+    try:
+        append(DECISION_LOG, json.dumps({
+            "ts": now_iso(),
+            "session_id": data.get("session_id"),
+            "event": data.get("hook_event_name"),
+            "tool": tool,
+            "agent_type": data.get("agent_type"),
+            "used_pct": used_pct,
+            "record_age_s": record_age_s,
+            "decision": decision,
+        }) + "\n")
+    except Exception:
+        log_error()
+
+
+def emit(event, **fields):
+    output = {"hookSpecificOutput": {"hookEventName": event, **fields}}
+    sys.stdout.write(json.dumps(output) + "\n")
+    sys.stdout.flush()
+
+
+def is_number(value):
+    return isinstance(value, (int, float)) and not isinstance(value, bool)
+
+
+def read_record(session_id):
+    """This session's (used_pct, record age in whole seconds) from the status line's record, or None."""
+    try:
+        with open(os.path.join(CTX_DIR, f"{session_id}.json"), "rb") as record_file:
+            record_age_s = int(time.time() - os.fstat(record_file.fileno()).st_mtime)
+            record = json.loads(record_file.read())
+    except (OSError, ValueError):  # missing, unreadable, not JSON: a silent input, not a failure
+        return None
+    used_pct = record.get("used_pct") if isinstance(record, dict) else None
+    if not is_number(used_pct):
+        return None
+    return used_pct, record_age_s
+
+
+def main():
+    raw = sys.stdin.buffer.read()
+    if not raw.strip():
+        return  # empty stdin is a silent input, not a failure
+    data = json.loads(raw)
+    if not isinstance(data, dict):
+        return
+    session_id = data.get("session_id")
+    if not isinstance(session_id, str) or not SESSION_ID.fullmatch(session_id):
+        return
+    found = read_record(session_id)
+    if found is None:
+        return
+    used_pct, record_age_s = found
+    event = data.get("hook_event_name")
+    tool = data.get("tool_name")
+    if event == "UserPromptSubmit" and used_pct >= RED_LINE_PCT:
+        emit(event, additionalContext=red_line(used_pct))
+        log_decision(data, None, used_pct, record_age_s, "red-line")
+    elif event == "PreToolUse" and tool in AGENT_TOOLS and used_pct >= AGENT_DENY_PCT:
+        emit(event, permissionDecision="deny", permissionDecisionReason=deny_reason(used_pct, tool))
+        log_decision(data, tool, used_pct, record_age_s, "deny")
+
+
+if __name__ == "__main__":
+    try:
+        main()
+    except Exception:
+        log_error()
+    # Flush here, not at shutdown: there a reader that has gone means exit 120 and a line on stderr.
+    try:
+        if sys.stdout is not None:  # None when the session started the hook with stdout closed
+            sys.stdout.flush()
+    except OSError:
+        pass
+    os._exit(0)
+
+exec
+/bin/bash -lc 'git show db391cb6:.claude/skills/dxb-team2/SKILL.md | nl -ba' in /home/dxb/DxB Global OS
+ succeeded in 0ms:
+     1	---
+     2	name: dxb-team2
+     3	description: Use when the CEO hands the construction a job — the default construction door. The lead (the session) chooses who writes — itself, a fork, medium helpers, or a fork with helpers — and verifies every piece; one blind, read-only GPT-6.1 Sol pass checks the work; its findings are fixed and tested; the CEO is warned to switch the effort — max for plan, design and architecture, high for the build. Trigger `/dxb-team2 <the job in one sentence>`.
+     4	---
+     5	
+     6	# The team — one lead, the hands it chooses, one blind auditor
+     7	
+     8	The construction's default door <!-- CEO-OK: dxb-team2-default-door-2026-09-28 -->, and since
+     9	2026-10-06 a lean one: no score card, no done-list, no Fable, no paperwork per job — the work, a blind
+    10	check, the fixes, the tests <!-- CEO-OK: dxb-team2-lean-2026-10-06 -->. Every holding build runs
+    11	through it, so the standard is the Ferrari's: fast because nothing in it is ceremony, right because
+    12	nothing reaches him unchecked. The laws it obeys are in `.claude/CLAUDE.md`; it opens `dxb-verify`
+    13	and `dxb-close-row`.
+    14	
+    15	## 1. The flow
+    16	
+    17	```
+    18	THE CEO'S JOB, in one sentence he would sign
+    19	   │
+    20	   ├── small — a fix, a deletion, a text he already worded: no plan, straight to ARRANGE
+    21	   │
+    22	PLAN      the talk turns to plan, design or architecture → effort warning MAX (§2)
+    23	          the plan goes to him once, in his language → his yes → effort warning HIGH (§2)
+    24	   │
+    25	ARRANGE   the lead chooses the hands (§3) and says it in one line
+    26	   │
+    27	BUILD     the hands write and run their own tests; the lead verifies every piece
+    28	   │
+    29	SOL       one blind, read-only pass (§4) — A blocks · B fixed now · C stays in the report
+    30	   │
+    31	FIX       a fork or a writing helper fixes; the lead verifies; no second Sol round
+    32	   │
+    33	TEST      the touched tests; code changed → the battery once (§5)
+    34	   │
+    35	COMMIT → TELL him in a few lines (§6) → STATE once, at the session's end
+    36	```
+    37	
+    38	**What reaches him as a question:** starting a job, its plan (once), money out, a contract, an identity
+    39	step, the Islamic boundaries, and an order of his that truly reads two ways — each with a
+    40	recommendation, answerable in one word. Technical choices inside a job he said yes to are the lead's.
+    41	The plan's single trip is his word <!-- CEO-OK: plan-comes-to-him-once-2026-10-03 -->.
+    42	
+    43	**The plan**, when there is one, names the scope, what it touches, the ordered steps, the
+    44	arrangement, how it is verified, and the risks — in his language, short. No file changes before his yes.
+    45	
+    46	## 2. Effort — the session warns, he switches
+    47	
+    48	The session runs at `high`: the talk, the build, the fixes, the tests. Plan, design and architecture run
+    49	at `max`. **He switches with /effort; the lead warns him — on every reply, until he has.**
+    50	
+    51	- The moment the talk turns to a plan, a design or an architecture, the lead runs
+    52	  `python3 .claude/hooks/dxb-effort-warn.py plan` and opens that reply with
+    53	  `⚠ Muhittin Bey, plan konuşmasındayız — /effort max'a geçin.`
+    54	- At his yes to the plan, the lead runs `python3 .claude/hooks/dxb-effort-warn.py build`, opens the reply
+    55	  with `⚠ Muhittin Bey, plan bitti — koda geçmeden /effort high'a geçin.`, and writes nothing until he
+    56	  has switched. At the job's end: `python3 .claude/hooks/dxb-effort-warn.py off`.
+    57	- Between those, the hook `dxb-effort-warn.py` repeats the line on each of his messages until the
+    58	  session's live level matches — the lead cannot forget it. A small job has no plan and no warning.
+    59	- Measured 2026-10-06: a hook's input carries no effort and /effort writes no transcript row, so the
+    60	  live level is the newer, by timestamp, of the status line's record
+    61	  (`$XDG_RUNTIME_DIR/claude-ctx/<session>.json`, field `effort`, which follows /effort at once) and
+    62	  this session's last step in the transcript; neither known → the warning names an unknown level.
+    63	  A skill's `effort` can raise a turn but never lower one — the reason the old design-at-max skill went.
+    64	
+    65	## 3. The seats and the arrangement
+    66	
+    67	| Seat | Who | Does | Never |
+    68	|---|---|---|---|
+    69	| **Lead** | the session, `high` | chooses the hands, writes what it keeps, verifies every piece and every fix, runs the tests, commits, tells him | approves its own work; commits a piece it has not verified; asks him a technical question |
+    70	| **Fork** | the lead's own copy (`subagent_type: "fork"`), its whole context | writes a large piece that needs this conversation | commits |
+    71	| **Writing helper** | `helper-writer` (Opus 5.5 · `medium`) | writes and tests a piece the lead specified; fixes a Sol finding | commits; widens the piece <!-- CEO-OK: helpers-write-code-under-lead-verification-2026-10-03 --> |
+    72	| **Helper** | `helper` (Opus 5.5 · `medium`, read-only) | reads code or documents, measures, researches | writes |
+    73	| **Reader** | a one-shot `scout` or `Explore` | a wide search whose text would swell the lead's context | writes; is resumed (its cache dies at 5 min) |
+    74	| **Escalation writer** | `builder` (Opus 5.5 · `max`), one-shot | only a piece that failed twice at `high` | is opened for a routine fix |
+    75	| **Auditor** | GPT-6.1 Sol <!-- CEO-OK: auditor-sol-6-1-2026-10-01 -->, through `scripts/governance/refuter.sh` | one blind pass per job (§4) | writes; audits a job twice; sees the lead's reasoning or verdict |
+    76	
+    77	Fable 5.1 is not consulted in a dxb-team2 job — neither the `advisor` tool (its own "before the work
+    78	and before done" advice does not apply here) nor the Fable-based `design-eye`.
+    79	
+    80	**The arrangement — chosen at ARRANGE, said to him in one line with its why**
+    81	<!-- CEO-OK: orchestration-three-arrangements-lead-chooses-2026-10-03 -->:
+    82	
+    83	| Arrangement | Who writes | When |
+    84	|---|---|---|
+    85	| **Lead** | the lead itself | a small job, or pieces so coupled that splitting them costs more than it saves |
+    86	| **Fork** | the fork | one large piece that needs the whole conversation, while the lead stays free to verify |
+    87	| **Team** | `helper-writer`s, in parallel; `helper`s read and research beside them | independent pieces, each specifiable in a paragraph |
+    88	| **Hybrid** | the fork writes the core; `helper-writer`s the side pieces; `helper`s read | a large core with independent pieces around it |
+    89	
+    90	- Parallel writers never touch the same file. Each gets a spec it can work from alone: the files, the
+    91	  behaviour, the measured facts it must not re-litigate, the test it writes first, what it reports.
+    92	- The lead verifies each piece before it is committed — reads the diff, runs its tests — and commits
+    93	  only what it verified. Nobody else commits.
+    94	- A fork starts cheap: its first call reads the lead's cache (203,676 tokens read, 1,200 written —
+    95	  session 5ed74ad7, 2026-10-03).
+    96	- Code is written at `high`. Opus `xhigh` is never used for code (FrontierCode 51.4 %, the bottom of the
+    97	  curve); `max` writes code only as the escalation writer — a medium try plus a high retry (USD 1.89)
+    98	  is under a third of one `max` run (USD 6.19) and passes the same auditor. Prices in this door are
+    99	  written USD, never with a dollar sign: opened with a job sentence, a dollar sign and a digit are
+   100	  replaced by the sentence's words (measured 2026-10-04).
+   101	
+   102	## 4. Sol — one blind pass
+   103	
+   104	Every job that changes code, a rule or a door gets one Sol pass, after BUILD; a change to the records
+   105	alone (STATE, the board) is checked by the rulers on commit instead.
+   106	
+   107	- **Launch:** `scripts/governance/refuter.sh [--effort medium|high|xhigh] "<brief>"` — `high` by
+   108	  default; `xhigh` for money, a database, security, approval, governance or the agents; `medium` for a
+   109	  text-only change. An audit can outlast the Bash tool's 10 minutes: launch it detached (a small
+   110	  script under `setsid nohup`, its output to the job folder, `EXIT=` on its last line) and wait for
+   111	  that line.
+   112	- **The brief — blind, not in the dark:** his words verbatim; the plan's decisions as facts ("this door
+   113	  is closed on purpose"); the range; where the raw test output lies. Never the lead's reasoning, a
+   114	  summary, "tests are green", or another auditor's verdict. Its first question: *does this do what he
+   115	  asked?*
+   116	- **Its hand:** Sol queries the construction engine itself through its one tool `sql_read`
+   117	  (`scripts/governance/sol-db-mcp.mjs`, role `sol_reader`) — the lead never hands over a count Sol can
+   118	  take. Its sandbox has no network, so the lead runs the database-writing tests and hands their output
+   119	  over whole.
+   120	- **Its findings**, per claim: Claim · Verdict (REFUTED | STANDS AFTER ATTEMPTED REFUTATION |
+   121	  UNVERIFIED) · Finding (`file:line`, scenario, impact) · Evidence · Correction required.
+   122	  **A** blocks · **B** is fixed in this pass · **C** is older than this work and stays in the job's
+   123	  report — never the board; a row opens only on his word.
+   124	- **Fix:** a fork or a `helper-writer` fixes each A and B; the lead verifies the finding's own case.
+   125	  There is no second Sol round <!-- CEO-OK: sol-single-pass-fixes-by-helper-2026-10-03 -->.
+   126	- **Dispute:** the lead runs the evidence Sol gave — it fails → real, fixed; it holds → the finding drops
+   127	  and the report says why. A question no test can settle is the lead's, with its reason in the report.
+   128	- **Sol unavailable** (quota, error, timeout): on an ordinary job the `refuter` subagent (Opus 5.5 ·
+   129	  `high`) audits once, and the report says *"audited by Opus instead of Sol — read-only by word, not by
+   130	  tool — because …"*; on money, a database or security the lead waits for Sol's window and works on
+   131	  something else. No job closes unaudited; the auditor is never swapped silently
+   132	  <!-- CEO-OK: fallback-auditor-named-and-refuter-second-round-gone-2026-10-04 -->.
+   133	
+   134	## 5. Tests
+   135	
+   136	- New behaviour is proven by a test written first — red before the code, green after.
+   137	- After each piece, its own tests. After Sol's fixes, the touched tests again.
+   138	- **Code changed → the battery, once, at the end:** `pnpm construction:battery` — the whole suite in
+   139	  both halves against the construction's own engine (port 54422), 1,486 tests, about 6 minutes
+   140	  (2026-10-04). Launch it detached from a shell whose `oom_score_adj` is 100; green is the line
+   141	  `BATTERY_GREEN`. It answers the one question no single test can: did this break anything else.
+   142	- **Text only** → no battery. A door, the core or a record: the commit hook's rulers read those on
+   143	  every commit. A persona's words: `bash scripts/persona-ruler.sh` (dxb-verify), which the commit
+   144	  hook does not run.
+   145	- The commit hook runs by itself on every commit: the secret scan (gitleaks); the records ruler when
+   146	  STATE, the board or the ledger change; the opening ruler when the core, a skill or the opening hook
+   147	  change; the research ruler and `tests/b46` when the research engine changes.
+   148	
+   149	## 6. Commit, tell, record
+   150	
+   151	- **Commit:** one per job, or one per independent piece; the message says what changed and why.
+   152	- **Tell him** in his language, in a few lines, under three headings — *Sizi bekleyen · Değişen ·
+   153	  Bulunan* <!-- CEO-OK: job-report-three-headings-2026-10-03 -->: what waits on him; what changed;
+   154	  what was found outside the job, each with a recommendation. An empty heading is not written; a
+   155	  defect fixed inside the job is not listed; the proof stays in the work until he asks.
+   156	- **His words** are written once, in `scripts/governance/ceo-approvals.json`, and only where a record
+   157	  must rest on his order or approval (LAW B) — never copied into commits, doors or STATE.
+   158	- **STATE** is written once, at the session's end: the three headings, a few lines each — what
+   159	  finished and waits for his eye, what is next, what waits on him. No conversation, no quotes, no
+   160	  hashes or counts beyond the one that names a job.
+   161	- **The job folder** (`.planning/quick/<date>-<slug>/`) holds Sol's report and the raw evidence — only
+   162	  for a job that went to Sol.
+   163	
+   164	## 7. Long commands, context and handover
+   165	
+   166	- **The 4-minute rules** (held by `~/.claude/hooks/dxb-cost-gate.py`): a command over 4 minutes is the
+   167	  lead's; a subagent idle over 4 minutes is never resumed — its cache is the 5-minute one.
+   168	- **The context gate** (held by `~/.claude/hooks/dxb-context-gate.py`) and **the clean break**: from
+   169	  50 % used, hand over at the first clean break — the piece finished, the tree committed, no battery
+   170	  running, the report sent — even when reaching it takes the session to 55-58 %; never in the middle of
+   171	  a piece <!-- CEO-OK: handover-at-the-clean-break-2026-10-06 -->. The gate refuses the Agent tool from
+   172	  55 %, so past it the lead finishes only what its own hand can, and starts no new phase it cannot
+   173	  finish by about 58 %.
+   174	- **The handover** is done by the engineer, never the CEO
+   175	  <!-- CEO-OK: handover-at-50-without-asking-2026-10-01 -->. A note in the scratchpad, in the author's
+   176	  own voice: the job's place in the whole first, then his words of this job verbatim, every phase with
+   177	  status and commit, the traps met, the first message the successor sends; session-only orders marked
+   178	  as such; last, the path of this session's own conversation —
+   179	  `~/.claude/projects/-home-dxb-DxB-Global-OS/$CLAUDE_CODE_SESSION_ID.jsonl` — with the line *if
+   180	  anything here is unclear, read the part you need there*
+   181	  <!-- CEO-OK: handover-carries-transcript-2026-10-03 -->, `wl-copy`'d. He is quoted verbatim — from
+   182	  the ledger, or from this conversation marked so
+   183	  <!-- CEO-OK: handover-quotes-conversation-verbatim-2026-10-03 --> — never composed in his first
+   184	  person. The successor opens with the same model at his saved default effort, in a VS Code
+   185	  editor-area terminal, through `operator` (look first; if the CEO is typing, wait):
+   186	  `operator key ctrl+shift+p` → `operator type "Terminal: Create New Terminal in Editor Area"` →
+   187	  `operator key Return` → `operator shot` → paste with `operator key ctrl+shift+v` (`ctrl+v` does not
+   188	  reach the terminal; `operator type` inverts case here, so a command line is pasted, never typed) the
+   189	  line
+   190	  `systemd-run --user --scope --quiet --collect -p MemoryMax=16G -p MemorySwapMax=4G -- /home/dxb/.local/bin/claude --model <same> "$(cat <note>)"`
+   191	  (`claude` is not on that terminal's PATH) → `operator shot`, read it → `operator key Return`.
+   192	  Proof it is alive: `ListAgents` shows it and it answers. If the job is in its plan phase, the
+   193	  successor's first reply carries the max warning (§2).
+
+exec
+/bin/bash -lc 'git show db391cb6:.claude/CLAUDE.md | nl -ba' in /home/dxb/DxB Global OS
+ succeeded in 0ms:
+     1	<!-- DXB ALWAYS-ON CORE. This file is a budget, not a shelf.
+     2	     It holds only what EVERY session needs before it knows what it is doing:
+     3	     who outranks whom, the boundaries that never bend, and which door to open.
+     4	     Procedures live behind the doors in §4 and load when the job matches.
+     5	     Adding something here means deleting something here.
+     6	     One rule, one owner: scripts/governance/rules.json fails the battery on a
+     7	     second copy. Written 2026-07-30 under the CEO's context-architecture order. -->
+     8	
+     9	# DXB Global OS
+    10	
+    11	An AI-native operating system for one holding company. One human in it: the CEO. He states
+    12	intent and approves what the approval gate stops at him; the OS runs the company end to end.
+    13	That is the whole product — **anti-baby-sitting**. If everything else fails, intent →
+    14	autonomous, quality-gated execution must still work.
+    15	
+    16	The plan exists **once**: `HOLDING-OS-MASTER-PLAN/` (the specs + the CEO's directives).
+    17	What is still open exists **once**: `HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md`.
+    18	Where the work stands today exists **once**: `.planning/STATE.md`.
+    19	
+    20	## WHAT THIS HOLDING IS — read once; it does not change
+    21	
+    22	**DXB Global AI-Native Holding OS** — the executive command platform for one whole holding:
+    23	companies, departments, directors, AI employees, projects, tasks, models, costs, decisions,
+    24	approvals, workflows, skills, knowledge, memory, risks and audit, all seen, entered, changed and
+    25	controlled from one place. It is **not** an admin panel, a project dashboard, an approval screen,
+    26	a task manager or a SaaS panel — each is a named rejection in the CEO's own directive, and a
+    27	delivery that resembles one is refused on sight.
+    28	
+    29	**Three faces, all three required:** it runs itself 7/24 (anti-baby-sitting) · the CEO sees every
+    30	detail to the bottom · he changes anything at any moment, without having to micro-manage.
+    31	
+    32	**The standard is the Ferrari** (CEO, 2026-08-01): he ordered the car, not the drive — first place
+    33	in a world competition, award standard, never amateur. Revenue and new companies come after; they
+    34	are what the finished machine DOES.
+    35	
+    36	**The first law of V2 — IT MUST BE ALIVE** (*"CANSIZ DÜZ KİTAP GİBİ ORGANİZMA YOK SIFIR CANLILIK"*,
+    37	2026-08-02). What the rival queue found, in one place:
+    38	
+    39	- The company is visibly working, and it keeps working when nobody is watching. A surface is
+    40	  permanently attached to what the system is doing; it is not a page opened to find out.
+    41	- You watch the work move: work travels between the workers on screen, the one who is working
+    42	  lights up and is named, the idle one is still — **motion IS state**.
+    43	- Movement means a real movement. A value moves until it is true and then stops; nothing loops for
+    44	  decoration; rest is part of the design; **zero is a real answer**.
+    45	- The surface follows the human: what is being talked about is what stands on the screen, put there
+    46	  by the system and not by a click, within seconds.
+    47	- The machine says when it last knew, and when it wakes next.
+    48	- **His acceptance test:** he opens a screen, touches nothing, and within minutes something changes
+    49	  because the company did work.
+    50	
+    51	Long form: `MASTER_PLAN.md` §1 · `HOLDING_OS_PRODUCT_SPEC.md` §§2-4 (his 19 control areas) ·
+    52	`00-CEO-DIRECTIVE-BEKLENTILER.md`.
+    53	
+    54	## 0. YOUR FIRST REPLY IN A SESSION STATES THE POSITION
+    55	
+    56	Whatever he opens with — a greeting, a question, an order — **your first reply tells him where the
+    57	work stands before anything else**, in four short lines in his language:
+    58	
+    59	1. what is finished and **waiting for his eye** (nothing is accepted until he looks — LAW B);
+    60	2. what is **next**, and whether it waits on him or on you;
+    61	3. what is **blocked on him** and cannot move without it;
+    62	4. then answer what he actually said.
+    63	
+    64	**Empty is silent, not announced** (CEO order, 2026-09-22: *"gözünüzü bekleyen bir şey yok diye
+    65	açılışta önüme gelmesin"*). Line 1 or line 3 is spoken only when it is true — something really is
+    66	waiting for his eye, or really is blocked on him. When there is nothing there, that line is
+    67	**dropped**, not replaced with "nothing is waiting" / "gözünüzü bekleyen bir şey yok". He reads
+    68	four lines to find out what needs him; a line that exists only to say "nothing" costs him the read
+    69	for zero content. This is scoped to this reply protocol only — it does not touch "zero is a real
+    70	answer" above, which governs system state surfaces, not this greeting line.
+    71	
+    72	**The position is already in front of you** — the session-start hook carries where we left off,
+    73	what is next and what waits on his approval; this file carries what the holding IS. **Never re-open a file
+    74	to be told what you have already been told.** Measured 2026-08-10: a session re-read
+    75	`MASTER_PLAN.md` §1 to answer "what is this project", and he saw it — *"ne diye tekrar tekrar
+    76	okuyorsun"*. Open a file for what the injected text does NOT carry — a count, a row's detail, a
+    77	live measurement — and then measure it rather than quote it.
+    78	
+    79	## 1. AUTHORITY — when two sources disagree
+    80	
+    81	1. The CEO's order in this conversation
+    82	2. His most recent written directive — `docs/ceo-directives/`
+    83	3. The spec that owns the contract — `HOLDING-OS-MASTER-PLAN/`
+    84	4. The open work board
+    85	5. `.planning/STATE.md` — the current state photo
+    86	6. Code, tests and schemas — evidence of what **is**, never of what **should be**
+    87	7. Anything older, any summary, any memory
+    88	
+    89	**Never silently choose between conflicting sources.** Name the conflict, apply this order,
+    90	say what you did.
+    91	
+    92	His live sentence beats every written rule beneath it. A written rule that pulls outside what he asked
+    93	for is not obeyed — it is reported to him in one line, and he decides.
+    94	
+    95	**LAW A — a live CEO order DELETES what contradicts it** (CEO, 2026-07-30). Not a footnote
+    96	beside it, not "superseded but retained". The contradicting text goes, and the report says
+    97	what went. Keeping both is how a record starts lying.
+    98	
+    99	**LAW B — finished ≠ approved** (CEO, 2026-07-30): *"iş tamamlanınca bitti anlamına gelmez,
+   100	ben bakmam lazım."* A green battery means the AUTHOR's work is done. Only the CEO's own eye
+   101	makes something **accepted**. No record may say approved / accepted / onaylandı / kabul
+   102	edildi without an entry in `scripts/governance/ceo-approvals.json` carrying his words and
+   103	the date. The battery fails on an unregistered approval claim.
+   104	
+   105	## 2. The boundaries that never bend
+   106	
+   107	- **The approval gate.** Money OUT, contracts, ad spend, identity steps and the subjects he
+   108	  marks stop at the CEO. Money IN and routine outward communication do not.
+   109	- **Ask before any project work.** Nothing in the project starts until he has said so in this
+   110	  conversation (CEO 2026-10-01).
+   111	- **Do not state as fact what you did not check.** Owner: `00-CEO-DIRECTIVE-MEASURE-NEVER-GUESS.md`.
+   112	- **Evidence before done.** A completion claim cites the command and its decisive output. Anything a terminal cannot observe is labelled `⚠ UNVERIFIED — requires
+   113	  human-eye confirmation` and listed apart. Door: `dxb-verify`.
+   114	- **A fix must not break what stands around it; the tests show it.** Door: `dxb-verify`.
+   115	- **Islamic boundaries are constitutional.** CEO-only. Code may refuse its own work against
+   116	  them; code may never widen or narrow them.
+   117	- **Code: the session writes it; inside `dxb-team2` a fork, a `helper-writer` and the `builder`
+   118	  seat write too, every piece verified by the lead before it is committed**
+   119	  <!-- CEO-OK: helpers-write-code-under-lead-verification-2026-10-03 -->. Other subagents audit,
+   120	  refute and sweep; they never write — and a
+   121	  CHECKER session is bound the same way: it measures, instructs and re-measures, it never writes,
+   122	  ruler scripts included (the audit law, CEO 2026-09-15
+   123	  <!-- CEO-OK: audit-law-checker-only-checks-2026-09-15 -->; door: `dxb-verify`).
+   124	- **The plan exists once.** No new spec, no new plan file. A deviation is a registered
+   125	  adaptation inside the spec that already owns the contract.
+   126	- **What the CEO drops is not written down.** A discussion that ends in *"forget it"* leaves no
+   127	  file, no row, no note — **silence is the record.** Only real, ordered, unfinished work is written
+   128	  anywhere. The reflex to keep a dropped idea "just in case" is what grew the always-on layer to 27
+   129	  pages, and he should never have to be the one who catches it.
+   130	- **Nothing becomes a law unless he says "make it a law".** His order, 2026-08-13: *"ben bir şey kanun olsun demeden onu asla kanun yapma bunu yasaklıyorum… ben bir
+   131	  kuralı sadece belirli bir session için söylüorm."* **A rule he states is for THAT session only**
+   132	  — obey it fully while it runs, and let it die with the session. Writing it into a law file, a
+   133	  banner, a skill or a standing order needs his explicit word. He
+   134	  authorised this one sentence, and only this one, to be written as a rule. When a session thinks a
+   135	  remark deserves to be permanent, it **asks him** in one line; his answer decides. Measured the day
+   136	  he gave it: his passing *"write it short"* had been promoted into the rival ledger's permanent
+   137	  banner beside his registered orders, and he caught it.
+   138	- **Secrets** never enter the repo, a prompt, or any printed output.
+   139	
+   140	## 3. Language
+   141	
+   142	Artifacts in English — specs, code, comments, migrations, commit messages, evidence.
+   143	Conversation with the CEO in Turkish: the answer first, plain, short. Every CEO-visible surface is 100 % one locale, both
+   144	locales at parity. Owner: `00-CEO-DIRECTIVE-LANGUAGE.md`.
+   145	
+   146	## 4. THE DOORS — open one when the job matches
+   147	
+   148	| When you are… | Open |
+   149	|---|---|
+   150	| asked to learn the holding — what is where | `dxb-start` |
+   151	| running a job | `dxb-team2` |
+   152	| taking a board row from open to closed | `dxb-close-row` |
+   153	| about to claim anything is finished | `dxb-verify` |
+   154	| changing anything the CEO looks at | `dxb-surface` |
+   155	| researching anything in the outside world | `dxb-research` |
+   156	| reading a rival system, video or repository | `dxb-rival-intel` |
+   157	| writing or repairing an employee's identity | `dxb-persona` |
+   158	| changing what Hamza or an agent knows at runtime | `dxb-hamza-context` |
+   159	
+   160	Doors live in `.claude/skills/<name>/SKILL.md`. A door holds the procedure, this file only
+   161	the boundary; a rule in both means the door is wrong.
+   162	
+   163	## 5. Gotchas — things the repository will not tell you
+   164	
+   165	- **The test suite writes to its OWN ENGINE, not to a database inside the company's.** The
+   166	  construction site runs its own Supabase stack — `DxB_Build`, port 54422, its own cluster —
+   167	  and the company does not exist there at all. The address is spelled once, in
+   168	  `tests/construction-engine.ts`. Its schema comes from the same `db/migrations` through the
+   169	  same canonical chain (`scripts/bootstrap-db.sh`); its data is GENERATED from the repository's
+   170	  own files by `db/seed/build-seed.ts` and holds not one row of the holding's. A gate that must
+   171	  prove what is true in the *company* reads the company database with SELECT only.
+   172	- **Internal technical identifiers still say `fable-5`** on purpose (live keys, undo chains,
+   173	  a persona-gate heading). Every label the CEO *sees* says Opus 5.
+   174	- **Tools before packages:** `.planning/research/STACK.md` is read before installing,
+   175	  upgrading or replacing anything. No Redis, no second job runtime, no second agent
+   176	  framework, no raw provider keys.
+
+exec
+/bin/bash -lc "rg -n 'CEO-OK|ceo-approvals|marker|handover-at-50|handover-at-the-clean|context|handover' scripts/governance/rules.json scripts/governance/*approval* .agents/skills/dxb-verify/SKILL.md" in /home/dxb/DxB Global OS
+exec
+/bin/bash -lc 'git show db391cb6:scripts/governance/ceo-approvals.json | nl -ba | tail -65' in /home/dxb/DxB Global OS
+ succeeded in 0ms:
+scripts/governance/rules.json:2:  "_doc": "One rule, one owner. Registered by the CEO's context-architecture order of 2026-07-30, after the measured finding that the same rule lived in dozens of files and the copies had drifted — which is how a rule he had given ('speak to me in my language') sat in a complaint ledger for nine days while binding nobody. Each entry names a sentence that belongs to exactly ONE file. ledger-truth.m [... omitted end of long line]
+.agents/skills/dxb-verify/SKILL.md:38:| **the audit law** (CEO, 2026-09-15: *"Tabii ki yazılsın, tabii ki."* <!-- CEO-OK: audit-law-checker-only-checks-2026-09-15 -->) | Every job is built by one hand and checked by another — in `dxb-team2` the blind Sol auditor (§4) — *"biri bir iş yaparken birisi kontrol edecek çünkü hata oluyor"*. **The checker only checks:** it measures, names the fault, and instructs what is to be done; the build [... omitted end of long line]
+.agents/skills/dxb-verify/SKILL.md:47:| Records (STATE, the board, ceo-approvals) | `scripts/governance/ledger-truth.mjs` + `tests/b43/records-truth.ts` (a record may not say his eye is awaited on what the ledger holds accepted; a new acceptance adds its row there or R4 is red) + records parity (`dxb-close-row`) | exists |
+.agents/skills/dxb-verify/SKILL.md:51:The table is his, holding-wide, on his word *"yaz"* of 2026-09-15 <!-- CEO-OK: ruler-table-holding-wide-2026-09-15 -->.
+.agents/skills/dxb-verify/SKILL.md:65:  started <!-- CEO-OK: dxb-verify-battery-and-restart-lines-2026-10-03 -->), and that restart is part
+.agents/skills/dxb-verify/SKILL.md:98:own work (CEO 2026-09-28 <!-- CEO-OK: audit-twin-every-job-2026-09-28 -->; the procedure is
+.agents/skills/dxb-verify/SKILL.md:114:(his word, 2026-09-24). <!-- CEO-OK: h6-perfection-gate-for-deliverables-2026-09-24 -->
+scripts/governance/ceo-approvals.json:2:  "_doc": "The register of things the CEO has actually approved. LAW B (CEO, 2026-07-30): 'iş tamamlanınca bitti anlamına gelmez — ben bakmam lazım ne yazılmış ve yapılmış.' A green battery means the AUTHOR's work is done; only his own eye makes something ACCEPTED. No document in this corpus may claim his approval unless it carries a <!-- CEO-OK: <id> --> marker naming an entry here. ledger-truth. [... omitted end of long line]
+scripts/governance/ceo-approvals.json:75:  "context-architecture-accepted-2026-07-31": {
+scripts/governance/ceo-approvals.json:77:    "what": "ACCEPTANCE of the delivered context architecture — distinct from his approval of the plan the night before. Board row B21 closed on this.",
+scripts/governance/ceo-approvals.json:103:  "context-architecture-2026-07-30": {
+scripts/governance/ceo-approvals.json:105:    "what": "The eight-step context architecture — one always-on core, eight doors, the state file as a photograph, the duplication and approval gates, dead rules deleted, and Hamza's information package put through the same discipline",
+scripts/governance/ceo-approvals.json:107:    "conditions": "Scope narrowed by him in the same exchange: 'şuan sadece odak noktamız bu directive paketi o kadar ve bu context engineering işi. rakip analizi vs bunlar hepsi sonra.' He also issued LAW A and LAW B in this exchange.",
+scripts/governance/ceo-approvals.json:297:    "conditions": "APPROVED: reaching the box through Hetzner's own console and reading what runs on it. NOT APPROVED BY THIS ENTRY: resetting the machine's root password. That is an identity step, it was named as one when the options were put to him, and the option text said plainly it would not be done without his word — so the next session ASKS HIM AGAIN if the console cannot be entered without [... omitted end of long line]
+scripts/governance/ceo-approvals.json:375:    "what": "THREE RULINGS IN ONE EVENING, ALL ON HOW THE HOLDING ARMS ITSELF. (1) THE QUALITY TIER. His words: \"ucretsizler secilirken ayni anda bunun ucretli ve cok daha mukemmel kalitede olani da kontrol edilmeli... dunya yarismalarinda birinci olacak seviyede e-commerce web siteleri yapilacaksa musteri iyi para veriyorsa en iyi malzemeler, normal olanlar icin ise bedava olanlar kullanilabilir [... omitted end of long line]
+scripts/governance/ceo-approvals.json:513:    "what": "Before the next leg (the call-sheet dispatcher and the studio's first productions), everything built this session is put to an INDEPENDENT EXTERNAL AUDITOR of the CEO's choosing; the session prepares the evidence and the handover so the next session continues at the same standard.",
+scripts/governance/ceo-approvals.json:716:    "what": "On his order the day's persona work was audited — three read-only Fable 5.1 subagents (personas vs rulings; records parity; the check and the binding) plus the author's own re-reading of every cited line — and every fault found was fixed in order, one topic at a time: (1) the Sound / Music seat, never read against his voice ruling of 2026-09-04, still replaced the engine's voice with  [... omitted end of long line]
+scripts/governance/ceo-approvals.json:719:    "where": "personas/media-studio/*.md · personas/design/design-image-prompt-engineer.md · personas/marketing/marketing-short-video-editing-coach.md · tests/b43/road-consistency.test.ts · scripts/governance/ledger-truth.mjs · .planning/STATE-ARCHIVE.md:2008 (the corrected marker) · .planning/quick/20260903-media-studio-founding/EVIDENCE-audit-2026-09-14.md · STATE 2026-09-14 (evening block) · bo [... omitted end of long line]
+scripts/governance/ceo-approvals.json:770:  "handover-prompt-only-on-his-session-request-2026-09-15": {
+scripts/governance/ceo-approvals.json:772:    "what": "The handover prompt (NEXT-SESSION-PROMPT) is NOT a global or standing rule in either direction: the CEO asked for one in some sessions, for that session only; it is not prepared automatically at the end of every session, and no new global law is made of it. The 2026-09-14 17:1x order that none be written was that session's order. Any record that had generalised it (STATE §4 of 2026-09 [... omitted end of long line]
+scripts/governance/ceo-approvals.json:775:    "where": ".planning/STATE.md §4 · .claude/skills/dxb-start Phase 5 carries no handover step (measured 2026-09-14)"
+scripts/governance/ceo-approvals.json:894:    "where": "scripts/governance/ceo-approvals.json (this entry) · HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md row B43 (the 12 eye claims rewritten to name this id) · .planning/STATE.md (the live-order block and the 9 eye claims) · .planning/quick/20260903-media-studio-founding/ (the W2…W13 evidence documents this acceptance covers)"
+scripts/governance/ceo-approvals.json:898:    "what": "W14 ORDERED AND WRITTEN ON HIS ONE-WORD ORDER. He was told what W14 is before he gave it: a REGISTRATION row that puts the eleven Ferrari legs he ordered on 2026-08-31 onto the board as owned legs with acceptance tests, and BUILDS NONE OF THEM. He was also told, before the word and again on the board, the one thing that costs him something: leg (01) is the two-roads cost table — the p [... omitted end of long line]
+scripts/governance/ceo-approvals.json:901:    "where": "HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md row B43, markers W14-L01 … W14-L11 and /W14 · .planning/quick/20260903-media-studio-founding/CHECK-W14-2026-09-16.sh (the ruler, committed alone, 5dfc1123) · .planning/STATE-ARCHIVE.md (the F036 diary correction of 2026-09-16) · .planning/STATE.md"
+scripts/governance/ceo-approvals.json:905:    "what": "W15 — THE LAST ROW OF THE STUDIO PLAN — IS ORDERED, AND ITS START IS TIED TO THE RULER, NOT TO A FURTHER WORD FROM HIM. He had already given the gate that morning ('denetçinin cetveli gelmeden başlama'); asked to talk to the checker, the author handed over W15's measured scope and requested the ruler; he then closed the loop in advance: the work begins the moment the checker's ruler a [... omitted end of long line]
+scripts/governance/ceo-approvals.json:908:    "where": "scripts/governance/ceo-approvals.json (this entry) · .planning/STATE.md (the live-order block) · .planning/quick/20260903-media-studio-founding/STUDIO_AUDIT_HANDOFF.md row W15 (line 1417) and the dependency note (line 1419)"
+scripts/governance/ceo-approvals.json:915:    "where": "scripts/governance/ceo-approvals.json (this entry) · commit a61d7ced, which quoted the order · .planning/quick/20260903-media-studio-founding/EVIDENCE-W15-2026-09-16.md"
+scripts/governance/ceo-approvals.json:917:  "ceo-no-handover-prompt-audit-what-you-did-2026-09-14": {
+scripts/governance/ceo-approvals.json:919:    "what": "NO HANDOVER PROMPT; COMMIT, MEASURE THE CLEAN-UP, AND EXPECT TO BE AUDITED. His order of 2026-09-14 17:1x, given after a day in which earlier sessions had produced evidence documents that looked right and covered poor work: he forbade writing a handover prompt, told the session to commit and measure its own tidiness, and said plainly that he would audit what THIS session did too, beca [... omitted end of long line]
+scripts/governance/ceo-approvals.json:921:    "conditions": "This is an order about that day and the practice around handover prompts; the standing form of it is the 2026-09-15 entry, which W15 wrote into the dxb-start door's Phase 5. It is not an acceptance of anything.",
+scripts/governance/ceo-approvals.json:922:    "where": "scripts/governance/ceo-approvals.json (this entry) · .claude/skills/dxb-start/SKILL.md Phase 5 · the three superseded NEXT-SESSION-PROMPT files, whose CEO-voice bodies W15 removed · EVIDENCE-W15-2026-09-16.md"
+scripts/governance/ceo-approvals.json:929:    "where": "scripts/governance/ceo-approvals.json (this entry) · HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md row B43 · EVIDENCE-W15-2026-09-16.md"
+scripts/governance/ceo-approvals.json:936:    "where": "scripts/governance/ceo-approvals.json (this entry) · db/migrations/20260913001000_b39_cost_ledger_source_qa.sql header · EVIDENCE-W15-2026-09-16.md"
+scripts/governance/ceo-approvals.json:938:  "ceo-delete-the-three-handover-prompt-files-2026-09-16": {
+scripts/governance/ceo-approvals.json:942:    "conditions": "Scope is those three files and nothing else. It changes no rule: a handover prompt is still written only when he asks for one in that session (handover-prompt-only-on-his-session-request-2026-09-15), and dxb-start Phase 5 already carries that ruling. It is not an acceptance of W15, which still waits on his eye (LAW B).",
+scripts/governance/ceo-approvals.json:943:    "where": "scripts/governance/ceo-approvals.json (this entry) · .planning/quick/20260903-media-studio-founding/ (the three files, deleted) · EVIDENCE-W15-2026-09-16.md · HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md row B43 · .planning/STATE.md"
+scripts/governance/ceo-approvals.json:947:    "what": "HIS EYE HAS PASSED OVER W14 AND W15 — THE LAST TWO ROWS OF THE STUDIO PLAN, AND WITH THEM THE WHOLE TABLE W1…W15. He was shown, in his own language and before he said it: what W14 wrote (the eleven Ferrari legs he ordered on 2026-08-31, each now an owned leg on board row B43 with an owner, the finding it closes, a CEO-facing deliverable, an acceptance test and ONE proving command — an [... omitted end of long line]
+scripts/governance/ceo-approvals.json:950:    "where": "scripts/governance/ceo-approvals.json (this entry) · HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md row B43 (the three eye claims rewritten) · .planning/STATE.md (the two eye claims rewritten) · .planning/quick/20260903-media-studio-founding/EVIDENCE-W15-2026-09-16.md"
+scripts/governance/ceo-approvals.json:957:    "where": "scripts/governance/ceo-approvals.json (this entry) · HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md row B44 · .planning/quick/20260903-media-studio-founding/CHECK-B44-2026-09-16.sh (the checker's ruler, md5 f1d3cb39463a55881f16cdb8a4296541, committed alone as 61d80dd8) · .planning/quick/20260903-media-studio-founding/EVIDENCE-B44-2026-09-16.md"
+scripts/governance/ceo-approvals.json:964:    "where": ".claude/hooks/ceo-language.sh (the shape, point 2 and 2b, and the emitted line) · scripts/governance/ceo-approvals.json (this entry)"
+scripts/governance/ceo-approvals.json:971:    "where": "scripts/governance/ceo-approvals.json (this entry) · HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md row B45 · .planning/quick/20260903-media-studio-founding/CHECK-B45-2026-09-16.sh (committed alone as 110a487c) · .planning/quick/20260903-media-studio-founding/EVIDENCE-B45-2026-09-16.md"
+scripts/governance/ceo-approvals.json:978:    "where": "scripts/governance/ceo-approvals.json (this entry) · HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md rows B44 and B45 · .planning/STATE.md · .planning/quick/20260903-media-studio-founding/EVIDENCE-B44-2026-09-16.md · .planning/quick/20260903-media-studio-founding/EVIDENCE-B45-2026-09-16.md"
+scripts/governance/ceo-approvals.json:985:    "where": "scripts/governance/ceo-approvals.json (this entry) · .planning/STATE.md (the 2026-09-14 block's heading, and the live-order block naming the gate question as the next session's first act)"
+scripts/governance/ceo-approvals.json:992:    "where": "scripts/governance/ceo-approvals.json (this entry) · .planning/STATE.md (the live-order block; the open-question paragraph it replaces is deleted under LAW A) · .planning/quick/20260903-media-studio-founding/sweep-acceptance-contradictions.py (its header sentence saying the decision is pending, corrected)"
+scripts/governance/ceo-approvals.json:1031:    "what": "THE EIGHT UNUSED PLUGINS ARE CLOSED FOR THIS PROJECT. Told, after the measurements of row B47, that caveman, impeccable, taste-skill, ui-ux-pro-max, frontend-design, obsidian, claude-md-management and andrej-karpathy-skills were still on (0 calls in 402 session records over 30 days; the chief engineer had recommended keeping them on because a closed plugin cannot be opened by name and [... omitted end of long line]
+scripts/governance/ceo-approvals.json:1052:    "what": "THE MEMORY PLUGIN'S TERMINAL ECHO IS SWITCHED OFF, ON THE CHECKER'S OK. Shown, in his Çalışma1 window, the list claude-mem prints at every opening (the observation index plus the 'View Observations Live' and cmem.ai/pro lines) he asked whether he must always see it, and said: ask the checker, and if the checker approves, close it. Measured first (row B47 L5): the plugin renders the sa [... omitted end of long line]
+scripts/governance/ceo-approvals.json:1059:    "what": "HIS ORDER ON THE SHAPE OF THE BOARD: the closed rows leave the open work and stand in one section at the very bottom of the same page. He asked first whether saying 'göz tmm' would have removed a row from the board at all; the measured answer is no — board law 2 ('a closed row keeps its evidence', accepted by him 2026-07-27) fixes a closed row's STATUS and never said anything about it [... omitted end of long line]
+scripts/governance/ceo-approvals.json:1066:    "what": "HE STOPPED THE RENTED SERVER AND KEPT THE SAFE. He opened it himself: the holding is still being built, the machine has been touched by nobody since 2026-08-27, and he did not want to keep paying for it for another two or three months. The analysis he remembered ('analizi yapılmıştı') was his own, of 2026-08-27, and it was put back in front of him in his own words — of 57 open rows ex [... omitted end of long line]
+scripts/governance/ceo-approvals.json:1069:    "where": "Hetzner cloud account (context dxb) · board rows B09 · B10 · B11 · B39's rented-box leg · .planning/STATE.md"
+scripts/governance/ceo-approvals.json:1076:    "where": "HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md Section 5 (row B39 moved in) · scripts/governance/ceo-approvals.json · .planning/STATE.md"
+scripts/governance/ceo-approvals.json:1080:    "what": "HE APPROVED THE CHIEF ENGINEER'S TWO-PHASE PLAN, IN HIS OWN WORDS: \"plani onayladim\" (2026-09-20, night). WHAT HE APPROVED, as it was put in front of him in the handover note /home/dxb/Desktop/DEVIR-2026-09-20-GECE.md, sections 2 and 3: (PHASE 1 - THE QUOTA RULER) the currency of this decision is QUOTA, not dollars, because we are on a subscription and the API price tables are outsi [... omitted end of long line]
+scripts/governance/ceo-approvals.json:1091:    "where": "HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md row B46 (moved into Section 5) · scripts/governance/ceo-approvals.json · tests/b43/records-truth.ts (row) · .planning/STATE.md"
+scripts/governance/ceo-approvals.json:1099:    "where": "HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md row B48 (moved into Section 5) · scripts/governance/ceo-approvals.json · tests/b43/records-truth.ts (row) · .planning/STATE.md"
+scripts/governance/ceo-approvals.json:1107:    "where": "HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md row B49 (moved into Section 5) · scripts/governance/ceo-approvals.json · tests/b43/records-truth.ts (row) · .planning/STATE.md 0-AF · .planning/quick/20260903-media-studio-founding/EVIDENCE-W9-2026-09-15.md §12-ter"
+scripts/governance/ceo-approvals.json:1131:    "where": "/home/dxb/.claude/plans/soft-singing-sutton.md (the approved plan), var/measure/startup-budget-baseline-2026-09-22.md (the P0 baseline row) and var/measure/context-budget-2026-09-22.md (the measured ladder the plan rests on)"
+scripts/governance/ceo-approvals.json:1139:    "where": ".claude/skills/dxb-crew/SKILL.md section 1, the paragraph carrying the marker crew-minors-fixed-in-same-pass-law-2026-09-22"
+scripts/governance/ceo-approvals.json:1147:    "where": "HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md row B52 (moved into Section 5) · .claude/CLAUDE.md section 0 (the silent-empty-line fix) · scripts/governance/ceo-approvals.json"
+scripts/governance/ceo-approvals.json:1185:    "session": "Opus 5.5 (xhigh), session 1ee0bc86-1f14-4b59-aa51-282485e87be2 (claude-code-quality-hooks) heard it first-hand at 01:18:01; registered from that session's verbatim handover by session fa4d10f2-131c-4369-9391-8762a60c0b5c.",
+scripts/governance/ceo-approvals.json:1190:    "what": "HE APPROVED THE CODE-GATE PLAN BY CLICK, in the plan dialog of session 1ee0bc86-1f14-4b59-aa51-282485e87be2, at about 01:25 local (time as recorded in that session's handover). The plan is saved at /home/dxb/.claude/plans/recursive-finding-puppy.md: phase A tests the mechanism in a scratch folder only (seven probes); phase B writes it permanently — the hook, the status line persisting [... omitted end of long line]
+scripts/governance/ceo-approvals.json:1225:    "what": "HIS CHOICE ON CARD H20 OF THE PROMPT AUDIT (board row B53). The standing honesty line every employee reads (packages/voice/src/prompt-core.ts honestyLine: 'never estimate') is stricter than his RULE #0-A and contradicts seats whose job is a labelled estimate (the risk manager's 'expert estimate with a wide range', the deal strategist, the trend researcher and others). Put to him as A: [... omitted end of long line]
+scripts/governance/ceo-approvals.json:1232:    "what": "HIS CHOICE ON CARD M1 OF THE PROMPT AUDIT (board row B53). ~/.claude/settings.json carried the alias opus[1m] (chosen with /model at 00:25), which follows every newer Opus in silence, against the sentence of his global instructions that the model id is written fixed and changes only measured and on his word. Put to him as A: the fixed id claude-opus-5-5 with today's 1M context kept, a [... omitted end of long line]
+scripts/governance/ceo-approvals.json:1268:    "verbatim": "hayır ya oturuma gelmesin ya oturumu şişirmesin. bekçi kim sonnet mi? o yapabilir işi. yani sadece istediğimiz modellerimizin çalışmasını ciddi anlamda etkileyecek bir haber varsa getirsin okadar. hergün saçpa sapan haber getirip ufak güncellemelerle contexti şişirmesin.",
+scripts/governance/ceo-approvals.json:1288:    "what": "Prompt-audit card H16 (board row B53), employee side: the prompt and context engineer's identity (personas/data-ai/prompt-context-engineer.md:55) says 'PERSONA YAZARLIĞI BU ROLDE YOKTUR — K2 hükmü gereği tüm personaları Fable bizzat yazar', naming a model that no longer holds the pen. The card proposed 'the construction session's author writes them in person'; he asked whether that me [... omitted end of long line]
+scripts/governance/ceo-approvals.json:1291:    "where": "board row B53 · page https://claude.ai/artifact/DjTVtgJNQHfQwJmu6ouYsk collection kararlar doc H16 · applied with B51 to personas/data-ai/prompt-context-engineer.md"
+scripts/governance/ceo-approvals.json:1347:    "session": "Opus 5.5 (xhigh), session 97159170-292d-490f-9f0a-e7fb81608573 (chief engineer, dxb-crew), heard first-hand; carried to session 15636eaa-079c-4bbb-a893-ccdc18ca3c1b in its handover note.",
+scripts/governance/ceo-approvals.json:1354:    "session": "Opus 5.5 (xhigh), session 97159170-292d-490f-9f0a-e7fb81608573 (chief engineer, dxb-crew), heard first-hand; carried to session 15636eaa-079c-4bbb-a893-ccdc18ca3c1b in its handover note.",
+scripts/governance/ceo-approvals.json:1390:    "what": "HE ORDERED A SECOND ORCHESTRATOR DOOR, dxb-team1, BESIDE dxb-crew, AND DREW ITS SHAPE HIMSELF. dxb-crew stays untouched on his word. The diagram he pasted: a Fable 5.1 lead/architect; three Opus 5.5 builders in parallel (he wrote MED/HIGH; corrected the same night to medium/max by difficulty, see dxb-team1-effort-by-difficulty-2026-09-25); implementation; a FRESH Opus 5.5 verifier at  [... omitted end of long line]
+scripts/governance/ceo-approvals.json:1406:    "what": "HIS WORD TO BUILD dxb-team1, given after a conversation on the one-page plan (his questions: whether useful parts of dxb-crew would be taken — yes, four; whether anything concerned operator — §0 and the handover; whether writers should run in a new session or as subagents — subagents, with the head-to-head owed as a measurement; whether a successor session after a handover knows the w [... omitted end of long line]
+scripts/governance/ceo-approvals.json:1420:  "context-gate-hook-ordered-2026-09-26": {
+scripts/governance/ceo-approvals.json:1422:    "what": "HE ORDERED THE CONTEXT GATE TO BECOME A HOOK, AND THE HANDOVER FIRST. He caught the chief engineer at 48 % context without a handover (\"peki neden %48 e gelmene rağmen yeni session açmadın?\" … \"hayır soruma cvpla NEDEN DİYE SORDUM. bu dxb-team1 içinde yazılı talimat. neden uymadın bu büyük sıkıntı\"). The cause named to him: the 40 % rule is text only — every rule that holds in thi [... omitted end of long line]
+scripts/governance/ceo-approvals.json:1424:    "conditions": "His acceptance of the recommendation as stated (handover first, hook as the successor's first job). Not a law; a job. The hook is a governance file → written by builder (max) from the chief engineer's spec, with tests; the numbers 40 / 45 are his own rule of 2026-09-21.",
+scripts/governance/ceo-approvals.json:1434:    "where": "board row B60 · .planning/STATE.md · .planning/quick/20260926-b59-context-gate/EVIDENCE-B60-2026-09-26.md"
+scripts/governance/ceo-approvals.json:1436:  "context-line-50-55-2026-09-26": {
+scripts/governance/ceo-approvals.json:1438:    "what": "HE MOVED THE CONTEXT LINE FROM 40 / 45 TO 50 / 55. His question (~01:00): \"%50 mi yapsak sınırı 40 az mı acaba?\". The recommendation put to him: 50 / 55 — the window is 1M tokens (40 % ≈ 360k, 50 % ≈ 450k, both far under the ceiling); a handover costs about 8 % of a window in the successor's opening alone (72k tokens measured this night) plus the note and ten minutes of orientation; [... omitted end of long line]
+scripts/governance/ceo-approvals.json:1440:    "conditions": "His acceptance of the recommendation as stated (50 red line / 55 refusal). Not a law; the numbers of the context gate, one place (~/.claude/hooks/dxb-context-gate.py RED_LINE_PCT / AGENT_DENY_PCT) with the door texts (dxb-crew §3, dxb-team1 §5) and the memory notes following. Tests updated by the builder.",
+scripts/governance/ceo-approvals.json:1490:    "where": ".claude/CLAUDE.md §2 (the boundary line, dated); .claude/hooks/ceo-language.sh (the marker, in the hook's own history note); scripts/governance/rules.json (entry removed); git history of .claude/skills/dxb-ceo-report/SKILL.md"
+scripts/governance/ceo-approvals.json:1528:    "conditions": "His second sentence the same minute: 'Dediğim gibi sen hangisini önerdiysen onu yap. Hangisi daha kaliteli iş çıktısı yapacaksa o şekilde devam et.' — the lead chose this session (the measurements were in hand) over a handover. The gate was not raised.",
+scripts/governance/ceo-approvals.json:1553:  "research-k3-rapor-engine-basla-and-handover-2026-09-26": {
+scripts/governance/ceo-approvals.json:1555:    "what": "K3 — stage 3 of the research door, the RAPOR (report) engine — STARTS on the lead's plan he accepted (three parts: 1 soru ayrıştırma · 2 rapor tipine göre şekil · 3 ayrı denetçi ajan; order 1 → 3 → 2; dxb-team1, staged, a real run and its page in front of him after each stage), in a SUCCESSOR Fable 5.1 session opened now at this session's clean break (36 % context), on the lead's reco [... omitted end of long line]
+scripts/governance/ceo-approvals.json:1557:    "conditions": "A start order for K3 stage 1 and the handover, not an acceptance: each stage is accepted only by his eye on a real run's page (LAW B). The recommendation he accepted, verbatim from the lead: 'Yeni oturuma devir daha uygun … \"başla\" sözünüzü şimdi verirseniz devir notuna \"K3 kademe 1 onaylı, hemen başla\" yazarım; halef sizi beklemeden işe girer.' Order of stages 1 → 3 → 2 as  [... omitted end of long line]
+scripts/governance/ceo-approvals.json:1558:    "where": ".planning/STATE.md live block · board B56 · the handover note HANDOVER-K3.md in the outgoing session's scratchpad"
+scripts/governance/ceo-approvals.json:1585:    "what": "HE ACCEPTED B59 BY HIS OWN EYE — the context gate as a hook (~/.claude/hooks/dxb-context-gate.py, the red line and the Agent refusal, at 50 / 55 since B61), built 2026-09-26 00:55 and listed to him as waiting his eye. LAW B acceptance, not a law.",
+scripts/governance/ceo-approvals.json:1640:    "what": "HIS ORDER TO DELETE THE dxb-now PROMPT HOOK (the clock line printed on every prompt, built the same day at 17:38, eb1f74f0), given at 22:55 after the successor session wrote 'dün kurulan dört kilit' about locks built that same day at 20:05–20:52; conditional on the chief engineer's judgment that the hook's information is available on demand — judged true (the date sits in the session' [... omitted end of long line]
+scripts/governance/ceo-approvals.json:1680:    "what": "HE CLOSED B61 BY HIS OWN EYE — the context line at 50 / 55: he saw the lead hand over at 50 %.",
+scripts/governance/ceo-approvals.json:1682:    "conditions": "He stated the scope in the same breath: the 50 % line was meant for the Fable 5.1 lead of dxb-team1. Measured the same minute: ~/.claude/hooks/dxb-context-gate.py carries no model check and runs in every session — asked whether 50 % suits every model, he settled it minutes later: \"yok %50 sorusu çözüldü tmmdır kalabilir o\" — the hook stays as it is, for every session.", [... omitted end of long line]
+scripts/governance/ceo-approvals.json:1688:    "what": "He ordered dxb-team2 as the construction's default door, built item by item with the lead: one lead that writes and fixes the code itself, a blind read-only GPT-6 Sol auditor on every job at a depth set by a 0-8 score card, Fable 5.1 for critical architecture and disputes, no technical question sent to him; dxb-team1 stops being the default and no record may name it as such; the dupli [... omitted end of long line]
+scripts/governance/ceo-approvals.json:1706:    "conditions": "Given after the lead put the plan to him in Turkish with its guarantees (write-refusal and company-untouched measured before and after; one from-scratch rebuild) and said the build goes to a successor session at the context gate.",
+scripts/governance/ceo-approvals.json:1784:    "what": "Second batch of the rule prune. Doors dxb-crew and dxb-team1 deleted whole, with the agents only they used (arbiter, verifier, builder-medium, builder-lean); dxb-team2 §8 now holds the context gate and the handover steps itself. Passages that made a session act without asking or over-apply a rule removed from dxb-close-row, dxb-team2, dxb-start, dxb-verify, dxb-surface, dxb-rival-inte [... omitted end of long line]
+scripts/governance/ceo-approvals.json:1788:    "where": ".claude/skills/* · ~/.claude/agents · ~/.claude/skills/{operator,graphify,agent-reach} · ~/.claude/hooks/dxb-context-gate.py · MODEL_ROUTING_SPEC A-2026-09-23/28 · memory/"
+scripts/governance/ceo-approvals.json:1790:  "handover-at-50-without-asking-2026-10-01": {
+scripts/governance/ceo-approvals.json:1792:    "what": "The handover at 50 % context stays and is the engineer's, without asking him. It replaces handover-prompt-only-on-his-session-request-2026-09-15 in dxb-start Phase 5. (Its clause on quoting him only from this register was deleted on his word of 2026-10-03, handover-quotes-conversation-verbatim-2026-10-03.)",
+scripts/governance/ceo-approvals.json:1852:    "where": "~/.claude/projects/-home-dxb-DxB-Global-OS/memory — four notes and the index line of the context-meter note"
+scripts/governance/ceo-approvals.json:1864:    "what": "dxb-start stays and holds only 'learn the holding — what is where': the read order, what not to read, where things are. The job rules that lived only there (the understanding report, the plan's contents, root cause before fix, the test that failed first, no silent narrowing or widening) move into dxb-team2 §4, which every job opens; its copies of what dxb-team2 and the board already o [... omitted end of long line]
+scripts/governance/ceo-approvals.json:1886:  "handover-carries-transcript-2026-10-03": {
+scripts/governance/ceo-approvals.json:1888:    "what": "Every handover note ends with the path of the handing-over session's own conversation (~/.claude/projects/-home-dxb-DxB-Global-OS/<session id>.jsonl) and the line: if anything here is unclear, read the part you need there. Written where the handover lives, dxb-team2 §8.",
+scripts/governance/ceo-approvals.json:1890:    "conditions": "First done in session 32178f5b's handover note, after his question 'devredilen session herşeyi bilecek mi konuştuklarımızı talepleri mi vs.'. 'kural yapar mısın' is his word to make it a standing rule. Registered as his order, not a LAW B acceptance.",
+scripts/governance/ceo-approvals.json:1902:  "dxb-hamza-context-restart-line-2026-10-03": {
+scripts/governance/ceo-approvals.json:1904:    "what": "The dxb-hamza-context door's restart rule corrected the same way as dxb-verify's: it said the chat and voice lanes load new code when `dxb-scheduler` and `dxb-jarvis` are restarted; the scheduler drains both lanes (packages/outbox-executor/src/scheduler.ts — drainVoiceCalls, drainChatMessages) and dxb-jarvis is stopped and disabled. The rule now restarts dxb-scheduler and says dxb-jar [... omitted end of long line]
+scripts/governance/ceo-approvals.json:1905:    "verbatim": "evet hamza-context'i de düzelt",
+scripts/governance/ceo-approvals.json:1906:    "conditions": "Answering the lead's one-line question after the dxb-verify fix (ledger dxb-verify-battery-and-restart-lines-2026-10-03): the same wrong line stood in dxb-hamza-context, and his earlier yes named dxb-verify alone. Registered as his order, not a LAW B acceptance.",
+scripts/governance/ceo-approvals.json:1908:    "where": ".claude/skills/dxb-hamza-context/SKILL.md (rule 5, Restart the residents) · Codex mirror"
+scripts/governance/ceo-approvals.json:1910:  "handover-quotes-conversation-verbatim-2026-10-03": {
+scripts/governance/ceo-approvals.json:1912:    "what": "A handover note may quote him verbatim from the handing-over session's own conversation, marked so, as well as from this register — never composed in his first person. The conversation's path, which every note now ends with (handover-carries-transcript-2026-10-03), makes each such quote checkable. LAW A: the clause 'the note still quotes him only from this register' is deleted from ha [... omitted end of long line]
+scripts/governance/ceo-approvals.json:1944:    "what": "dxb-team2 holds three arrangements and no line telling when to choose each: (1) the fork — the lead's own copy writes the job; (2) the team — Opus 5.5 high lead with three Opus medium helpers (code reader · edit+test · docs/research), Fable 5.1 at the three points, the lead gathering their results and deciding; (3) the hybrid — the fork writes, medium helpers read and research beside  [... omitted end of long line]
+scripts/governance/ceo-approvals.json:1970:    "conditions": "Correcting the lead's handover advice (effort high for writing the door, 'the plan moment is past'). Registered as his order, not a LAW B acceptance.",
+scripts/governance/ceo-approvals.json:1972:    "where": ".claude/skills/dxb-team2/SKILL.md (with the orchestration design) · the handover note"
+scripts/governance/ceo-approvals.json:2040:    "what": "The eight July/August diaries of the construction's auto-memory stay (e125-wave, e12-gates-night, july-2026-session-lessons, r4x-era-lessons, voice-layer-u15, ceo-complaint-ledger-u19, directive-history-2026-07, context-architecture-2026-07-30; ~80 KB). Shortening was left to the lead; the lead did not shorten them — they are opened only when their subject comes up, and each costs one [... omitted end of long line]
+scripts/governance/ceo-approvals.json:2059:    "session": "Opus 5.5 session fd7d67f2 — heard first-hand, 2026-10-04 18:12 local; registered by session e3574313, the job's lead after the handover, from fd7d67f2's transcript (promptId 0b087333).",
+scripts/governance/ceo-approvals.json:2142:  "handover-at-the-clean-break-2026-10-06": {
+scripts/governance/ceo-approvals.json:2144:    "what": "ORDER, permanent in dxb-team2 §7: from 50 % context the lead hands over at the first clean break — the piece finished, the tree committed, no battery running, the report sent — even when that takes the session to 55-58 %; never in the middle of a piece. Past 55 % the context gate refuses the Agent tool, so the lead finishes only what its own hand can.",
+scripts/governance/ceo-approvals.json:2146:    "conditions": "The first sentence at 53 % context, asking it into the handover note; the second answering the lead's one-line question whether it is for this session only or permanent in dxb-team2. Registered as his order, not a LAW B acceptance.",
+
+ succeeded in 0ms:
+  2086	  "helpers-never-call-fable-and-global-advisor-line-scoped-2026-10-04": {
+  2087	    "date": "2026-10-04",
+  2088	    "what": "Two found items of the orchestration job, both yes: (1) the `helper` and `helper-writer` seat definitions (~/.claude/agents/) carry the sentence that they never call the advisor tool (Fable) — Fable is consulted only by the lead, where the job's card allows; measured before: without the sentence both helper-writers of the orchestration job called Fable once each, unasked; with it in the brief, both helpers of the live bar called it zero times. (2) ~/.claude/CLAUDE.md's advisor line ('gerekli görüldüğü takdirde her zaman danışılabilir', CEO 2026-10-01) is limited to work outside dxb-team2; inside it, only where the card's `fable:` line allows.",
+  2089	    "verbatim": "evet yaz ikisini de",
+  2090	    "conditions": "Answering the lead's two questions of 2026-10-04 ~19:50 (the global line limited to work outside dxb-team2; the 'do not call Fable' sentence written into the two helper seats). Registered as his order, not a LAW B acceptance.",
+  2091	    "session": "Opus 5.5 session e3574313 — heard first-hand, 2026-10-04.",
+  2092	    "where": "~/.claude/agents/helper.md · ~/.claude/agents/helper-writer.md · ~/.claude/CLAUDE.md (# Danışman) — all outside the repo"
+  2093	  },
+  2094	  "persona-old-patterns-accepted-by-his-eye-2026-10-04": {
+  2095	    "date": "2026-10-04",
+  2096	    "what": "ACCEPTED BY HIS EYE: the old patterns removed from the 213 employee personas — B51 move 5's persona-text rows and his cards H13 H14 H15 H16 H17 H21 (retired model names and Fable-as-author lines, fixed step scripts and reasoning orders, one-sentence/one-line limits, the report-language conflict, tools the seats do not hold, issue quotas, the refusal lead-in, dated archaeology, emphatic capitals); §12 Islamic conduct untouched; filed in the company (213 versions gate passed, bound, --verify 213 MATCH). Shown to him as a before/after table in plain words. Not part of it: B51's code rows (another session's job).",
+  2097	    "verbatim": "göz tmm",
+  2098	    "conditions": "Answering the lead's table 'ne yapıldı personada', 2026-10-04 evening. Commits 3ebbce2b · c61a84d3 · 3d5bb2ed · 675767d6 · 4fa96287 · fb4bf1ff; Sol high, every finding CLOSED.",
+  2099	    "session": "Opus 5.5 session e7aa0d14 — heard first-hand, 2026-10-04.",
+  2100	    "where": ".planning/STATE.md · .planning/quick/20261004-persona-old-patterns/"
+  2101	  },
+  2102	  "fallback-auditor-named-and-refuter-second-round-gone-2026-10-04": {
+  2103	    "date": "2026-10-04",
+  2104	    "what": "Item 4 of the outside review of dxb-team2 that a Fable session wrote and he pasted into session 89e39ac4: (1) the door's fallback auditor — the one-shot Opus 5.5 subagent that audits a light or normal job when Sol is unavailable — is named for what it is: read-only by word, not by tool (no Write or Edit, but its Bash can write), a known weakness against dxb-verify's audit twin, never a licence; the record of such an audit says so. (2) The round-2 paragraph of refuter-redesign-2026-09-24 leaves ~/.claude/agents/refuter.md (LAW A): there is no second round since sol-single-pass-fixes-by-helper-2026-10-03. The rest of that redesign — acceptance items written before the work, the A/B/C boxes — stays.",
+  2105	    "verbatim": "4- tmm silinsin. ama 3 önemli — then, in the same conversation: 4. maddeyi önce bitir.",
+  2106	    "conditions": "His answer to the session's plain retelling of the review's item 4 ('Kayıt bu yedeğe dürüstçe \"sözle salt-okur\" desin. Denetçi tanımındaki eski \"ikinci tur\" paragrafı da silinsin, çünkü artık Sol tek geçiş yapıyor.'). Registered as his order, not a LAW B acceptance.",
+  2107	    "session": "Opus 5.5 session 89e39ac4 — heard first-hand, 2026-10-04.",
+  2108	    "where": ".claude/skills/dxb-team2/SKILL.md §2 (Fallback auditor) and its Codex mirror · ~/.claude/agents/refuter.md — outside the repo"
+  2109	  },
+  2110	  "fable-normal-start-only-critical-start-end-2026-10-04": {
+  2111	    "date": "2026-10-04",
+  2112	    "what": "Fable 5.1 advises by the job's size, read from the card's class: a light job (0-2) never; a normal job (3-5) once, at the start, before the plan goes to him; an important job — the card's critical class (6-8) — at the start and at the end (before 'done', reading the finished work with Sol's findings and ruling there on a disagreement no test settled). The card's `fable:` line is `none` · `start` · `start+end`. This replaces the normal job's end call of fable-start-and-end-normal-and-important-2026-10-04 (LAW A). The audit he describes in the same message is the one already written: one Sol pass, its findings fixed, then the tests (sol-single-pass-fixes-by-helper-2026-10-03). design-eye runs on Fable 5.1 and is bound by the same rule: it reads a finished surface only on a critical job, beside the end call (Sol's single pass on f03dfe16, B1).",
+  2113	    "verbatim": "abi küçük işte no fable orta işte başta fable önemli işlerde de başta ve sonra fable olay bu. ben bunu istiyorum. denetimde tek turdu bulunan hatalar tamir edilecekti. ve kontrol. çalışıor mu herşey çalışmıor mu düzgün yapılmış mı diye test sanırım.",
+  2114	    "conditions": "Said at 20:58 local in session 89e39ac4, while the lead ran item 4 of the outside review and had named a Fable end call for that normal job under the 19:22 rule. His 'küçük · orta · önemli' are read as the card's light · normal · critical. Registered as his order, not a LAW B acceptance.",
+  2115	    "session": "Opus 5.5 session 89e39ac4 — heard first-hand, 2026-10-04.",
+  2116	    "where": ".claude/skills/dxb-team2/SKILL.md (description, §1, §2 Advisor, §3, §4 PLAN · DISPUTE · JUDGE) · .claude/skills/dxb-verify/SKILL.md (a finding is evidence) · their Codex mirrors · ~/.claude/CLAUDE.md (# Danışman) — outside the repo · ~/.claude/agents/design-eye.md (outside the repo)"
+  2117	  },
+  2118	  "locked-tool-accepted-by-his-eye-2026-10-04": {
+  2119	    "date": "2026-10-04",
+  2120	    "what": "His list item 2, the locked tool resolved by the system itself, as built and live on the holding's own engine (commits acee5559..66b4d6a2, job folder .planning/quick/20261004-locked-tool/): the lock to the security engineer as a tool-less review, the unlock only by the repository's manifest (pnpm construction:pins:add), the 15-minute tool-lock-watch raising only a malicious verdict, a review stopped for good or a lock older than 72 h, and the tool check run after the machine wakes.",
+  2121	    "verbatim": "bkatım tmmdır.",
+  2122	    "conditions": "Said after the closing report (battery GREEN from scratch, 1220 + 266) and the session summary. The alerts page's eye leg had been reported ⚠ UNVERIFIED (B03-bis); his words accept the job as reported. The two found items (the manifest serializer's __proto__ loss; 84 dossiers saying dormant/draft) are not part of this and still wait on his word.",
+  2123	    "session": "Opus 5.5 session c04c8a07 — heard first-hand, 2026-10-04.",
+  2124	    "where": ".planning/STATE.md · .planning/quick/20261004-locked-tool/CARD.md"
+  2125	  },
+  2126	  "effort-machinery-removed-2026-10-06": {
+  2127	    "date": "2026-10-06",
+  2128	    "what": "ORDER: the effort machinery goes. Removed: the dxb-design-max skill, its project hook .claude/hooks/dxb-design-max.py and its registration in .claude/settings.json; the status line's 'tur: <level>' and '🟣 tasarım açık' marks with the one-second redraw added for them (~/.claude/hooks/dxb-statusline.js, ~/.claude/settings.json refreshInterval — outside the repo); tests/hooks/design-max.test.ts and tests/hooks/statusline-effort.test.ts; dxb-team2's Lead-row design-at-max clause, its §4 PLAN max paragraph and §8's '--effort <same>' (the successor now opens with the same model and his saved default effort). Supersedes design-plan-architecture-at-max-2026-10-03 (as to how it is carried out), design-max-skill-every-turn-2026-10-04, design-max-only-his-yes-closes-2026-10-04 and statusline-turn-effort-2026-10-04 (LAW A); those entries stay as history. What replaces them — who sets the effort and how (his direction: normal talk high, plan, architecture and design max; the lead tells him to switch, and when he is away the orchestrator switches its own session through the PC) — is decided with him next; nothing of it is written yet.",
+  2129	    "verbatim": "biliyor musun bunları kaldıralım. opus veya dxbteam2 yi kullanacak olan tüm ajanlar effor seciyesini kendisi operatorler seçsin olmaz mı? şu efforla gerekli kafa karıştıran hususları skill'den temizleyebilir misin? · ama biz o tur mur onları kaldırmayacak mıyız? önce kaldırılacakları bir kaldır sonra planımıza bakalım",
+  2130	    "conditions": "The second sentence answered the lead's question whether to repeat a measurement; he then pasted back the lead's own list of what goes (the skill, its hook and registration; the bar's 'tur: max' and 'tasarım açık'; their tests; dxb-team2's Lead line, §4 PLAN max paragraph and §8 '--effort <same>'). Before it the lead had measured that a skill with effort: high does not lower a session opened at max (transcript, headless, 2.1.291) — the reason a session opened at max wrote code at max. Registered as his order, not a LAW B acceptance.",
+  2131	    "session": "Opus 5.5 session f7a2bf71 — heard first-hand, 2026-10-06.",
+  2132	    "where": ".claude/skills/dxb-team2/SKILL.md §2 §4 §8 · .claude/settings.json · ~/.claude/hooks/dxb-statusline.js and ~/.claude/settings.json (outside the repo) · .planning/quick/20261006-effort-machinery-removal/"
+  2133	  },
+  2134	  "dxb-team2-lean-2026-10-06": {
+  2135	    "date": "2026-10-06",
+  2136	    "what": "ORDER: dxb-team2 rewritten lean. The lead chooses the hands (itself, a fork, medium helpers, or a fork with helpers) and verifies every piece; one blind Sol pass on every job that changes code, a rule or a door; its findings fixed by a fork or a helper; the touched tests, and the battery once at the end when code changed; a short report. Gone: the score card and audit-card.mjs (refuter.sh takes --effort, high by default, the lead's choice), the done-list, Fable in a dxb-team2 job (the advisor tool and the Fable-based design-eye), per-job records (his words only in this ledger where LAW B needs them; STATE once at the session's end, a few lines). Effort: the session at high; plan, design and architecture at max — he switches, the lead warns him on every reply until he has (.claude/hooks/dxb-effort-warn.py plan|build|off, the live level read from the status line's record). Supersedes score-card-gate-2026-10-01, auditor-never-regrades-2026-10-03 and fable-normal-start-only-critical-start-end-2026-10-04 (LAW A); those entries stay as history. Also fixed on the way, as he asked ('eksik, bozuk şeyler varsa onları da düzelt'): ~/.claude/agents/refuter.md's two older defects (Sol's C1, C2 of 2026-10-04 — a C finding no longer goes to the board; the fallback auditor runs only reading commands), its effort high as the door says.",
+  2137	    "verbatim": "Şu an Haydasın ve orkestratörsün. DXP 2, DXP Team 2 tasarla bakalım aynı konuştuğumuz şekilde. Bu şekilde onaylıyorum. Ve tasarlarken eksik, bozuk şeyler varsa onları da düzelt tabii ki. · Ferrari seviyesinde. Seviye Ferrari seviyesi uluslararası yarışmalarda birinciliğe aday olacak bir e, orkestratör sistemi olsun. Konuştuğumuz bu plan dahilinde.",
+  2138	    "conditions": "Said after the lead laid out the flow in this conversation (the job → the lead chooses the hands → the work → Sol → the fixes → the tests → a short report; plan talk warned to max, the build to high) and he had switched the session to high himself. 'Haydasın' is the dictation of 'high'dasın', 'DXP Team 2' of dxb-team2. Registered as his order, not a LAW B acceptance.",
+  2139	    "session": "Opus 5.5 session f7a2bf71 — heard first-hand, 2026-10-06.",
+  2140	    "where": ".claude/skills/dxb-team2/SKILL.md · .claude/hooks/dxb-effort-warn.py · .claude/settings.json · scripts/governance/refuter.sh · tests/governance/refuter-gate.test.ts · tests/hooks/effort-warn.test.ts · .claude/skills/dxb-verify/SKILL.md · HOLDING-OS-MASTER-PLAN/MODEL_ROUTING_SPEC.md · ~/.claude/agents/{refuter,helper,helper-writer,design-eye}.md, ~/.claude/CLAUDE.md, ~/.claude/hooks/dxb-statusline.js (outside the repo)"
+  2141	  },
+  2142	  "handover-at-the-clean-break-2026-10-06": {
+  2143	    "date": "2026-10-06",
+  2144	    "what": "ORDER, permanent in dxb-team2 §7: from 50 % context the lead hands over at the first clean break — the piece finished, the tree committed, no battery running, the report sent — even when that takes the session to 55-58 %; never in the middle of a piece. Past 55 % the context gate refuses the Agent tool, so the lead finishes only what its own hand can.",
+  2145	    "verbatim": "Her zaman en güzel yerde devret yani en rahat hiçbir sorun olmayacak yerde devret. İsterse o iş %55'e kadar uzarsa da uzasın. %58'e de uzarsa uzasın ama en clean yerde her zaman devretmek önemlidir. · bu kalıcı kural olabilir tabii ki. … DXP Team 2 e, sistemiyle de ilgili aynen o devir notunu benim söylediğim şey e, yazabilirsin.",
+  2146	    "conditions": "The first sentence at 53 % context, asking it into the handover note; the second answering the lead's one-line question whether it is for this session only or permanent in dxb-team2. Registered as his order, not a LAW B acceptance.",
+  2147	    "session": "Opus 5.5 session f7a2bf71 — heard first-hand, 2026-10-06.",
+  2148	    "where": ".claude/skills/dxb-team2/SKILL.md §7"
+  2149	  }
+  2150	}
+
+codex
+İlk bulgu: §7, verdiğiniz %58 örneğini yeni aşamalar için yaklaşık bir bitiş sınırına dönüştürüyor. Hook’ta böyle bir sınır yok; ayrıca Agent reddinin mesajı “finish nothing new” diyor. Kayıt ve işaret bağlantısını da doğrudan kontrol ediyorum.
+exec
+/bin/bash -lc 'cat .agents/skills/dxb-verify/SKILL.md' in /home/dxb/DxB Global OS
+ succeeded in 0ms:
+---
+name: dxb-verify
+description: Use before claiming any DXB work is finished, fixed, passing or done — the full check battery, what counts as green, and the two-tier reporting rule that separates verified from unverifiable.
+---
+
+# The battery — what "done" is allowed to mean
+
+**Evidence before done.** A completion claim cites the command that was actually run and its
+decisive output line, or the claim is forbidden. This is the CEO's oldest and hardest rule.
+
+**Two tiers, never mixed in one sentence:**
+
+- `✓ VERIFIED` — command → output
+- `⚠ UNVERIFIED` — with the reason it cannot be machine-checked
+
+Anything you cannot observe yourself — through a terminal or your own `operator` screenshot — such
+as how a voice sounds or a third-party service's state, is labelled
+`⚠ UNVERIFIED — requires human-eye confirmation` and listed separately. What you observed is
+reported as observed; it is not accepted until his eye (LAW B).
+
+**A prediction is not a result.** "This should work" is a hypothesis and is written as one. Only
+measured outcomes take the past tense.
+
+## Run these, in this order
+
+| Check | What it proves |
+|---|---|
+| `pnpm construction:battery` (vitest, both halves — the sandboxed and the host one; `BATTERY_GREEN`) — when code changed, once at the end of the job (`dxb-team2` §5); a text-only change is held by the rulers below and the commit hook | behaviour, against the construction site's own engine (`DxB_Build`, port 54422) |
+| `bash scripts/research-ruler.sh` | only when the research engine changed — the commit hook runs it by itself; `accept.sh` is the live half and is run before a claim that the engine works |
+| `bash scripts/persona-ruler.sh` | only when a persona under the ruler's contract changed — the writing and the doctrine of those seats, by the one metre the battery case (`tests/personas/persona-ruler.test.ts`) and the DB gate (`scripts/sync-personas-to-db.sh`) both run |
+| `pnpm typecheck` (`tsc --build`) | the interfaces still hold |
+| `pnpm verify:ledger` | the records still agree with the live company database |
+| `bash scripts/i18n-purity-check.sh` | both locales at parity, no leakage either way |
+| `gitleaks detect` | no secret entered history |
+| `bash scripts/b43/vitrin-register-gate.sh` | the product register the CEO opens — his vitrin and its catalogue (`~/tools/h3/studio`, outside git) — still tells the truth: every cast face names how it was born, no cancelled hand is advertised, no pointer into a folder he deleted, no acceptance claim without a registered ledger id, no media the page shows and the disk lacks, no hand-typed counter, and the page is served to him alone (loopback). Self-skips where there is no vitrin; run by the shared studio battery since W11 |
+| the design pass (door `dxb-surface`) | only when a CEO-visible surface changed |
+| resident restart | only when runtime code changed — see below |
+| **the audit law** (CEO, 2026-09-15: *"Tabii ki yazılsın, tabii ki."* <!-- CEO-OK: audit-law-checker-only-checks-2026-09-15 -->) | Every job is built by one hand and checked by another — in `dxb-team2` the blind Sol auditor (§4) — *"biri bir iş yaparken birisi kontrol edecek çünkü hata oluyor"*. **The checker only checks:** it measures, names the fault, and instructs what is to be done; the builder corrects it and reports "done"; the checker re-measures whether it was done and done right. The checker writes NO repo line — ruler scripts included: a ruler correction is an instruction to the builder, committed by the builder as its own `records(ruler): …` commit, never inside the build commit it measures. A checker that repairs what it then measures is not a checker. A checker's CONFIRMED is never an acceptance — only his own eye is (LAW B). |
+
+The tests a change needs follow its risk: a targeted test for a local change, an integration test at
+a boundary, a security check wherever authorisation, secrets or isolation move.
+
+| Artifact class | Its ruler (runnable, shared by builder and checker) | State today |
+|---|---|---|
+| Code | the battery: typecheck · vitest · i18n-purity-check · verify:ledger · gitleaks | exists, runs on every commit |
+| Persona files | `tests/personas/persona-ruler.test.ts` (`scripts/persona-ruler.sh`) | built in this commit |
+| Records (STATE, the board, ceo-approvals) | `scripts/governance/ledger-truth.mjs` + `tests/b43/records-truth.ts` (a record may not say his eye is awaited on what the ledger holds accepted; a new acceptance adds its row there or R4 is red) + records parity (`dxb-close-row`) | exists |
+| CEO-visible surfaces | eye test + Design Pass (RULE #0) — a human eye, not a script; reported ⚠ UNVERIFIED until his eye | exists, not a script |
+| Research engine (`.agents/skills/dxb-research`) | `bash scripts/research-ruler.sh` (11 rules) + `tests/b46/` (47 cases on the real scripts) + `bash .agents/skills/dxb-research/scripts/accept.sh` (a live run, judged from the files) | built 2026-09-17; the ruler runs on every commit that touches the engine |
+
+The table is his, holding-wide, on his word *"yaz"* of 2026-09-15 <!-- CEO-OK: ruler-table-holding-wide-2026-09-15 -->.
+
+Every commit runs its class's ruler automatically — no ruler green, no commit.
+
+A second session audits the CEO-visible and the risky work (personas, specs, money and identity
+paths, surfaces) on three things: the order against the diff (what was left out), the ruler output
+pasted into the evidence, and the blast radius measured.
+
+**Green on the parts you like is not green.**
+
+## Traps this project has already paid for
+
+- **Shipping runtime code is not shipping until the resident services are restarted** in the same
+  turn (`systemctl --user restart dxb-scheduler`; `dxb-jarvis` is stopped and disabled and is not
+  started <!-- CEO-OK: dxb-verify-battery-and-restart-lines-2026-10-03 -->), and that restart is part
+  of the evidence. A stale resident silently answered the CEO with pre-session code once.
+- **Live-database tests must be state-independent.** A case that books "today" passes until the
+  feature actually runs in production, then fails forever. Book a day the company will never live
+  through, or fixture your own row.
+- **A test that writes through a second connection escapes its own rolled-back transaction.** It
+  once tripped the real budget brake and left €105 of fake spend on the CEO's board.
+- **Piping a build into `head` kills it with SIGPIPE** and leaves a half-written build that a
+  design pass will happily photograph.
+- **A pipe swallows the verdict.** `check | tail -3 && commit` commits even when the check failed —
+  a pipeline's exit status is the LAST command's, and `tail` always succeeds. Measured on
+  2026-07-31: a record went in while its own gate was red. Run the check on its own line, read the
+  output, and only then act on it.
+- **A design pass that measured the login page reported PASS.** Assert the landed address and a
+  non-empty heading before you believe a screenshot.
+
+## The audit twin — when a second pair of eyes is required
+
+An independent agent is handed a **claim plus where to measure it** — never the author's
+conclusion — and told to **refute** it. It is read-only **by tool**, never by promise: a Claude
+agent limited to reading and searching, or the Codex refuter — launched **only** through
+`scripts/governance/refuter.sh` (gpt-6.1-sol; the lead chooses its effort with `--effort`, `high` when not given — dxb-team2 §4), which
+pins the read-only profile and refuses to run without it. Calling `codex` directly for an audit
+puts the promise back and takes the tool away: the base config runs unrestricted, measured
+2026-08-16. `refuter.sh --proof` re-prints the evidence that it cannot write. It may run
+measuring commands, never a writing command, and never a test suite (the suites write; the
+author runs them and hands over the whole raw output). It queries the construction engine
+itself through its one tool `sql_read` as the read-only role `sol_reader` (never the company's —
+refused by identity), so database evidence is gathered by the auditor's hand, not handed over. Record the audit-trail row counts before and after; a difference invalidates the audit.
+
+It fires once on **every construction job** that changes code, a rule or a door — a change to the
+records alone is held by the commit rulers — at the depth the lead chooses (dxb-team2 §4); the
+author never approves his
+own work (CEO 2026-09-28 <!-- CEO-OK: audit-twin-every-job-2026-09-28 -->; the procedure is
+`dxb-team2`). It also fires on the acceptance session, on a row whose closing evidence has a leg
+the machine cannot check, and on a defect the CEO caught — then it sweeps the **class**.
+
+**A finding is evidence, never a verdict.** The session author signs every ✓. A disputed finding
+is settled inside the team (`dxb-team2` §4 DISPUTE): a test decides; where no test can, the lead
+decides and records why; the lead has the last word. What no terminal can observe stays `⚠ UNVERIFIED`.
+
+Full text: `HOLDING-OS-MASTER-PLAN/00-CEO-DIRECTIVE-AUDIT-TWIN.md`.
+
+## The perfection gate — RULE #0-B
+
+A deliverable of the holding — a piece he will use, such as the dashboard's CRM section — is held
+to the standard of `AGENTS.md`: the Ferrari, a first-place candidate in a world
+competition. It ships when a world-class specialist would sign it, its structure matches the
+CEO's mental model rather than the implementer's convenience. Small work — a fix, a record, a one-line change — does not go through this gate
+(his word, 2026-09-24). <!-- CEO-OK: h6-perfection-gate-for-deliverables-2026-09-24 -->
+
+"It satisfies the spec row" is not a defence. The spec is the floor; this gate is the ceiling
+check. Full text: `HOLDING-OS-MASTER-PLAN/00-CEO-DIRECTIVE-PERFECTION-GATE.md`.
+
+## And then
+
+Green is the author's half. **It is not acceptance** — only the CEO's own eye accepts (LAW B in
+the always-on core). Say what was verified, what could not be, and what still waits for him.
+
+exec
+/bin/bash -lc "nl -ba /home/dxb/.claude/hooks/dxb-context-gate.py | sed -n '45,85p;145,175p'" in /home/dxb/DxB Global OS
+ succeeded in 0ms:
+    45	
+    46	# His numbers (CEO, 2026-09-26; 40 / 45 from 2026-09-21 until then).
+    47	# Change them here; nothing else holds them.
+    48	# Used context, in percent, from which every prompt carries the red handover line:
+    49	RED_LINE_PCT = 50
+    50	# Used context, in percent, from which the Agent / Task tool is refused:
+    51	AGENT_DENY_PCT = 55
+    52	
+    53	AGENT_TOOLS = {"Agent", "Task"}
+    54	# The session ids dxb-statusline.js writes a record for (its /^[0-9a-f-]{8,}$/i); no other id is read.
+    55	SESSION_ID = re.compile(r"[0-9a-f-]{8,}", re.IGNORECASE)
+    56	
+    57	LOG_DIR = os.environ.get("DXB_CONTEXT_GATE_LOG_DIR") or os.path.join(
+    58	    os.path.expanduser("~"), ".claude", "logs")
+    59	DECISION_LOG = os.path.join(LOG_DIR, "dxb-context-gate.jsonl")
+    60	ERROR_LOG = os.path.join(LOG_DIR, "dxb-context-gate.err")
+    61	# The same directory rule as dxb-statusline.js, which writes the record.
+    62	CTX_DIR = os.path.join(os.environ.get("XDG_RUNTIME_DIR") or "/tmp", "claude-ctx")
+    63	
+    64	
+    65	def red_line(used_pct):
+    66	    return (
+    67	        f"🔴 CONTEXT {used_pct}% — hand over at the first clean break (dxb-team2 §7): "
+    68	        "no battery running, tree committed, report sent; then the handover note and the successor "
+    69	        f"session through operator (dxb-team2 §7). At {AGENT_DENY_PCT} % the Agent tool is refused.")
+    70	
+    71	
+    72	def deny_reason(used_pct, tool):
+    73	    return (
+    74	        f"🔴 CONTEXT {used_pct}% ≥ {AGENT_DENY_PCT} % — the {tool} tool is refused until a handover "
+    75	        "(dxb-team2 §7): finish nothing new; commit what stands, write the handover note, "
+    76	        "open the successor session through operator (dxb-team2 §7). The new session starts with its "
+    77	        "own record.")
+    78	
+    79	
+    80	def now_iso():
+    81	    return datetime.datetime.now(datetime.timezone.utc).isoformat(timespec="seconds")
+    82	
+    83	
+    84	def append(path, text):
+    85	    os.makedirs(os.path.dirname(path), exist_ok=True)
+   145	    if not isinstance(session_id, str) or not SESSION_ID.fullmatch(session_id):
+   146	        return
+   147	    found = read_record(session_id)
+   148	    if found is None:
+   149	        return
+   150	    used_pct, record_age_s = found
+   151	    event = data.get("hook_event_name")
+   152	    tool = data.get("tool_name")
+   153	    if event == "UserPromptSubmit" and used_pct >= RED_LINE_PCT:
+   154	        emit(event, additionalContext=red_line(used_pct))
+   155	        log_decision(data, None, used_pct, record_age_s, "red-line")
+   156	    elif event == "PreToolUse" and tool in AGENT_TOOLS and used_pct >= AGENT_DENY_PCT:
+   157	        emit(event, permissionDecision="deny", permissionDecisionReason=deny_reason(used_pct, tool))
+   158	        log_decision(data, tool, used_pct, record_age_s, "deny")
+   159	
+   160	
+   161	if __name__ == "__main__":
+   162	    try:
+   163	        main()
+   164	    except Exception:
+   165	        log_error()
+   166	    # Flush here, not at shutdown: there a reader that has gone means exit 120 and a line on stderr.
+   167	    try:
+   168	        if sys.stdout is not None:  # None when the session started the hook with stdout closed
+   169	            sys.stdout.flush()
+   170	    except OSError:
+   171	        pass
+   172	    os._exit(0)
+
+exec
+/bin/bash -lc "git show db391cb6:.claude/CLAUDE.md | nl -ba | sed -n '83,145p'" in /home/dxb/DxB Global OS
+ succeeded in 0ms:
+    83	3. The spec that owns the contract — `HOLDING-OS-MASTER-PLAN/`
+    84	4. The open work board
+    85	5. `.planning/STATE.md` — the current state photo
+    86	6. Code, tests and schemas — evidence of what **is**, never of what **should be**
+    87	7. Anything older, any summary, any memory
+    88	
+    89	**Never silently choose between conflicting sources.** Name the conflict, apply this order,
+    90	say what you did.
+    91	
+    92	His live sentence beats every written rule beneath it. A written rule that pulls outside what he asked
+    93	for is not obeyed — it is reported to him in one line, and he decides.
+    94	
+    95	**LAW A — a live CEO order DELETES what contradicts it** (CEO, 2026-07-30). Not a footnote
+    96	beside it, not "superseded but retained". The contradicting text goes, and the report says
+    97	what went. Keeping both is how a record starts lying.
+    98	
+    99	**LAW B — finished ≠ approved** (CEO, 2026-07-30): *"iş tamamlanınca bitti anlamına gelmez,
+   100	ben bakmam lazım."* A green battery means the AUTHOR's work is done. Only the CEO's own eye
+   101	makes something **accepted**. No record may say approved / accepted / onaylandı / kabul
+   102	edildi without an entry in `scripts/governance/ceo-approvals.json` carrying his words and
+   103	the date. The battery fails on an unregistered approval claim.
+   104	
+   105	## 2. The boundaries that never bend
+   106	
+   107	- **The approval gate.** Money OUT, contracts, ad spend, identity steps and the subjects he
+   108	  marks stop at the CEO. Money IN and routine outward communication do not.
+   109	- **Ask before any project work.** Nothing in the project starts until he has said so in this
+   110	  conversation (CEO 2026-10-01).
+   111	- **Do not state as fact what you did not check.** Owner: `00-CEO-DIRECTIVE-MEASURE-NEVER-GUESS.md`.
+   112	- **Evidence before done.** A completion claim cites the command and its decisive output. Anything a terminal cannot observe is labelled `⚠ UNVERIFIED — requires
+   113	  human-eye confirmation` and listed apart. Door: `dxb-verify`.
+   114	- **A fix must not break what stands around it; the tests show it.** Door: `dxb-verify`.
+   115	- **Islamic boundaries are constitutional.** CEO-only. Code may refuse its own work against
+   116	  them; code may never widen or narrow them.
+   117	- **Code: the session writes it; inside `dxb-team2` a fork, a `helper-writer` and the `builder`
+   118	  seat write too, every piece verified by the lead before it is committed**
+   119	  <!-- CEO-OK: helpers-write-code-under-lead-verification-2026-10-03 -->. Other subagents audit,
+   120	  refute and sweep; they never write — and a
+   121	  CHECKER session is bound the same way: it measures, instructs and re-measures, it never writes,
+   122	  ruler scripts included (the audit law, CEO 2026-09-15
+   123	  <!-- CEO-OK: audit-law-checker-only-checks-2026-09-15 -->; door: `dxb-verify`).
+   124	- **The plan exists once.** No new spec, no new plan file. A deviation is a registered
+   125	  adaptation inside the spec that already owns the contract.
+   126	- **What the CEO drops is not written down.** A discussion that ends in *"forget it"* leaves no
+   127	  file, no row, no note — **silence is the record.** Only real, ordered, unfinished work is written
+   128	  anywhere. The reflex to keep a dropped idea "just in case" is what grew the always-on layer to 27
+   129	  pages, and he should never have to be the one who catches it.
+   130	- **Nothing becomes a law unless he says "make it a law".** His order, 2026-08-13: *"ben bir şey kanun olsun demeden onu asla kanun yapma bunu yasaklıyorum… ben bir
+   131	  kuralı sadece belirli bir session için söylüorm."* **A rule he states is for THAT session only**
+   132	  — obey it fully while it runs, and let it die with the session. Writing it into a law file, a
+   133	  banner, a skill or a standing order needs his explicit word. He
+   134	  authorised this one sentence, and only this one, to be written as a rule. When a session thinks a
+   135	  remark deserves to be permanent, it **asks him** in one line; his answer decides. Measured the day
+   136	  he gave it: his passing *"write it short"* had been promoted into the rival ledger's permanent
+   137	  banner beside his registered orders, and he caught it.
+   138	- **Secrets** never enter the repo, a prompt, or any printed output.
+   139	
+   140	## 3. Language
+   141	
+   142	Artifacts in English — specs, code, comments, migrations, commit messages, evidence.
+   143	Conversation with the CEO in Turkish: the answer first, plain, short. Every CEO-visible surface is 100 % one locale, both
+   144	locales at parity. Owner: `00-CEO-DIRECTIVE-LANGUAGE.md`.
+   145	
+
+exec
+/bin/bash -lc "git show db391cb6:scripts/governance/ceo-approvals.json | nl -ba | sed -n '2138,2153p'" in /home/dxb/DxB Global OS
+ succeeded in 0ms:
+  2138	    "conditions": "Said after the lead laid out the flow in this conversation (the job → the lead chooses the hands → the work → Sol → the fixes → the tests → a short report; plan talk warned to max, the build to high) and he had switched the session to high himself. 'Haydasın' is the dictation of 'high'dasın', 'DXP Team 2' of dxb-team2. Registered as his order, not a LAW B acceptance.",
+  2139	    "session": "Opus 5.5 session f7a2bf71 — heard first-hand, 2026-10-06.",
+  2140	    "where": ".claude/skills/dxb-team2/SKILL.md · .claude/hooks/dxb-effort-warn.py · .claude/settings.json · scripts/governance/refuter.sh · tests/governance/refuter-gate.test.ts · tests/hooks/effort-warn.test.ts · .claude/skills/dxb-verify/SKILL.md · HOLDING-OS-MASTER-PLAN/MODEL_ROUTING_SPEC.md · ~/.claude/agents/{refuter,helper,helper-writer,design-eye}.md, ~/.claude/CLAUDE.md, ~/.claude/hooks/dxb-statusline.js (outside the repo)"
+  2141	  },
+  2142	  "handover-at-the-clean-break-2026-10-06": {
+  2143	    "date": "2026-10-06",
+  2144	    "what": "ORDER, permanent in dxb-team2 §7: from 50 % context the lead hands over at the first clean break — the piece finished, the tree committed, no battery running, the report sent — even when that takes the session to 55-58 %; never in the middle of a piece. Past 55 % the context gate refuses the Agent tool, so the lead finishes only what its own hand can.",
+  2145	    "verbatim": "Her zaman en güzel yerde devret yani en rahat hiçbir sorun olmayacak yerde devret. İsterse o iş %55'e kadar uzarsa da uzasın. %58'e de uzarsa uzasın ama en clean yerde her zaman devretmek önemlidir. · bu kalıcı kural olabilir tabii ki. … DXP Team 2 e, sistemiyle de ilgili aynen o devir notunu benim söylediğim şey e, yazabilirsin.",
+  2146	    "conditions": "The first sentence at 53 % context, asking it into the handover note; the second answering the lead's one-line question whether it is for this session only or permanent in dxb-team2. Registered as his order, not a LAW B acceptance.",
+  2147	    "session": "Opus 5.5 session f7a2bf71 — heard first-hand, 2026-10-06.",
+  2148	    "where": ".claude/skills/dxb-team2/SKILL.md §7"
+  2149	  }
+  2150	}
+
+exec
+/bin/bash -lc "rg -n 'CEO-OK|ceo-approvals|verbatim' scripts/records-ruler* scripts/governance/rules.json; git status --short" in /home/dxb/DxB Global OS
+ succeeded in 0ms:
+rg: scripts/records-ruler*: No such file or directory (os error 2)
+?? .planning/quick/20261006-handover-clean-break/
+
+codex
+Kanıt standardı için [dxb-verify](/home/dxb/DxB%20Global%20OS/.agents/skills/dxb-verify/SKILL.md) kapısını uyguluyorum. Bu salt okunur denetimde dosya veya STATE değişikliği yapmadan, hook’un eşik dallarını bellekte sınayacağım.
+exec
+/bin/bash -lc "python3 -B - <<'PY'
+import ast, contextlib, io, json, pathlib, subprocess
+hook=pathlib.Path('/home/dxb/.claude/hooks/dxb-context-gate.py')
+ns={'__name__':'audit_in_memory'}
+exec(compile(ast.parse(hook.read_text()),str(hook),'exec'),ns)
+ns['log_decision']=lambda *a: None
+for pct in (49.9,50,54.9,55,58,59):
+ for event,tool in [('UserPromptSubmit',None),('PreToolUse','Agent'),('PreToolUse','Task'),('PreToolUse','Bash')]:
+  ns['read_record']=lambda sid,pct=pct:(pct,0)
+  data={'session_id':'abcdef12','hook_event_name':event,'tool_name':tool}
+  ns['sys'].stdin=io.TextIOWrapper(io.BytesIO(json.dumps(data).encode()))
+  output=io.StringIO()
+  with contextlib.redirect_stdout(output): ns['main']()
+  raw=output.getvalue()
+  decision=json.loads(raw)['hookSpecificOutput'] if raw else {}
+  print(f'{pct}% {event}/{tool}: '+(decision.get('permissionDecision') or ('red-line' if decision else 'silent')))
+print('DENIAL_MESSAGE:',ns['deny_reason'](55,'Agent'))
+def show(path): return subprocess.check_output(['git','show','db391cb6:'+path],text=True)
+raw=show('scripts/governance/ceo-approvals.json')
+pairs=json.loads(raw,object_pairs_hook=lambda pairs:pairs)
+key='handover-at-the-clean-break-2026-10-06'
+entries=[value for name,value in pairs if name==key]
+print('LEDGER_JSON_VALID; KEY_OCCURRENCES='+str(len(entries)))
+entry=dict(entries[0])
+print('LEDGER_REQUIRED_FIELDS_PRESENT='+str(all(entry.get(k) for k in ('date','what','verbatim','conditions','session','where'))))
+for p in ['.claude/skills/dxb-team2/SKILL.md','.agents/skills/dxb-team2/SKILL.md']:
+ body=show(p)
+ marker='<"'!-- CEO-OK: '"'+key+' -->'
+ print(p+': MARKER_COUNT='+str(body.count(marker))+'; RESOLVES='+str(len(entries)==1))
+a=show('.claude/skills/dxb-team2/SKILL.md'); b=show('.agents/skills/dxb-team2/SKILL.md')
+print('MIRROR_SECTION_7_IDENTICAL='+str(a.split('## 7.')[1]==b.split('## 7.')[1]))
+PY" in /home/dxb/DxB Global OS
+ succeeded in 0ms:
+49.9% UserPromptSubmit/None: silent
+49.9% PreToolUse/Agent: silent
+49.9% PreToolUse/Task: silent
+49.9% PreToolUse/Bash: silent
+50% UserPromptSubmit/None: red-line
+50% PreToolUse/Agent: silent
+50% PreToolUse/Task: silent
+50% PreToolUse/Bash: silent
+54.9% UserPromptSubmit/None: red-line
+54.9% PreToolUse/Agent: silent
+54.9% PreToolUse/Task: silent
+54.9% PreToolUse/Bash: silent
+55% UserPromptSubmit/None: red-line
+55% PreToolUse/Agent: deny
+55% PreToolUse/Task: deny
+55% PreToolUse/Bash: silent
+58% UserPromptSubmit/None: red-line
+58% PreToolUse/Agent: deny
+58% PreToolUse/Task: deny
+58% PreToolUse/Bash: silent
+59% UserPromptSubmit/None: red-line
+59% PreToolUse/Agent: deny
+59% PreToolUse/Task: deny
+59% PreToolUse/Bash: silent
+DENIAL_MESSAGE: 🔴 CONTEXT 55% ≥ 55 % — the Agent tool is refused until a handover (dxb-team2 §7): finish nothing new; commit what stands, write the handover note, open the successor session through operator (dxb-team2 §7). The new session starts with its own record.
+LEDGER_JSON_VALID; KEY_OCCURRENCES=1
+LEDGER_REQUIRED_FIELDS_PRESENT=True
+.claude/skills/dxb-team2/SKILL.md: MARKER_COUNT=1; RESOLVES=True
+.agents/skills/dxb-team2/SKILL.md: MARKER_COUNT=1; RESOLVES=True
+MIRROR_SECTION_7_IDENTICAL=True
+
+codex
+**Sonuç: 2 B bulgusu.** İncelenen sürüm: `db391cb6`; karşılaştırma: `a33c7831..db391cb6`. Dosya değiştirilmedi.
+
+**1. Claim:** Yeni §7, CEO’nun sözünü söylüyor ve fazlasını eklemiyor.  
+**Verdict:** **REFUTED — B**  
+**Finding:** `.claude/skills/dxb-team2/SKILL.md:172–173` ve aynı satırlardaki `.agents` aynası, “starts no new phase it cannot finish by about 58 %” sınırını ekliyor. CEO %55 ve %58’i temiz noktaya ulaşmak için uzama örnekleri olarak verdi; yaklaşık %58’de bitirme şartı koymadı. Örneğin güvenli bitişi %59’da olan bir aşama, bu ek cümle yüzünden engellenebilir.  
+**Evidence:** `git diff a33c7831..db391cb6`; verilen CEO sözlerinde böyle bir üst sınır bulunmuyor.  
+**Correction required:** Yaklaşık %58’de bitirme şartını iki kopyadan kaldırın. Mevcut %50 başlangıcı ve temiz devir koşulları korunabilir.
+
+**2. Claim:** Paragraf gerçek hook davranışı, core ve kapının diğer hükümleriyle çelişmiyor.  
+**Verdict:** **REFUTED — B**  
+**Finding:** §7:172–173, %55 sonrasında %58 civarında bitebilen yeni bir aşamaya açık kapı bırakıyor. `/home/dxb/.claude/hooks/dxb-context-gate.py:75` ise Agent reddinde **“finish nothing new; commit what stands”** diyor. %56’da yeni bir aşamaya başlayan lead iki farklı talimat alır. Ek %58 şartı ayrıca core `.claude/CLAUDE.md:130–135`’teki kalıcı kural için açık yetki şartını aşar.  
+**Evidence:** Hook’un `main()` dalları yazma ve log işlemleri devre dışı bırakılarak bellekte sınandı: %50’de uyarı; %55, %58 ve %59’da Agent/Task reddi; Bash için ret yok. Hook’ta %58 eşiği bulunmuyor. Temiz nokta tanımı ve %55 Agent reddi doğru aktarılmış; kapının kalanında ayrı bir çelişki saptanmadı.  
+**Correction required:** Yeni aşama başlatma iznini kaldırın; cümleyi mevcut parçayı lead’in kendi araçlarıyla tamamlayabilmesiyle sınırlayın.
+
+**3. Claim:** Ledger kaydı geçerli ve marker çözülüyor.  
+**Verdict:** **STANDS AFTER ATTEMPTED REFUTATION**  
+**Finding:** `scripts/governance/ceo-approvals.json:2142–2148` tarih, sözler, kalıcılık izni, oturum ve hedefi içeriyor; emri LAW B kabulünden ayırıyor. §7:171’deki marker iki kopyada da aynı tekil anahtara çözülüyor.  
+**Evidence:** Salt okunur JSON kontrolü: `LEDGER_JSON_VALID`, `KEY_OCCURRENCES=1`, gerekli alanlar mevcut; iki marker için `RESOLVES=True`; §7 aynaları aynı.  
+**Correction required:** Yok. Bu sonuç verilen sözler ve kayıt yapısıyla sınırlı; ledger’daki ilave konuşma ayrıntıları özgün transcript üzerinden doğrulanmadı.
+
+**A:** yok. **B:** yukarıdaki iki bulgu. **C:** yok.
+tokens used
+42,980
+EXIT=0

@@ -1,6 +1,6 @@
 // THE CONTEXT GATE under vitest — the real hook and the real status line, run where they stand.
 // The CEO's numbers of 2026-09-26 ("tmm önerini yapalım"; 40 / 45 from 2026-09-21 until then): at
-// 50 % of its context a session hands over at the first clean break, and at 55 % it opens no more
+// 50 % of its context a session hands over at the first clean break, and at 60 % it opens no more
 // subagents; on his word of 2026-09-26 ("tmm önerini uygula.") a hook holds them. The hook lives
 // outside the repository, in ~/.claude/hooks, and is spawned there with sample stdin: never a copy
 // of its logic. Every case gets its own temporary directory
@@ -139,31 +139,31 @@ describe("under 50 % the gate is silent; from 50 % every prompt carries the red 
     expect(Object.keys(lines[0]).sort()).toEqual(
       ["agent_type", "decision", "event", "record_age_s", "session_id", "tool", "ts", "used_pct"]);
   });
-  it("at 54: the red line on a prompt, Agent and Task still allowed", () => {
+  it("at 59: the red line on a prompt, Agent and Task still allowed", () => {
     const dir = box();
-    record(dir, SID, 54);
-    expectRedLine(gate(dir, prompt(SID)), 54);
+    record(dir, SID, 59);
+    expectRedLine(gate(dir, prompt(SID)), 59);
     expect(gate(dir, pre(SID, "Agent", SPAWN))).toBe("");
     expect(gate(dir, pre(SID, "Task", SPAWN))).toBe("");
     expect(logged(dir).map((l) => l.decision)).toEqual(["red-line"]);
   });
 });
 
-describe("from 55 % the Agent / Task tool is refused until a handover", () => {
-  it("at 55: Agent and Task denied, the prompt still carries the red line, and all three logged", () => {
+describe("from 60 % the Agent / Task tool is refused until a handover", () => {
+  it("at 60: Agent and Task denied, the prompt still carries the red line, and all three logged", () => {
     const dir = box();
-    record(dir, SID, 55);
-    expectDeny(gate(dir, pre(SID, "Agent", SPAWN)), 55);
-    expectDeny(gate(dir, pre(SID, "Task", SPAWN)), 55);
-    expectRedLine(gate(dir, prompt(SID)), 55);
+    record(dir, SID, 60);
+    expectDeny(gate(dir, pre(SID, "Agent", SPAWN)), 60);
+    expectDeny(gate(dir, pre(SID, "Task", SPAWN)), 60);
+    expectRedLine(gate(dir, prompt(SID)), 60);
     expect(logged(dir).map((l) => [l.decision, l.tool, l.used_pct])).toEqual([
-      ["deny", "Agent", 55], ["deny", "Task", 55], ["red-line", null, 55],
+      ["deny", "Agent", 60], ["deny", "Task", 60], ["red-line", null, 60],
     ]);
   });
-  it("at 56 denies a subagent's Agent call and logs its agent_type", () => {
+  it("at 61 denies a subagent's Agent call and logs its agent_type", () => {
     const dir = box();
-    record(dir, SID, 56);
-    expectDeny(gate(dir, pre(SID, "Agent", SPAWN, "builder", "a1")), 56);
+    record(dir, SID, 61);
+    expectDeny(gate(dir, pre(SID, "Agent", SPAWN, "builder", "a1")), 61);
     expect(logged(dir).map((l) => [l.decision, l.agent_type])).toEqual([["deny", "builder"]]);
   });
   it("at 90 never touches another tool: Write, Edit, Bash and Read pass and nothing is logged", () => {
@@ -179,10 +179,10 @@ describe("from 55 % the Agent / Task tool is refused until a handover", () => {
     }
     expect(existsSync(LOG(dir))).toBe(false);
   });
-  it("keeps obliging on an old record: 56 written two hours ago still denies, and the log carries its age", () => {
+  it("keeps obliging on an old record: 61 written two hours ago still denies, and the log carries its age", () => {
     const dir = box();
-    record(dir, SID, 56, 2 * HOUR);
-    expectDeny(gate(dir, pre(SID, "Agent", SPAWN)), 56);
+    record(dir, SID, 61, 2 * HOUR);
+    expectDeny(gate(dir, pre(SID, "Agent", SPAWN)), 61);
     expect(logged(dir)[0].record_age_s).toBeGreaterThanOrEqual(7000);
   });
 });
@@ -219,9 +219,9 @@ describe("the gate never breaks a session: what it cannot read is silent, not a 
     expect(existsSync(LOG(dir))).toBe(false);
     expect(existsSync(ERR(dir))).toBe(false);
   });
-  it("exits 0 with nothing on stderr when the reader of its answer is gone: a deny at 56 into a closed pipe", () => {
+  it("exits 0 with nothing on stderr when the reader of its answer is gone: a deny at 61 into a closed pipe", () => {
     const dir = box();
-    record(dir, SID, 56);
+    record(dir, SID, 61);
     // python3 gets its stdin 0.3 s late, so `true` has closed the pipe before the answer is written;
     // the status is python3's own (PIPESTATUS), not the pipeline's
     const r = spawnSync("bash", ["-c", '{ sleep 0.3; cat; } | python3 "$1" | true; exit "${PIPESTATUS[1]}"', "bash", GATE], {
@@ -266,10 +266,10 @@ describe("his numbers stand in one place, and the gate is wired", () => {
   type Entry = { matcher?: string; hooks: { type: string; command: string }[] };
   const runsGate = (e: Entry) => e.hooks.some((h) => h.command.endsWith("dxb-context-gate.py"));
 
-  it("holds 50 and 55 as RED_LINE_PCT and AGENT_DENY_PCT", () => {
+  it("holds 50 and 60 as RED_LINE_PCT and AGENT_DENY_PCT", () => {
     const source = readFileSync(GATE, "utf8");
     expect(source).toMatch(/^RED_LINE_PCT = 50$/m);
-    expect(source).toMatch(/^AGENT_DENY_PCT = 55$/m);
+    expect(source).toMatch(/^AGENT_DENY_PCT = 60$/m);
   });
   it("is wired in ~/.claude/settings.json on every prompt and on PreToolUse for Agent|Task", () => {
     const hooks = JSON.parse(readFileSync(SETTINGS, "utf8")).hooks as Record<string, Entry[]>;
