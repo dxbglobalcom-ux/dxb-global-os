@@ -1,0 +1,4 @@
+# The graph's own outputs are not part of the corpus: indexed, the previous report fed 1,247 nodes back
+# into the next build, so a door rewritten long ago still showed in the report (measured 2026-10-06).
+.planning/graphs/
+graphify-out/
