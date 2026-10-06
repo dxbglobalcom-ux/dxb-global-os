@@ -25,10 +25,10 @@ measured outcomes take the past tense.
 
 | Check | What it proves |
 |---|---|
-| `pnpm construction:battery` (vitest, both halves — the sandboxed and the host one; `BATTERY_GREEN`) — when code changed, once at the end of the job (`dxb-team2` §5); a text-only change is held by the rulers below and the commit hook | behaviour, against the construction site's own engine (`DxB_Build`, port 54422) |
+| `pnpm typecheck` (`tsc --build`, then `tsconfig.tests.json`) | the interfaces still hold |
+| `pnpm construction:battery` (vitest, both halves — the sandboxed and the host one; `BATTERY_GREEN`) — when code changed, before the audit, and again after a fix that changed code (`dxb-team2` §5); a text-only change is held by the rulers below and the commit hook | behaviour, against the construction site's own engine (`DxB_Build`, port 54422) |
 | `bash scripts/research-ruler.sh` | only when the research engine changed — the commit hook runs it by itself; `accept.sh` is the live half and is run before a claim that the engine works |
 | `bash scripts/persona-ruler.sh` | only when a persona under the ruler's contract changed — the writing and the doctrine of those seats, by the one metre the battery case (`tests/personas/persona-ruler.test.ts`) and the DB gate (`scripts/sync-personas-to-db.sh`) both run |
-| `pnpm typecheck` (`tsc --build`) | the interfaces still hold |
 | `pnpm verify:ledger` | the records still agree with the live company database |
 | `bash scripts/i18n-purity-check.sh` | both locales at parity, no leakage either way |
 | `gitleaks detect` | no secret entered history |
