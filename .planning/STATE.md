@@ -39,6 +39,8 @@ lines match the company and `sync-personas-to-db.sh --verify` now watches them; 
 Then, on his order: `tests/` and `db/seed/` under the typecheck (`tsconfig.tests.json`, run by
 `pnpm typecheck`; 37 errors fixed; Sol's one B fixed; battery GREEN); the knowledge graph rebuilt and no
 longer indexing its own outputs; Sol's raw dumps and briefs out of git, on disk.
+After an overall look at the door, on his word: the battery runs before Sol; dxb-verify names the
+fallback refuter's exception; the debugger agent hands fixes to the right seat (Sol: 1 B, fixed).
 ⚠ UNVERIFIED: the warning reaching a real reply — the first plan talk shows it on his screen.
 Still waiting for his eye from 2026-10-04 (STATE-ARCHIVE, § 2026-10-06): B51 move 5's persona text and code
 bundle 2; the auto-memory fixes; the outside review's item 4.
@@ -54,9 +56,6 @@ Tool loading is B41's leg of 2026-10-04, built when its turn comes.
 
 - The board rows that wait on him for a decision, money, an eye or an identity step — the board
   page's "Sizi bekleyenler" lists them.
-- Found in the overall look at dxb-team2 (his word decides): dxb-verify demands a read-only-by-tool second
-  eye while the door accepts the fallback refuter read-only by word; `~/.claude/agents/debugger.md` still
-  hands fixes to the builder; the battery runs after Sol, so Sol never sees it.
 - His open question (2026-10-06), to be answered when he asks for it: Sol's raw dumps and briefs, now on disk
   only (`.planning/quick/**/*.raw`, `*brief*.txt`) — keep them, or delete them past a point (e.g. monthly) so
   they are no load?
