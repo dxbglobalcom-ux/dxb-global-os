@@ -95,16 +95,19 @@ and before done" advice does not apply here) nor the Fable-based `design-eye`.
 
 | Arrangement | Who writes | When |
 |---|---|---|
-| **Lead** | the lead itself | pieces so coupled that splitting them costs more than it saves, or work that needs this conversation and is too small for a fork |
+| **Lead** | the lead itself | work that needs a decision, a design or judgement and is too small for a fork; pieces so coupled that splitting them costs more than it saves |
 | **Fork** | the fork | one large piece that needs the whole conversation, while the lead stays free to verify |
-| **Team** | one `helper-writer`, or several in parallel; `helper`s read and research beside them | any job or piece specifiable in a paragraph — a small one included |
+| **Team** | one `helper-writer`, or several in parallel; `helper`s read and research beside them | self-contained, mechanical pieces (below) — a small job included |
 | **Hybrid** | the fork writes the core; `helper-writer`s the side pieces; `helper`s read | a large core with independent pieces around it |
 
-- **Medium first** <!-- CEO-OK: simple-work-goes-to-a-medium-writer-2026-10-06 -->: a job or a piece
-  that can be specified in a paragraph goes to a medium `helper-writer`, however small — it starts at
-  about 20 k tokens, where every turn of the lead re-reads its whole context. The lead writes, at `high`,
-  only what the Lead or Fork rows above name; it still specifies, verifies, tests, runs the battery and
-  commits.
+- **Medium first** <!-- CEO-OK: simple-work-goes-to-a-medium-writer-2026-10-06 -->: a SELF-CONTAINED,
+  MECHANICAL piece goes to a medium `helper-writer`, however small — the lead can write down completely
+  which files it touches, what it does and the test that proves it, and it asks no decision, design or
+  judgement of the writer (the 90-day sweep of 2026-10-06 was one). A medium writer starts at about 20 k
+  tokens, where every turn of the lead re-reads its whole context. Work that needs a decision, a design
+  or judgement, touches many tightly coupled files, or needs this conversation stays with the lead or a
+  fork at `high`. A large job is first split: its mechanical pieces go to medium, its core stays with
+  the lead or the fork. Whoever writes, the lead specifies, verifies, tests, runs the battery and commits.
 - Parallel writers never touch the same file, and run their tests with `DXB_ENGINE_LOCK_WAIT=200`: one
   run at a time holds the construction engine, and with it a second one queues instead of being refused
   — inside the 4-minute rule (§7), so the lead starts no battery while writers are testing.
