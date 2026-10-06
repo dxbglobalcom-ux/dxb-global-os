@@ -27,12 +27,15 @@ not here. What is accepted is read from `scripts/governance/ceo-approvals.json`,
 
 ## Where we left off
 
-2026-10-06, session f7a2bf71 — dxb-team2 gone over with him and rewritten lean (finished, not accepted — LAW B)
-<!-- CEO-OK: dxb-team2-lean-2026-10-06 -->: no score card, done-list or Fable; the lead chooses the hands
-(itself, a fork, medium helpers, hybrid); one Sol pass; the battery once when code changed; effort warnings —
-max at plan, high at the build — through `.claude/hooks/dxb-effort-warn.py`. The old design-at-max machinery
-removed first <!-- CEO-OK: effort-machinery-removed-2026-10-06 -->. Job folders
-`.planning/quick/20261006-effort-machinery-removal/` and `.planning/quick/20261006-dxb-team2-lean/`.
+2026-10-06, session f0af511e — Fable's review of the lean dxb-team2 door fixed, every finding, and the three
+older findings with it (finished, not accepted — LAW B). The effort warning now starts by itself (plan
+permission mode; his words naming a plan, design or architecture; a session not at high before code), reads
+a /effort switch from its transcript row, and goes with the plan's question; the gates run in the battery's
+host half; parallel writers queue for the engine; the manifest keeps a `__proto__` key; 211 dossier status
+lines match the company and `sync-personas-to-db.sh --verify` now watches them; the status line survives a
+`null` payload. One Sol pass, its 3 A and 2 B fixed; battery GREEN. Job folder
+`.planning/quick/20261006-fable-review-fixes/`. The lean door itself (session f7a2bf71) also waits for his eye
+<!-- CEO-OK: dxb-team2-lean-2026-10-06 -->.
 ⚠ UNVERIFIED: the warning reaching a real reply — the first plan talk shows it on his screen.
 Still waiting for his eye from 2026-10-04 (STATE-ARCHIVE, § 2026-10-06): B51 move 5's persona text and code
 bundle 2; the auto-memory fixes; the outside review's item 4.
@@ -48,9 +51,9 @@ Tool loading is B41's leg of 2026-10-04, built when its turn comes.
 
 - The board rows that wait on him for a decision, money, an eye or an identity step — the board
   page's "Sizi bekleyenler" lists them.
-- Found in the locked-tool job (his word decides): (1) the manifest serializer drops a `__proto__` schema
-  key (Sol's C, older) — fix it; (2) 84 dossiers say dormant/draft against an all-active DB — regenerate them.
-- Found today, older than the work (his word decides): the status bar draws nothing for a `null` payload.
+- Found in the review job (his word decides): `tests/` and `db/seed/` are outside every typecheck — opened
+  once, 127 type errors in 52 files; Sol's raw dumps and briefs (his words) are committed in job folders;
+  `.planning/graphs/GRAPH_REPORT.md` (2026-10-04) still describes the old door.
 
 ## Where things live
 
