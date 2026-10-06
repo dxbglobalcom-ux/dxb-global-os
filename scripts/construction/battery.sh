@@ -28,7 +28,14 @@ cd "$REPO"
 # as before and says so, because a missing lock must not stop the work.)
 if command -v flock >/dev/null 2>&1; then
   exec 200>"${TMPDIR:-/tmp}/dxb-construction-battery.lock"
-  if ! flock -n 200; then
+  # DXB_ENGINE_LOCK_WAIT=<seconds> (dxb-team2 §5, 2026-10-06): a battery started
+  # beside a writer's run queues for the engine instead of colliding with it. A
+  # positive integer only; anything else is today's immediate refusal.
+  WAIT="${DXB_ENGINE_LOCK_WAIT:-}"
+  [[ "$WAIT" =~ ^[1-9][0-9]*$ ]] || WAIT=""
+  if ! flock -n 200 && { [ -z "$WAIT" ] || {
+        echo "waiting up to $WAIT s for the construction engine…" >&2
+        ! flock -w "$WAIT" 200; }; }; then
     echo "REFUSED: another construction battery is already running against this engine."
     echo "         Two runs on one bench measure each other, not the code. Wait for it,"
     echo "         or point this one elsewhere with DXB_CONSTRUCTION_URL."
@@ -78,6 +85,12 @@ HOST_FILES=(
   # dxb-team2 job 1 (2026-09-28): the auditor's read-only hand. Its credential is
   # ~/.config/dxb/sol-reader.env, outside the repository and outside the wall.
   tests/governance/sol-db-reach.test.ts
+  # dxb-team2 (2026-10-06, Fable's review B5): the gates the door stands on live in the CEO's home
+  # (~/.claude/hooks — the context gate, the cost gate, the status line), which the sandboxed user
+  # cannot read; inside the wall these three files skipped 33 cases, so BATTERY_GREEN proved none of them.
+  tests/hooks/context-gate.test.ts
+  tests/hooks/cost-gate.test.ts
+  tests/hooks/effort-warn.test.ts
 )
 
 # ── THE BENCH'S OWN RULER (CEO 2026-09-21: "tezgah kendini temizlesin her zaman

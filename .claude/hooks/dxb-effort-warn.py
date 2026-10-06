@@ -2,22 +2,30 @@
 """DXB effort warning (UserPromptSubmit / `plan` / `build` / `off`): the CEO is told which /effort to switch to.
 
 The CEO's order of 2026-10-06: he opens a session at effort high and switches it himself with /effort;
-the session only warns him. While the talk is plan, design or architecture, every reply begins with a
-warning to switch to max, until he has; once the plan is approved and the build starts, every reply
-begins with a warning to switch to high, until he has. The lead decides when each begins:
+the session only warns him. Plan, design and architecture run at max; the build at high. Fable's review of
+the same day made the warning start by itself and arrive in time:
 
   * `dxb-effort-warn.py plan|build|off`, run by the lead from Bash: sets (or, for `off`, removes) the
     mode of the session named by CLAUDE_CODE_SESSION_ID -- a file
     $XDG_RUNTIME_DIR/dxb-effort/<session_id> (/tmp/dxb-effort/ without XDG_RUNTIME_DIR) holding
-    `plan` or `build`.
-  * UserPromptSubmit: while the session has a mode and its live level does not match it (plan: max,
-    build: high), each of his messages carries the warning into the session's context.
+    `plan` or `build` -- and answers with the session's live level and whether THIS reply carries the
+    warning. `build` is run in the reply that asks him to approve the plan, so the high warning travels
+    with the question and his "yes" can arrive at high.
+  * UserPromptSubmit: while the session has a mode -- or, with none set, while his permission mode is
+    `plan` -- and its live level does not match it (plan: max, build: high), each of his messages carries
+    the warning into the session's context. With no mode and no plan permission mode, a message that names
+    a plan, a design or an architecture reminds the lead to run `plan`, and a session whose known level is
+    not high reminds the lead to warn him before writing code.
 
-The hook's stdin carries no effort (measured 2026-10-06). The live level is the newer, by timestamp, of
-the status line's record $XDG_RUNTIME_DIR/claude-ctx/<session_id>.json (field `effort`, written on each
-render, follows /effort at once) and this session's last assistant step in the transcript that carries an
-`effort` (a /effort switch writes no row, so the transcript lags one turn behind it). A source that cannot be
-read is not known; neither known: unknown. Every read is bounded (the transcript's tail, a few KB elsewhere).
+Neither the hook's stdin nor its environment carries the effort (measured 2026-10-06: the input has no
+effort field, and CLAUDE_EFFORT, which the Bash tool has, is absent from a UserPromptSubmit hook). The live
+level is the newest, by timestamp, of the status line's record $XDG_RUNTIME_DIR/claude-ctx/<session_id>.json
+(field `effort`, written on each render), this session's last assistant step in the transcript that
+carries an `effort`, and this session's last /effort row in the transcript (`<local-command-stdout>Set
+effort level to <level> ...`, written when he switches between turns; a switch made in the middle of a
+turn writes none). A source that cannot be read is not known; none known: unknown. Every read is bounded
+(the transcript's tail, a few KB elsewhere). The CLI finds the transcript at
+~/.claude/projects/*/<session_id>.jsonl.
 
 Only a session id shaped like Claude Code's (SESSION_ID) ever names a file, so no path leaves the
 folders; the mode folder is trusted only as a real directory (not a link) owned by this user and
@@ -25,10 +33,11 @@ writable by no one else, the record folder only when owned by this user; every f
 its folder's descriptor without following a link, and only a regular file counts (a planted link or
 FIFO must neither redirect a write nor block the hook). The mode is written by an O_EXCL temporary
 file and a rename. Stdlib only. As a hook it never fails a session: on any failure it exits 0 with
-nothing on stdout or stderr. The CLI answers on stdout; it refuses with exit 2 when it has no valid
-session id, and exits 1 with the reason on stderr when the mode cannot be written or removed.
+nothing on stdout or stderr. The CLI answers on stdout; it refuses with exit 2 a word it does not know or
+a missing session id, and exits 1 with the reason on stderr when the mode cannot be written or removed.
 """
 
+import glob
 import json
 import os
 import re
@@ -49,6 +58,14 @@ TAIL_BYTES = 256 * 1024
 SMALL_BYTES = 4 * 1024  # the mode file and the status line's record are a few dozen bytes
 MAX_LINE = "⚠ Muhittin Bey, plan konuşmasındayız — /effort max'a geçin."
 HIGH_LINE = "⚠ Muhittin Bey, plan bitti — koda geçmeden /effort high'a geçin."
+CODE_LINE = "⚠ Muhittin Bey, koda geçmeden /effort high'a geçin."
+LINES = {"plan": MAX_LINE, "build": HIGH_LINE}
+SWITCHED = re.compile(r"<local-command-stdout>Set effort level to (low|medium|high|xhigh|max)\b")
+# his words that turn the talk to a plan, a design or an architecture -- Turkish stems and English words,
+# matched at a word's start so "explain" and "planet" stay out
+PLAN_WORDS = re.compile(r"(?<!\w)(plan(?!et)\w*|tasar[ıi]m\w*|tasarla\w*|mimari\w*|design\w*|architect\w*)",
+                        re.IGNORECASE)
+USAGE = "usage: dxb-effort-warn.py plan|build|off   (as a hook: no argument, the hook's JSON on stdin)\n"
 
 
 def warning(mode, level):
@@ -64,7 +81,22 @@ def warning(mode, level):
         f"This session is in BUILD mode under dxb-team2 and {runs}; the CEO's order (2026-10-06) is "
         f"the build at high, switched by him with /effort. Begin your reply, before anything else, with "
         f"exactly this line:\n{HIGH_LINE}\n"
-        f"Then go on, but write no code until he has switched. When the job ends, run `{COMMAND} off`.")
+        f"Then go on, but write no code until he has switched. If his message asks to change the plan "
+        f"instead of approving it, run `{COMMAND} plan` and stay in the plan. When the job ends, run "
+        f"`{COMMAND} off`.")
+
+
+def plan_reminder():
+    return (f"His message names a plan, a design or an architecture, and this session has no dxb-team2 effort "
+            f"mode. If the talk is turning to one, run `{COMMAND} plan` now and do what it answers; if not, "
+            f"ignore this.")
+
+
+def code_reminder(level):
+    return (f"This session runs at {level}, not high, and has no dxb-team2 effort mode; the CEO's order "
+            f"(2026-10-06) is code at high. If your reply writes code, open it, before anything else, with "
+            f"exactly this line:\n{CODE_LINE}\nand write no code until he has switched. If the talk is a plan, "
+            f"a design or an architecture, run `{COMMAND} plan` instead. Otherwise ignore this.")
 
 
 def session_name(session_id):
@@ -160,9 +192,23 @@ def record_level(name):
     return (moment, record["effort"]) if moment else None
 
 
+def switched_level(row):
+    """The level a /effort row names, or None."""
+    if row.get("type") != "user":
+        return None
+    content = (row.get("message") or {}).get("content") if isinstance(row.get("message"), dict) else None
+    if isinstance(content, list):
+        content = " ".join(part.get("text", "") for part in content if isinstance(part, dict))
+    if not isinstance(content, str):
+        return None
+    found = SWITCHED.search(content)
+    return found.group(1) if found else None
+
+
 def transcript_level(path, name):
-    """(timestamp, level) of this session's last assistant step carrying an effort, from the transcript's tail, or
-    None -- also when it cannot be read. A step of another session, or one naming no session, does not count."""
+    """(timestamp, level) of this session's last row naming its effort -- an assistant step carrying one, or a
+    /effort row -- from the transcript's tail, or None -- also when it cannot be read. A row of another
+    session, or one naming no session, does not count."""
     if not isinstance(path, str) or not path:
         return None
     try:
@@ -176,12 +222,20 @@ def transcript_level(path, name):
             row = json.loads(line)
         except ValueError:  # the tail's cut first line, or a torn last one
             continue
-        if (isinstance(row, dict) and row.get("type") == "assistant" and row.get("sessionId") == name
-                and row.get("effort") in LEVELS):
+        if not isinstance(row, dict) or row.get("sessionId") != name:
+            continue
+        level = row.get("effort") if row.get("type") == "assistant" else switched_level(row)
+        if level in LEVELS:
             moment = parse_ts(row.get("timestamp"))
             if moment:
-                return moment, row["effort"]
+                return moment, level
     return None
+
+
+def own_transcript(name):
+    """This session's transcript where Claude Code keeps it, or None."""
+    found = sorted(glob.glob(os.path.join(os.path.expanduser("~"), ".claude", "projects", "*", f"{name}.jsonl")))
+    return found[0] if found else None
 
 
 def live_level(name, transcript_path):
@@ -199,13 +253,22 @@ def on_hook(data):
     if name is None:
         return
     mode = read_mode(name)
-    if mode is None:
-        return
+    if mode is None and data.get("permission_mode") == "plan":
+        mode = "plan"
     level = live_level(name, data.get("transcript_path"))
-    if level == WANTED[mode]:
+    if mode is not None:
+        if level == WANTED[mode]:
+            return
+        context = warning(mode, level)
+    elif not isinstance(data.get("prompt"), str) or "<task-notification>" in data["prompt"]:
+        return  # a subagent's report arriving is not his message (measured 2026-10-06: one tripped the net)
+    elif PLAN_WORDS.search(data["prompt"]):
+        context = plan_reminder()
+    elif level is not None and level != "high":
+        context = code_reminder(level)
+    else:
         return
-    output = {"hookSpecificOutput": {"hookEventName": "UserPromptSubmit",
-                                     "additionalContext": warning(mode, level)}}
+    output = {"hookSpecificOutput": {"hookEventName": "UserPromptSubmit", "additionalContext": context}}
     sys.stdout.write(json.dumps(output, ensure_ascii=False) + "\n")
 
 
@@ -261,8 +324,14 @@ def cli(mode):
         os.close(dir_fd)
     if mode == "off":
         print("effort mode: off — no warning for this session")
+        return 0
+    print(f"effort mode: {mode} — the CEO is warned to switch to {WANTED[mode]} until he does")
+    level = live_level(name, own_transcript(name))
+    if level == WANTED[mode]:
+        print(f"live level {level}: already at {level} — no warning in this reply")
     else:
-        print(f"effort mode: {mode} — the CEO is warned to switch to {WANTED[mode]} until he does")
+        where = "open" if mode == "plan" else "end"
+        print(f"live level {level or 'unknown'}: {where} this reply with exactly this line:\n{LINES[mode]}")
     return 0
 
 
@@ -276,8 +345,11 @@ def main():
 
 
 if __name__ == "__main__":
-    if len(sys.argv) == 2 and sys.argv[1] in ("plan", "build", "off"):
-        sys.exit(cli(sys.argv[1]))
+    if len(sys.argv) > 1:
+        if len(sys.argv) == 2 and sys.argv[1] in ("plan", "build", "off"):
+            sys.exit(cli(sys.argv[1]))
+        sys.stderr.write(USAGE)
+        sys.exit(2)
     try:
         main()
         sys.stdout.flush()

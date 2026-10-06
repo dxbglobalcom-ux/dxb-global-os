@@ -21,6 +21,13 @@ mkdir -p "$HOOK_DIR"
 cp "$GATE_SRC" "$GATE_DST"
 chmod +x "$GATE_DST"
 echo "installed: $GATE_DST"
+# The context gate and the status line live beside it; the repository holds their source too
+# (Fable's review, 2026-10-06: they had no tracked copy). Their registration in settings.json is
+# not this script's; only the files are put in place.
+for twin in dxb-context-gate.py dxb-statusline.js; do
+  cp "${REPO_ROOT}/scripts/ops/${twin}" "${HOOK_DIR}/${twin}"
+  echo "installed: ${HOOK_DIR}/${twin}"
+done
 
 [ -f "$SETTINGS" ] || { echo "no $SETTINGS — register the hook by hand" >&2; exit 1; }
 

@@ -71,11 +71,41 @@ const SAY = "[global-setup]";
 const ENGINE_LOCK = join(process.env.TMPDIR || "/tmp", "dxb-construction-battery.lock");
 let engineLockHolder: ChildProcess | null = null;
 
-async function takeTheEngine(): Promise<void> {
+// DXB_ENGINE_LOCK_WAIT=<seconds> (dxb-team2 §5, 2026-10-06): parallel writers
+// queue for the engine instead of colliding on it — the same variable, read the
+// same way, as battery.sh and run.sh. A positive integer only; anything else is
+// null, which is today's immediate refusal.
+export function engineLockWait(raw: string | undefined = process.env.DXB_ENGINE_LOCK_WAIT): number | null {
+  return raw !== undefined && /^[1-9][0-9]*$/.test(raw) ? Number(raw) : null;
+}
+
+export async function takeTheEngine(): Promise<void> {
   if (process.env.DXB_CONSTRUCTION_SANDBOX === "1") return; // the door holds it
   if (process.env.DXB_ENGINE_LOCK_HELD === "1") return; // the battery holds it
 
-  const verdict = await new Promise<"held" | "refused" | "no-flock">((resolve) => {
+  let verdict = await lockOnce(["-n"]);
+  const wait = engineLockWait();
+  if (verdict === "refused" && wait !== null) {
+    console.error(`${SAY} waiting up to ${wait} s for the construction engine…`);
+    verdict = await lockOnce(["-w", String(wait)]);
+  }
+
+  if (verdict === "no-flock") {
+    console.log(`${SAY} ⚠ UNVERIFIED — flock is not installed, so a concurrent run cannot be ruled out`);
+    return;
+  }
+  if (verdict === "refused") {
+    console.error(
+      `${SAY} REFUSED: another run already holds the construction engine.\n` +
+        `         Two runs on one bench measure each other, not the code. Wait for it,\n` +
+        `         or point this one elsewhere with DXB_CONSTRUCTION_URL.`,
+    );
+    process.exit(2);
+  }
+}
+
+function lockOnce(mode: string[]): Promise<"held" | "refused" | "no-flock"> {
+  return new Promise<"held" | "refused" | "no-flock">((resolve) => {
     let settled = false;
     const done = (v: "held" | "refused" | "no-flock") => {
       if (!settled) {
@@ -93,7 +123,7 @@ async function takeTheEngine(): Promise<void> {
     // waits on this process's own pipe instead: ending it releases the lock, and
     // so does this process dying for any reason at all, which is the half a
     // hand-written lock file can never do.
-    const child = spawn("flock", ["-n", ENGINE_LOCK, "sh", "-c", "echo LOCKED; exec cat"], {
+    const child = spawn("flock", [...mode, ENGINE_LOCK, "sh", "-c", "echo LOCKED; exec cat"], {
       stdio: ["pipe", "pipe", "ignore"],
     });
     child.on("error", () => done("no-flock")); // same fallback as battery.sh
@@ -105,22 +135,9 @@ async function takeTheEngine(): Promise<void> {
     });
     child.on("exit", () => done("refused"));
   });
-
-  if (verdict === "no-flock") {
-    console.log(`${SAY} ⚠ UNVERIFIED — flock is not installed, so a concurrent run cannot be ruled out`);
-    return;
-  }
-  if (verdict === "refused") {
-    console.error(
-      `${SAY} REFUSED: another run already holds the construction engine.\n` +
-        `         Two runs on one bench measure each other, not the code. Wait for it,\n` +
-        `         or point this one elsewhere with DXB_CONSTRUCTION_URL.`,
-    );
-    process.exit(2);
-  }
 }
 
-function releaseTheEngine(): void {
+export function releaseTheEngine(): void {
   if (engineLockHolder) {
     // Close the pipe, not the process: `cat` reads EOF, exits, and every
     // descriptor on the lock file goes with it.

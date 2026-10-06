@@ -277,3 +277,16 @@ describe("his numbers stand in one place, and the gate is wired", () => {
     expect(hooks.PreToolUse.some((e) => e.matcher === "Agent|Task" && runsGate(e))).toBe(true);
   });
 });
+
+// The repository holds these hooks' source (scripts/ops/, installed by scripts/ops/install-cost-gate.sh);
+// a live copy edited by hand and never brought back is how the cost gate's twin drifted (Fable's review,
+// 2026-10-06). The live file and its tracked copy are one text.
+describe("the live hooks equal their tracked copies in scripts/ops", () => {
+  for (const [name, live] of [["dxb-context-gate.py", GATE], ["dxb-statusline.js", STATUS_LINE]] as const) {
+    it(name, () => {
+      const tracked = join(__dirname, "..", "..", "scripts", "ops", name);
+      expect(readFileSync(live, "utf8") === readFileSync(tracked, "utf8"),
+        `${live} differs from ${tracked} — bring the change into the repository and run install-cost-gate.sh`).toBe(true);
+    });
+  }
+});

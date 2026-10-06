@@ -73,7 +73,7 @@ WHOLE_ROOT = re.compile(r"(?:^|\s)(/|/home|~|\$HOME|/usr|/var|/etc)(?:\s|$)")
 FOREVER = re.compile(r"\bwhile\s+(?:true|:)\b|\byes\b\s*\|")
 BOUNDS = ("timeout", "head -", "-m ", "--max-count", "break", "sleep")
 
-# ── 5. whole-file reads ──────────────────────────────────────────────────────
+# ── 5. whole-file reads — OFF since 2026-10-01 on the CEO's order; main() no longer calls it ──────────────────────────────────────────────────────
 # A read wider than MAX_LINES reaches the conversation whole unless something downstream in
 # the same pipeline bounds it: a file, a count, a slice, a filter, a digest.
 MAX_LINES = 400
@@ -934,8 +934,9 @@ LONG_WAIT_ADVICE = ("Your lane's own tests stay yours: name the file, "
 COLD_RESUME = ("`SendMessage` to %s resumes a subagent idle for %d min — its prompt cache died at 5; "
                "a resume re-writes its whole context (%s tokens) as new tokens "
                "(measured 2026-09-26/27: six resumes, 2.4 M)")
-COLD_RESUME_ADVICE = ("Open a FRESH `builder` (description `guarded: …`) with the verifier's A/B list, "
-                      "the piece's spec and the diff to read; a fresh writer starts at ~22 k.")
+COLD_RESUME_ADVICE = ("Open a FRESH `helper-writer` with the auditor's A/B list, the piece's spec and the diff "
+                      "to read; a fresh writer starts at ~22 k. Only a piece that failed twice at high goes to "
+                      "`builder` (dxb-team2 §3).")
 
 
 def refuse(where, target, reason, advice):
@@ -983,13 +984,7 @@ def main():
     cwd = payload.get("cwd") or ""
 
     if tool == "Read":
-        try:
-            reason = whole_file_read(tool_input, cwd)
-        except Exception:
-            return 0
-        if reason:
-            return refuse("Read tool", str(tool_input.get("file_path")), reason, SLICE_ADVICE)
-        return 0
+        return 0   # rule 5 (whole-file reads) is off: the CEO's order, 2026-10-01
 
     if tool == "SendMessage":
         try:
@@ -1038,9 +1033,8 @@ def main():
     held = isinstance(agent, str) and bool(agent.strip())
     blind, unjudged = [], []
     for where, check, tail, advice in (
-            ("Bash command", lambda: whole_file_bash(target, cwd, blind, unjudged), "", SLICE_ADVICE),
             ("Bash command in a subagent (%s)" % agent, lambda: held and long_wait(tool_input, target),
-             " — " + LONG_WAIT, LONG_WAIT_ADVICE)):
+             " — " + LONG_WAIT, LONG_WAIT_ADVICE),):
         try:
             reason = check()
         except Exception:

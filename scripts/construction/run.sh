@@ -37,7 +37,14 @@ fi
 LOCK="${TMPDIR:-/tmp}/dxb-construction-battery.lock"
 if [ -z "${DXB_ENGINE_LOCK_HELD:-}" ] && command -v flock >/dev/null 2>&1; then
   exec 200>"$LOCK"
-  if ! flock -n 200; then
+  # DXB_ENGINE_LOCK_WAIT=<seconds> (dxb-team2 §5, 2026-10-06): parallel writers
+  # queue for the engine instead of colliding on it. A positive integer only;
+  # anything else is today's immediate refusal.
+  WAIT="${DXB_ENGINE_LOCK_WAIT:-}"
+  [[ "$WAIT" =~ ^[1-9][0-9]*$ ]] || WAIT=""
+  if ! flock -n 200 && { [ -z "$WAIT" ] || {
+        echo "waiting up to $WAIT s for the construction engine…" >&2
+        ! flock -w "$WAIT" 200; }; }; then
     echo "REFUSED: another run already holds the construction engine." >&2
     echo "         Two runs on one bench measure each other, not the code. Wait for it," >&2
     echo "         or point this one elsewhere with DXB_CONSTRUCTION_URL." >&2

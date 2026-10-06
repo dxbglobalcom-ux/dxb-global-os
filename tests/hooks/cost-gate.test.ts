@@ -156,7 +156,7 @@ describe("dxb-cost-gate.py — GNU grep, a slice not the file, no long wait in a
     expect(denied(r)).toBe(true);
     expect(r.stderr).toContain("idle for 10 min");
     expect(r.stderr).toContain("300,000");
-    expect(r.stderr).toContain("Open a FRESH `builder`");
+    expect(r.stderr).toContain("Open a FRESH `helper-writer`");
     const last = readFileSync(join(LOGS, "dxb-cost-gate.jsonl"), "utf8").trim().split("\n").at(-1) ?? "";
     expect(JSON.parse(last)).toMatchObject({ tool: "SendMessage", decision: "deny", why: "resume-cold", idle_min: 10 });
     expect(last).not.toContain("private words");
@@ -222,5 +222,16 @@ describe("dxb-cost-gate.py — GNU grep, a slice not the file, no long wait in a
       { type: "attachment", timestamp: ago(1), attachment: { type: "x" } },
       { type: "attachment", timestamp: ago(0), attachment: { type: "y" } }]);
     expect(denied(send("aattach"))).toBe(true);
+  });
+});
+
+// The repository's scripts/ops/dxb-cost-gate.py is the source install-cost-gate.sh puts in place; the
+// live copy had drifted from it (rule 5's switch-off and the cold-resume advice lived only in the CEO's
+// home — Fable's review, 2026-10-06). The two are one text.
+describe("the live cost gate equals scripts/ops/dxb-cost-gate.py", () => {
+  it("byte for byte", () => {
+    const tracked = join(__dirname, "..", "..", "scripts", "ops", "dxb-cost-gate.py");
+    expect(readFileSync(GATE, "utf8") === readFileSync(tracked, "utf8"),
+      `${GATE} differs from ${tracked} — bring the change into the repository and run install-cost-gate.sh`).toBe(true);
   });
 });
