@@ -9,7 +9,7 @@
 // XDG_RUNTIME_DIR and its own transcript, so nothing lands in the machine's own folders.
 import { spawnSync } from "node:child_process";
 import {
-  chmodSync, existsSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, rmSync, symlinkSync, writeFileSync,
+  chmodSync, existsSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, rmSync, symlinkSync, writeFileSync, accessSync, constants,
 } from "node:fs";
 import { homedir, tmpdir } from "node:os";
 import { join, resolve } from "node:path";
@@ -273,8 +273,13 @@ describe("every read is bounded (Sol B4)", () => {
 });
 
 const STATUS_LINE = join(homedir(), ".claude", "hooks", "dxb-statusline.js");
+// The status line lives in the CEO's home; the sandboxed half of the battery cannot read it, so
+// these cases SKIP there with their reason, as context-gate.test.ts does (they run on the host).
+const STATUS_LINE_READABLE = (() => { try { accessSync(STATUS_LINE, constants.R_OK); return true; } catch { return false; } })();
+const describeStatusLine = STATUS_LINE_READABLE ? describe
+  : (title: string, fn: () => void) => describe.skip(`[SKIPPED — ${STATUS_LINE} unreadable here; run tests/hooks as the host user] ${title}`, fn);
 
-describe("the status line records /effort even when the payload has no context meter (Sol A4)", () => {
+describeStatusLine("the status line records /effort even when the payload has no context meter (Sol A4)", () => {
   const render = (dir: string, payload: Record<string, unknown>) => {
     const e: NodeJS.ProcessEnv = { ...process.env, XDG_RUNTIME_DIR: dir };
     delete e.CLAUDE_CODE_AUTO_COMPACT_WINDOW;
