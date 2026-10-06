@@ -42,6 +42,8 @@ bundle 2; the auto-memory fixes; the outside review's item 4.
 
 ## Next
 
+0. IN HAND (his order, 2026-10-06, through dxb-team2): bring `tests/` and `db/seed/` under the typecheck —
+   a typecheck project for them, its errors fixed, `pnpm typecheck` covering them.
 1. B51 bundle 3, with B51 moves 3 and 6 — waits on his word.
 2. The research he asked for — the tweet's top-tier agent systems (SS and S) and Hermes; the link is to come
    from him.
@@ -51,8 +53,7 @@ Tool loading is B41's leg of 2026-10-04, built when its turn comes.
 
 - The board rows that wait on him for a decision, money, an eye or an identity step — the board
   page's "Sizi bekleyenler" lists them.
-- Found in the review job (his word decides): `tests/` and `db/seed/` are outside every typecheck — opened
-  once, 127 type errors in 52 files; the knowledge graph (`.planning/graphs/`, built 2026-10-04, 75 commits
+- Found in the review job (his word decides): the knowledge graph (`.planning/graphs/`, built 2026-10-04, 75 commits
   behind) still describes the old door — a local rebuild, no model, `node scripts/governance/graph-refresh.mjs`.
 - His open question (2026-10-06), to be answered when he asks for it: Sol's raw dumps and briefs, now on disk
   only (`.planning/quick/**/*.raw`, `*brief*.txt`) — keep them, or delete them past a point (e.g. monthly) so
