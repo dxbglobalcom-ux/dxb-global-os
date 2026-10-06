@@ -14,3 +14,18 @@ EXIT=0
 
 ## Lead note
 The A disputed in part and fixed in the text: the high warning after a plan stays — the door's §2 opening line runs the whole session at high (the talk, the build, the fixes, the tests), so after a plan the lead returns from max to high whoever writes the code; the sentence 'a helper-writer's code needs no switch' now applies outside a plan only, and says why.
+
+# Second check (medium), d7089d36..7a440e33+ledger
+
+**Kapı için evet; aralığın tamamı için bir B bulgusu var.**
+
+✓ **STANDS AFTER ATTEMPTED REFUTATION:** [dxb-team2 §3](/home/dxb/DxB%20Global%20OS/.agents/skills/dxb-team2/SKILL.md:98) kabul ettiğiniz ayrımı taşıyor. İki kapının tamamında eski paragraf ölçütü yok. Python kontrolü: `paragraph/paragraf matches = 0`; §3 aynaları eşit. Onay kaydı da “Evet önerini yap.” sözünü ve yeni kapsamı içeriyor.
+
+**B — eski kural STATE’te kalmış:** [.planning/STATE.md:37](</home/dxb/DxB Global OS/.planning/STATE.md:37>) hâlâ “any job specifiable in a paragraph goes to a medium helper-writer” diyor. Kanıt: `git diff d7089d36..HEAD -- .planning/STATE.md`.
+
+**Gerekli düzeltme:** Yazıcı bu cümleyi kapıdaki yeni ölçütle değiştirmeli. Denetimde dosya değiştirmedim.
+tokens used
+30,723
+
+## Lead note
+The B fixed: STATE says the rule as worded in the door.

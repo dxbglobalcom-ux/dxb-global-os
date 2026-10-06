@@ -34,7 +34,8 @@ the graph no longer indexing itself, the battery before Sol. Job folders `.plann
 At the close, on his word and with his eye given in advance <!-- CEO-OK: sol-dumps-swept-after-90-days-2026-10-06 -->:
 Sol's raw dumps and briefs leave the disk after 90 days (`scripts/governance/sol-dump-sweep.sh`, after every commit).
 And a permanent rule on his word <!-- CEO-OK: simple-work-goes-to-a-medium-writer-2026-10-06 -->: medium first —
-any job specifiable in a paragraph goes to a medium helper-writer, however small (dxb-team2 §3).
+a self-contained, mechanical piece goes to a medium helper-writer, however small; decision, design,
+judgement or coupled work stays with the lead or a fork at high (dxb-team2 §3).
 ⚠ UNVERIFIED: the plan warning reaching his screen — the first plan talk shows it.
 Still waiting for his eye from 2026-10-04 (STATE-ARCHIVE, § 2026-10-06): B51 move 5's persona text and code
 bundle 2; the auto-memory fixes; the outside review's item 4.
