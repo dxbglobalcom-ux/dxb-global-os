@@ -44,6 +44,20 @@ describe("sol-dump-sweep.sh", () => {
     expect(existsSync(verdict)).toBe(true);
     expect(r.stdout).toContain("2 deleted");
   });
+  it("the limit is 90 days to the hour, not day 91: 90 days and an hour goes, 89 days and 23 hours stays", () => {
+    const dir = repo();
+    const at = (hours: number) => {
+      const file = join(dir, ".planning/quick/job", `h${hours}.raw`);
+      writeFileSync(file, "x");
+      execFileSync("touch", ["-d", `@${Math.floor(Date.now() / 1000) - hours * 3600}`, file]);
+      return file;
+    };
+    const over = at(90 * 24 + 1);
+    const under = at(90 * 24 - 1);
+    expect(sweep(dir).status).toBe(0);
+    expect(existsSync(over)).toBe(false);
+    expect(existsSync(under)).toBe(true);
+  });
   it("never deletes a tracked file, however old", () => {
     const dir = repo();
     const tracked = put(dir, "old.raw", 200);

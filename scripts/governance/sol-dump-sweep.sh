@@ -15,8 +15,10 @@ while IFS= read -r -d '' rel; do
   esac
   file="$REPO/$rel"
   [ -f "$file" ] && [ ! -L "$file" ] || continue
-  if [ -n "$(find "$file" -maxdepth 0 -mtime +"$DAYS" -print)" ]; then
-    rm -f -- "$file" && deleted=$((deleted + 1))
-  fi
+  # minutes, not -mtime: find rounds -mtime to whole days, so +90 began only at day 91 (Sol, 2026-10-06)
+  [ -n "$(find "$file" -maxdepth 0 -mmin +"$((DAYS * 24 * 60))" -print)" ] || continue
+  # asked again just before the delete: a file tracked since the listing is never removed
+  git -C "$REPO" ls-files --error-unmatch -- "$rel" >/dev/null 2>&1 && continue
+  rm -f -- "$file" && deleted=$((deleted + 1))
 done < <(git -C "$REPO" ls-files -z --others --ignored --exclude-standard -- .planning/quick)
 echo "sol-dump-sweep: $deleted deleted (older than $DAYS days)"
