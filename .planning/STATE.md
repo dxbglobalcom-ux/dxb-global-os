@@ -36,14 +36,15 @@ lines match the company and `sync-personas-to-db.sh --verify` now watches them; 
 `null` payload. One Sol pass, its 3 A and 2 B fixed; battery GREEN. Job folder
 `.planning/quick/20261006-fable-review-fixes/`. The lean door itself (session f7a2bf71) also waits for his eye
 <!-- CEO-OK: dxb-team2-lean-2026-10-06 -->.
+Then, on his order: `tests/` and `db/seed/` under the typecheck (`tsconfig.tests.json`, run by
+`pnpm typecheck`; 37 errors fixed; Sol's one B fixed; battery GREEN); the knowledge graph rebuilt and no
+longer indexing its own outputs; Sol's raw dumps and briefs out of git, on disk.
 ⚠ UNVERIFIED: the warning reaching a real reply — the first plan talk shows it on his screen.
 Still waiting for his eye from 2026-10-04 (STATE-ARCHIVE, § 2026-10-06): B51 move 5's persona text and code
 bundle 2; the auto-memory fixes; the outside review's item 4.
 
 ## Next
 
-0. IN HAND (his order, 2026-10-06, through dxb-team2): bring `tests/` and `db/seed/` under the typecheck —
-   a typecheck project for them, its errors fixed, `pnpm typecheck` covering them.
 1. B51 bundle 3, with B51 moves 3 and 6 — waits on his word.
 2. The research he asked for — the tweet's top-tier agent systems (SS and S) and Hermes; the link is to come
    from him.
@@ -53,8 +54,9 @@ Tool loading is B41's leg of 2026-10-04, built when its turn comes.
 
 - The board rows that wait on him for a decision, money, an eye or an identity step — the board
   page's "Sizi bekleyenler" lists them.
-- Found in the review job (his word decides): the knowledge graph (`.planning/graphs/`, built 2026-10-04, 75 commits
-  behind) still describes the old door — a local rebuild, no model, `node scripts/governance/graph-refresh.mjs`.
+- Found in the overall look at dxb-team2 (his word decides): dxb-verify demands a read-only-by-tool second
+  eye while the door accepts the fallback refuter read-only by word; `~/.claude/agents/debugger.md` still
+  hands fixes to the builder; the battery runs after Sol, so Sol never sees it.
 - His open question (2026-10-06), to be answered when he asks for it: Sol's raw dumps and briefs, now on disk
   only (`.planning/quick/**/*.raw`, `*brief*.txt`) — keep them, or delete them past a point (e.g. monthly) so
   they are no load?
