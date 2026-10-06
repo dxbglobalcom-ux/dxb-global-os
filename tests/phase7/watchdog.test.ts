@@ -103,7 +103,7 @@ describe("job validation (Pitfall 9 — loader parity)", () => {
         out = execFileSync("vps/hermes/load-jobs.sh", {
           env: { ...process.env, HERMES_DIR: dir, PATH: `${dir}:${process.env.PATH}` },
           encoding: "utf8",
-          stderr: "pipe",
+          stdio: "pipe",
         });
       } catch (e) {
         out = String((e as { stdout?: string }).stdout ?? "") + String((e as { stderr?: string }).stderr ?? "");

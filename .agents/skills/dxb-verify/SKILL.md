@@ -42,7 +42,7 @@ a boundary, a security check wherever authorisation, secrets or isolation move.
 
 | Artifact class | Its ruler (runnable, shared by builder and checker) | State today |
 |---|---|---|
-| Code | `pnpm typecheck` + the battery (vitest, both halves) · i18n-purity-check · verify:ledger · gitleaks | typecheck and the battery once at a job's end when code changed (`dxb-team2` §5); gitleaks on every commit; the typecheck does not cover `tests/` or `db/seed/` (measured 2026-10-06) |
+| Code | `pnpm typecheck` + the battery (vitest, both halves) · i18n-purity-check · verify:ledger · gitleaks | typecheck and the battery once at a job's end when code changed (`dxb-team2` §5); gitleaks on every commit; the typecheck covers `tests/` and `db/seed/` too (`tsconfig.tests.json`, 2026-10-06) |
 | Persona files | `tests/personas/persona-ruler.test.ts` (`scripts/persona-ruler.sh`) | built in this commit |
 | Records (STATE, the board, ceo-approvals) | `scripts/governance/ledger-truth.mjs` + `tests/b43/records-truth.ts` (a record may not say his eye is awaited on what the ledger holds accepted; a new acceptance adds its row there or R4 is red) + records parity (`dxb-close-row`) | exists |
 | CEO-visible surfaces | eye test + Design Pass (RULE #0) — a human eye, not a script; reported ⚠ UNVERIFIED until his eye | exists, not a script |

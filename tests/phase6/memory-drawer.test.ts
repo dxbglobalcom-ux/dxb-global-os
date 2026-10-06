@@ -70,7 +70,7 @@ describe("the memory root — one folder, never the working folder", () => {
     delete process.env.DXB_MEMORY_ROOT;
     const db = getDb();
     await expect(
-      commitMemory(db, { artifact: { path: "reports/unset.md", body: "no root" }, provenance }),
+      commitMemory(db, { facts: [], artifact: { path: "reports/unset.md", body: "no root" }, provenance }),
     ).rejects.toThrow(/DXB_MEMORY_ROOT/);
     const rows = await db
       .selectFrom("memory_index")
@@ -85,6 +85,7 @@ describe("the memory root — one folder, never the working folder", () => {
     const db = getDb();
     const marker = `OBS-${AGENT}`;
     const { created } = await commitMemory(db, {
+      facts: [],
       artifact: { path: "reports/drawer.md", body: `# Drawer\n${marker}` },
       provenance,
     });
@@ -211,7 +212,7 @@ describe("the reader opens nothing but a note of the writer's shape inside the r
     await symlink(outside, path.join(linkedRoot, "memory-store"));
     process.env.DXB_MEMORY_ROOT = linkedRoot;
     await expect(
-      commitMemory(getDb(), { artifact: { path: "reports/linked.md", body: "must not land" }, provenance }),
+      commitMemory(getDb(), { facts: [], artifact: { path: "reports/linked.md", body: "must not land" }, provenance }),
     ).rejects.toThrow(/memory/);
     expect(await readdir(outside)).toEqual([]);
     await rm(linkedRoot, { recursive: true, force: true });

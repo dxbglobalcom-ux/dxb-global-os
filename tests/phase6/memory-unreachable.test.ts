@@ -9,6 +9,7 @@
 import { afterAll, describe, expect, it, vi } from "vitest";
 import { sql, type Kysely } from "kysely";
 import type { DB } from "@dxb/shared";
+import type { RecallResult } from "@dxb/memory-router";
 import { memoryBlock, recallForAnswer, standingPrompt, HAMZA_SLUG } from "@dxb/voice";
 import { answerVoiceCall, intakeVoiceCall } from "@dxb/voice";
 import { closeDb, getDb } from "../../packages/shared/src/db.js";
@@ -33,8 +34,18 @@ async function inTrx(fn: (trx: Kysely<DB>) => Promise<void>): Promise<void> {
 const broken = async (): Promise<never> => {
   throw new Error("recall: memory ref broken for index x at 'artifact/x.md' — ENOENT");
 };
-const working = async () => ({
-  rows: [{ body: "the holding's first client is a furniture shop" }],
+const working = async (): Promise<RecallResult> => ({
+  rows: [
+    {
+      id: "00000000-0000-0000-0000-000000000001",
+      kind: "fact",
+      store: "pgvector",
+      body: "the holding's first client is a furniture shop",
+      trust_tier: "trusted",
+      confidence: "0.9",
+      created_at: new Date(0),
+    },
+  ],
   classifier_used: false,
 });
 

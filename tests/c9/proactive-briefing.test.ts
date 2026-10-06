@@ -1,7 +1,8 @@
 import { afterAll, describe, expect, it } from "vitest";
 import { sql } from "kysely";
 import type { Kysely } from "kysely";
-import { closeDb, getDb, type DB } from "../../packages/shared/src/db.js";
+import { closeDb, getDb } from "../../packages/shared/src/db.js";
+import type { DB } from "../../packages/shared/src/db-types.js";
 import {
   deliverMorningBriefing,
   readBriefingFacts,

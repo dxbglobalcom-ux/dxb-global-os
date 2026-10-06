@@ -1,6 +1,7 @@
 import { afterAll, describe, expect, it } from "vitest";
-import { sql } from "kysely";
+import { sql, type Transaction } from "kysely";
 import { closeDb, getDb } from "../../packages/shared/src/db.js";
+import type { DB } from "../../packages/shared/src/db-types.js";
 
 // Ledger 10d/10e (2026-07-24): the engine owner door. CEO-only (fn_org_actor),
 // validates engine + department, audited. Tests run inside rolled-back
@@ -18,7 +19,7 @@ afterAll(async () => {
   await closeDb();
 });
 
-const inTrx = async (fn: (trx: unknown) => Promise<void>) =>
+const inTrx = async (fn: (trx: Transaction<DB>) => Promise<void>) =>
   getDb()
     .transaction()
     .execute(async (trx) => {

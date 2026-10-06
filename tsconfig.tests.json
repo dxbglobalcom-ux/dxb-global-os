@@ -1,0 +1,39 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "declaration": false,
+    "declarationMap": false,
+    "allowImportingTsExtensions": true,
+    "jsx": "preserve",
+    "lib": [
+      "ES2023",
+      "DOM",
+      "DOM.Iterable"
+    ],
+    "types": [
+      "node"
+    ],
+    "paths": {
+      "@/*": [
+        "./apps/dashboard/src/*"
+      ],
+      "@dxb/*": [
+        "./packages/*/src/index.ts"
+      ],
+      "@supabase/*": [
+        "./apps/dashboard/node_modules/@supabase/*"
+      ]
+    },
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "allowJs": true,
+    "checkJs": false
+  },
+  "include": [
+    "tests/**/*.ts",
+    "tests/**/*.tsx",
+    "db/seed/**/*.ts",
+    "vitest.config.ts"
+  ]
+}

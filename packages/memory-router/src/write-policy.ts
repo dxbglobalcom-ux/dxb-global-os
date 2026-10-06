@@ -217,7 +217,8 @@ async function appendAudit(
 
 export async function commitMemory(
   db: Kysely<DB>,
-  input: CommitInput,
+  // the schema's INPUT shape, as recallMemory takes it: `facts` has a default, so a caller may omit it
+  input: z.input<typeof CommitInput>,
   deps: CommitDeps = {},
 ): Promise<{ created: CommittedMemory[] }> {
   const parsed = CommitInput.parse(input);

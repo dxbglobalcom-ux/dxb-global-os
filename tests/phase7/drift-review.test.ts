@@ -90,7 +90,7 @@ describe("drift review — the verdict rests on the repository's word alone", ()
     const hash = computeToolHash(upgraded);
     expect(judgeDrift("scrapling", "get", hash, CORPUS).verdict).toBe("suspect");
     const refreshed = approvedCorpus(
-      [{ server: "scrapling", tool: "get", ...upgraded, schema_hash: hash }],
+      [{ ...upgraded, server: "scrapling", tool: "get", schema_hash: hash }],
       new Set(["dxb-mcp"]),
       computeToolHash,
     );

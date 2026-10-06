@@ -149,8 +149,8 @@ alone (STATE, the board) is checked by the rulers on commit instead.
 - New behaviour is proven by a test written first — red before the code, green after.
 - After each piece, its own tests. After Sol's fixes, the touched tests again.
 - **Code changed → `pnpm typecheck`, then the battery, once, at the end** — and a resident service whose
-  code changed is restarted (`dxb-verify`). The typecheck covers `packages/` and `apps/`, not `tests/` or
-  `db/seed/` (measured 2026-10-06). The battery: `pnpm construction:battery`, the whole suite in
+  code changed is restarted (`dxb-verify`). The typecheck covers `packages/` and `apps/`, then `tests/` and
+  `db/seed/` (`tsconfig.tests.json`, since 2026-10-06). The battery: `pnpm construction:battery`, the whole suite in
   both halves against the construction's own engine (port 54422), 1,486 tests, about 6 minutes
   (2026-10-04). Launch it detached from a shell whose `oom_score_adj` is 100; green is the line
   `BATTERY_GREEN`. It answers the one question no single test can: did this break anything else.

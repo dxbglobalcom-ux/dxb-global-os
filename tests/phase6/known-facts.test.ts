@@ -122,7 +122,7 @@ describe("known-fact battery — 20 facts end-to-end across the composition", ()
           entry.kind === "artifact"
             ? await commitMemory(
                 db,
-                { artifact: { path: `battery/q${entry.id}.md`, body: entry.fact }, provenance },
+                { facts: [], artifact: { path: `battery/q${entry.id}.md`, body: entry.fact }, provenance },
                 commitDeps,
               )
             : await commitMemory(

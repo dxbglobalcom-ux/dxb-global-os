@@ -137,6 +137,7 @@ describe("per-store round-trips (write → memory_index → recall)", () => {
     const db = getDb();
     const body = `# Roundtrip artifact\nmarker OBS-${AGENT}`;
     const { created } = await commitMemory(db, {
+      facts: [],
       artifact: { path: "reports/roundtrip.md", body },
       provenance,
     });

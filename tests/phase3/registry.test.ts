@@ -25,7 +25,7 @@ async function sweepCostProbes() {
     .where("department", "=", "finance")
     .where("model", "=", "glm-5.2")
     .where("mode", "=", "api")
-    .where("cost_eur", "in", [0.01, 0.03])
+    .where("cost_eur", "in", ["0.01", "0.03"])
     .execute();
 }
 

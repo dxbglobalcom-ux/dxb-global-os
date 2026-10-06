@@ -92,6 +92,36 @@ export interface DepartmentsTable {
   director_id: string | null;
 }
 
+// personas and projects (org family 20260711002000, project family 20260711002300 and their later
+// columns): code reached them with raw sql only, so they were missing here and every typed insert in
+// tests failed (measured 2026-10-06, the first typecheck of tests/). Columns read from the construction
+// engine's information_schema, which the migrations build.
+export interface PersonasTable {
+  id: Generated<string>;
+  employee_id: string;
+  version: number;
+  author: string;
+  body_md: string;
+  quality_gate: Generated<string>;
+  created_at: Timestamptz;
+}
+
+export interface ProjectsTable {
+  id: Generated<string>;
+  slug: string;
+  name: string;
+  purpose: string;
+  strategy_link: string | null;
+  owner_employee_id: string | null;
+  company_id: string | null;
+  status: Generated<string>;
+  health_score: NumericNullable;
+  created_at: Timestamptz;
+  links: Jsonb;
+  purpose_tr: string | null;
+  name_tr: string | null;
+}
+
 export interface AgentsTable {
   id: Generated<string>;
   slug: string;
@@ -543,6 +573,8 @@ export interface DB {
   task_events: TaskEventsTable;
   departments: DepartmentsTable;
   agents: AgentsTable;
+  personas: PersonasTable;
+  projects: ProjectsTable;
   intents: IntentsTable;
   approvals: ApprovalsTable;
   approval_rules: ApprovalRulesTable;
