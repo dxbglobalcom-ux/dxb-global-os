@@ -374,27 +374,27 @@ describe("a locked tool resolved by the system itself (his yes of 2026-10-04)", 
     expect(uax.resolved_at).toBeNull();
   });
 
-  it("(h2) Sol F12: manifest-add verifies the bytes it wrote — a text the serializer cannot keep never replaces the file", async () => {
-    // An own `__proto__` property in a schema survives JSON and the hash, but not the (older) serializer.
+  it("(h2) a schema with an own `__proto__` key is written whole and the written file verifies (Sol F12, fixed 2026-10-06)", async () => {
+    // Until 2026-10-06 the serializer lost an own `__proto__` property and manifest-add refused the text
+    // ("the written manifest does not verify"); the serializer now keeps every own key, so the same lock
+    // is written, and the file manifest-add put down still carries the key.
     const schema = JSON.parse('{"type":"object","properties":{"__proto__":{"type":"string"},"id":{"type":"string"}}}') as unknown;
     const { lockId } = await lockedTool("h2_proto", { description: "The h2_proto tool reads one record.", inputSchema: schema });
     const dir = mkdtempSync(join(tmpdir(), "dxb-manifest-add-"));
     const path = join(dir, "manifest.json");
     writeFileSync(path, readFileSync(join(REPO, "db/seed/tool-pins.manifest.json"), "utf8"));
     const before = readFileSync(path, "utf8");
-    let failed = "";
-    try {
-      execFileSync(process.execPath, ["--experimental-strip-types", "scripts/gateway/manifest-add.ts", String(lockId), "--manifest", path, "--yes"], {
-        cwd: REPO,
-        env: { ...process.env, DXB_COMPANY_URL: CONSTRUCTION_DATABASE_URL },
-        encoding: "utf8",
-        stdio: "pipe",
-      });
-    } catch (err) {
-      failed = String((err as { stderr?: string }).stderr ?? err);
-    }
-    expect(failed).toContain("the written manifest does not verify, the file is unchanged");
-    expect(readFileSync(path, "utf8")).toBe(before);
+    execFileSync(process.execPath, ["--experimental-strip-types", "scripts/gateway/manifest-add.ts", String(lockId), "--manifest", path, "--yes"], {
+      cwd: REPO,
+      env: { ...process.env, DXB_COMPANY_URL: CONSTRUCTION_DATABASE_URL },
+      encoding: "utf8",
+      stdio: "pipe",
+    });
+    const after = readFileSync(path, "utf8");
+    expect(after).not.toBe(before);
+    const written = (JSON.parse(after) as { tools: Array<{ tool: string; inputSchema: { properties: object } }> })
+      .tools.find((t) => t.tool === "h2_proto");
+    expect(written && Object.prototype.hasOwnProperty.call(written.inputSchema.properties, "__proto__")).toBe(true);
   });
 
   it("(h) manifest-add: shows without --yes, vouches with it, and the next check lifts the lock", async () => {
