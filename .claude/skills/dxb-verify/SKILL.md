@@ -42,7 +42,7 @@ a boundary, a security check wherever authorisation, secrets or isolation move.
 
 | Artifact class | Its ruler (runnable, shared by builder and checker) | State today |
 |---|---|---|
-| Code | `pnpm typecheck` + the battery (vitest, both halves) · i18n-purity-check · verify:ledger · gitleaks | typecheck and the battery once at a job's end when code changed (`dxb-team2` §5); gitleaks on every commit; the typecheck covers `tests/` and `db/seed/` too (`tsconfig.tests.json`, 2026-10-06) |
+| Code | `pnpm typecheck` + the battery (vitest, both halves) · i18n-purity-check · verify:ledger · gitleaks | typecheck and the battery when code changed, before the audit (`dxb-team2` §5); gitleaks on every commit; the typecheck covers `tests/` and `db/seed/` too (`tsconfig.tests.json`, 2026-10-06) |
 | Persona files | `tests/personas/persona-ruler.test.ts` (`scripts/persona-ruler.sh`) | built in this commit |
 | Records (STATE, the board, ceo-approvals) | `scripts/governance/ledger-truth.mjs` + `tests/b43/records-truth.ts` (a record may not say his eye is awaited on what the ledger holds accepted; a new acceptance adds its row there or R4 is red) + records parity (`dxb-close-row`) | exists |
 | CEO-visible surfaces | eye test + Design Pass (RULE #0) — a human eye, not a script; reported ⚠ UNVERIFIED until his eye | exists, not a script |
@@ -50,7 +50,7 @@ a boundary, a security check wherever authorisation, secrets or isolation move.
 
 The table is his, holding-wide, on his word *"yaz"* of 2026-09-15 <!-- CEO-OK: ruler-table-holding-wide-2026-09-15 -->.
 
-Every commit runs gitleaks and, for what it touches, the rulers of the records, the opening and the research engine automatically — no ruler green, no commit (`scripts/hooks/pre-commit`). Code's ruler — the typecheck and the battery — runs once at a job's end, not on each commit.
+Every commit runs gitleaks and, for what it touches, the rulers of the records, the opening and the research engine automatically — no ruler green, no commit (`scripts/hooks/pre-commit`). Code's ruler — the typecheck and the battery — runs per job, before the audit and again after a fix that changed code (`dxb-team2` §5), not on each commit.
 
 A second session audits the CEO-visible and the risky work (personas, specs, money and identity
 paths, surfaces) on three things: the order against the diff (what was left out), the ruler output
@@ -84,7 +84,7 @@ An independent agent is handed a **claim plus where to measure it** — never th
 conclusion — and told to **refute** it. It is read-only **by tool**, never by promise: a Claude
 agent limited to reading and searching, or the Codex refuter — launched **only** through
 `scripts/governance/refuter.sh` (gpt-6.1-sol; the lead chooses its effort with `--effort`, `high` when not given — dxb-team2 §4), which
-pins the read-only profile and refuses to run without it. Calling `codex` directly for an audit
+pins the read-only profile and refuses to run without it. The one exception is `dxb-team2` §4's fallback: when Sol cannot be reached on an ordinary job, the `refuter` subagent audits read-only by word, not by tool (it holds Bash), and the report names it so <!-- CEO-OK: dxb-team2-overall-look-fixes-2026-10-06 -->. Calling `codex` directly for an audit
 puts the promise back and takes the tool away: the base config runs unrestricted, measured
 2026-08-16. `refuter.sh --proof` re-prints the evidence that it cannot write. It may run
 measuring commands, never a writing command, and never a test suite (the suites write; the

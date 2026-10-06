@@ -26,11 +26,13 @@ ARRANGE   the lead chooses the hands (§3) and says it in one line
    │
 BUILD     the hands write and run their own tests; the lead verifies every piece and commits it
    │
-SOL       one blind, read-only pass over the job's commits (§4) — A blocks · B fixed now · C in the report
+TEST      code changed → typecheck and the battery (§5), ended before Sol starts
    │
-FIX       a fork or a writing helper fixes; the lead verifies; no second Sol round
+SOL       one blind, read-only pass over the job's commits, the battery's output in hand (§4) —
+          A blocks · B fixed now · C in the report
    │
-TEST      the touched tests; code changed → typecheck and the battery once (§5)
+FIX       a fork or a writing helper fixes; the lead verifies; no second Sol round; the touched tests,
+          typecheck, and the battery again when a fix changed code
    │
 COMMIT the fixes → TELL him in a few lines (§6) → STATE, when nothing is left in hand
 ```
@@ -123,7 +125,7 @@ alone (STATE, the board) is checked by the rulers on commit instead.
   script under `setsid nohup`, its output to the job folder, `EXIT=` on its last line) and wait for
   that line.
 - **The brief — blind, not in the dark:** his words verbatim; the plan's decisions as facts ("this door
-  is closed on purpose"); the range; where the raw test output lies. Never the lead's reasoning, a
+  is closed on purpose"); the range; where the raw test and battery output lies. Never the lead's reasoning, a
   summary, "tests are green", or another auditor's verdict. Its first question: *does this do what he
   asked?*
 - **Its hand:** Sol queries the construction engine itself through its one tool `sql_read`
@@ -148,7 +150,10 @@ alone (STATE, the board) is checked by the rulers on commit instead.
 
 - New behaviour is proven by a test written first — red before the code, green after.
 - After each piece, its own tests. After Sol's fixes, the touched tests again.
-- **Code changed → `pnpm typecheck`, then the battery, once, at the end** — and a resident service whose
+- **Code changed → `pnpm typecheck`, then the battery, before Sol** — Sol reads its output instead of
+  marking it unverified, and reads the engine only after the battery has stopped writing to it
+  <!-- CEO-OK: dxb-team2-overall-look-fixes-2026-10-06 -->; again after the fixes when a fix changed code;
+  and a resident service whose
   code changed is restarted (`dxb-verify`). The typecheck covers `packages/` and `apps/`, then `tests/` and
   `db/seed/` (`tsconfig.tests.json`, since 2026-10-06). The battery: `pnpm construction:battery`, the whole suite in
   both halves against the construction's own engine (port 54422), 1,486 tests, about 6 minutes
@@ -176,7 +181,8 @@ alone (STATE, the board) is checked by the rulers on commit instead.
   hashes or counts beyond the one that names a job.
 - **The job folder** (`.planning/quick/<date>-<slug>/`) holds Sol's report and the raw evidence — only
   for a job that went to Sol. Sol's raw dump (`*.raw`) and its brief (`*brief*.txt`, his words verbatim)
-  stay on the disk and out of git (`.gitignore`); `SOL.md`, the verdict, is committed.
+  stay on the disk and out of git (`.gitignore`); `SOL.md`, the verdict, is committed
+  <!-- CEO-OK: dxb-team2-overall-look-fixes-2026-10-06 -->.
 
 ## 7. Long commands, context and handover
 

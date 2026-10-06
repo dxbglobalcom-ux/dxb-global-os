@@ -2146,5 +2146,13 @@
     "conditions": "The first sentence at 53 % context, asking it into the handover note; the second answering the lead's one-line question whether it is for this session only or permanent in dxb-team2. Registered as his order, not a LAW B acceptance. The third part corrected the lead's note that the gate shuts subagents at 55 %.",
     "session": "Opus 5.5 session f7a2bf71 — heard first-hand, 2026-10-06.",
     "where": ".claude/skills/dxb-team2/SKILL.md §7 · ~/.claude/hooks/dxb-context-gate.py (outside the repo) · tests/hooks/context-gate.test.ts"
+  },
+  "dxb-team2-overall-look-fixes-2026-10-06": {
+    "date": "2026-10-06",
+    "what": "ORDER, accepting the lead's recommendations after the overall look at dxb-team2: (1) dxb-verify names the fallback refuter's exception — read-only by word, not by tool, named in the report; (2) ~/.claude/agents/debugger.md hands a fix to the lead, a fork or a helper-writer, the builder only for a piece that failed twice at high; (3) the battery runs before Sol, which gets its output, and again after the fixes when a fix changed code. Also, the same day, accepting the recommendation of the Fable-review job: Sol's raw dumps (*.raw) and briefs (*brief*.txt) stay on disk and out of git; SOL.md is committed.",
+    "verbatim": "Önerilerine ilgili hepsi. · Önerin ikincisinde önerini kabul ediyorum.",
+    "conditions": "The first sentence answered the lead's four recommendations (the fourth was only a note that the plan warning has not yet been seen on his screen). The second, earlier, answered the three found items of the Fable-review job, accepting the second. Registered as his order, not a LAW B acceptance.",
+    "session": "Opus 5.5 session f0af511e — heard first-hand, 2026-10-06.",
+    "where": ".claude/skills/dxb-team2/SKILL.md §1 §4 §5 §6 · .claude/skills/dxb-verify/SKILL.md · ~/.claude/agents/debugger.md (outside the repo) · .gitignore"
   }
 }
