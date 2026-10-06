@@ -125,14 +125,20 @@ function duplicatePairs(items: Array<{ server: string; tool: string }>): string[
 }
 
 /** Object keys sorted recursively; arrays keep their order (order is meaningful
- *  in JSON Schema — the same rule `canonicalJson` follows when hashing). */
+ *  in JSON Schema — the same rule `canonicalJson` follows when hashing).
+ *  Built with `Object.fromEntries`, never by assigning into `{}`: an assignment to
+ *  the key `__proto__` sets the prototype instead of making a key, so a schema with
+ *  `properties: { "__proto__": … }` lost it and failed its own hash once written
+ *  (auditor, 2026-10-04). `fromEntries` defines every key as an own data property. */
 function sortKeysDeep(value: unknown): unknown {
   if (Array.isArray(value)) return value.map(sortKeysDeep);
   if (value !== null && typeof value === "object") {
     const source = value as Record<string, unknown>;
-    const out: Record<string, unknown> = {};
-    for (const key of Object.keys(source).sort(byName)) out[key] = sortKeysDeep(source[key]);
-    return out;
+    return Object.fromEntries(
+      Object.keys(source)
+        .sort(byName)
+        .map((key) => [key, sortKeysDeep(source[key])]),
+    );
   }
   return value;
 }
@@ -174,27 +180,40 @@ export function buildManifest(entries: ToolInventoryEntry[]): ToolPinsManifest {
   };
 }
 
-/** The manifest's file bytes — deterministic for a given corpus. */
+/** The manifest's file bytes — deterministic for a given corpus.
+ *  The bytes are read back before they are handed out: every tool parsed from
+ *  them must hash to what the tool it came from hashes to, else this throws
+ *  naming `server.tool`. It checks that the serialization is LOSSLESS, not that
+ *  the stored hashes are right (that is `verifyManifest`'s job, and the tests
+ *  write deliberately wrong manifests through here). Every writer goes through
+ *  this function, so no writer can put a file down that disagrees with what it
+ *  was given. */
 export function serializeManifest(manifest: ToolPinsManifest): string {
   const servers: Record<string, number> = emptyCounts();
   for (const server of Object.keys(manifest.servers).sort(byName)) {
     servers[server] = manifest.servers[server];
   }
+  const sorted = manifest.tools
+    .slice()
+    .sort((a, b) => byName(a.server, b.server) || byName(a.tool, b.tool));
   const ordered = {
     about: manifest.about,
     servers,
-    tools: manifest.tools
-      .slice()
-      .sort((a, b) => byName(a.server, b.server) || byName(a.tool, b.tool))
-      .map((t) => ({
-        server: t.server,
-        tool: t.tool,
-        description: t.description,
-        inputSchema: sortKeysDeep(t.inputSchema),
-        schema_hash: t.schema_hash,
-      })),
+    tools: sorted.map((t) => ({
+      server: t.server,
+      tool: t.tool,
+      description: t.description,
+      inputSchema: sortKeysDeep(t.inputSchema),
+      schema_hash: t.schema_hash,
+    })),
   };
-  return `${JSON.stringify(ordered, null, 2)}\n`;
+  const text = `${JSON.stringify(ordered, null, 2)}\n`;
+  const back = (JSON.parse(text) as { tools: Array<Pick<ManifestTool, "description" | "inputSchema">> }).tools;
+  const lost = sorted
+    .filter((t, i) => back[i] === undefined || computeToolHash(t) !== computeToolHash(back[i]))
+    .map(keyOf);
+  if (lost.length > 0) throw new Error(`manifest entry does not survive serialization: ${lost.join(", ")}`);
+  return text;
 }
 
 /** The manifest with one tool's text put in — the locked-tool review's last step (his yes of 2026-10-04,

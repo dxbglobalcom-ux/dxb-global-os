@@ -49,7 +49,8 @@ export async function loadPersonaBody(
     if (start < 0) return "";
     // HTML comments are the file's own bookkeeping — version lines (`<!-- v1 · fable-5 · … -->`),
     // the §12 note, approval markers — never the employee's mind; none reaches a model (B51 move 5,
-    // R14, 2026-10-04). The DB copy and its gate keep the whole file (sync-personas-to-db.sh).
+    // R14, 2026-10-04). The DB copy keeps the body from the header on, comments included
+    // (sync-personas-to-db.sh extract_body); the dossier table above the header goes nowhere.
     return text.slice(start).replace(/<!--[\s\S]*?-->/g, "").replace(/\n{3,}/g, "\n\n").trim();
   } catch {
     return "";

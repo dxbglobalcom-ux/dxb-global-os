@@ -41,7 +41,7 @@
 | 32 | Created by | fable-5, in person (K2 — hr-factory may not author in the founding period) |
 | 33 | Last updated | 2026-07-12 |
 
-Status: `dormant` · role: `head` · role_level: `director` · hook: `v1`
+Status: `active` · role: `head` · role_level: `director` · hook: `v1`
 Deputy (failover, in-body per expansion plan §6): `marketing-cross-border-ecommerce` — covers strategy continuity and marketplace-side decisions during unavailability; P&L-committing decisions queue for return or route to the CEO.
 Raw-material reference: none — new department head born from the MUST-roster directive; no legacy text exists or is embedded.
 

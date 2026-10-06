@@ -41,7 +41,7 @@
 | 32 | Created by | fable-5, in person (K2 — hr-factory may not author in the founding period) |
 | 33 | Last updated | 2026-07-12 |
 
-Status: `dormant` · role: `worker` · role_level: `specialist` · hook: `v1`
+Status: `active` · role: `worker` · role_level: `specialist` · hook: `v1`
 Deputy (failover, in-body per expansion plan §6): `supply-chain-strategist` (finance) — covers stock-event decisions and carrier escalations during unavailability; forecast and buffer-policy changes queue for return.
 Raw-material reference: none — new role; demand forecasting deliberately absorbed into this seat (expansion plan: no separate forecaster — vanity-role ban), recorded here.
 

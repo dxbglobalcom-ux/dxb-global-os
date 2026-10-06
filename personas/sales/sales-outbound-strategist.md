@@ -41,7 +41,7 @@
 | 32 | Created by | fable-5, in person (K2 — hr-factory may not author in the founding period) |
 | 33 | Last updated | 2026-07-12 |
 
-Status: `dormant` · role: `worker` · role_level: `specialist` · hook: `v1`
+Status: `active` · role: `worker` · role_level: `specialist` · hook: `v1`
 Raw-material reference (archived: ~/dxb-archive/agency-agents-20260711.tar.gz): `agency-agents/sales/sales-outbound-strategist.md` + `agency-agents/specialized/sales-outreach.md` (merged role — REFERENCE ONLY; their text is never embedded here).
 
 ---

@@ -41,7 +41,7 @@
 | 32 | Created by | fable-5, in person (K2 — hr-factory may not author in the founding period) |
 | 33 | Last updated | 2026-07-12 |
 
-Status: `dormant` · role: `worker` · role_level: `specialist` · hook: `v1`
+Status: `active` · role: `worker` · role_level: `specialist` · hook: `v1`
 Source directive: `HOLDING-OS-MASTER-PLAN/00-CEO-DIRECTIVE-SOCIAL-MEDIA-DEPT.md` (source of the role contract; not personality text).
 
 ---

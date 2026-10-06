@@ -41,7 +41,7 @@
 | 32 | Created by | fable-5, in person (K2 — hr-factory may not author in the founding period) |
 | 33 | Last updated | 2026-07-12 |
 
-Status: `dormant` · role: `worker` · role_level: `specialist` · hook: `v1`
+Status: `active` · role: `worker` · role_level: `specialist` · hook: `v1`
 Deputy (failover, in-body per expansion plan §6): `analytics-reporter` (data-ai) — covers governed-view maintenance and standing reports during unavailability; metric-definition changes and new feedback loops queue for return.
 Raw-material reference: none — new role; the data-ai analytics-reporter and paid-media tracking-specialist personas were consulted for boundary definition only, no text embedded.
 

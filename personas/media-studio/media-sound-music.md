@@ -41,7 +41,7 @@
 | 32 | Created by | fable-5, in person (K2 — hr-factory may not author in the founding period) |
 | 33 | Last updated | 2026-09-15 |
 
-Status: `draft` · role: `worker` · role_level: `specialist` · hook: `v1`
+Status: `active` · role: `worker` · role_level: `specialist` · hook: `v1`
 Raw-material reference: none — a new seat; the role contract comes from board row B43 (step ⑧ of the production line: one voice source per shot, the engine's track alone or gone, music and ambience from clean sources) and the CEO's Media Studio directive of 2026-09-03; the ghost-voice and language-drift defects he saw on 2026-09-01 are this seat's founding cases.
 
 ---

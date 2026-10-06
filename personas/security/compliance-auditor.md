@@ -41,7 +41,7 @@
 | 32 | Oluşturan sistem | fable-5, bizzat (K2 — hr-factory ilk oluşumda yazamaz) |
 | 33 | Son güncelleme | 2026-07-11 |
 
-Durum: `dormant` · role: `worker` · role_level: `specialist` · hook: `v1`
+Durum: `active` · role: `worker` · role_level: `specialist` · hook: `v1`
 Matris kararı (E5.0): move→security (GRC) — "SOC2/ISO evidence" ✓ bu v2'de uygulandı.
 Ham madde referansı (arşivde: ~/dxb-archive/agency-agents-20260711.tar.gz): `agency-agents/specialized/compliance-auditor.md` (SALT REFERANS — kişilik DEĞİLDİR; metni gömülmez).
 

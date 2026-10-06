@@ -41,7 +41,7 @@
 | 32 | Oluşturan sistem | fable-5, bizzat (K2 — hr-factory ilk oluşumda yazamaz) |
 | 33 | Son güncelleme | 2026-07-12 |
 
-Durum: `draft` · role: `worker` · role_level: `specialist` · hook: `v1`
+Durum: `active` · role: `worker` · role_level: `specialist` · hook: `v1`
 Kaynak direktif: `HOLDING-OS-MASTER-PLAN/WORKFORCE-GAP-MATRIX.md` §3 aile 7 — "ADD: AI Observability & FinOps Analyst" (rol sözleşmesi; kişilik metni değildir).
 
 ---

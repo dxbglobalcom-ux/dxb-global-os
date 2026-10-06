@@ -6,7 +6,7 @@
 #
 # Kullanım:
 #   scripts/sync-personas-to-db.sh <dosya>...        # verilen dosyaları submit eder (yeni sürüm açar)
-#   scripts/sync-personas-to-db.sh --verify [dosya]  # yazmaz; DB son sürüm ↔ dosya gövdesi hash karşılaştırır
+#   scripts/sync-personas-to-db.sh --verify [dosya]  # yazmaz; DB son sürüm ↔ dosya gövdesi hash ve durum satırı ↔ agents.employment_status karşılaştırır
 #   scripts/sync-personas-to-db.sh --bind [dosya]    # BINDS through fn_persona_bind; --dry-run to only list
 #   (dosya verilmezse personas/*/*.md tümü taranır)
 # Gate verdikti AYRI adımdır: fn_persona_gate (Fable 5-soru kontrolü sonrası).
@@ -152,6 +152,17 @@ for f in "${files[@]}"; do
       echo "MATCH $slug — DB↔dosya gövde eş (md5 $file_hash)"; verified=$((verified+1))
     else
       echo "DIFF  $slug — DB($db_hash) ≠ dosya($file_hash) — sync gerekli"; mismatched=$((mismatched+1))
+    fi
+    # The dossier's status line is a copy of agents.employment_status (it flows DB → file, never back).
+    # 211 of 213 had gone stale by 2026-10-06 (dormant/draft against an all-active company), so verify
+    # now measures it too: a stale copy is a DIFF, and the file's line is what gets corrected.
+    file_status="$(grep -m1 -oP '^(Durum|Status): `\K[^`]+' "$f" || true)"
+    if [ -n "$file_status" ]; then
+      db_status="$("${PSQL[@]}" -c "SELECT employment_status FROM agents WHERE id='$emp_id';")"
+      if [ "$file_status" != "$db_status" ]; then
+        echo "DIFF  $slug — status: dosya($file_status) ≠ DB($db_status) — dosyanın satırı düzeltilir"
+        mismatched=$((mismatched+1))
+      fi
     fi
   else
     # The psql exit code is NOT trusted alone here: with a heredoc the client can still return 0

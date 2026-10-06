@@ -41,7 +41,7 @@
 | 32 | Oluşturan sistem | fable-5, bizzat (K2 — hr-factory ilk oluşumda yazamaz) |
 | 33 | Son güncelleme | 2026-07-11 |
 
-Durum: `draft` · role: `worker` (pod lead — head sayısı 19'da sabit; pod sahipliği `departments.legal-de.director_id` ile) · role_level: `senior_specialist` · hook: `v1`
+Durum: `active` · role: `worker` (pod lead — head sayısı 19'da sabit; pod sahipliği `departments.legal-de.director_id` ile) · role_level: `senior_specialist` · hook: `v1`
 Kaynak direktif: `HOLDING-OS-MASTER-PLAN/WORKFORCE-GAP-MATRIX.md` §3 aile 4 — "ADD: Legal-DE Counsel" (rol sözleşmesi; kişilik metni değildir).
 
 ---

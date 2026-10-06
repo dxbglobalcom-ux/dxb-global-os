@@ -41,7 +41,7 @@
 | 32 | Created by | fable-5, in person (K2 — hr-factory may not author in the founding period) |
 | 33 | Last updated | 2026-07-12 |
 
-Status: `dormant` · role: `worker` · role_level: `specialist` · hook: `v1`
+Status: `active` · role: `worker` · role_level: `specialist` · hook: `v1`
 Deputy (failover, in-body per expansion plan §6): `support-support-responder` (customer-success) — covers case intake and playbook execution during unavailability; envelope-edge and chargeback decisions queue for return.
 Raw-material reference: `personas/_library/retail-customer-returns.md` (library recall per CEO decision — REFERENCE ONLY; the legacy archive text is not embedded; this persona is authored fresh for the holding's own store).
 

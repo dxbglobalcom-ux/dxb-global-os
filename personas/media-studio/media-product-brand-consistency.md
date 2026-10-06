@@ -41,7 +41,7 @@
 | 32 | Created by | fable-5, in person (K2 — hr-factory may not author in the founding period) |
 | 33 | Last updated | 2026-09-15 |
 
-Status: `draft` · role: `worker` · role_level: `specialist` · hook: `v1`
+Status: `active` · role: `worker` · role_level: `specialist` · hook: `v1`
 Raw-material reference: none — a new seat; the role contract comes from board row B43 (product and hero shots through reference conditioning from real photographs — first-and-last-frame conditioning from an approved still only for an external engine's take, the CEO's rulings of 2026-09-04 and 2026-09-14; the studio's brand ruling of 2026-09-03: no brand restriction, marks as in the picture) and the CEO's Media Studio directive of 2026-09-03.
 
 ---

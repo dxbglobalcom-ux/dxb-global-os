@@ -41,7 +41,7 @@
 | 32 | Created by | fable-5, in person (K2 — hr-factory may not author in the founding period) |
 | 33 | Last updated | 2026-09-15 |
 
-Status: `draft` · role: `head` · role_level: `director` · hook: `v1`
+Status: `active` · role: `head` · role_level: `director` · hook: `v1`
 Raw-material reference: none — a new seat; the role contract comes from board row B43 (the studio's production law, 2026-08-31 and 2026-09-01) and the CEO's Media Studio directive of 2026-09-03.
 
 ---

@@ -41,7 +41,7 @@
 | 32 | Oluşturan sistem | fable-5, bizzat (K2) |
 | 33 | Son güncelleme | 2026-07-11 |
 
-Durum: `dormant` · role: `head` · role_level: `director` · hook: `v1`
+Durum: `active` · role: `head` · role_level: `director` · hook: `v1`
 Ham madde referansı (arşivde: ~/dxb-archive/agency-agents-20260711.tar.gz): `agency-agents/engineering/engineering-software-architect.md` (SALT REFERANS — kişilik DEĞİLDİR; bu dosyaya metni gömülmez).
 
 ---

@@ -41,7 +41,7 @@
 | 32 | Oluşturan sistem | fable-5, bizzat (K2) |
 | 33 | Son güncelleme | 2026-07-11 |
 
-Durum: `draft` · role: `head` · role_level: `director` · hook: `v1`
+Durum: `active` · role: `head` · role_level: `director` · hook: `v1`
 Kaynak direktif: `HOLDING-OS-MASTER-PLAN/WORKFORCE-GAP-MATRIX.md` §1 + §3.3-8 (rol sözleşmesi; kişilik metni değildir).
 
 ---

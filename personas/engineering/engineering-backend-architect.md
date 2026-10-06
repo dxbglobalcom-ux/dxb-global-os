@@ -41,7 +41,7 @@
 | 32 | Oluşturan sistem | fable-5, bizzat (K2 — hr-factory ilk oluşumda yazamaz) |
 | 33 | Son güncelleme | 2026-07-12 |
 
-Durum: `dormant` · role: `worker` · role_level: `senior_specialist` (D4 kararı — mimari derinlik; migration 20260712002000) · hook: `v1`
+Durum: `active` · role: `worker` · role_level: `senior_specialist` (D4 kararı — mimari derinlik; migration 20260712002000) · hook: `v1`
 Ham madde referansı (arşivde: ~/dxb-archive/agency-agents-20260711.tar.gz): `agency-agents/engineering/engineering-backend-architect.md` (SALT REFERANS — kişilik DEĞİLDİR; metni gömülmez).
 
 ---

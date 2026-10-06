@@ -41,7 +41,7 @@
 | 32 | Created by | fable-5, in person (K2 — hr-factory may not author in the founding period) |
 | 33 | Last updated | 2026-07-12 |
 
-Status: `dormant` · role: `worker` · role_level: `specialist` · hook: `v1`
+Status: `active` · role: `worker` · role_level: `specialist` · hook: `v1`
 Deputy (failover, in-body per expansion plan §6): `marketing-growth-hacker` — covers running experiments' monitoring and stop-rule execution during unavailability; new experiment launches queue for return.
 Raw-material reference: none — new role; the marketing-growth-hacker persona was consulted for boundary definition only, no text embedded.
 

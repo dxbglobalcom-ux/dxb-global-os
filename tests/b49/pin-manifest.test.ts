@@ -450,4 +450,29 @@ describe("B49 the pin manifest", () => {
     expect(replaced.tools).toHaveLength(2);
     expect(replaced.tools.find((x) => x.server === "a.b")!.description).toBe("changed");
   });
+
+  it("(15) a schema with an OWN key named `__proto__` survives serialize → read → verify under the same hash", () => {
+    // The auditor's case (2026-10-04): the serializer rebuilt objects by assigning into `{}`, and an
+    // assignment to `__proto__` sets the prototype instead of making a key — one entry verified before
+    // serialization and failed `manifest hash mismatch` after. JSON.parse makes it a real own key.
+    const inputSchema = JSON.parse(
+      '{"type":"object","properties":{"__proto__":{"type":"string"},"b":{"type":"number"}}}',
+    ) as unknown;
+    const manifest = buildManifest([{ server: "s", tool: "t", description: "proto key", inputSchema }]);
+    expect(verifyManifest(manifest)).toHaveLength(1);
+    const text = serializeManifest(manifest);
+    const back = readManifestText(text);
+    expect(verifyManifest(back)).toHaveLength(1);
+    expect(back.tools[0].schema_hash).toBe(computeToolHash({ description: "proto key", inputSchema }));
+    const properties = (back.tools[0].inputSchema as { properties: object }).properties;
+    expect(Object.keys(properties)).toEqual(["__proto__", "b"]);
+    // the bytes are deterministic: serializing what was read gives the same file
+    expect(serializeManifest(back)).toBe(text);
+    // and the serializer re-reads its own bytes: a value JSON cannot carry (here a function, which
+    // the hash sees and the file drops) is refused by name instead of written as a file that lies.
+    const lossy = buildManifest([
+      { server: "s", tool: "t", description: "d", inputSchema: { type: "object", default: () => 1 } },
+    ]);
+    expect(() => serializeManifest(lossy)).toThrow(/does not survive serialization: s\.t/);
+  });
 });

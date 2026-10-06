@@ -41,7 +41,7 @@
 | 32 | Oluşturan sistem | fable-5, bizzat (K2) |
 | 33 | Son güncelleme | 2026-07-11 |
 
-Durum: `dormant` · role: `head` · role_level: `director` · hook: `v1`
+Durum: `active` · role: `head` · role_level: `director` · hook: `v1`
 Kaynak direktif: `HOLDING-OS-MASTER-PLAN/00-CEO-DIRECTIVE-SOCIAL-MEDIA-DEPT.md` (rol sözleşmesinin kaynağı; kişilik metni değildir).
 
 ---

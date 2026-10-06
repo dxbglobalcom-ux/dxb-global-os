@@ -41,7 +41,7 @@
 | 32 | Created by | fable-5, in person (K2 — hr-factory may not author in the founding period) |
 | 33 | Last updated | 2026-07-12 |
 
-Status: `dormant` · role: `worker` · role_level: `specialist` · hook: `v1`
+Status: `active` · role: `worker` · role_level: `specialist` · hook: `v1`
 Deputy (failover, in-body per expansion plan §6): `merchandising-pricing-manager` — covers live-deal evaluation during unavailability using this seat's registry and models; new supplier outreach pauses.
 Raw-material reference: none — new role, Fable independent discovery; no legacy text exists or is embedded.
 

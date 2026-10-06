@@ -41,7 +41,7 @@
 | 32 | Created by | fable-5, in person (K2 — hr-factory may not author in the founding period) |
 | 33 | Last updated | 2026-09-15 |
 
-Status: `draft` · role: `worker` · role_level: `specialist` · hook: `v1`
+Status: `active` · role: `worker` · role_level: `specialist` · hook: `v1`
 Raw-material reference: none — a new seat; the role contract comes from board row B43 (script and direction as step one of the line) and the CEO's Media Studio directive of 2026-09-03.
 
 ---

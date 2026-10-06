@@ -41,7 +41,7 @@
 | 32 | Created by | fable-5, in person (K2 — hr-factory may not author in the founding period) |
 | 33 | Last updated | 2026-09-15 |
 
-Status: `draft` · role: `worker` · role_level: `specialist` · hook: `v1`
+Status: `active` · role: `worker` · role_level: `specialist` · hook: `v1`
 Raw-material reference: none — a new seat; the role contract comes from board row B43 (step ⑦ of the production line: colour grade and film grain at native draft resolution — the finish that reads as footage; step ⑩, enlargement, only after the CEO has accepted the draft and asked for it, LAW D 2026-09-03; the research the CEO ordered for a local, free, single-tool equivalent of the paid video upscalers) and the CEO's Media Studio directive of 2026-09-03.
 
 ---

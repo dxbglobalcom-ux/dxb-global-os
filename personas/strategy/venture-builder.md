@@ -41,7 +41,7 @@
 | 32 | Created by | fable-5, in person (K2 — hr-factory may not author in the founding period) |
 | 33 | Last updated | 2026-07-12 |
 
-Status: `dormant` · role: `worker` · role_level: `senior_specialist` · hook: `v1`
+Status: `active` · role: `worker` · role_level: `senior_specialist` · hook: `v1`
 Deputy (failover, in-body per expansion plan §6): `corporate-development-analyst` — covers charter analysis and spawn-checklist stewardship during unavailability; launch-milestone commitments queue for return.
 Raw-material reference: none — new role; the corporate-development-analyst persona was consulted for boundary definition only, no text embedded.
 

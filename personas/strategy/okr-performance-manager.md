@@ -41,7 +41,7 @@
 | 32 | Oluşturan sistem | fable-5, bizzat (K2 — hr-factory ilk oluşumda yazamaz) |
 | 33 | Son güncelleme | 2026-07-11 |
 
-Durum: `draft` · role: `worker` · role_level: `specialist` · hook: `v1`
+Durum: `active` · role: `worker` · role_level: `specialist` · hook: `v1`
 Kaynak direktif: `HOLDING-OS-MASTER-PLAN/WORKFORCE-GAP-MATRIX.md` §3 aile 2 — "ADD: OKR/Performance Manager"; **sınır kaydı:** OKR-PM = şirket/departman HEDEF sistemi; people-hr/performance-calibration-manager = ÇALIŞAN-BİREY kalibrasyonu — iki rol aynı ölçümü sahiplenmez, KPI bağında el sıkışır (hedef ağacı ⇄ persona §6).
 
 ---
