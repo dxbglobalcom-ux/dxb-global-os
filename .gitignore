@@ -99,3 +99,9 @@ __pycache__/
 # (XiaoHongShu xsec_token, a presigned S3 link, Crossref keys gitleaks flags) — kept on disk, never in git.
 /.planning/research/answers/20260926-0234-astra-6-vs-fable-5-1-deep-run-raw/
 /.planning/research/answers/20260926-1608-astra-6-vs-fable-5-1-k1-live-run/
+
+# Sol's raw session dumps and the briefs sent to it (which carry the CEO's words verbatim) stay on this
+# disk, in their job folder, and out of git; the job's SOL.md — the verdict — is what is committed
+# (CEO 2026-10-06, accepting the recommendation of the Fable-review job).
+.planning/quick/**/*.raw
+.planning/quick/**/*brief*.txt

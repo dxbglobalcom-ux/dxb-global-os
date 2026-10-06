@@ -175,7 +175,8 @@ alone (STATE, the board) is checked by the rulers on commit instead.
   finished and waits for his eye, what is next, what waits on him. No conversation, no quotes, no
   hashes or counts beyond the one that names a job.
 - **The job folder** (`.planning/quick/<date>-<slug>/`) holds Sol's report and the raw evidence — only
-  for a job that went to Sol.
+  for a job that went to Sol. Sol's raw dump (`*.raw`) and its brief (`*brief*.txt`, his words verbatim)
+  stay on the disk and out of git (`.gitignore`); `SOL.md`, the verdict, is committed.
 
 ## 7. Long commands, context and handover
 

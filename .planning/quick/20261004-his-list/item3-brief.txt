@@ -1,9 +1,0 @@
-Repository: /home/dxb/DxB Global OS (an AI-run holding; ~214 employee personas).
-
-The CEO must give a verdict on "move 5 — the prompt audit" of board row B51 (.planning/board-rows/B51.md). The 2026-09-23/24 prompt audit (.planning/quick/20260923-prompt-audit/REPORT.md, PROPOSED.diff, slices/, verify-runtime.py) fixed the construction's own rules but left "Bucket 3 — runtime" (employee personas and some code) unapplied, waiting for B51. Prepare what he needs:
-1. Re-count TODAY each Bucket-3 row (R1-R17, R6/R7 for Hamza = personas/ceo/agents-orchestrator.md, the code rows C2-1…C2-12) — run verify-runtime.py only if it is read-only, else bounded greps; old count vs today's.
-2. Per row: one plain sentence of what it does to an employee's behaviour today and what changes if applied (e.g., R1 fixed reasoning order; R16 "Declines with a reason" vs his no-refusal law of 2026-08-20; R17 issue quotas that make a model invent findings). Mark text-in-persona vs code (packages/hr/src/template.ts, packages/voice/src/persona.ts etc.).
-3. How persona text reaches the live employee (see .claude/skills/dxb-persona/SKILL.md sync path): what applying takes (edit N files + sync + which test/gate proves it); work size.
-4. Group into at most 3 bundles he can say yes/no to, each with your recommendation and the risk if left.
-
-RETURN (final answer, English, ≤ 700 words): the table (row · today's count · effect · text/code), the bundles with recommendation, the work size, anything UNVERIFIED.

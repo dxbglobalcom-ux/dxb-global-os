@@ -1,9 +1,0 @@
-THE CEO'S WORDS (verbatim, 2026-10-06; ledger handover-at-the-clean-break-2026-10-06): "Her zaman en güzel yerde devret yani en rahat hiçbir sorun olmayacak yerde devret. İsterse o iş %55'e kadar uzarsa da uzasın. %58'e de uzarsa uzasın ama en clean yerde her zaman devretmek önemlidir." — and, asked whether permanent: "bu kalıcı kural olabilir tabii ki … DXP Team 2 … sistemiyle de ilgili … yazabilirsin."
-
-THIS AUDIT — one pass, medium (a text-only rule change). Range: a33c7831..db391cb6 (`git -C "/home/dxb/DxB Global OS" diff a33c7831..db391cb6`).
-
-FACTS: ~/.claude/hooks/dxb-context-gate.py refuses the Agent tool from 55 % (read it). The door's §7 is the only place the handover moment is written.
-
-REFUTE: 1. Does the new §7 paragraph say what his words say, and nothing more? 2. Does it contradict the context gate's real behaviour (read the hook's thresholds and messages), the core .claude/CLAUDE.md, or another line of the door? 3. Is the ledger entry valid and does the marker resolve?
-
-Output per claim: Claim / Verdict / Finding (file:line, scenario, impact) / Evidence / Correction required. Grade A · B · C.

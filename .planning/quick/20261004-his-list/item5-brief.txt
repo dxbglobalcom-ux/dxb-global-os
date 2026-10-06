@@ -1,8 +1,0 @@
-The construction sessions of /home/dxb/DxB Global OS have an auto-memory at /home/dxb/.claude/projects/-home-dxb-DxB-Global-OS/memory/ (67 files + MEMORY.md). The CEO will decide whether to clean it. Known: "Burj Al Arab" appears in eye-test-lessons.md and phase8-design-brief.md with a contradiction; 8 entries name paths not found in the repository (unchecked); dxb-crew pointers were removed 2026-10-03. Audit EVERY memory file:
-1. Every path, door/skill (dxb-*), hook, script, command or agent it names: does it exist today? (repo, ~/.claude/skills, ~/.claude/hooks, ~/.claude/agents, ~/tools, ~/.local/bin, .claude/skills/). List each missing one with memory file:line.
-2. Contradictions between memory files, or with the current rules: /home/dxb/DxB Global OS/.claude/CLAUDE.md, .claude/skills/dxb-*/SKILL.md, scripts/governance/ceo-approvals.json (the CEO's dated words; the later governs). Quote both sides with file:line; explain the Burj Al Arab one concretely.
-3. Files that only restate a door or CLAUDE.md.
-4. Per problematic file: keep · fix (which line) · delete, with a one-line reason. Memory should hold machine facts, the CEO's own words and non-obvious lessons; not what the repository records; a pointer to something gone is wrong.
-5. MEMORY.md index lines vs files, both ways.
-
-RETURN (final answer, English, ≤ 800 words): table file · problem · evidence · recommendation; counts per recommendation; anything UNVERIFIED.
