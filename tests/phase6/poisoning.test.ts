@@ -109,7 +109,6 @@ describe("rule 1 — deliberate poisoning lands quarantined (gate criterion 1, w
   it("web-origin artifact note carries the quarantined marker in its frontmatter", async () => {
     const db = getDb();
     const { created } = await commitMemory(db, {
-      facts: [],
       artifact: { path: "reports/summer-campaign.md", body: "# Fetched web report\ncontent here" },
       provenance: provenance("web"),
     });

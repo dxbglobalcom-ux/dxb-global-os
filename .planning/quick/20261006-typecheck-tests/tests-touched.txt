@@ -1,0 +1,106 @@
+
+ RUN  v3.2.6 /home/dxb/DxB Global OS
+
+[global-setup] construction engine 7690665340837392423/5 (postgres) — verified on the connection that does the work.
+(node:1039498) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+stdout | tests/phase6/known-facts.test.ts > known-fact battery — 20 facts end-to-end across the composition > BATTERY >= 18/20: commit through the door, recall through the full pipeline, verify bodies
+Q01 fact      -> pgvector HIT
+Q02 fact      -> pgvector HIT
+Q03 fact      -> pgvector HIT
+Q04 fact      -> pgvector HIT
+Q05 fact      -> pgvector HIT
+Q06 relation  -> graphify HIT
+Q07 relation  -> graphify HIT
+Q08 relation  -> graphify HIT
+Q09 relation  -> graphify HIT
+Q10 relation  -> graphify HIT
+Q11 artifact  -> obsidian HIT
+Q12 artifact  -> obsidian HIT
+Q13 artifact  -> obsidian HIT
+Q14 artifact  -> obsidian HIT
+Q15 artifact  -> obsidian HIT
+Q16 procedure -> notebook HIT
+Q17 procedure -> notebook HIT
+Q18 procedure -> notebook HIT
+Q19 procedure -> notebook HIT
+Q20 procedure -> notebook HIT
+BATTERY=20/20
+
+ ✓ tests/phase6/known-facts.test.ts (4 tests) 1133ms
+   ✓ known-fact battery — 20 facts end-to-end across the composition > BATTERY >= 18/20: commit through the door, recall through the full pipeline, verify bodies  895ms
+(node:1039596) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/e10/spawn-binding.test.ts (6 tests) 286ms
+(node:1039651) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/b43/dispatch-book.test.ts (20 tests) 262ms
+(node:1039719) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+stdout | tests/phase6/context-rot.test.ts > context-rot — 50-step control vs managed (master step 9) > CONTROL: budget disabled → the same 50 steps provably exceed the hard band
+control final context estimate: 37018 tokens (hard 16000)
+
+stdout | tests/phase6/context-rot.test.ts > context-rot — 50-step control vs managed (master step 9) > MANAGED: band held per step, compressions evented, evicted facts recall back, log written
+managed: 4 compressions at steps [17, 28, 38, 48]
+
+stdout | tests/phase6/context-rot.test.ts > context-rot — 50-step control vs managed (master step 9) > MANAGED: band held per step, compressions evented, evicted facts recall back, log written
+evicted planted facts: 10, 25, 40 — offload rows: 3
+
+ ✓ tests/phase6/context-rot.test.ts (4 tests | 1 skipped) 128ms
+(node:1039747) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/phase6/adapters-roundtrip.test.ts (7 tests) 224ms
+(node:1039776) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/r23/unified-constitution.test.ts (4 tests) 196ms
+(node:1039814) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/b43/assigned-seats.test.ts (6 tests) 141ms
+(node:1039916) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/phase6/recall.test.ts (7 tests | 1 skipped) 80ms
+(node:1039969) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/phase3/registry.test.ts (5 tests) 86ms
+(node:1040054) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/phase6/memory-drawer.test.ts (14 tests) 99ms
+ ✓ tests/phase6/pgvector.test.ts (5 tests) 42ms
+(node:1040108) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/b43/w9-road-proof.test.ts (3 tests) 77ms
+(node:1040208) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/phase6/contradiction.test.ts (4 tests | 1 skipped) 76ms
+ ✓ tests/phase7/watchdog.test.ts (13 tests) 141ms
+(node:1040311) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/c9/proactive-briefing.test.ts (17 tests) 55ms
+ ✓ tests/b43/brain-truth.test.ts (6 tests) 70ms
+(node:1040366) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/phase6/poisoning.test.ts (7 tests) 52ms
+(node:1040393) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+stderr | tests/phase7/drift-review.test.ts > drift review — what the manifest may vouch for > a missing or malformed manifest gives no entries — every external drift then locks
+[pin-check] tool manifest unreadable (/tmp/pin-manifest-yIEa4P/absent.json): Error: ENOENT: no such file or directory, open '/tmp/pin-manifest-yIEa4P/absent.json' — no external drift can be re-approved
+[pin-check] tool manifest unreadable (/tmp/pin-manifest-yIEa4P/bad.json): SyntaxError: Expected property name or '}' in JSON at position 1 (line 1 column 2) — no external drift can be re-approved
+
+ ✓ tests/phase7/drift-review.test.ts (23 tests) 35ms
+(node:1040425) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+stderr | tests/phase6/memory-unreachable.test.ts > both answer lanes hand the flag to the producer > chat: a failed recall reaches Hamza as memoryUnreachable
+[memory] recall failed on the chat lane — recall: memory ref broken for index x at 'artifact/x.md' — ENOENT
+
+stderr | tests/phase6/memory-unreachable.test.ts > both answer lanes hand the flag to the producer > voice: a failed recall reaches Hamza as memoryUnreachable
+[memory] recall failed on the voice lane — recall: memory ref broken for index x at 'artifact/x.md' — ENOENT
+
+ ✓ tests/phase6/memory-unreachable.test.ts (6 tests) 30ms
+ ✓ tests/c9/engine-owner.test.ts (3 tests) 18ms
+
+ Test Files  20 passed (20)
+      Tests  161 passed | 3 skipped (164)
+   Start at  18:53:03
+   Duration  9.28s (transform 441ms, setup 0ms, collect 3.82s, tests 3.23s, environment 2ms, prepare 622ms)
+
+[global-teardown] handed back 136 ops:live receipt(s) this run issued
