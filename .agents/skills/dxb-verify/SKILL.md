@@ -83,7 +83,7 @@ pasted into the evidence, and the blast radius measured.
 An independent agent is handed a **claim plus where to measure it** — never the author's
 conclusion — and told to **refute** it. It is read-only **by tool**, never by promise: a Claude
 agent limited to reading and searching, or the Codex refuter — launched **only** through
-`scripts/governance/refuter.sh` (gpt-6.1-sol; the effort is routed from the job's score card — no audit starts without `--card`, an `--effort` may raise it, never lower it — `audit-card.mjs`, 2026-10-01), which
+`scripts/governance/refuter.sh` (gpt-6.1-sol; the lead chooses its effort with `--effort`, `high` when not given — dxb-team2 §4), which
 pins the read-only profile and refuses to run without it. Calling `codex` directly for an audit
 puts the promise back and takes the tool away: the base config runs unrestricted, measured
 2026-08-16. `refuter.sh --proof` re-prints the evidence that it cannot write. It may run
@@ -92,8 +92,8 @@ author runs them and hands over the whole raw output). It queries the constructi
 itself through its one tool `sql_read` as the read-only role `sol_reader` (never the company's —
 refused by identity), so database evidence is gathered by the auditor's hand, not handed over. Record the audit-trail row counts before and after; a difference invalidates the audit.
 
-It fires once on **every construction job**, at the depth the job's score card sets (light Sol
-`medium` · normal `high` · critical `xhigh`) — the author never approves his
+It fires once on **every construction job**, at the depth the lead chooses (dxb-team2 §4) — the
+author never approves his
 own work (CEO 2026-09-28 <!-- CEO-OK: audit-twin-every-job-2026-09-28 -->; the procedure is
 `dxb-team2`). It also fires on the acceptance session, on a row whose closing evidence has a leg
 the machine cannot check, and on a defect the CEO caught — then it sweeps the **class**.

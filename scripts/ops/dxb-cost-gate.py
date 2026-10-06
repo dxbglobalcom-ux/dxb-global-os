@@ -935,7 +935,7 @@ COLD_RESUME = ("`SendMessage` to %s resumes a subagent idle for %d min — its p
                "a resume re-writes its whole context (%s tokens) as new tokens "
                "(measured 2026-09-26/27: six resumes, 2.4 M)")
 COLD_RESUME_ADVICE = ("Open a FRESH `builder` (description `guarded: …`) with the verifier's A/B list, "
-                      "the lane's done-list and the diff to read; a fresh writer starts at ~22 k.")
+                      "the piece's spec and the diff to read; a fresh writer starts at ~22 k.")
 
 
 def refuse(where, target, reason, advice):

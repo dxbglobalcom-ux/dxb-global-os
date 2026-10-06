@@ -1,0 +1,11 @@
+
+ RUN  v3.2.6 /home/dxb/DxB Global OS
+
+[global-setup] construction engine 7690665340837392423/5 (postgres) — verified on the connection that does the work.
+ ✓ tests/hooks/effort-warn.test.ts (28 tests) 606ms
+
+ Test Files  1 passed (1)
+      Tests  28 passed (28)
+   Start at  16:47:41
+   Duration  869ms (transform 50ms, setup 0ms, collect 15ms, tests 606ms, environment 0ms, prepare 30ms)
+

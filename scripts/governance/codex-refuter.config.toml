@@ -14,8 +14,8 @@
 # and disarming those was not what he approved.
 
 # CEO 2026-10-01: the auditor moves to gpt-6.1-sol ("denetçi 6.1 olsun tmm"), after the exam in
-# .planning/quick/20261001-auditor-exam/RESULT.md; the effort is routed from the job's score card
-# (scripts/governance/audit-card.mjs).
+# .planning/quick/20261001-auditor-exam/RESULT.md; the lead chooses the effort per audit
+# (refuter.sh --effort, high when not given; CEO 2026-10-06).
 model = "gpt-6.1-sol"
 model_reasoning_effort = "high"
 

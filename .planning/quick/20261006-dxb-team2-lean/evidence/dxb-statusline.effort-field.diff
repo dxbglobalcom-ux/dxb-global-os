@@ -1,0 +1,12 @@
+--- "/home/dxb/DxB Global OS/.planning/quick/20261006-dxb-team2-lean/evidence/dxb-statusline.before-effort-field.js"	2026-10-06 15:00:12.127775361 +0200
++++ /home/dxb/.claude/hooks/dxb-statusline.js	2026-10-06 16:44:48.342497109 +0200
+@@ -81,6 +81,9 @@
+       cwd: data.workspace?.current_dir || null,
+       ts: new Date().toISOString(),
+     };
++    // the live /effort level, read by .claude/hooks/dxb-effort-warn.py (CEO 2026-10-06)
++    const effort = data.effort?.level;
++    if (['low', 'medium', 'high', 'xhigh', 'max'].includes(effort)) rec.effort = effort;
+     const tmp = path.join(dir, `${sid}.json.tmp`);
+     fs.writeFileSync(tmp, JSON.stringify(rec));
+     fs.renameSync(tmp, path.join(dir, `${sid}.json`));

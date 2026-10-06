@@ -12,22 +12,17 @@
 # audit.
 #
 # The auditor is gpt-6.1-sol (CEO 2026-10-01, after the auditor exam; gpt-6-sol
-# before it); its effort is routed from the job's score card.
+# before it). The lead chooses its effort (CEO 2026-10-06): high by default,
+# xhigh for money, database, security, approval or governance work, medium for a
+# text-only change — dxb-team2 owns that rule; this door only bounds the level.
 #
 # Usage:
-#   scripts/governance/refuter.sh --card CARD.md "<claim + where to measure it>"          # effort from the card
-#   scripts/governance/refuter.sh --card CARD.md --effort xhigh "<claim + where …>"       # raise it, never lower
-#   scripts/governance/refuter.sh --proof                                                 # prove it cannot write
-#   scripts/governance/refuter.sh --install-profile                                       # copy the tracked profile into ~/.codex
+#   scripts/governance/refuter.sh "<claim + where to measure it>"                  # effort high
+#   scripts/governance/refuter.sh --effort xhigh "<claim + where to measure it>"   # medium, high or xhigh
+#   scripts/governance/refuter.sh --proof                                          # prove it cannot write
+#   scripts/governance/refuter.sh --install-profile                                # copy the tracked profile into ~/.codex
 #
-# THE SCORE CARD GATE (CEO 2026-10-01, "tmm makineyi de kur"). No audit starts
-# without the job's score card: scripts/governance/audit-card.mjs reads it,
-# checks the card's range is real and non-empty, sets the effort
-# (light medium · normal high · critical xhigh), refuses an --effort beneath it,
-# and shows Sol the card for information: Sol audits at the level the card
-# gives and never re-grades it (CEO 2026-10-03, "kalıcı olsun"). There is no
-# silent `high` default any more. Each launch is logged to
-# ~/.local/state/dxb/audit-cards.log (the class budgets are measured from it).
+# Each launch, every retry included, is one row of ~/.local/state/dxb/audits.log.
 #
 # THE AUDITOR'S OWN HAND (dxb-team2 job 1, CEO 2026-09-28 "önerin tmm"). The
 # profile starts one MCP server, `dxbdb`, whose one tool `sql_read` runs a
@@ -40,12 +35,10 @@
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
-CALLER_PWD="$PWD"
 cd "$ROOT"
 
 PROFILE="refuter"
-EFFORT=""
-CARD=""
+EFFORT="high"
 while :; do
   case "${1:-}" in
     --effort)
@@ -53,27 +46,15 @@ while :; do
         medium|high|xhigh) EFFORT="$2"; shift 2 ;;
         *) echo "REFUTER_FAIL: --effort takes medium, high or xhigh." >&2; exit 1 ;;
       esac ;;
-    --card)
-      [ -n "${2:-}" ] || { echo "REFUTER_FAIL: --card takes the path of the job's score card." >&2; exit 1; }
-      case "$2" in /*) CARD="$2" ;; *) CARD="$CALLER_PWD/$2" ;; esac
-      shift 2 ;;
     *) break ;;
   esac
 done
 
 # The gate runs before anything else for an audit, so a refused audit costs nothing.
-ROUTE=""
 case "${1:-}" in
   --proof|--install-profile) ;;
   *)
-    if [ -z "$CARD" ]; then
-      echo "REFUTER_FAIL: no score card — an audit starts only with --card <file> (dxb-team2 §3; CEO 2026-10-01)." >&2
-      exit 1
-    fi
-    ROUTE="$(node "$ROOT/scripts/governance/audit-card.mjs" check "$CARD" ${EFFORT:+--effort "$EFFORT"})" || exit 1
-    EFFORT="$(printf '%s' "$ROUTE" | node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>console.log(JSON.parse(s).effort))')"
-
-    # What may follow the card: an ALLOW-LIST of `codex exec` options and exactly one prompt (or
+    # What may follow the effort: an ALLOW-LIST of `codex exec` options and exactly one prompt (or
     # "-" for stdin). Anything else is refused, because a forwarded -c/--config, -s/--sandbox,
     # -m/--model, -p/--profile, --enable or --dangerously-* would override what the gate and the
     # profile just fixed — the effort, the sandbox, the model, the MCP inventory (Sol's audit of
@@ -101,7 +82,7 @@ case "${1:-}" in
             [ $# -eq 0 ] || { echo "REFUTER_FAIL: nothing may follow the prompt after '--'." >&2; exit 1; } ;;
         -) [ "$HAVE_PROMPT" -eq 0 ] || { echo "REFUTER_FAIL: more than one prompt given (an -i takes one file; repeat -i for more)." >&2; exit 1; }
            PROMPT_ARG="-"; HAVE_PROMPT=1; shift ;;
-        -*) echo "REFUTER_FAIL: '$1' is not passed to the auditor — only -C/--cd, --skip-git-repo-check, --ephemeral, --json, --color, -o/--output-last-message, --output-schema and -i/--image (one file per -i; repeat it for more) are; the effort, model, sandbox and servers are fixed by the card and the profile." >&2
+        -*) echo "REFUTER_FAIL: '$1' is not passed to the auditor — only -C/--cd, --skip-git-repo-check, --ephemeral, --json, --color, -o/--output-last-message, --output-schema and -i/--image (one file per -i; repeat it for more) are; the effort, model, sandbox and servers are fixed by --effort and the profile." >&2
             exit 1 ;;
         *) [ "$HAVE_PROMPT" -eq 0 ] || { echo "REFUTER_FAIL: more than one prompt given (an -i takes one file; repeat -i for more)." >&2; exit 1; }
            PROMPT_ARG="$1"; HAVE_PROMPT=1; shift ;;
@@ -234,26 +215,22 @@ if [ "${1:-}" = "--proof" ]; then
   exit 0
 fi
 
-# The card goes in front of the brief (the prompt argument, or stdin for "-").
-BLOCK="$(printf '%s' "$ROUTE" | node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>process.stdout.write(JSON.parse(s).brief))'; printf x)"
-BLOCK="${BLOCK%x}"
+# The prompt is the brief alone (the prompt argument, or stdin for "-").
 if [ "$PROMPT_ARG" = "-" ]; then BRIEF="$(cat; printf x)"; BRIEF="${BRIEF%x}"; else BRIEF="$PROMPT_ARG"; fi
 if [ -z "${BRIEF//[[:space:]]/}" ]; then
   echo "REFUTER_FAIL: the brief is empty — give the auditor a claim and where to measure it." >&2
   exit 1
 fi
-PROMPT="$BLOCK$BRIEF"
+PROMPT="$BRIEF"
 
 LOG_DIR="$HOME/.local/state/dxb"; mkdir -p "$LOG_DIR"
-ROUTE_LOG="$(printf '%s' "$ROUTE" | node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>{const r=JSON.parse(s);delete r.brief;console.log(JSON.stringify(r))})')"
-CARD_SHA="$(sha256sum "$CARD" | cut -c1-16)"
-echo "AUDIT_CARD class=$(printf '%s' "$ROUTE" | node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>{const r=JSON.parse(s);console.log(`${r.class} total=${r.total} effort=${r.effort}`)})')" >&2
+echo "AUDIT effort=$EFFORT" >&2
 
 # OpenAI can answer "Selected model is at capacity" in the middle of an audit (measured 2026-10-01
 # 17:44, one of eight Sol 6.1 runs that day; Codex does not retry it). The CEO: "sol 6.1 normal şekilde
 # kullanılması lazım bir hata vermemesi lazım". So the audit is run again, whole and blind, after a
 # wait — three times at most — before the door's fallback applies (dxb-team2 §2). Every launch,
-# retries included, is one log row (§7's budgets are summed from it).
+# retries included, is one row of audits.log.
 read -r -a WAITS <<< "${DXB_REFUTER_RETRY_WAITS:-60 180 300}"
 WAITS=("${WAITS[@]:0:3}")
 ERRF=""; OUTF=""
@@ -261,7 +238,7 @@ trap 'rm -f ${ERRF:+"$ERRF"} ${OUTF:+"$OUTF"}' EXIT
 ERRF="$(mktemp)"; OUTF="$(mktemp)"
 attempt=0
 while :; do
-  printf '%s\t%s\t%s\t%s\ttry=%s\n' "$(date -Iseconds)" "$CARD_SHA" "$CARD" "$ROUTE_LOG" "$((attempt + 1))" >> "$LOG_DIR/audit-cards.log"
+  printf '%s\t%s\ttry=%s\n' "$(date -Iseconds)" "$EFFORT" "$((attempt + 1))" >> "$LOG_DIR/audits.log"
   set +e
   codex -p "$PROFILE" "${REACH[@]}" -c "model_reasoning_effort=\"$EFFORT\"" exec "${OPTS[@]}" -- "$PROMPT" < /dev/null 2> "$ERRF" | tee "$OUTF"
   st=("${PIPESTATUS[@]}")

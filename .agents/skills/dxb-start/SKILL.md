@@ -41,7 +41,7 @@ open them to answer *"why was this decided"*, never to learn the current state.
 |---|---|
 | `HOLDING-OS-MASTER-PLAN/` | the plan, once — the specs, his directives (`00-CEO-DIRECTIVE-*`), the open-work board |
 | `docs/ceo-directives/` | his most recent written orders |
-| `.planning/` | `STATE.md` (today's photo) · `board-rows/` (each row's full record) · `quick/` (each job's card, done-list, probes) · `STATE-ARCHIVE.md` (history) |
+| `.planning/` | `STATE.md` (today's photo) · `board-rows/` (each row's full record) · `quick/` (each audited job's Sol report and evidence) · `STATE-ARCHIVE.md` (history) |
 | `scripts/governance/` | `ceo-approvals.json` (what he has approved, in his words) · the rulers · `refuter.sh` (Sol's only door) |
 | `apps/` | `dashboard` (his screen) · `jarvis` (voice) |
 | `packages/` | the engine — kernel, orchestrator, gateway, hook, hr, memory-router, observability, outbox-executor (the scheduler), revenue, shared, voice, dxb-mcp (the house bus) |

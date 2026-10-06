@@ -1,0 +1,661 @@
+
+ RUN  v3.2.6 /home/dxb/DxB Global OS
+
+[global-setup] construction engine 7690665340837392423/5 (postgres) — verified on the connection that does the work.
+ ❯ tests/hooks/effort-warn.test.ts (28 tests | 27 failed) 265ms
+   × no mode: the hook says nothing > a session with no mode is silent, whatever its level 14ms
+     → python3: can't open file '/home/dxb/DxB Global OS/.claude/hooks/dxb-effort-warn.py': [Errno 2] No such file or directory
+: expected 2 to be +0 // Object.is equality
+   × no mode: the hook says nothing > another session's mode does not reach this session 9ms
+     → python3: can't open file '/home/dxb/DxB Global OS/.claude/hooks/dxb-effort-warn.py': [Errno 2] No such file or directory
+: expected 2 to be +0 // Object.is equality
+   × plan mode warns to switch to max until the live level is max > the CLI answers one line and writes the mode file 0600 in a 0700 folder 9ms
+     → python3: can't open file '/home/dxb/DxB Global OS/.claude/hooks/dxb-effort-warn.py': [Errno 2] No such file or directory
+: expected 2 to be +0 // Object.is equality
+   × plan mode warns to switch to max until the live level is max > last step at high: the max line, the level named, no file until he switches, the build command 10ms
+     → python3: can't open file '/home/dxb/DxB Global OS/.claude/hooks/dxb-effort-warn.py': [Errno 2] No such file or directory
+: expected 2 to be +0 // Object.is equality
+   × plan mode warns to switch to max until the live level is max > last step at high but a NEWER status line record at max: silent (he has switched) 11ms
+     → python3: can't open file '/home/dxb/DxB Global OS/.claude/hooks/dxb-effort-warn.py': [Errno 2] No such file or directory
+: expected 2 to be +0 // Object.is equality
+   × plan mode warns to switch to max until the live level is max > an OLDER record at max but a newer step at high: the max line 11ms
+     → python3: can't open file '/home/dxb/DxB Global OS/.claude/hooks/dxb-effort-warn.py': [Errno 2] No such file or directory
+: expected 2 to be +0 // Object.is equality
+   × plan mode warns to switch to max until the live level is max > last step at max and no record: silent 9ms
+     → python3: can't open file '/home/dxb/DxB Global OS/.claude/hooks/dxb-effort-warn.py': [Errno 2] No such file or directory
+: expected 2 to be +0 // Object.is equality
+   × plan mode warns to switch to max until the live level is max > nothing known (no record, no transcript): the max line naming an unknown level 8ms
+     → python3: can't open file '/home/dxb/DxB Global OS/.claude/hooks/dxb-effort-warn.py': [Errno 2] No such file or directory
+: expected 2 to be +0 // Object.is equality
+   × plan mode warns to switch to max until the live level is max > a record whose session_id field differs is ignored 9ms
+     → python3: can't open file '/home/dxb/DxB Global OS/.claude/hooks/dxb-effort-warn.py': [Errno 2] No such file or directory
+: expected 2 to be +0 // Object.is equality
+   × plan mode warns to switch to max until the live level is max > only the transcript's tail is read, and its cut first line is tolerated 10ms
+     → python3: can't open file '/home/dxb/DxB Global OS/.claude/hooks/dxb-effort-warn.py': [Errno 2] No such file or directory
+: expected 2 to be +0 // Object.is equality
+   × build mode warns to switch to high until the live level is high > the CLI answers one line 11ms
+     → python3: can't open file '/home/dxb/DxB Global OS/.claude/hooks/dxb-effort-warn.py': [Errno 2] No such file or directory
+: expected 2 to be +0 // Object.is equality
+   × build mode warns to switch to high until the live level is high > at max: the high line, no code until he switches, the off command 9ms
+     → python3: can't open file '/home/dxb/DxB Global OS/.claude/hooks/dxb-effort-warn.py': [Errno 2] No such file or directory
+: expected 2 to be +0 // Object.is equality
+   × build mode warns to switch to high until the live level is high > at high: silent 10ms
+     → python3: can't open file '/home/dxb/DxB Global OS/.claude/hooks/dxb-effort-warn.py': [Errno 2] No such file or directory
+: expected 2 to be +0 // Object.is equality
+   × build mode warns to switch to high until the live level is high > a newer record at high beats an older step at max: silent 10ms
+     → python3: can't open file '/home/dxb/DxB Global OS/.claude/hooks/dxb-effort-warn.py': [Errno 2] No such file or directory
+: expected 2 to be +0 // Object.is equality
+   × off removes the mode > off removes this session's mode only, and the next prompt is silent 9ms
+     → python3: can't open file '/home/dxb/DxB Global OS/.claude/hooks/dxb-effort-warn.py': [Errno 2] No such file or directory
+: expected 2 to be +0 // Object.is equality
+   × off removes the mode > off with no mode set is not an error 9ms
+     → python3: can't open file '/home/dxb/DxB Global OS/.claude/hooks/dxb-effort-warn.py': [Errno 2] No such file or directory
+: expected 2 to be +0 // Object.is equality
+   × only a trusted folder and a regular file count as a mode > a link at the mode file is no mode 10ms
+     → python3: can't open file '/home/dxb/DxB Global OS/.claude/hooks/dxb-effort-warn.py': [Errno 2] No such file or directory
+: expected 2 to be +0 // Object.is equality
+   × only a trusted folder and a regular file count as a mode > a FIFO at the mode file is no mode, and does not block the hook 14ms
+     → python3: can't open file '/home/dxb/DxB Global OS/.claude/hooks/dxb-effort-warn.py': [Errno 2] No such file or directory
+: expected 2 to be +0 // Object.is equality
+   × only a trusted folder and a regular file count as a mode > a mode folder that is a link is no mode 10ms
+     → python3: can't open file '/home/dxb/DxB Global OS/.claude/hooks/dxb-effort-warn.py': [Errno 2] No such file or directory
+: expected 2 to be +0 // Object.is equality
+   × only a trusted folder and a regular file count as a mode > a group-writable mode folder is no mode 10ms
+     → python3: can't open file '/home/dxb/DxB Global OS/.claude/hooks/dxb-effort-warn.py': [Errno 2] No such file or directory
+: expected 2 to be +0 // Object.is equality
+   × only a trusted folder and a regular file count as a mode > the CLI writes through a link at the mode file by replacing it, never through it 9ms
+     → python3: can't open file '/home/dxb/DxB Global OS/.claude/hooks/dxb-effort-warn.py': [Errno 2] No such file or directory
+: expected 2 to be +0 // Object.is equality
+   ✓ a session id shaped like a path names nothing > the CLI refuses it with exit 2 and writes nothing 9ms
+   × a session id shaped like a path names nothing > the hook is silent for it, even with a file standing where the path points 8ms
+     → python3: can't open file '/home/dxb/DxB Global OS/.claude/hooks/dxb-effort-warn.py': [Errno 2] No such file or directory
+: expected 2 to be +0 // Object.is equality
+   × as a hook it never fails a session > garbage stdin: exit 0, nothing on stdout or stderr 8ms
+     → python3: can't open file '/home/dxb/DxB Global OS/.claude/hooks/dxb-effort-warn.py': [Errno 2] No such file or directory
+: expected 2 to be +0 // Object.is equality
+   × as a hook it never fails a session > empty stdin: exit 0, nothing on stdout or stderr 9ms
+     → python3: can't open file '/home/dxb/DxB Global OS/.claude/hooks/dxb-effort-warn.py': [Errno 2] No such file or directory
+: expected 2 to be +0 // Object.is equality
+   × as a hook it never fails a session > a non-object JSON: exit 0, silent 9ms
+     → python3: can't open file '/home/dxb/DxB Global OS/.claude/hooks/dxb-effort-warn.py': [Errno 2] No such file or directory
+: expected 2 to be +0 // Object.is equality
+   × the CLI > without CLAUDE_CODE_SESSION_ID exits 2 with a reason 10ms
+     → expected 'python3: can\'t open file \'/home/dxb…' to contain 'CLAUDE_CODE_SESSION_ID'
+   × settings.json registers the hook > as the first command of UserPromptSubmit, before no-laziness.sh 1ms
+     → expected { type: 'command', …(1) } to deeply equal { type: 'command', …(1) }
+
+⎯⎯⎯⎯⎯⎯ Failed Tests 27 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/hooks/effort-warn.test.ts > no mode: the hook says nothing > a session with no mode is silent, whatever its level
+AssertionError: python3: can't open file '/home/dxb/DxB Global OS/.claude/hooks/dxb-effort-warn.py': [Errno 2] No such file or directory
+: expected 2 to be +0 // Object.is equality
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- 0[39m
+[31m+ 2[39m
+
+ ❯ hook tests/hooks/effort-warn.test.ts:84:30
+     82|   });
+     83|   expect(r.error, "the hook did not finish in time").toBeUndefined();
+     84|   expect(r.status, r.stderr).toBe(0);
+       |                              ^
+     85|   expect(r.stderr).toBe("");
+     86|   return r.stdout;
+ ❯ tests/hooks/effort-warn.test.ts:112:12
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/27]⎯
+
+ FAIL  tests/hooks/effort-warn.test.ts > no mode: the hook says nothing > another session's mode does not reach this session
+AssertionError: python3: can't open file '/home/dxb/DxB Global OS/.claude/hooks/dxb-effort-warn.py': [Errno 2] No such file or directory
+: expected 2 to be +0 // Object.is equality
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- 0[39m
+[31m+ 2[39m
+
+ ❯ setMode tests/hooks/effort-warn.test.ts:105:30
+    103| function setMode(dir: string, mode: string, sid = SID) {
+    104|   const r = cli(dir, mode, sid);
+    105|   expect(r.status, r.stderr).toBe(0);
+       |                              ^
+    106|   return r;
+    107| }
+ ❯ tests/hooks/effort-warn.test.ts:116:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/27]⎯
+
+ FAIL  tests/hooks/effort-warn.test.ts > plan mode warns to switch to max until the live level is max > the CLI answers one line and writes the mode file 0600 in a 0700 folder
+AssertionError: python3: can't open file '/home/dxb/DxB Global OS/.claude/hooks/dxb-effort-warn.py': [Errno 2] No such file or directory
+: expected 2 to be +0 // Object.is equality
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- 0[39m
+[31m+ 2[39m
+
+ ❯ setMode tests/hooks/effort-warn.test.ts:105:30
+    103| function setMode(dir: string, mode: string, sid = SID) {
+    104|   const r = cli(dir, mode, sid);
+    105|   expect(r.status, r.stderr).toBe(0);
+       |                              ^
+    106|   return r;
+    107| }
+ ❯ tests/hooks/effort-warn.test.ts:124:15
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/27]⎯
+
+ FAIL  tests/hooks/effort-warn.test.ts > plan mode warns to switch to max until the live level is max > last step at high: the max line, the level named, no file until he switches, the build command
+AssertionError: python3: can't open file '/home/dxb/DxB Global OS/.claude/hooks/dxb-effort-warn.py': [Errno 2] No such file or directory
+: expected 2 to be +0 // Object.is equality
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- 0[39m
+[31m+ 2[39m
+
+ ❯ setMode tests/hooks/effort-warn.test.ts:105:30
+    103| function setMode(dir: string, mode: string, sid = SID) {
+    104|   const r = cli(dir, mode, sid);
+    105|   expect(r.status, r.stderr).toBe(0);
+       |                              ^
+    106|   return r;
+    107| }
+ ❯ tests/hooks/effort-warn.test.ts:132:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/27]⎯
+
+ FAIL  tests/hooks/effort-warn.test.ts > plan mode warns to switch to max until the live level is max > last step at high but a NEWER status line record at max: silent (he has switched)
+AssertionError: python3: can't open file '/home/dxb/DxB Global OS/.claude/hooks/dxb-effort-warn.py': [Errno 2] No such file or directory
+: expected 2 to be +0 // Object.is equality
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- 0[39m
+[31m+ 2[39m
+
+ ❯ setMode tests/hooks/effort-warn.test.ts:105:30
+    103| function setMode(dir: string, mode: string, sid = SID) {
+    104|   const r = cli(dir, mode, sid);
+    105|   expect(r.status, r.stderr).toBe(0);
+       |                              ^
+    106|   return r;
+    107| }
+ ❯ tests/hooks/effort-warn.test.ts:143:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/27]⎯
+
+ FAIL  tests/hooks/effort-warn.test.ts > plan mode warns to switch to max until the live level is max > an OLDER record at max but a newer step at high: the max line
+AssertionError: python3: can't open file '/home/dxb/DxB Global OS/.claude/hooks/dxb-effort-warn.py': [Errno 2] No such file or directory
+: expected 2 to be +0 // Object.is equality
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- 0[39m
+[31m+ 2[39m
+
+ ❯ setMode tests/hooks/effort-warn.test.ts:105:30
+    103| function setMode(dir: string, mode: string, sid = SID) {
+    104|   const r = cli(dir, mode, sid);
+    105|   expect(r.status, r.stderr).toBe(0);
+       |                              ^
+    106|   return r;
+    107| }
+ ❯ tests/hooks/effort-warn.test.ts:149:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/27]⎯
+
+ FAIL  tests/hooks/effort-warn.test.ts > plan mode warns to switch to max until the live level is max > last step at max and no record: silent
+AssertionError: python3: can't open file '/home/dxb/DxB Global OS/.claude/hooks/dxb-effort-warn.py': [Errno 2] No such file or directory
+: expected 2 to be +0 // Object.is equality
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- 0[39m
+[31m+ 2[39m
+
+ ❯ setMode tests/hooks/effort-warn.test.ts:105:30
+    103| function setMode(dir: string, mode: string, sid = SID) {
+    104|   const r = cli(dir, mode, sid);
+    105|   expect(r.status, r.stderr).toBe(0);
+       |                              ^
+    106|   return r;
+    107| }
+ ❯ tests/hooks/effort-warn.test.ts:157:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/27]⎯
+
+ FAIL  tests/hooks/effort-warn.test.ts > plan mode warns to switch to max until the live level is max > nothing known (no record, no transcript): the max line naming an unknown level
+AssertionError: python3: can't open file '/home/dxb/DxB Global OS/.claude/hooks/dxb-effort-warn.py': [Errno 2] No such file or directory
+: expected 2 to be +0 // Object.is equality
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- 0[39m
+[31m+ 2[39m
+
+ ❯ setMode tests/hooks/effort-warn.test.ts:105:30
+    103| function setMode(dir: string, mode: string, sid = SID) {
+    104|   const r = cli(dir, mode, sid);
+    105|   expect(r.status, r.stderr).toBe(0);
+       |                              ^
+    106|   return r;
+    107| }
+ ❯ tests/hooks/effort-warn.test.ts:162:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/27]⎯
+
+ FAIL  tests/hooks/effort-warn.test.ts > plan mode warns to switch to max until the live level is max > a record whose session_id field differs is ignored
+AssertionError: python3: can't open file '/home/dxb/DxB Global OS/.claude/hooks/dxb-effort-warn.py': [Errno 2] No such file or directory
+: expected 2 to be +0 // Object.is equality
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- 0[39m
+[31m+ 2[39m
+
+ ❯ setMode tests/hooks/effort-warn.test.ts:105:30
+    103| function setMode(dir: string, mode: string, sid = SID) {
+    104|   const r = cli(dir, mode, sid);
+    105|   expect(r.status, r.stderr).toBe(0);
+       |                              ^
+    106|   return r;
+    107| }
+ ❯ tests/hooks/effort-warn.test.ts:169:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/27]⎯
+
+ FAIL  tests/hooks/effort-warn.test.ts > plan mode warns to switch to max until the live level is max > only the transcript's tail is read, and its cut first line is tolerated
+AssertionError: python3: can't open file '/home/dxb/DxB Global OS/.claude/hooks/dxb-effort-warn.py': [Errno 2] No such file or directory
+: expected 2 to be +0 // Object.is equality
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- 0[39m
+[31m+ 2[39m
+
+ ❯ setMode tests/hooks/effort-warn.test.ts:105:30
+    103| function setMode(dir: string, mode: string, sid = SID) {
+    104|   const r = cli(dir, mode, sid);
+    105|   expect(r.status, r.stderr).toBe(0);
+       |                              ^
+    106|   return r;
+    107| }
+ ❯ tests/hooks/effort-warn.test.ts:176:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[10/27]⎯
+
+ FAIL  tests/hooks/effort-warn.test.ts > build mode warns to switch to high until the live level is high > the CLI answers one line
+AssertionError: python3: can't open file '/home/dxb/DxB Global OS/.claude/hooks/dxb-effort-warn.py': [Errno 2] No such file or directory
+: expected 2 to be +0 // Object.is equality
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- 0[39m
+[31m+ 2[39m
+
+ ❯ setMode tests/hooks/effort-warn.test.ts:105:30
+    103| function setMode(dir: string, mode: string, sid = SID) {
+    104|   const r = cli(dir, mode, sid);
+    105|   expect(r.status, r.stderr).toBe(0);
+       |                              ^
+    106|   return r;
+    107| }
+ ❯ tests/hooks/effort-warn.test.ts:183:15
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[11/27]⎯
+
+ FAIL  tests/hooks/effort-warn.test.ts > build mode warns to switch to high until the live level is high > at max: the high line, no code until he switches, the off command
+AssertionError: python3: can't open file '/home/dxb/DxB Global OS/.claude/hooks/dxb-effort-warn.py': [Errno 2] No such file or directory
+: expected 2 to be +0 // Object.is equality
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- 0[39m
+[31m+ 2[39m
+
+ ❯ setMode tests/hooks/effort-warn.test.ts:105:30
+    103| function setMode(dir: string, mode: string, sid = SID) {
+    104|   const r = cli(dir, mode, sid);
+    105|   expect(r.status, r.stderr).toBe(0);
+       |                              ^
+    106|   return r;
+    107| }
+ ❯ tests/hooks/effort-warn.test.ts:188:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[12/27]⎯
+
+ FAIL  tests/hooks/effort-warn.test.ts > build mode warns to switch to high until the live level is high > at high: silent
+AssertionError: python3: can't open file '/home/dxb/DxB Global OS/.claude/hooks/dxb-effort-warn.py': [Errno 2] No such file or directory
+: expected 2 to be +0 // Object.is equality
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- 0[39m
+[31m+ 2[39m
+
+ ❯ setMode tests/hooks/effort-warn.test.ts:105:30
+    103| function setMode(dir: string, mode: string, sid = SID) {
+    104|   const r = cli(dir, mode, sid);
+    105|   expect(r.status, r.stderr).toBe(0);
+       |                              ^
+    106|   return r;
+    107| }
+ ❯ tests/hooks/effort-warn.test.ts:200:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[13/27]⎯
+
+ FAIL  tests/hooks/effort-warn.test.ts > build mode warns to switch to high until the live level is high > a newer record at high beats an older step at max: silent
+AssertionError: python3: can't open file '/home/dxb/DxB Global OS/.claude/hooks/dxb-effort-warn.py': [Errno 2] No such file or directory
+: expected 2 to be +0 // Object.is equality
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- 0[39m
+[31m+ 2[39m
+
+ ❯ setMode tests/hooks/effort-warn.test.ts:105:30
+    103| function setMode(dir: string, mode: string, sid = SID) {
+    104|   const r = cli(dir, mode, sid);
+    105|   expect(r.status, r.stderr).toBe(0);
+       |                              ^
+    106|   return r;
+    107| }
+ ❯ tests/hooks/effort-warn.test.ts:205:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[14/27]⎯
+
+ FAIL  tests/hooks/effort-warn.test.ts > off removes the mode > off removes this session's mode only, and the next prompt is silent
+AssertionError: python3: can't open file '/home/dxb/DxB Global OS/.claude/hooks/dxb-effort-warn.py': [Errno 2] No such file or directory
+: expected 2 to be +0 // Object.is equality
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- 0[39m
+[31m+ 2[39m
+
+ ❯ setMode tests/hooks/effort-warn.test.ts:105:30
+    103| function setMode(dir: string, mode: string, sid = SID) {
+    104|   const r = cli(dir, mode, sid);
+    105|   expect(r.status, r.stderr).toBe(0);
+       |                              ^
+    106|   return r;
+    107| }
+ ❯ tests/hooks/effort-warn.test.ts:214:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[15/27]⎯
+
+ FAIL  tests/hooks/effort-warn.test.ts > off removes the mode > off with no mode set is not an error
+AssertionError: python3: can't open file '/home/dxb/DxB Global OS/.claude/hooks/dxb-effort-warn.py': [Errno 2] No such file or directory
+: expected 2 to be +0 // Object.is equality
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- 0[39m
+[31m+ 2[39m
+
+ ❯ setMode tests/hooks/effort-warn.test.ts:105:30
+    103| function setMode(dir: string, mode: string, sid = SID) {
+    104|   const r = cli(dir, mode, sid);
+    105|   expect(r.status, r.stderr).toBe(0);
+       |                              ^
+    106|   return r;
+    107| }
+ ❯ tests/hooks/effort-warn.test.ts:223:12
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[16/27]⎯
+
+ FAIL  tests/hooks/effort-warn.test.ts > only a trusted folder and a regular file count as a mode > a link at the mode file is no mode
+AssertionError: python3: can't open file '/home/dxb/DxB Global OS/.claude/hooks/dxb-effort-warn.py': [Errno 2] No such file or directory
+: expected 2 to be +0 // Object.is equality
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- 0[39m
+[31m+ 2[39m
+
+ ❯ hook tests/hooks/effort-warn.test.ts:84:30
+     82|   });
+     83|   expect(r.error, "the hook did not finish in time").toBeUndefined();
+     84|   expect(r.status, r.stderr).toBe(0);
+       |                              ^
+     85|   expect(r.stderr).toBe("");
+     86|   return r.stdout;
+ ❯ tests/hooks/effort-warn.test.ts:233:12
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[17/27]⎯
+
+ FAIL  tests/hooks/effort-warn.test.ts > only a trusted folder and a regular file count as a mode > a FIFO at the mode file is no mode, and does not block the hook
+AssertionError: python3: can't open file '/home/dxb/DxB Global OS/.claude/hooks/dxb-effort-warn.py': [Errno 2] No such file or directory
+: expected 2 to be +0 // Object.is equality
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- 0[39m
+[31m+ 2[39m
+
+ ❯ hook tests/hooks/effort-warn.test.ts:84:30
+     82|   });
+     83|   expect(r.error, "the hook did not finish in time").toBeUndefined();
+     84|   expect(r.status, r.stderr).toBe(0);
+       |                              ^
+     85|   expect(r.stderr).toBe("");
+     86|   return r.stdout;
+ ❯ tests/hooks/effort-warn.test.ts:239:12
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[18/27]⎯
+
+ FAIL  tests/hooks/effort-warn.test.ts > only a trusted folder and a regular file count as a mode > a mode folder that is a link is no mode
+AssertionError: python3: can't open file '/home/dxb/DxB Global OS/.claude/hooks/dxb-effort-warn.py': [Errno 2] No such file or directory
+: expected 2 to be +0 // Object.is equality
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- 0[39m
+[31m+ 2[39m
+
+ ❯ hook tests/hooks/effort-warn.test.ts:84:30
+     82|   });
+     83|   expect(r.error, "the hook did not finish in time").toBeUndefined();
+     84|   expect(r.status, r.stderr).toBe(0);
+       |                              ^
+     85|   expect(r.stderr).toBe("");
+     86|   return r.stdout;
+ ❯ tests/hooks/effort-warn.test.ts:247:12
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[19/27]⎯
+
+ FAIL  tests/hooks/effort-warn.test.ts > only a trusted folder and a regular file count as a mode > a group-writable mode folder is no mode
+AssertionError: python3: can't open file '/home/dxb/DxB Global OS/.claude/hooks/dxb-effort-warn.py': [Errno 2] No such file or directory
+: expected 2 to be +0 // Object.is equality
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- 0[39m
+[31m+ 2[39m
+
+ ❯ setMode tests/hooks/effort-warn.test.ts:105:30
+    103| function setMode(dir: string, mode: string, sid = SID) {
+    104|   const r = cli(dir, mode, sid);
+    105|   expect(r.status, r.stderr).toBe(0);
+       |                              ^
+    106|   return r;
+    107| }
+ ❯ tests/hooks/effort-warn.test.ts:251:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[20/27]⎯
+
+ FAIL  tests/hooks/effort-warn.test.ts > only a trusted folder and a regular file count as a mode > the CLI writes through a link at the mode file by replacing it, never through it
+AssertionError: python3: can't open file '/home/dxb/DxB Global OS/.claude/hooks/dxb-effort-warn.py': [Errno 2] No such file or directory
+: expected 2 to be +0 // Object.is equality
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- 0[39m
+[31m+ 2[39m
+
+ ❯ setMode tests/hooks/effort-warn.test.ts:105:30
+    103| function setMode(dir: string, mode: string, sid = SID) {
+    104|   const r = cli(dir, mode, sid);
+    105|   expect(r.status, r.stderr).toBe(0);
+       |                              ^
+    106|   return r;
+    107| }
+ ❯ tests/hooks/effort-warn.test.ts:261:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[21/27]⎯
+
+ FAIL  tests/hooks/effort-warn.test.ts > a session id shaped like a path names nothing > the hook is silent for it, even with a file standing where the path points
+AssertionError: python3: can't open file '/home/dxb/DxB Global OS/.claude/hooks/dxb-effort-warn.py': [Errno 2] No such file or directory
+: expected 2 to be +0 // Object.is equality
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- 0[39m
+[31m+ 2[39m
+
+ ❯ hook tests/hooks/effort-warn.test.ts:84:30
+     82|   });
+     83|   expect(r.error, "the hook did not finish in time").toBeUndefined();
+     84|   expect(r.status, r.stderr).toBe(0);
+       |                              ^
+     85|   expect(r.stderr).toBe("");
+     86|   return r.stdout;
+ ❯ tests/hooks/effort-warn.test.ts:278:12
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[22/27]⎯
+
+ FAIL  tests/hooks/effort-warn.test.ts > as a hook it never fails a session > garbage stdin: exit 0, nothing on stdout or stderr
+AssertionError: python3: can't open file '/home/dxb/DxB Global OS/.claude/hooks/dxb-effort-warn.py': [Errno 2] No such file or directory
+: expected 2 to be +0 // Object.is equality
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- 0[39m
+[31m+ 2[39m
+
+ ❯ hook tests/hooks/effort-warn.test.ts:84:30
+     82|   });
+     83|   expect(r.error, "the hook did not finish in time").toBeUndefined();
+     84|   expect(r.status, r.stderr).toBe(0);
+       |                              ^
+     85|   expect(r.stderr).toBe("");
+     86|   return r.stdout;
+ ❯ tests/hooks/effort-warn.test.ts:284:12
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[23/27]⎯
+
+ FAIL  tests/hooks/effort-warn.test.ts > as a hook it never fails a session > empty stdin: exit 0, nothing on stdout or stderr
+AssertionError: python3: can't open file '/home/dxb/DxB Global OS/.claude/hooks/dxb-effort-warn.py': [Errno 2] No such file or directory
+: expected 2 to be +0 // Object.is equality
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- 0[39m
+[31m+ 2[39m
+
+ ❯ hook tests/hooks/effort-warn.test.ts:84:30
+     82|   });
+     83|   expect(r.error, "the hook did not finish in time").toBeUndefined();
+     84|   expect(r.status, r.stderr).toBe(0);
+       |                              ^
+     85|   expect(r.stderr).toBe("");
+     86|   return r.stdout;
+ ❯ tests/hooks/effort-warn.test.ts:287:12
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[24/27]⎯
+
+ FAIL  tests/hooks/effort-warn.test.ts > as a hook it never fails a session > a non-object JSON: exit 0, silent
+AssertionError: python3: can't open file '/home/dxb/DxB Global OS/.claude/hooks/dxb-effort-warn.py': [Errno 2] No such file or directory
+: expected 2 to be +0 // Object.is equality
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- 0[39m
+[31m+ 2[39m
+
+ ❯ hook tests/hooks/effort-warn.test.ts:84:30
+     82|   });
+     83|   expect(r.error, "the hook did not finish in time").toBeUndefined();
+     84|   expect(r.status, r.stderr).toBe(0);
+       |                              ^
+     85|   expect(r.stderr).toBe("");
+     86|   return r.stdout;
+ ❯ tests/hooks/effort-warn.test.ts:290:12
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[25/27]⎯
+
+ FAIL  tests/hooks/effort-warn.test.ts > the CLI > without CLAUDE_CODE_SESSION_ID exits 2 with a reason
+AssertionError: expected 'python3: can\'t open file \'/home/dxb…' to contain 'CLAUDE_CODE_SESSION_ID'
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- CLAUDE_CODE_SESSION_ID[39m
+[31m+ python3: can't open file '/home/dxb/DxB Global OS/.claude/hooks/dxb-effort-warn.py': [Errno 2] No such file or directory[39m
+[31m+[39m
+
+ ❯ tests/hooks/effort-warn.test.ts:298:22
+    296|     const r = cli(box(), "plan");
+    297|     expect(r.status).toBe(2);
+    298|     expect(r.stderr).toContain("CLAUDE_CODE_SESSION_ID");
+       |                      ^
+    299|   });
+    300| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[26/27]⎯
+
+ FAIL  tests/hooks/effort-warn.test.ts > settings.json registers the hook > as the first command of UserPromptSubmit, before no-laziness.sh
+AssertionError: expected { type: 'command', …(1) } to deeply equal { type: 'command', …(1) }
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[2m  {[22m
+[32m-   "command": "python3 \"$CLAUDE_PROJECT_DIR/.claude/hooks/dxb-effort-warn.py\"",[39m
+[31m+   "command": "bash \"$CLAUDE_PROJECT_DIR/.claude/hooks/no-laziness.sh\"",[39m
+[2m    "type": "command",[22m
+[2m  }[22m
+
+ ❯ tests/hooks/effort-warn.test.ts:306:22
+    304|     const settings = JSON.parse(readFileSync(SETTINGS, "utf8"));
+    305|     const group = settings.hooks.UserPromptSubmit[0].hooks;
+    306|     expect(group[0]).toEqual({ type: "command", command: 'python3 "$CL…
+       |                      ^
+    307|     expect(group[1].command).toContain("no-laziness.sh");
+    308|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[27/27]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  27 failed | 1 passed (28)
+   Start at  16:46:22
+   Duration  531ms (transform 47ms, setup 0ms, collect 15ms, tests 265ms, environment 0ms, prepare 33ms)
+

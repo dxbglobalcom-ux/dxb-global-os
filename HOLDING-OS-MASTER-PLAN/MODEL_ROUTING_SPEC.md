@@ -363,12 +363,14 @@ replaces A-2026-09-25 (the three-writer door, which burned half a weekly quota o
 came from waste: parallel re-reads, a fresh `max` writer per fix, subagent caches that die at 5
 minutes). The canonical table is `.claude/skills/dxb-team2/SKILL.md` §2.
 
-1. **Seats.** Lead = the session (model and effort the CEO's choice; `high` measured best) — scores
-   the job 0-8, writes the done-list, writes and fixes the code itself · auditor = GPT-6.1 Sol (2026-10-01) through
-   `scripts/governance/refuter.sh --card`, blind and read-only by tool, one pass on every job ·
-   Fable 5.1 = the architecture of a critical job and the ruling on a dispute no test can settle ·
-   `builder` (`claude-opus-5-5` · `max`) only after a piece failed twice at `high`.
+1. **Seats.** Lead = the session at `high` (plan, design and architecture at `max`, the CEO switching
+   on the lead's warning) — chooses who writes (itself, a fork, `medium` helpers, or a fork with
+   helpers) and verifies every piece · auditor = GPT-6.1 Sol (2026-10-01) through
+   `scripts/governance/refuter.sh`, blind and read-only by tool, one pass on every job · Fable 5.1 is
+   not consulted in a construction job (2026-10-06) · `builder` (`claude-opus-5-5` · `max`) only after
+   a piece failed twice at `high`.
 2. **Effort.** Code at the lead's level; Opus `xhigh` never writes code (FrontierCode 51.4 %, the
-   bottom of the curve — his word 2026-09-28). Auditor: light `medium`, normal `high`, critical
-   `xhigh`; the first critical job measures `high` against `xhigh` on the same diff.
+   bottom of the curve — his word 2026-09-28). Auditor: `high` by default, `xhigh` for money,
+   a database, security, approval, governance or the agents, `medium` for a text-only change — the
+   lead's choice per audit (2026-10-06).
 3. **Pinned ids, as A-2026-09-23 §3.**
