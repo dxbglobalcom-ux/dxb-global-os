@@ -52,8 +52,8 @@ Tool loading is B41's leg of 2026-10-04, built when its turn comes.
 - The board rows that wait on him for a decision, money, an eye or an identity step — the board
   page's "Sizi bekleyenler" lists them.
 - Found in the review job (his word decides): `tests/` and `db/seed/` are outside every typecheck — opened
-  once, 127 type errors in 52 files; Sol's raw dumps and briefs (his words) are committed in job folders;
-  `.planning/graphs/GRAPH_REPORT.md` (2026-10-04) still describes the old door.
+  once, 127 type errors in 52 files; the knowledge graph (`.planning/graphs/`, built 2026-10-04, 75 commits
+  behind) still describes the old door — a local rebuild, no model, `node scripts/governance/graph-refresh.mjs`.
 
 ## Where things live
 
