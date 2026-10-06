@@ -31,6 +31,8 @@ not here. What is accepted is read from `scripts/governance/ceo-approvals.json`,
 by his eye <!-- CEO-OK: dxb-team2-lean-day-accepted-by-his-eye-2026-10-06 -->: the effort warnings, the
 clean-break handover, Fable's review and the older findings fixed, tests/ and db/seed/ under the typecheck,
 the graph no longer indexing itself, the battery before Sol. Job folders `.planning/quick/20261006-*`.
+At the close, on his word and with his eye given in advance <!-- CEO-OK: sol-dumps-swept-after-90-days-2026-10-06 -->:
+Sol's raw dumps and briefs leave the disk after 90 days (`scripts/governance/sol-dump-sweep.sh`, after every commit).
 ⚠ UNVERIFIED: the plan warning reaching his screen — the first plan talk shows it.
 Still waiting for his eye from 2026-10-04 (STATE-ARCHIVE, § 2026-10-06): B51 move 5's persona text and code
 bundle 2; the auto-memory fixes; the outside review's item 4.
@@ -46,9 +48,6 @@ Tool loading is B41's leg of 2026-10-04, built when its turn comes.
 
 - The board rows that wait on him for a decision, money, an eye or an identity step — the board
   page's "Sizi bekleyenler" lists them.
-- His open question (2026-10-06), to be answered when he asks for it: Sol's raw dumps and briefs, now on disk
-  only (`.planning/quick/**/*.raw`, `*brief*.txt`) — keep them, or delete them past a point (e.g. monthly) so
-  they are no load?
 
 ## Where things live
 

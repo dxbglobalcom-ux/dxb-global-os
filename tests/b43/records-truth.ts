@@ -114,6 +114,8 @@ export const C = {
     // The day's work on the lean dxb-team2 door, accepted by his eye 2026-10-06 ("Göz tamam."); the
     // records spell it "the lean dxb-team2 door".
     { id: "dxb-team2-lean-day-accepted-by-his-eye-2026-10-06", subject: /lean dxb-team2 door/i },
+    // Sol's dumps swept after 90 days, his eye given in advance 2026-10-06 ("Gözümü de şimdiden onay veriyorum").
+    { id: "sol-dumps-swept-after-90-days-2026-10-06", subject: /Sol's (raw )?dumps.{0,40}90 days/i },
   ],
   /**
    * R4 — the ruler cannot be forgotten: every acceptance of his eye registered in the ledger from

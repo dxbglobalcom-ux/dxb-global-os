@@ -2162,5 +2162,13 @@
     "conditions": "Said after the lead explained the whole dxb-team2 process step by step, confirmed it is the system as written, and asked in one line whether to register his 'Tamam güzel' as acceptance. The plan warning reaching his screen stays ⚠ UNVERIFIED — no plan talk happened today; his acceptance covers the work as reported. The 2026-10-04 items still waiting for his eye are not part of this.",
     "session": "Opus 5.5 session f0af511e — heard first-hand, 2026-10-06.",
     "where": ".planning/STATE.md · .claude/skills/dxb-team2/SKILL.md · the job folders .planning/quick/20261006-*"
+  },
+  "sol-dumps-swept-after-90-days-2026-10-06": {
+    "date": "2026-10-06",
+    "what": "ORDER, answering his own open question, and his eye given in advance: Sol's raw dumps (*.raw) and briefs (*brief*.txt) in .planning/quick/ — on disk only, out of git — are deleted once older than 90 days, by a simple system: scripts/governance/sol-dump-sweep.sh, run after every commit from scripts/hooks/post-commit; only a file git ignores is ever deleted. The question is removed from STATE. His eye on this work was given before it was built ('Gözümü de şimdiden onay veriyorum'), so it is registered as accepted on his word.",
+    "verbatim": "Şu sol dökümleri dokümanını kaldır. Ee, o şey o önerdiğin gibi olsun. Şöyle yap. Ee, bir sistem kur. 3 ayda bir kendini silsin yani. Gerek yok. 3 aylık. 3 ayda bir silsin her şey. Basit bir sistem kur. Hemen çak çak çak bitir. O kadar. Sonra kapat komitle. … Gözümü de şimdiden onay veriyorum sana. Senin yaptığını.",
+    "conditions": "Said at the day's close, after the day's work had been accepted. The lead had recommended keeping the dumps; he chose deletion after three months. Before any code the lead warned him to switch to high (the door's rule) and he did ('F'u haya geçirdim' = /effort high). Acceptance given in advance, before he saw the work.",
+    "session": "Opus 5.5 session f0af511e — heard first-hand, 2026-10-06.",
+    "where": "scripts/governance/sol-dump-sweep.sh · scripts/hooks/post-commit · tests/governance/sol-dump-sweep.test.ts · .claude/skills/dxb-team2/SKILL.md §6 · .planning/STATE.md"
   }
 }

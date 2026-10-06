@@ -181,7 +181,9 @@ alone (STATE, the board) is checked by the rulers on commit instead.
   hashes or counts beyond the one that names a job.
 - **The job folder** (`.planning/quick/<date>-<slug>/`) holds Sol's report and the raw evidence — only
   for a job that went to Sol. Sol's raw dump (`*.raw`) and its brief (`*brief*.txt`, his words verbatim)
-  stay on the disk and out of git (`.gitignore`); `SOL.md`, the verdict, is committed
+  stay on the disk and out of git (`.gitignore`), and leave the disk after 90 days
+  (`scripts/governance/sol-dump-sweep.sh`, run after every commit)
+  <!-- CEO-OK: sol-dumps-swept-after-90-days-2026-10-06 -->; `SOL.md`, the verdict, is committed
   <!-- CEO-OK: dxb-team2-overall-look-fixes-2026-10-06 -->.
 
 ## 7. Long commands, context and handover
