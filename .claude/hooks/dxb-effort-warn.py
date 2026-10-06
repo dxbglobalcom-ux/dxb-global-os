@@ -14,8 +14,9 @@ the same day made the warning start by itself and arrive in time:
   * UserPromptSubmit: while the session has a mode -- or, with none set, while his permission mode is
     `plan` -- and its live level does not match it (plan: max, build: high), each of his messages carries
     the warning into the session's context. With no mode and no plan permission mode, a message that names
-    a plan, a design or an architecture reminds the lead to run `plan`, and a session whose known level is
-    not high reminds the lead to warn him before writing code.
+    a plan, a design or an architecture reminds the lead to run `plan`, and a session whose level is not high
+    -- or not yet known: then the lead reads CLAUDE_EFFORT in Bash -- reminds the lead to warn him before
+    writing code.
 
 Neither the hook's stdin nor its environment carries the effort (measured 2026-10-06: the input has no
 effort field, and CLAUDE_EFFORT, which the Bash tool has, is absent from a UserPromptSubmit hook). The live
@@ -60,7 +61,9 @@ MAX_LINE = "⚠ Muhittin Bey, plan konuşmasındayız — /effort max'a geçin."
 HIGH_LINE = "⚠ Muhittin Bey, plan bitti — koda geçmeden /effort high'a geçin."
 CODE_LINE = "⚠ Muhittin Bey, koda geçmeden /effort high'a geçin."
 LINES = {"plan": MAX_LINE, "build": HIGH_LINE}
-SWITCHED = re.compile(r"<local-command-stdout>Set effort level to (low|medium|high|xhigh|max)\b")
+# the whole row is the command's output -- a quotation of it inside his own words is not a switch (Sol A3)
+SWITCHED = re.compile(r"<local-command-stdout>Set effort level to (low|medium|high|xhigh|max)\b[^<]*"
+                      r"</local-command-stdout>")
 # his words that turn the talk to a plan, a design or an architecture -- Turkish stems and English words,
 # matched at a word's start so "explain" and "planet" stay out
 PLAN_WORDS = re.compile(r"(?<!\w)(plan(?!et)\w*|tasar[ıi]m\w*|tasarla\w*|mimari\w*|design\w*|architect\w*)",
@@ -75,8 +78,9 @@ def warning(mode, level):
             f"This session is in PLAN mode under dxb-team2 and {runs}; the CEO's order (2026-10-06) is "
             f"plan, design and architecture at max, switched by him with /effort. Begin your reply, "
             f"before anything else, with exactly this line:\n{MAX_LINE}\n"
-            f"Then go on, but write no file until he has switched. When he approves the plan, run "
-            f"`{COMMAND} build` and warn him to switch to high.")
+            f"Then go on, but write no file until he has switched. In the reply that brings him the plan for "
+            f"his yes, run `{COMMAND} build` and close that reply with the line it gives, so his yes can "
+            f"arrive at high.")
     return (
         f"This session is in BUILD mode under dxb-team2 and {runs}; the CEO's order (2026-10-06) is "
         f"the build at high, switched by him with /effort. Begin your reply, before anything else, with "
@@ -90,6 +94,13 @@ def plan_reminder():
     return (f"His message names a plan, a design or an architecture, and this session has no dxb-team2 effort "
             f"mode. If the talk is turning to one, run `{COMMAND} plan` now and do what it answers; if not, "
             f"ignore this.")
+
+
+def unknown_reminder():
+    return (f"The hook cannot tell this session's effort yet (no status line record, no step in the "
+            f"transcript), and it has no dxb-team2 effort mode. If your reply writes code, first run "
+            f"`echo $CLAUDE_EFFORT` in Bash; if it is not high, open the reply, before anything else, with "
+            f"exactly this line:\n{CODE_LINE}\nand write no code until he has switched. Otherwise ignore this.")
 
 
 def code_reminder(level):
@@ -196,12 +207,10 @@ def switched_level(row):
     """The level a /effort row names, or None."""
     if row.get("type") != "user":
         return None
-    content = (row.get("message") or {}).get("content") if isinstance(row.get("message"), dict) else None
-    if isinstance(content, list):
-        content = " ".join(part.get("text", "") for part in content if isinstance(part, dict))
+    content = row["message"].get("content") if isinstance(row.get("message"), dict) else None
     if not isinstance(content, str):
         return None
-    found = SWITCHED.search(content)
+    found = SWITCHED.fullmatch(content.strip())
     return found.group(1) if found else None
 
 
@@ -264,7 +273,9 @@ def on_hook(data):
         return  # a subagent's report arriving is not his message (measured 2026-10-06: one tripped the net)
     elif PLAN_WORDS.search(data["prompt"]):
         context = plan_reminder()
-    elif level is not None and level != "high":
+    elif level is None:
+        context = unknown_reminder()
+    elif level != "high":
         context = code_reminder(level)
     else:
         return

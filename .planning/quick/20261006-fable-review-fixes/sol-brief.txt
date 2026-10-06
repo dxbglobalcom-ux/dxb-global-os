@@ -1,0 +1,31 @@
+THE CEO'S WORDS (verbatim, Turkish, 2026-10-06, this job):
+1. "Nvidia'yı sil. Gerek yok. Veya yok yok kalsın kalsın boşver önemli değil o. Fable'ın bu uygularını da düzelt hemen."
+   ("uygularını" is the dictation of "bulgularını" — findings.)
+2. "Eski bulgularla ilgili de Ferrari seviyesinde ne yapılması gerekiyorsa sen yap bitir işini."
+
+WHAT HE ASKED: fix every finding of Fable's read-only review of the lean dxb-team2 door — the review is
+.planning/quick/20261006-fable-review-fixes/FABLE-REVIEW.md (A1-A4, B5-B12, the C notes) — and, to the
+Ferrari standard, the three older findings STATE listed as waiting on his word: (1) the tool-pins manifest
+serializer drops a `__proto__` schema key; (2) persona dossiers say dormant/draft against an all-active
+company database; (3) the status line draws nothing for a `null` payload.
+
+DECISIONS, as facts:
+- The NVIDIA key line in ~/.claude/settings.json stays, on his word; it is out of scope.
+- Fable's A2 remedy candidate (read $CLAUDE_EFFORT in the hook) was measured before use: a temporary
+  probe in the UserPromptSubmit hook logged env=None (claude-effort-probe.log) while the Bash tool had
+  CLAUDE_EFFORT=high. The /effort row in the transcript is used instead.
+- Fable's A1 sub-question ("he said yes but is still at max — wait or switch?") is left as the door says:
+  nothing is written until he switches. A session cannot change its own effort.
+- Raw Sol dumps in git, the Sol brief carrying his words, and .planning/graphs/GRAPH_REPORT.md (Fable C)
+  were not changed in this job.
+- The dossier fix changes only the value inside the first `Durum:`/`Status:` line, from the company DB
+  (port 54322, read with SELECT only); the authored persona text below `# PERSONA — ` is untouched.
+
+RANGE: git a5db11c6..b36441de in /home/dxb/DxB Global OS (three commits), plus files outside the repo:
+~/.claude/hooks/dxb-cost-gate.py, ~/.claude/hooks/dxb-statusline.js (and their tracked copies in scripts/ops/).
+
+RAW EVIDENCE in .planning/quick/20261006-fable-review-fixes/: tests-touched.txt (the touched vitest files,
+run by the lead on the host), persona-verify.txt (scripts/sync-personas-to-db.sh --verify against the
+company DB after the fix). The full battery has not yet run; it runs after your pass.
+
+Your first question: does this do what he asked?

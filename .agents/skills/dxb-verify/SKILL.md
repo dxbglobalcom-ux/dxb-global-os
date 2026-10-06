@@ -35,14 +35,14 @@ measured outcomes take the past tense.
 | `bash scripts/b43/vitrin-register-gate.sh` | the product register the CEO opens — his vitrin and its catalogue (`~/tools/h3/studio`, outside git) — still tells the truth: every cast face names how it was born, no cancelled hand is advertised, no pointer into a folder he deleted, no acceptance claim without a registered ledger id, no media the page shows and the disk lacks, no hand-typed counter, and the page is served to him alone (loopback). Self-skips where there is no vitrin; run by the shared studio battery since W11 |
 | the design pass (door `dxb-surface`) | only when a CEO-visible surface changed |
 | resident restart | only when runtime code changed — see below |
-| **the audit law** (CEO, 2026-09-15: *"Tabii ki yazılsın, tabii ki."* <!-- CEO-OK: audit-law-checker-only-checks-2026-09-15 -->) | Every job is built by one hand and checked by another — in `dxb-team2` the blind Sol auditor (§4) — *"biri bir iş yaparken birisi kontrol edecek çünkü hata oluyor"*. **The checker only checks:** it measures, names the fault, and instructs what is to be done; the builder corrects it and reports "done"; the checker re-measures whether it was done and done right. The checker writes NO repo line — ruler scripts included: a ruler correction is an instruction to the builder, committed by the builder as its own `records(ruler): …` commit, never inside the build commit it measures. A checker that repairs what it then measures is not a checker. A checker's CONFIRMED is never an acceptance — only his own eye is (LAW B). |
+| **the audit law** (CEO, 2026-09-15: *"Tabii ki yazılsın, tabii ki."* <!-- CEO-OK: audit-law-checker-only-checks-2026-09-15 -->) | Every job is built by one hand and checked by another — in `dxb-team2` the blind Sol auditor (§4) — *"biri bir iş yaparken birisi kontrol edecek çünkü hata oluyor"*. **The checker only checks:** it measures, names the fault, and instructs what is to be done; the builder corrects it and reports "done"; whether it was done and done right is re-measured — in `dxb-team2` by the lead, on each finding's own case, with no second auditor round (its §4). The checker writes NO repo line — ruler scripts included: a ruler correction is an instruction to the builder, committed by the builder as its own `records(ruler): …` commit, never inside the build commit it measures. A checker that repairs what it then measures is not a checker. A checker's CONFIRMED is never an acceptance — only his own eye is (LAW B). |
 
 The tests a change needs follow its risk: a targeted test for a local change, an integration test at
 a boundary, a security check wherever authorisation, secrets or isolation move.
 
 | Artifact class | Its ruler (runnable, shared by builder and checker) | State today |
 |---|---|---|
-| Code | the battery: typecheck · vitest · i18n-purity-check · verify:ledger · gitleaks | exists, runs on every commit |
+| Code | `pnpm typecheck` + the battery (vitest, both halves) · i18n-purity-check · verify:ledger · gitleaks | typecheck and the battery once at a job's end when code changed (`dxb-team2` §5); gitleaks on every commit; the typecheck does not cover `tests/` or `db/seed/` (measured 2026-10-06) |
 | Persona files | `tests/personas/persona-ruler.test.ts` (`scripts/persona-ruler.sh`) | built in this commit |
 | Records (STATE, the board, ceo-approvals) | `scripts/governance/ledger-truth.mjs` + `tests/b43/records-truth.ts` (a record may not say his eye is awaited on what the ledger holds accepted; a new acceptance adds its row there or R4 is red) + records parity (`dxb-close-row`) | exists |
 | CEO-visible surfaces | eye test + Design Pass (RULE #0) — a human eye, not a script; reported ⚠ UNVERIFIED until his eye | exists, not a script |
@@ -50,7 +50,7 @@ a boundary, a security check wherever authorisation, secrets or isolation move.
 
 The table is his, holding-wide, on his word *"yaz"* of 2026-09-15 <!-- CEO-OK: ruler-table-holding-wide-2026-09-15 -->.
 
-Every commit runs its class's ruler automatically — no ruler green, no commit.
+Every commit runs gitleaks and, for what it touches, the rulers of the records, the opening and the research engine automatically — no ruler green, no commit (`scripts/hooks/pre-commit`). Code's ruler — the typecheck and the battery — runs once at a job's end, not on each commit.
 
 A second session audits the CEO-visible and the risky work (personas, specs, money and identity
 paths, surfaces) on three things: the order against the diff (what was left out), the ruler output

@@ -19,24 +19,25 @@ THE CEO'S JOB, in one sentence he would sign
    │
    ├── small — a fix, a deletion, a text he already worded: no plan, straight to ARRANGE
    │
-PLAN      the talk turns to plan, design or architecture → effort warning MAX (§2)
-          the plan goes to him once, in his language → his yes → effort warning HIGH (§2)
+PLAN      the talk turns to plan, design or architecture → `plan`: effort warning MAX (§2)
+          the plan goes to him once, in his language, closing with the HIGH warning (§2) → his yes
    │
 ARRANGE   the lead chooses the hands (§3) and says it in one line
    │
-BUILD     the hands write and run their own tests; the lead verifies every piece
+BUILD     the hands write and run their own tests; the lead verifies every piece and commits it
    │
-SOL       one blind, read-only pass (§4) — A blocks · B fixed now · C stays in the report
+SOL       one blind, read-only pass over the job's commits (§4) — A blocks · B fixed now · C in the report
    │
 FIX       a fork or a writing helper fixes; the lead verifies; no second Sol round
    │
-TEST      the touched tests; code changed → the battery once (§5)
+TEST      the touched tests; code changed → typecheck and the battery once (§5)
    │
-COMMIT → TELL him in a few lines (§6) → STATE once, at the session's end
+COMMIT the fixes → TELL him in a few lines (§6) → STATE, when nothing is left in hand
 ```
 
 **What reaches him as a question:** starting a job, its plan (once), money out, a contract, an identity
-step, the Islamic boundaries, and an order of his that truly reads two ways — each with a
+step, the Islamic boundaries, a discovery that would change the scope he approved, the architecture or
+the data's integrity (the work stops at it), and an order of his that truly reads two ways — each with a
 recommendation, answerable in one word. Technical choices inside a job he said yes to are the lead's.
 The plan's single trip is his word <!-- CEO-OK: plan-comes-to-him-once-2026-10-03 -->.
 
@@ -49,17 +50,25 @@ The session runs at `high`: the talk, the build, the fixes, the tests. Plan, des
 at `max`. **He switches with /effort; the lead warns him — on every reply, until he has.**
 
 - The moment the talk turns to a plan, a design or an architecture, the lead runs
-  `python3 .claude/hooks/dxb-effort-warn.py plan` and opens that reply with
-  `⚠ Muhittin Bey, plan konuşmasındayız — /effort max'a geçin.`
-- At his yes to the plan, the lead runs `python3 .claude/hooks/dxb-effort-warn.py build`, opens the reply
-  with `⚠ Muhittin Bey, plan bitti — koda geçmeden /effort high'a geçin.`, and writes nothing until he
-  has switched. At the job's end: `python3 .claude/hooks/dxb-effort-warn.py off`.
+  `python3 .claude/hooks/dxb-effort-warn.py plan`; it answers with the live level and whether this reply
+  opens with `⚠ Muhittin Bey, plan konuşmasındayız — /effort max'a geçin.` (not when he is already at
+  max). His plan permission mode starts the same warning by itself.
+- In the reply that brings him the plan for his yes, the lead runs
+  `python3 .claude/hooks/dxb-effort-warn.py build` and closes that reply with
+  `⚠ Muhittin Bey, plan bitti — koda geçmeden /effort high'a geçin.` — the warning travels with the
+  question, so his yes can arrive at high and the build starts at once. A yes that arrives at another
+  level gets the line again, and nothing is written until he has switched; a correction instead of a yes
+  → `plan` again. At the job's end: `python3 .claude/hooks/dxb-effort-warn.py off`.
 - Between those, the hook `dxb-effort-warn.py` repeats the line on each of his messages until the
-  session's live level matches — the lead cannot forget it. A small job has no plan and no warning.
-- Measured 2026-10-06: a hook's input carries no effort and /effort writes no transcript row, so the
-  live level is the newer, by timestamp, of the status line's record
-  (`$XDG_RUNTIME_DIR/claude-ctx/<session>.json`, field `effort`, which follows /effort at once) and
-  this session's last step in the transcript; neither known → the warning names an unknown level.
+  session's live level matches. With no mode set, a message of his naming a plan, a design or an
+  architecture reminds the lead to run `plan`, and a session whose level is not high reminds the lead to
+  open any reply that writes code with `⚠ Muhittin Bey, koda geçmeden /effort high'a geçin.` — a small
+  job is not written at max either.
+- Measured 2026-10-06: neither a hook's input nor its environment carries the effort (`CLAUDE_EFFORT`
+  reaches the Bash tool, not a UserPromptSubmit hook). The live level is the newest, by timestamp, of the
+  status line's record (`$XDG_RUNTIME_DIR/claude-ctx/<session>.json`, field `effort`), this session's last
+  step in the transcript, and its last /effort row there (`Set effort level to …`, written by a switch
+  between turns; a switch in the middle of a turn writes none) — none known → an unknown level.
   A skill's `effort` can raise a turn but never lower one — the reason the old design-at-max skill went.
 
 ## 3. The seats and the arrangement
@@ -87,13 +96,17 @@ and before done" advice does not apply here) nor the Fable-based `design-eye`.
 | **Team** | `helper-writer`s, in parallel; `helper`s read and research beside them | independent pieces, each specifiable in a paragraph |
 | **Hybrid** | the fork writes the core; `helper-writer`s the side pieces; `helper`s read | a large core with independent pieces around it |
 
-- Parallel writers never touch the same file. Each gets a spec it can work from alone: the files, the
+- Parallel writers never touch the same file, and run their tests with `DXB_ENGINE_LOCK_WAIT=200`: one
+  run at a time holds the construction engine, and with it a second one queues instead of being refused
+  — inside the 4-minute rule (§7), so the lead starts no battery while writers are testing.
+- Each writer gets a spec it can work from alone: the files, the
   behaviour, the measured facts it must not re-litigate, the test it writes first, what it reports.
 - The lead verifies each piece before it is committed — reads the diff, runs its tests — and commits
   only what it verified. Nobody else commits.
 - A fork starts cheap: its first call reads the lead's cache (203,676 tokens read, 1,200 written —
   session 5ed74ad7, 2026-10-03).
-- Code is written at `high`. Opus `xhigh` is never used for code (FrontierCode 51.4 %, the bottom of the
+- A piece that fails: a medium writer's goes to the lead or a fork at `high`; one that failed twice at
+  `high` goes to the `builder`, never earlier. Opus `xhigh` is never used for code (FrontierCode 51.4 %, the bottom of the
   curve); `max` writes code only as the escalation writer — a medium try plus a high retry (USD 1.89)
   is under a third of one `max` run (USD 6.19) and passes the same auditor. Prices in this door are
   written USD, never with a dollar sign: opened with a job sentence, a dollar sign and a digit are
@@ -135,7 +148,9 @@ alone (STATE, the board) is checked by the rulers on commit instead.
 
 - New behaviour is proven by a test written first — red before the code, green after.
 - After each piece, its own tests. After Sol's fixes, the touched tests again.
-- **Code changed → the battery, once, at the end:** `pnpm construction:battery` — the whole suite in
+- **Code changed → `pnpm typecheck`, then the battery, once, at the end** — and a resident service whose
+  code changed is restarted (`dxb-verify`). The typecheck covers `packages/` and `apps/`, not `tests/` or
+  `db/seed/` (measured 2026-10-06). The battery: `pnpm construction:battery`, the whole suite in
   both halves against the construction's own engine (port 54422), 1,486 tests, about 6 minutes
   (2026-10-04). Launch it detached from a shell whose `oom_score_adj` is 100; green is the line
   `BATTERY_GREEN`. It answers the one question no single test can: did this break anything else.
@@ -155,7 +170,8 @@ alone (STATE, the board) is checked by the rulers on commit instead.
   defect fixed inside the job is not listed; the proof stays in the work until he asks.
 - **His words** are written once, in `scripts/governance/ceo-approvals.json`, and only where a record
   must rest on his order or approval (LAW B) — never copied into commits, doors or STATE.
-- **STATE** is written once, at the session's end: the three headings, a few lines each — what
+- **STATE** is written once, when the job is told and nothing is left in hand (a session's end cannot
+  be seen coming): the three headings, a few lines each — what
   finished and waits for his eye, what is next, what waits on him. No conversation, no quotes, no
   hashes or counts beyond the one that names a job.
 - **The job folder** (`.planning/quick/<date>-<slug>/`) holds Sol's report and the raw evidence — only

@@ -1,0 +1,25 @@
+
+ RUN  v3.2.6 /home/dxb/DxB Global OS
+
+[global-setup] construction engine 7690665340837392423/5 (postgres) — verified on the connection that does the work.
+ ✓ tests/construction/engine-lock-wait.test.ts (19 tests) 5166ms
+   ✓ run.sh — the door > DXB_ENGINE_LOCK_WAIT=1: waits ~1 s, says so once, then refuses as today  1008ms
+   ✓ run.sh — the door > DXB_ENGINE_LOCK_WAIT=10: queues behind a 1 s holder and then goes through  1006ms
+   ✓ battery.sh — refuses before it does any work > DXB_ENGINE_LOCK_WAIT=1: waits ~1 s, says so once, then refuses as today  1008ms
+   ✓ global-teardown.ts — takeTheEngine, in this process with a private TMPDIR > DXB_ENGINE_LOCK_WAIT=1: waits ~1 s, says so once, then refuses  1007ms
+   ✓ global-teardown.ts — takeTheEngine, in this process with a private TMPDIR > DXB_ENGINE_LOCK_WAIT=10: queues behind a 1 s holder, takes the lock, and gives it back  1060ms
+ ✓ tests/hooks/effort-warn.test.ts (69 tests) 1775ms
+ ✓ tests/hooks/context-gate.test.ts (16 tests) 1064ms
+   ✓ the gate never breaks a session: what it cannot read is silent, not a failure > exits 0 with nothing on stderr when the reader of its answer is gone: a deny at 61 into a closed pipe  309ms
+ ✓ tests/hooks/opening-budget.test.ts (8 tests) 977ms
+ ✓ tests/hooks/cost-gate.test.ts (17 tests) 562ms
+ ✓ tests/hooks/session-start-fits.test.ts (4 tests) 139ms
+(node:844652) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/b49/pin-manifest.test.ts (15 tests) 45ms
+
+ Test Files  7 passed (7)
+      Tests  148 passed (148)
+   Start at  18:06:49
+   Duration  10.98s (transform 186ms, setup 0ms, collect 371ms, tests 9.73s, environment 1ms, prepare 217ms)
+

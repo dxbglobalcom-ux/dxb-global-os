@@ -96,8 +96,9 @@ and before done" advice does not apply here) nor the Fable-based `design-eye`.
 | **Team** | `helper-writer`s, in parallel; `helper`s read and research beside them | independent pieces, each specifiable in a paragraph |
 | **Hybrid** | the fork writes the core; `helper-writer`s the side pieces; `helper`s read | a large core with independent pieces around it |
 
-- Parallel writers never touch the same file, and run their tests with `DXB_ENGINE_LOCK_WAIT=900`: one
-  run at a time holds the construction engine, and with it a second one queues instead of being refused.
+- Parallel writers never touch the same file, and run their tests with `DXB_ENGINE_LOCK_WAIT=200`: one
+  run at a time holds the construction engine, and with it a second one queues instead of being refused
+  — inside the 4-minute rule (§7), so the lead starts no battery while writers are testing.
 - Each writer gets a spec it can work from alone: the files, the
   behaviour, the measured facts it must not re-litigate, the test it writes first, what it reports.
 - The lead verifies each piece before it is committed — reads the diff, runs its tests — and commits

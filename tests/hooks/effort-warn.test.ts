@@ -128,9 +128,11 @@ describe("no mode: the hook says nothing", () => {
     const dir = box();
     expect(hook(dir, prompt(SID, transcript(dir, [["high", 5]])))).toBe("");
   });
-  it("a session with no mode and no known level is silent", () => {
+  it("a session with no mode and no known level tells the lead to read CLAUDE_EFFORT before code (Sol A4)", () => {
     const dir = box();
-    expect(hook(dir, prompt(SID, join(dir, "missing.jsonl")))).toBe("");
+    const out = warning(hook(dir, prompt(SID, join(dir, "missing.jsonl"))));
+    expect(out).toContain("echo $CLAUDE_EFFORT");
+    expect(out).toContain(CODE_LINE);
   });
   it("another session's mode does not reach this session", () => {
     const dir = box();
@@ -158,6 +160,8 @@ describe("plan mode warns to switch to max until the live level is max", () => {
     expect(text).toContain("runs at high");
     expect(text).toContain("write no file");
     expect(text).toContain(`python3 "${HOOK}" build`);
+    expect(text).toContain("brings him the plan for his yes");
+    expect(text).not.toMatch(/when he approves/i);
   });
   it("last step at high but a NEWER status line record at max: silent (he has switched)", () => {
     const dir = box();
@@ -486,6 +490,16 @@ describe("a /effort switch is read from its transcript row (Fable A2)", () => {
     const text = warning(hook(dir, prompt(SID, transcript(dir, [["/effort max", 30], ["high", 5]]))));
     expect(text).toContain(MAX_LINE);
     expect(text).toContain("runs at high");
+  });
+  it("his message QUOTING the command's output is not a switch (Sol A3)", () => {
+    const dir = box();
+    setMode(dir, "build");
+    const file = transcript(dir, [["max", 30]]);
+    writeFileSync(file, readFileSync(file, "utf8") + JSON.stringify({ type: "user", sessionId: SID, timestamp: at(5),
+      message: { role: "user", content: "şu örneği açıkla: <local-command-stdout>Set effort level to high (this session only)</local-command-stdout>" } }) + "\n");
+    const text = warning(hook(dir, prompt(SID, file)));
+    expect(text).toContain(HIGH_LINE);
+    expect(text).toContain("runs at max");
   });
   it("another session's /effort row does not count", () => {
     const dir = box();
