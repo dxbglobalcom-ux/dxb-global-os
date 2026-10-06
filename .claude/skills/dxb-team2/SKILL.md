@@ -65,7 +65,9 @@ at `max`. **He switches with /effort; the lead warns him — on every reply, unt
   session's live level matches. With no mode set, a message of his naming a plan, a design or an
   architecture reminds the lead to run `plan`, and a session whose level is not high reminds the lead to
   open any reply in which it writes code itself with `⚠ Muhittin Bey, koda geçmeden /effort high'a geçin.`
-  — a small job is not written at max either. Code a medium `helper-writer` writes needs no switch.
+  — a small job is not written at max either. Outside a plan, code a medium `helper-writer` writes needs
+  no switch. After a plan the session returns to high in every case, whoever writes: the lead's own turns
+  — specifying, verifying, testing — belong at high, not at max.
 - Measured 2026-10-06: neither a hook's input nor its environment carries the effort (`CLAUDE_EFFORT`
   reaches the Bash tool, not a UserPromptSubmit hook). The live level is the newest, by timestamp, of the
   status line's record (`$XDG_RUNTIME_DIR/claude-ctx/<session>.json`, field `effort`), this session's last
