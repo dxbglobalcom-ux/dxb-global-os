@@ -2138,5 +2138,13 @@
     "conditions": "Said after the lead laid out the flow in this conversation (the job → the lead chooses the hands → the work → Sol → the fixes → the tests → a short report; plan talk warned to max, the build to high) and he had switched the session to high himself. 'Haydasın' is the dictation of 'high'dasın', 'DXP Team 2' of dxb-team2. Registered as his order, not a LAW B acceptance.",
     "session": "Opus 5.5 session f7a2bf71 — heard first-hand, 2026-10-06.",
     "where": ".claude/skills/dxb-team2/SKILL.md · .claude/hooks/dxb-effort-warn.py · .claude/settings.json · scripts/governance/refuter.sh · tests/governance/refuter-gate.test.ts · tests/hooks/effort-warn.test.ts · .claude/skills/dxb-verify/SKILL.md · HOLDING-OS-MASTER-PLAN/MODEL_ROUTING_SPEC.md · ~/.claude/agents/{refuter,helper,helper-writer,design-eye}.md, ~/.claude/CLAUDE.md, ~/.claude/hooks/dxb-statusline.js (outside the repo)"
+  },
+  "handover-at-the-clean-break-2026-10-06": {
+    "date": "2026-10-06",
+    "what": "ORDER, permanent in dxb-team2 §7: from 50 % context the lead hands over at the first clean break — the piece finished, the tree committed, no battery running, the report sent — even when that takes the session to 55-58 %; never in the middle of a piece. Past 55 % the context gate refuses the Agent tool, so the lead finishes only what its own hand can.",
+    "verbatim": "Her zaman en güzel yerde devret yani en rahat hiçbir sorun olmayacak yerde devret. İsterse o iş %55'e kadar uzarsa da uzasın. %58'e de uzarsa uzasın ama en clean yerde her zaman devretmek önemlidir. · bu kalıcı kural olabilir tabii ki. … DXP Team 2 e, sistemiyle de ilgili aynen o devir notunu benim söylediğim şey e, yazabilirsin.",
+    "conditions": "The first sentence at 53 % context, asking it into the handover note; the second answering the lead's one-line question whether it is for this session only or permanent in dxb-team2. Registered as his order, not a LAW B acceptance.",
+    "session": "Opus 5.5 session f7a2bf71 — heard first-hand, 2026-10-06.",
+    "where": ".claude/skills/dxb-team2/SKILL.md §7"
   }
 }

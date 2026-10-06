@@ -165,9 +165,12 @@ alone (STATE, the board) is checked by the rulers on commit instead.
 
 - **The 4-minute rules** (held by `~/.claude/hooks/dxb-cost-gate.py`): a command over 4 minutes is the
   lead's; a subagent idle over 4 minutes is never resumed — its cache is the 5-minute one.
-- **The context gate** (held by `~/.claude/hooks/dxb-context-gate.py`): hand over at ≥ 50 % used, or
-  when used + the next phase's honest estimate > 55 %; only at a clean break — no battery running,
-  tree committed, report sent.
+- **The context gate** (held by `~/.claude/hooks/dxb-context-gate.py`) and **the clean break**: from
+  50 % used, hand over at the first clean break — the piece finished, the tree committed, no battery
+  running, the report sent — even when reaching it takes the session to 55-58 %; never in the middle of
+  a piece <!-- CEO-OK: handover-at-the-clean-break-2026-10-06 -->. The gate refuses the Agent tool from
+  55 %, so past it the lead finishes only what its own hand can, and starts no new phase it cannot
+  finish by about 58 %.
 - **The handover** is done by the engineer, never the CEO
   <!-- CEO-OK: handover-at-50-without-asking-2026-10-01 -->. A note in the scratchpad, in the author's
   own voice: the job's place in the whole first, then his words of this job verbatim, every phase with
