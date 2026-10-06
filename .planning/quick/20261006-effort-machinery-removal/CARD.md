@@ -1,7 +1,7 @@
 # Score card — remove the effort machinery (design-at-max skill, its hook, the bar's turn mark)
 
 job: Remove what the CEO listed, nothing more: the `dxb-design-max` skill, its project hook and its registration in `.claude/settings.json`; the status line's "tur: <level>" and "🟣 tasarım açık" marks (and the one-second redraw added for them); the two test files that test only these; and dxb-team2's effort lines — the Lead row's design-at-max clause, the §4 PLAN max paragraph, and §8's `--effort <same>` — so that no file of the construction lifts, lowers or shows a turn's effort any more; the new rule (who sets the effort, and how) is decided with him afterwards
-range: 768d8ea8..HEAD
+range: 768d8ea8..94ce7d77
 blast: 1
 risk: 2
 reasoning: 0

@@ -1,0 +1,29 @@
+THE CEO'S WORDS (verbatim, this conversation, 2026-10-06; ledger scripts/governance/ceo-approvals.json effort-machinery-removed-2026-10-06):
+- "biliyor musun bunları kaldıralım. opus veya dxbteam2 yi kullanacak olan tüm ajanlar effor seciyesini kendisi operatorler seçsin olmaz mı? şu efforla gerekli kafa karıştıran hususları skill'den temizleyebilir misin?"
+- "ama biz o tur mur onları kaldırmayacak mıyız? önce kaldırılacakları bir kaldır sonra planımıza bakalım"
+- He then pasted back the lead's list, verbatim:
+  Kaldırılacaklar:
+  - dxb-design-max skill'i, hook'u ve ayarlardaki kaydı.
+  - Çubuktaki "tur: max" ve "tasarım açık" göstergeleri.
+  - Bunların testi.
+  - dxb-team2'deki effort satırları: Lead satırı, §4 PLAN'daki max paragrafı ve §8'deki --effort <same>.
+
+THIS AUDIT — one pass at the level the card gives (.planning/quick/20261006-effort-machinery-removal/CARD.md — for information; do not re-grade it); findings are fixed and verified by the lead; there is no second round.
+  Range: the card's range. Done-list: CARD.md, written before the edits.
+  Raw output in .planning/quick/20261006-effort-machinery-removal/evidence/: job-tests.txt (vitest of the two tests that touch the changed files), statusline-before-after.txt (one payload through the old and the new bar), dxb-statusline.before.js and dxb-statusline.diff (the status line lives outside git at ~/.claude/hooks/dxb-statusline.js — read the live file there too), user-settings-statusLine.before.json (the statusLine block of ~/.claude/settings.json before; read the live file).
+
+THE DECISIONS — facts, not claims to re-litigate:
+- The job is removal only. What replaces the machinery (who sets the effort, how) is decided with him next and is NOT part of this range; the door saying nothing about design at max is intended.
+- The ledger keeps his earlier words as history; a new entry supersedes four entries (the repository's precedent, e.g. the entry at "The handover prompt (NEXT-SESSION-PROMPT) is NOT a global or standing rule").
+- The handover line drops the effort flag; the successor opens at his saved default effort (~/.claude/settings.json modelSettings) — intended.
+- Job folders under .planning/quick/, STATE.md's dated history blocks, and two comments naming a past Sol finding (scripts/governance/sync-codex-mirror.sh:40, tests/governance/codex-mirror-check.test.ts:86) stay as history.
+- §6 of dxb-team2 (effort routing for writing code and for the auditor, the builder at max) was not on his list and is untouched on purpose.
+
+WHAT TO REFUTE:
+1. Does the done-list prove what his words asked for — everything on his list gone, and nothing beyond it?
+2. Is anything of the machinery left alive anywhere a session would load it: a registration, a hook, a skill, its mirror, a reference in a door, the core, a hook script, the status line, a test, a ruler — something that still lifts, lowers, reminds about or displays a turn's effort, or that now points at a deleted file?
+3. The status line (~/.claude/hooks/dxb-statusline.js): after the cut, does it still render the same bar minus the turn mark for every payload (missing fields, garbage stdin), with no dead code left that the cut orphaned, and no failure path the cut opened?
+4. The door text (.claude/skills/dxb-team2/SKILL.md §2, §4 PLAN, §8): after the cuts, does each sentence still read whole and stay true — no dangling reference to the removed mode, no CEO-OK marker cut in half, the handover command still runnable?
+5. The ledger entry: valid JSON, does it say what was done, and do the governance rulers that read the ledger still hold (scripts/governance/ledger-truth.mjs, closure-guard.mjs)?
+
+Output per claim: Claim / Verdict (REFUTED | STANDS AFTER ATTEMPTED REFUTATION | UNVERIFIED) / Finding (file:line, scenario, impact) / Evidence / Correction required. Grade A (blocks) · B (repair in this pass) · C (older than this work).
