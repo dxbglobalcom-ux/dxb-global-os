@@ -1,0 +1,230 @@
+
+ RUN  v3.2.6 /home/dxb/DxB Global OS
+
+[global-setup] construction engine 7690665340837392423/5 (postgres) — verified on the connection that does the work.
+ ✓ tests/hooks/context-gate.test.ts (14 tests) 1058ms
+   ✓ the gate never breaks a session: what it cannot read is silent, not a failure > exits 0 with nothing on stderr when the reader of its answer is gone: a deny at 56 into a closed pipe  309ms
+ ❯ tests/hooks/effort-warn.test.ts (40 tests | 11 failed) 1034ms
+   ✓ no mode: the hook says nothing > a session with no mode is silent, whatever its level 14ms
+   ✓ no mode: the hook says nothing > another session's mode does not reach this session 29ms
+   ✓ plan mode warns to switch to max until the live level is max > the CLI answers one line and writes the mode file 0600 in a 0700 folder 20ms
+   ✓ plan mode warns to switch to max until the live level is max > last step at high: the max line, the level named, no file until he switches, the build command 28ms
+   ✓ plan mode warns to switch to max until the live level is max > last step at high but a NEWER status line record at max: silent (he has switched) 29ms
+   ✓ plan mode warns to switch to max until the live level is max > an OLDER record at max but a newer step at high: the max line 29ms
+   ✓ plan mode warns to switch to max until the live level is max > last step at max and no record: silent 28ms
+   ✓ plan mode warns to switch to max until the live level is max > nothing known (no record, no transcript): the max line naming an unknown level 29ms
+   ✓ plan mode warns to switch to max until the live level is max > a record whose session_id field differs is ignored 29ms
+   ✓ plan mode warns to switch to max until the live level is max > only the transcript's tail is read, and its cut first line is tolerated 31ms
+   × only this session's steps in the transcript count (Sol A2) > own step at high and a NEWER step of another session at max: the max line still appears 47ms
+     → Unexpected end of JSON input
+   × only this session's steps in the transcript count (Sol A2) > own step at max and a NEWER step of another session at high: silent 32ms
+     → expected '{"hookSpecificOutput": {"hookEventNam…' to be '' // Object.is equality
+   × only this session's steps in the transcript count (Sol A2) > a step with no sessionId does not count 72ms
+     → Unexpected end of JSON input
+   ✓ a source that cannot be read leaves the other one in use (Sol A3) > the precondition: reading the raising path really raises 9ms
+   × a source that cannot be read leaves the other one in use (Sol A3) > a transcript whose read raises and a record at high in plan mode: the max line naming high 29ms
+     → Unexpected end of JSON input
+   × a source that cannot be read leaves the other one in use (Sol A3) > a transcript whose read raises and no record: the max line naming an unknown level 30ms
+     → Unexpected end of JSON input
+   × every read is bounded (Sol B4) > a transcript that grows while it is read is read no further than TAIL_BYTES (256 KB) 20ms
+     → expected 786432 to be less than or equal to 262144
+   × every read is bounded (Sol B4) > a mode file of 64 KB is read no further than 4 KB 33ms
+     → expected 65540 to be less than or equal to 4096
+   × every read is bounded (Sol B4) > a status line record of 64 KB is read no further than 4 KB 18ms
+     → expected 65645 to be less than or equal to 4096
+   × the status line records /effort even when the payload has no context meter (Sol A4) > a meter-less payload carrying max: the record says max 20ms
+     → ENOENT: no such file or directory, open '/tmp/effortwarn6HDBs5/claude-ctx/7c3e9a10-6f2b-4000-8000-000000000000.json'
+   × the status line records /effort even when the payload has no context meter (Sol A4) > a meter at high, then a meter-less max: the record says max and keeps the meter's last used_pct 44ms
+     → expected { …(8) } to match object { effort: 'max', used_pct: 12 }
+(6 matching properties omitted from actual)
+   × the status line records /effort even when the payload has no context meter (Sol A4) > the hook reads that record: plan mode, a meter-less max render and an older step at high is silent 46ms
+     → expected '{"hookSpecificOutput": {"hookEventNam…' to be '' // Object.is equality
+   ✓ build mode warns to switch to high until the live level is high > the CLI answers one line 15ms
+   ✓ build mode warns to switch to high until the live level is high > at max: the high line, no code until he switches, the off command 42ms
+   ✓ build mode warns to switch to high until the live level is high > at high: silent 26ms
+   ✓ build mode warns to switch to high until the live level is high > a newer record at high beats an older step at max: silent 28ms
+   ✓ off removes the mode > off removes this session's mode only, and the next prompt is silent 56ms
+   ✓ off removes the mode > off with no mode set is not an error 15ms
+   ✓ only a trusted folder and a regular file count as a mode > a link at the mode file is no mode 14ms
+   ✓ only a trusted folder and a regular file count as a mode > a FIFO at the mode file is no mode, and does not block the hook 18ms
+   ✓ only a trusted folder and a regular file count as a mode > a mode folder that is a link is no mode 13ms
+   ✓ only a trusted folder and a regular file count as a mode > a group-writable mode folder is no mode 30ms
+   ✓ only a trusted folder and a regular file count as a mode > the CLI writes through a link at the mode file by replacing it, never through it 17ms
+   ✓ a session id shaped like a path names nothing > the CLI refuses it with exit 2 and writes nothing 14ms
+   ✓ a session id shaped like a path names nothing > the hook is silent for it, even with a file standing where the path points 15ms
+   ✓ as a hook it never fails a session > garbage stdin: exit 0, nothing on stdout or stderr 13ms
+   ✓ as a hook it never fails a session > empty stdin: exit 0, nothing on stdout or stderr 15ms
+   ✓ as a hook it never fails a session > a non-object JSON: exit 0, silent 13ms
+   ✓ the CLI > without CLAUDE_CODE_SESSION_ID exits 2 with a reason 16ms
+   ✓ settings.json registers the hook > as the first command of UserPromptSubmit, before no-laziness.sh 0ms
+
+⎯⎯⎯⎯⎯⎯ Failed Tests 11 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/hooks/effort-warn.test.ts > only this session's steps in the transcript count (Sol A2) > own step at high and a NEWER step of another session at max: the max line still appears
+SyntaxError: Unexpected end of JSON input
+ ❯ warning tests/hooks/effort-warn.test.ts:94:23
+     92| /** the hook's additionalContext, after checking the output's shape */
+     93| function warning(out: string): string {
+     94|   const parsed = JSON.parse(out).hookSpecificOutput;
+       |                       ^
+     95|   expect(parsed.hookEventName).toBe("UserPromptSubmit");
+     96|   return parsed.additionalContext;
+ ❯ tests/hooks/effort-warn.test.ts:188:18
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/11]⎯
+
+ FAIL  tests/hooks/effort-warn.test.ts > only this session's steps in the transcript count (Sol A2) > own step at max and a NEWER step of another session at high: silent
+AssertionError: expected '{"hookSpecificOutput": {"hookEventNam…' to be '' // Object.is equality
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[31m+ {"hookSpecificOutput": {"hookEventName": "UserPromptSubmit", "additionalContext": "This session is in PLAN mode under dxb-team2 and runs at high; the CEO's order (2026-10-06) is plan, design and architecture at max, switched by him with /effort. Begin your reply, before anything else, with exactly this line:\n⚠ Muhittin Bey, plan konuşmasındayız — /effort max'a geçin.\nThen go on, but write no file until he has switched. When he approves the plan, run `python3 \"/home/dxb/DxB Global OS/.claude/hooks/dxb-effort-warn.py\" build` and warn him to switch to high."}}[39m
+[31m+[39m
+
+ ❯ tests/hooks/effort-warn.test.ts:195:88
+    193|     const dir = box();
+    194|     setMode(dir, "plan");
+    195|     expect(hook(dir, prompt(SID, transcript(dir, [["max", 30], ["high"…
+       |                                                                                        ^
+    196|   });
+    197|   it("a step with no sessionId does not count", () => {
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/11]⎯
+
+ FAIL  tests/hooks/effort-warn.test.ts > only this session's steps in the transcript count (Sol A2) > a step with no sessionId does not count
+SyntaxError: Unexpected end of JSON input
+ ❯ warning tests/hooks/effort-warn.test.ts:94:23
+     92| /** the hook's additionalContext, after checking the output's shape */
+     93| function warning(out: string): string {
+     94|   const parsed = JSON.parse(out).hookSpecificOutput;
+       |                       ^
+     95|   expect(parsed.hookEventName).toBe("UserPromptSubmit");
+     96|   return parsed.additionalContext;
+ ❯ tests/hooks/effort-warn.test.ts:200:18
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/11]⎯
+
+ FAIL  tests/hooks/effort-warn.test.ts > a source that cannot be read leaves the other one in use (Sol A3) > a transcript whose read raises and a record at high in plan mode: the max line naming high
+SyntaxError: Unexpected end of JSON input
+ ❯ warning tests/hooks/effort-warn.test.ts:94:23
+     92| /** the hook's additionalContext, after checking the output's shape */
+     93| function warning(out: string): string {
+     94|   const parsed = JSON.parse(out).hookSpecificOutput;
+       |                       ^
+     95|   expect(parsed.hookEventName).toBe("UserPromptSubmit");
+     96|   return parsed.additionalContext;
+ ❯ tests/hooks/effort-warn.test.ts:219:18
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/11]⎯
+
+ FAIL  tests/hooks/effort-warn.test.ts > a source that cannot be read leaves the other one in use (Sol A3) > a transcript whose read raises and no record: the max line naming an unknown level
+SyntaxError: Unexpected end of JSON input
+ ❯ warning tests/hooks/effort-warn.test.ts:94:23
+     92| /** the hook's additionalContext, after checking the output's shape */
+     93| function warning(out: string): string {
+     94|   const parsed = JSON.parse(out).hookSpecificOutput;
+       |                       ^
+     95|   expect(parsed.hookEventName).toBe("UserPromptSubmit");
+     96|   return parsed.additionalContext;
+ ❯ tests/hooks/effort-warn.test.ts:226:18
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/11]⎯
+
+ FAIL  tests/hooks/effort-warn.test.ts > every read is bounded (Sol B4) > a transcript that grows while it is read is read no further than TAIL_BYTES (256 KB)
+AssertionError: expected 786432 to be less than or equal to 262144
+ ❯ tests/hooks/effort-warn.test.ts:257:20
+    255|     const file = transcript(dir, [["high", 5]], 300 * 1024);
+    256|     const r = run(dir, `ew.live_level(${JSON.stringify(SID)}, ${JSON.s…
+    257|     expect(r.read).toBeLessThanOrEqual(256 * 1024);
+       |                    ^
+    258|   });
+    259|   it("a mode file of 64 KB is read no further than 4 KB", () => {
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/11]⎯
+
+ FAIL  tests/hooks/effort-warn.test.ts > every read is bounded (Sol B4) > a mode file of 64 KB is read no further than 4 KB
+AssertionError: expected 65540 to be less than or equal to 4096
+ ❯ tests/hooks/effort-warn.test.ts:264:20
+    262|     writeFileSync(modeFile(dir, SID), "plan" + " ".repeat(64 * 1024));
+    263|     const r = run(dir, `ew.read_mode(${JSON.stringify(SID)})`);
+    264|     expect(r.read).toBeLessThanOrEqual(4 * 1024);
+       |                    ^
+    265|   });
+    266|   it("a status line record of 64 KB is read no further than 4 KB", () …
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/11]⎯
+
+ FAIL  tests/hooks/effort-warn.test.ts > every read is bounded (Sol B4) > a status line record of 64 KB is read no further than 4 KB
+AssertionError: expected 65645 to be less than or equal to 4096
+ ❯ tests/hooks/effort-warn.test.ts:271:20
+    269|     writeFileSync(join(dir, "claude-ctx", `${SID}.json`), JSON.stringi…
+    270|     const r = run(dir, `ew.record_level(${JSON.stringify(SID)})`);
+    271|     expect(r.read).toBeLessThanOrEqual(4 * 1024);
+       |                    ^
+    272|   });
+    273| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/11]⎯
+
+ FAIL  tests/hooks/effort-warn.test.ts > the status line records /effort even when the payload has no context meter (Sol A4) > a meter-less payload carrying max: the record says max
+Error: ENOENT: no such file or directory, open '/tmp/effortwarn6HDBs5/claude-ctx/7c3e9a10-6f2b-4000-8000-000000000000.json'
+ ❯ saved tests/hooks/effort-warn.test.ts:287:45
+    285|     expect(r.status, r.stderr).toBe(0);
+    286|   };
+    287|   const saved = (dir: string) => JSON.parse(readFileSync(join(dir, "cl…
+       |                                             ^
+    288|   const meter = { context_window: { remaining_percentage: 90, total_to…
+    289|   it("a meter-less payload carrying max: the record says max", () => {
+ ❯ tests/hooks/effort-warn.test.ts:292:12
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/11]⎯
+
+ FAIL  tests/hooks/effort-warn.test.ts > the status line records /effort even when the payload has no context meter (Sol A4) > a meter at high, then a meter-less max: the record says max and keeps the meter's last used_pct
+AssertionError: expected { …(8) } to match object { effort: 'max', used_pct: 12 }
+(6 matching properties omitted from actual)
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[2m  {[22m
+[32m-   "effort": "max",[39m
+[31m+   "effort": "high",[39m
+[2m    "used_pct": 12,[22m
+[2m  }[22m
+
+ ❯ tests/hooks/effort-warn.test.ts:299:24
+    297|     expect(saved(dir)).toMatchObject({ effort: "high", used_pct: 12 });
+    298|     render(dir, { effort: { level: "max" } });
+    299|     expect(saved(dir)).toMatchObject({ effort: "max", used_pct: 12 });
+       |                        ^
+    300|   });
+    301|   it("the hook reads that record: plan mode, a meter-less max render a…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[10/11]⎯
+
+ FAIL  tests/hooks/effort-warn.test.ts > the status line records /effort even when the payload has no context meter (Sol A4) > the hook reads that record: plan mode, a meter-less max render and an older step at high is silent
+AssertionError: expected '{"hookSpecificOutput": {"hookEventNam…' to be '' // Object.is equality
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[31m+ {"hookSpecificOutput": {"hookEventName": "UserPromptSubmit", "additionalContext": "This session is in PLAN mode under dxb-team2 and runs at high; the CEO's order (2026-10-06) is plan, design and architecture at max, switched by him with /effort. Begin your reply, before anything else, with exactly this line:\n⚠ Muhittin Bey, plan konuşmasındayız — /effort max'a geçin.\nThen go on, but write no file until he has switched. When he approves the plan, run `python3 \"/home/dxb/DxB Global OS/.claude/hooks/dxb-effort-warn.py\" build` and warn him to switch to high."}}[39m
+[31m+[39m
+
+ ❯ tests/hooks/effort-warn.test.ts:305:69
+    303|     setMode(dir, "plan");
+    304|     render(dir, { effort: { level: "max" } });
+    305|     expect(hook(dir, prompt(SID, transcript(dir, [["high", 30]])))).to…
+       |                                                                     ^
+    306|   });
+    307| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[11/11]⎯
+
+
+ Test Files  1 failed | 1 passed (2)
+      Tests  11 failed | 43 passed (54)
+   Start at  17:06:33
+   Duration  2.47s (transform 62ms, setup 0ms, collect 36ms, tests 2.09s, environment 0ms, prepare 58ms)
+

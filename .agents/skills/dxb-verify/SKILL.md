@@ -25,7 +25,7 @@ measured outcomes take the past tense.
 
 | Check | What it proves |
 |---|---|
-| `pnpm construction:battery` (vitest, both halves — the sandboxed and the host one; `BATTERY_GREEN`) | behaviour, against the construction site's own engine (`DxB_Build`, port 54422) |
+| `pnpm construction:battery` (vitest, both halves — the sandboxed and the host one; `BATTERY_GREEN`) — when code changed, once at the end of the job (`dxb-team2` §5); a text-only change is held by the rulers below and the commit hook | behaviour, against the construction site's own engine (`DxB_Build`, port 54422) |
 | `bash scripts/research-ruler.sh` | only when the research engine changed — the commit hook runs it by itself; `accept.sh` is the live half and is run before a claim that the engine works |
 | `bash scripts/persona-ruler.sh` | only when a persona under the ruler's contract changed — the writing and the doctrine of those seats, by the one metre the battery case (`tests/personas/persona-ruler.test.ts`) and the DB gate (`scripts/sync-personas-to-db.sh`) both run |
 | `pnpm typecheck` (`tsc --build`) | the interfaces still hold |
@@ -35,7 +35,7 @@ measured outcomes take the past tense.
 | `bash scripts/b43/vitrin-register-gate.sh` | the product register the CEO opens — his vitrin and its catalogue (`~/tools/h3/studio`, outside git) — still tells the truth: every cast face names how it was born, no cancelled hand is advertised, no pointer into a folder he deleted, no acceptance claim without a registered ledger id, no media the page shows and the disk lacks, no hand-typed counter, and the page is served to him alone (loopback). Self-skips where there is no vitrin; run by the shared studio battery since W11 |
 | the design pass (door `dxb-surface`) | only when a CEO-visible surface changed |
 | resident restart | only when runtime code changed — see below |
-| **the audit law** (CEO, 2026-09-15: *"Tabii ki yazılsın, tabii ki."* <!-- CEO-OK: audit-law-checker-only-checks-2026-09-15 -->) | Every job is built by one hand and checked by another — in `dxb-team2` the blind Sol auditor (§5) — *"biri bir iş yaparken birisi kontrol edecek çünkü hata oluyor"*. **The checker only checks:** it measures, names the fault, and instructs what is to be done; the builder corrects it and reports "done"; the checker re-measures whether it was done and done right. The checker writes NO repo line — ruler scripts included: a ruler correction is an instruction to the builder, committed by the builder as its own `records(ruler): …` commit, never inside the build commit it measures. A checker that repairs what it then measures is not a checker. A checker's CONFIRMED is never an acceptance — only his own eye is (LAW B). |
+| **the audit law** (CEO, 2026-09-15: *"Tabii ki yazılsın, tabii ki."* <!-- CEO-OK: audit-law-checker-only-checks-2026-09-15 -->) | Every job is built by one hand and checked by another — in `dxb-team2` the blind Sol auditor (§4) — *"biri bir iş yaparken birisi kontrol edecek çünkü hata oluyor"*. **The checker only checks:** it measures, names the fault, and instructs what is to be done; the builder corrects it and reports "done"; the checker re-measures whether it was done and done right. The checker writes NO repo line — ruler scripts included: a ruler correction is an instruction to the builder, committed by the builder as its own `records(ruler): …` commit, never inside the build commit it measures. A checker that repairs what it then measures is not a checker. A checker's CONFIRMED is never an acceptance — only his own eye is (LAW B). |
 
 The tests a change needs follow its risk: a targeted test for a local change, an integration test at
 a boundary, a security check wherever authorisation, secrets or isolation move.
@@ -92,7 +92,8 @@ author runs them and hands over the whole raw output). It queries the constructi
 itself through its one tool `sql_read` as the read-only role `sol_reader` (never the company's —
 refused by identity), so database evidence is gathered by the auditor's hand, not handed over. Record the audit-trail row counts before and after; a difference invalidates the audit.
 
-It fires once on **every construction job**, at the depth the lead chooses (dxb-team2 §4) — the
+It fires once on **every construction job** that changes code, a rule or a door — a change to the
+records alone is held by the commit rulers — at the depth the lead chooses (dxb-team2 §4); the
 author never approves his
 own work (CEO 2026-09-28 <!-- CEO-OK: audit-twin-every-job-2026-09-28 -->; the procedure is
 `dxb-team2`). It also fires on the acceptance session, on a row whose closing evidence has a leg
@@ -100,8 +101,7 @@ the machine cannot check, and on a defect the CEO caught — then it sweeps the 
 
 **A finding is evidence, never a verdict.** The session author signs every ✓. A disputed finding
 is settled inside the team (`dxb-team2` §4 DISPUTE): a test decides; where no test can, the lead
-decides and records why — on a critical job Fable rules in its end call; the lead has the last
-word. What no terminal can observe stays `⚠ UNVERIFIED`.
+decides and records why; the lead has the last word. What no terminal can observe stays `⚠ UNVERIFIED`.
 
 Full text: `HOLDING-OS-MASTER-PLAN/00-CEO-DIRECTIVE-AUDIT-TWIN.md`.
 

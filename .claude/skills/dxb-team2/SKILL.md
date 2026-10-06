@@ -57,8 +57,9 @@ at `max`. **He switches with /effort; the lead warns him — on every reply, unt
 - Between those, the hook `dxb-effort-warn.py` repeats the line on each of his messages until the
   session's live level matches — the lead cannot forget it. A small job has no plan and no warning.
 - Measured 2026-10-06: a hook's input carries no effort and /effort writes no transcript row, so the
-  live level is read from the status line's record (`$XDG_RUNTIME_DIR/claude-ctx/<session>.json`,
-  field `effort`, which follows /effort at once), else from the last step's `effort` in the transcript.
+  live level is the newer, by timestamp, of the status line's record
+  (`$XDG_RUNTIME_DIR/claude-ctx/<session>.json`, field `effort`, which follows /effort at once) and
+  this session's last step in the transcript; neither known → the warning names an unknown level.
   A skill's `effort` can raise a turn but never lower one — the reason the old design-at-max skill went.
 
 ## 3. The seats and the arrangement
@@ -138,8 +139,9 @@ alone (STATE, the board) is checked by the rulers on commit instead.
   both halves against the construction's own engine (port 54422), 1,486 tests, about 6 minutes
   (2026-10-04). Launch it detached from a shell whose `oom_score_adj` is 100; green is the line
   `BATTERY_GREEN`. It answers the one question no single test can: did this break anything else.
-- **Text only** — a door, a persona's words, a record → no battery: the commit hook's rulers read those
-  texts on every commit.
+- **Text only** → no battery. A door, the core or a record: the commit hook's rulers read those on
+  every commit. A persona's words: `bash scripts/persona-ruler.sh` (dxb-verify), which the commit
+  hook does not run.
 - The commit hook runs by itself on every commit: the secret scan (gitleaks); the records ruler when
   STATE, the board or the ledger change; the opening ruler when the core, a skill or the opening hook
   change; the research ruler and `tests/b46` when the research engine changes.

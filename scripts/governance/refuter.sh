@@ -229,7 +229,7 @@ echo "AUDIT effort=$EFFORT" >&2
 # OpenAI can answer "Selected model is at capacity" in the middle of an audit (measured 2026-10-01
 # 17:44, one of eight Sol 6.1 runs that day; Codex does not retry it). The CEO: "sol 6.1 normal şekilde
 # kullanılması lazım bir hata vermemesi lazım". So the audit is run again, whole and blind, after a
-# wait — three times at most — before the door's fallback applies (dxb-team2 §2). Every launch,
+# wait — three times at most — before the door's fallback applies (dxb-team2 §4). Every launch,
 # retries included, is one row of audits.log.
 read -r -a WAITS <<< "${DXB_REFUTER_RETRY_WAITS:-60 180 300}"
 WAITS=("${WAITS[@]:0:3}")
@@ -263,7 +263,7 @@ while :; do
     continue
   fi
   if [ "$CAPACITY" -eq 1 ]; then
-    echo "REFUTER_FAIL: the model stayed at capacity after $(( ${#WAITS[@]} + 1 )) tries — apply the door's fallback auditor and record why (dxb-team2 §2)." >&2
+    echo "REFUTER_FAIL: the model stayed at capacity after $(( ${#WAITS[@]} + 1 )) tries — apply the door's fallback auditor and record why (dxb-team2 §4)." >&2
     exit 75
   fi
   exit "$rc"

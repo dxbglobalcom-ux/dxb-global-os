@@ -1,0 +1,41 @@
+--- "/home/dxb/DxB Global OS/.planning/quick/20261006-dxb-team2-lean/evidence/dxb-statusline.before-effort-field.js"	2026-10-06 15:00:12.127775361 +0200
++++ /home/dxb/.claude/hooks/dxb-statusline.js	2026-10-06 17:08:22.565046061 +0200
+@@ -68,11 +68,15 @@
+     const sid = data.session_id;
+     if (!sid || !/^[0-9a-f-]{8,}$/i.test(sid)) return;
+     const used = usedPercent(data.context_window);
+-    if (used == null) return;
++    // the live /effort level, read by .claude/hooks/dxb-effort-warn.py (CEO 2026-10-06)
++    const effort = data.effort?.level;
++    const hasEffort = ['low', 'medium', 'high', 'xhigh', 'max'].includes(effort);
++    if (used == null && !hasEffort) return;
+     const dir = path.join(process.env.XDG_RUNTIME_DIR || '/tmp', 'claude-ctx');
+     fs.mkdirSync(dir, { recursive: true });
++    const file = path.join(dir, `${sid}.json`);
+     const cw = data.context_window || {};
+-    const rec = {
++    let rec = {
+       session_id: sid,
+       used_pct: used,
+       tokens: usedTokens(cw.current_usage),
+@@ -81,9 +85,19 @@
+       cwd: data.workspace?.current_dir || null,
+       ts: new Date().toISOString(),
+     };
++    if (used == null) {
++      // A payload with no meter still carries /effort. The meter's last reading is kept, so
++      // dxb-context-gate.py and dxb-ctx go on seeing it; with none yet nothing is written --
++      // dxb-ctx --pct must never print a null (the hook then reads the transcript).
++      let prev = null;
++      try { prev = JSON.parse(fs.readFileSync(file, 'utf8')); } catch { /* none yet */ }
++      if (!prev || prev.session_id !== sid || typeof prev.used_pct !== 'number') return;
++      rec = { ...rec, used_pct: prev.used_pct, tokens: prev.tokens, total_tokens: prev.total_tokens };
++    }
++    if (hasEffort) rec.effort = effort;
+     const tmp = path.join(dir, `${sid}.json.tmp`);
+     fs.writeFileSync(tmp, JSON.stringify(rec));
+-    fs.renameSync(tmp, path.join(dir, `${sid}.json`));
++    fs.renameSync(tmp, file);
+   } catch { /* the bar is the product; the file is a convenience */ }
+ }
+ 

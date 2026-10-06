@@ -15,8 +15,9 @@ begins with a warning to switch to high, until he has. The lead decides when eac
 
 The hook's stdin carries no effort (measured 2026-10-06). The live level is the newer, by timestamp, of
 the status line's record $XDG_RUNTIME_DIR/claude-ctx/<session_id>.json (field `effort`, written on each
-render, follows /effort at once) and the last assistant step in the transcript that carries an `effort`
-(a /effort switch writes no row, so the transcript lags one turn behind it). Neither known: unknown.
+render, follows /effort at once) and this session's last assistant step in the transcript that carries an
+`effort` (a /effort switch writes no row, so the transcript lags one turn behind it). A source that cannot be
+read is not known; neither known: unknown. Every read is bounded (the transcript's tail, a few KB elsewhere).
 
 Only a session id shaped like Claude Code's (SESSION_ID) ever names a file, so no path leaves the
 folders; the mode folder is trusted only as a real directory (not a link) owned by this user and
@@ -45,6 +46,7 @@ COMMAND = f'python3 "{os.path.abspath(__file__)}"'
 DIR_FLAGS = os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW
 FILE_FLAGS = os.O_RDONLY | os.O_NOFOLLOW | os.O_NONBLOCK
 TAIL_BYTES = 256 * 1024
+SMALL_BYTES = 4 * 1024  # the mode file and the status line's record are a few dozen bytes
 MAX_LINE = "⚠ Muhittin Bey, plan konuşmasındayız — /effort max'a geçin."
 HIGH_LINE = "⚠ Muhittin Bey, plan bitti — koda geçmeden /effort high'a geçin."
 
@@ -90,8 +92,10 @@ def open_dir(path, create=False, private=True):
     return fd
 
 
-def read_regular(name, dir_fd=None, tail=None):
-    """The bytes of a regular file (its last `tail` bytes when given), or None -- a link, a FIFO or nothing is None."""
+def read_regular(name, dir_fd=None, limit=SMALL_BYTES, tail=False):
+    """At most `limit` bytes of a regular file (its last `limit` bytes when `tail`), or None -- a link, a FIFO or
+    nothing is None. A read error is raised; each source catches its own. A file growing while it is read is
+    still read no further than `limit`."""
     try:
         fd = os.open(name, FILE_FLAGS, dir_fd=dir_fd)
     except OSError:
@@ -100,14 +104,16 @@ def read_regular(name, dir_fd=None, tail=None):
         info = os.fstat(fd)
         if not stat.S_ISREG(info.st_mode):
             return None
-        if tail is not None and info.st_size > tail:
-            os.lseek(fd, info.st_size - tail, os.SEEK_SET)
+        if tail and info.st_size > limit:
+            os.lseek(fd, info.st_size - limit, os.SEEK_SET)
         chunks = []
-        while True:
-            chunk = os.read(fd, 65536)
+        left = limit
+        while left > 0:
+            chunk = os.read(fd, min(65536, left))
             if not chunk:
                 break
             chunks.append(chunk)
+            left -= len(chunk)
         return b"".join(chunks)
     finally:
         os.close(fd)
@@ -136,17 +142,17 @@ def read_mode(name):
 
 
 def record_level(name):
-    """(timestamp, level) from the status line's record of this session, or None."""
-    dir_fd = open_dir(CTX_DIR, private=False)
-    if dir_fd is None:
-        return None
+    """(timestamp, level) from the status line's record of this session, or None -- also when it cannot be read."""
     try:
-        raw = read_regular(f"{name}.json", dir_fd=dir_fd)
-    finally:
-        os.close(dir_fd)
-    try:
+        dir_fd = open_dir(CTX_DIR, private=False)
+        if dir_fd is None:
+            return None
+        try:
+            raw = read_regular(f"{name}.json", dir_fd=dir_fd)
+        finally:
+            os.close(dir_fd)
         record = json.loads(raw) if raw is not None else None
-    except ValueError:
+    except (OSError, ValueError):
         return None
     if not isinstance(record, dict) or record.get("session_id") != name or record.get("effort") not in LEVELS:
         return None
@@ -154,11 +160,15 @@ def record_level(name):
     return (moment, record["effort"]) if moment else None
 
 
-def transcript_level(path):
-    """(timestamp, level) of the transcript's last assistant step carrying an effort, from its tail, or None."""
+def transcript_level(path, name):
+    """(timestamp, level) of this session's last assistant step carrying an effort, from the transcript's tail, or
+    None -- also when it cannot be read. A step of another session, or one naming no session, does not count."""
     if not isinstance(path, str) or not path:
         return None
-    raw = read_regular(path, tail=TAIL_BYTES)
+    try:
+        raw = read_regular(path, limit=TAIL_BYTES, tail=True)
+    except OSError:
+        return None
     if raw is None:
         return None
     for line in reversed(raw.splitlines()):
@@ -166,7 +176,8 @@ def transcript_level(path):
             row = json.loads(line)
         except ValueError:  # the tail's cut first line, or a torn last one
             continue
-        if isinstance(row, dict) and row.get("type") == "assistant" and row.get("effort") in LEVELS:
+        if (isinstance(row, dict) and row.get("type") == "assistant" and row.get("sessionId") == name
+                and row.get("effort") in LEVELS):
             moment = parse_ts(row.get("timestamp"))
             if moment:
                 return moment, row["effort"]
@@ -174,7 +185,7 @@ def transcript_level(path):
 
 
 def live_level(name, transcript_path):
-    known = [found for found in (record_level(name), transcript_level(transcript_path)) if found]
+    known = [found for found in (record_level(name), transcript_level(transcript_path, name)) if found]
     if not known:
         return None
     # the record first, so on a tie the live one wins

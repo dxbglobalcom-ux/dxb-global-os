@@ -11,7 +11,7 @@ import { spawnSync } from "node:child_process";
 import {
   chmodSync, existsSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, rmSync, symlinkSync, writeFileSync,
 } from "node:fs";
-import { tmpdir } from "node:os";
+import { homedir, tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 import { afterAll, describe, expect, it } from "vitest";
 
@@ -44,14 +44,17 @@ const env = (dir: string, sid?: string) => {
 
 const at = (secondsAgo: number) => new Date(Date.now() - secondsAgo * 1000).toISOString();
 
-/** a transcript whose assistant steps carry the given levels, oldest first; `pad` puts that many bytes before them */
-function transcript(dir: string, steps: [string, number][], pad = 0): string {
+/** a transcript whose assistant steps carry the given levels, oldest first; `pad` puts that many bytes before them;
+ * a step's third element is its sessionId (SID when absent, no sessionId field when null) */
+function transcript(dir: string, steps: [string, number, (string | null)?][], pad = 0): string {
   const file = join(dir, "transcript.jsonl");
   const rows: string[] = [];
   if (pad) rows.push(JSON.stringify({ type: "user", message: { content: "x".repeat(pad) } }));
-  for (const [effort, ago] of steps) {
+  for (const [effort, ago, sid = SID] of steps) {
     rows.push(JSON.stringify({ type: "user", timestamp: at(ago + 1), message: { content: "hi" } }));
-    rows.push(JSON.stringify({ type: "assistant", timestamp: at(ago), effort, sessionId: SID, message: { content: [] } }));
+    const step: Record<string, unknown> = { type: "assistant", timestamp: at(ago), effort, message: { content: [] } };
+    if (sid !== null) step.sessionId = sid;
+    rows.push(JSON.stringify(step));
   }
   writeFileSync(file, rows.map((r) => r + "\n").join(""));
   return file;
@@ -175,6 +178,132 @@ describe("plan mode warns to switch to max until the live level is max", () => {
     const dir = box();
     setMode(dir, "plan");
     expect(hook(dir, prompt(SID, transcript(dir, [["high", 5]], 300 * 1024)))).toContain("runs at high");
+  });
+});
+
+describe("only this session's steps in the transcript count (Sol A2)", () => {
+  it("own step at high and a NEWER step of another session at max: the max line still appears", () => {
+    const dir = box();
+    setMode(dir, "plan");
+    const text = warning(hook(dir, prompt(SID, transcript(dir, [["high", 30], ["max", 5, OTHER]]))));
+    expect(text).toContain(MAX_LINE);
+    expect(text).toContain("runs at high");
+  });
+  it("own step at max and a NEWER step of another session at high: silent", () => {
+    const dir = box();
+    setMode(dir, "plan");
+    expect(hook(dir, prompt(SID, transcript(dir, [["max", 30], ["high", 5, OTHER]])))).toBe("");
+  });
+  it("a step with no sessionId does not count", () => {
+    const dir = box();
+    setMode(dir, "plan");
+    const text = warning(hook(dir, prompt(SID, transcript(dir, [["max", 5, null]]))));
+    expect(text).toContain("an unknown level");
+  });
+});
+
+// /proc/self/attr/exec opens as a regular file whose read raises EINVAL (measured on this machine, 2026-10-06)
+const RAISING = "/proc/self/attr/exec";
+
+describe("a source that cannot be read leaves the other one in use (Sol A3)", () => {
+  it("the precondition: reading the raising path really raises", () => {
+    const r = spawnSync("python3", ["-c",
+      `import os\nfd = os.open(${JSON.stringify(RAISING)}, os.O_RDONLY | os.O_NONBLOCK)\ntry:\n    os.read(fd, 1)\nexcept OSError as e:\n    print(type(e).__name__)`,
+    ], { encoding: "utf8" });
+    expect(r.stdout.trim()).toBe("OSError");
+  });
+  it("a transcript whose read raises and a record at high in plan mode: the max line naming high", () => {
+    const dir = box();
+    setMode(dir, "plan");
+    record(dir, SID, "high", 1);
+    const text = warning(hook(dir, prompt(SID, RAISING)));
+    expect(text).toContain(MAX_LINE);
+    expect(text).toContain("runs at high");
+  });
+  it("a transcript whose read raises and no record: the max line naming an unknown level", () => {
+    const dir = box();
+    setMode(dir, "plan");
+    const text = warning(hook(dir, prompt(SID, RAISING)));
+    expect(text).toContain("an unknown level");
+  });
+});
+
+/** runs the hook's own functions in-process with os.read counted; the first read of a growPath appends `grow` bytes to it */
+describe("every read is bounded (Sol B4)", () => {
+  const run = (dir: string, call: string, grow = 0, growPath?: string) => {
+    const code = [
+      "import importlib.util, json, os, sys",
+      `spec = importlib.util.spec_from_file_location("ew", ${JSON.stringify(HOOK)})`,
+      "ew = importlib.util.module_from_spec(spec); spec.loader.exec_module(ew)",
+      "real = os.read; total = [0]; grown = [False]",
+      "def counted(fd, n):",
+      "    chunk = real(fd, n); total[0] += len(chunk)",
+      "    if len(sys.argv) > 1 and not grown[0]:",
+      "        grown[0] = True",
+      `        with open(sys.argv[1], 'ab') as f: f.write(b'x' * ${grow})`,
+      "    return chunk",
+      "os.read = counted",
+      `answer = ${call}`,
+      "print(json.dumps({'read': total[0], 'answer': repr(answer)}))",
+    ].join("\n");
+    const r = spawnSync("python3", ["-c", code, ...(growPath ? [growPath] : [])], { encoding: "utf8", env: env(dir), timeout: LIMIT_MS });
+    expect(r.status, r.stderr).toBe(0);
+    return JSON.parse(r.stdout) as { read: number; answer: string };
+  };
+  it("a transcript that grows while it is read is read no further than TAIL_BYTES (256 KB)", () => {
+    const dir = box();
+    const file = transcript(dir, [["high", 5]], 300 * 1024);
+    const r = run(dir, `ew.live_level(${JSON.stringify(SID)}, ${JSON.stringify(file)})`, 512 * 1024, file);
+    expect(r.read).toBeLessThanOrEqual(256 * 1024);
+  });
+  it("a mode file of 64 KB is read no further than 4 KB", () => {
+    const dir = box();
+    setMode(dir, "plan");
+    writeFileSync(modeFile(dir, SID), "plan" + " ".repeat(64 * 1024));
+    const r = run(dir, `ew.read_mode(${JSON.stringify(SID)})`);
+    expect(r.read).toBeLessThanOrEqual(4 * 1024);
+  });
+  it("a status line record of 64 KB is read no further than 4 KB", () => {
+    const dir = box();
+    mkdirSync(join(dir, "claude-ctx"), { recursive: true });
+    writeFileSync(join(dir, "claude-ctx", `${SID}.json`), JSON.stringify({ session_id: SID, effort: "max", ts: at(1), pad: "x".repeat(64 * 1024) }));
+    const r = run(dir, `ew.record_level(${JSON.stringify(SID)})`);
+    expect(r.read).toBeLessThanOrEqual(4 * 1024);
+  });
+});
+
+const STATUS_LINE = join(homedir(), ".claude", "hooks", "dxb-statusline.js");
+
+describe("the status line records /effort even when the payload has no context meter (Sol A4)", () => {
+  const render = (dir: string, payload: Record<string, unknown>) => {
+    const e: NodeJS.ProcessEnv = { ...process.env, XDG_RUNTIME_DIR: dir };
+    delete e.CLAUDE_CODE_AUTO_COMPACT_WINDOW;
+    const r = spawnSync("node", [STATUS_LINE], {
+      input: JSON.stringify({ session_id: SID, model: { display_name: "Opus 5.5" }, workspace: { current_dir: "/x" }, ...payload }),
+      encoding: "utf8", env: e, timeout: LIMIT_MS,
+    });
+    expect(r.status, r.stderr).toBe(0);
+  };
+  const saved = (dir: string) => JSON.parse(readFileSync(join(dir, "claude-ctx", `${SID}.json`), "utf8"));
+  const meter = { context_window: { remaining_percentage: 90, total_tokens: 1000000, current_usage: { input_tokens: 1000 } } };
+  it("a meter-less payload with no earlier reading writes no record — dxb-ctx never sees a null used_pct", () => {
+    const dir = box();
+    render(dir, { effort: { level: "max" } });
+    expect(existsSync(join(dir, "claude-ctx", `${SID}.json`))).toBe(false);
+  });
+  it("a meter at high, then a meter-less max: the record says max and keeps the meter's last used_pct", () => {
+    const dir = box();
+    render(dir, { ...meter, effort: { level: "high" } });
+    expect(saved(dir)).toMatchObject({ effort: "high", used_pct: 12 });
+    render(dir, { effort: { level: "max" } });
+    expect(saved(dir)).toMatchObject({ effort: "max", used_pct: 12 });
+  });
+  it("the hook reads that record: plan mode, a meter-less max render and an older step at high is silent", () => {
+    const dir = box();
+    setMode(dir, "plan");
+    render(dir, { ...meter, effort: { level: "high" } });
+    render(dir, { effort: { level: "max" } });
+    expect(hook(dir, prompt(SID, transcript(dir, [["high", 30]])))).toBe("");
   });
 });
 

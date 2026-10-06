@@ -1,0 +1,45 @@
+--- "/home/dxb/DxB Global OS/.planning/quick/20261006-dxb-team2-lean/evidence/dxb-statusline.before-a4.js"	2026-10-06 17:05:39.678445734 +0200
++++ /home/dxb/.claude/hooks/dxb-statusline.js	2026-10-06 17:07:19.293628429 +0200
+@@ -68,11 +68,15 @@
+     const sid = data.session_id;
+     if (!sid || !/^[0-9a-f-]{8,}$/i.test(sid)) return;
+     const used = usedPercent(data.context_window);
+-    if (used == null) return;
++    // the live /effort level, read by .claude/hooks/dxb-effort-warn.py (CEO 2026-10-06)
++    const effort = data.effort?.level;
++    const hasEffort = ['low', 'medium', 'high', 'xhigh', 'max'].includes(effort);
++    if (used == null && !hasEffort) return;
+     const dir = path.join(process.env.XDG_RUNTIME_DIR || '/tmp', 'claude-ctx');
+     fs.mkdirSync(dir, { recursive: true });
++    const file = path.join(dir, `${sid}.json`);
+     const cw = data.context_window || {};
+-    const rec = {
++    let rec = {
+       session_id: sid,
+       used_pct: used,
+       tokens: usedTokens(cw.current_usage),
+@@ -81,12 +85,20 @@
+       cwd: data.workspace?.current_dir || null,
+       ts: new Date().toISOString(),
+     };
+-    // the live /effort level, read by .claude/hooks/dxb-effort-warn.py (CEO 2026-10-06)
+-    const effort = data.effort?.level;
+-    if (['low', 'medium', 'high', 'xhigh', 'max'].includes(effort)) rec.effort = effort;
++    if (used == null) {
++      // A payload with no meter still carries /effort. The meter's last reading is kept, so
++      // dxb-context-gate.py and dxb-ctx go on seeing it; with none yet, used_pct is null,
++      // which the gate reads as no record.
++      let prev = null;
++      try { prev = JSON.parse(fs.readFileSync(file, 'utf8')); } catch { /* none yet */ }
++      if (prev && prev.session_id === sid && typeof prev.used_pct === 'number') {
++        rec = { ...rec, used_pct: prev.used_pct, tokens: prev.tokens, total_tokens: prev.total_tokens };
++      }
++    }
++    if (hasEffort) rec.effort = effort;
+     const tmp = path.join(dir, `${sid}.json.tmp`);
+     fs.writeFileSync(tmp, JSON.stringify(rec));
+-    fs.renameSync(tmp, path.join(dir, `${sid}.json`));
++    fs.renameSync(tmp, file);
+   } catch { /* the bar is the product; the file is a convenience */ }
+ }
+ 

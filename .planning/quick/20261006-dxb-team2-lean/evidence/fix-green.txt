@@ -1,0 +1,13 @@
+
+ RUN  v3.2.6 /home/dxb/DxB Global OS
+
+[global-setup] construction engine 7690665340837392423/5 (postgres) — verified on the connection that does the work.
+ ✓ tests/hooks/effort-warn.test.ts (40 tests) 941ms
+ ✓ tests/hooks/context-gate.test.ts (14 tests) 1042ms
+   ✓ the gate never breaks a session: what it cannot read is silent, not a failure > exits 0 with nothing on stderr when the reader of its answer is gone: a deny at 56 into a closed pipe  308ms
+
+ Test Files  2 passed (2)
+      Tests  54 passed (54)
+   Start at  17:07:24
+   Duration  2.35s (transform 61ms, setup 0ms, collect 33ms, tests 1.98s, environment 0ms, prepare 58ms)
+

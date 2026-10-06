@@ -350,7 +350,7 @@ charts (2026-09-22 release) with his own eye.
 1. **Seats.** Chief engineer = the session he opens, `claude-opus-5-5` · `xhigh` · writer = a
    separate session, `claude-opus-5-5` · `max` · refuter and debugger subagents
    `claude-opus-5-5` · `xhigh` · design second eye `design-eye`, `claude-fable-5-1` · `high`,
-   read-only, no `Agent` tool. The canonical seat table is `.claude/skills/dxb-team2/SKILL.md` §2 (dxb-crew deleted on the CEO's order, 2026-10-01). <!-- CEO-OK: rules-prune-batch-2-2026-10-01 -->
+   read-only, no `Agent` tool. The canonical seat table is `.claude/skills/dxb-team2/SKILL.md` §3 (dxb-crew deleted on the CEO's order, 2026-10-01). <!-- CEO-OK: rules-prune-batch-2-2026-10-01 -->
 2. **Author.** Construction authorship belongs to the model that runs the session; A-2026-07-25's
    "Opus 5" names the author of that period and stays as history.
 3. **Pinned ids.** Model ids are pinned, never an alias; a stronger model takes a seat only when it
@@ -361,7 +361,7 @@ charts (2026-09-22 release) with his own eye.
 CONSTRUCTION tree only; no runtime routing row moves. A-2026-09-23's `dxb-crew` door was deleted on the CEO's order, 2026-10-01. <!-- CEO-OK: rules-prune-batch-2-2026-10-01 --> It
 replaces A-2026-09-25 (the three-writer door, which burned half a weekly quota on one job — the fire
 came from waste: parallel re-reads, a fresh `max` writer per fix, subagent caches that die at 5
-minutes). The canonical table is `.claude/skills/dxb-team2/SKILL.md` §2.
+minutes). The canonical table is `.claude/skills/dxb-team2/SKILL.md` §3.
 
 1. **Seats.** Lead = the session at `high` (plan, design and architecture at `max`, the CEO switching
    on the lead's warning) — chooses who writes (itself, a fork, `medium` helpers, or a fork with
