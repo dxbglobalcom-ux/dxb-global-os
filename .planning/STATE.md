@@ -27,21 +27,11 @@ not here. What is accepted is read from `scripts/governance/ceo-approvals.json`,
 
 ## Where we left off
 
-2026-10-06, session f0af511e — Fable's review of the lean dxb-team2 door fixed, every finding, and the three
-older findings with it (finished, not accepted — LAW B). The effort warning now starts by itself (plan
-permission mode; his words naming a plan, design or architecture; a session not at high before code), reads
-a /effort switch from its transcript row, and goes with the plan's question; the gates run in the battery's
-host half; parallel writers queue for the engine; the manifest keeps a `__proto__` key; 211 dossier status
-lines match the company and `sync-personas-to-db.sh --verify` now watches them; the status line survives a
-`null` payload. One Sol pass, its 3 A and 2 B fixed; battery GREEN. Job folder
-`.planning/quick/20261006-fable-review-fixes/`. The lean door itself (session f7a2bf71) also waits for his eye
-<!-- CEO-OK: dxb-team2-lean-2026-10-06 -->.
-Then, on his order: `tests/` and `db/seed/` under the typecheck (`tsconfig.tests.json`, run by
-`pnpm typecheck`; 37 errors fixed; Sol's one B fixed; battery GREEN); the knowledge graph rebuilt and no
-longer indexing its own outputs; Sol's raw dumps and briefs out of git, on disk.
-After an overall look at the door, on his word: the battery runs before Sol; dxb-verify names the
-fallback refuter's exception; the debugger agent hands fixes to the right seat (Sol: 1 B, fixed).
-⚠ UNVERIFIED: the warning reaching a real reply — the first plan talk shows it on his screen.
+2026-10-06, sessions f7a2bf71 and f0af511e — the lean dxb-team2 door, and the whole day's work on it, ACCEPTED
+by his eye <!-- CEO-OK: dxb-team2-lean-day-accepted-by-his-eye-2026-10-06 -->: the effort warnings, the
+clean-break handover, Fable's review and the older findings fixed, tests/ and db/seed/ under the typecheck,
+the graph no longer indexing itself, the battery before Sol. Job folders `.planning/quick/20261006-*`.
+⚠ UNVERIFIED: the plan warning reaching his screen — the first plan talk shows it.
 Still waiting for his eye from 2026-10-04 (STATE-ARCHIVE, § 2026-10-06): B51 move 5's persona text and code
 bundle 2; the auto-memory fixes; the outside review's item 4.
 

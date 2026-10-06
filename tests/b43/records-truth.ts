@@ -111,6 +111,9 @@ export const C = {
     // His list item 2 — the locked tool resolved by the system itself, accepted by his eye 2026-10-04
     // ("bkatım tmmdır."); the records spell it "A locked tool resolved by the system itself".
     { id: "locked-tool-accepted-by-his-eye-2026-10-04", subject: /locked tool resolved by the system itself/i },
+    // The day's work on the lean dxb-team2 door, accepted by his eye 2026-10-06 ("Göz tamam."); the
+    // records spell it "the lean dxb-team2 door".
+    { id: "dxb-team2-lean-day-accepted-by-his-eye-2026-10-06", subject: /lean dxb-team2 door/i },
   ],
   /**
    * R4 — the ruler cannot be forgotten: every acceptance of his eye registered in the ledger from
