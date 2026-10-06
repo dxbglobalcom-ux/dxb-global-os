@@ -54,6 +54,9 @@ Tool loading is B41's leg of 2026-10-04, built when its turn comes.
 - Found in the review job (his word decides): `tests/` and `db/seed/` are outside every typecheck — opened
   once, 127 type errors in 52 files; the knowledge graph (`.planning/graphs/`, built 2026-10-04, 75 commits
   behind) still describes the old door — a local rebuild, no model, `node scripts/governance/graph-refresh.mjs`.
+- His open question (2026-10-06), to be answered when he asks for it: Sol's raw dumps and briefs, now on disk
+  only (`.planning/quick/**/*.raw`, `*brief*.txt`) — keep them, or delete them past a point (e.g. monthly) so
+  they are no load?
 
 ## Where things live
 
