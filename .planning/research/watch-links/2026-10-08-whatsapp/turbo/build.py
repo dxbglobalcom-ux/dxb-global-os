@@ -265,6 +265,15 @@ def main(src_xlsx, out_xlsx):
         score_cols=(2, 3, 4, 8, 9), freeze="C2",
     )
 
+    # Print layout: landscape everywhere; the narrow sheets one page wide. The 26-column link
+    # sheets are not squeezed — at one page wide their text would be unreadable on paper.
+    for ws in wb:
+        ws.page_setup.orientation = "landscape"
+        if ws.title in ("Özet", "Projeler", "Değişenler"):
+            ws.page_setup.fitToWidth = 1
+            ws.page_setup.fitToHeight = 0
+            ws.sheet_properties.pageSetUpPr.fitToPage = True
+
     wb.save(out_xlsx)
     print(f"rows={len(ids)} split_files={[Path(f).name for f in split_files]} "
           f"missing_split={len(missing_split)} prio={len(prio)} changed={len(changed)} "
