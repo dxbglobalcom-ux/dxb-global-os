@@ -27,29 +27,23 @@ not here. What is accepted is read from `scripts/governance/ceo-approvals.json`,
 
 ## Where we left off
 
-2026-10-08, session c1281a35 — on his word <!-- CEO-OK: four-equal-arrangements-lead-chooses-2026-10-08 -->
-dxb-team2 §3 rewritten: four equal arrangements (Lead, Fork, Team, Hybrid); after his yes the lead at high chooses one by its own judgement and tells him which and why; writing
-itself is not the default; the medium-first rule and the "When" column are gone.
-Sol `medium`: 0 A · 1 B fixed; of its 3 C, two fixed <!-- CEO-OK: plan-names-no-arrangement-2026-10-08 -->
-<!-- CEO-OK: fork-seat-no-size-2026-10-08 --> — the plan names no arrangement, the Fork seat has no size —
-each re-audited by Sol with no finding to fix. Job folder `.planning/quick/20261008-four-equal-arrangements/`.
-Then, on his word <!-- CEO-OK: b58-closed-its-code-gate-gone-2026-10-08 -->, the global layer swept: B58 closed
-(its code gate was thrown away 2026-09-28); the stale dxb-team2 memories fixed or deleted; 143 leftovers of
-removed systems deleted from ~/.claude, ~/.codex and ~/.local (73.8 MB).
-§3 also lost the Fork's one-off token count and the failure ladder's two prices. A dry run of seven scenarios
-(fresh Opus 5.5 high sessions, read-only, the repo untouched) chose plan, effort warning, arrangement and Sol
-by the door in all seven; the Team arrangement was not exercised by any of them.
-The effort warning reached his screen both ways this session — the max line, then the high line — and he
-switched each time.
-Accepted by his word <!-- CEO-OK: eye-waiting-list-accepted-2026-10-08 -->: all of the above, and from 2026-10-04
-B51 move 5's persona text and code bundle 2, the auto-memory fixes and the outside review's item 4. Nothing waits for his eye.
+2026-10-08, session 0202e30f — his WhatsApp group "Claude Code" (125 saved AI links, 13.06 → 08.10) judged
+from the real content, on his orders of the day: every video from its transcript, the frames at the moments
+that matter, the whole video when it is truly valuable. Five Opus 5.5 medium readers, then the lead judged
+every row and wrote an application plan for the 30 worth acting on. The Excel was sent to him; results in
+`.planning/research/watch-links/2026-10-08-whatsapp/` (media and transcripts on disk, `~/.cache/link-watch/`).
+Mert Durmazer's AgencyOS studied in depth (53 screens, topic map, capability table — `agencyos-analysis.md`);
+his rulings: nothing in that system is decoration, and it is its own study, linked to B28 but not B28.
+On his word a new door: `.claude/skills/dxb-watch-links` — gather, watch in three steps, judge as his engineer,
+plan, Excel. YouTube refuses this machine's downloader; the door reads YouTube in his own Chrome.
+Not reached: two Instagram posts and parts of two more deleted by their owners; one name-only note ("abt seo")
+matches nothing.
 
 ## Next
 
-1. His WhatsApp's saved AI links (group "Claude Code", 13.06 → 08.10, 125 entries) — first pass (captions) sent and
-   rejected by him: every video is to be judged from its transcript, frames at the moments that matter. Second
-   pass running: downloads + transcripts, then Opus 5.5 medium readers for the 96 the first pass could not do, then
-   the lead judges each and writes the Excel with an application plan. Handover note in session baf55676's scratchpad.
+1. His word on the WhatsApp plan — the Excel's "Plan" sheet, strongest first: AgencyOS as its own study (lead
+   finding, Hamza's hands — `tools: []` today, niche playbooks, project ↔ client ↔ service), Meta's WhatsApp
+   Business MCP, claude-ads, OpenSEO, skills for the 213 personas (0 granted today). Nothing starts without it.
 2. The research he asked for — the tweet's top-tier agent systems (SS and S) and Hermes; the link is to come
    from him (it may be among the WhatsApp links).
 3. B51 bundle 3, with B51 moves 3 and 6 — put off by him on 2026-10-08 as delicate work for a rested day; what
@@ -58,6 +52,7 @@ Tool loading is B41's leg of 2026-10-04, built when its turn comes.
 
 ## Waiting on his approval
 
+- The WhatsApp links Excel and the AgencyOS study — sent 2026-10-08, waiting for his eye.
 - The board rows that wait on him for a decision, money, an eye or an identity step — the board
   page's "Sizi bekleyenler" lists them.
 
