@@ -30,10 +30,12 @@ not here. What is accepted is read from `scripts/governance/ceo-approvals.json`,
 2026-10-08, session c1281a35 — on his word <!-- CEO-OK: four-equal-arrangements-lead-chooses-2026-10-08 -->
 dxb-team2 §3 rewritten: four equal arrangements (Lead, Fork, Team, Hybrid); after his yes the lead at high chooses one by its own judgement and tells him which and why; writing
 itself is not the default; the medium-first rule and the "When" column are gone. Finished, not accepted (LAW B).
-Sol `medium`: 0 A · 1 B fixed · 3 C put to him. Job folder `.planning/quick/20261008-four-equal-arrangements/`.
+Sol `medium`: 0 A · 1 B fixed; of its 3 C, two fixed <!-- CEO-OK: plan-names-no-arrangement-2026-10-08 -->
+<!-- CEO-OK: fork-seat-no-size-2026-10-08 --> — the plan names no arrangement, the Fork seat has no size —
+each re-audited by Sol with no finding to fix. Job folder `.planning/quick/20261008-four-equal-arrangements/`.
 The effort warning reached his screen both ways this session — the max line, then the high line — and he
 switched each time.
-Still waiting for his eye: today's §3 change; and from 2026-10-04 (STATE-ARCHIVE, § 2026-10-06): B51 move 5's
+Still waiting for his eye: today's dxb-team2 changes; and from 2026-10-04 (STATE-ARCHIVE, § 2026-10-06): B51 move 5's
 persona text and code bundle 2; the auto-memory fixes; the outside review's item 4.
 
 ## Next
@@ -45,10 +47,6 @@ Tool loading is B41's leg of 2026-10-04, built when its turn comes.
 
 ## Waiting on his approval
 
-- Two older wordings Sol found in dxb-team2 (C, 2026-10-08; `SOL.md` in the job folder): the Fork seat row
-  ("a large piece that needs this conversation") — the lead recommends "writes the piece the lead gives it";
-  §2's "outside a plan … needs no switch" — the lead recommends leaving it. The third, the plan naming who
-  writes, is gone on his word <!-- CEO-OK: plan-names-no-arrangement-2026-10-08 --> (Sol: 0 findings, `SOL-2.md`).
 - The board rows that wait on him for a decision, money, an eye or an identity step — the board
   page's "Sizi bekleyenler" lists them.
 
