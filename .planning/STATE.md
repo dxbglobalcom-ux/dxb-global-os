@@ -46,9 +46,12 @@ B51 move 5's persona text and code bundle 2, the auto-memory fixes and the outsi
 
 ## Next
 
-1. B51 bundle 3, with B51 moves 3 and 6 — waits on his word.
+1. His WhatsApp's saved AI links (about 15-30: repositories, strategy, new developments) — read and weigh each
+   for what serves the holding and what improves these sessions; he connects his WhatsApp first.
 2. The research he asked for — the tweet's top-tier agent systems (SS and S) and Hermes; the link is to come
-   from him.
+   from him (it may be among the WhatsApp links).
+3. B51 bundle 3, with B51 moves 3 and 6 — put off by him on 2026-10-08 as delicate work for a rested day; what
+   to do with it he decides later.
 Tool loading is B41's leg of 2026-10-04, built when its turn comes.
 
 ## Waiting on his approval
