@@ -112,8 +112,6 @@ four, not the default.
   behaviour, the measured facts it must not re-litigate, the test it writes first, what it reports.
 - The lead verifies each piece before it is committed — reads the diff, runs its tests — and commits
   only what it verified. Nobody else commits.
-- A fork starts cheap: its first call reads the lead's cache (203,676 tokens read, 1,200 written —
-  session 5ed74ad7, 2026-10-03).
 - A piece that fails: a medium writer's goes to the lead or a fork at `high`; one that failed twice at
   `high` goes to the `builder`, never earlier. Opus `xhigh` is never used for code (FrontierCode 51.4 %, the bottom of the
   curve); `max` writes code only as the escalation writer — a medium try plus a high retry (USD 1.89)
