@@ -43,8 +43,9 @@ the data's integrity (the work stops at it), and an order of his that truly read
 recommendation, answerable in one word. Technical choices inside a job he said yes to are the lead's.
 The plan's single trip is his word <!-- CEO-OK: plan-comes-to-him-once-2026-10-03 -->.
 
-**The plan**, when there is one, names the scope, what it touches, the ordered steps, the
-arrangement, how it is verified, and the risks — in his language, short. No file changes before his yes.
+**The plan**, when there is one, names the scope, what it touches, the ordered steps, how it is verified,
+and the risks — in his language, short; not who writes, which the lead chooses after his yes (§3)
+<!-- CEO-OK: plan-names-no-arrangement-2026-10-08 -->. No file changes before his yes.
 
 ## 2. Effort — the session warns, he switches
 
