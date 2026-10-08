@@ -45,7 +45,8 @@ delivery that resembles one is refused on sight.
 detail to the bottom · he changes anything at any moment, without having to micro-manage.
 
 **The standard is the Ferrari** (CEO, 2026-08-01): he ordered the car, not the drive — first place
-in a world competition, award standard, never amateur.
+in a world competition, award standard, never amateur. Revenue and new companies come after; they
+are what the finished machine DOES.
 
 **The first law of V2 — IT MUST BE ALIVE** (*"CANSIZ DÜZ KİTAP GİBİ ORGANİZMA YOK SIFIR CANLILIK"*,
 2026-08-02). What the rival queue found, in one place:
