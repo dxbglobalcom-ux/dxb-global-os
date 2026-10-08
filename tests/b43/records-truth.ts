@@ -116,6 +116,10 @@ export const C = {
     { id: "dxb-team2-lean-day-accepted-by-his-eye-2026-10-06", subject: /lean dxb-team2 door/i },
     // Sol's dumps swept after 90 days, his eye given in advance 2026-10-06 ("Gözümü de şimdiden onay veriyorum").
     { id: "sol-dumps-swept-after-90-days-2026-10-06", subject: /Sol's (raw )?dumps.{0,40}90 days/i },
+    // Everything STATE listed as waiting for his eye, accepted by his word 2026-10-08 ("Gözüm bekleyen şeyleri
+    // onayladım. Kapat orayı."); the records spell its items "four equal arrangements", "code bundle 2",
+    // "the auto-memory fixes" and "the outside review's item 4".
+    { id: "eye-waiting-list-accepted-2026-10-08", subject: /four equal arrangements|code bundle 2|auto-memory fixes|outside review's item 4/i },
   ],
   /**
    * R4 — the ruler cannot be forgotten: every acceptance of his eye registered in the ledger from

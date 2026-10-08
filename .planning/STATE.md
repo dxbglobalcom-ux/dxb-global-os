@@ -29,7 +29,7 @@ not here. What is accepted is read from `scripts/governance/ceo-approvals.json`,
 
 2026-10-08, session c1281a35 — on his word <!-- CEO-OK: four-equal-arrangements-lead-chooses-2026-10-08 -->
 dxb-team2 §3 rewritten: four equal arrangements (Lead, Fork, Team, Hybrid); after his yes the lead at high chooses one by its own judgement and tells him which and why; writing
-itself is not the default; the medium-first rule and the "When" column are gone. Finished, not accepted (LAW B).
+itself is not the default; the medium-first rule and the "When" column are gone.
 Sol `medium`: 0 A · 1 B fixed; of its 3 C, two fixed <!-- CEO-OK: plan-names-no-arrangement-2026-10-08 -->
 <!-- CEO-OK: fork-seat-no-size-2026-10-08 --> — the plan names no arrangement, the Fork seat has no size —
 each re-audited by Sol with no finding to fix. Job folder `.planning/quick/20261008-four-equal-arrangements/`.
@@ -41,8 +41,8 @@ removed systems deleted from ~/.claude, ~/.codex and ~/.local (73.8 MB).
 by the door in all seven; the Team arrangement was not exercised by any of them.
 The effort warning reached his screen both ways this session — the max line, then the high line — and he
 switched each time.
-Still waiting for his eye: today's dxb-team2 changes; and from 2026-10-04 (STATE-ARCHIVE, § 2026-10-06): B51 move 5's
-persona text and code bundle 2; the auto-memory fixes; the outside review's item 4.
+Accepted by his word <!-- CEO-OK: eye-waiting-list-accepted-2026-10-08 -->: all of the above, and from 2026-10-04
+B51 move 5's persona text and code bundle 2, the auto-memory fixes and the outside review's item 4. Nothing waits for his eye.
 
 ## Next
 
