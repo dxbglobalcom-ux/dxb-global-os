@@ -36,6 +36,9 @@ each re-audited by Sol with no finding to fix. Job folder `.planning/quick/20261
 Then, on his word <!-- CEO-OK: b58-closed-its-code-gate-gone-2026-10-08 -->, the global layer swept: B58 closed
 (its code gate was thrown away 2026-09-28); the stale dxb-team2 memories fixed or deleted; 143 leftovers of
 removed systems deleted from ~/.claude, ~/.codex and ~/.local (73.8 MB).
+§3 also lost the Fork's one-off token count and the failure ladder's two prices. A dry run of seven scenarios
+(fresh Opus 5.5 high sessions, read-only, the repo untouched) chose plan, effort warning, arrangement and Sol
+by the door in all seven; the Team arrangement was not exercised by any of them.
 The effort warning reached his screen both ways this session — the max line, then the high line — and he
 switched each time.
 Still waiting for his eye: today's dxb-team2 changes; and from 2026-10-04 (STATE-ARCHIVE, § 2026-10-06): B51 move 5's
