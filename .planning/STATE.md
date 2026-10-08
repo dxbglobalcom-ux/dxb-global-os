@@ -46,9 +46,10 @@ B51 move 5's persona text and code bundle 2, the auto-memory fixes and the outsi
 
 ## Next
 
-1. His WhatsApp's saved AI links — read on 2026-10-08 from his Chrome (group "Claude Code", 13.06 → 08.10):
-   125 entries, five Sonnet readers, one spreadsheet sent to him (15 priority: 1 Kur · 9 Dene · 18 Araştır overall).
-   Finished, waiting for his eye. Open: 6 image-only messages unread (the 16.06 one carries "bunu kurdur, özellikle 2 ve 3").
+1. His WhatsApp's saved AI links (group "Claude Code", 13.06 → 08.10, 125 entries) — first pass (captions) sent and
+   rejected by him: every video is to be judged from its transcript, frames at the moments that matter. Second
+   pass running: downloads + transcripts, then Opus 5.5 medium readers for the 96 the first pass could not do, then
+   the lead judges each and writes the Excel with an application plan. Handover note in session baf55676's scratchpad.
 2. The research he asked for — the tweet's top-tier agent systems (SS and S) and Hermes; the link is to come
    from him (it may be among the WhatsApp links).
 3. B51 bundle 3, with B51 moves 3 and 6 — put off by him on 2026-10-08 as delicate work for a rested day; what
