@@ -27,32 +27,33 @@ not here. What is accepted is read from `scripts/governance/ceo-approvals.json`,
 
 ## Where we left off
 
-2026-10-08, session 0202e30f — his WhatsApp group "Claude Code" (125 saved AI links, 13.06 → 08.10) judged
-from the real content, on his orders of the day: every video from its transcript, the frames at the moments
-that matter, the whole video when it is truly valuable. Five Opus 5.5 medium readers, then the lead judged
-every row and wrote an application plan for the 30 worth acting on. The Excel was sent to him; results in
-`.planning/research/watch-links/2026-10-08-whatsapp/` (media and transcripts on disk, `~/.cache/link-watch/`).
-Mert Durmazer's AgencyOS studied in depth (53 screens, topic map, capability table — `agencyos-analysis.md`);
-his rulings: nothing in that system is decoration, and it is its own study, linked to B28 but not B28.
-On his word a new door: `.claude/skills/dxb-watch-links` — gather, watch in three steps, judge as his engineer,
-plan, Excel. YouTube refuses this machine's downloader; the door reads YouTube in his own Chrome.
-Not reached: two Instagram posts and parts of two more deleted by their owners; one name-only note ("abt seo")
-matches nothing.
+2026-10-08 evening, session f8b23136 — the 125 WhatsApp links re-judged by the holding's purpose after he found
+revenue ideas marked "gerek yok" (*"bu raporda en şiddetli şekilde gelir katmanları da düşünülerek herşey
+değerlendirilmeli"*). The purpose now opens `.claude/CLAUDE.md` and the dxb-watch-links door: technological
+advancement and revenue generation; the Ferrari sentence "Revenue and new companies come after" stays — he ruled it
+does not contradict <!-- CEO-OK: holding-purpose-tech-and-revenue-2026-10-08 -->. Five readers re-read every link from
+its content; the lead corrected four rows and wrote nine projects ordered by money, kept in `gelir-turu/` beside the
+first pass ("Gerek yok" 59 → 38; W068 1 → 3, W112 2 → 3). YouTube sponsors DXB (his statement); its scope is not
+known, so every YouTube-dependent row carries both readings (A: YouTube's own rules · B: other people's footage too).
 
 ## Next
 
-1. His word on the WhatsApp plan — the Excel's "Plan" sheet, strongest first: AgencyOS as its own study (lead
-   finding, Hamza's hands — `tools: []` today, niche playbooks, project ↔ client ↔ service), Meta's WhatsApp
-   Business MCP, claude-ads, OpenSEO, skills for the 213 personas (0 granted today). Nothing starts without it.
-2. The research he asked for — the tweet's top-tier agent systems (SS and S) and Hermes; the link is to come
-   from him (it may be among the WhatsApp links).
-3. B51 bundle 3, with B51 moves 3 and 6 — put off by him on 2026-10-08 as delicate work for a rested day; what
-   to do with it he decides later.
-Tool loading is B41's leg of 2026-10-04, built when its turn comes.
+1. The revenue pass's spreadsheet — the builder needs revenue columns, a "Projeler" sheet and a before/after view
+   (code: his /effort high first). Data: `.planning/research/watch-links/2026-10-08-whatsapp/gelir-turu/` (readers'
+   rows, `lider.jsonl` corrections, `projeler.jsonl`). Then onto his Desktop.
+2. Decisions the pass put to him: open the first YouTube channel (identity step) · the YouTube line on the board as its
+   own row or under B43 · whether DXB sells the machine or its setup (B28's open question of 2026-09-20) · joining a
+   creator's clipping programme as a clipper (B28: DXB runs no clip marketplace) · W077, deception (Islamic boundary)
+   · the "results or refund" guarantee clause · whether his sentence on revenue systems built during the construction
+   (the rest go on the board) is written beside the Ferrari sentence.
+3. The research he asked for — the top-tier agent systems (SS and S) and Hermes; the link is to come from him.
+4. B51 bundle 3 with moves 3 and 6 — put off by him on 2026-10-08 for a rested day.
 
 ## Waiting on his approval
 
-- The WhatsApp links Excel and the AgencyOS study — sent 2026-10-08, waiting for his eye.
+- The revenue pass — nine projects and the changed verdicts, reported in the conversation; the spreadsheet follows.
+- The first-pass Excel and the AgencyOS study (sent 2026-10-08) — the verdicts are superseded by the revenue pass;
+  the AgencyOS study stands.
 - The board rows that wait on him for a decision, money, an eye or an identity step — the board
   page's "Sizi bekleyenler" lists them.
 
