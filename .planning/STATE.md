@@ -2,7 +2,7 @@
 gsd_state_version: 1.0
 milestone: v2.0
 status: executing
-last_updated: "2026-10-06"
+last_updated: "2026-10-08"
 session_author: opus-5
 ---
 
@@ -27,17 +27,14 @@ not here. What is accepted is read from `scripts/governance/ceo-approvals.json`,
 
 ## Where we left off
 
-2026-10-06, sessions f7a2bf71 and f0af511e — the lean dxb-team2 door, and the whole day's work on it, ACCEPTED
-by his eye <!-- CEO-OK: dxb-team2-lean-day-accepted-by-his-eye-2026-10-06 -->: the effort warnings, the
-clean-break handover, Fable's review and the older findings fixed, tests/ and db/seed/ under the typecheck,
-the graph no longer indexing itself, the battery before Sol. Job folders `.planning/quick/20261006-*`.
-At the close, on his word and with his eye given in advance <!-- CEO-OK: sol-dumps-swept-after-90-days-2026-10-06 -->:
-Sol's raw dumps and briefs leave the disk after 90 days (`scripts/governance/sol-dump-sweep.sh`, after every commit).
-2026-10-08, on his word <!-- CEO-OK: four-equal-arrangements-lead-chooses-2026-10-08 -->: dxb-team2 §3 holds
-four equal arrangements, and the lead at high chooses one by its own judgement; writing itself is not the default.
-⚠ UNVERIFIED: the plan warning reaching his screen — the first plan talk shows it.
-Still waiting for his eye from 2026-10-04 (STATE-ARCHIVE, § 2026-10-06): B51 move 5's persona text and code
-bundle 2; the auto-memory fixes; the outside review's item 4.
+2026-10-08, session c1281a35 — on his word <!-- CEO-OK: four-equal-arrangements-lead-chooses-2026-10-08 -->
+dxb-team2 §3 rewritten: four equal arrangements (Lead, Fork, Team, Hybrid); after his yes the lead at high chooses one by its own judgement and tells him which and why; writing
+itself is not the default; the medium-first rule and the "When" column are gone. Finished, not accepted (LAW B).
+Sol `medium`: 0 A · 1 B fixed · 3 C put to him. Job folder `.planning/quick/20261008-four-equal-arrangements/`.
+The effort warning reached his screen both ways this session — the max line, then the high line — and he
+switched each time.
+Still waiting for his eye: today's §3 change; and from 2026-10-04 (STATE-ARCHIVE, § 2026-10-06): B51 move 5's
+persona text and code bundle 2; the auto-memory fixes; the outside review's item 4.
 
 ## Next
 
@@ -48,6 +45,9 @@ Tool loading is B41's leg of 2026-10-04, built when its turn comes.
 
 ## Waiting on his approval
 
+- The three older wordings Sol found in dxb-team2 (C, 2026-10-08): the Fork seat row ("a large piece that
+  needs this conversation"), §2's "outside a plan … needs no switch", the plan naming the arrangement before
+  his yes — each waits on his word (`SOL.md` in the job folder).
 - The board rows that wait on him for a decision, money, an eye or an identity step — the board
   page's "Sizi bekleyenler" lists them.
 

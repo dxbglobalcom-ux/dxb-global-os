@@ -2433,3 +2433,17 @@ work to be re-verified (nine questions, answered from the records), then set his
   helpers as headless `claude -p --effort medium`. Their measurements for items 2-5:
   `.planning/quick/20261004-his-list/`.
 - Another session (al-ma1-a7, "Çalışma1") was talking the dxb-team2 plan through with him in parallel.
+
+## Moved out of STATE.md on 2026-10-08 (session c1281a35) — "Where we left off" as it stood
+
+2026-10-06, sessions f7a2bf71 and f0af511e — the lean dxb-team2 door, and the whole day's work on it, ACCEPTED
+by his eye <!-- CEO-OK: dxb-team2-lean-day-accepted-by-his-eye-2026-10-06 -->: the effort warnings, the
+clean-break handover, Fable's review and the older findings fixed, tests/ and db/seed/ under the typecheck,
+the graph no longer indexing itself, the battery before Sol. Job folders `.planning/quick/20261006-*`.
+At the close, on his word and with his eye given in advance <!-- CEO-OK: sol-dumps-swept-after-90-days-2026-10-06 -->:
+Sol's raw dumps and briefs leave the disk after 90 days (`scripts/governance/sol-dump-sweep.sh`, after every commit).
+2026-10-08, on his word <!-- CEO-OK: four-equal-arrangements-lead-chooses-2026-10-08 -->: dxb-team2 §3 holds
+four equal arrangements, and the lead at high chooses one by its own judgement; writing itself is not the default.
+⚠ UNVERIFIED: the plan warning reaching his screen — the first plan talk shows it.
+Still waiting for his eye from 2026-10-04 (STATE-ARCHIVE, § 2026-10-06): B51 move 5's persona text and code
+bundle 2; the auto-memory fixes; the outside review's item 4.
