@@ -2194,5 +2194,13 @@
     "conditions": "Answering the lead's question whether the plan should carry a 'who writes' line, with the recommendation that it should not. Registered as his order, not a LAW B acceptance.",
     "session": "Opus 5.5 session c1281a35 — heard first-hand, 2026-10-08.",
     "where": ".claude/skills/dxb-team2/SKILL.md §1"
+  },
+  "fork-seat-no-size-2026-10-08": {
+    "date": "2026-10-08",
+    "what": "ORDER: the Fork seat row of dxb-team2 §3 loses the word 'large' — it writes a piece that needs this conversation; no size condition on any of the four equal arrangements (following four-equal-arrangements-lead-chooses-2026-10-08). Sol's C1 of 2026-10-08.",
+    "verbatim": "Anladım şimdi ne demek istediğini. Tamam yap. Evet. Yani o an zaten aynen biz kafasını karıştırmak istemiyoruz liderin. Kendisi işi biliyor. Ve oradan işe göre bu düzenlerden bir tanesiyle işi yaptı, ya yapıyor ya yaptırıyor. Aynen.",
+    "conditions": "Answering the lead's recommendation to delete only the word 'large' and keep 'needs this conversation', which is what a fork is. Registered as his order, not a LAW B acceptance.",
+    "session": "Opus 5.5 session c1281a35 — heard first-hand, 2026-10-08.",
+    "where": ".claude/skills/dxb-team2/SKILL.md §3 (the seats table)"
   }
 }
