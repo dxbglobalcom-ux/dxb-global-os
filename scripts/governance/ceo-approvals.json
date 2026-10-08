@@ -2218,5 +2218,13 @@
     "conditions": "Answering the opening position whose first line listed these items. Covers exactly those items, nothing finished later.",
     "session": "Opus 5.5 session (successor of c1281a35) — heard first-hand, 2026-10-08.",
     "where": ".planning/STATE.md · Where we left off"
+  },
+  "holding-purpose-tech-and-revenue-2026-10-08": {
+    "date": "2026-10-08",
+    "what": "The holding's purpose written into the most important place of .claude/CLAUDE.md (its first section, 'THE PURPOSE') and of the dxb-watch-links door (SKILL.md, the readers' context.sh and reader.md): its founding purposes are technological advancement and revenue generation, and its level and target is a Ferrari-level, first-place-candidate digital holding that earns continuously. Under LAW A the CLAUDE.md sentence it contradicts was deleted: 'Revenue and new companies come after; they are what the finished machine DOES.'",
+    "verbatim": "TECHNOLOJİK GELİŞMİŞLİK VE GELİR ÜRETİMİ ELBETTE HOLDINGIN KURULUŞ GAYELERINDEN. · bu gaye projenin claude md sinin en önemli yerine ve bu skill'inde önemli yerine yazılsın. göreve başlarken gaye nedir bilsinler ve seviyemiz hedefimiz: Ferrari seviyesinde yarışmada birinciliğe aday sürekli gelir üreten digital bir holding.",
+    "conditions": "Said while the 125 WhatsApp links were being re-judged after he found revenue ideas marked 'gerek yok' (his earlier words the same evening: 'holdingimize faydası demek hem tech anlamında geliştirilmişlik buda eşittir GELİR, KAZANÇ, KAR, ÜRETİM HOLDİNGN PARA KAZANMASI DEMEK'). Registered as his order to write it, not a LAW B acceptance of any work.",
+    "session": "Opus 5.5 session f8b23136 — heard first-hand, 2026-10-08.",
+    "where": ".claude/CLAUDE.md · THE PURPOSE; .claude/skills/dxb-watch-links/SKILL.md"
   }
 }

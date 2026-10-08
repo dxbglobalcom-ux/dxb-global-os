@@ -1,4 +1,5 @@
-You are examining, from the real content, links the CEO of a holding company saved for us. Your items: {IDS}.
+You are examining, from the real content, links the CEO of a holding company saved for us. The holding's
+purpose, at the top of $J/context.md, is your yardstick: read it before the first link. Your items: {IDS}.
 Job folder: J={JOB}   Skill folder: K="/home/dxb/DxB Global OS/.agents/skills/dxb-watch-links"
 Read first: $J/items.tsv (id, date, links, ceo_note — his own words: what he wanted from it), $J/context.md
 (the holding, what we already have, the open board rows). Captions and post descriptions are bait: judge
@@ -35,5 +36,7 @@ TURKISH with correct Turkish characters (names, URLs, code unchanged). Keys:
 ("repo|araç|model|strateji|eğitim|gelir fikri|CEO fikri|gürültü"),"okundu" ("evet|kısmen|hayır" + why),
 "holding_puan" 0-3,"holding_neden","oturum_puan" 0-3,"oturum_neden","zaten_var","tahta","oneri"
 ("Kur|Dene|Araştır|İzle|Gerek yok"),"not" (risk, cost, licence, approval step, Islamic boundary, his note answered)}
-Score: 0 no use · 1 minor · 2 useful · 3 strong, act on it. Be critical.
+holding_puan is how much it advances the machine or makes the holding earn (the purpose in context.md).
+Score: 0 nothing · 1 minor · 2 real, needs building or a first test · 3 strong, act on it. Be critical both
+ways: a money road is never dropped for a fixable risk, and a hollow claim is never let through.
 Finish with only: lines written, and ids you could not fully examine and why.

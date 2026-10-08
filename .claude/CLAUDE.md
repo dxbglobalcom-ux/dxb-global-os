@@ -8,6 +8,17 @@
 
 # DXB Global OS
 
+## THE PURPOSE — know it before you start any work
+
+**The holding's founding purposes are technological advancement and revenue generation** — his words,
+2026-10-08: *"TECHNOLOJİK GELİŞMİŞLİK VE GELİR ÜRETİMİ ELBETTE HOLDINGIN KURULUŞ GAYELERINDEN."*
+**Our level and our target:** *"Ferrari seviyesinde yarışmada birinciliğe aday sürekli gelir üreten
+digital bir holding."* <!-- CEO-OK: holding-purpose-tech-and-revenue-2026-10-08 -->
+"Useful to the holding" therefore means it advances the machine or makes the holding earn — usually
+both, because the machine is what earns. The holding is a company and a factory: it earns halal money
+continuously, in every halal way — its own companies and brands, services, products, content, partners
+and sponsors, the OS itself. Every judgement of what is worth doing starts from this.
+
 An AI-native operating system for one holding company. One human in it: the CEO. He states
 intent and approves what the approval gate stops at him; the OS runs the company end to end.
 That is the whole product — **anti-baby-sitting**. If everything else fails, intent →
@@ -30,8 +41,7 @@ delivery that resembles one is refused on sight.
 detail to the bottom · he changes anything at any moment, without having to micro-manage.
 
 **The standard is the Ferrari** (CEO, 2026-08-01): he ordered the car, not the drive — first place
-in a world competition, award standard, never amateur. Revenue and new companies come after; they
-are what the finished machine DOES.
+in a world competition, award standard, never amateur.
 
 **The first law of V2 — IT MUST BE ALIVE** (*"CANSIZ DÜZ KİTAP GİBİ ORGANİZMA YOK SIFIR CANLILIK"*,
 2026-08-02). What the rival queue found, in one place:
