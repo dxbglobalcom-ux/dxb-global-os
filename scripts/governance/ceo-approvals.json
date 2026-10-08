@@ -2202,5 +2202,13 @@
     "conditions": "Answering the lead's recommendation to delete only the word 'large' and keep 'needs this conversation', which is what a fork is. Registered as his order, not a LAW B acceptance.",
     "session": "Opus 5.5 session c1281a35 — heard first-hand, 2026-10-08.",
     "where": ".claude/skills/dxb-team2/SKILL.md §3 (the seats table)"
+  },
+  "b58-closed-its-code-gate-gone-2026-10-08": {
+    "date": "2026-10-08",
+    "what": "B58 closed on his word: its subject, the code gate ~/.claude/hooks/dxb-code-gate.py (and tests/hooks/code-gate.test.ts), was thrown away on his word on 2026-09-28 (code-gate-removed-2026-09-28, commit e18e0a33), so the lexer extension the row asked for has nothing left to extend.",
+    "verbatim": "a ve b yi önerdiğin gibi yap. b yi sil.",
+    "conditions": "Answering the lead's sweep of the global layer, whose item A3 was 'B58 is an open row about the code gate, which was thrown away on 2026-09-28 — close it on his word'. Registered as his order, not a LAW B acceptance.",
+    "session": "Opus 5.5 session c1281a35 — heard first-hand, 2026-10-08.",
+    "where": "HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md Section 5 · .planning/board-rows/B58.md"
   }
 }

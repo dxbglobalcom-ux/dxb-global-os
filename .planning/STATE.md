@@ -33,6 +33,9 @@ itself is not the default; the medium-first rule and the "When" column are gone.
 Sol `medium`: 0 A · 1 B fixed; of its 3 C, two fixed <!-- CEO-OK: plan-names-no-arrangement-2026-10-08 -->
 <!-- CEO-OK: fork-seat-no-size-2026-10-08 --> — the plan names no arrangement, the Fork seat has no size —
 each re-audited by Sol with no finding to fix. Job folder `.planning/quick/20261008-four-equal-arrangements/`.
+Then, on his word <!-- CEO-OK: b58-closed-its-code-gate-gone-2026-10-08 -->, the global layer swept: B58 closed
+(its code gate was thrown away 2026-09-28); the stale dxb-team2 memories fixed or deleted; 143 leftovers of
+removed systems deleted from ~/.claude, ~/.codex and ~/.local (73.8 MB).
 The effort warning reached his screen both ways this session — the max line, then the high line — and he
 switched each time.
 Still waiting for his eye: today's dxb-team2 changes; and from 2026-10-04 (STATE-ARCHIVE, § 2026-10-06): B51 move 5's
