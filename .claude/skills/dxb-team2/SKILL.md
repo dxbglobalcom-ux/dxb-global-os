@@ -101,9 +101,9 @@ and before done" advice does not apply here) nor the Fable-based `design-eye`.
 | **Team** | `helper-writer`s at `medium`, each its own piece, in parallel; `helper`s read and research beside them; the lead at `high` directs them |
 | **Hybrid** | the fork writes the core; `helper-writer`s the side pieces; `helper`s read |
 
-At ARRANGE — after the plan is talked through at `max` and he says yes, or at once on a small job — the
-lead at `high` looks at the job and chooses one of the four by its own judgement, and tells him in one
-line which and why. Writing itself is one of the four, not the default.
+After the plan is talked through at `max` and he says yes, the lead at `high` looks at the job and chooses
+one of the four by its own judgement, and tells him in one line which and why. Writing itself is one of the
+four, not the default.
 
 - Parallel writers never touch the same file, and run their tests with `DXB_ENGINE_LOCK_WAIT=200`: one
   run at a time holds the construction engine, and with it a second one queues instead of being refused
