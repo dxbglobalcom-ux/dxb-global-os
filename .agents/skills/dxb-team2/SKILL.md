@@ -114,10 +114,7 @@ four, not the default.
   only what it verified. Nobody else commits.
 - A piece that fails: a medium writer's goes to the lead or a fork at `high`; one that failed twice at
   `high` goes to the `builder`, never earlier. Opus `xhigh` is never used for code (FrontierCode 51.4 %, the bottom of the
-  curve); `max` writes code only as the escalation writer — a medium try plus a high retry (USD 1.89)
-  is under a third of one `max` run (USD 6.19) and passes the same auditor. Prices in this door are
-  written USD, never with a dollar sign: opened with a job sentence, a dollar sign and a digit are
-  replaced by the sentence's words (measured 2026-10-04).
+  curve); `max` writes code only as the escalation writer.
 
 ## 4. Sol — one blind pass
 
