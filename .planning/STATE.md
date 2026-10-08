@@ -45,9 +45,10 @@ Tool loading is B41's leg of 2026-10-04, built when its turn comes.
 
 ## Waiting on his approval
 
-- The three older wordings Sol found in dxb-team2 (C, 2026-10-08): the Fork seat row ("a large piece that
-  needs this conversation"), §2's "outside a plan … needs no switch", the plan naming the arrangement before
-  his yes — each waits on his word (`SOL.md` in the job folder).
+- Two older wordings Sol found in dxb-team2 (C, 2026-10-08; `SOL.md` in the job folder): the Fork seat row
+  ("a large piece that needs this conversation") — the lead recommends "writes the piece the lead gives it";
+  §2's "outside a plan … needs no switch" — the lead recommends leaving it. The third, the plan naming who
+  writes, is gone on his word <!-- CEO-OK: plan-names-no-arrangement-2026-10-08 --> (Sol: 0 findings, `SOL-2.md`).
 - The board rows that wait on him for a decision, money, an eye or an identity step — the board
   page's "Sizi bekleyenler" lists them.
 
