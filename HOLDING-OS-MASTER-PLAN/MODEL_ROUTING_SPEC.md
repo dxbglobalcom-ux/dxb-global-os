@@ -426,4 +426,8 @@ place to move and nothing waits for a code change or a restart.
    department-less row of the tier by priority" let any new high-priority row take a whole tier. `loadPolicy`
    breaks ties by `task_class`, then `id` (measured: 11 L1 seat rows shared one `updated_at`). With P3 live,
    the efforts written on class rows reach runs — move 3 (P5) sets them.
+7. **Move 3 — effort by the kind of work (P5a).** Critical decisions (`strategy`, `architecture`,
+   `final-approval`, the `critical_decision` seat) think at `xhigh`; code (`code.standard`, `code.bulk`, the
+   `coding` seat) at `high`; cheap mechanical work stays `low`. The `max` the three critical classes carried
+   had never reached a run (before P3 runs took the L1 seat's `medium`). Talking seats are P6's.
 

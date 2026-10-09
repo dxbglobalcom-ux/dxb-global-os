@@ -1,0 +1,19 @@
+== before
+STATE_FINGERPRINT 57fd6e606b1ceefe
+== chain
+[bootstrap] applying 20261010030000_b51_move3_efforts.sql
+[bootstrap] done — applied 1, skipped 175, ledger total 176
+== after
+STATE_FINGERPRINT c39edcd0aa94cd9f
+== parity
+SCHEMA_PARITY — the two engines carry the same public schema, object for object.
+== efforts
+architecture=xhigh
+chat.strategy=max
+code.bulk=high
+code.standard=high
+final-approval=xhigh
+slot.coding=high
+slot.critical_decision=xhigh
+strategy=xhigh
+audit|migration-b51|ceo-approvals:b51-plan-approved-2026-10-09|6
