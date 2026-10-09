@@ -18,7 +18,7 @@ import {
   isolationReceipt,
   loadPolicy,
   route,
-  SDK_MODEL_IDS,
+  sdkModelId,
   type ClassifiedIntent,
 } from "@dxb/kernel";
 import { QA_SPEND_SOURCE, recordSubscriptionSpend } from "./subscription-cap.js";
@@ -89,7 +89,7 @@ async function defaultEvaluator(task: QaTask): Promise<unknown> {
       options: {
         // B43 plan ② (2026-09-05), CEO 2026-10-03: the gate judges with nothing of the construction loaded
         ...(companyIsolation() ?? {}),
-        model: SDK_MODEL_IDS[routed.model] ?? routed.model,
+        model: await sdkModelId(getDb(), routed.model),
         effort: routed.effort as "low" | "medium" | "high" | "xhigh" | "max",
         tools: [],
         maxTurns: 4,

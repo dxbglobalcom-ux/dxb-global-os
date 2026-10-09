@@ -33,7 +33,7 @@ import { createDxbMcpServer } from "../../packages/dxb-mcp/src/index.js";
 import { assertProbeAllowed, parseMediaParams } from "../../packages/dxb-mcp/src/groups/media.js";
 import { runMediaLaneOnce, type EngineRunner } from "../../packages/outbox-executor/src/media-lane.js";
 import { resolveExecutionRoute, runWorkerOnce, turnBudgetFor } from "../../packages/orchestrator/src/worker-shim.js";
-import { SDK_MODEL_IDS } from "../../packages/kernel/src/index.js";
+import { sdkModelId } from "../../packages/kernel/src/index.js";
 import { compileLibraryProfiles, pinAll, readDxbMcpInventory, readLibraryLayer } from "../../packages/gateway/src/index.js";
 import { pinHookOff, sweepByDepartment, watchLedgers } from "../helpers/suite-scope.js";
 
@@ -277,7 +277,7 @@ describe("3. department-scoped routing at effort xhigh", () => {
     const deptId = (await sql<{ id: string }>`SELECT id FROM departments WHERE slug=${DEPT}`.execute(db())).rows[0].id;
     const rule = await db()
       .insertInto("routing_rules")
-      .values({ task_class: `${M}.creative`, match: JSON.stringify({}), model_tier: "L4", model: "sonnet-5", mode: "subscription", effort: "xhigh", priority: 99, enabled: true, department_id: deptId } as never)
+      .values({ task_class: `${M}.creative`, match: JSON.stringify({}), model_tier: "L4", model: "claude-sonnet-5", model_id: "claude-sonnet-5", mode: "subscription", effort: "xhigh", priority: 99, enabled: true, department_id: deptId } as never)
       .returning("id")
       .executeTakeFirstOrThrow();
     ruleIds.push(rule.id);
@@ -350,9 +350,10 @@ describe("5. grant → pins → compiled profile", () => {
 });
 
 describe("6. the two-brain trial (CEO 2026-09-03 evening)", () => {
-  it("Fable 5.1 is a brain the SDK map knows; a seat with the hands gets the longer turn budget", () => {
-    expect(SDK_MODEL_IDS["fable-5.1"]).toBe("claude-fable-5-1");
-    expect(SDK_MODEL_IDS["fable-5"]).toBe("claude-opus-5"); // U20 freeze untouched
+  it("Fable 5.1 is a brain the catalogue knows; a seat with the hands gets the longer turn budget", async () => {
+    // B51 P1: the SDK map is gone; the catalogue carries the API name.
+    expect(await sdkModelId(db(), "fable-5.1")).toBe("claude-fable-5-1");
+    expect(await sdkModelId(db(), "fable-5")).toBe("claude-opus-5"); // U20 freeze untouched
     expect(turnBudgetFor(["mcp__dxb-mcp__queue_get"])).toBe(12);
     expect(turnBudgetFor(["mcp__dxb-mcp__queue_get", "mcp__dxb-mcp__media_submit"])).toBe(40);
   });
@@ -362,7 +363,7 @@ describe("6. the two-brain trial (CEO 2026-09-03 evening)", () => {
     const mk = async (model: string, priority: number, enabled: boolean) => {
       const r = await db()
         .insertInto("routing_rules")
-        .values({ task_class: `${M}.twobrain`, match: JSON.stringify({}), model_tier: "L4", model, mode: "subscription", effort: "xhigh", priority, enabled, department_id: deptId } as never)
+        .values({ task_class: `${M}.twobrain`, match: JSON.stringify({}), model_tier: "L4", model, model_id: model, mode: "subscription", effort: "xhigh", priority, enabled, department_id: deptId } as never)
         .returning("id")
         .executeTakeFirstOrThrow();
       ruleIds.push(r.id);
@@ -385,6 +386,6 @@ describe("6. the two-brain trial (CEO 2026-09-03 evening)", () => {
     expect(after.rule.id).toBe(fable);
     expect(after.rule.model).toBe("fable-5.1");
     expect(after.rule.effort).toBe("xhigh");
-    expect(SDK_MODEL_IDS[after.rule.model]).toBe("claude-fable-5-1");
+    expect(await sdkModelId(db(), after.rule.model)).toBe("claude-fable-5-1");
   });
 });

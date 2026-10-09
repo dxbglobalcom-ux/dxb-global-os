@@ -1,0 +1,14 @@
+== before
+STATE_FINGERPRINT 386f5b23773a6f36
+== chain
+[bootstrap] pgboss schema ready
+[bootstrap] applying 20261010010000_b51_catalogue_one_place.sql
+NOTICE:  trigger "trg_gate_challengers_check" for relation "public.settings_values" does not exist, skipping
+[bootstrap] done — applied 1, skipped 173, ledger total 174
+exit=0
+== after
+STATE_FINGERPRINT 57fd6e606b1ceefe
+== parity
+sequences    company    14 13b638eb4eab9ade  construction    14 13b638eb4eab9ade  same
+
+SCHEMA_PARITY — the two engines carry the same public schema, object for object.

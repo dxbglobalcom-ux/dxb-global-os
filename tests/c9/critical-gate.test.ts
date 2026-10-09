@@ -2,7 +2,7 @@ import { afterAll, describe, expect, it } from "vitest";
 import { sql } from "kysely";
 import { closeDb, getDb } from "../../packages/shared/src/db.js";
 import {
-  CRITICAL_GATE_CONFIG,
+  loadGateSeats,
   runCriticalGate,
   type ChallengerRunner,
 } from "../../packages/orchestrator/src/index.js";
@@ -38,11 +38,9 @@ afterAll(async () => {
 });
 
 describe("§4e — the panel", () => {
-  it("the CEO's two named challengers are the panel, and nobody else", () => {
-    expect(CRITICAL_GATE_CONFIG.challengers.map((c) => c.model)).toEqual([
-      "gpt-6.1-sol",
-      "gpt-6-astra",
-    ]);
+  it("the CEO's two named challengers are the panel, and nobody else", async () => {
+    // B51 P1: the seats live in the gate.challengers setting, not in code.
+    expect((await loadGateSeats()).map((c) => c.model)).toEqual(["gpt-6.1-sol", "gpt-6-astra"]);
   });
 
   it("clean: every challenger answers and none finds a flaw", async () => {

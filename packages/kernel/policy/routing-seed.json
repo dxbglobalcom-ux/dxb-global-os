@@ -142,7 +142,7 @@
  {
   "mode": "subscription",
   "match": {},
-  "model": "sonnet-5",
+  "model": "claude-sonnet-5",
   "effort": "medium",
   "priority": 10,
   "model_tier": "L2",
@@ -152,7 +152,7 @@
  {
   "mode": "subscription",
   "match": {},
-  "model": "sonnet-5",
+  "model": "claude-sonnet-5",
   "effort": "medium",
   "priority": 10,
   "model_tier": "L3",
@@ -162,7 +162,7 @@
  {
   "mode": "subscription",
   "match": {},
-  "model": "sonnet-5",
+  "model": "claude-sonnet-5",
   "effort": "medium",
   "priority": 10,
   "model_tier": "L3",
@@ -172,7 +172,7 @@
  {
   "mode": "subscription",
   "match": {},
-  "model": "sonnet-5",
+  "model": "claude-sonnet-5",
   "effort": "low",
   "priority": 10,
   "model_tier": "L4",
@@ -182,7 +182,7 @@
  {
   "mode": "subscription",
   "match": {},
-  "model": "sonnet-5",
+  "model": "claude-sonnet-5",
   "effort": "low",
   "priority": 10,
   "model_tier": "L4",
@@ -192,7 +192,7 @@
  {
   "mode": "subscription",
   "match": {},
-  "model": "sonnet-5",
+  "model": "claude-sonnet-5",
   "effort": "low",
   "priority": 10,
   "model_tier": "L4",
@@ -202,7 +202,7 @@
  {
   "mode": "subscription",
   "match": {},
-  "model": "sonnet-5",
+  "model": "claude-sonnet-5",
   "effort": "low",
   "priority": 10,
   "model_tier": "L4",
@@ -212,7 +212,7 @@
  {
   "mode": "subscription",
   "match": {},
-  "model": "sonnet-5",
+  "model": "claude-sonnet-5",
   "effort": "low",
   "priority": 0,
   "model_tier": "L4",

@@ -172,6 +172,8 @@ ALTER TABLE routing_rules
 
 > **Planned E6.1 delta (`0021h_model_catalog_governance.sql`, roadmap E6.1 — not yet live):** model_catalog gains `display_name`, `banned`, `mechanical_only` + status CHECK extended with `'testing'`/`'disabled'`; routing_rules gains `department_id`, `risk_max`, `min_context`, `cost_cap_per_task` + `UNIQUE(role_slot, priority, department_id)`. Normative definition: [[MODEL_ROUTING_SPEC]] §4 (alignment note 2026-07-12). This block stays deployed-truth until 0021h ships, then folds the delta in.
 
+> **B51 P1 (`20261010010000_b51_catalogue_one_place.sql`, 2026-10-10):** model_catalog gains `api_model_id`, `lane` (CHECK `agent-sdk|codex-cli|litellm|local`), `family`, `succeeds` (FK model_catalog), `released_at`, `last_checked_at`, `aliases text[]`; CHECK `model_catalog_active_has_api_name`. `agents.brain` gains FK `agents_brain_fkey` → model_catalog and the default `fn_default_brain()` (the `low_cost` seat's model). `routing_rules.model` carries catalogue ids and `model_id` equals it. Settings key `gate.challengers` (category orchestrator) holds the critical gate's two seats, guarded by trigger `trg_gate_challengers_check` on settings_values. Normative: [[MODEL_ROUTING_SPEC]] A-2026-10-10.
+
 ### 4.3 Görünürlük ailesi — `0022x_observability_family`
 
 ```sql

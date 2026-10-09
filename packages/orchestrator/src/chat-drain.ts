@@ -14,7 +14,7 @@ import { join } from "node:path";
 import { query } from "@anthropic-ai/claude-agent-sdk";
 import { sql, type Kysely } from "kysely";
 import type { DB } from "@dxb/shared";
-import { companyIsolation, isolationReceipt, loadPolicy, route, SDK_MODEL_IDS } from "@dxb/kernel";
+import { companyIsolation, isolationReceipt, loadPolicy, route, sdkModelId } from "@dxb/kernel";
 import type { recallMemory } from "@dxb/memory-router";
 import { matchMute, matchUnmute, loadPersonaBody, recallForAnswer, routeEffort, standingPrompt, HAMZA_SLUG } from "@dxb/voice";
 import {
@@ -132,7 +132,7 @@ async function defaultAnswer(db: Kysely<DB>, q: ChatAnswerInput): Promise<string
     options: {
       // CEO 2026-10-03: nothing of the construction is loaded into a company call (kernel sdk-isolation.ts)
       ...(companyIsolation() ?? {}),
-      model: SDK_MODEL_IDS[r.model] ?? r.model,
+      model: await sdkModelId(db, r.model),
       // the routing row's effort through the one guard both answer lanes share (prompt-core, C2-2)
       effort: routeEffort(r.effort),
       tools: [],

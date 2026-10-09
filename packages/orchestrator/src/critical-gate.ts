@@ -31,21 +31,92 @@ import { getDb } from "@dxb/shared";
 import { sql } from "kysely";
 
 /**
- * The panel. ONE config surface — expanding it is CEO territory. Two challengers, because the CEO
- * named two: "solo 5.6 ve gpt 5.5 kullanılacak holdingin içinde … özellikle councilda" (2026-07-26).
- * The seats stay; the models are the day's (CEO 2026-10-09: "şuan solo 6.1 e çıktı gpt5.5 eskidi
- * artık"): Sol 6.1, and GPT Astra 6 from his top-tier set of 2026-09-13. Both answered the gate's own
- * codex call on 2026-10-09 (codex-cli 0.159.3). Moving these seats into the model catalogue, so a
- * succession carries them with every other brain, is B51 step 3.
+ * The panel. Two challengers, because the CEO named two: "solo 5.6 ve gpt 5.5 kullanılacak holdingin
+ * içinde … özellikle councilda" (2026-07-26). The seats stay; the models are the day's (CEO 2026-10-09:
+ * "şuan solo 6.1 e çıktı gpt5.5 eskidi artık"). B51 P1: the seats live in ONE settings key,
+ * `gate.challengers` — [{model: <catalogue id>, effort}, …] — which he sees and changes on /sys/settings and
+ * a succession moves with every other brain; the catalogue gives each seat its codex name and its label.
+ * A trigger refuses a bad value when it is written; this read refuses a seat whose model stopped being
+ * callable since (fail-closed per seat — the seat is `unavailable`, the other still judges).
  */
-export const CRITICAL_GATE_CONFIG = {
-  challengers: [
-    { model: "gpt-6.1-sol", label: "Sol 6.1" },
-    { model: "gpt-6-astra", label: "Astra 6" },
-  ],
-  /** A challenger that has not answered in three minutes is not going to. */
-  timeoutMs: 180_000,
-} as const;
+export const GATE_SETTING_KEY = "gate.challengers";
+
+/** A challenger that has not answered in three minutes is not going to. */
+export const CRITICAL_GATE_TIMEOUT_MS = 180_000;
+
+/** The efforts both subscription lanes accept (the trigger's list; codex's own 'ultra' stays out). */
+const SEAT_EFFORTS = ["low", "medium", "high", "xhigh", "max"] as const;
+export type SeatEffort = (typeof SEAT_EFFORTS)[number];
+
+export interface GateSeat {
+  /** 1-based seat number — the alert's dedup key names it. */
+  seat: number;
+  /** The catalogue id the setting names. */
+  model: string;
+  /** What the CEO sees: the catalogue's display name. */
+  label: string;
+  /** Present when the seat can judge. */
+  apiModelId?: string;
+  effort?: SeatEffort;
+  /** Present when it cannot — why, in one line. */
+  unavailable?: string;
+}
+
+export interface CatalogueEntry {
+  id: string;
+  api_model_id: string | null;
+  display_name: string | null;
+  status: string;
+  banned: boolean;
+  lane: string | null;
+}
+
+/**
+ * Pure: the setting's value and the catalogue rows it names → the two seats. Never throws; every way a
+ * seat can be wrong becomes that seat's `unavailable` reason.
+ */
+export function seatsFrom(value: unknown, catalogue: readonly CatalogueEntry[]): GateSeat[] {
+  if (!Array.isArray(value) || value.length !== 2) {
+    const why = `${GATE_SETTING_KEY} is not two seats`;
+    return [1, 2].map((seat) => ({ seat, model: "?", label: `seat ${seat}`, unavailable: why }));
+  }
+  return value.map((raw, i): GateSeat => {
+    const seat = i + 1;
+    const entry = (raw ?? {}) as { model?: unknown; effort?: unknown };
+    const model = typeof entry.model === "string" ? entry.model : "?";
+    const row = catalogue.find((c) => c.id === model);
+    const label = row?.display_name ?? model;
+    const effort = SEAT_EFFORTS.find((e) => e === entry.effort);
+    if (!effort) return { seat, model, label, unavailable: `seat ${seat}: effort '${String(entry.effort)}' is not one of ${SEAT_EFFORTS.join("|")}` };
+    if (!row) return { seat, model, label, unavailable: `seat ${seat}: ${model} is not in the model catalogue` };
+    if (row.banned || row.status !== "active") {
+      return { seat, model, label, unavailable: `seat ${seat}: ${model} is ${row.banned ? "banned" : row.status}` };
+    }
+    if (row.lane !== "codex-cli" || !row.api_model_id) {
+      return { seat, model, label, unavailable: `seat ${seat}: ${model} is not on the Codex lane` };
+    }
+    return { seat, model, label, apiModelId: row.api_model_id, effort };
+  });
+}
+
+/** The live seats: the setting (scope chain, then its registered default) and the catalogue, one read each. */
+export async function loadGateSeats(): Promise<GateSeat[]> {
+  const db = getDb();
+  const setting = await sql<{ v: unknown }>`SELECT resolve_setting(${GATE_SETTING_KEY}) AS v`.execute(db);
+  const value = setting.rows[0]?.v ?? null;
+  const ids = Array.isArray(value)
+    ? value.map((e) => (e as { model?: unknown })?.model).filter((m): m is string => typeof m === "string")
+    : [];
+  const catalogue = ids.length
+    ? (
+        await sql<CatalogueEntry>`
+          SELECT id, api_model_id, display_name, status, banned, lane
+            FROM model_catalog WHERE id = ANY (${ids}::text[])
+        `.execute(db)
+      ).rows
+    : [];
+  return seatsFrom(value, catalogue);
+}
 
 export const Objection = z.object({
   severity: z.enum(["high", "medium", "low"]),
@@ -123,6 +194,7 @@ export type ChallengerRunner = (args: {
   model: string;
   prompt: string;
   timeoutMs: number;
+  effort: SeatEffort;
 }) => Promise<{ ok: boolean; raw?: string; error?: string }>;
 
 function buildPrompt(input: CriticalGateInput): string {
@@ -242,10 +314,10 @@ function gateReceipt(log: (line: string) => void, model: string, stderr: string,
  *   --skip-git-repo-check  the sandbox cwd is not a repo
  *   --ephemeral            no session file is left behind per challenge
  *   -s read-only           a reviewer reasons about text, it never writes
- *   -c model_reasoning_effort="high"
- *                          the level the challengers ran at from ~/.codex's config.toml; the
- *                          company home has none (they fell to `none`), and the isolation must
- *                          not change how hard they think (measured 2026-10-03)
+ *   -c model_reasoning_effort=<the seat's effort>
+ *                          always passed: the company home has no config.toml default (they fell
+ *                          to `none`, measured 2026-10-03); since B51 P1 the level is the seat's,
+ *                          from the gate.challengers setting, no longer a constant here
  *   --output-schema        strict JSON instead of prose parsing
  *   -o                     final message to a file; stdout carries CLI chatter
  *   stdin closed           without it the CLI blocks on "Reading additional
@@ -254,8 +326,8 @@ function gateReceipt(log: (line: string) => void, model: string, stderr: string,
  * Every call, answered or not, writes its isolation line through `log` (gateReceipt above).
  */
 export function codexRunnerWith(log: (line: string) => void): ChallengerRunner {
-  return async ({ model, prompt, timeoutMs }) => {
-    const result = await runCodex(model, prompt, timeoutMs);
+  return async ({ model, prompt, timeoutMs, effort }) => {
+    const result = await runCodex(model, prompt, timeoutMs, effort);
     gateReceipt(log, model, result.stderr, result.ok);
     return result.ok ? { ok: true, raw: result.raw } : { ok: false, error: result.error };
   };
@@ -268,6 +340,7 @@ async function runCodex(
   model: string,
   prompt: string,
   timeoutMs: number,
+  effort: SeatEffort,
 ): Promise<{ ok: boolean; raw?: string; error?: string; stderr: string }> {
   const dir = await mkdtemp(join(tmpdir(), "dxb-gate-"));
   const schemaPath = join(dir, "schema.json");
@@ -287,7 +360,7 @@ async function runCodex(
           "-m",
           model,
           "-c",
-          'model_reasoning_effort="high"',
+          `model_reasoning_effort="${effort}"`,
           "--output-schema",
           schemaPath,
           "-o",
@@ -321,15 +394,19 @@ async function runCodex(
  */
 export async function runCriticalGate(
   input: CriticalGateInput,
-  opts: { runner?: ChallengerRunner; log?: boolean } = {},
+  opts: { runner?: ChallengerRunner; log?: boolean; seats?: GateSeat[] } = {},
 ): Promise<CriticalGateResult> {
   const runner = opts.runner ?? codexRunner;
   const prompt = buildPrompt(input);
+  const seats = opts.seats ?? (await loadGateSeats());
 
   const challengers: ChallengerRun[] = await Promise.all(
-    CRITICAL_GATE_CONFIG.challengers.map(async ({ model, label }) => {
+    seats.map(async ({ model, label, apiModelId, effort, unavailable }) => {
+      if (unavailable || !apiModelId || !effort) {
+        return { model, label, ok: false, error: unavailable ?? "seat not callable", ms: 0 };
+      }
       const started = Date.now();
-      const res = await runner({ model, prompt, timeoutMs: CRITICAL_GATE_CONFIG.timeoutMs });
+      const res = await runner({ model: apiModelId, prompt, timeoutMs: CRITICAL_GATE_TIMEOUT_MS, effort });
       const ms = Date.now() - started;
       if (!res.ok) return { model, label, ok: false, error: res.error ?? "unknown error", ms };
       const parsed = ChallengerVerdict.safeParse(safeJson(res.raw));
@@ -339,6 +416,21 @@ export async function runCriticalGate(
       return { model, label, ok: true, verdict: parsed.data, ms };
     }),
   );
+
+  // A seat that cannot judge is a setting or a catalogue row gone wrong, not a lane hiccup: it is raised
+  // to the CEO's alerts once per seat until resolved. The work still runs (§4e: the panel never halts it).
+  if (opts.log !== false) {
+    for (const s of seats.filter((x) => x.unavailable)) {
+      await sql`
+        INSERT INTO alerts (level, source, title, affected_area, probable_cause, suggested_action, dedup_key, task_id)
+        VALUES ('high', 'critical_gate', ${`Critical gate seat ${s.seat} cannot judge`}, 'critical_gate',
+                ${s.unavailable ?? ""},
+                ${`Name an active Codex-lane model for seat ${s.seat} in ${GATE_SETTING_KEY} (/sys/settings).`},
+                ${`gate-seat:${s.seat}`}, ${input.taskId ?? null}::uuid)
+        ON CONFLICT (dedup_key) WHERE resolved_at IS NULL AND dedup_key IS NOT NULL DO NOTHING
+      `.execute(getDb());
+    }
+  }
 
   const answered = challengers.filter((c) => c.ok);
   const objections = answered.flatMap((c) =>

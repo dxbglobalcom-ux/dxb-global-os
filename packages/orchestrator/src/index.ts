@@ -28,13 +28,30 @@ export { buildSdkToolOptions, resolveEvidenceToolCalls, resolveExecutionRoute } 
 // B43 plan ② (2026-09-05): a seat runs as the seat, in SDK isolation — exported so the delivery is pinned by tests
 export { composeSeatPrompt, seatStandingPrompt } from "./worker-shim.js";
 export type { SeatIdentity } from "./worker-shim.js";
-export { runCriticalGate, codexRunner, companyCodexHome, CRITICAL_GATE_CONFIG } from "./critical-gate.js";
+export {
+  runCriticalGate,
+  codexRunner,
+  companyCodexHome,
+  loadGateSeats,
+  seatsFrom,
+  CRITICAL_GATE_TIMEOUT_MS,
+  GATE_SETTING_KEY,
+} from "./critical-gate.js";
 export { classifyLeg, buildBriefSnapshot, legInstruction, LEG_TASK_CLASS } from "./chat-legs.js";
 // W2.6 — the proactive morning briefing: the holding opens the conversation.
 export { renderBriefing, readBriefingFacts, deliverMorningBriefing } from "./morning-briefing.js";
 export type { BriefingFacts, BriefingHeadline, RenderedBriefing, BriefingDelivery } from "./morning-briefing.js";
 export type { ChatLeg, BriefSnapshot } from "./chat-legs.js";
-export type { CriticalGateInput, CriticalGateResult, ChallengerRun, ChallengerRunner, Objection } from "./critical-gate.js";
+export type {
+  CriticalGateInput,
+  CriticalGateResult,
+  ChallengerRun,
+  ChallengerRunner,
+  Objection,
+  GateSeat,
+  SeatEffort,
+  CatalogueEntry,
+} from "./critical-gate.js";
 export type { ExecutionRoute } from "./worker-shim.js";
 export type { SdkToolOptions } from "./worker-shim.js";
 export { startOpsLiveCollector } from "./ops-live-collector.js";

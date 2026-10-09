@@ -30,7 +30,7 @@ import {
   resolveRuntimeProfile,
   type SdkToolOptions,
 } from "@dxb/gateway";
-import { companyIsolation, isolationReceipt, loadPolicy, SDK_MODEL_IDS, type RoutingRule } from "@dxb/kernel";
+import { companyIsolation, isolationReceipt, loadPolicy, sdkModelId, type RoutingRule } from "@dxb/kernel";
 import { loadPersonaBody, standingPrompt } from "@dxb/voice";
 import { recordSubscriptionSpend } from "./subscription-cap.js";
 
@@ -410,7 +410,7 @@ export async function defaultExecutor(task: ClaimedTask): Promise<WorkerOutput> 
     const q = query({
       prompt,
       options: {
-        model: SDK_MODEL_IDS[rule.model] ?? rule.model,
+        model: await sdkModelId(getDb(), rule.model),
         effort: rule.effort as "low" | "medium" | "high" | "xhigh" | "max",
         ...(seatPrompt ? { systemPrompt: seatPrompt } : {}),
         ...(companyIsolation() ?? {}),

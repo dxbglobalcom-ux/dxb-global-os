@@ -10,6 +10,7 @@ import { query } from "@anthropic-ai/claude-agent-sdk";
 import { getDb, sdkJsonSchema } from "@dxb/shared";
 import { loadPolicy, route, workClasses, type ResolvedRoute } from "./policy.js";
 import { companyIsolation, isolationReceipt } from "./sdk-isolation.js";
+import { sdkModelId } from "./models.js";
 
 export const ClassifiedIntent = z.object({
   intent_summary: z.string(),
@@ -32,26 +33,8 @@ export function classifiedIntentFor(taskClasses: readonly string[]) {
     : ClassifiedIntent;
 }
 
-// Brain-map row values → CLI model ids. Mechanical translation ONLY — the
-// choice lives in routing_rules; unknown values pass through unchanged so a
-// full CLI id can ship as pure data with zero code change.
-// Exported: orchestrator SDK calls (decompose/worker-shim) reuse this map so
-// no model-name literal ever appears outside the kernel translation layer.
-// U20 (CEO order 2026-07-25): construction/critical authorship moved to Opus 5
-// and the 4.8 generation retired. The routing SLUGS are technical keys and stay
-// put (renaming them would break the live model_catalog FK chain, the settings
-// undo chain and every historical routing_rules row) — only the CLI model they
-// resolve to moves. Both legacy slugs therefore land on the same real model.
-export const SDK_MODEL_IDS: Record<string, string> = {
-  "fable-5": "claude-opus-5",
-  // B43 two-brain trial (CEO 2026-09-03: "iki beyinlede denemek lazım"): the second
-  // brain the studio can be routed to — own slug, own catalogue row (Claude Fable 5.1).
-  // "fable-5" above keeps meaning Opus 5 (U20 freeze); nothing else moves.
-  "fable-5.1": "claude-fable-5-1",
-  "opus-5": "claude-opus-5",
-  "opus-4.8": "claude-opus-5",
-  "sonnet-5": "claude-sonnet-5",
-};
+// B51 P1: the brain-map translation (SDK_MODEL_IDS) is gone — a routing row names a catalogue id and
+// the catalogue carries the name the lane is called with (models.ts, resolveModel / sdkModelId).
 
 // approval_class from the LLM is advisory-only: code can RAISE it, never lower.
 // The Phase-4 approval/outbox rails stay the hard outward gate regardless.
@@ -96,7 +79,7 @@ async function runQuery(prompt: string, own: ResolvedRoute, schema: z.ZodType): 
     options: {
       // CEO 2026-10-03: nothing of the construction is loaded into a company call (sdk-isolation.ts)
       ...(companyIsolation() ?? {}),
-      model: SDK_MODEL_IDS[own.model] ?? own.model,
+      model: await sdkModelId(getDb(), own.model),
       effort: own.effort as "low" | "medium" | "high" | "xhigh" | "max",
       tools: [],
       // NOT 1: structured output is delivered via an internal StructuredOutput

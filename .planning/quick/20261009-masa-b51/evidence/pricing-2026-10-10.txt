@@ -1,0 +1,41 @@
+# B51 P1 — the sources of the catalogue's new numbers, read 2026-10-10 (lead Opus 5.5, session dxb-global-os-2e)
+
+## https://platform.claude.com/docs/en/about-claude/pricing (fetched 2026-10-10; docs.claude.com redirects here) — base input / 5m write / 1h write / cache hit / output
+| Claude Fable 5.1 | $10 / MTok | $12.50 / MTok | $20 / MTok | $0.25 / MTok<sup>1</sup> | $50 / MTok |
+| Claude Opus 5.5 | $4 / MTok | $5 / MTok | $8 / MTok | $0.20 / MTok<sup>2</sup> | $20 / MTok |
+| Claude Opus 5 | $5 / MTok | $6.25 / MTok | $10 / MTok | $0.50 / MTok | $25 / MTok |
+| Claude Sonnet 5.5 | $2 / MTok | $2.50 / MTok | $4 / MTok | $0.10 / MTok<sup>2</sup> | $10 / MTok |
+| Claude Sonnet 5 | $2 / MTok<sup>3</sup> | $2.50 / MTok | $4 / MTok | $0.20 / MTok | $10 / MTok<sup>3</sup> |
+| Claude Haiku 5.5 (for prompts up to 100,000 tokens) | $0.10 / MTok | $0.125 / MTok | $0.20 / MTok | $0.01 / MTok | $0.50 / MTok |
+| Claude Haiku 5.5 (for prompts over 100,000 tokens) | $0.50 / MTok | $0.625 / MTok | $1 / MTok | $0.05 / MTok | $2.50 / MTok |
+(The rows below come from the page's later tables — not the base model-pricing table — and are not used by the catalogue.)
+| Claude Opus 5.5 | $8 / MTok | $40 / MTok |
+| Claude Opus 5 / Claude Opus 4.8 | $10 / MTok | $50 / MTok |
+| Claude Fable 5.1 | $5 / MTok | $25 / MTok |
+| Claude Opus 5.5 | $2 / MTok | $10 / MTok |
+| Claude Opus 5 | $2.50 / MTok | $12.50 / MTok |
+| Claude Sonnet 5.5 | $1 / MTok | $5 / MTok |
+| Claude Sonnet 5 | $1 / MTok | $5 / MTok |
+| Claude Haiku 5.5 (for prompts up to 100,000 tokens) | $0.05 / MTok | $0.25 / MTok |
+| Claude Haiku 5.5 (for prompts over 100,000 tokens) | $0.25 / MTok | $1.25 / MTok |
+| Claude Opus 5.5 | 286 tokens | |
+| Claude Opus 5 | 286 tokens | 406 tokens |
+| Claude Sonnet 5.5 | 286 tokens | |
+| Claude Sonnet 5 | 354 tokens | 474 tokens |
+| Claude Haiku 5.5 | 286 tokens | 406 tokens |
+
+## https://platform.claude.com/docs/en/about-claude/models/overview (fetched 2026-10-10) — exact rows
+| Claude API ID | claude-fable-5-1 | claude-opus-5-5 | claude-sonnet-5-5 | claude-haiku-5-5 |
+| Pricing | $10 / input MTok, $50 / output MTok | $4 / input MTok, $20 / output MTok | $2 / input MTok, $10 / output MTok | From $0.10 / input MTok, From $0.50 / output MTok |
+| Context window | 1M tokens | 1M tokens | 1M tokens | 1M tokens |
+| Max output | 128K tokens | 128K tokens | 128K tokens | 128K tokens |
+(No release date is stated on either page → released_at stays NULL.)
+
+## ~/.codex/models_cache.json (codex-cli 0.159.3)
+fetched_at 2026-10-09T22:55:31.963867436Z
+gpt-6.1-sol | display GPT-6.1-Sol | context_window 272000 | supported_reasoning_levels ['low', 'medium', 'high', 'xhigh', 'max', 'ultra']
+gpt-6-astra | display GPT-6-Astra | context_window 272000 | supported_reasoning_levels ['low', 'medium', 'high', 'xhigh', 'max', 'ultra']
+gpt-5.6-sol | display GPT-5.6-Sol | context_window 272000 | supported_reasoning_levels ['low', 'medium', 'high', 'xhigh', 'max', 'ultra']
+
+'ultra' is codex-only (Claude efforts: low|medium|high|xhigh|max), so a seat's effort list is the intersection: low…max.
+OpenAI publishes no per-token price for these subscription slugs → cost columns NULL.

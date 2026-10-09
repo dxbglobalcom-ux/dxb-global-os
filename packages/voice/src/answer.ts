@@ -9,7 +9,7 @@ import { join } from "node:path";
 import { sql, type Kysely } from "kysely";
 import { query } from "@anthropic-ai/claude-agent-sdk";
 import type { DB } from "@dxb/shared";
-import { SDK_MODEL_IDS, companyIsolation, isolationReceipt, loadPolicy, route } from "@dxb/kernel";
+import { companyIsolation, isolationReceipt, loadPolicy, route, sdkModelId } from "@dxb/kernel";
 import type { recallMemory } from "@dxb/memory-router";
 import { recallForAnswer } from "./answer-memory.js";
 import { ttsSpeak, ttsForLang, speachesConfig, type SpeachesConfig } from "./speaches.js";
@@ -128,7 +128,7 @@ async function defaultAnswer(db: Kysely<DB>, q: AnswerQuestion): Promise<string>
     options: {
       // CEO 2026-10-03: nothing of the construction is loaded into a company call (kernel sdk-isolation.ts)
       ...(companyIsolation() ?? {}),
-      model: SDK_MODEL_IDS[r.model] ?? r.model,
+      model: await sdkModelId(db, r.model),
       // U21: effort comes from the routing row, never from a constant here.
       // The hardcoded "low" silently overrode the row and made the voice lane
       // the one place a CEO dashboard change could not reach. Same guard idiom

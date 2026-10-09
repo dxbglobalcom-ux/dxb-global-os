@@ -8,7 +8,7 @@ dediğimde cart diye modeller güncellenmeli.* No API key exists — subscriptio
 
 | | Piece | Status |
 |---|---|---|
-| P1 | The catalogue is the one place every model id lives (below) | spec agreed; three measurements first |
+| P1 | The catalogue is the one place every model id lives (below) | built 2026-10-10 — see "P1 as built" |
 | P2 | `fn_succeed_model(old, new, rationale, actor)` — one audited door moves routing rules, employees' brains and the gate's two judge seats in one transaction; old row `retired`, never deleted; one-click undo; `models.version` bumped → no restart | not started — read `fn_select_model` first to learn the `fallback_of` direction before touching the fallback chain |
 | P3 | `resolveExecutionRoute` prefers the task's class row (department-scoped first), falls to tier when `task_class` is NULL — so move 3's efforts reach runs | not started |
 | P4 | First succession on the company through P2: Opus 5 → 5.5, Sonnet 5 → 5.5; `codex-5.6` retired through the door | not started |
@@ -109,3 +109,26 @@ newest, would take EVERY L1 worker task onto `gpt-6.1-sol` (inferred from the or
 → P1.4 is reopened at the table. Options: (i) P3 first — execution routes by class and never by a slot row's tier,
 then judge rows are safe; (ii) judge rows at a priority below every execution row plus a `fn_routing_slots()`
 extension; (iii) judge seats outside `routing_rules` (a catalogue column or a settings key naming two catalogue ids).
+
+## P1 as built (2026-10-10, lead Opus 5.5 `dxb-global-os-2e`, second eye Fable 5.1 `dxb-global-os-e2`)
+- **P1.4 settled:** option (iii) as ONE settings key, `gate.challengers` — not a routing row (#3), not a table
+  (it would need its own surface and undo chain; the settings family has both and /sys/settings shows it).
+  Integrity at write time by trigger `trg_gate_challengers_check` (two seats, different, active, Codex lane,
+  effort low…max — codex `models_cache.json` lists low…max + ultra for Sol/Astra; ultra is codex-only).
+  Read per run; a seat gone bad → `unavailable` + alert `gate-seat:<n>`, the work runs on. Codex lane only:
+  a Claude challenger would judge its own family's work.
+- **No `models.version`:** the kernel reads the catalogue per call, uncached (like `loadPolicy`), so there is
+  nothing to invalidate. P2 needs no version bump.
+- **Nine call sites, not eight:** `tools/dxb-cli/src/promote.ts:83` used the map too.
+- **agents.brain default** was `glm-5.2` (retired + banned), also on `fn_hr_create_employee`; both now
+  `fn_default_brain()` = the `low_cost` seat's model, so a succession of that seat moves the default.
+- **For P2:** the door must also move (a) the 13 `orchestrator.*_model` registry defaults
+  (`value_schema->'default'`, `model_ref`) and any `model_ref` settings value; (b) `gate.challengers`;
+  `settings_change_log.change_source` CHECK is ui|api|system|undo — 'succession' needs the CHECK widened or
+  'system' with the rationale; `control_settings_set` whitelists the system actor to four keys, so the door
+  writes the values itself (SECURITY DEFINER) and logs the change rows.
+- **For P3:** the department-less fallback takes the highest-priority row of the tier; consider tying it to a
+  named seat (Fable's note) — measure and decide there.
+- `codex-5.6` = `gpt-5.6-sol` (the gate's 2026-07-26 config); OpenAI prices stay NULL (no per-token price for
+  the subscription slugs); `released_at` NULL where the vendor page states no date.
+

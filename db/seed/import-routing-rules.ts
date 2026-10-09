@@ -54,8 +54,9 @@ try {
     );
     if ((exists.rowCount ?? 0) > 0) continue;
     await pool.query(
-      `INSERT INTO routing_rules (task_class, match, model_tier, model, mode, effort, needs_council, priority)
-       VALUES ($1, $2, $3, $4, $5, $6, $7, $8)`,
+      // B51 P1: model is a catalogue id and model_id carries the same value (the SQL readers join on it).
+      `INSERT INTO routing_rules (task_class, match, model_tier, model, model_id, mode, effort, needs_council, priority)
+       VALUES ($1, $2, $3, $4, $4, $5, $6, $7, $8)`,
       [r.task_class, JSON.stringify(r.match), r.model_tier, r.model, r.mode, r.effort, r.needs_council, r.priority],
     );
     inserted++;

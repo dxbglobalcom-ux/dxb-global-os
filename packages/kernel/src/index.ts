@@ -3,7 +3,10 @@ import { PACKAGE } from "@dxb/shared";
 export const OWNER = "kernel" as const;
 export { PACKAGE };
 
-export { ClassifiedIntent, classify, SDK_MODEL_IDS } from "./classify.js";
+export { ClassifiedIntent, classify } from "./classify.js";
+// B51 P1: the catalogue is the one place every model id lives.
+export { ModelRefusedError, modeOfLane, resolveModel, sdkModelId } from "./models.js";
+export type { ModelLane, ResolvedModel } from "./models.js";
 // CEO 2026-10-03: every company model call runs with nothing of the construction loaded.
 export {
   companyClaudeHome,

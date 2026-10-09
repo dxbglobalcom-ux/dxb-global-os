@@ -23,7 +23,7 @@ import {
   loadPolicy,
   route,
   workClasses,
-  SDK_MODEL_IDS,
+  sdkModelId,
   type ClassifiedIntent,
   type ResolvedRoute,
   type RoutingRule,
@@ -140,7 +140,7 @@ async function runDraftQuery(prompt: string, own: ResolvedRoute, schema: z.ZodTy
     options: {
       // CEO 2026-10-03: nothing of the construction is loaded into a company call (kernel sdk-isolation.ts)
       ...(companyIsolation() ?? {}),
-      model: SDK_MODEL_IDS[own.model] ?? own.model,
+      model: await sdkModelId(getDb(), own.model),
       effort: own.effort as "low" | "medium" | "high" | "xhigh" | "max",
       tools: [],
       maxTurns: 4,

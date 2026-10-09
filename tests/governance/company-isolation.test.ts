@@ -1504,7 +1504,7 @@ describe("company isolation — the critical gate's Codex runs from the company'
       process.env.DXB_COMPANY_CODEX_HOME = home;
       try {
         expect(companyCodexHome()).toBe(home);
-        const res = await codexRunner({ model: "stand-in", prompt: "p", timeoutMs: 10_000 });
+        const res = await codexRunner({ model: "stand-in", prompt: "p", timeoutMs: 10_000, effort: "high" });
         expect(res.ok).toBe(true);
         expect(JSON.parse((res as { raw: string }).raw)).toEqual({ codex_home: home });
       } finally {
@@ -1591,7 +1591,7 @@ describe("company isolation — the critical gate's Codex runs from the company'
   it("the real runner under a refused home never launches codex — ok:false, the reason named", async () => {
     await withStandIn({ DXB_COMPANY_CODEX_HOME: join(userInfo().homedir, ".codex"), STANDIN_MARK: "<box>/launched" }, async (box) => {
       const { codexRunner } = await import("../../packages/orchestrator/src/critical-gate.js");
-      const res = await codexRunner({ model: "stand-in", prompt: "p", timeoutMs: 10_000 });
+      const res = await codexRunner({ model: "stand-in", prompt: "p", timeoutMs: 10_000, effort: "high" });
       expect(res.ok).toBe(false);
       expect(res.error).toMatch(/the construction's Codex home/);
       expect(existsSync(join(box, "launched"))).toBe(false);
@@ -1611,9 +1611,9 @@ describe("company isolation — the critical gate's Codex runs from the company'
         lines.push(a.map(String).join(" "));
       });
       try {
-        const ok = await codexRunner({ model: "stand-in", prompt: "p", timeoutMs: 10_000 });
+        const ok = await codexRunner({ model: "stand-in", prompt: "p", timeoutMs: 10_000, effort: "high" });
         process.env.STANDIN_FAIL = "1";
-        const failed = await codexRunner({ model: "stand-in", prompt: "p", timeoutMs: 10_000 });
+        const failed = await codexRunner({ model: "stand-in", prompt: "p", timeoutMs: 10_000, effort: "high" });
         expect([ok.ok, failed.ok]).toEqual([true, false]);
       } finally {
         spy.mockRestore();
@@ -1634,7 +1634,7 @@ describe("company isolation — the critical gate's Codex runs from the company'
         lines.push(a.map(String).join(" "));
       });
       try {
-        expect((await codexRunner({ model: "stand-in", prompt: "p", timeoutMs: 10_000 })).ok).toBe(false);
+        expect((await codexRunner({ model: "stand-in", prompt: "p", timeoutMs: 10_000, effort: "high" })).ok).toBe(false);
       } finally {
         spy.mockRestore();
       }
@@ -1646,13 +1646,14 @@ describe("company isolation — the critical gate's Codex runs from the company'
 
   // The company home has no config.toml, so nothing there sets an effort: from it both challengers
   // ran at `reasoning effort: none`, where from ~/.codex (model_reasoning_effort = "high") they had
-  // run at high (first fork, B3, 2026-10-03). The isolation must not change how hard they think.
-  it("pins the challengers' reasoning effort to high — the level they ran at before the company home", async () => {
+  // run at high (first fork, B3, 2026-10-03). The isolation must not change how hard they think — so the
+  // effort is always passed, and since B51 P1 it is the seat's own (gate.challengers), not a constant.
+  it("always passes the seat's reasoning effort to the CLI — the company home sets none", async () => {
     await withStandIn({ DXB_COMPANY_CODEX_HOME: "<box>/company-codex", STANDIN_ARGS: "<box>/args" }, async (box) => {
       const { codexRunner } = await import("../../packages/orchestrator/src/critical-gate.js");
-      expect((await codexRunner({ model: "stand-in", prompt: "p", timeoutMs: 10_000 })).ok).toBe(true);
+      expect((await codexRunner({ model: "stand-in", prompt: "p", timeoutMs: 10_000, effort: "xhigh" })).ok).toBe(true);
       const args = readFileSync(join(box, "args"), "utf8").split("\n");
-      const at = args.indexOf('model_reasoning_effort="high"');
+      const at = args.indexOf('model_reasoning_effort="xhigh"');
       expect(at, args.join(" ")).toBeGreaterThan(0);
       expect(args[at - 1]).toBe("-c");
       expect(args.filter((a) => a.includes("model_reasoning_effort"))).toHaveLength(1);
@@ -1665,7 +1666,7 @@ describe("company isolation — the critical gate's Codex runs from the company'
       const run = codexRunnerWith(() => {
         throw new Error("journal sink failed");
       });
-      const res = await run({ model: "stand-in", prompt: "p", timeoutMs: 10_000 });
+      const res = await run({ model: "stand-in", prompt: "p", timeoutMs: 10_000, effort: "high" });
       expect(res).toEqual({ ok: true, raw: JSON.stringify({ codex_home: join(box, "company-codex") }) });
     });
   });

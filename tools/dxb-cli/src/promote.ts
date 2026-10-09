@@ -8,7 +8,7 @@
 import { z } from "zod";
 import { query } from "@anthropic-ai/claude-agent-sdk";
 import { getDb, type DB } from "@dxb/shared";
-import { SDK_MODEL_IDS } from "@dxb/kernel";
+import { sdkModelId } from "@dxb/kernel";
 import type { Kysely } from "kysely";
 
 const Uuid = z.string().uuid();
@@ -80,7 +80,7 @@ async function sdkJudge(
   const q = query({
     prompt,
     options: {
-      model: SDK_MODEL_IDS[rule.model] ?? rule.model,
+      model: await sdkModelId(getDb(), rule.model),
       effort: rule.effort as "low" | "medium" | "high" | "max",
       tools: [],
       // Same NOT-1 as classify.ts: structured output arrives via an internal

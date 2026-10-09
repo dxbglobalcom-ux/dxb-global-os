@@ -19,7 +19,7 @@ import {
   resolveRuntimeProfile,
   type SdkToolOptions,
 } from "@dxb/gateway";
-import { SDK_MODEL_IDS } from "../classify.js";
+import { resolveModel, sdkModelId } from "../models.js";
 import { companyIsolation, isolationReceipt } from "../sdk-isolation.js";
 import type { AgentWork, AgentWorkResult } from "./types.js";
 
@@ -57,7 +57,8 @@ async function resolveMode(model: string): Promise<"subscription" | "api"> {
     .limit(1)
     .executeTakeFirst();
   if (row?.mode === "subscription" || row?.mode === "api") return row.mode;
-  return SDK_MODEL_IDS[model] ? "subscription" : "api";
+  // B51 P1: no routing row → the catalogue's lane decides (agent-sdk and codex-cli run on the subscriptions).
+  return (await resolveModel(getDb(), model)).mode;
 }
 
 export async function defaultWorkflowExecutor(work: AgentWork): Promise<AgentWorkResult> {
@@ -106,7 +107,7 @@ export async function defaultWorkflowExecutor(work: AgentWork): Promise<AgentWor
       options: {
         // CEO 2026-10-03: nothing of the construction is loaded into a company call (sdk-isolation.ts)
         ...(companyIsolation() ?? {}),
-        model: SDK_MODEL_IDS[work.model] ?? work.model,
+        model: await sdkModelId(getDb(), work.model),
         tools: [],
         ...(toolOpts
           ? {

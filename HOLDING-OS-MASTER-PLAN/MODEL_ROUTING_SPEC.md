@@ -168,7 +168,7 @@ The CEO read his own workforce page and asked *"183 sonnet nedir?"*. The honest 
 
 ### 4e. THE CRITICAL GATE — challengers, not co-authors (CEO order 2026-07-26, normative)
 
-CEO, said twice in the same session and closed with *"bunu unutma sakın"*: **two OpenAI models are used inside the holding, and above all in the council — as the models that check Opus's work.** The seats are his; the models are the day's (CEO 2026-10-09, *"şuan solo 6.1 e çıktı gpt5.5 eskidi artık"* <!-- CEO-OK: all-brains-stay-current-gate-judges-2026-10-09 -->): **Sol 6.1 (`gpt-6.1-sol`) and GPT Astra 6 (`gpt-6-astra`)**, the latter from his top-tier set of 2026-09-13. Until B51 step 3 moves them into the model catalogue, the pair lives in `CRITICAL_GATE_CONFIG`.
+CEO, said twice in the same session and closed with *"bunu unutma sakın"*: **two OpenAI models are used inside the holding, and above all in the council — as the models that check Opus's work.** The seats are his; the models are the day's (CEO 2026-10-09, *"şuan solo 6.1 e çıktı gpt5.5 eskidi artık"* <!-- CEO-OK: all-brains-stay-current-gate-judges-2026-10-09 -->): **Sol 6.1 (`gpt-6.1-sol`) and GPT Astra 6 (`gpt-6-astra`)**, the latter from his top-tier set of 2026-09-13. The pair lives in ONE settings key, `gate.challengers` — two seats, each `{model: <catalogue id>, effort}` — which he sees and changes on `/sys/settings` and a succession moves with every other brain (A-2026-10-10).
 
 Shape, settled with the CEO the same night after he rejected the first proposal (*"sen kendi cevabını üretmeyeceksen kalite düşmez mi ya? opus 5 bu saydıklarından daha güçlü değil mi"*):
 
@@ -374,3 +374,33 @@ minutes). The canonical table is `.claude/skills/dxb-team2/SKILL.md` §3.
    a database, security, approval, governance or the agents, `medium` for a text-only change — the
    lead's choice per audit (2026-10-06).
 3. **Pinned ids, as A-2026-09-23 §3.**
+
+## Registered adaptation A-2026-10-10 (B51 step 3 · P1 — the catalogue is the one place) <!-- CEO-OK: all-brains-stay-current-gate-judges-2026-10-09 --> <!-- CEO-OK: b51-plan-approved-2026-10-09 -->
+
+His acceptance sentence for step 3: *"hey opus 6 çıkmış ey hamza" dediğimde cart diye modeller güncellenmeli.*
+P1 makes every model id the company calls live in `model_catalog`, so the succession door (P2) has one
+place to move and nothing waits for a code change or a restart.
+
+1. **Lanes.** `model_catalog` gains `lane` (`agent-sdk` · `codex-cli` · `litellm` · `local`),
+   `api_model_id` (the name the lane is called with), `family`, `succeeds`, `released_at`,
+   `last_checked_at` and `aliases` (retired spellings that still resolve: `sonnet-5` → `claude-sonnet-5`,
+   `opus-5`/`opus-4.8` → `fable-5`). An active, non-local row must carry its lane and API name (CHECK).
+   `agent-sdk` and `codex-cli` run on the subscriptions; `litellm` and `local` do not. The kernel's code
+   map `SDK_MODEL_IDS` is deleted: every SDK call asks `sdkModelId()`, which refuses a retired, disabled,
+   banned or non-SDK-lane model by name; the workflow executor's fallback mode comes from the lane.
+   The catalogue is read per call, uncached, like `loadPolicy`.
+2. **One id space.** Live `routing_rules.model` and `agents.brain` name catalogue ids, never aliases;
+   `routing_rules.model_id` equals `model` (the FK moves to `model` once the SQL readers read it — later).
+   `agents.brain` gains a foreign key; its default (and `fn_hr_create_employee`'s) was `glm-5.2`, retired
+   and banned — it now follows the `low_cost` seat's model (`fn_default_brain()`).
+3. **The judges are a setting, not routing rows.** Measured: as slot rows they would be refused by the
+   fixed slot list and a department-less L1 row at priority ≥ 100 would take every L1 task's route.
+   `gate.challengers` is validated on every write by a trigger (exactly two, different, active, Codex
+   lane, effort low…max — `ultra` is codex's alone); the gate reads it per run and a seat whose model
+   stopped being callable is `unavailable`, raised once as an alert (`gate-seat:<n>`), and the work runs on.
+   A Claude judge is refused on purpose: a challenger from the author's own family is not independent.
+4. **§4c smoke test, Codex lane.** §4c step 2 smoke-tests through LiteLLM; a `codex-cli` model is
+   smoke-tested on its own lane instead (no key exists — subscriptions only, his word). Sol 6.1 and
+   Astra 6 enter `active` on the gate's live runs of 2026-10-09. Opus 5.5, Sonnet 5.5 and Haiku 5.5
+   enter `testing`: the succession door activates the first two (P4); Haiku 5.5 waits for his word (P7).
+
