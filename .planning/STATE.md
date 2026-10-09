@@ -27,27 +27,29 @@ not here. What is accepted is read from `scripts/governance/ceo-approvals.json`,
 
 ## Where we left off
 
-2026-10-09 night — B51 at one table: Opus 5.5 leads and writes, Fable 5.1 reads every piece before its commit
+2026-10-10 night — B51 at one table: Opus 5.5 leads and writes, Fable 5.1 reads every piece before its commit
 (his lasting working style, `~/Desktop/çalışma1.md`). Plan approved <!-- CEO-OK: b51-plan-approved-2026-10-09 -->:
-`.planning/quick/20261009-masa-b51/PLAN.md`. Step 1 built: rows keep up with the work, his plan words open dxb-team2
-<!-- CEO-OK: rows-keep-up-note-not-story-2026-10-09 --> <!-- CEO-OK: plan-words-open-dxb-team2-2026-10-09 -->.
-Step 2 built: the dead council deleted; the critical gate, which could never fire (it read the switch by tier, not
-by class), now reads the task's class <!-- CEO-OK: b51-gate-class-fix-2026-10-09 -->; its judges are the day's,
-Sol 6.1 and Astra 6 <!-- CEO-OK: all-brains-stay-current-gate-judges-2026-10-09 -->; it ran live on the construction
-engine and the task reached his approval gate. A successor now opens dxb-team2 first
-<!-- CEO-OK: successor-opens-dxb-team2-2026-10-09 -->. Sol's pass fixed; battery green.
+`.planning/quick/20261009-masa-b51/PLAN.md`. Steps 1 and 2 built and told. Step 3 (every brain stays current
+<!-- CEO-OK: all-brains-stay-current-gate-judges-2026-10-09 -->), built so far and live on the company: P1 — every
+model id lives in the catalogue, the gate's two judges are one setting (`gate.challengers`); P2 — the succession
+door (one call moves every seat of a model to its successor, one call undoes it); P3 — a worker runs on its task
+class's row; move 3 — critical decisions at xhigh, code at high. Spec and as-built notes:
+`.planning/quick/20261009-masa-b51/step3-spec.md`.
 
 ## Next
 
-1. B51 step 3 — every brain in one catalogue, one succession door that moves rules, employees and the gate's judges
-   at his word ("hey opus 6 çıkmış" → at once); first succession Opus 5 → 5.5, Sonnet 5 → 5.5; model and effort
-   chosen by the task's class; bundle 3; move 3; Hamza as Genel Müdür, his talking seats on Opus 5.5; Haiku 5.5
-   first tested beside Sonnet 5.5, the result to him. New models learned without an API key (subscriptions only).
+1. B51 step 3, in order: P5b (bundle 3 code — workflow steps get their effort and the seat's identity, Hamza's
+   chat prompt cached, the SDK fallback model from the catalogue); P4 the first succession Opus 5 → 5.5,
+   Sonnet 5 → 5.5 through the door; P6 Hamza as Genel Müdür, his talking seats on Opus 5.5, orchestration on
+   Fable 5.1; P7 Haiku 5.5 beside Sonnet 5.5, the result to him; P8 new models learned from his word, no key.
+   One Sol pass at the end of step 3.
 2. His Excel turbo decisions (the "Projeler" sheet) and the SS/S agent-systems + Hermes research (his link).
 
 ## Waiting on his approval
 
-- B51 steps 1 and 2 (finished, not accepted — LAW B): rows that keep up; the council gone and the gate live.
+- B51 steps 1 and 2, and step 3's P1, P2, P3 and move 3 (finished, not accepted — LAW B).
+- Security, outside B51: two live write functions of the routing and settings take anon as the system — a row?
+- Hamza's one brain tool inside step 3 (it calls the succession door) — recommendation yes.
 - Found in step 2, each needs his word for a row: research tasks cannot pass the knowledge shelf (no report file,
   no sourced figures); with the hook off the gate is skipped; memory recall needs a LiteLLM key.
 - Excel turbo (`~/Desktop/Lİnk araştırmaları/Excel-turbo.xlsx`) — nine projects, thirteen decisions.
