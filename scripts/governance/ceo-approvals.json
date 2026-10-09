@@ -2266,5 +2266,13 @@
     "conditions": "Said to Fable 5.1 (dxb-global-os-26, transcript 17494c9b) during B51 step 2's live gate run; relayed by Fable and the first sentence verified verbatim in that transcript by the lead. His order, not a LAW B acceptance of any work.",
     "session": "Fable 5.1 session 17494c9b (dxb-global-os-26) heard it; registered by Opus 5.5 session 28e910ee, the table's single writer.",
     "where": "packages/orchestrator/src/critical-gate.ts CRITICAL_GATE_CONFIG; HOLDING-OS-MASTER-PLAN/MODEL_ROUTING_SPEC.md §4e; .planning/quick/20261009-masa-b51/PLAN.md step 3"
+  },
+  "successor-opens-dxb-team2-2026-10-09": {
+    "date": "2026-10-09",
+    "what": "A session that takes over a job always starts by opening dxb-team2 (Skill(\"dxb-team2\")), so it continues the work as the job's lead, the orchestrator. Written into dxb-team2 §7: the handover note's first line tells the successor to open the door.",
+    "verbatim": "sen dxbteam2 ile mi işi devraldın yani başladın? · eğer öyle değilse devralan session her zaman dxbteam2 skill'i ile başlasın bu aslında dxbteam2'nin devir kısmına yazılmalı. zira orkestratör olarak işe devam edilmesi gerekiyor. işi bitirdikten sonra bunu da halledin.",
+    "conditions": "Asked during B51 step 2; the successor session had in fact opened dxb-team2 first because its handover note said so — he ordered it written into the door so it does not depend on one note. His explicit word to write it into the door; not a LAW B acceptance of any work.",
+    "session": "Opus 5.5 session 28e910ee — heard first-hand, 2026-10-09.",
+    "where": ".claude/skills/dxb-team2/SKILL.md §7"
   }
 }
