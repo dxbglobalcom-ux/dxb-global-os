@@ -31,14 +31,17 @@ import { getDb } from "@dxb/shared";
 import { sql } from "kysely";
 
 /**
- * The panel. ONE config surface — expanding it is CEO territory, exactly as the
- * producer list was under CNCL-01. Two challengers, because the CEO named two:
- * "solo 5.6 ve gpt 5.5 kullanılacak holdingin içinde … özellikle councilda".
+ * The panel. ONE config surface — expanding it is CEO territory. Two challengers, because the CEO
+ * named two: "solo 5.6 ve gpt 5.5 kullanılacak holdingin içinde … özellikle councilda" (2026-07-26).
+ * The seats stay; the models are the day's (CEO 2026-10-09: "şuan solo 6.1 e çıktı gpt5.5 eskidi
+ * artık"): Sol 6.1, and GPT Astra 6 from his top-tier set of 2026-09-13. Both answered the gate's own
+ * codex call on 2026-10-09 (codex-cli 0.159.3). Moving these seats into the model catalogue, so a
+ * succession carries them with every other brain, is B51 step 3.
  */
 export const CRITICAL_GATE_CONFIG = {
   challengers: [
-    { model: "gpt-5.6-sol", label: "Solo 5.6" },
-    { model: "gpt-5.5", label: "GPT 5.5" },
+    { model: "gpt-6.1-sol", label: "Sol 6.1" },
+    { model: "gpt-6-astra", label: "Astra 6" },
   ],
   /** A challenger that has not answered in three minutes is not going to. */
   timeoutMs: 180_000,

@@ -168,12 +168,12 @@ The CEO read his own workforce page and asked *"183 sonnet nedir?"*. The honest 
 
 ### 4e. THE CRITICAL GATE — challengers, not co-authors (CEO order 2026-07-26, normative)
 
-CEO, said twice in the same session and closed with *"bunu unutma sakın"*: **Solo 5.6 and GPT 5.5 are used inside the holding, and above all in the council — as the models that check Opus 5's work.**
+CEO, said twice in the same session and closed with *"bunu unutma sakın"*: **two OpenAI models are used inside the holding, and above all in the council — as the models that check Opus's work.** The seats are his; the models are the day's (CEO 2026-10-09, *"şuan solo 6.1 e çıktı gpt5.5 eskidi artık"* <!-- CEO-OK: all-brains-stay-current-gate-judges-2026-10-09 -->): **Sol 6.1 (`gpt-6.1-sol`) and GPT Astra 6 (`gpt-6-astra`)**, the latter from his top-tier set of 2026-09-13. Until B51 step 3 moves them into the model catalogue, the pair lives in `CRITICAL_GATE_CONFIG`.
 
 Shape, settled with the CEO the same night after he rejected the first proposal (*"sen kendi cevabını üretmeyeceksen kalite düşmez mi ya? opus 5 bu saydıklarından daha güçlü değil mi"*):
 
 1. **Opus 5 writes the answer.** The strongest model in the roster produces the work — it is never demoted to a comparator that merely picks between weaker drafts. That was the original CNCL-01 error.
-2. **Challengers try to break it.** Solo 5.6 (`gpt-5.6-sol`) and GPT 5.5 receive the answer and are instructed to REFUTE: find the wrong number, the missing constraint, the unverified claim, the risk not priced. They do not write a competing deliverable.
+2. **Challengers try to break it.** The two challengers receive the answer and are instructed to REFUTE: find the wrong number, the missing constraint, the unverified claim, the risk not priced. They do not write a competing deliverable.
 3. **Opus 5 revises and signs.** Every surviving objection is either fixed or answered in writing. The final artefact is Opus 5's, and the objections plus their disposition are recorded — a gate with no written trail is decoration.
 
 **Where it fires** (never on every task — a gate that runs everywhere is a tax, not a gate): the L1 classes that bind money, reputation or the company's direction — `strategy`, `final-approval`, `architecture`, `research.synthesis` when the conclusion drives a purchase or an install, outbound content before it leaves the company, and any halal/risk verdict. The existing `routing_rules.needs_council` flag is the switch.

@@ -2,7 +2,9 @@ import { afterAll, describe, expect, it } from "vitest";
 import { sql } from "kysely";
 import { closeDb, getDb } from "../../packages/shared/src/db.js";
 import { TaskEnvelope } from "../../packages/shared/src/envelope.js";
-import { ClassifiedIntent } from "../../packages/kernel/src/index.js";
+import { ClassifiedIntent, loadPolicy, workClasses } from "../../packages/kernel/src/index.js";
+import { classifyPrompt } from "../../packages/kernel/src/classify.js";
+import { draftPrompt } from "../../packages/orchestrator/src/decompose.js";
 import { watchLedgers } from "../helpers/suite-scope.js";
 import {
   decompose,
@@ -109,5 +111,28 @@ describe("B51 — the class rides the task to the critical gate", () => {
       .executeTakeFirstOrThrow();
     expect(tierWinner.needs_council).toBe(false); // the defect's precondition, measured
     expect(await gateNeededFor({ task_class: "strategy" })).toBe(true);
+  });
+});
+
+describe("B51 — the classes offered to the classifier and the decomposer are work classes, not seats", () => {
+  it("workClasses() leaves out every slot row (role_slot set) and keeps the gated classes", async () => {
+    const rules = await loadPolicy(getDb());
+    expect(rules.some((r) => r.role_slot !== null)).toBe(true); // the bench holds seats to leave out
+    const offered = workClasses(rules);
+    expect(offered.filter((c) => c.startsWith("slot."))).toEqual([]);
+    for (const c of ["strategy", "architecture", "final-approval", "content.outbound", "code.standard"]) {
+      expect(offered, c).toContain(c);
+    }
+    expect(offered).toEqual([...new Set(offered)].sort());
+  });
+
+  it("the classify prompt and the decompose draft prompt list only those classes", async () => {
+    const rules = await loadPolicy(getDb());
+    const offered = workClasses(rules);
+    const ci = ClassifiedIntent.parse({
+      intent_summary: "probe", task_class: "strategy", departments: ["strategy"], approval_class: "none", complexity: "multi",
+    });
+    expect(classifyPrompt("probe", offered, ["strategy"])).not.toMatch(/slot\./);
+    expect(draftPrompt(ci, offered, ["strategy"])).not.toMatch(/slot\./);
   });
 });

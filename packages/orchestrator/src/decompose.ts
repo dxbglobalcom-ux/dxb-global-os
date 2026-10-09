@@ -22,6 +22,7 @@ import {
   isolationReceipt,
   loadPolicy,
   route,
+  workClasses,
   SDK_MODEL_IDS,
   type ClassifiedIntent,
   type ResolvedRoute,
@@ -230,7 +231,7 @@ export async function decompose(ci: ClassifiedIntent): Promise<DecomposedEnvelop
   }
   const deptRows = await db.selectFrom("departments").select("slug").orderBy("slug").execute();
   const departments = deptRows.map((r) => r.slug);
-  const taskClasses = [...new Set(rules.map((r) => r.task_class))].sort();
+  const taskClasses = workClasses(rules);
   const basePrompt = draftPrompt(ci, taskClasses, departments);
 
   let lastFailure = "";

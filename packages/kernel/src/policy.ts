@@ -37,6 +37,17 @@ export async function loadPolicy(db: Kysely<DB>): Promise<RoutingRule[]> {
     .execute();
 }
 
+/**
+ * The classes a piece of work may be routed as — what the classifier and the decomposer are offered.
+ * A slot row (role_slot set: slot.primary, slot.coding, …) is a SEAT a department fills, not a kind of
+ * work. Measured 2026-10-09 (B51 step 2): both prompts listed every row's class, and a real strategy intent
+ * came back as five tasks, four of them classed slot.critical_decision / slot.planning — a class no gate,
+ * no effort and no model choice was ever written for. Distinct, sorted.
+ */
+export function workClasses(rules: readonly RoutingRule[]): string[] {
+  return [...new Set(rules.filter((r) => r.role_slot == null).map((r) => r.task_class))].sort();
+}
+
 // Supported match keys: dept (string ∈ ci.departments), keyword (case-insensitive
 // substring of ci.intent_summary). An unknown match key makes the rule
 // NON-matching — fail-closed so future match fields can't silently over-match.

@@ -1,0 +1,97 @@
+
+ RUN  v3.2.6 /home/dxb/DxB Global OS
+
+[global-setup] construction engine 7690665340837392423/5 (postgres) — verified on the connection that does the work.
+(node:578091) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+stdout | tests/b51/gate-live.test.ts > B51 — the critical gate, once, along the real path (live) > a strategy task reaches the gate and leaves exactly one critical_gate row
+[isolation] lane=classify session=82201b77-8186-44e3-89fe-032470ffe3e5 tools=1 mcp=0 plugins=0 skills=17 agents=5 hooks=0 input=1807 home=/home/dxb/.local/share/dxb/company-claude
+
+stdout | tests/b51/gate-live.test.ts > B51 — the critical gate, once, along the real path (live) > a strategy task reaches the gate and leaves exactly one critical_gate row
+[isolation] lane=decompose session=b1de79e5-04a1-4fb5-80b9-e11285c1ff0e tools=1 mcp=0 plugins=0 skills=17 agents=5 hooks=0 input=1883 home=/home/dxb/.local/share/dxb/company-claude
+
+stdout | tests/b51/gate-live.test.ts > B51 — the critical gate, once, along the real path (live) > a strategy task reaches the gate and leaves exactly one critical_gate row
+INTAKE {"processed":true,"intentId":"492c3b6d-9841-44e4-b7d4-2018ded26f49","status":"dispatched","taskIds":["4c6abea8-e651-43fb-ba0c-368b79914c6b","3946d7aa-fc66-4c6b-9d72-1a141279cfe0","b8f99718-ec1e-4f86-992f-7275823f2b19","56e73c2b-02e9-44e8-96ef-1c3498803bdc","a0e56284-9127-4324-8187-106024ae8f21"]}
+
+stdout | tests/b51/gate-live.test.ts > B51 — the critical gate, once, along the real path (live) > a strategy task reaches the gate and leaves exactly one critical_gate row
+TASKS [{"id":"56e73c2b-02e9-44e8-96ef-1c3498803bdc","department":"marketing","task_class":"strategy"},{"id":"4c6abea8-e651-43fb-ba0c-368b79914c6b","department":"strategy","task_class":"research.fanout"},{"id":"3946d7aa-fc66-4c6b-9d72-1a141279cfe0","department":"sales","task_class":"research.fanout"},{"id":"b8f99718-ec1e-4f86-992f-7275823f2b19","department":"finance","task_class":"slot.planning"},{"id":"a0e56284-9127-4324-8187-106024ae8f21","department":"ceo","task_class":"slot.critical_decision"}]
+
+stdout | tests/b51/gate-live.test.ts > B51 — the critical gate, once, along the real path (live) > a strategy task reaches the gate and leaves exactly one critical_gate row
+[isolation] lane=task session=1662c029-7b58-49d2-b6ab-660715ab3796 tools=24 mcp=1 plugins=0 skills=17 agents=5 hooks=0 input=59750 home=/home/dxb/.local/share/dxb/company-claude
+
+stdout | tests/b51/gate-live.test.ts > B51 — the critical gate, once, along the real path (live) > a strategy task reaches the gate and leaves exactly one critical_gate row
+[isolation] lane=task session=7a86d14b-5468-4322-a2b9-aadcbe78f4a8 tools=24 mcp=1 plugins=0 skills=17 agents=5 hooks=0 input=82554 home=/home/dxb/.local/share/dxb/company-claude
+
+stdout | tests/b51/gate-live.test.ts > B51 — the critical gate, once, along the real path (live) > a strategy task reaches the gate and leaves exactly one critical_gate row
+[isolation] lane=qa session=1fdf65e3-5fee-4c8d-821c-57395b14a4d6 tools=1 mcp=0 plugins=0 skills=17 agents=5 hooks=0 input=6381 home=/home/dxb/.local/share/dxb/company-claude
+
+stdout | tests/b51/gate-live.test.ts > B51 — the critical gate, once, along the real path (live) > a strategy task reaches the gate and leaves exactly one critical_gate row
+[qa] task 3946d7aa-fc66-4c6b-9d72-1a141279cfe0 FAIL (confidence 0.82) — the judge took 76748 ms in 1 call
+
+stdout | tests/b51/gate-live.test.ts > B51 — the critical gate, once, along the real path (live) > a strategy task reaches the gate and leaves exactly one critical_gate row
+[isolation] lane=task session=01889f69-b0bb-496f-ab4c-01872d4ab912 tools=34 mcp=2 plugins=0 skills=17 agents=5 hooks=0 input=477432 home=/home/dxb/.local/share/dxb/company-claude
+
+stdout | tests/b51/gate-live.test.ts > B51 — the critical gate, once, along the real path (live) > a strategy task reaches the gate and leaves exactly one critical_gate row
+[isolation] lane=task session=a4db18a2-bf71-44af-8eea-a08f42c7f77f tools=34 mcp=2 plugins=0 skills=17 agents=5 hooks=0 input=599079 home=/home/dxb/.local/share/dxb/company-claude
+
+stdout | tests/b51/gate-live.test.ts > B51 — the critical gate, once, along the real path (live) > a strategy task reaches the gate and leaves exactly one critical_gate row
+[isolation] lane=task session=63193bcb-c924-4f8d-a2fa-ba4e767bbc25 tools=24 mcp=1 plugins=0 skills=17 agents=5 hooks=0 input=52131 home=/home/dxb/.local/share/dxb/company-claude
+
+stdout | tests/b51/gate-live.test.ts > B51 — the critical gate, once, along the real path (live) > a strategy task reaches the gate and leaves exactly one critical_gate row
+[isolation] lane=qa session=b94282c1-5458-4906-9fe5-d432eb519dc6 tools=1 mcp=0 plugins=0 skills=17 agents=5 hooks=0 input=14732 home=/home/dxb/.local/share/dxb/company-claude
+
+stdout | tests/b51/gate-live.test.ts > B51 — the critical gate, once, along the real path (live) > a strategy task reaches the gate and leaves exactly one critical_gate row
+[qa] task 3946d7aa-fc66-4c6b-9d72-1a141279cfe0 FAIL (confidence 0.86) — the judge took 32262 ms in 1 call
+
+stdout | tests/b51/gate-live.test.ts > B51 — the critical gate, once, along the real path (live) > a strategy task reaches the gate and leaves exactly one critical_gate row
+[isolation] lane=task session=fc50a30d-ffc3-4fa5-b3e3-1b45f19b0127 tools=34 mcp=2 plugins=0 skills=17 agents=5 hooks=0 input=464679 home=/home/dxb/.local/share/dxb/company-claude
+
+stdout | tests/b51/gate-live.test.ts > B51 — the critical gate, once, along the real path (live) > a strategy task reaches the gate and leaves exactly one critical_gate row
+[isolation] lane=task session=70c4ef66-aa6d-4176-83e6-56f66f537358 tools=34 mcp=2 plugins=0 skills=17 agents=5 hooks=0 input=909685 home=/home/dxb/.local/share/dxb/company-claude
+
+stdout | tests/b51/gate-live.test.ts > B51 — the critical gate, once, along the real path (live) > a strategy task reaches the gate and leaves exactly one critical_gate row
+[isolation] lane=task session=eaa10db0-cc1b-42ed-85f1-eda879ef51a6 tools=24 mcp=1 plugins=0 skills=17 agents=5 hooks=0 input=51192 home=/home/dxb/.local/share/dxb/company-claude
+
+stdout | tests/b51/gate-live.test.ts > B51 — the critical gate, once, along the real path (live) > a strategy task reaches the gate and leaves exactly one critical_gate row
+[isolation] lane=task session=addcdb1b-c565-4c12-9651-1a647aca5520 tools=24 mcp=1 plugins=0 skills=17 agents=5 hooks=0 input=61928 home=/home/dxb/.local/share/dxb/company-claude
+
+stdout | tests/b51/gate-live.test.ts > B51 — the critical gate, once, along the real path (live) > a strategy task reaches the gate and leaves exactly one critical_gate row
+[isolation] lane=qa session=b9bdcde9-9ff7-4863-809e-e81150072811 tools=1 mcp=0 plugins=0 skills=17 agents=5 hooks=0 input=6734 home=/home/dxb/.local/share/dxb/company-claude
+
+stdout | tests/b51/gate-live.test.ts > B51 — the critical gate, once, along the real path (live) > a strategy task reaches the gate and leaves exactly one critical_gate row
+[qa] task 3946d7aa-fc66-4c6b-9d72-1a141279cfe0 FAIL (confidence 0.79) — the judge took 101132 ms in 1 call
+
+stdout | tests/b51/gate-live.test.ts > B51 — the critical gate, once, along the real path (live) > a strategy task reaches the gate and leaves exactly one critical_gate row
+[isolation] lane=task session=7a4b311e-fab6-4278-bc05-abe715bf1ff2 tools=24 mcp=1 plugins=0 skills=17 agents=5 hooks=0 input=52936 home=/home/dxb/.local/share/dxb/company-claude
+
+stdout | tests/b51/gate-live.test.ts > B51 — the critical gate, once, along the real path (live) > a strategy task reaches the gate and leaves exactly one critical_gate row
+[isolation] lane=qa session=70cd18ed-ea50-4c36-9a6d-f5bc720fecb2 tools=1 mcp=0 plugins=0 skills=17 agents=5 hooks=0 input=21323 home=/home/dxb/.local/share/dxb/company-claude
+
+stdout | tests/b51/gate-live.test.ts > B51 — the critical gate, once, along the real path (live) > a strategy task reaches the gate and leaves exactly one critical_gate row
+[qa] task 3946d7aa-fc66-4c6b-9d72-1a141279cfe0 FAIL (confidence 0.8) — the judge took 87280 ms in 1 call
+
+stdout | tests/b51/gate-live.test.ts > B51 — the critical gate, once, along the real path (live) > a strategy task reaches the gate and leaves exactly one critical_gate row
+[isolation] lane=task session=7951c172-cc18-48e7-a90c-353a20f65035 tools=24 mcp=1 plugins=0 skills=17 agents=5 hooks=0 input=51421 home=/home/dxb/.local/share/dxb/company-claude
+
+stdout | tests/b51/gate-live.test.ts > B51 — the critical gate, once, along the real path (live) > a strategy task reaches the gate and leaves exactly one critical_gate row
+[isolation] lane=qa session=a9aad81c-c157-4251-9c62-f83babc38bfd tools=1 mcp=0 plugins=0 skills=17 agents=5 hooks=0 input=7187 home=/home/dxb/.local/share/dxb/company-claude
+
+stdout | tests/b51/gate-live.test.ts > B51 — the critical gate, once, along the real path (live) > a strategy task reaches the gate and leaves exactly one critical_gate row
+[qa] task 3946d7aa-fc66-4c6b-9d72-1a141279cfe0 FAIL (confidence 0.82) — the judge took 88431 ms in 1 call
+
+stdout | tests/b51/gate-live.test.ts > B51 — the critical gate, once, along the real path (live) > a strategy task reaches the gate and leaves exactly one critical_gate row
+[isolation] lane=task session=bec74b9f-8cd2-4b4f-a5dc-667fabcc6f50 tools=34 mcp=2 plugins=0 skills=17 agents=5 hooks=0 input=547212 home=/home/dxb/.local/share/dxb/company-claude
+
+stdout | tests/b51/gate-live.test.ts > B51 — the critical gate, once, along the real path (live) > a strategy task reaches the gate and leaves exactly one critical_gate row
+[isolation] lane=task session=89416c99-a870-43fd-a262-f90cfc870899 tools=34 mcp=2 plugins=0 skills=17 agents=5 hooks=0 input=533932 home=/home/dxb/.local/share/dxb/company-claude
+
+stdout | tests/b51/gate-live.test.ts > B51 — the critical gate, once, along the real path (live) > a strategy task reaches the gate and leaves exactly one critical_gate row
+[isolation] lane=task session=dc821e8c-23f3-4bcb-9208-5cf34d5a545f tools=34 mcp=2 plugins=0 skills=17 agents=5 hooks=0 input=465463 home=/home/dxb/.local/share/dxb/company-claude
+
+stdout | tests/b51/gate-live.test.ts > B51 — the critical gate, once, along the real path (live) > a strategy task reaches the gate and leaves exactly one critical_gate row
+[isolation] lane=task session=a2add0fa-6689-4ae1-b988-51d6b3d1f7d9 tools=34 mcp=2 plugins=0 skills=17 agents=5 hooks=0 input=107301 home=/home/dxb/.local/share/dxb/company-claude
+
+stdout | tests/b51/gate-live.test.ts > B51 — the critical gate, once, along the real path (live) > a strategy task reaches the gate and leaves exactly one critical_gate row
+[isolation] lane=task session=d57964cc-0f03-40e9-acd7-7451aad27709 tools=34 mcp=2 plugins=0 skills=17 agents=5 hooks=0 input=855189 home=/home/dxb/.local/share/dxb/company-claude
+
+EXIT=143

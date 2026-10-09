@@ -1,0 +1,42 @@
+
+ RUN  v3.2.6 /home/dxb/DxB Global OS
+
+[global-setup] construction engine 7690665340837392423/5 (postgres) — verified on the connection that does the work.
+(node:545466) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+stdout | tests/b51/gate-live.test.ts > B51 — the critical gate, once, along the real path (live) > a strategy task reaches the gate and leaves exactly one critical_gate row
+GATE_EVIDENCE {"run":{"claimed":true,"taskId":"54301a26-d787-47d5-82f6-91df001f1376","status":"failed","error":"policy: missing_project_link: task has neither project ctx nor milestone"},"task":[{"id":"54301a26-d787-47d5-82f6-91df001f1376","department":"strategy","agent_id":"4aa67c8f-10b7-4599-bb73-372d57905213","task_class":"strategy","model_tier":"L1","status":"failed","objective":"Recommend the holding's first continuous-revenue line for the next quarter — a paid Turkish-language newsletter on applied AI, or a B2B AI-automation service for small businesses — with one decision, three reasons, the main risk and the first week's single step. Mark any figure you cannot source as a [placeholder].","result":null,"feedback":null,"created_at":"2026-10-09T20:04:30.965Z","updated_at":"2026-10-09T20:04:30.994Z"}],"events":[{"event":"created","from_status":"inbox","to_status":"queued","actor":"orchestrator:dispatch","payload":{"deps":[],"envelope_index":0},"created_at":"2026-10-09T20:04:30.965Z"},{"event":"claimed","from_status":"queued","to_status":"claimed","actor":"b51-gate-live","payload":{"lease_seconds":900},"created_at":"2026-10-09T20:04:30.977Z"},{"event":"transition","from_status":"claimed","to_status":"running","actor":"b51-gate-live","payload":{},"created_at":"2026-10-09T20:04:30.981Z"},{"event":"transition","from_status":"running","to_status":"failed","actor":"hook","payload":{"error":"policy: missing_project_link: task has neither project ctx nor milestone","hook_gate":"pre","violations":["std.project_alignment"]},"created_at":"2026-10-09T20:04:30.996Z"}],"runs":[],"decisions":[{"id":"7521","run_id":null,"decided_by":"b51-gate-live","decision":"employee-selection","rationale":"least-loaded active employee in 'strategy': corporate-development-analyst (open runs 0 of 1)","data_used":["agents","agent_runs","settings_values"],"alternatives":{"rule":"AGENT_ORCHESTRATION §6 — department + active + least open runs, below employee.max_concurrent_runs"},"confidence":null,"risk":"low","approval_id":null,"outcome":null,"created_at":"2026-10-09T20:04:30.984Z"}],"gate_rows":[],"hook_violations":[],"cost":[]}
+
+ ❯ tests/b51/gate-live.test.ts (1 test | 1 failed) 70ms
+   × B51 — the critical gate, once, along the real path (live) > a strategy task reaches the gate and leaves exactly one critical_gate row 50ms
+     → expected [] to have a length of 1 but got +0
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/b51/gate-live.test.ts > B51 — the critical gate, once, along the real path (live) > a strategy task reaches the gate and leaves exactly one critical_gate row
+AssertionError: expected [] to have a length of 1 but got +0
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- 1[39m
+[31m+ 0[39m
+
+ ❯ tests/b51/gate-live.test.ts:92:28
+     90|       expect(run.claimed).toBe(true);
+     91|       expect((ev.task[0] as { task_class: string }).task_class).toBe("…
+     92|       expect(ev.gate_rows).toHaveLength(1);
+       |                            ^
+     93|     },
+     94|     30 * 60_000,
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed (1)
+   Start at  22:04:30
+   Duration  806ms (transform 210ms, setup 0ms, collect 486ms, tests 70ms, environment 0ms, prepare 32ms)
+
+[global-teardown] handed back 7 ops:live receipt(s) this run issued
+EXIT=1

@@ -13,7 +13,7 @@ export {
   isolationReceipt,
 } from "./sdk-isolation.js";
 export type { SdkIsolation } from "./sdk-isolation.js";
-export { loadPolicy, route, NoRouteError } from "./policy.js";
+export { loadPolicy, route, workClasses, NoRouteError } from "./policy.js";
 export type { ResolvedRoute, RoutingRule } from "./policy.js";
 
 // E9.3 approval gate — operation classification is kernel-side, rule-table

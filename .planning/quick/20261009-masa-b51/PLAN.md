@@ -35,13 +35,15 @@ ilk gerçek kaydını yazar.
   kalır. Fiyatlar resmi tablodan, kurulum günü kontrol edilerek yazılır.
 - Düşünme seviyesi (hamle 3): kritik kararlar medium'dan xhigh'a, kod yazımı high'a çıkar; ucuz işler low'da kalır.
 - 2. adımda ölçüldü (9 Eki): çalışan, modeli ve düşünme seviyesini işin türüne göre değil seviyesine göre seçiyor; türün satırındaki ayar hiçbir işe ulaşmıyor. Tür artık görevde yazılı; bu adımda seçim önce türün satırına bakar, yoksa seviyeye düşer. Bu olmadan hamle 3'ün yükseltmeleri kâğıtta kalır.
+- Kontrol kapısının iki hakemi de kataloğa girer; koddaki sabit silinir, geçiş onları da taşır (9 Eki: Sol 6.1 ve Astra 6'ya elle geçirildi).
+- Kabul ölçütü sizin sözünüz (9 Eki): *"hey opus 6 çıkmış ey hamza" dediğimde cart diye modeller güncellenmeli* — tek kapı kuralları, çalışanları ve hakemleri tek seferde taşır, yeniden başlatma gerekmez. Yeni modeli Hamza'nın size haber vermesi anahtarsız kurulur: API anahtarı yok, yalnızca Claude ve ChatGPT abonelikleri var (9 Eki).
 - Paket 3'ün kod düzeltmeleri de bu adımda yapılır: iş akışı adımları çalışanın kimliği ve düşünme
   seviyesiyle çalışır; sohbetin sabit talimatı önbelleğe alınır.
 
 **Onaydan sonra gelen sözleri (9 Ekim):** *"haiku 5.5 i mi ki sonnet 5.5 ile test edin de sonra"* — Haiku 5.5
 kararından önce aynı mekanik işlerde (sınıflandırma, özet, altyazı) Sonnet 5.5 ile yan yana denenir, sonuç ona
 gelir, karar sonra. Hamza için: *"işine göre verin hamzaya modeli… hamza opus 5.5 ok. önerilerinize göre yapın
-o zaman."* Diğer sorularda "gerekli olanı yapın" önerilerimize onay sayıldı; API anahtarı onun adımı, bekliyor.
+o zaman."* Diğer sorularda "gerekli olanı yapın" önerilerimize onay sayıldı. API anahtarı yok, yalnızca abonelik var (9 Eki); yeni model kaynağı anahtarsız kurulur.
 
 ## Hamza — ölçtük, önerimiz
 
@@ -61,7 +63,7 @@ o zaman."* Diğer sorularda "gerekli olanı yapın" önerilerimize onay sayıld�
 - 3. adım şirketin canlı verisini değiştirir (iş kuralları, çalışanların modelleri). Değişiklik denetlenen
   kapıdan yapılır, kayda düşer ve tek tıkla geri alınabilir.
 - Bekçi yalnızca adıyla anılan işleri görür; asıl güvence, her işin sonunda satırı güncelleme kuralıdır.
-- Yeni modeli kendiliğinden öğrenmek için güvenilir bir kaynak gerekiyor; o sizin kararınız (aşağıda 4. soru).
+- Yeni modeli kendiliğinden öğrenmek için güvenilir bir kaynak gerekiyor; API anahtarı olmadığı için abonelikler üzerinden, anahtarsız kurulur.
 
 ## Sizden — her birinde önerimiz var
 
@@ -72,11 +74,8 @@ o zaman."* Diğer sorularda "gerekli olanı yapın" önerilerimize onay sayıld�
    artmıyorsa kendiliğinden geçsin ve size tek satırla haber verilsin. Alternatif: her geçiş sizin sözünüzle olsun.
 3. **Hamza'nın konuşma koltukları:** Önerimiz Opus 5.5. "Hamza tamamen Fable 5.1 olsun" derseniz daha pahalı
    olur ama en akıllı modelde çalışır.
-4. **Yeni modeli kendiliğinden öğrenmek:** Abonelik tarafında bir model listesi var ama güncel değil; Opus
-   5.5'i bile göstermiyor. Önerimiz: yalnızca model listesini okuyacak bir API anahtarı. Anahtar kasada durur,
-   onu tek bir salt-okur iş kullanır; bu, "ham sağlayıcı anahtarı yok" kuralına sizin sözünüzle bir istisna
-   olur. Resmi sayfanın haftalık okunması da mümkün, ama 1 Ekim'de kaldırdığınız eski gözcüye benzediği için
-   önermiyoruz.
+4. **Yeni modeli kendiliğinden öğrenmek:** Cevabınız (9 Eki): API anahtarı yok, yalnızca Claude ve ChatGPT
+   abonelikleri var. Kaynak bu aboneliklerle, anahtarsız kurulur (3. adım).
 5. Plana "başla" derseniz 1. adımdan başlarız.
 
 ## Beraber çalışma — ikimizin görüşü

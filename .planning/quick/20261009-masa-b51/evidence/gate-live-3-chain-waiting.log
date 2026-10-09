@@ -1,0 +1,55 @@
+
+ RUN  v3.2.6 /home/dxb/DxB Global OS
+
+[global-setup] construction engine 7690665340837392423/5 (postgres) — verified on the connection that does the work.
+(node:569701) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+stdout | tests/b51/gate-live.test.ts > B51 — the critical gate, once, along the real path (live) > a strategy task reaches the gate and leaves exactly one critical_gate row
+[isolation] lane=classify session=da27aeff-881e-44ed-a134-6fff81d91997 tools=1 mcp=0 plugins=0 skills=17 agents=5 hooks=0 input=1807 home=/home/dxb/.local/share/dxb/company-claude
+
+stdout | tests/b51/gate-live.test.ts > B51 — the critical gate, once, along the real path (live) > a strategy task reaches the gate and leaves exactly one critical_gate row
+[isolation] lane=decompose session=93b37ad7-6c19-4366-9a7d-f8e19bea739f tools=1 mcp=0 plugins=0 skills=17 agents=5 hooks=0 input=1880 home=/home/dxb/.local/share/dxb/company-claude
+
+stdout | tests/b51/gate-live.test.ts > B51 — the critical gate, once, along the real path (live) > a strategy task reaches the gate and leaves exactly one critical_gate row
+INTAKE {"processed":true,"intentId":"ecb6d36c-6ae3-414d-b1e3-6d38d89bf877","status":"dispatched","taskIds":["0f0c2b59-f654-43f8-a005-06bbf3957d81","ef9f61d0-8b09-4b44-b10d-520c037c4dbe","54541232-3702-45f6-b524-b0a48bcdd39b","ff091987-91f1-490b-b6b6-04e174a929da","d17bf987-bea8-4b82-b246-ae844b660679"]}
+
+stdout | tests/b51/gate-live.test.ts > B51 — the critical gate, once, along the real path (live) > a strategy task reaches the gate and leaves exactly one critical_gate row
+TASKS [{"id":"ff091987-91f1-490b-b6b6-04e174a929da","department":"finance","task_class":"strategy"},{"id":"0f0c2b59-f654-43f8-a005-06bbf3957d81","department":"marketing","task_class":"research.synthesis"},{"id":"ef9f61d0-8b09-4b44-b10d-520c037c4dbe","department":"sales","task_class":"research.synthesis"},{"id":"54541232-3702-45f6-b524-b0a48bcdd39b","department":"data-ai","task_class":"architecture"},{"id":"d17bf987-bea8-4b82-b246-ae844b660679","department":"ceo","task_class":"slot.critical_decision"}]
+
+stdout | tests/b51/gate-live.test.ts > B51 — the critical gate, once, along the real path (live) > a strategy task reaches the gate and leaves exactly one critical_gate row
+GATE_EVIDENCE {"run":{"claimed":false},"task":[{"id":"ff091987-91f1-490b-b6b6-04e174a929da","department":"finance","agent_id":null,"task_class":"strategy","model_tier":"L1","status":"queued","objective":"DXB Global (a holding company) must commit to ONE first continuous-revenue line for Q1 2027 (1 January – 31 March 2027); today is 9 October 2026. Two options have each been assessed commercially by other teams, and those two assessment briefs are your inputs: (i) 'Option A — Paid Turkish-Language Applied-AI Newsletter: Assessment' from the marketing team, covering a recurring PAID subscription publication in Turkish teaching applied AI tools and workflows, with audience size, pricing bands, acquisition channels, cost-per-subscriber, free-to-paid conversion and a 90-day conservative/base/optimistic scenario table of subscribers and monthly recurring revenue; and (ii) 'Option B — B2B AI-Automation Service for Small Businesses: Assessment' from the sales team, covering a productised service selling AI workflow automation, chatbots, document processing and reporting to small businesses on setup-fee-plus-retainer terms, with pricing bands, pipeline conversion rates, sales-cycle length and a 90-day conservative/base/optimistic scenario table of signed clients, setup revenue and retainer revenue. Read both briefs and build the financial comparison: (1) a 90-day cash model for each option by month (Jan, Feb, Mar 2027) showing revenue, direct delivery cost, acquisition/marketing spend, tooling cost and net cash; (2) upfront cash required before the first lira or dollar of revenue arrives, for each option; (3) month in which each option turns cash-positive under the base scenario, or an explicit statement that it does not within the quarter; (4) revenue QUALITY comparison: recurring vs one-off share, revenue concentration (how much of revenue sits in the largest single customer), churn sensitivity, and how fast revenue collapses if acquisition stops; (5) break-even sensitivity — for each option, the single input variable the outcome is most sensitive to and how much that variable must worsen to wipe out the quarter; (6) the downside case: worst realistic cash outcome for each option. CRITICAL RULE ON NUMBERS: carry forward and preserve the [SOURCED: ...] and [PLACEHOLDER — unsourced] tags from the input briefs; any figure you derive from a placeholder input is itself [PLACEHOLDER — unsourced]; never silently convert an estimate into a fact. State the TRY/USD rate assumption you use and tag it. Do NOT make the final choice — produce the numbers and the sensitivity picture; the CEO decides.","result":null,"feedback":null,"created_at":"2026-10-09T20:13:35.153Z","updated_at":"2026-10-09T20:13:35.153Z"}],"events":[{"event":"created","from_status":"inbox","to_status":"queued","actor":"orchestrator:dispatch","payload":{"deps":[0,1],"envelope_index":3},"created_at":"2026-10-09T20:13:35.153Z"}],"runs":[],"decisions":[],"gate_rows":[],"hook_violations":[],"cost":[]}
+PANEL ABSENT none
+
+ ❯ tests/b51/gate-live.test.ts (1 test | 1 failed) 99861ms
+   × B51 — the critical gate, once, along the real path (live) > a strategy task reaches the gate and leaves exactly one critical_gate row 99835ms
+     → expected false to be true // Object.is equality
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/b51/gate-live.test.ts > B51 — the critical gate, once, along the real path (live) > a strategy task reaches the gate and leaves exactly one critical_gate row
+AssertionError: expected false to be true // Object.is equality
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- true[39m
+[31m+ false[39m
+
+ ❯ tests/b51/gate-live.test.ts:105:27
+    103|       console.log(`${/unavailable|none/.test(panel) ? "PANEL ABSENT" :…
+    104| 
+    105|       expect(run.claimed).toBe(true);
+       |                           ^
+    106|       expect((ev.task[0] as { task_class: string }).task_class).toBe("…
+    107|       expect(ev.gate_rows).toHaveLength(1);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed (1)
+   Start at  22:11:54
+   Duration  100.53s (transform 183ms, setup 0ms, collect 424ms, tests 99.86s, environment 0ms, prepare 30ms)
+
+[global-teardown] handed back 6 ops:live receipt(s) this run issued
+EXIT=1

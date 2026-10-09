@@ -2258,5 +2258,13 @@
     "conditions": "Answer to the session's one-word question (recommendation: yes) after it measured that every L1 task resolves to a slot.* row with needs_council false. His order, not a LAW B acceptance of any work.",
     "session": "Opus 5.5 session 28e910ee (successor of 364d8687) — heard first-hand, 2026-10-09; Fable 5.1 (dxb-global-os-26) second eye.",
     "where": "db/migrations/20261009010000_tasks_task_class.sql; packages/orchestrator/src/worker-shim.ts gateNeededFor; HOLDING-OS-MASTER-PLAN/AGENT_ORCHESTRATION_SPEC.md A25; HOLDING-OS-MASTER-PLAN/DATA_MODEL.md"
+  },
+  "all-brains-stay-current-gate-judges-2026-10-09": {
+    "date": "2026-10-09",
+    "what": "Every model inside the holding stays current: when Claude or OpenAI ship a newer model the brains are exchanged — Hamza tells him which models came, or he tells Hamza to update, and the brains renew at once wherever the old model sits. First application the same night: the critical gate's two challengers move from Solo 5.6 / GPT 5.5 to Sol 6.1 (gpt-6.1-sol) and GPT Astra 6 (gpt-6-astra). The succession door for every brain, the judges included, is B51 step 3.",
+    "verbatim": "ama işte bu iki hakem nedir bunlar eski modeller sizin bimeniz lazım opus 5.5 e de söyledim şirketin içindeki tüm modeller her zaman güncellenmeli mesela şuan solo 6.1 e çıktı gpt5.5 eskidi artık. · abi derdimi anladınız mı? yani holding içindeki modeller her zaman güncellenmeye müsait olmalı. yani claude ve openai'da güncel modller çıktıysa exchange yapılmalı. yapılmadan önce mesela hamza bana haber etmeli muhittin bey şu modeller geldi veya ben hamzaya şu modeller geldi güncelleyelim modelleri dediğimde beyinler otomatik yenilenmeli... mesela opus 5.5 nerede beyin olarak varsa veya model olarak opus 5.6 veya opus 6 çıktığında. \"hey opus 6 çıkmış ey hamza\" dediğimde cart diye modeller güncellenmeli.",
+    "conditions": "Said to Fable 5.1 (dxb-global-os-26, transcript 17494c9b) during B51 step 2's live gate run; relayed by Fable and the first sentence verified verbatim in that transcript by the lead. His order, not a LAW B acceptance of any work.",
+    "session": "Fable 5.1 session 17494c9b (dxb-global-os-26) heard it; registered by Opus 5.5 session 28e910ee, the table's single writer.",
+    "where": "packages/orchestrator/src/critical-gate.ts CRITICAL_GATE_CONFIG; HOLDING-OS-MASTER-PLAN/MODEL_ROUTING_SPEC.md §4e; .planning/quick/20261009-masa-b51/PLAN.md step 3"
   }
 }

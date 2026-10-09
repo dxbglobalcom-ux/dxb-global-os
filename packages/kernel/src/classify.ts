@@ -8,7 +8,7 @@
 import { z } from "zod";
 import { query } from "@anthropic-ai/claude-agent-sdk";
 import { getDb, sdkJsonSchema } from "@dxb/shared";
-import { loadPolicy, route, type ResolvedRoute } from "./policy.js";
+import { loadPolicy, route, workClasses, type ResolvedRoute } from "./policy.js";
 import { companyIsolation, isolationReceipt } from "./sdk-isolation.js";
 
 export const ClassifiedIntent = z.object({
@@ -143,7 +143,7 @@ export async function classify(
   const deptSlugs = deptRows.map((d) => d.slug);
   const rules = await loadPolicy(db);
   // Legal task classes are live data — whatever routing_rules can route.
-  const taskClasses = [...new Set(rules.map((r) => r.task_class))].sort();
+  const taskClasses = workClasses(rules);
 
   const ownCi = {
     intent_summary: "kernel classification call",

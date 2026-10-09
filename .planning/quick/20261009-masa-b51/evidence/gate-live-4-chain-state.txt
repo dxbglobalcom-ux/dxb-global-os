@@ -1,0 +1,43 @@
+== tasks
+56e73c2b-02e9-44e8-96ef-1c3498803bdc|marketing|strategy|queued|L1|{4c6abea8-e651-43fb-ba0c-368b79914c6b,3946d7aa-fc66-4c6b-9d72-1a141279cfe0}|
+b8f99718-ec1e-4f86-992f-7275823f2b19|finance|slot.planning|queued|L1|{4c6abea8-e651-43fb-ba0c-368b79914c6b,3946d7aa-fc66-4c6b-9d72-1a141279cfe0}|
+a0e56284-9127-4324-8187-106024ae8f21|ceo|slot.critical_decision|queued|L1|{b8f99718-ec1e-4f86-992f-7275823f2b19,56e73c2b-02e9-44e8-96ef-1c3498803bdc}|
+3946d7aa-fc66-4c6b-9d72-1a141279cfe0|sales|research.fanout|failed|L1|{}|BLOCKED after 5 failures — escalation ladder exhausted (hard stop).
+Task: 3946d7aa-fc66-4c6b-9d72-1a141279cfe0
+Objective: DXB Global (a holding company) is choosing ONE business line to launch next qu
+4c6abea8-e651-43fb-ba0c-368b79914c6b|strategy|research.fanout|review|L2|{}|
+== decisions
+7522|hook|hook_reject|pre-gate rejected: std.project_alignment — missing_project_link: task has neither project ctx nor milestone
+7528|orchestrator:dispatch|task_plan|dispatched 5 task(s): [0] strategy: DXB Global (a holding company) is choosing ONE business line to launch next quar · [1] sales: DXB Global (a holding company) is choosing ONE business line to launch next quar · [2] finance: DXB Global (a holding company) must pick ONE business line to launch next 
+7529|b51-gate-live|employee-selection|least-loaded active employee in 'sales': head-of-sales (open runs 0 of 1)
+7530|hook|hook_reject|post-gate revised: std.knowledge_shelf — revision round 1/2: research task closed without a report artifact (file-kind evidence with ref) — no research without report (knowledge-shelf)
+7531|orchestrator:qa|workflow_branch|qa fail → escalation ladder: Structure is compliant (6 sections, both 3-item lists, 4-col table, every figure tagged, no comparison/recommendation), but substance fails the contract. Section 1 omits required content entirely: zero named agencies, zero packaging detail, zero TRY pricing — the worker 
+7532|orchestrator:escalate|escalation|fail_count=1 → ladder 'retry-same-tier': requeued at tier L3 (was L3)
+7533|b51-gate-live|employee-selection|least-loaded active employee in 'strategy': corporate-development-analyst (open runs 0 of 1)
+7534|hook|hook_reject|post-gate revised: std.knowledge_shelf — revision round 1/2: research task closed without a report artifact (file-kind evidence with ref) — no research without report (knowledge-shelf)
+7535|orchestrator:escalate|escalation|fail_count=1 → ladder 'retry-same-tier': requeued at tier L3 (was L3)
+7536|orchestrator:qa|workflow_branch|qa fail → escalation ladder: Structure is present (six numbered sections in order, verbatim 'Demand Signals (3)' and 'Delivery & Demand Risks (3)' with three items each, 4-column table, consistent tagging, honest tag audit), but substance fails the contract. (1) Section 1's core ask — named agencies
+7537|orchestrator:escalate|escalation|fail_count=2 → ladder 'specialist': requeued at tier L2 (was L3)
+7538|hook|hook_reject|post-gate revised: std.knowledge_shelf — revision round 1/2: research task closed without a report artifact (file-kind evidence with ref) — no research without report (knowledge-shelf)
+7539|orchestrator:escalate|escalation|fail_count=2 → ladder 'specialist': requeued at tier L2 (was L3)
+7540|hook|hook_reject|post-gate revised: std.knowledge_shelf — revision round 1/2: research task closed without a report artifact (file-kind evidence with ref) — no research without report (knowledge-shelf)
+7541|orchestrator:qa|workflow_branch|qa fail → escalation ladder: FAIL. Structure is compliant (six numbered sections in order, verbatim 'Demand Signals (3)' and 'Delivery & Demand Risks (3)' lists, 4-column claim|source|date|URL table, consistent [PLACEHOLDER — UNVERIFIED] tagging, no cross-option comparison or recommendation). But th
+7542|orchestrator:escalate|escalation|fail_count=3 → ladder 'head-review': requeued at tier L2 (was L2)
+7543|orchestrator:qa|workflow_branch|qa fail → escalation ladder: Structure present (six numbered sections in order, both 3-item lists, 4-column table, every figure tagged), but substance fails: zero [SOURCED] figures means the brief carries no market evidence — it is a research plan. Objective required reported evidence on named selle
+7544|orchestrator:escalate|escalation|fail_count=4 → ladder 'fable-final': requeued at tier L1 (was L2)
+7545|orchestrator:qa|workflow_branch|qa fail → escalation ladder: Structure is compliant (six numbered sections in order, verbatim 'Demand Signals (3)' and 'Delivery & Demand Risks (3)' with 3 items each, 4-column claim|source|date|URL table, every figure tagged, no comparison/recommendation). Three contract breaches: (1) length — pros
+7546|orchestrator:escalate|escalation|hard stop after 5 failures — ladder exhausted, blocked report written for the CEO
+7547|hook|hook_reject|post-gate revised: std.knowledge_shelf — revision round 1/2: research task closed without a report artifact (file-kind evidence with ref) — no research without report (knowledge-shelf)
+7548|orchestrator:escalate|escalation|fail_count=3 → ladder 'head-review': requeued at tier L2 (was L2)
+7549|hook|hook_reject|post-gate revised: std.knowledge_shelf — revision round 1/2: research task closed without a report artifact (file-kind evidence with ref) — no research without report (knowledge-shelf)
+7550|hook|hook_reject|post-gate revised: std.knowledge_shelf — revision round 2/2: research task closed without a report artifact (file-kind evidence with ref) — no research without report (knowledge-shelf)
+== runs
+3946d7aa-fc66-4c6b-9d72-1a141279cfe0|fable-5|succeeded|16|24569|
+4c6abea8-e651-43fb-ba0c-368b79914c6b|sonnet-5|failed|20|8935|worker-shim: agent-sdk result error (error_max_turns)
+3946d7aa-fc66-4c6b-9d72-1a141279cfe0|fable-5|succeeded|6|7040|
+4c6abea8-e651-43fb-ba0c-368b79914c6b|sonnet-5|failed|20|8513|worker-shim: agent-sdk result error (error_max_turns)
+3946d7aa-fc66-4c6b-9d72-1a141279cfe0|fable-5|succeeded|12|19388|
+3946d7aa-fc66-4c6b-9d72-1a141279cfe0|fable-5|succeeded|6|8068|
+3946d7aa-fc66-4c6b-9d72-1a141279cfe0|fable-5|succeeded|6|6487|
+4c6abea8-e651-43fb-ba0c-368b79914c6b|sonnet-5|succeeded|44|30246|
+4c6abea8-e651-43fb-ba0c-368b79914c6b|sonnet-5|succeeded|50|35814|

@@ -40,8 +40,8 @@ afterAll(async () => {
 describe("§4e — the panel", () => {
   it("the CEO's two named challengers are the panel, and nobody else", () => {
     expect(CRITICAL_GATE_CONFIG.challengers.map((c) => c.model)).toEqual([
-      "gpt-5.6-sol",
-      "gpt-5.5",
+      "gpt-6.1-sol",
+      "gpt-6-astra",
     ]);
   });
 
@@ -51,8 +51,8 @@ describe("§4e — the panel", () => {
       {
         log: false,
         runner: stub({
-          "gpt-5.6-sol": { ok: true, raw: answered("sound") },
-          "gpt-5.5": { ok: true, raw: answered("sound") },
+          "gpt-6.1-sol": { ok: true, raw: answered("sound") },
+          "gpt-6-astra": { ok: true, raw: answered("sound") },
         }),
       },
     );
@@ -67,13 +67,13 @@ describe("§4e — the panel", () => {
       {
         log: false,
         runner: stub({
-          "gpt-5.6-sol": {
+          "gpt-6.1-sol": {
             ok: true,
             raw: answered("flawed", [
               { severity: "high", claim: "14 GB is wrong", why: "13B at bf16 needs ~26 GB" },
             ]),
           },
-          "gpt-5.5": {
+          "gpt-6-astra": {
             ok: true,
             raw: answered("flawed", [
               { severity: "medium", claim: "licence unchecked", why: "commercial use is gated" },
@@ -84,7 +84,7 @@ describe("§4e — the panel", () => {
     );
     expect(res.status).toBe("objections");
     expect(res.objections).toHaveLength(2);
-    expect(res.objections.map((o) => o.from).sort()).toEqual(["GPT 5.5", "Solo 5.6"]);
+    expect(res.objections.map((o) => o.from).sort()).toEqual(["Astra 6", "Sol 6.1"]);
     expect(res.feedback).toContain("14 GB is wrong");
     expect(res.feedback).toContain("licence unchecked");
   });
@@ -95,8 +95,8 @@ describe("§4e — the panel", () => {
       {
         log: false,
         runner: stub({
-          "gpt-5.6-sol": { ok: false, error: "timeout" },
-          "gpt-5.5": {
+          "gpt-6.1-sol": { ok: false, error: "timeout" },
+          "gpt-6-astra": {
             ok: true,
             raw: answered("flawed", [{ severity: "low", claim: "c", why: "w" }]),
           },
@@ -104,7 +104,7 @@ describe("§4e — the panel", () => {
       },
     );
     expect(res.status).toBe("objections");
-    expect(res.challengers.find((c) => c.model === "gpt-5.6-sol")?.ok).toBe(false);
+    expect(res.challengers.find((c) => c.model === "gpt-6.1-sol")?.ok).toBe(false);
     expect(res.objections).toHaveLength(1);
   });
 
@@ -114,8 +114,8 @@ describe("§4e — the panel", () => {
       {
         log: false,
         runner: stub({
-          "gpt-5.6-sol": { ok: false, error: "no subscription" },
-          "gpt-5.5": { ok: false, error: "no subscription" },
+          "gpt-6.1-sol": { ok: false, error: "no subscription" },
+          "gpt-6-astra": { ok: false, error: "no subscription" },
         }),
       },
     );
@@ -129,8 +129,8 @@ describe("§4e — the panel", () => {
       {
         log: false,
         runner: stub({
-          "gpt-5.6-sol": { ok: true, raw: "I think it looks fine to me!" },
-          "gpt-5.5": { ok: true, raw: JSON.stringify({ verdict: "maybe", objections: [] }) },
+          "gpt-6.1-sol": { ok: true, raw: "I think it looks fine to me!" },
+          "gpt-6-astra": { ok: true, raw: JSON.stringify({ verdict: "maybe", objections: [] }) },
         }),
       },
     );
@@ -144,11 +144,11 @@ describe("§4e — the panel", () => {
       {
         log: false,
         runner: stub({
-          "gpt-5.6-sol": {
+          "gpt-6.1-sol": {
             ok: true,
             raw: `Here is my review:\n${answered("sound")}\nHope that helps.`,
           },
-          "gpt-5.5": { ok: true, raw: answered("sound") },
+          "gpt-6-astra": { ok: true, raw: answered("sound") },
         }),
       },
     );
@@ -166,13 +166,13 @@ describe("§4e — the decision trail", () => {
       { subject: "gate trail probe", answer: "an answer" },
       {
         runner: stub({
-          "gpt-5.6-sol": {
+          "gpt-6.1-sol": {
             ok: true,
             raw: answered("flawed", [
               { severity: "high", claim: "trail probe claim", why: "trail probe why" },
             ]),
           },
-          "gpt-5.5": { ok: true, raw: answered("sound") },
+          "gpt-6-astra": { ok: true, raw: answered("sound") },
         }),
       },
     );
