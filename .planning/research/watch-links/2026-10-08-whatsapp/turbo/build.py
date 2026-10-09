@@ -136,6 +136,10 @@ def main(src_xlsx, out_xlsx):
     projects = sorted(jsonl(JOB / "projeler.jsonl"), key=lambda p: p["sira"])
     ids = sorted(rows)
     missing_split = [i for i in ids if "tek_puan" not in rows[i]]
+    # CEO, 2026-10-09: 'Gerek yok' incelendi, gerçekten gerek yok — bu linkler detay sayfalarından
+    # tamamen çıkar (Tüm linkler, Değişenler), ayrı "Gerek yok" sayfası kalksın. Yalnız Özet'teki
+    # öneri sayımı (süreç kaydı) kalır.
+    ids_keep = [i for i in ids if rows[i]["oneri"] != "Gerek yok"]
 
     wb = Workbook()
     wb.remove(wb.active)
@@ -198,8 +202,8 @@ def main(src_xlsx, out_xlsx):
         ["Sayfalar", None],
         ["Projeler", "Dokuz gelir projesi, paraya göre sıralı; dayandığı linkler, önerimiz ve sizi bekleyen kararlar"],
         ["Öncelikli", "Holding puanı 2-3 ve öneri Kur / Dene / Araştır olan linkler"],
-        ["Tüm linkler", "125 linkin hepsi; teknoloji ve gelir katkısı ayrı sütunlarda"],
-        ["Değişenler", "Puanı ya da önerisi değişen linkler — üç durak: ikinci tur → gelir turu → turbo, ve nedeni"],
+        ["Tüm linkler", f"{len(ids_keep)} link — '{ONERI_ORDER[-1]}' denen {now.get(ONERI_ORDER[-1], 0)} link çıkarıldı (CEO 2026-10-09, incelendi, gerçekten gerek yok); teknoloji ve gelir katkısı ayrı sütunlarda"],
+        ["Değişenler", "Puanı ya da önerisi değişen, 'Gerek yok' ile sonuçlanmayan linkler — üç durak: ikinci tur → gelir turu → turbo, ve nedeni"],
         [None, None],
         ["YouTube sponsorluğu", "Kapsamı bilinmiyor. YouTube'a dayanan satırlarda iki okuma var — A: YouTube'un kendi kuralları · B: başkalarının görüntüsü de serbest. Varsayım yapılmadı."],
     ]
@@ -247,9 +251,9 @@ def main(src_xlsx, out_xlsx):
     prio = sorted([i for i in ids if (as_int(rows[i]["holding_puan"]) or 0) >= 2
                    and rows[i]["oneri"] in ("Kur", "Dene", "Araştır")], key=key)
     sheet(wb, "Öncelikli", all_head, all_w, [full_row(i) for i in prio], score_cols)
-    sheet(wb, "Tüm linkler", all_head, all_w, [full_row(i) for i in ids], score_cols)
+    sheet(wb, "Tüm linkler", all_head, all_w, [full_row(i) for i in ids_keep], score_cols)
 
-    changed = [i for i in ids if i in before and len({
+    changed = [i for i in ids_keep if i in before and len({
         (before[i]["puan"], before[i]["oneri"]), (rows[i]["gt_puan"], rows[i]["gt_oneri"]),
         (as_int(rows[i]["holding_puan"]), rows[i]["oneri"])}) > 1]
     sheet(
