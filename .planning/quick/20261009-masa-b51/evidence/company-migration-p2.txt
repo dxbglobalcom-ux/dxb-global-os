@@ -1,0 +1,13 @@
+== before
+STATE_FINGERPRINT 57fd6e606b1ceefe
+== chain
+[bootstrap] pgboss schema ready
+[bootstrap] applying 20261010020000_b51_succession_door.sql
+[bootstrap] done — applied 1, skipped 174, ledger total 175
+== after
+STATE_FINGERPRINT 57fd6e606b1ceefe
+== parity
+
+SCHEMA_PARITY — the two engines carry the same public schema, object for object.
+== acl
+f|t|t

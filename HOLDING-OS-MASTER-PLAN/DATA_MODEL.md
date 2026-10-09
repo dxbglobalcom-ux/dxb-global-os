@@ -174,6 +174,8 @@ ALTER TABLE routing_rules
 
 > **B51 P1 (`20261010010000_b51_catalogue_one_place.sql`, 2026-10-10):** model_catalog gains `api_model_id`, `lane` (CHECK `agent-sdk|codex-cli|litellm|local`), `family`, `succeeds` (FK model_catalog), `released_at`, `last_checked_at`, `aliases text[]`; CHECK `model_catalog_active_has_api_name`. `agents.brain` gains FK `agents_brain_fkey` → model_catalog and the default `fn_default_brain()` (the `low_cost` seat's model). `routing_rules.model` carries catalogue ids and `model_id` equals it. Settings key `gate.challengers` (category orchestrator) holds the critical gate's two seats, guarded by trigger `trg_gate_challengers_check` on settings_values. Normative: [[MODEL_ROUTING_SPEC]] A-2026-10-10.
 
+> **B51 P2 (`20261010020000_b51_succession_door.sql`, 2026-10-10):** functions `fn_succeed_model(text,text,text,text,text)`, `fn_undo_succession(bigint,text)`, `fn_succession_actor()`; `settings_change_log.change_source` CHECK gains `'succession'`. Normative: [[MODEL_ROUTING_SPEC]] A-2026-10-10 §5.
+
 ### 4.3 Görünürlük ailesi — `0022x_observability_family`
 
 ```sql

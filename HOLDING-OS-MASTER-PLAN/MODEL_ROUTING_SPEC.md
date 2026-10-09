@@ -403,4 +403,18 @@ place to move and nothing waits for a code change or a restart.
    smoke-tested on its own lane instead (no key exists — subscriptions only, his word). Sol 6.1 and
    Astra 6 enter `active` on the gate's live runs of 2026-10-09. Opus 5.5, Sonnet 5.5 and Haiku 5.5
    enter `testing`: the succession door activates the first two (P4); Haiku 5.5 waits for his word (P7).
+5. **The succession door (P2).** `fn_succeed_model(old, new, rationale, authority, idempotency_key)` moves
+   every seat a model holds to its successor in ONE transaction: routing rows (disabled ones too), every
+   brain that names it — his own choices included, `brain_source` kept (a seat left on a retired model could
+   never run again; the count of his choices is said in the record) — `model_ref` settings values and
+   registered defaults, the gate's seats, and the fallback chain (`X.fallback_of = old` → new; the successor
+   inherits the old fallback when it has none); then the old row is retired, never deleted, and no alias is
+   written — a historical row naming the old id is refused loudly, not slid onto the successor. Same lane
+   only. `authority` names whose word moves the seats; the company's own system may act only on his word
+   (`ceo-…`) or a written policy (`policy:…`). The door is mechanical: it returns both prices and whether
+   the price rises, and the caller (the drawer, Hamza's tool, P4) applies the policy. The before-photograph
+   lives in `audit_log` (`routing.succession`); `fn_undo_succession(audit_id, key)` puts back every seat that
+   still names the successor and counts the ones someone moved since. Settings changes are logged as
+   `change_source = 'succession'`. The actor comes from the request's JWT role or the login role — never
+   `current_user`, which inside SECURITY DEFINER is always the owner; anon has no EXECUTE.
 
