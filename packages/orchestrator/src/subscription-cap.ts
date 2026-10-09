@@ -34,8 +34,7 @@
 // WHAT IT DOES NOT DO. It writes no EUR. The single-source cost rule
 // (litellm.ts LOCKED header, 04-04) forbids a second writer of API-mode money
 // because LiteLLM's own tables already hold it; this path is in no such table
-// and this file adds no euro figure. It records TOKENS, which nothing else does,
-// exactly as council.ts has recorded its own calls since Phase 4.
+// and this file adds no euro figure. It records TOKENS, which nothing else does.
 import { sql } from "kysely";
 import { getDb } from "@dxb/shared";
 

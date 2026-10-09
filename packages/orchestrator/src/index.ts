@@ -61,8 +61,6 @@ export { escalate, failCount, ladderAction, bumpTier } from "./escalate.js";
 export type { LadderAction, EscalateResult } from "./escalate.js";
 export { qa, QaVerdict } from "./qa.js";
 export type { QaTask, QaEvaluator, QaOutcome } from "./qa.js";
-export { council, judgeCandidates, shouldCouncil, COUNCIL_CONFIG, JudgeVerdict } from "./council.js";
-export type { CouncilTask, CouncilResult, CandidateLabel } from "./council.js";
 export type { ClaimedTask, Executor, HookedClaimedTask, RunWorkerArgs, RunWorkerResult, WorkerOutput } from "./worker-shim.js";
 // E10.2 — spawn-path hook binding (FABLE_5_HOOK §3): dispatch-side glue.
 export {

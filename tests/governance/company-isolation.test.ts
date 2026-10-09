@@ -923,8 +923,8 @@ function analyzeEnvWrites(rel: string, text: string): string[] {
 // ── the company's runtime, read ──────────────────────────────────────────────────────────────────
 
 const SOURCES = runtimeSources().map((file) => ({ rel: relative(REPO, file), text: readFileSync(file, "utf8") }));
-/** The eight company lanes on 2026-10-03. A ninth call site fails here until it is added on purpose. */
-const LANES = ["chat", "classify", "council", "decompose", "qa", "task", "voice", "workflow"];
+/** The seven company lanes on 2026-10-09 (the dead council's lane went with it). An eighth call site fails here until it is added on purpose. */
+const LANES = ["chat", "classify", "decompose", "qa", "task", "voice", "workflow"];
 /** Every runtime file bound and read once — every file, not the ones whose text names the SDK. */
 const SDK_REPORTS = SOURCES.map((s) => analyzeSdk(s.rel, s.text));
 const LAUNCH_REPORTS = SOURCES.map((s) => analyzeLaunches(s.rel, s.text));
@@ -937,7 +937,7 @@ describe("company isolation — the ruler over every company model call (CEO 202
     expect(SDK_REPORTS.flatMap((r) => r.problems)).toEqual([]);
   });
 
-  it("finds exactly the eight company lanes, each once", () => {
+  it("finds exactly the seven company lanes, each once", () => {
     expect(sites.map((s) => s.lane).sort()).toEqual(LANES);
   });
 

@@ -186,7 +186,7 @@ Shape, settled with the CEO the same night after he rejected the first proposal 
 
 **Live proof (2026-07-26):** a deliberately flawed recommendation ("install HunyuanVideo 13B at bf16, ~14 GB VRAM, fits the 16 GB card, open weights so commercial use is fine, €0/month") went through the panel. Both challengers returned `flawed` with 7 objections carrying sources: the VRAM figure is wrong (13B at bf16 is ~26 GB of weights alone; Tencent's own README specifies 45-60 GB), open weights do not grant commercial rights (Stable Video Diffusion's licence gates commercial use on revenue), the "best motion quality" claim rests on a table where it was the only open model, and the €0 figure never prices the remedy if the model does not fit. `decision_log` id 20251.
 
-**What is explicitly dead:** the v1 `CNCL-01` shape — three cheap producers (GLM 5.2 / Kimi 2.7 / Qwen 3.6) plus a comparison-only judge. All three producers are dismissed models under U21, and the design inverted the quality order by keeping the strongest model out of authorship.
+**What is explicitly dead:** the v1 `CNCL-01` shape — three cheap producers (GLM 5.2 / Kimi 2.7 / Qwen 3.6) plus a comparison-only judge. All three producers are dismissed models under U21, and the design inverted the quality order by keeping the strongest model out of authorship. Its code (`council.ts`, its exports and its test) was deleted on 2026-10-09 (B51 step 2).
 
 **Live enforcement:** migration `20260726001000_u21_quality_tier_law.sql` (U21). Seed mirror: `packages/kernel/policy/routing-seed.json` — regenerated from the live table, so a fresh bootstrap reproduces the law instead of resurrecting a fired model.
 

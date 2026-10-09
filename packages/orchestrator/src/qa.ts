@@ -1,6 +1,6 @@
 // Default QA gate — master-plan §3: ONE strong model evaluates a worker
-// result against its output_contract. QA is a single call, not a council,
-// for normal tasks (the council fires only at critical gates — council.ts).
+// result against its output_contract. QA is a single call; a task whose
+// routing row sets needs_council meets the critical gate after it (critical-gate.ts).
 //
 // The QA model is a routing_rules lookup (task_class 'final-approval') —
 // the choice is a data row, not a constant; no model name lives in this file.

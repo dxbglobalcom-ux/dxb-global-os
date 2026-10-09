@@ -5,7 +5,7 @@
 // header, and the CLI now validates the schema before the run — it refuses that header with
 // `--json-schema is not a valid JSON Schema: no schema with key or ref ".../2020-12/schema"`
 // and the run dies with 0 tokens. Claude Code 2.1.201 (SDK 0.3.201) had accepted it. Every
-// structured call in the company (worker, QA, decompose, classify, council, workflow executor)
+// structured call in the company (worker, QA, decompose, classify, workflow executor)
 // therefore goes through here, and the header is dropped — the schema body is unchanged.
 import { z } from "zod";
 

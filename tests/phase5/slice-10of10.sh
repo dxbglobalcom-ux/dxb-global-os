@@ -255,16 +255,6 @@ async function drive() {
     const body = await readFile(p, "utf8");
     if (!body.includes(id)) fail(`run ${runI}: artifact ${name} does not reference task ${id}`);
   }
-  // council-silent negative proof: slice tasks are internal/non-L1 — ZERO
-  // council-tagged spend rows may exist for the chain (CNCL-01 inside the gate)
-  const council = await db
-    .selectFrom("cost_ledger")
-    .select(({ fn }) => fn.countAll().as("n"))
-    .where("task_id", "in", ids)
-    .where(sql`meta->>'council' = 'true'`)
-    .executeTakeFirstOrThrow();
-  if (Number(council.n) !== 0)
-    fail(`run ${runI}: council fired ${council.n}x on a normal internal task — CNCL-01 violated`);
 
   console.log(
     `run ${runI}/10: PASS (chain=${ids.length} tasks, events=${eventTotal}, ` +
