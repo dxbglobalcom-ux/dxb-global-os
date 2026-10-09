@@ -37,6 +37,11 @@ ilk gerçek kaydını yazar.
 - Paket 3'ün kod düzeltmeleri de bu adımda yapılır: iş akışı adımları çalışanın kimliği ve düşünme
   seviyesiyle çalışır; sohbetin sabit talimatı önbelleğe alınır.
 
+**Onaydan sonra gelen sözleri (9 Ekim):** *"haiku 5.5 i mi ki sonnet 5.5 ile test edin de sonra"* — Haiku 5.5
+kararından önce aynı mekanik işlerde (sınıflandırma, özet, altyazı) Sonnet 5.5 ile yan yana denenir, sonuç ona
+gelir, karar sonra. Hamza için: *"işine göre verin hamzaya modeli… hamza opus 5.5 ok. önerilerinize göre yapın
+o zaman."* Diğer sorularda "gerekli olanı yapın" önerilerimize onay sayıldı; API anahtarı onun adımı, bekliyor.
+
 ## Hamza — ölçtük, önerimiz
 
 - **Bugün:** Ne orkestratör ne sözcü. Konuşuyor ama eli yok, hiçbir aracı yok. İşi bölümlere dağıtan makine

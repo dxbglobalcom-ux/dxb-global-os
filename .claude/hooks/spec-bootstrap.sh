@@ -91,12 +91,23 @@ if [[ "$locks" =~ ^([1-9][0-9]*)\|(.*)$ ]]; then
   locks_line="LOCKED TOOLS WAITING FOR THE MANIFEST: ${BASH_REMATCH[1]} (audit ${BASH_REMATCH[2]}) — read each: pnpm construction:pins:add <audit_id>; vouch with --yes; commit."
 fi
 
+# The CEO, 2026-10-09 ("Bana eski şeyleri getirip önüme koymayın artık"): a board row that work has
+# passed — a commit scoped to its id, newer than the row's last edit (the records ruler's R6) — is named
+# here before a session can repeat it as current. Empty is silent; two git calls, ~0.3 s, capped at 3 s.
+stale=$(timeout 3 node --no-warnings "$ROOT/tests/b43/records-truth.ts" --stale 2>/dev/null || true)
+stale_line=""
+if [[ -n "$stale" ]]; then
+  stale_line="BOARD ROWS BEHIND THEIR WORK — measure before you repeat them; the job that moved them rewrites them:
+$stale"
+fi
+
 cat <<EOF
 === DXB — WHERE THE WORK STANDS ===
 Always-on core: .claude/CLAUDE.md (authority order, the boundaries, the doors).
 Open work: HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md — the single register.
 Asked to learn the holding? dxb-start. A job: dxb-team2.
 ${locks_line:+$locks_line
+}${stale_line:+$stale_line
 }
 YOUR FIRST REPLY TELLS HIM WHERE THE WORK STANDS, THEN ANSWERS HIM (core §0).
 Everything below was read from .planning/STATE.md just now —

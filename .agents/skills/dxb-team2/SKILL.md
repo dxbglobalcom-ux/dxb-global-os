@@ -1,6 +1,6 @@
 ---
 name: dxb-team2
-description: Use when the CEO hands the construction a job — the default construction door. The lead (the session) chooses who writes — itself, a fork, medium helpers, or a fork with helpers — and verifies every piece; one blind, read-only GPT-6.1 Sol pass checks the work; its findings are fixed and tested; the CEO is warned to switch the effort — max for plan, design and architecture, high for the build. Trigger `/dxb-team2 <the job in one sentence>`.
+description: Use when the CEO hands the construction a job, or says a plan will be talked ("plan konuşacağız", "plan moduna geçelim") — the default construction door. The lead (the session) chooses who writes — itself, a fork, medium helpers, or a fork with helpers — and verifies every piece; one blind, read-only GPT-6.1 Sol pass checks the work; its findings are fixed and tested; the CEO is warned to switch the effort — max for plan, design and architecture, high for the build. Trigger `/dxb-team2 <the job in one sentence>`.
 ---
 
 # The team — one lead, the hands it chooses, one blind auditor
@@ -19,7 +19,8 @@ THE CEO'S JOB, in one sentence he would sign
    │
    ├── small — a fix, a deletion, a text he already worded: no plan, straight to ARRANGE
    │
-PLAN      the talk turns to plan, design or architecture → `plan`: effort warning MAX (§2)
+PLAN      the talk turns to plan, design or architecture → `plan`: effort warning MAX (§2); his "plan
+          konuşacağız" opens this door at once, the job is asked inside it
           the plan goes to him once, in his language, closing with the HIGH warning (§2) → his yes
    │
 ARRANGE   the lead chooses the hands (§3) and says it in one line
@@ -42,6 +43,8 @@ step, the Islamic boundaries, a discovery that would change the scope he approve
 the data's integrity (the work stops at it), and an order of his that truly reads two ways — each with a
 recommendation, answerable in one word. Technical choices inside a job he said yes to are the lead's.
 The plan's single trip is his word <!-- CEO-OK: plan-comes-to-him-once-2026-10-03 -->.
+His plan words open the door; the hook reminds the lead, it cannot open it
+<!-- CEO-OK: plan-words-open-dxb-team2-2026-10-09 -->.
 
 **The plan**, when there is one, names the scope, what it touches, the ordered steps, how it is verified,
 and the risks — in his language, short; not who writes, which the lead chooses after his yes (§3)
@@ -171,6 +174,12 @@ alone (STATE, the board) is checked by the rulers on commit instead.
 ## 6. Commit, tell, record
 
 - **Commit:** one per job, or one per independent piece; the message says what changed and why.
+- **The row:** a job that advances a board row rewrites that row in the same commit — what finished becomes
+  one dated note, `node scripts/board/note-done.mjs <ID> "<what finished>"`, never a story; what remains open
+  stays; the row closes only when all of it is finished (`dxb-close-row`)
+  <!-- CEO-OK: rows-keep-up-note-not-story-2026-10-09 -->. The commit's subject names the row in its scope —
+  `type(B51 …): …` — and the records ruler's R6 stops the STATE commit while a row is behind work so named. A row left behind by
+  another job's commit gets its note from that commit and its folder — measured, never guessed.
 - **Tell him** in his language, in a few lines, under three headings — *Sizi bekleyen · Değişen ·
   Bulunan* <!-- CEO-OK: job-report-three-headings-2026-10-03 -->: what waits on him; what changed;
   what was found outside the job, each with a recommendation. An empty heading is not written; a

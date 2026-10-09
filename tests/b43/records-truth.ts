@@ -27,9 +27,20 @@
 // only in the approvals ledger. A row over the ceiling now turns the ruler red until its detail
 // moves to its own file.
 //
+// R6 (CEO 2026-10-09, "Güncellenmeler yerinde ve düzgün yapılmıyor. Hep bir kopukluk oluyor. Önce bu
+// kesinlikle düzeltilmeli" — "benim sorunum. her zaman güncellenmesi herşeyin otomatik olarak."):
+// an open row on the board keeps up with the work committed on it. Board row B51 was last edited
+// 2026-09-28 while commits scoped to B51 landed on 2026-10-04 (d364e81a, 71811fb0, fbd51308) and
+// 2026-10-08, and the row went on describing a defect already fixed. A commit names a row only when
+// the row's id stands inside its subject's scope parentheses — `type(B51 move 5, bundle 2): …`; the
+// body is never read (it gave 8 false positives out of 9). The newest such commit later than the
+// row line's last edit (git blame of the working tree, so an uncommitted rewrite counts as fresh)
+// turns the ruler red until the row is rewritten.
+//
 // Usage:
 //   node --no-warnings tests/b43/records-truth.ts              — the table, exit 1 on any failure
 //   node --no-warnings tests/b43/records-truth.ts --verdicts   — plus one RULER-VERDICT line per rule
+//   node --no-warnings tests/b43/records-truth.ts --stale      — R6 only, one STALE line per row, always exit 0 (session-start hook)
 //   npx vitest run tests/b43/records-truth.test.ts             — the ruler bites, and the tree passes
 import { execFileSync } from "node:child_process";
 import { readFileSync } from "node:fs";
@@ -218,13 +229,88 @@ export function r5OpenRowsStayThin(root: string, boardOverride?: string): Verdic
   return { rule: `R5 every open board row stays under ${C.rowCeiling} bytes`, pass: failures.length === 0, failures };
 }
 
+export type Commit = { ct: number; hash: string; date: string; subject: string };
+export type StaleRow = { id: string; line: number; rowEdited: number; commit: Commit };
+
+/** R6 — a commit names a row only when the id stands inside its subject's scope parentheses: `type(B51 move 5, bundle 2): …`. */
+export const scopeNames = (id: string) =>
+  new RegExp(`^[a-z-]+\\(([^)]*[^A-Za-z0-9])?${id.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}([^0-9A-Za-z][^)]*)?\\)`);
+
+/**
+ * R6, pure — every open row whose newest naming commit is later than the row line's last edit.
+ * `lastEdit` takes the 0-based line index in boardText and answers epoch seconds.
+ */
+export function staleRows(boardText: string, lastEdit: (lineIndex0: number) => number, commits: Commit[]): StaleRow[] {
+  const stale: StaleRow[] = [];
+  let section = "";
+  boardText.split("\n").forEach((line, i) => {
+    const mark = /<!-- BOARD-SECTION: (\w+) -->/.exec(line);
+    if (mark) { section = mark[1]; return; }
+    if (section !== "open" || !/^\| [A-Z]+[0-9]/.test(line)) return;
+    const id = line.split("|")[1].trim();
+    const names = scopeNames(id);
+    let newest: Commit | undefined;
+    for (const c of commits) if (names.test(c.subject) && (!newest || c.ct > newest.ct)) newest = c;
+    const rowEdited = lastEdit(i);
+    if (newest && newest.ct > rowEdited) stale.push({ id, line: i + 1, rowEdited, commit: newest });
+  });
+  return stale;
+}
+
+/** R6 on the real tree — ONE git log, ONE git blame of the working tree's board. */
+export function staleRowsOfTree(root: string): StaleRow[] {
+  const git = (args: string[]) => execFileSync("git", ["-C", root, ...args], { encoding: "utf8", maxBuffer: 256 * 1024 * 1024, stdio: ["ignore", "pipe", "pipe"] });
+  const commits = git(["log", "--format=%ct%x09%h%x09%cs%x09%s"]).split("\n").filter(Boolean).map((l) => {
+    const [ct, hash, date, ...subject] = l.split("\t");
+    return { ct: Number(ct), hash, date, subject: subject.join("\t") };
+  });
+  // --line-porcelain: one header per line; a line not yet committed carries the all-zero hash
+  // ("Not Committed Yet") and counts as edited now.
+  const now = Math.floor(Date.now() / 1000);
+  const times: number[] = [];
+  let ct = 0;
+  let uncommitted = false;
+  for (const l of git(["blame", "--line-porcelain", "--", C.board]).split("\n")) {
+    if (/^[0-9a-f]{40} /.test(l)) { uncommitted = /^0{40} /.test(l); continue; }
+    if (l.startsWith("committer-time ")) ct = Number(l.slice(15));
+    else if (l.startsWith("\t")) times.push(uncommitted ? now : ct);
+  }
+  const board = readFileSync(join(root, C.board), "utf8");
+  return staleRows(board, (i) => times[i] ?? now, commits);
+}
+
+/** a calendar day in the machine's local time — the same day git's %cs prints, not the UTC day */
+const day = (s: number) => {
+  const d = new Date(s * 1000);
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+};
+
+/** R6 — every open board row keeps up with the work committed on it. */
+export function r6RowsKeepUpWithWork(root: string): Verdict {
+  const failures = staleRowsOfTree(root).map(
+    (s) => `${s.id} — work committed after the row's last edit: ${s.commit.hash} ${s.commit.date} "${s.commit.subject}" (row last edited ${day(s.rowEdited)}). Rewrite the row: what finished as one dated note line, what remains open.`,
+  );
+  return { rule: "R6 every open board row keeps up with the work committed on it", pass: failures.length === 0, failures };
+}
+
 export function runRuler(opts: { root?: string; texts?: Record<string, string> } = {}): RulerReport {
   const root = repoRoot(opts.root);
-  const verdicts = [r1LedgerGate(root), r2NoAwaitingOnAccepted(root, opts.texts), r3TableIsRegistered(root), r4NoAcceptanceWithoutARow(root), r5OpenRowsStayThin(root)];
+  const verdicts = [r1LedgerGate(root), r2NoAwaitingOnAccepted(root, opts.texts), r3TableIsRegistered(root), r4NoAcceptanceWithoutARow(root), r5OpenRowsStayThin(root), r6RowsKeepUpWithWork(root)];
   return { verdicts, pass: verdicts.every((v) => v.pass) };
 }
 
 function main() {
+  if (process.argv.includes("--stale")) {
+    // the session-start hook must never be stopped by this line, so a failing git is said on stderr and still exits 0
+    try {
+      for (const s of staleRowsOfTree(repoRoot())) {
+        console.log(`STALE ${s.id} — ${s.commit.hash} ${s.commit.date} "${s.commit.subject}" after the row's last edit ${day(s.rowEdited)}`);
+      }
+    } catch (e) {
+      console.error(`records-truth --stale: ${(e as Error).message.split("\n")[0]}`);
+    }
+    process.exit(0);
+  }
   const wantVerdicts = process.argv.includes("--verdicts");
   const report = runRuler();
   console.log("RECORDS RULER 2026-09-19 — " + C.records.join(" · "));

@@ -42,6 +42,11 @@ The board defines the STATE-versus-EVENT rule; this is how you satisfy it.
   that is not a bare SELECT, and re-measures the value against the live company database on every
   run — so the number cannot go stale in silence.
 - A statement about what happened **once** carries its date and `<!-- HISTORY -->`.
+- On a board row, a part that finished is ONE dated note — `✓ <date> — <what finished>`, written with
+  `node scripts/board/note-done.mjs <ID> "<note>"` — never a story; the story may stay in the row's own file.
+  A row closes only when ALL of it is finished, never on a part. The job that advances a row rewrites it in
+  the same commit; the records ruler's R6 is red while a row is behind work committed under its id
+  <!-- CEO-OK: rows-keep-up-note-not-story-2026-10-09 -->.
 - An `<!-- OPEN: <row> -->` marker, where one is written, names a live board row. A board row is
   opened only on the CEO's word (board law 1).
 - A claim that the CEO approved something carries `<!-- CEO-OK: <id> -->` and an entry in

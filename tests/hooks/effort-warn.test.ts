@@ -516,9 +516,11 @@ describe("plan permission mode starts the plan warning by itself (Fable A3)", ()
     expect(text).toContain(MAX_LINE);
     expect(text).toContain("runs at high");
   });
-  it("no mode set, permission mode plan, at max: silent", () => {
+  it("no mode set, permission mode plan, at max: no max line, only the door (the CEO, 2026-10-09)", () => {
     const dir = box();
-    expect(hook(dir, prompt(SID, transcript(dir, [["max", 5]]), "devam", "plan"))).toBe("");
+    const out = warning(hook(dir, prompt(SID, transcript(dir, [["max", 5]]), "devam", "plan")));
+    expect(out).toContain(DOOR);
+    expect(out).not.toContain(MAX_LINE);
   });
   it("build mode set wins over permission mode plan: the high line at max", () => {
     const dir = box();
@@ -601,6 +603,51 @@ describe("the CLI tells the lead whether this reply opens with the warning (Fabl
     const r = setMode(box(), "plan");
     expect(r.stdout).toContain("live level unknown");
     expect(r.stdout).toContain(MAX_LINE);
+  });
+});
+
+// The CEO's order of 2026-10-09: "plan konuşacağız dediğimde direkt DXP Team 2 açılmalı." A hook cannot open a
+// skill; with no mode set, the lead is reminded to open the dxb-team2 door first, then to run `plan`.
+const DOOR = 'Skill("dxb-team2")';
+
+describe("a plan talk opens the dxb-team2 door at once (CEO 2026-10-09)", () => {
+  it("plan words, no mode: the door is opened first, then the plan command, and the escape stays", () => {
+    const dir = box();
+    const out = warning(hook(dir, prompt(SID, transcript(dir, [["high", 5]]), "bunun planını konuşacağız")));
+    expect(out).toContain(DOOR);
+    expect(out).toContain("2026-10-09");
+    expect(out).toContain("generic plan mode");
+    expect(out).toContain(`python3 "${HOOK}" plan`);
+    expect(out.indexOf(DOOR)).toBeLessThan(out.indexOf(`python3 "${HOOK}" plan`));
+    expect(out).toContain("ignore this");
+  });
+  it("permission mode plan, no mode: the door is opened first, then the plan command, and the max line", () => {
+    const dir = box();
+    const out = warning(hook(dir, prompt(SID, transcript(dir, [["high", 5]]), "devam", "plan")));
+    expect(out).toContain(DOOR);
+    expect(out).toContain("generic plan mode");
+    expect(out).toContain(`python3 "${HOOK}" plan`);
+    expect(out.indexOf(DOOR)).toBeLessThan(out.indexOf(`python3 "${HOOK}" plan`));
+    expect(out).toContain(MAX_LINE);
+  });
+
+  it("a session already in plan mode: no door sentence", () => {
+    const dir = box();
+    setMode(dir, "plan");
+    for (const permissionMode of ["default", "plan"]) {
+      const out = warning(hook(dir, prompt(SID, transcript(dir, [["high", 5]]), "planı konuşalım", permissionMode)));
+      expect(out).toContain(MAX_LINE);
+      expect(out).not.toContain(DOOR);
+    }
+  });
+  it("a session already in build mode: no door sentence", () => {
+    const dir = box();
+    setMode(dir, "build");
+    for (const permissionMode of ["default", "plan"]) {
+      const out = warning(hook(dir, prompt(SID, transcript(dir, [["max", 5]]), "planı değiştirelim", permissionMode)));
+      expect(out).toContain(HIGH_LINE);
+      expect(out).not.toContain(DOOR);
+    }
   });
 });
 

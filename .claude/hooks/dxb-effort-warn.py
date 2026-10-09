@@ -14,7 +14,8 @@ the same day made the warning start by itself and arrive in time:
   * UserPromptSubmit: while the session has a mode -- or, with none set, while his permission mode is
     `plan` -- and its live level does not match it (plan: max, build: high), each of his messages carries
     the warning into the session's context. With no mode and no plan permission mode, a message that names
-    a plan, a design or an architecture reminds the lead to run `plan`, and a session whose level is not high
+    a plan, a design or an architecture reminds the lead to open the dxb-team2 door and run `plan` (the
+    door, too, with plan permission mode and no mode -- the CEO, 2026-10-09), and a session whose level is not high
     -- or not yet known: then the lead reads CLAUDE_EFFORT in Bash -- reminds the lead to warn him before
     writing code.
 
@@ -90,10 +91,18 @@ def warning(mode, level):
         f"`{COMMAND} off`.")
 
 
+def open_door():
+    # the CEO, 2026-10-09: "plan konuşacağız dediğimde direkt DXP Team 2 açılmalı" -- a hook cannot open a
+    # skill, so it tells the lead to open the door before the plan command
+    return (f"By the CEO's order of 2026-10-09 a plan talk opens dxb-team2 at once: if the dxb-team2 door is not "
+            f"already open in this session, open it now with `Skill(\"dxb-team2\")` and ask the job inside the "
+            f"door -- not in Claude Code's generic plan mode, whose click-box questions do not reach him. Then "
+            f"run `{COMMAND} plan` and do what it answers.")
+
+
 def plan_reminder():
     return (f"His message names a plan, a design or an architecture, and this session has no dxb-team2 effort "
-            f"mode. If the talk is turning to one, run `{COMMAND} plan` now and do what it answers; if not, "
-            f"ignore this.")
+            f"mode. If the talk is turning to one: {open_door()} If not, ignore this.")
 
 
 def unknown_reminder():
@@ -262,13 +271,19 @@ def on_hook(data):
     if name is None:
         return
     mode = read_mode(name)
-    if mode is None and data.get("permission_mode") == "plan":
+    door = mode is None and data.get("permission_mode") == "plan"
+    if door:
         mode = "plan"
     level = live_level(name, data.get("transcript_path"))
     if mode is not None:
-        if level == WANTED[mode]:
+        if level == WANTED[mode] and not door:
             return
-        context = warning(mode, level)
+        # plan permission mode with no mode set: the door first, even when he is already at max -- the case
+        # that started this, 2026-10-09 (the CEO: "plan konuşacağız dediğimde direkt DXP Team 2 açılmalı")
+        if door:
+            context = open_door() if level == WANTED[mode] else f"{open_door()}\n{warning(mode, level)}"
+        else:
+            context = warning(mode, level)
     elif not isinstance(data.get("prompt"), str) or "<task-notification>" in data["prompt"]:
         return  # a subagent's report arriving is not his message (measured 2026-10-06: one tripped the net)
     elif PLAN_WORDS.search(data["prompt"]):

@@ -2226,5 +2226,29 @@
     "conditions": "Said while the 125 WhatsApp links were being re-judged after he found revenue ideas marked 'gerek yok' (his earlier words the same evening: 'holdingimize faydası demek hem tech anlamında geliştirilmişlik buda eşittir GELİR, KAZANÇ, KAR, ÜRETİM HOLDİNGN PARA KAZANMASI DEMEK'). Registered as his order to write it, not a LAW B acceptance of any work. His ruling on the Ferrari sentence, same evening: 'burada çelişki yok bu kalsın bu holdingin gayesine zıt birşey değil ZİRA HOLDİNG HENÜZ TAM ANLAMIYLA KURULMADI. kurulunca gelir ve yeni şirketler gelicek işte şuan zaten onu yapıoruz holdingi oluştururken kurarken aynı zamanda bunu da değerlendiriorz ama bir plan olarak yazılıyor. hem ferrari seviyesindeki holding kurulurken yapılabilecek gelir üretim sistemleri varsa aynı anda kurulur yoksa yapılacaklar tahtasına yazılır holding tam kurulduktan sonra. ilgili bölüme entegre edilir.'",
     "session": "Opus 5.5 session f8b23136 — heard first-hand, 2026-10-08.",
     "where": ".claude/CLAUDE.md · THE PURPOSE; .claude/skills/dxb-watch-links/SKILL.md"
+  },
+  "plan-words-open-dxb-team2-2026-10-09": {
+    "date": "2026-10-09",
+    "what": "When he says a plan will be talked ('plan konuşacağız', 'plan moduna geçelim'), the dxb-team2 door opens at once and the job is asked inside it. A hook cannot open a skill, so the UserPromptSubmit hook dxb-effort-warn.py REMINDS the lead to open Skill(\"dxb-team2\") (plan words, or his plan permission mode, with no dxb-team2 mode set); the door's description names the trigger. Made permanent on his yes to the session's question 'Bunu kalıcı yapayım mı?'.",
+    "verbatim": "Birinci husus, evet önerini yap. Çünkü plan konuşacağız dediğimde direkt DXP Team 2 açılmalı.",
+    "conditions": "Said after a session took his 'Plan moduna geçelim' into Claude Code's own plan mode instead of opening dxb-team2. His order to write it, not a LAW B acceptance of any work.",
+    "session": "Opus 5.5 session 364d8687 (dxb-global-os-c3) — heard first-hand, 2026-10-09; planned at one table with Fable 5.1 (dxb-global-os-26).",
+    "where": ".claude/hooks/dxb-effort-warn.py; .claude/skills/dxb-team2/SKILL.md (description, §1)"
+  },
+  "rows-keep-up-note-not-story-2026-10-09": {
+    "date": "2026-10-09",
+    "what": "Records stay current automatically. A job that advances a board row rewrites that row in the same commit: what finished becomes one dated note line (scripts/board/note-done.mjs), not a story — the story may stay in the row's own file; what remains open stays; a row closes only when all of it is finished, never on a part. The records ruler's R6 turns red when a commit scoped to a row (type(B51 …): …) is newer than the row's last edit, and the session opening names such a row. Archiving finished rows is not required.",
+    "verbatim": "Güncellenmeler yerinde ve düzgün yapılmıyor. Hep bir kopukluk oluyor. Önce bu kesinlikle düzeltilmeli ya. Bana eski şeyleri getirip önüme koymayın artık. · tahtanın durumu şudur. bir satırda bazen işin sadece bir kısmı bitmiştir. dikkat edin sakın kapatmayın herşey tamamen bitince satır kapanır. bir kısmı değil. oraya sadece ne bittiği ile ilgili not düşülür hikaye değil. arşive taşınmaması daha iyi ise kalsınlar sorun yok. benim sorunum. her zaman güncellenmesi herşeyin otomatik olarak.",
+    "conditions": "Said after a session repeated the B51 row's 2026-09-21 text as current although part of it was fixed on 2026-10-04. The plan (.planning/quick/20261009-masa-b51/PLAN.md) was approved with 'tmm. dxbteam2 ile devam et sen. gerekli olanı yapın. düzgün.' His order, not a LAW B acceptance of any work.",
+    "session": "Opus 5.5 session 364d8687 (dxb-global-os-c3) — heard first-hand, 2026-10-09; planned at one table with Fable 5.1 (dxb-global-os-26).",
+    "where": ".claude/skills/dxb-team2/SKILL.md §6; .claude/skills/dxb-close-row/SKILL.md; tests/b43/records-truth.ts (R6); scripts/board/note-done.mjs; .claude/hooks/spec-bootstrap.sh"
+  },
+  "b51-plan-approved-2026-10-09": {
+    "date": "2026-10-09",
+    "what": "His yes to the one-page plan of the B51 table (.planning/quick/20261009-masa-b51/PLAN.md — beyinler, konsey, kayıtlar), built in three steps: (1) records that keep up with the work + his plan words open dxb-team2; (2) the dead council deleted and the live critical gate run once; (3) model succession through the catalogue, the first succession (Opus 5 → 5.5, Sonnet 5 → 5.5), B51 bundle 3, move 3 and Hamza's level. 'gerekli olanı yapın' is read as yes to the plan's recommendations (Haiku 5.5 testing + mechanical only; mechanical seats succeed by themselves when the price does not rise); the API key for the model list stays his step. Two decisions in the same conversation bind step 3: Haiku 5.5 is first tested side by side with Sonnet 5.5 on the same mechanical work and the result goes to him before any decision; Hamza's seats get their model by the work they do — his talking seats on Opus 5.5.",
+    "verbatim": "tmm. dxbteam2 ile devam et sen. gerekli olanı yapın. düzgün. · haiku 5.5 i miki sonnet 5.5 ile test edin de sonra · ama hamza iş dağıtımı mı yapıyor ki? yani dediğim gibi işine göre verin hamzaya modeli. eğer böyle uygun gördüyseniz daha uysunsa bu şekilde hamza opus 5.5 ok. önerilerinize göre yapın o zaman.",
+    "conditions": "His order to build the plan, not a LAW B acceptance of any work: each step's result still waits for his eye.",
+    "session": "Opus 5.5 session 364d8687 (dxb-global-os-c3) — heard first-hand, 2026-10-09; plan made at one table with Fable 5.1 (dxb-global-os-26).",
+    "where": "HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md (B51 row); .planning/quick/20261009-masa-b51/PLAN.md"
   }
 }

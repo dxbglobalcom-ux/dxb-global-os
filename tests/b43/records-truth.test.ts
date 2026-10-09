@@ -7,7 +7,7 @@
 import { describe, expect, it } from "vitest";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
-import { C, r2NoAwaitingOnAccepted, r4NoAcceptanceWithoutARow, r5OpenRowsStayThin, runRuler } from "./records-truth.js";
+import { C, r2NoAwaitingOnAccepted, r4NoAcceptanceWithoutARow, r5OpenRowsStayThin, runRuler, staleRows } from "./records-truth.js";
 
 const root = process.cwd();
 const STATE = ".planning/STATE.md";
@@ -93,5 +93,55 @@ describe("the records as they stand", () => {
     expect(v.failures[0]).toMatch(/B97 is \d+ bytes/);
     const closed = board.replace("<!-- BOARD-SECTION: closed -->", `<!-- BOARD-SECTION: closed -->\n${fat}`);
     expect(r5OpenRowsStayThin(root, closed).pass).toBe(true);
+  });
+});
+
+describe("R6 — an open row keeps up with the work committed on it (CEO 2026-10-09)", () => {
+  // A synthetic board: line 1 opens the open section, line 2 is B51, line 4 opens the closed section.
+  const board = [
+    "<!-- BOARD-SECTION: open -->",
+    "| B51 | 2026-09-28 | the defect still stands | - | - | AUTHOR | - |",
+    "| B5 | 2026-09-01 | an older row | - | - | AUTHOR | - |",
+    "<!-- BOARD-SECTION: closed -->",
+    "| B510 | 2026-09-01 | a closed row | - | - | DONE | - |",
+  ].join("\n");
+  const SEP28 = Date.parse("2026-09-28T12:00:00Z") / 1000;
+  const OCT04 = Date.parse("2026-10-04T12:00:00Z") / 1000;
+  const OCT05 = Date.parse("2026-10-05T12:00:00Z") / 1000;
+  const editedOn = (s: number) => () => s;
+  const commit = (ct: number, subject: string, hash = "d364e81a") => ({ ct, hash, date: new Date(ct * 1000).toISOString().slice(0, 10), subject });
+
+  it("(a) the B51 case: a B51-scoped commit after the row's last edit is stale", () => {
+    const s = staleRows(board, editedOn(SEP28), [commit(OCT04, "fix(B51 move 5, bundle 2): the defect is gone")]);
+    expect(s.map((r) => r.id)).toEqual(["B51"]);
+    expect(s[0].line).toBe(2);
+    expect(s[0].commit.hash).toBe("d364e81a");
+  });
+  it("(b) the row edited after the commit is not stale", () => {
+    expect(staleRows(board, editedOn(OCT05), [commit(OCT04, "fix(B51 move 5, bundle 2): the defect is gone")])).toEqual([]);
+  });
+  it("(c) the id outside the scope parentheses is not counted", () => {
+    const subjects = ["fix(records): audit finding B51 closed", "records: B51 mentioned in passing", "fix(records) B51: not a scope"];
+    expect(staleRows(board, editedOn(SEP28), subjects.map((s) => commit(OCT04, s)))).toEqual([]);
+  });
+  it("(d) a scope that names no row is not counted", () => {
+    expect(staleRows(board, editedOn(SEP28), [commit(OCT04, "fix(watch-links): Excel turbo prints its summary")])).toEqual([]);
+  });
+  it("(e) a row in the closed section is ignored", () => {
+    expect(staleRows(board, editedOn(SEP28), [commit(OCT04, "fix(B510): a closed row's work")])).toEqual([]);
+  });
+  it("(f) B5, B51 and B510 never match one another", () => {
+    expect(staleRows(board, editedOn(SEP28), [commit(OCT04, "fix(B510): a closed row's work")]).map((r) => r.id)).toEqual([]);
+    expect(staleRows(board, editedOn(SEP28), [commit(OCT04, "fix(B5): only B5")]).map((r) => r.id)).toEqual(["B5"]);
+    expect(staleRows(board, editedOn(SEP28), [commit(OCT04, "fix(B51): only B51")]).map((r) => r.id)).toEqual(["B51"]);
+  });
+  it("(g) a multi-id scope counts for each id it names", () => {
+    const s = staleRows(board, editedOn(SEP28), [commit(OCT04, "records(B51 bundle 2, STATE, ledger): the row and STATE")]);
+    expect(s.map((r) => r.id)).toEqual(["B51"]);
+    expect(staleRows(board, editedOn(SEP28), [commit(OCT04, "records(STATE, B5): both")]).map((r) => r.id)).toEqual(["B5"]);
+  });
+  it("names the NEWEST naming commit", () => {
+    const s = staleRows(board, editedOn(SEP28), [commit(OCT04, "fix(B51): older", "aaaa"), commit(OCT05, "fix(B51): newer", "bbbb")]);
+    expect(s[0].commit.hash).toBe("bbbb");
   });
 });
