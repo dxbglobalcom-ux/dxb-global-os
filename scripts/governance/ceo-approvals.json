@@ -2250,5 +2250,13 @@
     "conditions": "His order to build the plan, not a LAW B acceptance of any work: each step's result still waits for his eye.",
     "session": "Opus 5.5 session 364d8687 (dxb-global-os-c3) — heard first-hand, 2026-10-09; plan made at one table with Fable 5.1 (dxb-global-os-26).",
     "where": "HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md (B51 row); .planning/quick/20261009-masa-b51/PLAN.md"
+  },
+  "b51-gate-class-fix-2026-10-09": {
+    "date": "2026-10-09",
+    "what": "B51 step 2 widened on his word: a task keeps the class decompose routed it as (tasks.task_class), and the worker reads the critical gate's switch (routing_rules.needs_council) by that class instead of by the row that won the task's tier — the defect that kept the gate from ever firing. Then the gate is run once on the construction engine along the real path.",
+    "verbatim": "düzeltmeyi ve gereken neyse onu yap. hedefi biliyorsun ferrari seviyesi. fable'ı da haberdar et. cache'si soğumasın.",
+    "conditions": "Answer to the session's one-word question (recommendation: yes) after it measured that every L1 task resolves to a slot.* row with needs_council false. His order, not a LAW B acceptance of any work.",
+    "session": "Opus 5.5 session 28e910ee (successor of 364d8687) — heard first-hand, 2026-10-09; Fable 5.1 (dxb-global-os-26) second eye.",
+    "where": "db/migrations/20261009010000_tasks_task_class.sql; packages/orchestrator/src/worker-shim.ts gateNeededFor; HOLDING-OS-MASTER-PLAN/AGENT_ORCHESTRATION_SPEC.md A25; HOLDING-OS-MASTER-PLAN/DATA_MODEL.md"
   }
 }

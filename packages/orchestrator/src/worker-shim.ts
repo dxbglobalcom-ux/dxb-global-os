@@ -85,6 +85,8 @@ export interface ClaimedTask {
   feedback?: string | null;
   /** false = no MCP server is mounted for this task (the locked-tool review, CEO 2026-10-04). */
   tools_allowed?: boolean;
+  /** The class decompose routed this task as (B51 step 2); NULL when born outside decompose. */
+  task_class?: string | null;
 }
 
 /** E10.2: what the binding hands the executor — the claimed row plus the
@@ -188,6 +190,35 @@ export interface SeatIdentity {
  * model name lives in this file, ORCH-02), and §4f lets the assigned employee's
  * brain RAISE that tier — never lower it.
  */
+/**
+ * §4e — is the critical gate on for this task? The switch is routing_rules.needs_council, kept under the
+ * name CNCL-01 used so the gate stays CEO-configurable as data, and it belongs to a task CLASS.
+ *
+ * B51 step 2 (2026-10-09): until that day the worker read the switch off the row resolveExecutionRoute
+ * picks — the one that wins the task's TIER. On the company the L1 winners are the slot.* rows (priority
+ * 100, switch off), so no task ever met the gate: decision_log held 0 critical_gate rows. The class now
+ * rides the task from decompose, and the switch is read by it, at claim time, so a change he makes to
+ * the table reaches tasks already queued.
+ *
+ * Any enabled row of the class with the switch on opens it (a class may hold department rows too): a gate
+ * that runs once more than needed is better than one that never runs. No class, an unknown class or a
+ * failed read → no gate; a read failure must not fail the task.
+ */
+export async function gateNeededFor(task: Pick<ClaimedTask, "task_class">): Promise<boolean> {
+  if (!task.task_class) return false;
+  try {
+    const res = await sql<{ on: boolean | null }>`
+      SELECT bool_or(needs_council) AS on
+        FROM routing_rules
+       WHERE enabled AND task_class = ${task.task_class}
+    `.execute(getDb());
+    return res.rows[0]?.on === true;
+  } catch (err) {
+    console.error("[worker-shim] critical-gate switch read failed:", err);
+    return false;
+  }
+}
+
 export async function resolveExecutionRoute(task: ClaimedTask): Promise<ExecutionRoute> {
   const rules = await loadPolicy(getDb()); // already priority-ordered
 
@@ -793,15 +824,9 @@ export async function runWorkerOnce(args: RunWorkerArgs): Promise<RunWorkerResul
   if (!hookOn) await alertHookDisabled();
 
   // §4e: does this task's class bind money, reputation or the company's
-  // direction? The switch is the routing row's needs_council flag — the same
-  // one CNCL-01 used, kept so the gate is CEO-configurable as data. A routing
-  // failure here must not fail the task: no route resolved simply means no gate.
-  let needsGate = false;
-  try {
-    needsGate = (await resolveExecutionRoute(task)).rule.needs_council === true;
-  } catch {
-    needsGate = false;
-  }
+  // direction? Read by the task's CLASS (gateNeededFor), never by the row that
+  // won its tier — that row is a slot and its switch is off.
+  const needsGate = await gateNeededFor(task);
 
   let hookCtx: HookCtx | null = null;
   let preVerdict: Extract<PreVerdict, { verdict: "PASS" }> | null = null;

@@ -28,7 +28,10 @@ import {
   type RoutingRule,
 } from "@dxb/kernel";
 
-export type DecomposedEnvelope = TaskEnvelope & { deps: number[] };
+// task_class rides beside the LOCKED envelope, like deps: the class route() was asked for, kept on the
+// task so the worker reads the critical gate's switch by it (B51 step 2, 2026-10-09). Optional because a
+// hand-built batch may carry none — such a task meets no gate.
+export type DecomposedEnvelope = TaskEnvelope & { deps: number[]; task_class?: string };
 
 // Raised from 3 to 5 by the CEO's order of 2026-08-27 — *"derinliği ileride yapacağımız
 // yoğun ve compleks işlere uyumlu şekilde yükselt"* — after a real intent (a website for a
@@ -189,7 +192,7 @@ async function finalize(
       model_tier: routed.model_tier, // route() decides — never the LLM (T-05-11)
       approval_class: raiseApproval(ci.approval_class, d.approval_class),
     });
-    return { ...envelope, deps: [...d.deps] };
+    return { ...envelope, deps: [...d.deps], task_class: d.task_class };
   });
 }
 
@@ -210,7 +213,7 @@ export async function decompose(ci: ClassifiedIntent): Promise<DecomposedEnvelop
       model_tier: routed.model_tier,
       approval_class: ci.approval_class,
     });
-    return [{ ...envelope, deps: [] }];
+    return [{ ...envelope, deps: [], task_class: ci.task_class }];
   }
 
   // 'multi' — one drafting call; parameters come from the 'orchestration'

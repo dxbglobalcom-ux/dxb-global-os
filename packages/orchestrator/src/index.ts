@@ -8,7 +8,7 @@ export type { DecomposedEnvelope } from "./decompose.js";
 export { dispatch } from "./dispatch.js";
 export { intakeIntentOnce, drainIntents, headline } from "./intent-intake.js";
 export type { IntentIntakeDeps, IntakeResult } from "./intent-intake.js";
-export { runWorkerOnce, makeSteppedExecutor } from "./worker-shim.js";
+export { runWorkerOnce, makeSteppedExecutor, gateNeededFor } from "./worker-shim.js";
 // R2.1 — resident worker loop (audit F-01): the tasks-queue production consumer.
 export { drainTasks, RESIDENT_WORKER_ID } from "./worker-loop.js";
 export {

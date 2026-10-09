@@ -202,6 +202,12 @@ Source: the MCP lecture (`.planning/research/rival-intel/41-4f1xr3hx-es.md` §5)
 **And it uncovered the next wall, which is NOT this adaptation and is not fixed here.** With the depth guard cleared, the same intent reached `route()` and died on
 `NoRouteError: no enabled routing_rules row matches task_class 'content.outbound'`. The row exists and is enabled at L1 — but its match condition is `{"keyword": "listeleme"}`, residue of the Outleteuro vertical slice (PHASE-05 §2, *"tek marka ürün listeleme taslağı"*) the CEO **cancelled** in U19. So the classifier is told `content.outbound` is a legal class, chooses it, and the router then refuses every outward-content task that is not a product listing. It is a data row and a routing decision, so it was put to the CEO rather than changed by the author. Row B40. <!-- HISTORY -->
 
+### B51 additions (2026-10-09 — the critical gate reads the task's class) <!-- CEO-OK: b51-gate-class-fix-2026-10-09 -->
+
+| # | Adaptation | Why |
+|---|-----------|-----|
+| A25 | **A task carries the class it was routed as, and the critical gate is switched by that class.** `decompose` writes the class `route()` was asked for onto each envelope (`DecomposedEnvelope.task_class`, beside the LOCKED `TaskEnvelope`, like `deps`); `dispatch` stores it in `tasks.task_class`; `runWorkerOnce` asks `gateNeededFor(task)` (`packages/orchestrator/src/worker-shim.ts`) — any enabled `routing_rules` row of that class with `needs_council` true opens the gate, read at claim time. No class (a task born outside decompose: revenue discovery, the pin check, the dxb-mcp queue, `control_work_generate`'s steps), an unknown class or a failed read → no gate. Model and effort selection (`resolveExecutionRoute`) is unchanged: it still picks by tier. | Measured 2026-10-09: the worker read `needs_council` off the row that won the task's TIER; on the company the L1 winners are the `slot.*` rows (priority 100, switch off), so no task could meet the gate and `decision_log` held 0 `critical_gate` rows. The class was known at decompose and lost at dispatch. |
+
 ## Done definition (bu spec)
 
 27 başlık ✓ · yaşam döngüsü 7 adım tek diyagram ✓ · KALIR/GENİŞLER/YENİ eşleme ✓ · madde 5.2 20-soru kabul bağı (§21) ✓ · madde 18 runtime/build ayrımı (G6) ✓ · müdahale seti fn+UI+audit üçlüsüyle ✓ · adım-başı doğrulama ✓ · ⛔ tek açık karar: stream-kesme (§26) ✓

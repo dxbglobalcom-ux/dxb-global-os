@@ -34,6 +34,7 @@ ilk gerçek kaydını yazar.
 - İlk geçiş sizin istediğiniz: Opus 5'ten 5.5'e, Sonnet 5'ten 5.5'e. Fable 5.1 günün en akıllı modeli olarak
   kalır. Fiyatlar resmi tablodan, kurulum günü kontrol edilerek yazılır.
 - Düşünme seviyesi (hamle 3): kritik kararlar medium'dan xhigh'a, kod yazımı high'a çıkar; ucuz işler low'da kalır.
+- 2. adımda ölçüldü (9 Eki): çalışan, modeli ve düşünme seviyesini işin türüne göre değil seviyesine göre seçiyor; türün satırındaki ayar hiçbir işe ulaşmıyor. Tür artık görevde yazılı; bu adımda seçim önce türün satırına bakar, yoksa seviyeye düşer. Bu olmadan hamle 3'ün yükseltmeleri kâğıtta kalır.
 - Paket 3'ün kod düzeltmeleri de bu adımda yapılır: iş akışı adımları çalışanın kimliği ve düşünme
   seviyesiyle çalışır; sohbetin sabit talimatı önbelleğe alınır.
 

@@ -42,6 +42,9 @@ export interface TasksTable {
   // the locked-tool review (CEO 2026-10-04): false = the seat runs with no MCP server mounted
   // (worker-shim). NOT NULL DEFAULT true, so no existing insert names it.
   tools_allowed: Generated<boolean>;
+  // B51 step 2 (2026-10-09): the class decompose routed this task as; the worker reads the
+  // critical gate's switch by it. NULL when the task was born outside decompose.
+  task_class: string | null;
   created_at: Timestamptz;
   updated_at: Timestamptz;
 }

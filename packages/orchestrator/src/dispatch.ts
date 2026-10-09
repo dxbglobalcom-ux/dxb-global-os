@@ -42,7 +42,7 @@ export async function dispatch(
         );
       }
     }
-    return { ...parsed, deps: e.deps };
+    return { ...parsed, deps: e.deps, task_class: e.task_class ?? null };
   });
 
   const db = getDb();
@@ -60,6 +60,7 @@ export async function dispatch(
           output_contract: env.output_contract,
           model_tier: env.model_tier,
           approval_class: env.approval_class,
+          task_class: env.task_class,
           budget_max_tokens: env.budget.max_tokens,
           budget_max_cost_eur: env.budget.max_cost_eur,
           priority: env.priority,

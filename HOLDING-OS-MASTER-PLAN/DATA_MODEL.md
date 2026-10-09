@@ -392,6 +392,10 @@ The media studio was founded on 2026-09-03 and has run ever since against a tabl
 
 **Who closes it:** <!-- OPEN: B43 --> not W13. A `job → scene → shot` record family and a `code` column are a schema change; they belong to the studio's screen plan (W14) and wait on the CEO's word. W13's duty was to make the company's data model say that the studio exists, what it actually stores today, and precisely what it does not.
 
+## Registered adaptation — B51 the task's class (2026-10-09) <!-- CEO-OK: b51-gate-class-fix-2026-10-09 -->
+
+`tasks.task_class text NULL` — `db/migrations/20261009010000_tasks_task_class.sql`. The `routing_rules.task_class` decompose routed the task as; NULL for a task born outside decompose. No FK: `routing_rules` holds several rows per class, and a class retired from the table must not orphan the tasks that ran under it. Reader: the worker's critical-gate switch (AGENT_ORCHESTRATION A25). Rows older than 2026-10-09 stay NULL.
+
 ## 27. Done definition (bu spec)
 
 27 başlık ✓ · mevcut 18 tablo sicili ✓ · 5 aile DDL taslağı (kolon+kısıt bağlayıcı) ✓ · ilişki haritası ✓ · RLS/append-only desenleri ✓ · migration/rollback haritası ✓ · doğrulama komutları ✓ · Opus-devralma notu ✓
