@@ -10,7 +10,7 @@ dediğimde cart diye modeller güncellenmeli.* No API key exists — subscriptio
 |---|---|---|
 | P1 | The catalogue is the one place every model id lives (below) | built 2026-10-10 — see "P1 as built" |
 | P2 | `fn_succeed_model(old, new, rationale, authority, key)` — one audited door moves routing rules, employees' brains, model settings and defaults, the gate's two judge seats and the fallback chain in one transaction; old row `retired`, never deleted, no alias; `fn_undo_succession` | built 2026-10-10 — MODEL_ROUTING_SPEC A-2026-10-10 §5 |
-| P3 | `resolveExecutionRoute` prefers the task's class row (department-scoped first), falls to tier when `task_class` is NULL — so move 3's efforts reach runs | not started |
+| P3 | `resolveExecutionRoute` prefers the task's class row (department-scoped first), falls to tier when `task_class` is NULL — so move 3's efforts reach runs | built 2026-10-10 — A-2026-10-10 §6; goes live with P5 (one scheduler restart) |
 | P4 | First succession on the company through P2: Opus 5 → 5.5, Sonnet 5 → 5.5; `codex-5.6` retired through the door | not started |
 | P5 | Move 3 efforts (critical decisions medium → xhigh, code → high, cheap work stays low) + bundle 3 (C2-3, C2-4, C2-9, C2-12, C2-13 — `.planning/quick/20261004-his-list/item3-report.md`) | not started |
 | P6 | Hamza: level Genel Müdür, `role` → `general_manager`; talking seats on Opus 5.5 (`voice.answer` stays `low` until B12 measures `medium`); `orchestration`/`decompose` rows on Fable 5.1 (his 2026-09-21 word); SİCİL field 8 names no model | not started |

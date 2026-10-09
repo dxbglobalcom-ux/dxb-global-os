@@ -219,6 +219,12 @@ export async function gateNeededFor(task: Pick<ClaimedTask, "task_class">): Prom
   }
 }
 
+/** L1 is the best tier; an unknown tier ranks below every known one (never wins a floor comparison). */
+function tierRank(tier: string): number {
+  const m = /^L([1-4])$/.exec(tier);
+  return m ? Number(m[1]) : 99;
+}
+
 export async function resolveExecutionRoute(task: ClaimedTask): Promise<ExecutionRoute> {
   const rules = await loadPolicy(getDb()); // already priority-ordered
 
@@ -256,20 +262,37 @@ export async function resolveExecutionRoute(task: ClaimedTask): Promise<Executio
     }
   }
 
-  // B43 (2026-09-03) — MODEL_ROUTING_SPEC §3 step 2 reads "kural taraması:
-  // routing_rules (rol, departman, …)": a rule scoped to the employee's own
-  // department wins at the same tier (the studio's creative row is L1 at
-  // effort xhigh, the CEO's ruling of that day); a department-scoped row is
-  // NEVER picked for another department, whatever its priority.
-  // A raised tier with no enabled row would silently strand the task, so the
-  // task's own tier stays the fallback: the floor is an upgrade path, never a
-  // new failure mode.
+  // B51 step 3 · P3 (2026-10-10): the CLASS leads. Until then the task's class (decompose's routing, B51
+  // step 2) only switched the gate; model and effort came from whichever row won the TIER, so the efforts
+  // written per class could never reach a run. Order:
+  //   1. the employee's department row of the task's class;
+  //   2. B43 (2026-09-03) — MODEL_ROUTING_SPEC §3 step 2 "kural taraması: routing_rules (rol, departman, …)":
+  //      a row scoped to the employee's own department wins at the same tier (the studio's creative row is
+  //      L1 at effort xhigh, the CEO's ruling of that day); a department row is NEVER picked for another
+  //      department, whatever its priority;
+  //   3. the department-less row of the task's class;
+  //   4. the tier fallback — a task with no class, or a class with no row.
+  // A class row below the employee's brain floor (§4f) is passed over: the floor is never lowered.
+  // The tier fallback picks the PRIMARY seat, then any seat (a role_slot row), then any row of the tier:
+  // measured 2026-10-09, "the first department-less row of the tier by priority" let any new high-priority
+  // row take a whole tier, and among seats of one priority the order is only alphabetical (slot.backup would
+  // lead L1) — the backup seat is not the default.
+  // A raised tier with no enabled row would silently strand the task, so the task's own tier stays the last
+  // fallback: the floor is an upgrade path, never a new failure mode.
+  const atOrAbove = (r: RoutingRule) => tierRank(r.model_tier) <= tierRank(effectiveTier);
+  const ofClass = (r: RoutingRule) => task.task_class != null && r.task_class === task.task_class && atOrAbove(r);
+  const tierRow = (tier: string) =>
+    rules.find((r) => r.department_id == null && r.role_slot === "primary" && r.model_tier === tier) ??
+    rules.find((r) => r.department_id == null && r.role_slot != null && r.model_tier === tier) ??
+    rules.find((r) => r.department_id == null && r.model_tier === tier);
   const rule: RoutingRule | undefined =
+    (departmentId ? rules.find((r) => r.department_id === departmentId && ofClass(r)) : undefined) ??
     (departmentId
       ? rules.find((r) => r.department_id === departmentId && r.model_tier === effectiveTier)
       : undefined) ??
-    rules.find((r) => r.department_id == null && r.model_tier === effectiveTier) ??
-    rules.find((r) => r.department_id == null && r.model_tier === task.model_tier);
+    rules.find((r) => r.department_id == null && ofClass(r)) ??
+    tierRow(effectiveTier) ??
+    tierRow(task.model_tier);
   if (!rule) {
     throw new Error(`worker-shim: no enabled routing_rules row for tier '${task.model_tier}'`);
   }

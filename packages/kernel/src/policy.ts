@@ -34,6 +34,10 @@ export async function loadPolicy(db: Kysely<DB>): Promise<RoutingRule[]> {
     .where("enabled", "=", true)
     .orderBy("priority", "desc")
     .orderBy("updated_at", "desc")
+    // B51 P3 (2026-10-10): a deterministic tie-break. Measured that day: the construction engine's 11 L1 seat
+    // rows share one updated_at (the company's share 3), so two reads could pick different rows.
+    .orderBy("task_class")
+    .orderBy("id")
     .execute();
 }
 

@@ -417,4 +417,13 @@ place to move and nothing waits for a code change or a restart.
    still names the successor and counts the ones someone moved since. Settings changes are logged as
    `change_source = 'succession'`. The actor comes from the request's JWT role or the login role — never
    `current_user`, which inside SECURITY DEFINER is always the owner; anon has no EXECUTE.
+6. **The class leads (P3).** A worker picks its row in this order: (1) its department's row of the task's
+   class; (2) its department's own row of its tier (B43 — a department's tier row takes that department's
+   work of EVERY class; today only the studio has one; a class-specific effort inside a department is a
+   department-scoped class row, step 1); (3) the department-less row of the task's class; (4) the tier
+   fallback — for a task with no class or a class with no row. A class row below the employee's brain floor
+   (§4f) is passed over. The tier fallback picks the `primary` seat, then any seat, then any row: "the first
+   department-less row of the tier by priority" let any new high-priority row take a whole tier. `loadPolicy`
+   breaks ties by `task_class`, then `id` (measured: 11 L1 seat rows shared one `updated_at`). With P3 live,
+   the efforts written on class rows reach runs — move 3 (P5) sets them.
 

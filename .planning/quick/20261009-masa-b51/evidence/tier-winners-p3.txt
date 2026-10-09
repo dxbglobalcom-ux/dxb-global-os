@@ -1,0 +1,23 @@
+# B51 P3 — the tier fallback's winner per tier, before and after (department-less rows, enabled), 2026-10-10
+# before: first by priority DESC, updated_at DESC (ties = several candidates, order undefined)
+# after: role_slot='primary' first, then any seat, then any row; ties broken by task_class, id
+
+== supabase_db_DxB_Global_OS
+before|L1|slot.coding(fable-5/medium)
+before|L2|code.bulk(claude-sonnet-5/medium)
+before|L3|video.summarize(claude-sonnet-5/medium)
+before|L4|slot.fast_task(claude-sonnet-5/low) | slot.low_cost(claude-sonnet-5/low)
+after|L1|slot.primary(fable-5/medium)
+after|L2|code.bulk(claude-sonnet-5/medium)
+after|L3|video.summarize(claude-sonnet-5/medium)
+after|L4|slot.fast_task(claude-sonnet-5/low)
+
+== supabase_db_DxB_Build
+before|L1|slot.backup(fable-5/medium) | slot.coding(fable-5/medium) | slot.critical_decision(fable-5/medium) | slot.design(fable-5/medium) | slot.execution(fable-5/medium) | slot.hr(fable-5/medium) | slot.planning(fable-5/medium) | slot.primary(fable-5/medium) | slot.qa(fable-5/medium) | slot.research(fable-5/medium) | slot.review(fable-5/medium)
+before|L2|code.bulk(claude-sonnet-5/medium)
+before|L3|video.summarize(claude-sonnet-5/medium)
+before|L4|slot.fast_task(claude-sonnet-5/low) | slot.low_cost(claude-sonnet-5/low)
+after|L1|slot.primary(fable-5/medium)
+after|L2|code.bulk(claude-sonnet-5/medium)
+after|L3|video.summarize(claude-sonnet-5/medium)
+after|L4|slot.fast_task(claude-sonnet-5/low)
