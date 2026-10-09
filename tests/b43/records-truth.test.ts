@@ -7,7 +7,7 @@
 import { describe, expect, it } from "vitest";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
-import { C, r2NoAwaitingOnAccepted, r4NoAcceptanceWithoutARow, r5OpenRowsStayThin, runRuler, staleRows } from "./records-truth.js";
+import { C, commitMsgRefusals, r2NoAwaitingOnAccepted, r4NoAcceptanceWithoutARow, r5OpenRowsStayThin, runRuler, scopeIds, staleRows } from "./records-truth.js";
 
 const root = process.cwd();
 const STATE = ".planning/STATE.md";
@@ -143,5 +143,45 @@ describe("R6 — an open row keeps up with the work committed on it (CEO 2026-10
   it("names the NEWEST naming commit", () => {
     const s = staleRows(board, editedOn(SEP28), [commit(OCT04, "fix(B51): older", "aaaa"), commit(OCT05, "fix(B51): newer", "bbbb")]);
     expect(s[0].commit.hash).toBe("bbbb");
+  });
+  it("(h) a `-` is part of an id, not a boundary: B03-bis never names B03", () => {
+    const bis = ["<!-- BOARD-SECTION: open -->", "| B03 | 2026-09-01 | the row | - | - | AUTHOR | - |", "| B03-bis | 2026-09-01 | its leg | - | - | AUTHOR | - |"].join("\n");
+    expect(staleRows(bis, editedOn(SEP28), [commit(OCT04, "fix(B03-bis): the leg's work")]).map((r) => r.id)).toEqual(["B03-bis"]);
+    const ids = ["B03", "B03-bis", "B04", "B51"];
+    expect(scopeIds("fix(B03-bis): the second leg", ids)).toEqual(["B03-bis"]);
+    expect(scopeIds("fix(B03, B04): both", ids)).toEqual(["B03", "B04"]);
+    expect(scopeIds("records(B51 bundle 2, STATE): the row and STATE", ids)).toEqual(["B51"]);
+    expect(scopeIds("fix(pre-B03): a prefix is not the id", ids)).toEqual([]);
+  });
+});
+
+describe("R6 at commit time — the commit being made cannot slip past (commit-msg hook)", () => {
+  // Pre-commit runs before the commit exists, so R6 cannot see its subject. The commit-msg hook can:
+  // when STATE is staged, every open row named in the subject's scope must be changed in the staged board.
+  const board = ["<!-- BOARD-SECTION: open -->", "| B51 | 2026-09-28 | the defect | - | - | AUTHOR | - |", "| B03-bis | 2026-09-01 | a leg | - | - | AUTHOR | - |", "<!-- BOARD-SECTION: closed -->", "| B40 | 2026-09-01 | closed | - | - | DONE | - |"].join("\n");
+  const STAGED = [".planning/STATE.md", "HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md"];
+  const rowChanged = "@@ -2 +2 @@\n-| B51 | 2026-09-28 | the defect | - | - | AUTHOR | - |\n+| B51 | 2026-09-28 | the defect ✓ 2026-10-09 — move 5 done | - | - | AUTHOR | - |\n";
+  const otherRowChanged = "@@ -3 +3 @@\n-| B03-bis | 2026-09-01 | a leg |\n+| B03-bis | 2026-09-01 | a leg ✓ 2026-10-09 — done |\n";
+
+  it("refuses: B51 in scope, STATE staged, the B51 row unchanged", () => {
+    expect(commitMsgRefusals("records(B51 bundle 2, STATE): STATE moves on", [".planning/STATE.md", "packages/x.ts"], board, "")).toEqual(["B51"]);
+    expect(commitMsgRefusals("records(B51): STATE moves on", [...STAGED, "packages/x.ts"], board, otherRowChanged)).toEqual(["B51"]);
+  });
+  it("passes: the same commit with the B51 row changed in the staged board", () => {
+    expect(commitMsgRefusals("records(B51 bundle 2, STATE): STATE moves on", STAGED, board, rowChanged)).toEqual([]);
+  });
+  it("passes: a records-only STATE commit naming a row the job's own commit already rewrote (Fable, 2026-10-09)", () => {
+    expect(commitMsgRefusals("records(B51 step 2, STATE): the job is told", [".planning/STATE.md"], board, "")).toEqual([]);
+  });
+  it("passes: STATE not staged", () => {
+    expect(commitMsgRefusals("fix(B51 move 5): the code", ["src/x.ts"], board, "")).toEqual([]);
+  });
+  it("passes: the id is not in the scope, or names a closed row", () => {
+    expect(commitMsgRefusals("records(STATE): B51 mentioned in passing", [".planning/STATE.md"], board, "")).toEqual([]);
+    expect(commitMsgRefusals("records(B40): a closed row", [".planning/STATE.md"], board, "")).toEqual([]);
+  });
+  it("B03-bis in scope does not ask for a B03 row change, and a B03-bis change satisfies it", () => {
+    expect(commitMsgRefusals("fix(B03-bis): the leg", STAGED, board, otherRowChanged)).toEqual([]);
+    expect(commitMsgRefusals("fix(B03-bis): the leg", [...STAGED, "packages/x.ts"], board, rowChanged)).toEqual(["B03-bis"]);
   });
 });

@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+# DXB Global OS — commit-msg hook: R6 of the records ruler on the commit being made.
+#
+# CLONE BOOTSTRAP (required once per fresh clone, shared with pre-commit):
+#   git config core.hooksPath scripts/hooks
+#
+# (1) THE ROW KEEPS UP WITH THE COMMIT THAT ADVANCES IT — the CEO's order of 2026-10-09
+#     ("Güncellenmeler yerinde ve düzgün yapılmıyor. Hep bir kopukluk oluyor."). Rule R6 of
+#     tests/b43/records-truth.ts finds an open board row older than a commit whose subject scope
+#     names it — but pre-commit runs before the commit exists, so the commit being made is
+#     invisible to it: a commit that advances B51 and writes STATE without touching B51's row
+#     passed. Here the message exists. When .planning/STATE.md is staged, every open row named in
+#     the subject's scope must have its line changed in the staged board, or the commit stops
+#     with the id and the fix (scripts/board/note-done.mjs). No STATE staged costs nothing.
+REPO_TOP=$(git rev-parse --show-toplevel)
+if ! node --no-warnings "$REPO_TOP/tests/b43/records-truth.ts" --commit-msg "$1"; then
+  echo "" >&2
+  echo "COMMIT DURDURULDU — kayit cetveli R6: commit'in kapsami acik bir satiri adliyor, STATE yaziliyor, ama tahtadaki satir degismiyor." >&2
+  echo "Duzelt: satira notu dus, tahtayi stage et, sonra tekrar commit et." >&2
+  exit 1
+fi

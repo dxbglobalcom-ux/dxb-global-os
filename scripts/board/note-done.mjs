@@ -17,6 +17,10 @@
  * bytes, tests/b43/records-truth.ts) after the note — if it would not, nothing
  * is written and the row's detail has to move to its file first.
  *
+ * The row file is written before the board. A board that already carries the
+ * note while the row file lacks its bullet (a half-written earlier run) is
+ * repaired: only the bullet is written, and the run says REPAIRED.
+ *
  * Usage:
  *   node scripts/board/note-done.mjs <ID> "<note>" [--date YYYY-MM-DD] [--board <path>] [--rows-dir <path>]
  */
@@ -126,27 +130,34 @@ if (cellEnd === -1) refuse(`${id} has fewer than three cells`);
 let insertAt = cellEnd;
 while (insertAt > 0 && /[ \t]/.test(row[insertAt - 1])) insertAt--;
 const mark = `✓ ${date} — ${note}`;
-// Idempotent: the same note on the same day is already there — refuse rather than write it twice.
-if (row.includes(mark)) refuse(`${id} already carries "${mark}"; nothing written`);
-const noted = `${row.slice(0, insertAt)} ${mark}${row.slice(insertAt)}`;
-const size = Buffer.byteLength(noted, "utf8");
-if (size > ROW_CEILING) {
-  refuse(`${id} would be ${size} bytes, over the R5 ceiling of ${ROW_CEILING} — move its detail word for word to ${args.rowsDir}/${id}.md first; nothing written`);
-}
-lines[at] = cr ? `${noted}\r` : noted;
-writeAtomic(boardPath, lines.join("\n"));
-
-let rowStatus;
+const bullet = `- ${mark}`;
 const rowFile = join(rowsDir, `${id}.md`);
-if (!existsSync(rowFile)) {
+const body = existsSync(rowFile) ? readFileSync(rowFile, "utf8") : null;
+const fileCarries = body !== null && body.split(/\r?\n/).some((l) => l.trimEnd() === bullet);
+const boardCarries = row.includes(mark);
+// Idempotent: the same note on the same day is already there — refuse rather than write it twice.
+// A board that carries it while the row file lacks it is a half-written earlier run: repair the file only.
+if (boardCarries && (body === null || fileCarries)) refuse(`${id} already carries "${mark}"; nothing written`);
+let noted = null;
+if (!boardCarries) {
+  noted = `${row.slice(0, insertAt)} ${mark}${row.slice(insertAt)}`;
+  const size = Buffer.byteLength(noted, "utf8");
+  if (size > ROW_CEILING) {
+    refuse(`${id} would be ${size} bytes, over the R5 ceiling of ${ROW_CEILING} — move its detail word for word to ${args.rowsDir}/${id}.md first; nothing written`);
+  }
+}
+
+// The row file is written BEFORE the board: if it fails, the board is untouched and a retry starts clean.
+let rowStatus;
+if (body === null) {
   rowStatus = `row file ${rowFile} not found — skipped`;
+} else if (fileCarries) {
+  rowStatus = `row file ${rowFile} — already carries the bullet`;
 } else {
-  const body = readFileSync(rowFile, "utf8");
   const eol = body.includes("\r\n") ? "\r\n" : "\n";
   const endsWithEol = body.endsWith("\n");
   const rl = body.split(eol);
   if (endsWithEol) rl.pop();
-  const bullet = `- ${mark}`;
   const h = rl.findIndex((l) => l.trimEnd() === HEADING);
   if (h === -1) {
     while (rl.length > 0 && rl[rl.length - 1].trim() === "") rl.pop();
@@ -163,5 +174,12 @@ if (!existsSync(rowFile)) {
   writeAtomic(rowFile, rl.join(eol) + eol);
   rowStatus = `row file ${rowFile} — bullet added under ${HEADING}${h === -1 ? " (heading created)" : ""}`;
 }
+
+if (noted === null) {
+  process.stdout.write(`REPAIRED ${id} ${mark} — the board already carried it\n${rowStatus}\n`);
+  process.exit(0);
+}
+lines[at] = cr ? `${noted}\r` : noted;
+writeAtomic(boardPath, lines.join("\n"));
 
 process.stdout.write(`NOTED ${id} ${mark}\n${rowStatus}\n`);

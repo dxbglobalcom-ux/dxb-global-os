@@ -97,8 +97,15 @@ fi
 stale=$(timeout 3 node --no-warnings "$ROOT/tests/b43/records-truth.ts" --stale 2>/dev/null || true)
 stale_line=""
 if [[ -n "$stale" ]]; then
+  # Budgeted (Sol B5, 2026-10-09): at most five rows, each cut to 200 characters, so the position block
+  # always fits its own ruler; the rest is counted and the full list is one command away.
+  stale_n=$(printf '%s\n' "$stale" | wc -l)
+  stale_head=$(printf '%s\n' "$stale" | head -5 | cut -c1-200)
+  stale_more=""
+  (( stale_n > 5 )) && stale_more="
+(+$((stale_n - 5)) more — node --no-warnings tests/b43/records-truth.ts --stale)"
   stale_line="BOARD ROWS BEHIND THEIR WORK — measure before you repeat them; the job that moved them rewrites them:
-$stale"
+$stale_head$stale_more"
 fi
 
 cat <<EOF

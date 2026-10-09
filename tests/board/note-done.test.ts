@@ -10,7 +10,7 @@
 // copy of a small synthetic board — the real board is never written.
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import { spawnSync } from "node:child_process";
-import { existsSync, mkdtempSync, readFileSync, rmSync, writeFileSync, mkdirSync } from "node:fs";
+import { chmodSync, existsSync, mkdtempSync, readFileSync, rmSync, writeFileSync, mkdirSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -89,6 +89,33 @@ describe("note-done — a partly finished row gets one dated note", () => {
     expect(r.status).toBe(1);
     expect(r.stderr).toContain("already carries");
     expect(readFileSync(board, "utf8")).toBe(once);
+  });
+
+  it("a failed row-file write leaves the board untouched (the file is written first)", () => {
+    chmodSync(rows, 0o555);
+    try {
+      const r = run("B90", "first part done");
+      expect(r.status).not.toBe(0);
+    } finally {
+      chmodSync(rows, 0o755);
+    }
+    expect(readFileSync(board, "utf8")).toBe(BOARD);
+    expect(readFileSync(join(rows, "B90.md"), "utf8")).toBe(ROW_FILE);
+  });
+
+  it("a board that carries the note while the row file lacks it is repaired by a retry; then both carry it and it is refused", () => {
+    const mark = `✓ ${DATE} — first part done`;
+    const half = BOARD.replace("<!-- OPEN: B90 --> |", `<!-- OPEN: B90 --> ${mark} |`);
+    writeFileSync(board, half);
+    const r = run("B90", "first part done");
+    expect(r.status, r.stderr).toBe(0);
+    expect(r.stdout).toContain(`REPAIRED B90 ${mark}`);
+    expect(readFileSync(board, "utf8")).toBe(half);
+    expect(readFileSync(join(rows, "B90.md"), "utf8")).toBe(`${ROW_FILE}\n## Done notes\n\n- ${mark}\n`);
+    const again = run("B90", "first part done");
+    expect(again.status).toBe(1);
+    expect(again.stderr).toContain("already carries");
+    expect(readFileSync(board, "utf8")).toBe(half);
   });
 
   it("the row file gets the heading once and one bullet per note", () => {

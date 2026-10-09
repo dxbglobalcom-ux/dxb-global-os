@@ -35,12 +35,15 @@
 // the row's id stands inside its subject's scope parentheses — `type(B51 move 5, bundle 2): …`; the
 // body is never read (it gave 8 false positives out of 9). The newest such commit later than the
 // row line's last edit (git blame of the working tree, so an uncommitted rewrite counts as fresh)
-// turns the ruler red until the row is rewritten.
+// turns the ruler red until the row is rewritten. Pre-commit cannot see the commit being made, so
+// the commit-msg hook (scripts/hooks/commit-msg) runs `--commit-msg`: a commit that stages STATE and
+// names an open row in its scope must change that row's line in the staged board too.
 //
 // Usage:
 //   node --no-warnings tests/b43/records-truth.ts              — the table, exit 1 on any failure
 //   node --no-warnings tests/b43/records-truth.ts --verdicts   — plus one RULER-VERDICT line per rule
 //   node --no-warnings tests/b43/records-truth.ts --stale      — R6 only, one STALE line per row, always exit 0 (session-start hook)
+//   node --no-warnings tests/b43/records-truth.ts --commit-msg <file> — R6 on the commit being made, exit 1 on a refusal (commit-msg hook)
 //   npx vitest run tests/b43/records-truth.test.ts             — the ruler bites, and the tree passes
 import { execFileSync } from "node:child_process";
 import { readFileSync } from "node:fs";
@@ -232,9 +235,27 @@ export function r5OpenRowsStayThin(root: string, boardOverride?: string): Verdic
 export type Commit = { ct: number; hash: string; date: string; subject: string };
 export type StaleRow = { id: string; line: number; rowEdited: number; commit: Commit };
 
-/** R6 — a commit names a row only when the id stands inside its subject's scope parentheses: `type(B51 move 5, bundle 2): …`. */
+/**
+ * R6 — a commit names a row only when the id stands inside its subject's scope parentheses: `type(B51 move 5, bundle 2): …`.
+ * A `-` belongs to an id (`B03-bis`), so it is never a boundary: `fix(B03-bis)` names B03-bis and not B03.
+ */
 export const scopeNames = (id: string) =>
-  new RegExp(`^[a-z-]+\\(([^)]*[^A-Za-z0-9])?${id.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}([^0-9A-Za-z][^)]*)?\\)`);
+  new RegExp(`^[a-z-]+\\(([^)]*[^A-Za-z0-9-])?${id.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}([^A-Za-z0-9-][^)]*)?\\)`);
+
+/** the ids among `ids` that a commit subject names in its scope, in the order given */
+export const scopeIds = (subject: string, ids: string[]) => ids.filter((id) => scopeNames(id).test(subject));
+
+/** the ids of the open rows on a board text */
+export function openRowIds(boardText: string): string[] {
+  const ids: string[] = [];
+  let section = "";
+  for (const line of boardText.split("\n")) {
+    const mark = /<!-- BOARD-SECTION: (\w+) -->/.exec(line);
+    if (mark) { section = mark[1]; continue; }
+    if (section === "open" && /^\| [A-Z]+[0-9]/.test(line)) ids.push(line.split("|")[1].trim());
+  }
+  return ids;
+}
 
 /**
  * R6, pure — every open row whose newest naming commit is later than the row line's last edit.
@@ -293,6 +314,35 @@ export function r6RowsKeepUpWithWork(root: string): Verdict {
   return { rule: "R6 every open board row keeps up with the work committed on it", pass: failures.length === 0, failures };
 }
 
+/**
+ * R6 at commit time, pure — the commit being made. Pre-commit runs before the commit exists, so R6
+ * cannot see its subject; the commit-msg hook can. When STATE is staged, every open row named in the
+ * subject's scope must have its line changed in the staged board (a `+| <ID> |` line in its diff).
+ * Only a commit that ADVANCES work is held to it — one staging at least one path outside the records
+ * (STATE, the board, the ledger, .planning/): a records-only STATE commit at a job's end, whose row was
+ * already rewritten by the job's own commit, is measured by pre-commit's R6 instead (Fable, 2026-10-09).
+ * Answers the ids that are not.
+ */
+export function commitMsgRefusals(subject: string, staged: string[], boardText: string, boardDiff: string): string[] {
+  if (!staged.includes(C.records[0])) return [];
+  const recordsOnly = staged.every((f) => f.startsWith(".planning/") || f === C.board || f === "scripts/governance/ceo-approvals.json");
+  if (recordsOnly) return [];
+  const changed = new Set(boardDiff.split("\n").filter((l) => l.startsWith("+| ")).map((l) => l.slice(1).split("|")[1].trim()));
+  return scopeIds(subject, openRowIds(boardText)).filter((id) => !changed.has(id));
+}
+
+/** R6 at commit time on the real index — the message file's first line against the staged STATE and board. */
+export function commitMsgRefusalsOfIndex(root: string, msgFile: string): string[] {
+  const git = (args: string[]) => execFileSync("git", ["-C", root, ...args], { encoding: "utf8", maxBuffer: 256 * 1024 * 1024, stdio: ["ignore", "pipe", "pipe"] });
+  const subject = readFileSync(msgFile, "utf8").split("\n")[0];
+  const staged = git(["diff", "--cached", "--name-only"]).split("\n").filter(Boolean);
+  if (!staged.includes(C.records[0])) return [];
+  // the board as it will be committed; a board not in the index at all is read from the working tree
+  let board: string;
+  try { board = git(["show", `:${C.board}`]); } catch { board = readFileSync(join(root, C.board), "utf8"); }
+  return commitMsgRefusals(subject, staged, board, git(["diff", "--cached", "-U0", "--", C.board]));
+}
+
 export function runRuler(opts: { root?: string; texts?: Record<string, string> } = {}): RulerReport {
   const root = repoRoot(opts.root);
   const verdicts = [r1LedgerGate(root), r2NoAwaitingOnAccepted(root, opts.texts), r3TableIsRegistered(root), r4NoAcceptanceWithoutARow(root), r5OpenRowsStayThin(root), r6RowsKeepUpWithWork(root)];
@@ -300,6 +350,17 @@ export function runRuler(opts: { root?: string; texts?: Record<string, string> }
 }
 
 function main() {
+  const msgAt = process.argv.indexOf("--commit-msg");
+  if (msgAt !== -1) {
+    const msgFile = process.argv[msgAt + 1];
+    if (!msgFile) { console.error("records-truth --commit-msg: needs the message file"); process.exit(1); }
+    const refused = commitMsgRefusalsOfIndex(repoRoot(), msgFile);
+    for (const id of refused) {
+      console.error(`COMMIT DURDURULDU — R6: the subject's scope names ${id} and STATE is staged, but the staged board does not change ${id}'s row.`);
+      console.error(`  Fix: node scripts/board/note-done.mjs ${id} "<what finished>"  then  git add ${C.board}  and commit again.`);
+    }
+    process.exit(refused.length === 0 ? 0 : 1);
+  }
   if (process.argv.includes("--stale")) {
     // the session-start hook must never be stopped by this line, so a failing git is said on stderr and still exits 0
     try {
