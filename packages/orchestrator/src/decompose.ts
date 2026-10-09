@@ -58,6 +58,23 @@ type EnvelopeDraft = z.infer<typeof EnvelopeDraft>;
 
 const DraftBatch = z.object({ envelopes: z.array(EnvelopeDraft).min(2) });
 
+/**
+ * The batch schema for ONE drafting call, task_class narrowed to the work classes offered in its prompt —
+ * the same guard classify() keeps (classifiedIntentFor). Sol's pass on B51 step 2 (2026-10-09) drove a
+ * controlled answer through the free-string schema and decompose accepted `slot.planning`: a seat, under
+ * which no gate opens. The model is handed this schema, and the answer is parsed by it. With no work class at
+ * all (an empty table) route() could not place any envelope anyway, so the free schema is harmless there.
+ */
+export function draftBatchFor(taskClasses: readonly string[]) {
+  return taskClasses.length > 0
+    ? z.object({
+        envelopes: z
+          .array(EnvelopeDraft.extend({ task_class: z.enum(taskClasses as [string, ...string[]]) }))
+          .min(2),
+      })
+    : DraftBatch;
+}
+
 // Self-contained lint (master-plan §5 risk 1): an objective that points at
 // "the above/previous" output is not executable in isolation — reject.
 // Unicode lookarounds, not \b: ASCII \b never fires at the edge of 'önceki'.
@@ -117,7 +134,7 @@ export function lintBatch(drafts: Pick<EnvelopeDraft, "objective" | "deps">[]): 
 // Same SDK access pattern as kernel classify.ts: subscription-mode only,
 // structured output with a mechanical fence-unwrap fallback — Zod stays the
 // sole decision gate.
-async function runDraftQuery(prompt: string, own: ResolvedRoute): Promise<unknown> {
+async function runDraftQuery(prompt: string, own: ResolvedRoute, schema: z.ZodType): Promise<unknown> {
   const q = query({
     prompt,
     options: {
@@ -127,7 +144,7 @@ async function runDraftQuery(prompt: string, own: ResolvedRoute): Promise<unknow
       effort: own.effort as "low" | "medium" | "high" | "xhigh" | "max",
       tools: [],
       maxTurns: 4,
-      outputFormat: { type: "json_schema", schema: sdkJsonSchema(DraftBatch) },
+      outputFormat: { type: "json_schema", schema: sdkJsonSchema(schema) },
     },
   });
   const seen = isolationReceipt("decompose");
@@ -233,6 +250,7 @@ export async function decompose(ci: ClassifiedIntent): Promise<DecomposedEnvelop
   const departments = deptRows.map((r) => r.slug);
   const taskClasses = workClasses(rules);
   const basePrompt = draftPrompt(ci, taskClasses, departments);
+  const batchSchema = draftBatchFor(taskClasses);
 
   let lastFailure = "";
   for (let attempt = 0; attempt < 2; attempt++) {
@@ -240,8 +258,8 @@ export async function decompose(ci: ClassifiedIntent): Promise<DecomposedEnvelop
       attempt === 0
         ? basePrompt
         : `${basePrompt}\n\nYour previous batch was rejected:\n${lastFailure}\nReturn a corrected JSON batch only.`;
-    const raw = await runDraftQuery(prompt, own);
-    const parsed = DraftBatch.safeParse(raw);
+    const raw = await runDraftQuery(prompt, own, batchSchema);
+    const parsed = batchSchema.safeParse(raw);
     if (!parsed.success) {
       lastFailure = JSON.stringify(parsed.error.issues);
       continue;

@@ -209,7 +209,9 @@ alone (STATE, the board) is checked by the rulers on commit instead.
   the Agent tool — a safety net, past which nothing new starts.
 - **The handover** is done by the engineer, never the CEO
   <!-- CEO-OK: handover-at-50-without-asking-2026-10-01 -->. A note in the scratchpad, in the author's
-  own voice: the job's place in the whole first, then his words of this job verbatim, every phase with
+  own voice, whose first line tells the successor to open this door — `Skill("dxb-team2")` — before
+  anything else: it carries the job on as its lead, the orchestrator, not as a fresh session
+  <!-- CEO-OK: successor-opens-dxb-team2-2026-10-09 -->; then the job's place in the whole, then his words of this job verbatim, every phase with
   status and commit, the traps met, the first message the successor sends; session-only orders marked
   as such; last, the path of this session's own conversation —
   `~/.claude/projects/-home-dxb-DxB-Global-OS/$CLAUDE_CODE_SESSION_ID.jsonl` — with the line *if

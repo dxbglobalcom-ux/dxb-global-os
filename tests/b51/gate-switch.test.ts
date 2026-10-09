@@ -4,7 +4,8 @@ import { closeDb, getDb } from "../../packages/shared/src/db.js";
 import { TaskEnvelope } from "../../packages/shared/src/envelope.js";
 import { ClassifiedIntent, loadPolicy, workClasses } from "../../packages/kernel/src/index.js";
 import { classifyPrompt } from "../../packages/kernel/src/classify.js";
-import { draftPrompt } from "../../packages/orchestrator/src/decompose.js";
+import { draftBatchFor, draftPrompt } from "../../packages/orchestrator/src/decompose.js";
+import { sdkJsonSchema } from "../../packages/shared/src/index.js";
 import { watchLedgers } from "../helpers/suite-scope.js";
 import {
   decompose,
@@ -134,5 +135,26 @@ describe("B51 — the classes offered to the classifier and the decomposer are w
     });
     expect(classifyPrompt("probe", offered, ["strategy"])).not.toMatch(/slot\./);
     expect(draftPrompt(ci, offered, ["strategy"])).not.toMatch(/slot\./);
+  });
+});
+
+describe("B51 — the decomposer's own schema holds the work classes too (Sol, step 2, B)", () => {
+  const env = (task_class: string) => ({
+    department: "strategy",
+    objective: "compare the two revenue lines on demand, moat and time to first revenue",
+    output_contract: "a one-page comparison",
+    task_class,
+    approval_class: "internal",
+    deps: [],
+  });
+
+  it("a draft naming a seat class is refused by the schema the model is handed and by the parse", async () => {
+    const offered = workClasses(await loadPolicy(getDb()));
+    const batch = draftBatchFor(offered);
+    expect(batch.safeParse({ envelopes: [env("strategy"), env("architecture")] }).success).toBe(true);
+    expect(batch.safeParse({ envelopes: [env("strategy"), env("slot.planning")] }).success).toBe(false);
+    expect(batch.safeParse({ envelopes: [env("strategy"), env("no-such-class")] }).success).toBe(false);
+    expect(JSON.stringify(sdkJsonSchema(batch))).not.toMatch(/slot\./);
+    expect(JSON.stringify(sdkJsonSchema(batch))).toContain('"strategy"');
   });
 });
