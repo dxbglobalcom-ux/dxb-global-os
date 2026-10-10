@@ -1,0 +1,4 @@
+ ✓ tests/b43/records-truth.test.ts (23 tests) 384ms
+   ✓ the records as they stand > pass every rule of the ruler  376ms
+ Test Files  1 passed (1)
+      Tests  23 passed (23)

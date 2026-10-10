@@ -1,0 +1,12 @@
+# dxb-scheduler restart for SDK 0.3.296
+ActiveEnterTimestamp=Sat 2026-10-10 02:14:31 CEST
+ActiveState=active
+ActiveEnterTimestamp=Sat 2026-10-10 03:13:11 CEST
+MainPID=2182904
+sdk resolved by the scheduler's packages:
+/home/dxb/DxB Global OS/node_modules/.pnpm/@anthropic-ai+claude-agent-sdk@0.3.296_@anthropic-ai+sdk@0.110.0_zod@4.4.3__@modelconte_83eed8147529cdd4cd8195e5bbce050c/node_modules/@anthropic-ai/claude-agent-sdk/sdk.mjs
+[ops-live] host: collector listening (start #1)
+[scheduler] resident scheduler up — queues live, chains armed, ops:live hosted
+[isolation] company-claude home=/home/dxb/.local/share/dxb/company-claude credentials=present
+[memory] root=/home/dxb/.local/share/dxb/company-claude notes=1
+[scheduler] the company is working with 1 hand (first tick) — loops running 1, started 1

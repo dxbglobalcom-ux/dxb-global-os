@@ -285,7 +285,15 @@ function isHelperModule(spec: string, rel: string): boolean {
  *  `spawnClaudeCodeProcess`, `resume`, `continue`, `forkSession`, `sessionStore`, `persistSession` and
  *  `cwd`, each of which can bring back what the helper shut out (an `env` alone changed what loaded,
  *  probe D of 2026-10-03). `fallbackModel` (B51 P5b, 2026-10-10) names a second model and nothing
- *  else — the CLI's `--fallback-model`; it loads no setting, file or server. */
+ *  else — the CLI's `--fallback-model`; it loads no setting, file or server. sdk.d.ts 0.3.296 (B51,
+ *  2026-10-10) adds three, all left off the list: `projectConfigRoot` (project settings, `.mcp.json`
+ *  and the `.claude` trees come from that folder instead of `cwd` — it would reopen them),
+ *  `pluginDelivery` (how `plugins` reach the CLI — refused with `plugins`), `verbatimPrompts` (skips
+ *  the CLI's turn-start attachments; not needed while the helper loads none). The baseline a company call
+ *  loads under 0.3.296 (measured 2026-10-10, evidence/live-probe-sdk-0.3.296-2026-10-10.txt): three plugins,
+ *  all bundled in the CLI (`path: "builtin"`) — cc-plugin-agents-md, cc-plugin-telemetry,
+ *  cc-plugin-plugin-authoring — 19 bundled skills, 5 built-in agents, mcp=0, hooks=0, ~555 input tokens
+ *  (0.3.259: plugins=0, skills=17); a cold first call showed plugins=1 skills=18. A fourth plugin is a change. */
 const OPTIONS_ALLOWED = new Set(["model", "fallbackModel", "effort", "tools", "maxTurns", "outputFormat", "systemPrompt"]);
 /** The compiled gateway profile (R2.2): allowed only as `<profile>.<key>`, where the profile is written
  *  by `buildSdkToolOptions()` from @dxb/gateway and by nothing else — the company's own servers. Its

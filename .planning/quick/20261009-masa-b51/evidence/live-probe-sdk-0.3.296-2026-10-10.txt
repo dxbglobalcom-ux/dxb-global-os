@@ -1,0 +1,53 @@
+{"sdk":"0.3.296","at":"2026-10-10T01:05:50.410Z"}
+[isolation] lane=probe:claude-opus-5-5 session=7bde533e-d931-45fb-863a-84b62ea375bb tools=0 mcp=0 plugins=1 skills=18 agents=5 hooks=0 input=555 home=/home/dxb/.local/share/dxb/company-claude
+{"model":"claude-opus-5-5","cli":"2.1.296","served":"claude-opus-5-5","type":"result","subtype":"success","is_error":false,"result":"OK","ms":3753}
+[isolation] lane=probe:claude-sonnet-5-5 session=991048fa-2ce9-47d9-a550-0e0625655e98 tools=0 mcp=0 plugins=3 skills=19 agents=5 hooks=0 input=559 home=/home/dxb/.local/share/dxb/company-claude
+{"model":"claude-sonnet-5-5","cli":"2.1.296","served":"claude-sonnet-5-5","type":"result","subtype":"success","is_error":false,"result":"OK","ms":2108}
+[isolation] lane=probe:claude-opus-5 session=87a04691-2987-49ac-9487-b1444121a72b tools=0 mcp=0 plugins=3 skills=19 agents=5 hooks=0 input=550 home=/home/dxb/.local/share/dxb/company-claude
+{"model":"claude-opus-5","cli":"2.1.296","served":"claude-opus-5","type":"result","subtype":"success","is_error":false,"result":"OK","ms":2211}
+[isolation] lane=probe:claude-fable-5-1 session=104d05f3-1508-4ad2-ba51-a585a28bb679 tools=0 mcp=0 plugins=3 skills=19 agents=5 hooks=0 input=555 home=/home/dxb/.local/share/dxb/company-claude
+{"model":"claude-fable-5-1","cli":"2.1.296","served":"claude-fable-5-1","type":"result","subtype":"success","is_error":false,"result":"OK","ms":1556}
+# init under companyIsolation(), SDK 0.3.296 (sonnet-5-5, two runs)
+{"plugins":[{"name":"cc-plugin-agents-md","path":"builtin","source":"cc-plugin-agents-md@builtin"},{"name":"cc-plugin-telemetry","path":"builtin","source":"cc-plugin-telemetry@builtin"},{"name":"cc-plugin-plugin-authoring","path":"builtin","source":"cc-plugin-plugin-authoring@builtin"}],"skills":["deep-research","design","design-sync","dataviz","update-config","verify","debug","code-review","simplify","batch","fewer-permission-prompts","doctor","loop","schedule","claude-api","workflow-authoring","run","run-skill-generator","plugin-authoring"],"agents":["claude","Explore","general-purpose","Plan","statusline-setup"],"mcp":[],"cwd":"/home/dxb/.local/share/dxb/company-claude/work","slash":55}
+{"plugins":[{"name":"cc-plugin-agents-md","path":"builtin","source":"cc-plugin-agents-md@builtin"},{"name":"cc-plugin-telemetry","path":"builtin","source":"cc-plugin-telemetry@builtin"},{"name":"cc-plugin-plugin-authoring","path":"builtin","source":"cc-plugin-plugin-authoring@builtin"}],"skills":["deep-research","design","design-sync","dataviz","update-config","verify","debug","code-review","simplify","batch","fewer-permission-prompts","doctor","loop","schedule","claude-api","workflow-authoring","run","run-skill-generator","plugin-authoring"],"agents":["claude","Explore","general-purpose","Plan","statusline-setup"],"mcp":[],"cwd":"/home/dxb/.local/share/dxb/company-claude/work","slash":55}
+
+# Options keys added 0.3.259 -> 0.3.296
+43a44
+> pluginDelivery
+44a46
+> projectConfigRoot
+66a69
+> verbatimPrompts
+
+# script
+// B51 live probe: one tiny call per model through the company's own Agent SDK, under companyIsolation(),
+// with the isolation receipt (what the run loaded and read). A successor is called once, live, before
+// any seat moves onto it. Run: node live-probe.mjs <model-id> …
+import { createRequire } from "node:module";
+const R = "/home/dxb/DxB Global OS";
+const req = createRequire(R + "/packages/kernel/package.json");
+const sdkPath = req.resolve("@anthropic-ai/claude-agent-sdk");
+const sdkVersion = createRequire(sdkPath)("./package.json").version;
+const { query } = await import(sdkPath);
+const { companyIsolation, isolationReceipt } = await import(R + "/packages/kernel/dist/sdk-isolation.js");
+console.log(JSON.stringify({ sdk: sdkVersion, at: new Date().toISOString() }));
+for (const model of process.argv.slice(2)) {
+  const t0 = Date.now();
+  const receipt = isolationReceipt(`probe:${model}`);
+  const q = query({ prompt: "Reply with the single word OK.", options: { ...(companyIsolation() ?? {}), model, tools: [], maxTurns: 2 } });
+  let served = null, cli = null;
+  for await (const m of q) {
+    receipt(m);
+    if (m.type === "system" && m.subtype === "init") cli = m.claude_code_version ?? null;
+    if (m.type === "assistant" && m.message?.model) served = m.message.model;
+    if (m.type === "result") {
+      console.log(JSON.stringify({ model, cli, served, type: m.type, subtype: m.subtype, is_error: m.is_error, result: String(m.result ?? ""), ms: Date.now() - t0 }));
+      break;
+    }
+  }
+}
+
+# second-eye C: the claude-opus-5-5 lane again (2026-10-10T03:15:32+02:00) — init plugins/skills named
+{"plugins":[{"name":"cc-plugin-agents-md","path":"builtin","source":"cc-plugin-agents-md@builtin"},{"name":"cc-plugin-telemetry","path":"builtin","source":"cc-plugin-telemetry@builtin"},{"name":"cc-plugin-plugin-authoring","path":"builtin","source":"cc-plugin-plugin-authoring@builtin"}],"skills":["deep-research","design","design-sync","dataviz","update-config","verify","debug","code-review","simplify","batch","fewer-permission-prompts","doctor","loop","schedule","claude-api","workflow-authoring","run","run-skill-generator","plugin-authoring"],"agents":["claude","Explore","general-purpose","Plan","statusline-setup"],"mcp":[],"cwd":"/home/dxb/.local/share/dxb/company-claude/work","slash":55}
+# and the smoke run of 03:14 (evidence/smoke-bench-b2.txt) on the same lane:
+[isolation] lane=smoke:claude-opus-5-5 session=924369d4-91a4-4f33-b7bb-b3091f0f91b0 tools=0 mcp=0 plugins=3 skills=19 agents=5 hooks=0 input=555 home=/home/dxb/.local/share/dxb/company-claude

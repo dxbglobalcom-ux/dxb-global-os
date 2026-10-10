@@ -1,0 +1,8 @@
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/governance/company-isolation.test.ts (106 tests) 211ms
+
+ Test Files  1 passed (1)
+      Tests  106 passed (106)
+   Start at  03:06:39
+   Duration  2.91s (transform 107ms, setup 0ms, collect 2.44s, tests 211ms, environment 0ms, prepare 29ms)
+
