@@ -353,7 +353,9 @@ describe("6. the two-brain trial (CEO 2026-09-03 evening)", () => {
   it("Fable 5.1 is a brain the catalogue knows; a seat with the hands gets the longer turn budget", async () => {
     // B51 P1: the SDK map is gone; the catalogue carries the API name.
     expect(await sdkModelId(db(), "fable-5.1")).toBe("claude-fable-5-1");
-    expect(await sdkModelId(db(), "fable-5")).toBe("claude-opus-5"); // U20 freeze untouched; Opus 5.5 waits for the SDK (B51 P4)
+    // B51 P4: Opus 5 (the frozen id fable-5) retired through the succession door; its seats run on Opus 5.5
+    expect(await sdkModelId(db(), "claude-opus-5-5")).toBe("claude-opus-5-5");
+    await expect(sdkModelId(db(), "fable-5")).rejects.toThrow(/fable-5 is retired/);
     expect(turnBudgetFor(["mcp__dxb-mcp__queue_get"])).toBe(12);
     expect(turnBudgetFor(["mcp__dxb-mcp__queue_get", "mcp__dxb-mcp__media_submit"])).toBe(40);
   });

@@ -1,0 +1,16 @@
+# 070000 on the BENCH, 2026-10-10T03:36:53+02:00 — stamp cleared first so the fresh-build branch (recorded call) runs
+UPDATE 1
+NOTICE:  B51 P4: fable-5 → claude-opus-5-5 {"ok": true, "moved": {"agents": 22, "routing": 28, "registry": 11, "settings": 0, "fallbacks": 2, "gate_seats": 0, "ceo_override": 0}, "price": {"new": {"cost_in": 4, "cost_out": 20}, "old": {"cost_in": null, "cost_out": null}, "price_known": false, "price_rises": false}, "audit_id": 48973, "decision_id": 11643}
+APPLY_EXIT=0
+claude-opus-5-5|active|claude-sonnet-5-5|2026-10-10 01:05:54+00|2.1.296
+fable-5|retired|claude-sonnet-5-5||
+fable-5.1|active|claude-opus-5-5||
+gpt-6.1-sol|active||2026-10-10 01:14:09.388062+00|codex-cli 0.159.3
+48126|model.smoke|system|claude-haiku-5-5|
+48972|model.smoke|system|claude-opus-5-5|.planning/quick/20261009-masa-b51/evidence/live-probe-sdk-0.3.296-2026-10-10.txt
+48973|routing.succession|system|claude-opus-5-5|
+48974|model_catalog.fallback_cut|migration-b51|gpt-6.1-sol|
+28|22
+# re-run is a no-op:
+RERUN_EXIT=0
+2

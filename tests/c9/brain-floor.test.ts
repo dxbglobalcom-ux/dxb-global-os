@@ -64,7 +64,7 @@ describe("§4f — the brain is a floor, never a ceiling", () => {
 
   it("RAISES: an Opus-brained employee runs a clerical task at the top tier", async () => {
     await inTrx(async (trx) => {
-      const id = await probeAgent(trx, "raise", "fable-5", "slot");
+      const id = await probeAgent(trx, "raise", "claude-opus-5-5", "slot");
       const r = await sql<{ tier: string }>`
         SELECT fn_effective_tier('L4', ${id}::uuid) AS tier
       `.execute(trx as never);
@@ -84,7 +84,7 @@ describe("§4f — the brain is a floor, never a ceiling", () => {
 
   it("leaves the task where it was for an unassigned brain and for no agent at all", async () => {
     await inTrx(async (trx) => {
-      const id = await probeAgent(trx, "placeholder", "fable-5", "default");
+      const id = await probeAgent(trx, "placeholder", "claude-opus-5-5", "default");
       const r = await sql<{ withagent: string; noagent: string }>`
         SELECT fn_effective_tier('L3', ${id}::uuid) AS withagent,
                fn_effective_tier('L3', NULL) AS noagent
@@ -193,7 +193,7 @@ describe("§4f — the executor honours the floor (worker-shim wiring)", () => {
 
   it("an Opus-brained employee pulls a clerical task up to the L1 model", async () => {
     await inTrx(async (trx) => {
-      const id = await probeAgent(trx, "exec-raise", "fable-5", "slot");
+      const id = await probeAgent(trx, "exec-raise", "claude-opus-5-5", "slot");
       // resolveExecutionRoute reads through the pooled connection, so the probe
       // agent is committed-visible only inside this transaction: assert on the
       // SQL seam the executor calls, with the executor's own tier fallback.
@@ -206,7 +206,7 @@ describe("§4f — the executor honours the floor (worker-shim wiring)", () => {
          WHERE enabled AND model_tier = ${r.rows[0].tier}
          ORDER BY priority DESC, updated_at DESC LIMIT 1
       `.execute(trx as never);
-      expect(rule.rows[0].model).toBe("fable-5");
+      expect(rule.rows[0].model).toBe("claude-opus-5-5");
     });
   });
 

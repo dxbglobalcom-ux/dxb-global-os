@@ -1,0 +1,33 @@
+# B2 → company, 2026-10-10T03:35:48+02:00
+## pending (files not in company schema_migrations):
+20261010060000_b51_smoke_gate.sql
+## fingerprint before
+  sequences (all schemas)   : 19
+  sequence fingerprint      : 96a0d87e884826bc
+  large objects             : 0
+  audit_log / hook_violations: 10973/17
+STATE_FINGERPRINT 5d5885213f24abcd
+## bootstrap
+NOTICE:  schema "realtime" already exists, skipping
+NOTICE:  schema "supabase_migrations" already exists, skipping
+NOTICE:  relation "schema_migrations" already exists, skipping
+[bootstrap] pg-boss schema (library initializer)
+[bootstrap] pgboss schema ready
+[bootstrap] applying 20261010060000_b51_smoke_gate.sql
+NOTICE:  function public.fn_model_smoke_passed(text,text,jsonb) does not exist, skipping
+[bootstrap] done — applied 1, skipped 178, ledger total 179
+## parity
+triggers     company    32 66c997417d0f5d90  construction    32 66c997417d0f5d90  same
+sequences    company    14 13b638eb4eab9ade  construction    14 13b638eb4eab9ade  same
+
+SCHEMA_PARITY — the two engines carry the same public schema, object for object.
+## fingerprint after
+  sequences (all schemas)   : 19
+  sequence fingerprint      : 96a0d87e884826bc
+  large objects             : 0
+  audit_log / hook_violations: 10973/17
+STATE_FINGERPRINT 5d5885213f24abcd
+## measured
+fn_succeed_model(text,text,text,text,text)
+fn_model_smoke_passed(text,text,jsonb,timestamp with time zone)
+0

@@ -447,9 +447,10 @@ place to move and nothing waits for a code change or a restart.
    (`fable-5`) → Opus 5.5 went live and was undone through the door's own undo within minutes
    (`20261010050000`): the CLI inside the company's Agent SDK (2.1.259) refuses `claude-opus-5-5` — "version
    2.1.280 or newer is required" — as a result of subtype success with `is_error` true, and the lanes read only
-   the result text; the row went back to `testing`. Opus 5.5 takes its seats
-   through the door again once the SDK carries a CLI that can call it, measured by a live call first; a
-   successor is called once, live, before the door moves a seat onto it. The old rows carried no token price
+   the result text; the row went back to `testing`. With the SDK at 0.3.296 (CLI 2.1.296) Opus 5.5 answered
+   a live call and took its seats through the door again (`20261010070000`, after the smoke gate of §10);
+   a successor is called once, live, before the door moves a seat onto it. The same file cut the Codex
+   judge's inherited fallback onto a Claude model (`gpt-6.1-sol` → none). The old rows carried no token price
    (subscriptions, no key), so the door reported `price_known = false`; until an old row carries a price the
    door cannot see a rise.
 10. **The live call is the door's own guard (B2).** A successor enters through the door only after it has

@@ -81,14 +81,14 @@ describe("P1 — the catalogue is the one place", () => {
     expect(bad.rows.map((r) => r.id)).toEqual([]);
   });
 
-  it("(b) the day's models are catalogued; Sonnet 5.5 took its seats (P4), Opus 5.5 waits for the SDK", async () => {
+  it("(b) the day's models are catalogued; Opus 5.5 and Sonnet 5.5 took their seats through the door (P4)", async () => {
     const rows = await sql<{ id: string; status: string; lane: string; api_model_id: string; mechanical_only: boolean; display_name: string }>`
       SELECT id, status, lane, api_model_id, mechanical_only, display_name FROM model_catalog
        WHERE id IN ('claude-opus-5-5', 'claude-sonnet-5-5', 'claude-haiku-5-5', 'gpt-6.1-sol', 'gpt-6-astra')
        ORDER BY id
     `.execute(db());
     const by = Object.fromEntries(rows.rows.map((r) => [r.id, r]));
-    expect(by["claude-opus-5-5"]).toMatchObject({ status: "testing", lane: "agent-sdk", api_model_id: "claude-opus-5-5" });
+    expect(by["claude-opus-5-5"]).toMatchObject({ status: "active", lane: "agent-sdk", api_model_id: "claude-opus-5-5" });
     expect(by["claude-sonnet-5-5"]).toMatchObject({ status: "active", lane: "agent-sdk", api_model_id: "claude-sonnet-5-5" });
     expect(by["claude-haiku-5-5"]).toMatchObject({ status: "testing", mechanical_only: true });
     expect(by["gpt-6.1-sol"]).toMatchObject({ status: "active", lane: "codex-cli", display_name: "Sol 6.1" });
@@ -96,10 +96,10 @@ describe("P1 — the catalogue is the one place", () => {
   });
 
   it("(d) resolveModel resolves an alias to its row and refuses what may not be called", async () => {
-    // an alias resolves to the row that carries it; a retired row is refused by its own name (the door writes
-    // no alias: an old spelling never slides onto the successor — Sonnet 5 retired in P4)
+    // an alias resolves to the row that carries it — since P4 those rows are retired, so the call is refused
+    // by the row's name (the door writes no alias: an old spelling never slides onto the successor)
     await expect(resolveModel(db(), "sonnet-5")).rejects.toThrow(/claude-sonnet-5 is retired/);
-    expect((await resolveModel(db(), "opus-5")).apiModelId).toBe("claude-opus-5");
+    await expect(resolveModel(db(), "opus-5")).rejects.toThrow(/fable-5 is retired/);
     expect(await resolveModel(db(), "claude-sonnet-5-5")).toMatchObject({
       id: "claude-sonnet-5-5", apiModelId: "claude-sonnet-5-5", lane: "agent-sdk", mode: "subscription",
     });

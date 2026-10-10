@@ -177,3 +177,11 @@ extension; (iii) judge seats outside `routing_rules` (a catalogue column or a se
   and local are not stamped). Measured on the bench: opus-5-5, gpt-6.1-sol, haiku-5-5 stamped; a model the
   CLI refuses (claude-opus-9-9) came back subtype success + is_error true and was NOT stamped.
 - **Numbering:** B2 took 060000, so Opus 5.5's return is 070000.
+- **Opus 5.5 takes its seats** (20261010070000): through the door with a new idempotency key (the old one would
+  replay 040000's answer). On a fresh build or the bench the row is stamped from the recorded live call with
+  that call's time (01:05:54Z, `recorded` in the evidence); on the company smoke.mjs stamped every live brain
+  first (audit 76084-76089). claude-opus-5-5 keeps fallback_of claude-sonnet-5-5 (L2 → no SDK fallback, as
+  Opus 5 before; the only L1 hop, fable-5.1, now falls back onto Opus 5.5 — both ways would be a cycle).
+  gpt-6.1-sol's inherited fallback onto claude-opus-5-5 is cut (audit `model_catalog.fallback_cut`).
+  Open: fn_model_fallback filters no lane (report, its own small job); claude-haiku-5-5 is unstamped on the
+  company — a smoke first if it ever goes through the door (P7).
