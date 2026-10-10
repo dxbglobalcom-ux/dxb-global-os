@@ -52,7 +52,7 @@ beforeAll(async () => {
   classRow = await rule({ task_class: `${P}.work`, model_tier: "L2", model: "claude-sonnet-5-5", effort: "xhigh", priority: -100 });
   // an employee whose brain raises an L2 task to L1 (§4f floor)
   const a = await sql<{ id: string }>`
-    SELECT id FROM agents WHERE brain = 'claude-opus-5-5' AND employment_status <> 'archived' LIMIT 1
+    SELECT id FROM agents WHERE brain = 'fable-5' AND employment_status <> 'archived' LIMIT 1
   `.execute(getDb());
   opusSeat = a.rows[0]?.id ?? null;
 });

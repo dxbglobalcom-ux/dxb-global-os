@@ -1,0 +1,39 @@
+=== why (2026-10-10 02:43:18) ===
+Live probe after P4: claude-opus-5-5 through the company's Agent SDK → 'API Error: 400 Claude Code 2.1.259 does not support this model; version 2.1.280 or newer is required' (returned as subtype success). claude-sonnet-5-5 → OK. Undo call 1 only.
+=== fingerprint BEFORE ===
+B36 · company state fingerprint
+  tables in public          : 62
+  rows in public            : 18283
+  row fingerprint           : 9f79819da2e91bd0
+  sequences (all schemas)   : 19
+  sequence fingerprint      : bb12d14da18bb631
+  large objects             : 0
+  audit_log / hook_violations: 10971/17
+STATE_FINGERPRINT 4b2c488bc42bf831
+=== undo ===
+{"ok": true, "skipped": 1, "audit_id": 76082, "restored": {"agents": 33, "routing": 28, "registry": 11, "settings": 0, "fallbacks": 2}}
+=== after ===
+claude-opus-5-5 active fb=claude-sonnet-5-5
+claude-sonnet-5 retired fb=-
+claude-sonnet-5-5 active fb=-
+codex-5.6 retired fb=fable-5
+fable-5 active fb=claude-sonnet-5-5
+fable-5.1 active fb=fable-5
+gpt-6.1-sol active fb=claude-opus-5-5
+claude-sonnet-5-5 10
+fable-5 28
+fable-5.1 1
+claude-sonnet-5-5|slot|166
+fable-5|ceo_override|10
+fable-5|slot|23
+fable-5.1|slot|14
+=== fingerprint AFTER ===
+B36 · company state fingerprint
+  tables in public          : 62
+  rows in public            : 18286
+  row fingerprint           : bd1b071ca58ec4e2
+  sequences (all schemas)   : 19
+  sequence fingerprint      : 07fcb769a369ecd8
+  large objects             : 0
+  audit_log / hook_violations: 10972/17
+STATE_FINGERPRINT b524f6faecc4d2e0

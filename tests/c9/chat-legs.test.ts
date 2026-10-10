@@ -80,7 +80,7 @@ describe("two legs — which one answers", () => {
     expect(r.rows).toHaveLength(2);
     for (const row of r.rows) {
       expect(row.model_tier, row.task_class).toBe("L1");
-      expect(row.model, row.task_class).toBe("claude-opus-5-5"); // B51 P4: Opus 5 → Opus 5.5
+      expect(row.model, row.task_class).toBe("fable-5"); // Opus 5.5 waits for the SDK (B51 P4)
     }
     const byClass = Object.fromEntries(r.rows.map((x) => [x.task_class, x.effort]));
     expect(byClass["chat.strategy"]).toBe("max");

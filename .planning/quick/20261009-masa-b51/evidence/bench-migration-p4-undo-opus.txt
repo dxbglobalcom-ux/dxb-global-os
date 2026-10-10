@@ -1,0 +1,12 @@
+[bootstrap] preamble (bare-PG compat surface; admin plane)
+NOTICE:  extension "vector" already exists, skipping
+NOTICE:  schema "auth" already exists, skipping
+NOTICE:  schema "realtime" already exists, skipping
+NOTICE:  schema "supabase_migrations" already exists, skipping
+NOTICE:  relation "schema_migrations" already exists, skipping
+[bootstrap] pg-boss schema (library initializer)
+[bootstrap] pgboss schema ready
+[bootstrap] applying 20261010050000_b51_p4_opus_waits_for_the_sdk.sql
+NOTICE:  B51 P4: fable-5 → claude-opus-5-5 undone {"ok": true, "skipped": 1, "audit_id": 43810, "restored": {"agents": 22, "routing": 28, "registry": 11, "settings": 0, "fallbacks": 2}}
+[bootstrap] done — applied 1, skipped 177, ledger total 178
+SOL_READER_OK sysid=7690665340837392423/5/postgres readable_public_tables=62 credential=/home/dxb/.config/dxb/sol-reader.env

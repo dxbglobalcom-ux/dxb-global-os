@@ -1,0 +1,55 @@
+=== pending on the company before (2026-10-10 02:42:01) ===
+20261010040000_b51_p4_first_succession.sql (the only one — measured against supabase_migrations.schema_migrations)
+=== fingerprint BEFORE ===
+B36 · company state fingerprint
+  tables in public          : 62
+  rows in public            : 18274
+  row fingerprint           : e403e4829d8da53a
+  sequences (all schemas)   : 19
+  sequence fingerprint      : 8a5311dbc5e80866
+  large objects             : 0
+  audit_log / hook_violations: 10968/17
+STATE_FINGERPRINT c39edcd0aa94cd9f
+=== bootstrap ===
+[bootstrap] preamble (bare-PG compat surface; admin plane)
+NOTICE:  extension "vector" already exists, skipping
+NOTICE:  schema "auth" already exists, skipping
+NOTICE:  schema "realtime" already exists, skipping
+NOTICE:  schema "supabase_migrations" already exists, skipping
+NOTICE:  relation "schema_migrations" already exists, skipping
+[bootstrap] pg-boss schema (library initializer)
+[bootstrap] pgboss schema ready
+[bootstrap] applying 20261010040000_b51_p4_first_succession.sql
+NOTICE:  B51 P4: fable-5 → claude-opus-5-5 {"ok": true, "moved": {"agents": 33, "routing": 28, "registry": 11, "settings": 0, "fallbacks": 3, "gate_seats": 0, "ceo_override": 10}, "price": {"new": {"cost_in": 4, "cost_out": 20}, "old": {"cost_in": null, "cost_out": null}, "price_known": false, "price_rises": false}, "audit_id": 76079, "decision_id": 28550}
+NOTICE:  B51 P4: claude-sonnet-5 → claude-sonnet-5-5 {"ok": true, "moved": {"agents": 166, "routing": 10, "registry": 2, "settings": 0, "fallbacks": 4, "gate_seats": 0, "ceo_override": 0}, "price": {"new": {"cost_in": 2, "cost_out": 10}, "old": {"cost_in": null, "cost_out": null}, "price_known": false, "price_rises": false}, "audit_id": 76080, "decision_id": 28551}
+NOTICE:  B51 P4: codex-5.6 → gpt-6.1-sol {"ok": true, "moved": {"agents": 0, "routing": 0, "registry": 0, "settings": 0, "fallbacks": 1, "gate_seats": 0, "ceo_override": 0}, "price": {"new": {"cost_in": null, "cost_out": null}, "old": {"cost_in": null, "cost_out": null}, "price_known": false, "price_rises": false}, "audit_id": 76081, "decision_id": 28552}
+[bootstrap] done — applied 1, skipped 176, ledger total 177
+bootstrap exit=0
+=== schema parity ===
+company      : 7674907968528752679 / postgres
+construction : 7690665340837392423 / postgres
+
+columns      company   639 cac5a80a3cc733e2  construction   639 cac5a80a3cc733e2  same
+constraints  company   255 fd86a8eb529b5852  construction   255 fd86a8eb529b5852  same
+indexes      company   124 c2f41611e7a22873  construction   124 c2f41611e7a22873  same
+functions    company   233 1ad6a1b4b9a78753  construction   233 1ad6a1b4b9a78753  same
+views        company    34 d03007d3df38bbc5  construction    34 8bdef3b0d98839bf  same after removing PostgreSQL's own default type labels
+    normalised : v_alerts_active ::  SELECT kind, …
+    1 view definition(s) matched only after that removal. Their OUTPUT columns are compared strictly under `view_columns` and are identical.
+view_columns company   461 72649692695f1e0b  construction   461 72649692695f1e0b  same
+policies     company    57 50677097944b0bcc  construction    57 50677097944b0bcc  same
+triggers     company    32 66c997417d0f5d90  construction    32 66c997417d0f5d90  same
+sequences    company    14 13b638eb4eab9ade  construction    14 13b638eb4eab9ade  same
+
+SCHEMA_PARITY — the two engines carry the same public schema, object for object.
+parity exit=0
+=== fingerprint AFTER ===
+B36 · company state fingerprint
+  tables in public          : 62
+  rows in public            : 18283
+  row fingerprint           : 9f79819da2e91bd0
+  sequences (all schemas)   : 19
+  sequence fingerprint      : bb12d14da18bb631
+  large objects             : 0
+  audit_log / hook_violations: 10971/17
+STATE_FINGERPRINT 4b2c488bc42bf831
