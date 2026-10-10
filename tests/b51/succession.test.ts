@@ -62,6 +62,8 @@ async function probeModels(trx: never, lane: "agent-sdk" | "codex-cli", newStatu
            (${`${SEED}-child`}, 'anthropic', 'active', 'Probe Child', false, false, 'L1',
             ${`${SEED}-child`}, ${lane}, 'probe', ${`${SEED}-old`})
   `.execute(trx);
+  // the successor has answered its live call (B2) — the door's other laws are what these probes test
+  await sql`UPDATE model_catalog SET smoke_ok_at = now(), smoke_cli = 'probe' WHERE id = ${`${SEED}-new`}`.execute(trx);
 }
 
 async function probeAgent(trx: never, suffix: string, brain: string, brainSource: string) {
@@ -194,8 +196,8 @@ describe("P2 — the succession door", () => {
   it("the gate's judges move with a Codex-lane succession", async () => {
     await inTrx(async (trx) => {
       await sql`
-        INSERT INTO model_catalog (id, provider, status, display_name, banned, mechanical_only, tier_floor, api_model_id, lane, family)
-        VALUES (${`${SEED}-astra7`}, 'openai', 'testing', 'Astra 7', false, false, 'L1', ${`${SEED}-astra7`}, 'codex-cli', 'gpt-astra')
+        INSERT INTO model_catalog (id, provider, status, display_name, banned, mechanical_only, tier_floor, api_model_id, lane, family, smoke_ok_at, smoke_cli)
+        VALUES (${`${SEED}-astra7`}, 'openai', 'testing', 'Astra 7', false, false, 'L1', ${`${SEED}-astra7`}, 'codex-cli', 'gpt-astra', now(), 'probe')
       `.execute(trx);
       const r = await succeed(trx, "gpt-6-astra", `${SEED}-astra7`, `${SEED}-k3`);
       expect(r).toMatchObject({ ok: true, moved: { gate_seats: 1 } });
@@ -265,8 +267,8 @@ describe("P2 — the succession door", () => {
       expect(Number(r.price!.new.cost_in)).toBe(4);
       // an unpriced pair says it does not know, rather than "the same"
       await sql`
-        INSERT INTO model_catalog (id, provider, status, display_name, banned, mechanical_only, tier_floor, api_model_id, lane, family)
-        VALUES (${`${SEED}-unpriced`}, 'anthropic', 'testing', 'Probe Unpriced', false, false, 'L1', ${`${SEED}-unpriced`}, 'agent-sdk', 'probe')
+        INSERT INTO model_catalog (id, provider, status, display_name, banned, mechanical_only, tier_floor, api_model_id, lane, family, smoke_ok_at, smoke_cli)
+        VALUES (${`${SEED}-unpriced`}, 'anthropic', 'testing', 'Probe Unpriced', false, false, 'L1', ${`${SEED}-unpriced`}, 'agent-sdk', 'probe', now(), 'probe')
       `.execute(trx);
       const u = await succeed(trx, `${SEED}-new`, `${SEED}-unpriced`, `${SEED}-k17`);
       expect(u.price).toMatchObject({ price_known: false });
@@ -283,5 +285,67 @@ describe("P2 — the succession door", () => {
              has_function_privilege('anon', 'fn_undo_succession(bigint,text)', 'EXECUTE') AS pub
     `.execute(getDb());
     expect(acl.rows[0]).toEqual({ anon: false, pub: false });
+  });
+});
+
+describe("B2 — a successor answers one live call before the door moves a seat onto it", () => {
+  it("refuses a successor that never answered, and moves nothing", async () => {
+    await inTrx(async (trx) => {
+      await probeModels(trx, "agent-sdk");
+      await sql`UPDATE model_catalog SET smoke_ok_at = NULL, smoke_cli = NULL WHERE id = ${`${SEED}-new`}`.execute(trx);
+      const seat = await probeAgent(trx, "smoke", `${SEED}-old`, "slot");
+      expect(await succeed(trx, `${SEED}-old`, `${SEED}-new`, `${SEED}-s1`)).toMatchObject({
+        ok: false, error: "SMOKE_REQUIRED", detail: expect.stringMatching(/scripts\/models\/smoke\.mjs/),
+      });
+      const after = await one(trx, sql<{ brain: string; old: string; neu: string }>`
+        SELECT (SELECT brain FROM agents WHERE id = ${seat}) AS brain,
+               (SELECT status FROM model_catalog WHERE id = ${`${SEED}-old`}) AS old,
+               (SELECT status FROM model_catalog WHERE id = ${`${SEED}-new`}) AS neu`);
+      expect(after).toEqual({ brain: `${SEED}-old`, old: "active", neu: "testing" });
+    });
+  });
+
+  it("the company's own system stamps a passing call, with its CLI and an audit row; the door then opens", async () => {
+    await inTrx(async (trx) => {
+      await probeModels(trx, "agent-sdk");
+      await sql`UPDATE model_catalog SET smoke_ok_at = NULL, smoke_cli = NULL WHERE id = ${`${SEED}-new`}`.execute(trx);
+      const s = (
+        await sql<{ r: { ok: boolean; audit_id: number } }>`
+          SELECT fn_model_smoke_passed(${`${SEED}-new`}, '2.1.296', '{"served":"probe"}'::jsonb) AS r`.execute(trx)
+      ).rows[0].r;
+      expect(s.ok).toBe(true);
+      const row = await one(trx, sql<{ cli: string; stamped: boolean; action: string; actor: string; before: unknown }>`
+        SELECT c.smoke_cli AS cli, c.smoke_ok_at IS NOT NULL AS stamped, a.action, a.actor, a.payload->'before'->'smoke_ok_at' AS before
+          FROM model_catalog c, audit_log a WHERE c.id = ${`${SEED}-new`} AND a.id = ${s.audit_id}`);
+      expect(row).toEqual({ cli: "2.1.296", stamped: true, action: "model.smoke", actor: "system", before: null });
+      expect((await succeed(trx, `${SEED}-old`, `${SEED}-new`, `${SEED}-s2`)).ok).toBe(true);
+      // a retired or unknown model is not stamped
+      const r = (await sql<{ r: { ok: boolean; error: string } }>`SELECT fn_model_smoke_passed(${`${SEED}-old`}, '2.1.296', NULL) AS r`.execute(trx)).rows[0].r;
+      expect(r).toMatchObject({ ok: false, error: "VALIDATION_FAILED" });
+      const c = (await sql<{ r: { ok: boolean; error: string } }>`SELECT fn_model_smoke_passed(${`${SEED}-new`}, '', NULL) AS r`.execute(trx)).rows[0].r;
+      expect(c).toMatchObject({ ok: false, error: "VALIDATION_FAILED" });
+      // a stamp from a recorded call carries that call's time, never the stamping's — and never a time to come
+      const at = "2026-10-10T01:05:50Z";
+      expect((await sql<{ r: { ok: boolean } }>`SELECT fn_model_smoke_passed(${`${SEED}-new`}, '2.1.296', '{"recorded":"probe"}'::jsonb, ${at}::timestamptz) AS r`.execute(trx)).rows[0].r.ok).toBe(true);
+      const t = await one(trx, sql<{ same: boolean }>`SELECT smoke_ok_at = ${at}::timestamptz AS same FROM model_catalog WHERE id = ${`${SEED}-new`}`);
+      expect(t.same).toBe(true);
+      const f = (await sql<{ r: { ok: boolean; error: string } }>`SELECT fn_model_smoke_passed(${`${SEED}-new`}, '2.1.296', NULL, now() + interval '1 hour') AS r`.execute(trx)).rows[0].r;
+      expect(f).toMatchObject({ ok: false, error: "VALIDATION_FAILED" });
+    });
+  });
+
+  it("a dashboard session cannot attest a call that did not happen; anon and authenticated hold no EXECUTE", async () => {
+    await inTrx(async (trx) => {
+      await probeModels(trx, "agent-sdk");
+      await sql`SELECT set_config('request.jwt.claims', '{"role":"authenticated","sub":"00000000-0000-0000-0000-000000000001"}', true)`.execute(trx);
+      const r = (await sql<{ r: { ok: boolean; error: string } }>`SELECT fn_model_smoke_passed(${`${SEED}-new`}, '2.1.296', NULL) AS r`.execute(trx)).rows[0].r;
+      expect(r).toMatchObject({ ok: false, error: "PERMISSION_DENIED" });
+    });
+    const acl = await sql<{ anon: boolean; authn: boolean; svc: boolean }>`
+      SELECT has_function_privilege('anon', 'fn_model_smoke_passed(text,text,jsonb,timestamptz)', 'EXECUTE') AS anon,
+             has_function_privilege('authenticated', 'fn_model_smoke_passed(text,text,jsonb,timestamptz)', 'EXECUTE') AS authn,
+             has_function_privilege('service_role', 'fn_model_smoke_passed(text,text,jsonb,timestamptz)', 'EXECUTE') AS svc
+    `.execute(getDb());
+    expect(acl.rows[0]).toEqual({ anon: false, authn: false, svc: true });
   });
 });

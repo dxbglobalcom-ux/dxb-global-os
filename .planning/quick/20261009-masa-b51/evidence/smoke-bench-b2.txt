@@ -1,0 +1,24 @@
+# B2 smoke script on the BENCH (54422), 2026-10-10T03:14:00+02:00
+[isolation] lane=smoke:claude-opus-5-5 session=924369d4-91a4-4f33-b7bb-b3091f0f91b0 tools=0 mcp=0 plugins=3 skills=19 agents=5 hooks=0 input=555 home=/home/dxb/.local/share/dxb/company-claude
+{"model":"claude-opus-5-5","api":"claude-opus-5-5","lane":"agent-sdk","at":"2026-10-10T01:14:00.205Z","pass":true,"cli":"2.1.296","sdk":"0.3.296","served":"claude-opus-5-5","subtype":"success","is_error":false,"result":"OK","stamped":true,"stamp":{"ok":true,"cli":"2.1.296","model":"claude-opus-5-5","audit_id":46413}}
+[isolation] lane=gate model=gpt-6.1-sol session=01a1235f-cba3-7be2-a1c9-6ad8cc8848de home=/home/dxb/.local/share/dxb/company-codex notes=0 mcp=0 ok=true tokens=14306
+{"model":"gpt-6.1-sol","api":"gpt-6.1-sol","lane":"codex-cli","at":"2026-10-10T01:14:02.853Z","pass":true,"cli":"codex-cli 0.159.3","ok":true,"error":null,"raw":"{\"verdict\":\"sound\",\"objections\":[]}","stamped":true,"stamp":{"ok":true,"cli":"codex-cli 0.159.3","model":"gpt-6.1-sol","audit_id":46414}}
+[isolation] lane=smoke:claude-haiku-5-5 session=95b5dcf0-f86a-406f-837e-37c7786aafab tools=0 mcp=0 plugins=3 skills=19 agents=5 hooks=0 input=557 home=/home/dxb/.local/share/dxb/company-claude
+{"model":"claude-haiku-5-5","api":"claude-haiku-5-5","lane":"agent-sdk","at":"2026-10-10T01:14:09.391Z","pass":true,"cli":"2.1.296","sdk":"0.3.296","served":"claude-haiku-5-5","subtype":"success","is_error":false,"result":"OK","stamped":true,"stamp":{"ok":true,"cli":"2.1.296","model":"claude-haiku-5-5","audit_id":46415}}
+{"model":"deepseek-v4-pro","api":"deepseek-v4-pro","lane":"litellm","at":"2026-10-10T01:14:11.688Z","pass":false,"cli":null,"error":"lane litellm is not smoked by this script","stamped":false,"stamp":null}
+{"model":"no-such-model","at":"2026-10-10T01:14:11.688Z","pass":false,"stamped":false,"error":"not in the catalogue"}
+EXIT=1
+claude-haiku-5-5|t|2.1.296
+claude-opus-5-5|t|2.1.296
+gpt-6.1-sol|t|codex-cli 0.159.3
+46413|system|model.smoke|claude-opus-5-5|2.1.296
+46414|system|model.smoke|gpt-6.1-sol|codex-cli 0.159.3
+46415|system|model.smoke|claude-haiku-5-5|2.1.296
+# B2 smoke — a model the CLI refuses is not stamped (bench, 2026-10-10T03:14:20+02:00)
+[isolation] lane=smoke:claude-opus-9-9 session=b9c095f8-ced2-4cad-88fc-37be50caac64 tools=0 mcp=0 plugins=3 skills=19 agents=5 hooks=0 input=0 home=/home/dxb/.local/share/dxb/company-claude
+{"model":"b2-refused-probe","api":"claude-opus-9-9","lane":"agent-sdk","at":"2026-10-10T01:14:20.500Z","pass":false,"cli":"2.1.296","sdk":"0.3.296","served":"<synthetic>","subtype":"success","is_error":true,"result":"There's an issue with the selected model (claude-opus-9-9). It may not exist or you may not have access to it.","stamped":false,"stamp":null}
+EXIT=1
+b2-refused-probe|
+# after B6 (p_at): the script's three-argument call resolves to the four-argument stamp (2026-10-10T03:29:14+02:00)
+{"model":"claude-haiku-5-5","api":"claude-haiku-5-5","lane":"agent-sdk","at":"2026-10-10T01:29:14.111Z","pass":true,"cli":"2.1.296","sdk":"0.3.296","served":"claude-haiku-5-5","subtype":"success","is_error":false,"result":"OK","stamped":true,"stamp":{"ok":true,"cli":"2.1.296","model":"claude-haiku-5-5","audit_id":48126}}
+EXIT=0

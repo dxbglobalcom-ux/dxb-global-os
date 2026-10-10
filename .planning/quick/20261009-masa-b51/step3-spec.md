@@ -162,3 +162,18 @@ extension; (iii) judge seats outside `routing_rules` (a catalogue column or a se
   gpt-6.1-sol inherited codex-5.6's fallback (claude-opus-5-5) — fn_model_fallback filters no lane, its one
   caller is select-model.ts; the gate reads gate.challengers. Persona bodies name `fable-5` 812 times —
   authorship records (author column, version comments), not brains; untouched.
+
+## SDK and B2 as built (2026-10-10, lead Opus 5.5 `dxb-global-os-e4`, second eye Fable 5.1 `dxb-global-os-1b`)
+- **SDK 0.3.296** (785113e8): CLI 2.1.296 = the station's interactive Claude Code; Opus 5.5 answered live
+  through company isolation. Three plugins now load in every company call, all bundled in the CLI
+  (agents-md, telemetry, plugin-authoring; 0.3.259 loaded none) — what the telemetry builtin sends is
+  ⚠ UNVERIFIED (not measurable from the terminal without a network trace).
+- **B2 — the smoke gate in the door** (20261010060000): `smoke_ok_at` / `smoke_cli`; the door refuses an
+  unstamped successor with SMOKE_REQUIRED; one writer of the stamp, `fn_model_smoke_passed`, for the system
+  actor only (a dashboard session cannot attest a call), one audit row `model.smoke` per stamp; its `p_at`
+  (default now()) is the call's own time — a stamp from a recorded call carries that time (second eye's B6);
+  `scripts/models/smoke.mjs` makes the call (agent-sdk under companyIsolation(): subtype success,
+  is_error false, served = asked, "OK"; codex-cli through the gate's own runner, a parsed verdict; litellm
+  and local are not stamped). Measured on the bench: opus-5-5, gpt-6.1-sol, haiku-5-5 stamped; a model the
+  CLI refuses (claude-opus-9-9) came back subtype success + is_error true and was NOT stamped.
+- **Numbering:** B2 took 060000, so Opus 5.5's return is 070000.

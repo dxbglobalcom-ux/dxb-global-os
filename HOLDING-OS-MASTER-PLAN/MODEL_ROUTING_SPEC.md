@@ -452,3 +452,14 @@ place to move and nothing waits for a code change or a restart.
    successor is called once, live, before the door moves a seat onto it. The old rows carried no token price
    (subscriptions, no key), so the door reported `price_known = false`; until an old row carries a price the
    door cannot see a rise.
+10. **The live call is the door's own guard (B2).** A successor enters through the door only after it has
+   answered one live call through the company's own runtime: `model_catalog.smoke_ok_at` and `smoke_cli`
+   carry when and through which CLI, and `fn_succeed_model` refuses an unstamped successor with
+   `SMOKE_REQUIRED` (`20261010060000`). The stamp has one writer, `fn_model_smoke_passed`, callable by the
+   company's own system and never by a dashboard session — a person cannot attest a call that did not
+   happen — and it leaves one audit row. `scripts/models/smoke.mjs` makes the call: the Agent SDK lane under
+   company isolation (a pass is subtype success, `is_error` false, served by the model asked, answering OK),
+   the Codex lane through the gate's own runner (a parsed verdict); other lanes are not stamped. The SDK was
+   raised to 0.3.296 (CLI 2.1.296) the same night, after which Opus 5.5 answered. Once Hamza calls the door
+   on the CEO's word (P8) no engineer stands between that sentence and the seats, so the guard sits in the
+   door rather than in a procedure.
