@@ -30,28 +30,31 @@ not here. What is accepted is read from `scripts/governance/ceo-approvals.json`,
 2026-10-10 night — B51 at one table: Opus 5.5 leads and writes, Fable 5.1 reads every piece before its commit
 (his lasting working style, `~/Desktop/çalışma1.md`). Plan approved <!-- CEO-OK: b51-plan-approved-2026-10-09 -->:
 `.planning/quick/20261009-masa-b51/PLAN.md`. Steps 1 and 2 built and told. Step 3 (every brain stays current
-<!-- CEO-OK: all-brains-stay-current-gate-judges-2026-10-09 -->), built so far and live on the company: P1 — every
-model id lives in the catalogue, the gate's two judges are one setting (`gate.challengers`); P2 — the succession
-door (one call moves every seat of a model to its successor, one call undoes it); P3 — a worker runs on its task
-class's row; move 3 — critical decisions at xhigh, code at high. Spec and as-built notes:
-`.planning/quick/20261009-masa-b51/step3-spec.md`.
+<!-- CEO-OK: all-brains-stay-current-gate-judges-2026-10-09 -->) built and live on the company except P8: the
+catalogue as the one place of model ids, the succession door with a live-call guard, the class leads the route,
+efforts by kind of work, Opus 5.5 and Sonnet 5.5 in their seats (the company's Agent SDK raised so it can call
+Opus 5.5), Hamza as general manager with dispatch and critical decisions on Fable 5.1, Haiku 5.5 tried beside
+Sonnet 5.5 (pairs on his Desktop, `B51-P7-Haiku-Sonnet-2026-10-10.md`). One Sol pass, its findings fixed. Spec
+and as-built notes: `.planning/quick/20261009-masa-b51/step3-spec.md`.
 
 ## Next
 
-1. B51 step 3, in order: P5b (bundle 3 code — workflow steps get their effort and the seat's identity, Hamza's
-   chat prompt cached, the SDK fallback model from the catalogue); P4 the first succession Opus 5 → 5.5,
-   Sonnet 5 → 5.5 through the door; P6 Hamza as Genel Müdür, his talking seats on Opus 5.5, orchestration on
-   Fable 5.1; P7 Haiku 5.5 beside Sonnet 5.5, the result to him; P8 new models learned from his word, no key.
-   One Sol pass at the end of step 3.
+1. B51 step 3 P8 — new models learned from his word — waits on his two answers below; nothing of it is built.
 2. His Excel turbo decisions (the "Projeler" sheet) and the SS/S agent-systems + Hermes research (his link).
 
 ## Waiting on his approval
 
-- B51 steps 1 and 2, and step 3's P1, P2, P3 and move 3 (finished, not accepted — LAW B).
-- Security, outside B51: two live write functions of the routing and settings take anon as the system — a row?
-- Hamza's one brain tool inside step 3 (it calls the succession door) — recommendation yes.
-- Found in step 2, each needs his word for a row: research tasks cannot pass the knowledge shelf (no report file,
-  no sourced figures); with the hook off the gate is skipped; memory recall needs a LiteLLM key.
+- B51 steps 1 and 2, and all of step 3 that is built (finished, not accepted — LAW B).
+- P8's scope: Hamza's one brain tool inside step 3 (it calls the succession door) — recommendation yes; and the
+  "Halef yap" drawer on the models page, whose design he approves before it is built.
+- Haiku 5.5: the trial's result is his to decide — recommendation: not on classification; on summaries after
+  his look at the pairs.
+- chat.strategy runs at max (his July chat legs); the plan's xhigh is for critical-decision seats — one word moves it.
+- Security, outside B51: `fn_update_routing` is EXECUTE-able by anon and takes the actor from the owner — a row?
+- Found, each needs his word for a row: the eight Agent SDK readers do not check `is_error`; the SQL model
+  fallback ignores the lane and the tier floor; the HR org check counts only heads as roots; the routing seed is
+  half the live table; research tasks cannot pass the knowledge shelf; with the hook off the gate is skipped;
+  memory recall and the summarize lane need a LiteLLM key.
 - Excel turbo (`~/Desktop/Lİnk araştırmaları/Excel-turbo.xlsx`) — nine projects, thirteen decisions.
 - The board rows that wait on him — the board page's "Sizi bekleyenler" lists them.
 

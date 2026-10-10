@@ -1,0 +1,24 @@
+# 090000 → company, 2026-10-10T05:07:01+02:00
+## pending:
+20261010090000_b51_sol_undo_and_default_fixes.sql
+## fingerprint before
+  audit_log / hook_violations: 10986/17
+STATE_FINGERPRINT b46197b152799d06
+## bootstrap
+[bootstrap] applying 20261010090000_b51_sol_undo_and_default_fixes.sql
+[bootstrap] done — applied 1, skipped 181, ledger total 182
+## parity
+SCHEMA_PARITY — the two engines carry the same public schema, object for object.
+## fingerprint after
+  audit_log / hook_violations: 10986/17
+STATE_FINGERPRINT b46197b152799d06
+## measured (read-only probes in a rolled-back transaction)
+BEGIN
+{"ok": false, "error": "ALREADY_UNDONE", "detail": "succession 76079 was undone already"}
+{"ok": false, "error": "NOT_LATEST", "detail": "succession 76090 is the latest standing one after 76080 — undo that one first", "blocking_audit_id": 76090}
+ROLLBACK
+claude-sonnet-5-5
+76090|routing.succession
+76081|routing.succession
+76080|routing.succession
+76079|routing.succession
