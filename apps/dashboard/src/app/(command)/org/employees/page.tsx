@@ -28,7 +28,7 @@ type AgentRow = {
   id: string;
   slug: string;
   department: string;
-  role: "head" | "specialist" | "worker";
+  role: "general_manager" | "head" | "specialist" | "worker";
   brain: string;
   autonomy_level: number;
   persona_id: string | null;
@@ -58,7 +58,7 @@ export default async function EmployeesPage({
       ? params.status
       : undefined;
   const role =
-    params.role === "head" || params.role === "specialist" || params.role === "worker"
+    params.role === "general_manager" || params.role === "head" || params.role === "specialist" || params.role === "worker"
       ? params.role
       : undefined;
   const dept = params.dept || undefined;
@@ -378,6 +378,7 @@ export default async function EmployeesPage({
               defaultValue: "",
               options: [
                 { value: "", label: tf.all },
+                { value: "general_manager", label: roleLabels.general_manager },
                 { value: "head", label: roleLabels.head },
                 { value: "specialist", label: roleLabels.specialist },
                 { value: "worker", label: roleLabels.worker },

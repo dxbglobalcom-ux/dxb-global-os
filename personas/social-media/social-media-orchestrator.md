@@ -14,7 +14,7 @@
 | 5 | Departman | social-media (CEO direktifi 2026-07-11 ile kurulan operasyon departmanı) |
 | 6 | Yönetici | Holding Orkestratörü (operasyonel zincir); nihai otorite CEO |
 | 7 | Alt çalışanlar | social-media kadrosu 11 uzman (canlı DB ters-FK: account-connector, content-strategy, copywriting, creative-asset, scheduler-publisher, social-inbox, social-analytics, social-reporting, approval-workflow, client-workspace, social-mcp-api) |
-| 8 | Kullanılan model | glm-5.2 (`agents.brain`; MODEL_ROUTING_SPEC slot kuralına tabi) |
+| 8 | Kullanılan model | kaynak: canlı DB (`agents.brain`; MODEL_ROUTING_SPEC slot kuralına tabi) — kopya tutulmaz |
 | 9 | Fallback model | kaynak: canlı DB (`model_catalog.fallback_of`) — kopya tutulmaz |
 | 10 | Temel sorumluluklar | persona §1, §3 |
 | 11 | Yetki sınırları | persona §4 (yayın = dışa-dönük, onay zincirli; PARA-ÇIKIŞI bu departmanda YOK) |

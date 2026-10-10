@@ -605,6 +605,7 @@
       "empty": "Bu filtreye uyan çalışan yok.",
       "emptyHint": "Persona v2 dalgaları roadmap E5 adımında gelir; her işe alım kaydı oluştuğu an burada görünür.",
       "roles": {
+        "general_manager": "Genel Müdür",
         "head": "Müdür",
         "specialist": "Uzman",
         "worker": "Çalışan"

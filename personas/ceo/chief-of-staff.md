@@ -14,7 +14,7 @@
 | 5 | Departman | ceo (ceo-office) |
 | 6 | Yönetici | Holding Orkestratörü (operasyonel zincir); nihai otorite CEO |
 | 7 | Alt çalışanlar | ceo-office kadrosu (canlı DB ters-FK: executive-operations-manager, board-decision-secretary, executive-summary-generator, document-generator) |
-| 8 | Kullanılan model | glm-5.2 (`agents.brain`; MODEL_ROUTING_SPEC slot kuralına tabi) |
+| 8 | Kullanılan model | kaynak: canlı DB (`agents.brain`; MODEL_ROUTING_SPEC slot kuralına tabi) — kopya tutulmaz |
 | 9 | Fallback model | kaynak: canlı DB (`model_catalog.fallback_of`) — kopya tutulmaz |
 | 10 | Temel sorumluluklar | persona §1, §3 (CEO kaldıraç katmanı: karar paketleme standardı + exec ops sahipliği + takip zinciri) |
 | 11 | Yetki sınırları | persona §4 (CEO adına KARAR VERMEZ — kararı hazırlar, izler, kapattırır) |

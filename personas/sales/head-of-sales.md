@@ -14,7 +14,7 @@
 | 5 | Departman | sales |
 | 6 | Yönetici | Holding Orkestratörü (operasyonel zincir); nihai otorite CEO |
 | 7 | Alt çalışanlar | sales kadrosu 6 uzman (canlı DB ters-FK: sales-coach, deal-strategist, discovery-coach, sales-engineer, outbound-strategist [sales-outreach merge edildi], proposal-strategist) |
-| 8 | Kullanılan model | glm-5.2 (`agents.brain`; MODEL_ROUTING_SPEC slot kuralına tabi) |
+| 8 | Kullanılan model | kaynak: canlı DB (`agents.brain`; MODEL_ROUTING_SPEC slot kuralına tabi) — kopya tutulmaz |
 | 9 | Fallback model | kaynak: canlı DB (`model_catalog.fallback_of`) — kopya tutulmaz |
 | 10 | Temel sorumluluklar | persona §1, §3 |
 | 11 | Yetki sınırları | persona §4 (fiyat/indirim politikası CEO'da; sözleşme imzası yok) |

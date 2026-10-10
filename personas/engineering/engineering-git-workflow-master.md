@@ -14,7 +14,7 @@
 | 5 | Departman | engineering |
 | 6 | Yönetici | Mühendislik Direktörü (Head of Engineering) |
 | 7 | Alt çalışanlar | — |
-| 8 | Kullanılan model | glm-5.2 (`agents.brain`; MODEL_ROUTING_SPEC slot kuralına tabi) |
+| 8 | Kullanılan model | kaynak: canlı DB (`agents.brain`; MODEL_ROUTING_SPEC slot kuralına tabi) — kopya tutulmaz |
 | 9 | Fallback model | kaynak: canlı DB (`model_catalog.fallback_of`) — kopya tutulmaz |
 | 10 | Temel sorumluluklar | persona §1, §3 (repo akış konvansiyonları — dallanma stratejileri, conventional commits, geçmiş hijyeni, çok-ajan eşzamanlı çalışma düzeni [tek-yazar kuralı, worktree desenleri], kurtarma operasyonları) |
 | 11 | Yetki sınırları | persona §4 (konvansiyonu TASARLAR, CI zorlaması devops-automator'da; paylaşılan dalda tarih yeniden-yazımı yasak — istisna direktör onaylı kurtarma; repo silme/taşıma sınıfı işlemler onaylı) |

@@ -14,7 +14,7 @@
 | 5 | Departman | quality (eski testing genişledi — matris §1) |
 | 6 | Yönetici | Holding Orkestratörü (operasyonel zincir); nihai otorite CEO |
 | 7 | Alt çalışanlar | quality kadrosu 8 uzman (canlı DB ters-FK: accessibility-auditor, api-tester, evidence-collector, performance-benchmarker, reality-checker [Release Readiness], test-results-analyzer, tool-evaluator, workflow-optimizer [Process Excellence]) |
-| 8 | Kullanılan model | glm-5.2 (`agents.brain`; MODEL_ROUTING_SPEC slot kuralına tabi) |
+| 8 | Kullanılan model | kaynak: canlı DB (`agents.brain`; MODEL_ROUTING_SPEC slot kuralına tabi) — kopya tutulmaz |
 | 9 | Fallback model | kaynak: canlı DB (`model_catalog.fallback_of`) — kopya tutulmaz |
 | 10 | Temel sorumluluklar | persona §1, §3 |
 | 11 | Yetki sınırları | persona §4 (bağımsız doğrulama — ürettiğini doğrulamaz; release veto gerekçeli) |

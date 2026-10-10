@@ -1,0 +1,15 @@
+# 080000 on the BENCH, 2026-10-10T03:49:25+02:00
+APPLY_EXIT=0
+RERUN_EXIT=0
+agents-orchestrator|general_manager|General Manager|Genel Müdür
+agent_role_change|B51 P6: Hamza is the holding's general manager|0
+routing_change|B51 P6: orchestration and decompose on Fable 5.1; critical decisions on Fable 5.1 at xhigh|6
+
+# second eye's B1 + battery red (seed-is-fiction 10): the bench workforce is generated after the migrations; Hamza's bench row restored to what a fresh bench holds (role worker from the importer, the seed's invented title), 2026-10-10T03:56:53+02:00
+worker|Still Water Ledger Orchestrator|Durgun Su Defter Orkestratörü
+# registry default added to 080000 and the file re-run: orchestrator.critical_decision_model → "fable-5.1"
+
+# second eye's B2 (measured: 20260711006900 inserts agents-orchestrator on every engine): the bench is put where a fresh bench lands — the file re-run (role general_manager), then only the title back to the seed's invention, 2026-10-10T04:07:39+02:00
+RERUN_EXIT=0
+UPDATE 1
+general_manager|Still Water Ledger Orchestrator|Durgun Su Defter Orkestratörü

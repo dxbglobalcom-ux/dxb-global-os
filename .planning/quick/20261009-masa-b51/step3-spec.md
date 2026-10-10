@@ -185,3 +185,17 @@ extension; (iii) judge seats outside `routing_rules` (a catalogue column or a se
   gpt-6.1-sol's inherited fallback onto claude-opus-5-5 is cut (audit `model_catalog.fallback_cut`).
   Open: fn_model_fallback filters no lane (report, its own small job); claude-haiku-5-5 is unstamped on the
   company — a smoke first if it ever goes through the door (P7).
+
+## P6 as built (2026-10-10)
+- 20261010080000: agents.role allows `general_manager`; Hamza (agents-orchestrator) holds it, titled General Manager /
+  Genel Müdür on the company (the bench invents titles); orchestration and decompose (high), strategy, architecture,
+  final-approval and slot.critical_decision (xhigh) on fable-5.1 (model and model_id); the critical-decision seat's
+  registry default follows to fable-5.1 (E7.1). Talking seats stay on Opus 5.5, voice.answer low; chat.strategy keeps
+  the max of 20260726003000 (a talking seat — his word moves it to xhigh).
+- His identity line on every lane: "You are Hamza, the general manager of DXB Global" (prompt-core).
+- SİCİL field 8 names no model in any of the 86 dossiers that carried one, and the generator writes the pointer.
+  The persona BODY is unchanged ("# PERSONA — Holding Orkestratörü"): a body change is a new persona version
+  through the gate, on his word.
+- The employees page knows the role (filter, both locales). Eye test ⚠ UNVERIFIED (B03-bis).
+- Found: v_hr_equipment_check counts only role='head' as an org root.
+

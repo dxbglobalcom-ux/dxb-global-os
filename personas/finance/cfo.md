@@ -14,7 +14,7 @@
 | 5 | Departman | finance |
 | 6 | Yönetici | Holding Orkestratörü (operasyonel zincir); nihai otorite CEO |
 | 7 | Alt çalışanlar | finance kadrosu (canlı DB ters-FK: bookkeeper-controller, financial-analyst, fpa-analyst, investment-researcher, tax-strategist, accounts-payable-agent, supply-chain-strategist + ADD: Treasury & AR, Payroll) |
-| 8 | Kullanılan model | glm-5.2 (`agents.brain`; MODEL_ROUTING_SPEC slot kuralına tabi) |
+| 8 | Kullanılan model | kaynak: canlı DB (`agents.brain`; MODEL_ROUTING_SPEC slot kuralına tabi) — kopya tutulmaz |
 | 9 | Fallback model | kaynak: canlı DB (`model_catalog.fallback_of`) — kopya tutulmaz |
 | 10 | Temel sorumluluklar | persona §1, §3 |
 | 11 | Yetki sınırları | persona §4 (para-ÇIKIŞI istisnasız CEO'ya — hard gate) |

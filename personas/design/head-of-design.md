@@ -14,7 +14,7 @@
 | 5 | Departman | design (pod: inclusive — cultural-intelligence + inclusive-visuals) |
 | 6 | Yönetici | Holding Orkestratörü (operasyonel zincir); nihai otorite CEO |
 | 7 | Alt çalışanlar | design kadrosu 9 uzman (canlı DB ters-FK: brand-guardian, image-prompt-engineer, inclusive-visuals-specialist, ui-designer, ux-architect, ux-researcher, visual-storyteller, whimsy-injector, specialized-cultural-intelligence-strategist) |
-| 8 | Kullanılan model | glm-5.2 (`agents.brain`; MODEL_ROUTING_SPEC slot kuralına tabi) |
+| 8 | Kullanılan model | kaynak: canlı DB (`agents.brain`; MODEL_ROUTING_SPEC slot kuralına tabi) — kopya tutulmaz |
 | 9 | Fallback model | kaynak: canlı DB (`model_catalog.fallback_of`) — kopya tutulmaz |
 | 10 | Temel sorumluluklar | persona §1, §3 |
 | 11 | Yetki sınırları | persona §4 (marka kimliği değişimi CEO'da; göz-testi nihai hakem CEO) |

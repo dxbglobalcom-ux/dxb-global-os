@@ -196,14 +196,16 @@ describe("§4f — the executor honours the floor (worker-shim wiring)", () => {
       const id = await probeAgent(trx, "exec-raise", "claude-opus-5-5", "slot");
       // resolveExecutionRoute reads through the pooled connection, so the probe
       // agent is committed-visible only inside this transaction: assert on the
-      // SQL seam the executor calls, with the executor's own tier fallback.
+      // SQL seam the executor calls, with the executor's own tier fallback — the
+      // PRIMARY seat of the tier first (worker-shim.ts tierRow, B51 P3), never
+      // "the first row of the tier", which only ties broke.
       const r = await sql<{ tier: string }>`
         SELECT fn_effective_tier('L4', ${id}::uuid) AS tier
       `.execute(trx as never);
       expect(r.rows[0].tier).toBe("L1");
       const rule = await sql<{ model: string }>`
         SELECT model FROM routing_rules
-         WHERE enabled AND model_tier = ${r.rows[0].tier}
+         WHERE enabled AND department_id IS NULL AND role_slot = 'primary' AND model_tier = ${r.rows[0].tier}
          ORDER BY priority DESC, updated_at DESC LIMIT 1
       `.execute(trx as never);
       expect(rule.rows[0].model).toBe("claude-opus-5-5");

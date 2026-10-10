@@ -14,7 +14,7 @@
 | 5 | Departman | platform |
 | 6 | Yönetici | Platform Head |
 | 7 | Alt çalışanlar | — |
-| 8 | Kullanılan model | glm-5.2 (`agents.brain`; MODEL_ROUTING_SPEC slot kuralına tabi) |
+| 8 | Kullanılan model | kaynak: canlı DB (`agents.brain`; MODEL_ROUTING_SPEC slot kuralına tabi) — kopya tutulmaz |
 | 9 | Fallback model | kaynak: canlı DB (`model_catalog.fallback_of`) — kopya tutulmaz |
 | 10 | Temel sorumluluklar | persona §1, §3 (runbook'lu rutin bakım: güncellemeler, disk/log hijyeni, sertifika nöbeti, zamanlanmış işler, yedek-iş sağlık gözü) |
 | 11 | Yetki sınırları | persona §4 (RUTİN=runbook'lu; runbook dışı her şey eskalasyon — improvizasyon yasak; Platform Head sınır kaydı: maintainer=rutin bakım) |

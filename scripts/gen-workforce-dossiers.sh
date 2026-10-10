@@ -107,7 +107,7 @@ while IFS=$'\t' read -r id slug dept role rlevel estatus brain hookv ppath pver;
 | 5 | Departman | ${dept} |
 | 6 | Yönetici | ⏳ E5.3'te müdür ataması (\`manager_id\` backfill — matris §5.2) |
 | 7 | Alt çalışanlar | — |
-| 8 | Kullanılan model | ${brain} (\`agents.brain\`; MODEL_ROUTING_SPEC'e tabi) |
+| 8 | Kullanılan model | kaynak: canlı DB (\`agents.brain\`; MODEL_ROUTING_SPEC slot kuralına tabi) — kopya tutulmaz |
 | 9 | Fallback model | kaynak: canlı DB (\`model_catalog.fallback_of\`) — kopya tutulmaz |
 | 10 | Temel sorumluluklar | ⏳ v2 yazımında dolar (persona §1, §3) |
 | 11 | Yetki sınırları | ⏳ v2 yazımında dolar (persona §4) |

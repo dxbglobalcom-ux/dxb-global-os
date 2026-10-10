@@ -14,7 +14,7 @@
 | 5 | Departman | platform |
 | 6 | Yönetici | Platform Head |
 | 7 | Alt çalışanlar | — |
-| 8 | Kullanılan model | glm-5.2 (`agents.brain`; MODEL_ROUTING_SPEC slot kuralına tabi) |
+| 8 | Kullanılan model | kaynak: canlı DB (`agents.brain`; MODEL_ROUTING_SPEC slot kuralına tabi) — kopya tutulmaz |
 | 9 | Fallback model | kaynak: canlı DB (`model_catalog.fallback_of`) — kopya tutulmaz |
 | 10 | Temel sorumluluklar | persona §1, §3 (SLO/error-budget işletimi, gerçek-işlem probe'ları, alarm hijyeni, kapasite trendleri, deploy sağlık kapıları) |
 | 11 | Yetki sınırları | persona §4 (rutin bakım maintainer'da; olay KOMUTASI IRC'de; Postgres derinliği DBRE'de — güvenilirlik MÜHENDİSLİĞİ burada) |

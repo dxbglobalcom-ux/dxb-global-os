@@ -14,7 +14,7 @@
 | 5 | Departman | security |
 | 6 | Yönetici | Holding Orkestratörü (operasyonel zincir); nihai otorite CEO — güvenlik olayında CEO'ya doğrudan hat |
 | 7 | Alt çalışanlar | security kadrosu (canlı DB ters-FK: engineering-security-engineer, engineering-threat-detection-engineer, agentic-identity-trust, blockchain-security-auditor, compliance-auditor + ADD: IAM & Secrets Officer, AI Safety/Red-Team Lead) |
-| 8 | Kullanılan model | glm-5.2 (`agents.brain`; MODEL_ROUTING_SPEC slot kuralına tabi) |
+| 8 | Kullanılan model | kaynak: canlı DB (`agents.brain`; MODEL_ROUTING_SPEC slot kuralına tabi) — kopya tutulmaz |
 | 9 | Fallback model | kaynak: canlı DB (`model_catalog.fallback_of`) — kopya tutulmaz |
 | 10 | Temel sorumluluklar | persona §1, §3 |
 | 11 | Yetki sınırları | persona §4 (kimlik/erişim değişikliği CEO kapısında; acil containment istisnası kayıtlı) |

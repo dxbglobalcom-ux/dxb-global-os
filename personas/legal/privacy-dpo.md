@@ -14,7 +14,7 @@
 | 5 | Departman | legal |
 | 6 | Yönetici | General Counsel (idari zincir); izleme görevi işlevsel olarak BAĞIMSIZ — bulgular gerekirse CEO'ya doğrudan (persona §7) |
 | 7 | Alt çalışanlar | — |
-| 8 | Kullanılan model | glm-5.2 (`agents.brain`; MODEL_ROUTING_SPEC slot kuralına tabi) |
+| 8 | Kullanılan model | kaynak: canlı DB (`agents.brain`; MODEL_ROUTING_SPEC slot kuralına tabi) — kopya tutulmaz |
 | 9 | Fallback model | kaynak: canlı DB (`model_catalog.fallback_of`) — kopya tutulmaz |
 | 10 | Temel sorumluluklar | persona §1, §3 (işleme envanteri gözü + DPIA tetikleri + ihlal saati + DSAR akışı + AI-özgü veri riskleri) |
 | 11 | Yetki sınırları | persona §4 (izler ve tavsiye eder — İŞLEMEYİ yürütmez; bildirim kararı CEO'da, hukuki yorum GC'de) |

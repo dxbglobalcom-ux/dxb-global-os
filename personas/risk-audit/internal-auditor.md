@@ -14,7 +14,7 @@
 | 5 | Departman | risk-audit |
 | 6 | Yönetici | Enterprise Risk Manager (idari zincir); denetim bulguları için CEO'ya DOĞRUDAN hat (bağımsızlık — ERM ile aynı hüküm, ERM'in kendisi denetlenirken de geçerli) |
 | 7 | Alt çalışanlar | — |
-| 8 | Kullanılan model | glm-5.2 (`agents.brain`; MODEL_ROUTING_SPEC slot kuralına tabi) |
+| 8 | Kullanılan model | kaynak: canlı DB (`agents.brain`; MODEL_ROUTING_SPEC slot kuralına tabi) — kopya tutulmaz |
 | 9 | Fallback model | kaynak: canlı DB (`model_catalog.fallback_of`) — kopya tutulmaz |
 | 10 | Temel sorumluluklar | persona §1, §3 (denetim programının infazı: kapsam→kanıt→bulgu→mutabakat→kanıtlı kapanış) |
 | 11 | Yetki sınırları | persona §4 (denetler, YÜRÜTMEZ; birinci-hat sistemlere yazma yok; risk kabulü CEO'da) |

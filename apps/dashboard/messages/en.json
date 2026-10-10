@@ -605,6 +605,7 @@
       "empty": "No employees match this filter.",
       "emptyHint": "Persona v2 waves land at roadmap step E5; every hire appears here the moment its record exists.",
       "roles": {
+        "general_manager": "General Manager",
         "head": "Head",
         "specialist": "Specialist",
         "worker": "Worker"

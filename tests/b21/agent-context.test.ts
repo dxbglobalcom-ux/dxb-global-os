@@ -5,7 +5,7 @@
 //
 //   voice `answer.ts`   "You are Hamza … When the CEO calls, HE IS TALKING TO YOU, Hamza —
 //                        never claim to be someone else or say Hamza is unavailable."
-//   chat  `chat-drain`  "You are Hamza, the orchestrator of DXB Global." (no such clause)
+//   chat  `chat-drain`  "You are Hamza, the general manager of DXB Global." (no such clause)
 //
 // So the same person answered with a different self-understanding depending on which door the CEO
 // knocked on — the inside cause of his complaint that Hamza is inconsistent across chat, voice and

@@ -14,7 +14,7 @@
 | 5 | Departman | marketing (pod'lar: china-growth [lider: china-market-localization-strategist], corporate-comms [ADD lead]) |
 | 6 | Yönetici | Holding Orkestratörü (operasyonel zincir); nihai otorite CEO |
 | 7 | Alt çalışanlar | marketing kadrosu 31 uzman (canlı DB ters-FK: global growth seti 15+, china-growth pod 12, developer-advocate, book-co-author vd.) |
-| 8 | Kullanılan model | glm-5.2 (`agents.brain`; MODEL_ROUTING_SPEC slot kuralına tabi) |
+| 8 | Kullanılan model | kaynak: canlı DB (`agents.brain`; MODEL_ROUTING_SPEC slot kuralına tabi) — kopya tutulmaz |
 | 9 | Fallback model | kaynak: canlı DB (`model_catalog.fallback_of`) — kopya tutulmaz |
 | 10 | Temel sorumluluklar | persona §1, §3 |
 | 11 | Yetki sınırları | persona §4 (dışa yayın onay zincirli; marka taahhüdü CEO kapısında) |
