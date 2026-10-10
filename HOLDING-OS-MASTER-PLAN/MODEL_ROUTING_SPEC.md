@@ -441,3 +441,10 @@ place to move and nothing waits for a code change or a restart.
    `fallback_of` (≤ 4 hops) that is not mechanical-only and whose tier floor is not below the primary's —
    the SDK falls over silently and the run stays recorded under the primary, so an L1 run never quietly
    finishes on an L2 model; no such hop → no fallback.
+9. **The first succession (P4).** Through the door, as a migration (`20261010040000`) so the bench and a
+   fresh bootstrap hold the same law, the seed naming the successors: Opus 5 (`fable-5`) → Opus 5.5 and
+   Sonnet 5 → Sonnet 5.5 on the approved plan; the old judge `codex-5.6` retired onto Sol 6.1 on his judges
+   word — each call under the authority that says it. The old rows carried no token price (subscriptions,
+   no key), so the door reported `price_known = false`; until an old row carries a price the door cannot
+   see a rise. Opus 5.5 has no SDK fallback (its chain names Sonnet 5.5, below its floor). Undo in reverse:
+   Sonnet first, then Opus.

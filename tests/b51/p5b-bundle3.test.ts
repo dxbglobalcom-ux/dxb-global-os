@@ -61,14 +61,14 @@ describe("C2-3 — a workflow step carries its routing row's effort", () => {
   });
 
   it("a pinned model keeps its slot's effort; a pin without a slot takes the model's own top row", async () => {
-    const pinned = await resolveStepModel({ model_role_slot: "coding", model_id: "claude-sonnet-5" }, "low");
-    expect(pinned).toEqual({ model: "claude-sonnet-5", effort: await slotEffort("coding") });
+    const pinned = await resolveStepModel({ model_role_slot: "coding", model_id: "claude-sonnet-5-5" }, "low");
+    expect(pinned).toEqual({ model: "claude-sonnet-5-5", effort: await slotEffort("coding") });
 
     const top = await sql<{ effort: string }>`
-      SELECT effort FROM routing_rules WHERE model = 'claude-sonnet-5' AND enabled
+      SELECT effort FROM routing_rules WHERE model = 'claude-sonnet-5-5' AND enabled
        ORDER BY priority DESC LIMIT 1`.execute(db());
-    const bare = await resolveStepModel({ model_id: "claude-sonnet-5" }, "low");
-    expect(bare).toEqual({ model: "claude-sonnet-5", effort: top.rows[0].effort });
+    const bare = await resolveStepModel({ model_id: "claude-sonnet-5-5" }, "low");
+    expect(bare).toEqual({ model: "claude-sonnet-5-5", effort: top.rows[0].effort });
 
     expect(await resolveStepModel({ model_id: "no-such-routed-model" }, "low")).toEqual({
       model: "no-such-routed-model",
@@ -89,7 +89,7 @@ describe("C2-4 — a workflow step runs as its seat", () => {
     employeeId: "00000000-0000-4000-8000-000000000001",
     employeeSlug: "finance-controller",
     department: "finance",
-    model: "claude-sonnet-5",
+    model: "claude-sonnet-5-5",
     objective: "o",
     outputContract: "c",
     seat: { slug: "finance-controller", department: "finance", role_level: "director", persona_path: "p.md" },
@@ -163,33 +163,40 @@ describe("C2-9 — Hamza's standing layer is the cached system prompt", () => {
 describe("C2-12 — an Agent SDK call carries the catalogue's fallback", () => {
   it("follows fallback_of to the first live agent-sdk hop at or above the primary's tier floor", async () => {
     await inTrx(async (trx) => {
-      // the catalogue as it stands: fable-5.1 (L1) → fable-5 (L1) → claude-sonnet-5 (L2)
-      expect(await sdkModel(trx, "fable-5.1")).toEqual({ model: "claude-fable-5-1", fallbackModel: "claude-opus-5" });
+      // the catalogue since P4: fable-5.1 (L1) → claude-opus-5-5 (L1) → claude-sonnet-5-5 (L2)
+      expect(await sdkModel(trx, "fable-5.1")).toEqual({ model: "claude-fable-5-1", fallbackModel: "claude-opus-5-5" });
       // second eye's B1: an L1 Opus run never falls silently to Sonnet (L2) — no fallback rather than a lower one
-      expect(await sdkModel(trx, "fable-5")).toEqual({ model: "claude-opus-5" });
-      expect(await sdkModel(trx, "claude-sonnet-5")).toEqual({ model: "claude-sonnet-5" });
+      expect(await sdkModel(trx, "claude-opus-5-5")).toEqual({ model: "claude-opus-5-5" });
+      expect(await sdkModel(trx, "claude-sonnet-5-5")).toEqual({ model: "claude-sonnet-5-5" });
+      // a retired primary is refused before any chain is read
+      await expect(sdkModel(trx, "fable-5")).rejects.toThrow(/fable-5 is retired/);
       // falling UP is allowed: Sonnet (L2) to an L1 model (the chain is cut first — the catalogue refuses a cycle)
-      await sql`UPDATE model_catalog SET fallback_of = NULL WHERE id = 'fable-5'`.execute(trx);
-      await sql`UPDATE model_catalog SET fallback_of = 'fable-5' WHERE id = 'claude-sonnet-5'`.execute(trx);
-      expect(await sdkModel(trx, "claude-sonnet-5")).toEqual({ model: "claude-sonnet-5", fallbackModel: "claude-opus-5" });
+      await sql`UPDATE model_catalog SET fallback_of = NULL WHERE id = 'claude-opus-5-5'`.execute(trx);
+      await sql`UPDATE model_catalog SET fallback_of = 'claude-opus-5-5' WHERE id = 'claude-sonnet-5-5'`.execute(trx);
+      expect(await sdkModel(trx, "claude-sonnet-5-5")).toEqual({
+        model: "claude-sonnet-5-5",
+        fallbackModel: "claude-opus-5-5",
+      });
       // an alias resolves to its row, and the row's chain is used
-      await sql`UPDATE model_catalog SET fallback_of = NULL WHERE id IN ('claude-sonnet-5', 'fable-5.1')`.execute(trx);
-      await sql`UPDATE model_catalog SET fallback_of = 'fable-5.1' WHERE id = 'fable-5'`.execute(trx);
-      expect(await sdkModel(trx, "opus-5")).toEqual({ model: "claude-opus-5", fallbackModel: "claude-fable-5-1" });
+      await sql`UPDATE model_catalog SET aliases = aliases || '{p5b-probe-alias}' WHERE id = 'fable-5.1'`.execute(trx);
+      expect(await sdkModel(trx, "p5b-probe-alias")).toEqual({
+        model: "claude-fable-5-1",
+        fallbackModel: "claude-opus-5-5",
+      });
     });
   });
 
   it("passes over a retired, a Codex and a mechanical-only hop; four hops at most", async () => {
     await inTrx(async (trx) => {
-      // fable-5.1 → claude-opus-4-8 (retired) → gpt-6.1-sol (codex) → claude-haiku-5-5 (mechanical) → fable-5
+      // fable-5.1 → claude-opus-4-8 (retired) → gpt-6.1-sol (codex) → claude-haiku-5-5 (mechanical) → claude-opus-5-5
       await sql`UPDATE model_catalog SET fallback_of = 'claude-opus-4-8' WHERE id = 'fable-5.1'`.execute(trx);
       await sql`UPDATE model_catalog SET fallback_of = 'gpt-6.1-sol' WHERE id = 'claude-opus-4-8'`.execute(trx);
       await sql`UPDATE model_catalog SET fallback_of = 'claude-haiku-5-5' WHERE id = 'gpt-6.1-sol'`.execute(trx);
       await sql`UPDATE model_catalog SET status = 'active' WHERE id = 'claude-haiku-5-5'`.execute(trx);
-      await sql`UPDATE model_catalog SET fallback_of = 'fable-5' WHERE id = 'claude-haiku-5-5'`.execute(trx);
+      await sql`UPDATE model_catalog SET fallback_of = 'claude-opus-5-5' WHERE id = 'claude-haiku-5-5'`.execute(trx);
       expect(await sdkModel(trx, "fable-5.1")).toEqual({
         model: "claude-fable-5-1",
-        fallbackModel: "claude-opus-5",
+        fallbackModel: "claude-opus-5-5",
       });
       // one dead hop more in front (the retired claude-haiku-4-5) and the live model sits at hop 5: out of reach
       await sql`UPDATE model_catalog SET fallback_of = 'claude-opus-4-8' WHERE id = 'claude-haiku-4-5'`.execute(trx);

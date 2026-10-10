@@ -64,7 +64,7 @@ describe("§4f — the brain is a floor, never a ceiling", () => {
 
   it("RAISES: an Opus-brained employee runs a clerical task at the top tier", async () => {
     await inTrx(async (trx) => {
-      const id = await probeAgent(trx, "raise", "fable-5", "slot");
+      const id = await probeAgent(trx, "raise", "claude-opus-5-5", "slot");
       const r = await sql<{ tier: string }>`
         SELECT fn_effective_tier('L4', ${id}::uuid) AS tier
       `.execute(trx as never);
@@ -74,7 +74,7 @@ describe("§4f — the brain is a floor, never a ceiling", () => {
 
   it("NEVER LOWERS: a Sonnet-brained employee still runs a critical task at L1", async () => {
     await inTrx(async (trx) => {
-      const id = await probeAgent(trx, "nolower", "claude-sonnet-5", "slot");
+      const id = await probeAgent(trx, "nolower", "claude-sonnet-5-5", "slot");
       const r = await sql<{ tier: string }>`
         SELECT fn_effective_tier('L1', ${id}::uuid) AS tier
       `.execute(trx as never);
@@ -84,7 +84,7 @@ describe("§4f — the brain is a floor, never a ceiling", () => {
 
   it("leaves the task where it was for an unassigned brain and for no agent at all", async () => {
     await inTrx(async (trx) => {
-      const id = await probeAgent(trx, "placeholder", "fable-5", "default");
+      const id = await probeAgent(trx, "placeholder", "claude-opus-5-5", "default");
       const r = await sql<{ withagent: string; noagent: string }>`
         SELECT fn_effective_tier('L3', ${id}::uuid) AS withagent,
                fn_effective_tier('L3', NULL) AS noagent
@@ -118,20 +118,20 @@ describe("§4f — the brain is a floor, never a ceiling", () => {
 describe("§4b step 0 — a CEO-assigned brain wins the slot lane", () => {
   it("the override model is selected and the decision says so", async () => {
     await inTrx(async (trx) => {
-      const id = await probeAgent(trx, "override", "claude-sonnet-5", "ceo_override");
+      const id = await probeAgent(trx, "override", "claude-sonnet-5-5", "ceo_override");
       const r = await sql<{ out: { ok: boolean; model_id: string; source: string } }>`
         SELECT fn_select_model('coding', NULL, 'low', NULL, NULL, NULL, false, true,
                                ${id}::uuid) AS out
       `.execute(trx as never);
       expect(r.rows[0].out.ok).toBe(true);
-      expect(r.rows[0].out.model_id).toBe("claude-sonnet-5");
+      expect(r.rows[0].out.model_id).toBe("claude-sonnet-5-5");
       expect(r.rows[0].out.source).toBe("ceo_override");
     });
   });
 
   it("a 'slot' brain does NOT hijack the slot lane — only a CEO override does", async () => {
     await inTrx(async (trx) => {
-      const id = await probeAgent(trx, "slotbrain", "claude-sonnet-5", "slot");
+      const id = await probeAgent(trx, "slotbrain", "claude-sonnet-5-5", "slot");
       const r = await sql<{ out: { ok: boolean; source: string } }>`
         SELECT fn_select_model('coding', NULL, 'low', NULL, NULL, NULL, false, true,
                                ${id}::uuid) AS out
@@ -193,7 +193,7 @@ describe("§4f — the executor honours the floor (worker-shim wiring)", () => {
 
   it("an Opus-brained employee pulls a clerical task up to the L1 model", async () => {
     await inTrx(async (trx) => {
-      const id = await probeAgent(trx, "exec-raise", "fable-5", "slot");
+      const id = await probeAgent(trx, "exec-raise", "claude-opus-5-5", "slot");
       // resolveExecutionRoute reads through the pooled connection, so the probe
       // agent is committed-visible only inside this transaction: assert on the
       // SQL seam the executor calls, with the executor's own tier fallback.
@@ -206,7 +206,7 @@ describe("§4f — the executor honours the floor (worker-shim wiring)", () => {
          WHERE enabled AND model_tier = ${r.rows[0].tier}
          ORDER BY priority DESC, updated_at DESC LIMIT 1
       `.execute(trx as never);
-      expect(rule.rows[0].model).toBe("fable-5");
+      expect(rule.rows[0].model).toBe("claude-opus-5-5");
     });
   });
 

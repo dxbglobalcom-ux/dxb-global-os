@@ -49,10 +49,10 @@ let classRow = "";
 let opusSeat: string | null = null;
 
 beforeAll(async () => {
-  classRow = await rule({ task_class: `${P}.work`, model_tier: "L2", model: "claude-sonnet-5", effort: "xhigh", priority: -100 });
+  classRow = await rule({ task_class: `${P}.work`, model_tier: "L2", model: "claude-sonnet-5-5", effort: "xhigh", priority: -100 });
   // an employee whose brain raises an L2 task to L1 (§4f floor)
   const a = await sql<{ id: string }>`
-    SELECT id FROM agents WHERE brain = 'fable-5' AND employment_status <> 'archived' LIMIT 1
+    SELECT id FROM agents WHERE brain = 'claude-opus-5-5' AND employment_status <> 'archived' LIMIT 1
   `.execute(getDb());
   opusSeat = a.rows[0]?.id ?? null;
 });
@@ -88,7 +88,7 @@ describe("P3 — the class leads, the tier is the fallback", () => {
   it("a new department-less row, however high its priority, cannot take a tier from its seat", async () => {
     const before = await resolveExecutionRoute(task({ task_class: null, model_tier: "L1" }));
     expect(before.rule.role_slot).toBe("primary"); // the primary seat, never the alphabet's first (backup)
-    const hijack = await rule({ task_class: `${P}.loud`, model_tier: "L1", model: "claude-sonnet-5", effort: "low", priority: 10_000 });
+    const hijack = await rule({ task_class: `${P}.loud`, model_tier: "L1", model: "claude-sonnet-5-5", effort: "low", priority: 10_000 });
     const after = await resolveExecutionRoute(task({ task_class: null, model_tier: "L1" }));
     expect(after.rule.id).not.toBe(hijack);
     expect(after.rule.id).toBe(before.rule.id);
@@ -101,7 +101,7 @@ describe("P3 — the class leads, the tier is the fallback", () => {
     // a department with no department rows of its own, and one of its employees whose brain keeps L2 at L2
     const seat = await sql<{ id: string; dept: string }>`
       SELECT a.id, d.id AS dept FROM agents a JOIN departments d ON d.slug = a.department
-       WHERE a.brain = 'claude-sonnet-5' AND a.employment_status <> 'archived'
+       WHERE a.brain = 'claude-sonnet-5-5' AND a.employment_status <> 'archived'
          AND NOT EXISTS (SELECT 1 FROM routing_rules r WHERE r.department_id = d.id)
        LIMIT 1
     `.execute(getDb());
@@ -110,14 +110,14 @@ describe("P3 — the class leads, the tier is the fallback", () => {
     const deptRow = async (taskClass: string) => {
       const r = await sql<{ id: string }>`
         INSERT INTO routing_rules (task_class, match, model_tier, model, model_id, mode, effort, priority, enabled, department_id)
-        VALUES (${taskClass}, '{}', 'L2', 'claude-sonnet-5', 'claude-sonnet-5', 'subscription', 'high', -100, true, ${dept}::uuid)
+        VALUES (${taskClass}, '{}', 'L2', 'claude-sonnet-5-5', 'claude-sonnet-5-5', 'subscription', 'high', -100, true, ${dept}::uuid)
         RETURNING id
       `.execute(getDb());
       ids.push(r.rows[0].id);
       return r.rows[0].id;
     };
     const deptClass = await deptRow(`${P}.deptclass`);
-    const globalClass = await rule({ task_class: `${P}.global`, model_tier: "L2", model: "claude-sonnet-5", effort: "medium", priority: -100 });
+    const globalClass = await rule({ task_class: `${P}.global`, model_tier: "L2", model: "claude-sonnet-5-5", effort: "medium", priority: -100 });
     // (1) the department's row of the task's class
     expect((await resolveExecutionRoute(task({ task_class: `${P}.deptclass`, model_tier: "L2", agent_id: agent }))).rule.id).toBe(deptClass);
     // (2) beats (3): the department's own tier row takes the department's work of every class

@@ -11,7 +11,7 @@ dediğimde cart diye modeller güncellenmeli.* No API key exists — subscriptio
 | P1 | The catalogue is the one place every model id lives (below) | built 2026-10-10 — see "P1 as built" |
 | P2 | `fn_succeed_model(old, new, rationale, authority, key)` — one audited door moves routing rules, employees' brains, model settings and defaults, the gate's two judge seats and the fallback chain in one transaction; old row `retired`, never deleted, no alias; `fn_undo_succession` | built 2026-10-10 — MODEL_ROUTING_SPEC A-2026-10-10 §5 |
 | P3 | `resolveExecutionRoute` prefers the task's class row (department-scoped first), falls to tier when `task_class` is NULL — so move 3's efforts reach runs | built 2026-10-10 — A-2026-10-10 §6; goes live with P5 (one scheduler restart) |
-| P4 | First succession on the company through P2: Opus 5 → 5.5, Sonnet 5 → 5.5; `codex-5.6` retired through the door | not started |
+| P4 | First succession on the company through P2: Opus 5 → 5.5, Sonnet 5 → 5.5; `codex-5.6` retired through the door on his judges word (`all-brains-stay-current-gate-judges-2026-10-09`; the plan names only the first two) | migration 20261010040000 |
 | P5 | Move 3 efforts (critical decisions medium → xhigh, code → high, cheap work stays low) + bundle 3 (C2-3, C2-4, C2-9, C2-12, C2-13 — `.planning/quick/20261004-his-list/item3-report.md`) | P5a efforts built 2026-10-10 (A-2026-10-10 §7); P5b bundle 3 built 2026-10-10 (§8; C2-13 done in step 2) |
 | P6 | Hamza: level Genel Müdür, `role` → `general_manager`; talking seats on Opus 5.5 (`voice.answer` stays `low` until B12 measures `medium`); `orchestration`/`decompose` rows on Fable 5.1 (his 2026-09-21 word); SİCİL field 8 names no model | not started |
 | P7 | Haiku 5.5 beside Sonnet 5.5 on the same mechanical jobs (classify, summarize, subtitle) — result to him, his decision; B51's "Haiku never returns" stays until his word | not started |
@@ -46,7 +46,7 @@ P7's side-by-side test, not activated without his word. `fable-5` / `fable-5.1` 
 `api_model_id` = id, tier floor L1, not mechanical, status `active` (smoke-tested on their own lane — live gate runs
 5-7 on disk; a registered adaptation of §4c's "through LiteLLM" sentence: the smoke test runs on the model's own lane,
 no key). `gpt-6.1-sol.succeeds = codex-5.6` (testing, his 2026-08-26 word); `codex-5.6` retires in P4 through the door,
-never by hand. `display_name` = the name he sees (Sol 6.1 / Astra 6).
+never by hand, on his judges word (`all-brains-stay-current-gate-judges-2026-10-09`). `display_name` = the name he sees (Sol 6.1 / Astra 6).
 
 **P1.4 The judges are routing slot rows** (not a setting, not a role column): two rows, `role_slot`
 'gate_challenger_1' / 'gate_challenger_2', `task_class` 'slot.gate_challenger_1/2', department NULL, L1, model
@@ -143,3 +143,14 @@ extension; (iii) judge seats outside `routing_rules` (a catalogue column or a se
 - Open, outside P5b: when the SDK does fall over, nothing records the model that really ran (agent_runs keeps
   the primary) — report "Bulunan", its own small job. Plan mode on chat = two system-prompt variants = two
   cache keys (accepted). The cache hit itself is ⚠ UNVERIFIED (no live call made).
+
+## P4 as built (2026-10-10)
+- A migration that calls the door three times (guarded: skipped once the old row is retired), the seed's 22
+  rows moved to the successors, the bench first (battery), then the company. Calls 1-2 on the plan's key,
+  call 3 (codex-5.6 → gpt-6.1-sol) on `all-brains-stay-current-gate-judges-2026-10-09` (second eye's B1:
+  the plan never names codex-5.6).
+- After it: claude-opus-5-5.fallback_of = claude-sonnet-5-5 (L2, so no SDK fallback on Opus 5.5 — left as
+  the door wrote it); fable-5.1 → claude-opus-5-5; gpt-6.1-sol inherited codex-5.6's fallback
+  (claude-opus-5-5) — fn_model_fallback filters no lane, its one caller is select-model.ts; the gate reads
+  gate.challengers. Undo in reverse (2, then 1; 3 independent). Persona bodies name `fable-5` 812 times —
+  authorship records (author column, version comments), not brains; untouched.
