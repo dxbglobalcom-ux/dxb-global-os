@@ -1,0 +1,53 @@
+=== pending on the company before (2026-10-10T03:01:43+02:00) ===
+PENDING 20261010050000_b51_p4_opus_waits_for_the_sdk.sql
+=== fingerprint BEFORE ===
+B36 · company state fingerprint
+  tables in public          : 62
+  rows in public            : 18286
+  row fingerprint           : bd1b071ca58ec4e2
+  sequences (all schemas)   : 19
+  sequence fingerprint      : 07fcb769a369ecd8
+  large objects             : 0
+  audit_log / hook_violations: 10972/17
+STATE_FINGERPRINT b524f6faecc4d2e0
+=== bootstrap ===
+[bootstrap] preamble (bare-PG compat surface; admin plane)
+NOTICE:  extension "vector" already exists, skipping
+NOTICE:  schema "auth" already exists, skipping
+NOTICE:  schema "realtime" already exists, skipping
+NOTICE:  schema "supabase_migrations" already exists, skipping
+NOTICE:  relation "schema_migrations" already exists, skipping
+[bootstrap] pg-boss schema (library initializer)
+[bootstrap] pgboss schema ready
+[bootstrap] applying 20261010050000_b51_p4_opus_waits_for_the_sdk.sql
+NOTICE:  B51 P4: claude-opus-5-5 active → testing (no seat; the SDK cannot call it)
+[bootstrap] done — applied 1, skipped 177, ledger total 178
+bootstrap exit=0
+=== schema parity ===
+company      : 7674907968528752679 / postgres
+construction : 7690665340837392423 / postgres
+
+columns      company   639 cac5a80a3cc733e2  construction   639 cac5a80a3cc733e2  same
+constraints  company   255 fd86a8eb529b5852  construction   255 fd86a8eb529b5852  same
+indexes      company   124 c2f41611e7a22873  construction   124 c2f41611e7a22873  same
+functions    company   233 1ad6a1b4b9a78753  construction   233 1ad6a1b4b9a78753  same
+views        company    34 d03007d3df38bbc5  construction    34 8bdef3b0d98839bf  same after removing PostgreSQL's own default type labels
+    normalised : v_alerts_active ::  SELECT kind, …
+    1 view definition(s) matched only after that removal. Their OUTPUT columns are compared strictly under `view_columns` and are identical.
+view_columns company   461 72649692695f1e0b  construction   461 72649692695f1e0b  same
+policies     company    57 50677097944b0bcc  construction    57 50677097944b0bcc  same
+triggers     company    32 66c997417d0f5d90  construction    32 66c997417d0f5d90  same
+sequences    company    14 13b638eb4eab9ade  construction    14 13b638eb4eab9ade  same
+
+SCHEMA_PARITY — the two engines carry the same public schema, object for object.
+parity exit=0
+=== fingerprint AFTER ===
+B36 · company state fingerprint
+  tables in public          : 62
+  rows in public            : 18287
+  row fingerprint           : ed5f4fe21ccf1f1c
+  sequences (all schemas)   : 19
+  sequence fingerprint      : 96a0d87e884826bc
+  large objects             : 0
+  audit_log / hook_violations: 10973/17
+STATE_FINGERPRINT 5d5885213f24abcd
