@@ -1,0 +1,1618 @@
+{
+  "at": "2026-10-10T02:20:05.754Z",
+  "models": [
+    "claude-haiku-5-5",
+    "claude-sonnet-5-5"
+  ],
+  "effort": "low",
+  "path": "Agent SDK under companyIsolation() (the production lanes call LiteLLM, which has no key)",
+  "agreement_note": "same_answer counts identical answers, not correct ones",
+  "summary": {
+    "memory.classify": {
+      "per_model": {
+        "claude-haiku-5-5": {
+          "n": 20,
+          "valid": 17,
+          "served_as_asked": 20,
+          "median_duration_api_ms": 2807,
+          "median_duration_ms": 2119,
+          "median_ttft_ms": 2088,
+          "tokens_in": 17191,
+          "tokens_out": 4202
+        },
+        "claude-sonnet-5-5": {
+          "n": 20,
+          "valid": 20,
+          "served_as_asked": 20,
+          "median_duration_api_ms": 2642,
+          "median_duration_ms": 2058,
+          "median_ttft_ms": 2042,
+          "tokens_in": 17231,
+          "tokens_out": 567
+        }
+      },
+      "both_valid": 17,
+      "same_answer": 12
+    },
+    "summarize": {
+      "per_model": {
+        "claude-haiku-5-5": {
+          "n": 20,
+          "valid": 20,
+          "served_as_asked": 20,
+          "median_duration_api_ms": 3801,
+          "median_duration_ms": 3054,
+          "median_ttft_ms": 2947,
+          "tokens_in": 78728,
+          "tokens_out": 12542,
+          "facts_total": 165
+        },
+        "claude-sonnet-5-5": {
+          "n": 20,
+          "valid": 20,
+          "served_as_asked": 20,
+          "median_duration_api_ms": 8406,
+          "median_duration_ms": 7685,
+          "median_ttft_ms": 7679,
+          "tokens_in": 78768,
+          "tokens_out": 20940,
+          "facts_total": 211
+        }
+      },
+      "both_valid": 20
+    }
+  },
+  "items": [
+    {
+      "job": "memory.classify",
+      "id": "chat_messages:8bd3b16e-ed3a-4858-805e-94a4a9cd5d29",
+      "input_sha256_12": "f1867c25c85e",
+      "input_chars": 20,
+      "order": [
+        "claude-haiku-5-5",
+        "claude-sonnet-5-5"
+      ],
+      "out": {
+        "claude-haiku-5-5": {
+          "served": "claude-haiku-5-5",
+          "subtype": "success",
+          "is_error": false,
+          "valid": true,
+          "duration_ms": 2460,
+          "duration_api_ms": 2933,
+          "ttft_ms": 2286,
+          "tokens_in": 839,
+          "tokens_out": 251,
+          "answer": {
+            "store": "pgvector",
+            "kind": "fact"
+          }
+        },
+        "claude-sonnet-5-5": {
+          "served": "claude-sonnet-5-5",
+          "subtype": "success",
+          "is_error": false,
+          "valid": true,
+          "duration_ms": 1963,
+          "duration_api_ms": 2642,
+          "ttft_ms": 1958,
+          "tokens_in": 841,
+          "tokens_out": 20,
+          "answer": {
+            "store": "pgvector",
+            "kind": "fact"
+          }
+        }
+      }
+    },
+    {
+      "job": "memory.classify",
+      "id": "chat_messages:967d171a-b188-4749-839e-9b3337a5c22f",
+      "input_sha256_12": "e2ffe5f7207f",
+      "input_chars": 75,
+      "order": [
+        "claude-sonnet-5-5",
+        "claude-haiku-5-5"
+      ],
+      "out": {
+        "claude-haiku-5-5": {
+          "served": "claude-haiku-5-5",
+          "subtype": "success",
+          "is_error": false,
+          "valid": true,
+          "duration_ms": 2119,
+          "duration_api_ms": 3568,
+          "ttft_ms": 2088,
+          "tokens_in": 870,
+          "tokens_out": 227,
+          "answer": {
+            "store": "obsidian",
+            "kind": "artifact"
+          }
+        },
+        "claude-sonnet-5-5": {
+          "served": "claude-sonnet-5-5",
+          "subtype": "success",
+          "is_error": false,
+          "valid": true,
+          "duration_ms": 1528,
+          "duration_api_ms": 1300,
+          "ttft_ms": 1520,
+          "tokens_in": 872,
+          "tokens_out": 20,
+          "answer": {
+            "store": "notebook",
+            "kind": "procedure"
+          }
+        }
+      }
+    },
+    {
+      "job": "memory.classify",
+      "id": "chat_messages:648d5737-cadc-470c-b4e7-e4fc7f3796b2",
+      "input_sha256_12": "127825ca96fd",
+      "input_chars": 30,
+      "order": [
+        "claude-haiku-5-5",
+        "claude-sonnet-5-5"
+      ],
+      "out": {
+        "claude-haiku-5-5": {
+          "served": "claude-haiku-5-5",
+          "subtype": "success",
+          "is_error": false,
+          "valid": true,
+          "duration_ms": 1050,
+          "duration_api_ms": 1518,
+          "ttft_ms": 1044,
+          "tokens_in": 847,
+          "tokens_out": 20,
+          "answer": {
+            "store": "pgvector",
+            "kind": "fact"
+          }
+        },
+        "claude-sonnet-5-5": {
+          "served": "claude-sonnet-5-5",
+          "subtype": "success",
+          "is_error": false,
+          "valid": true,
+          "duration_ms": 1743,
+          "duration_api_ms": 2189,
+          "ttft_ms": 1623,
+          "tokens_in": 849,
+          "tokens_out": 20,
+          "answer": {
+            "store": "notebook",
+            "kind": "procedure"
+          }
+        }
+      }
+    },
+    {
+      "job": "memory.classify",
+      "id": "chat_messages:30732ba3-a075-46fb-b6cf-d61aaa74fa7c",
+      "input_sha256_12": "b097e2fa6f1c",
+      "input_chars": 77,
+      "order": [
+        "claude-sonnet-5-5",
+        "claude-haiku-5-5"
+      ],
+      "out": {
+        "claude-haiku-5-5": {
+          "served": "claude-haiku-5-5",
+          "subtype": "success",
+          "is_error": false,
+          "valid": true,
+          "duration_ms": 1956,
+          "duration_api_ms": 3003,
+          "ttft_ms": 1815,
+          "tokens_in": 865,
+          "tokens_out": 190,
+          "answer": {
+            "store": "graphify",
+            "kind": "relation"
+          }
+        },
+        "claude-sonnet-5-5": {
+          "served": "claude-sonnet-5-5",
+          "subtype": "success",
+          "is_error": false,
+          "valid": true,
+          "duration_ms": 3721,
+          "duration_api_ms": 4652,
+          "ttft_ms": 3716,
+          "tokens_in": 867,
+          "tokens_out": 19,
+          "answer": {
+            "store": "graphify",
+            "kind": "relation"
+          }
+        }
+      }
+    },
+    {
+      "job": "memory.classify",
+      "id": "chat_messages:1fba5175-3bc0-4b75-ac40-8b710157247f",
+      "input_sha256_12": "45ca5cbff15e",
+      "input_chars": 16,
+      "order": [
+        "claude-haiku-5-5",
+        "claude-sonnet-5-5"
+      ],
+      "out": {
+        "claude-haiku-5-5": {
+          "served": "claude-haiku-5-5",
+          "subtype": "success",
+          "is_error": false,
+          "valid": false,
+          "duration_ms": 3522,
+          "duration_api_ms": 3998,
+          "ttft_ms": 3086,
+          "tokens_in": 838,
+          "tokens_out": 474,
+          "answer": null
+        },
+        "claude-sonnet-5-5": {
+          "served": "claude-sonnet-5-5",
+          "subtype": "success",
+          "is_error": false,
+          "valid": true,
+          "duration_ms": 2016,
+          "duration_api_ms": 2483,
+          "ttft_ms": 2000,
+          "tokens_in": 840,
+          "tokens_out": 20,
+          "answer": {
+            "store": "pgvector",
+            "kind": "fact"
+          }
+        }
+      }
+    },
+    {
+      "job": "memory.classify",
+      "id": "chat_messages:d91be5e6-73b9-4b1c-8b8f-23a4f4bb3552",
+      "input_sha256_12": "ffcaceb8b51c",
+      "input_chars": 74,
+      "order": [
+        "claude-haiku-5-5",
+        "claude-sonnet-5-5"
+      ],
+      "out": {
+        "claude-haiku-5-5": {
+          "served": "claude-haiku-5-5",
+          "subtype": "success",
+          "is_error": false,
+          "valid": false,
+          "duration_ms": 3594,
+          "duration_api_ms": 4934,
+          "ttft_ms": 3579,
+          "tokens_in": 887,
+          "tokens_out": 492,
+          "answer": null
+        },
+        "claude-sonnet-5-5": {
+          "served": "claude-sonnet-5-5",
+          "subtype": "success",
+          "is_error": false,
+          "valid": true,
+          "duration_ms": 1588,
+          "duration_api_ms": 1152,
+          "ttft_ms": 1580,
+          "tokens_in": 889,
+          "tokens_out": 20,
+          "answer": {
+            "store": "pgvector",
+            "kind": "fact"
+          }
+        }
+      }
+    },
+    {
+      "job": "memory.classify",
+      "id": "chat_messages:52330ddc-fac8-41cb-b113-b7365d45a501",
+      "input_sha256_12": "7bc3211815f2",
+      "input_chars": 50,
+      "order": [
+        "claude-haiku-5-5",
+        "claude-sonnet-5-5"
+      ],
+      "out": {
+        "claude-haiku-5-5": {
+          "served": "claude-haiku-5-5",
+          "subtype": "success",
+          "is_error": false,
+          "valid": true,
+          "duration_ms": 1329,
+          "duration_api_ms": 886,
+          "ttft_ms": 1313,
+          "tokens_in": 860,
+          "tokens_out": 20,
+          "answer": {
+            "store": "notebook",
+            "kind": "procedure"
+          }
+        },
+        "claude-sonnet-5-5": {
+          "served": "claude-sonnet-5-5",
+          "subtype": "success",
+          "is_error": false,
+          "valid": true,
+          "duration_ms": 1741,
+          "duration_api_ms": 1352,
+          "ttft_ms": 1725,
+          "tokens_in": 862,
+          "tokens_out": 20,
+          "answer": {
+            "store": "notebook",
+            "kind": "procedure"
+          }
+        }
+      }
+    },
+    {
+      "job": "memory.classify",
+      "id": "chat_messages:58c9c6e4-7431-4279-bca3-04ea963977e9",
+      "input_sha256_12": "afd4805ce2ad",
+      "input_chars": 89,
+      "order": [
+        "claude-haiku-5-5",
+        "claude-sonnet-5-5"
+      ],
+      "out": {
+        "claude-haiku-5-5": {
+          "served": "claude-haiku-5-5",
+          "subtype": "success",
+          "is_error": false,
+          "valid": true,
+          "duration_ms": 2396,
+          "duration_api_ms": 4002,
+          "ttft_ms": 2274,
+          "tokens_in": 885,
+          "tokens_out": 297,
+          "answer": {
+            "store": "pgvector",
+            "kind": "fact"
+          }
+        },
+        "claude-sonnet-5-5": {
+          "served": "claude-sonnet-5-5",
+          "subtype": "success",
+          "is_error": false,
+          "valid": true,
+          "duration_ms": 2937,
+          "duration_api_ms": 4479,
+          "ttft_ms": 2920,
+          "tokens_in": 887,
+          "tokens_out": 20,
+          "answer": {
+            "store": "pgvector",
+            "kind": "fact"
+          }
+        }
+      }
+    },
+    {
+      "job": "memory.classify",
+      "id": "chat_messages:59bade12-79e7-456a-acbd-0e8faff46196",
+      "input_sha256_12": "c3f0a8c6b18c",
+      "input_chars": 29,
+      "order": [
+        "claude-haiku-5-5",
+        "claude-sonnet-5-5"
+      ],
+      "out": {
+        "claude-haiku-5-5": {
+          "served": "claude-haiku-5-5",
+          "subtype": "success",
+          "is_error": false,
+          "valid": true,
+          "duration_ms": 2420,
+          "duration_api_ms": 2807,
+          "ttft_ms": 2414,
+          "tokens_in": 844,
+          "tokens_out": 264,
+          "answer": {
+            "store": "notebook",
+            "kind": "procedure"
+          }
+        },
+        "claude-sonnet-5-5": {
+          "served": "claude-sonnet-5-5",
+          "subtype": "success",
+          "is_error": false,
+          "valid": true,
+          "duration_ms": 2916,
+          "duration_api_ms": 3364,
+          "ttft_ms": 2899,
+          "tokens_in": 846,
+          "tokens_out": 20,
+          "answer": {
+            "store": "notebook",
+            "kind": "procedure"
+          }
+        }
+      }
+    },
+    {
+      "job": "memory.classify",
+      "id": "chat_messages:4c9af340-b761-47e6-ae9a-4c2abdd08086",
+      "input_sha256_12": "cc8c1c9ec9e6",
+      "input_chars": 60,
+      "order": [
+        "claude-haiku-5-5",
+        "claude-sonnet-5-5"
+      ],
+      "out": {
+        "claude-haiku-5-5": {
+          "served": "claude-haiku-5-5",
+          "subtype": "success",
+          "is_error": false,
+          "valid": true,
+          "duration_ms": 1316,
+          "duration_api_ms": 1773,
+          "ttft_ms": 1303,
+          "tokens_in": 865,
+          "tokens_out": 20,
+          "answer": {
+            "store": "notebook",
+            "kind": "procedure"
+          }
+        },
+        "claude-sonnet-5-5": {
+          "served": "claude-sonnet-5-5",
+          "subtype": "success",
+          "is_error": false,
+          "valid": true,
+          "duration_ms": 3736,
+          "duration_api_ms": 4106,
+          "ttft_ms": 3731,
+          "tokens_in": 867,
+          "tokens_out": 20,
+          "answer": {
+            "store": "notebook",
+            "kind": "procedure"
+          }
+        }
+      }
+    },
+    {
+      "job": "memory.classify",
+      "id": "chat_messages:77dca2e8-3c14-4042-94ef-76a8054f7c12",
+      "input_sha256_12": "98dd0d3325aa",
+      "input_chars": 34,
+      "order": [
+        "claude-haiku-5-5",
+        "claude-sonnet-5-5"
+      ],
+      "out": {
+        "claude-haiku-5-5": {
+          "served": "claude-haiku-5-5",
+          "subtype": "success",
+          "is_error": false,
+          "valid": true,
+          "duration_ms": 1186,
+          "duration_api_ms": 745,
+          "ttft_ms": 1168,
+          "tokens_in": 847,
+          "tokens_out": 21,
+          "answer": {
+            "store": "obsidian",
+            "kind": "artifact"
+          }
+        },
+        "claude-sonnet-5-5": {
+          "served": "claude-sonnet-5-5",
+          "subtype": "success",
+          "is_error": false,
+          "valid": true,
+          "duration_ms": 1975,
+          "duration_api_ms": 2418,
+          "ttft_ms": 1970,
+          "tokens_in": 849,
+          "tokens_out": 21,
+          "answer": {
+            "store": "obsidian",
+            "kind": "artifact"
+          }
+        }
+      }
+    },
+    {
+      "job": "memory.classify",
+      "id": "chat_messages:2eee2dcd-0abb-432b-9a71-c80249ae22cc",
+      "input_sha256_12": "f44bb1eed94c",
+      "input_chars": 45,
+      "order": [
+        "claude-sonnet-5-5",
+        "claude-haiku-5-5"
+      ],
+      "out": {
+        "claude-haiku-5-5": {
+          "served": "claude-haiku-5-5",
+          "subtype": "success",
+          "is_error": false,
+          "valid": true,
+          "duration_ms": 2402,
+          "duration_api_ms": 2932,
+          "ttft_ms": 2396,
+          "tokens_in": 853,
+          "tokens_out": 263,
+          "answer": {
+            "store": "pgvector",
+            "kind": "fact"
+          }
+        },
+        "claude-sonnet-5-5": {
+          "served": "claude-sonnet-5-5",
+          "subtype": "success",
+          "is_error": false,
+          "valid": true,
+          "duration_ms": 3169,
+          "duration_api_ms": 3670,
+          "ttft_ms": 3152,
+          "tokens_in": 855,
+          "tokens_out": 20,
+          "answer": {
+            "store": "notebook",
+            "kind": "procedure"
+          }
+        }
+      }
+    },
+    {
+      "job": "memory.classify",
+      "id": "chat_messages:00effa31-71df-466c-ac0e-30860678f9e6",
+      "input_sha256_12": "04bff6c3f1e5",
+      "input_chars": 217,
+      "order": [
+        "claude-haiku-5-5",
+        "claude-sonnet-5-5"
+      ],
+      "out": {
+        "claude-haiku-5-5": {
+          "served": "claude-haiku-5-5",
+          "subtype": "success",
+          "is_error": false,
+          "valid": true,
+          "duration_ms": 2393,
+          "duration_api_ms": 2122,
+          "ttft_ms": 2267,
+          "tokens_in": 936,
+          "tokens_out": 251,
+          "answer": {
+            "store": "notebook",
+            "kind": "procedure"
+          }
+        },
+        "claude-sonnet-5-5": {
+          "served": "claude-sonnet-5-5",
+          "subtype": "success",
+          "is_error": false,
+          "valid": true,
+          "duration_ms": 2058,
+          "duration_api_ms": 1612,
+          "ttft_ms": 2042,
+          "tokens_in": 938,
+          "tokens_out": 20,
+          "answer": {
+            "store": "notebook",
+            "kind": "procedure"
+          }
+        }
+      }
+    },
+    {
+      "job": "memory.classify",
+      "id": "chat_messages:d7dc1e8e-d4dc-48cc-a864-534a2285c4f1",
+      "input_sha256_12": "0d5339c1f64a",
+      "input_chars": 31,
+      "order": [
+        "claude-sonnet-5-5",
+        "claude-haiku-5-5"
+      ],
+      "out": {
+        "claude-haiku-5-5": {
+          "served": "claude-haiku-5-5",
+          "subtype": "success",
+          "is_error": false,
+          "valid": true,
+          "duration_ms": 1145,
+          "duration_api_ms": 1396,
+          "ttft_ms": 1128,
+          "tokens_in": 846,
+          "tokens_out": 20,
+          "answer": {
+            "store": "pgvector",
+            "kind": "fact"
+          }
+        },
+        "claude-sonnet-5-5": {
+          "served": "claude-sonnet-5-5",
+          "subtype": "success",
+          "is_error": false,
+          "valid": true,
+          "duration_ms": 2637,
+          "duration_api_ms": 3092,
+          "ttft_ms": 2621,
+          "tokens_in": 848,
+          "tokens_out": 20,
+          "answer": {
+            "store": "notebook",
+            "kind": "procedure"
+          }
+        }
+      }
+    },
+    {
+      "job": "memory.classify",
+      "id": "chat_messages:ff9226c0-d44b-41f1-950f-e4af0bd9b4a9",
+      "input_sha256_12": "18d952f72ce2",
+      "input_chars": 37,
+      "order": [
+        "claude-sonnet-5-5",
+        "claude-haiku-5-5"
+      ],
+      "out": {
+        "claude-haiku-5-5": {
+          "served": "claude-haiku-5-5",
+          "subtype": "success",
+          "is_error": false,
+          "valid": true,
+          "duration_ms": 1338,
+          "duration_api_ms": 922,
+          "ttft_ms": 1318,
+          "tokens_in": 848,
+          "tokens_out": 20,
+          "answer": {
+            "store": "notebook",
+            "kind": "procedure"
+          }
+        },
+        "claude-sonnet-5-5": {
+          "served": "claude-sonnet-5-5",
+          "subtype": "success",
+          "is_error": false,
+          "valid": true,
+          "duration_ms": 3062,
+          "duration_api_ms": 3528,
+          "ttft_ms": 3057,
+          "tokens_in": 850,
+          "tokens_out": 20,
+          "answer": {
+            "store": "pgvector",
+            "kind": "fact"
+          }
+        }
+      }
+    },
+    {
+      "job": "memory.classify",
+      "id": "chat_messages:31c65779-aa79-49b3-a8bb-e8f4b52d4cb5",
+      "input_sha256_12": "85d155af272c",
+      "input_chars": 25,
+      "order": [
+        "claude-sonnet-5-5",
+        "claude-haiku-5-5"
+      ],
+      "out": {
+        "claude-haiku-5-5": {
+          "served": "claude-haiku-5-5",
+          "subtype": "success",
+          "is_error": false,
+          "valid": true,
+          "duration_ms": 2699,
+          "duration_api_ms": 3799,
+          "ttft_ms": 2662,
+          "tokens_in": 842,
+          "tokens_out": 303,
+          "answer": {
+            "store": "pgvector",
+            "kind": "fact"
+          }
+        },
+        "claude-sonnet-5-5": {
+          "served": "claude-sonnet-5-5",
+          "subtype": "success",
+          "is_error": false,
+          "valid": true,
+          "duration_ms": 1615,
+          "duration_api_ms": 1183,
+          "ttft_ms": 1607,
+          "tokens_in": 844,
+          "tokens_out": 20,
+          "answer": {
+            "store": "pgvector",
+            "kind": "fact"
+          }
+        }
+      }
+    },
+    {
+      "job": "memory.classify",
+      "id": "chat_messages:4737b78c-37d3-439f-830b-8095d72413a7",
+      "input_sha256_12": "0c2feb6827c1",
+      "input_chars": 46,
+      "order": [
+        "claude-haiku-5-5",
+        "claude-sonnet-5-5"
+      ],
+      "out": {
+        "claude-haiku-5-5": {
+          "served": "claude-haiku-5-5",
+          "subtype": "success",
+          "is_error": false,
+          "valid": true,
+          "duration_ms": 2839,
+          "duration_api_ms": 4217,
+          "ttft_ms": 2683,
+          "tokens_in": 853,
+          "tokens_out": 331,
+          "answer": {
+            "store": "notebook",
+            "kind": "procedure"
+          }
+        },
+        "claude-sonnet-5-5": {
+          "served": "claude-sonnet-5-5",
+          "subtype": "success",
+          "is_error": false,
+          "valid": true,
+          "duration_ms": 3722,
+          "duration_api_ms": 5043,
+          "ttft_ms": 3716,
+          "tokens_in": 855,
+          "tokens_out": 20,
+          "answer": {
+            "store": "notebook",
+            "kind": "procedure"
+          }
+        }
+      }
+    },
+    {
+      "job": "memory.classify",
+      "id": "chat_messages:78405c26-0d7b-418f-bf85-ddd6c4681156",
+      "input_sha256_12": "c1fd4d969070",
+      "input_chars": 35,
+      "order": [
+        "claude-sonnet-5-5",
+        "claude-haiku-5-5"
+      ],
+      "out": {
+        "claude-haiku-5-5": {
+          "served": "claude-haiku-5-5",
+          "subtype": "success",
+          "is_error": false,
+          "valid": true,
+          "duration_ms": 1334,
+          "duration_api_ms": 1769,
+          "ttft_ms": 1321,
+          "tokens_in": 846,
+          "tokens_out": 21,
+          "answer": {
+            "store": "obsidian",
+            "kind": "artifact"
+          }
+        },
+        "claude-sonnet-5-5": {
+          "served": "claude-sonnet-5-5",
+          "subtype": "success",
+          "is_error": false,
+          "valid": true,
+          "duration_ms": 1494,
+          "duration_api_ms": 1974,
+          "ttft_ms": 1489,
+          "tokens_in": 848,
+          "tokens_out": 21,
+          "answer": {
+            "store": "obsidian",
+            "kind": "artifact"
+          }
+        }
+      }
+    },
+    {
+      "job": "memory.classify",
+      "id": "chat_messages:8fb5122a-e3cc-4607-a2fd-722f22647b91",
+      "input_sha256_12": "9c2de2a8cb51",
+      "input_chars": 65,
+      "order": [
+        "claude-haiku-5-5",
+        "claude-sonnet-5-5"
+      ],
+      "out": {
+        "claude-haiku-5-5": {
+          "served": "claude-haiku-5-5",
+          "subtype": "success",
+          "is_error": false,
+          "valid": true,
+          "duration_ms": 1962,
+          "duration_api_ms": 1536,
+          "ttft_ms": 1656,
+          "tokens_in": 864,
+          "tokens_out": 134,
+          "answer": {
+            "store": "notebook",
+            "kind": "procedure"
+          }
+        },
+        "claude-sonnet-5-5": {
+          "served": "claude-sonnet-5-5",
+          "subtype": "success",
+          "is_error": false,
+          "valid": true,
+          "duration_ms": 4711,
+          "duration_api_ms": 6486,
+          "ttft_ms": 4439,
+          "tokens_in": 866,
+          "tokens_out": 186,
+          "answer": {
+            "store": "notebook",
+            "kind": "procedure"
+          }
+        }
+      }
+    },
+    {
+      "job": "memory.classify",
+      "id": "chat_messages:074f5c67-70f3-4315-8cc5-cd7e1e791de8",
+      "input_sha256_12": "ac109e7ebdb7",
+      "input_chars": 50,
+      "order": [
+        "claude-haiku-5-5",
+        "claude-sonnet-5-5"
+      ],
+      "out": {
+        "claude-haiku-5-5": {
+          "served": "claude-haiku-5-5",
+          "subtype": "success",
+          "is_error": false,
+          "valid": false,
+          "duration_ms": 4105,
+          "duration_api_ms": 5246,
+          "ttft_ms": 3045,
+          "tokens_in": 856,
+          "tokens_out": 583,
+          "answer": null
+        },
+        "claude-sonnet-5-5": {
+          "served": "claude-sonnet-5-5",
+          "subtype": "success",
+          "is_error": false,
+          "valid": true,
+          "duration_ms": 2441,
+          "duration_api_ms": 2955,
+          "ttft_ms": 2424,
+          "tokens_in": 858,
+          "tokens_out": 20,
+          "answer": {
+            "store": "notebook",
+            "kind": "procedure"
+          }
+        }
+      }
+    },
+    {
+      "job": "summarize",
+      "id": "tasks:0cd4a1a0-9c43-49f9-a04c-cc87b399ed53",
+      "input_sha256_12": "282a41dbe6cd",
+      "input_chars": 8000,
+      "order": [
+        "claude-haiku-5-5",
+        "claude-sonnet-5-5"
+      ],
+      "out": {
+        "claude-haiku-5-5": {
+          "served": "claude-haiku-5-5",
+          "subtype": "success",
+          "is_error": false,
+          "valid": true,
+          "duration_ms": 3251,
+          "duration_api_ms": 3820,
+          "ttft_ms": 3246,
+          "tokens_in": 4171,
+          "tokens_out": 562,
+          "facts": 7
+        },
+        "claude-sonnet-5-5": {
+          "served": "claude-sonnet-5-5",
+          "subtype": "success",
+          "is_error": false,
+          "valid": true,
+          "duration_ms": 8791,
+          "duration_api_ms": 9478,
+          "ttft_ms": 8786,
+          "tokens_in": 4173,
+          "tokens_out": 1319,
+          "facts": 11
+        }
+      }
+    },
+    {
+      "job": "summarize",
+      "id": "tasks:b2e23f11-bb12-4711-a189-1b753ab62c9f",
+      "input_sha256_12": "b001eb50a4e4",
+      "input_chars": 8000,
+      "order": [
+        "claude-sonnet-5-5",
+        "claude-haiku-5-5"
+      ],
+      "out": {
+        "claude-haiku-5-5": {
+          "served": "claude-haiku-5-5",
+          "subtype": "success",
+          "is_error": false,
+          "valid": true,
+          "duration_ms": 3197,
+          "duration_api_ms": 3527,
+          "ttft_ms": 3182,
+          "tokens_in": 4353,
+          "tokens_out": 488,
+          "facts": 8
+        },
+        "claude-sonnet-5-5": {
+          "served": "claude-sonnet-5-5",
+          "subtype": "success",
+          "is_error": false,
+          "valid": true,
+          "duration_ms": 6676,
+          "duration_api_ms": 8287,
+          "ttft_ms": 6662,
+          "tokens_in": 4355,
+          "tokens_out": 842,
+          "facts": 9
+        }
+      }
+    },
+    {
+      "job": "summarize",
+      "id": "tasks:eb531a1a-9af1-4517-833d-1ee889badf10",
+      "input_sha256_12": "ea3635eee9b8",
+      "input_chars": 7818,
+      "order": [
+        "claude-haiku-5-5",
+        "claude-sonnet-5-5"
+      ],
+      "out": {
+        "claude-haiku-5-5": {
+          "served": "claude-haiku-5-5",
+          "subtype": "success",
+          "is_error": false,
+          "valid": true,
+          "duration_ms": 2799,
+          "duration_api_ms": 2414,
+          "ttft_ms": 2791,
+          "tokens_in": 4178,
+          "tokens_out": 439,
+          "facts": 6
+        },
+        "claude-sonnet-5-5": {
+          "served": "claude-sonnet-5-5",
+          "subtype": "success",
+          "is_error": false,
+          "valid": true,
+          "duration_ms": 8368,
+          "duration_api_ms": 8877,
+          "ttft_ms": 8354,
+          "tokens_in": 4180,
+          "tokens_out": 1191,
+          "facts": 17
+        }
+      }
+    },
+    {
+      "job": "summarize",
+      "id": "tasks:20fab84f-4048-4535-a404-75645b48d969",
+      "input_sha256_12": "e8ace2a7979e",
+      "input_chars": 6605,
+      "order": [
+        "claude-sonnet-5-5",
+        "claude-haiku-5-5"
+      ],
+      "out": {
+        "claude-haiku-5-5": {
+          "served": "claude-haiku-5-5",
+          "subtype": "success",
+          "is_error": false,
+          "valid": true,
+          "duration_ms": 2953,
+          "duration_api_ms": 3536,
+          "ttft_ms": 2947,
+          "tokens_in": 3563,
+          "tokens_out": 477,
+          "facts": 6
+        },
+        "claude-sonnet-5-5": {
+          "served": "claude-sonnet-5-5",
+          "subtype": "success",
+          "is_error": false,
+          "valid": true,
+          "duration_ms": 7287,
+          "duration_api_ms": 7577,
+          "ttft_ms": 7271,
+          "tokens_in": 3565,
+          "tokens_out": 962,
+          "facts": 10
+        }
+      }
+    },
+    {
+      "job": "summarize",
+      "id": "tasks:0d750689-6490-493a-8c48-2fbf7f9e7f22",
+      "input_sha256_12": "6dd1b136f7f2",
+      "input_chars": 7294,
+      "order": [
+        "claude-sonnet-5-5",
+        "claude-haiku-5-5"
+      ],
+      "out": {
+        "claude-haiku-5-5": {
+          "served": "claude-haiku-5-5",
+          "subtype": "success",
+          "is_error": false,
+          "valid": true,
+          "duration_ms": 3053,
+          "duration_api_ms": 3689,
+          "ttft_ms": 3048,
+          "tokens_in": 4066,
+          "tokens_out": 511,
+          "facts": 6
+        },
+        "claude-sonnet-5-5": {
+          "served": "claude-sonnet-5-5",
+          "subtype": "success",
+          "is_error": false,
+          "valid": true,
+          "duration_ms": 8553,
+          "duration_api_ms": 8967,
+          "ttft_ms": 8546,
+          "tokens_in": 4068,
+          "tokens_out": 1187,
+          "facts": 14
+        }
+      }
+    },
+    {
+      "job": "summarize",
+      "id": "tasks:f44681e8-22de-41f1-96b3-e925065e2285",
+      "input_sha256_12": "d9fedbfbff9d",
+      "input_chars": 7327,
+      "order": [
+        "claude-haiku-5-5",
+        "claude-sonnet-5-5"
+      ],
+      "out": {
+        "claude-haiku-5-5": {
+          "served": "claude-haiku-5-5",
+          "subtype": "success",
+          "is_error": false,
+          "valid": true,
+          "duration_ms": 2888,
+          "duration_api_ms": 3353,
+          "ttft_ms": 2872,
+          "tokens_in": 3799,
+          "tokens_out": 491,
+          "facts": 6
+        },
+        "claude-sonnet-5-5": {
+          "served": "claude-sonnet-5-5",
+          "subtype": "success",
+          "is_error": false,
+          "valid": true,
+          "duration_ms": 7025,
+          "duration_api_ms": 7499,
+          "ttft_ms": 7010,
+          "tokens_in": 3801,
+          "tokens_out": 888,
+          "facts": 9
+        }
+      }
+    },
+    {
+      "job": "summarize",
+      "id": "tasks:222b0bdd-b565-4ce7-ad91-79054dce4297",
+      "input_sha256_12": "f4e981fb158a",
+      "input_chars": 7772,
+      "order": [
+        "claude-haiku-5-5",
+        "claude-sonnet-5-5"
+      ],
+      "out": {
+        "claude-haiku-5-5": {
+          "served": "claude-haiku-5-5",
+          "subtype": "success",
+          "is_error": false,
+          "valid": true,
+          "duration_ms": 2639,
+          "duration_api_ms": 3316,
+          "ttft_ms": 2625,
+          "tokens_in": 4053,
+          "tokens_out": 472,
+          "facts": 6
+        },
+        "claude-sonnet-5-5": {
+          "served": "claude-sonnet-5-5",
+          "subtype": "success",
+          "is_error": false,
+          "valid": true,
+          "duration_ms": 5918,
+          "duration_api_ms": 7098,
+          "ttft_ms": 5770,
+          "tokens_in": 4055,
+          "tokens_out": 721,
+          "facts": 7
+        }
+      }
+    },
+    {
+      "job": "summarize",
+      "id": "tasks:3c9ea472-3d4b-47d4-a3a9-9b19684b45d4",
+      "input_sha256_12": "e06b412a481f",
+      "input_chars": 7988,
+      "order": [
+        "claude-haiku-5-5",
+        "claude-sonnet-5-5"
+      ],
+      "out": {
+        "claude-haiku-5-5": {
+          "served": "claude-haiku-5-5",
+          "subtype": "success",
+          "is_error": false,
+          "valid": true,
+          "duration_ms": 6357,
+          "duration_api_ms": 8132,
+          "ttft_ms": 2018,
+          "tokens_in": 4170,
+          "tokens_out": 1308,
+          "facts": 14
+        },
+        "claude-sonnet-5-5": {
+          "served": "claude-sonnet-5-5",
+          "subtype": "success",
+          "is_error": false,
+          "valid": true,
+          "duration_ms": 10169,
+          "duration_api_ms": 12340,
+          "ttft_ms": 10152,
+          "tokens_in": 4172,
+          "tokens_out": 1476,
+          "facts": 14
+        }
+      }
+    },
+    {
+      "job": "summarize",
+      "id": "tasks:d03b8d71-7019-4130-ac2b-1706ccc4e7a5",
+      "input_sha256_12": "e37d87f13719",
+      "input_chars": 8000,
+      "order": [
+        "claude-sonnet-5-5",
+        "claude-haiku-5-5"
+      ],
+      "out": {
+        "claude-haiku-5-5": {
+          "served": "claude-haiku-5-5",
+          "subtype": "success",
+          "is_error": false,
+          "valid": true,
+          "duration_ms": 6080,
+          "duration_api_ms": 6553,
+          "ttft_ms": 3722,
+          "tokens_in": 4112,
+          "tokens_out": 1279,
+          "facts": 10
+        },
+        "claude-sonnet-5-5": {
+          "served": "claude-sonnet-5-5",
+          "subtype": "success",
+          "is_error": false,
+          "valid": true,
+          "duration_ms": 10453,
+          "duration_api_ms": 10984,
+          "ttft_ms": 10447,
+          "tokens_in": 4114,
+          "tokens_out": 1371,
+          "facts": 11
+        }
+      }
+    },
+    {
+      "job": "summarize",
+      "id": "tasks:576c0ad7-defc-43ed-8f97-22586246d5ce",
+      "input_sha256_12": "8123e9c3e9e3",
+      "input_chars": 8000,
+      "order": [
+        "claude-sonnet-5-5",
+        "claude-haiku-5-5"
+      ],
+      "out": {
+        "claude-haiku-5-5": {
+          "served": "claude-haiku-5-5",
+          "subtype": "success",
+          "is_error": false,
+          "valid": true,
+          "duration_ms": 2876,
+          "duration_api_ms": 4202,
+          "ttft_ms": 2861,
+          "tokens_in": 4199,
+          "tokens_out": 477,
+          "facts": 6
+        },
+        "claude-sonnet-5-5": {
+          "served": "claude-sonnet-5-5",
+          "subtype": "success",
+          "is_error": false,
+          "valid": true,
+          "duration_ms": 8825,
+          "duration_api_ms": 9859,
+          "ttft_ms": 8820,
+          "tokens_in": 4201,
+          "tokens_out": 1130,
+          "facts": 12
+        }
+      }
+    },
+    {
+      "job": "summarize",
+      "id": "tasks:f946af15-e13e-4159-b9a9-3e2ee9b08319",
+      "input_sha256_12": "988777377653",
+      "input_chars": 8000,
+      "order": [
+        "claude-sonnet-5-5",
+        "claude-haiku-5-5"
+      ],
+      "out": {
+        "claude-haiku-5-5": {
+          "served": "claude-haiku-5-5",
+          "subtype": "success",
+          "is_error": false,
+          "valid": true,
+          "duration_ms": 3054,
+          "duration_api_ms": 3589,
+          "ttft_ms": 3048,
+          "tokens_in": 4304,
+          "tokens_out": 530,
+          "facts": 10
+        },
+        "claude-sonnet-5-5": {
+          "served": "claude-sonnet-5-5",
+          "subtype": "success",
+          "is_error": false,
+          "valid": true,
+          "duration_ms": 7871,
+          "duration_api_ms": 8406,
+          "ttft_ms": 7866,
+          "tokens_in": 4306,
+          "tokens_out": 998,
+          "facts": 9
+        }
+      }
+    },
+    {
+      "job": "summarize",
+      "id": "tasks:c9d2dccf-436f-4109-a593-a0551e176e7e",
+      "input_sha256_12": "b9a0a4b1c2c0",
+      "input_chars": 8000,
+      "order": [
+        "claude-sonnet-5-5",
+        "claude-haiku-5-5"
+      ],
+      "out": {
+        "claude-haiku-5-5": {
+          "served": "claude-haiku-5-5",
+          "subtype": "success",
+          "is_error": false,
+          "valid": true,
+          "duration_ms": 3326,
+          "duration_api_ms": 3879,
+          "ttft_ms": 3308,
+          "tokens_in": 4238,
+          "tokens_out": 658,
+          "facts": 10
+        },
+        "claude-sonnet-5-5": {
+          "served": "claude-sonnet-5-5",
+          "subtype": "success",
+          "is_error": false,
+          "valid": true,
+          "duration_ms": 8114,
+          "duration_api_ms": 8573,
+          "ttft_ms": 8107,
+          "tokens_in": 4240,
+          "tokens_out": 1106,
+          "facts": 12
+        }
+      }
+    },
+    {
+      "job": "summarize",
+      "id": "tasks:b5dbc4c2-68d8-47c7-a615-37f86cb10c41",
+      "input_sha256_12": "b9abdd08e95b",
+      "input_chars": 8000,
+      "order": [
+        "claude-haiku-5-5",
+        "claude-sonnet-5-5"
+      ],
+      "out": {
+        "claude-haiku-5-5": {
+          "served": "claude-haiku-5-5",
+          "subtype": "success",
+          "is_error": false,
+          "valid": true,
+          "duration_ms": 2735,
+          "duration_api_ms": 3167,
+          "ttft_ms": 2721,
+          "tokens_in": 4333,
+          "tokens_out": 461,
+          "facts": 8
+        },
+        "claude-sonnet-5-5": {
+          "served": "claude-sonnet-5-5",
+          "subtype": "success",
+          "is_error": false,
+          "valid": true,
+          "duration_ms": 7685,
+          "duration_api_ms": 9024,
+          "ttft_ms": 7679,
+          "tokens_in": 4335,
+          "tokens_out": 1031,
+          "facts": 10
+        }
+      }
+    },
+    {
+      "job": "summarize",
+      "id": "tasks:e3100825-630f-494f-a333-88bd96eaa5b9",
+      "input_sha256_12": "9c8881f6eddd",
+      "input_chars": 8000,
+      "order": [
+        "claude-haiku-5-5",
+        "claude-sonnet-5-5"
+      ],
+      "out": {
+        "claude-haiku-5-5": {
+          "served": "claude-haiku-5-5",
+          "subtype": "success",
+          "is_error": false,
+          "valid": true,
+          "duration_ms": 3567,
+          "duration_api_ms": 4030,
+          "ttft_ms": 3550,
+          "tokens_in": 3992,
+          "tokens_out": 588,
+          "facts": 8
+        },
+        "claude-sonnet-5-5": {
+          "served": "claude-sonnet-5-5",
+          "subtype": "success",
+          "is_error": false,
+          "valid": true,
+          "duration_ms": 6156,
+          "duration_api_ms": 6597,
+          "ttft_ms": 6150,
+          "tokens_in": 3994,
+          "tokens_out": 724,
+          "facts": 7
+        }
+      }
+    },
+    {
+      "job": "summarize",
+      "id": "tasks:dd76b31e-0afb-44a0-acd2-65bc7e66eddf",
+      "input_sha256_12": "d35b4540ac8b",
+      "input_chars": 7934,
+      "order": [
+        "claude-sonnet-5-5",
+        "claude-haiku-5-5"
+      ],
+      "out": {
+        "claude-haiku-5-5": {
+          "served": "claude-haiku-5-5",
+          "subtype": "success",
+          "is_error": false,
+          "valid": true,
+          "duration_ms": 2684,
+          "duration_api_ms": 3801,
+          "ttft_ms": 2671,
+          "tokens_in": 4179,
+          "tokens_out": 460,
+          "facts": 8
+        },
+        "claude-sonnet-5-5": {
+          "served": "claude-sonnet-5-5",
+          "subtype": "success",
+          "is_error": false,
+          "valid": true,
+          "duration_ms": 6800,
+          "duration_api_ms": 8162,
+          "ttft_ms": 6673,
+          "tokens_in": 4181,
+          "tokens_out": 937,
+          "facts": 9
+        }
+      }
+    },
+    {
+      "job": "summarize",
+      "id": "tasks:09ed6e14-9dc5-4ee1-9e87-bc0c47586d9e",
+      "input_sha256_12": "f1d3337d0c6d",
+      "input_chars": 8000,
+      "order": [
+        "claude-haiku-5-5",
+        "claude-sonnet-5-5"
+      ],
+      "out": {
+        "claude-haiku-5-5": {
+          "served": "claude-haiku-5-5",
+          "subtype": "success",
+          "is_error": false,
+          "valid": true,
+          "duration_ms": 3746,
+          "duration_api_ms": 5341,
+          "ttft_ms": 3730,
+          "tokens_in": 4195,
+          "tokens_out": 714,
+          "facts": 10
+        },
+        "claude-sonnet-5-5": {
+          "served": "claude-sonnet-5-5",
+          "subtype": "success",
+          "is_error": false,
+          "valid": true,
+          "duration_ms": 12498,
+          "duration_api_ms": 13863,
+          "ttft_ms": 12492,
+          "tokens_in": 4197,
+          "tokens_out": 1751,
+          "facts": 13
+        }
+      }
+    },
+    {
+      "job": "summarize",
+      "id": "tasks:0e5f1817-c024-4dcf-bdda-fb7bb0d8768f",
+      "input_sha256_12": "fdd10aaeec1d",
+      "input_chars": 4217,
+      "order": [
+        "claude-haiku-5-5",
+        "claude-sonnet-5-5"
+      ],
+      "out": {
+        "claude-haiku-5-5": {
+          "served": "claude-haiku-5-5",
+          "subtype": "success",
+          "is_error": false,
+          "valid": true,
+          "duration_ms": 4154,
+          "duration_api_ms": 4726,
+          "ttft_ms": 1973,
+          "tokens_in": 2275,
+          "tokens_out": 828,
+          "facts": 8
+        },
+        "claude-sonnet-5-5": {
+          "served": "claude-sonnet-5-5",
+          "subtype": "success",
+          "is_error": false,
+          "valid": true,
+          "duration_ms": 5474,
+          "duration_api_ms": 7107,
+          "ttft_ms": 5458,
+          "tokens_in": 2277,
+          "tokens_out": 714,
+          "facts": 8
+        }
+      }
+    },
+    {
+      "job": "summarize",
+      "id": "tasks:7e4ceb09-87b9-4ab6-bd4a-593c3bbb2853",
+      "input_sha256_12": "e1e5f3f9d8e2",
+      "input_chars": 5724,
+      "order": [
+        "claude-haiku-5-5",
+        "claude-sonnet-5-5"
+      ],
+      "out": {
+        "claude-haiku-5-5": {
+          "served": "claude-haiku-5-5",
+          "subtype": "success",
+          "is_error": false,
+          "valid": true,
+          "duration_ms": 4336,
+          "duration_api_ms": 5488,
+          "ttft_ms": 4330,
+          "tokens_in": 3371,
+          "tokens_out": 975,
+          "facts": 13
+        },
+        "claude-sonnet-5-5": {
+          "served": "claude-sonnet-5-5",
+          "subtype": "success",
+          "is_error": false,
+          "valid": true,
+          "duration_ms": 6585,
+          "duration_api_ms": 7035,
+          "ttft_ms": 6578,
+          "tokens_in": 3373,
+          "tokens_out": 859,
+          "facts": 9
+        }
+      }
+    },
+    {
+      "job": "summarize",
+      "id": "tasks:b43ca570-0903-4000-8000-00000000c001",
+      "input_sha256_12": "2e2f2d10848c",
+      "input_chars": 8000,
+      "order": [
+        "claude-haiku-5-5",
+        "claude-sonnet-5-5"
+      ],
+      "out": {
+        "claude-haiku-5-5": {
+          "served": "claude-haiku-5-5",
+          "subtype": "success",
+          "is_error": false,
+          "valid": true,
+          "duration_ms": 2219,
+          "duration_api_ms": 2938,
+          "ttft_ms": 2202,
+          "tokens_in": 4388,
+          "tokens_out": 356,
+          "facts": 8
+        },
+        "claude-sonnet-5-5": {
+          "served": "claude-sonnet-5-5",
+          "subtype": "success",
+          "is_error": false,
+          "valid": true,
+          "duration_ms": 7821,
+          "duration_api_ms": 8410,
+          "ttft_ms": 7814,
+          "tokens_in": 4390,
+          "tokens_out": 955,
+          "facts": 11
+        }
+      }
+    },
+    {
+      "job": "summarize",
+      "id": "tasks:abb65adc-59c2-436d-8951-49fc0268e028",
+      "input_sha256_12": "458dc53a0487",
+      "input_chars": 5531,
+      "order": [
+        "claude-haiku-5-5",
+        "claude-sonnet-5-5"
+      ],
+      "out": {
+        "claude-haiku-5-5": {
+          "served": "claude-haiku-5-5",
+          "subtype": "success",
+          "is_error": false,
+          "valid": true,
+          "duration_ms": 3058,
+          "duration_api_ms": 4644,
+          "ttft_ms": 3052,
+          "tokens_in": 2789,
+          "tokens_out": 468,
+          "facts": 7
+        },
+        "claude-sonnet-5-5": {
+          "served": "claude-sonnet-5-5",
+          "subtype": "success",
+          "is_error": false,
+          "valid": true,
+          "duration_ms": 5708,
+          "duration_api_ms": 7988,
+          "ttft_ms": 5702,
+          "tokens_in": 2791,
+          "tokens_out": 778,
+          "facts": 9
+        }
+      }
+    }
+  ]
+}

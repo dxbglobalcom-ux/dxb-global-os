@@ -1,0 +1,6 @@
+# dxb-scheduler restart for P7's lane refactor (memory-router classify-read, orchestrator context-budget: prompts + parsers exported, behaviour unchanged), 2026-10-10T04:26:22+02:00
+ActiveEnterTimestamp=Sat 2026-10-10 04:08:25 CEST
+ActiveState=active
+ActiveEnterTimestamp=Sat 2026-10-10 04:26:22 CEST
+[memory] root=/home/dxb/.local/share/dxb/company-claude notes=1
+[scheduler] the studio's hands: 4 lanes running — 1 for the card, 3 for the processor (first tick)

@@ -1,0 +1,102 @@
+(node:2650700) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+memory.classify chat_messages:8bd3b16e-ed3a-4858-805e-94a4a9cd5d29 haiku ok 2933ms · sonnet ok 2642ms
+memory.classify chat_messages:967d171a-b188-4749-839e-9b3337a5c22f haiku ok 3568ms · sonnet ok 1300ms
+memory.classify chat_messages:648d5737-cadc-470c-b4e7-e4fc7f3796b2 haiku ok 1518ms · sonnet ok 2189ms
+memory.classify chat_messages:30732ba3-a075-46fb-b6cf-d61aaa74fa7c haiku ok 3003ms · sonnet ok 4652ms
+memory.classify chat_messages:1fba5175-3bc0-4b75-ac40-8b710157247f haiku INVALID 3998ms · sonnet ok 2483ms
+memory.classify chat_messages:d91be5e6-73b9-4b1c-8b8f-23a4f4bb3552 haiku INVALID 4934ms · sonnet ok 1152ms
+memory.classify chat_messages:52330ddc-fac8-41cb-b113-b7365d45a501 haiku ok 886ms · sonnet ok 1352ms
+memory.classify chat_messages:58c9c6e4-7431-4279-bca3-04ea963977e9 haiku ok 4002ms · sonnet ok 4479ms
+memory.classify chat_messages:59bade12-79e7-456a-acbd-0e8faff46196 haiku ok 2807ms · sonnet ok 3364ms
+memory.classify chat_messages:4c9af340-b761-47e6-ae9a-4c2abdd08086 haiku ok 1773ms · sonnet ok 4106ms
+memory.classify chat_messages:77dca2e8-3c14-4042-94ef-76a8054f7c12 haiku ok 745ms · sonnet ok 2418ms
+memory.classify chat_messages:2eee2dcd-0abb-432b-9a71-c80249ae22cc haiku ok 2932ms · sonnet ok 3670ms
+memory.classify chat_messages:00effa31-71df-466c-ac0e-30860678f9e6 haiku ok 2122ms · sonnet ok 1612ms
+memory.classify chat_messages:d7dc1e8e-d4dc-48cc-a864-534a2285c4f1 haiku ok 1396ms · sonnet ok 3092ms
+memory.classify chat_messages:ff9226c0-d44b-41f1-950f-e4af0bd9b4a9 haiku ok 922ms · sonnet ok 3528ms
+memory.classify chat_messages:31c65779-aa79-49b3-a8bb-e8f4b52d4cb5 haiku ok 3799ms · sonnet ok 1183ms
+memory.classify chat_messages:4737b78c-37d3-439f-830b-8095d72413a7 haiku ok 4217ms · sonnet ok 5043ms
+memory.classify chat_messages:78405c26-0d7b-418f-bf85-ddd6c4681156 haiku ok 1769ms · sonnet ok 1974ms
+memory.classify chat_messages:8fb5122a-e3cc-4607-a2fd-722f22647b91 haiku ok 1536ms · sonnet ok 6486ms
+memory.classify chat_messages:074f5c67-70f3-4315-8cc5-cd7e1e791de8 haiku INVALID 5246ms · sonnet ok 2955ms
+summarize tasks:0cd4a1a0-9c43-49f9-a04c-cc87b399ed53 haiku ok 3820ms · sonnet ok 9478ms
+summarize tasks:b2e23f11-bb12-4711-a189-1b753ab62c9f haiku ok 3527ms · sonnet ok 8287ms
+summarize tasks:eb531a1a-9af1-4517-833d-1ee889badf10 haiku ok 2414ms · sonnet ok 8877ms
+summarize tasks:20fab84f-4048-4535-a404-75645b48d969 haiku ok 3536ms · sonnet ok 7577ms
+summarize tasks:0d750689-6490-493a-8c48-2fbf7f9e7f22 haiku ok 3689ms · sonnet ok 8967ms
+summarize tasks:f44681e8-22de-41f1-96b3-e925065e2285 haiku ok 3353ms · sonnet ok 7499ms
+summarize tasks:222b0bdd-b565-4ce7-ad91-79054dce4297 haiku ok 3316ms · sonnet ok 7098ms
+summarize tasks:3c9ea472-3d4b-47d4-a3a9-9b19684b45d4 haiku ok 8132ms · sonnet ok 12340ms
+summarize tasks:d03b8d71-7019-4130-ac2b-1706ccc4e7a5 haiku ok 6553ms · sonnet ok 10984ms
+summarize tasks:576c0ad7-defc-43ed-8f97-22586246d5ce haiku ok 4202ms · sonnet ok 9859ms
+summarize tasks:f946af15-e13e-4159-b9a9-3e2ee9b08319 haiku ok 3589ms · sonnet ok 8406ms
+summarize tasks:c9d2dccf-436f-4109-a593-a0551e176e7e haiku ok 3879ms · sonnet ok 8573ms
+summarize tasks:b5dbc4c2-68d8-47c7-a615-37f86cb10c41 haiku ok 3167ms · sonnet ok 9024ms
+summarize tasks:e3100825-630f-494f-a333-88bd96eaa5b9 haiku ok 4030ms · sonnet ok 6597ms
+summarize tasks:dd76b31e-0afb-44a0-acd2-65bc7e66eddf haiku ok 3801ms · sonnet ok 8162ms
+summarize tasks:09ed6e14-9dc5-4ee1-9e87-bc0c47586d9e haiku ok 5341ms · sonnet ok 13863ms
+summarize tasks:0e5f1817-c024-4dcf-bdda-fb7bb0d8768f haiku ok 4726ms · sonnet ok 7107ms
+summarize tasks:7e4ceb09-87b9-4ab6-bd4a-593c3bbb2853 haiku ok 5488ms · sonnet ok 7035ms
+summarize tasks:b43ca570-0903-4000-8000-00000000c001 haiku ok 2938ms · sonnet ok 8410ms
+summarize tasks:abb65adc-59c2-436d-8951-49fc0268e028 haiku ok 4644ms · sonnet ok 7988ms
+{
+  "evidence": "/home/dxb/DxB Global OS/.planning/quick/20261009-masa-b51/evidence/p7-side-by-side-2026-10-10.json",
+  "private": "/home/dxb/Desktop/B51-P7-Haiku-Sonnet-2026-10-10.md",
+  "summary": {
+    "memory.classify": {
+      "per_model": {
+        "claude-haiku-5-5": {
+          "n": 20,
+          "valid": 17,
+          "served_as_asked": 20,
+          "median_duration_api_ms": 2807,
+          "median_duration_ms": 2119,
+          "median_ttft_ms": 2088,
+          "tokens_in": 17191,
+          "tokens_out": 4202
+        },
+        "claude-sonnet-5-5": {
+          "n": 20,
+          "valid": 20,
+          "served_as_asked": 20,
+          "median_duration_api_ms": 2642,
+          "median_duration_ms": 2058,
+          "median_ttft_ms": 2042,
+          "tokens_in": 17231,
+          "tokens_out": 567
+        }
+      },
+      "both_valid": 17,
+      "same_answer": 12
+    },
+    "summarize": {
+      "per_model": {
+        "claude-haiku-5-5": {
+          "n": 20,
+          "valid": 20,
+          "served_as_asked": 20,
+          "median_duration_api_ms": 3801,
+          "median_duration_ms": 3054,
+          "median_ttft_ms": 2947,
+          "tokens_in": 78728,
+          "tokens_out": 12542,
+          "facts_total": 165
+        },
+        "claude-sonnet-5-5": {
+          "n": 20,
+          "valid": 20,
+          "served_as_asked": 20,
+          "median_duration_api_ms": 8406,
+          "median_duration_ms": 7685,
+          "median_ttft_ms": 7679,
+          "tokens_in": 78768,
+          "tokens_out": 20940,
+          "facts_total": 211
+        }
+      },
+      "both_valid": 20
+    }
+  }
+}
+EXIT=0

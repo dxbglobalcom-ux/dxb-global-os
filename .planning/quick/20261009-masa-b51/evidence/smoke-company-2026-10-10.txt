@@ -24,3 +24,7 @@ gpt-6.1-sol|codex-cli|active|2026-10-10 01:36:27.268776+00|codex-cli 0.159.3
 76087|system|claude-opus-5-5|2.1.296
 76088|system|gpt-6.1-sol|codex-cli 0.159.3
 76089|system|gpt-6-astra|codex-cli 0.159.3
+# P7: Haiku 5.5 smoked on the COMPANY before its trial (stamp only, no seat), 2026-10-10T04:12:04+02:00
+[isolation] lane=smoke:claude-haiku-5-5 session=4b2e0667-ab8d-45a4-89c7-011cb61a5a37 tools=0 mcp=0 plugins=3 skills=19 agents=5 hooks=0 input=557 home=/home/dxb/.local/share/dxb/company-claude
+{"model":"claude-haiku-5-5","api":"claude-haiku-5-5","lane":"agent-sdk","at":"2026-10-10T02:12:04.633Z","pass":true,"cli":"2.1.296","sdk":"0.3.296","served":"claude-haiku-5-5","subtype":"success","is_error":false,"result":"OK","stamped":true,"stamp":{"ok":true,"cli":"2.1.296","model":"claude-haiku-5-5","audit_id":76095}}
+EXIT=0

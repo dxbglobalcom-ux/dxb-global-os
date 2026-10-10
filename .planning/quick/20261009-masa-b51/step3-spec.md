@@ -199,3 +199,13 @@ extension; (iii) judge seats outside `routing_rules` (a catalogue column or a se
 - The employees page knows the role (filter, both locales). Eye test ⚠ UNVERIFIED (B03-bis).
 - Found: v_hr_equipment_check counts only role='head' as an org root.
 
+## P7 as built (2026-10-10)
+- scripts/models/side-by-side.mjs: the production lanes' own prompts and strict parsers (exported from classify-read.ts and
+  context-budget.ts, behaviour unchanged), both models through the Agent SDK under companyIsolation() at effort low, the
+  same fixed inputs read from the company (his chat lines for memory.classify, finished task results for summarize, 20
+  each), order by a fixed seed. The repository keeps ids, hashes and metrics only; the pairs and a Turkish summary are on
+  his Desktop (B51-P7-Haiku-Sonnet-2026-10-10.md). Haiku 5.5 stamped on the company first; no seat moved.
+- Result: classify — Sonnet 20/20 valid, Haiku 17/20 (3 prose answers); same answer 12 of 17. Summarize — both 20/20,
+  Haiku 2.2x faster (median 3.8 s / 8.4 s), 165 facts vs 211. No subtitle job runs on a model today (Whisper).
+- P8 is not built: Hamza's brain tool waits on his scope answer, the "Halef yap" drawer on his design approval.
+

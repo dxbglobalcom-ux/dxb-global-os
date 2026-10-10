@@ -79,6 +79,13 @@ export interface ContextBudgetDeps {
 
 const FactsJson = z.object({ facts: z.array(z.string()) });
 
+/** The summarize lane's system prompt — exported so a side-by-side model trial (B51 P7) runs the lane's own words. */
+export const FACTS_SYSTEM_PROMPT =
+  "You compress an agent work log. Extract the durable facts worth remembering " +
+  "beyond this task: decisions, named values, thresholds, identifiers, outcomes. " +
+  "Each fact must be a standalone sentence (no 'it/this/above'). Reply with STRICT " +
+  'JSON only, no prose: {"facts": ["<fact>", ...]}. If nothing is durable: {"facts": []}';
+
 /** Production fact extractor — model from the routing_rules 'summarize' row
  *  (L4, seeded; no model literal here — same data-driven pattern as the
  *  worker shim and the router's contradiction judge). Unparseable output
@@ -105,16 +112,17 @@ async function defaultExtractFacts(
     messages: [
       {
         role: "system",
-        content:
-          "You compress an agent work log. Extract the durable facts worth remembering " +
-          "beyond this task: decisions, named values, thresholds, identifiers, outcomes. " +
-          "Each fact must be a standalone sentence (no 'it/this/above'). Reply with STRICT " +
-          'JSON only, no prose: {"facts": ["<fact>", ...]}. If nothing is durable: {"facts": []}',
+        content: FACTS_SYSTEM_PROMPT,
       },
       { role: "user", content: historyText },
     ],
   });
-  let raw = res.content.trim();
+  return parseFacts(res.content);
+}
+
+/** The summarize lane's strict parse (a fenced block is unwrapped); unparseable output throws. */
+export function parseFacts(content: string): string[] {
+  let raw = content.trim();
   const fenced = raw.match(/```(?:json)?\s*([\s\S]*?)```/);
   if (fenced) raw = fenced[1].trim();
   try {

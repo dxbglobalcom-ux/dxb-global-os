@@ -1,0 +1,38 @@
+# 080000 → company, 2026-10-10T04:08:11+02:00
+## pending:
+20261010080000_b51_p6_hamza_general_manager.sql
+## fingerprint before
+  audit_log / hook_violations: 10981/17
+STATE_FINGERPRINT 77c440b1ca29d49b
+## bootstrap
+[bootstrap] applying 20261010080000_b51_p6_hamza_general_manager.sql
+[bootstrap] done — applied 1, skipped 180, ledger total 181
+## parity
+SCHEMA_PARITY — the two engines carry the same public schema, object for object.
+## fingerprint after
+  audit_log / hook_violations: 10984/17
+STATE_FINGERPRINT 0765ded784cd523e
+## measured
+agents-orchestrator|general_manager|orchestrator|General Manager|Genel Müdür
+architecture|fable-5.1|fable-5.1|xhigh
+chat.answer|claude-opus-5-5|claude-opus-5-5|high
+chat.brief|claude-opus-5-5|claude-opus-5-5|medium
+chat.strategy|claude-opus-5-5|claude-opus-5-5|max
+decompose|fable-5.1|fable-5.1|high
+final-approval|fable-5.1|fable-5.1|xhigh
+orchestration|fable-5.1|fable-5.1|high
+slot.critical_decision|fable-5.1|fable-5.1|xhigh
+strategy|fable-5.1|fable-5.1|xhigh
+voice.answer|claude-opus-5-5|claude-opus-5-5|low
+orchestrator.critical_decision_model|"fable-5.1"
+76092|agent_role_change|migration-b51
+76093|routing_change|migration-b51
+76094|settings_registry_change|migration-b51
+## scheduler restart (prompt-core)
+ActiveEnterTimestamp=Sat 2026-10-10 03:13:11 CEST
+ActiveState=active
+ActiveEnterTimestamp=Sat 2026-10-10 04:08:25 CEST
+1
+[isolation] company-claude home=/home/dxb/.local/share/dxb/company-claude credentials=present
+[memory] root=/home/dxb/.local/share/dxb/company-claude notes=1
+[scheduler] the studio's hands: 4 lanes running — 1 for the card, 3 for the processor (first tick)

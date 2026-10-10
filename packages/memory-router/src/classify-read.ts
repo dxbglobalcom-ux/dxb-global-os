@@ -29,7 +29,9 @@ import {
   type MemoryStore,
 } from "./write-policy.js";
 
-const CLASSIFY_SYSTEM_PROMPT = `You route a memory query to exactly one store. Stores and their contracts:
+/** The memory.classify lane's system prompt — exported so a side-by-side model trial (B51 P7) runs the lane's
+ *  own words. */
+export const CLASSIFY_SYSTEM_PROMPT = `You route a memory query to exactly one store. Stores and their contracts:
 - pgvector: atomic facts — short factual statements looked up semantically (numbers, ports, settings, single-line truths)
 - graphify: entity relations — which component connects to / depends on / gates which; pipelines; links between things
 - obsidian: authored artifacts — documents, notes, reports, templates that were written and are retrieved whole
@@ -90,13 +92,18 @@ export async function classifyQuery(db: Kysely<DB>, query: string): Promise<Clas
       { role: "user", content: query },
     ],
   });
-  const t = res.content.trim();
-  if (!t.startsWith("{") || !t.endsWith("}")) throw new ClassifyParseError(res.content);
+  return parseClassification(res.content);
+}
+
+/** The lane's strict parse: one store, one kind, the LOCKED pair — anything else throws. */
+export function parseClassification(raw: string): ClassifiedQuery {
+  const t = raw.trim();
+  if (!t.startsWith("{") || !t.endsWith("}")) throw new ClassifyParseError(raw);
   let parsed: { store?: unknown; kind?: unknown };
   try {
     parsed = JSON.parse(t) as { store?: unknown; kind?: unknown };
   } catch {
-    throw new ClassifyParseError(res.content);
+    throw new ClassifyParseError(raw);
   }
   if (
     typeof parsed.store !== "string" ||
@@ -105,7 +112,7 @@ export async function classifyQuery(db: Kysely<DB>, query: string): Promise<Clas
     !KINDS.has(parsed.kind) ||
     KIND_STORE[parsed.kind as MemoryKind] !== parsed.store // pair must match the LOCKED composition
   ) {
-    throw new ClassifyParseError(res.content);
+    throw new ClassifyParseError(raw);
   }
   return { store: parsed.store as MemoryStore, kind: parsed.kind as MemoryKind };
 }
