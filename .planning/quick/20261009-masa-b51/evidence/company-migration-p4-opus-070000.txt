@@ -1,0 +1,28 @@
+# 070000 → company, 2026-10-10T03:44:00+02:00
+## pending:
+20261010070000_b51_p4_opus_5_5_takes_its_seats.sql
+## fingerprint before
+  audit_log / hook_violations: 10979/17
+STATE_FINGERPRINT c8583b7dae189f90
+## bootstrap
+[bootstrap] applying 20261010070000_b51_p4_opus_5_5_takes_its_seats.sql
+NOTICE:  B51 P4: fable-5 → claude-opus-5-5 {"ok": true, "moved": {"agents": 33, "routing": 28, "registry": 11, "settings": 0, "fallbacks": 2, "gate_seats": 0, "ceo_override": 10}, "price": {"new": {"cost_in": 4, "cost_out": 20}, "old": {"cost_in": null, "cost_out": null}, "price_known": false, "price_rises": false}, "audit_id": 76090, "decision_id": 28554}
+[bootstrap] done — applied 1, skipped 179, ledger total 180
+## parity
+SCHEMA_PARITY — the two engines carry the same public schema, object for object.
+## fingerprint after
+  audit_log / hook_violations: 10981/17
+STATE_FINGERPRINT 77c440b1ca29d49b
+## measured
+claude-opus-5-5|active|claude-sonnet-5-5|2.1.296
+claude-sonnet-5-5|active||2.1.296
+fable-5|retired|claude-sonnet-5-5|2.1.296
+fable-5.1|active|claude-opus-5-5|2.1.296
+gpt-6-astra|active||codex-cli 0.159.3
+gpt-6.1-sol|active||codex-cli 0.159.3
+rules|28|28
+brains|ceo_override|10
+brains|slot|23
+left on fable-5|0|0
+76090|routing.succession|system|claude-opus-5-5
+76091|model_catalog.fallback_cut|migration-b51|gpt-6.1-sol

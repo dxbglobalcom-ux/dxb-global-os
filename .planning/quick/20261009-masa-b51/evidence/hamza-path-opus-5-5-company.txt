@@ -1,0 +1,9 @@
+# Hamza's talking seats on the COMPANY → sdkModel (read-only), 2026-10-10T03:44:32+02:00
+{"task_class":"chat.answer","model_tier":"L1","model":"claude-opus-5-5","effort":"high","sdk":{"model":"claude-opus-5-5"}}
+{"task_class":"chat.brief","model_tier":"L1","model":"claude-opus-5-5","effort":"medium","sdk":{"model":"claude-opus-5-5"}}
+{"task_class":"chat.strategy","model_tier":"L1","model":"claude-opus-5-5","effort":"max","sdk":{"model":"claude-opus-5-5"}}
+{"task_class":"voice.answer","model_tier":"L1","model":"claude-opus-5-5","effort":"low","sdk":{"model":"claude-opus-5-5"}}
+{"task_class":"voice.classify","model_tier":"L4","model":"claude-sonnet-5-5","effort":"low","sdk":{"model":"claude-sonnet-5-5"}}
+{"catalogue":"fable-5.1","sdk":{"model":"claude-fable-5-1","fallbackModel":"claude-opus-5-5"}}
+{"catalogue":"claude-opus-5-5","sdk":{"model":"claude-opus-5-5"}}
+EXIT=0
