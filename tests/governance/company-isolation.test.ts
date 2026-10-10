@@ -284,8 +284,9 @@ function isHelperModule(spec: string, rel: string): boolean {
  *  `managedSettings`, `plugins`, `env`, `extraArgs`, `executableArgs`, `pathToClaudeCodeExecutable`,
  *  `spawnClaudeCodeProcess`, `resume`, `continue`, `forkSession`, `sessionStore`, `persistSession` and
  *  `cwd`, each of which can bring back what the helper shut out (an `env` alone changed what loaded,
- *  probe D of 2026-10-03). */
-const OPTIONS_ALLOWED = new Set(["model", "effort", "tools", "maxTurns", "outputFormat", "systemPrompt"]);
+ *  probe D of 2026-10-03). `fallbackModel` (B51 P5b, 2026-10-10) names a second model and nothing
+ *  else — the CLI's `--fallback-model`; it loads no setting, file or server. */
+const OPTIONS_ALLOWED = new Set(["model", "fallbackModel", "effort", "tools", "maxTurns", "outputFormat", "systemPrompt"]);
 /** The compiled gateway profile (R2.2): allowed only as `<profile>.<key>`, where the profile is written
  *  by `buildSdkToolOptions()` from @dxb/gateway and by nothing else — the company's own servers. Its
  *  `strictMcpConfig` is held to `true` below, because it lands after the helper's own. */

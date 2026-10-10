@@ -282,12 +282,27 @@ async function attemptWithPolicies(
   );
 }
 
+/**
+ * B51 P5b (C2-4) — a workflow step runs as its seat, not as a one-line name. Every agent and review step
+ * (fallback alternates included) goes through the executor, so the seat's standing prompt is joined there,
+ * once: the composition point's `seatPrompt` builds it from the step's seat (the orchestrator's one
+ * definition, the same the task lane gives a staffed run). Built per attempt, like the task lane — an
+ * edited persona file reaches the next attempt. No seatPrompt dependency → the executor unchanged.
+ */
+export function seatedExecutor(executor: WorkflowExecutor, seatPrompt?: RunnerDeps["seatPrompt"]): WorkflowExecutor {
+  if (!seatPrompt) return executor;
+  return async (work) => {
+    const systemPrompt = work.seat ? await seatPrompt(work.seat) : null;
+    return executor(systemPrompt ? { ...work, systemPrompt } : work);
+  };
+}
+
 /** Advance one run to completion / park / failure. Idempotent on terminal runs. */
 export async function runWorkflowRun(
   runId: string,
   deps: RunnerDeps = {},
 ): Promise<RunOutcome> {
-  const executor = deps.executor ?? defaultWorkflowExecutor;
+  const executor = seatedExecutor(deps.executor ?? defaultWorkflowExecutor, deps.seatPrompt);
   const sleep = deps.sleep ?? defaultSleep;
   const db = getDb();
 

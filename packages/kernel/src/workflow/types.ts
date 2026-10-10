@@ -15,6 +15,25 @@ export interface AgentWork {
   /** R2.3 — hook post-gate REVISE feedback rides the re-execution (§19),
    *  exactly the worker-shim idiom. */
   feedback?: string;
+  /** B51 P5b (C2-3) — the effort of the routing row that chose the model; absent → the SDK's default. */
+  effort?: StepEffort;
+  /** B51 P5b (C2-4) — who the seat is: what the composition point needs to build its standing prompt. */
+  seat?: StepSeat;
+  /** B51 P5b (C2-4) — the seat's standing prompt (identity, persona, the laws), the system prompt of the
+   *  run. Filled by the composition point (RunnerDeps.seatPrompt); absent → the one-line identity. */
+  systemPrompt?: string;
+}
+
+/** The effort levels the Agent SDK accepts and a routing row may carry. */
+export const STEP_EFFORTS = ["low", "medium", "high", "xhigh", "max"] as const;
+export type StepEffort = (typeof STEP_EFFORTS)[number];
+
+/** The employee a step runs as — the orchestrator's SeatIdentity shape (the kernel cannot import it). */
+export interface StepSeat {
+  slug: string;
+  department: string;
+  role_level: string | null;
+  persona_path: string | null;
 }
 
 /** R2.3 — the executor's result carries the A10 evidence package the hook
@@ -34,6 +53,10 @@ export interface RunnerDeps {
   executor?: WorkflowExecutor;
   /** Backoff sleeper — tests inject an instant one. */
   sleep?: (ms: number) => Promise<void>;
+  /** B51 P5b (C2-4) — builds a seat's standing prompt. The one definition lives in the orchestrator
+   *  (`seatStandingPrompt`, prompt-core underneath), which the kernel cannot import (it depends on the
+   *  kernel), so the composition point — the scheduler — hands it in. Absent → no system prompt. */
+  seatPrompt?: (seat: StepSeat) => Promise<string | null>;
 }
 
 /** §17 error triple: transient → retry policy · policy → escalate · fatal → run failed + alert. */

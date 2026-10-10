@@ -6,7 +6,7 @@
 // default escalate); this handler only produces the verdict.
 import { ReviewStepConfig } from "@dxb/shared";
 import { runScope } from "@dxb/observability";
-import { resolveEligibleEmployee, resolveStepModel } from "./agent.js";
+import { resolveEligibleEmployee, resolveStepModel, stepSeat } from "./agent.js";
 import type { AgentWork, WorkflowExecutor, WorkflowRow, WorkflowRunRow } from "../types.js";
 
 export interface ReviewVerdict {
@@ -25,7 +25,7 @@ export async function runReviewStep(args: {
 }): Promise<ReviewVerdict> {
   const cfg = ReviewStepConfig.parse(args.config);
   const emp = await resolveEligibleEmployee(cfg.employee_id);
-  const model = await resolveStepModel(cfg, args.wf.risk);
+  const { model, effort } = await resolveStepModel(cfg, args.wf.risk);
 
   const work: AgentWork = {
     employeeId: emp.id,
@@ -43,6 +43,8 @@ export async function runReviewStep(args: {
       args.previousOutput,
     ].join("\n"),
     outputContract: "verdict text + honest confidence in [0,1]",
+    ...(effort ? { effort } : {}),
+    seat: stepSeat(emp),
   };
 
   const { value } = await runScope(

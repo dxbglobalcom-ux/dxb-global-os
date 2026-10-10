@@ -5,7 +5,7 @@ export { PACKAGE };
 
 export { ClassifiedIntent, classify } from "./classify.js";
 // B51 P1: the catalogue is the one place every model id lives.
-export { ModelRefusedError, modeOfLane, resolveModel, sdkModelId } from "./models.js";
+export { ModelRefusedError, modeOfLane, resolveModel, sdkModel, sdkModelId } from "./models.js";
 export type { ModelLane, ResolvedModel } from "./models.js";
 // CEO 2026-10-03: every company model call runs with nothing of the construction loaded.
 export {
@@ -25,7 +25,7 @@ export { classifyOperation } from "./approval-gate.js";
 export type { ClassifiedOperation, OperationGate, OperationClass } from "./approval-gate.js";
 
 // E9.1 workflow engine — a library inside the kernel worker (WORKFLOW §3 ⛔).
-export { runWorkflowRun, drainWorkflowRuns } from "./workflow/runner.js";
+export { runWorkflowRun, drainWorkflowRuns, seatedExecutor } from "./workflow/runner.js";
 export {
   registerCronTriggers,
   dispatchEventTriggers,
@@ -40,6 +40,8 @@ export type {
   RunnerDeps,
   RunOutcome,
   StepErrorClass,
+  StepEffort,
+  StepSeat,
 } from "./workflow/types.js";
 export type { CronRegistrar, CronWorkflow } from "./workflow/triggers.js";
 export type { DrainResult } from "./workflow/runner.js";

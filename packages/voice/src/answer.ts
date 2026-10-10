@@ -9,14 +9,14 @@ import { join } from "node:path";
 import { sql, type Kysely } from "kysely";
 import { query } from "@anthropic-ai/claude-agent-sdk";
 import type { DB } from "@dxb/shared";
-import { companyIsolation, isolationReceipt, loadPolicy, route, sdkModelId } from "@dxb/kernel";
+import { companyIsolation, isolationReceipt, loadPolicy, route, sdkModel } from "@dxb/kernel";
 import type { recallMemory } from "@dxb/memory-router";
 import { recallForAnswer } from "./answer-memory.js";
 import { ttsSpeak, ttsForLang, speachesConfig, type SpeachesConfig } from "./speaches.js";
 import { assertTransition, type CallState, type TimelineEntry } from "./machine.js";
 import { logCall } from "./log.js";
 import { loadPersonaBody } from "./persona.js";
-import { HAMZA_SLUG, routeEffort, standingPrompt } from "./prompt-core.js";
+import { HAMZA_SLUG, answerLayers, routeEffort } from "./prompt-core.js";
 
 // Re-exported, not re-declared: `prompt-core` owns the one definition of who the CEO is talking
 // to, and the standing instructions both answer lanes carry. Before 2026-07-30 this slug was
@@ -109,32 +109,42 @@ async function defaultAnswer(db: Kysely<DB>, q: AnswerQuestion): Promise<string>
   // language law, the honesty rule and the approval gate. Only what is genuinely spoken-lane
   // specific is written here — the style ruling of 2026-07-24 ("türkçesi çok kötü... tarzanca")
   // and the TOPIC contract the transcript header depends on.
-  const sys = [
-    ...standingPrompt({
+  // B51 P5b (C2-9): what stands is the system prompt (cached); the matched memory and the
+  // conversation ride the turn — the same cut as the chat lane, from the same definition.
+  const { system, memory } = answerLayers(
+    {
       agent: q.agent,
       personaBody: q.personaBody,
       memoryLines: q.memoryLines,
       memoryUnreachable: q.memoryUnreachable,
       lang: q.lang,
       lane: "voice",
-    }),
-    ...voiceLaneLines(q.lang),
-  ].filter(Boolean).join("\n\n");
+    },
+    voiceLaneLines(q.lang),
+  );
   const historyText = (q.history ?? [])
     .map((m) => `${m.role === "ceo" ? "CEO" : "Hamza"}: ${m.content}`)
     .join("\n");
+  // B51 P5b (C2-12): the catalogue's API name and its fallback model, read uncached per call
+  const sdk = await sdkModel(db, r.model);
   const stream = query({
-    prompt: `${sys}${historyText ? `\n\nConversation so far (chat and voice are ONE conversation):\n${historyText}` : ""}\n\nCEO asks: ${q.question}`,
+    prompt: [
+      memory,
+      historyText ? `Conversation so far (chat and voice are ONE conversation):\n${historyText}` : "",
+      `CEO asks: ${q.question}`,
+    ].filter(Boolean).join("\n\n"),
     options: {
       // CEO 2026-10-03: nothing of the construction is loaded into a company call (kernel sdk-isolation.ts)
       ...(companyIsolation() ?? {}),
-      model: await sdkModelId(db, r.model),
+      model: sdk.model,
+      ...(sdk.fallbackModel ? { fallbackModel: sdk.fallbackModel } : {}),
       // U21: effort comes from the routing row, never from a constant here.
       // The hardcoded "low" silently overrode the row and made the voice lane
       // the one place a CEO dashboard change could not reach. Same guard idiom
       // as chat-drain: an unknown row value falls back to "low" rather than
       // handing the SDK a value it cannot parse. One guard for both lanes (prompt-core).
       effort: routeEffort(r.effort),
+      systemPrompt: system,
       tools: [],
       // Same lesson as classify NOT 1: with maxTurns 1 the SDK cannot recover
       // when the model spends its only turn before the final text — measured

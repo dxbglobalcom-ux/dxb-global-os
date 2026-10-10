@@ -30,7 +30,7 @@ import {
   resolveRuntimeProfile,
   type SdkToolOptions,
 } from "@dxb/gateway";
-import { companyIsolation, isolationReceipt, loadPolicy, sdkModelId, type RoutingRule } from "@dxb/kernel";
+import { companyIsolation, isolationReceipt, loadPolicy, sdkModel, type RoutingRule } from "@dxb/kernel";
 import { loadPersonaBody, standingPrompt } from "@dxb/voice";
 import { recordSubscriptionSpend } from "./subscription-cap.js";
 
@@ -430,10 +430,13 @@ export async function defaultExecutor(task: ClaimedTask): Promise<WorkerOutput> 
     // session's (kernel sdk-isolation.ts). An unstaffed task keeps the CLI's default prompt.
     const seatPrompt = employee ? await seatStandingPrompt(employee) : null;
     const seen = isolationReceipt("task");
+    // B51 P5b (C2-12): the catalogue's API name and its fallback model, read uncached per call
+    const sdk = await sdkModel(getDb(), rule.model);
     const q = query({
       prompt,
       options: {
-        model: await sdkModelId(getDb(), rule.model),
+        model: sdk.model,
+        ...(sdk.fallbackModel ? { fallbackModel: sdk.fallbackModel } : {}),
         effort: rule.effort as "low" | "medium" | "high" | "xhigh" | "max",
         ...(seatPrompt ? { systemPrompt: seatPrompt } : {}),
         ...(companyIsolation() ?? {}),

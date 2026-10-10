@@ -10,7 +10,7 @@ import { query } from "@anthropic-ai/claude-agent-sdk";
 import { getDb, sdkJsonSchema } from "@dxb/shared";
 import { loadPolicy, route, workClasses, type ResolvedRoute } from "./policy.js";
 import { companyIsolation, isolationReceipt } from "./sdk-isolation.js";
-import { sdkModelId } from "./models.js";
+import { sdkModel } from "./models.js";
 
 export const ClassifiedIntent = z.object({
   intent_summary: z.string(),
@@ -74,12 +74,15 @@ export function classifyPrompt(text: string, taskClasses: readonly string[], dep
 }
 
 async function runQuery(prompt: string, own: ResolvedRoute, schema: z.ZodType): Promise<unknown> {
+  // B51 P5b (C2-12): the catalogue's API name and its fallback model, read uncached per call
+  const sdk = await sdkModel(getDb(), own.model);
   const q = query({
     prompt,
     options: {
       // CEO 2026-10-03: nothing of the construction is loaded into a company call (sdk-isolation.ts)
       ...(companyIsolation() ?? {}),
-      model: await sdkModelId(getDb(), own.model),
+      model: sdk.model,
+      ...(sdk.fallbackModel ? { fallbackModel: sdk.fallbackModel } : {}),
       effort: own.effort as "low" | "medium" | "high" | "xhigh" | "max",
       tools: [],
       // NOT 1: structured output is delivered via an internal StructuredOutput

@@ -431,3 +431,13 @@ place to move and nothing waits for a code change or a restart.
    `coding` seat) at `high`; cheap mechanical work stays `low`. The `max` the three critical classes carried
    had never reached a run (before P3 runs took the L1 seat's `medium`). Talking seats are P6's.
 
+8. **Bundle 3 — every lane hears its row (P5b).** A workflow step runs at the effort of the routing row
+   that chose its model (`fn_select_model`'s `rule_id`; a pinned model takes its slot's row, a pin without a
+   slot the model's own top row) and as its seat: the composition point hands the kernel the orchestrator's
+   `seatStandingPrompt`, the same standing prompt the task lane gives a staffed run. Hamza's chat and voice
+   answers carry the standing layer as the system prompt — identical from turn to turn, so it can be cached —
+   and the matched memory, the live figures and the conversation in the turn (`answerLayers`, prompt-core).
+   Every Agent SDK call carries the catalogue's fallback model: the first live agent-sdk hop of
+   `fallback_of` (≤ 4 hops) that is not mechanical-only and whose tier floor is not below the primary's —
+   the SDK falls over silently and the run stays recorded under the primary, so an L1 run never quietly
+   finishes on an L2 model; no such hop → no fallback.

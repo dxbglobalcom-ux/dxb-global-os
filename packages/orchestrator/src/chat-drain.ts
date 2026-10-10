@@ -14,9 +14,9 @@ import { join } from "node:path";
 import { query } from "@anthropic-ai/claude-agent-sdk";
 import { sql, type Kysely } from "kysely";
 import type { DB } from "@dxb/shared";
-import { companyIsolation, isolationReceipt, loadPolicy, route, sdkModelId } from "@dxb/kernel";
+import { companyIsolation, isolationReceipt, loadPolicy, route, sdkModel } from "@dxb/kernel";
 import type { recallMemory } from "@dxb/memory-router";
-import { matchMute, matchUnmute, loadPersonaBody, recallForAnswer, routeEffort, standingPrompt, HAMZA_SLUG } from "@dxb/voice";
+import { matchMute, matchUnmute, loadPersonaBody, recallForAnswer, routeEffort, answerLayers, HAMZA_SLUG } from "@dxb/voice";
 import {
   buildBriefSnapshot,
   classifyLeg,
@@ -111,30 +111,42 @@ async function defaultAnswer(db: Kysely<DB>, q: ChatAnswerInput): Promise<string
   // the CEO language law, the honesty rule and the approval gate. This lane used to write its own
   // versions of all six, and the identity line had already drifted from the voice lane's — the
   // same person answering with a different self-understanding depending on which door was used.
-  const sys = [
-    ...standingPrompt({
+  // B51 P5b (C2-9): what stands goes into the system prompt, which the cache keeps; the memory that
+  // matched, the leg's instruction (the brief leg's live figures) and the conversation ride the turn.
+  const { system, memory } = answerLayers(
+    {
       agent: { slug: CHAT_HAMZA_SLUG },
       personaBody: q.personaBody,
       memoryLines: q.memoryLines,
       memoryUnreachable: q.memoryUnreachable,
       lang: q.lang,
       lane: "chat",
-    }),
-    ...chatLaneLines(planMode, legInstruction(q.leg, q.snapshot, q.lang)),
-  ].filter(Boolean).join("\n\n");
+    },
+    chatLaneLines(planMode),
+  );
 
   const historyText = q.history
     .map((m) => `${m.role === "ceo" ? "CEO" : "Hamza"}: ${m.content}`)
     .join("\n");
 
+  // B51 P5b (C2-12): the catalogue's API name and its fallback model, read uncached per call
+  const sdk = await sdkModel(db, r.model);
   const stream = query({
-    prompt: `${sys}\n\nConversation so far:\n${historyText}\n\nCEO says: ${q.message}\n\nHamza replies:`,
+    prompt: [
+      memory,
+      legInstruction(q.leg, q.snapshot, q.lang),
+      `Conversation so far:\n${historyText}`,
+      `CEO says: ${q.message}`,
+      "Hamza replies:",
+    ].filter(Boolean).join("\n\n"),
     options: {
       // CEO 2026-10-03: nothing of the construction is loaded into a company call (kernel sdk-isolation.ts)
       ...(companyIsolation() ?? {}),
-      model: await sdkModelId(db, r.model),
+      model: sdk.model,
+      ...(sdk.fallbackModel ? { fallbackModel: sdk.fallbackModel } : {}),
       // the routing row's effort through the one guard both answer lanes share (prompt-core, C2-2)
       effort: routeEffort(r.effort),
+      systemPrompt: system,
       tools: [],
       // maxTurns 1 starves the SDK of its final text turn (measured
       // error_max_turns on the voice fast lane, probe 30ddba44) — keep 4.

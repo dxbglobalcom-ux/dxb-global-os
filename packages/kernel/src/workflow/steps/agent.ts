@@ -20,12 +20,23 @@ import {
   preTask,
   type HookCtx,
 } from "@dxb/hook";
-import { StepError, type AgentWork, type WorkflowExecutor, type WorkflowRow, type WorkflowRunRow } from "../types.js";
+import {
+  STEP_EFFORTS,
+  StepError,
+  type AgentWork,
+  type StepEffort,
+  type StepSeat,
+  type WorkflowExecutor,
+  type WorkflowRow,
+  type WorkflowRunRow,
+} from "../types.js";
 
 export interface EligibleEmployee {
   id: string;
   slug: string;
   department: string;
+  role_level: string | null;
+  persona_path: string | null;
 }
 
 // §25 edge — "atanan çalışan arşivlenmiş → adım başlangıcında fn reddi → run
@@ -35,7 +46,7 @@ export interface EligibleEmployee {
 export async function resolveEligibleEmployee(employeeId: string): Promise<EligibleEmployee> {
   const emp = await getDb()
     .selectFrom("agents")
-    .select(["id", "slug", "department", "employment_status", "persona_version"])
+    .select(["id", "slug", "department", "role_level", "persona_path", "employment_status", "persona_version"])
     .where("id", "=", employeeId)
     .executeTakeFirst();
   if (!emp) {
@@ -48,21 +59,74 @@ export async function resolveEligibleEmployee(employeeId: string): Promise<Eligi
       "EMPLOYEE_INELIGIBLE",
     );
   }
-  return { id: emp.id, slug: emp.slug, department: emp.department };
+  return {
+    id: emp.id,
+    slug: emp.slug,
+    department: emp.department,
+    role_level: emp.role_level ?? null,
+    persona_path: emp.persona_path ?? null,
+  };
 }
 
 // Slot → model through fn_select_model (E7.1, live): guardrails (banned /
 // mechanical_only / context) applied in the fn, decision_log row included.
+//
+// B51 P5b (C2-3): the effort comes with the model, from the SAME routing row — the row fn_select_model
+// chose (its rule_id). Before, a workflow step ran at the SDK's default whatever its row said, so the
+// efforts of move 3 (a critical decision at xhigh) could never reach a workflow. With no chosen row — a
+// pinned model_id, or the CEO's own brain override (rule_id NULL) — the slot's first enabled row in the
+// fn's own order gives the effort; a pin without a slot takes the pinned model's highest-priority enabled
+// row, the row the executor already reads for the model's mode. No row → no effort (the SDK default).
+export interface StepModel {
+  model: string;
+  effort?: StepEffort;
+}
+
+function asEffort(v: string | null | undefined): StepEffort | undefined {
+  return (STEP_EFFORTS as readonly string[]).includes(v ?? "") ? (v as StepEffort) : undefined;
+}
+
+async function slotRowEffort(slot: string): Promise<StepEffort | undefined> {
+  const row = await getDb()
+    .selectFrom("routing_rules")
+    .select("effort")
+    .where("role_slot", "=", slot)
+    .where("enabled", "=", true)
+    .where("department_id", "is", null)
+    .orderBy("priority", "desc")
+    .orderBy("updated_at", "desc")
+    .limit(1)
+    .executeTakeFirst();
+  return asEffort(row?.effort);
+}
+
 export async function resolveStepModel(
   cfg: { model_role_slot?: string; model_id?: string },
   risk: string,
-): Promise<string> {
-  if (cfg.model_id) return cfg.model_id; // §2: pin = exception, slot = default
+): Promise<StepModel> {
+  if (cfg.model_id) {
+    // §2: pin = exception, slot = default
+    if (cfg.model_role_slot) return { model: cfg.model_id, effort: await slotRowEffort(cfg.model_role_slot) };
+    const row = await getDb()
+      .selectFrom("routing_rules")
+      .select("effort")
+      .where("model", "=", cfg.model_id)
+      .where("enabled", "=", true)
+      .orderBy("priority", "desc")
+      .limit(1)
+      .executeTakeFirst();
+    return { model: cfg.model_id, effort: asEffort(row?.effort) };
+  }
   const res = await sql<{ fn_select_model: unknown }>`
     SELECT fn_select_model(${cfg.model_role_slot}, NULL, ${risk}, NULL, NULL, NULL,
                            ${risk === "critical"}, true) AS fn_select_model
   `.execute(getDb());
-  const out = res.rows[0]?.fn_select_model as { ok?: boolean; model_id?: string; error?: string };
+  const out = res.rows[0]?.fn_select_model as {
+    ok?: boolean;
+    model_id?: string;
+    rule_id?: string | null;
+    error?: string;
+  };
   if (!out?.ok || !out.model_id) {
     throw new StepError(
       `no model for slot '${cfg.model_role_slot}' (${out?.error ?? "no result"})`,
@@ -70,7 +134,25 @@ export async function resolveStepModel(
       "NO_MODEL_AVAILABLE",
     );
   }
-  return out.model_id;
+  if (out.rule_id) {
+    const row = await getDb()
+      .selectFrom("routing_rules")
+      .select("effort")
+      .where("id", "=", out.rule_id)
+      .executeTakeFirst();
+    return { model: out.model_id, effort: asEffort(row?.effort) };
+  }
+  return { model: out.model_id, effort: await slotRowEffort(cfg.model_role_slot as string) };
+}
+
+/** B51 P5b (C2-4) — the seat a step runs as, for the composition point's standing prompt. */
+export function stepSeat(emp: EligibleEmployee): StepSeat {
+  return {
+    slug: emp.slug,
+    department: emp.department,
+    role_level: emp.role_level,
+    persona_path: emp.persona_path,
+  };
 }
 
 /** R2.3 — workflow-side HookCtx assembly from REAL rows (the A9 mirror of the
@@ -125,7 +207,7 @@ export async function runAgentStep(args: {
 }): Promise<{ output: string; confidence: number }> {
   const cfg = AgentStepConfig.parse(args.config);
   const emp = await resolveEligibleEmployee(cfg.employee_id);
-  const model = await resolveStepModel(cfg, args.wf.risk);
+  const { model, effort } = await resolveStepModel(cfg, args.wf.risk);
 
   const work: AgentWork = {
     employeeId: emp.id,
@@ -134,6 +216,8 @@ export async function runAgentStep(args: {
     model,
     objective: cfg.objective,
     outputContract: cfg.output_contract,
+    ...(effort ? { effort } : {}),
+    seat: stepSeat(emp),
   };
 
   // R2.3 hook binding (A9): same order as the task path — pre-gate BEFORE the

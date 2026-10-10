@@ -223,3 +223,25 @@ export function standingPrompt(input: {
     noRefusalLaw(),
   ].filter(Boolean);
 }
+
+/**
+ * An ANSWER call's two layers, cut where the prompt cache needs the cut (B51 P5b, C2-9, 2026-10-10).
+ *
+ * Both answer lanes used to send the whole standing layer inside the user turn, so the same identity,
+ * persona and laws were paid in full on every message and never cached. The system prompt is what the
+ * cache keeps; it must therefore hold ONLY what is identical from turn to turn — the ALWAYS layer and
+ * the lane's own standing lines. The memory that matched THIS turn varies with the question, so it rides
+ * the turn, beside the conversation and any figure measured for this answer (the PER TURN layer of this
+ * file's header). The blocks and their words are standingPrompt's own — one definition, cut in two.
+ */
+export function answerLayers(
+  input: Parameters<typeof standingPrompt>[0],
+  laneLines: readonly string[],
+): { system: string; memory: string } {
+  return {
+    system: [...standingPrompt({ ...input, memoryLines: [], memoryUnreachable: false }), ...laneLines]
+      .filter(Boolean)
+      .join("\n\n"),
+    memory: memoryBlock(input.memoryLines, input.memoryUnreachable),
+  };
+}

@@ -18,6 +18,7 @@ export {
   HAMZA_SLUG,
   routeEffort,
   standingPrompt,
+  answerLayers,
   identityLine,
   personaBlock,
   memoryBlock,

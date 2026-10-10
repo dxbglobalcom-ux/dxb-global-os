@@ -12,7 +12,7 @@ dediğimde cart diye modeller güncellenmeli.* No API key exists — subscriptio
 | P2 | `fn_succeed_model(old, new, rationale, authority, key)` — one audited door moves routing rules, employees' brains, model settings and defaults, the gate's two judge seats and the fallback chain in one transaction; old row `retired`, never deleted, no alias; `fn_undo_succession` | built 2026-10-10 — MODEL_ROUTING_SPEC A-2026-10-10 §5 |
 | P3 | `resolveExecutionRoute` prefers the task's class row (department-scoped first), falls to tier when `task_class` is NULL — so move 3's efforts reach runs | built 2026-10-10 — A-2026-10-10 §6; goes live with P5 (one scheduler restart) |
 | P4 | First succession on the company through P2: Opus 5 → 5.5, Sonnet 5 → 5.5; `codex-5.6` retired through the door | not started |
-| P5 | Move 3 efforts (critical decisions medium → xhigh, code → high, cheap work stays low) + bundle 3 (C2-3, C2-4, C2-9, C2-12, C2-13 — `.planning/quick/20261004-his-list/item3-report.md`) | P5a efforts built 2026-10-10 (A-2026-10-10 §7); P5b bundle 3 code not started (C2-13 done in step 2) |
+| P5 | Move 3 efforts (critical decisions medium → xhigh, code → high, cheap work stays low) + bundle 3 (C2-3, C2-4, C2-9, C2-12, C2-13 — `.planning/quick/20261004-his-list/item3-report.md`) | P5a efforts built 2026-10-10 (A-2026-10-10 §7); P5b bundle 3 built 2026-10-10 (§8; C2-13 done in step 2) |
 | P6 | Hamza: level Genel Müdür, `role` → `general_manager`; talking seats on Opus 5.5 (`voice.answer` stays `low` until B12 measures `medium`); `orchestration`/`decompose` rows on Fable 5.1 (his 2026-09-21 word); SİCİL field 8 names no model | not started |
 | P7 | Haiku 5.5 beside Sonnet 5.5 on the same mechanical jobs (classify, summarize, subtitle) — result to him, his decision; B51's "Haiku never returns" stays until his word | not started |
 | P8 | New models learned without a key: the source is HIS word — "Halef yap" in the `/ai/models` drawer and Hamza's brain tool. No timer, no scraping (B55 removed that shape on his word). Hamza, asked, says what the lanes list, the catalogue's `last_checked_at`, and that the SDK's own list lags (measured: `supportedModels()` 6 entries, no Opus 5.5) | design agreed |
@@ -132,3 +132,14 @@ extension; (iii) judge seats outside `routing_rules` (a catalogue column or a se
 - `codex-5.6` = `gpt-5.6-sol` (the gate's 2026-07-26 config); OpenAI prices stay NULL (no per-token price for
   the subscription slugs); `released_at` NULL where the vendor page states no date.
 
+
+## P5b as built (2026-10-10, lead Opus 5.5 `dxb-global-os-21`, second eye Fable 5.1 `dxb-global-os-e2` → `-1b`)
+- SDK fallback held at the primary's tier floor (second eye's B1): today fable-5.1 → claude-opus-5, fable-5 and
+  claude-sonnet-5 → none. The isolation ruler stays strict (no opaque spread): `fallbackModel` was added to its
+  list, each site writes `model: sdk.model` + a conditional `fallbackModel`.
+- **For P4 (second eye's C3):** the door copies fable-5's `fallback_of` (claude-sonnet-5, L2) onto
+  claude-opus-5-5, which the floor then drops — Opus 5.5's L1 seats would have no SDK fallback; fable-5.1's
+  chain re-points to claude-opus-5-5 (L1, good). Decide in P4 and say it in its diff.
+- Open, outside P5b: when the SDK does fall over, nothing records the model that really ran (agent_runs keeps
+  the primary) — report "Bulunan", its own small job. Plan mode on chat = two system-prompt variants = two
+  cache keys (accepted). The cache hit itself is ⚠ UNVERIFIED (no live call made).

@@ -92,3 +92,46 @@ export async function sdkModelId(db: Kysely<DB>, name: string): Promise<string> 
   }
   return m.apiModelId;
 }
+
+/**
+ * B51 P5b (C2-12) — what an Agent SDK call is given for its model: the Claude API id, and the SDK's
+ * `fallbackModel` read from the catalogue's fallback chain (`model_catalog.fallback_of` = the model this
+ * one falls to — the same direction fn_model_fallback walks). The first hop that is live — active, not
+ * banned, not mechanical-only (the call site does not know whether its seat may take one), on the
+ * agent-sdk lane with an API name — is the fallback; a retired or Codex hop is passed over, at most four
+ * hops (fn_model_fallback's depth). None → no fallbackModel, and the SDK runs the model alone as before.
+ *
+ * The fallback never sits below the primary's tier floor (second eye, 2026-10-10): the SDK falls over
+ * silently, mid-run, and the run is still recorded under the primary, so an L1 strategy or final-approval
+ * run on Opus must not quietly finish on Sonnet (L2) — U21 §4d keeps Sonnet out of critical work. A hop
+ * without a floor is no candidate.
+ * A succession that rewrites the chain reaches the very next call: read uncached, like resolveModel.
+ */
+export async function sdkModel(
+  db: Kysely<DB>,
+  name: string,
+): Promise<{ model: string; fallbackModel?: string }> {
+  const m = await resolveModel(db, name);
+  if (m.lane !== "agent-sdk") {
+    throw new ModelRefusedError(name, `${m.id} runs on the ${m.lane} lane, not through the Agent SDK`);
+  }
+  const res = await sql<{ api_model_id: string }>`
+    WITH RECURSIVE chain(id, depth) AS (
+      SELECT fallback_of, 1 FROM model_catalog WHERE id = ${m.id} AND fallback_of IS NOT NULL
+      UNION ALL
+      SELECT c.fallback_of, chain.depth + 1
+        FROM chain JOIN model_catalog c ON c.id = chain.id
+       WHERE c.fallback_of IS NOT NULL AND chain.depth < 4
+    )
+    SELECT f.api_model_id
+      FROM chain JOIN model_catalog f ON f.id = chain.id
+      JOIN model_catalog p ON p.id = ${m.id}
+     WHERE f.status = 'active' AND NOT f.banned AND NOT f.mechanical_only
+       AND f.lane = 'agent-sdk' AND f.api_model_id IS NOT NULL AND f.api_model_id <> ${m.apiModelId}
+       AND f.tier_floor IS NOT NULL AND fn_tier_rank(f.tier_floor) <= fn_tier_rank(p.tier_floor)
+     ORDER BY chain.depth
+     LIMIT 1
+  `.execute(db);
+  const fallback = res.rows[0]?.api_model_id;
+  return fallback ? { model: m.apiModelId, fallbackModel: fallback } : { model: m.apiModelId };
+}

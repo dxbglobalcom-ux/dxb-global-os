@@ -23,7 +23,7 @@ import {
   loadPolicy,
   route,
   workClasses,
-  sdkModelId,
+  sdkModel,
   type ClassifiedIntent,
   type ResolvedRoute,
   type RoutingRule,
@@ -135,12 +135,15 @@ export function lintBatch(drafts: Pick<EnvelopeDraft, "objective" | "deps">[]): 
 // structured output with a mechanical fence-unwrap fallback — Zod stays the
 // sole decision gate.
 async function runDraftQuery(prompt: string, own: ResolvedRoute, schema: z.ZodType): Promise<unknown> {
+  // B51 P5b (C2-12): the catalogue's API name and its fallback model, read uncached per call
+  const sdk = await sdkModel(getDb(), own.model);
   const q = query({
     prompt,
     options: {
       // CEO 2026-10-03: nothing of the construction is loaded into a company call (kernel sdk-isolation.ts)
       ...(companyIsolation() ?? {}),
-      model: await sdkModelId(getDb(), own.model),
+      model: sdk.model,
+      ...(sdk.fallbackModel ? { fallbackModel: sdk.fallbackModel } : {}),
       effort: own.effort as "low" | "medium" | "high" | "xhigh" | "max",
       tools: [],
       maxTurns: 4,

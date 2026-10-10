@@ -34,6 +34,7 @@ import {
   generateWorkFromPlans,
   RESIDENT_WORKER_ID,
   QA_SPEND_SOURCE,
+  seatStandingPrompt,
   SUBSCRIPTION_SPEND_SOURCE,
 } from "@dxb/orchestrator";
 import { revenueBrief, revenueRollup, revenueScan, revenueScore } from "@dxb/revenue";
@@ -575,7 +576,9 @@ export async function startWorkers(boss: PgBoss): Promise<void> {
       for (const job of jobs) {
         if (job.data?.slug) await triggerRunNow(job.data.slug, "cron");
       }
-      await drainWorkflowRuns();
+      // B51 P5b (C2-4): a workflow step runs as its seat — the same standing prompt the task lane gives
+      // a staffed run, built by the orchestrator's one definition (the kernel cannot import it).
+      await drainWorkflowRuns({ seatPrompt: (seat) => seatStandingPrompt(seat) });
     } finally {
       await enqueueWorkflowDrain(boss, CADENCES.workflowDrainSeconds);
     }

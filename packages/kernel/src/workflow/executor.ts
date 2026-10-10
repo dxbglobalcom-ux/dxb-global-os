@@ -19,7 +19,7 @@ import {
   resolveRuntimeProfile,
   type SdkToolOptions,
 } from "@dxb/gateway";
-import { resolveModel, sdkModelId } from "../models.js";
+import { resolveModel, sdkModel } from "../models.js";
 import { companyIsolation, isolationReceipt } from "../sdk-isolation.js";
 import type { AgentWork, AgentWorkResult } from "./types.js";
 
@@ -72,8 +72,12 @@ export async function defaultWorkflowExecutor(work: AgentWork): Promise<AgentWor
     toolOpts = buildSdkToolOptions(surface, await dxbInventoryNames());
   }
 
+  // B51 P5b (C2-4): with the seat's standing prompt as the system prompt, the seat already knows who it
+  // is; the one-line name stays only for a run without one (a test executor, no composition point).
   const prompt = [
-    `You are ${work.employeeSlug}, a DXB Global OS employee agent (${work.department}).`,
+    ...(work.systemPrompt
+      ? []
+      : [`You are ${work.employeeSlug}, a DXB Global OS employee agent (${work.department}).`]),
     "Complete the work below and answer as strict JSON only:",
     '{"result": "<deliverable text>", "confidence": <0..1>,',
     ' "evidence": [{"kind": "verification", "tool": "<mcp tool you called>", "note": "<what you checked>"}],',
@@ -102,12 +106,18 @@ export async function defaultWorkflowExecutor(work: AgentWork): Promise<AgentWor
 
   let raw: unknown;
   if ((await resolveMode(work.model)) === "subscription") {
+    // B51 P5b (C2-12): the catalogue's API name and its fallback model, read uncached per call
+    const sdk = await sdkModel(getDb(), work.model);
     const q = query({
       prompt,
       options: {
         // CEO 2026-10-03: nothing of the construction is loaded into a company call (sdk-isolation.ts)
         ...(companyIsolation() ?? {}),
-        model: await sdkModelId(getDb(), work.model),
+        // B51 P5b: the catalogue's model and its fallback (C2-12), the row's effort (C2-3), the seat (C2-4)
+        model: sdk.model,
+        ...(sdk.fallbackModel ? { fallbackModel: sdk.fallbackModel } : {}),
+        ...(work.effort ? { effort: work.effort } : {}),
+        ...(work.systemPrompt ? { systemPrompt: work.systemPrompt } : {}),
         tools: [],
         ...(toolOpts
           ? {
@@ -162,7 +172,10 @@ export async function defaultWorkflowExecutor(work: AgentWork): Promise<AgentWor
     const res = await llmCall({
       department: work.department,
       model: work.model,
-      messages: [{ role: "user", content: prompt }],
+      messages: [
+        ...(work.systemPrompt ? [{ role: "system" as const, content: work.systemPrompt }] : []),
+        { role: "user" as const, content: prompt },
+      ],
       maxTokens: 8192,
     });
     obs?.addUsage({

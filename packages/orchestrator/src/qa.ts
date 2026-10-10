@@ -18,7 +18,7 @@ import {
   isolationReceipt,
   loadPolicy,
   route,
-  sdkModelId,
+  sdkModel,
   type ClassifiedIntent,
 } from "@dxb/kernel";
 import { QA_SPEND_SOURCE, recordSubscriptionSpend } from "./subscription-cap.js";
@@ -84,12 +84,15 @@ async function defaultEvaluator(task: QaTask): Promise<unknown> {
   ].join("\n");
 
   if (routed.mode === "subscription") {
+    // B51 P5b (C2-12): the catalogue's API name and its fallback model, read uncached per call
+    const sdk = await sdkModel(getDb(), routed.model);
     const q = query({
       prompt,
       options: {
         // B43 plan ② (2026-09-05), CEO 2026-10-03: the gate judges with nothing of the construction loaded
         ...(companyIsolation() ?? {}),
-        model: await sdkModelId(getDb(), routed.model),
+        model: sdk.model,
+        ...(sdk.fallbackModel ? { fallbackModel: sdk.fallbackModel } : {}),
         effort: routed.effort as "low" | "medium" | "high" | "xhigh" | "max",
         tools: [],
         maxTurns: 4,

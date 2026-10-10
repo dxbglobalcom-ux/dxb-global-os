@@ -8,7 +8,7 @@
 import { z } from "zod";
 import { query } from "@anthropic-ai/claude-agent-sdk";
 import { getDb, type DB } from "@dxb/shared";
-import { sdkModelId } from "@dxb/kernel";
+import { sdkModel } from "@dxb/kernel";
 import type { Kysely } from "kysely";
 
 const Uuid = z.string().uuid();
@@ -77,10 +77,13 @@ async function sdkJudge(
       ? `EXISTING TRUSTED (contradiction target): """${ctx.targetBody}"""`
       : "EXISTING TRUSTED: none (no contradiction target recorded)",
   ].join("\n");
+  // B51 P5b (C2-12): the catalogue's API name and its fallback model, read uncached per call
+  const sdk = await sdkModel(getDb(), rule.model);
   const q = query({
     prompt,
     options: {
-      model: await sdkModelId(getDb(), rule.model),
+      model: sdk.model,
+      ...(sdk.fallbackModel ? { fallbackModel: sdk.fallbackModel } : {}),
       effort: rule.effort as "low" | "medium" | "high" | "max",
       tools: [],
       // Same NOT-1 as classify.ts: structured output arrives via an internal
