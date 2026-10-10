@@ -1,0 +1,25 @@
+# Sol B6 — the bench's ledger brought level through the canonical bootstrap, 2026-10-10T04:43:28+02:00
+## bench ledger before:
+20261010010000
+20261010020000
+20261010030000
+20261010040000
+20261010050000
+[bootstrap] applying 20261010060000_b51_smoke_gate.sql
+[bootstrap] applying 20261010070000_b51_p4_opus_5_5_takes_its_seats.sql
+[bootstrap] applying 20261010080000_b51_p6_hamza_general_manager.sql
+[bootstrap] done — applied 3, skipped 178, ledger total 181
+## bench ledger after:
+20261010010000
+20261010020000
+20261010030000
+20261010040000
+20261010050000
+20261010060000
+20261010070000
+20261010080000
+## Hamza's bench title back to the seed's invention (080000 re-titled him again):
+UPDATE 1
+general_manager|Still Water Ledger Orchestrator
+## parity
+SCHEMA_PARITY — the two engines carry the same public schema, object for object.

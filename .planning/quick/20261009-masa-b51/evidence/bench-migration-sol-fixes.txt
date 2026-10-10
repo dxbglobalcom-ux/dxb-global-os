@@ -1,0 +1,38 @@
+# 090000 (Sol's step-3 fixes A1, B1, B2, B3) on the BENCH through the canonical bench bootstrap, 2026-10-10T04:47:37+02:00
+## measured before (both engines, read-only): workflow_steps total / pinned (config ? 'model_id')
+supabase_db_DxB_Build: 0 / 0
+supabase_db_DxB_Global_OS: 0 / 0
+## low_cost rows (both engines):
+supabase_db_DxB_Build: slot.low_cost claude-sonnet-5-5 enabled=true
+supabase_db_DxB_Global_OS: slot.low_cost claude-sonnet-5-5 enabled=true
+## bootstrap
+[bootstrap] applying 20261010090000_b51_sol_undo_and_default_fixes.sql
+[bootstrap] done — applied 1, skipped 181, ledger total 182
+## Hamza's bench title after:
+general_manager|Still Water Ledger Orchestrator|Durgun Su Defter Orkestratörü
+## functions
+ERROR:  column reference "oid" is ambiguous
+# note: the line above is the listing query's own error (oid ambiguous), not the migration's — the functions are listed below it
+LINE 1: SELECT oid::regprocedure, prolang::regproc FROM pg_proc p JO...
+               ^
+fn_default_brain()|plpgsql
+fn_succeed_model(text,text,text,text,text)|plpgsql
+fn_undo_succession(bigint,text)|plpgsql
+## function bodies vs originals
+fn_succeed_model vs 060000: 12 lines added, 0 removed (workflow pins only)
+fn_undo_succession vs 020000: 113 added, 23 removed
+## tests: tests/b51 + tests/c9 + e7 routing-slots + b36 seed-is-fiction → 34 files passed | 1 skipped, 277 tests passed | 1 skipped; succession.test.ts 16/16 after the A1 pin update; typecheck exit 0
+
+# the coordinator's LIFO rule (NOT_LATEST replaces SUPERSEDED; status_kept + reason): the edited file re-run on the bench (it never reached the company), 2026-10-10T04:49:22+02:00
+RERUN_EXIT=0
+## the real first Opus succession on this bench, undone already — what an undo of it would write now:
+42089|43810
+48973|
+BEGIN
+{"ok": false, "error": "ALREADY_UNDONE", "detail": "succession 42089 was undone already"}
+ROLLBACK
+ Test Files  34 passed | 1 skipped (35)
+      Tests  279 passed | 1 skipped (280)
+TC_EXIT=0
+
+# lead's change after the fork (2026-10-10): NOT_LATEST names max(a.id) — the latest standing succession — not min; re-applied to the bench, succession 17/17

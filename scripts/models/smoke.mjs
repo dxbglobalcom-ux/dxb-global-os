@@ -9,13 +9,14 @@
 // 2026-10-10: the SDK's CLI 2.1.259 returned its refusal of claude-opus-5-5 as subtype success with is_error
 // true and a synthetic served model — the result text alone is not a pass.
 // codex-cli lane: the critical gate's own runner (`codex exec` from the company's Codex home), effort low; a
-// pass is a verdict that parses.
+// pass is a verdict the gate's own schema (ChallengerVerdict) accepts — scripts/models/smoke-verdict.mjs.
 // Other lanes are not smoked here and are never stamped. The database URL is required, never defaulted: a
 // stamp on the wrong engine is a false record. One JSON line per model; exit 1 when any model fails.
 import { createRequire } from "node:module";
 import { execFileSync } from "node:child_process";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+import { codexSmokePasses } from "./smoke-verdict.mjs";
 
 const REPO = join(dirname(fileURLToPath(import.meta.url)), "..", "..");
 const ids = process.argv.slice(2);
@@ -54,7 +55,7 @@ async function smokeSdk(apiModelId) {
 }
 
 async function smokeCodex(apiModelId) {
-  const { codexRunnerWith } = await import(join(REPO, "packages", "orchestrator", "dist", "critical-gate.js"));
+  const { codexRunnerWith, ChallengerVerdict } = await import(join(REPO, "packages", "orchestrator", "dist", "critical-gate.js"));
   const runner = codexRunnerWith((line) => console.error(line));
   const prompt =
     "Smoke test of the reviewer seat. Review this one-line change: `const x = 1;` becomes `const x = 2;`. Return your verdict in the required JSON.";
@@ -65,13 +66,7 @@ async function smokeCodex(apiModelId) {
   } catch {
     cli = null;
   }
-  let parsed = false;
-  try {
-    parsed = res.ok && typeof JSON.parse(res.raw ?? "") === "object";
-  } catch {
-    parsed = false;
-  }
-  return { pass: parsed && cli !== null, cli, evidence: { ok: res.ok, error: res.error ?? null, raw: String(res.raw ?? "").slice(0, 300) } };
+  return { pass: codexSmokePasses({ ok: res.ok, raw: res.raw, cli }, ChallengerVerdict), cli, evidence: { ok: res.ok, error: res.error ?? null, raw: String(res.raw ?? "").slice(0, 300) } };
 }
 
 const client = new pg.Client({ connectionString: url });

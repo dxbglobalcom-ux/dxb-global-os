@@ -91,7 +91,21 @@ const RULES: Rule[] = [
     re: /^Tool unlocked: (.+) now carries the text the repository vouches for$/,
     tr: (m) => `Araç kilidi açıldı: ${m[1]} artık depodaki onaylı metni taşıyor`,
   },
+  {
+    // B51 — a critical-gate seat that cannot judge (packages/orchestrator/src/critical-gate.ts runCriticalGate).
+    re: /^Critical gate seat (\d+) cannot judge$/,
+    tr: (m) => `Kritik kapının ${m[1]}. koltuğu karar veremiyor`,
+  },
 ];
+
+// The catalogue's statuses (model_catalog_status_check) as a seat's reason names them. An unknown one passes
+// through as it is.
+const MODEL_STATUS_TR: Record<string, string> = {
+  testing: "deneme aşamasında",
+  degraded: "performansı düşmüş durumda",
+  disabled: "devre dışı",
+  retired: "kullanımdan kaldırılmış",
+};
 
 // The pin check's signal names (packages/gateway/src/drift-review.ts describeDrift) — what to read
 // first in a locked tool's change. An unknown name passes through as it is.
@@ -182,6 +196,31 @@ const DETAIL_RULES: Rule[] = [
     tr: (m) => `Depodaki incelenmiş araç listesi artık yeni metni taşıyor (${m[1]} numaralı denetim kaydı)`,
   },
   { re: /^tool pins$/, tr: () => "araç onayları" },
+  // B51 — the critical gate's seat alert: its action, and every reason seatsFrom gives for a seat that cannot
+  // judge (packages/orchestrator/src/critical-gate.ts). The specific "is not …" lines come before "is <status>".
+  {
+    re: /^Name an active Codex-lane model for seat (\d+) in (\S+) \(\/sys\/settings\)\.$/,
+    tr: (m) => `${m[1]}. koltuk için ${m[2]} ayarında (/sys/settings) etkin durumda bir Codex hattı modeli belirleyin.`,
+  },
+  { re: /^critical_gate$/, tr: () => "kritik karar kapısı" },
+  { re: /^(\S+) is not two seats$/, tr: (m) => `${m[1]} ayarı tam olarak iki koltuk tanımlamıyor` },
+  {
+    re: /^seat (\d+): effort '(.*)' is not one of (\S+)$/,
+    tr: (m) => `${m[1]}. koltuk: '${m[2]}' çaba düzeyi geçerli değil; şunlardan biri olmalı: ${m[3]}`,
+  },
+  {
+    re: /^seat (\d+): (.+) is not in the model catalogue$/,
+    tr: (m) => `${m[1]}. koltuk: ${m[2]} model kataloğunda bulunmuyor`,
+  },
+  {
+    re: /^seat (\d+): (.+) is not on the Codex lane$/,
+    tr: (m) => `${m[1]}. koltuk: ${m[2]} Codex hattında çalışmıyor`,
+  },
+  { re: /^seat (\d+): (.+) is banned$/, tr: (m) => `${m[1]}. koltuk: ${m[2]} yasaklı` },
+  {
+    re: /^seat (\d+): (.+) is (\S+)$/,
+    tr: (m) => `${m[1]}. koltuk: ${m[2]} etkin değil (durumu: ${MODEL_STATUS_TR[m[3]!] ?? m[3]})`,
+  },
 ];
 
 function localize(rules: Rule[], text: string, locale: string): string {

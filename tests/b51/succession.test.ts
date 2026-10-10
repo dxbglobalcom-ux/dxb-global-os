@@ -170,8 +170,12 @@ describe("P2 — the succession door", () => {
         (await one(trx, sql<{ d: unknown }>`SELECT value_schema->'default' AS d FROM settings_registry WHERE key = ${`${SEED}.model`}`)).d,
       ).toBe(`${SEED}-old`);
 
-      // a second undo changes nothing
-      expect((await undo(trx, r.audit_id!, `${SEED}-u2`)).restored).toMatchObject({ routing: 0, agents: 0 });
+      // a second undo under another key is refused and changes nothing (Sol's A1: it once answered "ok, 0 moved"
+      // here, and after a return through the door the same call would have moved the return's seats)
+      expect(await undo(trx, r.audit_id!, `${SEED}-u2`)).toMatchObject({ ok: false, error: "ALREADY_UNDONE" });
+      const rulesStill = await sql<{ model: string }>`
+        SELECT model FROM routing_rules WHERE id = ANY (${ruleOn}::uuid[])`.execute(trx);
+      expect(rulesStill.rows.every((x) => x.model === `${SEED}-old`)).toBe(true);
 
       // and after an undo the same succession can be made again, as a new record
       const again = await succeed(trx, `${SEED}-old`, `${SEED}-new`, `${SEED}-k1b`);
@@ -347,5 +351,169 @@ describe("B2 — a successor answers one live call before the door moves a seat 
              has_function_privilege('service_role', 'fn_model_smoke_passed(text,text,jsonb,timestamptz)', 'EXECUTE') AS svc
     `.execute(getDb());
     expect(acl.rows[0]).toEqual({ anon: false, authn: false, svc: true });
+  });
+});
+
+describe("Sol's step-3 fixes — an undo moves only what its own succession placed (A1, B1, B3) and no default is retired (B2)", () => {
+  const seatRule = async (trx: never, suffix: string, model: string) =>
+    (
+      await sql<{ id: string }>`
+        INSERT INTO routing_rules (task_class, match, model_tier, model, model_id, mode, effort, priority, enabled)
+        VALUES (${`${SEED}.${suffix}`}, '{}', 'L4', ${model}, ${model}, 'subscription', 'low', -50, true)
+        RETURNING id`.execute(trx)
+    ).rows[0].id;
+  const ruleModel = async (trx: never, id: string) =>
+    (await one(trx, sql<{ model: string }>`SELECT model FROM routing_rules WHERE id = ${id}::uuid`)).model;
+
+  it("A1: a succession undone once cannot be undone again under another key — the return's seats stay", async () => {
+    await inTrx(async (trx) => {
+      await probeModels(trx, "agent-sdk");
+      const rule = await seatRule(trx, "a1", `${SEED}-old`);
+      const first = await succeed(trx, `${SEED}-old`, `${SEED}-new`, `${SEED}-a1-s1`);
+      expect(first.ok).toBe(true);
+      expect((await undo(trx, first.audit_id!, `${SEED}-a1-u1`)).ok).toBe(true);
+      const again = await succeed(trx, `${SEED}-old`, `${SEED}-new`, `${SEED}-a1-s2`);
+      expect(again.ok).toBe(true);
+      expect(await ruleModel(trx, rule)).toBe(`${SEED}-new`);
+      expect(await undo(trx, first.audit_id!, `${SEED}-a1-u2`)).toMatchObject({ ok: false, error: "ALREADY_UNDONE" });
+      expect(await ruleModel(trx, rule)).toBe(`${SEED}-new`);
+      // the same key replays its stored answer, as before
+      expect((await undo(trx, first.audit_id!, `${SEED}-a1-u1`)).ok).toBe(true);
+      expect(await ruleModel(trx, rule)).toBe(`${SEED}-new`);
+    });
+  });
+
+  it("A1: successions are undone last-in, first-out — an earlier one waits while a later one stands", async () => {
+    await inTrx(async (trx) => {
+      await probeModels(trx, "agent-sdk");
+      await sql`
+        INSERT INTO model_catalog (id, provider, status, display_name, banned, mechanical_only, tier_floor, api_model_id,
+                                   lane, family, smoke_ok_at, smoke_cli)
+        VALUES (${`${SEED}-newer`}, 'anthropic', 'testing', 'Probe Newer', false, false, 'L1', ${`${SEED}-newer`},
+                'agent-sdk', 'probe', now(), 'probe'),
+               (${`${SEED}-newest`}, 'anthropic', 'testing', 'Probe Newest', false, false, 'L1', ${`${SEED}-newest`},
+                'agent-sdk', 'probe', now(), 'probe')`.execute(trx);
+      const rule = await seatRule(trx, "a1b", `${SEED}-old`);
+      const r1 = await succeed(trx, `${SEED}-old`, `${SEED}-new`, `${SEED}-a1b-s1`);
+      const r2 = await succeed(trx, `${SEED}-new`, `${SEED}-newer`, `${SEED}-a1b-s2`);
+      const r3 = await succeed(trx, `${SEED}-newer`, `${SEED}-newest`, `${SEED}-a1b-s3`);
+      expect(r1.ok && r2.ok && r3.ok).toBe(true);
+      // the one to undo first is the LATEST standing succession, not merely a later one
+      expect(await undo(trx, r1.audit_id!, `${SEED}-a1b-u1`)).toMatchObject({
+        ok: false, error: "NOT_LATEST", blocking_audit_id: r3.audit_id, detail: expect.stringMatching(/undo that one first/),
+      });
+      expect(await ruleModel(trx, rule)).toBe(`${SEED}-newest`);
+      expect((await undo(trx, r3.audit_id!, `${SEED}-a1b-u4`)).ok).toBe(true);
+      expect((await undo(trx, r2.audit_id!, `${SEED}-a1b-u2`)).ok).toBe(true);
+      expect((await undo(trx, r1.audit_id!, `${SEED}-a1b-u3`)).ok).toBe(true);
+      expect(await ruleModel(trx, rule)).toBe(`${SEED}-old`);
+    });
+  });
+
+  it("A1: on this engine the first Opus succession, undone already, can no longer reach a seat", async () => {
+    // Sol measured the undone record (fable-5 → claude-opus-5-5) still matching 22 rows and 22 brains after Opus 5.5's
+    // return; the undo now stops at ALREADY_UNDONE before any UPDATE runs
+    await inTrx(async (trx) => {
+      const first = await one(trx, sql<{ id: number | null }>`
+        SELECT min(a.id)::int AS id FROM audit_log a
+         WHERE a.action = 'routing.succession' AND a.payload->>'old' = 'fable-5' AND a.payload->>'new' = 'claude-opus-5-5'
+           AND EXISTS (SELECT 1 FROM audit_log u WHERE u.action = 'routing.succession.undo'
+                        AND (u.payload->>'undo_of')::bigint = a.id)`);
+      expect(first.id).not.toBeNull();
+      const before = await one(trx, sql<{ rules: number; brains: number }>`
+        SELECT (SELECT count(*)::int FROM routing_rules WHERE model = 'claude-opus-5-5') AS rules,
+               (SELECT count(*)::int FROM agents WHERE brain = 'claude-opus-5-5') AS brains`);
+      expect(await undo(trx, first.id!, `${SEED}-a1-real`)).toMatchObject({ ok: false, error: "ALREADY_UNDONE" });
+      const after = await one(trx, sql<{ rules: number; brains: number }>`
+        SELECT (SELECT count(*)::int FROM routing_rules WHERE model = 'claude-opus-5-5') AS rules,
+               (SELECT count(*)::int FROM agents WHERE brain = 'claude-opus-5-5') AS brains`);
+      expect(after).toEqual(before);
+    });
+  });
+
+  it("B1: the gate's seats come back seat by seat — a later effort change elsewhere does not block, each seat keeps its current effort", async () => {
+    await inTrx(async (trx) => {
+      await sql`
+        INSERT INTO model_catalog (id, provider, status, display_name, banned, mechanical_only, tier_floor, api_model_id,
+                                   lane, family, smoke_ok_at, smoke_cli)
+        VALUES (${`${SEED}-astra7`}, 'openai', 'testing', 'Astra 7', false, false, 'L1', ${`${SEED}-astra7`},
+                'codex-cli', 'gpt-astra', now(), 'probe')`.execute(trx);
+      const r = await succeed(trx, "gpt-6-astra", `${SEED}-astra7`, `${SEED}-b1-s`);
+      expect(r).toMatchObject({ ok: true, moved: { gate_seats: 1 } });
+      // after the succession: the OTHER seat's effort changes, and the moved seat's effort too
+      await sql`
+        UPDATE settings_values
+           SET value = '[{"model":"gpt-6.1-sol","effort":"xhigh"}]'::jsonb
+                       || jsonb_build_array(jsonb_set(value->1, '{effort}', '"medium"'))
+         WHERE key = 'gate.challengers' AND scope = 'global'`.execute(trx);
+      await sql`
+        UPDATE settings_registry
+           SET value_schema = jsonb_set(value_schema, '{default,0,effort}', '"xhigh"')
+         WHERE key = 'gate.challengers'`.execute(trx);
+      const u = await undo(trx, r.audit_id!, `${SEED}-b1-u`);
+      expect(u.ok).toBe(true);
+      const after = await one(
+        trx,
+        sql<{ v: unknown; d: unknown; status: string }>`
+          SELECT (SELECT value FROM settings_values WHERE key = 'gate.challengers' AND scope = 'global') AS v,
+                 (SELECT value_schema->'default' FROM settings_registry WHERE key = 'gate.challengers') AS d,
+                 (SELECT status FROM model_catalog WHERE id = ${`${SEED}-astra7`}) AS status`,
+      );
+      expect(after.v).toEqual([
+        { model: "gpt-6.1-sol", effort: "xhigh" },
+        { model: "gpt-6-astra", effort: "medium" },
+      ]);
+      expect((after.d as { model: string; effort: string }[]).map((s) => s.model)).toEqual(["gpt-6.1-sol", "gpt-6-astra"]);
+      expect((after.d as { model: string; effort: string }[])[0].effort).toBe("xhigh");
+      // nothing names the successor any more, so it goes back to what it was
+      expect(after.status).toBe("testing");
+    });
+  });
+
+  it("B1: the successor is not lowered while a seat still names it", async () => {
+    await inTrx(async (trx) => {
+      await probeModels(trx, "agent-sdk");
+      const r = await succeed(trx, `${SEED}-old`, `${SEED}-new`, `${SEED}-b1k-s`);
+      expect(r.ok).toBe(true);
+      // after the succession someone seats an employee on the successor
+      await probeAgent(trx, "b1k-later", `${SEED}-new`, "ceo_override");
+      const u = await undo(trx, r.audit_id!, `${SEED}-b1k-u`);
+      expect(u).toMatchObject({ ok: true, status_kept: true, status_kept_reason: expect.stringMatching(/still named/) });
+      const s = await one(trx, sql<{ status: string }>`SELECT status FROM model_catalog WHERE id = ${`${SEED}-new`}`);
+      expect(s.status).toBe("active");
+    });
+  });
+
+  it("B3: a workflow step pinned to the old model moves with the succession and comes back with its undo", async () => {
+    await inTrx(async (trx) => {
+      await probeModels(trx, "agent-sdk");
+      const wf = (
+        await sql<{ id: string }>`
+          INSERT INTO workflows (slug, name, trigger) VALUES (${`${SEED}-wf`}, 'probe workflow', '{}'::jsonb)
+          RETURNING id`.execute(trx)
+      ).rows[0].id;
+      const step = (
+        await sql<{ id: string }>`
+          INSERT INTO workflow_steps (workflow_id, seq, kind, config)
+          VALUES (${wf}::uuid, 1, 'agent', ${JSON.stringify({ model_id: `${SEED}-old` })}::jsonb)
+          RETURNING id`.execute(trx)
+      ).rows[0].id;
+      const pin = async () =>
+        (await one(trx, sql<{ m: string }>`SELECT config->>'model_id' AS m FROM workflow_steps WHERE id = ${step}::uuid`)).m;
+      const r = await succeed(trx, `${SEED}-old`, `${SEED}-new`, `${SEED}-b3-s`);
+      expect(r).toMatchObject({ ok: true, moved: { workflow_pins: 1 } });
+      expect(await pin()).toBe(`${SEED}-new`);
+      const u = await undo(trx, r.audit_id!, `${SEED}-b3-u`);
+      expect(u).toMatchObject({ ok: true, restored: { workflow_pins: 1 } });
+      expect(await pin()).toBe(`${SEED}-old`);
+    });
+  });
+
+  it("B2: with no enabled low_cost row the default brain is refused, never a fixed model id", async () => {
+    await inTrx(async (trx) => {
+      expect((await one(trx, sql<{ b: string }>`SELECT fn_default_brain() AS b`)).b).toBe("claude-sonnet-5-5");
+      await sql`UPDATE routing_rules SET enabled = false WHERE role_slot = 'low_cost'`.execute(trx);
+      await expect(sql`SELECT fn_default_brain()`.execute(trx)).rejects.toThrow(/no enabled low_cost routing row/);
+    });
   });
 });
