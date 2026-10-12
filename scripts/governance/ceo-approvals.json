@@ -2267,6 +2267,14 @@
     "session": "Opus 5.5 session e25dc58a -- heard first-hand, 2026-10-12.",
     "where": ".claude/hooks/dxb-effort-warn.py; tests/hooks/effort-warn.test.ts; .claude/skills/dxb-team2/SKILL.md section 2 (mirror .agents/skills/dxb-team2/SKILL.md)"
   },
+  "plan-at-xhigh-2026-10-12": {
+    "date": "2026-10-12",
+    "what": "Plan, design and architecture talk runs at effort xhigh, not max; the build stays at high. The warning hook (.claude/hooks/dxb-effort-warn.py), its tests and dxb-team2 section 2 now name xhigh; max is no longer the plan level.",
+    "verbatim": "ceo emridir. öncelikle şu max ile konuşulacak kısmı değiştiriyorum. xhigh ile olsun. artık xhigh ile konuşacağız planlama mimari işlerini. · hayırrr yaaaa o iş durmasın · (değerlendirme.txt, NOT 12) Bu arada max yerine X high kullanılsın. … Max'i tamamıyla çıkartın. … Yani düşünmede X high, fiiliyata dökme aksiyonda medium ve high.",
+    "conditions": "His order for every session ('artık'). Covers the construction's plan level; the holding runtime's own levels (Hamza's strategy chat and the rest) are B64/B51 design and change through that work.",
+    "session": "Opus 5.5 session 351c41a1 -- heard first-hand, 2026-10-12.",
+    "where": ".claude/hooks/dxb-effort-warn.py; tests/hooks/effort-warn.test.ts; .claude/skills/dxb-team2/SKILL.md (mirror .agents/skills/dxb-team2/SKILL.md)"
+  },
   "b51-plan-approved-2026-10-09": {
     "date": "2026-10-09",
     "what": "His yes to the one-page plan of the B51 table (.planning/quick/20261009-masa-b51/PLAN.md — beyinler, konsey, kayıtlar), built in three steps: (1) records that keep up with the work + his plan words open dxb-team2; (2) the dead council deleted and the live critical gate run once; (3) model succession through the catalogue, the first succession (Opus 5 → 5.5, Sonnet 5 → 5.5), B51 bundle 3, move 3 and Hamza's level. 'gerekli olanı yapın' is read as yes to the plan's recommendations (Haiku 5.5 testing + mechanical only; mechanical seats succeed by themselves when the price does not rise); the API key for the model list stays his step. Two decisions in the same conversation bind step 3: Haiku 5.5 is first tested side by side with Sonnet 5.5 on the same mechanical work and the result goes to him before any decision; Hamza's seats get their model by the work they do — his talking seats on Opus 5.5.",

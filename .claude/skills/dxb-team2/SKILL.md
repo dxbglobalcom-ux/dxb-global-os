@@ -1,6 +1,6 @@
 ---
 name: dxb-team2
-description: Use when the CEO hands the construction a job, or says a plan will be talked ("plan konuşacağız", "plan moduna geçelim") — the default construction door. The lead (the session) chooses who writes — itself, a fork, medium helpers, or a fork with helpers — and verifies every piece; one blind, read-only GPT-6.1 Sol pass checks the work; its findings are fixed and tested; the CEO is warned to switch the effort — max for plan, design and architecture, high for the build. Trigger `/dxb-team2 <the job in one sentence>`.
+description: Use when the CEO hands the construction a job, or says a plan will be talked ("plan konuşacağız", "plan moduna geçelim") — the default construction door. The lead (the session) chooses who writes — itself, a fork, medium helpers, or a fork with helpers — and verifies every piece; one blind, read-only GPT-6.1 Sol pass checks the work; its findings are fixed and tested; the CEO is warned to switch the effort — xhigh for plan, design and architecture, high for the build. Trigger `/dxb-team2 <the job in one sentence>`.
 ---
 
 # The team — one lead, the hands it chooses, one blind auditor
@@ -19,7 +19,7 @@ THE CEO'S JOB, in one sentence he would sign
    │
    ├── small — a fix, a deletion, a text he already worded: no plan, straight to ARRANGE
    │
-PLAN      the talk turns to plan, design or architecture → `plan`: effort warning MAX (§2); his "plan
+PLAN      the talk turns to plan, design or architecture → `plan`: effort warning XHIGH (§2); his "plan
           konuşacağız" opens this door at once, the job is asked inside it
           the plan goes to him once, in his language, closing with the HIGH warning (§2) → his yes
    │
@@ -53,14 +53,14 @@ and the risks — in his language, short; not who writes, which the lead chooses
 ## 2. Effort — the session warns, he switches
 
 The session runs at `high`: the talk, the build, the fixes, the tests. Plan, design and architecture run
-at `max`. **He switches with /effort; the lead warns him — on every reply, until he has.**
+at `xhigh` <!-- CEO-OK: plan-at-xhigh-2026-10-12 -->. **He switches with /effort; the lead warns him — on every reply, until he has.**
 
 - **The warning comes before the thinking** <!-- CEO-OK: plan-warning-before-the-thinking-2026-10-12 -->.
   The moment his message turns the talk to a plan, a design or an architecture — to plan, propose or
   evaluate one, not to ask a plain fact about what exists — the lead runs
   `python3 .claude/hooks/dxb-effort-warn.py plan` before it thinks about the substance; it answers with the
-  live level and whether this reply opens with `⚠ Muhittin Bey, plan konuşmasındayız — /effort max'a geçin.`
-  (not when he is already at max). Until he has switched, that reply does no plan, design or architecture
+  live level and whether this reply opens with `⚠ Muhittin Bey, plan konuşmasındayız — /effort xhigh'a geçin.`
+  (not when he is already at xhigh). Until he has switched, that reply does no plan, design or architecture
   thinking at all: the line, the plain facts he asked in a line or two, the wait, and no file. An
   architecture weighed at high and warned about at the end is the failure this exists for (2026-10-12). His
   plan permission mode starts the same warning by itself.
@@ -73,11 +73,11 @@ at `max`. **He switches with /effort; the lead warns him — on every reply, unt
 - Between those, the hook `dxb-effort-warn.py` repeats the line on each of his messages until the
   session's live level matches. With no mode set, a message of his naming a plan, a design or an
   architecture tells the lead to decide first, before the thinking, and — when the reply would be plan work —
-  to run `plan`, open with the max line and stop; and a session whose level is not high reminds the lead to
+  to run `plan`, open with the xhigh line and stop; and a session whose level is not high reminds the lead to
   open any reply in which it writes code itself with `⚠ Muhittin Bey, koda geçmeden /effort high'a geçin.`
-  — a small job is not written at max either. Outside a plan, code a medium `helper-writer` writes needs
+  — a small job is not written at xhigh either. Outside a plan, code a medium `helper-writer` writes needs
   no switch. After a plan the session returns to high in every case, whoever writes: the lead's own turns
-  — specifying, verifying, testing — belong at high, not at max.
+  — specifying, verifying, testing — belong at high, not at xhigh.
 - Measured 2026-10-06: neither a hook's input nor its environment carries the effort (`CLAUDE_EFFORT`
   reaches the Bash tool, not a UserPromptSubmit hook). The live level is the newest, by timestamp, of the
   status line's record (`$XDG_RUNTIME_DIR/claude-ctx/<session>.json`, field `effort`), this session's last
@@ -110,7 +110,7 @@ and before done" advice does not apply here) nor the Fable-based `design-eye`.
 | **Team** | `helper-writer`s at `medium`, each its own piece, in parallel; `helper`s read and research beside them; the lead at `high` directs them |
 | **Hybrid** | the fork writes the core; `helper-writer`s the side pieces; `helper`s read |
 
-After the plan is talked through at `max` and he says yes, the lead at `high` looks at the job and chooses
+After the plan is talked through at `xhigh` and he says yes, the lead at `high` looks at the job and chooses
 one of the four by its own judgement, and tells him in one line which and why. Writing itself is one of the
 four, not the default.
 
@@ -234,4 +234,4 @@ alone (STATE, the board) is checked by the rulers on commit instead.
   `systemd-run --user --scope --quiet --collect -p MemoryMax=16G -p MemorySwapMax=4G -- /home/dxb/.local/bin/claude --model <same> "$(cat <note>)"`
   (`claude` is not on that terminal's PATH) → `operator shot`, read it → `operator key Return`.
   Proof it is alive: `ListAgents` shows it and it answers. If the job is in its plan phase, the
-  successor's first reply carries the max warning (§2).
+  successor's first reply carries the xhigh warning (§2).
