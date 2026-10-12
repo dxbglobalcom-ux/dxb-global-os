@@ -2251,6 +2251,14 @@
     "session": "Opus 5.5 session e25dc58a — heard first-hand, 2026-10-12.",
     "where": "db/migrations/20261012010000_b51_decompose_row_removed.sql; packages/kernel/policy/routing-seed.json; HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md (B51 row)"
   },
+  "b64-opened-goal-not-intent-and-hamza-2026-10-12": {
+    "date": "2026-10-12",
+    "what": "Row B64 opened on his word: what he gives the holding is a goal written as a broad brief, not a one-line 'intent' -- the word 'niyet' and the one-line box go and the way work enters is redesigned whole; and Hamza's role and authority (envoy only, or also a doer) are to be decided by engineering research, measurement and tests, not assumed from his July directive.",
+    "verbatim": "Niyet değil, hedef. Verilecek hedef, holdinge verilecek iş. … Ondan yapılacakların kısmına notu yazalım. … Dizayn zaten tamamıyla hepsi değişmeli yani. · Hamza her şeye eli kolu uzansın mı, yapsın mı? Yani yetkisi ne olsun? … Mühendisler olarak sizin bunları test edip ölçüp tam olarak bilmeniz lazım, araştırmanız lazım.",
+    "conditions": "His order to write the note and to research; not a plan and not an acceptance of any work. The plan comes to him once, in his language.",
+    "session": "Opus 5.5 session e25dc58a -- heard first-hand, 2026-10-12.",
+    "where": "HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md (B64); .planning/board-rows/B64.md"
+  },
   "plan-warning-before-the-thinking-2026-10-12": {
     "date": "2026-10-12",
     "what": "The plan warning comes before the thinking: when his message turns the talk to a plan, a design or an architecture and the session is not at max, the session warns first and does no plan, design or architecture thinking until he has switched -- never an evaluation made at high and warned about at its end. Built into .claude/hooks/dxb-effort-warn.py (the reminder makes the lead decide first; plan mode's warning stops instead of going on) and dxb-team2 section 2.",
