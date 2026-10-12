@@ -2,7 +2,7 @@
 gsd_state_version: 1.0
 milestone: v2.0
 status: executing
-last_updated: "2026-10-08"
+last_updated: "2026-10-12"
 session_author: opus-5
 ---
 
@@ -27,30 +27,28 @@ not here. What is accepted is read from `scripts/governance/ceo-approvals.json`,
 
 ## Where we left off
 
-2026-10-12 — he walked B51 with the session and does not accept it in this shape (*"bu şekli ile de kabul
-etmiyorum"*). Measured with him: Hamza neither splits nor sends work — the seat that splits a job is a nameless
-Fable 5.1 call (routing row `orchestration`); B51's records and the 2026-10-11 card filed it under Hamza. Done
-the same day: the unread `decompose` routing row removed on his word <!-- CEO-OK: decompose-row-removed-orchestration-stays-2026-10-12 --> (bd178290 — construction bench only; Sol's
-pass could not start, `REFUTER_FAIL … codex mcp list failed`, so the company has not got it); the effort hook
-warns before the thinking and stops plan work until he is at the plan level (xhigh since 2026-10-12, his order) (4dcf2ff6, no Sol on his word <!-- CEO-OK: plan-warning-before-the-thinking-2026-10-12 -->). B64 opened <!-- CEO-OK: b64-opened-goal-not-intent-and-hamza-2026-10-12 -->: how work
-reaches the holding (a goal, not an "intent") and the gaps no other row owns; Hamza's role is his §2d ruling of
-2026-08-01, tested by research, not restated. B64's research is in flight: primary sources and the rival studies
-read, the field run in `var/research/runs/b64-hamza-role/`.
+2026-10-12 — B64's design waits for his eye as version 9 of his page
+(https://claude.ai/artifact/FvrKgh2Gr4Bus3rVdfKbAu; source `.planning/quick/20261012-b64-is-akisi/is-akisi.html`): how a job
+reaches its owner, who picks each piece's model and effort, the checks by the job's value, his word over every brain,
+six worked scenarios and where his twelve notes break. Sol checked it blind (`SOL-v9.md`); its three A and four B
+findings are fixed on the page. Also today: plan, design and architecture talk at xhigh in the construction
+(bc751d51, a2a23c07, d17467fd); the `decompose` routing row removed on the construction bench only (bd178290)
+<!-- CEO-OK: decompose-row-removed-orchestration-stays-2026-10-12 -->. B51 steps 1-3 are not accepted in their shape (his word).
 
 ## Next
 
-1. B64: the research as one page in his language → his one word on B22 → the plan, at xhigh.
+1. B64: his answers to the nine decisions on the page → the design into the owning specs as registered adaptations
+   (one Sol pass) → the one-page plan, once, at xhigh. The handover note carries a draft plan skeleton.
 2. The `decompose` removal reaches the company only after Sol's pass — the refuter's preflight is repaired first.
-3. B51 P8 waits on his two answers below.
+3. B51 P8 waits on his two answers; Hamza's brain tool overlaps B64's decision 6.
 
 ## Waiting on his approval
 
-- Whether B64's research feeds B22's synthesis (B22 holds all design until he reads it) — recommendation yes:
-  one design track, nothing written twice.
-- B51 steps 1-3 as built: not accepted in this shape (his word, 2026-10-12). P8's scope: Hamza's one brain tool
-  and the "Halef yap" drawer's design. Haiku 5.5's result — recommendation: not on classification. chat.strategy
-  runs at max — one word moves it.
-- Security outside B51: `fn_update_routing` is EXECUTE-able by anon and takes the actor from the owner — a row?
+- B64's nine decisions at the top of the page, each "önerim: evet"; five change a standing rule (B15 for one-off
+  client deliveries, the approval gate for standard contracts, September's "Haiku never returns", the critical gate's
+  posture and panel, CEO-only line definitions) and say so.
+- B51 steps 1-3 as built: not accepted in this shape (his word, 2026-10-12).
+- Security: `fn_update_routing` is EXECUTE-able by anon in the company — inside B64's decision 6, or a row of its own.
 - Found, each needs his word for a row: the eight Agent SDK readers do not check `is_error`; the SQL model
   fallback ignores the lane and the tier floor; the HR org check counts only heads as roots; the routing seed is
   half the live table; research tasks cannot pass the knowledge shelf; with the hook off the gate is skipped;

@@ -3,7 +3,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,500;7..72,650&family=Public+Sans:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@500&display=swap">
 <style>
-/* Layout: one reading column for a chief executive; tables and the chain scroll inside their own frames. */
+/* Layout: one reading column for a chief executive; the flow map, the brain table and every scenario scroll inside their own frames. */
 :root {
   --bg: #f6f7f9;
   --surface: #ffffff;
@@ -13,6 +13,7 @@
   --accent: #a8811c;
   --accent-soft: #f3ead2;
   --ok: #2f7a55;
+  --warn: #9a4b16;
   --font-display: "Literata", Georgia, "Times New Roman", serif;
   --font-body: "Public Sans", "Segoe UI", system-ui, sans-serif;
   --font-util: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
@@ -20,12 +21,12 @@
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     --bg: #0f1522; --surface: #161f31; --ink: #e5e9f1; --muted: #9ba6bb; --line: #27324a;
-    --accent: #d8b75a; --accent-soft: #2a2614; --ok: #5fb98a; color-scheme: dark;
+    --accent: #d8b75a; --accent-soft: #2a2614; --ok: #5fb98a; --warn: #e39a62; color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
   --bg: #0f1522; --surface: #161f31; --ink: #e5e9f1; --muted: #9ba6bb; --line: #27324a;
-  --accent: #d8b75a; --accent-soft: #2a2614; --ok: #5fb98a; color-scheme: dark;
+  --accent: #d8b75a; --accent-soft: #2a2614; --ok: #5fb98a; --warn: #e39a62; color-scheme: dark;
 }
 * { box-sizing: border-box; }
 body {
@@ -33,15 +34,15 @@ body {
   font-family: var(--font-body); font-size: 16.5px; line-height: 1.62;
   padding-inline: 16px; padding-block: 28px 64px;
 }
-main { max-width: 780px; margin-inline: auto; display: grid; gap: 34px; }
+main { max-width: 820px; margin-inline: auto; display: grid; gap: 38px; }
 header { display: grid; gap: 10px; }
 .eyebrow { font-family: var(--font-util); font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
-h1, h2 { font-family: var(--font-display); font-weight: 650; text-wrap: balance; line-height: 1.2; margin: 0; }
+h1, h2, h3 { font-family: var(--font-display); font-weight: 650; text-wrap: balance; line-height: 1.2; margin: 0; }
 h1 { font-size: clamp(30px, 5vw, 42px); }
-h2 { font-size: 23px; }
-h2 .n { font-family: var(--font-util); font-size: 14px; color: var(--accent); margin-right: 10px; vertical-align: 3px; }
+h2 { font-size: 24px; }
+h3 { font-size: 19px; }
 p { margin: 0; }
-section { display: grid; gap: 14px; }
+section { display: grid; gap: 14px; min-width: 0; }
 .core {
   background: var(--accent-soft); border-left: 3px solid var(--accent);
   padding: 16px 18px; border-radius: 4px; font-size: 17.5px;
@@ -49,263 +50,341 @@ section { display: grid; gap: 14px; }
 .core strong { font-family: var(--font-display); }
 ul, ol { margin: 0; padding-left: 1.2em; display: grid; gap: 8px; }
 li { padding-left: .2em; }
-.frame { overflow-x: auto; border: 1px solid var(--line); border-radius: 6px; background: var(--surface); }
-table { border-collapse: collapse; width: 100%; font-size: 15px; }
-th, td { text-align: left; vertical-align: top; padding: 10px 12px; border-bottom: 1px solid var(--line); }
-th { font-family: var(--font-util); font-size: 11.5px; letter-spacing: .05em; text-transform: uppercase; color: var(--muted); font-weight: 500; white-space: nowrap; }
-tr:last-child td { border-bottom: 0; }
-td:first-child { font-weight: 600; }
-.examples { display: grid; gap: 8px; }
-.ex { background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 12px 14px; }
-.ex q { font-style: italic; }
-.chain { display: flex; gap: 8px; align-items: stretch; flex-wrap: wrap; }
-.seat {
-  flex: 1 1 130px; min-width: 0; background: var(--surface); border: 1px solid var(--line); border-radius: 6px;
-  padding: 10px 12px; display: grid; gap: 2px;
-}
-.seat b { font-family: var(--font-display); font-size: 17px; }
-.seat span { font-size: 13.5px; color: var(--muted); line-height: 1.4; }
-.arrow { align-self: center; color: var(--accent); font-family: var(--font-util); }
-.machine {
-  border: 1px dashed var(--line); border-radius: 6px; padding: 10px 12px; font-size: 14px; color: var(--muted);
-}
-.machine b { color: var(--ink); }
-.roles { display: grid; gap: 10px; }
-.role { display: grid; grid-template-columns: 9.5em 1fr; gap: 14px; }
-.role > b { font-family: var(--font-display); }
-@media (max-width: 560px) { .role { grid-template-columns: 1fr; gap: 2px; } }
-.journey { list-style: none; padding: 0; counter-reset: step; display: grid; gap: 0; }
-.journey li { counter-increment: step; display: grid; grid-template-columns: 2.4em 1fr; gap: 12px; padding: 10px 0; border-top: 1px solid var(--line); }
-.journey li:first-child { border-top: 0; }
-.journey li::before {
-  content: counter(step, decimal-leading-zero); font-family: var(--font-util); color: var(--accent); font-size: 14px; padding-top: 3px;
-}
-.journey b { font-weight: 600; }
-.sub { margin-top: 6px; display: grid; gap: 4px; padding-left: 1.1em; }
-.ladder { list-style: none; padding: 0; display: grid; gap: 8px; }
-.ladder li { background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 10px 14px; display: grid; grid-template-columns: 7.5em 1fr; gap: 12px; }
-.ladder li b { font-family: var(--font-display); }
-@media (max-width: 560px) { .ladder li { grid-template-columns: 1fr; gap: 2px; } }
 .note { font-size: 14.5px; color: var(--muted); }
-.decide {
-  background: var(--surface); border: 2px solid var(--accent); border-radius: 8px; padding: 18px 20px; display: grid; gap: 12px;
-}
-.decide ol { gap: 10px; }
-.cols { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-@media (max-width: 640px) { .cols { grid-template-columns: 1fr; } }
-.box { background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 14px 16px; display: grid; gap: 8px; min-width: 0; }
-.box h3 { margin: 0; font-family: var(--font-util); font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); font-weight: 500; }
-.strength { font-family: var(--font-util); font-size: 12px; white-space: nowrap; }
-footer { font-size: 13.5px; color: var(--muted); border-top: 1px solid var(--line); padding-top: 14px; }
 a { color: var(--accent); }
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* decisions */
+.decisions { background: var(--surface); border: 2px solid var(--accent); border-radius: 8px; padding: 18px 20px; display: grid; gap: 12px; }
+.decisions ol { gap: 9px; }
+.rec { font-family: var(--font-util); font-size: 11.5px; color: var(--ok); white-space: nowrap; }
+
+/* flow map */
+.flowmap { display: grid; gap: 10px; }
+.lanes { display: grid; gap: 8px; }
+.lane { display: grid; grid-template-columns: 12.5em auto 1fr; align-items: center; gap: 10px; }
+.door { font-family: var(--font-util); font-size: 12px; letter-spacing: .04em; text-transform: uppercase; color: var(--muted); }
+.arr { color: var(--accent); font-family: var(--font-util); }
+.node { background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 8px 12px; display: grid; gap: 2px; min-width: 0; }
+.node b { font-family: var(--font-display); font-size: 16.5px; }
+.node small { font-size: 13.5px; color: var(--muted); line-height: 1.4; }
+.node.main { border: 2px solid var(--accent); background: var(--accent-soft); }
+.merge { color: var(--accent); font-family: var(--font-util); padding-left: 13.2em; line-height: 1; }
+.mainline { display: flex; flex-wrap: wrap; align-items: stretch; gap: 8px; }
+.mainline .node { flex: 1 1 130px; }
+.mainline .node.main { flex: 2.2 1 250px; }
+.mainline .arr { align-self: center; }
+@media (max-width: 600px) {
+  .lane { grid-template-columns: 1fr; gap: 4px; }
+  .lane .arr, .mainline .arr { display: none; }
+  .merge { padding-left: 0; }
+}
+
+/* roles */
+.roles { display: grid; gap: 12px; }
+.role { display: grid; grid-template-columns: 8.5em 1fr; gap: 14px; }
+.role > b { font-family: var(--font-display); }
+@media (max-width: 560px) { .role { grid-template-columns: 1fr; gap: 2px; } }
+
+/* tables */
+.frame { overflow-x: auto; border: 1px solid var(--line); border-radius: 6px; background: var(--surface); }
+table { border-collapse: collapse; width: 100%; font-size: 15px; }
+th, td { text-align: left; vertical-align: top; padding: 9px 12px; border-bottom: 1px solid var(--line); }
+thead th { font-family: var(--font-util); font-size: 11.5px; letter-spacing: .05em; text-transform: uppercase; color: var(--muted); font-weight: 500; white-space: nowrap; }
+tr.grp th { font-family: var(--font-display); font-size: 16px; font-weight: 650; color: var(--ink); background: var(--accent-soft); text-transform: none; letter-spacing: 0; }
+tbody tr:last-child td { border-bottom: 0; }
+td.k { font-weight: 600; }
+.brain td:nth-child(3) { font-size: 14px; color: var(--muted); }
+.chip { font-family: var(--font-util); font-size: 11.5px; white-space: nowrap; padding: 2px 8px; border-radius: 99px; border: 1px solid var(--line); display: inline-block; }
+.chip.opus { background: var(--accent-soft); border-color: var(--accent); }
+.chip.fable { border-color: var(--ok); color: var(--ok); }
+.chip.sol { border-color: var(--warn); color: var(--warn); }
+.chip.code { color: var(--muted); }
+
+/* rule and his word */
+.rule { display: grid; gap: 8px; }
+.word { background: var(--surface); border: 1px solid var(--line); border-left: 3px solid var(--ok); border-radius: 6px; padding: 14px 16px; display: grid; gap: 10px; }
+.word h3 { font-size: 17px; }
+.word dl { margin: 0; display: grid; gap: 8px; }
+.word dt { font-style: italic; }
+.word dd { margin: 0 0 0 1.2em; }
+
+/* scenarios */
+.flows { display: grid; gap: 22px; }
+.flow { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 16px 18px; display: grid; gap: 10px; min-width: 0; }
+.flow .ask { color: var(--muted); font-style: italic; }
+.steps { list-style: none; padding: 0; margin: 0; counter-reset: s; display: grid; gap: 0; }
+.steps li { counter-increment: s; display: grid; grid-template-columns: 1.8em 9.2em 1fr auto; gap: 10px; align-items: start; padding: 8px 0; border-top: 1px solid var(--line); }
+.steps li:first-child { border-top: 0; }
+.steps li::before { content: counter(s); font-family: var(--font-util); color: var(--accent); font-size: 13px; padding-top: 2px; }
+.steps .who { font-weight: 600; }
+.steps .what { min-width: 0; }
+.gets { font-size: 15px; border-top: 1px dashed var(--line); padding-top: 8px; }
+.why { font-size: 14.5px; color: var(--muted); }
+@media (max-width: 640px) {
+  .steps li { grid-template-columns: 1.6em 1fr; }
+  .steps li .what, .steps li .chip { grid-column: 2; }
+  .steps li .chip { justify-self: start; }
+}
+
+footer { font-size: 13.5px; color: var(--muted); border-top: 1px solid var(--line); padding-top: 14px; }
 </style>
 
 <main>
   <header>
-    <div class="eyebrow">B22 sentezinin ilk bölümü · 12 Ekim 2026 · taslak, gözünüzü bekliyor</div>
+    <div class="eyebrow">B64 · tasarım · 12 Ekim 2026 · sürüm 9 · gözünüzü bekliyor</div>
     <h1>Holdingde iş nasıl akar</h1>
-    <p class="core"><strong>Özü:</strong> Holding gerçek bir holding gibi çalışır. Merkez hedefi, parayı, onay sınırlarını ve kalite çıtasını tutar; şirketler kendi işini kendi ritminde yürütür. Her işin yazılı bir tarifi ve tek bir sahibi vardır. İşi yapan ile denetleyen ayrıdır. Makine düzeni tutar. Size yalnız “bitti” ya da “kararınız lazım” gelir.</p>
+    <p class="core"><strong>Özü:</strong> İş size, e-postaya, bir müşteriye ya da takvime gelir. Sizin işinizi Hamza, dışarıdan geleni karşılama masası, o işi alan bölümün başkanına verir. Başkan işin sahibidir: planlar, her parçanın beynini ve eforunu menüden seçer, parçaları birleştirip kendisi dener. Kontrolün sayısı işin değerine göre seçilir. Size yalnız sonuç ya da kararınız gereken şey gelir, bir iki satırla.</p>
   </header>
 
-  <section id="uc-tur">
-    <h2><span class="n">1</span>Üç tür iş</h2>
-    <div class="frame"><table>
-      <thead><tr><th>Tür</th><th>Nedir</th><th>Sahibi</th><th>Ritmi</th></tr></thead>
-      <tbody>
-        <tr><td>İş</td><td>Sonu olan iş</td><td>İşin ait olduğu şirketin ya da departmanın başkanı</td><td>hedef → tarif → plan → yapım → denetim → teslim → kapanış</td></tr>
-        <tr><td>Hat</td><td>Tekrar eden üretim</td><td>Hattın başı (kanal ya da müşteri sorumlusu)</td><td>takvim ya da bir olay tetikler; her koşu küçük bir iştir</td></tr>
-        <tr><td>Sorumluluk</td><td>Sürekli, değişen görev</td><td>Şirket ya da departman başkanı</td><td>her hafta: ölç → karar ver → hattı ya da işi değiştir</td></tr>
-      </tbody>
-    </table></div>
-    <p>Bir hedef çoğu zaman üçünü birden doğurur:</p>
-    <div class="examples">
-      <div class="ex"><q>Yeni bir YouTube kanalı açalım</q> → <b>İş:</b> kanalın kimliği ve ilk üç video · <b>Hat:</b> haftada iki video · <b>Sorumluluk:</b> kanalı büyütmek, haftalık karneyle.</div>
-      <div class="ex"><q>Yeni bir müşteri geldi</q> → <b>Sorumluluk:</b> müşterinin hesabı · <b>Hat:</b> aylık reklam paketi · <b>İş:</b> lansman kampanyası.</div>
-    </div>
-  </section>
-
-  <section id="kim">
-    <h2><span class="n">2</span>Kim ne yapar</h2>
-    <div class="chain" aria-label="İş zinciri">
-      <div class="seat"><b>Siz</b><span>hedef ve size ayrılmış kararlar</span></div>
-      <div class="arrow" aria-hidden="true">→</div>
-      <div class="seat"><b>Hamza</b><span>kapı: tarif, sahibe verir, sonucu getirir</span></div>
-      <div class="arrow" aria-hidden="true">→</div>
-      <div class="seat"><b>Başkan</b><span>işin sahibi: planlar, böler, birleştirir</span></div>
-      <div class="arrow" aria-hidden="true">→</div>
-      <div class="seat"><b>Uzmanlar</b><span>yapar, kanıtıyla bitirir</span></div>
-      <div class="arrow" aria-hidden="true">⇄</div>
-      <div class="seat"><b>Denetçi</b><span>yapmayan göz: tarife göre dener</span></div>
-    </div>
-    <div class="machine"><b>Makine, hepsinin altında:</b> kuyruk, takvim, öncelik, kapasite, bütçe ve sert durdurma, onay kaydı, tekrar deneme, süre sınırı, durdur ve iptal, kayıt, canlı akış.</div>
-    <div class="roles">
-      <div class="role"><b>Siz</b><p>Hedef verirsiniz. Yalnız size ayrılmış kararları verirsiniz: para çıkışı, sözleşme, reklam harcaması, kimlik adımları ve sizin işaretlediğiniz konular.</p></div>
-      <div class="role"><b>Hamza, kapınız</b><p>1 Ağustos hükmünüz: küçük işi kendi eliyle yapar. Büyük hedefi sizinle birlikte tarife çevirir; en fazla bir soru sorar. İşi sahibine verir, takip eder, sonucu aynı konuşmaya geri getirir. İşi kendisi bölmez, kendisi yürütmez.</p></div>
-      <div class="role"><b>Başkan, işin sahibi</b><p>Tarifi alır, planlar, gerekiyorsa uzmanlarına böler, parçaları birleştirir, bütünü kendisi dener ve teslim eder. Hatların ve sorumlulukların da sahibidir.</p></div>
-      <div class="role"><b>Uzman, yapan</b><p>Kendi parçasını yapar. İşini bir sonuç cümlesi ve kanıtıyla bitirir.</p></div>
-      <div class="role"><b>Denetçi</b><p>Sonucu tarifteki “bitti” ölçütlerine göre gerçek denemeyle kontrol eder: çalıştırır, açar, sayar, test eder. Daha iyisini aramaz.</p></div>
-      <div class="role"><b>Makine</b><p>Beyin değil, düzen. Ajanslardaki “trafik sorumlusu” budur: kimin neyi ne zaman yapacağını, neyin kaydığını tutar ve yeniden planlar.</p></div>
-      <div class="role"><b>Merkez ve şirketler</b><p>Merkezde siz, Hamza ve ortak hizmetler durur: finans, hukuk, insan kaynakları ve persona kütüphanesi, kalite, makine. Media Studio, reklam ajansı ve kanallar gibi şirketler kendi sorumluluklarını ve hatlarını yürütür. Her şirkete ne kadar yakından bakılacağı şirket şirket ayarlanır.</p></div>
-    </div>
-  </section>
-
-  <section id="yolculuk">
-    <h2><span class="n">3</span>Yeni bir işin yolculuğu</h2>
-    <ol class="journey">
-      <li><div><b>Hedef.</b> Sesle, sohbette ya da ekrandan söylersiniz. 500 karakterlik “niyet” kutusu kalkar.</div></li>
-      <li><div><b>Tarif.</b> Hamza sizinle yazar: amaç, test edilebilir “bitti” ölçütleri, bütçe (para ve süre), size durması gereken adımlar. Sizin cümleniz tarifte aynen kalır; hiçbir özet onun yerine geçmez.</div></li>
-      <li><div><b>Sahip.</b> Hamza işi ait olduğu başkana verir. Birden çok departmanı ilgilendiren işte başkanlardan biri lider olur.</div></li>
-      <li><div><b>Masa.</b> Her işin ortak bir masası olur: tarif, plan, kararlar, parçalar, çıktılar, maliyet. Herkes masadan okur, kendi parçasına yazar. İş bir oturumun hafızasında değil, masada yaşar.</div></li>
-      <li><div><b>Plan ve bölme.</b> Sahip planı yazar ve işi şekline göre böler:
-        <ul class="sub">
-          <li>Tek parça yapım (film kurgusu, site, rapor): tek el baştan sona yapar.</li>
-          <li>Geniş iş (yüzlerce belge, bütün müşteriler, pazar taraması): birçok uzman aynı anda, aynı masada çalışır; sonuç birleştirilir.</li>
-          <li>Acil iş: hız için ekip kurulur. Anthropic'in ölçümünde ekip iki üç kat hızlı ama daha pahalı; bizim işlerimizde henüz ölçülmedi.</li>
-        </ul>
-        Bölmeden önce sahip kısa bir sözleşme yazar: kim neyi yapar, parçalar nasıl birleşir, her ek yerinin sahibi kim.</div></li>
-      <li><div><b>Yapım.</b> Uzmanlar yapar. Her parça sonucu ve kanıtıyla biter: “12 video kesildi, 3'ü 60 saniyeyi aştı, dosyalar şurada.”</div></li>
-      <li><div><b>Birleştirme.</b> Sahip parçaları birleştirir ve bütünü kendisi dener.</div></li>
-      <li><div><b>Denetim.</b> Önce otomatik kontroller (dosya var mı, kalıp doğru mu, sayılar tutuyor mu, test geçiyor mu), sonra tarifi elinde tutan bir hakem. Geçmezse iş, denetçinin notlarıyla sahibine döner.</div></li>
-      <li><div><b>Teslim.</b> Hamza sonucu aynı konuşmada getirir: ne yapıldı, ne bulundu, ne kaldı, bir öneri ve gerekiyorsa tek soru.</div></li>
-      <li><div><b>Kapanış.</b> Maliyet ve süre kayda geçer. İş tekrar edecekse hatta dönüşür.</div></li>
-    </ol>
-  </section>
-
-  <section id="hat">
-    <h2><span class="n">4</span>Sürekli işler: hat</h2>
-    <ul>
-      <li>Her hattın bir kartı olur: adım adım tarif, tetik (takvim ya da olay), kalite ölçüsü, bütçe, metrikler, sahip ve özerklik basamağı.</li>
-      <li>Her koşu küçük bir iştir: aynı kuyruktan ve aynı denetimden geçer, sonucunu kendisi yazar.</li>
-      <li>Hat kendi verisinden öğrenir: kanalın tıklanma oranı ve izlenme süresi bir sonraki tarifi besler.</li>
-    </ul>
-    <p><b>Özerklik merdiveni</b>, her hat için ayrı; ölçüsü tahtadaki B15'in dört kutu testi:</p>
-    <ol class="ladder">
-      <li><b>Bakılarak</b><span>Hattın her çıktısı onaya gelir. Dört kutudan biri bile boşsa hat bu basamakta kalır.</span></li>
-      <li><b>Kendi başına</b><span>Dört kutunun dördü de dolduktan ve art arda temiz koşulardan sonra: iş her hafta tekrar eder, otomatik kapı kötü çıktıyı reddeder, iş baştan sona yapılır, “bitti” ölçüsü nesneldir. Bu basamakta yalnız istisnalar gelir.</span></li>
-    </ol>
-    <p class="note">Size ayrılmış kararlar hiçbir basamakta atlanmaz. Bazı hatlarda üst basamak bilerek kapalı kalır; örneğin markanın sesi.</p>
-  </section>
-
-  <section id="sorumluluk">
-    <h2><span class="n">5</span>Değişen işler: sorumluluk</h2>
-    <ul>
-      <li>Haftalık döngü: sahip ölçer (hedefe göre yeşil, sarı, kırmızı) ve karar verir (hattı değiştir, yeni iş aç, durdur). Yetkisini aşan kararı size seçenekleri ve önerisiyle getirir.</li>
-      <li>Tarif değişirse tarifi veren değiştirir; sizin işinizse siz. Plan değişirse sahip değiştirir. Her değişiklik sürümüyle kayda geçer.</li>
-      <li>Kayıtlı bir hattın tanımını bugün yalnız siz değiştirebilirsiniz. Sahip değişikliği önerir. Bu kilidin nasıl gevşeyeceği, örneğin sizin çizdiğiniz sınırlar içinde sahibin değiştirebilmesi, uygulama planında size sorulacak.</li>
-    </ul>
-  </section>
-
-  <section id="model">
-    <h2><span class="n">6</span>Hangi adımda hangi model</h2>
-    <div class="frame"><table>
-      <thead><tr><th>Adım</th><th>Model (ilk hâli)</th></tr></thead>
-      <tbody>
-        <tr><td>Hamza, tarif, plan, araştırma, denetim kararı</td><td>Opus 5.5 medium; belirsiz işte high</td></tr>
-        <tr><td>Uzun, gözetimsiz büyük yapım (yarım saatten uzun)</td><td>Opus 5.5 xhigh</td></tr>
-        <tr><td>Tarifi net, testi olan kod</td><td>Sol 6.1 high; uzun ömürlü kodda Opus 5.5 medium. Sol bugünkü çalışan yolundan henüz çalışmıyor; bağlantısı uygulama kapsamında.</td></tr>
-        <tr><td>Müşterinin ya da sizin göreceğiniz son metin ve içerik</td><td>Son hâlini Opus 5.5 verir; kalite kanunu gereği insanın gördüğü her şey en üst kademededir. Taslağı Sonnet 5.5 yazabilir.</td></tr>
-        <tr><td>İç rutin iş: ayıklama, yönlendirme, etiket, ara özet, şablon</td><td>Haiku 5.5 medium veya high; çıktısı otomatik kalıp kontrolünden geçer ve insanın göreceği son çıktı olmaz</td></tr>
-        <tr><td>max</td><td>Hiçbir adımda varsayılan değil</td></tr>
-      </tbody>
-    </table></div>
-    <ul>
-      <li>Kodla yapılabilen iş modele yaptırılmaz; model yalnız karar gereken yerde çalışır.</li>
-      <li>Her çağrıda model ve seviye açıkça yazılır; hiçbiri kendiliğinden miras alınmaz.</li>
-      <li>Jev şimdilik yok; ucuz kararları Haiku 5.5 verir. Laya, ileride gerçek zamanlı ayıklama gerekirse kendi ekran kartımızda denenir.</li>
-      <li>Bu eşleme bizim işlerimizde ve Türkçede ölçülmedi. Her rutin iş türü için gerçek örneklerden bir deneme seti kurulup ölçülür. Bu ölçüm API'ye para ödemek demektir; sizin onayınızla başlar.</li>
-    </ul>
-  </section>
-
-  <section id="size">
-    <h2><span class="n">7</span>Size ne gelir</h2>
-    <ul>
-      <li>Yalnız iki şey: <b>“bitti”</b> (sonuç) ya da <b>“kararınız lazım”</b> (seçenekler ve öneri; tek kelimeyle cevaplanır).</li>
-      <li>Her sabah: istisna özeti. Kırmızıya dönenler, takılanlar, sizi bekleyenler. Boş bir gün de “boş” diye söylenir.</li>
-      <li>Her hafta: şirket ve hat başına karne. Hedefe göre durum, maliyet, öneriler.</li>
-      <li>Ekranda her an: hangi iş kimde, kim çalışıyor, ne bekliyor. Tıklayınca işin masasına, oradan her adıma inersiniz. Her işte durdur ve iptal düğmesi vardır.</li>
-      <li>Verdiğiniz işin sonucu size gelir; onu kabul eden sizin gözünüzdür. İşin ara adımları size tek tek onaya gelmez. Bir hattın çıktıları, dört kutu testini geçene kadar onaya gelir.</li>
-      <li>Onay yalnız onay kapısının kaydından okunur. Bir ajanın “Muhittin Bey onayladı” demesi geçersizdir: Opus 5.5'in sistem kartı, yönetici ajanın çok nadir de olsa sahte bir onay cümlesi uydurduğunu kaydediyor.</li>
-    </ul>
-  </section>
-
-  <section id="olcek">
-    <h2><span class="n">8</span>Aynı anda yüzlerce iş</h2>
-    <ul>
-      <li>Tek kuyruk vardır; öncelik sorumluluktan ve sizden gelir. Kapasite, model bütçesi, hız sınırları ve denetim sırasıyla ölçülür. Makine kayan işi yeniden planlar ve ona bağlı işlere haber verir.</li>
-      <li>Bütçe zinciri: holding → şirket → departman → iş. Yüzde 70'te ve 90'da uyarı gelir; yüzde 100'de kritik olmayan yeni iş durur.</li>
-      <li>Bilgi üç katmanda tutulur: holdingin ortak bilgisi (çalışanlar yalnız okur), departmanın bilgisi ve çalışanın kendi taslağı. Her değişiklik kimden geldiğini taşır; aynı anda yazma çakışması kontrol edilir.</li>
-    </ul>
-  </section>
-
-  <section id="bugun">
-    <h2><span class="n">9</span>Bugünkü sistemden ne kalır, ne değişir</h2>
-    <div class="cols">
-      <div class="box"><h3>Kalır, iskelet sağlam</h3><p>İş kuyruğu ve şeritleri; kapılar; çalışan başına araç profilleri ve personalar; model yönlendirme; stüdyonun iş defteri; onay köprüsü ve dış gönderim kuyruğu; kayıtlar; sabah brifingi; hatlar için beklet ve devam ettir motoru; tekrar deneme merdiveni.</p></div>
-      <div class="box"><h3>Eklenir ya da akışa bağlanır</h3><p>Bugünkü proje ve görev kayıtlarının üstüne iş ve masa; hedefi baştan sona sahibiyle yürüten süreç; birleştirme; sonucu konuşmaya geri getirme; var olan başkan ve yönetici bağlarının iş akışına bağlanması; hat kartı ve özerklik merdiveni; hatlarda zaten olan durdurma, iptal ve süre sınırının her işe yayılması; kayıtta duran iş başına maliyet tavanının gerçekten kesmesi; Hamza'nın elleri.</p></div>
-    </div>
-    <div class="frame"><table>
-      <thead><tr><th>Bugün</th><th>Yeni</th></tr></thead>
-      <tbody>
-        <tr><td>500 karakterlik niyet kutusu</td><td>hedef ve tarif</td></tr>
-        <tr><td>işi yapana sizin cümleniz değil, modelin tek cümlelik özeti gidiyor; cümleniz kayıtta duruyor ama yapana ulaşmıyor</td><td>cümleniz tarifte aynen kalır ve yapana ulaşır</td></tr>
-        <tr><td>hedef kutusundan gelen işin parçaları birbirinin sonucunu görmüyor (stüdyonun iş defteri görüyor)</td><td>ortak masa</td></tr>
-        <tr><td>son denetçi yalnız yazıyı okuyor; kapılar araç kullanımını denetliyor ama ürünü deneyen bağımsız bir kontrol yok</td><td>gerçek denemeyle denetim</td></tr>
-        <tr><td>denetimden dönen iş, denetçinin notları olmadan yeniden deneniyor: önce aynı modelle, sonra daha güçlüsüyle</td><td>notlarla tekrar</td></tr>
-        <tr><td>“şirket içi” diye işaretlenen her ara iş de denetimden sonra size onaya geliyor</td><td>işin sonucu size gelir, ara adımlar gelmez</td></tr>
-        <tr><td>hedef kutusundan gelen bütün işler tek bir projeye bağlanıyor</td><td>her hedef kendi işi</td></tr>
-        <tr><td>hattın bir adımı önceki adımın sonucunu görmüyor; adımlar ortak iş kuyruğundan ve son denetimden geçmiyor</td><td>her koşu kuyruktan ve denetimden geçen küçük bir iş</td></tr>
-        <tr><td>kritik kapının koltukları itiraz etmek üzere kurulmuş</td><td>“tarife göre doğrula”</td></tr>
-      </tbody>
-    </table></div>
-    <p><b>Nasıl:</b> Toptan değil, ince dilimlerle. Eski yol, yenisi fabrikada gerçek bir işi baştan sona yapana kadar yerinde kalır. Her dilim test, batarya ve Sol denetiminden geçer.</p>
-  </section>
-
-  <section id="olcecegiz">
-    <h2><span class="n">10</span>Kanıtın bilmediği, kendimiz ölçeceğimiz</h2>
-    <ul>
-      <li>Modellerin bizim işlerimizde ve Türkçede ne kadar başarılı olduğu.</li>
-      <li>Denetçinin başka bir modelden olmasının ne kadar fark ettiği.</li>
-      <li>Başkan kademesinin ek maliyetine değip değmediği; ilk gerçek işte ölçülür.</li>
-      <li>Hatlar çoğalınca denetim sırasının darboğaz olup olmadığı.</li>
-    </ul>
-  </section>
-
-  <section id="karar">
-    <div class="decide">
-      <h2><span class="n">11</span>Sizden üç söz</h2>
-      <p class="note">Önerim üçüne de evet.</p>
+  <section id="kararlar">
+    <div class="decisions">
+      <h2>Sizi bekleyen kararlar</h2>
+      <p class="note">Her biri tek kelimeyle cevaplanır; numarayla da cevaplayabilirsiniz. Üç tür işi ve Fable'ın yerini zaten verdiniz.</p>
       <ol>
-        <li>Üç tür iş ve zincir: Hamza kapıdır, başkan sahiptir, uzman yapar, denetçi ayrıdır.</li>
-        <li>İşin ara adımları size tek tek onaya gelmesin; yalnız verdiğiniz işin sonucu, size ayrılmış kararlar ve dört kutu testini henüz geçmemiş hatların çıktıları gelsin.</li>
-        <li>Model eşlemesi ilk hâliyle kabul edilsin, kendi ölçümümüzle düzeltilsin.</li>
+        <li>Bu akış tasarımın temeli olur ve şartnamelere yazılır; ardından tek sayfalık plan size bir kez gelir. <span class="rec">önerim: evet</span></li>
+        <li>Her parçanın beynini ve eforunu işin sahibi menüden seçer; kod sınırları korur; sizin sözünüz her şeyin üstündedir. <span class="rec">önerim: evet</span></li>
+        <li>Hamza normal soruyu high'da cevaplar. Para ya da plan kokan konuşma strateji ayarına (xhigh) çıkar ve konu bitene kadar orada kalır. Bugün durum sorusu dışındaki her mesaj, sıradan sorular da, strateji ayarına yani max'a gidiyor. <span class="rec">önerim: evet</span></li>
+        <li>Tek seferlik müşteri işlerinde her yeni hizmet türünün ilk teslimi (ilk site, ilk kampanya) size gelir; sonrakiler kontrollerden geçip müşteriye gider. Bugünkü kural (B15) dört kutudan biri boşsa işi insana getiriyor; tek seferlik iş “her hafta tekrar” kutusunu hiç dolduramadığı için her site size gelirdi. Hatlar dört kutu ve sizin basamak kararınızla yürümeye devam eder. <span class="rec">önerim: evet</span></li>
+        <li>Fiyat politikasını ve standart sözleşme metnini bir kez onaylarsınız; bunların içindeki teklif ve sözleşme size gelmez, dışındaki her şey gelir. Bugün her sözleşme size geliyor. <span class="rec">önerim: evet</span></li>
+        <li>Hamza sözünüzle beyni ve eforu değiştirir: kendisininkini, bir konuşma boyunca ya da toplu olarak. Önce, bugün giriş yapmadan çalıştırılabilen yönlendirme kapısı kapatılır. <span class="rec">önerim: evet</span></li>
+        <li>Karşılama Sonnet 5.5 ile başlar; Haiku 5.5 (high) ve Jev kendi örneklerimizde ölçülür, geçen devralır. Eylül'deki “Haiku geri dönmez” hükmü bununla değişir. Jev için hesap açmak sizin onayınızla. <span class="rec">önerim: evet</span></li>
+        <li>Kritik kapı “itiraz et” diye değil, “tarife göre doğrula” diye çalışır. Bugün iki koltuğu var: Sol 6.1 ve Astra 6, ikisi de high. Rutin müşteri mesajına Sol tek başına bakar; değerli teslimde, parada ve sözleşmede ikisi birden bakar. <span class="rec">önerim: evet</span></li>
+        <li>Bir hattın tanımını sahibi, sizin çizdiğiniz sınırlar içinde değiştirebilir; bugün yalnız siz değiştirebiliyorsunuz. <span class="rec">önerim: evet</span></li>
       </ol>
-      <p>Bu bölümü okuduğunuzda tasarımı ilgili şartnamelere yazar, uygulama planını tek sayfa olarak getiririm.</p>
     </div>
+  </section>
+
+  <section id="akis">
+    <h2>Bir iş nereden gelir, kime gider</h2>
+    <div class="flowmap" aria-label="İşin yolu">
+      <div class="lanes">
+        <div class="lane"><span class="door">Siz: ses, sohbet, ekran</span><span class="arr" aria-hidden="true">→</span><span class="node"><b>Hamza</b><small>hedefinizi tarife çevirir, işi sahibine gönderir</small></span></div>
+        <div class="lane"><span class="door">E-posta · müşteri mesajı</span><span class="arr" aria-hidden="true">→</span><span class="node"><b>Karşılama masası</b><small>her talebi ayrı kayıt yapar, sahibine verir</small></span></div>
+        <div class="lane"><span class="door">Takvim · olay</span><span class="arr" aria-hidden="true">→</span><span class="node"><b>Hat kartı</b><small>tekrar eden işin koşusunu başlatır</small></span></div>
+      </div>
+      <div class="merge" aria-hidden="true">↓</div>
+      <div class="mainline">
+        <span class="node main"><b>Sahip</b><small>işi alan bölümün başkanı: planlar, her parçanın beynini ve eforunu seçer, birleştirir, dener</small></span>
+        <span class="arr" aria-hidden="true">→</span>
+        <span class="node"><b>Uzmanlar</b><small>yapar</small></span>
+        <span class="arr" aria-hidden="true">→</span>
+        <span class="node"><b>Kontrol</b><small>tarife göre gerçek denemeyle</small></span>
+        <span class="arr" aria-hidden="true">→</span>
+        <span class="node"><b>Teslim</b><small>size Hamza, müşteriye hesap sahibi</small></span>
+      </div>
+      <p class="note">Karşılama, sahibi belli olmayan talebi Hamza'ya bırakır. Hamza gelen her şeyi sabah özetinde görür.</p>
+    </div>
+
+    <div class="roles">
+      <div class="role"><b>Siz</b><p>Hedef verirsiniz ve yalnız size ayrılmış kararları verirsiniz: para çıkışı, sözleşme, reklam harcaması, kimlik adımları ve işaretlediğiniz konular. Her şeyi istediğiniz an sözünüzle değiştirirsiniz.</p></div>
+      <div class="role"><b>Hamza</b><p>Sizin kapınız. Hedefinizi konuşarak anlar, en fazla bir soru sorar. Tarifi yazar; cümleniz tarifte aynen kalır. İşi o işi alan bölümün başkanına gönderir, sonucu aynı konuşmaya getirir, sabah gelen işleri anlatır. Üç eli vardır: işi göndermek, durumu okumak, sözünüzle beyin ve efor değişikliğini kapıya iletmek. İşi kendisi bölmez, yürütmez; müşteri maillerini tek tek taşımaz.</p></div>
+      <div class="role"><b>Karşılama</b><p>Hamza'nın ofisindeki kurmay başkanına bağlı bir masa. Dışarıdan gelen her e-postayı ve mesajı ayrı bir kayıt yapar ve sahibine verir: kayıtlı müşteriyi hesabın sahibine, yeni göndereni satışa, sahibi belli olmayanı Hamza'ya. Silmez, cevap göndermez, para harcamaz. Mailin içindeki yazı ona bilgidir, emir değildir. Bunu yapabilmesi için her bölümün hangi işi aldığı bir kez yazılır; bugün bu liste hiçbir yerde kayıtlı değil.</p></div>
+      <div class="role"><b>Sahip</b><p>İşi alan bölümün başkanı; 22 bölümün her birinin başkanı kayıtlı. Planı yazar, her parçanın beynini ve eforunu seçer. İşi bölerse parçaların nasıl birleşeceğini ve her ek yerinin sahibini önceden yazar. Parçaları birleştirir, bütünü kendisi dener ve teslim eder. Hatların ve sorumlulukların da sahibidir.</p></div>
+      <div class="role"><b>Uzman</b><p>Kendi parçasını yapar ve bir iki satırlık sonuçla bitirir.</p></div>
+      <div class="role"><b>İşin masası</b><p>Tarif, plan, parçalar, çıktılar ve maliyet tek yerde durur. Herkes masadan okur, kendi parçasını yazar. Ayrıntı orada kalır, size gelmez.</p></div>
+      <div class="role"><b>Kontrol</b><p>Sonucu tarifteki “bitti” ölçütlerine göre gerçek denemeyle kontrol eder: açar, çalıştırır, sayar. Daha iyisini aramaz. Geçmeyen iş, kontrolün notlarıyla sahibine döner; bugün hakemin notları tekrar deneme merdivenine ulaşmıyor, bu düzeltilir.</p></div>
+      <div class="role"><b>Makine</b><p>Beyin değil, düzen: kuyruk, öncelik, kapasite, bütçe, takvim, durdur ve iptal, kayıt.</p></div>
+      <div class="role"><b>Şirketler, diller</b><p>Bugün 22 bölüm DXB Global'in içinde. Reklam ajansı ya da medya şirketi ayrı bir şirket olarak açıldığında akış aynen çalışır; sahip o şirketin ilgili başkanıdır. Müşteri işi müşterinin dilinde yapılır: Arapça, Portekizce, Farsça ya da başka bir dil. Holdingin iç dili İngilizce ve Türkçe.</p></div>
+    </div>
+  </section>
+
+  <section id="beyin">
+    <h2>Kim, hangi beyin, hangi efor</h2>
+    <div class="frame"><table class="brain">
+      <thead><tr><th>İş</th><th>Beyin · efor</th><th>Not</th></tr></thead>
+      <tbody>
+        <tr class="grp"><th colspan="3">Hamza, sizinle konuşurken</th></tr>
+        <tr><td class="k">Strateji ve plan konuşması</td><td><span class="chip opus">Opus 5.5 · xhigh</span></td><td>Max'tı; notunuzla xhigh. Para ya da plan kokan konuşma buraya çıkar.</td></tr>
+        <tr><td class="k">Normal soru-cevap</td><td><span class="chip opus">Opus 5.5 · high</span></td><td>Bugün kod bunu da strateji ayarına gönderiyor.</td></tr>
+        <tr><td class="k">Size brifing</td><td><span class="chip opus">Opus 5.5 · medium</span></td><td></td></tr>
+        <tr><td class="k">Sesli cevap (1–1,3 sn hedefi)</td><td><span class="chip opus">Opus 5.5 · low</span></td><td></td></tr>
+        <tr><td class="k">Sesli komutu anlamak</td><td><span class="chip">Sonnet 5.5 · low</span></td><td></td></tr>
+      </tbody>
+      <tbody>
+        <tr class="grp"><th colspan="3">İş yapılırken: sahibin menüsü</th></tr>
+        <tr><td class="k">Ayıklama ve rutin iç iş: gelen postayı sınıflamak, etiket, iç özet</td><td><span class="chip">Sonnet 5.5 · low</span></td><td>Haiku 5.5 (high) ve Jev ölçülüyor; geçen devralır.</td></tr>
+        <tr><td class="k">Standart iş: araştırma, analiz, taslak, sıradan kod</td><td><span class="chip opus">Opus 5.5 · medium</span></td><td>Anthropic'in Opus 5.5 için varsayılanı.</td></tr>
+        <tr><td class="k">İyi iş: müşterinin, izleyicinin ya da sizin göreceğiniz son metin; iyi yapılması gereken kod</td><td><span class="chip opus">Opus 5.5 · high</span></td><td></td></tr>
+        <tr><td class="k">Derin düşünme: strateji, mimari ve her yeni planın yazılması</td><td><span class="chip opus">Opus 5.5 · xhigh</span></td><td>Notunuz: düşünmede xhigh. Bilinen iş türü kalıpla yürür, plan yeniden yazılmaz.</td></tr>
+        <tr><td class="k">Uzun yapım: yarım saatten uzun, gözetimsiz büyük yapım</td><td><span class="chip opus">Opus 5.5 · xhigh</span></td><td></td></tr>
+        <tr><td class="k">Opus'un kotası sıkışınca taşan iş</td><td><span class="chip fable">Fable 5.1 · parçanın eforu</span></td><td>Yedek kapasite. Kritik iş Opus'u bekler.</td></tr>
+      </tbody>
+      <tbody>
+        <tr class="grp"><th colspan="3">Kontrol</th></tr>
+        <tr><td class="k">Otomatik kontrol</td><td><span class="chip code">kod</span></td><td>Her parçada, saniyeler içinde.</td></tr>
+        <tr><td class="k">Hakem</td><td><span class="chip opus">Opus 5.5 · high</span></td><td>İç işin sonunda bir kez; değerli işte teslimden önce bütünü dener.</td></tr>
+        <tr><td class="k">İkinci göz</td><td><span class="chip fable">Fable 5.1 · xhigh</span></td><td>Yalnız değerli işin planı, yapımdan önce bir kez.</td></tr>
+        <tr><td class="k">Kritik kapı</td><td><span class="chip sol">Sol 6.1 · high</span> <span class="chip sol">Astra 6 · high</span></td><td>Müşteriye ulaşan her şey; para, sözleşme, hukuk. Rutin müşteri mesajına Sol tek başına bakar (karar 8). Kod yazmaz.</td></tr>
+        <tr><td class="k">max</td><td>—</td><td>Hiçbir varsayılanda yok; yalnız sizin sözünüzle.</td></tr>
+      </tbody>
+    </table></div>
+
+    <div class="rule">
+      <p><b>Kim seçer:</b> işin sahibi. Başkan planı yazarken her parçaya menüden bir ayar koyar ve gerekçesini bir satırla yazar. Bilinen bir iş türünde ayarlar başkanın kayıtlı kalıbından gelir; plan yeniden yazılmaz.</p>
+      <p><b>İşin değeri üç basamaktır.</b> Basit: kayıtlı kalıp, plan yazılmaz. Normal: başkan planı xhigh'da yazar ve kalıp olarak kaydeder. Değerli: buna ek olarak Fable planı inceler, kod Opus high'da yazılır, teslimden önce kritik kapının iki koltuğu bakar. Değeri işi veren koyar: siz ya da sizin sözünüzden Hamza, anlaşmanın tutarından satış, kendi kartından hat.</p>
+      <p><b>Kod sınırları korur:</b> insanın göreceği son çıktı Opus'un altına inmez; max yalnız sizin sözünüzle açılır; hiçbir parça işin bütçesini aşamaz.</p>
+      <p><b>Ölçüm düzeltir:</b> her seçim gerekçesiyle kayda geçer ve menü kendi işlerimizden kurulan bir deneme setiyle düzeltilir. Model adları menüde değil katalogda durur; yeni model gelince menü kendiliğinden yenilenir.</p>
+      <p class="note">B51'de 10 Ekim'de Fable'a yazılan yönetim satırları (işi bölmek, strateji, mimari, son onay) kararınızla Opus'a geçer; Fable ikinci göz ve yedek kapasite olur.</p>
+    </div>
+
+    <div class="word">
+      <h3>Sizin sözünüz her şeyin üstünde</h3>
+      <dl>
+        <dt>“Bu konuşmada max.”</dt><dd>Hamza o konuşma boyunca max'ta düşünür; konuşma bitince kendi ayarına döner.</dd>
+        <dt>“Bu işi en yüksek seviyede yapın.”</dt><dd>İş “değerli” olur.</dd>
+        <dt>“Bütün müdürleri Opus high yap.”</dt><dd>Hamza değişikliği tek kayıtlı kapıya iletir; kapı uygular ve kaydeder. Hamza size şöyle der: “22 müdür Opus high'a geçti; geri almak için ‘geri al’ deyin.”</dd>
+      </dl>
+      <p class="note">Bu emirler yalnız sizin sohbetinizden ve sesinizden kabul edilir. Bir mailin içindeki “beyni değiştir” yazısı hiçbir şeyi değiştirmez.</p>
+    </div>
+  </section>
+
+  <section id="senaryolar">
+    <h2>Altı senaryo</h2>
+    <p class="note">Her senaryo yukarıdaki tabloyla yürür. Her adımda kim çalışıyor, ne yapıyor, hangi beyin ve hangi eforla; en altta size ne geldiği.</p>
+    <div class="flows">
+
+      <div class="flow">
+        <h3>1 · Sizin verdiğiniz iş</h3>
+        <p class="ask">“Şu videoyu inceleyin; holdinge ne alabiliriz?”</p>
+        <ol class="steps">
+          <li><span class="who">Hamza</span><span class="what">Sizi anlar; iş açık olduğu için soru sormaz. Tarifi yazar: cümleniz aynen, “bitti” ölçütü (her bulgu videodaki dakikasıyla), değer “normal”. İşi strateji başkanına gönderir.</span><span class="chip opus">Opus 5.5 · high</span></li>
+          <li><span class="who">Strateji başkanı</span><span class="what">Video incelemesi bilinen bir iş türüyse kayıtlı kalıbı kullanır. İlk kezse planı yazar ve kalıp olarak kaydeder.</span><span class="chip opus">kalıp · ilk kez Opus xhigh</span></li>
+          <li><span class="who">Araç</span><span class="what">Videonun konuşma metnini ve önemli karelerini çıkarır.</span><span class="chip code">kod</span></li>
+          <li><span class="who">Uzman</span><span class="what">Analiz eder; holdinge alınacakları ve nereye gireceklerini yazar.</span><span class="chip opus">Opus 5.5 · medium</span></li>
+          <li><span class="who">Otomatik kontrol</span><span class="what">Her bulgunun dakikası var mı, istenen bölümler yazılmış mı.</span><span class="chip code">kod</span></li>
+          <li><span class="who">Hakem</span><span class="what">Bir kez dener: bulguların dakikalarını videoda açıp doğrular.</span><span class="chip opus">Opus 5.5 · high</span></li>
+          <li><span class="who">Hamza</span><span class="what">Sonucu aynı konuşmaya 3–5 satırla getirir; tam rapor işin masasında.</span><span class="chip opus">Opus 5.5 · high</span></li>
+        </ol>
+        <p class="gets"><b>Size gelen:</b> yalnız sonuç, aynı sohbette.</p>
+      </div>
+
+      <div class="flow">
+        <h3>2 · Gmail'inize 30 müşteri e-postası</h3>
+        <p class="ask">Fiyat soruyorlar, ayrıntı istiyorlar.</p>
+        <ol class="steps">
+          <li><span class="who">Araç</span><span class="what">Birkaç dakikada bir yeni postaları çeker. Spam ve boş mailler “Temizlendi” etiketine gider; silinmez, 30 gün içinde geri alınır.</span><span class="chip code">kod</span></li>
+          <li><span class="who">Karşılama</span><span class="what">Gönderen kayıtlı müşteriyse talebi hesabın sahibine verir; bunu kod yapar. Değilse maili okur ve etiketler: yeni müşteri, mevcut müşteri, destek, fatura, diğer; iş alanı, dil, aciliyet. Aynı etiketler Gmail'inizde de görünür. Emin olmadığını Hamza'ya bırakır.</span><span class="chip">Sonnet 5.5 · low</span></li>
+          <li><span class="who">Satış</span><span class="what">“Yeni müşteri talebi” bilinen bir iş türüdür: kalıp her talebi ayrı bir iş yapar, otuzu aynı anda yürür.</span><span class="chip code">kalıp</span></li>
+          <li><span class="who">Satış uzmanı</span><span class="what">Talebi tartar: kim, ne istiyor, bizim işimiz mi, helal mi.</span><span class="chip opus">Opus 5.5 · medium</span></li>
+          <li><span class="who">Satış uzmanı</span><span class="what">Cevabı müşterinin dilinde yazar. Fiyatı onaylı politikadan verir; politikada olmayan iş için soru sorar ve teklif hazırlar.</span><span class="chip opus">Opus 5.5 · high</span></li>
+          <li><span class="who">Otomatik kontrol</span><span class="what">Fiyat politikanın içinde mi, cevap müşterinin dilinde mi, ek doğru mu.</span><span class="chip code">kod</span></li>
+          <li><span class="who">Kritik kapı</span><span class="what">Müşteriye giden her şeye bakar (Eylül'deki kuralınız): cevap soruyu karşılıyor mu, politikanın dışında söz verilmiş mi. Rutin mesaj olduğu için Sol tek başına.</span><span class="chip sol">Sol 6.1 · high</span></li>
+          <li><span class="who">Gönderim</span><span class="what">Cevap şirket adresinden gider; rutin dış iletişim size takılmaz.</span><span class="chip code">kod</span></li>
+          <li><span class="who">Hamza</span><span class="what">Sabah: “Muhittin Bey, 30 potansiyel müşteri maili geldi; 24'üne cevap gitti, 6 özel teklif hazırlanıyor, 2'si kararınızı bekliyor.”</span><span class="chip opus">Opus 5.5 · medium</span></li>
+        </ol>
+        <p class="gets"><b>Size gelen:</b> sabah tek satır; fiyat politikası ve standart sözleşme dışında kalan her şey (karar 5). Holdingin içindeki Müşteriler ekranında her talep bir satırdır: kim yazdı, ne istiyor, kim ilgileniyor, cevaplandı mı. Bir tıkla Gmail'deki asıl maile inersiniz. Ekranın çizimi önce size gelir.</p>
+      </div>
+
+      <div class="flow">
+        <h3>3 · Değerli bir web sitesi</h3>
+        <p class="ask">Ünlü bir firma mail atıyor: 5.000–10.000 dolarlık lüks bir site istiyor.</p>
+        <ol class="steps">
+          <li><span class="who">Karşılama</span><span class="what">Yeni müşteri, web işi: satışa verir.</span><span class="chip">Sonnet 5.5 · low</span></li>
+          <li><span class="who">Satış</span><span class="what">Müşteriyle görüşür, ihtiyacı netleştirir, teklifi yazar. Standart dışı sözleşme size gelir.</span><span class="chip opus">Opus 5.5 · high</span></li>
+          <li><span class="who">Satış</span><span class="what">İmzayla iş açılır: değer “değerli”, sahip mühendislik başkanı. Tarif müşterinin cümleleriyle gelir; hesap müşteri başarısına geçer.</span><span class="chip code">kod</span></li>
+          <li><span class="who">Mühendislik başkanı</span><span class="what">Planı yazar: sayfalar, tasarım, metin, görseller, kod; kim neyi yapar; parçalar nasıl birleşir, her ek yerinin sahibi kim.</span><span class="chip opus">Opus 5.5 · xhigh</span></li>
+          <li><span class="who">İkinci göz</span><span class="what">Planı yapım başlamadan bir kez inceler.</span><span class="chip fable">Fable 5.1 · xhigh</span></li>
+          <li><span class="who">Tasarım, metin, stüdyo</span><span class="what">Görsel tasarım, müşterinin dilinde site metni, görseller ve video; her biri ayrı elde.</span><span class="chip opus">Opus 5.5 · high · stüdyo</span></li>
+          <li><span class="who">Ön yüz geliştiricisi</span><span class="what">Sitenin kodu tek elde: uzun, gözetimsiz yapım.</span><span class="chip opus">Opus 5.5 · xhigh</span></li>
+          <li><span class="who">Yan geliştiriciler</span><span class="what">Ayrı dosyalarda yan parçalar: form, harita, rezervasyon.</span><span class="chip opus">Opus 5.5 · high</span></li>
+          <li><span class="who">Otomatik kontrol</span><span class="what">Her parçada testler, bağlantılar, telefon görünümü, hız, sağdan sola yazılan diller.</span><span class="chip code">kod</span></li>
+          <li><span class="who">Mühendislik başkanı</span><span class="what">Parçaları birleştirir, siteyi gerçek tarayıcıda kendisi dener.</span><span class="chip opus">Opus 5.5 · high</span></li>
+          <li><span class="who">Hakem</span><span class="what">Tarifteki her “bitti” ölçütünü sitede tıklayarak dener.</span><span class="chip opus">Opus 5.5 · high</span></li>
+          <li><span class="who">Kritik kapı</span><span class="what">Müşteriye teslimden önce; değerli iş olduğu için iki koltuk birden.</span><span class="chip sol">Sol 6.1 + Astra 6 · high</span></li>
+          <li><span class="who">Hesap sahibi</span><span class="what">Siteyi teslim eder; müşterinin düzeltmeleri aynı yoldan küçük bir iş olarak döner.</span><span class="chip opus">Opus 5.5 · high</span></li>
+        </ol>
+        <p class="gets"><b>Size gelen:</b> standart dışı sözleşme. Holdingin ilk sitesi teslimden önce size gelir (karar 4); sonrakiler sabah özetinde “teslim edildi” diye.</p>
+        <p class="why"><b>Neden kod tek elde:</b> sıkı bağlı bir yapımı birçok ajana bölmek ölçümlerde 1,8–5,1 kat pahalı ve Opus 5.5'te kaliteyi anlamlı artırmıyor; kazanç, başkanın parçaları birleştirip kendisi denemesinden geliyor. Tasarım, metin ve görsel gerçekten ayrılabildiği için ayrı ellerde.</p>
+      </div>
+
+      <div class="flow">
+        <h3>4 · Haftalık YouTube hattı</h3>
+        <p class="ask">Kanala haftada iki video.</p>
+        <ol class="steps">
+          <li><span class="who">Takvim</span><span class="what">Salı ve cuma hattı başlatır; her koşu küçük bir iştir.</span><span class="chip code">kod</span></li>
+          <li><span class="who">Araştırmacı</span><span class="what">Konuyu seçer: kanalın verisi, ilgi gören konular.</span><span class="chip opus">Opus 5.5 · medium</span></li>
+          <li><span class="who">Senarist</span><span class="what">Senaryoyu yazar.</span><span class="chip opus">Opus 5.5 · high</span></li>
+          <li><span class="who">Stüdyo</span><span class="what">Görsel, ses ve kurgu.</span><span class="chip code">stüdyo araçları</span></li>
+          <li><span class="who">Kanal uzmanı</span><span class="what">Başlık, açıklama, etiket.</span><span class="chip opus">Opus 5.5 · high</span></li>
+          <li><span class="who">Otomatik kontrol</span><span class="what">Süre, ses seviyesi, altyazı, marka kuralları.</span><span class="chip code">kod</span></li>
+          <li><span class="who">Hakem</span><span class="what">Hat kendi başına çalışmayı hak edene kadar her videoda.</span><span class="chip opus">Opus 5.5 · high</span></li>
+          <li><span class="who">Yayın</span><span class="what">Hat “bakılarak” basamağındaysa video önce size gelir. Basamağı siz yükseltince kendisi yayınlar.</span><span class="chip code">kod</span></li>
+          <li><span class="who">Sosyal medya başkanı</span><span class="what">Hattın sahibi. Haftalık karne: tıklanma ve izlenme süresi bir sonraki konuları besler.</span><span class="chip opus">Opus 5.5 · medium</span></li>
+        </ol>
+        <p class="gets"><b>Size gelen:</b> başta her video; hattı siz yükseltince yalnız haftalık karne.</p>
+      </div>
+
+      <div class="flow">
+        <h3>5 · Bir müşterinin aylık paketi</h3>
+        <p class="ask">Yeni müşteri: aylık reklam paketi ve bir lansman kampanyası. Bir hedef üç işi birden doğurur.</p>
+        <ol class="steps">
+          <li><span class="who">Satış</span><span class="what">Anlaşmayı kapatır; standart dışı sözleşme size gelir.</span><span class="chip opus">Opus 5.5 · high</span></li>
+          <li><span class="who">Müşteri başarısı</span><span class="what">Sorumluluk açılır: “X'in hesabı”, hedefleri sözleşmeden, haftalık karnesiyle. Bir hesap sahibi atanır.</span><span class="chip code">kod</span></li>
+          <li><span class="who">Reklam başkanı</span><span class="what">İş: lansman kampanyası. Planı yazar.</span><span class="chip opus">Opus 5.5 · xhigh</span></li>
+          <li><span class="who">Uzmanlar</span><span class="what">Müşterinin dilinde reklam metni, stüdyoda görseller, hedefleme.</span><span class="chip opus">Opus 5.5 · high · stüdyo</span></li>
+          <li><span class="who">Kritik kapı</span><span class="what">Müşteriye giden her şeyde; rutin gönderide Sol tek başına, kampanya teslimi değerliyse iki koltuk.</span><span class="chip sol">Sol 6.1 · high</span></li>
+          <li><span class="who">Müşteri</span><span class="what">Medya planını ve işleri onaylar.</span><span class="chip code">müşteri</span></li>
+          <li><span class="who">Hat</span><span class="what">Aylık paket, örneğin 12 gönderi ve 4 reklam. Her koşu küçük bir iştir ve aynı kontrollerden geçer.</span><span class="chip code">hat kartı</span></li>
+          <li><span class="who">Hesap sahibi</span><span class="what">Haftada bir müşterinin hedeflerine göre yeşil, sarı ya da kırmızı der; hattı ayarlar ya da yeni iş önerir.</span><span class="chip opus">Opus 5.5 · medium</span></li>
+        </ol>
+        <p class="gets"><b>Size gelen:</b> standart dışı sözleşme; reklam harcaması (bugünkü kurala göre); şirket karnesinde bu müşterinin satırı; kırmızıya dönerse istisna olarak.</p>
+      </div>
+
+      <div class="flow">
+        <h3>6 · Aynı anda yüzlerce iş</h3>
+        <p class="ask">Pazartesi 09.00: 40 hat koşusu, 60 müşteri talebi, 200 e-posta ve sizden 5 iş.</p>
+        <ul>
+          <li>Tek kuyruk vardır. Önce sizin işleriniz ve teslim tarihi yaklaşanlar, sonra müşteri teslimleri, sonra hatlar, sonra iç işler.</li>
+          <li>Pahalı beyin az kullanılır: 200 e-postayı Sonnet low ayırır; xhigh yalnız yeni bir planın yazılmasında ve uzun yapımda çalışır, bilinen iş türleri kalıpla yürür; her işe bir son kontrol bakar; kendi başına çalışan hatlarda yalnız otomatik kontrol vardır.</li>
+          <li>Opus'un kotası sıkışınca taşan iş Fable'a gider; kritik iş Opus'u bekler.</li>
+          <li>Bütçe holding, şirket, bölüm ve iş diye iner. Yüzde 70'te ve 90'da uyarı gelir; yüzde 100'de kritik olmayan yeni iş durur.</li>
+          <li>Kayan işi makine yeniden planlar ve ona bağlı işlere haber verir. Her işte durdur ve iptal vardır.</li>
+        </ul>
+        <p class="gets"><b>Size gelen:</b> sabah yalnız istisnalar: kırmızıya dönen, takılan, sizi bekleyen. Ekranda her an kimin ne üzerinde çalıştığı görünür.</p>
+        <p class="why"><b>Bu senaryonun elediği:</b> Hamza her şeyi taşısaydı tıkanırdı. Her teslim size gelseydi darboğaz siz olurdunuz. Her parçaya hakem baksaydı kontrol kuyruğu işin kendisinden uzun sürerdi.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="muhendis">
+    <h2>Notlarınız, mühendis gözüyle</h2>
+    <p class="note">Fikirlerinizin çoğu senaryolarda tuttu ve yukarıdaki tasarımın içinde. Sekiz yerde bir senaryo fikri bozdu; bozulduğu yer ve daha iyi şekli:</p>
+    <div class="frame"><table>
+      <thead><tr><th>Fikir</th><th>Nerede bozuluyor</th><th>Daha iyi şekli</th></tr></thead>
+      <tbody>
+        <tr><td class="k">Her müşteri talebi derin düşünülsün</td><td>30 mailde her cevap uzun düşünür ve müşteri bekler. Opus'ta görev başı maliyet xhigh'da medium'un yaklaşık 2,5 katı.</td><td>İlk cevap high'da ve hızlı. Derin düşünme (xhigh) gerçek bir projenin planında.</td></tr>
+        <tr><td class="k">En üstteki zekâ her parçanın beynini serbestçe seçsin</td><td>Serbest bırakılırsa aynı tür iş her seferinde başka bir beyinle yapılır; ne maliyet öngörülür ne kalite ölçülür.</td><td>Sahip kısa bir menüden seçer ve gerekçesini yazar; kod sınırları korur; kendi ölçümümüz menüyü düzeltir.</td></tr>
+        <tr><td class="k">Gelen her talep Hamza'ya sunulsun</td><td>30 mailde Hamza tıkanır; sizinle konuşması müşteri trafiğiyle dolar.</td><td>Karşılama talebi sahibine verir. Hamza hepsini sabah özetinde görür, yalnız sahipsiz ve büyük talepleri alır.</td></tr>
+        <tr><td class="k">Mail gelince iş direkt başlasın</td><td>Sahte bir müşteri ya da mailin içine gizlenmiş bir talimat iş başlatıp para harcatabilir.</td><td>Yalnız kayıtlı müşteri, anlaşılan kapsam ve bütçe içinde direkt başlar. Yeni gönderen satışa gider. Mailin yazısı emir değil, bilgidir.</td></tr>
+        <tr><td class="k">Spam ve boş mailler her zaman temizlensin</td><td>Yanlışlıkla spam sayılan gerçek bir müşteri maili kaybolur.</td><td>Silinmez; “Temizlendi” etiketine gider, 30 gün içinde geri alınır.</td></tr>
+        <tr><td class="k">Haiku high daha çok kullanılsın</td><td>10 Ekim'deki kendi ölçümümüzde Haiku 5.5, low ayarda 20 sınıflandırmanın 3'ünde bozuk cevap verdi ve Sonnet 5.5'ten hızlı değildi. High'da henüz ölçülmedi.</td><td>Karşılama Sonnet 5.5 ile başlar. Haiku 5.5 high kendi örneklerimizde geçerse devralır (karar 7).</td></tr>
+        <tr><td class="k">Değerli işin kodu Ultracode'da yazılsın</td><td>Ultracode, inşaatta kullandığımız Claude Code'un bir ayarı; holdingin çalışanlarının motorunda çalıştığı ölçülmedi.</td><td>“Değerli iş” ayarı aynı şeyi verir: plan xhigh, Fable ikinci göz, kod Opus high, uzun yapım xhigh, teslimden önce kritik kapının iki koltuğu.</td></tr>
+        <tr><td class="k">Ajanlar beyinleri nasıl kullanacaklarını Anthropic'in sitesinden öğrensin</td><td>Her işte sayfa okumak işi yavaşlatır ve her başkan farklı sonuca varır.</td><td>Rehberi biz bir kez yazarız: Anthropic'in belgeleri ve kendi ölçümümüz. Her başkana verilir, yeni model gelince yenilenir.</td></tr>
+      </tbody>
+    </table></div>
   </section>
 
   <section id="dayanak">
     <h2>Neye dayanıyor</h2>
     <div class="frame"><table>
-      <thead><tr><th>Hüküm</th><th>Kaynak</th><th>Tarih</th><th>Gücü</th></tr></thead>
+      <thead><tr><th>Hüküm</th><th>Kaynak</th><th>Tarih</th></tr></thead>
       <tbody>
-        <tr><td>Üç tür iş, tek sahip, ayrı trafik koltuğu, yazılı tarif, kademeli kontrol, yöneticiye istisna ve haftalık karne</td><td>McKinsey, Bain, IPA, 4A's, ajans işleyiş kaynakları, MrBeast üretim kılavuzu, Amazon'un işletme ritmi</td><td>2019–2026</td><td class="strength">uygulama</td></tr>
-        <tr><td>Sahibi olmayan ek yeri işi düşürür (10 denemenin 10'u)</td><td>UCL, 1.902 Claude Code koşusu, Sonnet 4.6</td><td>Ağu 2026</td><td class="strength">ölçüm, eski model</td></tr>
-        <tr><td>Başarılı ekiplerin ortak masası, lideri, sözleşmesi, birleştirmesi ve gerçek testi var</td><td>Opus 5.5 sistem kartı §8.12; Vals AI; GitSwarm</td><td>Eyl–Eki 2026</td><td class="strength">ölçüm</td></tr>
-        <tr><td>Opus 5.5 medium, uygulama yapımında tek başına en iyi fiyat/performans</td><td>Vals AI</td><td>9 Eki 2026</td><td class="strength">ölçüm</td></tr>
-        <tr><td>Ekip, iş bölünebilir ya da acilse değer; 2,7–2,8 kat hız</td><td>Opus 5.5 sistem kartı</td><td>22 Eyl 2026</td><td class="strength">ölçüm</td></tr>
-        <tr><td>Kendi işini denetleyen ajan kendini övüyor; dışarıdan gerçek test şart</td><td>Anthropic mühendislik yazısı; SEAL ve doğrulayıcı makaleleri</td><td>Mar–Eki 2026</td><td class="strength">uygulama ve ölçüm</td></tr>
-        <tr><td>Yolu belli iş sabit akışla, ucu açık iş ajanla yürür; uzmanlık skill olarak paketlenir</td><td>Anthropic (Zhang, Murag); “Building effective agents”</td><td>Ara 2024 – Ara 2025</td><td class="strength">resmi</td></tr>
-        <tr><td>Yönetici ajan sahte onay uydurabiliyor</td><td>Opus 5.5 sistem kartı</td><td>22 Eyl 2026</td><td class="strength">resmi</td></tr>
-        <tr><td>Effort işe göre seçilir: medium varsayılan, xhigh uzun yapım, max asla varsayılan değil</td><td>Anthropic belgeleri; Nate Herk; Avenox; Artificial Analysis</td><td>Eyl–Eki 2026</td><td class="strength">resmi ve ölçüm</td></tr>
-        <tr><td>Model eşlemesi</td><td>Artificial Analysis, Vals Index, VulcanBench, uzman testleri</td><td>Eyl–Eki 2026</td><td class="strength">ölçüm, bizim işlerde değil</td></tr>
-        <tr><td>Jev şimdi değil, Haiku 5.5</td><td>TypeSafe belgeleri; OpenRouter, Red Hat ve bağımsız testler</td><td>Eyl–Eki 2026</td><td class="strength">resmi ve ölçüm</td></tr>
-        <tr><td>Özerklik merdiveni; tek cümleyle dağıtıp tek cevapta toplama; günlük döngü</td><td>Rakip incelemeleri (Bennett OS, Sureflow, Chase AI)</td><td>2026</td><td class="strength">ekranda görüldü</td></tr>
-        <tr><td>Bilgi katmanları, değişiklik kaydı, çakışma kontrolü</td><td>Anthropic'in ajan hafızası konuşması</td><td>2026</td><td class="strength">uzman</td></tr>
-        <tr><td>Bugünkü sistem</td><td>kendi kodumuz, dosya ve satırıyla</td><td>12 Eki 2026</td><td class="strength">ölçüm</td></tr>
+        <tr><td>Opus 5.5'in varsayılanı medium; xhigh yarım saatten uzun, gözetimsiz iş için; max “azalan getiri gösterebilir, aşırı düşünmeye yatkın”</td><td>Anthropic belgeleri</td><td>Eki 2026</td></tr>
+        <tr><td>Opus 5.5'te görev başı maliyet: medium 1,34 $ · high 1,82 $ · xhigh 3,46 $ · max 5,98 $</td><td>Artificial Analysis</td><td>12 Eki 2026</td></tr>
+        <tr><td>Uzun yapımda xhigh, max'ı yarı fiyata ve %60 sürede geçti</td><td>Nate Herk (tek deneme)</td><td>24 Eyl 2026</td></tr>
+        <tr><td>Sıkı bağlı yapımı ekibe bölmek 1,8–5,1 kat pahalı; Opus 5.5'te anlamlı kazanç yok; kazanç liderin birleştirip kendisi denediği yerde</td><td>Vals AI</td><td>9 Eki 2026</td></tr>
+        <tr><td>Sahibi olmayan ek yeri işi düşürür (10 denemenin 10'u)</td><td>UCL (eski model)</td><td>Ağu 2026</td></tr>
+        <tr><td>Kendi işini denetleyen ajan kendini över; dışarıdan gerçek test şart</td><td>Anthropic mühendislik yazısı; SEAL</td><td>Mar–Eki 2026</td></tr>
+        <tr><td>Yolu belli iş sabit akışla, ucu açık iş sahibi olan ajanla yürür</td><td>Anthropic mühendisleri</td><td>2025–2026</td></tr>
+        <tr><td>Opus 5.5 aynı büyük işi Fable 5.1'den hızlı (9,5 saate karşı 12) ve %51 ucuza bitirdi</td><td>Anthropic, Opus 5.5 sayfası</td><td>Eyl 2026</td></tr>
+        <tr><td>Haiku 5.5 (low) 20 hafıza sınıflandırmasının 3'ünde bozuk cevap verdi, Sonnet 5.5 hiçbirinde; ikisi aynı hızdaydı</td><td>Kendi ölçümümüz</td><td>10 Eki 2026</td></tr>
+        <tr><td>Yönetici ajan çok nadir de olsa sahte bir onay cümlesi uydurabilir; onay yalnız onay kaydından okunur</td><td>Opus 5.5 sistem kartı</td><td>22 Eyl 2026</td></tr>
+        <tr><td>Bugünkü sistem hakkındaki cümleler</td><td>Kendi kodumuz ve şirket veritabanı, yalnız okunarak; GPT-6.1 Sol kör denetimle kontrol etti, bulduğu yedi düzeltme işlendi</td><td>12 Eki 2026</td></tr>
       </tbody>
     </table></div>
   </section>
 
-  <footer>13 araştırmacının raporundan birleştirildi: altı uzman videosu, Jev'in resmi kaynakları, model ölçümleri, çok ajanlı çalışma ölçümleri, gerçek holding ve ajans işleyişi, rakip incelemeleri ve kendi kodumuz. Kör denetim: GPT-6.1 Sol (xhigh). İki engelleyici bulgusu düzeltildi: müşteriye giden son metin kalite kanunu gereği Opus'ta kalır; hatların özerkliği tahtadaki dört kutu testine bağlandı. Bugünkü sistemle ilgili cümleler kodla birebir eşleşecek şekilde daraltıldı.</footer>
+  <footer>Sürüm 9. On iki notunuz ve 12 Ekim'deki kararlarınız üzerine kuruldu ve altı senaryoyla sınandı. Önceki sürümlerin araştırma bölümü ve 13 araştırma raporu depoda duruyor.</footer>
 </main>

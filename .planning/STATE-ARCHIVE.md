@@ -2447,3 +2447,38 @@ four equal arrangements, and the lead at high chooses one by its own judgement; 
 ⚠ UNVERIFIED: the plan warning reaching his screen — the first plan talk shows it.
 Still waiting for his eye from 2026-10-04 (STATE-ARCHIVE, § 2026-10-06): B51 move 5's persona text and code
 bundle 2; the auto-memory fixes; the outside review's item 4.
+
+## Moved out of STATE.md on 2026-10-12 night (session b337c27a) — the three headings as they stood
+
+## Where we left off
+
+2026-10-12 — he walked B51 with the session and does not accept it in this shape (*"bu şekli ile de kabul
+etmiyorum"*). Measured with him: Hamza neither splits nor sends work — the seat that splits a job is a nameless
+Fable 5.1 call (routing row `orchestration`); B51's records and the 2026-10-11 card filed it under Hamza. Done
+the same day: the unread `decompose` routing row removed on his word <!-- CEO-OK: decompose-row-removed-orchestration-stays-2026-10-12 --> (bd178290 — construction bench only; Sol's
+pass could not start, `REFUTER_FAIL … codex mcp list failed`, so the company has not got it); the effort hook
+warns before the thinking and stops plan work until he is at the plan level (xhigh since 2026-10-12, his order) (4dcf2ff6, no Sol on his word <!-- CEO-OK: plan-warning-before-the-thinking-2026-10-12 -->). B64 opened <!-- CEO-OK: b64-opened-goal-not-intent-and-hamza-2026-10-12 -->: how work
+reaches the holding (a goal, not an "intent") and the gaps no other row owns; Hamza's role is his §2d ruling of
+2026-08-01, tested by research, not restated. B64's research is in flight: primary sources and the rival studies
+read, the field run in `var/research/runs/b64-hamza-role/`.
+
+## Next
+
+1. B64: the research as one page in his language → his one word on B22 → the plan, at xhigh.
+2. The `decompose` removal reaches the company only after Sol's pass — the refuter's preflight is repaired first.
+3. B51 P8 waits on his two answers below.
+
+## Waiting on his approval
+
+- Whether B64's research feeds B22's synthesis (B22 holds all design until he reads it) — recommendation yes:
+  one design track, nothing written twice.
+- B51 steps 1-3 as built: not accepted in this shape (his word, 2026-10-12). P8's scope: Hamza's one brain tool
+  and the "Halef yap" drawer's design. Haiku 5.5's result — recommendation: not on classification. chat.strategy
+  runs at max — one word moves it.
+- Security outside B51: `fn_update_routing` is EXECUTE-able by anon and takes the actor from the owner — a row?
+- Found, each needs his word for a row: the eight Agent SDK readers do not check `is_error`; the SQL model
+  fallback ignores the lane and the tier floor; the HR org check counts only heads as roots; the routing seed is
+  half the live table; research tasks cannot pass the knowledge shelf; with the hook off the gate is skipped;
+  memory recall and the summarize lane need a LiteLLM key.
+- Excel turbo (`~/Desktop/Lİnk araştırmaları/Excel-turbo.xlsx`) — nine projects, thirteen decisions.
+- The board rows that wait on him — the board page's "Sizi bekleyenler" lists them.
