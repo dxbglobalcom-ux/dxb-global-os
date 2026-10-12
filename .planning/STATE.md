@@ -32,14 +32,14 @@ etmiyorum"*). Measured with him: Hamza neither splits nor sends work — the sea
 Fable 5.1 call (routing row `orchestration`); B51's records and the 2026-10-11 card filed it under Hamza. Done
 the same day: the unread `decompose` routing row removed on his word <!-- CEO-OK: decompose-row-removed-orchestration-stays-2026-10-12 --> (bd178290 — construction bench only; Sol's
 pass could not start, `REFUTER_FAIL … codex mcp list failed`, so the company has not got it); the effort hook
-warns before the thinking and stops plan work below max (4dcf2ff6, no Sol on his word <!-- CEO-OK: plan-warning-before-the-thinking-2026-10-12 -->). B64 opened <!-- CEO-OK: b64-opened-goal-not-intent-and-hamza-2026-10-12 -->: how work
+warns before the thinking and stops plan work until he is at the plan level (xhigh since 2026-10-12, his order) (4dcf2ff6, no Sol on his word <!-- CEO-OK: plan-warning-before-the-thinking-2026-10-12 -->). B64 opened <!-- CEO-OK: b64-opened-goal-not-intent-and-hamza-2026-10-12 -->: how work
 reaches the holding (a goal, not an "intent") and the gaps no other row owns; Hamza's role is his §2d ruling of
 2026-08-01, tested by research, not restated. B64's research is in flight: primary sources and the rival studies
 read, the field run in `var/research/runs/b64-hamza-role/`.
 
 ## Next
 
-1. B64: the research as one page in his language → his one word on B22 → the plan, at max.
+1. B64: the research as one page in his language → his one word on B22 → the plan, at xhigh.
 2. The `decompose` removal reaches the company only after Sol's pass — the refuter's preflight is repaired first.
 3. B51 P8 waits on his two answers below.
 

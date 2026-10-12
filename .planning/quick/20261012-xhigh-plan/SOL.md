@@ -1,0 +1,15 @@
+codex
+**Hook ve dxb-team2, tanımlanan kapsamda emri uyguluyor. Ancak açılış katmanı hâlâ plan için max söylüyor: bir B bulgusu var. Tam regresyon kanıtı eksik.**
+
+Denetlenen aralık: yalnız `bc751d51`; doğrudan parent’ı `ba32b8da`. Repo değiştirilmedi.
+
+| Claim | Verdict | Finding · Evidence | Correction required |
+|---|---|---|---|
+| Plan/design/architecture hedefi xhigh oldu. | **STANDS AFTER ATTEMPTED REFUTATION** | [Hook:56](/home/dxb/DxB%20Global%20OS/.claude/hooks/dxb-effort-warn.py:56): plan hedefi `xhigh`. Max seviyesinde xhigh uyarısı geliyor; xhigh’da mevcut plan modu sessiz. Bellek içi senaryo kontrolü geçti. | Yok. |
+| Aktif açılış talimatlarında plan=max kalmadı. | **REFUTED — B** | [STATE:35](/home/dxb/DxB%20Global%20OS/.planning/STATE.md:35) “stops plan work below max”; [STATE:42](/home/dxb/DxB%20Global%20OS/.planning/STATE.md:42) “the plan, at max” diyor. `bash .claude/hooks/spec-bootstrap.sh` → exit 0; **iki yanlış ifade de gerçek açılış çıktısında göründü**. Yeni oturum yanlış seviyeye yönlendiriliyor. | İki ifadeyi xhigh sözleşmesine göre düzeltin. “Below” yerine hedefle eşleşmeyi anlatın; hook max’ta da uyarıyor. Bu değişiklikle yanlışlaşan aktif talimat olduğundan C değil, B. |
+| Build modu doğru kaldı. | **STANDS AFTER ATTEMPTED REFUTATION** | [Hook:95](/home/dxb/DxB%20Global%20OS/.claude/hooks/dxb-effort-warn.py:95): high’da sessiz; xhigh/max/bilinmeyende high uyarısı ve kod yazmama talimatı. Kontrol edilen build çıktıları parent ile birebir aynı. | Yok. |
+| Bilinmeyen seviye ve plan permission mode doğru çalışıyor. | **STANDS AFTER ATTEMPTED REFUTATION** | [Hook:284](/home/dxb/DxB%20Global%20OS/.claude/hooks/dxb-effort-warn.py:284): permission plan + xhigh → yalnız kapı; diğer seviyeler → xhigh uyarısı ve STOP. Açık build modu önceliğini koruyor. Gerçek stdin çağrısı → `exit=0`, bilinmeyen seviye + xhigh uyarısı + STOP. | Yok. |
+| Plan seviyesi dışında davranış değişmedi; mirror doğru. | **STANDS AFTER ATTEMPTED REFUTATION** | `git show bc751d51` → belirtilen beş dosya. AST karşılaştırması → yalnız `warning` ve `plan_reminder` fonksiyonlarının metinleri değişmiş; 17 fonksiyon aynı. Mirror beklenen path dönüşümleriyle birebir eşleşiyor. [Builder ve kod kuralları](/home/dxb/DxB%20Global%20OS/.claude/skills/dxb-team2/SKILL.md:97) korunmuş. | Yok. |
+| Tam regresyon güvence altında. | **UNVERIFIED — A, kapanış kanıtı** | [Ham log:8](/home/dxb/DxB%20Global%20OS/.planning/quick/20261012-xhigh-plan/tests.log:8) → `79 passed (79)`. Bağımsız bellek içi kontrol → `HOOK_MATRIX_PASS 108 cases`; kaynak okumaları taklit edildi, tam entegrasyon değildir. Typecheck ve tam battery çıktısı sunulmadı. | [dxb-team2 §5](/home/dxb/DxB%20Global%20OS/.agents/skills/dxb-team2/SKILL.md:175) gereği `pnpm typecheck` ve `pnpm construction:battery` ham çıktısını sağlayın; battery için `BATTERY_GREEN` gerekli. |
+
+Kalan `design-at-max` ifadesi tarihsel açıklama; `LEVELS`/switch parser içindeki max mevcut seviyeyi tanımak için gerekli. `STATE:52` içindeki `chat.strategy=max` ise açıkça kapsam dışında bırakılan holding runtime’ına ait. Bunlar ek bulgu değil.

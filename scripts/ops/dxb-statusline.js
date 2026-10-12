@@ -193,5 +193,10 @@ process.stdin.on('end', () => {
   const dir = data.workspace?.current_dir || process.cwd();
   const name = dir.split('/').filter(Boolean).pop() || dir;
 
-  process.stdout.write(`\x1b[2m${model}\x1b[0m${contextMeter(data.context_window)} \x1b[2m${name}\x1b[0m${branch(dir)}`);
+  // the live /effort level, always on the bar (CEO 2026-10-12)
+  const effortLevel = data.effort?.level;
+  const effortColor = { low: '2', medium: '36', high: '32', xhigh: '33', max: '35;1' }[effortLevel];
+  const effortTag = effortColor ? ` \x1b[${effortColor}m· ${effortLevel}\x1b[0m` : '';
+
+  process.stdout.write(`\x1b[2m${model}\x1b[0m${effortTag}${contextMeter(data.context_window)} \x1b[2m${name}\x1b[0m${branch(dir)}`);
 });
