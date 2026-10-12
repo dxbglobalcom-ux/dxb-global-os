@@ -178,7 +178,7 @@ describe("triage.py — the measured Haiku triage, applied through triage-bulk",
     expect(r.out).toMatch(/^triaged: relevant 6 · irrelevant 2 · duplicate 1 · unknown-id 0 · already-triaged 0$/m);
     expect(r.out).toMatch(/^not sent: 2 pending rows have no body \(x 2\)/m);
     expect(status(run).platforms.x).toMatchObject({ pending: 2, pending_with_body: 0, relevant: 6, unread: 6 });
-    expect(row(run, "L0112")).toMatchObject({ triage: "relevant", triage_by: "haiku-4-5" });
+    expect(row(run, "L0112")).toMatchObject({ triage: "relevant", triage_by: "haiku-5-5" });
     // the claude envelope, as the model returned it (fenced JSON inside `result`), reads the same
     const env = join(root, `envelope-${n}.json`);
     writeFileSync(env, JSON.stringify({ result: "```json\n" + readFileSync(HAIKU, "utf8") + "```", total_cost_usd: 0.13 }));
