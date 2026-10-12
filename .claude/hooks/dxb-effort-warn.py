@@ -13,9 +13,12 @@ the same day made the warning start by itself and arrive in time:
     with the question and his "yes" can arrive at high.
   * UserPromptSubmit: while the session has a mode -- or, with none set, while his permission mode is
     `plan` -- and its live level does not match it (plan: max, build: high), each of his messages carries
-    the warning into the session's context. With no mode and no plan permission mode, a message that names
-    a plan, a design or an architecture reminds the lead to open the dxb-team2 door and run `plan` (the
-    door, too, with plan permission mode and no mode -- the CEO, 2026-10-09), and a session whose level is not high
+    the warning into the session's context, and until he has switched the plan work itself waits (STOP).
+    With no mode and no plan permission mode, a message that names a plan, a design or an architecture
+    tells the lead, before it thinks about the substance, to decide whether the reply would be plan work;
+    if so, to open the dxb-team2 door, run `plan`, open with the max line and stop -- at max, only the door
+    and `plan` (the CEO, 2026-10-12: the warning comes before the thinking; the door, too, with plan
+    permission mode and no mode -- the CEO, 2026-10-09), and a session whose level is not high
     -- or not yet known: then the lead reads CLAUDE_EFFORT in Bash -- reminds the lead to warn him before
     writing code.
 
@@ -62,6 +65,12 @@ MAX_LINE = "⚠ Muhittin Bey, plan konuşmasındayız — /effort max'a geçin."
 HIGH_LINE = "⚠ Muhittin Bey, plan bitti — koda geçmeden /effort high'a geçin."
 CODE_LINE = "⚠ Muhittin Bey, koda geçmeden /effort high'a geçin."
 LINES = {"plan": MAX_LINE, "build": HIGH_LINE}
+# the CEO, 2026-10-12, after a session evaluated an architecture at high and warned him only at its end: "Orada
+# planı yapmadan önce, sen kafanda düşünmeden önce bu uyarıyı yapmalısın." -- the warning comes first, and the plan,
+# design or architecture thinking waits for his switch; it is never done at high and warned about afterwards
+STOP = ("do not plan, design, propose or evaluate an architecture or a design in this reply -- that thinking "
+        "belongs at max, after he switches. Answer only plain facts he asked, in a line or two, say in one line "
+        "that you wait for his switch, and write no file")
 # the whole row is the command's output -- a quotation of it inside his own words is not a switch (Sol A3)
 SWITCHED = re.compile(r"<local-command-stdout>Set effort level to (low|medium|high|xhigh|max)\b[^<]*"
                       r"</local-command-stdout>")
@@ -79,7 +88,7 @@ def warning(mode, level):
             f"This session is in PLAN mode under dxb-team2 and {runs}; the CEO's order (2026-10-06) is "
             f"plan, design and architecture at max, switched by him with /effort. Begin your reply, "
             f"before anything else, with exactly this line:\n{MAX_LINE}\n"
-            f"Then go on, but write no file until he has switched. In the reply that brings him the plan for "
+            f"Then, until he has switched, {STOP}. Once he is at max: in the reply that brings him the plan for "
             f"his yes, run `{COMMAND} build` and close that reply with the line it gives, so his yes can "
             f"arrive at high.")
     return (
@@ -100,9 +109,16 @@ def open_door():
             f"run `{COMMAND} plan` and do what it answers.")
 
 
-def plan_reminder():
-    return (f"His message names a plan, a design or an architecture, and this session has no dxb-team2 effort "
-            f"mode. If the talk is turning to one: {open_door()} If not, ignore this.")
+def plan_reminder(level):
+    if level == WANTED["plan"]:
+        return (f"His message names a plan, a design or an architecture, and this session has no dxb-team2 effort "
+                f"mode. If the talk is turning to one: {open_door()} If not, ignore this.")
+    runs = f"runs at {level}" if level else "runs at an unknown level"
+    return (f"FIRST, before you think about the substance of his message: his message names a plan, a design or an "
+            f"architecture, this session {runs} and has no dxb-team2 effort mode. Decide now whether your reply "
+            f"would plan, design, propose, or evaluate an architecture or a design -- anything beyond plain facts "
+            f"about what exists. If it would: {open_door()} Open your reply, before anything else, with exactly this "
+            f"line:\n{MAX_LINE}\nand then {STOP}. If it would not, ignore this.")
 
 
 def unknown_reminder():
@@ -287,7 +303,7 @@ def on_hook(data):
     elif not isinstance(data.get("prompt"), str) or "<task-notification>" in data["prompt"]:
         return  # a subagent's report arriving is not his message (measured 2026-10-06: one tripped the net)
     elif PLAN_WORDS.search(data["prompt"]):
-        context = plan_reminder()
+        context = plan_reminder(level)
     elif level is None:
         context = unknown_reminder()
     elif level != "high":

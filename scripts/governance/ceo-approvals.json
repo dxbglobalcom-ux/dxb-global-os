@@ -2243,6 +2243,14 @@
     "session": "Opus 5.5 session 364d8687 (dxb-global-os-c3) — heard first-hand, 2026-10-09; planned at one table with Fable 5.1 (dxb-global-os-26).",
     "where": ".claude/skills/dxb-team2/SKILL.md §6; .claude/skills/dxb-close-row/SKILL.md; tests/b43/records-truth.ts (R6); scripts/board/note-done.mjs; .claude/hooks/spec-bootstrap.sh"
   },
+  "plan-warning-before-the-thinking-2026-10-12": {
+    "date": "2026-10-12",
+    "what": "The plan warning comes before the thinking: when his message turns the talk to a plan, a design or an architecture and the session is not at max, the session warns first and does no plan, design or architecture thinking until he has switched -- never an evaluation made at high and warned about at its end. Built into .claude/hooks/dxb-effort-warn.py (the reminder makes the lead decide first; plan mode's warning stops instead of going on) and dxb-team2 section 2.",
+    "verbatim": "Max'a geçsem ne olur? … Orada planı yapmadan önce, sen kafanda düşünmeden önce bu uyarıyı yapmalısın. · Ama olmaz ki işte böyle. Bunu bir önce bu sorunu bir düzeltelim yani. Önce şunu bir düzelt yani. Başka session'larda da bu başıma gelmesin. · Geçtim, tamam. Bunu yap, sola denetletmene gerek yok.",
+    "conditions": "His order for this change, for every session ('başka session'larda da'). No Sol pass for this change on his word ('sola denetletmene gerek yok') -- this change only; dxb-team2 section 4 is otherwise unchanged.",
+    "session": "Opus 5.5 session e25dc58a -- heard first-hand, 2026-10-12.",
+    "where": ".claude/hooks/dxb-effort-warn.py; tests/hooks/effort-warn.test.ts; .claude/skills/dxb-team2/SKILL.md section 2 (mirror .agents/skills/dxb-team2/SKILL.md)"
+  },
   "b51-plan-approved-2026-10-09": {
     "date": "2026-10-09",
     "what": "His yes to the one-page plan of the B51 table (.planning/quick/20261009-masa-b51/PLAN.md — beyinler, konsey, kayıtlar), built in three steps: (1) records that keep up with the work + his plan words open dxb-team2; (2) the dead council deleted and the live critical gate run once; (3) model succession through the catalogue, the first succession (Opus 5 → 5.5, Sonnet 5 → 5.5), B51 bundle 3, move 3 and Hamza's level. 'gerekli olanı yapın' is read as yes to the plan's recommendations (Haiku 5.5 testing + mechanical only; mechanical seats succeed by themselves when the price does not rise); the API key for the model list stays his step. Two decisions in the same conversation bind step 3: Haiku 5.5 is first tested side by side with Sonnet 5.5 on the same mechanical work and the result goes to him before any decision; Hamza's seats get their model by the work they do — his talking seats on Opus 5.5.",

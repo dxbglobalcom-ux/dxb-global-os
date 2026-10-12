@@ -55,10 +55,15 @@ and the risks — in his language, short; not who writes, which the lead chooses
 The session runs at `high`: the talk, the build, the fixes, the tests. Plan, design and architecture run
 at `max`. **He switches with /effort; the lead warns him — on every reply, until he has.**
 
-- The moment the talk turns to a plan, a design or an architecture, the lead runs
-  `python3 .claude/hooks/dxb-effort-warn.py plan`; it answers with the live level and whether this reply
-  opens with `⚠ Muhittin Bey, plan konuşmasındayız — /effort max'a geçin.` (not when he is already at
-  max). His plan permission mode starts the same warning by itself.
+- **The warning comes before the thinking** <!-- CEO-OK: plan-warning-before-the-thinking-2026-10-12 -->.
+  The moment his message turns the talk to a plan, a design or an architecture — to plan, propose or
+  evaluate one, not to ask a plain fact about what exists — the lead runs
+  `python3 .claude/hooks/dxb-effort-warn.py plan` before it thinks about the substance; it answers with the
+  live level and whether this reply opens with `⚠ Muhittin Bey, plan konuşmasındayız — /effort max'a geçin.`
+  (not when he is already at max). Until he has switched, that reply does no plan, design or architecture
+  thinking at all: the line, the plain facts he asked in a line or two, the wait, and no file. An
+  architecture weighed at high and warned about at the end is the failure this exists for (2026-10-12). His
+  plan permission mode starts the same warning by itself.
 - In the reply that brings him the plan for his yes, the lead runs
   `python3 .claude/hooks/dxb-effort-warn.py build` and closes that reply with
   `⚠ Muhittin Bey, plan bitti — koda geçmeden /effort high'a geçin.` — the warning travels with the
@@ -67,7 +72,8 @@ at `max`. **He switches with /effort; the lead warns him — on every reply, unt
   → `plan` again. At the job's end: `python3 .claude/hooks/dxb-effort-warn.py off`.
 - Between those, the hook `dxb-effort-warn.py` repeats the line on each of his messages until the
   session's live level matches. With no mode set, a message of his naming a plan, a design or an
-  architecture reminds the lead to run `plan`, and a session whose level is not high reminds the lead to
+  architecture tells the lead to decide first, before the thinking, and — when the reply would be plan work —
+  to run `plan`, open with the max line and stop; and a session whose level is not high reminds the lead to
   open any reply in which it writes code itself with `⚠ Muhittin Bey, koda geçmeden /effort high'a geçin.`
   — a small job is not written at max either. Outside a plan, code a medium `helper-writer` writes needs
   no switch. After a plan the session returns to high in every case, whoever writes: the lead's own turns

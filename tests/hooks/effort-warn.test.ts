@@ -531,11 +531,16 @@ describe("plan permission mode starts the plan warning by itself (Fable A3)", ()
 
 describe("with no mode, his words naming a plan, a design or an architecture remind the lead (Fable A3)", () => {
   for (const text of ["bunun planını yapalım", "Mimarisini konuşalım", "şu ekranın tasarımı nasıl olsun", "let's design it"]) {
-    it(`"${text}": the lead is told to run plan — no line for the CEO is ordered`, () => {
+    // Until 2026-10-12 no line was ordered here and the lead decided alone; a session then evaluated an
+    // architecture at high and warned at its end. The lead still decides -- first, before the thinking -- and
+    // the line and the stop come with the reminder (the CEO, 2026-10-12; the block at the end of this file).
+    it(`"${text}": the lead decides first; plan work gets the plan command, the max line and the stop`, () => {
       const dir = box();
       const out = warning(hook(dir, prompt(SID, transcript(dir, [["high", 5]]), text)));
       expect(out).toContain(`python3 "${HOOK}" plan`);
-      expect(out).not.toContain(MAX_LINE);
+      expect(out).toContain(MAX_LINE);
+      expect(out).toContain(STOP);
+      expect(out).toContain("ignore this");
     });
   }
   it("a subagent's report arriving through the prompt is not his message: silent, even at max", () => {
@@ -661,4 +666,42 @@ describe("the CLI refuses a word it does not know (Fable B12)", () => {
       expect(existsSync(MODES(dir))).toBe(false);
     });
   }
+});
+
+// The CEO, 2026-10-12, after a session evaluated the architecture at high and warned him only at the end:
+// "Orada planı yapmadan önce, sen kafanda düşünmeden önce bu uyarıyı yapmalısın." The warning comes FIRST and the
+// plan, design or architecture thinking waits for his switch -- it is not done at high and then warned about.
+const STOP = "do not plan, design, propose or evaluate";
+
+describe("the warning comes before the thinking, and the thinking waits for max (CEO 2026-10-12)", () => {
+  it("plan words, no mode, at high: decide first, before thinking; if it is plan work, warn and stop", () => {
+    const dir = box();
+    const out = warning(hook(dir, prompt(SID, transcript(dir, [["high", 5]]), "bu mimariyi derinlemesine değerlendir")));
+    expect(out).toMatch(/^FIRST, before you think about the substance of his message/);
+    expect(out).toContain(STOP);
+    expect(out).toContain(MAX_LINE);
+    expect(out).toContain(DOOR);
+    expect(out).toContain("ignore this");
+  });
+  it("plan words, no mode, level unknown: the same stop", () => {
+    const out = warning(hook(box(), prompt(SID, "/nonexistent/transcript.jsonl", "planı konuşalım")));
+    expect(out).toContain(STOP);
+    expect(out).toContain(MAX_LINE);
+  });
+  it("plan words, no mode, already at max: no stop -- the door and the plan command only", () => {
+    const dir = box();
+    const out = warning(hook(dir, prompt(SID, transcript(dir, [["max", 5]]), "planı konuşalım")));
+    expect(out).not.toContain(STOP);
+    expect(out).not.toContain(MAX_LINE);
+    expect(out).toContain(DOOR);
+  });
+  it("plan mode at high: the max line, then the plan work stops -- it does not go on", () => {
+    const dir = box();
+    setMode(dir, "plan");
+    const text = warning(hook(dir, prompt(SID, transcript(dir, [["high", 5]]), "devam")));
+    expect(text).toContain(MAX_LINE);
+    expect(text).toContain(STOP);
+    expect(text).not.toMatch(/Then go on/);
+    expect(text).toContain("write no file");
+  });
 });
