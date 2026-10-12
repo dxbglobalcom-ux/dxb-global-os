@@ -363,7 +363,7 @@ replaces A-2026-09-25 (the three-writer door, which burned half a weekly quota o
 came from waste: parallel re-reads, a fresh `max` writer per fix, subagent caches that die at 5
 minutes). The canonical table is `.claude/skills/dxb-team2/SKILL.md` §3.
 
-1. **Seats.** Lead = the session at `high` (plan, design and architecture at `max`, the CEO switching
+1. **Seats.** Lead = the session at `high` (plan, design and architecture at `xhigh` since 2026-10-12, the CEO switching
    on the lead's warning) — chooses who writes (itself, a fork, `medium` helpers, or a fork with
    helpers) and verifies every piece · auditor = GPT-6.1 Sol (2026-10-01) through
    `scripts/governance/refuter.sh`, blind and read-only by tool, one pass on every job · Fable 5.1 is
