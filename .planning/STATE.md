@@ -27,30 +27,30 @@ not here. What is accepted is read from `scripts/governance/ceo-approvals.json`,
 
 ## Where we left off
 
-2026-10-10 night — B51 at one table: Opus 5.5 leads and writes, Fable 5.1 reads every piece before its commit
-(his lasting working style, `~/Desktop/çalışma1.md`). Plan approved <!-- CEO-OK: b51-plan-approved-2026-10-09 -->:
-`.planning/quick/20261009-masa-b51/PLAN.md`. Steps 1 and 2 built and told. Step 3 (every brain stays current
-<!-- CEO-OK: all-brains-stay-current-gate-judges-2026-10-09 -->) built and live on the company except P8: the
-catalogue as the one place of model ids, the succession door with a live-call guard, the class leads the route,
-efforts by kind of work, Opus 5.5 and Sonnet 5.5 in their seats (the company's Agent SDK raised so it can call
-Opus 5.5), Hamza as general manager with dispatch and critical decisions on Fable 5.1, Haiku 5.5 tried beside
-Sonnet 5.5 (pairs on his Desktop, `B51-P7-Haiku-Sonnet-2026-10-10.md`). One Sol pass, its findings fixed. Spec
-and as-built notes: `.planning/quick/20261009-masa-b51/step3-spec.md`.
+2026-10-12 — he walked B51 with the session and does not accept it in this shape (*"bu şekli ile de kabul
+etmiyorum"*). Measured with him: Hamza neither splits nor sends work — the seat that splits a job is a nameless
+Fable 5.1 call (routing row `orchestration`); B51's records and the 2026-10-11 card filed it under Hamza. Done
+the same day: the unread `decompose` routing row removed on his word <!-- CEO-OK: decompose-row-removed-orchestration-stays-2026-10-12 --> (bd178290 — construction bench only; Sol's
+pass could not start, `REFUTER_FAIL … codex mcp list failed`, so the company has not got it); the effort hook
+warns before the thinking and stops plan work below max (4dcf2ff6, no Sol on his word <!-- CEO-OK: plan-warning-before-the-thinking-2026-10-12 -->). B64 opened <!-- CEO-OK: b64-opened-goal-not-intent-and-hamza-2026-10-12 -->: how work
+reaches the holding (a goal, not an "intent") and the gaps no other row owns; Hamza's role is his §2d ruling of
+2026-08-01, tested by research, not restated. B64's research is in flight: primary sources and the rival studies
+read, the field run in `var/research/runs/b64-hamza-role/`.
 
 ## Next
 
-1. B51 step 3 P8 — new models learned from his word — waits on his two answers below; nothing of it is built.
-2. His Excel turbo decisions (the "Projeler" sheet) and the SS/S agent-systems + Hermes research (his link).
+1. B64: the research as one page in his language → his one word on B22 → the plan, at max.
+2. The `decompose` removal reaches the company only after Sol's pass — the refuter's preflight is repaired first.
+3. B51 P8 waits on his two answers below.
 
 ## Waiting on his approval
 
-- B51 steps 1 and 2, and all of step 3 that is built (finished, not accepted — LAW B).
-- P8's scope: Hamza's one brain tool inside step 3 (it calls the succession door) — recommendation yes; and the
-  "Halef yap" drawer on the models page, whose design he approves before it is built.
-- Haiku 5.5: the trial's result is his to decide — recommendation: not on classification; on summaries after
-  his look at the pairs.
-- chat.strategy runs at max (his July chat legs); the plan's xhigh is for critical-decision seats — one word moves it.
-- Security, outside B51: `fn_update_routing` is EXECUTE-able by anon and takes the actor from the owner — a row?
+- Whether B64's research feeds B22's synthesis (B22 holds all design until he reads it) — recommendation yes:
+  one design track, nothing written twice.
+- B51 steps 1-3 as built: not accepted in this shape (his word, 2026-10-12). P8's scope: Hamza's one brain tool
+  and the "Halef yap" drawer's design. Haiku 5.5's result — recommendation: not on classification. chat.strategy
+  runs at max — one word moves it.
+- Security outside B51: `fn_update_routing` is EXECUTE-able by anon and takes the actor from the owner — a row?
 - Found, each needs his word for a row: the eight Agent SDK readers do not check `is_error`; the SQL model
   fallback ignores the lane and the tier floor; the HR org check counts only heads as roots; the routing seed is
   half the live table; research tasks cannot pass the knowledge shelf; with the hook off the gate is skipped;
