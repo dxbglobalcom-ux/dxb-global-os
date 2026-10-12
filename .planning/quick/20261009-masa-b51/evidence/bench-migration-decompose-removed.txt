@@ -1,0 +1,10 @@
+# 20261012010000 on the BENCH, 2026-10-12T10:33:48+02:00
+## before
+decompose|fable-5.1|high
+orchestration|fable-5.1|high
+trg_agents_brain_follows_routing
+APPLY_EXIT=0
+RERUN_EXIT=0
+## after
+orchestration|fable-5.1|high
+routing_rule.removed|decompose|ceo-approvals:decompose-row-removed-orchestration-stays-2026-10-12|1

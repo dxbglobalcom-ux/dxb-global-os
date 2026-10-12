@@ -2243,6 +2243,14 @@
     "session": "Opus 5.5 session 364d8687 (dxb-global-os-c3) — heard first-hand, 2026-10-09; planned at one table with Fable 5.1 (dxb-global-os-26).",
     "where": ".claude/skills/dxb-team2/SKILL.md §6; .claude/skills/dxb-close-row/SKILL.md; tests/b43/records-truth.ts (R6); scripts/board/note-done.mjs; .claude/hooks/spec-bootstrap.sh"
   },
+  "decompose-row-removed-orchestration-stays-2026-10-12": {
+    "date": "2026-10-12",
+    "what": "Of the two department-less routing rows that name the seat splitting a job, the unread 'decompose' row is removed and 'orchestration' — the one decompose.ts reads — stays. Ordered after the session measured that no code reads 'decompose' and that the word 'orchestrator' names both Hamza's former title and that row.",
+    "verbatim": "Bunu not al lan. Not al, bunu düzeltin şimdi. · Peki bu kod, okumadığı kod niye var decompose diye yazıyor yani? Birisin, ikisinden biri kaldırılsın. Şey, genel müdürse, general managersa şey, Hamza, o zaman orchestration kalsın.",
+    "conditions": "His order for this one change, not a LAW B acceptance of any work. Taking 'orchestration' out of the work-class list offered to the drafting model was NOT ordered and is not done.",
+    "session": "Opus 5.5 session e25dc58a — heard first-hand, 2026-10-12.",
+    "where": "db/migrations/20261012010000_b51_decompose_row_removed.sql; packages/kernel/policy/routing-seed.json; HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md (B51 row)"
+  },
   "plan-warning-before-the-thinking-2026-10-12": {
     "date": "2026-10-12",
     "what": "The plan warning comes before the thinking: when his message turns the talk to a plan, a design or an architecture and the session is not at max, the session warns first and does no plan, design or architecture thinking until he has switched -- never an evaluation made at high and warned about at its end. Built into .claude/hooks/dxb-effort-warn.py (the reminder makes the lead decide first; plan mode's warning stops instead of going on) and dxb-team2 section 2.",

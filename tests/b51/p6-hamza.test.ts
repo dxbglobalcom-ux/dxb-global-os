@@ -17,7 +17,9 @@ afterAll(async () => {
   await closeDb();
 });
 
-const DISPATCH = ["orchestration", "decompose"];
+// One row splits a job: 'orchestration' (decompose.ts routes its own drafting call through it). The 'decompose'
+// row beside it was read by no code and went on his word, 2026-10-12 (20261012010000).
+const DISPATCH = ["orchestration"];
 const CRITICAL = ["strategy", "architecture", "final-approval", "slot.critical_decision"];
 const TALKING = ["chat.answer", "chat.brief", "chat.strategy", "voice.answer"];
 
@@ -87,6 +89,30 @@ describe("P6 — Hamza, the general manager", () => {
     for (const row of seed.filter((x) => [...DISPATCH, ...CRITICAL].includes(x.task_class))) {
       expect(row.model, row.task_class).toBe("fable-5.1");
     }
+  });
+});
+
+describe("one row splits a job — the unread 'decompose' row is gone (CEO 2026-10-12)", () => {
+  it("no engine carries a 'decompose' routing row; 'orchestration' stays, enabled", async () => {
+    const r = await sql<{ task_class: string; enabled: boolean }>`
+      SELECT task_class, enabled FROM routing_rules WHERE task_class IN ('decompose', 'orchestration')`.execute(db());
+    expect(r.rows).toEqual([{ task_class: "orchestration", enabled: true }]);
+  });
+
+  it("the routing seed carries no 'decompose' row, so a fresh engine never gets it back", async () => {
+    const seed = JSON.parse(await readFile(join(REPO_ROOT, "packages/kernel/policy/routing-seed.json"), "utf8")) as Array<{
+      task_class: string;
+    }>;
+    expect(seed.filter((x) => x.task_class === "decompose")).toEqual([]);
+    expect(seed.filter((x) => x.task_class === "orchestration")).toHaveLength(1);
+  });
+
+  it("the removal is photographed in the audit log under his word", async () => {
+    const r = await sql<{ n: number }>`
+      SELECT count(*)::int AS n FROM audit_log
+       WHERE action = 'routing_rule.removed' AND payload->>'task_class' = 'decompose'
+         AND payload->>'authority' = 'ceo-approvals:decompose-row-removed-orchestration-stays-2026-10-12'`.execute(db());
+    expect(r.rows[0].n).toBe(1);
   });
 });
 
