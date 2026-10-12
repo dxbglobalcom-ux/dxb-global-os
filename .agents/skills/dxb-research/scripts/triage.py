@@ -10,7 +10,7 @@ bodies in ONE prompt to Haiku 4.5, effort low, no tools — 130 of 130 judged, r
 irrelevant 23 · duplicate 2, in 96 s, for $0.14. PROMPT below is that prompt, generalised from
 "X posts about Astra 6 and Fable 5.1" to any platform and any question.
 
-  triage.py <run> [--platform P|all] [--model claude-haiku-4-5-20251001] [--batch 60] [--dry-run FILE]
+  triage.py <run> [--platform P|all] [--model claude-haiku-5-5] [--batch 60] [--dry-run FILE]
 
 WHAT IS SENT. The address rows that have a body and whose triage is `pending` — per platform, in
 ledger order, at most --batch rows and PROMPT_CHARS characters to a prompt, each text whitespace-
@@ -61,7 +61,7 @@ sys.path.insert(0, str(HERE))
 import evidence  # noqa: E402  — the ledger, its lock and the one path from a triage JSON to the rows
 import platforms  # noqa: E402  — the platform names
 
-MODEL = "claude-haiku-4-5-20251001"
+MODEL = "claude-haiku-5-5"   # Haiku 4.5 until 2026-10-12, when he asked for the newer Haiku
 BATCH = 60
 TEXT_CHARS = 6000          # a body's first 6,000 characters decide its topic; 129 of the 130 X bodies go whole
 PROMPT_CHARS = 240_000     # ≈ 103k tokens at the X prompt's measured 2.33 bytes a token; an all-CJK
