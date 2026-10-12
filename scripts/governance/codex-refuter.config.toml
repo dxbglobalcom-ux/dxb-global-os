@@ -60,7 +60,17 @@ enabled = false
 [mcp_servers.openaiDeveloperDocs]
 enabled = false
 
-[mcp_servers.node_repl]
+[mcp_servers.context7]
+enabled = false
+
+[mcp_servers.playwright]
+enabled = false
+
+# scrapling is defined only by the untracked project .codex/config.toml (written by the Codex app on
+# 2026-10-10); it carries its own command so the profile stays valid wherever that file is absent.
+[mcp_servers.scrapling]
+command = "/home/dxb/scrapling-env/bin/scrapling"
+args = ["mcp"]
 enabled = false
 
 # THE ONE TOOL: a read-only query into the construction engine as `sol_reader`.
