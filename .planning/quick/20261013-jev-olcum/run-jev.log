@@ -1,0 +1,17 @@
+........................................  jev
+{
+  "jev": {
+    "correct": "40/40",
+    "adversarial_correct": "6/6",
+    "invalid": 0,
+    "by_lang": {
+      "tr": "24/24",
+      "en": "12/12",
+      "ar": "4/4"
+    },
+    "median_ms": 293,
+    "wrong": []
+  }
+}
+evidence: /home/dxb/DxB Global OS/.planning/quick/20261013-jev-olcum/evidence-2026-10-13-jev.json
+EXIT=0
