@@ -71,6 +71,7 @@ export async function defaultWorkflowExecutor(work: AgentWork): Promise<AgentWor
   if (surface.allowedTools.length > 0) {
     toolOpts = buildSdkToolOptions(surface, await dxbInventoryNames());
   }
+  const craft = toolOpts !== null && (surface.plugins ?? []).length > 0; // B41: a granted plugin's skills
 
   // B51 P5b (C2-4): with the seat's standing prompt as the system prompt, the seat already knows who it
   // is; the one-line name stays only for a run without one (a test executor, no composition point).
@@ -91,6 +92,9 @@ export async function defaultWorkflowExecutor(work: AgentWork): Promise<AgentWor
           "'verification' and the exact tool name. Never claim evidence for a tool",
           "you did not call.",
         ]
+      : []),
+    ...(craft
+      ? ["", "You also hold craft skills (the Skill tool lists them). When the task needs one, open it with the Skill tool and follow it."]
       : []),
     "",
     `Objective: ${work.objective}`,
@@ -118,9 +122,13 @@ export async function defaultWorkflowExecutor(work: AgentWork): Promise<AgentWor
         ...(sdk.fallbackModel ? { fallbackModel: sdk.fallbackModel } : {}),
         ...(work.effort ? { effort: work.effort } : {}),
         ...(work.systemPrompt ? { systemPrompt: work.systemPrompt } : {}),
+        // B41: a seat granted a plugin gets Skill and a Read confined to that plugin's folder.
         tools: [],
         ...(toolOpts
           ? {
+              tools: toolOpts.tools,
+              plugins: toolOpts.plugins,
+              skills: toolOpts.skills,
               mcpServers: toolOpts.mcpServers,
               allowedTools: toolOpts.allowedTools,
               disallowedTools: toolOpts.disallowedTools,

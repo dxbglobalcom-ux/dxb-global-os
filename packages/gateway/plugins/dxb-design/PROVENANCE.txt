@@ -1,0 +1,13 @@
+dxb-design — the holding's design skills (B41 first slice, CEO 2026-10-13)
+source=https://github.com/emilkowalski/skills
+source_commit=2d228630ba1446365f614a108cb8252f1feda202
+license=MIT (LICENSE beside this file; copyright stays with the author)
+content=15 skills, copied unchanged from the commit above; markdown only, nothing executable
+vetted=full read of all 29 files at that commit on 2026-10-13 (the construction drawer copy,
+  ~/.local/share/dxb/skills/emil/INSTALL_PROVENANCE.txt): no fetch, secret or override instructions.
+  Notes: animate-expo runs `npx expo install`, prototype deletes its own prototype surface, improve-animations
+  `execute` writes in a git worktree, mobile-native serves on 0.0.0.0 — a seat holds no Bash or Write, so
+  these stay text it reads; the house rules govern any build that follows.
+reaches=only seats granted library item plugin/dxb-design (scripts/library/register-design-skills.mjs);
+  the seat lists the skills and opens one with the Skill tool when a job needs it; Read is confined to
+  this folder (packages/gateway/src/runtime-profile.ts).

@@ -2330,5 +2330,13 @@
     "conditions": "Two messages in conversation after the blind xhigh/max test (deneme-2026-10-13/). A yes to decision 10 as written on the page — its $1,000 threshold is his — not a LAW B acceptance of built work; nothing is built.",
     "session": "Opus 5.5 session 854807ea, in conversation, 2026-10-13.",
     "where": ".planning/quick/20261012-b64-is-akisi/is-akisi.html (decision 10)"
+  },
+  "b41-design-skills-first-slice-2026-10-13": {
+    "date": "2026-10-13",
+    "what": "B41 first slice: Emil Kowalski's 15 design skills reach the holding as one local plugin (dxb-design), granted through control_library_action to the design department, engineering-frontend-developer, media-creative-director and media-product-brand-consistency; listed for the granted seat and opened by the seat itself with the Skill tool when a job needs it, Read confined to the plugin folder, never loaded at opening; ungranted seats receive nothing.",
+    "verbatim": "5-tmm yani tasarım skilleri tasarım yapılınca kendileri çağıracak ajan tarafından değil mi? · tmm herşeyi hazırla bitir commitle · hayır sen devam et yaaaaa pc açık kalaacak · bu konuda /goal yapıorum. tmmdır.",
+    "conditions": "His yes to the slice plan given in conversation on 2026-10-13 (b0d7d072) and re-stated in session 854807ea. A go for the build — not a LAW B acceptance of the built work, which waits for his eye.",
+    "session": "Opus 5.5 session 854807ea, in conversation, 2026-10-13.",
+    "where": "packages/gateway/plugins/dxb-design · scripts/library/register-design-skills.mjs · packages/gateway/src/runtime-profile.ts"
   }
 }

@@ -364,10 +364,12 @@ export async function defaultExecutor(task: ClaimedTask): Promise<WorkerOutput> 
   // review reads text an outside server wrote, so the seat holds no hand a
   // poisoned description could try to use (CEO 2026-10-04).
   let toolOpts: SdkToolOptions | null = null;
+  let craft = false; // B41: the seat holds a granted plugin's skills
   if (employee && task.tools_allowed !== false) {
     const surface = resolveRuntimeProfile(employee);
     if (surface.allowedTools.length > 0) {
       toolOpts = buildSdkToolOptions(surface, await dxbInventoryNames());
+      craft = (surface.plugins ?? []).length > 0;
     }
   }
 
@@ -399,6 +401,9 @@ export async function defaultExecutor(task: ClaimedTask): Promise<WorkerOutput> 
           `Your own task row id is ${task.id} (department ${task.department}) —`,
           "reading it back (e.g. queue_get) is a valid minimal verification.",
         ]
+      : []),
+    ...(craft
+      ? ["", "You also hold craft skills (the Skill tool lists them). When the task needs one, open it with the Skill tool and follow it."]
       : []),
     "",
     `Objective: ${task.objective}`,
@@ -443,10 +448,14 @@ export async function defaultExecutor(task: ClaimedTask): Promise<WorkerOutput> 
         // R2.2: built-ins stay OFF (least privilege); the MCP surface is the
         // compiled gateway profile — allowed set mounted, everything else in
         // the inventory stripped from context, session pinned to these
-        // servers only. Tool-less tasks keep the old empty surface.
+        // servers only. Tool-less tasks keep the old empty surface. B41: a seat
+        // granted a plugin gets Skill and a Read confined to that plugin's folder.
         tools: [],
         ...(toolOpts
           ? {
+              tools: toolOpts.tools,
+              plugins: toolOpts.plugins,
+              skills: toolOpts.skills,
               mcpServers: toolOpts.mcpServers,
               allowedTools: toolOpts.allowedTools,
               disallowedTools: toolOpts.disallowedTools,

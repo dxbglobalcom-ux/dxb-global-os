@@ -536,6 +536,7 @@ COMMIT;`);
     run: () => {
       node("scripts/library/intake.mjs", ["--apply"]);
       node("scripts/library/register-arsenal.mjs", ["--apply"]);
+      node("scripts/library/register-design-skills.mjs", ["--apply"]);
       node("scripts/library/enrich.mjs", ["--apply"]);
     },
     measure: async () => `${await one("SELECT count(*) FROM library_items")} item(s) · ` +

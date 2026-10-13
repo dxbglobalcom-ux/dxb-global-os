@@ -9,7 +9,7 @@
 // file exists → else the employee's department profile. No profile file → an
 // EMPTY surface (default-deny, T-07-07) — the caller runs tool-less rather
 // than inheriting somebody else's grants.
-import { existsSync, readFileSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { dirname, isAbsolute, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -19,8 +19,18 @@ const PROFILES_DIR = join(
   "profiles",
 );
 
+// B41 (CEO 2026-10-13): the local plugins a seat may be granted, one folder each — today dxb-design,
+// the design seats' skills. A profile's `_skills` names a plugin by its folder; the seat lists the
+// plugin's skills and opens one with the Skill tool when a job needs it. Nothing here loads at opening.
+const PLUGINS_DIR = join(
+  dirname(fileURLToPath(import.meta.url)),
+  "..", // dist/ (or src/ under vitest alias)
+  "plugins",
+);
+
 interface ProfileFile {
   _tools?: Record<string, string[]>;
+  _skills?: string[];
   mcpServers?: Record<string, { command: string; args?: string[]; env?: Record<string, string> }>;
 }
 
@@ -33,6 +43,32 @@ export interface RuntimeToolSurface {
   allowedTools: string[];
   /** Bare "<server>.<tool>" pairs (evidence resolution, logging). */
   grantedPairs: string[];
+  /** B41: the granted local plugins — folder, absolute path, and its skills as `<plugin>:<skill>`. */
+  plugins?: GrantedPlugin[];
+}
+
+export interface GrantedPlugin {
+  name: string;
+  path: string;
+  skills: string[];
+}
+
+/** A granted `_skills` name that is a plugin folder under `pluginsDir`: a bare folder name with a
+ *  `.claude-plugin/plugin.json`. Anything else — a skill name, a path, a missing folder — is no plugin. */
+function grantedPlugin(name: string, pluginsDir: string): GrantedPlugin | null {
+  if (!/^[a-z0-9][a-z0-9-]*$/.test(name)) return null;
+  const path = join(pluginsDir, name);
+  if (!existsSync(join(path, ".claude-plugin", "plugin.json"))) return null;
+  let skills: string[] = [];
+  try {
+    skills = readdirSync(join(path, "skills"), { withFileTypes: true })
+      .filter((e) => e.isDirectory() && existsSync(join(path, "skills", e.name, "SKILL.md")))
+      .map((e) => `${name}:${e.name}`)
+      .sort();
+  } catch {
+    return null;
+  }
+  return skills.length > 0 ? { name, path, skills } : null;
 }
 
 /** SDK MCP tool naming: server dxb-mcp, tool queue_get → mcp__dxb-mcp__queue_get. */
@@ -55,6 +91,10 @@ export interface SdkToolOptions {
   allowedTools: string[];
   disallowedTools: string[];
   strictMcpConfig: true;
+  /** B41: the built-in tools the seat may use — empty unless a plugin is granted. */
+  tools: string[];
+  plugins: { type: "local"; path: string }[];
+  skills: string[];
 }
 
 /** R2.3 (moved from the orchestrator worker-shim so BOTH spawn paths share
@@ -67,11 +107,22 @@ export function buildSdkToolOptions(
   inventory: string[],
 ): SdkToolOptions {
   const allowed = new Set(surface.allowedTools);
+  const plugins = surface.plugins ?? [];
+  // B41: a granted plugin brings exactly two built-ins — Skill, to open one of its skills, and Read,
+  // allowed only inside the plugin's own folder (`//` = an absolute path in a permission rule), for
+  // the files a skill points to. Measured live 2026-10-13 in the company isolation: a Read there
+  // succeeded, /etc/hostname and the repository were refused. No plugin → the old empty surface.
+  const builtins = new Set<string>();
+  if (plugins.length > 0) builtins.add("Skill").add("Read");
+  for (const p of plugins) builtins.add(`Read(/${p.path}/**)`);
   return {
     mcpServers: surface.mcpServers,
-    allowedTools: [...allowed].sort(),
+    allowedTools: [...new Set([...allowed, ...[...builtins].filter((t) => t !== "Read")])].sort(),
     disallowedTools: inventory.filter((t) => !allowed.has(t)).sort(),
     strictMcpConfig: true,
+    tools: plugins.length > 0 ? ["Read", "Skill"] : [],
+    plugins: plugins.map((p) => ({ type: "local" as const, path: p.path })),
+    skills: plugins.flatMap((p) => p.skills),
   };
 }
 
@@ -80,12 +131,13 @@ export function buildSdkToolOptions(
 export function resolveRuntimeProfile(
   employee: { slug: string; department: string },
   profilesDir: string = PROFILES_DIR,
+  pluginsDir: string = PLUGINS_DIR,
 ): RuntimeToolSurface {
   const overlay = readProfile(join(profilesDir, `${employee.slug}.employee.mcp.json`));
   const dept = overlay ? null : readProfile(join(profilesDir, `${employee.department}.mcp.json`));
   const profile = overlay ?? dept;
   if (!profile) {
-    return { source: "none", mcpServers: {}, allowedTools: [], grantedPairs: [] };
+    return { source: "none", mcpServers: {}, allowedTools: [], grantedPairs: [], plugins: [] };
   }
 
   const mcpServers: RuntimeToolSurface["mcpServers"] = {};
@@ -108,10 +160,14 @@ export function resolveRuntimeProfile(
       grantedPairs.push(`${server}.${tool}`);
     }
   }
+  const plugins = [...new Set(profile._skills ?? [])]
+    .map((name) => grantedPlugin(name, pluginsDir))
+    .filter((p): p is GrantedPlugin => p !== null);
   return {
     source: overlay ? "employee" : "department",
     mcpServers,
     allowedTools: allowedTools.sort(),
     grantedPairs: grantedPairs.sort(),
+    plugins,
   };
 }

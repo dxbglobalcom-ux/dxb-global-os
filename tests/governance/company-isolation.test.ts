@@ -293,12 +293,16 @@ function isHelperModule(spec: string, rel: string): boolean {
  *  loads under 0.3.296 (measured 2026-10-10, evidence/live-probe-sdk-0.3.296-2026-10-10.txt): three plugins,
  *  all bundled in the CLI (`path: "builtin"`) — cc-plugin-agents-md, cc-plugin-telemetry,
  *  cc-plugin-plugin-authoring — 19 bundled skills, 5 built-in agents, mcp=0, hooks=0, ~555 input tokens
- *  (0.3.259: plugins=0, skills=17); a cold first call showed plugins=1 skills=18. A fourth plugin is a change. */
+ *  (0.3.259: plugins=0, skills=17); a cold first call showed plugins=1 skills=18. A fourth plugin is a change.
+ *  B41 (CEO 2026-10-13) made that change on purpose, measured live the same day: `plugins` and `skills`
+ *  are taken only from the compiled profile (OPTIONS_FROM_PROFILE) — a plugin folder under
+ *  packages/gateway/plugins/ that the seat's library grant names; it brings the Skill tool and a Read
+ *  confined to its own folder, and a seat without the grant receives neither. */
 const OPTIONS_ALLOWED = new Set(["model", "fallbackModel", "effort", "tools", "maxTurns", "outputFormat", "systemPrompt"]);
 /** The compiled gateway profile (R2.2): allowed only as `<profile>.<key>`, where the profile is written
  *  by `buildSdkToolOptions()` from @dxb/gateway and by nothing else — the company's own servers. Its
  *  `strictMcpConfig` is held to `true` below, because it lands after the helper's own. */
-const OPTIONS_FROM_PROFILE = new Set(["mcpServers", "allowedTools", "disallowedTools", "strictMcpConfig"]);
+const OPTIONS_FROM_PROFILE = new Set(["mcpServers", "allowedTools", "disallowedTools", "strictMcpConfig", "plugins", "skills"]);
 
 interface Site {
   where: string;
