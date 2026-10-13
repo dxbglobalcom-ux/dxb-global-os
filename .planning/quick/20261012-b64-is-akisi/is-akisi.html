@@ -58,6 +58,9 @@ a { color: var(--accent); }
 .decisions { background: var(--surface); border: 2px solid var(--accent); border-radius: 8px; padding: 18px 20px; display: grid; gap: 12px; }
 .decisions ol { gap: 9px; }
 .rec { font-family: var(--font-util); font-size: 11.5px; color: var(--ok); white-space: nowrap; }
+.chg { font-family: var(--font-util); font-size: 11px; color: var(--warn); white-space: nowrap; }
+.answered { color: var(--muted); }
+.answered .rec { color: var(--muted); }
 
 /* flow map */
 .flowmap { display: grid; gap: 10px; }
@@ -132,25 +135,28 @@ footer { font-size: 13.5px; color: var(--muted); border-top: 1px solid var(--lin
 
 <main>
   <header>
-    <div class="eyebrow">B64 · tasarım · 12 Ekim 2026 · sürüm 9 · gözünüzü bekliyor</div>
+    <div class="eyebrow">B64 · tasarım · 13 Ekim 2026 · sürüm 10 · gözünüzü bekliyor</div>
     <h1>Holdingde iş nasıl akar</h1>
-    <p class="core"><strong>Özü:</strong> İş size, e-postaya, bir müşteriye ya da takvime gelir. Sizin işinizi Hamza, dışarıdan geleni karşılama masası, o işi alan bölümün başkanına verir. Başkan işin sahibidir: planlar, her parçanın beynini ve eforunu menüden seçer, parçaları birleştirip kendisi dener. Kontrolün sayısı işin değerine göre seçilir. Size yalnız sonuç ya da kararınız gereken şey gelir, bir iki satırla.</p>
+    <p class="core"><strong>Özü:</strong> İş size, e-postaya, bir müşteriye ya da takvime gelir. Sizin işinizi Hamza, dışarıdan geleni karşılama masası, o işi alan bölümün başkanına verir. Başkan işin sahibidir: planlar, her parçanın beynini ve eforunu kendisi seçer, parçaları birleştirip kendisi dener. Kontrolün sayısı işin değerine göre seçilir; 1.000 $ ve üstü her teslim müşteriden önce size gelir. Bunun dışında size yalnız sonuç ya da kararınız gereken şey gelir, bir iki satırla.</p>
   </header>
 
   <section id="kararlar">
     <div class="decisions">
       <h2>Sizi bekleyen kararlar</h2>
-      <p class="note">Her biri tek kelimeyle cevaplanır; numarayla da cevaplayabilirsiniz. Üç tür işi ve Fable'ın yerini zaten verdiniz.</p>
+      <p class="note">Her biri tek kelimeyle cevaplanır; numarayla da cevaplayabilirsiniz. Üç tür işi, Fable'ın yerini ve 6. kararı zaten verdiniz. 13 Ekim notlarınızla değişenler işaretli; 10–12 yeni.</p>
       <ol>
         <li>Bu akış tasarımın temeli olur ve şartnamelere yazılır; ardından tek sayfalık plan size bir kez gelir. <span class="rec">önerim: evet</span></li>
-        <li>Her parçanın beynini ve eforunu işin sahibi menüden seçer; kod sınırları korur; sizin sözünüz her şeyin üstündedir. <span class="rec">önerim: evet</span></li>
-        <li>Hamza normal soruyu high'da cevaplar. Para ya da plan kokan konuşma strateji ayarına (xhigh) çıkar ve konu bitene kadar orada kalır. Bugün durum sorusu dışındaki her mesaj, sıradan sorular da, strateji ayarına yani max'a gidiyor. <span class="rec">önerim: evet</span></li>
-        <li>Tek seferlik müşteri işlerinde her yeni hizmet türünün ilk teslimi (ilk site, ilk kampanya) size gelir; sonrakiler kontrollerden geçip müşteriye gider. Bugünkü kural (B15) dört kutudan biri boşsa işi insana getiriyor; tek seferlik iş “her hafta tekrar” kutusunu hiç dolduramadığı için her site size gelirdi. Hatlar dört kutu ve sizin basamak kararınızla yürümeye devam eder. <span class="rec">önerim: evet</span></li>
+        <li><span class="chg">değişti</span> Her parçanın beynini ve eforunu işin sahibi kendi aklıyla seçer ve gerekçesini bir satırla yazar; arada kalırsa rehbere bakar (aşağıdaki tablo). Kod sınırları korur; sizin sözünüz her şeyin üstündedir. <span class="rec">önerim: evet</span></li>
+        <li><span class="chg">değişti</span> Hamza normal sohbette ve brifingde Opus 5.5 medium'dadır. Plan, mimari ya da strateji konuşulunca xhigh'a geçer ve söyler: “Plan konuşuyoruz, xhigh'a geçtim; isterseniz max.” “Max'a geç” ya da “high'a in” dediğinizde konu bitene kadar o seviyede kalır. Sesli konuşmada da aynısı olur; uzun düşünürken önce “Düşünüyorum, Muhittin Bey” der. Sesli normal konuşma Sonnet 5.5 medium'a geçer; önce bugünkü Opus low ile 20 cümlede yan yana ölçülür: ilk sesin gelme süresi ve Hamza'nın karakteri. Bugün durum sorusu dışındaki her mesaj max'a gidiyor; bu düzelir. <span class="rec">önerim: evet</span></li>
+        <li><span class="chg">değişti</span> Anlaşması 1.000 $ ve üstü olan her işin teslimi müşteriye gitmeden önce size gelir; notunuz olursa düzeltilir. Daha küçük tek seferlik işlerde her yeni hizmet türünün yalnız ilk teslimi size gelir; sonrakiler kontrollerden geçip gider. Bugünkü kural (B15) dört kutudan biri boşsa işi insana getiriyor. Tek seferlik iş “her hafta tekrar” kutusunu hiç dolduramadığı için her iş size gelirdi. Hatlar dört kutu ve sizin basamak kararınızla yürümeye devam eder. <span class="rec">önerim: evet</span></li>
         <li>Fiyat politikasını ve standart sözleşme metnini bir kez onaylarsınız; bunların içindeki teklif ve sözleşme size gelmez, dışındaki her şey gelir. Bugün her sözleşme size geliyor. <span class="rec">önerim: evet</span></li>
-        <li>Hamza sözünüzle beyni ve eforu değiştirir: kendisininkini, bir konuşma boyunca ya da toplu olarak. Önce, bugün giriş yapmadan çalıştırılabilen yönlendirme kapısı kapatılır. <span class="rec">önerim: evet</span></li>
-        <li>Karşılama Sonnet 5.5 ile başlar; Haiku 5.5 (high) ve Jev kendi örneklerimizde ölçülür, geçen devralır. Eylül'deki “Haiku geri dönmez” hükmü bununla değişir. Jev için hesap açmak sizin onayınızla. <span class="rec">önerim: evet</span></li>
-        <li>Kritik kapı “itiraz et” diye değil, “tarife göre doğrula” diye çalışır. Bugün iki koltuğu var: Sol 6.1 ve Astra 6, ikisi de high. Rutin müşteri mesajına Sol tek başına bakar; değerli teslimde, parada ve sözleşmede ikisi birden bakar. <span class="rec">önerim: evet</span></li>
+        <li class="answered">Hamza sözünüzle beyni ve eforu değiştirir: kendisininkini, bir konuşma boyunca ya da toplu olarak. Önce, bugün giriş yapmadan çalıştırılabilen yönlendirme kapısı kapatılır. <span class="rec">cevabınız: evet · 13 Ekim</span><!-- CEO-OK: b64-decision6-hamza-changes-brains-on-his-word-2026-10-13 --></li>
+        <li><span class="chg">değişti</span> Karşılama Sonnet 5.5 medium ile başlar. Sonnet ve Haiku hiçbir yerde low'da çalışmaz. Haiku 5.5 (high) ve Jev kendi örneklerimizde ölçülür; Türkçe mailler ve içine talimat gizlenmiş mailler de ölçüme girer. Hangisi geçerse işi o devralır. Jev'e Vercel hesabınızın AI Gateway'inden ulaşılır, ayrı hesap gerekmez; anahtarı siz açarsınız ve kasaya girer. Eylül'deki “Haiku geri dönmez” hükmü bununla değişir. <span class="rec">önerim: evet</span></li>
+        <li><span class="chg">değişti</span> Kritik kapı “itiraz et” diye değil, “tarife göre doğrula” diye çalışır. Müşteriye giden her şeye Sol 6.1 high bakar. Değerli teslimde, parada ve sözleşmede yanına Fable 5.1 high gelir. Astra 6 gelir arttıkça geri gelir. <span class="rec">önerim: evet</span></li>
         <li>Bir hattın tanımını sahibi, sizin çizdiğiniz sınırlar içinde değiştirebilir; bugün yalnız siz değiştirebiliyorsunuz. <span class="rec">önerim: evet</span></li>
+        <li id="karar10"><span class="chg">yeni</span> Değerli iş: anlaşma 1.000 $ ve üstüyse ya da siz “bu değerli bir iş” dediyseniz. Başkan planı iki kez yazar, biri xhigh, biri max. Plan hakemi Fable 5.1 high iyisini seçer, diğerinde olup bunda eksik olanı ekler, hiçbir şeyi değiştirmez. İşin bütçesi anlaşmanın en fazla %30'u (1.000 $'lık işte 300 $). Denememizde iki hakem de max planını seçti, ikisi de xhigh planından eklenecek şeyler buldu (aşağıda). <span class="rec">önerim: evet</span></li>
+        <li><span class="chg">yeni</span> Başkanlar ve yöneticiler her zaman Opus 5.5 high ya da üstünde düşünür: high, xhigh ya da max, kendileri seçer. Kod onları high'ın altına indirmez. <span class="rec">önerim: evet</span></li>
+        <li><span class="chg">yeni</span> Gelen mail dört yere ayrılır. İş, sahibine gider. Önemli mail, yani müşteriden, resmi bir yerden ya da gerçek bir kişiden gerçek bir konuda gelen mail, ekranınızdaki Önemli bölmesine ve Hamza'nın sabah satırına gider. Fatura, makbuz ve hesap bildirimi finansın arşivine gider. Spam, reklam ve boş mail Gmail'in çöp kutusuna gider; Gmail onu 30 günde kendisi siler, yanlış giden 30 gün içinde geri alınır. Emin olunamayan mail çöpe değil, Önemli'ye gider. <span class="rec">önerim: evet</span></li>
       </ol>
     </div>
   </section>
@@ -162,6 +168,7 @@ footer { font-size: 13.5px; color: var(--muted); border-top: 1px solid var(--lin
         <div class="lane"><span class="door">Siz: ses, sohbet, ekran</span><span class="arr" aria-hidden="true">→</span><span class="node"><b>Hamza</b><small>hedefinizi tarife çevirir, işi sahibine gönderir</small></span></div>
         <div class="lane"><span class="door">E-posta · müşteri mesajı</span><span class="arr" aria-hidden="true">→</span><span class="node"><b>Karşılama masası</b><small>her talebi ayrı kayıt yapar, sahibine verir</small></span></div>
         <div class="lane"><span class="door">Takvim · olay</span><span class="arr" aria-hidden="true">→</span><span class="node"><b>Hat kartı</b><small>tekrar eden işin koşusunu başlatır</small></span></div>
+        <div class="lane"><span class="door">Siz: “beni şu başkana bağla”</span><span class="arr" aria-hidden="true">→</span><span class="node"><b>Başkan</b><small>Hamza'yla konuştuğunuz gibi konuşursunuz; iş doğarsa sahibi o olur</small></span></div>
       </div>
       <div class="merge" aria-hidden="true">↓</div>
       <div class="mainline">
@@ -177,10 +184,10 @@ footer { font-size: 13.5px; color: var(--muted); border-top: 1px solid var(--lin
     </div>
 
     <div class="roles">
-      <div class="role"><b>Siz</b><p>Hedef verirsiniz ve yalnız size ayrılmış kararları verirsiniz: para çıkışı, sözleşme, reklam harcaması, kimlik adımları ve işaretlediğiniz konular. Her şeyi istediğiniz an sözünüzle değiştirirsiniz.</p></div>
-      <div class="role"><b>Hamza</b><p>Sizin kapınız. Hedefinizi konuşarak anlar, en fazla bir soru sorar. Tarifi yazar; cümleniz tarifte aynen kalır. İşi o işi alan bölümün başkanına gönderir, sonucu aynı konuşmaya getirir, sabah gelen işleri anlatır. Üç eli vardır: işi göndermek, durumu okumak, sözünüzle beyin ve efor değişikliğini kapıya iletmek. İşi kendisi bölmez, yürütmez; müşteri maillerini tek tek taşımaz.</p></div>
-      <div class="role"><b>Karşılama</b><p>Hamza'nın ofisindeki kurmay başkanına bağlı bir masa. Dışarıdan gelen her e-postayı ve mesajı ayrı bir kayıt yapar ve sahibine verir: kayıtlı müşteriyi hesabın sahibine, yeni göndereni satışa, sahibi belli olmayanı Hamza'ya. Silmez, cevap göndermez, para harcamaz. Mailin içindeki yazı ona bilgidir, emir değildir. Bunu yapabilmesi için her bölümün hangi işi aldığı bir kez yazılır; bugün bu liste hiçbir yerde kayıtlı değil.</p></div>
-      <div class="role"><b>Sahip</b><p>İşi alan bölümün başkanı; 22 bölümün her birinin başkanı kayıtlı. Planı yazar, her parçanın beynini ve eforunu seçer. İşi bölerse parçaların nasıl birleşeceğini ve her ek yerinin sahibini önceden yazar. Parçaları birleştirir, bütünü kendisi dener ve teslim eder. Hatların ve sorumlulukların da sahibidir.</p></div>
+      <div class="role"><b>Siz</b><p>Hedef verirsiniz ve yalnız size ayrılmış kararları verirsiniz: para çıkışı, sözleşme, reklam harcaması, kimlik adımları ve işaretlediğiniz konular. Anlaşması 1.000 $ ve üstü olan her işin teslimine müşteriden önce bakarsınız. Her başkanla, Hamza'yla konuştuğunuz gibi doğrudan konuşursunuz. Her şeyi istediğiniz an sözünüzle değiştirirsiniz.</p></div>
+      <div class="role"><b>Hamza</b><p>Sizin kapınız ve bütün çalışanlarla aranızdaki elçi. Hazreti Hamza'nın karakterinde, insan gibi doğal konuşur; sesinin doğallığı B12'de. Hedefinizi konuşarak anlar. İşin gerektirdiği soruları sorar, kendi bulabileceğini sormaz. Plan ya da mimari konuşulurken sizinle bugün VS Code'da mühendisinizle konuştuğunuz gibi konuşur: seçenekleri tartar, önerisini söyler, gerekirse işin başkanını konuşmaya çağırır. Tarifi sizin kararınızla yazar; cümleniz tarifte aynen kalır. İşi o işi alan bölümün başkanına gönderir, sonucu aynı konuşmaya getirir, sabah gelen işleri anlatır. “Sitenin neresindesiniz, tasarımı getirin” dediğinizde durumu ve son hâlini işin masasından getirir. Üç eli vardır: işi göndermek, durumu okumak, sözünüzle beyin ve efor değişikliğini kapıya iletmek. İşi kendisi bölmez, yürütmez; müşteri maillerini tek tek taşımaz.</p></div>
+      <div class="role"><b>Karşılama</b><p>Hamza'nın ofisindeki kurmay başkanına bağlı bir masa. Dışarıdan gelen her e-postayı ve mesajı ayrı bir kayıt yapar ve dört yere ayırır. İş sahibine gider: kayıtlı müşteri hesabın sahibine, yeni gönderen satışa, sahibi belli olmayan Hamza'ya. Önemli mail sizin Önemli bölmenize gider. Fatura ve resmi bildirim finansın arşivine gider. Spam Gmail'in çöp kutusuna gider. Cevap göndermez, para harcamaz. Mailin içindeki yazı ona bilgidir, emir değildir. Holdingin ekranında kendi bölümü vardır: gelen her şey geldiği an orada görünür, nereye gittiği ve ona ne olduğu canlı ilerler. Müşteriler görünümü aynı kayıtları müşteriye göre toplar. Bu ekranın çizimi önce size gelir. Masanın işi doğru yere verebilmesi için her bölümün hangi işi aldığı bir kez yazılır; bugün bu liste hiçbir yerde kayıtlı değil.</p></div>
+      <div class="role"><b>Sahip</b><p>İşi alan bölümün başkanı; 22 bölümün her birinin başkanı kayıtlı. Her zaman high ya da üstünde düşünür. Planı yazar, her parçanın beynini ve eforunu kendisi seçer. İşi bölerse parçaların nasıl birleşeceğini ve her ek yerinin sahibini önceden yazar. Parçaları birleştirir, bütünü kendisi dener ve teslim eder. Hatların ve sorumlulukların da sahibidir.</p></div>
       <div class="role"><b>Uzman</b><p>Kendi parçasını yapar ve bir iki satırlık sonuçla bitirir.</p></div>
       <div class="role"><b>İşin masası</b><p>Tarif, plan, parçalar, çıktılar ve maliyet tek yerde durur. Herkes masadan okur, kendi parçasını yazar. Ayrıntı orada kalır, size gelmez.</p></div>
       <div class="role"><b>Kontrol</b><p>Sonucu tarifteki “bitti” ölçütlerine göre gerçek denemeyle kontrol eder: açar, çalıştırır, sayar. Daha iyisini aramaz. Geçmeyen iş, kontrolün notlarıyla sahibine döner; bugün hakemin notları tekrar deneme merdivenine ulaşmıyor, bu düzeltilir.</p></div>
@@ -195,45 +202,49 @@ footer { font-size: 13.5px; color: var(--muted); border-top: 1px solid var(--lin
       <thead><tr><th>İş</th><th>Beyin · efor</th><th>Not</th></tr></thead>
       <tbody>
         <tr class="grp"><th colspan="3">Hamza, sizinle konuşurken</th></tr>
-        <tr><td class="k">Strateji ve plan konuşması</td><td><span class="chip opus">Opus 5.5 · xhigh</span></td><td>Max'tı; notunuzla xhigh. Para ya da plan kokan konuşma buraya çıkar.</td></tr>
-        <tr><td class="k">Normal soru-cevap</td><td><span class="chip opus">Opus 5.5 · high</span></td><td>Bugün kod bunu da strateji ayarına gönderiyor.</td></tr>
+        <tr><td class="k">Strateji, plan ve mimari konuşması, yazılı ve sesli</td><td><span class="chip opus">Opus 5.5 · xhigh</span></td><td>Varsayılan. “Max'a geç” ya da “high'a in” dediğinizde konu bitene kadar o seviyede kalır.</td></tr>
+        <tr><td class="k">Normal sohbet ve soru-cevap</td><td><span class="chip opus">Opus 5.5 · medium</span></td><td>Notunuz: Opus medium ya da Sonnet high. Opus medium, Anthropic'in Opus 5.5 için varsayılanı; okuduğunuz metin Opus'ta kalır.</td></tr>
         <tr><td class="k">Size brifing</td><td><span class="chip opus">Opus 5.5 · medium</span></td><td></td></tr>
-        <tr><td class="k">Sesli cevap (1–1,3 sn hedefi)</td><td><span class="chip opus">Opus 5.5 · low</span></td><td></td></tr>
-        <tr><td class="k">Sesli komutu anlamak</td><td><span class="chip">Sonnet 5.5 · low</span></td><td></td></tr>
+        <tr><td class="k">Sesli normal konuşma (1–1,3 sn hedefi)</td><td><span class="chip">Sonnet 5.5 · medium</span></td><td>Notunuz. Önce bugünkü Opus 5.5 low ile 20 cümlede yan yana ölçülür; hedefi ve Hamza'nın karakterini tutarsa geçer.</td></tr>
       </tbody>
       <tbody>
-        <tr class="grp"><th colspan="3">İş yapılırken: sahibin menüsü</th></tr>
-        <tr><td class="k">Ayıklama ve rutin iç iş: gelen postayı sınıflamak, etiket, iç özet</td><td><span class="chip">Sonnet 5.5 · low</span></td><td>Haiku 5.5 (high) ve Jev ölçülüyor; geçen devralır.</td></tr>
+        <tr class="grp"><th colspan="3">İş yapılırken: rehber. Sahip kendisi seçer, arada kalırsa buna bakar</th></tr>
+        <tr><td class="k">Ayıklama ve rutin iç iş: gelen postayı sınıflamak, etiket, iç özet</td><td><span class="chip">Sonnet 5.5 · medium</span></td><td>Haiku 5.5 (high) ve Jev ölçülüyor; geçen devralır. Sonnet ve Haiku low'da çalışmaz.</td></tr>
         <tr><td class="k">Standart iş: araştırma, analiz, taslak, sıradan kod</td><td><span class="chip opus">Opus 5.5 · medium</span></td><td>Anthropic'in Opus 5.5 için varsayılanı.</td></tr>
         <tr><td class="k">İyi iş: müşterinin, izleyicinin ya da sizin göreceğiniz son metin; iyi yapılması gereken kod</td><td><span class="chip opus">Opus 5.5 · high</span></td><td></td></tr>
-        <tr><td class="k">Derin düşünme: strateji, mimari ve her yeni planın yazılması</td><td><span class="chip opus">Opus 5.5 · xhigh</span></td><td>Notunuz: düşünmede xhigh. Bilinen iş türü kalıpla yürür, plan yeniden yazılmaz.</td></tr>
+        <tr><td class="k">Başkanın ve yöneticinin kendi işi: plan, karar, birleştirme, haftalık karne</td><td><span class="chip opus">Opus 5.5 · high, xhigh ya da max</span></td><td>Kendisi seçer; high'ın altına inmez.</td></tr>
+        <tr><td class="k">Derin düşünme: strateji, mimari, tasarım, her yeni planın yazılması</td><td><span class="chip opus">Opus 5.5 · xhigh ya da max</span></td><td>Bilinen iş türü kalıpla yürür, plan yeniden yazılmaz. max hiçbir yerde varsayılan değil.</td></tr>
+        <tr><td class="k">Değerli işin planı</td><td><span class="chip opus">Opus 5.5 · xhigh</span> <span class="chip opus">Opus 5.5 · max</span></td><td>Aynı plan iki kez; plan hakemi iyisini seçer, eksiğini öbüründen ekler. Denemede max kazandı, xhigh ekler verdi.</td></tr>
         <tr><td class="k">Uzun yapım: yarım saatten uzun, gözetimsiz büyük yapım</td><td><span class="chip opus">Opus 5.5 · xhigh</span></td><td></td></tr>
         <tr><td class="k">Opus'un kotası sıkışınca taşan iş</td><td><span class="chip fable">Fable 5.1 · parçanın eforu</span></td><td>Yedek kapasite. Kritik iş Opus'u bekler.</td></tr>
       </tbody>
       <tbody>
         <tr class="grp"><th colspan="3">Kontrol</th></tr>
         <tr><td class="k">Otomatik kontrol</td><td><span class="chip code">kod</span></td><td>Her parçada, saniyeler içinde.</td></tr>
-        <tr><td class="k">Hakem</td><td><span class="chip opus">Opus 5.5 · high</span></td><td>İç işin sonunda bir kez; değerli işte teslimden önce bütünü dener.</td></tr>
-        <tr><td class="k">İkinci göz</td><td><span class="chip fable">Fable 5.1 · xhigh</span></td><td>Yalnız değerli işin planı, yapımdan önce bir kez.</td></tr>
-        <tr><td class="k">Kritik kapı</td><td><span class="chip sol">Sol 6.1 · high</span> <span class="chip sol">Astra 6 · high</span></td><td>Müşteriye ulaşan her şey; para, sözleşme, hukuk. Rutin müşteri mesajına Sol tek başına bakar (karar 8). Kod yazmaz.</td></tr>
-        <tr><td class="k">max</td><td>—</td><td>Hiçbir varsayılanda yok; yalnız sizin sözünüzle.</td></tr>
+        <tr><td class="k">Son kontrol</td><td><span class="chip opus">Opus 5.5 · high</span></td><td>İç işin sonunda bir kez; değerli işte teslimden önce bütünü dener.</td></tr>
+        <tr><td class="k">Plan hakemi</td><td><span class="chip fable">Fable 5.1 · high</span></td><td>Yalnız değerli işte: iki planı karşılaştırır, iyisini seçer, eksik varsa ekler, değiştirmez.</td></tr>
+        <tr><td class="k">Kritik kapı</td><td><span class="chip sol">Sol 6.1 · high</span> <span class="chip fable">+ Fable 5.1 · high</span></td><td>Müşteriye ulaşan her şeye Sol bakar; değerli teslimde, parada ve sözleşmede Fable da bakar. Astra 6 gelir arttıkça geri gelir. Kod yazmaz.</td></tr>
+        <tr><td class="k">Sizin gözünüz</td><td>—</td><td>Anlaşması 1.000 $ ve üstü olan her teslim, müşteriden önce.</td></tr>
+        <tr><td class="k">max</td><td>—</td><td>Hiçbir varsayılanda yok. Sizin sözünüzle ya da başkanın düşünme işinde gerekçeli seçimiyle açılır.</td></tr>
       </tbody>
     </table></div>
 
     <div class="rule">
-      <p><b>Kim seçer:</b> işin sahibi. Başkan planı yazarken her parçaya menüden bir ayar koyar ve gerekçesini bir satırla yazar. Bilinen bir iş türünde ayarlar başkanın kayıtlı kalıbından gelir; plan yeniden yazılmaz.</p>
-      <p><b>İşin değeri üç basamaktır.</b> Basit: kayıtlı kalıp, plan yazılmaz. Normal: başkan planı xhigh'da yazar ve kalıp olarak kaydeder. Değerli: buna ek olarak Fable planı inceler, kod Opus high'da yazılır, teslimden önce kritik kapının iki koltuğu bakar. Değeri işi veren koyar: siz ya da sizin sözünüzden Hamza, anlaşmanın tutarından satış, kendi kartından hat.</p>
-      <p><b>Kod sınırları korur:</b> insanın göreceği son çıktı Opus'un altına inmez; max yalnız sizin sözünüzle açılır; hiçbir parça işin bütçesini aşamaz.</p>
-      <p><b>Ölçüm düzeltir:</b> her seçim gerekçesiyle kayda geçer ve menü kendi işlerimizden kurulan bir deneme setiyle düzeltilir. Model adları menüde değil katalogda durur; yeni model gelince menü kendiliğinden yenilenir.</p>
-      <p class="note">B51'de 10 Ekim'de Fable'a yazılan yönetim satırları (işi bölmek, strateji, mimari, son onay) kararınızla Opus'a geçer; Fable ikinci göz ve yedek kapasite olur.</p>
+      <p><b>Kim seçer:</b> işin sahibi, kendi aklıyla. Başkan planı yazarken her parçanın beynini ve eforunu kendisi seçer ve gerekçesini bir satırla yazar. Arada kalırsa yukarıdaki tabloya bakar; tablo onun rehberidir ve her başkana verilir. Bilinen bir iş türünde ayarlar başkanın kayıtlı kalıbından gelir, plan yeniden yazılmaz. Böylece aynı tür iş aynı ayarla yürür, maliyet öngörülür, kalite ölçülür.</p>
+      <p><b>İşin değeri üç basamaktır.</b> Basit: kayıtlı kalıp, plan yazılmaz. Normal: başkan planı xhigh'da yazar ve kalıp olarak kaydeder. Değerli: anlaşma 1.000 $ ve üstüyse ya da siz “bu değerli bir iş” dediyseniz. Başkan planı iki kez yazar, biri xhigh, biri max; plan hakemi Fable iyisini seçer ve öbüründeki eksiği ekler. Kod Opus high'da yazılır. Teslimden önce kritik kapıda Sol ile Fable bakar, sonra siz bakarsınız. İşin bütçesi anlaşmanın en fazla %30'u. Değeri işi veren koyar: siz ya da sizin sözünüzden Hamza, anlaşmanın tutarından satış, kendi kartından hat.</p>
+      <p><b>Kod sınırları korur:</b> insanın okuduğu son metin Opus'un altına inmez; sesli normal konuşma notunuzla Sonnet'tedir. Başkanlar ve yöneticiler high'ın altına inmez. Sonnet ve Haiku low'da çalışmaz. max hiçbir yerde varsayılan olmaz. Hiçbir parça işin bütçesini aşamaz.</p>
+      <p><b>Ölçüm düzeltir:</b> her seçim gerekçesiyle kayda geçer ve rehber kendi işlerimizden kurulan bir deneme setiyle düzeltilir. Model adları rehberde değil katalogda durur; yeni model gelince rehber kendiliğinden yenilenir.</p>
+      <p class="note">B51'de 10 Ekim'de Fable'a yazılan yönetim satırları (işi bölmek, strateji, mimari, son onay) Opus'a geçer. Fable üç yerde durur: yedek kapasite, değerli işin plan hakemi, kritik kapının ikinci koltuğu. Boşa yakılmaz.</p>
     </div>
 
     <div class="word">
       <h3>Sizin sözünüz her şeyin üstünde</h3>
       <dl>
-        <dt>“Bu konuşmada max.”</dt><dd>Hamza o konuşma boyunca max'ta düşünür; konuşma bitince kendi ayarına döner.</dd>
-        <dt>“Bu işi en yüksek seviyede yapın.”</dt><dd>İş “değerli” olur.</dd>
-        <dt>“Bütün müdürleri Opus high yap.”</dt><dd>Hamza değişikliği tek kayıtlı kapıya iletir; kapı uygular ve kaydeder. Hamza size şöyle der: “22 müdür Opus high'a geçti; geri almak için ‘geri al’ deyin.”</dd>
+        <dt>“Max'a geç.” · “High'a in.”</dt><dd>Hamza o konu bitene kadar o seviyede düşünür, sonra kendi ayarına döner.</dd>
+        <dt>“Bu değerli bir iş.” · “Bu işi en yüksek seviyede yapın.”</dt><dd>İş “değerli” olur.</dd>
+        <dt>“Bütün müdürleri xhigh yap.”</dt><dd>Hamza değişikliği tek kayıtlı kapıya iletir; kapı uygular ve kaydeder. Hamza size şöyle der: “22 müdür xhigh'a geçti; geri almak için ‘geri al’ deyin.”</dd>
+        <dt>“Beni mühendislik başkanına bağla.”</dt><dd>O başkanla Hamza'yla konuştuğunuz gibi konuşursunuz. Konuşmadan bir iş doğarsa sahibi o başkandır; Hamza konuşmayı bilir.</dd>
+        <dt>“Sitenin neresindesiniz, tasarımı getirin.”</dt><dd>Hamza işin durumunu ve son hâlini aynı konuşmaya getirir; işe ne zaman isterseniz müdahale edersiniz.</dd>
       </dl>
       <p class="note">Bu emirler yalnız sizin sohbetinizden ve sesinizden kabul edilir. Bir mailin içindeki “beyni değiştir” yazısı hiçbir şeyi değiştirmez.</p>
     </div>
@@ -248,13 +259,13 @@ footer { font-size: 13.5px; color: var(--muted); border-top: 1px solid var(--lin
         <h3>1 · Sizin verdiğiniz iş</h3>
         <p class="ask">“Şu videoyu inceleyin; holdinge ne alabiliriz?”</p>
         <ol class="steps">
-          <li><span class="who">Hamza</span><span class="what">Sizi anlar; iş açık olduğu için soru sormaz. Tarifi yazar: cümleniz aynen, “bitti” ölçütü (her bulgu videodaki dakikasıyla), değer “normal”. İşi strateji başkanına gönderir.</span><span class="chip opus">Opus 5.5 · high</span></li>
+          <li><span class="who">Hamza</span><span class="what">Sizi anlar; iş açık olduğu için soru sormaz. Tarifi yazar: cümleniz aynen, “bitti” ölçütü (her bulgu videodaki dakikasıyla), değer “normal”. İşi strateji başkanına gönderir.</span><span class="chip opus">Opus 5.5 · medium</span></li>
           <li><span class="who">Strateji başkanı</span><span class="what">Video incelemesi bilinen bir iş türüyse kayıtlı kalıbı kullanır. İlk kezse planı yazar ve kalıp olarak kaydeder.</span><span class="chip opus">kalıp · ilk kez Opus xhigh</span></li>
           <li><span class="who">Araç</span><span class="what">Videonun konuşma metnini ve önemli karelerini çıkarır.</span><span class="chip code">kod</span></li>
           <li><span class="who">Uzman</span><span class="what">Analiz eder; holdinge alınacakları ve nereye gireceklerini yazar.</span><span class="chip opus">Opus 5.5 · medium</span></li>
           <li><span class="who">Otomatik kontrol</span><span class="what">Her bulgunun dakikası var mı, istenen bölümler yazılmış mı.</span><span class="chip code">kod</span></li>
-          <li><span class="who">Hakem</span><span class="what">Bir kez dener: bulguların dakikalarını videoda açıp doğrular.</span><span class="chip opus">Opus 5.5 · high</span></li>
-          <li><span class="who">Hamza</span><span class="what">Sonucu aynı konuşmaya 3–5 satırla getirir; tam rapor işin masasında.</span><span class="chip opus">Opus 5.5 · high</span></li>
+          <li><span class="who">Son kontrol</span><span class="what">Bir kez dener: bulguların dakikalarını videoda açıp doğrular.</span><span class="chip opus">Opus 5.5 · high</span></li>
+          <li><span class="who">Hamza</span><span class="what">Sonucu aynı konuşmaya 3–5 satırla getirir; tam rapor işin masasında.</span><span class="chip opus">Opus 5.5 · medium</span></li>
         </ol>
         <p class="gets"><b>Size gelen:</b> yalnız sonuç, aynı sohbette.</p>
       </div>
@@ -263,38 +274,39 @@ footer { font-size: 13.5px; color: var(--muted); border-top: 1px solid var(--lin
         <h3>2 · Gmail'inize 30 müşteri e-postası</h3>
         <p class="ask">Fiyat soruyorlar, ayrıntı istiyorlar.</p>
         <ol class="steps">
-          <li><span class="who">Araç</span><span class="what">Birkaç dakikada bir yeni postaları çeker. Spam ve boş mailler “Temizlendi” etiketine gider; silinmez, 30 gün içinde geri alınır.</span><span class="chip code">kod</span></li>
-          <li><span class="who">Karşılama</span><span class="what">Gönderen kayıtlı müşteriyse talebi hesabın sahibine verir; bunu kod yapar. Değilse maili okur ve etiketler: yeni müşteri, mevcut müşteri, destek, fatura, diğer; iş alanı, dil, aciliyet. Aynı etiketler Gmail'inizde de görünür. Emin olmadığını Hamza'ya bırakır.</span><span class="chip">Sonnet 5.5 · low</span></li>
+          <li><span class="who">Araç</span><span class="what">Birkaç dakikada bir yeni postaları çeker.</span><span class="chip code">kod</span></li>
+          <li><span class="who">Karşılama</span><span class="what">Gönderen kayıtlı müşteriyse talebi hesabın sahibine verir; bunu kod yapar. Değilse maili okur ve dört yere ayırır: iş, önemli, kayıt (fatura, makbuz, hesap bildirimi), çöp. İşi etiketler: yeni müşteri, mevcut müşteri, destek; iş alanı, dil, aciliyet. Aynı etiketler Gmail'inizde de görünür. Spam ve boş mail Gmail'in çöp kutusuna gider, Gmail 30 günde siler. Emin olamadığını çöpe değil, Önemli bölmesine koyar.</span><span class="chip">Sonnet 5.5 · medium</span></li>
           <li><span class="who">Satış</span><span class="what">“Yeni müşteri talebi” bilinen bir iş türüdür: kalıp her talebi ayrı bir iş yapar, otuzu aynı anda yürür.</span><span class="chip code">kalıp</span></li>
           <li><span class="who">Satış uzmanı</span><span class="what">Talebi tartar: kim, ne istiyor, bizim işimiz mi, helal mi.</span><span class="chip opus">Opus 5.5 · medium</span></li>
           <li><span class="who">Satış uzmanı</span><span class="what">Cevabı müşterinin dilinde yazar. Fiyatı onaylı politikadan verir; politikada olmayan iş için soru sorar ve teklif hazırlar.</span><span class="chip opus">Opus 5.5 · high</span></li>
           <li><span class="who">Otomatik kontrol</span><span class="what">Fiyat politikanın içinde mi, cevap müşterinin dilinde mi, ek doğru mu.</span><span class="chip code">kod</span></li>
           <li><span class="who">Kritik kapı</span><span class="what">Müşteriye giden her şeye bakar (Eylül'deki kuralınız): cevap soruyu karşılıyor mu, politikanın dışında söz verilmiş mi. Rutin mesaj olduğu için Sol tek başına.</span><span class="chip sol">Sol 6.1 · high</span></li>
           <li><span class="who">Gönderim</span><span class="what">Cevap şirket adresinden gider; rutin dış iletişim size takılmaz.</span><span class="chip code">kod</span></li>
-          <li><span class="who">Hamza</span><span class="what">Sabah: “Muhittin Bey, 30 potansiyel müşteri maili geldi; 24'üne cevap gitti, 6 özel teklif hazırlanıyor, 2'si kararınızı bekliyor.”</span><span class="chip opus">Opus 5.5 · medium</span></li>
+          <li><span class="who">Hamza</span><span class="what">Sabah: “Muhittin Bey, 30 potansiyel müşteri maili geldi; 24'üne cevap gitti, 6 özel teklif hazırlanıyor, 2'si kararınızı bekliyor. Bir de 2 önemli mail var: biri vergi dairesinden, biri bir bankadan.”</span><span class="chip opus">Opus 5.5 · medium</span></li>
         </ol>
-        <p class="gets"><b>Size gelen:</b> sabah tek satır; fiyat politikası ve standart sözleşme dışında kalan her şey (karar 5). Holdingin içindeki Müşteriler ekranında her talep bir satırdır: kim yazdı, ne istiyor, kim ilgileniyor, cevaplandı mı. Bir tıkla Gmail'deki asıl maile inersiniz. Ekranın çizimi önce size gelir.</p>
+        <p class="gets"><b>Size gelen:</b> sabah tek satır; Önemli bölmesindeki mailler; fiyat politikası ve standart sözleşme dışında kalan her şey (karar 5). Holdingin ekranındaki Karşılama bölümünde gelen her şey canlı akar: kim yazdı, ne istiyor, kime gitti, ona ne oldu. Müşteriler görünümü aynı kayıtları müşteriye göre toplar. Bir tıkla Gmail'deki asıl maile inersiniz. Ekranın çizimi önce size gelir.</p>
       </div>
 
       <div class="flow">
         <h3>3 · Değerli bir web sitesi</h3>
         <p class="ask">Ünlü bir firma mail atıyor: 5.000–10.000 dolarlık lüks bir site istiyor.</p>
         <ol class="steps">
-          <li><span class="who">Karşılama</span><span class="what">Yeni müşteri, web işi: satışa verir.</span><span class="chip">Sonnet 5.5 · low</span></li>
+          <li><span class="who">Karşılama</span><span class="what">Yeni müşteri, web işi: satışa verir.</span><span class="chip">Sonnet 5.5 · medium</span></li>
           <li><span class="who">Satış</span><span class="what">Müşteriyle görüşür, ihtiyacı netleştirir, teklifi yazar. Standart dışı sözleşme size gelir.</span><span class="chip opus">Opus 5.5 · high</span></li>
-          <li><span class="who">Satış</span><span class="what">İmzayla iş açılır: değer “değerli”, sahip mühendislik başkanı. Tarif müşterinin cümleleriyle gelir; hesap müşteri başarısına geçer.</span><span class="chip code">kod</span></li>
-          <li><span class="who">Mühendislik başkanı</span><span class="what">Planı yazar: sayfalar, tasarım, metin, görseller, kod; kim neyi yapar; parçalar nasıl birleşir, her ek yerinin sahibi kim.</span><span class="chip opus">Opus 5.5 · xhigh</span></li>
-          <li><span class="who">İkinci göz</span><span class="what">Planı yapım başlamadan bir kez inceler.</span><span class="chip fable">Fable 5.1 · xhigh</span></li>
+          <li><span class="who">Satış</span><span class="what">İmzayla iş açılır: anlaşma 1.000 $'ın üstünde olduğu için değer “değerli”, sahip mühendislik başkanı. Tarif müşterinin cümleleriyle gelir; hesap müşteri başarısına geçer.</span><span class="chip code">kod</span></li>
+          <li><span class="who">Mühendislik başkanı</span><span class="what">Planı iki kez yazar, biri xhigh, biri max: sayfalar, tasarım, metin, görseller, kod; kim neyi yapar; parçalar nasıl birleşir, her ek yerinin sahibi kim.</span><span class="chip opus">Opus 5.5 · xhigh + max</span></li>
+          <li><span class="who">Plan hakemi</span><span class="what">İki planı karşılaştırır, iyisini seçer; diğerinde olup bunda eksik olanı ekler, hiçbir şeyi değiştirmez.</span><span class="chip fable">Fable 5.1 · high</span></li>
           <li><span class="who">Tasarım, metin, stüdyo</span><span class="what">Görsel tasarım, müşterinin dilinde site metni, görseller ve video; her biri ayrı elde.</span><span class="chip opus">Opus 5.5 · high · stüdyo</span></li>
           <li><span class="who">Ön yüz geliştiricisi</span><span class="what">Sitenin kodu tek elde: uzun, gözetimsiz yapım.</span><span class="chip opus">Opus 5.5 · xhigh</span></li>
           <li><span class="who">Yan geliştiriciler</span><span class="what">Ayrı dosyalarda yan parçalar: form, harita, rezervasyon.</span><span class="chip opus">Opus 5.5 · high</span></li>
           <li><span class="who">Otomatik kontrol</span><span class="what">Her parçada testler, bağlantılar, telefon görünümü, hız, sağdan sola yazılan diller.</span><span class="chip code">kod</span></li>
           <li><span class="who">Mühendislik başkanı</span><span class="what">Parçaları birleştirir, siteyi gerçek tarayıcıda kendisi dener.</span><span class="chip opus">Opus 5.5 · high</span></li>
-          <li><span class="who">Hakem</span><span class="what">Tarifteki her “bitti” ölçütünü sitede tıklayarak dener.</span><span class="chip opus">Opus 5.5 · high</span></li>
-          <li><span class="who">Kritik kapı</span><span class="what">Müşteriye teslimden önce; değerli iş olduğu için iki koltuk birden.</span><span class="chip sol">Sol 6.1 + Astra 6 · high</span></li>
+          <li><span class="who">Son kontrol</span><span class="what">Tarifteki her “bitti” ölçütünü sitede tıklayarak dener.</span><span class="chip opus">Opus 5.5 · high</span></li>
+          <li><span class="who">Kritik kapı</span><span class="what">Müşteriye teslimden önce; değerli iş olduğu için Sol'un yanında Fable da bakar.</span><span class="chip sol">Sol 6.1 + Fable 5.1 · high</span></li>
+          <li><span class="who">Siz</span><span class="what">Site müşteriye gitmeden önce bakarsınız. Notunuz olursa başkana döner ve düzeltilir. Kartta müşterinin teslim tarihi durur.</span><span class="chip">sizin gözünüz</span></li>
           <li><span class="who">Hesap sahibi</span><span class="what">Siteyi teslim eder; müşterinin düzeltmeleri aynı yoldan küçük bir iş olarak döner.</span><span class="chip opus">Opus 5.5 · high</span></li>
         </ol>
-        <p class="gets"><b>Size gelen:</b> standart dışı sözleşme. Holdingin ilk sitesi teslimden önce size gelir (karar 4); sonrakiler sabah özetinde “teslim edildi” diye.</p>
+        <p class="gets"><b>Size gelen:</b> standart dışı sözleşme ve teslimden önce sitenin kendisi (karar 4). İşin ortasında “sitenin neresindesiniz, tasarımı getirin” derseniz Hamza getirir. Siteler Vercel'de yayınlanır; Vercel hesabınız bugün ücretsiz Hobby planında ve bu plan ticari işe kapalı. İlk müşteri sitesi yayına çıkmadan Pro plan gerekir (aylık 20 $); bu para çıkışı olduğu için sizin onayınızla olur.</p>
         <p class="why"><b>Neden kod tek elde:</b> sıkı bağlı bir yapımı birçok ajana bölmek ölçümlerde 1,8–5,1 kat pahalı ve Opus 5.5'te kaliteyi anlamlı artırmıyor; kazanç, başkanın parçaları birleştirip kendisi denemesinden geliyor. Tasarım, metin ve görsel gerçekten ayrılabildiği için ayrı ellerde.</p>
       </div>
 
@@ -310,7 +322,7 @@ footer { font-size: 13.5px; color: var(--muted); border-top: 1px solid var(--lin
           <li><span class="who">Otomatik kontrol</span><span class="what">Süre, ses seviyesi, altyazı, marka kuralları.</span><span class="chip code">kod</span></li>
           <li><span class="who">Hakem</span><span class="what">Hat kendi başına çalışmayı hak edene kadar her videoda.</span><span class="chip opus">Opus 5.5 · high</span></li>
           <li><span class="who">Yayın</span><span class="what">Hat “bakılarak” basamağındaysa video önce size gelir. Basamağı siz yükseltince kendisi yayınlar.</span><span class="chip code">kod</span></li>
-          <li><span class="who">Sosyal medya başkanı</span><span class="what">Hattın sahibi. Haftalık karne: tıklanma ve izlenme süresi bir sonraki konuları besler.</span><span class="chip opus">Opus 5.5 · medium</span></li>
+          <li><span class="who">Sosyal medya başkanı</span><span class="what">Hattın sahibi. Haftalık karne: tıklanma ve izlenme süresini okur, bir sonraki konuları ve yeni fikirleri önerir.</span><span class="chip opus">Opus 5.5 · high</span></li>
         </ol>
         <p class="gets"><b>Size gelen:</b> başta her video; hattı siz yükseltince yalnız haftalık karne.</p>
       </div>
@@ -323,10 +335,10 @@ footer { font-size: 13.5px; color: var(--muted); border-top: 1px solid var(--lin
           <li><span class="who">Müşteri başarısı</span><span class="what">Sorumluluk açılır: “X'in hesabı”, hedefleri sözleşmeden, haftalık karnesiyle. Bir hesap sahibi atanır.</span><span class="chip code">kod</span></li>
           <li><span class="who">Reklam başkanı</span><span class="what">İş: lansman kampanyası. Planı yazar.</span><span class="chip opus">Opus 5.5 · xhigh</span></li>
           <li><span class="who">Uzmanlar</span><span class="what">Müşterinin dilinde reklam metni, stüdyoda görseller, hedefleme.</span><span class="chip opus">Opus 5.5 · high · stüdyo</span></li>
-          <li><span class="who">Kritik kapı</span><span class="what">Müşteriye giden her şeyde; rutin gönderide Sol tek başına, kampanya teslimi değerliyse iki koltuk.</span><span class="chip sol">Sol 6.1 · high</span></li>
+          <li><span class="who">Kritik kapı</span><span class="what">Müşteriye giden her şeyde; rutin gönderide Sol tek başına, kampanya teslimi değerliyse Sol ile Fable.</span><span class="chip sol">Sol 6.1 · high</span></li>
           <li><span class="who">Müşteri</span><span class="what">Medya planını ve işleri onaylar.</span><span class="chip code">müşteri</span></li>
           <li><span class="who">Hat</span><span class="what">Aylık paket, örneğin 12 gönderi ve 4 reklam. Her koşu küçük bir iştir ve aynı kontrollerden geçer.</span><span class="chip code">hat kartı</span></li>
-          <li><span class="who">Hesap sahibi</span><span class="what">Haftada bir müşterinin hedeflerine göre yeşil, sarı ya da kırmızı der; hattı ayarlar ya da yeni iş önerir.</span><span class="chip opus">Opus 5.5 · medium</span></li>
+          <li><span class="who">Hesap sahibi</span><span class="what">Haftada bir müşterinin hedeflerine göre yeşil, sarı ya da kırmızı der; hattı ayarlar ya da yeni iş önerir.</span><span class="chip opus">Opus 5.5 · high</span></li>
         </ol>
         <p class="gets"><b>Size gelen:</b> standart dışı sözleşme; reklam harcaması (bugünkü kurala göre); şirket karnesinde bu müşterinin satırı; kırmızıya dönerse istisna olarak.</p>
       </div>
@@ -336,8 +348,9 @@ footer { font-size: 13.5px; color: var(--muted); border-top: 1px solid var(--lin
         <p class="ask">Pazartesi 09.00: 40 hat koşusu, 60 müşteri talebi, 200 e-posta ve sizden 5 iş.</p>
         <ul>
           <li>Tek kuyruk vardır. Önce sizin işleriniz ve teslim tarihi yaklaşanlar, sonra müşteri teslimleri, sonra hatlar, sonra iç işler.</li>
-          <li>Pahalı beyin az kullanılır: 200 e-postayı Sonnet low ayırır; xhigh yalnız yeni bir planın yazılmasında ve uzun yapımda çalışır, bilinen iş türleri kalıpla yürür; her işe bir son kontrol bakar; kendi başına çalışan hatlarda yalnız otomatik kontrol vardır.</li>
-          <li>Opus'un kotası sıkışınca taşan iş Fable'a gider; kritik iş Opus'u bekler.</li>
+          <li>Pahalı beyin az kullanılır: 200 e-postayı Sonnet medium ayırır; xhigh ve max yalnız yeni bir planın yazılmasında, başkanların düşünme işinde ve uzun yapımda çalışır, bilinen iş türleri kalıpla yürür; her işe bir son kontrol bakar; kendi başına çalışan hatlarda yalnız otomatik kontrol vardır.</li>
+          <li>Opus'un kotası sıkışınca taşan iş Fable'a gider; kritik iş Opus'u bekler. Fable bunun dışında yalnız değerli işte ve parada, sözleşmede çalışır.</li>
+          <li>1.000 $ ve üstü teslimler sizin gözünüzü bekler. Her kartta müşterinin teslim tarihi durur; tarih yaklaşınca Hamza sabah hatırlatır. Bakamayacaksanız tek kelimeyle “gönderin” dersiniz.</li>
           <li>Bütçe holding, şirket, bölüm ve iş diye iner. Yüzde 70'te ve 90'da uyarı gelir; yüzde 100'de kritik olmayan yeni iş durur.</li>
           <li>Kayan işi makine yeniden planlar ve ona bağlı işlere haber verir. Her işte durdur ve iptal vardır.</li>
         </ul>
@@ -348,20 +361,37 @@ footer { font-size: 13.5px; color: var(--muted); border-top: 1px solid var(--lin
     </div>
   </section>
 
+  <section id="deneme">
+    <h2>Deneme: aynı işin xhigh ve max planı</h2>
+    <p>Notunuzdaki deneme yapıldı. İş: 1.500 $'lık bir diş kliniği sitesi; iki dil, kliniğe WhatsApp'tan ve e-postayla giden randevu formu, KVKK, sağlık reklamı kuralları, eski sitenin Google sıralaması. Mühendislik başkanı aynı tarifle iki plan yazdı. İki hakem planları A ve B diye okudu; hangisinin hangi seviyede yazıldığını bilmiyorlardı.</p>
+    <div class="frame"><table>
+      <thead><tr><th>Hakem</th><th>Seçtiği</th><th>Neden</th></tr></thead>
+      <tbody>
+        <tr><td class="k"><span class="chip fable">Fable 5.1 · high</span></td><td>max planı, belirgin farkla</td><td>Talep kliniğe müşterinin istediği gibi WhatsApp'tan kendiliğinden ulaşıyor; xhigh planında hasta göndermezse ulaşmıyordu. KVKK metninde verinin gittiği her yeri sayıyor. Her parçanın “geçti” ölçüsü yazılı.</td></tr>
+        <tr><td class="k"><span class="chip sol">Sol 6.1 · high</span></td><td>max planı, belirgin farkla</td><td>Aynı WhatsApp noktası. Kontroller daha somut. Google ve alan adı erişimlerini SEO kararlarından önce istiyor. Hukuk onayını yazılı istiyor.</td></tr>
+        <tr><td class="k">Süre ve uzunluk</td><td>xhigh 8 dakika · max 31 dakika</td><td>xhigh 4.586 kelime, max 5.619 kelime.</td></tr>
+      </tbody>
+    </table></div>
+    <p>İki hakem de xhigh planında kazanana eklenecek şeyler buldu: teslimden önce bir iki gün pay, eski sitenin parametreli adreslerinin de yönlendirilmesi, sıralamanın korunduğunun 21. günde kanıtlanamayacağını müşteriye baştan söylemek. Sol bir şey daha buldu, iki plan da kaçırmıştı: hasta yorumlarını sitede reklam gibi kullanmak sağlık tanıtım kurallarına takılabilir; hesap sahibi müşteriyi ilk gün uyarmalı.</p>
+    <p class="note">Tek iş, tek deneme: işaret verir, kural koymaz. Karar 10'u destekliyor: max'ın planı kazandı, xhigh'ın planı ona ekler verdi, hakem ikisini birleştirdi. İki plan ve iki hakemin tam yazısı depoda.</p>
+  </section>
+
   <section id="muhendis">
     <h2>Notlarınız, mühendis gözüyle</h2>
-    <p class="note">Fikirlerinizin çoğu senaryolarda tuttu ve yukarıdaki tasarımın içinde. Sekiz yerde bir senaryo fikri bozdu; bozulduğu yer ve daha iyi şekli:</p>
+    <p class="note">12 ve 13 Ekim notlarınızın çoğu senaryolarda tuttu ve yukarıdaki tasarımın içinde. Bir senaryonun fikri bozduğu yerler ve daha iyi şekli:</p>
     <div class="frame"><table>
       <thead><tr><th>Fikir</th><th>Nerede bozuluyor</th><th>Daha iyi şekli</th></tr></thead>
       <tbody>
         <tr><td class="k">Her müşteri talebi derin düşünülsün</td><td>30 mailde her cevap uzun düşünür ve müşteri bekler. Opus'ta görev başı maliyet xhigh'da medium'un yaklaşık 2,5 katı.</td><td>İlk cevap high'da ve hızlı. Derin düşünme (xhigh) gerçek bir projenin planında.</td></tr>
-        <tr><td class="k">En üstteki zekâ her parçanın beynini serbestçe seçsin</td><td>Serbest bırakılırsa aynı tür iş her seferinde başka bir beyinle yapılır; ne maliyet öngörülür ne kalite ölçülür.</td><td>Sahip kısa bir menüden seçer ve gerekçesini yazar; kod sınırları korur; kendi ölçümümüz menüyü düzeltir.</td></tr>
+        <tr><td class="k">Başkanlar beyni kendi aklıyla seçsin</td><td>Aynı tür iş her seferinde başka bir ayarla yapılırsa ne maliyet öngörülür ne kalite ölçülür.</td><td>Serbest seçim kalır. Bilinen iş türü kayıtlı kalıbıyla aynı ayarda yürür, her seçim gerekçesiyle kaydedilir, arada kalan başkan rehbere bakar.</td></tr>
+        <tr><td class="k">Hamza “hangi seviyeye geçeyim” diye sorsun</td><td>Her plan konuşması bir soruyla başlar; siz cevap verene kadar Hamza bekler.</td><td>Hamza geçer ve söyler: “xhigh'a geçtim; isterseniz max.” Tek kelimeyle değiştirirsiniz, hiçbir şey beklemez.</td></tr>
+        <tr><td class="k">Sesli konuşmada da strateji xhigh ya da max'ta</td><td>xhigh ve max uzun düşünür; sesli konuşmada bu, uzun bir sessizlik demektir.</td><td>Hamza önce “Düşünüyorum, Muhittin Bey” der, cevabı hazır olunca konuşur; uzun cevabı ekrana da koyar.</td></tr>
         <tr><td class="k">Gelen her talep Hamza'ya sunulsun</td><td>30 mailde Hamza tıkanır; sizinle konuşması müşteri trafiğiyle dolar.</td><td>Karşılama talebi sahibine verir. Hamza hepsini sabah özetinde görür, yalnız sahipsiz ve büyük talepleri alır.</td></tr>
         <tr><td class="k">Mail gelince iş direkt başlasın</td><td>Sahte bir müşteri ya da mailin içine gizlenmiş bir talimat iş başlatıp para harcatabilir.</td><td>Yalnız kayıtlı müşteri, anlaşılan kapsam ve bütçe içinde direkt başlar. Yeni gönderen satışa gider. Mailin yazısı emir değil, bilgidir.</td></tr>
-        <tr><td class="k">Spam ve boş mailler her zaman temizlensin</td><td>Yanlışlıkla spam sayılan gerçek bir müşteri maili kaybolur.</td><td>Silinmez; “Temizlendi” etiketine gider, 30 gün içinde geri alınır.</td></tr>
-        <tr><td class="k">Haiku high daha çok kullanılsın</td><td>10 Ekim'deki kendi ölçümümüzde Haiku 5.5, low ayarda 20 sınıflandırmanın 3'ünde bozuk cevap verdi ve Sonnet 5.5'ten hızlı değildi. High'da henüz ölçülmedi.</td><td>Karşılama Sonnet 5.5 ile başlar. Haiku 5.5 high kendi örneklerimizde geçerse devralır (karar 7).</td></tr>
-        <tr><td class="k">Değerli işin kodu Ultracode'da yazılsın</td><td>Ultracode, inşaatta kullandığımız Claude Code'un bir ayarı; holdingin çalışanlarının motorunda çalıştığı ölçülmedi.</td><td>“Değerli iş” ayarı aynı şeyi verir: plan xhigh, Fable ikinci göz, kod Opus high, uzun yapım xhigh, teslimden önce kritik kapının iki koltuğu.</td></tr>
-        <tr><td class="k">Ajanlar beyinleri nasıl kullanacaklarını Anthropic'in sitesinden öğrensin</td><td>Her işte sayfa okumak işi yavaşlatır ve her başkan farklı sonuca varır.</td><td>Rehberi biz bir kez yazarız: Anthropic'in belgeleri ve kendi ölçümümüz. Her başkana verilir, yeni model gelince yenilenir.</td></tr>
+        <tr><td class="k">Önemli olmayan her mail silinsin</td><td>Fatura, makbuz ve hesap bildirimleri de silinir, muhasebe kaydı kaybolur. Yanlışlıkla spam sayılan bir müşteri maili de geri gelmez.</td><td>Fatura ve resmi bildirim finansın arşivine gider. Yalnız spam, reklam ve boş mail Gmail'in çöpüne gider; Gmail 30 günde siler. Emin olunamayan mail Önemli'ye gider.</td></tr>
+        <tr><td class="k">1.000 $ üstü her teslime siz bakın</td><td>Siz yoldayken 40 teslim birikebilir ve müşteriler teslim tarihini kaçırır.</td><td>Her kartta teslim tarihi durur, tarih yaklaşınca Hamza hatırlatır. Bakamayacaksanız tek kelimeyle “gönderin” dersiniz.</td></tr>
+        <tr><td class="k">Haiku high daha çok kullanılsın</td><td>10 Ekim'deki kendi ölçümümüzde Haiku 5.5, low ayarda 20 sınıflandırmanın 3'ünde bozuk cevap verdi ve Sonnet 5.5'ten hızlı değildi. High'da henüz ölçülmedi.</td><td>Karşılama Sonnet 5.5 medium ile başlar. Haiku 5.5 high kendi örneklerimizde geçerse devralır (karar 7).</td></tr>
+        <tr><td class="k">Ajanlar beyinleri nasıl kullanacaklarını Anthropic'in sitesinden öğrensin</td><td>Her işte sayfa okumak işi yavaşlatır ve her başkan farklı sonuca varır.</td><td>Rehberi biz bir kez yazarız: Anthropic'in belgeleri ve kendi ölçümümüz. Her başkana verilir; başkan arada kalınca bakar; yeni model gelince yenilenir.</td></tr>
       </tbody>
     </table></div>
   </section>
@@ -381,10 +411,13 @@ footer { font-size: 13.5px; color: var(--muted); border-top: 1px solid var(--lin
         <tr><td>Opus 5.5 aynı büyük işi Fable 5.1'den hızlı (9,5 saate karşı 12) ve %51 ucuza bitirdi</td><td>Anthropic, Opus 5.5 sayfası</td><td>Eyl 2026</td></tr>
         <tr><td>Haiku 5.5 (low) 20 hafıza sınıflandırmasının 3'ünde bozuk cevap verdi, Sonnet 5.5 hiçbirinde; ikisi aynı hızdaydı</td><td>Kendi ölçümümüz</td><td>10 Eki 2026</td></tr>
         <tr><td>Yönetici ajan çok nadir de olsa sahte bir onay cümlesi uydurabilir; onay yalnız onay kaydından okunur</td><td>Opus 5.5 sistem kartı</td><td>22 Eyl 2026</td></tr>
-        <tr><td>Bugünkü sistem hakkındaki cümleler</td><td>Kendi kodumuz ve şirket veritabanı, yalnız okunarak; GPT-6.1 Sol kör denetimle kontrol etti, bulduğu yedi düzeltme işlendi</td><td>12 Eki 2026</td></tr>
+        <tr><td>Vercel'in ücretsiz Hobby planı ticari kullanıma kapalı (ücret alınarak yapılan ya da barındırılan site dahil); ticari iş Pro plan ister, aylık 20 $. Hesabınız bugün Hobby'de: proje yok, kart yok, AI kredisi 0 $</td><td>Vercel kullanım kuralları ve fiyat sayfası; hesabınız, yalnız bakılarak</td><td>13 Eki 2026</td></tr>
+        <tr><td>Jev (typesafe-ai/jev), Haiku 5.5, Sonnet 5.5, Opus 5.5 ve Laya, Vercel AI Gateway'de tek anahtarla erişilebilir; listede 458 model var</td><td>Vercel AI Gateway model listesi</td><td>13 Eki 2026</td></tr>
+        <tr><td>Sesli yolda ayrı bir “komutu anlama” adımı yok; Hamza doğrudan cevap veriyor. O adım 24 Temmuz'da kalktı; 9. sürümdeki satırı bu yüzden silindi. Sesli konuşmada bir başkanı seçince o başkan cevap veriyor; yazılı sohbette bu yok</td><td>Kendi kodumuz (<code>packages/voice/src/answer.ts</code>)</td><td>13 Eki 2026</td></tr>
+        <tr><td>Bugünkü sistem hakkındaki cümleler</td><td>Kendi kodumuz ve şirket veritabanı, yalnız okunarak; GPT-6.1 Sol 9. sürümü kör denetimle kontrol etti, bulduğu yedi düzeltme işlendi. 10. sürümde eklenen ölçümler kendi ölçümümüz</td><td>12–13 Eki 2026</td></tr>
       </tbody>
     </table></div>
   </section>
 
-  <footer>Sürüm 9. On iki notunuz ve 12 Ekim'deki kararlarınız üzerine kuruldu ve altı senaryoyla sınandı. Önceki sürümlerin araştırma bölümü ve 13 araştırma raporu depoda duruyor.</footer>
+  <footer>Sürüm 10. 12 Ekim'deki on iki notunuz, kararlarınız ve 13 Ekim'deki ikinci değerlendirmeniz üzerine kuruldu; altı senaryoyla sınandı. Önceki sürümlerin araştırma bölümü, 13 araştırma raporu ve denemenin iki planı depoda duruyor.</footer>
 </main>

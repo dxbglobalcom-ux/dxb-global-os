@@ -2,7 +2,7 @@
 gsd_state_version: 1.0
 milestone: v2.0
 status: executing
-last_updated: "2026-10-12"
+last_updated: "2026-10-13"
 session_author: opus-5
 ---
 
@@ -27,28 +27,31 @@ not here. What is accepted is read from `scripts/governance/ceo-approvals.json`,
 
 ## Where we left off
 
-2026-10-12 — B64's design waits for his eye as version 9 of his page
-(https://claude.ai/artifact/FvrKgh2Gr4Bus3rVdfKbAu; source `.planning/quick/20261012-b64-is-akisi/is-akisi.html`): how a job
-reaches its owner, who picks each piece's model and effort, the checks by the job's value, his word over every brain,
-six worked scenarios and where his twelve notes break. Sol checked it blind (`SOL-v9.md`); its three A and four B
-findings are fixed on the page. Also today: plan, design and architecture talk at xhigh in the construction
-(bc751d51, a2a23c07, d17467fd); the `decompose` routing row removed on the construction bench only (bd178290)
-<!-- CEO-OK: decompose-row-removed-orchestration-stays-2026-10-12 -->. B51 steps 1-3 are not accepted in their shape (his word).
+2026-10-13 — B64's design waits for his eye as version 10 of his page
+(https://claude.ai/artifact/FvrKgh2Gr4Bus3rVdfKbAu; source `.planning/quick/20261012-b64-is-akisi/is-akisi.html`): his second
+evaluation worked in — Hamza's levels, intake on Sonnet medium, Sol + Fable at the critical gate, his eye on every delivery
+of $1,000 and up, heads at high or above, mail in four places, direct talk with any head (added to B64's row file). His
+asked test ran blind: the same client job planned at xhigh and at max; Fable 5.1 and Sol 6.1 both chose the max plan and
+both took additions from the xhigh one (`deneme-2026-10-13/`). Decision 6 is his yes
+<!-- CEO-OK: b64-decision6-hamza-changes-brains-on-his-word-2026-10-13 -->. Emil Kowalski's 15 design skills sit in a
+drawer on this machine, never loaded at opening (0cbbf473).
 
 ## Next
 
-1. B64: his answers to the nine decisions on the page → the design into the owning specs as registered adaptations
-   (one Sol pass) → the one-page plan, once, at xhigh. The handover note carries a draft plan skeleton.
-2. The `decompose` removal reaches the company only after Sol's pass — the refuter's preflight is repaired first.
-3. B51 P8 waits on his two answers; Hamza's brain tool overlaps B64's decision 6.
+1. B64: his answers to decisions 1-5 and 7-12 on the page → the design into the owning specs as registered adaptations
+   (one Sol pass) → the one-page plan, once. The 2026-10-12 handover note carries a draft plan skeleton.
+2. Jev measurement (decision 7): the harness is prepared; it runs once he has loaded AI Gateway credit and dropped the key.
+3. The `decompose` removal reaches the company only after Sol's pass — the refuter's preflight is repaired first.
 
 ## Waiting on his approval
 
-- B64's nine decisions at the top of the page, each "önerim: evet"; five change a standing rule (B15 for one-off
-  client deliveries, the approval gate for standard contracts, September's "Haiku never returns", the critical gate's
-  posture and panel, CEO-only line definitions) and say so.
-- B51 steps 1-3 as built: not accepted in this shape (his word, 2026-10-12).
-- Security: `fn_update_routing` is EXECUTE-able by anon in the company — inside B64's decision 6, or a row of its own.
+- B64's decisions 1-5 and 7-12 on the page, each "önerim: evet"; several change a standing rule and say so.
+- B41's first slice — the design skills for the design, front-end and studio seats inside the holding: plan given in
+  the conversation of 2026-10-13, waits on his yes. The apple-design skill installed this morning loads at every opening:
+  move it into the drawer? — his word.
+- Vercel: his team is on Hobby (non-commercial); Pro ($20/month) before the first client site goes live — money out.
+  For Jev: AI Gateway credit and the key are his steps.
+- Security: `fn_update_routing` is EXECUTE-able by anon in the company — inside B64's decision 6, closed first.
 - Found, each needs his word for a row: the eight Agent SDK readers do not check `is_error`; the SQL model
   fallback ignores the lane and the tier floor; the HR org check counts only heads as roots; the routing seed is
   half the live table; research tasks cannot pass the knowledge shelf; with the hook off the gate is skipped;

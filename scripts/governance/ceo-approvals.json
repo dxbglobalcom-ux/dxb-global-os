@@ -2306,5 +2306,13 @@
     "conditions": "Asked during B51 step 2; the successor session had in fact opened dxb-team2 first because its handover note said so — he ordered it written into the door so it does not depend on one note. His explicit word to write it into the door; not a LAW B acceptance of any work.",
     "session": "Opus 5.5 session 28e910ee — heard first-hand, 2026-10-09.",
     "where": ".claude/skills/dxb-team2/SKILL.md §7"
+  },
+  "b64-decision6-hamza-changes-brains-on-his-word-2026-10-13": {
+    "date": "2026-10-13",
+    "what": "B64 decision 6: Hamza changes the brain and the effort on his word — his own, for one conversation, or in bulk — after the routing door that runs without login is closed first.",
+    "verbatim": "Ek: Bu konuyu 6. maddede cevaplamışsın galiba: \"Hamza sözünüzle beyni ve eforu değiştirir\" kısmı. Doğru anladıysam güzel, evet.",
+    "conditions": "Given in his second evaluation of the B64 design (~/Desktop/değerlendirme 2.txt, §1, the 'Ek' line), read in session b0d7d072. A yes to the decision as written on the page — not a LAW B acceptance of any built work; nothing is built.",
+    "session": "Opus 5.5 session b0d7d072 — read from his own file, 2026-10-13.",
+    "where": ".planning/quick/20261012-b64-is-akisi/is-akisi.html (decision 6)"
   }
 }
