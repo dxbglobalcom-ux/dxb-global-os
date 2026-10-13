@@ -1,0 +1,50 @@
+{
+  "_department": "media-studio",
+  "_employee": "media-product-brand-consistency",
+  "_generated_at": "2026-10-13T11:50:37.194Z",
+  "_generator": "packages/gateway/src/generate-profiles.ts",
+  "_skills": [
+    "dxb-design"
+  ],
+  "_source_hash": "754ed500138d928ac60b5bedd5f33af92275d2c51225cb85d4caa2fbef5755cc",
+  "_tools": {
+    "dxb-mcp": [
+      "approval_finalize_draft",
+      "approval_list_pending",
+      "approval_submit_draft",
+      "audit_append",
+      "audit_trace",
+      "cost_record",
+      "cost_summary",
+      "crm_get",
+      "dashboard_feed",
+      "media_cancel",
+      "media_probe",
+      "media_status",
+      "media_submit",
+      "media_wait",
+      "memory_commit",
+      "memory_recall",
+      "queue_claim",
+      "queue_create_task",
+      "queue_dispatch",
+      "queue_get",
+      "queue_list",
+      "queue_return",
+      "queue_sheet_times",
+      "queue_transition",
+      "registry_activate",
+      "registry_create_department",
+      "registry_get_agent",
+      "registry_list"
+    ]
+  },
+  "mcpServers": {
+    "dxb-mcp": {
+      "args": [
+        "packages/dxb-mcp/dist/index.js"
+      ],
+      "command": "node"
+    }
+  }
+}

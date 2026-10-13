@@ -1,10 +1,12 @@
 {
   "_department": "design",
   "_employee": "design-image-prompt-engineer",
-  "_generated_at": "2026-10-01T18:44:56.460Z",
+  "_generated_at": "2026-10-13T11:50:37.194Z",
   "_generator": "packages/gateway/src/generate-profiles.ts",
-  "_skills": [],
-  "_source_hash": "6c348f4cb28b4a72025ba94cdfbef1d9af5127e0a229fd3717d29a26006eee84",
+  "_skills": [
+    "dxb-design"
+  ],
+  "_source_hash": "754ed500138d928ac60b5bedd5f33af92275d2c51225cb85d4caa2fbef5755cc",
   "_tools": {
     "dxb-mcp": [
       "approval_finalize_draft",

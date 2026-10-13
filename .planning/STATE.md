@@ -34,16 +34,17 @@ form — Jev sorts the mail first, Sonnet medium takes what Jev doubts, Haiku ou
 Jev 69/70 at 0.3 s, Sonnet 70/70 at 2.4 s, Haiku 68/70 at 1.7 s; `.planning/quick/20261013-jev-olcum/`)
 <!-- CEO-OK: b64-decision7-jev-first-sonnet-on-doubt-2026-10-13 -->; decision 10 — valuable work ($1,000 and up) planned
 at xhigh and max, Fable judges — is his yes <!-- CEO-OK: b64-decision10-valuable-work-two-plans-fable-judge-2026-10-13 -->.
-B41's first slice (design skills for the design seats) started on his "tmm": a live probe proved a local plugin of
-Emil Kowalski's 15 skills loads inside the company isolation and a seat opens a skill itself; no code written yet
-(`.planning/quick/20261013-b41-tasarim-becerileri/PROBE-2026-10-13.md`). apple-design moved into the drawer.
+B41's first slice is built and live, waiting for his eye <!-- CEO-OK: b41-design-skills-first-slice-2026-10-13 -->:
+Emil Kowalski's 15 design skills are one plugin (`packages/gateway/plugins/dxb-design`), granted in the company to the
+design department, engineering-frontend-developer, media-creative-director and media-product-brand-consistency; such a
+seat lists them and opens one itself, reads only inside the plugin folder; every other seat gets nothing. Sol at xhigh
+found three A and three B, all fixed and re-proven live (`.planning/quick/20261013-b41-tasarim-becerileri/`).
+apple-design moved into the drawer.
 
 ## Next
 
-1. B41 first slice, build: plugin in the repo with its licence, library grant to the design seats, `_skills` read at
-   runtime, the task lane passes `plugins` + `tools: ["Skill"]` only to a granted seat, the isolation ruler widened
-   for exactly that; tests first, battery, Sol at xhigh. The probe file lists the measured facts and the open probe
-   (Read outside the plugin folder refused).
+1. B41: the first real design task in the company shows a seat opening a skill (the scheduler log's isolation line
+   reads plugins=4); further slices (more skills, other departments) only on his word.
 2. B64: his answers to decisions 1-5, 8, 9, 11 and 12 → the design into the owning specs as registered adaptations
    (one Sol pass) → the one-page plan, once.
 3. The `decompose` removal reaches the company only after Sol's pass — the refuter's preflight is repaired first.

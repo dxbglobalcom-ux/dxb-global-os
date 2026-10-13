@@ -1,0 +1,106 @@
+{
+  "_department": "engineering",
+  "_employee": "engineering-frontend-developer",
+  "_generated_at": "2026-10-13T11:50:37.194Z",
+  "_generator": "packages/gateway/src/generate-profiles.ts",
+  "_skills": [
+    "dxb-design"
+  ],
+  "_source_hash": "754ed500138d928ac60b5bedd5f33af92275d2c51225cb85d4caa2fbef5755cc",
+  "_tools": {
+    "context7": [
+      "query-docs",
+      "resolve-library-id"
+    ],
+    "dxb-mcp": [
+      "approval_finalize_draft",
+      "approval_list_pending",
+      "approval_submit_draft",
+      "audit_append",
+      "audit_trace",
+      "cost_record",
+      "cost_summary",
+      "crm_get",
+      "dashboard_feed",
+      "memory_commit",
+      "memory_recall",
+      "queue_claim",
+      "queue_create_task",
+      "queue_dispatch",
+      "queue_get",
+      "queue_list",
+      "queue_return",
+      "queue_sheet_times",
+      "queue_transition",
+      "registry_activate",
+      "registry_create_department",
+      "registry_get_agent",
+      "registry_list"
+    ],
+    "git": [
+      "git_branch",
+      "git_diff",
+      "git_diff_staged",
+      "git_diff_unstaged",
+      "git_log",
+      "git_show",
+      "git_status"
+    ],
+    "playwright": [
+      "browser_click",
+      "browser_close",
+      "browser_console_messages",
+      "browser_drag",
+      "browser_drop",
+      "browser_evaluate",
+      "browser_fill_form",
+      "browser_find",
+      "browser_handle_dialog",
+      "browser_hover",
+      "browser_navigate",
+      "browser_navigate_back",
+      "browser_network_request",
+      "browser_network_requests",
+      "browser_press_key",
+      "browser_resize",
+      "browser_select_option",
+      "browser_snapshot",
+      "browser_tabs",
+      "browser_take_screenshot",
+      "browser_type",
+      "browser_wait_for"
+    ]
+  },
+  "mcpServers": {
+    "context7": {
+      "args": [
+        "node_modules/@upstash/context7-mcp/dist/index.js"
+      ],
+      "command": "node"
+    },
+    "dxb-mcp": {
+      "args": [
+        "packages/dxb-mcp/dist/index.js"
+      ],
+      "command": "node"
+    },
+    "git": {
+      "args": [
+        "--with",
+        "mcp==1.12.0",
+        "mcp-server-git==2026.7.10",
+        "--repository",
+        "./"
+      ],
+      "command": "uvx"
+    },
+    "playwright": {
+      "args": [
+        "node_modules/@playwright/mcp/cli.js",
+        "--headless",
+        "--isolated"
+      ],
+      "command": "node"
+    }
+  }
+}
