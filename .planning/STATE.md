@@ -27,32 +27,32 @@ not here. What is accepted is read from `scripts/governance/ceo-approvals.json`,
 
 ## Where we left off
 
-2026-10-13 — B64's design waits for his eye as version 10 of his page
-(https://claude.ai/artifact/FvrKgh2Gr4Bus3rVdfKbAu; source `.planning/quick/20261012-b64-is-akisi/is-akisi.html`): his second
-evaluation worked in — Hamza's levels, intake on Sonnet medium, Sol + Fable at the critical gate, his eye on every delivery
-of $1,000 and up, heads at high or above, mail in four places, direct talk with any head (added to B64's row file). His
-asked test ran blind: the same client job planned at xhigh and at max; Fable 5.1 and Sol 6.1 both chose the max plan and
-both took additions from the xhigh one (`deneme-2026-10-13/`). Decision 6 is his yes
-<!-- CEO-OK: b64-decision6-hamza-changes-brains-on-his-word-2026-10-13 -->; decision 7 is his yes in a changed form — Jev
-sorts the mail first, Sonnet medium takes what Jev doubts <!-- CEO-OK: b64-decision7-jev-first-sonnet-on-doubt-2026-10-13 -->; decision 10
-(valuable work planned at xhigh and max, Fable judges) is his yes <!-- CEO-OK: b64-decision10-valuable-work-two-plans-fable-judge-2026-10-13 -->. Emil Kowalski's 15 design skills sit in a
-drawer on this machine, never loaded at opening (0cbbf473).
+2026-10-13 — B64's design waits for his eye as version 11 of his page
+(https://claude.ai/artifact/FvrKgh2Gr4Bus3rVdfKbAu; source `.planning/quick/20261012-b64-is-akisi/is-akisi.html`). Decision 6
+is his yes <!-- CEO-OK: b64-decision6-hamza-changes-brains-on-his-word-2026-10-13 -->; decision 7 is his yes in a changed
+form — Jev sorts the mail first, Sonnet medium takes what Jev doubts, Haiku out of intake (measured on 70 invented mails:
+Jev 69/70 at 0.3 s, Sonnet 70/70 at 2.4 s, Haiku 68/70 at 1.7 s; `.planning/quick/20261013-jev-olcum/`)
+<!-- CEO-OK: b64-decision7-jev-first-sonnet-on-doubt-2026-10-13 -->; decision 10 — valuable work ($1,000 and up) planned
+at xhigh and max, Fable judges — is his yes <!-- CEO-OK: b64-decision10-valuable-work-two-plans-fable-judge-2026-10-13 -->.
+B41's first slice (design skills for the design seats) started on his "tmm": a live probe proved a local plugin of
+Emil Kowalski's 15 skills loads inside the company isolation and a seat opens a skill itself; no code written yet
+(`.planning/quick/20261013-b41-tasarim-becerileri/PROBE-2026-10-13.md`). apple-design moved into the drawer.
 
 ## Next
 
-1. B64: his answers to decisions 1-5, 8, 9, 11 and 12 on the page → the design into the owning specs as registered adaptations
-   (one Sol pass) → the one-page plan, once. The 2026-10-12 handover note carries a draft plan skeleton.
-2. Decision 7's intake trial is measured: Jev 69/70 at 0.3 s, Sonnet medium 70/70 at 2.4 s, Haiku high 68/70 at 1.7 s —
-   his choice of the intake model now has its numbers (`.planning/quick/20261013-jev-olcum/`).
+1. B41 first slice, build: plugin in the repo with its licence, library grant to the design seats, `_skills` read at
+   runtime, the task lane passes `plugins` + `tools: ["Skill"]` only to a granted seat, the isolation ruler widened
+   for exactly that; tests first, battery, Sol at xhigh. The probe file lists the measured facts and the open probe
+   (Read outside the plugin folder refused).
+2. B64: his answers to decisions 1-5, 8, 9, 11 and 12 → the design into the owning specs as registered adaptations
+   (one Sol pass) → the one-page plan, once.
 3. The `decompose` removal reaches the company only after Sol's pass — the refuter's preflight is repaired first.
 
 ## Waiting on his approval
 
 - B64's decisions 1-5, 8, 9, 11 and 12 on the page, each "önerim: evet"; several change a standing rule and say so.
-- B41's first slice — the design skills for the design, front-end and studio seats inside the holding: plan given in
-  the conversation of 2026-10-13, waits on his yes. The apple-design skill installed this morning loads at every opening:
-  move it into the drawer? — his word.
-- Vercel: his team is on Hobby (non-commercial); Pro ($20/month) before the first client site goes live — money out.
+- Vercel: AI Gateway runs on Hobby (his card on file, $10 credit, $4 budget on team and key). Pro ($20/month) only if
+  client sites are hosted on Vercel; hosting them on the Hetzner server needs none — his word at the first client site.
 - Security: `fn_update_routing` is EXECUTE-able by anon in the company — inside B64's decision 6, closed first.
 - Found, each needs his word for a row: the eight Agent SDK readers do not check `is_error`; the SQL model
   fallback ignores the lane and the tier floor; the HR org check counts only heads as roots; the routing seed is
