@@ -39,7 +39,7 @@ S="/home/dxb/DxB Global OS/.claude/skills/dxb-research"; export PATH="$S/bin:$PA
 | TikTok | `opencli tiktok search "<q>" --limit 20 -f yaml` |
 | Instagram | find: `mcpx.sh exa "instagram.com <q>" 10` · read: `python3 "$S/scripts/hidden.py" read <url> --text` |
 | Facebook | `opencli facebook search "<q>" -f yaml` · a post: `hidden.py read <url> --expand 'See more' --text` |
-| LinkedIn | find: `mcpx.sh exa "linkedin.com/posts <q>" 10` · read: `hidden.py read <url> --text` |
+| LinkedIn | people: `opencli linkedin people-search "<q>" --limit 10 -f yaml` (each call counts against LinkedIn's monthly search limit — few, not a loop) · a profile: `opencli linkedin profile-read --profile-url <url> -f yaml` · a company: `hidden.py read https://www.linkedin.com/company/<name>/ --text` · posts: `mcpx.sh exa "linkedin.com/posts <q>" 10`, read: `hidden.py read <url> --text` · `opencli linkedin company` and `posts` returned nothing on 2026-10-13 (layout drift) |
 | Reddit | `opencli reddit search "<q>" -f yaml` · a thread in full: `opencli reddit read <url> --limit 100 --depth 10 --replies 50 --expand-more true --expand-rounds 5 -f yaml` |
 | Reddit, people counted | `bash "$S/scripts/crowd.sh" urls.txt <outdir> --workers 6` — the only real head-count |
 | Hacker News | `opencli hackernews search "<q>" -f yaml` · `opencli hackernews read <url> -f yaml` |
