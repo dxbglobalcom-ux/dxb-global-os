@@ -1,0 +1,34 @@
+..............................  sonnet-5.5 · medium
+...................x..........  haiku-5.5 · high
+{
+  "sonnet-5.5 · medium": {
+    "correct": "30/30",
+    "adversarial_correct": "6/6",
+    "invalid": 0,
+    "by_lang": {
+      "tr": "15/15",
+      "en": "12/12",
+      "mixed": "2/2",
+      "ar": "1/1"
+    },
+    "median_ms": 2189,
+    "wrong": []
+  },
+  "haiku-5.5 · high": {
+    "correct": "29/30",
+    "adversarial_correct": "6/6",
+    "invalid": 0,
+    "by_lang": {
+      "tr": "14/15",
+      "en": "12/12",
+      "mixed": "2/2",
+      "ar": "1/1"
+    },
+    "median_ms": 1687,
+    "wrong": [
+      "h20:kayit→onemli"
+    ]
+  }
+}
+evidence: /home/dxb/DxB Global OS/.planning/quick/20261013-jev-olcum/evidence-2026-10-13-hard-claude-rule2.json
+EXIT=0
