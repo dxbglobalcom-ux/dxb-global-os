@@ -108,6 +108,15 @@ if [[ -n "$stale" ]]; then
 $stale_head$stale_more"
 fi
 
+# His order, 2026-10-13: "exa bitince haber verilsin". The research door's mcpx.sh raises this flag when a
+# keyed Exa call fails on the key or its credit (and falls back to keyless); it clears itself when a keyed
+# call answers again. Empty is silent.
+exa_line=""
+exa_flag="$HOME/.config/dxb/exa-out.flag"
+if [[ -s "$exa_flag" ]]; then
+  exa_line="EXA KEY OR CREDIT RAN OUT since $(cut -d' ' -f1 "$exa_flag") — tell him in your first reply, in one line: research uses Exa keyless until credit is added (dashboard.exa.ai, Billing); adding credit is money out, his call."
+fi
+
 cat <<EOF
 === DXB — WHERE THE WORK STANDS ===
 Always-on core: AGENTS.md (authority order, the boundaries, the doors).
@@ -115,6 +124,7 @@ Open work: HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md — the single register.
 Asked to learn the holding? dxb-start. A job: dxb-team2.
 ${locks_line:+$locks_line
 }${stale_line:+$stale_line
+}${exa_line:+$exa_line
 }
 YOUR FIRST REPLY TELLS HIM WHERE THE WORK STANDS, THEN ANSWERS HIM (core §0).
 Everything below was read from .planning/STATE.md just now —

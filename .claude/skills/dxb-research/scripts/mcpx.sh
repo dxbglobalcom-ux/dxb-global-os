@@ -55,10 +55,11 @@ case "$DOOR" in
   *) echo "unknown door: $DOOR" >&2; exit 2 ;;
 esac
 
+call() {
 curl -sS -m 60 -X POST "$URL" \
   -H 'Content-Type: application/json' \
   -H 'Accept: application/json, text/event-stream' \
-  "${HDR[@]}" -d "$BODY" \
+  "$@" -d "$BODY" \
 | python3 -c '
 import sys, json
 raw = sys.stdin.read()
@@ -92,3 +93,29 @@ for line in raw.splitlines():
 out = "\n".join(chunks).strip()
 print(out if out else "(empty)")
 '
+}
+
+# THE KEY RUNS OUT (his order 2026-10-13: "exa bitince haber verilsin"). A keyed Exa call that fails
+# on the key or its credit raises a flag the session opening reads (.claude/hooks/spec-bootstrap.sh)
+# and puts one desktop notice on his screen, once; the search itself falls back to the keyless call,
+# so research does not stop. The flag clears itself on the next keyed call that answers. Exa's exact
+# out-of-credit text was not observable on 2026-10-13 (the account had credit), so the match is broad:
+# 401/402/403 or the words credit, balance, insufficient, payment, billing, invalid api key. A rate
+# limit or a timeout is not the key running out and raises nothing.
+EXA_FLAG="${DXB_EXA_FLAG:-$HOME/.config/dxb/exa-out.flag}"
+if [ "$DOOR" = exa ] && [ ${#HDR[@]} -gt 0 ]; then
+  OUT=$(call "${HDR[@]}"); RC=$?
+  if [ $RC -eq 0 ]; then
+    rm -f "$EXA_FLAG"; printf '%s\n' "$OUT"; exit 0
+  fi
+  if printf '%s' "$OUT" | grep -qiE '\b(401|402|403)\b|credit|balance|insufficient|payment|billing|invalid api key'; then
+    if [ ! -e "$EXA_FLAG" ]; then
+      mkdir -p "$(dirname "$EXA_FLAG")"
+      printf '%s %s\n' "$(date -Is)" "$(printf '%s' "$OUT" | head -c 300 | tr '\n' ' ')" > "$EXA_FLAG"
+      notify-send -u critical "Exa kredisi bitti" "Araştırma Exa'yı anahtarsız kullanıyor. Kredi eklemek: dashboard.exa.ai" 2>/dev/null || true
+    fi
+  fi
+  call
+  exit $?
+fi
+call "${HDR[@]}"
