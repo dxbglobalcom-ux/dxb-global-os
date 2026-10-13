@@ -40,7 +40,8 @@ drawer on this machine, never loaded at opening (0cbbf473).
 
 1. B64: his answers to decisions 1-5 and 7-12 on the page → the design into the owning specs as registered adaptations
    (one Sol pass) → the one-page plan, once. The 2026-10-12 handover note carries a draft plan skeleton.
-2. Jev measurement (decision 7): the harness is prepared; it runs once he has loaded AI Gateway credit and dropped the key.
+2. Decision 7's intake trial is measured: Jev 69/70 at 0.3 s, Sonnet medium 70/70 at 2.4 s, Haiku high 68/70 at 1.7 s —
+   his choice of the intake model now has its numbers (`.planning/quick/20261013-jev-olcum/`).
 3. The `decompose` removal reaches the company only after Sol's pass — the refuter's preflight is repaired first.
 
 ## Waiting on his approval
@@ -50,7 +51,6 @@ drawer on this machine, never loaded at opening (0cbbf473).
   the conversation of 2026-10-13, waits on his yes. The apple-design skill installed this morning loads at every opening:
   move it into the drawer? — his word.
 - Vercel: his team is on Hobby (non-commercial); Pro ($20/month) before the first client site goes live — money out.
-  For Jev: AI Gateway credit and the key are his steps.
 - Security: `fn_update_routing` is EXECUTE-able by anon in the company — inside B64's decision 6, closed first.
 - Found, each needs his word for a row: the eight Agent SDK readers do not check `is_error`; the SQL model
   fallback ignores the lane and the tier floor; the HR org check counts only heads as roots; the routing seed is
