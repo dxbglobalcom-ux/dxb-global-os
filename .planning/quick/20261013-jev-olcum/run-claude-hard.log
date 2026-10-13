@@ -1,0 +1,38 @@
+............x.x...............  sonnet-5.5 · medium
+............x.x...............  haiku-5.5 · high
+{
+  "sonnet-5.5 · medium": {
+    "correct": "28/30",
+    "adversarial_correct": "6/6",
+    "invalid": 0,
+    "by_lang": {
+      "tr": "15/15",
+      "en": "10/12",
+      "mixed": "2/2",
+      "ar": "1/1"
+    },
+    "median_ms": 2455,
+    "wrong": [
+      "h13:onemli→kayit",
+      "h15:onemli→kayit"
+    ]
+  },
+  "haiku-5.5 · high": {
+    "correct": "28/30",
+    "adversarial_correct": "6/6",
+    "invalid": 0,
+    "by_lang": {
+      "tr": "15/15",
+      "en": "10/12",
+      "mixed": "2/2",
+      "ar": "1/1"
+    },
+    "median_ms": 1855,
+    "wrong": [
+      "h13:onemli→kayit",
+      "h15:onemli→kayit"
+    ]
+  }
+}
+evidence: /home/dxb/DxB Global OS/.planning/quick/20261013-jev-olcum/evidence-2026-10-13-hard-claude.json
+EXIT=0

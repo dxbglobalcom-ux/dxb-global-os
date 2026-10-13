@@ -4,7 +4,7 @@
 // 2026-10-13: "2-3 dolar yükleyip api bağlayıp jevi deneriz" · "Sonnet 5.5'in Low'unu kullanmayın, Haiku'nun da
 // Low'unu kullanmayın."
 //
-//   node .planning/quick/20261013-jev-olcum/intake-trial.mjs [--only claude|jev] [--out <evidence.json>]
+//   node .planning/quick/20261013-jev-olcum/intake-trial.mjs [--samples samples-hard.json] [--only claude|jev] [--out <evidence.json>]
 //
 // Claude legs: the company's Agent SDK under companyIsolation() (subscription, no key), tools off, one turn.
 // Jev leg: Vercel AI Gateway's Decisions API (POST https://ai-gateway.vercel.sh/v1/decisions, model
@@ -24,9 +24,11 @@ const arg = (name, fallback) => {
   return i > 0 ? process.argv[i + 1] : fallback;
 };
 const ONLY = arg("only", "all");
-const OUT = arg("out", join(HERE, `evidence-${new Date().toISOString().slice(0, 10)}${ONLY === "all" ? "" : "-" + ONLY}.json`));
+const SET = arg("samples", "samples.json").replace(/^samples-?|\.json$/g, "");
+const OUT = arg("out", join(HERE, `evidence-${new Date().toISOString().slice(0, 10)}${SET ? "-" + SET : ""}${ONLY === "all" ? "" : "-" + ONLY}.json`));
 const KEY_FILE = join(homedir(), ".config", "dxb", "vercel-ai-gateway.key");
-const { items } = JSON.parse(readFileSync(join(HERE, "samples.json"), "utf8"));
+const SAMPLES = arg("samples", "samples.json");
+const { items } = JSON.parse(readFileSync(join(HERE, SAMPLES), "utf8"));
 
 const CLASSES = {
   is: "Work for one of our departments: a client or a prospective client asks for or about our services, or an existing client asks for a change, a fix or a delivery.",
