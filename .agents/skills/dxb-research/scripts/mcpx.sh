@@ -91,6 +91,28 @@ for line in raw.splitlines():
     if res.get("structuredContent"):
         chunks.append(json.dumps(res["structuredContent"], ensure_ascii=False))
 out = "\n".join(chunks).strip()
+# THE QUOTA NOTICE DRESSED AS AN ANSWER. A door whose free allowance is spent can answer a normal,
+# non-error result whose only content is the notice: Tavily sent {"code":"monthly_cap_reached_bonus_eligible",
+# ...} and keyless Exa sent "You have hit the Exa free MCP rate limit" (reworded: this block sits inside
+# single quotes, so it may carry no apostrophe) — both exit 0 here, so the sweep
+# counted a spent door as a working one. Measured 2026-10-13; fixed on his word ("yes correct it").
+# A JSON body whose "code" names a cap, limit or quota, or a SHORT body that is only such a sentence,
+# is an error; a real result that mentions rate limits is long and passes.
+import re
+notice = None
+for ch in chunks:          # the notice can come twice: as text and again as structuredContent
+    try:
+        j = json.loads(ch)
+    except Exception:
+        continue
+    if isinstance(j, dict) and re.search(r"cap|limit|quota|exceeded|payment", str(j.get("code", "")), re.I):
+        notice = str(j.get("message") or j.get("code"))
+        break
+if notice is None and len(out) < 600 and re.search(
+        r"rate limit|reached the .{0,20}limit|quota|limit reached|create (your own|an) .{0,10}api key", out, re.I):
+    notice = out
+if notice:
+    print("MCP ERROR (quota):", notice.strip()[:400]); sys.exit(1)
 print(out if out else "(empty)")
 '
 }
