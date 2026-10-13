@@ -34,12 +34,13 @@ of $1,000 and up, heads at high or above, mail in four places, direct talk with 
 asked test ran blind: the same client job planned at xhigh and at max; Fable 5.1 and Sol 6.1 both chose the max plan and
 both took additions from the xhigh one (`deneme-2026-10-13/`). Decision 6 is his yes
 <!-- CEO-OK: b64-decision6-hamza-changes-brains-on-his-word-2026-10-13 -->; decision 7 is his yes in a changed form — Jev
-sorts the mail first, Sonnet medium takes what Jev doubts <!-- CEO-OK: b64-decision7-jev-first-sonnet-on-doubt-2026-10-13 -->. Emil Kowalski's 15 design skills sit in a
+sorts the mail first, Sonnet medium takes what Jev doubts <!-- CEO-OK: b64-decision7-jev-first-sonnet-on-doubt-2026-10-13 -->; decision 10
+(valuable work planned at xhigh and max, Fable judges) is his yes <!-- CEO-OK: b64-decision10-valuable-work-two-plans-fable-judge-2026-10-13 -->. Emil Kowalski's 15 design skills sit in a
 drawer on this machine, never loaded at opening (0cbbf473).
 
 ## Next
 
-1. B64: his answers to decisions 1-5 and 8-12 on the page → the design into the owning specs as registered adaptations
+1. B64: his answers to decisions 1-5, 8, 9, 11 and 12 on the page → the design into the owning specs as registered adaptations
    (one Sol pass) → the one-page plan, once. The 2026-10-12 handover note carries a draft plan skeleton.
 2. Decision 7's intake trial is measured: Jev 69/70 at 0.3 s, Sonnet medium 70/70 at 2.4 s, Haiku high 68/70 at 1.7 s —
    his choice of the intake model now has its numbers (`.planning/quick/20261013-jev-olcum/`).
@@ -47,7 +48,7 @@ drawer on this machine, never loaded at opening (0cbbf473).
 
 ## Waiting on his approval
 
-- B64's decisions 1-5 and 8-12 on the page, each "önerim: evet"; several change a standing rule and say so.
+- B64's decisions 1-5, 8, 9, 11 and 12 on the page, each "önerim: evet"; several change a standing rule and say so.
 - B41's first slice — the design skills for the design, front-end and studio seats inside the holding: plan given in
   the conversation of 2026-10-13, waits on his yes. The apple-design skill installed this morning loads at every opening:
   move it into the drawer? — his word.
