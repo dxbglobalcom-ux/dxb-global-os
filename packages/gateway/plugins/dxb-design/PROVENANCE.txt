@@ -2,7 +2,11 @@ dxb-design — the holding's design skills (B41 first slice, CEO 2026-10-13)
 source=https://github.com/emilkowalski/skills
 source_commit=2d228630ba1446365f614a108cb8252f1feda202
 license=MIT (LICENSE beside this file; copyright stays with the author)
-content=15 skills, copied unchanged from the commit above; markdown only, nothing executable
+content=15 skills from the commit above; markdown only, nothing executable. ONE change from upstream:
+  the frontmatter line `disable-model-invocation: true` is removed from pick-ui-library, prototype and
+  review-animations (B41 Sol pass, 2026-10-13). Upstream reserves those three for a human to invoke; a
+  holding seat has no human beside it, so with the line kept it could never open them. A seat holds no
+  Bash or Write, so they stay text it reads. Their descriptions still say they run when invoked.
 vetted=full read of all 29 files at that commit on 2026-10-13 (the construction drawer copy,
   ~/.local/share/dxb/skills/emil/INSTALL_PROVENANCE.txt): no fetch, secret or override instructions.
   Notes: animate-expo runs `npx expo install`, prototype deletes its own prototype surface, improve-animations

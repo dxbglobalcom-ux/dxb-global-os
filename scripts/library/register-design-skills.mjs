@@ -40,7 +40,9 @@ const DEPARTMENTS = ["design"];
 const SEATS = ["engineering-frontend-developer", "media-creative-director", "media-product-brand-consistency"];
 
 async function ceoAction(client, payload, label) {
-  const key = `b41-design-skills-${createHash("md5").update(JSON.stringify(payload)).digest("hex")}`;
+  // Sol's pass (B41): a fixed key replayed the stored answer of a grant revoked since — so the key
+  // carries the moment; re-run safety comes from the active-grant check before each write instead.
+  const key = `b41-design-skills-${createHash("md5").update(JSON.stringify(payload)).digest("hex")}-${Date.now()}`;
   await client.query("BEGIN");
   try {
     await client.query(
@@ -63,6 +65,12 @@ async function ceoAction(client, payload, label) {
 const client = new pg.Client({ connectionString: DB_URL });
 await client.connect();
 try {
+  await run(client);
+} finally {
+  await client.end();
+}
+
+async function run(client) {
   const seats = (
     await client.query(
       "SELECT id, slug FROM agents WHERE slug = ANY($1) AND employment_status IS DISTINCT FROM 'archived' ORDER BY slug",
@@ -70,9 +78,19 @@ try {
     )
   ).rows;
   const depts = (await client.query("SELECT slug FROM departments WHERE slug = ANY($1)", [DEPARTMENTS])).rows;
+  const missing = [
+    ...DEPARTMENTS.filter((d) => !depts.some((x) => x.slug === d)),
+    ...SEATS.filter((s) => !seats.some((x) => x.slug === s)),
+  ];
+  if (missing.length > 0) {
+    // Fail closed: a half-granted plugin is a record that lies about who holds it.
+    console.error(`library/register-design-skills: absent on this engine: ${missing.join(", ")} — nothing written.`);
+    process.exitCode = 3;
+    return;
+  }
   if (!APPLY) {
     console.log(`dry-run: plugin/${ITEM.name}; departments present ${depts.length}/${DEPARTMENTS.length}; seats present ${seats.length}/${SEATS.length}`);
-    process.exit(0);
+    return;
   }
 
   let item = (
@@ -95,7 +113,8 @@ try {
   ];
   for (const g of grants) {
     const have = await client.query(
-      "SELECT 1 FROM library_grants WHERE item_id = $1 AND grantee_kind = $2 AND grantee_id = $3",
+      `SELECT 1 FROM library_grants WHERE item_id = $1 AND grantee_kind = $2 AND grantee_id = $3
+          AND (expires_at IS NULL OR expires_at > now())`,
       [item.id, g.grantee_kind, g.grantee_id],
     );
     if (have.rows.length > 0) {
@@ -105,8 +124,20 @@ try {
     await ceoAction(client, { action: "grant", item_id: item.id, grantee_kind: g.grantee_kind, grantee_id: g.grantee_id }, `grant ${ITEM.name}→${g.label}`);
     console.log(`granted ${ITEM.name} → ${g.label}`);
   }
-  const missing = [...DEPARTMENTS.filter((d) => !depts.some((x) => x.slug === d)), ...SEATS.filter((s) => !seats.some((x) => x.slug === s))];
-  console.log(`done: ${grants.length} grant(s) held${missing.length ? `; absent on this engine: ${missing.join(", ")}` : ""}`);
-} finally {
-  await client.end();
+  // Read back what is really active — the answer of the door is not the record.
+  const active = (
+    await client.query(
+      `SELECT grantee_kind, grantee_id FROM library_grants
+        WHERE item_id = $1 AND (expires_at IS NULL OR expires_at > now())`,
+      [item.id],
+    )
+  ).rows;
+  const held = grants.filter((g) => active.some((a) => a.grantee_kind === g.grantee_kind && a.grantee_id === g.grantee_id));
+  if (held.length !== grants.length) {
+    const lost = grants.filter((g) => !held.includes(g)).map((g) => g.label);
+    console.error(`library/register-design-skills: not active after the run: ${lost.join(", ")}`);
+    process.exitCode = 4;
+    return;
+  }
+  console.log(`done: ${held.length} active grant(s) held — ${held.map((g) => g.label).join(", ")}`);
 }

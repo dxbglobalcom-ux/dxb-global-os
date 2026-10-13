@@ -340,11 +340,52 @@ function readonlyParameter(call: ts.CallExpression, arg: ts.Expression, b: Bound
 /** The compiled profile: written only by `buildSdkToolOptions(…)` (or an empty start), then only
  *  tested (`p ? … : …`, `p !== null`) and read member by member into the options — never handed on,
  *  never changed (Sol's single pass: `Object.assign(profile, …)` went through). */
-function profileCheck(b: Bound, builders: Set<ts.Symbol>, report: SdkReport, rel: string): (s: ts.Symbol) => boolean {
+function profileCheck(
+  b: Bound,
+  builders: Set<ts.Symbol>,
+  resolvers: Set<ts.Symbol>,
+  report: SdkReport,
+  rel: string,
+): (s: ts.Symbol) => boolean {
   const memo = new Map<ts.Symbol, boolean>();
+  const isBuilderCall = (e: ts.Node): e is ts.CallExpression =>
+    ts.isCallExpression(e) && ts.isIdentifier(e.expression) && builders.has(b.symbolOf(e.expression)!);
+  /** B41, Sol's pass: the surface a profile is built from must be the seat's own compiled surface — a
+   *  variable initialised by `resolveRuntimeProfile(<seat>)` with ONE argument (no profile or plugin
+   *  root of the caller's choosing), never written, read only member by member or handed to the
+   *  builder. A hand-made surface passed to buildSdkToolOptions() went through before this check. */
+  const isCompiledSurface = (x: ts.Expression | undefined): boolean => {
+    const e = x ? unwrap(x) : undefined;
+    if (!e || !ts.isIdentifier(e)) return false;
+    const s = b.symbolOf(e);
+    if (!s || !s.declarations?.length) return false;
+    for (const d of s.declarations) {
+      if (!ts.isVariableDeclaration(d) || !d.initializer) return false;
+      const init = unwrap(d.initializer);
+      if (!ts.isCallExpression(init) || !ts.isIdentifier(init.expression) || !resolvers.has(b.symbolOf(init.expression)!)) return false;
+      if (init.arguments.length !== 1) return false;
+    }
+    for (const id of referencesTo(b, s)) {
+      const p = id.parent;
+      if (isBuilderCall(p) && p.arguments[0] === id) continue;
+      if (ts.isPropertyAccessExpression(p) && p.expression === id) {
+        let top: ts.Expression = p;
+        while ((ts.isPropertyAccessExpression(top.parent) || ts.isElementAccessExpression(top.parent)) && top.parent.expression === top) top = top.parent;
+        const q = top.parent;
+        const written =
+          (ts.isBinaryExpression(q) && q.left === top && q.operatorToken.kind >= ts.SyntaxKind.FirstAssignment && q.operatorToken.kind <= ts.SyntaxKind.LastAssignment) ||
+          ts.isDeleteExpression(q) ||
+          ((ts.isPrefixUnaryExpression(q) || ts.isPostfixUnaryExpression(q)) &&
+            [ts.SyntaxKind.PlusPlusToken, ts.SyntaxKind.MinusMinusToken].includes(q.operator));
+        if (!written) continue;
+      }
+      return false;
+    }
+    return true;
+  };
   const isBuilt = (x: ts.Expression): boolean => {
     const e = unwrap(x);
-    return ts.isCallExpression(e) && ts.isIdentifier(e.expression) && builders.has(b.symbolOf(e.expression)!);
+    return isBuilderCall(e) && isCompiledSurface(e.arguments[0]);
   };
   const isEmpty = (x?: ts.Expression): boolean =>
     !x || x.kind === ts.SyntaxKind.NullKeyword || (ts.isIdentifier(x) && x.text === "undefined");
@@ -557,6 +598,7 @@ function analyzeSdk(rel: string, text: string): SdkReport {
   const isolation = new Set<ts.Symbol>();
   const receipt = new Set<ts.Symbol>();
   const builders = new Set<ts.Symbol>();
+  const resolvers = new Set<ts.Symbol>();
   const add = (set: Set<ts.Symbol>, id: ts.Identifier): void => {
     const s = symbolOf(id);
     if (s) set.add(s);
@@ -593,6 +635,7 @@ function analyzeSdk(rel: string, text: string): SdkReport {
             } else add(imported === "companyIsolation" ? isolation : receipt, el.name);
           }
           if (spec === GATEWAY && imported === "buildSdkToolOptions") add(builders, el.name);
+          if (spec === GATEWAY && imported === "resolveRuntimeProfile") add(resolvers, el.name);
         }
       }
     }
@@ -619,7 +662,7 @@ function analyzeSdk(rel: string, text: string): SdkReport {
   };
   imports(sf);
 
-  const b: Bindings = { bound, isolation, receipt, fromProfile: profileCheck(bound, builders, report, rel) };
+  const b: Bindings = { bound, isolation, receipt, fromProfile: profileCheck(bound, builders, resolvers, report, rel) };
   for (const q of queries) {
     for (const id of referencesTo(bound, q)) {
       const p = id.parent;
@@ -993,7 +1036,7 @@ const ISO = `...(companyIsolation() ?? {}), model: "m", tools: [], maxTurns: 4`;
 const GOOD = `import { query as ask } from "@anthropic-ai/claude-agent-sdk";\n${HEAD}${lane(ISO)}`;
 /** A lane that takes the compiled profile, with `write` deciding what the profile is. */
 const profileLane = (write: string): string =>
-  `import { query as ask } from "@anthropic-ai/claude-agent-sdk";\nimport { buildSdkToolOptions } from "@dxb/gateway";\n${HEAD}` +
+  `import { query as ask } from "@anthropic-ai/claude-agent-sdk";\nimport { buildSdkToolOptions, resolveRuntimeProfile } from "@dxb/gateway";\n${HEAD}` +
   `let toolOpts: any = null;\n${write}\n` +
   lane(`${ISO}, ...(toolOpts ? { mcpServers: toolOpts.mcpServers, allowedTools: toolOpts.allowedTools, strictMcpConfig: toolOpts.strictMcpConfig } : {})`);
 
@@ -1062,9 +1105,24 @@ describe("the ruler refuses what it cannot follow (Sol's counter-examples, 2026-
 
   it("reads the profile keys only from buildSdkToolOptions()", () => {
     const profile = profileLane;
-    expect(verdict(profile("toolOpts = buildSdkToolOptions(s, i);"))).toEqual([]);
+    const S = "const s = resolveRuntimeProfile(e);";
+    expect(verdict(profile(`${S} toolOpts = buildSdkToolOptions(s, i);`))).toEqual([]);
+    expect(verdict(profile(`${S} toolOpts = buildSdkToolOptions(s, i, { cwd: "/w" });`))).toEqual([]);
     expect(verdict(profile("toolOpts = { mcpServers: { playwright: {} } };")).length).toBeGreaterThan(0);
-    expect(verdict(profile("toolOpts = buildSdkToolOptions(s, i); toolOpts.mcpServers = {};")).length).toBeGreaterThan(0);
+    expect(verdict(profile(`${S} toolOpts = buildSdkToolOptions(s, i); toolOpts.mcpServers = {};`)).length).toBeGreaterThan(0);
+  });
+
+  // B41, Sol's pass (A): the builder's input was never followed — a hand-made surface carrying a plugin
+  // outside the root passed with problems=[].
+  it.each([
+    ["a hand-made surface", `toolOpts = buildSdkToolOptions({ source: "none", mcpServers: {}, allowedTools: [], grantedPairs: [], plugins: [{ name: "evil", path: "/tmp/x", skills: ["evil:t"] }] }, i);`],
+    ["a surface from a resolver given its own roots", `const s = resolveRuntimeProfile(e, "/tmp/p", "/tmp/q"); toolOpts = buildSdkToolOptions(s, i);`],
+    ["a surface that is not declared here", `toolOpts = buildSdkToolOptions(s, i);`],
+    ["a surface written after it was resolved", `const s = resolveRuntimeProfile(e); s.plugins = [{ name: "evil", path: "/tmp/x", skills: [] }]; toolOpts = buildSdkToolOptions(s, i);`],
+    ["a surface handed on before the build", `const s = resolveRuntimeProfile(e); Object.assign(s, {}); toolOpts = buildSdkToolOptions(s, i);`],
+    ["a surface reassigned", `let s = resolveRuntimeProfile(e); s = other; toolOpts = buildSdkToolOptions(s, i);`],
+  ])("refuses a profile built from %s", (_name, write) => {
+    expect(verdict(profileLane(write)).length).toBeGreaterThan(0);
   });
 });
 

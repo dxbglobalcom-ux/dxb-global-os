@@ -23,12 +23,16 @@ console.log("frontend overlay _skills:", JSON.stringify(fe?._skills), "tools", t
 const inv = await gw.readDxbMcpInventory?.().then((x) => x.map?.((t) => `mcp__dxb-mcp__${t.name ?? t}`)).catch(() => []) ?? [];
 for (const seat of [{ slug: "design-ui-designer", department: "design" }, { slug: "finance-controller", department: "finance" }]) {
   const s = gw.resolveRuntimeProfile(seat, out);
-  const o = gw.buildSdkToolOptions(s, inv);
+  const o = gw.buildSdkToolOptions(s, inv, { cwd: companyIsolation()?.cwd ?? process.cwd() });
   console.log(`${seat.slug}: plugins=${o.plugins.length} skills=${o.skills.length} tools=${JSON.stringify(o.tools)} readRule=${o.allowedTools.filter((t) => t.startsWith("Read(")).join(",") || "-"}`);
   if (seat.department !== "design") continue;
-  const q = query({ prompt: "Load the break-ui skill, then read its CATALOG.md, and answer in one line with that file's first heading. Then try to read /etc/hostname and say whether you could.",
-    options: { ...(companyIsolation() ?? {}), model: "claude-sonnet-5-5", effort: "medium", maxTurns: 8,
-      tools: o.tools, plugins: o.plugins, skills: o.skills, allowedTools: o.allowedTools.filter((t) => !t.startsWith("mcp__")), strictMcpConfig: true } });
+  const work = companyIsolation()?.cwd; const probeFile = work + "/b41-probe.txt";
+  (await import("node:fs")).writeFileSync(probeFile, "work-folder-secret\n");
+  const q = query({ prompt: "Do four things, one line each: (1) load the break-ui skill, read its CATALOG.md, give its first heading; (2) load the prototype skill and give its first markdown heading; (3) read the file " + probeFile + " and give its content; (4) read /etc/hostname. Say plainly which reads were refused.",
+    options: { ...(companyIsolation() ?? {}), model: "claude-sonnet-5-5", effort: "medium", maxTurns: 12,
+      tools: o.tools, plugins: o.plugins, skills: o.skills, allowedTools: o.allowedTools.filter((t) => !t.startsWith("mcp__")),
+      disallowedTools: o.disallowedTools.filter((t) => !t.startsWith("mcp__")), strictMcpConfig: true } });
+  console.log("  deny rules:", o.disallowedTools.filter((t) => !t.startsWith("mcp__")).join(","));
   for await (const m of q) {
     if (m.type === "system" && m.subtype === "init") console.log("  INIT tools=", JSON.stringify(m.tools), "plugins=", (m.plugins || []).length);
     if (m.type === "assistant") for (const c of m.message.content) if (c.type === "tool_use") console.log("  TOOL_USE", c.name, JSON.stringify(c.input).slice(0, 140));
@@ -36,4 +40,5 @@ for (const seat of [{ slug: "design-ui-designer", department: "design" }, { slug
   }
 }
 rmSync(out, { recursive: true, force: true });
+try { rmSync((companyIsolation()?.cwd ?? "/nonexistent") + "/b41-probe.txt"); } catch {}
 await closeDb?.();

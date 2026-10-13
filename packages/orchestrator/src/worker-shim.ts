@@ -364,12 +364,14 @@ export async function defaultExecutor(task: ClaimedTask): Promise<WorkerOutput> 
   // review reads text an outside server wrote, so the seat holds no hand a
   // poisoned description could try to use (CEO 2026-10-04).
   let toolOpts: SdkToolOptions | null = null;
-  let craft = false; // B41: the seat holds a granted plugin's skills
+  let mcp = false; // the seat holds MCP tools (the verification lines, the evidence gate, the turn budget)
+  let craft = false; // B41: the seat holds a granted plugin's skills — with or without MCP tools
   if (employee && task.tools_allowed !== false) {
     const surface = resolveRuntimeProfile(employee);
-    if (surface.allowedTools.length > 0) {
-      toolOpts = buildSdkToolOptions(surface, await dxbInventoryNames());
-      craft = (surface.plugins ?? []).length > 0;
+    mcp = surface.allowedTools.length > 0;
+    craft = (surface.plugins ?? []).length > 0;
+    if (mcp || craft) {
+      toolOpts = buildSdkToolOptions(surface, await dxbInventoryNames(), { cwd: companyIsolation()?.cwd ?? process.cwd() });
     }
   }
 
@@ -391,7 +393,7 @@ export async function defaultExecutor(task: ClaimedTask): Promise<WorkerOutput> 
     'An evidence entry may also be {"kind": "file", "ref": "<the exact ref your output',
     'contract names>", "note": "<what this artifact is>"}. When the contract names a file',
     "ref, the file entry carries that ref exactly.",
-    ...(toolOpts
+    ...(mcp
       ? [
           "",
           "You have real MCP tools. VERIFY your work with at least one relevant tool",
@@ -460,7 +462,8 @@ export async function defaultExecutor(task: ClaimedTask): Promise<WorkerOutput> 
               allowedTools: toolOpts.allowedTools,
               disallowedTools: toolOpts.disallowedTools,
               strictMcpConfig: toolOpts.strictMcpConfig,
-              maxTurns: turnBudgetFor(toolOpts.allowedTools), // 12 for verification loops, 40 for a seat with the hands
+              // 12 for verification loops, 40 for a seat with the hands; a seat with skills only gets 12
+              maxTurns: mcp ? turnBudgetFor(toolOpts.allowedTools) : TURN_BUDGET.default,
             }
           : { maxTurns: TURN_BUDGET.toolless }),
         outputFormat: { type: "json_schema", schema: sdkJsonSchema(WorkerJson) },
@@ -556,7 +559,7 @@ export async function defaultExecutor(task: ClaimedTask): Promise<WorkerOutput> 
       acceptance_map: parsed.acceptance_map,
     },
     confidence: parsed.confidence,
-    toolSurfaceMounted: rule.mode === "subscription" && toolOpts !== null,
+    toolSurfaceMounted: rule.mode === "subscription" && toolOpts !== null && mcp,
   };
 }
 

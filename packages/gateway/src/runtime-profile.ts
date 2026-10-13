@@ -9,8 +9,8 @@
 // file exists → else the employee's department profile. No profile file → an
 // EMPTY surface (default-deny, T-07-07) — the caller runs tool-less rather
 // than inheriting somebody else's grants.
-import { existsSync, readdirSync, readFileSync } from "node:fs";
-import { dirname, isAbsolute, join, resolve } from "node:path";
+import { existsSync, readdirSync, readFileSync, realpathSync } from "node:fs";
+import { dirname, isAbsolute, join, relative, resolve, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const PROFILES_DIR = join(
@@ -57,18 +57,43 @@ export interface GrantedPlugin {
  *  `.claude-plugin/plugin.json`. Anything else — a skill name, a path, a missing folder — is no plugin. */
 function grantedPlugin(name: string, pluginsDir: string): GrantedPlugin | null {
   if (!/^[a-z0-9][a-z0-9-]*$/.test(name)) return null;
-  const path = join(pluginsDir, name);
-  if (!existsSync(join(path, ".claude-plugin", "plugin.json"))) return null;
+  // Sol's pass (B41, 2026-10-13): a folder with a valid name may still be a link out of the root.
+  // The plugin's REAL path must sit directly under the REAL root, each skill's real path under the
+  // plugin's — the path handed to the SDK (and to the Read rule) is the real one.
+  let path: string;
+  try {
+    const root = realpathSync(pluginsDir);
+    path = realpathSync(join(pluginsDir, name));
+    if (dirname(path) !== root) return null;
+    if (!existsSync(join(path, ".claude-plugin", "plugin.json"))) return null;
+    if (!inside(realpathSync(join(path, ".claude-plugin", "plugin.json")), path)) return null;
+  } catch {
+    return null;
+  }
   let skills: string[] = [];
   try {
     skills = readdirSync(join(path, "skills"), { withFileTypes: true })
-      .filter((e) => e.isDirectory() && existsSync(join(path, "skills", e.name, "SKILL.md")))
+      .filter((e) => {
+        const dir = join(path, "skills", e.name);
+        try {
+          const real = realpathSync(dir);
+          return inside(real, path) && existsSync(join(real, "SKILL.md")) && inside(realpathSync(join(real, "SKILL.md")), path);
+        } catch {
+          return false;
+        }
+      })
       .map((e) => `${name}:${e.name}`)
       .sort();
   } catch {
     return null;
   }
   return skills.length > 0 ? { name, path, skills } : null;
+}
+
+/** `child` is strictly inside `parent` (both real, absolute paths). */
+function inside(child: string, parent: string): boolean {
+  const r = relative(parent, child);
+  return r !== "" && !r.startsWith("..") && !isAbsolute(r) && !r.split(sep).includes("..");
 }
 
 /** SDK MCP tool naming: server dxb-mcp, tool queue_get → mcp__dxb-mcp__queue_get. */
@@ -105,6 +130,7 @@ export interface SdkToolOptions {
 export function buildSdkToolOptions(
   surface: RuntimeToolSurface,
   inventory: string[],
+  opts: { cwd?: string } = {},
 ): SdkToolOptions {
   const allowed = new Set(surface.allowedTools);
   const plugins = surface.plugins ?? [];
@@ -112,13 +138,18 @@ export function buildSdkToolOptions(
   // allowed only inside the plugin's own folder (`//` = an absolute path in a permission rule), for
   // the files a skill points to. Measured live 2026-10-13 in the company isolation: a Read there
   // succeeded, /etc/hostname and the repository were refused. No plugin → the old empty surface.
+  // Sol's pass: the CLI also lets Read in the call's working folder without asking — so that folder is
+  // denied by rule (a deny outranks every allow), leaving the plugin folders as the only readable place.
   const builtins = new Set<string>();
   if (plugins.length > 0) builtins.add("Skill").add("Read");
   for (const p of plugins) builtins.add(`Read(/${p.path}/**)`);
   return {
     mcpServers: surface.mcpServers,
     allowedTools: [...new Set([...allowed, ...[...builtins].filter((t) => t !== "Read")])].sort(),
-    disallowedTools: inventory.filter((t) => !allowed.has(t)).sort(),
+    disallowedTools: [
+      ...inventory.filter((t) => !allowed.has(t)),
+      ...(plugins.length > 0 ? [`Read(/${resolve(opts.cwd ?? process.cwd())}/**)`] : []),
+    ].sort(),
     strictMcpConfig: true,
     tools: plugins.length > 0 ? ["Read", "Skill"] : [],
     plugins: plugins.map((p) => ({ type: "local" as const, path: p.path })),

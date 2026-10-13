@@ -68,10 +68,11 @@ export async function defaultWorkflowExecutor(work: AgentWork): Promise<AgentWor
     slug: work.employeeSlug,
     department: work.department,
   });
-  if (surface.allowedTools.length > 0) {
-    toolOpts = buildSdkToolOptions(surface, await dxbInventoryNames());
+  const mcp = surface.allowedTools.length > 0; // the verification lines and the turn budget
+  const craft = (surface.plugins ?? []).length > 0; // B41: a granted plugin's skills, with or without MCP tools
+  if (mcp || craft) {
+    toolOpts = buildSdkToolOptions(surface, await dxbInventoryNames(), { cwd: companyIsolation()?.cwd ?? process.cwd() });
   }
-  const craft = toolOpts !== null && (surface.plugins ?? []).length > 0; // B41: a granted plugin's skills
 
   // B51 P5b (C2-4): with the seat's standing prompt as the system prompt, the seat already knows who it
   // is; the one-line name stays only for a run without one (a test executor, no composition point).
@@ -84,7 +85,7 @@ export async function defaultWorkflowExecutor(work: AgentWork): Promise<AgentWor
     ' "evidence": [{"kind": "verification", "tool": "<mcp tool you called>", "note": "<what you checked>"}],',
     ' "acceptance_map": {"<each requirement of the output contract>": "<how the deliverable meets it, specific>"}}',
     "confidence is your honest self-assessment that the deliverable meets the contract.",
-    ...(toolOpts
+    ...(mcp
       ? [
           "",
           "You have real MCP tools. VERIFY your work with at least one relevant tool",
