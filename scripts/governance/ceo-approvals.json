@@ -2346,5 +2346,13 @@
     "conditions": "An order to open rows, not a LAW B acceptance of any work; nothing is built.",
     "session": "Opus 5.5 session, in conversation, 2026-10-14 (https://claude.ai/code/session_014LfegVePU2tLZ68UAV5ds5).",
     "where": "HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md (B65-B70; §2d V2 memory)"
+  },
+  "b66-old-fallback-obeys-floor-or-closes-2026-10-14": {
+    "date": "2026-10-14",
+    "what": "B66: when its turn comes, the old SQL fallback (fn_model_fallback / fallbackModel()) is either made to obey the tier floor and the lane or closed, so valuable work never falls to a weaker model. Not now; nothing calls it today (measured 2026-10-14).",
+    "verbatim": "Eski yol kötü ya. Kesinlikle şey yapılmasın. Böyle işlerde zayıf kişiye gitmesin. · tmm önerini kabul ediorm.",
+    "conditions": "A yes to the recommendation as stated in conversation, not a LAW B acceptance; nothing is built. Which of the two (obey or close) is chosen at build time and reported to him.",
+    "session": "Opus 5.5 session, in conversation, 2026-10-14 (https://claude.ai/code/session_014LfegVePU2tLZ68UAV5ds5).",
+    "where": "HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md (B66)"
   }
 }
