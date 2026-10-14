@@ -17,7 +17,7 @@ Her ajan koşusunun HANGİ modelle çalışacağının tablo-güdümlü, CEO-de�
 - R5. Raw provider key YASAK: tüm çağrılar LiteLLM proxy virtual key'leriyle (departman-başı; STACK sert kuralı). One registered exception: the Hermes-only key (B64 decision 15, A-2026-10-14 item 10). Jev rides LiteLLM's `vercel_ai_gateway/` route with its key in the LiteLLM env, so it needs no exception.
 - R6. Model Orchestration Panel (§19): görsel flow, node sürükle → rol ataması değişir (control seam üzerinden); settings 6.1 anahtarlarıyla AYNI kaynağa yazar.
 - R7. Rotalama parametreleri ayarlanabilir (6.1): timeout, max token, max maliyet, context limiti, retry, confidence threshold, escalation, human-approval eşiği, Opus 5-review zorunluluğu (teknik anahtar sabit: `orchestrator.fable_review_required`) — hepsi settings_registry'de, resolve zinciriyle scope'lu.
-- R8. (CEO direktifi 2026-07-12) `agents.brain` ajan-seviyesi beyin birinci sınıf rotalama girdisidir ve **dashboard'dan CEO-değiştirilebilir**: değişim = tek UPDATE + audit_log + decision_log + Broadcast; banned/mechanical_only korkulukları ajan seviyesinde de MUTLAK (bypass yolu yok). Normatif ayrıntı §4b.
+- R8. (CEO direktifi 2026-07-12) `agents.brain` ajan-seviyesi beyin birinci sınıf rotalama girdisidir ve **dashboard'dan CEO-değiştirilebilir**: değişim = tek UPDATE + audit_log + decision_log + Broadcast; banned/mechanical_only korkulukları ajan seviyesinde de MUTLAK — her beyin-değişim kaynağı için bypass yolu yok; tek istisna CEO'nun kendi teyitli tek-seferlik istisnasıdır (§4b, B64 decision 17: bir uyarı, onun "devam"ı, `override` karar satırı olarak kaydedilir, kural yerinde kalır). Normatif ayrıntı §4b.
 
 ## 3. Mimari
 
@@ -104,7 +104,7 @@ Canlı kolon: `agents.brain text NOT NULL DEFAULT 'glm-5.2'` (`20260707000002_re
 
 **Katman ilişkisi (çözüm önceliği):**
 - Yeni kolon: `agents.brain_source text NOT NULL DEFAULT 'default'` — `default` (doldurulmamış placeholder) | `slot` (rotalama-atama geçişiyle §4 varsayılan tablosundan türetilmiş) | `ceo_override` (dashboard'dan CEO ataması). Migration: `0021g_agent_brain_source.sql` (0021x ailesi, §22'ye ek).
-- `fn_select_model` genişler: adım 0 — ajanın `brain_source='ceo_override'` ise model = `agents.brain`, kural taraması atlanır; aksi halde §3 zinciri aynen. Korkuluklar HER iki yolda istisnasız: `banned=true` model hiçbir ajana atanamaz/seçilemez (bugün boş küme — mekanizma migration-only korunur), `mechanical_only` model yalnız mekanik görev-sınıfı role atanabilir (`role_level='ops_agent'`; verdict/onay üretemez), COST_CONTROL hard-stop her seçimi keser.
+- `fn_select_model` genişler: adım 0 — ajanın `brain_source='ceo_override'` ise model = `agents.brain`, kural taraması atlanır; aksi halde §3 zinciri aynen. Korkuluklar HER iki yolda istisnasız (tek istisna: CEO'nun teyitli tek-seferlik istisnası, aşağıdaki CEO dashboard maddesi — B64 decision 17): `banned=true` model hiçbir ajana atanamaz/seçilemez (bugün boş küme — mekanizma migration-only korunur), `mechanical_only` model yalnız mekanik görev-sınıfı role atanabilir (`role_level='ops_agent'`; verdict/onay üretemez), COST_CONTROL hard-stop her seçimi keser.
 - **Rotalama-atama geçişi** (tekdüzeliği gideren adım): E5.5 persona dalgaları bitince tek migration — her ajanın rol sınıfı → 13 slot eşlemesi → §4 varsayılanından `brain` yazılır, `brain_source='slot'`, decision_log'a toplu `routing_change`. Geçişe kadar glm-5.2 görünümü bilinen-placeholder'dır; slot kuralı değişince `brain_source='slot'` ajanlar yeniden çözülür, `ceo_override` ajanlar CEO temizleyene kadar sabit kalır.
 
 **Dashboard değişim kanalı (TEK yol):**
@@ -164,7 +164,7 @@ The CEO read his own workforce page and asked *"183 sonnet nedir?"*. The honest 
 
 **Deliberately fail-open toward the task's own tier.** An unassigned task, a `brain_source='default'` placeholder, an unrated model, a retired or banned one — all leave the task exactly where the routing table put it. A raised tier with no enabled routing row falls back to the task's tier in `resolveExecutionRoute`. **A floor is an upgrade path, never a new failure mode.** One edge is closed by B64 decision 11: a head's or a manager's run never falls below Opus 5.5 at `high` — the fail-open path included (A-2026-10-14 item 3). <!-- OPEN: B64 -->
 
-**Guardrails are absolute and unbypassable by a floor:** `banned` models are never selected; `mechanical_only` models never serve a verdict-capable slot; the budget hard-stop still cuts every non-critical selection. A `ceo_override` brain that fails any of these falls through to the normal rule scan and the refusal is written into the decision's `considered` list — it never silently succeeds and never strands the task.
+**Guardrails are absolute; a floor or any agent/CAIO source never bypasses them:** `banned` models are never selected; `mechanical_only` models never serve a verdict-capable slot; the budget hard-stop still cuts every non-critical selection. A `ceo_override` brain that fails any of these is neither silently applied nor silently rerouted: he is warned once — *"Bu şu kuralla çelişiyor, yine yapayım mı?"* (§4b) — and on his "devam" it applies as a one-time exception, recorded as an `override` decision line naming the rule, while the rule itself stays (B64 decision 17); without his "devam" it falls through to the normal rule scan and the refusal is written into the decision's `considered` list — it never strands the task.
 
 **§4b step 0, finally built:** the slot lane has no tiers, so the brain enters it the way §4b always said — an employee carrying `brain_source='ceo_override'` wins the selection outright, after the same guardrails, and `decision_log` records `selected_ceo_override` with the agent id. `brain_source='slot'` does NOT hijack the slot lane: a derived assignment is a floor, not an override.
 
@@ -560,7 +560,7 @@ RUNTIME tree. The design he answered decision by decision: `.planning/quick/2026
    hiding an instruction and a payment step that must stop among them — compare Opus and Sonnet at `medium` and
    `high`; the cheapest that finishes as many as Opus `high` wins, "done" checked from outside; the same 20 jobs
    gate every Hermes upgrade. Installation waits for the holding's server. <!-- OPEN: B09 --> <!-- OPEN: B11 -->
-11. **Quota state (Omnigent's method 3).** §3 step 3's health check reads how much of each subscription's 5-hour
+11. **Quota state (Omnigent's method 3; in B64's plan for his yes).** §3 step 3's health check reads how much of each subscription's 5-hour
    and weekly windows remains; a full subscription shows `full`, never `ready`; every run records the model that
    really did the work. The display is [[COST_CONTROL_SPEC]]'s.
 12. **His word over a limit (decision 17).** Every limit above is a holding rule: when his word conflicts with one,

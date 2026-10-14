@@ -15,7 +15,7 @@
 ## 1. Minimum kritik kapsam (12'sine yetişmezse bile OLMAZSA OLMAZ)
 
 1. Çekirdek OS çalışır kalır (intent→kernel→task→approval→outbox zinciri) — zaten canlı, DOKUNULMAZ.
-2. Para-ÇIKIŞI onay kapısı + outbox tek-çıkış — her senaryoda aktif.
+2. Para-ÇIKIŞI onay kapısı + outbox tek-çıkış (holdingin kendi çalışanlarının dış eylemleri için; Hermes'in bilgisayar işi ikinci, adı konmuş yoldur — SECURITY_MODEL O2) — her senaryoda aktif.
 3. Korpus 31/31 diskte + commit'li (bu, Fable'ın devredilemez mirasıdır).
 4. WS-A migration'ları (veri omurgası) — kontrol düzleminin temeli.
 5. DESIGN_SYSTEM tokens + Command Center shell + Executive Overview (gerçek veriyle).

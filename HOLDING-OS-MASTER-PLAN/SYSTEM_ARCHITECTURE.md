@@ -189,7 +189,9 @@ Design: `.planning/quick/20261012-b64-is-akisi/is-akisi.html` (decisions 15 and 
 
 1. **Where.** Hermes is the holding's 24/7 hands and eyes — a part of the holding, one brain, never two. It runs on the
    holding's server: the machine the holding runs on 24/7 once it stands, rented at his gate because it is money out
-   (B09, B11). Nothing is installed before that; today Hermes is on no machine.
+   (B09, B11). Nothing of the holding's integration is installed before that. The desktop machine carries a local,
+   idle install (Hermes 0.20.5, `~/.hermes/hermes-agent`, since 2026-08-23; no process or service runs it — measured
+   2026-10-14); it is not the holding's integration, and the holding's 24/7 Hermes is not built.
 2. **How it is installed.** In Docker, so that a mistake cannot break the rest of the server — on the condition that
    Docker restricts nothing: every capability is tried inside at install, and one that does not work there is installed
    without Docker. From `vps/provision/` + `vps/compose.yaml` (his ruling of 2026-08-27, carried by the 2026-09-19

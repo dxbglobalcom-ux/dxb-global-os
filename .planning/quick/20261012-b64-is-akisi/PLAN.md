@@ -1,14 +1,13 @@
 # Plan — Holdingde iş nasıl akar (B64)
 
+**Bittiğinde ekranınızda:** Hamza'ya verdiğiniz hedef siz bakmadan o işin başkanında yürür ve sonucu aynı
+konuşmada görürsünüz; dışarıdan gelen her mail ve mesaj Karşılama'da canlı akar, size yalnız kararınız gereken
+şeyler gelir ve sabah tek satırda gecenin işini okursunuz.
+
+**Kanıtı:** `pnpm verify:b64` — tasarımdaki altı senaryo inşaat motorunda baştan sona koşar ve hepsi yeşil yanar.
+
 14 Ekim 2026. Tasarım: sürüm 15, bütün kararlarınız verildi (`is-akisi.html`). Her karar sahibi olan şartnameye
 kayıtlı uyarlama olarak yazıldı.
-
-**Bittiğinde ekranınızda:** Hamza'ya bir hedef verirsiniz. İş, o işi alan bölümün başkanına gider, siz bakmadan
-yürür ve bitince sonucu aynı konuşmada görürsünüz. Dışarıdan gelen her mail ve mesaj Karşılama bölümünde canlı
-akar. Size yalnız kararınız gereken şeyler ve 1.000 $ ve üstü teslimler gelir. Sabah tek satırda gecenin işini ve
-rüyanın bulduğunu okursunuz.
-
-**Kanıtı:** `pnpm verify:b64`. Tasarımdaki altı senaryo inşaat motorunda baştan sona koşar ve hepsi yeşil yanar.
 
 ## Sıra — her adım ayrı bir iş, biri bitmeden öbürü başlamaz
 
@@ -19,7 +18,8 @@ rüyanın bulduğunu okursunuz.
    - "Max'a geç", "Bütün müdürleri xhigh yap" gibi sözlerinizi tek kapıya iletir. "Geri al" derseniz geri alınır.
 
    Ekranınızdan "niyet" sözü ve tek satırlık kutu kalkar. Hamza normal konuşmada orta seviyede düşünür. Plan
-   konuşulunca bir üst seviyeye geçer ve bunu size söyler. "Beni şu başkana bağla" yazılı sohbette de çalışır.
+   konuşulunca xhigh'a geçer ve bunu size söyler. Sesli normal konuşma Sonnet 5.5 medium'a geçer; önce bugünkü
+   Opus low ile 20 cümlede yan yana ölçülür, hızı ve Hamza'nın karakteri tutarsa geçer. "Beni şu başkana bağla" yazılı sohbette de çalışır.
    Temmuz'dan kalan 51 sesli kayıt kendiliğinden çalıştırılmaz.
 2. **İşin sahibi ve işin masası.** İşi alan başkan planı yazar. Her parçanın modelini ve düşünme seviyesini
    seçer, nedenini bir satırla yazar. Parçaları birleştirir, kendisi dener ve teslim eder. İşin tarifi, planı,
@@ -28,7 +28,8 @@ rüyanın bulduğunu okursunuz.
 3. **Kontrol ve kritik kapı.** Kontrol, işi tarifteki "bitti" ölçütüne göre gerçekten açıp çalıştırarak sınar;
    daha iyisini aramaz. Geçmeyen iş, kontrolün notlarıyla sahibine döner. Müşteriye giden her şeye Sol bakar.
    Değerli teslimde, parada ve sözleşmede yanına Fable gelir. İkisi birden düşerse iş bekler ve size haber gelir.
-4. **Yedek çift ve model odası.** Opus düşerse işi Fable alır, Fable düşerse Opus. Geçiş kayda yazılır; hiçbir iş
+4. **Yedek çift ve model odası.** Opus düşerse işi Fable alır, Fable düşerse Opus. Fable'ın hakem koltukları düşerse Opus değil
+   Sol bakar; Opus kendi planını denetlemez. Geçiş kayda yazılır; hiçbir iş
    daha zayıf bir modele düşmez. Eski yedek yolu kapanır; B65 ve B66 bu adımda biter. Fable'ın kotası %95'e
    gelince ikinci abonelik için onayınız istenir. Yeni bir model çıkınca size tek sayfalık öneri gelir.
 5. **Dışarıdan gelen iş.** Gmail bağlanır. Gelen maili önce Jev ayırır, emin olmadığını Sonnet ayırır. İş maili
@@ -46,16 +47,19 @@ rüyanın bulduğunu okursunuz.
    yeni iş durur. Fiyatı bilinmeyen model "0 $" değil, "bilinmiyor" sayılır. Dolan abonelik ekranda "dolu"
    görünür. Para, sözleşme ya da kimlik içeren bir adım, çalışmadan önce onay kapınızda durur. Çalışanların
    ortamındaki şirket anahtarları çıkarılır, işi ana sürecin aracı yapar. Ajanların kullandığı ortak araç da
-   kendisini kimin çağırdığını denetler.
+   kendisini kimin çağırdığını denetler. Bu adımdaki beş madde (fiyatı bilinmeyenin "bilinmiyor" sayılması,
+   eşiklerin sorulması, dolan aboneliğin görünmesi, anahtarların ortamdan çıkması, adımın onay kapısında durması)
+   kararlarınızda yoktu; başka bir sistemden, Omnigent'ten alındı ve bu planla onayınıza sunuluyor.
 8. **Tek rüya.** Her gece günün işleri okunur; tekrar eden şeyler, çelişkiler ve eskiyen bilgiler bulunur. Öneri
-   hafızayı kendisi değiştirmez. Bir bölümün hafızasına dair öneriyi o bölümün başkanı kabul eder. Holdingin
-   geneline ya da kurallarınıza dokunan öneri size gelir. Sabah ekranınızda tek satır durur. Ölçüsü şu: aynı iş
+   hafızayı kendisi değiştirmez; kabul edilince holdingin ve Hermes'in hafızasına işlenir. Bugün hafızayı yalnız
+   siz değiştirirsiniz, bu yüzden her öneri size gelir (4. soru). Sabah ekranınızda tek satır durur. Ölçüsü şu: aynı iş
    ikinci kez daha iyi ve daha ucuz yapılır.
 9. **Hermes, holding ayağa kalkınca.** Holdingin sunucusu kiralanır; para çıkışı olduğu için onayınızla. Hermes
-   Docker'la kurulur ve her özelliği içeride denenir. Beyni kurulumda denenir: önce Claude aboneliğiniz, sonra
+   Docker'la kurulur ve her özelliği içeride denenir; biri çalışmazsa Docker'sız kurulur. Beyni kurulumda denenir: önce Claude aboneliğiniz, sonra
    100 $ kredili Hermes anahtarı. Holdingin 20 gerçek işinde ölçülür. WhatsApp ve Telegram kapısı, gece işleri
    ve ekranda canlı, sade görünüşü bu adımda gelir. Hermes'e kısıt konmaz; tek kapı onayınızdır. Harcama sınırı
-   da konmaz; kredi bitince kendiliğinden durur. Temmuz'daki eski bekçi dosyası kurulumda kullanılmaz.
+   da konmaz; kredi bitince kendiliğinden durur. Opus düşerse Hermes'in işi Fable'a geçmez, bekler; işi verene
+   "Hermes'in beyni şu an kapalı, işiniz sırada" denir ve beyin dönünce iş sürer. Temmuz'daki eski bekçi dosyası kurulumda kullanılmaz.
 
 ## Nasıl doğrulanır
 
@@ -72,7 +76,7 @@ bakmadan hiçbir şey "kabul edildi" sayılmaz.
 - İş büyük. En çok zamanı başkanın işi birleştirmesi ve kontrolün gerçek denemesi alır. Bu yüzden her adım ayrı
   biter ve size ayrı gelir.
 
-## Sözünüzü bekleyen üç konu
+## Sözünüzü bekleyen dört konu
 
 1. **Şirket anahtarlarını ortamdan çıkarmak Hermes'e de uygulansın mı?** Uygulanırsa Hermes veritabanına
    doğrudan değil, holdingin aracı üzerinden ulaşır ve yine her şeyi yapar. **Önerim: evet.** Gizli bir talimata
@@ -85,3 +89,7 @@ bakmadan hiçbir şey "kabul edildi" sayılmaz.
    İslami sınırlar ile para, sözleşme ve kimlik onayı bunun dışında kalsın. İslami sınırda holding kendi işini
    reddedebilir; bu sizin anayasanız. Onay da sesle değil onay kartınızdan verilir, çünkü sesin size ait olduğu
    doğrulanamıyor.
+4. **Bir bölümün hafızasına dair rüya önerisini o bölümün başkanı kabul edebilsin mi?** Bugün hafızayı yalnız
+   siz değiştirirsiniz; bu yüzden her gece bütün öneriler size gelir. **Önerim: evet.** Holdingin geneline ya da
+   kurallarınıza dokunan öneri yine size gelir. Tasarımdaki sabah satırı ("3 şey bulundu, 1'i sizi bekliyor")
+   da bunu varsayıyor; bölümün kendi işini en iyi bilen başkanıdır.
