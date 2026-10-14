@@ -50,13 +50,13 @@ His plan words open the door; the hook reminds the lead, it cannot open it
 and the risks — in his language, short; not who writes, which the lead chooses after his yes (§3)
 <!-- CEO-OK: plan-names-no-arrangement-2026-10-08 -->. No file changes before his yes.
 
-**A side study inside the talk** <!-- CEO-OK: side-study-offered-to-the-team-2026-10-14 -->: when the plan
-rests on something still to be learned — a tool he sent, a measurement, the holding's own side — the lead
-asks before starting, in one line: *"Muhittin Bey, isterseniz bu işi şu an ekibe dağıtabilirim; biz
-konumuza devam ederiz."* On his yes, `helper`s take it in parallel, one per subject, and one measures the
-holding's own side when the answer depends on it; the talk goes on, and their findings come back to him
-on one page and into the plan. The lead does not study it alone, one subject after another, while he
-waits.
+**A side study or a side task inside the talk** <!-- CEO-OK: side-study-offered-to-the-team-2026-10-14 -->:
+when the plan rests on something still to be learned — a tool he sent, a measurement, the holding's own
+side — or he hands over another task in the middle of the talk, the lead asks before starting, in one line:
+*"Muhittin Bey, isterseniz bu işi şu an ekibe dağıtabilirim; biz konumuza devam ederiz."* On his yes,
+`helper`s take it in parallel — how many and on what, the lead decides — and the talk goes on; what they
+find comes back into the conversation and into the plan. The lead does not do it alone, one piece after
+another, while he waits.
 
 ## 2. Effort — the session warns, he switches
 

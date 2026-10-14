@@ -38,16 +38,15 @@ is his page https://claude.ai/artifact/KVMSsTv4psiR6tK1kVnUEA, for him and for F
 B41's first slice is built and live, waiting for his eye <!-- CEO-OK: b41-design-skills-first-slice-2026-10-13 -->.
 The seven older defects from B51 are rows B65-B70 and a §2d memory note <!-- CEO-OK: b65-b70-older-defects-opened-2026-10-14 -->;
 B66 closes the old fallback whole <!-- CEO-OK: b66-old-fallback-closed-whole-2026-10-14 -->. The dxb-team2 door now
-offers a side study to the team before starting it <!-- CEO-OK: side-study-offered-to-the-team-2026-10-14 -->; Sol's
-medium pass on that door change runs in `.planning/quick/20261014-yan-calisma-kapisi/`.
+offers a side study or a mid-talk task to the team before starting it <!-- CEO-OK: side-study-offered-to-the-team-2026-10-14 -->;
+Sol's medium pass found no A and two B, both fixed (`.planning/quick/20261014-yan-calisma-kapisi/SOL.md`).
 
 ## Next
 
-1. Sol's door pass: read `SOL.md.raw`, fix A and B, commit `SOL.md`.
-2. B64: his answers to decisions 1-5, 8, 9, 11, 12 and 15 → the design into the owning specs as registered adaptations
+1. B64: his answers to decisions 1-5, 8, 9, 11, 12 and 15 → the design into the owning specs as registered adaptations
    (one Sol pass; Omnigent's four methods go in: unpriced = unknown, ask thresholds, quota awareness, secrets out of
    the agent's environment) → the one-page plan, once. Jev wherever it fits in the holding (his word, 14 Oct).
-3. The `decompose` removal reaches the company only after Sol's pass — the refuter's preflight is repaired first.
+2. The `decompose` removal reaches the company only after Sol's pass — the refuter's preflight is repaired first.
 
 ## Waiting on his approval
 
