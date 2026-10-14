@@ -33,6 +33,13 @@ findings are on one page in front of him; construction starts only on his separa
   belli bir düzenle, belli bir sırayla, belli bir ahenkle tek tek yapılmalı. Bunun planını işte yapmanızı istiyorum.
   Sen session'ın yetmeyecekse başka bir session'a devret, taze session yapsın bunu."*
 
+- *"Yani tekrar ediyorum, dediğim gibi yani inşaata henüz başlanmayacak yani. Sadece düzgün yani holding baştan aşağı
+  kontrol edilecek. Daha sonra plan ona göre yapılan, tahta ona göre düzenlenecek. … Belki ekleyeceğim başka şeyler de
+  var, eksikler tahtasına. … Holding'e entegre edilmesi gereken bazı konular olabilir. … Bu incelemeler içerisinde şey
+  de var. Excel dosyası Turbo var. Ondan sonra diğer şey var. Görev, masa üstünde görev, rakip 39 var. Rakip 41 var.
+  Bunlarla ilgili de bunlar da okunsun. Ne değildir. Bakılsın. İncelensin. Anlatabildim mi? Tahtaya yazılacaksa,
+  yazılması gereken şeylerse yazılsın yani."*
+
 **The order is the engineers' call, not his** — he said so. The page does not ask him to judge importance; it shows
 him the order with one line of reason each, and asks his word only where the board's laws need it (new rows, law 4).
 
@@ -95,6 +102,15 @@ Inside a layer: what makes the company visibly breathe goes first; then what mor
    - Owner row: <ID and the row's words that cover it> | NONE
    - Layer: L1..L8 · Severity: blocks | hurts | cosmetic · Needs his eye: yes | no
    ```
+2b. **His sources** (one reader each, in parallel with step 2; each writes `sources-<name>.md` here): the Excel
+   Turbo file `~/Desktop/İNCELEMELER/Excel-turbo.xlsx` (nine projects, thirteen decisions — STATE's old path
+   `~/Desktop/Lİnk araştırmaları/` is stale), the task file for rival sources 39 and 40 `~/Desktop/GOREV-RAKIP-39-40.md`
+   (did that task run? where did it land — B43, B22, `.planning/research/rival-intel/`?), and the source-41 report
+   `~/Desktop/RAKIP-41-RAPOR.md` (MCP / the opening; his words in it: nothing built until he has seen the plan). For
+   each item they carry: what it is, is it already on the board (row) or already built (evidence), what it would
+   integrate into the holding, its layer, and whether it belongs on the board (a candidate row or a note for an
+   existing row) — the board takes it only if it is real work he ordered or should be put to him (law 6). He may add
+   more items himself before the page: they enter the same way. Never call anything in his sources decoration.
 3. **Consolidate** (the lead): merge overlaps, attach each finding to its owner row (noted for that row's file) or to
    a candidate new row (one line what, one line why, layer); draw the "stands on" graph; flag cycles.
 4. **Order**: a rank for every open row and candidate — layer by layer, inside a layer by breathes → stood on → age;
