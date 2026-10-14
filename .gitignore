@@ -105,3 +105,6 @@ __pycache__/
 # (CEO 2026-10-06, accepting the recommendation of the Fable-review job).
 .planning/quick/**/*.raw
 .planning/quick/**/*brief*.txt
+
+# Codex CLI project config — this machine's local tool wiring (env paths, MCP binaries), never shared
+.codex/config.toml
