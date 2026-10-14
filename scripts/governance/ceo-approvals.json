@@ -2354,5 +2354,29 @@
     "conditions": "Replaces the same day's 'obey or close' yes (LAW A). An order on a board row, not a LAW B acceptance; nothing is built.",
     "session": "Opus 5.5 session, in conversation, 2026-10-14 (https://claude.ai/code/session_014LfegVePU2tLZ68UAV5ds5).",
     "where": "HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md (B66)"
+  },
+  "side-study-offered-to-the-team-2026-10-14": {
+    "date": "2026-10-14",
+    "what": "dxb-team2 door: when a plan talk rests on something still to be learned (a tool he sent, a measurement, the holding's own side), the lead asks before starting — 'isterseniz bu işi şu an ekibe dağıtabilirim; biz konumuza devam ederiz' — and on his yes helpers take it in parallel while the talk goes on; findings come back on one page and into the plan. Written into the door on his explicit word, for every session, not this one only.",
+    "verbatim": "siz DXP Team 2 load ediyorsanız bu skill'i, yani yapılacak işlerde orkestratörsünüz … Ama sen, bu session için değil. Hani düzgün bir şey çerçevesinde bunu Team 2'ye yazman gerekli hani, plan aşamasında … Mesela ayrı bir araştırma yapılsın. Sen bunu ekibine yaptır, sonra plana o şekilde devam edelim … Başlamadan soracak. Muhittin Bey, yani bu işi isterseniz şu an ekibe dağıtabilirim. Biz konumuza devam edebiliriz.",
+    "conditions": "Preceded the same morning by: 'aç ekibini çalıştır ya bu iş üzerine. illa bunu ben mi söylemem lazım?'. An order to write a door rule, not a LAW B acceptance.",
+    "session": "Opus 5.5 session, in conversation, 2026-10-14 (https://claude.ai/code/session_014LfegVePU2tLZ68UAV5ds5).",
+    "where": ".claude/skills/dxb-team2/SKILL.md §1 (A side study inside the talk)"
+  },
+  "b64-decision13-backup-pair-opus-fable-2026-10-14": {
+    "date": "2026-10-14",
+    "what": "B64 decision 13 (design v12): when a model fails for any reason (quota, overload, outage) its work moves to the other — Opus 5.5 and Fable 5.1 back each other up; critical work continues too; on Fable the effort is the piece's own clamped to high..xhigh (low/medium/high → high, xhigh/max → xhigh); Fable's judging seats (plan judge, critical gate) fall to Sol 6.1, never to Opus judging Opus; Hamza's spoken voice reply falls back to Opus 5.5 low for speed while the work he is given runs at its own level; no 70 % threshold — at 95 % a second subscription is added (money out, his approval) and work continues; the holding performs the fallback itself — it sees the error (B65), re-runs on the backup at the chosen effort and records who really did the work; the old SQL fallback is closed (B66). Never a weaker model.",
+    "verbatim": "bir sorun olduğu zaman Fable 5.1'e düşsün her şey. Onun da işe göre seviyesi hani seçilsin … hi ile x hi arasında iş yapılsın. Devam etsin. Çünkü bizim yedek kotamız her zaman Fable 5.1 · Fable'ın yediği Opus, Opus'un yediği de Fable · Eşik koyulacaksa %95 konur … ikinci bir şey, subscription eklenir. Oradan iş devam eder · ve mühendislik itirazıyla ilgili de evet, birincisi dediğin gibi doğru · Tamam, sesle ilgili … çok güzel · İkinci riskle ilgili söylediklerini de kabul ediyorum. Önerini de kabul ediyorum. Aynı şekilde gereğini sen yap. Yaz yani.",
+    "conditions": "His yes to the backup rule as stated in conversation and written on the B64 page v12 as decision 13; nothing is built. Fable's separate quota is his statement, not measured.",
+    "session": "Opus 5.5 session, in conversation, 2026-10-14 (https://claude.ai/code/session_014LfegVePU2tLZ68UAV5ds5).",
+    "where": ".planning/quick/20261012-b64-is-akisi/is-akisi.html (decision 13)"
+  },
+  "b64-decision14-model-room-2026-10-14": {
+    "date": "2026-10-14",
+    "what": "B64 decision 14 (design v12): the model room — the backup pair is written by role (main brain, backup brain), not by model name, so a new model taking a role carries the rule with it; when a new model enters the catalogue one page proposes the whole map (every seat, the guide, the backup pair, the judges: today, proposal, why, measured on our own test set); big seats move on his one word, mechanical seats by themselves with one line to him (the B51 rule of 2026-10-09); every standing assignment carries its date, who decided and why; the room's screen is B08's panel.",
+    "verbatim": "bu şeylerde bir şalter odası gibi bir yer olması lazım … Hani bu bir model odası mı olması lazım? … şu beyinleri güncelle dediğimiz zaman bütün hepsiyle ilgili öneri mi gelse acaba? · Önerini de kabul ediyorum. Aynı şekilde gereğini sen yap. Yaz yani.",
+    "conditions": "His yes to the recommendation as stated in conversation and written on the B64 page v12 as decision 14; nothing is built.",
+    "session": "Opus 5.5 session, in conversation, 2026-10-14 (https://claude.ai/code/session_014LfegVePU2tLZ68UAV5ds5).",
+    "where": ".planning/quick/20261012-b64-is-akisi/is-akisi.html (decision 14)"
   }
 }
