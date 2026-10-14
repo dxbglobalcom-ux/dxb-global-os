@@ -2477,7 +2477,7 @@
   },
   "company-engine-stopped-until-the-key-turn-2026-10-14": {
     "date": "2026-10-14",
-    "what": "The company's own engine, the resident scheduler (dxb-scheduler: briefings, revenue scan, HR and memory jobs, the written chat and voice drain), is stopped and disabled until the key turn; the construction's tools keep running. Done 2026-10-14 ~21:20 with `systemctl --user disable --now dxb-scheduler.service` → inactive, disabled.",
+    "what": "The company's own engine, the resident scheduler (dxb-scheduler: briefings, revenue scan, HR and memory jobs, the written chat and voice drain), is stopped and disabled until the key turn; the construction's tools keep running. Done 2026-10-14 (journal: stopped 20:58:52) with `systemctl --user disable --now dxb-scheduler.service` → inactive, disabled.",
     "verbatim": "Bunları da teslime kadar durdurmak gerekebilir. Evet. Tamam. … Ya para harcayıp harcamaması önemli mi? … Hani o sürekli o tekerleği döner halde bırakmak mantıklı mı yani? || Evet, önerini kabul ediyorum.",
     "conditions": "Re-enabled only at the key turn (ORDER rank 52). The company database itself stays up; nothing is deleted.",
     "session": "Opus 5.5 session 8 of 2026-10-14 (f06917d7-291b-4671-bd6e-84a75f1c1bb2), in conversation.",

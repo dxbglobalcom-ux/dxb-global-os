@@ -137,7 +137,7 @@ says the memory brain stands on B64 step 8; ORDER's 30 → 31 is the right direc
   well-known default key — its key is not the default), **port 22** (SSH on the LAN; only `KbdInteractiveAuthentication
   no` is set, so password login is on by OpenSSH's default — not confirmed with `sshd -T`, which needs root), and
   **sign-up** (F-R1-4; now reachable only from this machine). Adding ports to the wall is a root edit — his hand.
-- **The company's own engine is stopped** on his word: `dxb-scheduler` inactive and disabled (21:20). The written
+- **The company's own engine is stopped** on his word: `dxb-scheduler` inactive and disabled (journal: stopped 20:58:52). The written
   chat and the voice drain stop with it; nothing he uses today.
 - **Y6 (the morning jobs) leaves rank 9** and becomes part of the key turn (his words, `HIS-WORDS.md`).
 
