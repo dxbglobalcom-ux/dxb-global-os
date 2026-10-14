@@ -27,17 +27,19 @@ not here. What is accepted is read from `scripts/governance/ceo-approvals.json`,
 
 ## Where we left off
 
-2026-10-14 — B64's design waits for his eye as version 13 of his page
+2026-10-14 — B64's design waits for his eye as version 14 of his page
 (https://claude.ai/artifact/FvrKgh2Gr4Bus3rVdfKbAu; source `.planning/quick/20261012-b64-is-akisi/is-akisi.html`). His yes so
 far: decisions 6, 7 and 10 (13 Oct) and, on 14 Oct, 13 — Opus 5.5 and Fable 5.1 back each other up
 <!-- CEO-OK: b64-decision13-backup-pair-opus-fable-2026-10-14 -->, 14 — the model room
-<!-- CEO-OK: b64-decision14-model-room-2026-10-14 --> and 15 — Hamza's fourth hand is daily errands through Hermes on its
-own machine; the last click on every payment is his and no card sits in Hermes; its brain is off Sol's subscription
-and the engineers' choice, Opus 5.5 high <!-- CEO-OK: b64-decision15-hermes-errand-hand-last-click-his-2026-10-14 -->.
-Decision 8 gained the Sol-down line; decision 16 (Hermes waits rather than falling to Fable) is proposed. The four-tool
-study is his page https://claude.ai/artifact/KVMSsTv4psiR6tK1kVnUEA: T3 Code and Paseo are not installed — Claude Code's
-own Remote Control already gives the phone window; Omnigent gives five methods; its source ledger now records every
-read. Fable 5.1 reviewed v12 on his word; its seven findings are in v13 and the study page.
+<!-- CEO-OK: b64-decision14-model-room-2026-10-14 -->, 15 — Hermes is the holding's 24/7 hands and eyes, inside the
+holding, one brain, no restrictions but his approval gate; its brain is tried at install on his Claude subscription
+first, then on a Hermes-only key on the Max plan's 100 $ monthly API credit
+<!-- CEO-OK: b64-decision15-hermes-holding-hands-and-eyes-2026-10-14 -->, 17 — his word over a holding rule is done as
+a one-time exception after one warning <!-- CEO-OK: b64-decision17-his-word-over-a-rule-as-exception-2026-10-14 -->,
+and 18 — one dream for the whole holding, Hermes inside it <!-- CEO-OK: b64-decision18-one-dream-holding-wide-2026-10-14 -->.
+The board's Hermes plan (§2d, B09-B11) was gone over at Ferrari level in the same frame; what he accepted is in those
+rows. Decision 16 (Hermes waits rather than falling to Fable) is proposed. The four-tool study is his page "Dört Araç"
+(https://claude.ai/artifact/KVMSsTv4psiR6tK1kVnUEA), brought in line with v14.
 B41's first slice is built and live, waiting for his eye <!-- CEO-OK: b41-design-skills-first-slice-2026-10-13 -->.
 B65-B70 are open for B51's older defects <!-- CEO-OK: b65-b70-older-defects-opened-2026-10-14 -->; B66 closes the old
 fallback whole <!-- CEO-OK: b66-old-fallback-closed-whole-2026-10-14 -->; dxb-team2 offers a side study to the team
@@ -55,9 +57,9 @@ first <!-- CEO-OK: side-study-offered-to-the-team-2026-10-14 -->.
 ## Waiting on his approval
 
 - B64's decisions 1-5, 8, 9, 11, 12 and 16 on the page, each "önerim: evet".
-- Hermes, when the holding stands — money out: its machine (the deleted server bought back, B09/B11) and its brain's
-  own Anthropic account (prepaid, stops when empty; his Max 5x plan's monthly 100 $ API credit can fund it, one account
-  only), with his exception to "no raw provider keys" for Hermes, which stays outside the holding. The family later.
+- Hermes, when the holding stands — money out: the holding's server (B09/B11). Its brain is tried there: his Claude
+  subscription first (no money out while extra usage stays off), then the Max plan's 100 $ API credit on a Hermes-only
+  key, his exception to "no raw provider keys". The family later.
 - Kept for after the holding stands (his word, 14 Oct): where client sites are published is measured and talked then;
   Vercel stays on Hobby, Pro only if Vercel calls it commercial.
 - Security: `fn_update_routing` is EXECUTE-able by anon (closed first in decision 6); every agent child receives the
