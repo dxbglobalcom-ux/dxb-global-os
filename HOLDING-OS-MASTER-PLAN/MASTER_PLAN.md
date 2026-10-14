@@ -16,13 +16,13 @@ Bu proje **DXB GLOBAL AI-NATIVE HOLDING OPERATING SYSTEM**'dir: bütün holdingi
 1. **Çalışan şirket** (mevcut çekirdek OS): kernel, kuyruk, onay motoru, outbox, memory, MCP gateway — KALIR, genişler.
 2. **Yöneten kokpit** (yeni kontrol düzlemi): Executive Command Center + org/HR/settings/observability — SIFIRDAN, direktif §§1-39.
 
-Çekirdek ilke değişmedi: **anti-baby-sitting** — CEO niyeti bir kez söyler, şirket uçtan uca otonom yürütür; sert onay kapısı yalnız dışa dönük aksiyonlarda (madde 4/B7b: para-ÇIKIŞI + outbox kapısı KALIR; güvenlik sertleştirme DURUR, yeni bürokrasi açılmaz).
+Çekirdek ilke değişmedi: **anti-baby-sitting** — the CEO gives his goal once, as a broad brief (never a one-line "intent" — B64), and the company carries it end to end on its own; the hard approval gate stands only at outward steps (madde 4/B7b: money out, contracts outside the approved price policy and standard text, ad spend, identity and the subjects he marks — CLAUDE.md §2; the outbox stays the one exit for the holding's own workers; güvenlik sertleştirme DURUR, yeni bürokrasi açılmaz). <!-- CEO-OK: b64-opened-goal-not-intent-and-hamza-2026-10-12 --> <!-- CEO-OK: b64-decisions-1-5-8-9-11-12-16-his-yes-2026-10-14 -->
 
 ## 2. HÜKÜM VE STRATEJİ
 
 - **Plan-first:** Bu korpus (31 spec) %100 bitmeden execution başlamaz. Korpus, executor-bağımsız detayda yazılır: her adımda dosya yolu, içerik kontratı, "çalıştır → şu çıktıyı gör" doğrulaması — devralan yazar duraksamadan sürdürebilir; ama korpus bitince birincil uygulayıcı YİNE FABLE'dır (12 Temmuz son geceye kadar). *(Devir gerçekleşti: 2026-07-25 itibarıyla yazar Opus 5 — bkz. aşağıdaki model zinciri.)*
 - **Deadline:** 12 Temmuz 2026 = Fable erişiminin son günü. Erken bitirme hedefi; uyku/erteleme yasak. 12'sine yetişmeyen kapsam BACKUP_PLAN protokolüne düşer.
-- **Model zinciri (v9, CEO 2026-07-25 — geçerli hüküm):** **İnşaat yazarı bizzat — oturumu süren model (kadro 2026-09-23'ten beri Opus 5.5, MODEL_ROUTING_SPEC A-2026-09-23). Yedek model katmanı YOKTUR** — hata/timeout durumunda sessizce alt modele düşülmez, iş `blocked` raporuyla CEO'ya çıkar. **Sonnet DEFEDİLDİ** inşaat yazarlığında (hiçbir rol; ürün runtime'ında serbest — MODEL_ROUTING_SPEC §4b). Haiku yalnız mekanik getir-götür. *(Tarihsel: v6 zinciri "Fable bizzat → en kötü ihtimal Opus 4.8" idi; 2026-07-25'te yazarlık Opus 5'e devredildi ve yedek katman kaldırıldı — U20.)*
+- **Model zinciri (v9, CEO 2026-07-25 — geçerli hüküm):** **İnşaat yazarı bizzat — oturumu süren model (kadro 2026-09-23'ten beri Opus 5.5, MODEL_ROUTING_SPEC A-2026-09-23). Construction authorship has no backup-model layer (YOKTUR)** — hata/timeout durumunda sessizce alt modele düşülmez, iş `blocked` raporuyla CEO'ya çıkar. The holding's runtime is not covered by this line: its backup is the B64 backup pair, Opus 5.5 ⇄ Fable 5.1 (decision 13), never a weaker model. <!-- CEO-OK: b64-decision13-backup-pair-opus-fable-2026-10-14 --> **Sonnet DEFEDİLDİ** inşaat yazarlığında (hiçbir rol; ürün runtime'ında serbest — MODEL_ROUTING_SPEC §4b). Haiku yalnız mekanik getir-götür. *(Tarihsel: v6 zinciri "Fable bizzat → en kötü ihtimal Opus 4.8" idi; 2026-07-25'te yazarlık Opus 5'e devredildi ve yedek katman kaldırıldı — U20.)*
 - **Öncelik:** Outleteuro DEĞİL — her şey bitince İLK PİLOT çalışma (CEO Faz 11). **Tanım (CEO sözlü düzeltmesi, 2026-07-10 ~20:45):** Outleteuro, şirketin MEVCUT e-ticaret sitesidir (WooCommerce/WordPress üzerinde yapılmış; kalitesi düşük). Holding OS tamamlanınca holdingin uzmanları önce bu siteyi MÜKEMMELLEŞTİRİR, sonra tam otonom işletmeye alır: alışlar + satışlar dahil tam otonom mağaza. Bu aşamada Outleteuro, holdingden doğan AYRI bir alt-OS (spawn) şirket olur. Önceki "holdingin yöneteceği ilk şirket projesi" ifadesi bu tanımla düzeltilmiştir.
 
 ## 3. KANITLI VARLIK ENVANTERİ (ne var — mevcut-durum eşlemesi)
@@ -34,9 +34,9 @@ Kanıt tabanı: repo durumu 2026-07-10, commit `3744db8` sonrası. Doğrulama ko
 | Varlık | İçerik | Kanıt komutu → beklenen |
 |--------|--------|------------------------|
 | Postgres şeması (19 migration) | 18 tablo: `agents, approvals, audit_log, budget_state, cost_ledger, crm_clients, crm_contacts, crm_deals, crm_requests, departments, intents, memory_embeddings, memory_index, outbox, routing_rules, task_events, tasks, tool_pins` | `ls db/migrations \| wc -l` → 19; `grep -rhoiE "create table [a-z_]+" db \| sort -u \| wc -l` → 18 |
-| `packages/kernel` | İntent→plan→task döngüsü, pg-boss üstünde | `ls packages/kernel/src` → dosyalar |
+| `packages/kernel` | İntent→plan→task döngüsü, pg-boss üstünde. Since B64 (2026-10-14): his goal enters as Hamza's brief and the owning head writes the plan ([[AGENT_ORCHESTRATION_SPEC]] B64) <!-- OPEN: B64 --> | `ls packages/kernel/src` → dosyalar |
 | `packages/orchestrator` | Görev yönlendirme + routing_rules tüketimi | `ls packages/orchestrator` |
-| `packages/outbox-executor` | Dışa dönük aksiyonların TEK çıkış kapısı (onay sonrası) | `ls packages/outbox-executor` |
+| `packages/outbox-executor` | The one exit for outward actions the holding's own workers take (after approval where the action needs one); Hermes's computer work is the second, named path (B64 decision 15, SECURITY_MODEL O2) <!-- CEO-OK: b64-decision15-hermes-holding-hands-and-eyes-2026-10-14 --> | `ls packages/outbox-executor` |
 | `packages/memory-router` | 4-store kompozisyon (06-02 spike 20/20) | `ls packages/memory-router` |
 | `packages/gateway` + `packages/dxb-mcp` | MCP gateway + 8 DXB MCP, departman-başı least-privilege profiller (14 profil) | `ls packages/gateway packages/dxb-mcp` |
 | `packages/shared` | Zod şemaları, ortak tipler | `ls packages/shared` |
@@ -50,7 +50,7 @@ Kanıt tabanı: repo durumu 2026-07-10, commit `3744db8` sonrası. Doğrulama ko
 | `apps/dashboard` (Next.js 16.2, React 19) | Faz 8 MACHINE-COMPLETE; ana kokpit CEO tarafından RET (yüzeysel) | Shell + sayfalar SIFIRDAN (CEO_COMMAND_CENTER_SPEC); altyapı (auth, Supabase SSR, i18n çifti EN birincil/TR tam, Broadcast) KALIR |
 | Login "Golden Threshold" | CEO: "güzel, kalabilir" | KALIR + 3D hover upgrade (spec'e girer) |
 | Approvals okunur payload (`3744db8`) | Canlı | KALIR; APPROVAL_ENGINE_SPEC genişletir (alan-haritası dışı payload alanları asla gizlenmez — ham JSON audit disclosure'da her zaman erişilir) |
-| `apps/jarvis` + Speaches | Faz 9 wave 1 ✓ (09-01, 09-02); 09-03..05 DURDU | Ertelendi — kayıtlı sapma; korpus sonrası roadmap re-baseline |
+| `apps/jarvis` + Speaches | Faz 9 wave 1 ✓ (09-01, 09-02); 09-03..05 DURDU | Ertelendi — kayıtlı sapma; korpus sonrası roadmap re-baseline. **Since 2026-07-17** (roadmap R3.1 ✓) the voice line runs, and since 2026-07-24 it lives inside `/chat`; his voice is one of the four doors in (B64 decision 1) |
 
 ### 3.3 Bilgi/yönetişim katmanı — HAMMADDE
 
@@ -112,7 +112,7 @@ Her workstream = spec seti + execution paketi. Bağımlılık oku: üsttekiler a
 | 9 | Library + skills + plugins + memory | Kısmi: memory-router; library YOK | YENİ+GENİŞLER (WS-G) |
 | 10 | Test + kalite + güvenlik + production readiness | Kısmi: faz-başı verification vardı | GENİŞLER (WS-H); güvenlik SERTLEŞTİRME ertelenmiş sicilde |
 | 11 | Outleteuro pilotu: mevcut WooCommerce/WordPress e-ticaret sitesi holding uzmanlarınca mükemmelleştirilir, tam otonom mağazaya (alış+satış) dönüştürülür, AYRI bir alt-OS spawn şirket olarak doğar (CEO sözlü düzeltmesi 2026-07-10) | Roadmap Faz 11 (satış motoru) ile örtüşür | SONRA — holding bitmeden başlamaz; her şey bitince İLK PİLOT |
-| — | JARVIS voice (mevcut Faz 9) | CEO fazlarında görünmüyor | Ertelendi (09-03..05); korpus sonrası re-baseline'da yeri CEO'ya sorulmaz, IMPLEMENTATION_ROADMAP'te "sistem sonrası" dilimine yazılır — kayıtlı uyarlama U4 |
+| — | JARVIS voice (mevcut Faz 9) | CEO fazlarında görünmüyor | Ertelendi (09-03..05); korpus sonrası re-baseline'da yeri CEO'ya sorulmaz, IMPLEMENTATION_ROADMAP'te "sistem sonrası" dilimine yazılır — kayıtlı uyarlama U4. Voice v1 shipped 2026-07-17 (R3.1); his voice is one of the four doors in (B64 decision 1) |
 
 ## 7. DEADLINE STRATEJİSİ (12 Temmuz)
 

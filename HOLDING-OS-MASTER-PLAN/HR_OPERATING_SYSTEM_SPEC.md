@@ -13,7 +13,7 @@ HR = holding'in AI çalışan yaşam döngüsü motoru: oluşturma → donatma �
 |------------------|-----------|
 | Çalışan oluşturma | `fn_hr_create_employee` — `draft` durumda doğar |
 | Persona oluşturma · Sicil oluşturma | EMPLOYEE_PERSONA akışı (`fn_persona_submit` + sicil satırı otomatik) |
-| Model atama · Departmana atama · Müdüre bağlama | create/move fn parametreleri (ORG fn'lerine delege — ikinci yazım yolu yok) |
+| Model atama · Departmana atama · Müdüre bağlama | create/move fn parametreleri (ORG fn'lerine delege — ikinci yazım yolu yok). A head's or a manager's brain is never assigned below Opus 5.5 at `high`, the default brain included, and the model guide is handed to every head (owner: [[MODEL_ROUTING_SPEC]] §4f and A-2026-10-14 items 1 and 3; B64 decisions 2 and 11) <!-- CEO-OK: b64-decisions-1-5-8-9-11-12-16-his-yes-2026-10-14 --> <!-- OPEN: B64 --> |
 | Yetki atama · Skill atama · Plugin atama · Tool erişimi | `library_grants` + MCP profil bağlama (`fn_hr_grant`) |
 | Eğitim verme | eğitim paketi = persona revizyonu + library `training` item ataması; `training_needs` düşülür |
 | Performans değerlendirme | günlük HR job'ı: run/violation/review verisinden KPI skoru → `performance_history` |

@@ -31,7 +31,7 @@ T = teslimat/takvim · K = kalite/model · Ş = şema/veri · A = altyapı/kayna
 | R08 | A | Broadcast fırtınası UI/Realtime boğar | O | D | Kanal debounce (1s/5s) + sanal liste → poll fallback 30 sn | system kanalı düşen-yayın sayacı | EVENT_MODEL |
 | R09 | A | Log hacmi diski doldurur | O | O | 180g retention + özet damıtma + tampon → prune; disk %80 alarm | System Health disk | AUDIT §25 |
 | R10 | A | pg-boss transaction-pooling yanlış config (bilinen tuzak) | D | Y | STACK.md sert kural: session-mode 5432; L2 bağlantı testi → config düzelt, kuyruk DB'de kayıpsız | pg-boss bağlantı hatası | STACK.md |
-| R11 | K | Token bütçesi execution sırasında tükenir (Fable penceresi) | O | Y | Kompakt cadence + inline tek akış (subagent yasağı zaten) → bütçe-fallback: Opus 4.8 + Fable planı | usage uyarıları | model-routing v6 |
+| R11 | K | A subscription's quota runs out in the middle of work | O | Y | Quota awareness — the 5-hour and weekly windows read before work, a full subscription shown `full`, never `ready` → the backup pair takes the work; at 95 % of Fable's quota a second subscription is proposed at his gate; no work falls to a weaker model (B64 decision 13; the July Opus 4.8 budget-fallback was cancelled 2026-07-25) | usage windows; `routing_fallback` decision lines | [[MODEL_ROUTING_SPEC]] A-2026-10-14 · [[COST_CONTROL_SPEC]] A7 |
 | R12 | G | Tek-faktör CEO girişi (S1 kabul edilen) | D | Y | SECURITY sicil tetiği; para-çıkışı ayrı kapı telafisi → oturum iptali + anahtar rotasyonu | anomali: beklenmeyen approval/karar | SECURITY §16 |
 | R13 | G | Bilinen bekleyen credential rotasyonu (S6 — bir kez sızmış token) | Y | O | CEO checklist kalemi; Outleteuro öncesi zorunlu gözden geçirme → rotasyon + eski anahtar 401 kanıtı | checklist durumu | SECURITY S6 |
 | R14 | O | CEO göz testi RET (tasarım öznel kapısı) | O | O | Referans çapaları (A1, §3, Golden Threshold emsali) + §35 ön-kontrol → madde-bağlı RET döngüsü | E13.2 sonuçları | ACCEPTANCE §17 |
@@ -43,6 +43,7 @@ T = teslimat/takvim · K = kalite/model · Ş = şema/veri · A = altyapı/kayna
 | R20 | O | Kabul edilen ekranlarda sonradan regresyon | O | O | Kabul dondurmaz — L5 senaryoları kabul edilen ekranları da korur → RET döngüsü yeniden | L5 koşuları | ACCEPTANCE §27 |
 | R21 | K | Opus test assert'lerini gevşetir (sessiz kalite erozyonu) | D | Y | Assert-sayısı-düşemez kapısı + test diff'i evidence kapsamında → diff revert + yeniden yazım | sayaç denetimi | TEST §27 |
 | R22 | T | Opus 5 Hook policy içeriği yetişmez (E10, persona ailesine bağlı) | O | O | Geçici çözüm kayıtlı: spawn-sarmalayıcı + policy tablosu v1 (BACKUP §6) → tam gates sonra | E10 durum | FABLE_5_HOOK |
+| R23 | G | Hermes falls for an instruction hidden in an open web page and touches the holding's data — his accepted risk: no restriction on Hermes, B64 decision 15 <!-- CEO-OK: b64-decision15-hermes-holding-hands-and-eyes-2026-10-14 --> | D | Y | Measured on Anthropic's 1,100-attempt test: Opus 5.5 fell once. Remedy instead of a restriction: every change Hermes makes is recorded and reversible; Docker keeps a mistake from breaking the rest of the server; money, contracts, identity and an outward critical step stop at his gate; what it brings back is information, never an order; its 20-job trial includes a page hiding an instruction → the change is undone from the record, and the page is reported to him | Hermes's change record; the 20-job trial | [[SECURITY_MODEL]] §16 <!-- OPEN: B11 --> |
 
 ## 5-12. Component/Backend/Frontend/API/Event/State/Tablolar/İlişkiler
 
@@ -66,7 +67,7 @@ Gerçekleşen risk = önce tablodaki "gerçekleşirse" kolonu, sonra [[RECOVERY_
 
 ## 20. Test planı / 21. Acceptance criteria
 
-Bu sicilin kabulü: 22 satır dolu (olasılık/etki/karşılık/izleme/sahip eksiksiz) + MASTER_PLAN §9'un 5 omurga riski kapsanmış (R01, R02, R03/R05, R07 eşlemesi) + SECURITY kabul-yüzeyi satırları mevcut (R12, R13).
+Bu sicilin kabulü: her satır dolu (kabulde 22; R23 eklendi 2026-10-14, B64) (olasılık/etki/karşılık/izleme/sahip eksiksiz) + MASTER_PLAN §9'un 5 omurga riski kapsanmış (R01, R02, R03/R05, R07 eşlemesi) + SECURITY kabul-yüzeyi satırları mevcut (R12, R13).
 
 ## 22. Migration / 23. Rollback
 
@@ -75,7 +76,7 @@ Yok (kayıt dosyası); dogfood taşıması §5-12'de tanımlı.
 ## 24. Uygulama sırası (doğrulamalı)
 
 ```bash
-grep -c "^| R[0-9]" HOLDING-OS-MASTER-PLAN/RISK_REGISTER.md    # → 22
+grep -c "^| R[0-9]" HOLDING-OS-MASTER-PLAN/RISK_REGISTER.md    # → 23
 grep -c "KAPANDI" HOLDING-OS-MASTER-PLAN/RISK_REGISTER.md      # → kapanış sayısı (zamanla artar)
 ```
 

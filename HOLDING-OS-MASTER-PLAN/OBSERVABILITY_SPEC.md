@@ -91,7 +91,7 @@ Madde 5.2 eşleme kontrolü: 20 sorunun kaynağı — kim/görev/veren/workflow/
 > **Registered adaptations — E8.4b (2026-07-13, ticket `.planning/quick/20260713-e84b-alert-center/`):**
 > A1. `alerts` additive columns: `dedup_key` (unique WHERE resolved_at IS NULL — storm dedup, §26), `run_id`/`task_id`/`source_ref jsonb` (§12 "gevşek bağ" made concrete: envelope corr + drill target), `escalated_at`/`escalated_from` (GAP-10 escalation), `muted_until` (API_CONTRACTS `mute` op = per-alert snooze).
 > A2. Escalation defined (GAP-10): unacknowledged past per-level deadline (settings `alerts.escalate_after_minutes`, default attention 240m / high 60m / critical 15m) → ONE level bump (…→emergency), swept by `fn_alerts_evaluate()`; time-based checks (queue age, heartbeat, escalation) live in that fn — Phase-7 pg-boss 'alert-evaluate' job adopts it (R3 held).
-> A3. Single broadcast producer: alerts-table trigger emits alert.raised/acknowledged/resolved/escalated; every source (run failure, cost 70/90/100, budget stop, fallback ≥2/exhausted, flagged review, obs spill, evaluate fn) INSERTs a row instead of broadcasting directly.
+> A3. Single broadcast producer: alerts-table trigger emits alert.raised/acknowledged/resolved/escalated; every source (run failure, cost 70/90/100, budget stop, both brains down / both gate seats down / Hermes waiting for its brain (B64 A3), flagged review, obs spill, evaluate fn) INSERTs a row instead of broadcasting directly.
 > A4. Heartbeat source = `system_health_snapshots` freshness (table created in E8.4b; probe job Phase 7); empty table → no alert (honest pre-Phase-7 state).
 > A5. Alert title/cause/action strings are system artifacts in ENGLISH (language directive); UI chrome fully bilingual — same data-vs-chrome rule as audit payloads and task objectives.
 > A6. Success supersedes the failure alarm (CEO order 2026-07-18 eye session, migration `20260718210000`): when a task transitions to `done`, its still-active `task_id`-bound alerts auto-resolve with an explicit mitigation note (`trg_alert_supersede_on_task_done`). Rides the A3 single-producer trigger for `alert.resolved` broadcasts. Scope: task-bound alerts only — cost/budget/hook/obs alerts keep their own lifecycles. Precedent: E12.5 wave left 123 success-superseded alarms burying 7 real criticals; manual governed sweep (control_alerts_action ×123, audit +123) preceded this permanent rule.
@@ -129,6 +129,8 @@ Reads: `v_live_operations`, `v_agent_run_detail(id)`, `v_health_current`, `v_ale
 | decision eklendi | `ops:live` | `{decision_id, kind, actor}` |
 | alert insert/ack/resolve | `alerts` | `{alert_id, level, title}` |
 | health snapshot | `ops:live` (60sn'de 1) | kompakt sağlık özeti |
+| backup switch (B64) | `ops:live` | `{run_id, from, to, effort, reason}` — `run.brain_switched` |
+| job opened / done / replanned / stopped / cancelled (B64) | `ops:live` | `{job_id, owner, state}` — [[EVENT_MODEL]] B64 |
 
 Trigger→Broadcast deseni 0013 emsali; debounce SYSTEM_ARCHITECTURE §26.
 
@@ -142,7 +144,7 @@ UI'da gözlem verisi cache'lenmez (kaynak DB + delta); yalnız görünüm tercih
 
 ## 13. Yetkilendirme
 
-Okuma: `ceo` tam; ajanlar kendi run scope'unu okur (RLS: employee_id eşleşmesi — memory router'ın bağlam ihtiyacı). Yazma: yalnız `system` rolü (worker); `ceo` yalnız alerts ack/resolve + run pause/cancel.
+Okuma: `ceo` tam; ajanlar kendi run scope'unu okur (RLS: employee_id eşleşmesi — memory router'ın bağlam ihtiyacı). One named exception: the one dream reads every employee's runs of the day, Hermes's included, each night (B64 A4). Yazma: yalnız `system` rolü (worker); `ceo` yalnız alerts ack/resolve + run pause/cancel.
 
 ## 14. Logging / 15. Audit
 
@@ -206,6 +208,15 @@ The CEO approved the studio's clock on 2026-09-13 <!-- CEO-OK: time-line-retired
 **Why it is registered rather than left on the row.** A measurement the CEO relies on must be findable from the spec that owns measurement, not from a 7,961-word board row. The clock's environment knob `DXB_LANE_REST_SECONDS` and the QA judge's own time `judge_ms` are registered with the orchestration that produces them (AGENT_ORCHESTRATION A22).
 
 **The gap, named and not closed here.** Nothing of the studio reaches the CEO's observability *screens* — there is no panel, no retention rule and no alert threshold for a sheet that runs over its budget; `seats_over_budget` is computed and read by a tool, seen by no eye. **Who closes it:** the studio's screen plan (W14), on his word.
+
+## Registered adaptations — B64 how work reaches the holding (2026-10-14)
+
+Design: `.planning/quick/20261012-b64-is-akisi/is-akisi.html` (v15). Nothing below is built yet. <!-- OPEN: B64 -->
+
+1. **Hermes is alive and simple (E24).** <!-- CEO-OK: b64-decision15-hermes-holding-hands-and-eyes-2026-10-14 --> Hermes's work is recorded as runs like every worker's (its identity on the run: schema at build), so the screen lights it up and names it while it works and leaves it still when it rests — motion is state. On his screen it shows nothing more: no model, no duration, no detail in his eye ([[CEO_COMMAND_CENTER_SPEC]] B64); the detail stays in `AgentRunDrawer` for his own drill-down.
+2. **Quota awareness (E29(3), in B64's plan for his yes; the 95 % trigger is decision 13).** <!-- CEO-OK: b64-decision13-backup-pair-opus-fable-2026-10-14 --> `system_health_snapshots.provider_status` carries, per subscription, how much of the 5-hour and the weekly window remains; a full subscription is shown "full", never "ready"; at 95 % of Fable's quota decision 13's alert is raised, and the second subscription it asks for is money out at his gate. `agent_runs.model_id` names the model that really did the work — after a backup switch, the backup's.
+3. **Alerts for the brains (E18, E22, E25).** <!-- CEO-OK: b64-decisions-1-5-8-9-11-12-16-his-yes-2026-10-14 --> Both brains down → an alert: client-bound work waits and he is told. Both gate seats down (Sol 6.1 and Fable 5.1) → an alert: client-bound work waits. Hermes's work waiting for its brain → an alert carrying "Hermes'in beyni şu an kapalı, işiniz sırada". The backup switch itself is not an alert: it is recorded ([[AUDIT_AND_LOGGING_SPEC]] B64 A2) and published (`run.brain_switched`, §9).
+4. **The dream's read (E26).** <!-- CEO-OK: b64-decision18-one-dream-holding-wide-2026-10-14 --> The one dream reads every employee's runs of the day, Hermes's included, each night — the named exception to §13's "an agent reads only its own run scope". It reads and proposes; it never writes memory itself ([[MEMORY_ARCHITECTURE]] B64).
 
 ## Done definition (bu spec)
 

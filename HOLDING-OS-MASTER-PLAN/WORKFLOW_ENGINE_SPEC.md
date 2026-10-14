@@ -4,7 +4,7 @@
 
 ## 1. Amaç
 
-pg-boss üstünde CEO-görünür ve CEO-düzenlenebilir **deklaratif workflow varlığı**: bugün kod-tanımlı job zincirleri, DB'de yaşayan `workflows/workflow_steps` kayıtlarına taşınır; CEO dashboard'dan oluşturur, düzenler, kopyalar, durdurur, yeniden başlatır — kod dokunuşu olmadan (madde 2 "Bir workflow'u durdurabilmeli/yeniden başlatabilmeli" hükmünün motoru).
+pg-boss üstünde CEO-görünür ve CEO-düzenlenebilir **deklaratif workflow varlığı**: bugün kod-tanımlı job zincirleri, DB'de yaşayan `workflows/workflow_steps` kayıtlarına taşınır; CEO dashboard'dan oluşturur, düzenler, kopyalar, durdurur, yeniden başlatır — kod dokunuşu olmadan (madde 2 "Bir workflow'u durdurabilmeli/yeniden başlatabilmeli" hükmünün motoru). A line's owner — the head of its department — may also change its own line's definition, within the limits he drew (B64 A7).
 
 ## 2. Gereksinimler (madde 6.4 → karşılık)
 
@@ -31,7 +31,7 @@ trigger (cron | event | manual)
         approval → approvals satırı aç → run status='waiting_approval' (PARK, retry değil)
         review   → reviewer çalışan koşusu; verdict fail → yapılandırılmış aksiyon (§17)
         retry    → önceki adım için policy uygula (max_attempts, backoff)
-        fallback → alternatif adım/slot zincirine geç
+        fallback → alternatif adım zincirine geç (a model's failure is not this step's — the backup pair, AGENT_ORCHESTRATION A31)
       her geçiş: workflow_runs.status + task_events/agent_runs satırları + Broadcast (ops:live)
 ```
 
@@ -72,7 +72,7 @@ DATA_MODEL 4.4 + kayıtlı ek: `workflow_runs.steps_snapshot jsonb NOT NULL DEFA
 
 ## 13. Yetkilendirme
 
-Workflow CRUD yalnız CEO (control seam); `run_now` CEO veya sistem (cron/event); ajanlar workflow tanımını DEĞİŞTİREMEZ (gateway profillerinde workflow yazım fn'i yok). Çalışan ataması v2-persona-aktif kontrolünden geçer (HR kuralı fn içinde).
+Workflow CRUD: the CEO (control seam), and a line's owner for its own line only, within the limits he drew — those limits stay his (B64 A7; decision 9 <!-- CEO-OK: b64-decisions-1-5-8-9-11-12-16-his-yes-2026-10-14 -->); `run_now` CEO veya sistem (cron/event); no other agent changes a workflow definition (gateway profillerinde workflow yazım fn'i yok). Çalışan ataması v2-persona-aktif kontrolünden geçer (HR kuralı fn içinde).
 
 ## 14. Logging / 15. Audit
 
@@ -86,9 +86,9 @@ Adım config'inde secret taşınamaz (Zod şemaları credential alanı içermez;
 
 - Adım hatası sınıflaması SYSTEM_ARCHITECTURE §17 üçlüsü: transient → retry adımı/policy; policy (hook reddi) → escalation (FABLE_5_HOOK zinciri); fatal → run failed + `alerts` kanalına `alert.raised`.
 - Retry adımı: `{max_attempts, backoff_s, on_exhaust: 'fail'|'fallback'|'escalate'}`.
-- Fallback adımı: `{alternate_steps:[...]}` — ana adım tükenince alternatif zincir; model fallback'i AYRI mekanizmadır (model_catalog zinciri, orchestrator içinde).
-- Bütçe/token/timeout enforcement: adım başlamadan `cost_ledger` koşu toplamı kontrol (aşımda run `failed`, sebep `BUDGET_EXCEEDED`); token_limit LiteLLM virtual key üstünden koşu-etiketli sayaç; timeout_s pg-boss job `expireInSeconds` karşılığı (approval parkı hariç).
-- Review adımı fail: `{on_fail:'retry_prev'|'fallback'|'escalate'|'fail'}` — varsayılan `escalate`.
+- Fallback adımı: `{alternate_steps:[...]}` — ana adım tükenince alternatif zincir; a model's failure is a separate mechanism — the backup pair, never a weaker model; the old `model_catalog` fallback chain closes (B66; AGENT_ORCHESTRATION A31).
+- Bütçe/token/timeout enforcement: adım başlamadan `cost_ledger` koşu toplamı kontrol — a model with no price makes the total unknown, never 0, and a budgeted run waits until a price is entered; alerts at 70 % and 90 %; at 100 % a non-critical run stops before its next step (`BUDGET_EXCEEDED`) (B64 A10); token_limit LiteLLM virtual key üstünden koşu-etiketli sayaç; timeout_s pg-boss job `expireInSeconds` karşılığı (approval parkı hariç).
+- Review adımı fail: `{on_fail:'retry_prev'|'fallback'|'escalate'|'fail'}` — varsayılan `retry_prev`, the review's notes riding the retry; `escalate` reaches the line's owner, and him only as a morning exception (B64 A9).
 
 ## 20. Test planı / 21. Acceptance criteria
 
@@ -137,7 +137,9 @@ psql "$DB" -c "SELECT status FROM workflow_runs ORDER BY started_at DESC LIMIT 1
 > with P7; until then `SUM(tokens_in+tokens_out)` / `SUM(cost_eur)` over the
 > run's `agent_runs` rows is the enforcement source (single-source cost rule
 > intact). Timeout excludes approval-park time by subtracting decided
-> approvals' open intervals.
+> approvals' open intervals. Since B64 a row whose model carries no price
+> makes this sum unknown, never 0 — and a budgeted run waits on it (A10
+> below). <!-- OPEN: B64 -->
 > **A5 — snapshot result bookkeeping:** the runner appends a `result`
 > object into the run's own `steps_snapshot` entry as each step closes —
 > run-record bookkeeping (what resume/review read), not definition drift;
@@ -163,7 +165,16 @@ Measured on the company engine, 2026-09-15: the `workflows` table holds **0** ro
 
 **What it costs the CEO, named.** Because the **production line** is not an entity, he cannot see the studio's order of work from the cockpit, and he cannot change it without a persona being rewritten. That is the opposite of the third face of this product — *he changes anything at any moment*.
 
-**The gap, named and not closed here.** Either the **dispatch book** gains a stored, CEO-editable template for the standard ten steps (a `workflows` row the director instantiates and may deviate from, with the deviation recorded), or the studio's screen gives him the order as an editable object. Both are builds. **Who closes it:** W14 with the screen plan, on his word.
+**The gap, named and not closed here.** Either the **dispatch book** gains a stored, CEO-editable template for the standard ten steps (a `workflows` row the director instantiates and may deviate from, with the deviation recorded), or the studio's screen gives him the order as an editable object. Both are builds. **Who closes it:** the stored template is B64's registered pattern (A8 below), closed when it is built; the screen that shows him the order stays with W14's screen plan.
+
+## Registered adaptations — B64 how work reaches the holding: lines and patterns (2026-10-14) <!-- CEO-OK: b64-decisions-1-5-8-9-11-12-16-his-yes-2026-10-14 -->
+
+Source: his design page v15, `.planning/quick/20261012-b64-is-akisi/is-akisi.html` — every decision answered and registered. The law the build follows; none of it is built yet. <!-- OPEN: B64 --> Measured 2026-10-12: 0 workflows, 0 steps, 0 runs; only 15 maintenance jobs run on the scheduler.
+
+- **A7 — A line is recurring work with an owner (decision 9).** A calendar or an event starts a line's run through its line card (`workflows.trigger` cron | event); every run is a small job and passes the same checks as any job (AGENT_ORCHESTRATION A28). The line's owner — the head of its department — may change the line's definition within the limits he drew; the limits themselves stay his: the line's autonomy step (the four boxes and his step decision, board row B15) and its budget. Every change makes a new `version` (§10), is audited and can be undone. Today only he can change a line.
+- **A8 — A known job type runs from a pattern (decision 2).** A head's registered pattern for a known job type carries the plan, the seats and each part's brain and effort: a simple job runs from it with no plan, and a normal job's first plan is saved as one (AGENT_ORCHESTRATION A30). It is the stored template the B43 gap above names; the owner may deviate, and the deviation is recorded. A line sets its own value tier from its card.
+- **A9 — How a line is checked.** Every part gets the automatic check. A judge (`review` step) stays on a line only until he raises its autonomy step: a line that runs on its own carries automatic checks only, and every job still gets a final check. A failed review returns the work to its owner with the review's notes, riding the retry (§17); it reaches him only as a morning exception.
+- **A10 — Money in a line.** A model with no price makes the cost unknown, never 0 €; a budgeted run waits until a price is entered (COST_CONTROL). Budgets alert at 70 % and 90 %; at 100 % a non-critical run stops before its next step. A model that fails is replaced by the backup pair, never by a weaker model (AGENT_ORCHESTRATION A31).
 
 ## Done definition (bu spec)
 

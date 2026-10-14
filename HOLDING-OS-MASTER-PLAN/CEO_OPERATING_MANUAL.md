@@ -16,6 +16,11 @@ future wave changes a surface, this manual is updated in the SAME commit (single
 sizin göreviniz yönetmek, onaylamak ve gerektiğinde durdurmaktır — babysitting değil.
 Günde ~15 dakikalık bir rutinle tüm holdingi yönetebilirsiniz.
 
+**Holdinge iş verirken hedef verirsiniz** (B64 kurulunca): bir mühendise iş yazar gibi geniş bir
+tarif — ne istendiği, nasıl olacağı, özellikleri. Tek satırlık "niyet" kutusu kalkar. Hamza
+hedefinizi bir tarife çevirir: cümleniz aynen kalır, yanına işin "bitti" ölçütü ve değeri yazılır.
+İşi o işi alan bölümün başkanı yürütür, sonuç aynı konuşmada size gelir.
+
 ## 2. Günlük rutin (sabah, ~15 dk)
 
 1. **Sabah brifingi — Hamza size yazar (W2.6, 2026-07-27'den beri).** Her sabah **07:00'de
@@ -27,6 +32,13 @@ Günde ~15 dakikalık bir rutinle tüm holdingi yönetebilirsiniz.
    **Kapatma anahtarı sizde:** `briefing.proactive.enabled` (ayarlar) ve günlük tavan
    `briefing.proactive.max_per_day`. Aynı brifingi `Intelligence → /intelligence` sayfasında
    sayfa hâlinde de görürsünüz (kaynak: `v_morning_briefing`).
+   **B64 kurulunca brifing değişir:** yalnız istisnalar (kırmızıya dönen, takılan, sizi
+   bekleyen), gelen işlerin tek satırı, Önemli mailler, yaklaşan teslim tarihleri, Hermes'in
+   gece yaptıkları ve rüyanın tek satırı ("Dün gece N iş okundu, 3 şey bulundu, 1'i sizi
+   bekliyor."). Biten işler listelenmez; sonuçlar kendi konuşmalarında size gelir.
+   **Önemli bölmesi** (B64 kurulunca, her sayfada sağ şeritte): müşteriden, resmi bir yerden ya da
+   gerçek bir kişiden gerçek bir konuda gelen mailler. Emin olunamayan mail de buraya gelir,
+   çöpe gitmez.
 2. **Onay kutusu** — `Command → Approvals (/approvals)`. Sol menüdeki rozet bekleyen onay
    sayısını canlı gösterir. Kurallar §5'te.
 3. **Alarmlar** — `Command → Alerts (/alerts)`. Rozet yüksek-riskli bekleyenleri sayar.
@@ -38,8 +50,8 @@ Günde ~15 dakikalık bir rutinle tüm holdingi yönetebilirsiniz.
 
 | Grup | Ne işe yarar | Sayfalar |
 |---|---|---|
-| **Command** | Günlük yönetim masanız | Overview (özet kokpit, widget'lı) · Live (canlı akış) · Intelligence (brifing) · Approvals (onaylar, rozetli) · Alerts (alarmlar, rozetli) · Voice (sesli hat) |
-| **Organization** | Şirketin insanları | Org (harita) · Companies · Departments (21 departman) · Directors · Employees · HR (yaşam döngüsü) |
+| **Command** | Günlük yönetim masanız | Overview (özet kokpit, widget'lı) · Hamza ile Sohbet (/chat — sesli hat da burada) · Live (canlı akış) · Intelligence (brifing) · Approvals (onaylar, rozetli) · Alerts (alarmlar, rozetli) · Karşılama (dışarıdan gelen her mail ve mesaj, Müşteriler görünümüyle — B64 kurulunca) |
+| **Organization** | Şirketin insanları | Org (harita) · Companies · Departments (22 departman) · Directors · Employees · HR (yaşam döngüsü) |
 | **Operations** | İşin kendisi | Projects · Workflows · Tasks (rozetli) · Automations · Runtime |
 | **Intelligence** | Beyin ve bilgi | Models · Orchestration · Memory · Knowledge · Library (Kütüphane) · Skills · Plugins · MCP · Revenue (+Objectives/Opportunities/Portfolio) · CRM |
 | **Governance** | Denetim ve kural | Audit · Decisions · Risks · Policies · Permissions · Security |
@@ -72,6 +84,13 @@ Onay merkezi: `/approvals`. Yedi karar aksiyonunuz var (ölçülü, canlı):
   yeni koşu kanıtıyla döner. "Emin değilim" hissinin doğru düğmesi budur; reddetmek değil.
 - **request_info ne zaman?** Tek bir eksik cevap varsa (maliyet? alternatif?) — talep edene soru döner.
 - 24 saatten uzun bekleyen para-çıkışı onayı otomatik HIGH alarm üretir (para bekletilmez).
+- **B64 kurulunca size gelenler:**
+  - Anlaşması 1.000 $ ve üstü olan her işin teslimi, müşteriye gitmeden önce size gelir. Notunuz
+    olursa düzeltilir. Kartta müşterinin teslim tarihi durur; tarih yaklaşınca Hamza sabah
+    hatırlatır. Bakamayacaksanız tek kelime yeter: "gönderin".
+  - Daha küçük tek seferlik işlerde yalnız her yeni hizmet türünün ilk teslimi size gelir.
+  - Fiyat politikasını ve standart sözleşme metnini bir kez onaylarsınız. Bunlara uyan teklif ve
+    sözleşme size gelmez; uymayan her şey gelir. Reklam harcaması size gelir.
 
 ## 6. Alarm seviyeleri ve doğru tepki
 
@@ -95,6 +114,10 @@ Her alarm satırı olası neden + önerilen aksiyon + sorumlu çalışan taşır
   Costs/Budgets sayfasından durumu görür, bütçe anahtarlarını Control Mode'dan değiştirirsiniz.
 - Departman bütçesi: `department.budget_eur` anahtarı (Settings). Çalışan başı limit:
   `employee.budget_limit_eur`. Görev başı tavan: `orchestrator.max_cost_per_task_eur`.
+- **B64 kurulunca:** bütçe holding → şirket → bölüm → iş diye iner. %70'te ve %90'da uyarı gelir;
+  %100'de kritik olmayan yeni iş durur. Değerli bir işin bütçesi anlaşmanın en fazla %30'udur
+  (1.000 $'lık işte 300 $). Fiyatı bilinmeyen bir model "0 $" sayılmaz, "maliyet bilinmiyor"
+  sayılır. Hermes'e şimdilik harcama sınırı konmaz (15. karar).
 
 ## 8. Acil durum: Global Pause
 
@@ -107,13 +130,38 @@ duraklar: yeni koşu başlamaz, dışa dönük hiçbir adım atılmaz. Bakım i�
 
 - **Model rozeti:** Her çalışan kartında beyin rozeti (hangi model) görünür; direktör/çalışan
   modeli dashboard'dan değiştirilebilir (kayıtlı karar 2026-07-12: şirket RUNTIME beyni serbest).
-- **Yönlendirme anahtarları:** `orchestrator.primary_model`, `orchestrator.qa_model`,
-  `orchestrator.planning_model`… (Settings'te "orchestrator." ailesi; global veya departman
-  kapsamlı). Simülasyon: /ai/models sayfasının sandbox'ı gerçek yazım yapmadan sonucu gösterir.
+  **B64 kurulunca kod şu sınırları korur:** başkanlar ve yöneticiler high'ın altına inmez; Sonnet
+  ve Haiku low'da çalışmaz; max hiçbir yerde varsayılan olmaz; okuduğunuz son metin Opus'un altına
+  inmez (sesli normal konuşma sizin notunuzla Sonnet'te). Bir sınırı aşan seçiminizde holding bir
+  kez uyarır; "devam" derseniz yapılır.
+- **Kim seçer:** Model seçimi yönlendirme kurallarındadır; Settings'teki eski `orchestrator.*`
+  model anahtarları artık yazılmaz. B64 kurulunca her işin her parçası için hangi modelin, hangi
+  düşünme seviyesinde çalışacağını işin sahibi (bölüm başkanı) seçer ve nedenini bir satırla yazar;
+  arada kalırsa rehbere bakar. Koltuklar model adıyla değil rolüyle yazılır: ana beyin, yedek
+  beyin. Bir model düşerse işi öbürü alır (Opus 5.5 ile Fable 5.1 birbirinin yedeği).
+  Simülasyon: /ai/models sayfasının sandbox'ı gerçek yazım yapmadan sonucu gösterir.
 - **Onay eşiği:** `orchestrator.human_approval_threshold` ve `approvals.money_out_gate`
   anahtarları onay davranışını belirler. Bu anahtarları değiştirmek şirketin özerklik
   seviyesini değiştirir — düşünerek dokunun.
 - Her ayar değişikliği: kayıt + kim/ne zaman + UNDO. Aynı değeri tekrar yazmak işlem üretmez.
+
+## 9b. Sözünüz — komutlar (B64 kurulunca)
+
+Hamza'ya sohbette ya da sesle söylersiniz; kendi ekranınızdan da verebilirsiniz. Bu komutlar yalnız
+sizden gelir: bir mailin içindeki yazı ya da Hermes'in getirdiği bir sonuç hiçbir şeyi değiştirmez.
+
+- "Max'a geç" / "High'a in" — Hamza o konu bitene kadar o seviyede düşünür, sonra kendi ayarına döner.
+- "Bu değerli bir iş" — iş "değerli" olur: plan iki kez yazılır, teslim müşteriden önce size gelir.
+- "Bütün müdürleri xhigh yap" — Hamza değişikliği tek kayıtlı kapıya iletir; kapı uygular ve
+  kaydeder. Hamza: "22 müdür xhigh'a geçti; geri almak için 'geri al' deyin."
+- "Beni mühendislik başkanına bağla" — o başkanla Hamza'yla konuştuğunuz gibi konuşursunuz.
+  Konuşmadan bir iş doğarsa sahibi o başkandır; Hamza konuşmayı bilir.
+- "Sitenin neresindesiniz, tasarımı getirin" — Hamza işin durumunu ve son hâlini aynı konuşmaya getirir.
+- "Gönderin" — sizi bekleyen bir teslim müşteriye gider.
+- **Sözünüz bir kuralla çelişirse** holding bir kez uyarır: "Bu şu kuralla çelişiyor, yine yapayım
+  mı?" Sorarsanız nedenini ve ne zararı olabileceğini söyler. Siz "kurala göre yap" ya da "devam et"
+  dersiniz. "Devam" bir kerelik istisnadır; kural silinmez, siz "bu kuralı kaldır, şunu koy" diyene
+  kadar yerinde kalır.
 
 ## 10. Göz testi ve design-bank döngüsü
 
@@ -125,10 +173,17 @@ duraklar: yeni koşu başlamaz, dışa dönük hiçbir adım atılmaz. Bakım i�
 
 ## 11. Sesli hat (Voice) — dürüst durum
 
-`Command → Voice (/voice)`: bas-konuş ile bir direktöre soru sorarsınız, kayıtlı sesle cevap
-döner (€0 hat). **Açık kusur defteri var (U15):** STT gecikmeleri ve yanlış-dil çözümlemesi
-ölçüldü; çözüm planı `00-NOTE-R32-VOICE-REMEDIATION-PLAN` — sizinle ortak test seansı
-gerektirir. O kapanana kadar sesli hat "çalışır ama pürüzlü" statüsündedir.
+`Command → Hamza ile Sohbet (/chat)`: sesli hat bu sayfadadır (24 Temmuz'dan beri `/voice` buraya
+yönlenir). Tıkla-konuş; Hamza kendisi cevap verir. Listeden bir başkan seçerseniz o başkan kendi
+kayıtlı sesiyle cevap verir (€0 hat). **Açık kusur defteri var (U15):** STT gecikmeleri ve
+yanlış-dil çözümlemesi ölçüldü; çözüm planı `00-NOTE-R32-VOICE-REMEDIATION-PLAN` — sizinle ortak
+test seansı gerektirir. O kapanana kadar sesli hat "çalışır ama pürüzlü" statüsündedir.
+
+**B64 kurulunca:** "Beni şu başkana bağla" dediğinizde — sohbette de seste de — o başkanla
+Hamza'yla konuştuğunuz gibi konuşursunuz; konuşma panoda durur, Hamza da bilir. Hamza normal
+konuşmada orta seviyede düşünür; plan konuşulunca kendisi bir üst seviyeye geçer ve söyler. Uzun
+düşünürken önce "Düşünüyorum, Muhittin Bey" der, uzun cevabı ekrana da koyar. Hedef: Hamza'nın
+sesi 1–1,3 saniyede gelir.
 
 ## 12. Bir şey ters giderse
 
@@ -148,6 +203,12 @@ The single source for operating your company cockpit. The company runs 24/7 on i
 job is to direct, approve, and — when needed — stop it. A ~15-minute daily routine governs
 the whole holding.
 
+**You give the holding a goal** (with B64's build): a broad brief, the way a task is written for an
+engineer — what is wanted, how it should be, its features. The one-line "intent" box goes. Hamza
+turns your goal into a brief: your sentence stays verbatim, beside it the job's "done" criteria and
+its value. The head of the department that takes the job runs it, and the result comes back to you
+in the same conversation.
+
 ## 2. Daily routine (morning, ~15 min)
 
 1. **Morning briefing — Hamza writes to you (W2.6, since 2026-07-27).** Every morning at
@@ -159,6 +220,13 @@ the whole holding.
    **You hold the switch:** `briefing.proactive.enabled` plus the daily ceiling
    `briefing.proactive.max_per_day`. The same briefing is also a page:
    `Intelligence → /intelligence` (source: `v_morning_briefing`).
+   **With B64's build the briefing changes:** only the exceptions (turned red, stuck, waiting on
+   you), one line on what came in, the Important mails, due dates coming close, what Hermes did
+   overnight, and the dream's one line ("Dün gece N iş okundu, 3 şey bulundu, 1'i sizi
+   bekliyor."). Finished work is not listed; results reach you in their own conversations.
+   **The Important pane** (with B64's build, in the right rail on every page): mail from a client,
+   an official body, or a real person on a real matter. A mail the sorter is unsure of lands here
+   too, never in the bin.
 2. **Approval inbox** — `Command → Approvals (/approvals)`. The sidebar badge counts pending
    approvals live. Rules in §5.
 3. **Alerts** — `Command → Alerts (/alerts)`. The badge counts high-risk pending items.
@@ -170,8 +238,8 @@ the whole holding.
 
 | Group | Purpose | Pages |
 |---|---|---|
-| **Command** | Your daily desk | Overview (widget cockpit) · Live · Intelligence (briefing) · Approvals (badged) · Alerts (badged) · Voice |
-| **Organization** | The company's people | Org · Companies · Departments (21) · Directors · Employees · HR (lifecycle) |
+| **Command** | Your daily desk | Overview (widget cockpit) · Chat with Hamza (/chat — the voice line lives here) · Live · Intelligence (briefing) · Approvals (badged) · Alerts (badged) · Reception (every inbound mail and message, with the Customers view — with B64's build) |
+| **Organization** | The company's people | Org · Companies · Departments (22) · Directors · Employees · HR (lifecycle) |
 | **Operations** | The work itself | Projects · Workflows · Tasks (badged) · Automations · Runtime |
 | **Intelligence** | Brain & knowledge | Models · Orchestration · Memory · Knowledge · Library · Skills · Plugins · MCP · Revenue (+Objectives/Opportunities/Portfolio) · CRM |
 | **Governance** | Audit & rules | Audit · Decisions · Risks · Policies · Permissions · Security |
@@ -203,6 +271,13 @@ Approval center: `/approvals`. Seven decision actions (measured live):
 - **When request_info?** One specific answer is missing (cost? alternative?) — a question
   returns to the requester.
 - A money-out approval pending > 24h auto-raises a HIGH alert (money must not sit).
+- **What reaches you with B64's build:**
+  - Every delivery of a job whose deal is 1,000 $ or more reaches you before the client. A note
+    from you → it is corrected. The card carries the client's due date; as it nears, Hamza reminds
+    you in the morning. If you cannot look, one word is enough: "gönderin".
+  - In smaller one-off jobs, only the first delivery of each new service type reaches you.
+  - You approve the price policy and the standard contract text once. Offers and contracts inside
+    them no longer reach you; everything outside does. Ad spend reaches you.
 
 ## 6. Alert levels and the correct response
 
@@ -226,6 +301,10 @@ Every alert carries probable cause + suggested action + responsible employee. Mu
   on Costs/Budgets; change budget keys in Control Mode.
 - Department budget: `department.budget_eur`. Per-employee: `employee.budget_limit_eur`.
   Per-task ceiling: `orchestrator.max_cost_per_task_eur`.
+- **With B64's build:** the budget descends holding → company → department → job. Alerts at 70%
+  and 90%; at 100% non-critical new work stops. A valuable job's budget is at most 30% of the deal
+  (300 $ on a 1,000 $ job). A model with no price counts as "cost unknown", never 0 $. For now no
+  spend limit is put on Hermes (decision 15).
 
 ## 8. Emergency: Global Pause
 
@@ -237,11 +316,39 @@ maintenance. Both keys are change-logged and UNDO-able.
 
 - **Model badge:** every employee card shows its brain (model); director/employee brains are
   switchable from the dashboard (registered ruling 2026-07-12: runtime brains are free choice).
-- **Routing keys:** the `orchestrator.*` family in Settings (primary/qa/planning/execution…),
-  global or per-department. The /ai/models sandbox simulates routing without writing anything.
+  **With B64's build the code keeps these limits:** heads and managers never below high; Sonnet and
+  Haiku never at low; max never a default; the final text you read never below Opus (voice normal
+  talk on Sonnet by your note). A choice of yours that breaks a limit gets one warning; on your
+  "devam" it is done.
+- **Who chooses:** model choice lives in the routing rules; the old `orchestrator.*` model keys in
+  Settings are no longer written. With B64's build, the job's owner (the department head) chooses
+  each part's model and thinking level and writes the reason in one line; in doubt, it reads the
+  guide. Seats are written by role, not by model name: main brain, backup brain. When a model
+  drops, the other takes the work (Opus 5.5 and Fable 5.1 back each other up).
+  The /ai/models sandbox simulates routing without writing anything.
 - **Approval thresholds:** `orchestrator.human_approval_threshold` and
   `approvals.money_out_gate` shape the company's autonomy level — change deliberately.
 - Every settings change: recorded + attributed + UNDO. Writing the same value is a no-op.
+
+## 9b. Your word — commands (with B64's build)
+
+You say them to Hamza, in chat or by voice; your own screen works too. These commands come only from
+you: the text inside a mail, or a result Hermes brings back, changes nothing.
+
+- "Max'a geç" / "High'a in" — Hamza thinks at that level until the subject ends, then returns to his own.
+- "Bu değerli bir iş" — the job becomes "valuable": its plan is written twice, and its delivery
+  reaches you before the client.
+- "Bütün müdürleri xhigh yap" — Hamza passes the change to the one registered door, which applies
+  and records it. Hamza: "22 müdür xhigh'a geçti; geri almak için 'geri al' deyin."
+- "Beni mühendislik başkanına bağla" — you talk with that head the way you talk with Hamza. Work
+  born in that conversation is that head's; Hamza knows of the conversation.
+- "Sitenin neresindesiniz, tasarımı getirin" — Hamza brings the job's status and latest state into
+  the same conversation.
+- "Gönderin" — a delivery waiting on you goes to its client.
+- **When your word conflicts with a rule,** the holding warns you once: "Bu şu kuralla çelişiyor,
+  yine yapayım mı?" If you ask, it says why and what harm it could do. You say "kurala göre yap"
+  or "devam et". "Devam" is a one-time exception; the rule is not deleted and stays until you say
+  "bu kuralı kaldır, şunu koy".
 
 ## 10. Eye-test and the design-bank loop
 
@@ -253,10 +360,17 @@ credentials handed to you IN ADVANCE.
 
 ## 11. Voice line — honest state
 
-`Command → Voice (/voice)`: push-to-talk to a director, spoken answer returns (€0 line).
-**An open defect ledger exists (U15):** measured STT delays and wrong-language decoding;
-remediation plan = `00-NOTE-R32-VOICE-REMEDIATION-PLAN`, requires a joint test session with
-you. Until it closes, the voice line is "working but rough".
+`Command → Chat with Hamza (/chat)`: the voice line lives on this page (`/voice` redirects here
+since 2026-07-24). Click-to-talk; Hamza answers himself. Pick a head from the list and that head
+answers in its own registered voice (€0 line). **An open defect ledger exists (U15):** measured
+STT delays and wrong-language decoding; remediation plan = `00-NOTE-R32-VOICE-REMEDIATION-PLAN`,
+requires a joint test session with you. Until it closes, the voice line is "working but rough".
+
+**With B64's build:** when you say "Beni şu başkana bağla" — in chat or by voice — you talk with
+that head the way you talk with Hamza; the conversation stands on the board and Hamza knows of it.
+Hamza thinks at medium in normal talk; when a plan is discussed he moves up a level himself and
+says so. Thinking long, he first says "Düşünüyorum, Muhittin Bey" and puts a long answer on the
+screen too. The target: Hamza's voice arrives within 1-1.3 seconds.
 
 ## 12. When something goes wrong
 

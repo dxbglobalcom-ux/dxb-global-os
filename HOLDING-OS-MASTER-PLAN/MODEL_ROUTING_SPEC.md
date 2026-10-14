@@ -13,8 +13,8 @@ Her ajan koşusunun HANGİ modelle çalışacağının tablo-güdümlü, CEO-de�
 - R1. Madde 6.1'in 13 rol slotu birinci sınıf: ana orkestratör · yedek orkestratör · planlama · execution · review · kritik karar · hızlı görev · düşük maliyet · araştırma · kodlama · tasarım · QA · HR.
 - R2. Haiku yalnız mekanik getir-götür sınıfı görevlerde (verdict/onay üretemez — rol kısıtı `mechanical_only`). `banned` bayrağı MEKANİZMA olarak kalır (gelecek yasaklar için, migration-only). ~~Sonnet hiçbir rol slotuna atanamaz~~ **KALDIRILDI (CEO kararı 2026-07-12):** Sonnet katalogda `banned=false` — rol slotlarına ve `agents.brain`e atanabilir; eski madde-18 daraltması yalnız İNŞAAT yazarlığında yaşar (üstbilgi kapsam ayrımı).
 - R3. Her model için §19 meta seti: provider, context window, cost, speed, quality score, reliability, current usage, assigned employees, active tasks, failure rate, fallback ilişkisi.
-- R4. Fallback zinciri deterministik: `model_catalog.fallback_of` + rol-başı sıra; her düşüş decision_log'a `routing_fallback` olayı.
-- R5. Raw provider key YASAK: tüm çağrılar LiteLLM proxy virtual key'leriyle (departman-başı; STACK sert kuralı).
+- R4. Backup by role, not a chain (B64 decision 13, A-2026-10-14 item 4): the main brain Opus 5.5 ⇄ the backup brain Fable 5.1; every switch is a decision_log `routing_fallback` event naming who really did the work; no work ever falls to a weaker model; Hermes never switches, it waits (decision 16). <!-- OPEN: B64 -->
+- R5. Raw provider key YASAK: tüm çağrılar LiteLLM proxy virtual key'leriyle (departman-başı; STACK sert kuralı). One registered exception: the Hermes-only key (B64 decision 15, A-2026-10-14 item 10). Jev rides LiteLLM's `vercel_ai_gateway/` route with its key in the LiteLLM env, so it needs no exception.
 - R6. Model Orchestration Panel (§19): görsel flow, node sürükle → rol ataması değişir (control seam üzerinden); settings 6.1 anahtarlarıyla AYNI kaynağa yazar.
 - R7. Rotalama parametreleri ayarlanabilir (6.1): timeout, max token, max maliyet, context limiti, retry, confidence threshold, escalation, human-approval eşiği, Opus 5-review zorunluluğu (teknik anahtar sabit: `orchestrator.fable_review_required`) — hepsi settings_registry'de, resolve zinciriyle scope'lu.
 - R8. (CEO direktifi 2026-07-12) `agents.brain` ajan-seviyesi beyin birinci sınıf rotalama girdisidir ve **dashboard'dan CEO-değiştirilebilir**: değişim = tek UPDATE + audit_log + decision_log + Broadcast; banned/mechanical_only korkulukları ajan seviyesinde de MUTLAK (bypass yolu yok). Normatif ayrıntı §4b.
@@ -30,15 +30,17 @@ task (kernel) ─→ orchestrator.select_model(task)
                    4. bütçe kontrolü: COST_CONTROL hard-stop bayrağı
                    5. seçim → decision_log('routing_decision') → LiteLLM
                       virtual key (departman) + model id ile çağrı
-                 fallback: hata/timeout/rate-limit → zincirde sıradaki →
-                      decision_log('routing_fallback') → 2 düşüşte alert
+                 backup: quota/overload/outage → the role's other brain
+                      (Opus 5.5 ⇄ Fable 5.1, Fable at high..xhigh) →
+                      decision_log('routing_fallback'); both down → the work
+                      waits + Critical alert (A-2026-10-14 item 4)
 ```
 
 ⛔ mimari-kritik: seçim mantığı `packages/orchestrator` İÇİNDE kalır (ayrı servis değil — SYSTEM_ARCHITECTURE §3 kararı); kurallar DB'de, kod yalnız yorumlayıcı.
 
 **Kayıtlı adaptasyon (2026-09-03, B43 — CEO onaylı plan, `studio-hands-build-plan-approved-2026-09-03`):** adım 2'nin *departman* ayağı canlıdır. `routing_rules.department_id` (E6.1 deltası, canlı kolon) artık `resolveExecutionRoute` tarafından okunur: çalışanın kendi departmanına bağlı kural aynı katmanda önce gelir; departmana bağlı bir satır başka bir departman için ASLA seçilmez; departmansız satırlar eski davranışla devam eder. İlk departman satırı stüdyonundur: `media.creative` · L1 · `fable-5` · effort **`xhigh`** (CEO hükmü 2026-09-03: *"max gerek yok xhigh olsun"*) — `effort` CHECK kısıtı ve dört TS dökümü aynı gün `xhigh` ile genişletildi (migration `20260903190000_b43_media_hands.sql`). Kanıt: `tests/b43/media-hands.test.ts` §3. **Aynı gün akşamı, iki-beyin denemesi (CEO: *"iki beyinlede denemek lazım"*, `two-brain-trial-run-approved-2026-09-03`):** stüdyo için ikinci bir departman satırı — `media.creative` · L1 · `fable-5.1` (katalog: *Claude Fable 5.1*, SDK: `claude-fable-5-1`) · `xhigh` · öncelik 40 · **`enabled=false`** — migration `20260903210000_b43_two_brains.sql`. Deneme, iki satırın `enabled` bayrağını koşular arasında çevirir (kart tek, koşular ardışık). **CEO hükmü 2026-09-05 (*"Fable 5.1 olsun, Opus 5 yedek"*, `studio-brain-fable-5-1-opus-5-standby-2026-09-05`): stüdyonun beyni `fable-5.1` (Claude Fable 5.1) — satırı `enabled=true`, öncelik 50; `fable-5` (Claude Opus 5) satırı kapalı yedek, öncelik 40; `audit_log` `routing_change`. `loadPolicy` her koşuda yalnız açık satırları okur, servis yeniden başlatılmadan geçerli.** Kanıt: aynı test §6 ve `routing_rules` sorgusu.
 
-**Registered adaptation (2026-09-15, B43 / B08 — CEO rulings `top-tier-set-and-brain-switch-order-2026-09-13` and `studio-brains-open-set-defaults-switchable-2026-09-15`; audit F034, W4):** the studio's brain is a DEFAULT MAP, not a restriction. Defaults: the director, the screenwriter and every creative seat → the smartest model of the day (today Claude Fable 5.1 at `xhigh`, the `media.creative` department row above); every other employee → Claude Opus 5 (`fable-5`). Not restricted to those two: GPT Solo 5.6 (`codex-5.6`, catalogue `testing` today), GPT Astra 6 (no catalogue row yet; the Codex CLI upgrade first — B08 step 1) or another model may serve any seat. Every brain is changeable at any moment by the CEO or by Hamza with one click (§4b `fn_update_agent_brain` / `fn_update_routing`, audited), and a new model is addable from inside the studio (§4c drawer reached from the studio tab). Consequence for §4d: the top tier is a SET, and which member serves a seat is always an explicit routing row or his override — see the §4d note. Measured 2026-09-15 after W10: enabled L1 rows `fable-5` 11 · `fable-5.1` 1 (`media.creative`, dept-scoped) · 16 slot rows without a model; the 14 studio seats' `agents.brain` reads **`fable-5.1`** — the model of the enabled `media.creative` row — and the two ASSIGNED seats read `fable-5`, because they route by their own home departments (audit F035, closed). **Registered adaptation (2026-09-15, W10):** the label no longer has to be corrected by hand behind §4b's doors — `trg_agents_brain_follows_routing` on `routing_rules` moves the `brain` of a department's SLOT-derived seats whenever that department's enabled `media.creative` row changes, and never touches a `ceo_override` brain, which is the CEO's own choice and outranks the router. What §4b writes, the trigger follows; the doors themselves are unchanged. Nothing of the panel is built; B08 step (7) carries it.
+**Registered adaptation (2026-09-15, B43 / B08 — CEO rulings `top-tier-set-and-brain-switch-order-2026-09-13` and `studio-brains-open-set-defaults-switchable-2026-09-15`; audit F034, W4):** the studio's brain is a DEFAULT MAP, not a restriction. Defaults: the director, the screenwriter and every creative seat → the smartest model of the day (today Claude Fable 5.1 at `xhigh`, the `media.creative` department row above); every other employee → Claude Opus 5 (`fable-5`). Not restricted to those two: GPT Solo 5.6 (`codex-5.6`, catalogue `testing` today), GPT Astra 6 (no catalogue row yet; the Codex CLI upgrade first — B08 step 1) or another model may serve any seat. Every brain is changeable at any moment by the CEO or by Hamza on his word (§4b `fn_update_agent_brain` / `fn_update_routing`, audited), and a new model is addable from inside the studio (§4c drawer reached from the studio tab). Consequence for §4d: the top tier is a SET, and which member serves a seat is always an explicit routing row or his override — see the §4d note. Measured 2026-09-15 after W10: enabled L1 rows `fable-5` 11 · `fable-5.1` 1 (`media.creative`, dept-scoped) · 16 slot rows without a model; the 14 studio seats' `agents.brain` reads **`fable-5.1`** — the model of the enabled `media.creative` row — and the two ASSIGNED seats read `fable-5`, because they route by their own home departments (audit F035, closed). **Registered adaptation (2026-09-15, W10):** the label no longer has to be corrected by hand behind §4b's doors — `trg_agents_brain_follows_routing` on `routing_rules` moves the `brain` of a department's SLOT-derived seats whenever that department's enabled `media.creative` row changes, and never touches a `ceo_override` brain, which is the CEO's own choice and outranks the router. What §4b writes, the trigger follows; the doors themselves are unchanged. Nothing of the panel is built; B08 step (7) carries it.
 
 ## 4. Veri modeli
 
@@ -91,10 +93,10 @@ Varsayılan atamalar (seed — CEO settings'ten değiştirir; ⛔ değişiklik C
 
 | Rol slotu | Varsayılan | Not |
 |-----------|-----------|-----|
-| Ana orkestratör · kritik karar · review · planlama · kodlama · tasarım · araştırma · QA · HR · execution | `fable-5` (görünen ad: **Claude Opus 5**) | Devir tamamlandı 2026-07-25: kritik-karar/review Opus 5'tedir. Katalog satırının teknik `id`'si tarihsel nedenle `fable-5` kalır (yeniden adlandırma canlı FK zincirini kırardı — CEO kararı 2026-07-25); CEO'ya görünen ad `display_name` üzerinden Opus 5'tir. |
-| Yedek orkestratör · emergency fallback | **YOK** (katman kaldırıldı, CEO 2026-07-25) | Tek beyin Opus 5. Hata/timeout/rate-limit'te sessiz alt-model düşüşü yasak — iş `blocked` raporuyla CEO'ya çıkar (§"never a silent drop"). `claude-opus-4-8` satırı `status='retired'`. Tek-provider riski §26'da |
-| Hızlı görev · düşük maliyet | `claude-haiku-4-5` (`mechanical_only`) | verdict üretemez; çıktısı ham girdi sayılır |
-| (atanabilir havuz — varsayılan slotu yok) | `claude-sonnet-5` (`banned=false`) | CEO kararı 2026-07-12: runtime beyin olarak SERBEST; CEO settings/panel'den slot veya ajan-beyni atar — hızlı görev/düşük maliyet slotlarına doğal aday |
+| Ana orkestratör · kritik karar · review · planlama · kodlama · tasarım · araştırma · QA · HR · execution | `claude-opus-5-5` (**Claude Opus 5.5**) — the main brain | Opus 5 (`fable-5`; the id is kept for its history, CEO 2026-07-25) handed its seats to Opus 5.5 through the succession door on 2026-10-10 (A-2026-10-10 item 9). The rows B51 P6 put on `fable-5.1` the same day — `orchestration`, `strategy`, `architecture`, `final-approval`, the critical-decision seat and `orchestrator.critical_decision_model` — return to Opus 5.5 (B64, A-2026-10-14 item 1). <!-- OPEN: B64 --> |
+| Yedek orkestratör · emergency fallback | `fable-5.1` (**Claude Fable 5.1**) — the backup brain (B64 decision 13) | Written by role, not by name. On quota, overload or outage the other brain of the pair takes the work; on Fable it keeps its own effort, clamped to `high`..`xhigh`; Fable's judge seats fall to Sol 6.1, never to Opus; no work falls to a weaker model; both down → the work waits and he is told (A-2026-10-14 item 4). The July "no backup layer" (2026-07-25) now holds for construction authorship only. <!-- OPEN: B64 --> |
+| Hızlı görev · düşük maliyet | Jev first (LiteLLM `vercel_ai_gateway/` route), `claude-sonnet-5-5` at `medium` on doubt (B64 decision 7) | Sorting and routine internal work; its output is raw input, never a verdict. Sonnet and Haiku never run at `low`. `claude-haiku-4-5` is retired and banned (§4d roster). <!-- OPEN: B64 --> |
+| (atanabilir havuz — varsayılan slotu yok) | `claude-sonnet-5-5` (`banned=false`; Sonnet 5 → 5.5 on 2026-10-10) | CEO kararı 2026-07-12: runtime beyin olarak SERBEST; CEO settings/panel'den slot veya ajan-beyni atar. In the B64 guide it serves triage on doubt and, after its trial, Hamza's spoken normal talk — always at `medium` or above. |
 
 ### 4b. Ajan-seviyesi beyin: `agents.brain` — dashboard'dan değişim (CEO direktifi 2026-07-12, normatif)
 
@@ -108,7 +110,7 @@ Canlı kolon: `agents.brain text NOT NULL DEFAULT 'glm-5.2'` (`20260707000002_re
 **Dashboard değişim kanalı (TEK yol):**
 - Yüzey: `EmployeeCommandPage`/`EmployeeCard` Control Mode rozeti + palette "X'in modelini değiştir" ([[CEO_COMMAND_CENTER_SPEC]] §8) → `POST /api/control/employees {op:'set_model', employee_id, model_id, rationale}`.
 - fn: `fn_update_agent_brain(employee_id, model_id, rationale)` — doğrulama: katalogda var + `status='active'` + `banned=false` + `mechanical_only` rol-sınıf kontrolü; yazım: `agents.brain` UPDATE + `brain_source='ceo_override'` + audit_log + decision_log(`routing_change`, aktör=`ceo`, gerekçe) + `settings` Broadcast (kernel cache invalidate — §9 yolu). Yanıt `{ok, change_id}`; undo settings_change_log/audit üzerinden. Doğrudan tablo UPDATE'i (psql/PostgREST) control seam dışıdır — audit'siz yazım ihlal.
-- **Eval-önce doktrini (CAIO):** ajan/CAIO-kaynaklı beyin-değişim önerisi eval-önce + kayıtlı yürür (CAIO persona hükmü). CEO dashboard değişimi hook'un ÜSTÜNDEDİR ([[FABLE_5_HOOK_SPEC]] CEO istisnası): engellenmez, anında uygulanır; sistem warn + audit düşer ve CAIO'ya değişim-sonrası eval görevi otomatik kuyruklanır (`v_model_stats` 7 gün izleme; gerileme → bilgi-alert'i + geri-alma önerisi — approval DEĞİL, operasyon bilgisi).
+- **Eval-önce doktrini (CAIO):** ajan/CAIO-kaynaklı beyin-değişim önerisi eval-önce + kayıtlı yürür (CAIO persona hükmü). CEO dashboard değişimi hook'un ÜSTÜNDEDİR ([[FABLE_5_HOOK_SPEC]] CEO istisnası): a change that breaks no rule applies at once; one that conflicts with a holding rule (a code-kept limit of A-2026-10-14 item 1) is warned about once — *"Bu şu kuralla çelişiyor, yine yapayım mı?"* — and on his "devam" applies at once as a one-time exception, recorded as an `override` decision line while the rule itself stays (B64 decision 17); audit düşer ve CAIO'ya değişim-sonrası eval görevi otomatik kuyruklanır (`v_model_stats` 7 gün izleme; gerileme → bilgi-alert'i + geri-alma önerisi — approval DEĞİL, operasyon bilgisi).
 - Kapsam ayrımı (üstbilgi satırının tekrarı, karışma yasak): bu blok ÜRÜN RUNTIME beyinleridir; inşaat yazarlık hiyerarşisi (model-routing-hierarchy v13: tek yazar oturumu süren model — kadro Opus 5.5, A-2026-09-23 —, yedek yok, Sonnet defedildi, Haiku getir-götür) kim persona/kod yazar sorusudur — iki ağaç ayrıdır.
 
 ### 4c. Yeni model ekleme + bağlama — dashboard'dan (CEO direktifi 2026-07-12 ~01:30, normatif)
@@ -118,7 +120,7 @@ Yeni bir model çıktığında CEO onu dashboard'dan kataloğa ekler ve bağlar;
 1. **Kayıt:** form (id, provider, display_name, context_window, cost_in_per_mtok/cost_out_per_mtok, speed_score) → `POST /api/control/models {op:'add_model'}` → katalog satırı **`status='testing'`** doğar (atanabilir havuzda DEĞİL). LiteLLM'e kayıt proxy admin API'siyle runtime yapılır (config dosyasına dokunmadan); admin API erişilemezse satır "LiteLLM kaydı bekliyor" durumunda görünür kalır — sahte-hazır yasak (§35 ruhu). ⛔ Raw provider key ASLA dashboard'dan girilmez/gösterilmez (R5): key işi vault + LiteLLM env; dashboard yalnız alias tanır. <!-- HISTORY -->
 2. **Duman testi (zorunlu):** `{op:'test_model'}` → LiteLLM üzerinden 1 ucuz çağrı; latency/token/hata drawer'da gösterilir; başarısız model `testing`te kalır.
 3. **Eval-önce:** aktivasyon öncesi mini eval bataryası görevi otomatik açılır (sahip: Model Evaluation Lead, CAIO doktrini); sonuç `quality_score` ilk değerini verir. CEO atlayabilir — §4b ile aynı hook-üstü rejim (warn + audit + 7 gün izleme).
-4. **Aktivasyon + bağlama:** `{op:'set_catalog_status', 'active'}` → model atanabilir havuza girer; aynı drawer'dan bağlama kısayolları: rol slotuna ata (`assign_role`) · tek ajana beyin yap (§4b `set_model`) · fallback zincirine ekle (`set_fallback`, döngü-CHECK).
+4. **Aktivasyon + bağlama:** `{op:'set_catalog_status', 'active'}` → model atanabilir havuza girer; aynı drawer'dan bağlama kısayolları: rol slotuna ata (`assign_role`) · tek ajana beyin yap (§4b `set_model`) · the backup pair's role — main brain or backup brain (B64 decision 14; today's `set_fallback` chain closes with the backup pair, B66). <!-- OPEN: B64 -->
 
 Her adım audit_log + decision_log. Katalog satırı SİLİNMEZ — emekli model `status='retired'` (geçmiş decision_log referansları kırılmaz).
 
@@ -126,24 +128,26 @@ Her adım audit_log + decision_log. Katalog satırı SİLİNMEZ — emekli model
 
 ### 4d. THE QUALITY TIER LAW (CEO order 2026-07-26, normative, supersedes the §4 default table where they disagree)
 
-**The law, one sentence: judgment, taste, structure and every output a human — the CEO or a customer — actually sees is produced by Opus 5. A lower tier's output is never a finished product; it is the higher tier's input.**
+**The law, one sentence: judgment, taste, structure and every output a human — the CEO or a customer — actually sees is produced by Opus (Opus 5.5 since 2026-10-10) or a model never below it. A lower tier's output is never a finished product; it is the higher tier's input.** The one exception is his own note: Hamza's spoken normal talk runs on Sonnet 5.5 at `medium` once its 20-sentence side-by-side holds (B64 decision 3).
 
 CEO in chat, verbatim: *"ana hedef KALİTE!!! her işte!!! zeka!!!"* · *"sonnet şuanlık kritik işlerde asla olmamalı … sadece angarya işlerinde"* · *"site mağaza kurulumunu sen yapacaksın tasarım vs … basit ve göze hitap etmeyen backend işleri vs bunlar diğer modeller … videolarda alt yazı başka model ama videoların tasarımı vs sen"*.
 
 The dividing line is **not** cost and **not** code-versus-text. It is a single question: *does this work carry taste, structure, or a result a human will see?* If yes, it is L1 and stays L1 permanently — a cheaper coder model arriving later does not change it.
 
-| Tier | What belongs here | Model today |
+| Tier | What belongs here | Model (the B64 guide, A-2026-10-14 item 1; live rows move at build) |
 |------|-------------------|-------------|
-| **L1** | strategy · decisions · money · QA and halal verdicts · research **synthesis** · site and store build · design and video direction · feature code · department planning · outbound content · the CEO conversation (chat and voice) · memory promotion | `fable-5` (display **Claude Opus 5**) |
-| **L2** | mechanical backend code with no visual or structural judgment in it (bulk plumbing) | `sonnet-5` |
-| **L3** | grunt text work: gathering, drafting, summarising — raw material only | `sonnet-5` |
-| **L4** | mechanical/clerical: classify, extract, transcribe, subtitle | `sonnet-5` at `effort='low'`, the local model's reserved seat until the exam runs on the new workstation |
+| **L1** | strategy · decisions · money · QA and halal verdicts · research **synthesis** · site and store build · design and video direction · feature code · department planning · outbound content · the CEO conversation (chat; spoken normal talk per the exception above) · memory promotion | `claude-opus-5-5` (**Claude Opus 5.5**) — `medium` for standard work, `high` for good work a human sees, `xhigh` or `max` for deep thinking |
+| **L2** | mechanical backend code with no visual or structural judgment in it (bulk plumbing) | the owner's choice by the guide: ordinary code on Opus 5.5 `medium`; `claude-sonnet-5-5` only at `medium` or above |
+| **L3** | grunt text work: gathering, drafting, summarising — raw material only | Opus 5.5 `medium` (the guide's standard work), or `claude-sonnet-5-5` at `medium` by the owner's reasoned choice |
+| **L4** | mechanical/clerical: classify, extract, transcribe, subtitle | Jev first, `claude-sonnet-5-5` at `medium` on doubt — never `low` (B64 decisions 2 and 7); the local model's reserved seat until the exam runs on the new workstation |
+
+<!-- OPEN: B64 -->
 
 **Research, worked example (the CEO's own case — "which local video tools for the new PC"):** L3 opens the fan (many sources, parallel, cheap) → real tools verify what was gathered (scrapling/playwright, never model memory) → **L1 decides**: what fits 16 GB of VRAM, what the licence permits, what actually runs on Linux, what we install and what we discard. Gathering may be cheap. Concluding may not.
 
-**Roster.** In: Opus 5 (L1), Sonnet (L2-L4 grunt), a local model (L4, after the exam), plus DeepSeek V4 Pro held `mechanical_only` for bulk reads too large for the local tier — it may never produce a verdict. Out, `status='retired'` + `banned=true`: haiku 4.5 · DeepSeek V4 Flash · Kimi 2.7 Code · Kimi 3 · GLM 5.2 · Qwen 3.6 Flash · MiniMax M3 · Codex 5.5. Rows are retired, never deleted (U20 precedent — `agent_runs`/`cost_ledger` history references them), and `banned=true` makes `fn_update_agent_brain` and the §4c onboarding flow refuse to re-hire one from the dashboard.
+**Roster.** In: Opus 5.5 (the main brain — L1 and the guide's standard and good work); Fable 5.1 in three places — the backup brain, valuable work's plan judge, the critical gate's second seat (the studio's creative seats on Fable by his rulings of 2026-09-05 and 2026-09-15 are a question named in B64's plan); Sonnet 5.5 (triage on doubt; Hamza's spoken normal talk after its trial; never at `low`); Jev (triage first, LiteLLM's `vercel_ai_gateway/` route); Sol 6.1 (the critical gate); a local model (L4, after the exam); plus DeepSeek V4 Pro held `mechanical_only` for bulk reads too large for the local tier — it may never produce a verdict. Haiku 5.5 stays `testing`, is not used for mail sorting (B64 decision 7) and never runs at `low`. Out, `status='retired'` + `banned=true`: haiku 4.5 · DeepSeek V4 Flash · Kimi 2.7 Code · Kimi 3 · GLM 5.2 · Qwen 3.6 Flash · MiniMax M3 · Codex 5.5. Rows are retired, never deleted (U20 precedent — `agent_runs`/`cost_ledger` history references them), and `banned=true` makes `fn_update_agent_brain` and the §4c onboarding flow refuse to re-hire one from the dashboard.
 
-**Tier homogeneity (new invariant).** `packages/orchestrator/src/worker-shim.ts` resolves a task's model by `model_tier` alone. Before this law, one tier could resolve to four different models depending on row ordering. Every tier is now single-model, so *tier match == model match*. **A routing change that puts two different models on one tier reintroduces nondeterminism and is a defect**, not a preference. **Registered adaptation 2026-09-15 (audit F034; LAW A — the later word governs):** since 2026-09-05 the L1 tier carries two models on purpose — `fable-5` on the holding's rows and `fable-5.1` on the studio's department-scoped row `media.creative` (measured 2026-09-15: enabled L1 rows `fable-5` 11 · `fable-5.1` 1), by his rulings `studio-brain-fable-5-1-opus-5-standby-2026-09-05`, `top-tier-set-and-brain-switch-order-2026-09-13` and `studio-brains-open-set-defaults-switchable-2026-09-15`. The invariant is therefore restated: **the top tier is a SET {Fable 5.1, Opus 5, GPT-6 Astra when its lane answers, and any model he adds}; which member serves a seat is always an EXPLICIT row (department-scoped) or his override, never row order.** Nondeterminism by row order stays a defect; two explicit rows on one tier are not. The sentence before this note is kept as the history it is.
+**Tier homogeneity (new invariant).** `packages/orchestrator/src/worker-shim.ts` resolves a task's model by `model_tier` alone. Before this law, one tier could resolve to four different models depending on row ordering. Every tier is now single-model, so *tier match == model match*. **A routing change that puts two different models on one tier reintroduces nondeterminism and is a defect**, not a preference. **Registered adaptation 2026-09-15 (audit F034; LAW A — the later word governs):** since 2026-09-05 the L1 tier carries two models on purpose — `fable-5` on the holding's rows and `fable-5.1` on the studio's department-scoped row `media.creative` (measured 2026-09-15: enabled L1 rows `fable-5` 11 · `fable-5.1` 1), by his rulings `studio-brain-fable-5-1-opus-5-standby-2026-09-05`, `top-tier-set-and-brain-switch-order-2026-09-13` and `studio-brains-open-set-defaults-switchable-2026-09-15`. The invariant is therefore restated: **the top tier is a SET {Fable 5.1, Opus 5.5, GPT-6 Astra when its lane answers, and any model he adds}; which member serves a seat is always an EXPLICIT row (department-scoped) or his override, never row order.** Default placement follows the B64 guide (A-2026-10-14 item 1): Opus 5.5 is the main brain and Fable 5.1 stands in its three places; any other placement is an explicit row or his word. Nondeterminism by row order stays a defect; two explicit rows on one tier are not. The sentence before this note is kept as the history it is.
 
 **The GPT/Codex lane is NOT open** (measured 2026-07-26): the CEO's OpenAI key authenticates (HTTP 200, 117 models, up to `gpt-5.6-sol/terra/luna`) but every completion returns `429 insufficient_quota` — the ChatGPT subscription does not fund the API. Opening the lane additionally requires `SDK_MODEL_IDS` to learn a non-Anthropic id or the call to go through LiteLLM. Until both are true, no rule may name a GPT/Codex model; when it opens, that lane competes for **L2 mechanical work only — never for the design lane**. **Superseded in part by his ruling of 2026-09-15** (`studio-brains-open-set-defaults-switchable-2026-09-15`): when the GPT lane opens, GPT Solo 5.6 / GPT Astra 6 are eligible brains for any seat, the creative seats included, by his or Hamza's click — the director and the screenwriter always on the smartest model of the day. The lane's technical state is unchanged (catalogue `codex-5.6` = `testing`, no `gpt-6-astra` row, Codex CLI upgrade first — B08 step 1); nothing is routed to it today.
 
@@ -158,7 +162,7 @@ The CEO read his own workforce page and asked *"183 sonnet nedir?"*. The honest 
 
 **Where the ordering lives:** `model_catalog.tier_floor` (`L1` best … `L4`), the best tier a model is allowed to serve. `fn_tier_rank(text)` turns it into a number (unknown → 99, so a typo can never win a comparison) and `fn_effective_tier(task_tier, agent_id)` performs the single comparison. No other place may re-derive quality order. `quality_score` is NOT that source — it is NULL on both Opus 5 and Sonnet and reflects eval history, not seat.
 
-**Deliberately fail-open toward the task's own tier.** An unassigned task, a `brain_source='default'` placeholder, an unrated model, a retired or banned one — all leave the task exactly where the routing table put it. A raised tier with no enabled routing row falls back to the task's tier in `resolveExecutionRoute`. **A floor is an upgrade path, never a new failure mode.**
+**Deliberately fail-open toward the task's own tier.** An unassigned task, a `brain_source='default'` placeholder, an unrated model, a retired or banned one — all leave the task exactly where the routing table put it. A raised tier with no enabled routing row falls back to the task's tier in `resolveExecutionRoute`. **A floor is an upgrade path, never a new failure mode.** One edge is closed by B64 decision 11: a head's or a manager's run never falls below Opus 5.5 at `high` — the fail-open path included (A-2026-10-14 item 3). <!-- OPEN: B64 -->
 
 **Guardrails are absolute and unbypassable by a floor:** `banned` models are never selected; `mechanical_only` models never serve a verdict-capable slot; the budget hard-stop still cuts every non-critical selection. A `ceo_override` brain that fails any of these falls through to the normal rule scan and the refusal is written into the decision's `considered` list — it never silently succeeds and never strands the task.
 
@@ -166,23 +170,23 @@ The CEO read his own workforce page and asked *"183 sonnet nedir?"*. The honest 
 
 **Live enforcement:** migration `20260726002000_brain_floor.sql`; executor seam `packages/orchestrator/src/worker-shim.ts` → `resolveExecutionRoute()`; proof `tests/c9/brain-floor.test.ts` (14 cases, every probe inside a rolled-back transaction because the resident scheduler shares this database). The employees page header now carries the meaning in both locales instead of leaving the CEO to infer it.
 
-### 4e. THE CRITICAL GATE — challengers, not co-authors (CEO order 2026-07-26, normative)
+### 4e. THE CRITICAL GATE — verification against the brief, not co-authors (CEO order 2026-07-26; seats and question by B64 decision 8, 2026-10-14; normative)
 
-CEO, said twice in the same session and closed with *"bunu unutma sakın"*: **two OpenAI models are used inside the holding, and above all in the council — as the models that check Opus's work.** The seats are his; the models are the day's (CEO 2026-10-09, *"şuan solo 6.1 e çıktı gpt5.5 eskidi artık"* <!-- CEO-OK: all-brains-stay-current-gate-judges-2026-10-09 -->): **Sol 6.1 (`gpt-6.1-sol`) and GPT Astra 6 (`gpt-6-astra`)**, the latter from his top-tier set of 2026-09-13. The pair lives in ONE settings key, `gate.challengers` — two seats, each `{model: <catalogue id>, effort}` — which he sees and changes on `/sys/settings` and a succession moves with every other brain (A-2026-10-10).
+His order of 2026-07-26, closed with *"bunu unutma sakın"*, put two OpenAI models on the gate to check Opus's work. The seats are his; the models are the day's (CEO 2026-10-09, *"şuan solo 6.1 e çıktı gpt5.5 eskidi artık"* <!-- CEO-OK: all-brains-stay-current-gate-judges-2026-10-09 -->). Since B64 decision 8 <!-- CEO-OK: b64-decisions-1-5-8-9-11-12-16-his-yes-2026-10-14 -->: **Sol 6.1 (`gpt-6.1-sol`) at `high` reads everything going to a client; Fable 5.1 (`fable-5.1`) at `high` sits beside it on valuable delivery, money and contracts; a routine client message is Sol's alone.** GPT Astra 6 leaves the gate and comes back as revenue grows. The seats live in ONE settings key, `gate.challengers` — seat 1 Sol, seat 2 Fable, each `{model: <catalogue id>, effort}` — which he sees and changes on `/sys/settings` and a succession moves with every other brain (A-2026-10-10). <!-- OPEN: B64 -->
 
 Shape, settled with the CEO the same night after he rejected the first proposal (*"sen kendi cevabını üretmeyeceksen kalite düşmez mi ya? opus 5 bu saydıklarından daha güçlü değil mi"*):
 
 1. **Opus 5 writes the answer.** The strongest model in the roster produces the work — it is never demoted to a comparator that merely picks between weaker drafts. That was the original CNCL-01 error.
-2. **Challengers try to break it.** The two challengers receive the answer and are instructed to REFUTE: find the wrong number, the missing constraint, the unverified claim, the risk not priced. They do not write a competing deliverable.
+2. **The seats verify it against the brief.** They receive the answer and the brief and check it against the brief's "done" criteria with evidence — the wrong number, the missing constraint, the unverified claim, the risk not priced, a promise outside the price policy. They never look for a better version and never write a competing deliverable (his words of 2026-10-12, B64 decision 8).
 3. **Opus 5 revises and signs.** Every surviving objection is either fixed or answered in writing. The final artefact is Opus 5's, and the objections plus their disposition are recorded — a gate with no written trail is decoration.
 
-**Where it fires** (never on every task — a gate that runs everywhere is a tax, not a gate): the L1 classes that bind money, reputation or the company's direction — `strategy`, `final-approval`, `architecture`, `research.synthesis` when the conclusion drives a purchase or an install, outbound content before it leaves the company, and any halal/risk verdict. The existing `routing_rules.needs_council` flag is the switch.
+**Where it fires** (never on every task — a gate that runs everywhere is a tax, not a gate): everything that goes to a client (Sol); valuable delivery, money and contracts (Sol and Fable); and the internal L1 classes that bind the company's direction — `strategy`, `final-approval`, `architecture`, `research.synthesis` when the conclusion drives a purchase or an install — and any halal/risk verdict (Sol; Fable too when money or a contract is in it). The `routing_rules.needs_council` flag stays the switch for internal classes; the trigger for client-bound work is the job's destination, owned by AGENT_ORCHESTRATION (B64). <!-- OPEN: B64 -->
 
-**Transport — BUILT 2026-07-26:** `packages/orchestrator/src/critical-gate.ts`, the Codex CLI in ChatGPT-subscription mode (`auth_mode` = tokens, no `OPENAI_API_KEY`), NOT the OpenAI API — the key returns `429 insufficient_quota` because API billing is separate from the subscription (§4d). The CLI runs `--ephemeral -s read-only --skip-git-repo-check` in a temp directory with `--output-schema`: a challenger reasons about text and may never touch this repository. Two measured traps: stdin must be closed or the CLI blocks forever on *"Reading additional input from stdin…"*, and the final message is read from `-o <file>` because stdout carries CLI chatter.
+**Transport — BUILT 2026-07-26:** `packages/orchestrator/src/critical-gate.ts`, the Codex CLI in ChatGPT-subscription mode (`auth_mode` = tokens, no `OPENAI_API_KEY`), NOT the OpenAI API — the key returns `429 insufficient_quota` because API billing is separate from the subscription (§4d). The CLI runs `--ephemeral -s read-only --skip-git-repo-check` in a temp directory with `--output-schema`: a challenger reasons about text and may never touch this repository. Two measured traps: stdin must be closed or the CLI blocks forever on *"Reading additional input from stdin…"*, and the final message is read from `-o <file>` because stdout carries CLI chatter. Fable's seat runs on the agent-sdk lane, read-only in the same way (B64). <!-- OPEN: B64 -->
 
-**Where it fires in the runtime:** `runWorkerOnce`, immediately after the QA hook returns PASS. The hook asks *does this meet its contract*; the gate asks a different question — *is it WRONG*. Objections return as exactly one revision round through the existing `feedback` channel, so the author revises and signs. One round only: a second would let two reviewers argue forever over one task. The switch is the routing row's `needs_council` flag, so the gate stays CEO-configurable as data.
+**Where it fires in the runtime:** `runWorkerOnce`, immediately after the QA hook returns PASS. The hook asks *does this meet its contract*; the gate asks *does it meet the brief, proven with evidence*. Objections return as exactly one revision round through the existing `feedback` channel, so the author revises and signs. One round only: a second would let two reviewers argue forever over one task. The switch is the routing row's `needs_council` flag, so the gate stays CEO-configurable as data.
 
-**Failure policy:** challengers never throw. A dead panel is recorded as `unavailable` and the work proceeds — a review gate that can halt the company when a subscription hiccups is a worse failure than a missed review. Unparsable or off-schema verdicts are refused rather than believed.
+**Failure policy:** the seats never throw; a dead seat is recorded as `unavailable`. Sol down (quota, error) → Fable 5.1 `high` reads alone; both down → client-bound work, money and contracts wait and he is told (B64 decision 8); other internal work proceeds with the gap recorded. Unparsable or off-schema verdicts are refused rather than believed. <!-- OPEN: B64 -->
 
 **Live proof (2026-07-26):** a deliberately flawed recommendation ("install HunyuanVideo 13B at bf16, ~14 GB VRAM, fits the 16 GB card, open weights so commercial use is fine, €0/month") went through the panel. Both challengers returned `flawed` with 7 objections carrying sources: the VRAM figure is wrong (13B at bf16 is ~26 GB of weights alone; Tencent's own README specifies 45-60 GB), open weights do not grant commercial rights (Stable Video Diffusion's licence gates commercial use on revenue), the "best motion quality" claim rests on a table where it was the only open model, and the €0 figure never prices the remedy if the model does not fit. `decision_log` id 20251.
 
@@ -194,7 +198,7 @@ Shape, settled with the CEO the same night after he rejected the first proposal 
 
 | Bileşen | İçerik |
 |---------|--------|
-| `ModelOrchestrationPanel` (`/ai/orchestration`) | §19 görsel flow: rol slotları → model node'ları → fallback okları; DESIGN_SYSTEM Model Routing Node + routing graph chart |
+| `ModelOrchestrationPanel` (`/ai/orchestration`) | §19 görsel flow: rol slotları → model node'ları → the backup pair's arrows (main brain ⇄ backup brain); DESIGN_SYSTEM Model Routing Node + routing graph chart |
 | `ModelNode` | model badge + §19 meta rozetleri (usage, failure rate, cost) + sağlık halkası |
 | `ModelDetailDrawer` | R3 meta tam seti + assigned employees listesi + aktif task'ler + son routing kararları |
 | `RoleSlotColumn` | 13 slot; Control Mode'da drop hedefi (drag = atama değişikliği onay dialog'u ile) |
@@ -213,12 +217,12 @@ Shape, settled with the CEO the same night after he rejected the first proposal 
 
 ## 8. API'ler
 
-Reads: `v_model_stats`, `v_routing_rules_resolved` (rol→etkin kural zinciri). Mutations: `/api/control/models` (idempotency + `{ok, change_id, affected[]}`). Ajan içi: orchestrator → LiteLLM `POST /chat/completions` (virtual key `Authorization`; model id seçimden). LiteLLM config: provider key'ler yalnız proxy env'inde — repo/agent config'te 0 satır (doğrulama komutu §24).
+Reads: `v_model_stats`, `v_routing_rules_resolved` (rol→etkin kural zinciri). Mutations: `/api/control/models` (idempotency + `{ok, change_id, affected[]}`). Ajan içi: orchestrator → LiteLLM `POST /chat/completions` (virtual key `Authorization`; model id seçimden). LiteLLM config: provider key'ler yalnız proxy env'inde — repo/agent config'te 0 satır (doğrulama komutu §24). The one registered exception is the Hermes-only key (R5; A-2026-10-14 item 10): held in the vault, given to Hermes alone, never in the repository.
 
 ## 9. Event yapısı
 
 - `routing_decision` / `routing_fallback` / `routing_change` decision_log olayları; `ops:live` kanalına ajan satırında "model" alanı olarak yansır.
-- 2 ardışık fallback VEYA provider degraded → `alerts` (High); emergency fallback'e düşüş → Critical.
+- A backup switch → decision_log `routing_fallback` naming who really did the work ("Opus düştü, işi Fable high'da yaptı"); provider degraded → `alerts` (High); both brains of the pair down → `alerts` (Critical), the work waits and he is told (B64 decision 13). <!-- OPEN: B64 -->
 - Routing değişikliği → `settings` Broadcast (kernel cache invalidate — SETTINGS §9 ile aynı yol).
 - `agents.brain` değişimi (§4b) → decision_log `routing_change` + `settings` Broadcast; EmployeeCard/AgentDock model rozeti canlı boyanır (optimistic update yok — §10 ilkesi).
 
@@ -228,11 +232,11 @@ Panel client state'i yalnız görsel (seçili node, simulator girdileri). Atama 
 
 ## 11. Database tabloları / 12. İlişkiler
 
-§4 normatif; [[DATA_MODEL]] 0021x ailesine girer. İlişkiler: catalog 1—N rules; catalog self-FK fallback zinciri (döngü CHECK ile yasak: `fallback_of != id` + fn içi derinlik≤4 kontrolü); rules.department_id → org_units (E6.1 delta). RESOLVED 2026-07-12: the existing `routing_rules` table was extended IN PLACE by the 0021x family (model_id + role_slot live); no view-alias bridge and no `model_routing_rules` table exist or will be created — the name `routing_rules` is final (breaking change yasak — SYSTEM_ARCHITECTURE §11).
+§4 normatif; [[DATA_MODEL]] 0021x ailesine girer. İlişkiler: catalog 1—N rules; the catalog self-FK `fallback_of` chain closes with the role-written backup pair (B64 decision 13; B66) <!-- OPEN: B66 -->; rules.department_id → org_units (E6.1 delta). RESOLVED 2026-07-12: the existing `routing_rules` table was extended IN PLACE by the 0021x family (model_id + role_slot live); no view-alias bridge and no `model_routing_rules` table exist or will be created — the name `routing_rules` is final (breaking change yasak — SYSTEM_ARCHITECTURE §11).
 
 ## 13. Yetkilendirme
 
-Atama/kural değişikliği yalnız `ceo` (Control Mode → seam). `system` yalnız `status` alanını değiştirebilir (health degradation otomatiği); banned/mechanical_only bayraklarını KİMSE runtime'da değiştiremez (migration-only — CEO kararıyla değişir; emsal: Sonnet yasağı tam bu yolla, kayıtlı CEO kararıyla kaldırıldı 2026-07-12 — sessiz değişim imkânsız kalır). `agents.brain` aynı rejimde: runtime yazımı yalnız `ceo` (§4b tek yol, `fn_update_agent_brain`); `system` yalnız rotalama-atama geçişi migration'ıyla yazar.
+Atama/kural değişikliği yalnız `ceo` (Control Mode → seam) — or Hamza on his word, through the same door on the C-class (MCP) path, recorded as the CEO's word via Hamza with the sentence's reference, accepted only from his chat, his voice or his own screen and never from a mail (B64 decision 6); anon holds no EXECUTE on `fn_update_routing`, closed before Hamza gets this hand (measured gap, B64). <!-- CEO-OK: b64-decision6-hamza-changes-brains-on-his-word-2026-10-13 --> <!-- OPEN: B64 --> When a new model enters the catalogue, the mechanical seats move by themselves with one line to him and the big seats wait for his word (B64 decision 14). `system` yalnız `status` alanını değiştirebilir (health degradation otomatiği); banned/mechanical_only bayraklarını KİMSE runtime'da değiştiremez (migration-only — CEO kararıyla değişir; emsal: Sonnet yasağı tam bu yolla, kayıtlı CEO kararıyla kaldırıldı 2026-07-12 — sessiz değişim imkânsız kalır). `agents.brain` aynı rejimde: runtime yazımı yalnız `ceo` or Hamza on his word (§4b tek yol, `fn_update_agent_brain`); `system` yalnız rotalama-atama geçişi migration'ıyla yazar.
 
 ## 14. Logging / 15. Audit
 
@@ -244,14 +248,14 @@ Virtual key'ler departman-başı (mevcut LiteLLM kurulumu KALIR); key rotasyonu 
 
 ## 17. Error handling / 18. Retry / 19. Fallback
 
-- Model hatası sınıflaması: rate-limit/timeout → transient (zincirde kal, retry 6.1 politikası); auth/4xx → policy (zincirde sıradaki + alert); içerik reddi → task'e döner (model değişimi çözmez).
-- Zincir tükenirse: task `blocked_no_model` state + Critical alert + CEO aksiyonu (Approval Center'a düşmez — approval değil operasyon arızası).
+- Model hatası sınıflaması: quota, overload, outage, rate-limit or timeout → the other brain of the backup pair reruns the work at the right effort (Fable `high`..`xhigh`) and the switch is recorded (B64 decision 13); Hermes's work does not switch — it waits and resumes when its brain is back (decision 16); auth/4xx → policy (the pair's other brain + alert); içerik reddi → task'e döner (model değişimi çözmez). <!-- OPEN: B64 -->
+- Both brains down: task `blocked_no_model` state + Critical alert, the work waits and he is told (Approval Center'a düşmez — approval değil operasyon arızası); a full quota is answered by decision 13's alert — a second subscription is money out at his gate ([[COST_CONTROL_SPEC]]).
 - LiteLLM proxy çökmesi: orchestrator circuit-breaker (30sn) + kuyruk park; VPS içi restart `unless-stopped`.
 
 ## 20. Test planı / 21. Acceptance criteria
 
-- Birim: kural önceliği, departman override'ı, banned reddi, mechanical_only kısıtı, fallback derinlik sınırı, bütçe-stop kesişimi.
-- Entegrasyon: sahte provider hatası → zincir yürür → decision_log 2 satır → alert.
+- Birim: kural önceliği, departman override'ı, banned reddi, mechanical_only kısıtı, the backup pair (Opus ⇄ Fable, Fable clamped to `high`..`xhigh`, never a weaker model, Hermes waits), the code-kept limits of A-2026-10-14 item 1, bütçe-stop kesişimi.
+- Entegrasyon: sahte provider hatası → the pair's other brain runs the work → decision_log `routing_fallback` naming who did it; both down → the work waits + Critical alert.
 - Kabul: 13 slot panel'de görünür ve atanabilir · her koşuda decision_log kaydı var (örneklem denetimi) · `banned=true` test-satırı atama denemesi reddedilir (mekanizma kanıtı; Sonnet serbest — CEO 2026-07-12) · simulator zinciri doğru gösterir · settings 6.1 ↔ panel aynı kaynağı değiştirir · §4b: dashboard'dan beyin değişimi → audit_log + decision_log + Broadcast üçlüsü kanıtlı; banned model ajan-seviyesinde de reddedilir; `ceo_override` ajan slot-kural değişiminden etkilenmez (kanıt sorgusu) · §4c: add_model→testing→duman→active zinciri audit'li; `testing` model hiçbir slota/ajana atanamaz (fn reddi, kanıt).
 
 ## 22. Migration planı / 23. Rollback planı
@@ -276,8 +280,8 @@ LiteLLM 1.91 proxy (canlı) · [[SETTINGS_AND_CONTROL_SPEC]] resolve/registry ·
 
 - **Tek-provider yoğunluğu** (bugün fiilen Anthropic): katalog provider-çoklu tasarlandı; yeni provider eklemek = katalog satırı + LiteLLM config, kod değişikliği yok. Provider-çapı kararı CEO'da.
 - **Quality score öznelliği**: skor CEO/QA girdisi + v_model_stats gerçek verisi yan yana gösterilir — tek sayıya indirgenmez.
-- **Fallback fırtınası** (rate-limit dalgası): zincir başına dakikada ≤3 düşüş, sonrası circuit-breaker + kuyruk park (maliyet patlaması önlenir).
-- **Yazar devri (GERÇEKLEŞTİ 2026-07-25)**: kritik-karar slotu Opus 5'tedir; `claude-opus-4-8` satırı `retired`, yedek zincir kaldırıldı. Gelecekte bir katalog satırı `disabled`/`retired` edilirse aynı yol işler: slot yeniden çözülür → decision_log 'routing_change' + CEO'ya bilgi alert'i.
+- **Backup storm** (rate-limit dalgası): ≤3 switches a minute per pair, sonrası circuit-breaker + kuyruk park (maliyet patlaması önlenir).
+- **Yazar devri (GERÇEKLEŞTİ 2026-07-25)**: kritik-karar slotu Opus 5'e geçti; `claude-opus-4-8` satırı `retired`, the July backup chain was removed (the runtime backup pair returned with B64 decision 13, A-2026-10-14). Gelecekte bir katalog satırı `disabled`/`retired` edilirse aynı yol işler: slot yeniden çözülür → decision_log 'routing_change' + CEO'ya bilgi alert'i.
 - **mechanical_only ihlal denemesi** (Haiku'ya review görevi): fn reddeder + policy hatası + decision_log; görev bir üst slota escalate.
 
 ## Done definition (bu spec)
@@ -291,9 +295,10 @@ LiteLLM 1.91 proxy (canlı) · [[SETTINGS_AND_CONTROL_SPEC]] resolve/registry ·
    `routing_rules`/`routing-seed.json` api-mode rows with Anthropic models
    flipped to `subscription`. Measured trigger: $2.80 real Sonnet spend on the
    CEO's OpenRouter panel.
-2. **Fable fallback chain = Codex 5.6 Solo (first), Opus 4.8 (second).**
-   Catalog: `codex-5.6.fallback_of = fable-5` (status `testing` until its
-   exam); Opus 4.8 remains the construction-authorship fallback per v6 memory.
+2. **A model's backup is the B64 backup pair** (A-2026-10-14 item 4): the main
+   brain Opus 5.5 ⇄ the backup brain Fable 5.1, written by role. The July chain
+   it replaced is gone — Opus 4.8 retired 2026-07-25, Codex 5.6 retired
+   2026-10-10 (A-2026-10-10 item 9).
 3. **Catalog completed to the real roster** (kimi-2.7-code, glm-5.2,
    deepseek-v4-flash, qwen3.6-flash, minimax-m3, codex-5.5 active; CEO-ordered
    candidates codex-5.6, kimi-3, deepseek-v4-pro in `testing` — kimi-3
@@ -305,22 +310,20 @@ LiteLLM 1.91 proxy (canlı) · [[SETTINGS_AND_CONTROL_SPEC]] resolve/registry ·
    database; audit records the event, not the key. Provider/routing wiring is
    the orchestrator's job (§4c gate chain unchanged: testing → smoke → eval →
    activate).
-5. **chat.answer routing row** (sonnet-5, subscription, medium effort) added
-   for the CEO Chat Board fast lane (C1/C10) — §4b runtime-lane authority.
+5. **chat.answer routing row** — the CEO Chat Board's lane (C1/C10), §4b
+   runtime-lane authority: Hamza's normal chat on Opus 5.5 at `medium` (B64
+   decision 3, A-2026-10-14 item 2; added in July on `sonnet-5`). <!-- OPEN: B64 -->
 
 ## Registered adaptation A-2026-07-25 (CEO order — construction authorship handover, U20, BINDING)
 
 1. **Construction authorship moved Fable 5 → Opus 5.** Every forward-looking
    authority sentence in the corpus, the governance memory and the planning
    docs now names **Opus 5**. `model-routing-hierarchy` is at **v9**.
-2. **The backup-model layer is REMOVED.** The v6 chain "Fable in person → at
-   worst Opus 4.8" and the v5 budget-fallback mode are cancelled. One brain:
-   Opus 5. On error/timeout/rate-limit there is no silent downgrade — the work
-   surfaces to the CEO as a `blocked` report. Consequence in the catalog:
-   `claude-opus-4-8` moves to `status='retired'`; item 2 of adaptation
-   A-2026-07-19 (Opus 4.8 as the construction-authorship fallback) is
-   **superseded** by this row. The Codex 5.6 fallback row from that same
-   adaptation is untouched (separate CEO order, standing order 3).
+2. **Construction authorship has no backup-model layer.** The v6 chain "Fable
+   in person → at worst Opus 4.8" and the v5 budget-fallback mode are
+   cancelled; `claude-opus-4-8` is `status='retired'`. The holding's runtime
+   is not covered by this item: its backup is the B64 backup pair (decision
+   13, A-2026-10-14 item 4), never a silent downgrade to a weaker model.
 3. **History is not rewritten** (CEO decision 2026-07-25). Records of who
    authored what — persona `Created by: fable-5`, the live
    `persona_version='v2.0-fable'` rows, applied migration files, evidence
@@ -392,13 +395,16 @@ place to move and nothing waits for a code change or a restart.
 2. **One id space.** Live `routing_rules.model` and `agents.brain` name catalogue ids, never aliases;
    `routing_rules.model_id` equals `model` (the FK moves to `model` once the SQL readers read it — later).
    `agents.brain` gains a foreign key; its default (and `fn_hr_create_employee`'s) was `glm-5.2`, retired
-   and banned — it now follows the `low_cost` seat's model (`fn_default_brain()`).
+   and banned — it now follows the `low_cost` seat's model (`fn_default_brain()`). Since B64 a default brain is
+   never Jev, and a head's or a manager's is never below Opus 5.5 `high` (decision 11, A-2026-10-14 item 3). <!-- OPEN: B64 -->
 3. **The judges are a setting, not routing rows.** Measured: as slot rows they would be refused by the
    fixed slot list and a department-less L1 row at priority ≥ 100 would take every L1 task's route.
-   `gate.challengers` is validated on every write by a trigger (exactly two, different, active, Codex
-   lane, effort low…max — `ultra` is codex's alone); the gate reads it per run and a seat whose model
-   stopped being callable is `unavailable`, raised once as an alert (`gate-seat:<n>`), and the work runs on.
-   A Claude judge is refused on purpose: a challenger from the author's own family is not independent.
+   `gate.challengers` is validated on every write by a trigger (exactly two, different, active, effort
+   low…max — `ultra` is codex's alone); since B64 decision 8 seat 1 is Sol 6.1 on the Codex lane and seat 2 is
+   Fable 5.1 on the agent-sdk lane, so the trigger admits that lane for seat 2 — Sol reads every gate run, which
+   keeps one seat outside the author's family. The gate reads it per run; a seat whose model stopped being
+   callable is `unavailable`, raised once as an alert (`gate-seat:<n>`); Sol down → Fable reads alone; both
+   down → client-bound work, money and contracts wait and he is told (§4e). <!-- OPEN: B64 -->
 4. **§4c smoke test, Codex lane.** §4c step 2 smoke-tests through LiteLLM; a `codex-cli` model is
    smoke-tested on its own lane instead (no key exists — subscriptions only, his word). Sol 6.1 and
    Astra 6 enter `active` on the gate's live runs of 2026-10-09. Opus 5.5, Sonnet 5.5 and Haiku 5.5
@@ -428,8 +434,10 @@ place to move and nothing waits for a code change or a restart.
    the efforts written on class rows reach runs — move 3 (P5) sets them.
 7. **Move 3 — effort by the kind of work (P5a).** Critical decisions (`strategy`, `architecture`,
    `final-approval`, the `critical_decision` seat) think at `xhigh`; code (`code.standard`, `code.bulk`, the
-   `coding` seat) at `high`; cheap mechanical work stays `low`. The `max` the three critical classes carried
-   had never reached a run (before P3 runs took the L1 seat's `medium`). Talking seats are P6's.
+   `coding` seat) at `high`; cheap mechanical work runs at `low` only on a model other than Sonnet or Haiku —
+   those two never run at `low` (B64 decision 2) — and sorting goes to Jev first (decision 7). The `max` the
+   three critical classes carried had never reached a run (before P3 runs took the L1 seat's `medium`).
+   Talking seats are P6's; their levels are B64 decision 3's (A-2026-10-14 item 2). <!-- OPEN: B64 -->
 
 8. **Bundle 3 — every lane hears its row (P5b).** A workflow step runs at the effort of the routing row
    that chose its model (`fn_select_model`'s `rule_id`; a pinned model takes its slot's row, a pin without a
@@ -437,10 +445,11 @@ place to move and nothing waits for a code change or a restart.
    `seatStandingPrompt`, the same standing prompt the task lane gives a staffed run. Hamza's chat and voice
    answers carry the standing layer as the system prompt — identical from turn to turn, so it can be cached —
    and the matched memory, the live figures and the conversation in the turn (`answerLayers`, prompt-core).
-   Every Agent SDK call carries the catalogue's fallback model: the first live agent-sdk hop of
-   `fallback_of` (≤ 4 hops) that is not mechanical-only and whose tier floor is not below the primary's —
-   the SDK falls over silently and the run stays recorded under the primary, so an L1 run never quietly
-   finishes on an L2 model; no such hop → no fallback.
+   Every Agent SDK call carries its backup: the other brain of the B64 backup pair (decision 13,
+   A-2026-10-14 item 4) — Opus 5.5 ⇄ Fable 5.1, never a model below the primary. The switch is not silent:
+   the run records the model that really did the work ("Opus düştü, işi Fable high'da yaptı"), and on Fable
+   the effort is the work's own clamped to `high`..`xhigh`. Hermes's calls carry no backup — its work waits
+   (decision 16). Today's `fallback_of` hop and the silent SDK fall-over close with it (B65, B66). <!-- OPEN: B64 -->
 9. **The first succession (P4).** Through the door, as migrations so the bench and a fresh bootstrap hold
    the same law, the seed naming what stands: Sonnet 5 → Sonnet 5.5 on the approved plan, and the old judge
    `codex-5.6` retired onto Sol 6.1 on his judges word — each call under the authority that says it. Opus 5
@@ -464,3 +473,98 @@ place to move and nothing waits for a code change or a restart.
    raised to 0.3.296 (CLI 2.1.296) the same night, after which Opus 5.5 answered. Once Hamza calls the door
    on the CEO's word (P8) no engineer stands between that sentence and the seats, so the guard sits in the
    door rather than in a procedure.
+
+## Registered adaptation A-2026-10-14 (B64 — how work reaches the holding) <!-- CEO-OK: b64-decisions-1-5-8-9-11-12-16-his-yes-2026-10-14 --> <!-- CEO-OK: b64-decision7-jev-first-sonnet-on-doubt-2026-10-13 --> <!-- CEO-OK: b64-decision10-valuable-work-two-plans-fable-judge-2026-10-13 --> <!-- CEO-OK: b64-decision13-backup-pair-opus-fable-2026-10-14 --> <!-- CEO-OK: b64-decision14-model-room-2026-10-14 --> <!-- CEO-OK: b64-decision15-hermes-holding-hands-and-eyes-2026-10-14 --> <!-- CEO-OK: b64-decision17-his-word-over-a-rule-as-exception-2026-10-14 --> <!-- OPEN: B64 -->
+
+RUNTIME tree. The design he answered decision by decision: `.planning/quick/20261012-b64-is-akisi/is-akisi.html`
+(v15). Nothing below is built yet; each item is the law the build delivers.
+
+1. **The guide — who chooses a brain (decision 2).** The job's owner — the head of the department that takes it —
+   chooses every part's model and effort by its own judgement and writes the reason in one line; in doubt it reads
+   the guide, which every head is given:
+
+   | Work | Model · effort |
+   |---|---|
+   | sorting and routine internal work (mail, labels, an internal summary) | Jev first; Sonnet 5.5 `medium` on doubt |
+   | standard work (research, analysis, a draft, ordinary code) | Opus 5.5 `medium` |
+   | good work (the final text a client, a viewer or he reads; code that must be good) | Opus 5.5 `high` |
+   | a head's or manager's own work (plan, decision, assembly, weekly scorecard) | Opus 5.5 `high`, `xhigh` or `max`, its own choice |
+   | deep thinking (strategy, architecture, design, writing every new plan) | Opus 5.5 `xhigh` or `max` |
+   | valuable work's plan | Opus 5.5 `xhigh` and `max` — written twice (item 7) |
+   | a long unattended build (over half an hour) | Opus 5.5 `xhigh` |
+   | final check | Opus 5.5 `high` |
+   | plan judge (valuable work only) | Fable 5.1 `high` |
+   | critical gate | Sol 6.1 `high`; Fable 5.1 `high` beside it on valuable delivery, money, contracts (§4e) |
+
+   A known job type runs from the head's registered pattern ([[WORKFLOW_ENGINE_SPEC]]); its plan is not rewritten.
+   **Value tiers:** simple — a registered pattern, no plan; normal — the head writes the plan at `xhigh` and keeps
+   it as a pattern; valuable — a deal of 1,000 $ or more, or his word "bu değerli bir iş" (item 7). **Code keeps
+   the limits:** the final text a human reads is never below Opus (§4d's one exception: spoken normal talk); heads
+   and managers never below `high`; Sonnet and Haiku never at `low`; `max` a default nowhere — his word or a head's
+   reasoned choice in thinking work opens it; no part over the job's budget. **Measurement corrects:** every choice
+   is recorded with its reason; the guide is corrected with a test set built from our own jobs ([[TEST_STRATEGY]]);
+   model names live in the catalogue, never in the guide. **Fable stands in three places** — the backup brain,
+   valuable work's plan judge, the critical gate's second seat — and is never burnt idly: the rows B51 P6 put on
+   `fable-5.1` on 2026-10-10 (`orchestration`, `strategy`, `architecture`, `final-approval`, the critical-decision
+   seat, and the default of `orchestrator.critical_decision_model`) move to Opus 5.5. The studio's creative seats
+   on Fable (his rulings of 2026-09-05 and 2026-09-15, §3) are not moved here: they are a question named in B64's
+   plan.
+2. **Hamza's levels, model side (decision 3).** Normal chat, questions and the briefing: Opus 5.5 `medium`. Plan,
+   architecture or strategy talk: `xhigh`, said aloud; "Max'a geç" or "High'a in" holds until the subject ends.
+   Today `chat.strategy` carries `max` and every message but a status question reaches it — fixed. Spoken normal
+   talk moves to Sonnet 5.5 `medium` after a 20-sentence side-by-side with today's Opus 5.5 `low` (first voice,
+   1-1.3 s, B12, and Hamza's character). The speech itself is [[VOICE_INTERACTION_SPEC]] §24ter's.
+3. **Heads and managers never below `high` (decision 11).** Their own thinking runs on Opus 5.5 at `high`, `xhigh`
+   or `max`, their own choice. §4f's floor gains this effort floor: no fail-open path, no default brain
+   (`fn_default_brain()`) and no model picker puts one below it.
+4. **The backup pair (decision 13).** Written by role — main brain, backup brain — never by model name, so a new
+   model taking a role carries the rule. Any failure (quota, overload, outage) → the other brain takes the work,
+   critical work included. On Fable the work keeps its own effort clamped to `high`..`xhigh` (low, medium,
+   high → high; xhigh, max → xhigh). Fable's judge seats (plan judge, critical gate) fall to Sol 6.1, never to
+   Opus — Opus never audits its own plan. Hamza's spoken reply falls back to Opus 5.5 `low` for speed; work given
+   to him runs at its own level. No 70 % threshold: at 95 % of Fable's quota a second subscription is added —
+   money out, at his gate ([[COST_CONTROL_SPEC]]). The holding switches by itself — sees the error, reruns on the
+   backup at the right level, records "Opus düştü, işi Fable high'da yaptı" — and the old path closes (`fallback_of`,
+   the silent SDK fall-over, the SQL fallback: B65, B66). No work ever falls to a weaker model.
+5. **Hermes's backup (decision 16).** On an Opus outage or overload Hermes's work does not go to Fable: it waits;
+   whoever gave it tells him "Hermes'in beyni şu an kapalı, işiniz sırada"; it resumes when the brain is back. Quota
+   or credit full → item 4's alert; a second subscription or extra credit is money out at his gate. Why: Fable fell
+   for an instruction hidden in a page about 28 times in 1,100 attempts, Opus once; Fable measured weaker at
+   computer work (OSWorld 2.0 strict: Opus 48.7 %, Fable 42.8 % — Anthropic's test at `max`, not ours); 2.5× the
+   price.
+6. **The model room (decision 14).** A new model entering the catalogue brings him one page: every seat, the guide,
+   the backup pair and the judges — today, the proposal, why, measured on our own test set. The big seats move on
+   his one word; the mechanical seats move by themselves with one line to him (the B51 rule of 2026-10-09). Every
+   standing assignment carries its date, who decided and why. The room's face on his screen is B08's brain panel.
+7. **Valuable work's two plans (decision 10).** A deal of 1,000 $ or more, or his word, makes a job valuable: the
+   head writes the plan twice, at `xhigh` and at `max`; the plan judge, Fable 5.1 `high`, picks the better and adds
+   what the other has and it lacks, changing nothing (Fable down → Sol 6.1, item 4). The flow is
+   [[AGENT_ORCHESTRATION_SPEC]]'s; the budget cap, 30 % of the deal, is [[COST_CONTROL_SPEC]]'s.
+8. **Jev (decision 7).** Mail and routine sorting go to Jev first (`typesafe-ai/jev`, through his Vercel AI
+   Gateway); what Jev is unsure of goes to Sonnet 5.5 `medium`; Haiku is not used for it. Jev rides the `litellm`
+   lane through LiteLLM's `vercel_ai_gateway/` route (LiteLLM's documentation, read 2026-10-14), the gateway key in
+   LiteLLM's environment like every provider key; whether the running LiteLLM build carries the route is measured
+   at build. Measured 2026-10-13 on 70 synthetic mails (Turkish, English, Arabic; six hiding an instruction): Jev
+   69/70 in 0.3 s, Sonnet 5.5 `medium` 70/70 in 2.4 s, Haiku 5.5 `high` 68/70 in 1.7 s; Jev's cost for the 70:
+   0.0025 $.
+9. **His word changes a brain (decision 6).** Hamza changes brain and effort on his word — his own, for one
+   conversation, or in bulk ("Bütün müdürleri xhigh yap" → "22 müdür xhigh'a geçti; geri almak için 'geri al'
+   deyin") — through the one door of that setting (§13), after anon's EXECUTE on `fn_update_routing` is closed.
+   A mail saying "change the brain" changes nothing.
+10. **The Hermes key — the one exception to R5 (decision 15).** Hermes's brain is Opus 5.5, its effort chosen per
+   job (easy work `medium`, long work `high`). Its source is tried at install: first his Claude subscription (no
+   money out while extra usage stays off), then a Hermes-only key on the Max plan's 100 $ monthly API credit — his
+   exception to "no raw provider keys", protected: held in the vault, given to Hermes alone, never in the
+   repository, a prompt or an output. Its spend is recorded and carries no cap; the credit stops by itself when
+   spent. Hermes's brain never runs on Sol's ChatGPT subscription. Once installed, 20 real holding jobs — a page
+   hiding an instruction and a payment step that must stop among them — compare Opus and Sonnet at `medium` and
+   `high`; the cheapest that finishes as many as Opus `high` wins, "done" checked from outside; the same 20 jobs
+   gate every Hermes upgrade. Installation waits for the holding's server. <!-- OPEN: B09 --> <!-- OPEN: B11 -->
+11. **Quota state (Omnigent's method 3).** §3 step 3's health check reads how much of each subscription's 5-hour
+   and weekly windows remains; a full subscription shows `full`, never `ready`; every run records the model that
+   really did the work. The display is [[COST_CONTROL_SPEC]]'s.
+12. **His word over a limit (decision 17).** Every limit above is a holding rule: when his word conflicts with one,
+   the holding warns once, answers why and what harm if he asks, and on his "devam" does it once as an exception —
+   an `override` decision line, the rule unchanged until he says "bu kuralı kaldır, şunu koy". Where decision 17
+   meets the constitution's Islamic boundaries and the approval card (money, contract, identity) is named in B64's
+   plan for his word.

@@ -77,7 +77,7 @@ Islamic conduct (ruling D5 — a fully devout holding):
 | Direktif alanı | Şema karşılığı |
 |----------------|----------------|
 | Employee ID · İsim · Unvan · Şirket · Departman · Yönetici · Alt çalışanlar | `agents` (id, name, title, company via dept, department_id, manager_id; alt çalışanlar ters-FK) |
-| Kullanılan model · Fallback model | `agents.model` + routing kuralı; fallback `model_catalog.fallback_of` |
+| Kullanılan model · Fallback model | `agents.model` + routing kuralı; the backup is the backup pair written by role — main brain ⇄ backup brain ([[MODEL_ROUTING_SPEC]] A-2026-10-14 item 4, B64 decision 13); today's `model_catalog.fallback_of` closes with it <!-- OPEN: B66 --> |
 | Temel sorumluluklar · Yetki sınırları · Karar kapsamı · Uzmanlıklar · Deneyim profili · Metodoloji · İletişim biçimi · Raporlama standardı · Kalite standardı · Risk yaklaşımı · Escalation kuralları | `employee_records` (responsibilities, authority_limits, decision_scope, expertise, methodology + persona §2-8 çapraz referans) |
 | Skill set · Plugin erişimi · Tool erişimi · Bilgi kaynakları · Memory kapsamı | `library_grants` (kind bazında) + MCP profil; sicil bunları CANLI sorguyla gösterir (kopya tutmaz — tek kaynak) |
 | KPI'lar · Performans geçmişi · Hata geçmişi · Review sonuçları · Eğitim ihtiyaçları | `employee_records` jsonb alanları (HR job'ları besler) |

@@ -14,6 +14,7 @@ Admin panel · proje takip dashboard'u · approval ekranı · task manager · st
 ## 3. Ne'dir — tek cümle + üç yüz
 
 **Bütün holdingin yönetilmesi, izlenmesi, yapılandırılması, denetlenmesi, değiştirilmesi ve geliştirilmesi için merkezi executive command platformu.** Üç yüzü: (1) OTONOM İŞLETİM — şirket 7/24 kendi çalışır (anti-baby-sitting çekirdek değeri); (2) TAM GÖRÜNÜRLÜK — CEO her detaya sonsuz drill-down ile iner (madde 3B); (3) TAM KONTROL — CEO istediği anda her şeyi değiştirir (madde 2), mikro-yönetim ZORUNDA KALMADAN.
+Detail waits on his drill-down and is never pushed to him: it stays on the job desk (revision R1.4). Hermes, the holding's 24/7 hands and eyes, is part of this one organism — inside the holding, one brain, never a second system (revision R1.6). <!-- CEO-OK: b64-decision15-hermes-holding-hands-and-eyes-2026-10-14 -->
 
 ## 4. CEO'nun 19 kontrol alanı (madde 1 listesi → sistem karşılığı)
 
@@ -44,13 +45,17 @@ Kural: her alan için "gör + incele + DEĞİŞTİR + kontrol et" dört fiili sa
 ## 5. Ürün ilkeleri (bağlayıcı, tüm spec'lerin üstünde)
 
 - P0. **Revenue-First founding purpose (CEO directive 2026-07-16/17, [[00-CEO-DIRECTIVE-REVENUE-FIRST]]):** the Holding exists to conduct real economic activity and generate sustainable, **halal net profit** — discover opportunities, run them through digital employees, sell, measure, scale winners, stop losers, 24/7. The dashboard is the control surface, not the purpose. The objective is fixed; the Islamic boundaries are fixed and may never be debated, reinterpreted, or optimized around by any agent; the solution and portfolio are the Holding's responsibility. Normative machinery: [[REVENUE_ENGINE_SPEC]] (spec #32). P0 outranks P1–P7; every feature is additionally audited against "does this serve halal net profit generation?".
-- P1. **Anti-baby-sitting:** CEO niyeti bir kez söyler; sistem uçtan uca yürütür; onay yalnız dışa-dönük eşiklerde (para/sözleşme/kimlik).
+- P1. **Anti-baby-sitting:** the CEO gives a **goal** once — a broad brief, written the way a task is written for an engineer, never a one-line "intent" box; Hamza turns it into a brief (his sentence verbatim, the "done" criteria, the value tier) and the system carries it end to end. <!-- CEO-OK: b64-opened-goal-not-intent-and-hamza-2026-10-12 -->
+  Work reaches the holding through four doors: (a) he, by voice, chat or screen → Hamza; (b) e-mail and client messages → the Reception desk; (c) a calendar or an event → a line card starts a run of recurring work; (d) "Beni şu başkana bağla" → he talks with that head directly, as with Hamza, and work born there is that head's. <!-- CEO-OK: b64-decisions-1-5-8-9-11-12-16-his-yes-2026-10-14 -->
+  What stops at him: money out, a contract outside the approved price policy and standard contract, ad spend, identity steps, the subjects he marks — and, before the client, every delivery of a job whose deal is ≥ 1,000 $ (in smaller one-off jobs, the first delivery of each new service type). Normative text: APPROVAL_ENGINE.
 - P2. **Özet varsa detayı vardır:** hedefsiz özet render EDİLMEZ (Infinite Drill-Down — CEO_COMMAND_CENTER normatif haritası).
 - P3. **Şema-önce:** DB'de karşılığı olmayan hiçbir veri ekranda yoktur; sahte metrik/dummy widget yasak (§35).
 - P4. **Tek yazım seamı:** her mutasyon SECURITY DEFINER fn'den; audit'siz değişiklik imkânsız.
 - P5. **Kayıt-dışı iş yok:** her koşu, karar, araç çağrısı, dosya değişimi kayıtlı (OBSERVABILITY G1).
 - P6. **Kalite maliyete kurban edilmez:** token disiplini kaliteyi düşürerek DEĞİL israfı keserek (kernel gate, cache, compression) sağlanır.
-- P7. **Tek insan, tam otorite:** CEO override her yerde; sistem CEO'yu engellemez, kayıt altına alır (hook §27 ilkesi).
+- P7. **One human, full authority — his word over a rule:** his word stands above every holding rule, policy and principle. When it conflicts with one, the holding warns him once — "Bu şu kuralla çelişiyor, yine yapayım mı?" — and, if he asks, says why it conflicts and what harm it could do; he decides: "kurala göre yap" or "devam et". <!-- CEO-OK: b64-decision17-his-word-over-a-rule-as-exception-2026-10-14 -->
+  "Devam" is done at that moment as a one-time exception and recorded as an override; the rule is not deleted, not changed and not recorded as changed — it stays until he says "bu kuralı kaldır, şunu koy". Hamza, the heads and Hermes all work this way. This is the holding's runtime behaviour, not a construction law.
+  Its edges against the constitution's Islamic boundaries and against the approval card (money, contract, identity) are named in B64's plan for his word. <!-- OPEN: B64 -->
 
 ## 6-10. Component/Backend/Frontend/API/Event bağlamı
 
@@ -74,7 +79,7 @@ Modül testleri ilgili spec'lerde; ürün-seviye kabul (ACCEPTANCE_CRITERIA D5'i
 
 - A1. Ret-listesi denetimi: teslim edilen sistem §2'deki 7 kalıptan hiçbirine indirgenemez (CEO göz testi + 19-alan kapsam kanıtı).
 - A2. 19/19 alan: her alanda dört fiil (gör/incele/değiştir/kontrol) çalışır — alan-başı kanıt komutu ACCEPTANCE_CRITERIA'da.
-- A3. Anti-baby-sitting smoke: CEO tek intent girer → sistem plan/görev/koşu/çıktı zincirini onay kapıları dışında insansız tamamlar (uçtan uca senaryo testi).
+- A3. Anti-baby-sitting smoke: he gives one goal, by chat or by voice → Hamza writes the brief and sends it to the owning head → the owner plans, staffs the parts, assembles them and tries the whole → the job reaches **done** and its result comes back into the same conversation — with no human outside the approval gate (end-to-end scenario test; revision R1.3). <!-- OPEN: B64 -->
 - A4. Drill-down bütünlüğü: rastgele seçilen 10 özet değerin 10'u da kaynağına iner (P2 kanıtı).
 - A5. ≤3-tık erişim: 19 alanın rota derinliği denetimi (bilgi mimarisi scripti).
 
@@ -98,7 +103,19 @@ Tüm korpus bu tanıma bağımlıdır (ters yön yok). D4/D5 spec'leri §4 devir
 
 - Risk: teslim baskısıyla ürünün §2 kalıplarına gerilemesi (deadline daralınca "basit panel yeter" refleksi) — panzehir: BACKUP_PLAN minimum kritik kapsamı bile A2'nin çekirdek alt kümesini korur (kapsam daraltma = alan sayısı düşürme DEĞİL, alan-içi derinlik kademesi).
 - Risk: 19 alan eşit derinlikte sanılır — öncelik sırası madde 17 fazlarıdır (MASTER_PLAN); eşleme tablosu kapsamı, roadmap sırayı yönetir.
-- Edge: yeni iş alanı doğar (20. alan) — tanım revizyon protokolünden geçer (⛔ §22-23); Outleteuro gibi alt-OS spawn'ları bu tanımın DIŞINDA ayrı ürün tanımı taşır (outleteuro-definition kaydı — holding OS şablonu miras alınır ama tanım bağımsız).
+- Edge: a new field of work is born (a 20th area) — it passes the revision protocol (⛔ §22-23). A company opened inside the holding — an ad agency, a media company — runs the same flow under this definition; its owner is that company's head (revision R1.5). The Outleteuro sub-OS this edge once carved out was cancelled entirely (U19, CEO 2026-07-19).
+
+## Registered revisions
+
+⛔ §22-23: a revision of this definition needs the strongest model in hand, his approval, and its record here.
+
+- **R1 — B64, how work reaches the holding (2026-10-14).** Design: `.planning/quick/20261012-b64-is-akisi/is-akisi.html` (v15). <!-- CEO-OK: b64-opened-goal-not-intent-and-hamza-2026-10-12 --> <!-- CEO-OK: b64-decisions-1-5-8-9-11-12-16-his-yes-2026-10-14 --> <!-- CEO-OK: b64-decision15-hermes-holding-hands-and-eyes-2026-10-14 --> <!-- CEO-OK: b64-decision17-his-word-over-a-rule-as-exception-2026-10-14 -->
+  1. P1 — what he gives is a goal, not an "intent"; the four doors in; what stops at him (E01, E02, decisions 4 and 5).
+  2. P7 — his word over a holding rule: one warning, a one-time exception, the rule stays (decision 17).
+  3. A3 — the smoke test reads goal → brief → owner → done → reported (E01, E05, E31).
+  4. §3 face 2 — detail waits on his drill-down and is never pushed; it stays on the job desk (E06).
+  5. §27 edge — a company opened inside the holding runs the same flow; the Outleteuro carve-out goes (E09, U19).
+  6. §3 — Hermes is part of the one organism, inside the holding, one brain (decision 15).
 
 ## Done definition (bu spec)
 

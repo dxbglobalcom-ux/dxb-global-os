@@ -11,7 +11,7 @@
 
 ## 1. Amaç
 
-Holding'deki HER ajan — hangi temel modeli kullanırsa kullansın — inşaat yazarının (oturumu süren model) tanımladığı merkezi çalışma standardına bağlanır. Hook = `packages/hook` kütüphanesi: ajan spawn yolunu saran policy motoru. Prompt değil, YÜRÜTME KATMANI: pre-task gate, post-task gate, koşu-içi kurallar, ihlal kaydı, escalation.
+Holding'deki HER ajan — hangi temel modeli kullanırsa kullansın — inşaat yazarının (oturumu süren model) tanımladığı merkezi çalışma standardına bağlanır. Hermes, the holding's 24/7 hands and eyes, is not an employee: it is bound only by the pre-step approval check (§6, A17) — B64 decision 15, no restriction on it beyond his approval gate. Hook = `packages/hook` kütüphanesi: ajan spawn yolunu saran policy motoru. Prompt değil, YÜRÜTME KATMANI: pre-task gate, post-task gate, koşu-içi kurallar, ihlal kaydı, escalation.
 
 ## 2. Gereksinimler — madde 7'nin 17 standardı (normatif eşleme)
 
@@ -43,7 +43,8 @@ Madde 7'nin 12 uygulama katmanı (system policy, governance, pre/post validation
 orchestrator.dispatch
   └─ hook.preTask(ctx)  ── kural seti (DB'den) ──→ PASS | REJECT(reason)
        ctx: {employee, persona_version, task, project, grants, budget, settings}
-  └─ [SDK koşusu — koşu-içi kurallar runner'a enjekte: token bütçe, spawn kuralı, context eşiği]
+  └─ [SDK koşusu — koşu-içi kurallar runner'a enjekte: token bütçe, spawn kuralı, context eşiği;
+      pre-step check (B64, A16): money / contract / identity step → PASS | STOP | HOLD(his approval)]
   └─ hook.postTask(output, evidence) ──→ PASS | REVISE(feedback) | ESCALATE(chain)
 ```
 
@@ -94,7 +95,7 @@ CREATE TABLE hook_violations (
 
 ## 7. Escalation zinciri
 
-`çalışan → müdürü (department director) → orchestrator → CEO (alert 'high' + approval öğesi)`. Her sıçrama decision_log'a; zincir `settings 'hook.escalation_chain'` ile departman bazında özelleştirilebilir. Escalation SONUÇ üretmek zorunda: açık escalation 24s cevapsız kalırsa alert `critical` (kaybolmuş sorumluluk = ihlal).
+`çalışan → the job's owner (the head of its department) → Hamza → CEO` — he is reached only for his own items (money, a contract, identity, an outward critical step, a valuable delivery, a decision that is his); a failed part never reaches him as an approval item, it returns to its owner with the check's notes (B64, A19). Her sıçrama decision_log'a; zincir `settings 'hook.escalation_chain'` ile departman bazında özelleştirilebilir. Escalation SONUÇ üretmek zorunda: açık escalation 24s cevapsız kalırsa alert `critical` (kaybolmuş sorumluluk = ihlal).
 
 ## 8. API'ler / 9. Event yapısı / 10. State yönetimi
 
@@ -160,7 +161,7 @@ pnpm --filter hook test -- --grep "fail-closed"                         # → sp
 
 - Risk: post-gate mekanik denetimi kanıt-şekilciliğine kayar (kanıt var ama anlamsız) — panzehir: HR örneklem derin denetimi + ihlal istatistiği trendi (gov/violations ekranı).
 - Risk: policy seti şişer, spawn gecikir — bütçe: pre-gate < 100ms (DB tek sorgu + cache); ölçüm health snapshot'ta.
-- Edge: hook sürümü yükselirken koşan run'lar (eski sürümle biter — `agent_runs` başlangıç sürümünü taşır); CEO'nun kendisi standart-dışı iş isterse (hook CEO emrini engellemez, `warn` + audit ile kayıt altına alır — tek insan otoritesi ilkesi); iki policy çelişirse (en kısıtlayıcı kazanır + alert `medium` çelişki kaydı).
+- Edge: hook sürümü yükselirken koşan run'lar (eski sürümle biter — `agent_runs` başlangıç sürümünü taşır); CEO'nun kendisi standart-dışı iş isterse (hook CEO emrini engellemez: it warns him once — *"Bu şu kuralla çelişiyor, yine yapayım mı?"* — answers why and what harm if he asks, and on his "devam" passes that run once as an exception, recorded as a `warned` violation and an `override` decision line; the policy itself is not changed — B64 decision 17, A18 — tek insan otoritesi ilkesi); iki policy çelişirse (en kısıtlayıcı kazanır + alert `medium` çelişki kaydı).
 
 ## Registered adaptations — E10.1 (2026-07-14, Fable K1; ticket .planning/quick/20260714-e101-hook-engine)
 
@@ -194,9 +195,21 @@ Source: [[00-CEO-DIRECTIVE-REVENUE-FIRST]] §2 (immutable Islamic boundaries) + 
 
 - **Policy row `const.halal_screen`** (migration `20260717010000_r15_halal_screen_policy.sql`): gate `pre`, severity `block`, filed under standard_no 11 ("do not conflict with holding goals" — haram scope is the deepest conflict with holding goals; the 1..17 constraint stays untouched). The rule JSON carries the CANONICAL haram term list, 9 categories: alcohol, tobacco, pork, gambling, riba, adult, fraud, crypto_trading, stock_trading (crypto/stock trading = CEO exclusion, Talep §4).
 - **Check semantics** (`packages/hook/src/pre-task.ts`): task text surface (objective + output_contract) is letter-boundary matched against the term list with tr-locale lowering on both sides; a hit fail-closes the spawn — REJECT + `hook_violations` row + `decision_log` `hook_reject` row (existing violation path). False-positive guards: no bare "ham"/"stock"/"slot"/"interest"/"bitcoin" terms; multi-word terms used instead.
-- **Immutability:** policy edits remain CEO-ONLY through the `fn_hook_set_policy` wall (§13, `auth.uid()` required — the system actor is rejected). No agent can weaken, disable, or reinterpret the boundary; §27 CEO sovereignty applies unchanged (actor `ceo` degrades block → warn, recorded).
+- **Immutability:** policy edits remain CEO-ONLY through the `fn_hook_set_policy` wall (§13, `auth.uid()` required — the system actor is rejected). No agent can weaken, disable, or reinterpret the boundary. §27 CEO sovereignty takes decision 17's shape — a one-time exception on his "devam", never a change to the policy (A18); whether decision 17 reaches the constitution's Islamic boundaries at all is named in B64's plan for his word.
 - **Settings mirror:** the R1.2/R1.3 revenue_core wave mirrors the canonical list into settings `revenue.halal_screen` for the opportunity intake screen (REVENUE_ENGINE_SPEC §16 leg b). Canonical source stays this policy row.
 - **Evidence (executed 2026-07-17):** live policy row `const.halal_screen|11|pre|block|t`; `tests/e10/hook.test.ts` 35/35 PASS incl. 4 new cases — EN red (alcohol), TR red (kumar, tr-locale), letter-boundary PASS ("ham veri / stok raporu"), §27 CEO warn-degrade; spawn-binding 6/6 PASS.
+
+## Registered adaptations — B64 how work reaches the holding (2026-10-14) <!-- CEO-OK: b64-decisions-1-5-8-9-11-12-16-his-yes-2026-10-14 --> <!-- CEO-OK: b64-decision15-hermes-holding-hands-and-eyes-2026-10-14 --> <!-- CEO-OK: b64-decision17-his-word-over-a-rule-as-exception-2026-10-14 --> <!-- OPEN: B64 -->
+
+The design he answered decision by decision: `.planning/quick/20261012-b64-is-akisi/is-akisi.html` (v15). Not built yet.
+
+| # | Adaptation | Why |
+|---|-----------|-----|
+| A15 | **The brief feeds the gates.** The brief Hamza or the owner writes carries the "done" criteria; they are std 1's acceptance criteria. The post-gate is the automatic check on every part, in code and in seconds; a failed part returns to the job's owner with the check's notes — the notes reach the retry ladder. | B64 design (the check verifies against the brief by trial, never looks for a better version) |
+| A16 | **Every step is checked before it runs.** A step carrying money, a contract or identity — filling a payment form, signing, an identity step — or an outward critical step gets one of three answers before it runs: pass, stop, or hold for his approval card; held, it runs only after his yes. Browser-using employees and Hermes cannot pass it ([[APPROVAL_ENGINE_SPEC]], [[PERMISSION_MODEL]] G4). | Omnigent's method 5; decision 15 — his gate is the one gate |
+| A17 | **Hermes's binding.** Hermes is no `agents` row and carries no `hook_version`: A16 is the only check it runs under. The 17 standards, the token budget and the persona gate are not put on it. | Decision 15 — "Hermes'e kısıt konmaz"; the remedy is that every change it makes is recorded and reversible |
+| A18 | **His word against a policy.** §27's CEO case is a one-time exception, never a policy change: one warning, an answer to "why" and "what harm" if he asks, then his "kurala göre yap" or "devam"; "devam" passes that run, recorded (`warned` violation + `override` decision line). A policy changes only through `fn_hook_set_policy` when he says "bu kuralı kaldır, şunu koy". | Decision 17 |
+| A19 | **The escalation chain** is worker → the job's owner → Hamza → him, and he is reached only for his own items (§7). | B64 design: the owner assembles and owns the job; the morning brings him only exceptions |
 
 ## Done definition (bu spec)
 

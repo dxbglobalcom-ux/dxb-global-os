@@ -1,7 +1,7 @@
 # COST_CONTROL_SPEC — MALİYET VE TOKEN ZEKÂSI
 
 > Dalga 2 · Yazar: Fable 5 bizzat · Üst: [[SYSTEM_ARCHITECTURE]] · Kardeşler: [[OBSERVABILITY_SPEC]] (10.5 akış kaynağı), [[MODEL_ROUTING_SPEC]] (bütçe-stop kesişimi), [[SETTINGS_AND_CONTROL_SPEC]] (bütçe anahtarları)
-> Direktif kaynağı: §20 (Cost & Token Intelligence) + madde 10.5 (cost logs) + proje kısıtı: **€50-150/ay OS işletme bütçesi; Cost Monitor: %70 alert, %100'de non-critical hard-stop** (mevcut Phase-4 mekanizması KALIR ve genelleşir).
+> Direktif kaynağı: §20 (Cost & Token Intelligence) + madde 10.5 (cost logs) + proje kısıtı: **€50-150/ay OS işletme bütçesi; Cost Monitor: %70 alert, %90 High, %100'de non-critical hard-stop** (mevcut Phase-4 mekanizması KALIR ve genelleşir).
 
 ## 1. Amaç
 
@@ -12,7 +12,7 @@ Her token ve her cent'in NEREDEN geldiğinin (hangi ajan, model, departman, proj
 - R1. §20'nin 11 kırılım boyutu: holding · company · department · project · workflow · employee · model · provider · task · tool · date range — hepsi kombinlenebilir (örn. departman×model×hafta).
 - R2. §20'nin 10 görselleştirmesi: cost trend · token trend · cost anomaly · project burn rate · employee cost efficiency · model efficiency · cache usage · spawn cost · forecast · budget risk. Her chart tıklanabilir + hover detay + drill-down (§20 hükmü; DESIGN_SYSTEM chart kuralları).
 - R3. Madde 10.5 alanları ledger'da: cache kullanımı, context tüketimi, spawn maliyeti dahil.
-- R4. Bütçe zinciri: holding → company → department → project/employee scope'lu limitler; %70 Attention alert, %90 High, %100 non-critical hard-stop (kritik işler + para-çıkışı onay akışı ASLA otomatik durdurulmaz — CEO kararı).
+- R4. Bütçe zinciri: holding → company → department → project/employee → job scope'lu limitler (the job level and its own cap: B64, A5); %70 Attention alert, %90 High, %100 non-critical hard-stop (kritik işler + para-çıkışı onay akışı ASLA otomatik durdurulmaz — CEO kararı). A full budget never moves work to a cheaper or weaker model (A8). Hermes is the one scope outside the chain (A9).
 - R5. LiteLLM virtual key bütçeleriyle çift katman: DB bütçesi (politika/görünürlük) + proxy bütçesi (fiziksel kesici). İkisi settings'ten TEK anahtar setiyle senkron yönetilir.
 - R6. Forecast dürüst: model basit ve açıklanır (30g EMA + ay-sonu projeksiyon); "AI tahmini" süsü yasak — yöntem chart tooltip'inde yazar.
 
@@ -48,7 +48,7 @@ ALTER TABLE cost_ledger ADD COLUMN IF NOT EXISTS
   spawn_parent uuid,                         -- 10.5 spawn maliyeti (alt-ajan zinciri toplamı view'da)
   tool_summary jsonb;                        -- R1 tool boyutu
 budgets (
-  id uuid PK, scope_type text,               -- holding|company|department|project|employee
+  id uuid PK, scope_type text,               -- holding|company|department|project|employee; B64 adds job (schema at build)
   scope_id uuid null,                        -- null = holding
   period text,                               -- daily|weekly|monthly
   limit_eur numeric, token_limit bigint null,
@@ -177,7 +177,7 @@ Mevcut cost_ledger + Cost Monitor (KALIR) · [[OBSERVABILITY_SPEC]] trigger/snap
 - **Çifte sayım** (spawn zinciri): ledger satırı koşu-başı; ağaç toplamı VIEW'da (spawn_parent yürüyüşü) — aggregate'e çocuklar bir kez girer (rollup yalnız satır bazlı).
 - **Kur/fiyat değişimi**: model fiyatları model_catalog'dan; fiyat güncellemesi geçmişi YENİDEN FİYATLAMAZ (ledger yazım anındaki maliyeti taşır — muhasebe doğruluğu).
 - **€150 tavana yaklaşan ay sonu**: forecast budget risk chart'ı + %90 High alert CEO'ya erken görünür; hard-stop ayın son günü sürpriz olmaz.
-- **Bütçesiz scope** (yeni departman): holding bütçesi şemsiyedir — scope bütçesi yoksa üst scope sayacına akar (kaçak yok).
+- **Bütçesiz scope** (yeni departman): holding bütçesi şemsiyedir — scope bütçesi yoksa üst scope sayacına akar (kaçak yok). The one named exception is Hermes (A9): its spend is recorded, never capped.
 
 ## Registered adaptations — E11.1 (2026-07-14, Fable K1; CEO-visible)
 
@@ -205,6 +205,18 @@ Measured on the company engine, 2026-09-15:
 **Why the zero is not an error to be fixed with a number.** The studio's work is not bought from a provider by the token: it is a graphics card running in this building for minutes at a time. `cost_ledger` is fed by the model router, and the router never sees a shot. So every euro the studio has ever spent is invisible to the CEO's cost intelligence, and any margin decision that reads this ledger (B28) is reading a zero that means "not measured", not "free".
 
 **The gap, named and not closed here.** The missing dimension is **card time** — a per-job cost written from `media_jobs.wall_seconds` against a measured machine rate, and above it the figure the CEO asked for by name on 2026-08-31: **cost per delivered second** of finished film, which needs the delivered length beside the engine time. It requires a cost column or a `source = 'media'` writer, and the two-roads cost table he ordered as a CEO-facing artefact. **Who closes it:** W14, on his word — it is on the board as an owned leg (audit F036, F066). W13 registers that this spec knows the dimension is missing and that its zero is a silence, not a price.
+
+## Registered adaptations — B64 how work reaches the holding (2026-10-14) <!-- CEO-OK: b64-decisions-1-5-8-9-11-12-16-his-yes-2026-10-14 --> <!-- CEO-OK: b64-decision10-valuable-work-two-plans-fable-judge-2026-10-13 --> <!-- CEO-OK: b64-decision13-backup-pair-opus-fable-2026-10-14 --> <!-- CEO-OK: b64-decision15-hermes-holding-hands-and-eyes-2026-10-14 --> <!-- OPEN: B64 -->
+
+The design he answered decision by decision: `.planning/quick/20261012-b64-is-akisi/is-akisi.html` (v15). Not built yet.
+
+| # | Adaptation | Why |
+|---|------------|-----|
+| A5 | **The chain reaches the job.** Budget descends holding → company → department → job; alerts at 70 % and 90 %; at 100 % non-critical new work stops (§3 as today). Every job carries its own cap, and a threshold he sets is asked once and remembered (Omnigent's method 2). A valuable job's cap is at most 30 % of its deal (300 $ on 1,000 $). The 1,000 $ line is his, in dollars; a deal in another currency is compared at that day's rate. | Scenario 6 and decision 10; one cap per job stops a single run from eating a department's month |
+| A6 | **No price is "cost unknown", never 0.** A model row with no token price reports `cost unknown`; a budgeted job on such a model waits until a price is entered; no unpriced run is summed as zero. Today no Anthropic row carries a price (subscriptions — [[MODEL_ROUTING_SPEC]] A-2026-10-10 item 9). | Omnigent's method 1; a zero that means "not measured" misleads him (as the studio's zero above) |
+| A7 | **A quota is a budget too.** `ProviderBoard` shows each subscription's 5-hour and weekly windows remaining, a full subscription as `full` (never `ready`), and which model really did each run (state: MODEL_ROUTING §3 step 3). No 70 % quota threshold: at 95 % of Fable's quota a second subscription is proposed — money out, at his gate — and the work continues there once he says yes. Quota or credit full on Hermes → the alert, and Hermes's work waits. | Decisions 13 and 16; Omnigent's method 3 |
+| A8 | **Never a cheaper model.** A full budget stops non-critical new work; it never moves work to a cheaper or weaker model. | Decision 13 — "Hiçbir iş daha zayıf bir modele düşmez"; Omnigent's default of going on with cheaper models is not taken |
+| A9 | **Hermes carries no cap.** Hermes's spend is written to `cost_ledger` like every run, but no budget, no umbrella hard-stop and no LiteLLM key budget stops it — "şimdilik bekçi ve harcama sınırı da konmaz". Its brain on his subscription spends nothing while extra usage stays off; the 100 $ monthly credit on its own key stops by itself when spent; a second subscription or extra credit is money out at his gate. | Decision 15; the remedy is the record, not a limit |
 
 ## Done definition (bu spec)
 

@@ -12,7 +12,7 @@ Sistemdeki "ne oldu" bilgisinin iki katmanlı modeli: (1) **kaynak gerçek** —
 - G1. postgres_changes YASAK — yalnız Broadcast (STACK.md sert kuralı; 0013 trigger emsali).
 - G2. Her canlı olay bir kaynak-gerçek satırından türetilir; satırsız olay yayınlanamaz (sahte canlılık yasağı).
 - G3. Olay zarfı korelasyon taşır: task→run→workflow_run→project zinciri UI'da kopmaz.
-- G4. Dışa dönük hiçbir aksiyon olay yayınıyla tetiklenemez — dış dünyaya tek kapı `outbox` (KALIR, DOKUNULMAZ).
+- G4. No outward action can be triggered by an event broadcast. The holding's own workers reach the outside world only through `outbox` (KALIR, DOKUNULMAZ); Hermes's computer work is the second, named path — every step recorded, every change reversible, and money, a contract, identity or an outward critical step stopped at his gate (B64 decision 15; SECURITY_MODEL O2). <!-- CEO-OK: b64-decision15-hermes-holding-hands-and-eyes-2026-10-14 -->
 
 ## 3. Mimari
 
@@ -35,6 +35,8 @@ UI → kanal aboneliği (tek subscription/kanal) → context fan-out → kompone
 | Ayar değişimleri | `settings_change_log` | YENİ (0021x) |
 | Workflow koşuları | `workflow_runs` (durum geçişleri) | YENİ (0023x) |
 | Onay/maliyet | `approvals`, `cost_ledger` | KALIR |
+| Jobs (owner, brief, state) | the job record — [[DATA_MODEL]] B64 A3, schema at build | YENİ (B64) |
+| Inbound mail and messages | the inbound record — [[DATA_MODEL]] B64 A2, schema at build | YENİ (B64) |
 
 ## 5. Component yapısı / 6. Backend yapısı
 
@@ -58,7 +60,7 @@ Olay yayını API değildir; API senkron sonucu döndürür, olay aynı gerçeğ
   "ts": "timestamptz",
   "type": "entity.verb_past",
   "actor": "ceo | system | employee:<id>",
-  "entity": { "kind": "task|run|workflow_run|employee|setting|approval|alert|project|library_item", "id": "..." },
+  "entity": { "kind": "task|run|workflow_run|employee|setting|approval|alert|project|library_item|job|inbound", "id": "..." },
   "corr": { "task_id": null, "run_id": null, "workflow_run_id": null, "project_id": null },
   "payload": { "...": "olay-özel; change_id mutasyon kaynaklıysa zorunlu" }
 }
@@ -68,7 +70,8 @@ Olay yayını API değildir; API senkron sonucu döndürür, olay aynı gerçeğ
 
 | Kanal | İçerik | Başlıca type'lar | Debounce |
 |-------|--------|------------------|----------|
-| `ops:live` | ajan/koşu canlılığı | `run.started`, `run.progressed`, `run.waiting_approval`, `run.succeeded`, `run.failed`, `task.event_appended` | 1 sn toplu |
+| `ops:live` | ajan/koşu canlılığı | `run.started`, `run.progressed`, `run.waiting_approval`, `run.succeeded`, `run.failed`, `task.event_appended`, `run.brain_switched`, `job.opened`, `job.done`, `job.replanned`, `job.stopped`, `job.cancelled` (B64) | 1 sn toplu |
+| `reception` | the Reception desk: every inbound mail and message, where it went and what happened to it (B64) | `inbound.received`, `inbound.sorted`, `inbound.progressed` | yok |
 | `approvals` | onay kuyruğu (KALIR) | `approval.created`, `approval.decided` | yok |
 | `alerts` | kritik uyarılar | `alert.raised`, `alert.acknowledged`, `alert.muted` | yok |
 | `settings` | ayar değişimi + library kayıt/grant değişimi | `setting.changed`, `setting.undone`, `library_item.changed`, `library_grant.changed` | yok |
@@ -146,6 +149,15 @@ Measured on the company engine, 2026-09-15: non-internal triggers on `public.med
 
 **The gap, named and not closed here.** A `media_jobs` type set in §9b (a job's `queued → running → done|failed|cancelled` passage, carrying the job's kind, its seat and its task) plus the **trigger** that broadcasts it is a schema and channel change. **Who closes it:** the studio's screen plan (W14), on the CEO's word — a channel is added to the closed envelope dictionary only with the strongest model and his approval (§ Opus-devralma notu). Until then the studio has no live source and any screen drawn for it must say so rather than poll silently.
 
+## Registered adaptations — B64 how work reaches the holding (2026-10-14)
+
+Design: `.planning/quick/20261012-b64-is-akisi/is-akisi.html` (v15). Nothing below is built yet. <!-- OPEN: B64 -->
+
+1. **The `reception` channel (§9b).** <!-- CEO-OK: b64-decisions-1-5-8-9-11-12-16-his-yes-2026-10-14 --> A new channel enters this closed dictionary only on his approval (§ Opus-devralma notu); his yes to the flow (decision 1) and to mail sorted four ways (decision 12) gives it. The Reception desk's section on his screen shows every inbound mail and message the moment it arrives, where it went and what happened to it. Source truth: the inbound record ([[DATA_MODEL]] B64 A2), one row per mail or message, so G2 holds. Entity kind `inbound` (§9a). Types: `inbound.received` (the record is made), `inbound.sorted` (its class — work, important, record, bin — and its owner), `inbound.progressed` (what happened to it: became a job, answered, archived to finance, moved to Gmail's bin). The payload carries a summary and the record's reference, never the mail's body (§16).
+2. **A job's life is published (`ops:live`).** <!-- CEO-OK: b64-decisions-1-5-8-9-11-12-16-his-yes-2026-10-14 --> Today nothing publishes a job's end: an intent's states stop at `dispatched`. Entity kind `job` (§9a). Types: `job.opened`, `job.done` (assembled, tried and delivered by its owner), `job.replanned` (the machine replanned slipped work and told its dependants), `job.stopped`, `job.cancelled`. Source truth: the job record ([[DATA_MODEL]] B64 A3). Hamza's report of a finished job and the screen's "who works on what" read these.
+3. **The backup switch is never silent (`ops:live`).** <!-- CEO-OK: b64-decision13-backup-pair-opus-fable-2026-10-14 --> `run.brain_switched` carries the model that failed, the model that took the work, the effort it ran at, and the reason (quota, overload, outage). When both brains are down, client-bound work waits and he is told: an `alert.raised` (existing type). Hermes's work waiting for its brain (decision 16) raises the same alert.
+4. **Hermes on his screen** <!-- CEO-OK: b64-decision15-hermes-holding-hands-and-eyes-2026-10-14 --> lights up and is named through the `run.*` types of its own runs, with no channel of its own ([[OBSERVABILITY_SPEC]] B64). G4 (§2) names its outward path.
+
 ## Done definition (bu spec)
 
-27 başlık ✓ · kaynak-gerçek/canlı-yayın ayrımı ✓ · kanal kataloğu (8 kanal, type listeleri, debounce) ✓ · bağlayıcı zarf ✓ · reconnect/fallback kontratı ✓ · doğrulama komutları ✓ · Opus-devralma + ⛔ ✓
+27 başlık ✓ · kaynak-gerçek/canlı-yayın ayrımı ✓ · kanal kataloğu (9 kanal, type listeleri, debounce) ✓ · bağlayıcı zarf ✓ · reconnect/fallback kontratı ✓ · doğrulama komutları ✓ · Opus-devralma + ⛔ ✓

@@ -9,7 +9,11 @@ Holding OS'un tüm katmanlarının — çekirdek yürütme (kernel/kuyruk/ajanla
 
 ## 2. Gereksinimler
 
-- R1. Mevcut çekirdek OS akışı (intent → kernel → task → agent → approval → outbox) kesintisiz KALIR.
+- R1. The holding's running flow is never broken while it is rebuilt. What runs today is the July chain
+  (intent → kernel → task → agent → approval → outbox); B64's flow replaces it step by step — his goal → Hamza's brief →
+  the owner (the head of the department that takes the job) → specialists → the check → delivery, with his approval gate
+  and the outbox at the outward end (B64 decision 1, AGENT_ORCHESTRATION_SPEC).
+  <!-- CEO-OK: b64-decisions-1-5-8-9-11-12-16-his-yes-2026-10-14 --> <!-- OPEN: B64 -->
 - R2. Her çalışan varlık (şirket/departman/müdür/çalışan/ajan) DB'de birinci-sınıf kayıttır; UI saf projeksiyondur (şema-önce ilkesi, roadmap kararıyla uyumlu).
 - R3. CEO'nun her ayar değişikliği tek yazım seamı üzerinden geçer (SECURITY DEFINER fonksiyon deseni — migration 0015 emsali) ve audit'e düşer.
 - R4. Canlılık: UI güncellemeleri Supabase Realtime **Broadcast** ile (postgres_changes YASAK — STACK.md sert kuralı).
@@ -44,8 +48,15 @@ Holding OS'un tüm katmanlarının — çekirdek yürütme (kernel/kuyruk/ajanla
   ki"*): mevcut zamanlayıcı işi her on saniyede **kendisi hesaplar** — bekleyen iş, makinenin
   taşıyabileceği (çekirdek − 2, en fazla 8) ve saatin kalan harcama payı. Ev artık iş
   istasyonudur (aşağı, ALTYAPI).
-- R6. Her ajan spawn'ı Opus 5 Hook policy katmanından geçer (pre/post-task validation) — madde 7.
-- R7. Güvenlik sertleştirme ertelenmiş sicilde; para-ÇIKIŞI onay kapısı + outbox tek-çıkış deseni DOKUNULMAZ.
+  **One registered exception (B64, 2026-10-14):** Hermes runs as a resident service on the holding's server — the
+  `KAYITLI UYARLAMA — B64` in §3.
+- R6. Her ajan spawn'ı Opus 5 Hook policy katmanından geçer (pre/post-task validation) — madde 7. Hermes, a resident
+  hand rather than a spawned agent, is bound only by the hook's pre-step approval check (B64 decision 15;
+  FABLE_5_HOOK_SPEC).
+- R7. Security hardening sits in the deferred register (SECURITY_MODEL). The money-out approval gate is UNTOUCHABLE.
+  Outward actions leave through two named paths only — the `outbox` for the holding's own workers, and Hermes's
+  recorded, reversible computer work (B64 decision 15) — with money, contract, identity and outward critical steps at
+  his gate (SECURITY_MODEL O2). <!-- CEO-OK: b64-decision15-hermes-holding-hands-and-eyes-2026-10-14 -->
 
 ## 3. Mimari (katman görünümü)
 
@@ -54,7 +65,7 @@ Holding OS'un tüm katmanlarının — çekirdek yürütme (kernel/kuyruk/ajanla
 │ apps/dashboard (Next.js 16.2, RSC-first)                             │
 │  Executive Command Center: sol nav (7 grup) · command bar · canvas   │
 │  · sağ intelligence rayı · floating agent dock  [SIFIRDAN]           │
-│ apps/jarvis (voice — ertelendi, mimari yeri korunur)      [KALIR]    │
+│ apps/jarvis + packages/voice (voice: live since R3.1)    [KALIR]     │
 ├─ KONTROL DÜZLEMİ ────────────────────────────────── [YENİ] ──────────┤
 │ Settings/Org/HR mutasyonları: Next.js route handler →               │
 │  SECURITY DEFINER fn → settings/org tabloları → audit_log + Broadcast│
@@ -64,7 +75,7 @@ Holding OS'un tüm katmanlarının — çekirdek yürütme (kernel/kuyruk/ajanla
 │ packages/kernel (intent→plan→task) · packages/orchestrator (routing) │
 │ pg-boss 12 (aynı Postgres; session-mode 5432)                        │
 │ Claude Agent SDK ajanları · LiteLLM proxy (virtual keys, hard-stop)  │
-│ packages/outbox-executor (dışa dönük TEK kapı, onay sonrası)         │
+│ packages/outbox-executor (the workers' outward exit; Hermes 2nd)     │
 │ packages/gateway + dxb-mcp (8 MCP, 14 least-privilege profil)        │
 │ packages/memory-router (4-store kompozisyon)                         │
 ├─ VERİ — İKİ MOTOR, ARALARINDA DUVAR (B36, 2026-08-24) ───────────────┤
@@ -77,7 +88,7 @@ Holding OS'un tüm katmanlarının — çekirdek yürütme (kernel/kuyruk/ajanla
 │                                                                      │
 │ İNŞAAT MOTORU  supabase_db_DxB_Build · port 54422 · kendi kümesi     │
 │  aynı db/migrations · verisi bu depodan üretilir · holdingin 0 satırı│
-└─ ALTYAPI: iş istasyonu (ev) · Hetzner cx33 (kiralık, aşağıdaki nota bak) ──┘
+└─ ALTYAPI: iş istasyonu (ev) · Storage Box · server gone 2026-09-19 ──┘
 ```
 
 **ALTYAPI — CEO hükmü 2026-08-25 ve o günün ölçümleri.** *"İş istasyonu evdir."* Şirketin motoru,
@@ -85,8 +96,14 @@ Hamza, zamanlayıcı ve panel bu makinede çalışır: **30 GB RAM · 24 iş par
 1,8 TB NVMe**, ölçüm anında yük 0,32-0,55 (`free -h`, `lscpu`, `uptime`). Eski "8 GB kutu"
 varsayımı burada geçerli değildir ve R5'in gerekçesi yukarıda düzeltilmiştir.
 
-**KİRALIK KUTU — 2026-08-26/27'de ödendi, geri geldi ve İÇİ OKUNDU; kaderi hâlâ CEO'nun kararıdır
-(tahta satırı B39).** Hetzner'in kendi kaydı: `dxb-vps-1`, ID 149310629, **cx33 · 4 vCPU · 8 GB ·
+**2026-09-19 — THE RENTED BOX IS GONE, ON HIS WORD** <!-- CEO-OK: hetzner-server-stopped-until-the-holding-stands-2026-09-19 -->
+*"orada önemli bişey yok silinebilir herşey şuanlık… şuan işimize yaramaz"* — B39 closed by his own eye
+<!-- CEO-OK: b39-closed-by-his-eye-2026-09-19 -->. `hcloud server delete dxb-vps-1` → 0 servers, 0 primary IPs,
+0 snapshots; the bill 13.91 → 3.81 €/month, the Storage Box `dxb-backup-1` alone. The two paragraphs below are the box
+as it stood on 2026-08-27 — history. The holding's server comes back when the holding stands (B64 adaptation below).
+
+**KİRALIK KUTU — 2026-08-26/27'de ödendi, geri geldi ve İÇİ OKUNDU; kaderi 2026-09-19'da CEO'nun sözüyle
+belirlendi: silindi (B39, yukarıda).** Hetzner'in kendi kaydı: `dxb-vps-1`, ID 149310629, **cx33 · 4 vCPU · 8 GB ·
 80 GB**, nbg1, Ubuntu 24.04, 2026-07-09'dan beri ayakta, durum **running**, IPv4 `46.225.89.249`,
 Hetzner tarafında hiç güvenlik duvarı kuralı yok. **Ağ kapatması kalktı:** CEO `080001075196` numaralı
 **14,22 €**'luk faturayı ödedi (ekranında `settled`), ardından ölçüldü — `ipv4.blocked = false`,
@@ -122,8 +139,9 @@ işlemde durduruldu ve devre dışı bırakıldı (ikisi de `/opt/dxb` üstünde
 ⚠ **Yazar ardından tahtadaki B09 · B10 · B11 satırlarını KENDİ KARARIYLA kapattı; böyle bir emir yoktu.**
 CEO aynı saat içinde yakaladı — *"hermes sunucuda 7/24 zaten çalışacaktı ve neden kapattınız tahtayı … ben
 sadece hetzner ile ilgili sorunu çözüyorduk"* — ve haklıdır: eskimiş bir kopyayı silmek, Hermes hakkındaki
-bir şikâyetin cevabı değildir. Üç satır da aynı gece **asıl metinleriyle geri açıldı**. <!-- OPEN: B09 --> **Kutu artık V2 için boş bir iniş pistidir**; yeniden kurulum
-`vps/provision/` + `vps/compose.yaml` ile sıfırdan ve **158 göç dosyasının tamamıyla** yapılacaktır.
+bir şikâyetin cevabı değildir. Üç satır da aynı gece **asıl metinleriyle geri açıldı**. <!-- OPEN: B09 --> Kutu o gün V2 için boş bir iniş pistiydi;
+2026-09-19'da silindi (yukarıda). Geri dönüş, holding ayağa kalkınca holdingin sunucusunda `vps/provision/` +
+`vps/compose.yaml` ile sıfırdan ve bütün göç dosyalarıyla kurulumdur (B64 uyarlaması, aşağıda).
 ⚠ Emrin lafzına rağmen tek bir dosya bırakıldı ve saklanmadı: `dxb-2026-07-17.dump` (38,5 MB) —
 **2026-07-09…17 aralığını holding tarafındaki hiçbir kopya taşımıyor**; CEO'nun sözüyle o da gider.
 
@@ -164,6 +182,38 @@ hâliyle silinip yerine ölçülen hâli yazıldı (KANUN A).
   (`scripts/governance/company-untouched.mjs`) — aletlerini önce kırmızıda gösterir, sonra şirketi
   fotoğraflar, bütün bataryayı koşar, tekrar fotoğraflar ve çıkarır, `dxb_gateway` ile 13 şekilde
   yazmayı dener ve depoyu süpürür. Kabul edildi 2026-08-25 (`b36-block6-accepted-2026-08-25`).
+
+**KAYITLI UYARLAMA — B64, 2026-10-14: HERMES INSIDE THE HOLDING, ON THE HOLDING'S SERVER.**
+<!-- CEO-OK: b64-decision15-hermes-holding-hands-and-eyes-2026-10-14 --> <!-- CEO-OK: b64-decisions-1-5-8-9-11-12-16-his-yes-2026-10-14 --> <!-- OPEN: B11 -->
+Design: `.planning/quick/20261012-b64-is-akisi/is-akisi.html` (decisions 15 and 16).
+
+1. **Where.** Hermes is the holding's 24/7 hands and eyes — a part of the holding, one brain, never two. It runs on the
+   holding's server: the machine the holding runs on 24/7 once it stands, rented at his gate because it is money out
+   (B09, B11). Nothing is installed before that; today Hermes is on no machine.
+2. **How it is installed.** In Docker, so that a mistake cannot break the rest of the server — on the condition that
+   Docker restricts nothing: every capability is tried inside at install, and one that does not work there is installed
+   without Docker. From `vps/provision/` + `vps/compose.yaml` (his ruling of 2026-08-27, carried by the 2026-09-19
+   record), a pinned current release.
+3. **R5.** Hermes is a resident service — the one registered exception to R5.
+4. **Its brain and its money.** Opus 5.5, effort per job (easy work medium, long work high). At install his Claude
+   subscription is tried first, then the Hermes-only key on the Max plan's 100 $ monthly API credit — his exception to
+   "no raw provider keys", protected (SECURITY_MODEL O4); never Sol's ChatGPT subscription. LiteLLM's hard-stop does not
+   apply to it: no spend limit and no watchdog for now, by his word. The 100 $ credit stops by itself when it is spent;
+   with extra usage left off, the subscription moves no money. Its spend is recorded.
+5. **The July watchdog is not part of the reinstall.** `vps/watchdog/watchdog.sh` with `vps/systemd/watchdog.service`
+   and `watchdog.timer` killed Hermes over any budget field; they stay out of the install. The files stay on disk until
+   he sees the list.
+6. **Its outward path** — sites, forms, its WhatsApp (official business channel) and Telegram door — is the second named
+   path beside the outbox (R7, SECURITY_MODEL O2): every step recorded, every change reversible; money, a contract,
+   identity and an outward critical step stop at his gate; at the payment step Hermes stops and he pays.
+7. **Its work.** Hamza and every head give it computer work through the holding's one queue (AGENT_ORCHESTRATION_SPEC),
+   the night shift included; the result returns to whoever gave it and lands in the holding's own runs. Its memory lives
+   inside the holding (MEMORY_ARCHITECTURE A2).
+8. **When Opus is down** (decision 16), its work waits and never moves to Fable; the giver tells him *"Hermes'in beyni
+   şu an kapalı, işiniz sırada"*. Quota or credit full → decision 13's alert; a second subscription or extra credit is
+   money out at his gate.
+9. **On his screen** it is alive and simple — part of the organism, lit and named while it works, no detail before his
+   eye (CEO_COMMAND_CENTER_SPEC).
 
 Karar ilkesi (⛔ mimari-kritik): **kontrol düzlemi ayrı mikroservis DEĞİLDİR.** Gerekçe: (a) RAM bütçesi (R5), (b) tek yazım seamı zaten DB fonksiyon katmanında, (c) Opus devrinde işletilecek parça sayısını düşük tutmak. Ayrı servisleştirme ancak ölçüm kanıtıyla (latency/lock) ve CEO onayıyla açılır.
 
@@ -214,7 +264,10 @@ RSC-first; client komponent yalnız etkileşim yüzeylerinde (org graph, widget 
 Prensipler (tam kontrat D4 API_CONTRACTS):
 - Reads: PostgREST + view'lar; sayfa-başı tek round-trip hedefi.
 - Mutations: `/api/control/{alan}` route handler'ları; idempotency key zorunlu; yanıt = `{ok, change_id, affected[]}`.
-- Ajan içi: MCP gateway profil-başı; LiteLLM virtual key'ler — raw provider key hiçbir config'de bulunamaz (sert kural).
+- Ajan içi: MCP gateway profil-başı; LiteLLM virtual keys — a raw provider key stands in no config (hard rule), with
+  one registered exception: the Hermes-only key (B64 decision 15, SECURITY_MODEL O4). Jev rides LiteLLM's
+  `vercel_ai_gateway/` route; its Vercel AI Gateway key lives in LiteLLM's environment like every provider key
+  (B64 decision 7). <!-- CEO-OK: b64-decision7-jev-first-sonnet-on-doubt-2026-10-13 -->
 
 ## 9. Event yapısı
 
@@ -246,11 +299,22 @@ Sunucu gerçeği tek kaynak; client state yalnız görünüm tercihi (widget lay
 
 Madde 4 hükmü: sertleştirme DURUR — MFA kapalı kalır, local açık kalır, yeni kimlik bürokrasisi eklenmez. Mimarinin güvenlik omurgası şu üçlüde sabittir: (1) para-çıkışı onay kapısı, (2) outbox tek-çıkış, (3) MCP least-privilege profiller + LiteLLM virtual keys. Ertelenen her sertleştirme kalemi SECURITY_MODEL (D4) sicil tablosuna yazılır ("ne, neden ertelendi, ne zaman açılır"). <!-- HISTORY -->
 
+**Since 2026-10-14 (B64):** the triad reads (1) the money-out approval gate; (2) two named outward paths — the outbox
+and Hermes's recorded, reversible computer work (SECURITY_MODEL O2); (3) every hand open behind two walls (CEO
+2026-10-04, B41) and LiteLLM virtual keys with one registered exception, the Hermes-only key (O4).
+
 ## 17. Error handling / 18. Retry / 19. Fallback
 
 - Hata sınıfları: `transient` (ağ/rate-limit → retry), `policy` (hook reddi → escalation), `fatal` (kod hatası → task fail + alert).
 - Retry: pg-boss `retryLimit/retryDelay/retryBackoff` job-tipi başına; approval-bekleyen işler retry DEĞİL park (state machine).
-- Model fallback: `model_catalog.fallback_of` zinciri; orchestrator seçimde sırayla dener, her düşüş `decision_log`a yazılır. Fable→Opus devri de aynı zincirin insan-katmanı karşılığıdır.
+- Model fallback — the backup pair (B64 decision 13) <!-- CEO-OK: b64-decision13-backup-pair-opus-fable-2026-10-14 -->,
+  written by role: main brain Opus 5.5 ⇄ backup brain Fable 5.1. A model failing for any reason (quota, overload,
+  outage) → the other takes the work, at the work's own effort (on Fable clamped to high..xhigh); Fable's judge seats
+  fall to Sol 6.1, never to Opus; Hamza's spoken reply falls back to Opus 5.5 low for speed. No work ever falls to a
+  weaker model. The holding switches by itself and records it (*"Opus düştü, işi Fable high'da yaptı"*); the old
+  `model_catalog.fallback_of` chain closes (B66). Both brains down → the work waits and he is told. Hermes is the one
+  exception (decision 16): its work waits for Opus and never moves to Fable. Owner: MODEL_ROUTING_SPEC.
+  <!-- OPEN: B66 -->
 
 ## 20. Test planı / 21. Acceptance criteria
 
@@ -273,7 +337,7 @@ curl -s localhost:3000/api/control/health # → {"ok":true}
 
 ## 25. Bağımlılıklar
 
-Dışsal: Supabase self-hosted imajları, pg-boss 12.x (session-mode 5432 — transaction pooling YASAK), Next.js 16.2.x, MCP SDK 1.29, LiteLLM 1.91, Hetzner VPS. Versiyon uyumluluğu değişikliklerinde `.planning/research/STACK.md` önce okunur (sert kural).
+Dışsal: Supabase self-hosted imajları, pg-boss 12.x (session-mode 5432 — transaction pooling YASAK), Next.js 16.2.x, MCP SDK 1.29, LiteLLM 1.91, Hetzner VPS, Vercel AI Gateway (Jev, through LiteLLM — B64 decision 7), hermes-agent (a pinned current release, on the holding's server — B64 decision 15). Versiyon uyumluluğu değişikliklerinde `.planning/research/STACK.md` önce okunur (sert kural).
 
 ## 26. Riskler / 27. Edge case'ler
 
@@ -285,4 +349,4 @@ Dışsal: Supabase self-hosted imajları, pg-boss 12.x (session-mode 5432 — tr
 
 ## Done definition (bu spec)
 
-Bu dosya: 27 başlık ✓ · KALIR/DEĞİŞİR/YENİ eşlemesi ✓ · doğrulama komut deseni ✓ · Opus-devralma netliği (§3 karar ilkesi + §24 sıra + D5 işaretleri) ✓ · ⛔ kritik karar işaretli (§3) ✓
+Bu dosya: 27 başlık ✓ · KALIR/DEĞİŞİR/YENİ eşlemesi ✓ · doğrulama komut deseni ✓ · Opus-devralma netliği (§3 karar ilkesi + §24 sıra + D5 işaretleri) ✓ · ⛔ kritik karar işaretli (§3) ✓ · B64 registered (Hermes on the holding's server, two named outward paths, the backup pair — not built)

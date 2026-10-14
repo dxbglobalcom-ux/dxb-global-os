@@ -10,6 +10,8 @@ Kim (rol/çalışan) neye (kaynak) ne yapabilir (aksiyon) sorusunun TEK normatif
 ## 2. Gereksinimler
 
 - G1. Üç özne sınıfı: `ceo` (tek insan, Supabase Auth), `system` (kernel/worker/HR job service_role), `agent` (çalışan — MCP profil + virtual key ile).
+  - **G1-bis (registered adaptation, B64, CEO 2026-10-14 <!-- CEO-OK: b64-decision15-hermes-holding-hands-and-eyes-2026-10-14 -->).** Hermes, the holding's 24/7 hands and eyes, is not a fourth subject class and holds no row in §4's matrix: it is a holding hand whose only gate is G4's — money, a contract, identity and an outward critical step reach his approval (APPROVAL_ENGINE A11). It carries no other restriction (decision 15). What it brings back is information, never a command. On the org graph it is a live node (ORGANIZATION_ENGINE A4). <!-- OPEN: B09 -->
+  - **G1-ter (registered adaptation, B64, CEO 2026-10-13/14 <!-- CEO-OK: b64-decision6-hamza-changes-brains-on-his-word-2026-10-13 --> <!-- CEO-OK: b64-decisions-1-5-8-9-11-12-16-his-yes-2026-10-14 -->).** His commands come only from him — his chat, his voice, his own screen. A mail's text, any inbound message and anything Hermes brings back are information: none of them changes a setting, a brain, an effort, a rule or a gate. Each setting has one door that applies, records and can undo; Hamza carries his word to it through the C-class (MCP) path, recorded as the CEO's word via Hamza with the sentence's reference — only after the routing door that runs without login is closed (decision 6; measured 2026-10-14 in the company engine: `fn_update_routing(text,jsonb,text)` is EXECUTE-able by `anon`; SECURITY_MODEL O5). <!-- OPEN: B64 -->
 - G2. Ajan yetkisi üç eksenden BİLEŞKEdir: MCP profil (araç yüzeyi) ∩ library_grants (skill/plugin/tool) ∩ role_level tavanı (aşağıda §4) — en dar kesişim geçerli.
   - **G2-bis (registered adaptation, W9, CEO 2026-09-15 <!-- CEO-OK: w9-assigned-seats-plan-approved-2026-09-15 -->).** Bir çalışan `agent_assignments` ile BAŞKA bir departmanın koltuğuna atanmış olabilir — ikinci bir üyelik, asla bir nakil: `agents.department` ev departmanı olarak kalır. Bu durumda MCP profil ekseninin TAVANI, çalışanın kayıtlı üyesi olduğu HER departmanın yüzeyinin birleşimidir; kesişim kuralı değişmez, en dar kesişim yine geçerlidir. Atanan departmanın kendi grant'ları çalışanın yetki kümesine EKLENMEZ (en dar yetki: ödünç koltuk yalnız adıyla verilmiş olanı alır). Ölçüm 2026-09-15: iki stüdyo koltuğu 23 → 28 araç, yalnız beş `media_*`; `design.mcp.json` ve `marketing.mcp.json` hâlâ 0 `media_*`.
 - G3. CEO her yetkiyi UI'dan görebilir ve değiştirebilir (madde 6.3); değişiklik audit'li + geri alınabilir.
@@ -41,8 +43,13 @@ Mevcut-varlık eşlemesi: Katman 1-3 KALIR (0014 RLS deseni yeni tablolara kopya
 | Approval TALEBİ açma | ✓ | ✓ | ✓ | ✓ | — | — |
 | Approval KARARI | — (yalnız CEO) | — | — | — | — | — |
 | Outbox yazımı | — (yalnız fn_decide_approval) | — | — | — | — | — |
-| Org/settings mutasyonu | — (yalnız CEO; HR delege fn'leri system) | — | — | — | — | — |
-| Model self-override | — (routing tablosu karar verir) | — | — | — | — | — |
+| Org/settings mutasyonu | — (yalnız CEO — his word carried by Hamza through the one door included, G1-ter; HR delege fn'leri system) | ✓(own line's definition only, within his limits — §4-bis) | — | — | — | — |
+| Model self-override (brain and effort choice) | — (carries his word to the one door, G1-ter) | ✓(owner: each part of its job, reasoned, within code's limits; own work never below Opus 5.5 high — §4-bis) | — | — | — | — |
+
+**§4-bis (registered adaptation, B64, CEO 2026-10-14 <!-- CEO-OK: b64-decisions-1-5-8-9-11-12-16-his-yes-2026-10-14 -->).** The two rows above changed by his decisions; the seed keeps its 60 cells, and the two changed director cells carry their conditions (codes at build). <!-- OPEN: B64 -->
+1. **A line's owner** — the head of its department — may change its own line's definition within the limits he drew; the limits (its autonomy step, its budget) stay his (decision 9; WORKFLOW_ENGINE A7).
+2. **A job's owner chooses** each part's brain and effort with a one-line reason, the guide in doubt; heads and managers choose high, xhigh or max for their own work; code keeps the limits (decisions 2 and 11; MODEL_ROUTING §4d). The routing table no longer decides alone — it enforces and records.
+3. **The Reception desk's routing** — a registered client's request to the account's owner, a new sender's to sales — is the system's work on the list of which work each department takes (ORGANIZATION_ENGINE A2), not an agent's cross-department task creation; the "Görev oluşturma (departmanlar-arası)" row does not bind it.
 
 ```sql
 -- 0021x içinde (kontrol ailesi)
@@ -100,6 +107,7 @@ Her RED `fn_permission_check` tarafından loglanır (`hook_violations` DEĞİL �
 - Derin savunma sırası değişmez: gateway profili (dar araç yüzeyi) her zaman aktif; fn/hook kontrolleri EK katmandır — hiçbiri diğerinin yerine geçmez.
 - Ertelenen sertleştirmeler (SECURITY_MODEL siciline): satır-imzalı audit, kolon şifreleme, ceiling değişiminde 2-kişi kuralı (tek CEO — uygulanamaz, sicile "N/A tek-insan" notuyla), MFA (CEO kararıyla kapalı).
 - Para-çıkışı: bu matriste 'Outbox yazımı' satırının tek ✓'sü `fn_decide_approval` fonksiyonudur — rol DEĞİL fonksiyon; DB grant kanıtı APPROVAL_ENGINE'de.
+- **§16-bis (registered adaptation, B64, CEO 2026-10-14 <!-- CEO-OK: b64-decision6-hamza-changes-brains-on-his-word-2026-10-13 -->).** §1's principle — permission truth lives in the database and the gateway — is not yet true in two measured places: `fn_update_routing` is EXECUTE-able by `anon` (measured 2026-10-14, company engine), and every agent child receives the `DXB_*` values (the company database URL, the department keys — measured 2026-10-04, `.planning/quick/20261004-his-list/item2-report.md:32`) while dxb-mcp checks no caller. The first closes before Hamza's brain door opens (decision 6; SECURITY_MODEL O5); the second is SECURITY_MODEL O7's — a secret never stands in an agent's environment and dxb-mcp checks its caller; for Hermes it is named in B64's plan for his word. <!-- OPEN: B64 -->
 
 ## 17. Error handling / 18. Retry / 19. Fallback
 

@@ -63,7 +63,7 @@ Kayıtlı ekler: `memory_index.run_id uuid` + `memory_index.scope text DEFAULT '
 
 - Yazım: yalnız memory-router üzerinden (ajan profillerinde store'lara doğrudan yazım yolu yok; dosya-store dizinleri MCP dosya araçlarının profil kapsamı dışında).
 - Okuma: `holding` scope herkese, `dept:` scope profil eşleşmesine; CEO tümünü görür.
-- Düzenleme/arşiv: yalnız CEO (control seam) + HR süreçleri (çalışan arşivinde ilişkili scope temizliği önerisi üretir, otomatik SİLMEZ).
+- Editing and archiving: the CEO through the control seam; HR processes only propose (an employee's archive yields a clean-up proposal for its scope, never a deletion). The one dream (A1) only proposes too: a proposal on a department's memory (`dept:<id>`) is accepted by that department's head; one on holding-wide memory (`holding`) or touching his rules waits on him. An accepted proposal is written through the router like any write (B64 decision 18). <!-- CEO-OK: b64-decision18-one-dream-holding-wide-2026-10-14 -->
 
 ## 14. Logging / 15. Audit
 
@@ -100,7 +100,37 @@ psql "$DB" -c "SELECT count(*) FROM library_items WHERE kind='memory_source';"  
 
 - Bağımlılık: pgvector (0010), memory-router paketi, dxb-mcp memory grubu, library ailesi (0024x — envanter köprüsü için önce gelmeli).
 - Risk: dosya-store büyümesi repo'yu şişirir → eşik: `memory-store/` 500MB'ta System Health uyarısı; arşiv stratejisi (eski artifact'ler Storage Box'a) BACKUP_PLAN döngüsüne bağlanır.
-- Edge: aynı olgunun çift yazımı → embeddings benzerlik eşiğiyle dedup önerisi (otomatik silme YOK, CEO kuyruğu); çalışan arşivlendiğinde scope'lu kayıtları → kalır, sahibi `archived` işaretli; Opus döneminde classify kalitesi düşerse → `needs_reclassify` kuyruğu büyür, eşik alarmı CEO'ya.
+- Edge: aynı olgunun çift yazımı → embeddings benzerlik eşiğiyle dedup önerisi (otomatik silme YOK; the proposal follows the dream's acceptance path, §13 and A1: a department's memory → its head, holding-wide → the CEO); çalışan arşivlendiğinde scope'lu kayıtları → kalır, sahibi `archived` işaretli; Opus döneminde classify kalitesi düşerse → `needs_reclassify` kuyruğu büyür, eşik alarmı CEO'ya.
+
+## Registered adaptations (B64, 2026-10-14 — CEO-visible; no silent deviation)
+
+Design: `.planning/quick/20261012-b64-is-akisi/is-akisi.html` (decisions 15 and 18). The composition, the redaction gate
+and `KIND_STORE` are untouched (⛔ above); both items ride the router as it stands.
+
+- **A1 The one dream (decision 18)** <!-- CEO-OK: b64-decision18-one-dream-holding-wide-2026-10-14 --> <!-- OPEN: B64 -->
+  — his words: *"Bu rüya olayı aşırı önemli"*.
+  1. One dream for the whole holding, at Ferrari level, with Hermes inside it — never one dream per tool or per
+     employee. Every night every employee's work of the day, Hermes's included, is read; recurring patterns,
+     contradictions and stale knowledge are found, and a few memory changes are proposed.
+  2. Each proposal carries the runs it was seen in, how many times it was seen, and why it is needed.
+  3. A proposal never edits memory itself. Accepted (§13: a department's memory → that department's head;
+     holding-wide memory or anything touching his rules → him), it is written through this router into the holding's
+     memory and into Hermes's (A2), so the two never diverge.
+  4. One line on his screen in the morning: *"Dün gece N iş okundu, 3 şey bulundu, 1'i sizi bekliyor."* The line is
+     drawn by CEO_COMMAND_CENTER_SPEC; its numbers come from this dream.
+  5. The bar: the same job done a second time is better and cheaper — read from the holding's own runs (the check's
+     verdict and the cost of the first and the second run of a job type).
+  6. The night reading is a queued scheduler job (pg-boss), not a resident service (§10, R5). Reading every
+     employee's runs is a named exception to "an agent reads only its own run scope" (AUDIT_AND_LOGGING_SPEC,
+     OBSERVABILITY_SPEC). Schema at build.
+  7. Measured 2026-10-14: Hermes's core has no dreaming (its documentation, code and 39 releases); a
+     community-written dream plugin in its catalogue is not used; the three-phase description (light, deep, REM) written
+     on the board in August was OpenClaw's.
+- **A2 Hermes's memory lives inside the holding (decision 15)** <!-- CEO-OK: b64-decision15-hermes-holding-hands-and-eyes-2026-10-14 --> <!-- OPEN: B11 -->
+  — brain and memory stay in the holding: one brain, never two. Hermes keeps its working memory on the holding's
+  server as part of the holding's memory: registered as a `memory_source` in the library bridge (§4), written through
+  this router and its redaction gate (§16). The holding's memory is the source; an accepted dream change is written into
+  both (A1.3). Schema at build.
 
 ## Opus-devralma notu
 
@@ -108,4 +138,4 @@ Motor canlı ve test-korumalı; Opus'un işi yalnız köprü ekleri (2 kolon + 4
 
 ## Done definition (bu spec)
 
-27 başlık ✓ · 4-store kompozisyon (kod-kanıtlı, kilitli) ✓ · scope + run_id köprüleri (kayıtlı ekler) ✓ · CEO görünürlük/kontrol yüzeyi ✓ · redaksiyon güvenlik geçidi ✓ · doğrulama komutları ✓ · Opus-devralma + ⛔ ✓
+27 başlık ✓ · 4-store kompozisyon (kod-kanıtlı, kilitli) ✓ · scope + run_id köprüleri (kayıtlı ekler) ✓ · CEO görünürlük/kontrol yüzeyi ✓ · redaksiyon güvenlik geçidi ✓ · doğrulama komutları ✓ · Opus-devralma + ⛔ ✓ · the one dream and Hermes's memory inside the holding registered (A1, A2 — B64, not built)

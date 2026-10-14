@@ -92,7 +92,7 @@ Test durumu commit'e bağlı: her test koşusu temiz fixture'dan başlar (DB res
 
 ## 11. Database tabloları / 12. İlişkiler
 
-Yeni tablo yok. L2 assert envanteri (bağlayıcı çekirdek): v2'siz persona aktivasyon reddi · fallback döngü reddi · append-only UPDATE reddi · task_dependencies self/döngü reddi · money_out onaysız outbox reddi (O1 — HER koşuda) · settings value_schema ihlal reddi · idempotency mismatch 409.
+Yeni tablo yok. L2 assert envanteri (bağlayıcı çekirdek): v2'siz persona aktivasyon reddi · the backup pair's rules (written by role, never a weaker model, Fable clamped to `high`..`xhigh`, Hermes waits — B64 decision 13; replaces today's fallback-cycle refusal when `fallback_of` closes, B66) · append-only UPDATE reddi · task_dependencies self/döngü reddi · money_out onaysız outbox reddi (O1 — HER koşuda) · settings value_schema ihlal reddi · idempotency mismatch 409.
 
 ## 13. Yetkilendirme (test yetkileri)
 
@@ -111,6 +111,7 @@ Kapsam (madde 4 sınırında — yeni bürokrasi değil, mevcut omurganın kanı
 - Flaky test politikası: 2 kez üst üste flake → karantina etiketi + RISK_REGISTER satırı; sessiz retry-until-green YASAK.
 - Timeout'lar sabit (vitest 30s, E2E 60s/senaryo); aşan test optimize edilir, süre uzatma gerekçe ister.
 - LLM-mock sınırı: classify/persona derleme testleri sabit yanıt fixture'ı kullanır; canlı LLM çağrısı test suite'inde YOK (maliyet + determinizm).
+- Live model measurements stand outside the suite (B64): the model guide's test set built from our own jobs, Hermes's 20-job trial (which also gates every Hermes upgrade), and the 20-sentence voice side-by-side are measurements run by hand when their moment comes, each with its brief, its raw output and its verdict kept as evidence in its job folder — the form of the 2026-10-13 mail-sorting trial (`.planning/quick/20261013-jev-olcum/`). They never enter the battery. <!-- OPEN: B64 -->
 
 ## 20. Test planı (kapı takvimi) / 21. Acceptance criteria
 

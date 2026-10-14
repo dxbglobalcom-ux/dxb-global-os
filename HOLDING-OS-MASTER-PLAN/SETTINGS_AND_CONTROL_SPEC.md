@@ -43,7 +43,7 @@ settings_registry (            -- ayar TANIMLARI (seed ile gelir, koddan üretil
 settings_values (
   id uuid PK, key FK→registry, scope_type text, scope_id uuid null,  -- null=global
   value jsonb, version int,    -- optimistic concurrency
-  updated_at, updated_by,      -- 'ceo' | 'system'
+  updated_at, updated_by,      -- 'ceo' | 'system'; B64 adds via 'hamza' + the sentence's reference (schema at build)
   UNIQUE(key, scope_type, scope_id)
 )
 settings_change_log (
@@ -70,7 +70,7 @@ settings_change_log (
 
 - `POST /api/control/settings` `{key, scope_type, scope_id, value, expected_version, idempotency_key}` → Zod → `fn_set_setting(...)`: registry doğrulaması (tip/enum/scope/locked) → optimistic version kontrolü → values upsert + change_log insert + audit_log insert + `settings` Broadcast — TEK transaction.
 - `POST /api/control/settings/revert` `{change_id}` → `fn_revert_setting`: old_value'yu yeni değişiklik olarak uygular (history hiç silinmez).
-- Registry seed: `supabase/seed/settings_registry.sql` — madde 6.1'in 23 anahtarı (13 model rolü + fallback sırası, timeout, max token, max maliyet, context limiti, retry politikası, confidence threshold, escalation politikası, human-approval eşiği, Fable-review zorunluluğu) + 6.2 departman seti + 6.3 çalışan seti (28 alan) + 6.4 workflow seti (17 alan) + sistem anahtarları (Global Pause, Maintenance). Model rolü anahtarlarının değer uzayı `model_catalog`dan (MODEL_ROUTING_SPEC).
+- Registry seed: `supabase/seed/settings_registry.sql` — madde 6.1'in 23 anahtarı (13 model rolü + the backup pair written by role — main brain, backup brain (B64 decision 13; the old fallback order closes with it, B66), timeout, max token, max maliyet, context limiti, retry politikası, confidence threshold, escalation politikası, human-approval eşiği, Opus-review zorunluluğu — key `orchestrator.fable_review_required`, the id kept under U20) + 6.2 departman seti + 6.3 çalışan seti (28 alan) + 6.4 workflow seti (17 alan) + sistem anahtarları (Global Pause, Maintenance). Model rolü anahtarlarının değer uzayı `model_catalog`dan (MODEL_ROUTING_SPEC).
 
 ## 7. Frontend yapısı
 
@@ -94,7 +94,7 @@ Bkz. §4 (normatif). İlişkiler: registry 1—N values 1—N change_log; values
 
 ## 13. Yetkilendirme
 
-Yazma yalnız `ceo` (tek insan) + `system` (kernel'in kendi runtime ayar güncellemeleri — örn. cost monitor hard-stop bayrağı; changed_by='system' ile ayrışır). `locked=true` anahtarlar: fn KOŞULSUZ reddeder (CEO dahil — B7b para-çıkışı kapatma girişimi 'policy' hatası döner ve audit'e düşer).
+Yazma yalnız `ceo` (tek insan) + `system` (kernel'in kendi runtime ayar güncellemeleri — örn. cost monitor hard-stop bayrağı; changed_by='system' ile ayrışır). Since B64 two more hands write through the same seam, never around it (A1, A2): Hamza on his word, and a line's owner on its own line. `locked=true` anahtarlar: fn KOŞULSUZ reddeder (CEO dahil — B7b para-çıkışı kapatma girişimi 'policy' hatası döner ve audit'e düşer); `locked` belongs to the money-out lock alone (A3).
 
 ## 14. Logging / 15. Audit
 
@@ -102,7 +102,7 @@ Her fn çağrısı audit_log + change_log (çift kayıt: audit=kim/ne zaman/ne, 
 
 ## 16. Security
 
-Madde 4: yeni sertleştirme yok. Mevcut RLS read-policy deseni settings tablolarına kopyalanır (0014 emsali). Secrets bu sisteme GİRMEZ: provider API anahtarları vault/.env + LiteLLM'de kalır; settings yalnız referans/politika tutar (sert kural — registry'de secret value_type YOKTUR).
+Madde 4: yeni sertleştirme yok. Mevcut RLS read-policy deseni settings tablolarına kopyalanır (0014 emsali). Secrets bu sisteme GİRMEZ: provider API anahtarları vault/.env + LiteLLM'de kalır — Jev's Vercel AI Gateway key among them; the one registered exception, the Hermes-only key, lives in the vault and is given to Hermes alone ([[MODEL_ROUTING_SPEC]] R5, B64 decision 15); settings yalnız referans/politika tutar (sert kural — registry'de secret value_type YOKTUR).
 
 ## 17. Error handling / 18. Retry / 19. Fallback
 
@@ -143,6 +143,18 @@ Opus-devralma: bölüm-başı teslim; registry seed'e anahtar ekleme mekaniktir 
 - **system yazıcısı CEO'yu ezmesi**: system yalnız kendi anahtar kümesine yazabilir (fn içi whitelist); CEO değerini değiştirmez, runtime bayraklarını değiştirir.
 - **Scope karmaşası**: ScopeSwitcher her an görünür; global değişiklik onay metni "TÜM holding'i etkiler (N varlık)".
 - **Seed drift** (kod yeni anahtar bekler, registry eski): uygulama açılışta registry sürüm kontrolü; eksik anahtar → alerts Attention + default'la çalış.
+
+## Registered adaptations — B64 how work reaches the holding (2026-10-14) <!-- CEO-OK: b64-decision6-hamza-changes-brains-on-his-word-2026-10-13 --> <!-- CEO-OK: b64-decisions-1-5-8-9-11-12-16-his-yes-2026-10-14 --> <!-- CEO-OK: b64-decision14-model-room-2026-10-14 --> <!-- CEO-OK: b64-decision17-his-word-over-a-rule-as-exception-2026-10-14 --> <!-- OPEN: B64 -->
+
+The design he answered decision by decision: `.planning/quick/20261012-b64-is-akisi/is-akisi.html` (v15). Not built yet.
+These items touch the seam contract (§24's ⛔ class); his answers to decisions 6, 9, 14 and 17 are that approval.
+
+| # | Adaptation | Why |
+|---|------------|-----|
+| A1 | **Hamza writes on his word.** A change he gives Hamza — his own brain or effort, one conversation's, or in bulk — goes through this seam as `changed_by='ceo'` with `via='hamza'` and the sentence's reference (the "CEO context" precedent); accepted only from his chat, his voice or his own screen; a write whose source is a mail or any inbound text is refused. Undo is the ordinary undo: Hamza says *"22 müdür xhigh'a geçti; geri almak için 'geri al' deyin"*. | Decision 6 |
+| A2 | **A line's owner changes its own line** — the line's definition, within the limits he drew — through the workflow seam ([[WORKFLOW_ENGINE_SPEC]]), recorded and undoable like every change; today only he can. | Decision 9 |
+| A3 | **`locked` is the money-out lock alone (B7b).** The code-kept limits of the model guide ([[MODEL_ROUTING_SPEC]] A-2026-10-14 item 1: heads and managers never below `high`, Sonnet and Haiku never at `low`, `max` never a default, the final human-read text never below Opus, no part over its job's budget) are holding rules, not locks: when his change conflicts with one, the seam warns once (*"Bu şu kuralla çelişiyor, yine yapayım mı?"*), answers why and what harm if he asks, and on his "devam" applies it once, recorded as an `override` line; the rule stays until he says "bu kuralı kaldır, şunu koy". Where decision 17 meets the Islamic boundaries and the approval card is named in B64's plan for his word. | Decision 17 |
+| A4 | **Every standing assignment carries its date, who decided and why.** A model-role change records its reason beside `changed_at` and `changed_by` (schema at build); when a new model enters the catalogue, the mechanical seats move by themselves with one line to him and the big seats wait for his word. The "Models" and "Fallback Routing" sections show the backup pair by role (main brain ⇄ backup brain). | Decision 14 — the model room |
 
 ## Done definition (bu spec)
 

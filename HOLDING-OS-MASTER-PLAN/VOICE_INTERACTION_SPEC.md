@@ -23,7 +23,7 @@
 
 ## 1. Purpose
 
-Give the CEO a working spoken channel into the Holding at €0 marginal cost: press-to-talk, ask a question, the orchestrator (Hamza) routes it to the right department director, and the answer comes back in that director's stable cloned voice. v1 is deliberately NOT a meeting room (CEO ruling D3: "toplantı değil — gerektiğinde soru sormak için orkestratör vasıtasıyla bir çağrı"). The full executive boardroom (Talep §5.3–5.5) is architected here at add-later level (§3.4) and executes only after revenue funds it (D1).
+Give the CEO a working spoken channel into the Holding at €0 marginal cost: he talks with Hamza, who answers himself, and — when he says "Beni şu başkana bağla" — with that head directly, as with Hamza (B64, §24sexies); the answer comes back in the speaker's stable cloned voice. v1 is deliberately NOT a meeting room (CEO ruling D3: "toplantı değil — gerektiğinde soru sormak için orkestratör vasıtasıyla bir çağrı"): one voice at a time, never a moderated table of directors. The full executive boardroom (Talep §5.3–5.5) is architected here at add-later level (§3.4) and executes only after revenue funds it (D1). <!-- CEO-OK: b64-decisions-1-5-8-9-11-12-16-his-yes-2026-10-14 -->
 
 ## 2. Requirements (binding V-rules)
 
@@ -31,8 +31,8 @@ Give the CEO a working spoken channel into the Holding at €0 marginal cost: pr
 - **V2 — One brain (Talep §5.1):** Hamza is the spoken interface of the SAME kernel/orchestrator/memory/intent path. No voice-only decision logic, no parallel state.
 - **V3 — Free-first (D1):** v1 runs entirely on self-hosted Speaches + local voicebox — €0 marginal cost. Any paid realtime layer (OpenAI `gpt-realtime` **mini** is the selected future path) activates ONLY after the first objective's realized net profit (REVENUE_ENGINE_SPEC objective O1, €50) AND explicit CEO approval — it is money-out, so it is approval-gated (B7b).
 - **V4 — One speaker + CEO override (Talep §5.5):** only one AI voice speaks at a time; CEO interruption stops playback immediately. v1 satisfies this trivially (single-director call); the boardroom design (§3.4) inherits it as a floor-control state machine.
-- **V5 — Single authoritative path (Talep §5.8):** a spoken CEO decision enters the SAME intent → orchestration → workflow → audit path as a typed one. The call line submits transcripts through the existing intents intake; no shadow channel.
-- **V6 — No approvals by voice in v1:** there is no voice-print authentication; therefore outward-facing/destructive confirmations (money, contracts, identity) can NEVER be granted by voice. Approval stays in the dashboard. Voice may REQUEST; it may not APPROVE.
+- **V5 — Single authoritative path (Talep §5.8):** a spoken goal or decision enters the SAME path as a typed one — Hamza's one conversation → the brief → the owning head → audit (B64 E02a); no shadow channel. Measured 2026-10-12: the intake skips spoken items by design (`packages/orchestrator/src/intent-intake.ts:78`) and 51 spoken items from July wait unprocessed — B64 closes this gap. <!-- OPEN: B64 -->
+- **V6 — No approvals by voice in v1:** there is no voice-print authentication; therefore outward-facing/destructive confirmations (money, contracts, identity) can NEVER be granted by voice. Approval stays in the dashboard. Voice may REQUEST; it may not APPROVE. Releasing a finished delivery to its client — "gönderin" — is not an approval of money, a contract or identity, and may be spoken (B64 decision 4, §24sexies).
 - **V7 — Fixed style & decision principles (Talep §5.6–5.7, §5.11):** Hamza's communication style and 5-step decision hierarchy (truth → safety → efficiency → profitability → cost discipline) live in the Hamza persona file + hook policy, in the DB persona record — never in model-specific config. Model routing may change the engine, never the persona.
 - **V8 — Memory continuity (Talep §5.9):** Hamza and directors answer from existing [[MEMORY_ARCHITECTURE]] surfaces (doctrine, prior CEO decisions, objectives, department memory). No separate voice memory store.
 - **V9 — Audio privacy:** in v1 no audio ever leaves CEO hardware + own VPS (Speaches self-hosted, voicebox local). External audio APIs are forbidden until the V3 paid path is approved.
@@ -45,9 +45,10 @@ Give the CEO a working spoken channel into the Holding at €0 marginal cost: pr
 ```
 CEO push-to-talk (dashboard /voice or laptop client)
   → audio → Speaches STT  /v1/audio/transcriptions        [€0, local]
-  → transcript → kernel classify (existing intents path)   [V5]
-  → orchestrator: resolve target director (explicit pick or Hamza routing)
-  → director agent answers from persona + department memory [V2, V8]
+  → transcript → Hamza's one conversation (the chat path)  [V5]
+  → answerer: Hamza himself, or the head he asked for
+    (explicit pick or "Beni şu başkana bağla" — §24sexies)
+  → the answerer replies from persona + memory              [V2, V8]
   → answer text → TTS:
        primary: voicebox cloned voice of that director/Hamza [V1]
        fallback: Speaches Kokoro voice (marked non-cloned)
@@ -58,14 +59,16 @@ CEO push-to-talk (dashboard /voice or laptop client)
 > **Registered adaptation 2026-07-24 (CEO ruling, in-chat):** the default
 > answerer is **Hamza himself** — the classify→department-director hop is
 > retired for unpicked calls ("Hamza neden kendisi cevap vermiyor da CEO ofis
-> müdürü araya giriyor?"). A director answers only on an explicit ASK-dropdown
-> pick. Same ruling: push-to-talk became click-to-talk toggle; `voice.answer`
+> müdürü araya giriyor?"). A director answers on an explicit pick — the ASK
+> dropdown, or his spoken "Beni şu başkana bağla" (B64, §24sexies). Same ruling:
+> push-to-talk became click-to-talk toggle; `voice.answer`
 > routing row lifted L4-haiku/low → L2-sonnet/medium (KERN-02 parity in
-> `routing-seed.json`) after measured broken-Turkish answers on the haiku row.
+> `routing-seed.json`) after measured broken-Turkish answers on the haiku row
+> (since moved again: today Opus 5.5 low; B64's voice brain is §24sexies).
 > The call surface itself lives inside `/chat` since the same-day merge
 > (CC-SPEC §7 sync note).
 
-Two spoken shapes, one pipeline: (a) "Hamza, ask the HR Director: …" — Hamza routes and the director's voice answers; (b) "Hamza, …" — Hamza answers himself as orchestrator. Both are ONE call session with ONE active AI voice.
+Two spoken shapes, one pipeline: (a) "Beni İK başkanına bağla" — he talks with that head directly, as with Hamza, and the head's voice answers; work born in that conversation is that head's, and Hamza knows of the conversation (§24sexies); (b) "Hamza, …" — Hamza answers himself. Both are ONE call session with ONE active AI voice.
 
 ### 3.2 Voice supply
 
@@ -77,7 +80,7 @@ Selected upgrade: OpenAI `gpt-realtime` **mini** (CEO D1 ruling "16-da mini pake
 
 ### 3.4 Add-later: Moderated Boardroom (DEFERRED — D3)
 
-Design sketch only; NO execution row exists until the CEO orders one after revenue funds it.
+Design sketch only; NO execution row exists until the CEO orders one after revenue funds it. Talking with ONE head directly — "Beni şu başkana bağla" — is not this boardroom: it is v1 work under B64 (§24sexies). What stays deferred here is the multi-voice table: invite/dismiss, floor transfer, the context bus.
 
 - **Media bus:** self-hosted SFU (LiveKit-class) OR OpenAI realtime sessions per participant; CEO mic is the only human input.
 - **Floor control state machine:** `floor_owner ∈ {ceo, hamza, director_i}`; transitions only via CEO utterance ("Hamza, let the HR Director speak") parsed by Hamza; CEO barge-in preempts instantly (hard stop of active TTS stream ≤250ms target). Exactly one owner at all times (V4).
@@ -107,7 +110,7 @@ Two tables, additive only (no breaking change to the existing schema — DATA_MO
 
 ## 7. Frontend structure (§31 route addition — Command group)
 
-`/voice` page: single-call surface. States: idle → recording → thinking → speaking → done/failed, each visibly distinct; transcript pane (CEO line + answer line, speaker-labeled with agent identity chip); director picker (default: Hamza routes). RULE #0 applies: EN+TR, ≥2 widths, design-bank baseline before done.
+`/voice` page: single-call surface. States: idle → recording → thinking → speaking → done/failed, each visibly distinct; transcript pane (CEO line + answer line, speaker-labeled with agent identity chip); director picker (default: Hamza answers himself — the 2026-07-24 ruling; a head on his pick or on "Beni şu başkana bağla"). The call surface lives inside `/chat` since 2026-07-24 (§3.1 note). RULE #0 applies: EN+TR, ≥2 widths, design-bank baseline before done.
 
 ## 8. APIs (control seam — SECURITY DEFINER, audit-writing)
 
@@ -185,13 +188,13 @@ Every call → `voice_calls` (full transcript + timing) + `decision_log` entry f
 
 - Unit: state machine transitions (legal/illegal), V1-law rejection (specialist agent → fn error).
 - Integration: WAV → Speaches STT roundtrip (TR + EN sample), voicebox speak roundtrip, fallback switch when voicebox absent.
-- E2E (R3.1 acceptance): spoken Turkish question → routed director → spoken answer; timings recorded in `voice_calls`. Latency TARGETS (hypotheses until measured, per Evidence-Before-Done): STT ≤2s for a 5s utterance (faster-whisper small int8 ≈4× realtime on CPU — STACK.md:29), total turn ≤10s v1.
+- E2E (R3.1 acceptance): spoken Turkish question → routed director → spoken answer; timings recorded in `voice_calls`. Latency TARGETS (hypotheses until measured, per Evidence-Before-Done): STT ≤2s for a 5s utterance (faster-whisper small int8 ≈4× realtime on CPU — STACK.md:29); Hamza's first voice within 1-1.3 s (board row B12; B64 E11).
 
 ## 21. Acceptance criteria (Talep §5.13 mapped — nothing silently dropped)
 
 | Talep §5.13 item | v1 (R3.1) | Boardroom (deferred, §3.4) |
 |---|---|---|
-| CEO questions a director by voice | ✓ (via Hamza routing — D3 shape) | direct-mode refinement |
+| CEO questions a director by voice | ✓ explicit pick · "Beni şu başkana bağla", in chat and in voice: B64 (§24sexies) <!-- OPEN: B64 --> | — |
 | Moderated meeting, invite/dismiss directors | — | ✓ deferred |
 | Floor transfer by natural speech | — | ✓ deferred |
 | One AI voice at a time | ✓ (single call) | state machine |
@@ -232,7 +235,7 @@ Drop-family rollback: 0029x tables/fns are leaf objects (nothing else references
 - Trust model: runs on the CEO's own terminal, reads the CEO's own microphone, talks to localhost services only — physical presence IS the authentication (same trust class as the laptop session itself). V6 unchanged: voice may still never approve.
 
 **R3.2 scope also closes two measured line defects:**
-1. **Voice fast lane (routing data):** spoken-call classify/answer rode the L1 `orchestration` row — measured 104s answer leg (live call f05cf286). New `routing_rules` rows `voice.classify` + `voice.answer` (L4, subscription mode) via migration `20260717090000` + `routing-seed.json` parity (KERN-02: routing stays pure data; both callers fall back to `orchestration` on a pre-migration DB). Answer leg re-measured 39.2s same-day on a thermally degraded X230 (honest floor below). SDK lesson NOT-1 applied to the answer query: `maxTurns: 4` — `maxTurns: 1` produced `error_max_turns` on the fast tier (probe call 30ddba44).
+1. **Voice fast lane (routing data):** spoken-call classify/answer rode the L1 `orchestration` row — measured 104s answer leg (live call f05cf286). New `routing_rules` rows `voice.classify` + `voice.answer` (L4, subscription mode — since moved, §3.1 note; today's voice brain: §24sexies) via migration `20260717090000` + `routing-seed.json` parity (KERN-02: routing stays pure data; both callers fall back to `orchestration` on a pre-migration DB). Answer leg re-measured 39.2s same-day on a thermally degraded X230 (honest floor below). SDK lesson NOT-1 applied to the answer query: `maxTurns: 4` — `maxTurns: 1` produced `error_max_turns` on the fast tier (probe call 30ddba44).
 2. **Utterance-language law:** §27 registered adaptation (UI locale never forced into STT; TTS voice follows the ANSWER language).
 
 **Honest hardware floor (measured X230, 2026-07-17):** wake reaction ≈ speech chunk + STT ≈ 3-6s; question→spoken-answer ≈ 30-60s nominal. Under the machine's measured thermal-critical state (cores 96-100°C against an 87°C threshold) raw small-model STT degraded 17.8s → 50-80s; a SECOND resident whisper model amplifies the thrash, so the wake pass defaults to the SAME model intake uses (one working set; a GPU/VPS host may point `DXB_WAKE_STT_MODEL` at a lighter model). The <1s wake upgrade lane remains openWakeWord custom-model training on the VPS/GPU path.
@@ -254,29 +257,30 @@ Drop-family rollback: 0029x tables/fns are leaf objects (nothing else references
 2. **Dismiss second net (D9):** if the rough pass misses a dismissal but intake's full transcript matches it, the daemon ends the parked call honestly (`dismiss_via_intake`/`hard_off_via_intake` timeline reason), closes/mutes, and speaks the bye/off cue — the LLM must never answer a goodbye while the session silently stays open (the measured "tamam kapanıyorum ama devam ediyor" defect).
 3. **Half-duplex law (D10):** the daemon's own speaker output can never re-enter the pipeline — every playback goes through one `speak()` seam; segments captured during playback or within the echo tail (`DXB_JARVIS_ECHO_TAIL_MS`, default 1500ms) are dropped pre-STT (`shouldDropSegment`), and the segment queue ALWAYS coalesces (a room-chatter backlog can never replay as questions).
 4. **Runaway-active fixes (D11):** idle timeout runs on the wall clock (10s timer), `lastActivity` moves ONLY on real interactions (wake/dismiss/re-greet/successful intake/answer) — ambient segments no longer keep the session alive; active mode gained its own STT spacing (`DXB_ACTIVE_STT_GAP_MS`, default 3000ms).
-5. **One-conversation law (D12):** chat, dictation and JARVIS are ONE Hamza. `chat_messages.source` ('chat'|'voice'); Hamza-answered voice calls mirror both turns onto the board (terminal rows — chat.drain never re-answers them); the voice answer prompt carries the recent board history; chat.drain executes mute/unmute commands deterministically (`matchMute`/`matchUnmute`, no LLM call) and confirms in Turkish. Director-picked calls do NOT mirror (the board's role model is ceo|hamza).
+5. **One-conversation law (D12):** chat, dictation and JARVIS are ONE Hamza. `chat_messages.source` ('chat'|'voice'); Hamza-answered voice calls mirror both turns onto the board (terminal rows — chat.drain never re-answers them); the voice answer prompt carries the recent board history; chat.drain executes mute/unmute commands deterministically (`matchMute`/`matchUnmute`, no LLM call) and confirms in Turkish. A conversation with a head mirrors too: since B64 it stands on the board, in chat and in voice, and Hamza knows of it — the board's role model widens from ceo|hamza to the head who answered (schema at build; §24sexies). <!-- OPEN: B64 -->
 6. **Session threads (D13):** one wake session = one conversation — `voice_calls.session_id` (uuid, minted at WAKE, carried by every intake in the session; the ONE write door learned the field); /chat Recent list groups calls by session (thread row: first topic + exchange count + summed duration; purge removes the whole thread). Threading costs zero extra tokens: transcripts and topics already exist for answering.
 7. **Panel surface:** /chat voice section summary row shows the live mic state pill + toggle (`/api/voice/daemon` → the audited door); board turns that arrived by voice carry a mic marker.
 **Verify:** tests/r32 58/58 (matchers incl. D9/D10 cases) · tests/u15r2 5/5 (door audit, deterministic chat mute/unmute, mirror+session on a live-DB rolled-back transaction) · daemon boot log "STATE: MUTED (chat/panel reopens)" · ⚠ CEO ear/eye re-test remains the human gate (block 8bis).
 
-## 24ter. HAMZA'S TWO LEGS — one conversation, two behaviours (CEO directive 2026-07-25, built 2026-07-26)
+## 24ter. HAMZA'S LEGS — one conversation, different behaviours (CEO directive 2026-07-25, built 2026-07-26; B64 decision 3 adds the normal leg)
 
 CEO, verbatim: *"2 ayak var: 1- para kazanma planları projeleri konusu konuşulması 2- gündelik rapor özetler şirket nasıl ilerliyor sohbeti. ikisi de Hamza jarvis ama farklı beyinler olmalı sanırım."*
 
-**Both legs are L1.** §4d (MODEL_ROUTING_SPEC) is explicit — anything the CEO reads is produced by Opus 5 — so the CEO's instinct that they need "different brains" resolves as different BEHAVIOUR on the same brain, not a quality split. Splitting them onto different models would have put the daily report, which the CEO reads every morning, below the ceiling.
+**Every leg is on Opus.** §4d (MODEL_ROUTING_SPEC) is explicit — anything the CEO reads is produced by Opus (Opus 5.5 since the 2026-10-10 succession) — so the CEO's instinct that they need "different brains" resolves as different BEHAVIOUR on the same brain, not a quality split. One exception, by his own note: voice normal talk moves to Sonnet 5.5 medium once its 20-sentence trial holds (§24sexies). <!-- CEO-OK: b64-decisions-1-5-8-9-11-12-16-his-yes-2026-10-14 -->
 
 | Leg | Class | Effort | What it is handed | What it does |
 |---|---|---|---|---|
-| **Strategy** — money, plans, projects, decisions | `chat.strategy` | `max` | persona + memory + conversation | Thinks WITH the CEO. Takes a position, names the trade-off, says what it would do and why. A decision he can act on beats a balanced survey he cannot. |
+| **Normal** — talk, questions, everything that is not a plan or a report | the default leg (class at build, B64) | `medium` | persona + memory + conversation | Answers plainly, like a person. |
+| **Strategy** — money, plans, projects, architecture, decisions | `chat.strategy` | `xhigh` — `max` only on his "Max'a geç", held until the subject ends | persona + memory + conversation | Says so first: "Plan konuşuyoruz, xhigh'a geçtim; isterseniz max." Thinks WITH the CEO. Takes a position, names the trade-off, says what it would do and why. A decision he can act on beats a balanced survey he cannot. |
 | **Brief** — how is the company doing | `chat.brief` | `medium` | the above **plus a live snapshot** | Reports MEASURED numbers only. |
 
-**Routing is one-directional (CEO safety rule):** anything smelling of money or planning goes UP, never down. `classifyLeg()` therefore defaults to **strategy** and routes to brief only on an explicit report/status marker, in both languages, because the CEO switches mid-sentence. Misrouting a status question to strategy costs tokens; misrouting a money decision to the report leg costs a decision.
+**Routing is one-directional (CEO safety rule):** anything smelling of money or planning goes UP, never down. `classifyLeg()` defaults to the **normal** leg (B64 decision 3 — until it ships, every message but a status question runs at max), routes UP to strategy on any money or planning marker, and to brief only on an explicit report/status marker, in both languages, because the CEO switches mid-sentence. When in doubt between normal and strategy it goes up: misrouting a chat line to strategy costs tokens; misrouting a money decision down costs a decision. <!-- OPEN: B64 -->
 
 **The brief leg may not remember figures — it must be given them.** `buildBriefSnapshot()` reads `v_exec_overview`, the revenue ledger, the opportunity count and open alerts live, renders them in the CEO's language, and the prompt states that these are the only numbers permitted. A query that fails drops its line rather than inviting an estimate: a brief with one missing figure is honest, a brief with an invented one is a RULE #0-A violation by Hamza himself.
 
 **Standing framing rule, carried in the prompt:** empty tables are NOT a defect. The CEO deliberately has not started the money leg — the factory is being built first — and he has corrected this framing twice in chat. Presenting zero revenue or zero running work as a failure is the error; the emptiness is not.
 
-**Fallback chain** (a deployment that has not shipped the new rows must keep answering): leg row → `chat.answer` → `voice.answer` → `orchestration`. Every rung is L1 after U21, so a fallback can never quietly downgrade the CEO's conversation.
+**Row resolution** (a deployment that has not shipped a leg's row must keep answering): leg row → `chat.answer` → `voice.answer` → `orchestration` — every rung on Opus, so a missing row never downgrades the CEO's conversation. **A brain that fails** (quota, overload, outage) is a different event: the backup pair takes the turn — Opus 5.5 ⇄ Fable 5.1, Fable's effort clamped to high..xhigh — and Hamza's spoken reply falls back to Opus 5.5 low for speed, while work he is given runs at its own level; no turn falls to a weaker model, and the old model-to-model chain closes (MODEL_ROUTING; B64 decision 13; B66). <!-- CEO-OK: b64-decision13-backup-pair-opus-fable-2026-10-14 --> <!-- OPEN: B66 -->
 
 **Live enforcement:** `packages/orchestrator/src/chat-legs.ts` + `chat-drain.ts`; rows from `db/migrations/20260726003000_chat_legs.sql`; proof `tests/c9/chat-legs.test.ts` (13 cases).
 
@@ -340,6 +344,20 @@ The CEO opened the Ses Hattı section and voice and chat interleaved: the conver
 
 **Live enforcement:** migration `20260727001000_w26_proactive_briefing.sql` (view, door, ledger, settings, both language columns) · `packages/orchestrator/src/morning-briefing.ts` · `packages/outbox-executor/src/scheduler.ts` (`ceo.briefing.morning`) · proof `tests/c9/proactive-briefing.test.ts`.
 
+## 24sexies. B64 — Hamza and the heads in voice (design v15, 2026-10-14)
+
+<!-- CEO-OK: b64-decisions-1-5-8-9-11-12-16-his-yes-2026-10-14 --> <!-- CEO-OK: b64-decision6-hamza-changes-brains-on-his-word-2026-10-13 --> <!-- CEO-OK: b64-decision10-valuable-work-two-plans-fable-judge-2026-10-13 --> <!-- CEO-OK: b64-decision13-backup-pair-opus-fable-2026-10-14 --> <!-- CEO-OK: b64-decision15-hermes-holding-hands-and-eyes-2026-10-14 --> <!-- CEO-OK: b64-decision17-his-word-over-a-rule-as-exception-2026-10-14 --> <!-- CEO-OK: b64-decision18-one-dream-holding-wide-2026-10-14 -->
+Design: `.planning/quick/20261012-b64-is-akisi/is-akisi.html` (v15). Nothing in this section is built yet. <!-- OPEN: B64 -->
+
+1. **Hamza in conversation.** He understands the goal by talking and asks only what the job needs, never what he can find himself. In plan or architecture talk he talks like the engineer: weighs the options, gives his recommendation, may call the job's head into the talk. He writes the brief with the CEO's decision — the CEO's sentence verbatim — sends it to the owning head and brings the result back into the same conversation; "Sitenin neresindesiniz, tasarımı getirin" → he fetches the job's status and latest state from its job desk. His three hands: send work, read status, pass a brain or effort change on the CEO's word to the one registered door. He does not split or run work and does not carry client mails one by one.
+2. **His levels (decision 3).** Normal talk, questions and the briefing at Opus 5.5 medium. Plan, architecture or strategy → xhigh, and he says so: "Plan konuşuyoruz, xhigh'a geçtim; isterseniz max." "Max'a geç" / "High'a in" hold until the subject ends, then he returns to his own level (§24ter). In voice the same: thinking long, he first says "Düşünüyorum, Muhittin Bey" (the words of the `prep` cue) and puts a long answer on the screen as well.
+3. **The voice brain (decisions 3 and 13).** Voice normal talk moves to Sonnet 5.5 medium after a 20-sentence side-by-side with today's Opus 5.5 low — first-voice time against the 1-1.3 s target (B12) and Hamza's character; it moves only if both hold. When the brain fails, his spoken reply falls back to Opus 5.5 low for speed; work he is given runs at its own level.
+4. **"Beni şu başkana bağla" (the B64 row, item 4).** In chat and in voice it opens a conversation with that head, as with Hamza; the head's own voice identity answers (V1); work born there is that head's; the conversation stands on the board and Hamza knows of it. Measured 2026-10-13: only a voice call lets a head answer, when he is picked in the call's ASK choice (`packages/voice/src/answer.ts:232-246`); the written chat has no such door (`packages/orchestrator/src/chat-drain.ts` carries no target agent).
+5. **His spoken commands — accepted only from him: his chat, his voice, his own screen; never from a mail, an inbound message, or anything Hermes brings back.** "Max'a geç" / "High'a in" · "Bu değerli bir iş" / "Bu işi en yüksek seviyede yapın" → the job becomes valuable · "Bütün müdürleri xhigh yap" → Hamza passes it to the one registered door, which applies and records it, and Hamza says "22 müdür xhigh'a geçti; geri almak için 'geri al' deyin" — this path opens only after the routing door callable without login is closed (decision 6) · "Sitenin neresindesiniz, tasarımı getirin" · "gönderin" → a delivery waiting on his eye goes to its client (V6 note). A command that conflicts with a holding rule gets one warning and then his decision (decision 17; HOLDING_OS_PRODUCT_SPEC P7).
+6. **The morning briefing.** From the same single view, rendered by no model (§24quinquies; Phase 9 LOCKED), it carries: the exceptions — turned red, stuck, waiting on him; one line on what came in (the Reception desk's count: answered, in preparation, waiting on him); the Important mails; the due dates coming close; Hermes's night results; the dream's one line — "Dün gece N iş okundu, 3 şey bulundu, 1'i sizi bekliyor." Finished work is not listed: results reach him in their own conversations.
+
+**Verify (at build):** `tests/c9/chat-legs.test.ts` grows — a greeting routes to the normal leg at medium; a money or plan line routes to strategy at xhigh with the spoken notice; "Max'a geç" holds max until the subject ends · new cases: a "Beni şu başkana bağla" chat turn is answered by that head and mirrored with its role; a mail carrying "beyni değiştir" changes nothing; the briefing view carries the six lines and no finished-work list · the 20-sentence side-by-side leaves its evidence file before the voice row moves · ⚠ his ear on the voice is the human gate.
+
 ## 25. Dependencies
 
 Speaches container (measured Up) · voicebox install (measured present) · agents/directors live rows (220 agents in DB) · intents intake (exists) · NOT dependent on R1.2 revenue tables (parallel-safe) · R1.5 hook codification supplies the Islamic-boundary + decision-principles enforcement Hamza answers under.
@@ -348,10 +366,10 @@ Speaches container (measured Up) · voicebox install (measured present) · agent
 
 | Risk | Response |
 |---|---|
-| CPU STT/TTS latency breaks conversational feel | Targets in §20 measured honestly; if >10s, shrink model (whisper small→base) before considering paid path |
+| CPU STT/TTS latency breaks conversational feel | Targets in §20 measured honestly; if the first voice misses 1-1.3 s, shrink the STT model (whisper small→base) before considering the paid path |
 | Turkish clone quality poor on some director profiles | Kokoro fallback + mark `degraded`; CEO ear-test gates each identity |
 | X230 8GB RAM (voicebox + browser + containers) | Single-browser rule (memory: x230-freeze); heavy TTS can run on VPS Speaches instead |
-| Scope creep back into boardroom before revenue | D3 is binding: §3.4 has NO roadmap row; opening one requires a CEO order recorded in INDEX |
+| Scope creep back into boardroom before revenue | D3 binds the multi-voice boardroom: §3.4 has NO roadmap row; opening one requires a CEO order recorded in INDEX. Talking with one head ("Beni şu başkana bağla") is not the boardroom — B64, §24sexies |
 
 ## 27. Edge cases
 

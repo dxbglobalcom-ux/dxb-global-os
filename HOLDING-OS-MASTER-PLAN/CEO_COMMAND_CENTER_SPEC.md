@@ -32,6 +32,7 @@ CEO'nun holdingin TAMAMINI — şirket/departman/müdür/çalışan/ajan, proje/
 │ (§10 listesi)  │ Executive Overview = widget    │ approval özeti     │
 │ daraltılabilir │ grid (§25); diğer sayfalar     │ critical alerts    │
 │ (ikon moduna)  │ modül şablonları               │ live ticker        │
+│                │                                │ Important pane     │
 │                │                                │ contextual controls│
 ├─ ALT/FLOATING: Agent Dock ───────────────────────────────────────────┤
 │ aktif ajan rozetleri (durum+model+süre) · hızlı komut · dock gizlenir│
@@ -69,13 +70,13 @@ Kural: view'lar sadece OKUMA; hiçbir dashboard bileşeni tabloya doğrudan yazm
 | `CommandShell` (5 katman) | SIFIRDAN | tüm (command) route'ları |
 | `CommandBar` + `GlobalSearch` + `CommandPalette` | SIFIRDAN | üst katman |
 | `SideNav` (7 grup, collapse) | SIFIRDAN | sol katman |
-| `IntelligenceRail` (approval/alert/ticker) | SIFIRDAN | sağ katman |
-| `AgentDock` | SIFIRDAN | alt katman |
+| `IntelligenceRail` (approval/alert/ticker/Important) | SIFIRDAN | sağ katman — the Important pane is A8 <!-- OPEN: B64 --> |
+| `AgentDock` | SIFIRDAN | alt katman — Hermes's chip lights while it works and carries its name, nothing more (A9) <!-- OPEN: B10 --> |
 | `WidgetGrid` + `WidgetFrame` + 17 widget (§25 listesi) | SIFIRDAN | Executive Overview + özel dashboard'lar |
 | `HoldingHealthPanel` (skor + explain drawer) | SIFIRDAN | Overview ana panel |
 | `LiveOpsPanel` (stream/grid/timeline/process-graph görünümleri) | SIFIRDAN | Overview + Live Operations sayfası |
 | `OrgGraph` (7 lens, drag-drop) | SIFIRDAN | Holding Structure |
-| `EmployeeCard` + `EmployeeCommandPage` | SIFIRDAN | Employees + org node tıklaması; **beyin (model) rozeti zorunlu** — Control Mode'da rozet tıklaması model picker MutationDrawer açar (banned modeller listede YOK, mechanical_only etiketli; kurallar [[MODEL_ROUTING_SPEC]] §4b) |
+| `EmployeeCard` + `EmployeeCommandPage` | SIFIRDAN | Employees + org node tıklaması; **beyin (model) rozeti zorunlu** — Control Mode'da rozet tıklaması model picker MutationDrawer açar (banned modeller listede YOK, mechanical_only etiketli; kurallar [[MODEL_ROUTING_SPEC]] §4b; the code limits are checked too — A10) |
 | `ProjectCommandView` | SIFIRDAN | Projects detayı (§23) |
 | `ControlModeSwitch` + `MutationDrawer` | SIFIRDAN | Control Mode her mutasyon yüzeyi |
 | Login sahnesi "Golden Threshold" | KALIR+DEĞİŞİR | 3D hover parallax upgrade (§39 notu) |
@@ -84,7 +85,7 @@ Kural: view'lar sadece OKUMA; hiçbir dashboard bileşeni tabloya doğrudan yazm
 ## 6. Backend yapısı
 
 - Okuma: RSC'de `@supabase/ssr` ile `v_*` view'ları; client bileşenlere props. Ağır sayfalarda `Promise.all` ile view + Broadcast snapshot tek geçiş.
-- Yazma (Control Mode mutasyonları): `/api/control/{alan}` route handler → Zod validate → `SECURITY DEFINER` fn → audit + Broadcast (SYSTEM_ARCHITECTURE §6 tek desen). Dashboard'a özel handler alanları: `org` (taşı/bağla/askıya al), `employees` (oluştur/deaktive/model değiştir — `set_model` → `fn_update_agent_brain`: katalog+banned+mechanical_only doğrulaması, audit + decision_log `routing_change` + `settings` Broadcast + undo `change_id`; CEO direktifi 2026-07-12, normatif [[MODEL_ROUTING_SPEC]] §4b), `workflows` (durdur/başlat/yeniden dene), `settings` (SETTINGS_AND_CONTROL_SPEC'e devir), `layout` (widget layout kaydet).
+- Yazma (Control Mode mutasyonları): `/api/control/{alan}` route handler → Zod validate → `SECURITY DEFINER` fn → audit + Broadcast (SYSTEM_ARCHITECTURE §6 tek desen). Dashboard'a özel handler alanları: `org` (taşı/bağla/askıya al), `employees` (oluştur/deaktive/model değiştir — `set_model` → `fn_update_agent_brain`: katalog+banned+mechanical_only doğrulaması + the code limits of A10, audit + decision_log `routing_change` + `settings` Broadcast + undo `change_id`; CEO direktifi 2026-07-12, normatif [[MODEL_ROUTING_SPEC]] §4b), `workflows` (durdur/başlat/yeniden dene), `settings` (SETTINGS_AND_CONTROL_SPEC'e devir), `layout` (widget layout kaydet).
 - Command palette aksiyonları ayrı endpoint AÇMAZ — mevcut control handler'larına komut eşler (aksiyon kataloğu §8'de).
 
 ## 7. Frontend yapısı (route ağacı = bilgi mimarisi)
@@ -133,7 +134,7 @@ Kural: bu tabloya yeni özet eklenirse hedefi de eklenir; hedefsiz özet render 
 ## 8. API'ler
 
 - Reads: PostgREST/view (yukarıda). Mutations: `/api/control/*` — idempotency key zorunlu, yanıt `{ok, change_id, affected[]}` (SYSTEM_ARCHITECTURE §8).
-- Command palette aksiyon kataloğu (§11 örnekleri → eşleme): "X'in modelini değiştir" → `POST /api/control/employees {op:'set_model'}` · "son 24h başarısız workflow" → `/ops/workflows?state=failed&range=24h` (navigasyon) · "en çok token kullanan çalışanlar" → `/fin/tokens?dim=employee&sort=desc` · "projeyi durdur" → `POST /api/control/workflows {op:'pause_project'}` (approval kuralına tabi) · "yeni AI çalışanı oluştur" → HR wizard `/org/hr/new`.
+- Command palette aksiyon kataloğu (§11 örnekleri → eşleme): "X'in modelini değiştir" → `POST /api/control/employees {op:'set_model'}` — the same change spoken or typed to Hamza passes the same door (A11) · "son 24h başarısız workflow" → `/ops/workflows?state=failed&range=24h` (navigasyon) · "en çok token kullanan çalışanlar" → `/fin/tokens?dim=employee&sort=desc` · "projeyi durdur" → `POST /api/control/workflows {op:'pause_project'}` (approval kuralına tabi) · "yeni AI çalışanı oluştur" → HR wizard `/org/hr/new`.
 - Global search: `GET /api/search?q=` → `v_global_search` (entity tipi + skor + href döner; 15 varlık tipi madde §11 listesi).
 
 ## 9. Event yapısı
@@ -144,6 +145,7 @@ Kural: bu tabloya yeni özet eklenirse hedefi de eklenir; hedefsiz özet render 
 | `approvals` | mevcut trigger (0013, KALIR) | sağ ray özeti, Approval Center rozeti |
 | `alerts` | alerts insert trigger | CommandBar kritik rozet + sağ ray + `/alerts` |
 | `settings` | settings_change_log trigger | açık sayfada "değer değişti" banner + canlı yenile |
+| `reception` | inbound record writes (B64; channel contract in EVENT_MODEL) | the Reception section (A7) + the Important pane (A8) <!-- OPEN: B64 --> |
 
 Abonelik deseni: kanal-başı TEK subscription shell'de; context ile komponentlere fan-out (SYSTEM_ARCHITECTURE §9). Reconnect otomatik; kopukluk >10sn ise CommandBar'da "stale data" göstergesi (sahte canlılık yasak — §35 ruhu).
 
@@ -181,7 +183,7 @@ Madde 4 hükmü: yeni sertleştirme YOK — MFA kapalı, local açık. Mevcut Au
 
 ## 20. Test planı / 21. Acceptance criteria
 
-- Playwright akışları (mevcut altyapı KALIR): (a) login→overview<3sn, (b) overview'daki HER özet değerin tıklanıp doğru filtreli sayfaya inmesi (drill-down haritası üstünden data-driven test), (c) Control Mode toggle→mutasyon→audit satırı+Broadcast yayını, (d) widget ekle/taşı/kaydet→reload→layout korunur, (e) TV modu döngüsü, (f) EmployeeCommandPage beyin değişimi: rozet→picker→onay→audit satırı + `settings` Broadcast + rozet yeni modeli gösterir; negatif kanıt: banned model picker'da görünmez.
+- Playwright akışları (mevcut altyapı KALIR): (a) login→overview<3sn, (b) overview'daki HER özet değerin tıklanıp doğru filtreli sayfaya inmesi (drill-down haritası üstünden data-driven test), (c) Control Mode toggle→mutasyon→audit satırı+Broadcast yayını, (d) widget ekle/taşı/kaydet→reload→layout korunur, (e) TV modu döngüsü, (f) EmployeeCommandPage beyin değişimi: rozet→picker→onay→audit satırı + `settings` Broadcast + rozet yeni modeli gösterir; negatif kanıt: banned model picker'da görünmez; a head set below high gets the one warning of A10 and changes only on his "devam".
 - Veri gerçekliği testi: her widget'ın render değeri, kaynağı olan view'a SQL ile sorulup karşılaştırılır (sahte metrik regresyonu).
 - §38'in 27 maddesi ACCEPTANCE_CRITERIA'ya (D5) modül-başı kabul olarak taşınır; görsel maddeler CEO göz testine ⚠ UNVERIFIED etiketiyle sunulur (evidence-before-done).
 
@@ -211,7 +213,7 @@ Opus-devralma netliği: her ekran bağımsız teslim birimi; IMPLEMENTATION_ROAD
 ## 26. Riskler / 27. Edge case'ler
 
 - **Yoğunluk-karmaşa dengesi** (§2.3): risk = 26 sayfa tutarlılığının kayması → tek shell + tek WidgetRegistry + DESIGN_SYSTEM lint'i.
-- **Boş holding durumu**: şirket=1, çalışan az iken Overview'un "boş lüks" görünme riski (§35) → widget'lar gerçek az-veriyi dürüst gösterir + empty state bağlamsal metin (örn. "2 şirket kayıtlı — Outleteuro Faz 11'de katılır"); sahte kalabalık YASAK.
+- **Boş holding durumu**: şirket=1, çalışan az iken Overview'un "boş lüks" görünme riski (§35) → widget'lar gerçek az-veriyi dürüst gösterir + empty state bağlamsal metin (örn. "1 şirket kayıtlı"); sahte kalabalık YASAK.
 - **Broadcast fırtınası**: çok ajan × çok event → 1sn toplu yayın + sanal liste (SYSTEM_ARCHITECTURE §26).
 - **Tek tık felaketi**: Global Pause/Maintenance yanlış tık → çift-onay + geri alma; her mutasyonun `settings_change_log`/audit üzerinden undo yolu.
 - **Ultrawide↔laptop geçişi**: grid kolon sayısı breakpoint'te düşer, widget sırası korunur; TV modunda etkileşim kapalı.
@@ -235,7 +237,7 @@ carries a SHORT HEADLINE in both languages:
 | `tasks.objective` | unchanged — the worker's instruction, shown on the task's own page |
 
 **Whoever creates the task writes both legs**, at creation, where the meaning is known:
-the scout because it knows what it was sent to do, the intent intake because the CEO's
+the scout because it knows what it was sent to do, the goal intake (today's `intent-intake`) because the CEO's
 own sentence needs no translation (both legs carry it verbatim, first line, cut at a
 word boundary — `headline()` in `@dxb/orchestrator`).
 
@@ -259,3 +261,9 @@ ways. Gate: `tests/c9/feed-headlines.test.ts`.
 | A4 | **2026-07-24 (CEO order, in-chat with screenshots): nav gains a LAST group "Machine Room" (`machineRoom` — EN "Machine Room" / TR "Makine Odası") holding the code-heavy compliance/telemetry surfaces: Audit Trail `/gov/audit` (Hook Violations `/gov/violations` rides its tab bar), Runtime `/ops/runtime`, System Logs `/sys/logs`. Doctrine registered with the move: these surfaces are the ROBOTS' domain (orchestrator, directors, audit processes) — the CEO is not expected to read them; they serve as evidence when a dispute or doubt arises. Consequently their DETAIL panes are exempt from the plain-language humanization standard (rule 6 keeps applying to every CEO working surface): hook-violation detail strings stay English by explicit CEO waiver ("büyük iş büyük token"), audit expanded-record raw fields likewise. Decisions stays in Governance — it is the CEO's own record. §7 route table composition unchanged (routes move groups, none die). | CEO complaint 2026-07-24 night: audit flood "hiçbirinin detayı bana anlamlı gelmiyor... robotların alanı, benim değil"; builder verdict concurred (C19 runtime jargon complaint same class) | `config/command-nav.ts` machineRoom group · dicts `command.nav.groups.machineRoom` · complaint ledger 19e/19f + C19 rows |
 | A5 | **2026-07-26 (CEO screenshot: "canlı türkçe değil hala ingilizce"): task rows across the cockpit render `tasks.label`/`label_tr`, never `objective`** — the objective is an instruction and the live feed was reciting a 1700-character scout brief as one row's label. Contract in §9ter; registered as U29. Surfaces changed together so they cannot disagree: `/live`, `/intelligence` (tail + overnight list), the approvals dock in `(command)/layout.tsx`, `/ops/tasks` grid, `/ops/projects/[slug]`, `/approvals/[id]`, `/gov/decisions` | CEO live report | migrations `20260726010000/010100/010200` |
 | A6 | **2026-07-27 (W2.6): the chat board carries SYSTEM-authored text for the first time, and therefore carries two language legs.** `chat_messages.content_tr` + `chat_sessions.title_tr` (+ `v_chat_threads.title_tr`, `has_briefing`): a message Hamza opens by himself is an i18n surface, so the board renders the leg its locale asks for and the English board never borrows the Turkish one. Conversation turns stay single-leg on purpose — the CEO's own words and Hamza's replies are the language they were written in, not translations. A briefing message shows the `Sabah brifingi` / `Morning briefing` badge and **no dispatch button** (a report is not a proposal). Design contract for the briefing itself: [[VOICE_INTERACTION_SPEC]] §24quinquies | Measured 2026-07-27: 14 scheduled jobs, none writing to `chat_messages`; U26 had answered the same i18n question by having the system author nothing at all — a rule that only holds while the OS is silent | migration `20260727001000` · `components/chat/chat-board.tsx` + `chat-threads.tsx` · `tests/e2e/authed.spec.ts` (W2.6 case) · `scripts/i18n-purity-check.sh` (briefings leg) |
+| A7 | **2026-10-14 (B64, decisions 1 and 12): the Reception desk has its own section on his screen.** Every inbound mail and message appears the moment it arrives; where it went (work → its owner, Important, finance's archive, Gmail's bin) and what happened to it move live. A **Customers view** groups the same records by client and links each client to its CRM page (`/revenue/crm/…`, A3); one click opens the original mail in Gmail. The route joins the Command group when it is built — the nav file and §7's table change in the same commit (the table-sync rule above). **Its drawing goes to him first.** Design: `.planning/quick/20261012-b64-is-akisi/is-akisi.html` (v15). <!-- CEO-OK: b64-decisions-1-5-8-9-11-12-16-his-yes-2026-10-14 --> <!-- OPEN: B64 --> | The desk that sorts the outside world needs one face he can glance at (design v15: Karşılama, scenario 2) | §7 Command group (when built) · §9 `reception` · EVENT_MODEL · REVENUE_ENGINE accounts |
+| A8 | **2026-10-14 (B64, decision 12): the Important pane in the right rail, on every page.** Mail from a client, an official body or a real person on a real matter — and every mail the sorter is unsure of — lands here and in Hamza's morning line, never in the bin; one click opens the original. <!-- CEO-OK: b64-decisions-1-5-8-9-11-12-16-his-yes-2026-10-14 --> <!-- OPEN: B64 --> | Decision 12: unsure → Important, never the bin; the rail is the one place present on every page (§3) | §3 right rail · `IntelligenceRail` |
+| A9 | **2026-10-14 (B64, decision 15): Hermes on his screen is part of the organism — alive and simple.** It lights up while it works and carries its name, in the Agent Dock and as a live node on the org graph; no model, no duration, no step detail enters his eye (his drill-down still reaches its runs). It has no screen of its own: it is the holding's, inside the holding. <!-- CEO-OK: b64-decision15-hermes-holding-hands-and-eyes-2026-10-14 --> <!-- OPEN: B10 --> | Decision 15's text: "çalışırken yanar, adıyla görünür; ayrıntı gözünüze girmez" | §5 `AgentDock` · `OrgGraph` · B10 |
+| A10 | **2026-10-14 (B64, decisions 2, 11, 14 and 17): the brain picker keeps the code limits; the model room has one face.** A choice that would put a head or manager below high, Sonnet or Haiku at low, max as a default, or the final text a human reads below Opus (voice normal talk on Sonnet by his note) gets one warning — "Bu şu kuralla çelişiyor, yine yapayım mı?" — and is applied only on his "devam", as a one-time exception recorded as an override; the rule stays. The model room's face on this screen is B08's brain panel. <!-- CEO-OK: b64-decisions-1-5-8-9-11-12-16-his-yes-2026-10-14 --> <!-- CEO-OK: b64-decision14-model-room-2026-10-14 --> <!-- CEO-OK: b64-decision17-his-word-over-a-rule-as-exception-2026-10-14 --> <!-- OPEN: B64 --> | The picker validated only catalogue + banned + mechanical_only (§5, §6) | §5 `EmployeeCard` · §6 `fn_update_agent_brain` · §21 (f) · MODEL_ROUTING (the limits' owner) · B08 |
+| A11 | **2026-10-14 (B64, decisions 6 and 12): his commands come only from him** — his chat, his voice, his own screen; never from a mail, an inbound message or anything Hermes brings back (a mail saying "change the brain" changes nothing). A change he speaks or types to Hamza — "Bütün müdürleri xhigh yap" — passes the same registered door the palette uses; the door applies and records it, and Hamza answers "22 müdür xhigh'a geçti; geri almak için 'geri al' deyin". That path opens only after the routing door callable without login is closed. <!-- CEO-OK: b64-decision6-hamza-changes-brains-on-his-word-2026-10-13 --> <!-- CEO-OK: b64-decisions-1-5-8-9-11-12-16-his-yes-2026-10-14 --> <!-- OPEN: B64 --> | Design v15 ("Sizin sözünüz her şeyin üstünde"); `fn_update_routing` is EXECUTE-able by anon until decision 6 closes it | §8 palette catalogue · SETTINGS_AND_CONTROL · PERMISSION_MODEL |
+| A12 | **2026-10-14 (B64, decision 18): the one dream's morning line.** One line on the morning briefing — "Dün gece N iş okundu, 3 şey bulundu, 1'i sizi bekliyor." — and the one waiting on him opens with one click; nothing else of the dream enters his eye. The briefing's contents: [[VOICE_INTERACTION_SPEC]] §24sexies. <!-- CEO-OK: b64-decision18-one-dream-holding-wide-2026-10-14 --> <!-- OPEN: B64 --> | Decision 18: one line on his screen in the morning | A6 briefing message · MEMORY_ARCHITECTURE (the dream) |

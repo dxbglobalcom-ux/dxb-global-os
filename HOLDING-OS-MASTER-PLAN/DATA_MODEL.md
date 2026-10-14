@@ -21,9 +21,9 @@ Holding OS'un tüm birinci-sınıf varlıklarının tek şema sözlüğü: mevcu
 | `agents` | Ajan kayıtları (ad, departman, model, durum) | **GENİŞLER** → employees evrimi (§4.1) |
 | `departments` | Departmanlar | **GENİŞLER** → org hiyerarşisi (§4.1) |
 | `tasks`, `task_events` | Görevler + append-only olay akışı | KALIR; `tasks.project_id` eklenir |
-| `intents` | CEO niyet girişi (0016) | KALIR |
+| `intents` | Where his goal enters today (0016) — a broad brief, never a one-line "intent"; the word leaves every surface he sees and the 500-character cap goes (B64 A1) <!-- CEO-OK: b64-opened-goal-not-intent-and-hamza-2026-10-12 --> | KALIR (the name stays until the build renames it) |
 | `approvals` | Onay kuyruğu (risk sınıflı; karar yolu 0015) | KALIR; APPROVAL_ENGINE genişletir |
-| `outbox` | Dışa dönük aksiyon tek-çıkışı | KALIR — DOKUNULMAZ |
+| `outbox` | The one exit for outward actions the holding's own workers take; Hermes's computer work is the second, named path (B64 decision 15, SECURITY_MODEL O2) <!-- CEO-OK: b64-decision15-hermes-holding-hands-and-eyes-2026-10-14 --> | KALIR — DOKUNULMAZ |
 | `cost_ledger`, `budget_state` | Maliyet defteri + bütçe durumu | KALIR; COST_CONTROL view'ları üstüne gelir |
 | `audit_log` | Denetim | KALIR; control-plane zorunlu hedefi |
 | `routing_rules` | Model/görev yönlendirme | **GENİŞLER** → model_catalog FK (§4.2) |
@@ -161,13 +161,13 @@ CREATE TABLE model_catalog (
   context_window int,
   cost_in_per_mtok numeric, cost_out_per_mtok numeric,
   speed_score int, quality_score int, reliability numeric,
-  fallback_of text REFERENCES model_catalog(id),
+  fallback_of text REFERENCES model_catalog(id),  -- the old fallback path; closes with B66 (B64 decision 13) — the backup is the role pair (B64 A6)
   status text NOT NULL DEFAULT 'active' CHECK (status IN ('active','degraded','retired'))
 );
 
 ALTER TABLE routing_rules
   ADD COLUMN model_id text REFERENCES model_catalog(id),
-  ADD COLUMN role_slot text;                 -- §19: planning|execution|review|coding|research|design|low_cost|emergency
+  ADD COLUMN role_slot text;                 -- §19: planning|execution|review|coding|research|design|low_cost|emergency; the backup pair is written by role, main brain ⇄ backup brain (B64 A6)
 ```
 
 > **Planned E6.1 delta (`0021h_model_catalog_governance.sql`, roadmap E6.1 — not yet live):** model_catalog gains `display_name`, `banned`, `mechanical_only` + status CHECK extended with `'testing'`/`'disabled'`; routing_rules gains `department_id`, `risk_max`, `min_context`, `cost_cap_per_task` + `UNIQUE(role_slot, priority, department_id)`. Normative definition: [[MODEL_ROUTING_SPEC]] §4 (alignment note 2026-07-12). This block stays deployed-truth until 0021h ships, then folds the delta in.
@@ -191,7 +191,7 @@ CREATE TABLE agent_runs (
   started_at timestamptz NOT NULL DEFAULT now(),
   ended_at timestamptz,
   tokens_in bigint NOT NULL DEFAULT 0, tokens_out bigint NOT NULL DEFAULT 0,
-  cost_eur numeric NOT NULL DEFAULT 0,
+  cost_eur numeric,                          -- NULL = cost unknown (a model with no price), never 0 (B64 A5); live: NOT NULL DEFAULT 0 (20260711002200) until the build
   progress_pct int, error text
 );
 
@@ -311,7 +311,8 @@ projects 1─n tasks 1─n task_events · workflows 1─n workflow_steps · work
 workflow_runs 1─n agent_runs 1─n {decision_log, tool_calls, file_changes}
 agent_runs n─1 agents · decision_log n─1 approvals · approvals 1─n outbox (mevcut)
 library_items 1─n library_grants · settings_registry 1─n settings_values 1─n settings_change_log
-model_catalog 1─n routing_rules · model_catalog self (fallback_of)
+model_catalog 1─n routing_rules · model_catalog self (fallback_of — the old path, closing with B66) · the backup pair by role (B64 A6)
+jobs (B64 A3) 1─n tasks · inbound records (B64 A2) n─1 crm_clients · an inbound record 0─1 job (schema at build)
 ```
 
 ## 6-10. Component/Backend/Frontend/API/Event bağlamı
@@ -333,12 +334,12 @@ Madde 4 sınırı: bu şema yeni kimlik/erişim bürokrasisi EKLEMEZ; RLS mevcut
 
 ## 15. Error handling / 16. Retry / 17. Fallback
 
-Şema karşılıkları: `agent_runs.status` durum makinesi (waiting_approval retry DEĞİL park); `workflow_steps.kind='retry'/'fallback'` adımları config'iyle deklaratif; `model_catalog.fallback_of` zinciri döngü-korumalı (trigger: kendine/döngüye izin yok).
+Şema karşılıkları: `agent_runs.status` durum makinesi (waiting_approval retry DEĞİL park); `workflow_steps.kind='retry'/'fallback'` adımları config'iyle deklaratif. A failed model's work goes to the other brain of the role pair — main brain ⇄ backup brain, written by role, never a weaker model (B64 A6); the loop-guarded `model_catalog.fallback_of` chain is the old path and closes with B66.
 
 ## 18. Test planı / 19. Acceptance criteria
 
 - Migration testi: boş DB'de 0001→0024x sıralı push → `\dt` beklenen tablo sayısı; ikinci push idempotent (0 değişiklik).
-- Kısıt testleri: v2'siz persona ile aktivasyon reddi; fallback döngüsü reddi; append-only tablolarda UPDATE reddi.
+- Kısıt testleri: v2'siz persona ile aktivasyon reddi; a backup brain weaker than its main brain is refused (B64 A6); append-only tablolarda UPDATE reddi.
 - Kabul: her yeni aile için en az bir uçtan-uca kanıt sorgusu (örn. `INSERT settings değişimi → change_log satırı + audit_log satırı + Broadcast payload`).
 
 ## 20. Migration planı / 21. Rollback planı
@@ -399,6 +400,18 @@ The media studio was founded on 2026-09-03 and has run ever since against a tabl
 ## Registered adaptation — B51 the task's class (2026-10-09) <!-- CEO-OK: b51-gate-class-fix-2026-10-09 -->
 
 `tasks.task_class text NULL` — `db/migrations/20261009010000_tasks_task_class.sql`. The `routing_rules.task_class` decompose routed the task as; NULL for a task born outside decompose. No FK: `routing_rules` holds several rows per class, and a class retired from the table must not orphan the tasks that ran under it. Reader: the worker's critical-gate switch (AGENT_ORCHESTRATION A25). Rows older than 2026-10-09 stay NULL.
+
+## Registered adaptations — B64 how work reaches the holding (2026-10-14)
+
+Design: `.planning/quick/20261012-b64-is-akisi/is-akisi.html` (v15). These are contracts — what each record must carry; the schema is chosen at build. <!-- OPEN: B64 -->
+
+- **A1 — The goal and the brief (E01).** <!-- CEO-OK: b64-opened-goal-not-intent-and-hamza-2026-10-12 --> What he gives the holding is a goal: a broad brief, written the way a task is written for an engineer. `intents` (0016) is where it enters today: `text` is capped at 500 characters (`20260710000016_intents_intake.sql:13`) and the states stop at `dispatched`. The cap goes, and for him the record means "his goal"; the table keeps its name until the build renames it. Hamza turns the goal into the job's brief: his sentence verbatim, the "done" criteria, the value tier.
+- **A2 — The inbound record (E04, E15, E17).** <!-- CEO-OK: b64-decisions-1-5-8-9-11-12-16-his-yes-2026-10-14 --> Every mail and every message from outside is its own record. It carries: the channel (mail, WhatsApp's official business channel, Telegram) and the sender; the client, when the sender is a registered one (→ `crm_clients`); the class — work, important, record (invoice, receipt, account notice) or bin — and who sorted it (Jev, or Sonnet 5.5 medium when Jev was unsure; an unsure mail is important, never bin); the owner it went to (the account's owner by code, sales for a new sender, Hamza when ownerless); the link to the original mail in Gmail; and what happened to it (became a job, answered, archived to finance, moved to Gmail's bin — recoverable for 30 days). Nothing in a mail's text is ever executed: it is information, never a command. The Customers view groups these records by client.
+- **A3 — The job and its desk (E05, E06, E09, E10, E13, E20, E31).** <!-- CEO-OK: b64-decisions-1-5-8-9-11-12-16-his-yes-2026-10-14 --> <!-- CEO-OK: b64-decision10-valuable-work-two-plans-fable-judge-2026-10-13 --> A job is the owned unit of work born from a brief, a line run or a client deal. Its record — the job desk — carries: the owner (the head of the department that takes it); the brief; the value tier (simple, normal, valuable) and who set it (he, or Hamza from his word; sales from the deal amount; a line from its own card); the deal amount and its currency, when there is one; the budget cap (valuable work: at most 30 % of the deal); the client and the client's language; the client's due date; the plan (on valuable work: two plans, xhigh and max, and the plan judge's pick with what it added); its parts — `tasks` stay the parts, each carrying its brain, its effort and the owner's one-line reason; the outputs; the cost. Its states: open, running, done (assembled, tried and delivered by its owner), replanned, stopped, cancelled. Everyone reads the desk and writes only its own part; the detail stays there and never goes to him. A task's single place of state, owner and result is board row C60. A part's `tasks.due_at` exists (`20260718090000_e125_activation_contract.sql:29-32`, default creation + 7 days); a client job's due date is the client's, never that default.
+- **A4 — The department intake list (E04).** <!-- CEO-OK: b64-decisions-1-5-8-9-11-12-16-his-yes-2026-10-14 --> One written list of which work each department takes, so the Reception desk gives work to the right owner; today it is recorded nowhere. It belongs to the org family (§4.1) — 22 departments, each with a registered head (company engine, SELECT, 2026-10-14). `crm_clients` gains the client's language.
+- **A5 — Cost unknown is not zero (E29(1); in B64's plan for his yes).** A run on a model whose catalogue row carries no price costs "unknown", never 0: `agent_runs.cost_eur` takes NULL for unknown (live: NOT NULL DEFAULT 0, `20260711002200_observability_family.sql:23`); a sum that meets an unknown says "unknown" instead of adding 0; a budgeted job waits until the price is entered ([[COST_CONTROL_SPEC]] B64). Today no Anthropic model row carries a price (B51).
+- **A6 — The backup pair, by role (E22, E23).** <!-- CEO-OK: b64-decision13-backup-pair-opus-fable-2026-10-14 --> <!-- CEO-OK: b64-decision14-model-room-2026-10-14 --> The backup is written by role — main brain (Opus 5.5) ⇄ backup brain (Fable 5.1) — never by model name and never a weaker model; where the pair is stored is chosen at build ([[MODEL_ROUTING_SPEC]]). `model_catalog.fallback_of` and its loop-guarded chain are the old path and close with B66.
+- **A7 — No head is born below the floor (E21).** <!-- CEO-OK: b64-decisions-1-5-8-9-11-12-16-his-yes-2026-10-14 --> `fn_default_brain()` gives an agent born without a brain the `low_cost` seat's model (B51 P1, above). A head or manager born without one takes the main brain instead, and its effort never starts below high ([[MODEL_ROUTING_SPEC]] §4f).
 
 ## 27. Done definition (bu spec)
 

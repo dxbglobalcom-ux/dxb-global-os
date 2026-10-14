@@ -58,7 +58,7 @@ Governance grubu "Audit" sayfası: zaman-akışlı birleşik görünüm (audit_l
 
 ## 8. API'ler
 
-Okuma: PostgREST + `v_audit_trail` view (audit_log ⋈ detail_ref çözümü tek sorguda). Mutasyon YOK (append-only; tek istisna `file_changes.review_status` — `control_audit_mark_reviewed` fn'i, [[API_CONTRACTS]] envanterine kayıtlı ek). Ajan-içi: ajanlar kendi koşu loglarını OKUYABİLİR (öz-düzeltme için), başkasınınkini okuyamaz (profil sınırı).
+Okuma: PostgREST + `v_audit_trail` view (audit_log ⋈ detail_ref çözümü tek sorguda). Mutasyon YOK (append-only; tek istisna `file_changes.review_status` — `control_audit_mark_reviewed` fn'i, [[API_CONTRACTS]] envanterine kayıtlı ek). Ajan-içi: ajanlar kendi koşu loglarını OKUYABİLİR (öz-düzeltme için), başkasınınkini okuyamaz (profil sınırı). One named exception: the one dream reads every employee's runs of the day, Hermes's included, each night — it reads and proposes, and never writes memory itself (B64 decision 18). <!-- CEO-OK: b64-decision18-one-dream-holding-wide-2026-10-14 -->
 
 ## 9. Event yapısı
 
@@ -66,7 +66,7 @@ Log yazımları Broadcast ÜRETMEZ (hacim; canlılık ops:live'ın işi). İstis
 
 ## 10. State yönetimi ("önemli karar" tanımı — bağlayıcı liste)
 
-decision_log yazımı ZORUNLU olan noktalar: model seçimi/fallback düşüşü · görev atama (hangi çalışana neden) · workflow adım dallanması (retry/fallback/escalate tercihi) · hook reddi/escalation · approval'a dönüştürme · bütçe-sınır aksiyonu · persona sürüm terfisi · org değişikliği önerisi. Liste genişletilebilir (append) — daraltma ⛔. Bu liste dışında kalan mikro seçimler task_events düzeyinde kalır (log enflasyonu bilinçli sınırlandı).
+decision_log yazımı ZORUNLU olan noktalar: model seçimi / the switch to the backup brain (no work ever falls to a weaker model — B64 A2) · görev atama (hangi çalışana neden) · workflow adım dallanması (retry/fallback/escalate tercihi) · hook reddi/escalation · approval'a dönüştürme · bütçe-sınır aksiyonu · persona sürüm terfisi · org değişikliği önerisi · the brain and effort a job's owner chose for each part, with its one-line reason · a standing model assignment (its date, who decided, why) · the Reception desk's routing of an inbound record · a "devam" on his word against a rule (an `override` line) · the acceptance of a dream proposal (B64 A1-A5). Liste genişletilebilir (append) — daraltma ⛔. Bu liste dışında kalan mikro seçimler task_events düzeyinde kalır (log enflasyonu bilinçli sınırlandı).
 
 ## 11. Database tabloları / 12. İlişkiler
 
@@ -74,7 +74,7 @@ decision_log yazımı ZORUNLU olan noktalar: model seçimi/fallback düşüşü 
 
 ## 13. Yetkilendirme
 
-Append-only grant modeli (O8): INSERT yalnız service_role/fn; UPDATE/DELETE grant'i YOK (tek istisna: file_changes.review_status kolonu fn-yoluyla). Okuma: CEO tümü; ajanlar kendi run_id kapsamı.
+Append-only grant modeli (O8): INSERT yalnız service_role/fn; UPDATE/DELETE grant'i YOK (tek istisna: file_changes.review_status kolonu fn-yoluyla). Okuma: CEO tümü; ajanlar kendi run_id kapsamı — one named exception, the one dream (§8, B64 decision 18).
 
 ## 14. Logging / 15. Audit (log'un log'u)
 
@@ -116,6 +116,16 @@ pnpm --filter @dxb/orchestrator test -- --grep "tool_calls"                     
 ## Opus-devralma notu
 
 Şema + sarmalayıcı deseni + "önemli karar" listesi + saklama sınıfları kapalıdır; Opus yeni karar noktası eklerken §10 listesine satır ekler ve `logDecision` çağırır — başka mekanizma icat etmez. ⛔ kritik karar: saklama sınıflarını kısaltma / KALICI sınıfı gevşetme — en güçlü model + CEO onayı.
+
+## Registered adaptations — B64 how work reaches the holding (2026-10-14)
+
+Design: `.planning/quick/20261012-b64-is-akisi/is-akisi.html` (v15). Nothing below is built yet. <!-- OPEN: B64 -->
+
+- **A1 — Every choice carries its reason (E10).** <!-- CEO-OK: b64-decisions-1-5-8-9-11-12-16-his-yes-2026-10-14 --> A job's owner chooses each part's brain and effort by its own judgement and writes a one-line reason; that choice is a §10 decision, so the guide can be corrected against what was chosen and what it cost.
+- **A2 — The backup switch is recorded (E22).** <!-- CEO-OK: b64-decision13-backup-pair-opus-fable-2026-10-14 --> When a brain fails (quota, overload, outage) and the other takes the work, the switch is a decision line in plain words — "Opus düştü, işi Fable high'da yaptı" — with the run, both models and the effort it ran at. No work falls to a weaker model, so there is no "fallback düşüşü" to record.
+- **A3 — Standing assignments and the Reception's routing (E23, E04).** <!-- CEO-OK: b64-decision14-model-room-2026-10-14 --> Every standing model assignment carries its date, who decided and why. Every inbound record's routing — its class, its owner, and who sorted it — is a decision line.
+- **A4 — His word over a rule (E27).** <!-- CEO-OK: b64-decision17-his-word-over-a-rule-as-exception-2026-10-14 --> When he says "devam" after the one warning, the exception is one `override` decision line naming the rule and his sentence; the rule itself is never changed or recorded as changed.
+- **A5 — Hermes's changes are recorded and reversible (E24).** <!-- CEO-OK: b64-decision15-hermes-holding-hands-and-eyes-2026-10-14 --> Instead of a restriction, every change Hermes makes to the holding's data is recorded with its before-state and can be reversed: the `reverted_by` chain (§4) widens from files to data changes (schema at build). The one dream's nightly read of every run is the named exception to "an agent reads only its own runs" (§8, §13).
 
 ## Done definition (bu spec)
 

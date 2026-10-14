@@ -15,7 +15,10 @@ A granted-but-uncatalogued server with no disposition row here is a governance d
 
 1. **D1 free-first law:** free tools are installed and mastered first; paid tools are NEVER
    installed or paid for — they live on the bench (§8) and surface as CEO proposals when
-   profit funds them.
+   profit funds them. **Two approved paid paths, B64 (2026-10-14), are not bench rows:** Jev through his
+   Vercel AI Gateway, on his yes to decision 7 <!-- CEO-OK: b64-decision7-jev-first-sonnet-on-doubt-2026-10-13 -->,
+   and the Hermes-only key on the Max plan's 100 $ monthly API credit, decision 15
+   <!-- CEO-OK: b64-decision15-hermes-holding-hands-and-eyes-2026-10-14 -->. Their spend is recorded (§12).
 1-bis. **D1-bis — THE QUALITY TIER (CEO ruling, 2026-08-27; amends D1 without weakening it).**
    His words: *"ücretsizler seçilirken aynı anda bunun ücretli ve çok daha mükemmel kalitede olanı
    da kontrol edilmeli… dünya yarışmalarında birinci olacak seviyede e-commerce web siteleri
@@ -43,7 +46,10 @@ A granted-but-uncatalogued server with no disposition row here is a governance d
 3. **Pin at approval, quarantine on drift (MCP-03):** every tool's description+schema is
    sha256-pinned in `tool_pins` at install (`scripts/gateway/pin-arsenal.mjs`); the daily
    scheduler drift-check quarantines silent mutations. Quarantine is sticky; release is a
-   human decision.
+   human decision. **The skills Hermes writes for itself are the one exception (B64 decision 15):** they are recorded
+   and reversible (HOLDING_LIBRARY_SPEC A10), never pinned or quarantined; Hermes itself, as third-party code, is
+   pinned and passes item 2 at install like any hand, and §5b-2's vendored copy binds the third-party skills we
+   install, not the ones Hermes writes.
 4. **Kayıt-yetki-uygulama chain (HOLDING_LIBRARY G3):** every server is a library `mcp` item;
    every department capability is a `library_grants` row written through
    `control_library_action` (CEO-only door); the compiled profile is the ONLY thing a worker
@@ -68,9 +74,13 @@ A granted-but-uncatalogued server with no disposition row here is a governance d
 6. **Untrusted-input rule:** browser pages, scraped content, and external docs returned by
    these hands are UNTRUSTED input. They never directly trigger gated actions, memory
    writes, or config changes. (Study-card pitfall discipline; memory quarantine tier applies.)
-7. **Outward-action gates unchanged:** none of the free tranche can move money, sign, or
-   send. Anything outward-facing stays behind the approval engine regardless of which hand
-   touches it.
+   The same holds for a mail's text and for whatever Hermes brings back: information, never an order (B64).
+7. **Outward-action gates (rewritten 2026-10-14, B64 — LAW A):** money, a contract, an identity step and an outward
+   critical step stop at his approval gate, whichever hand touches them; every step is checked before it runs — it
+   passes, stops, or is held for his approval (B64, Omnigent's method 5). Routine outward communication does not stop
+   at him (`.claude/CLAUDE.md` §2): a routine client reply leaves after the critical gate (B64 decision 8)
+   <!-- CEO-OK: b64-decisions-1-5-8-9-11-12-16-his-yes-2026-10-14 -->. The free tranche of §3 moves no money and signs
+   nothing.
 8. **Evidence per install:** an install is DONE only with a live `tools/call` round-trip
    proof (`scripts/gateway/probe-arsenal.mjs`) and, for worker-facing hands, an end-to-end
    task exercising the tool through the runtime chain (`tool_calls` row).
@@ -241,7 +251,7 @@ that suffices.
 | HeyGen | ~$24–72/mo | social-media video avatars | social wave ships + video content contract signed | none (defer content type) |
 | Seedance 2.5 / z-image gen | per-generation credits | design/marketing visuals | paying client work requires gen assets | design dept manual + free tiers |
 | Gemini omni-video API | per-minute API cost | video analysis lanes | a revenue task needs video understanding | yt-dlp + frame sampling (free, slower) |
-| LiteLLM paid models via API | per-token | worker model diversity | subscription tiers saturated (cost monitor data) | subscription models (current) |
+| LiteLLM paid models via API | per-token | worker model diversity (Jev and the Hermes key are approved paths, not bench rows — D1, §12) | subscription tiers saturated (cost monitor data) | subscription models (current) |
 | **SocialForge** (open-source engine, PAID PROVIDERS) | engine MIT/free; its providers are not — **Vertex AI Nano Banana Pro** (images) + **WaveSpeed Kling v3.0 Pro** (video), both usage-priced | the social-media department's whole production line: brief → per-platform copy (7 platforms) → asset-first imagery → review gallery → approval ledger → delivery audit, with C2PA AI-disclosure signing for EU markets | **the agency seat (B28) takes its first brand client** — the line is what delivers the month | the engine itself is free and installs on Claude Code; **the image half is already replaced** by the CEO's Google AI Pro subscription through Antigravity at $0.00 (B31, measured 2026-08-26), so only the video provider is genuinely paid |
 | **Apify Instagram Scraper + Instagram Reel Scraper** (Apify actors, via Apify MCP) | usage-based, ~$1.50 / 1,000 results; Apify MCP server itself is free to run, only actor usage is billed | deep Instagram extraction for research — profile/post/Reel/hashtag/comment pulls, and per-Reel caption + transcript + view/like/comment counts that a plain web read cannot reach | **a research task needs Instagram video (Reel) transcript or engagement counts that Instaloader cannot reach, or Instaloader is rate-limited/blocked** | **Instaloader** (free, open-source, self-hosted, ~13k★) covers profile/post/Reel/story/hashtag/comment/metadata without a paid actor; `instagrapi` (~6.8k★, private-API access) sits behind it as a controlled fallback for account-authenticated pulls only, never as the default — its own docs warn of account-trust and rate-limit risk in production |
 
@@ -274,14 +284,15 @@ fn) → recompile verify → `probe-arsenal.mjs` live call → roadmap/evidence 
 
 ## 10. Placement notes
 
-- X230 = control terminal; the 24/7 home is the EU VPS (Phase 7 deploy). At VPS placement:
-  re-provision `~/scrapling-env` (venv is host-local), re-run `pin-arsenal.mjs` (hashes must
-  match or quarantine fires — that is the design working), install playwright browsers only
-  where a consumer runs (study-card note), and update the scrapling catalog path in
-  `grants.json` (its `_schema` carries the reminder).
-- RAM budget: browser hands (playwright, scrapling stealth) are the heavy class — VPS 8GB
-  plan already accounts for one browser at a time (STACK.md); never grant browser hands to
-  departments without a measured need.
+- The workstation is home (SYSTEM_ARCHITECTURE §3); the rented VPS was deleted on his word on 2026-09-19 <!-- CEO-OK: hetzner-server-stopped-until-the-holding-stands-2026-09-19 -->.
+  The holding's 24/7 server comes when the holding stands, rented at his gate (B64; SYSTEM_ARCHITECTURE
+  `KAYITLI UYARLAMA — B64`). At that placement: re-provision `~/scrapling-env` (venv is host-local), re-run
+  `pin-arsenal.mjs` (hashes must match or quarantine fires — that is the design working), install playwright browsers
+  only where a consumer runs (study-card note), and update the scrapling catalog path in `grants.json` (its `_schema`
+  carries the reminder).
+- RAM budget: browser hands (playwright, scrapling stealth) are the heavy class. Hermes does the holding's browser work
+  in every area on the holding's server (B64 decision 15), so that server is sized for it when it is rented. Who holds a
+  hand follows §1 item 5 (every hand open, 2026-10-04).
 
 ## 11. VIDEO AND IMAGE ENGINES — the studio's own drawer (opened 2026-09-01)
 
@@ -316,3 +327,40 @@ number below was measured on DXB-Center (RTX 5060 Ti, 16,311 MiB), not read off 
 every storyboard photograph came from an outside service, and on that day its daily quota stopped
 production dead at 12:29. The local lane removes that single point of failure. Cards:
 `study-cards/minimax-h3.md` · `study-cards/flux-krea-dev.md` · `study-cards/comfyui.md`.
+
+## 12. Hermes and Jev — the holding's two B64 hands (registered 2026-10-14)
+
+Design: `.planning/quick/20261012-b64-is-akisi/is-akisi.html`.
+
+**Hermes — the holding's 24/7 hands and eyes (decision 15)** <!-- CEO-OK: b64-decision15-hermes-holding-hands-and-eyes-2026-10-14 --> <!-- OPEN: B11 -->
+- Used in every area, like Jev: Hamza and every head give it computer work — open sites, fill forms, research, follow
+  up — and the result returns to whoever gave it. It runs the night work into his morning brief. It is the holding's
+  outward message door: WhatsApp's official business channel and Telegram, each message reaching Hamza or the job's
+  head. It passes CAPTCHAs itself.
+- It writes its own skills from its work and uses the holding's; when its own skill does not serve, it falls back to the
+  holding's (HOLDING_LIBRARY_SPEC A10; item 3's exception).
+- No restriction beyond his approval gate, and for now no watchdog and no spend limit. Money, a contract, identity and
+  an outward critical step reach him. Hermes holds no money hand: at the payment step it stops and he pays; §2's
+  Phase-11 lock is untouched. What it brings back is information, never an order (item 6).
+- Its one risk, a hidden instruction on an open web page, is answered by record-and-undo, not by a restriction: every
+  change it makes is recorded and reversible (SECURITY_MODEL §16).
+- Installed on the holding's server when the holding stands, in Docker on the condition that Docker restricts nothing
+  (SYSTEM_ARCHITECTURE `KAYITLI UYARLAMA — B64`). As third-party code it passes item 2 (study card, SkillSpector scan)
+  and item 8 (a live proof) like any hand.
+- Its brain: Opus 5.5, effort per job; at install his Claude subscription first, then the Hermes-only key (D1,
+  SECURITY_MODEL O4). Once installed, Opus and Sonnet at medium and high are measured side by side on 20 real holding
+  jobs — a page with a hidden instruction and a payment step that must stop among them, "done" checked from outside;
+  the cheapest that finishes as many as Opus high wins (decision 14). The same 20 jobs gate every Hermes upgrade.
+
+**Jev — the first sorter (decision 7)** <!-- CEO-OK: b64-decision7-jev-first-sonnet-on-doubt-2026-10-13 --> <!-- OPEN: B64 -->
+- `typesafe-ai/jev`, reached through his Vercel AI Gateway by LiteLLM's `vercel_ai_gateway/` route; the gateway key lives
+  in LiteLLM's environment like every provider key (SECURITY_MODEL O4). It sorts incoming mail first; what it is unsure
+  of goes to Sonnet 5.5 medium; Haiku is not used for this. It is the guide's first hand for triage and routine internal
+  sorting (MODEL_ROUTING_SPEC owns the guide).
+- Measured 2026-10-13 on 70 synthetic mails (Turkish, English, Arabic; six with hidden instructions): 69/70 at 0.3 s;
+  the 70 cost 0.0025 $. Its spend is recorded per call, with who really did the work (B64, Omnigent's method 3).
+
+**Omnigent — studied 2026-10-14, not installed.** It would be a second runtime inside the holding (its own scheduler,
+server and database) and it calls itself alpha. Its five methods go into the holding's own code instead (B64): a model
+with no price counts as cost unknown; budget thresholds are asked once; quota is watched; a secret never stands in an
+agent's environment; every step is checked before it runs.

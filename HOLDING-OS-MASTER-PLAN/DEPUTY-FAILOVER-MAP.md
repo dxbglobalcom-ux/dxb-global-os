@@ -6,8 +6,8 @@
 
 ## 1. Takeover protocol (applies to every row)
 
-1. **Trigger fires** (see per-row trigger; generic triggers: agent hard-down > SLA window, hook_violations halt unresolved > 1 cycle, model/brain outage without fallback, CEO manual order).
-2. **Temporary authority grant:** deputy operates ONLY within the "temporary authority" column — never the full seat. Everything outside that column QUEUES for the owner's return or escalates to the manager. **Hard gates never transfer:** money-out, contracts, identity steps stay CEO-gated regardless of who operates.
+1. **Trigger fires** (see per-row trigger; generic triggers: agent hard-down > SLA window, hook_violations halt unresolved > 1 cycle, both brains of the backup pair down, CEO manual order). A single model's outage is not a trigger: the backup pair switches the brain and the seat keeps its owner ([[MODEL_ROUTING_SPEC]] A-2026-10-14 item 4, B64 decision 13).
+2. **Temporary authority grant:** deputy operates ONLY within the "temporary authority" column — never the full seat. Everything outside that column QUEUES for the owner's return or escalates to the manager. **Hard gates never transfer:** money-out, contracts outside the price policy and standard contract he approved once, and identity steps stay CEO-gated regardless of who operates ([[APPROVAL_ENGINE_SPEC]], B64 decision 5).
 3. **Memory/context access:** deputy reads the owner's recorded artifacts (ledgers, registries, runbooks — per row); deputy never writes to the owner's append-only records under the owner's name; deputy actions are logged under the deputy's own identity with a `acting-for:<slug>` marker.
 4. **Resume protocol:** owner returns → deputy hands back with a written delta note (what happened, what was decided, what queued); the delta note enters the owner's record; open deputy actions transfer explicitly, never silently.
 
@@ -26,7 +26,7 @@
 
 | Head (owner) | Dept | Deputy | Temporary authority (uniform) |
 |---|---|---|---|
-| `chief-of-staff` | ceo | `executive-operations-manager` | Uniform head-deputy authority: keep the dept cadence running (standing reviews, intake triage, escalation routing); rule on IN-ENVELOPE operational conflicts; escalate everything envelope-touching, strategic, or cross-department to the orchestrator/CEO line. NO new envelopes, NO policy changes, NO hires/role changes, NO outward commitments — those queue. Memory access: dept decision logs + standing reports (read; deputy logs acting-for). Resume: delta note per §1.4. |
+| `chief-of-staff` | ceo | `executive-operations-manager` | Uniform head-deputy authority: keep the dept cadence running (standing reviews, intake triage, escalation routing); rule on IN-ENVELOPE operational conflicts; escalate everything envelope-touching, strategic, or cross-department to Hamza, who brings to the CEO only what is his (B64). NO new envelopes, NO policy changes, NO hires/role changes, NO outward commitments — those queue. Memory access: dept decision logs + standing reports (read; deputy logs acting-for). Resume: delta note per §1.4. |
 | `head-of-strategy` | strategy | `market-intelligence-lead` | (uniform, above) |
 | `cfo` | finance | `treasury-ar-manager` | (uniform) |
 | `general-counsel` | legal | `legal-de-counsel` | (uniform) |

@@ -64,7 +64,11 @@ Kontrol düzlemi in-process (ayrı servis değil — SYSTEM_ARCHITECTURE §3 ⛔
 
 Fable penceresinde paralellik YOK (inline tek akış — subagent yasağı). Opus penceresinde: migration aileleri ↔ UI sayfa grupları ↔ seed/persona-dışı içerik birbirinden bağımsız koşabilir (aynı dosyaya iki el değmemek şartıyla; roadmap'te işaretli).
 
-## 9. Görev-model dağılımı (v6 — direktif m.16'nın güncellenmiş cevabı)
+## 9. Görev-model dağılımı (v6 — direktif m.16'nın güncellenmiş cevabı) <!-- HISTORY -->
+
+> The construction tree as it stood in July 2026 (v6) — who wrote the corpus and the code, not which brains the
+> holding runs. Today's construction seats: `.claude/skills/dxb-team2/SKILL.md` §3; the holding's runtime brains,
+> Sonnet and Haiku included: [[MODEL_ROUTING_SPEC]] (B64 guide, A-2026-10-14).
 
 | Görev sınıfı | Model | Not |
 |--------------|-------|-----|

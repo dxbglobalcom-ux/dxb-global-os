@@ -9,8 +9,9 @@
 |---|---|
 | `revenue_ledger` + `fn_revenue_record` + `v_pnl_daily/engine/platform` (E6.5/E6.5b) | **KALIR** — stays the single realized-revenue truth |
 | `revenue_ledger.engine` CHECK constraint (frozen enum) | **DEĞİŞİR** — CHECK dropped, FK to new `revenue_engines(slug)`; engines become data (Talep §7.2: engines are a floor, not a ceiling) |
-| `intents` intake + kernel classify (E6.4) | **KALIR** — objectives do NOT replace intents; an objective is a standing contract, an intent is a one-shot command |
-| `tasks`/`projects`/workflow/approval/outbox rails | **KALIR** — revenue execution rides existing rails; approval classes unchanged (money-out always gated, B7b) |
+| `intents` intake + kernel classify (E6.4) | **DEĞİŞİR** — what he gives is a goal, which Hamza turns into a brief for the owning head (B64; AGENT_ORCHESTRATION A26); objectives do NOT replace it — an objective is a standing contract, a goal is one job |
+| `tasks`/`projects`/workflow/approval/outbox rails | **KALIR** — revenue execution rides existing rails; approval classes unchanged except his B64 decisions 4 and 5 (§7sexies) — money-out always gated (B7b), ad spend gated |
+| Sales and accounts — how a client's work reaches its owner | **YENİ** — §7sexies (B64, registered 2026-10-14) |
 | pg-boss scheduler (9 live schedules) | **KALIR+GENİŞLER** — new `revenue.*` job family |
 | `cost_ledger` (COST_CONTROL) | **KALIR** — net-profit math reads it |
 | Strategy dept roster | **DEĞİŞİR** — +2 seats: Opportunity Scout, Portfolio Manager (workforce amendment W-R1, §25) |
@@ -29,7 +30,7 @@ Give the Holding the missing economic brain: a binding **Objective Contract** fr
 - G5. **Never fabricated revenue:** realized numbers come ONLY from `revenue_ledger` (append-only, audited). No projected number may render where a realized number is expected (P3 schema-first stays).
 - G6. First seeded objective = **€50 net profit** (D2), status `draft` until CEO activates post-E13 test closure.
 - G7. Research proposals cite tooling runs (Library `research` items / study-cards); "genel geçer" tool defaults rejected — advanced intake per D4 (Scrapling/Camoufox/deerflow class, each through Library STUDY lifecycle).
-- G8. Every outward step of any revenue project keeps existing approval classes; this spec adds ZERO new bypasses.
+- G8. Every outward step of any revenue project keeps the approval classes; this spec adds ZERO new bypasses. The one change is his own (B64 decision 5, §7sexies): offers and contracts inside the price policy and standard contract text he approved once no longer reach him; money out and ad spend stay gated.
 - G9. Engine set is data: creating/retiring an engine is a control-fn mutation + audit row, never a migration.
 
 ## 3. Architecture (the operating cycle, Talep §7.6 mapped to owners)
@@ -42,7 +43,7 @@ RECEIVE OBJECTIVE (CEO / Hamza-proposed → CEO)          objectives
 → ESTABLISH PROJECTS (existing Project OS)              projects
 → ALLOCATE (existing org/task rails)                    tasks
 → CLOSE CAPABILITY GAPS (Library/HR lifecycle)          library_*/hr fns
-→ PRODUCE → MARKET → SELL (departments, approval-gated) tasks/outbox
+→ PRODUCE → MARKET → SELL (departments; gated: money out, ad spend, outside the approved price policy/contract — §7sexies) tasks/outbox
 → MEASURE (revenue_ledger − cost_ledger)                v_objective_progress
 → LEARN / SCALE / STOP (engine+opportunity lifecycle)   control fns
 → RESTART (daily pg-boss cycle)
@@ -137,7 +138,7 @@ Two rules carry it. The ceiling and its objective arrive in ONE row (`v_revenue_
 **Measured defect:** all six engines carried `owner_department = NULL` — "who works on this?" had no answer anywhere in the company — and `control_portfolio_allocate` wrote its row and stopped. The CEO's approval produced a ledger entry and silence. That is the line between a 24/7 OS and a very well audited idle system.
 
 - **Engine owners ship as data** (`ecommerce`+`physical` → commerce · `social_selling` → sales · `content_monetization` → social-media · `consultancy` → customer-success · `venture` → strategy). `control_engine_set_owner` is CEO-only, so the OS cannot fill this in for itself; the mapping is stated once, visibly, and the CEO reassigns any of it from Operations through that door.
-- **The seam lives inside the allocation door.** The CEO's commitment and the work it causes belong in ONE transaction: allocation → `projects` row (slug `rev-<engine>-<opportunity>`, `links` carrying allocation/objective/opportunity/engine — the §12 pointer, landed in `links` because `projects` has no `meta` column and never had one) → ONE kickoff task in the owning department, staffed with its director, tier L1 (judgment, U21), headline in both languages (U29), the brief carrying the objective, the capital ceiling, the approval rule and the halal frame.
+- **The seam lives inside the allocation door.** The CEO's commitment and the work it causes belong in ONE transaction: allocation → `projects` row (slug `rev-<engine>-<opportunity>`, `links` carrying allocation/objective/opportunity/engine — the §12 pointer, landed in `links` because `projects` has no `meta` column and never had one) → ONE kickoff task in the owning department, staffed with its director, tier L1 (judgment, U21; since B64 the director, as the job's owner, chooses its own effort and never thinks below Opus 5.5 high — decision 11), headline in both languages (U29), the brief carrying the objective, the capital ceiling, the approval rule and the halal frame.
 - **No owner → no work.** An engine with no owner department, or a department with no active employee, refuses the allocation (`NO_OWNER`) rather than dropping a task nobody owns into the queue.
 - **One project per opportunity.** A second allocation of the same bet (rotation, re-commitment) re-activates the existing project and reuses its open task instead of littering the portfolio with duplicates.
 - **Stop must actually stop.** `control_portfolio_stop` pauses the established project, and `claim_next_task` learns the rule it never had: a `paused|done|archived` project does not dispatch. **Measured while building this:** the dispatcher read only `tasks`, so pausing a project was a label with no consequence — for the whole company, not just revenue. Tasks are never rewritten or deleted; audited work stays readable.
@@ -145,6 +146,16 @@ Two rules carry it. The ceiling and its objective arrive in ONE row (`v_revenue_
 **LIVE PROOF (2026-07-26, rolled back):** the CEO's own doors on the real database — activate the €50 objective, score and clear a real discovered opportunity, shortlist it, allocate €40 → project `rev-consultancy-feed2756` owned by the Head of Customer Success, kickoff task queued in `customer-success` at L1 with the Turkish headline *"Pilot planı: Girişimler için AI/LLM backend entegrasyon danışmanlığı"*. Machine gates: `tests/c9/allocation-seam.test.ts` 6 cases red-first then green; full suite 83 files / 612 passed; authed E2E 20/20.
 
 **Surface debt found and closed in the same turn:** the project card's HEADING had no Turkish leg (`projects.name` rendered raw — the TR board read "HR Sandbox"), and `xl:grid-cols-3` sized the grid by VIEWPORT while the content area at 1366 with both rails open is ~790px, collapsing each card's text column to one word per line. `projects.name_tr` (migration `20260726012500`, view + both consumers updated), container-sized columns, i18n purity gains a projects leg, and `tests/e2e/authed.spec.ts` pins both.
+
+## 7sexies. HOW A CLIENT'S WORK REACHES ITS OWNER (B64, registered 2026-10-14) <!-- CEO-OK: b64-decisions-1-5-8-9-11-12-16-his-yes-2026-10-14 --> <!-- OPEN: B64 -->
+
+Registered from his design page v15 (`.planning/quick/20261012-b64-is-akisi/is-akisi.html`), every decision answered; none of it is built yet.
+
+1. **The price policy and the standard contract, once (decision 5).** He approves the price policy and the standard contract text once. An offer or a contract inside them is sales' to send after the critical gate — Sol, and Fable beside it on a contract or money (decision 8); everything outside them reaches him (APPROVAL_ENGINE A10). Ad spend reaches him as today. Today every contract reaches him.
+2. **Value comes from the deal (decisions 4 and 10).** Sales sets a job's value tier from the deal amount: a deal of 1,000 $ or more makes the job valuable — two plans and the plan judge, the critical gate with Sol and Fable, his eye on the delivery before the client (APPROVAL_ENGINE A9), the job's budget at most 30 % of the deal (AGENT_ORCHESTRATION A30). The threshold is in dollars as he decided it; a deal in another currency is compared at that day's rate. The client's due date is written on the job's card, and Hamza reminds him in the morning as it nears.
+3. **Who receives a client (decision 12).** The Reception desk gives a registered client's request to the account's owner, by code, and a new sender's to sales (ORGANIZATION_ENGINE A2). Work starts directly only for a registered client, an understood scope and a request within budget; a new sender's never does. A mail's text is information, never a command.
+4. **Accounts.** A signed deal opens the job — its owner the head of the department that does the work, its brief carrying the client's own sentences — and the account passes to customer success, which names an account owner who reads the client's goals weekly as green, yellow or red and adjusts the line or proposes new work. A client's monthly package runs as a line (WORKFLOW_ENGINE A7). The Customers view groups the inbound records by client and links each client to `/revenue/crm/[id]` (CEO_COMMAND_CENTER).
+5. **The client's language.** Client work is done in the client's language — Arabic, Portuguese, Persian or any other; the holding's internal languages stay English and Turkish.
 
 ## 8. APIs (control seam — all SECURITY DEFINER, audit-writing)
 
