@@ -27,9 +27,10 @@ not here. What is accepted is read from `scripts/governance/ceo-approvals.json`,
 
 ## Where we left off
 
-2026-10-14 — every B64 decision is answered: version 15 of his page
-(https://claude.ai/artifact/FvrKgh2Gr4Bus3rVdfKbAu; source `.planning/quick/20261012-b64-is-akisi/is-akisi.html`). On 14 Oct
-he said "Evet, bu hâliyle yaz" to decisions 1-5, 8, 9, 11, 12 and 16 as written
+2026-10-14 — B64's design, version 15 of his page (https://claude.ai/artifact/FvrKgh2Gr4Bus3rVdfKbAu; source
+`.planning/quick/20261012-b64-is-akisi/is-akisi.html`), is written into the owning specs as registered adaptations, and
+his one-page plan is ready (`.planning/quick/20261012-b64-is-akisi/PLAN.md`); Sol's single pass is checking both. On
+14 Oct, after reading them line by line, he said "Tamam, hepsine evet, devam edin" to decisions 1-5, 8, 9, 11, 12 and 16
 <!-- CEO-OK: b64-decisions-1-5-8-9-11-12-16-his-yes-2026-10-14 -->. Before that: 6, 7 and 10 (13 Oct) and, on 14 Oct, 13 — Opus 5.5 and Fable 5.1 back each other up
 <!-- CEO-OK: b64-decision13-backup-pair-opus-fable-2026-10-14 -->, 14 — the model room
 <!-- CEO-OK: b64-decision14-model-room-2026-10-14 -->, 15 — Hermes is the holding's 24/7 hands and eyes, inside the
@@ -48,22 +49,21 @@ first <!-- CEO-OK: side-study-offered-to-the-team-2026-10-14 -->.
 
 ## Next
 
-1. B64: the design into the owning specs as registered adaptations (one Sol pass; Omnigent's five methods go in: unpriced = unknown, ask thresholds, quota awareness, secrets out of
-   the agent's environment, every step checked before it runs with money, contract and identity steps at his gate)
-   → the one-page plan, once. Hamza's first three hands come first; Hermes when the holding stands. Jev wherever it
-   fits in the holding (his word, 14 Oct).
+1. B64: Sol's findings on the specs and the plan fixed → the one-page plan goes to him once, with three questions
+   (Omnigent's method 4 on Hermes, the studio's Fable seats, decision 17's two edges). Hamza's first three hands come
+   first; Hermes when the holding stands.
 2. The `decompose` removal reaches the company only after Sol's pass — the refuter's preflight is repaired first.
 
 ## Waiting on his approval
 
-- B64's one-page plan, once, after the design is in the specs.
+- B64's one-page plan, once, after Sol's findings are fixed.
 - Hermes, when the holding stands — money out: the holding's server (B09/B11). Its brain is tried there: his Claude
   subscription first (no money out while extra usage stays off), then the Max plan's 100 $ API credit on a Hermes-only
   key, his exception to "no raw provider keys". The family later.
 - Kept for after the holding stands (his word, 14 Oct): where client sites are published is measured and talked then;
   Vercel stays on Hobby, Pro only if Vercel calls it commercial.
 - Security: `fn_update_routing` is EXECUTE-able by anon (closed first in decision 6); every agent child receives the
-  `DXB_*` values (database URL, department keys) and dxb-mcp checks no caller — into B64's plan.
+  `DXB_*` values (database URL, department keys) and dxb-mcp checks no caller — in B64's plan (steps 1 and 7).
 - Excel turbo (`~/Desktop/Lİnk araştırmaları/Excel-turbo.xlsx`) — nine projects, thirteen decisions.
 - The board rows that wait on him — the board page's "Sizi bekleyenler" lists them.
 
