@@ -110,6 +110,39 @@ describe("B36 · Block 3-bis — the live drills, on the company's side", () => 
   );
 
   it(
+    "(4-ter) LIVE — after the reseal, a NEW function in public is still born closed to anon and PUBLIC",
+    { timeout: 240_000 },
+    () => {
+      // B64 step 1, Sol's finding A1 (2026-10-14). Migration 20261014030000 took
+      // anon out of postgres' public-schema default row and PUBLIC out of
+      // postgres' global row. The reseal this drill applies re-granted future
+      // EXECUTE to every current role, anon included, so after the battery the
+      // schema row carried anon=X again while every case stayed green. The drill
+      // is run here, in this case, so the answer does not hang on case order.
+      const out = runNode(["scripts/b36/prove-window-escapes.mjs"]);
+      expect(out, `the escape proof did not finish:\n${out}`).toContain("ESCAPES_RED_THEN_GREEN");
+
+      // `=X/` with nothing before the `=` is PUBLIC. A missing global row would
+      // mean PostgreSQL's built-in default — PUBLIC — so the row must exist.
+      const row = (schema: "global" | "public"): string =>
+        benchSql(
+          "SELECT coalesce(string_agg(array_to_string(d.defaclacl, ' '), ' '), '<no row>') " +
+            "FROM pg_default_acl d WHERE d.defaclrole = 'postgres'::regrole AND d.defaclobjtype = 'f' " +
+            (schema === "global"
+              ? "AND d.defaclnamespace = 0"
+              : "AND d.defaclnamespace = 'public'::regnamespace"),
+        );
+      const global = row("global");
+      const pub = row("public");
+      expect(global, "postgres' global function default is gone — the built-in PUBLIC grant is back").not.toBe("<no row>");
+      for (const [name, acl] of [["global", global], ["public", pub]] as const) {
+        expect(acl, `postgres' ${name} function default hands anon EXECUTE: ${acl}`).not.toMatch(/(^|\s)anon=[^ ]*X/);
+        expect(acl, `postgres' ${name} function default hands PUBLIC EXECUTE: ${acl}`).not.toMatch(/(^|\s)=[^ ]*X/);
+      }
+    },
+  );
+
+  it(
     "(5) LIVE — a forged live event reached the screen, and now it is refused",
     { timeout: 240_000 },
     () => {

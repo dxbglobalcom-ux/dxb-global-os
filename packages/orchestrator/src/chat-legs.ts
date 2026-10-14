@@ -86,6 +86,13 @@ export const LEG_TASK_CLASS: Record<ChatLeg, string> = {
 
 /** Said first when a conversation moves onto the strategy leg (§24ter, his words). */
 export const STRATEGY_NOTICE_TR = "Plan konuşuyoruz, xhigh'a geçtim; isterseniz max.";
+/** The same notice on an English turn — system text follows the conversation's language. */
+export const STRATEGY_NOTICE_EN = "We are talking plans, so I moved to xhigh; max if you prefer.";
+
+/** The strategy notice in the conversation's resolved language. */
+export function strategyNotice(lang: "tr" | "en"): string {
+  return lang === "tr" ? STRATEGY_NOTICE_TR : STRATEGY_NOTICE_EN;
+}
 
 /** How long his level word holds without a message from him in that conversation. */
 export const LEVEL_HOLD_MS = 30 * 60 * 1000;
@@ -98,6 +105,16 @@ const LEVEL_WORDS: Record<string, ChatEffort> = {
 const LEVEL_VERBS = new Set(["geç", "gec", "in", "düşün", "dusun", "çık", "cik"]);
 // Filler allowed around a standalone command ("Hamza, max'a geç lütfen").
 const LEVEL_FILLER = new Set(["hamza", "lütfen", "lutfen", "artık", "artik", "hemen", "şimdi", "simdi", "tamam"]);
+// Quotation marks. ' ’ ‘ ` ´ are also apostrophes ("max'a"), so they count as a quote only when
+// they do not stand between two letters; the others are always quotes.
+const ALWAYS_QUOTE = /["“”«»„]/;
+const QUOTE_NOT_APOSTROPHE = /(?<!\p{L})['’‘`´]|['’‘`´](?!\p{L})/u;
+
+/** Quoted text is information he passes on, never his command (G1-ter): any quote mark in the
+ *  words of a command makes it not one. */
+function hasQuote(text: string): boolean {
+  return ALWAYS_QUOTE.test(text) || QUOTE_NOT_APOSTROPHE.test(text);
+}
 
 /**
  * His level word, or null. Only a short standalone command counts — every token
@@ -106,6 +123,7 @@ const LEVEL_FILLER = new Set(["hamza", "lütfen", "lutfen", "artık", "artik", "
  * `"normal"` is his "normale dön": the held level ends.
  */
 export function matchLevelCommand(message: string): ChatEffort | "normal" | null {
+  if (hasQuote(message)) return null;
   const tokens = message
     .toLocaleLowerCase("tr")
     .replace(/['’`´]/g, "")
@@ -124,9 +142,12 @@ export function matchLevelCommand(message: string): ChatEffort | "normal" | null
  * düşün" → max, "şu planı düşün". The message is cut at its clause marks; leading clauses of
  * filler alone ("Hamza,") are passed, and the first clause with words must be the level word
  * itself — so "geçen hafta max'a geçmiştik" or a level word quoted later in a text changes
- * nothing. `rest` is "" for a standalone command.
+ * nothing. A message that opens with a quote mark, or whose level clause is quoted, is someone
+ * else's sentence ("\"Max'a geç\", diyor müşteri") and changes nothing. `rest` is "" for a
+ * standalone command.
  */
 export function splitLevelCommand(message: string): { level: ChatEffort | "normal"; rest: string } | null {
+  if (/^\s*["“”«»„'’‘`´]/.test(message)) return null;
   const clause = /[^,.;:!?\n]*[,.;:!?\n]*/gy;
   let at = 0;
   while (at < message.length) {
@@ -153,8 +174,14 @@ const LEVEL_SUFFIX: Record<ChatEffort, string> = {
   medium: "Medium'a geçtim; konu bitene kadar medium'dayım.",
 };
 
-/** Hamza's one-line confirmation of his level word. Turkish: the words are Turkish (as the mute confirmation). */
-export function levelConfirmation(level: ChatEffort | "normal"): string {
+/** Hamza's one-line confirmation of his level word, in the conversation's language (Turkish by
+ *  default: the level words are Turkish, as the mute confirmation). */
+export function levelConfirmation(level: ChatEffort | "normal", lang: "tr" | "en" = "tr"): string {
+  if (lang === "en") {
+    return level === "normal"
+      ? "Back to normal; medium for talk, xhigh when we talk plans."
+      : `Switched to ${level}; I stay at ${level} until we are done.`;
+  }
   return level === "normal"
     ? "Normale döndüm; sohbette medium, plan konuşunca xhigh."
     : LEVEL_SUFFIX[level];

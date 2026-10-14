@@ -1,4 +1,4 @@
-import { afterAll, describe, expect, it } from "vitest";
+import { afterAll, describe, expect, it, vi } from "vitest";
 import { sql } from "kysely";
 import { closeDb, getDb } from "../../packages/shared/src/db.js";
 import {
@@ -12,6 +12,7 @@ import {
   drainChatMessages,
   type ChatAnswerInput,
 } from "../../packages/orchestrator/src/index.js";
+import * as legs from "../../packages/orchestrator/src/chat-legs.js";
 
 // Hamza's two legs (CEO directive 2026-07-25): the money/planning conversation
 // and the daily report. Both are L1 — §4d puts anything the CEO reads on Opus 5
@@ -486,5 +487,198 @@ describe("B64 — every change of his level is on the record", () => {
       expect(expired[0]).toMatchObject({ actor: "hamza", actor_type: "system" });
       expect(expired[0].payload).toMatchObject({ session_id: s, old: "high", new: null, sentence: "selam", via: "hamza" });
     });
+  });
+});
+
+// Sol's pass on B64 step 1 (.planning/quick/20261014-b64-adim1/SOL.md): A2, B2–B7. Each case is
+// a scenario Sol measured on the committed drain.
+describe("B64 — Sol's findings on the levels", () => {
+  const open = async (trx: never) =>
+    (await sql<{ id: string }>`SELECT fn_chat_session_for_new_message('x', true) AS id`.execute(trx)).rows[0].id;
+  const say = async (trx: never, s: string, content: string, minutesAgo = 0) => {
+    await sql`
+      INSERT INTO chat_messages (role, content, mode, status, session_id, created_at)
+      VALUES ('ceo', ${content}, 'normal', 'pending', ${s}::uuid, now() - make_interval(mins => ${minutesAgo}))
+    `.execute(trx);
+  };
+  const turn = async (db: never, answer: (q: ChatAnswerInput) => Promise<string> = async () => "cevap") => {
+    let seen: ChatAnswerInput | null = null;
+    const res = await drainChatMessages({ db, answer: async (q) => ((seen = q), answer(q)) });
+    return { res, seen: seen as ChatAnswerInput | null };
+  };
+  const replies = async (trx: never, s: string) =>
+    (await sql<{ content: string }>`
+      SELECT content FROM chat_messages WHERE session_id = ${s}::uuid AND role = 'hamza'`.execute(trx)).rows.map((r) => r.content);
+  const held = async (trx: never, s: string) =>
+    (await sql<{ effort_override: string | null }>`SELECT effort_override FROM chat_sessions WHERE id = ${s}::uuid`.execute(trx)).rows[0].effort_override;
+  const audit = async (trx: never, s: string) =>
+    (await sql<{ n: number }>`
+      SELECT count(*)::int AS n FROM audit_log WHERE action = 'chat.level.changed' AND payload->>'session_id' = ${s}`.execute(trx)).rows[0].n;
+  const clean = (trx: never) => sql`UPDATE chat_messages SET status = 'answered' WHERE status = 'pending'`.execute(trx);
+  // A Kysely handle that behaves like trx except for the calls a case breaks on purpose. Methods
+  // are bound to the real instance (Kysely keeps its state in private fields).
+  const broken = (trx: never, fails: (method: string, table: string) => Error | null): never => {
+    const failing = (err: Error): unknown =>
+      new Proxy(() => undefined, {
+        get: (_t, p) =>
+          p === "then" ? undefined
+          : typeof p === "string" && p.startsWith("execute") ? async () => { throw err; }
+          : () => failing(err),
+      });
+    return new Proxy(trx as object, {
+      get(t, p) {
+        const v = Reflect.get(t, p);
+        if (typeof v !== "function") return v;
+        if (typeof p === "string" && ["selectFrom", "updateTable", "insertInto"].includes(p)) {
+          return (table: string) => {
+            const err = fails(p, table);
+            return err ? failing(err) : v.call(t, table);
+          };
+        }
+        return v.bind(t);
+      },
+    }) as never;
+  };
+
+  it("A2: a quoted level sentence is never his command", () => {
+    expect(splitLevelCommand("\"Max'a geç\", diyor müşteri; bu maili değerlendir")).toBeNull();
+    expect(splitLevelCommand("Hamza, 'Max’a geç.' cümlesini İngilizceye çevir")).toBeNull();
+    for (const q of ["'", "\"", "“", "”", "‘", "’", "«"]) {
+      expect(splitLevelCommand(`${q}Max'a geç${q === "«" ? "»" : q}`), q).toBeNull();
+      expect(matchLevelCommand(`${q}max'a geç`), q).toBeNull();
+    }
+    // the apostrophe inside his word is not a quote
+    expect(splitLevelCommand("Max’a geç lütfen")).toEqual({ level: "max", rest: "" });
+    expect(splitLevelCommand("Hamza, max'a geç, şu planı düşün")).toEqual({ level: "max", rest: "şu planı düşün" });
+  });
+
+  it("A2: the drain leaves the level and its history unchanged for a quoted sentence", async () => {
+    await inTrx(async (trx) => {
+      await clean(trx);
+      const s = await open(trx);
+      await say(trx, s, "\"Max'a geç\", diyor müşteri; bu maili değerlendir");
+      const t = await turn(trx);
+      expect(t.seen!.effortOverride).toBeNull();
+      expect(t.seen!.message).toBe("\"Max'a geç\", diyor müşteri; bu maili değerlendir");
+      expect(await held(trx, s)).toBeNull();
+      expect(await audit(trx, s)).toBe(0);
+    });
+  });
+
+  it("B2: a daemon command renews the hold (max at 0, kapan at 20, selam at 31 keeps max)", async () => {
+    await inTrx(async (trx) => {
+      await clean(trx);
+      const s = await open(trx);
+      await say(trx, s, "Max'a geç", 31);
+      await turn(trx);
+      await say(trx, s, "kapan", 11);
+      expect((await turn(trx)).res.answered).toBe(1);
+      await say(trx, s, "selam");
+      expect((await turn(trx)).seen!.effortOverride).toBe("max");
+    });
+  });
+
+  it("B2: the hold ends at exactly 30 quiet minutes", async () => {
+    await inTrx(async (trx) => {
+      await clean(trx);
+      const s = await open(trx);
+      await say(trx, s, "Max'a geç", 30);
+      await turn(trx);
+      await say(trx, s, "selam");
+      expect((await turn(trx)).seen!.effortOverride).toBeNull();
+      expect(await held(trx, s)).toBeNull();
+    });
+  });
+
+  it("B3: back at the row's xhigh after his level expired, the notice is said again", async () => {
+    await inTrx(async (trx) => {
+      await clean(trx);
+      const s = await open(trx);
+      await say(trx, s, "bütçe planını konuşalım", 40);
+      await turn(trx);
+      await say(trx, s, "High'a in", 39);
+      await turn(trx);
+      await say(trx, s, "fiyat planı ne olsun?", 38);
+      expect((await turn(trx)).seen!.effortOverride).toBe("high");
+      await say(trx, s, "hangi ürünle başlayalım?"); // 38 quiet minutes later
+      const last = await turn(trx);
+      expect(last.seen!.leg).toBe("strategy");
+      expect(last.seen!.effortOverride).toBeNull();
+      expect((await replies(trx, s)).filter((c) => c.startsWith(STRATEGY_NOTICE_TR))).toHaveLength(2);
+    });
+  });
+
+  it("B4: a level change is confirmed even when the answer fails, in both languages", async () => {
+    await inTrx(async (trx) => {
+      await clean(trx);
+      const s = await open(trx);
+      await say(trx, s, "Max'a geç, şu planı düşün");
+      const fail = async () => { throw new Error("model down"); };
+      const t = await turn(trx, fail);
+      expect(t.res).toEqual({ answered: 0, failed: 1 });
+      expect(await held(trx, s)).toBe("max");
+      expect(await replies(trx, s)).toEqual(["Max'a geçtim; konu bitene kadar max'tayım."]);
+
+      const e = await open(trx);
+      await say(trx, e, "high'a in, what should we price it at?");
+      await turn(trx, fail);
+      expect(await held(trx, e)).toBe("high");
+      expect(await replies(trx, e)).toEqual(["Switched to high; I stay at high until we are done."]);
+    });
+  });
+
+  it("B5: when the audit row cannot be written the previous level stays", async () => {
+    await inTrx(async (trx) => {
+      await clean(trx);
+      const s = await open(trx);
+      await say(trx, s, "High'a in");
+      await turn(trx);
+      await say(trx, s, "Max'a geç");
+      const noAudit = broken(trx, (m, table) => (m === "insertInto" && table === "audit_log" ? new Error("audit down") : null));
+      const t = await turn(noAudit);
+      expect(t.res.failed).toBe(1);
+      expect(await held(trx, s)).toBe("high");
+      expect(await audit(trx, s)).toBe(1); // only the first change
+    });
+  });
+
+  it("B6: an English strategy turn gets the notice in English", async () => {
+    expect(legs.strategyNotice("tr")).toBe(STRATEGY_NOTICE_TR);
+    expect(legs.strategyNotice("en")).toBe("We are talking plans, so I moved to xhigh; max if you prefer.");
+    await inTrx(async (trx) => {
+      await clean(trx);
+      const s = await open(trx);
+      await say(trx, s, "what pricing strategy should we use?");
+      await turn(trx);
+      expect(await replies(trx, s)).toEqual([`${legs.strategyNotice("en")}\n\ncevap`]);
+    });
+  });
+
+  it("B7: without the levels migration (42703) chat keeps answering with no hold, no level write, one warning", async () => {
+    const undefinedColumn = Object.assign(new Error('column "effort_override" does not exist'), { code: "42703" });
+    const warn = vi.spyOn(console, "warn").mockImplementation(() => undefined);
+    try {
+      await inTrx(async (trx) => {
+        await clean(trx);
+        const s = await open(trx);
+        const old = broken(trx, (m, table) => (table === "chat_sessions" && m !== "insertInto" ? undefinedColumn : null));
+        await say(trx, s, "Max'a geç");
+        const a = await turn(old);
+        expect(a.res).toEqual({ answered: 1, failed: 0 });
+        expect(a.seen!.effortOverride).toBeNull();
+        await say(trx, s, "bütçe planını konuşalım");
+        const b = await turn(old);
+        expect(b.res).toEqual({ answered: 1, failed: 0 });
+        expect(b.seen!.leg).toBe("strategy");
+        expect(b.seen!.effortOverride).toBeNull();
+        expect(await replies(trx, s)).toEqual(["cevap", "cevap"]);
+        expect(await held(trx, s)).toBeNull();
+        expect(await audit(trx, s)).toBe(0);
+      });
+      const said = warn.mock.calls.filter((c) => String(c[0]).includes("chat levels inactive"));
+      expect(said).toEqual([["chat levels inactive: migration 20261014020000 not applied"]]);
+    } finally {
+      warn.mockRestore();
+    }
   });
 });

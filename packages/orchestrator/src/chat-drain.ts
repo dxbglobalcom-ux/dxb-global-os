@@ -25,7 +25,7 @@ import {
   splitLevelCommand,
   LEG_TASK_CLASS,
   LEVEL_HOLD_MS,
-  STRATEGY_NOTICE_TR,
+  strategyNotice,
   type BriefSnapshot,
   type ChatEffort,
   type ChatLeg,
@@ -193,21 +193,98 @@ async function recordLevelChange(
     .execute();
 }
 
-/** His level word held on the conversation ("normal" ends the hold), and recorded. */
+/** The session's level and its audit row as one unit (Sol B5): if the record cannot be written,
+ *  the previous level stays. Production passes a plain connection, so this opens a transaction;
+ *  inside a caller's transaction (the tests) a savepoint gives the same all-or-nothing. */
+async function atomically<T>(db: Kysely<DB>, fn: (tx: Kysely<DB>) => Promise<T>): Promise<T> {
+  if (!db.isTransaction) return db.transaction().execute(fn);
+  await sql`SAVEPOINT chat_level`.execute(db);
+  try {
+    const out = await fn(db);
+    await sql`RELEASE SAVEPOINT chat_level`.execute(db);
+    return out;
+  } catch (e) {
+    await sql`ROLLBACK TO SAVEPOINT chat_level`.execute(db);
+    throw e;
+  }
+}
+
+// Sol B7: the levels' columns (chat_sessions.effort_override, effort_override_at, last_leg) come
+// from 20261014020000, applied to the construction engine first; the resident scheduler runs these
+// built files on an engine that may not have them yet. There the chat keeps answering at the leg's
+// own level, without a hold, and says so once per process.
+let levelsInactiveSaid = false;
+function levelsMissing(e: unknown): boolean {
+  if ((e as { code?: unknown } | null)?.code !== "42703") return false; // undefined_column
+  if (!levelsInactiveSaid) {
+    levelsInactiveSaid = true;
+    console.warn("chat levels inactive: migration 20261014020000 not applied");
+  }
+  return true;
+}
+
+/** The level held on a conversation as his message finds it, and the leg its last answer took. */
+interface LevelState {
+  override: ChatEffort | null;
+  lastLeg: ChatLeg | null;
+}
+
+/** B64 decision 3: the level he holds ends on its own once 30 minutes pass without a message from
+ *  him; while it holds, EVERY message of his renews it (Sol B2 — the mute command too). Null when
+ *  the engine has no level columns (B7). A change of level clears last_leg, so the strategy notice
+ *  follows the effective level, not only the leg (Sol B3). */
+async function renewLevel(db: Kysely<DB>, sessionId: string, at: Date, sentence: string): Promise<LevelState | null> {
+  try {
+    return await atomically(db, async (tx) => {
+      const s = await tx.selectFrom("chat_sessions")
+        .select(["effort_override", "effort_override_at", "last_leg"])
+        .where("id", "=", sessionId)
+        .executeTakeFirst();
+      const override = s?.effort_override ?? null;
+      if (!override) return { override: null, lastLeg: s?.last_leg ?? null };
+      const since = new Date(at).getTime() - new Date(s!.effort_override_at ?? 0).getTime();
+      if (since >= LEVEL_HOLD_MS) {
+        await tx.updateTable("chat_sessions")
+          .set({ effort_override: null, effort_override_at: null, last_leg: null })
+          .where("id", "=", sessionId)
+          .execute();
+        await recordLevelChange(tx, { session_id: sessionId, old: override, new: null, sentence, reason: "expired" });
+        return { override: null, lastLeg: null };
+      }
+      await tx.updateTable("chat_sessions").set({ effort_override_at: at }).where("id", "=", sessionId).execute();
+      return { override, lastLeg: s?.last_leg ?? null };
+    });
+  } catch (e) {
+    if (levelsMissing(e)) return null;
+    throw e;
+  }
+}
+
+/** His level word held on the conversation ("normal" ends the hold), and recorded — together.
+ *  Returns whether the level changed. */
 async function holdLevel(
   db: Kysely<DB>,
   sessionId: string,
   level: ChatEffort | "normal",
   at: Date,
   sentence: string,
-): Promise<void> {
-  const before = await db.selectFrom("chat_sessions").select(["effort_override"]).where("id", "=", sessionId).executeTakeFirst();
+): Promise<boolean> {
   const held = level === "normal" ? null : level;
-  await db.updateTable("chat_sessions")
-    .set({ effort_override: held, effort_override_at: held ? at : null })
-    .where("id", "=", sessionId)
-    .execute();
-  await recordLevelChange(db, { session_id: sessionId, old: before?.effort_override ?? null, new: held, sentence, reason: "his_word" });
+  return atomically(db, async (tx) => {
+    const before = await tx.selectFrom("chat_sessions").select(["effort_override"]).where("id", "=", sessionId).executeTakeFirst();
+    const old = before?.effort_override ?? null;
+    await tx.updateTable("chat_sessions")
+      .set({ effort_override: held, effort_override_at: held ? at : null, ...(old !== held ? { last_leg: null } : {}) })
+      .where("id", "=", sessionId)
+      .execute();
+    await recordLevelChange(tx, { session_id: sessionId, old, new: held, sentence, reason: "his_word" });
+    return old !== held;
+  });
+}
+
+/** The conversation's language, read from his words (Turkish letters or any non-ASCII → tr). */
+function langOf(text: string): "tr" | "en" {
+  return /[çğıöşüÇĞİÖŞÜ]/.test(text) || !/^[\x00-\x7F]*$/.test(text) ? "tr" : "en";
 }
 
 /** One resident drain pass: answer the OLDEST pending CEO message.
@@ -229,8 +306,28 @@ export async function drainChatMessages(deps: DrainChatDeps): Promise<DrainChatR
     .executeTakeFirst();
   if (!row) return result;
 
-  const lang: "tr" | "en" =
-    /[çğıöşüÇĞİÖŞÜ]/.test(row.content) || !/^[\x00-\x7F]*$/.test(row.content) ? "tr" : "en";
+  // His level on this conversation as this message finds it — renewed or ended before anything
+  // else, so every message of his counts, whatever branch answers it (Sol B2).
+  let level: LevelState | null = null;
+  if (row.session_id) {
+    try {
+      level = await renewLevel(db, row.session_id, row.created_at, row.content);
+    } catch (e) {
+      await db.updateTable("chat_messages")
+        .set({ status: "failed", error: (e as Error).message.slice(0, 300) })
+        .where("id", "=", row.id)
+        .execute();
+      result.failed += 1;
+      return result;
+    }
+  }
+  // B7: on an engine without the level columns there is no hold to keep and none to write.
+  const levelsActive = row.session_id ? level !== null : false;
+
+  // A level word at the start answers the rest in the rest's language: "Max'a geç, what should we
+  // price it at?" is an English turn (Sol B6).
+  const levelCommand = levelsActive ? splitLevelCommand(row.content) : null;
+  const lang = langOf(levelCommand?.rest || row.content);
 
   // U15 D12 (CEO live verdict 2026-07-25 "chatten kapan dedim, uymadı"):
   // daemon control commands execute DETERMINISTICALLY — no LLM, no
@@ -266,7 +363,6 @@ export async function drainChatMessages(deps: DrainChatDeps): Promise<DrainChatR
   // own pending chat rows reach this drain; voice mirrors and briefings are written answered.
   // Standing alone it is answered here; at the start of a longer message the rest is answered
   // below, at the new level, in the same turn.
-  const levelCommand = row.session_id ? splitLevelCommand(row.content) : null;
   if (levelCommand && !levelCommand.rest && row.session_id) {
     try {
       await holdLevel(db, row.session_id, levelCommand.level, row.created_at, row.content);
@@ -285,9 +381,15 @@ export async function drainChatMessages(deps: DrainChatDeps): Promise<DrainChatR
     return result;
   }
 
+  // Once his level word is held, Hamza confirms it even if the answer that follows fails (Sol B4).
+  let confirmation = "";
   try {
+    let effortOverride: ChatEffort | null = level?.override ?? null;
+    let lastLeg: ChatLeg | null = level?.lastLeg ?? null;
     if (levelCommand && row.session_id) {
-      await holdLevel(db, row.session_id, levelCommand.level, row.created_at, row.content);
+      if (await holdLevel(db, row.session_id, levelCommand.level, row.created_at, row.content)) lastLeg = null;
+      effortOverride = levelCommand.level === "normal" ? null : levelCommand.level;
+      confirmation = levelConfirmation(levelCommand.level, lang);
     }
     const question = levelCommand?.rest || row.content;
     const hamza = await db
@@ -319,31 +421,11 @@ export async function drainChatMessages(deps: DrainChatDeps): Promise<DrainChatR
     const classified = classifyLeg(question);
     const leg: ChatLeg = row.mode === "plan" && classified === "normal" ? "strategy" : classified;
     const snapshot = leg === "brief" ? await buildBriefSnapshot(db, lang) : null;
-    // B64 decision 3: the level he holds on this conversation ends on its own after 30 minutes
-    // without a message from him; while it holds, each message of his renews it.
-    const session = row.session_id
-      ? await db.selectFrom("chat_sessions")
-          .select(["effort_override", "effort_override_at", "last_leg"])
-          .where("id", "=", row.session_id)
-          .executeTakeFirst()
-      : undefined;
-    let effortOverride: ChatEffort | null = session?.effort_override ?? null;
-    if (effortOverride && row.session_id) {
-      const since = new Date(row.created_at).getTime() - new Date(session!.effort_override_at ?? 0).getTime();
-      if (since > LEVEL_HOLD_MS) {
-        await recordLevelChange(db, { session_id: row.session_id, old: effortOverride, new: null, sentence: row.content, reason: "expired" });
-        effortOverride = null;
-      }
-      await db.updateTable("chat_sessions")
-        .set(effortOverride
-          ? { effort_override_at: row.created_at }
-          : { effort_override: null, effort_override_at: null })
-        .where("id", "=", row.session_id)
-        .execute();
-    }
-    // Said once, when the conversation moves onto the strategy leg at the row's xhigh; under his own
-    // level word Hamza is not at xhigh, so the sentence would be false and is not said.
-    const notice = leg === "strategy" && !effortOverride && session?.last_leg !== "strategy";
+    // Said once, when the conversation moves onto the strategy leg at the row's xhigh — again after
+    // his own level ended, since last_leg is cleared with every change of level; under his own level
+    // word Hamza is not at xhigh, so the sentence would be false and is not said. Without the level
+    // columns (B7) nothing tracks it, and it is not said.
+    const notice = leg === "strategy" && !effortOverride && (levelsActive || !row.session_id) && lastLeg !== "strategy";
     const answerText = await produce({
       message: question,
       mode: row.mode,
@@ -358,14 +440,14 @@ export async function drainChatMessages(deps: DrainChatDeps): Promise<DrainChatR
     });
     await db
       .insertInto("chat_messages")
-      .values({ role: "hamza", content: [levelCommand ? levelConfirmation(levelCommand.level) : "", notice ? STRATEGY_NOTICE_TR : "", answerText].filter(Boolean).join("\n\n"), mode: row.mode, status: "answered", error: null, intent_id: null, session_id: row.session_id })
+      .values({ role: "hamza", content: [confirmation, notice ? strategyNotice(lang) : "", answerText].filter(Boolean).join("\n\n"), mode: row.mode, status: "answered", error: null, intent_id: null, session_id: row.session_id })
       .execute();
     await db
       .updateTable("chat_messages")
       .set({ status: "answered" })
       .where("id", "=", row.id)
       .execute();
-    if (row.session_id) {
+    if (row.session_id && levelsActive) {
       await db.updateTable("chat_sessions").set({ last_leg: leg }).where("id", "=", row.session_id).execute();
     }
     result.answered += 1;
@@ -376,6 +458,11 @@ export async function drainChatMessages(deps: DrainChatDeps): Promise<DrainChatR
       .where("id", "=", row.id)
       .execute();
     result.failed += 1;
+    if (confirmation) {
+      await db.insertInto("chat_messages")
+        .values({ role: "hamza", content: confirmation, mode: row.mode, status: "answered", error: null, intent_id: null, session_id: row.session_id })
+        .execute();
+    }
   }
   return result;
 }

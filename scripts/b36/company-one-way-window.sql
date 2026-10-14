@@ -453,6 +453,13 @@ BEGIN
   -- role that exists, because the built-in default is PUBLIC. So every current
   -- role is named and only the window is left out. A role created AFTER this
   -- runs will need an explicit grant, and that is the intended, stated cost.
+  --
+  -- EXCEPT anon (B64 step 1, Sol's finding A1, 2026-10-14). Migration
+  -- 20261014030000 closed every future function to the browser that has not
+  -- signed in: anon out of postgres' public-schema row, PUBLIC out of postgres'
+  -- global row. Naming every role here handed anon back on every reseal. anon is
+  -- never granted, and for the postgres creator that closure is re-stated so the
+  -- order of this file and that migration does not matter.
   FOREACH v_schema IN ARRAY ARRAY['public', 'pgboss'] LOOP
     IF EXISTS (SELECT 1 FROM pg_namespace WHERE nspname = v_schema) THEN
       FOREACH v_creator IN ARRAY ARRAY['postgres', 'supabase_admin'] LOOP
@@ -460,9 +467,16 @@ BEGIN
           BEGIN
             EXECUTE format('ALTER DEFAULT PRIVILEGES FOR ROLE %I IN SCHEMA %I '
                            'REVOKE EXECUTE ON FUNCTIONS FROM PUBLIC', v_creator, v_schema);
+            IF v_creator = 'postgres' AND v_schema = 'public' THEN
+              EXECUTE 'ALTER DEFAULT PRIVILEGES FOR ROLE postgres IN SCHEMA public '
+                      'REVOKE EXECUTE ON FUNCTIONS FROM anon';
+              EXECUTE 'ALTER DEFAULT PRIVILEGES FOR ROLE postgres '
+                      'REVOKE EXECUTE ON FUNCTIONS FROM PUBLIC';
+            END IF;
             FOR v_role IN
               SELECT rolname FROM pg_roles
-               WHERE rolname NOT LIKE 'pg\_%' AND rolname <> ALL (c_windows) ORDER BY 1
+               WHERE rolname NOT LIKE 'pg\_%' AND rolname <> ALL (c_windows)
+                 AND rolname <> 'anon' ORDER BY 1
             LOOP
               EXECUTE format('ALTER DEFAULT PRIVILEGES FOR ROLE %I IN SCHEMA %I '
                              'GRANT EXECUTE ON FUNCTIONS TO %I', v_creator, v_schema, v_role);

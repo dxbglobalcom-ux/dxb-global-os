@@ -82,6 +82,31 @@ describe("B64 step 1 — the routing door is closed to anyone who has not logged
     });
   });
 
+  it("a direct postgres login that steps down to authenticated, with no JWT at all, is refused (Sol B1)", async () => {
+    // Before 20261014050000 fn_succession_actor saw no JWT role and session_user 'postgres' and answered
+    // 'system' — it never looked at the effective role the login had switched to. fn_org_actor answers NULL.
+    await inTrx(async (trx) => {
+      const m = await anyModel(trx);
+      await sql`SET LOCAL ROLE authenticated`.execute(trx);
+      expect(await route(trx, "set_catalog_status", { model_id: m.id, status: m.status }, `${SEED}-setrole`)).toEqual({
+        ok: false,
+        error: "PERMISSION_DENIED",
+      });
+    });
+  });
+
+  it("a PostgREST-style service_role request is 'system': a system op passes", async () => {
+    await inTrx(async (trx) => {
+      const m = await anyModel(trx);
+      await sql`SET LOCAL ROLE service_role`.execute(trx);
+      await sql`SELECT set_config('request.jwt.claims', '{"role":"service_role"}', true)`.execute(trx);
+      expect(await route(trx, "set_catalog_status", { model_id: m.id, status: m.status }, `${SEED}-svc`)).toEqual({
+        ok: true,
+        noop: true,
+      });
+    });
+  });
+
   it("the company's own direct postgres login is 'system': a system op passes, a ceo-only op is refused", async () => {
     await inTrx(async (trx) => {
       const m = await anyModel(trx);
