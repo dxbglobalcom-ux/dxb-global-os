@@ -2347,11 +2347,11 @@
     "session": "Opus 5.5 session, in conversation, 2026-10-14 (https://claude.ai/code/session_014LfegVePU2tLZ68UAV5ds5).",
     "where": "HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md (B65-B70; §2d V2 memory)"
   },
-  "b66-old-fallback-obeys-floor-or-closes-2026-10-14": {
+  "b66-old-fallback-closed-whole-2026-10-14": {
     "date": "2026-10-14",
-    "what": "B66: when its turn comes, the old SQL fallback (fn_model_fallback / fallbackModel()) is either made to obey the tier floor and the lane or closed, so valuable work never falls to a weaker model. Not now; nothing calls it today (measured 2026-10-14).",
-    "verbatim": "Eski yol kötü ya. Kesinlikle şey yapılmasın. Böyle işlerde zayıf kişiye gitmesin. · tmm önerini kabul ediorm.",
-    "conditions": "A yes to the recommendation as stated in conversation, not a LAW B acceptance; nothing is built. Which of the two (obey or close) is chosen at build time and reported to him.",
+    "what": "B66: in its turn the old SQL fallback (fn_model_fallback / fallbackModel()) is closed whole — not repaired. A full quota is answered by an alert and a spare subscription (an API only when the work is urgent; the API is expensive), never by a weaker model. Nothing calls it today (measured 2026-10-14).",
+    "verbatim": "Yok ya, tamamıyla kapat gitsin ya. At gitsin. · Yani tamamıyla kapatılsın gitsin. … kota dolarsa o zaten ayrı bir uyarı, ayrı bir subscription bağlarız yani oraya. Yedek subscription'lar olur hani. Veya o an iş acildir, API bağlarız … API pahalı. … Bu kapatılsın yani. … zayıf modele gitmesin.",
+    "conditions": "Replaces the same day's 'obey or close' yes (LAW A). An order on a board row, not a LAW B acceptance; nothing is built.",
     "session": "Opus 5.5 session, in conversation, 2026-10-14 (https://claude.ai/code/session_014LfegVePU2tLZ68UAV5ds5).",
     "where": "HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md (B66)"
   }
