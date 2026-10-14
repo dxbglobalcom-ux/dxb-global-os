@@ -27,9 +27,10 @@ not here. What is accepted is read from `scripts/governance/ceo-approvals.json`,
 
 ## Where we left off
 
-2026-10-14 — B64's design waits for his eye as version 14 of his page
-(https://claude.ai/artifact/FvrKgh2Gr4Bus3rVdfKbAu; source `.planning/quick/20261012-b64-is-akisi/is-akisi.html`). His yes so
-far: decisions 6, 7 and 10 (13 Oct) and, on 14 Oct, 13 — Opus 5.5 and Fable 5.1 back each other up
+2026-10-14 — every B64 decision is answered: version 15 of his page
+(https://claude.ai/artifact/FvrKgh2Gr4Bus3rVdfKbAu; source `.planning/quick/20261012-b64-is-akisi/is-akisi.html`). On 14 Oct
+he said "Evet, bu hâliyle yaz" to decisions 1-5, 8, 9, 11, 12 and 16 as written
+<!-- CEO-OK: b64-decisions-1-5-8-9-11-12-16-his-yes-2026-10-14 -->. Before that: 6, 7 and 10 (13 Oct) and, on 14 Oct, 13 — Opus 5.5 and Fable 5.1 back each other up
 <!-- CEO-OK: b64-decision13-backup-pair-opus-fable-2026-10-14 -->, 14 — the model room
 <!-- CEO-OK: b64-decision14-model-room-2026-10-14 -->, 15 — Hermes is the holding's 24/7 hands and eyes, inside the
 holding, one brain, no restrictions but his approval gate; its brain is tried at install on his Claude subscription
@@ -38,7 +39,7 @@ first, then on a Hermes-only key on the Max plan's 100 $ monthly API credit
 a one-time exception after one warning <!-- CEO-OK: b64-decision17-his-word-over-a-rule-as-exception-2026-10-14 -->,
 and 18 — one dream for the whole holding, Hermes inside it <!-- CEO-OK: b64-decision18-one-dream-holding-wide-2026-10-14 -->.
 The board's Hermes plan (§2d, B09-B11) was gone over at Ferrari level in the same frame; what he accepted is in those
-rows. Decision 16 (Hermes waits rather than falling to Fable) is proposed. The four-tool study is his page "Dört Araç"
+rows. The four-tool study is his page "Dört Araç"
 (https://claude.ai/artifact/KVMSsTv4psiR6tK1kVnUEA), brought in line with v14.
 B41's first slice is built and live, waiting for his eye <!-- CEO-OK: b41-design-skills-first-slice-2026-10-13 -->.
 B65-B70 are open for B51's older defects <!-- CEO-OK: b65-b70-older-defects-opened-2026-10-14 -->; B66 closes the old
@@ -47,8 +48,7 @@ first <!-- CEO-OK: side-study-offered-to-the-team-2026-10-14 -->.
 
 ## Next
 
-1. B64: his answers to decisions 1-5, 8, 9, 11, 12 and 16 → the design into the owning specs as registered adaptations
-   (one Sol pass; Omnigent's five methods go in: unpriced = unknown, ask thresholds, quota awareness, secrets out of
+1. B64: the design into the owning specs as registered adaptations (one Sol pass; Omnigent's five methods go in: unpriced = unknown, ask thresholds, quota awareness, secrets out of
    the agent's environment, every step checked before it runs with money, contract and identity steps at his gate)
    → the one-page plan, once. Hamza's first three hands come first; Hermes when the holding stands. Jev wherever it
    fits in the holding (his word, 14 Oct).
@@ -56,7 +56,7 @@ first <!-- CEO-OK: side-study-offered-to-the-team-2026-10-14 -->.
 
 ## Waiting on his approval
 
-- B64's decisions 1-5, 8, 9, 11, 12 and 16 on the page, each "önerim: evet".
+- B64's one-page plan, once, after the design is in the specs.
 - Hermes, when the holding stands — money out: the holding's server (B09/B11). Its brain is tried there: his Claude
   subscription first (no money out while extra usage stays off), then the Max plan's 100 $ API credit on a Hermes-only
   key, his exception to "no raw provider keys". The family later.
