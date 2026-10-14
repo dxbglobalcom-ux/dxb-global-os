@@ -2378,5 +2378,13 @@
     "conditions": "His yes to the recommendation as stated in conversation and written on the B64 page v12 as decision 14; nothing is built.",
     "session": "Opus 5.5 session, in conversation, 2026-10-14 (https://claude.ai/code/session_014LfegVePU2tLZ68UAV5ds5).",
     "where": ".planning/quick/20261012-b64-is-akisi/is-akisi.html (decision 14)"
+  },
+  "b64-decision15-hermes-errand-hand-last-click-his-2026-10-14": {
+    "date": "2026-10-14",
+    "what": "B64 decision 15 (design v13): Hamza's fourth hand is daily errands, done by Hermes Agent on its own machine, holding none of the holding's keys. The last click is his: Hermes finds, presents the options, selects what he picks and stops at the payment step; he pays, the same for every payment, and no card is stored in Hermes. Bank, e-Devlet and holding logins are never given to Hermes; every step touching money, a contract or identity reaches his approval gate before it runs. Hermes's brain is not the ChatGPT subscription the auditor Sol uses; the engineers choose its model and effort, after research. Order: Hamza's first three hands come first with B64's plan; Hermes arrives with its machine once the holding stands (B09, B11). The family comes later.",
+    "verbatim": "Hayır, Hermes'i seçiyorum tabii. Yani şu anlattıklarından sonra Hermes tabii ki kalsın, güzel yani de. · Ya şimdi ben onunla evet, son tıkı ben yapacağım. Yani bileti buldu, her şeyi yaptı, seçenekleri sundu, bunu seç dedim, bunu seçti falan filan. Tam para ödenecek, o bana, o kısım bana gelsin. Her konuda böyle yani, evet. Evet, solun aboneliği şeyi aynen, Hermes'in aboneliği solla olmasın yani. Hermes'in beyni hangisi daha uygunsa ona siz en uygununu karar verin. Opus mu, Sonnet mi, burada hangi bunların şeyi eforları, bunun kararını siz verin. Eğer zorlanırsanız araştırma yapın, ona göre karar verin. · Önce Hamza'nın ilk 3 eli kurulsun. Hermes sonra gelsin. Ya Hamza'ya bir süre el verilecek. Yani holdingde aletler herkese dağıtılacak. … Şimdi tamam, devam et canım, tamam, hadi bakalım.",
+    "conditions": "His yes in conversation to Hermes as the worker, to the last click being his on every payment, and to Hermes's brain staying off Sol's subscription; the brain's model and effort delegated to the engineers by his word; the order read out by him from Fable 5.1's seventh point and followed by 'devam et'. Nothing is built; Hermes's machine is money out and comes to him when the holding stands.",
+    "session": "Opus 5.5 session, in conversation, 2026-10-14 (https://claude.ai/code/session_01BaZDi96DVyr3HsMFrTDgMC).",
+    "where": ".planning/quick/20261012-b64-is-akisi/is-akisi.html (decision 15)"
   }
 }
