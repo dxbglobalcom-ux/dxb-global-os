@@ -2506,5 +2506,13 @@
     "conditions": "Permanent door text on his yes to the proposal put to him in conversation (one section in dxb-watch-links, not a new skill).",
     "session": "Opus 5.5 session 9 of 2026-10-14 (1e8f9809-3877-4f3e-b74b-3a19ef3f2c9d), in conversation.",
     "where": ".claude/skills/dxb-watch-links/SKILL.md §5"
+  },
+  "two-videos-reviewed-into-a-new-excel-sheet-2026-10-14": {
+    "date": "2026-10-14",
+    "what": "His order: the repos and skills of two YouTube videos (HhZdNYI4pJs, LCwT00LrPZg) and one X post (RahulTechX 2110166431610572865) are reviewed the way the 88 links were — two blind readers (Opus 5.5 high, Fable 5.1 high), the lead as referee at max — excluding taste, impeccable, caveman, ponytail and Agent-Reach; long videos are not watched frame by frame; the result goes into his Excel as a new last sheet 'Yeni eklenenler', the transfer done by Sonnet. Permission for the review; nothing is installed without his word.",
+    "verbatim": "https://www.youtube.com/watch?v=HhZdNYI4pJs ve https://www.youtube.com/watch?v=LCwT00LrPZg burada önemli repo ve skiller var fakat ikincisinde istemediğim: taste impeccable, caveman zaten var, ponytail, agent reach falan bunlara gerek yok. … mevcut excele yeni eklenenler diye alt tarafa bir sayfa açılsın çalışma onun üzerinde yapılsın. ok? || dikkat kare kare izlenmesin || https://x.com/RahulTechX/status/2110166431610572865 Ekibe şunu da versene, bir incelesinler. || İşte önceki seçimde yaptığımız şekilde yapalım. … Sonnet'te yapılabiliyorsa yapılsın. || Max sen yapacaksın. Sen en sonda değerlendirme yapacağın için Max'te sen yapacaksın.",
+    "conditions": "Permission, not acceptance of any result (LAW B). Every install waits on his word at its rank.",
+    "session": "Opus 5.5 session 9 of 2026-10-14 (1e8f9809-3877-4f3e-b74b-3a19ef3f2c9d), in conversation.",
+    "where": ".planning/quick/20261014-iki-video/MERGE.md · Excel-turbo.xlsx sheet 'Yeni eklenenler'"
   }
 }

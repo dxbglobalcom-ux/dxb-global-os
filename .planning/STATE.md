@@ -27,28 +27,36 @@ not here. What is accepted is read from `scripts/governance/ceo-approvals.json`,
 
 ## Where we left off
 
-2026-10-14 night — The ordered board is revised and waits on one page for his single answer:
-https://claude.ai/code/artifact/63283c85-07f6-4d45-b6bf-242c7abb3e56 (record: `.planning/quick/20261014-tahta-sirasi/ORDER.md`,
-56 ranks, 10 new rows). Before it, on his word, the Excel's 88 links were read again by two blind readers and merged
+2026-10-14 night — His two YouTube videos and one X post were reviewed the way the 88 links were: two blind readers
+(Opus 5.5 high, Fable 5.1 high), the lead as referee at max, the result written by Sonnet into a new last sheet of his
+Excel, "Yeni eklenenler" (`Excel-turbo.xlsx`, desktop and repo copies identical; record
+`.planning/quick/20261014-iki-video/MERGE.md`) <!-- CEO-OK: two-videos-reviewed-into-a-new-excel-sheet-2026-10-14 -->.
+Nothing was installed. The dxb-watch-links door now carries that review as its §5
+<!-- CEO-OK: watch-links-important-review-2026-10-14 -->. The ordered board still waits on one page for his single
+answer: https://claude.ai/code/artifact/63283c85-07f6-4d45-b6bf-242c7abb3e56 (record:
+`.planning/quick/20261014-tahta-sirasi/ORDER.md`). Before it, on his word, the Excel's 88 links were read again and merged
 (`.planning/quick/20261014-88-link/MERGE.md`) <!-- CEO-OK: excel-88-links-reviewed-before-the-board-2026-10-14 -->, and the
 two İNCELEMELER reports read <!-- CEO-OK: board-order-page-answers-2-3-4-2026-10-14 -->. Board line 2 is his bench rule:
 parts tested and set aside, the key turned once at the end <!-- CEO-OK: bench-rule-key-turned-once-2026-10-14 -->; the
 company's own engine (`dxb-scheduler`) is stopped until then <!-- CEO-OK: company-engine-stopped-until-the-key-turn-2026-10-14 -->.
-The company database door was already shut in the kernel (measured; R1's finding refuted). B64's plan is accepted
-(<!-- CEO-OK: b64-plan-his-yes-2026-10-14 -->); its step 1 is built and Sol-checked on the construction engine only. The
-company has no face today: V1 closed <!-- CEO-OK: v2-location-and-v1-dead-2026-08-01 -->, V2 not drawn, voice off until a
-dedicated microphone <!-- CEO-OK: jarvis-silent-listening-voice-04-okayed-2026-09-14 -->. B41's first slice waits for his
-eye <!-- CEO-OK: b41-design-skills-first-slice-2026-10-13 -->.
+B64's plan is accepted (<!-- CEO-OK: b64-plan-his-yes-2026-10-14 -->); its design page is at version 16; step 1 is built
+and Sol-checked on the construction engine only. The company has no face today: V1 closed
+<!-- CEO-OK: v2-location-and-v1-dead-2026-08-01 -->, V2 not drawn, voice off until a dedicated microphone
+<!-- CEO-OK: jarvis-silent-listening-voice-04-okayed-2026-09-14 -->. B41's first slice waits for his eye
+<!-- CEO-OK: b41-design-skills-first-slice-2026-10-13 -->.
 
 ## Next
 
-1. His yes on the page, then `ORDER.md` "On his yes": his words registered, board law 4 rewritten, the new rows opened as
-   B71-B80, the ranks written, the board page fixed, `pnpm board:order`. No construction before it.
+1. His yes on the board page, then `ORDER.md` "On his yes": his words registered, board law 4 rewritten, the new rows
+   opened as B71-B80, the ranks written (each rank's carries take the tools of "Yeni eklenenler" from MERGE §3), the
+   board page fixed, `pnpm board:order`. No construction before it.
 2. Then rank 1 (Y1): ports 4000 and 22 into the kernel wall (a root edit — his password), sign-up off.
 
 ## Waiting on his approval
 
 - The revised board order and its 10 new rows (one question on the page).
+- "Yeni eklenenler": each install at its rank (the first, the Supabase skills, when rank 3 starts); claude-mem's telemetry,
+  measured on by default — turn it off? (recommendation: yes); deleting the X1 transcription's 268 MB cache.
 - At their rows' turn: the server and a Meta business account (32), his Islamic rulings on depiction and the Excel
   decisions (46-49), where the holding's own site is hosted (47).
 - Hermes, when the holding stands — money out: the holding's server (B09/B11). The family later.

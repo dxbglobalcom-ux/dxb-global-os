@@ -1,0 +1,502 @@
+language: en
+[00:00] There are over 500,000 clawed skills out there, Github is full of them.
+[00:03] But most of them don't even work and some are just nicely formatted system prompts with a readme file.
+[00:08] Very few are actually worth installing and you might think you don't need them.
+[00:13] Models are already powerful enough, right? Why add a skill file?
+[00:17] But here's the thing, every model follows its own patterns.
+[00:21] And once you've seen it, you can't unsee it.
+[00:24] That's why you need something to steer it.
+[00:26] These skills are built by people in the trenches.
+[00:29] You've got a meta-engineer, a security researcher,
+[00:32] and they've repackaged what worked for them so you can use it too.
+[00:36] For a skill that cuts your training usage by 65%,
+[00:38] to one that creates motion graphics using natural language.
+[00:42] I've tested hundreds of skills at this point
+[00:44] and these nine are the ones I keep coming back to every single day.
+[00:48] Thanks to HubSpot for sponsoring this video.
+[00:51] We're starting with the absolute holy grail of clawed skills,
+[00:54] the skill that arguably started this whole craze
+[00:57] with over half a million installs.
+[00:59] Of course, I'm talking about the caveman skill
+[01:02] because why use many token?
+[01:04] Which few token do trick?
+[01:06] If you haven't heard about the caveman skill before,
+[01:08] then chances are that you are probably a caveman yourself
+[01:12] because this is unironically one of the most useful skills I've ever installed.
+[01:16] And probably the most entertaining as well.
+[01:19] We all know clawed is a complete yapper.
+[01:22] You ask for one simple request and you get three paragraphs of,
+[01:25] great question, let me walk you through my approach.
+[01:28] That preamble is not only annoying, but it costs you tokens
+[01:32] and tokens equals money.
+[01:34] What I love about caveman is it drops all of it
+[01:36] and just gives it to you straight.
+[01:38] It's like having a spam filter for your inbox,
+[01:41] but it also saves you tokens.
+[01:43] The creator claims a 65% reduction in tokens saved,
+[01:47] but I actually tested this myself and it was closer to about 35%.
+[01:52] I'd rank caveman higher, but everyone already knows about it
+[01:55] so I'll leave it at number nine.
+[01:56] Next is a new skill that's been gaining attention
+[01:58] from an up and coming developer.
+[02:01] Millions of lines of code at metal, Netflix, and now cursor.
+[02:06] The person who helps build and maintain the react compiler,
+[02:10] that is who wrote number eight.
+[02:12] Of course, I'm talking about Pistak.
+[02:14] Pistak is a set of skills from potato with an E
+[02:17] and the one that everyone's going crazy about is potato mode.
+[02:21] Her pitch is one of my favorite lines I've ever read in a repo.
+[02:25] I don't want to ship like a team of 20 slop artists.
+[02:29] And then she says, if you want to go fast,
+[02:31] you first need to go deep,
+[02:34] which is the exact opposite of how everyone is currently using.
+[02:37] Agents, by the way.
+[02:38] The move right now is spin off eight parallel agents and pray.
+[02:43] And you can do it.
+[02:44] It technically works.
+[02:45] It feels incredible for about 20 minutes
+[02:48] until Sunday comes around and you're looking at 8,000 lines of code
+[02:52] trying to figure out which one of your robot children
+[02:54] broke your app.
+[02:55] The insight in Pistak is that the problem is not running parallel agents.
+[03:01] The problem is thrust.
+[03:03] You cannot safely run 10 agents
+[03:05] if you do not trust what the agent produces.
+[03:08] Make one agent rigorous first, then run parallel agents.
+[03:13] Once you have felt the difference, you cannot go back.
+[03:16] Once you go deep, you can't go to sleep.
+[03:19] And the cherry on top is the fact that these are the actual skills
+[03:23] she uses every day at cursor
+[03:25] to ship thousands of lines of code every single day.
+[03:29] Okay, okay.
+[03:29] Number eight was pretty solid.
+[03:31] But if you thought that was good,
+[03:33] wait till I tell you about rank seven.
+[03:35] Hard credit API keys,
+[03:37] security rules completely skipped,
+[03:40] auto tokens sitting in local storage,
+[03:42] and my personal favorite,
+[03:44] letting the browser decide how much something costs.
+[03:46] Do you know what that means?
+[03:48] Someone opens DevTools, changes your $99 product
+[03:52] to one cent, hits buy, and Stripe just processes it.
+[03:57] Because your app basically asked the customer,
+[03:59] how much would you like to pay?
+[04:00] So number seven is Vibe Security.
+[04:03] Built by Chris Roroke,
+[04:04] I never know how to pronounce his name,
+[04:06] and the team at Aloha.
+[04:08] If you've been anywhere near this side of YouTube,
+[04:10] you probably already know Chris.
+[04:12] I watch him all the time.
+[04:13] And this isn't just some generic prompt that says,
+[04:16] check my app for security problems.
+[04:18] It actually understands what your app is using.
+[04:21] If you're using SuperBase,
+[04:23] it checks for SuperBase specific security issues.
+[04:25] If you're using Next.js,
+[04:27] it checks for Next.js issues.
+[04:29] And I think this skill is massively underrated.
+[04:32] It has under a thousand stars.
+[04:34] Because the scary part about Vibe Coding
+[04:36] isn't that you intentionally wrote insecure code.
+[04:39] The AI did.
+[04:40] It confidently hardcoded your API key.
+[04:43] It confidently skipped your security rules,
+[04:45] and you confidently clicked approve on it.
+[04:48] So use AI to check AI.
+[04:50] Run this on your app every time you make a big update.
+[04:54] I ran it on a side project I'd already shipped
+[04:56] six weeks earlier,
+[04:57] and it found a few fatal problems.
+[04:59] All right, Vibe Security catches the vulnerabilities
+[05:01] you did not know Claude wrote.
+[05:03] But there is another blind spot almost everyone has.
+[05:06] And it is bigger than security.
+[05:09] So here's an uncomfortable truth I learned
+[05:11] while researching for this video.
+[05:13] Most of you are using maybe 10%
+[05:15] of what Claude can actually do.
+[05:17] You open the chat, you type, you close it.
+[05:20] That is the whole workflow.
+[05:22] Meanwhile, skills, code, code, and design
+[05:26] are just sitting there, uncouched.
+[05:28] And I get it.
+[05:29] Anthropics shoots new stuff faster than anyone can track.
+[05:32] It is confusing.
+[05:33] That's why I wanted to share this free guide
+[05:35] called Claude at Work from HubSpot
+[05:38] that maps the entire ecosystem.
+[05:40] It has every product side by side
+[05:42] so you can see where each one fits.
+[05:44] It even has the current model lineup
+[05:46] with which model should I use breakdown.
+[05:48] And three real world workflows
+[05:50] showing you how to chain these tools together.
+[05:53] This guide will show you exactly how the skills
+[05:55] like the ones we're talking about in this video
+[05:57] can fit into a daily workflow
+[05:59] in a way that actually multiplies their capabilities.
+[06:02] My favorite one is a workflow that takes a single video
+[06:05] and turns it into a full week of content across platforms.
+[06:09] Step by step with which Claude product to use at which stage.
+[06:12] If you're someone who makes content
+[06:14] that one workflow alone is worth the download.
+[06:17] It takes one breed and it will show you capabilities
+[06:20] you did not know you had.
+[06:22] Check it out in the description.
+[06:24] And thanks to HubSpot for sponsoring today's video.
+[06:26] All right, back to the skills.
+[06:28] Because number six is about fixing the thing
+[06:31] Claude is genuinely the worst at.
+[06:33] No AI slot.
+[06:35] Built by Peter Yang,
+[06:36] it kills 22 patterns of AI writing
+[06:39] that have infected basically everything
+[06:41] on the internet right now.
+[06:42] You probably already know these.
+[06:44] A lot of us have developed a physical reaction to them.
+[06:47] It's not X, it's Y.
+[06:48] The future isn't coming.
+[06:50] It's already here.
+[06:51] What nobody tells you is.
+[06:53] And don't even get me started on the M dashes.
+[06:56] Every single platform, LinkedIn, Twitter,
+[07:00] sub-staff, YouTube comments,
+[07:02] they are everywhere.
+[07:04] And here is the trap.
+[07:05] When you use AI to fix AI writing,
+[07:08] it polishes out the exact stuff that made it sound human.
+[07:11] Your weird sentence length, good bad analogies,
+[07:14] the joke that on the lands if people know you,
+[07:17] those were the good bits.
+[07:19] Most writing skills,
+[07:20] sand them off and hand you back a nicer flavor
+[07:24] of the same problem.
+[07:25] This skills actual trick is it removes the patterns
+[07:28] without flattening your voice.
+[07:30] And then this is the part I genuinely love.
+[07:33] It lists everything it changed
+[07:35] so you can actually argue with it.
+[07:37] All right, so as you can see,
+[07:38] I've made Claude write a short sales script
+[07:40] about my app Ace.
+[07:42] And it is full of AI terminology.
+[07:45] Here's the part that matters.
+[07:47] It's not X, it's Y.
+[07:50] Wow.
+[07:52] So we're going to go ahead and run the no AI slop skill,
+[07:57] but see how it does.
+[08:00] And boom, as you can see,
+[08:01] we now have a script and Ace is a one-time payment.
+[08:05] $150 for lifetime access,
+[08:08] including every future update Ace ships,
+[08:10] no recurring fee ever.
+[08:12] That's a huge difference from here's the part that matters.
+[08:15] Ace isn't a subscription, it's a one payment.
+[08:18] Like that's a way better improvement.
+[08:21] And here you can see what actually changes.
+[08:23] So it's really easy to understand.
+[08:25] Rewrite the offer line.
+[08:27] And then if you want,
+[08:28] you can argue in and be like,
+[08:29] hey, I actually didn't want you to rewrite the offer line.
+[08:32] It's really cool.
+[08:34] That is the writing slop dealt with.
+[08:37] Number five deals with the code slop problem.
+[08:40] Coming in at number five
+[08:41] and of course I'm talking about Ponytail.
+[08:43] And Ponytail makes your agents think
+[08:45] like the laziest senior developer in the room.
+[08:48] He says nothing, he writes one line and it works.
+[08:53] You know the guy, every team has one.
+[08:55] You spend two days building an app,
+[08:57] you're showing them,
+[08:58] and he looks at it for eight seconds and goes,
+[09:00] why didn't you just do this?
+[09:02] This skill is the embodiment of that Ponytailed individual.
+[09:06] A perfect anti-slop skill for code volume.
+[09:10] Because here is the thing
+[09:11] a lot of people don't realize about AI coding.
+[09:13] The problem is not that Claude writes bad code.
+[09:16] It actually writes pretty good code
+[09:18] if you know what you're doing.
+[09:19] It just writes far too much of it.
+[09:22] Ponytail claims to reduce the amount of code Claude writes
+[09:25] by up to 94%,
+[09:27] but from my own tests,
+[09:28] it's closer to around 50%.
+[09:30] And there's some pretty neat side effects too,
+[09:32] like past being about 20% cheaper and 27% faster.
+[09:36] Everything is verifiable on the repo,
+[09:38] but I recommend you try it for yourself.
+[09:40] Ponytail is one idea executed perfectly.
+[09:44] Write less code.
+[09:45] Number four is the entire operating system,
+[09:47] and I'm about to say something
+[09:49] that might ruffle a few feathers.
+[09:51] Remember Superpowers?
+[09:52] Everyone lost their minds over it.
+[09:55] Every thread, every video,
+[09:57] every this changes everything post,
+[09:59] and I'll
+[10:00] Honestly, it deserved it at the time.
+[10:02] It was good, but this replaces it.
+[10:05] I'm talking about Matt Pocock skills,
+[10:07] and I'm not gonna lie,
+[10:08] it is the best base layup I have ever used,
+[10:12] because this is not a clever one-trick skill
+[10:15] like Caveman or Ponytail.
+[10:16] It is the foundation you put underneath everything else.
+[10:20] Here's how I actually use it.
+[10:22] And if you steal one thing from this video, steal this.
+[10:26] I give my agent a link to the reaper,
+[10:28] kick off a long running task,
+[10:29] and tell it to use the skills where they make sense.
+[10:33] That is the whole instruction.
+[10:34] I do not micromanage which skill flyers were,
+[10:37] because the descriptions inside the skills
+[10:39] are actually good enough.
+[10:41] It just picks correctly.
+[10:42] For example, inside Matt Pocock skills,
+[10:44] there is a code review skill.
+[10:46] I have Claude Fable orchestrate Sonic models
+[10:49] to do the heavy execution work.
+[10:51] It then uses the code review skill
+[10:53] to make Sonic review its own output
+[10:56] before it ever comes back to Fable, the orchestrator agent.
+[10:59] The swap actually gets caught inside that loop.
+[11:02] The same model that wrote it
+[11:04] is now the same model that judges it.
+[11:06] It never hits my eyeballs.
+[11:08] I just get a finished product that's ready to test.
+[11:11] All right, foundation, reviewer, security, editor,
+[11:15] all the boring stuff is sorted,
+[11:17] which means we can finally get to the fun stuff.
+[11:20] All right, what if I told you
+[11:21] every single piece of motion graphics
+[11:22] in this video that you're watching
+[11:23] was made using the skill hyperframes?
+[11:26] And I'm gonna say this straight up,
+[11:28] I think it's actually better than remote motion.
+[11:29] Remote motion is great,
+[11:30] but I'm not trying to start a fight.
+[11:32] Hyperframes just produces better outputs
+[11:35] more of the time with less nagging.
+[11:38] So if you make content, you already know the problem.
+[11:40] Motion graphics are the single worst effort
+[11:43] to pay off ratio in the entire pipeline.
+[11:46] A four second animation that makes one point clearly
+[11:49] can eat an hour of your life in After Effects.
+[11:52] Then you watch it back and go,
+[11:54] actually, the easing is wrong.
+[11:57] See here's what I'm gonna do.
+[11:58] I'm going to describe an animation out loud right now,
+[12:01] and we're going to see what comes back.
+[12:03] I'm going to link the hyperframe skill and just say,
+[12:08] create an animation of a really big,
+[12:11] crazy firework explosion in the night sky.
+[12:16] And I'm just gonna let this run
+[12:18] and let's see what it generates.
+[12:20] And we're done, that took roughly eight minutes.
+[12:24] Let's have a look at the video.
+[12:27] Look at this.
+[12:29] Dang it on.
+[12:31] That looks nice.
+[12:33] Wow, I love how it explodes and shakes the sky.
+[12:37] Well, there you go.
+[12:38] In eight minutes, we were able to create
+[12:40] this sick ass motion graphics.
+[12:42] Imagine trying to do that in After Effects.
+[12:45] That would literally take you an entire day
+[12:48] to get all the particles to look like that.
+[12:51] Hyperframes makes cool animations,
+[12:53] but coming in at number two,
+[12:54] it turns Claude into an award-winning designer.
+[12:58] All right, this one's actually cheating slightly,
+[13:00] but coming in at number two, it's actually two skills.
+[13:07] Hey, it's my video.
+[13:08] I make the rules around here,
+[13:10] but I'm not gonna lie,
+[13:11] there are a lot of design skills out there.
+[13:13] Genuinely, dozens at this point,
+[13:15] and I am going to say something that sounds harsh,
+[13:18] but I mean it.
+[13:19] Most of them are like the same six prompts
+[13:22] about white space wearing different hats.
+[13:25] These two are the ones that survived on my machine,
+[13:28] and the reason they both survived
+[13:30] is they are good at completely opposite things.
+[13:33] Taste is the one-shot king.
+[13:35] If it's a blank page, no existing design language,
+[13:38] you need something that looks intentional
+[13:40] on the first try.
+[13:41] Taste just hands it to you.
+[13:43] It is the, I need a landing page in 20 minutes
+[13:45] and I need an ASAP kind of skill.
+[13:47] Impeccable is the opposite, it's the analyst.
+[13:50] It's not trying to be clever, it is trying to be right.
+[13:54] You're gonna add a real app with 15 screens
+[13:56] and it goes through them properly, one by one.
+[13:59] Maybe you've got inconsistent spacing,
+[14:01] you've got four different grays,
+[14:02] there should be one gray,
+[14:04] that button that's like two pixels off
+[14:06] on one screen only,
+[14:07] things you have absolutely looked directly at
+[14:10] and not seen.
+[14:12] And the combination of these two is where it gets stupid.
+[14:16] Taste for the first pass,
+[14:17] you have something with a point of view.
+[14:19] Impeccable to grade it and grind out every inconsistency.
+[14:22] One gives you the idea, the other gives you the discipline.
+[14:26] I've shipped things with this combination
+[14:28] that people assumed I paid a designer for.
+[14:31] Actually note, before number one,
+[14:33] here are four skills that did not make the list
+[14:36] but absolutely could have.
+[14:37] Because I've seen comments about every single one of these
+[14:40] and I would rather address them now
+[14:42] than read about it in the comments
+[14:43] for the next six months straight.
+[14:45] First, un-lazing.
+[14:47] This one genuinely hurt to cut out.
+[14:49] It is an anti-lazing skill for agents
+[14:51] built around something called the depth tree method.
+[14:55] Here's what it does.
+[14:56] It splits the task into layers
+[14:58] and gives every single leaf the full time budget
+[15:01] of the whole task.
+[15:02] So effort actually multiplies with depth
+[15:05] instead of getting thinner.
+[15:06] It's built on actual research into model laziness
+[15:09] and premature completion.
+[15:11] That thing clearly does where it writes
+[15:13] about 80% of the code
+[15:14] and then types the rest follows the same pattern.
+[15:17] I hate that.
+[15:18] Un-lazy fixes it.
+[15:19] So if you do long, energetic runs,
+[15:21] this is on basic.
+[15:23] Go get it.
+[15:24] Next, you've got AI job search.
+[15:25] Exactly what it sounds like.
+[15:27] If you are job hunting right now,
+[15:29] this is probably the most immediately valuable thing
+[15:31] in this entire video
+[15:32] and it did not even make the list.
+[15:35] Next, you've got agent reach.
+[15:37] Give your agents access to gated parts of the internet.
+[15:40] Use it responsibly though, please.
+[15:43] With great power.
+[15:44] I'm straight responsible.
+[15:46] The fourth, you've got open design
+[15:48] and this one fixes a genuinely annoying limitation.
+[15:51] Core design is one of my favorite creations
+[15:53] from the anthropic team,
+[15:55] but you cannot extend it with skills.
+[15:57] Open design lets you.
+[15:58] It's basically an open-sourced free core design alternative
+[16:02] that lets you use skills like impeccable and taste
+[16:05] to improve on your UI screens.
+[16:07] And I want to reframe something real quick
+[16:09] because number one is not the flashiest skill on this list.
+[16:13] Hyperframes makes pretty things.
+[16:15] Ponytail has better numbers.
+[16:16] Number one is here for a different reason.
+[16:19] It is probably the most versatile, most underrated
+[16:22] and biggest upgrade to your agent skill artillery today.
+[16:29] Now this skill was originally built to train AI models.
+[16:33] The mechanism is brutally simple.
+[16:35] Run hundreds of tiny experiments, keep what works
+[16:39] and then throw away what doesn't.
+[16:41] Repeat and that's it.
+[16:43] That is the whole thing.
+[16:45] Now read that again and tell me what part of it
+[16:47] is actually about machine learning.
+[16:49] Nothing, nothing about that is specific to models.
+[16:53] It is just the scientific method.
+[16:55] With the patient's problem removed
+[16:57] because the reason you and I do not run a hundred experiments
+[17:00] on anything in our lives is not that we do not believe
+[17:03] in the method, it's that a hundred experiments
+[17:07] is a hundred experiments.
+[17:09] So run a hundred experiments to optimize your budget.
+[17:12] Run a hundred experiments on your calorie intake.
+[17:15] Run a hundred experiments on your apps UI.
+[17:18] Run hundreds of experiments on your thumbnails.
+[17:21] You are not limited by the skill.
+[17:23] You are limited by what we thought to point it at.
+[17:27] All right, now a lot of people don't know this
+[17:29] but when I first built ACE,
+[17:31] I actually ran the auto researcher skill on my app
+[17:35] and it was able to create a lot of tiny little delight moments
+[17:39] within my app.
+[17:40] Like if we just click on any of these
+[17:43] and we look at the whiteboard, even the loading screen,
+[17:47] you can see like just being able to connect the models
+[17:51] and stuff like that,
+[17:52] it created a lot of tiny delight moments,
+[17:55] like literally hundreds of them
+[17:57] and they stacked up on top of each other
+[17:59] to the point where like,
+[18:00] I don't even know what is and what isn't done
+[18:03] by the auto research skill anymore.
+[18:05] Things like the line glowing when it's connected,
+[18:08] the ability to change the things,
+[18:11] the pill of the model picker here,
+[18:14] like how that menu looks.
+[18:16] A lot of this was designed and implemented
+[18:18] by the auto researcher skill.
+[18:20] But we're not going to be doing that today.
+[18:22] For today's example,
+[18:24] I've actually got my gym workout
+[18:27] and I've pasted it in.
+[18:29] It's a five day upper lower split.
+[18:32] All I'm going to say is
+[18:33] use the auto research skill methodology
+[18:36] because we're not using the skill
+[18:37] because it's used to train AI agents.
+[18:39] We're using the methodology of the skill
+[18:41] to run a hundred tiny experiments
+[18:43] to improve my gym routine.
+[18:45] I want to gain hypertrophy around the arms,
+[18:48] look bulkier and tone.
+[18:50] I'm 176 centimeters tall and I weigh 80 kg.
+[18:55] I'm a 25 male.
+[18:57] Now I'm going to go ahead and send that front.
+[19:01] And I'm doing this just to prove
+[19:02] that you can literally run this skill on anything
+[19:06] and it will find the most optimal best solution.
+[19:10] Just like when I ran it on my app
+[19:11] and I focused it on finding, you know,
+[19:14] animations and tiny little delight moments
+[19:16] that would make a user want to stay on the app
+[19:19] and have a more enjoyable experience.
+[19:21] It's the exact same thing I'm doing with my workout routine.
+[19:25] And I'm using Opus 5 on medium effort
+[19:27] because you need to also consider that
+[19:29] running a hundred experiments is not cheap.
+[19:32] So I'm going to let this run and let's see how it does.
+[19:35] Okay, so as you can see,
+[19:37] it went ahead and ran 100 experiments
+[19:42] via a base diagnosis.
+[19:43] Five things wrong in effect order.
+[19:46] Direct arm volume is seven sets a week each.
+[19:49] Priority range is 12 to 20.
+[19:52] Five of seven triceps sets are push downs.
+[19:55] No stretch position biceps work at all.
+[19:58] So yeah, pretty interesting.
+[20:00] interesting. Let's have a look and boom. If you compare it to the previous plan, you can
+[20:08] see day one, we've got bubble bench press, three sets, six to eight reps, lat pull down,
+[20:15] inclined bench, seated cable row. This all seems to look the same, okay, except we've
+[20:22] the changed it to an overhead cable, easy tricep extension. And then I also did inclined
+[20:27] dumbbell curls. Okay, so it's changed that slightly. Day two, we've got lower, which is
+[20:34] unchanged. And then day three, it's actually doing arm priority. So it's changed this completely
+[20:40] to weighted dips or close grip bench, weighted chin ups, overhead press, chest supported.
+[20:45] So very arm heavy movements here. Lower is the same. Then upper, it's actually added
+[20:52] a bit more of what we missed and day three. Super cool. And there you go. Everything else on this
+[20:59] list makes you faster at something you were already doing. This one actually changes the size of the
+[21:05] problem you're willing to attack. And it costs nothing. It is just a text bar. There you have it,
+[21:11] the secrets to all my favorite skills. I've left a link to all of them in the description. Leave a
+[21:15] like on your way out. Peace.
