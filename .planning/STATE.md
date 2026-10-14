@@ -27,34 +27,37 @@ not here. What is accepted is read from `scripts/governance/ceo-approvals.json`,
 
 ## Where we left off
 
-2026-10-13 — B64's design waits for his eye as version 11 of his page
-(https://claude.ai/artifact/FvrKgh2Gr4Bus3rVdfKbAu; source `.planning/quick/20261012-b64-is-akisi/is-akisi.html`). Decision 6
-is his yes <!-- CEO-OK: b64-decision6-hamza-changes-brains-on-his-word-2026-10-13 -->; decision 7 is his yes in a changed
-form — Jev sorts the mail first, Sonnet medium takes what Jev doubts, Haiku out of intake (measured on 70 invented mails:
-Jev 69/70 at 0.3 s, Sonnet 70/70 at 2.4 s, Haiku 68/70 at 1.7 s; `.planning/quick/20261013-jev-olcum/`)
-<!-- CEO-OK: b64-decision7-jev-first-sonnet-on-doubt-2026-10-13 -->; decision 10 — valuable work ($1,000 and up) planned
-at xhigh and max, Fable judges — is his yes <!-- CEO-OK: b64-decision10-valuable-work-two-plans-fable-judge-2026-10-13 -->.
-B41's first slice is built and live, waiting for his eye <!-- CEO-OK: b41-design-skills-first-slice-2026-10-13 -->:
-Emil Kowalski's 15 design skills are one plugin (`packages/gateway/plugins/dxb-design`), granted in the company to the
-design department, engineering-frontend-developer, media-creative-director and media-product-brand-consistency; such a
-seat lists them and opens one itself, reads only inside the plugin folder; every other seat gets nothing. Sol at xhigh
-found three A and three B, all fixed and re-proven live (`.planning/quick/20261013-b41-tasarim-becerileri/`).
-apple-design moved into the drawer.
-2026-10-14 — the seven older defects Sol found in B51 are on the board on his word, each in its turn: B65-B70, and
-the LiteLLM-key one under §2d's V2 memory ruling <!-- CEO-OK: b65-b70-older-defects-opened-2026-10-14 -->. Vercel
-Pro is not needed (his word): only Jev is used, through the AI Gateway on Hobby.
+2026-10-14 — B64's design waits for his eye as version 12 of his page
+(https://claude.ai/artifact/FvrKgh2Gr4Bus3rVdfKbAu; source `.planning/quick/20261012-b64-is-akisi/is-akisi.html`). His yes so
+far: decisions 6, 7 and 10 (13 Oct) and, on 14 Oct, 13 — Opus 5.5 and Fable 5.1 back each other up for any failure,
+effort high..xhigh on Fable, Fable's judge seats fall to Sol, a second subscription at 95 %, the holding performs and
+records the fallback, B65 and B66 go with B64's plan <!-- CEO-OK: b64-decision13-backup-pair-opus-fable-2026-10-14 -->
+— and 14, the model room <!-- CEO-OK: b64-decision14-model-room-2026-10-14 -->. Decision 15 (Hamza's fourth hand, daily
+errands through Hermes) is proposed. The study behind it — T3 Code, Omnigent, Paseo, Hermes, four helpers in parallel —
+is his page https://claude.ai/artifact/KVMSsTv4psiR6tK1kVnUEA, for him and for Fable's judgement.
+B41's first slice is built and live, waiting for his eye <!-- CEO-OK: b41-design-skills-first-slice-2026-10-13 -->.
+The seven older defects from B51 are rows B65-B70 and a §2d memory note <!-- CEO-OK: b65-b70-older-defects-opened-2026-10-14 -->;
+B66 closes the old fallback whole <!-- CEO-OK: b66-old-fallback-closed-whole-2026-10-14 -->. The dxb-team2 door now
+offers a side study to the team before starting it <!-- CEO-OK: side-study-offered-to-the-team-2026-10-14 -->; Sol's
+medium pass on that door change runs in `.planning/quick/20261014-yan-calisma-kapisi/`.
 
 ## Next
 
-1. B64: his answers to decisions 1-5, 8, 9, 11 and 12 → the design into the owning specs as registered adaptations
-   (one Sol pass) → the one-page plan, once. His word 2026-10-14: Jev wherever it fits in the holding, not only
-   intake — found and designed at xhigh with B64.
-2. The `decompose` removal reaches the company only after Sol's pass — the refuter's preflight is repaired first.
+1. Sol's door pass: read `SOL.md.raw`, fix A and B, commit `SOL.md`.
+2. B64: his answers to decisions 1-5, 8, 9, 11, 12 and 15 → the design into the owning specs as registered adaptations
+   (one Sol pass; Omnigent's four methods go in: unpriced = unknown, ask thresholds, quota awareness, secrets out of
+   the agent's environment) → the one-page plan, once. Jev wherever it fits in the holding (his word, 14 Oct).
+3. The `decompose` removal reaches the company only after Sol's pass — the refuter's preflight is repaired first.
 
 ## Waiting on his approval
 
-- B64's decisions 1-5, 8, 9, 11 and 12 on the page, each "önerim: evet"; several change a standing rule and say so.
-- Security: `fn_update_routing` is EXECUTE-able by anon in the company — inside B64's decision 6, closed first.
+- B64's decisions 1-5, 8, 9, 11, 12 and 15 on the page, each "önerim: evet".
+- Hermes (decision 15): its brain (ChatGPT subscription, Nous Portal or Claude extra credits), Telegram or WhatsApp,
+  the card, the name his family sees. A 30-minute Paseo trial for the construction (phone window instead of RDP).
+- Kept for after the holding stands (his word, 14 Oct): where client sites are published is measured and talked then;
+  Vercel stays on Hobby, Pro only if Vercel calls it commercial.
+- Security: `fn_update_routing` is EXECUTE-able by anon (closed first in decision 6); every agent child receives the
+  `DXB_*` values (database URL, department keys) and dxb-mcp checks no caller — into B64's plan.
 - Excel turbo (`~/Desktop/Lİnk araştırmaları/Excel-turbo.xlsx`) — nine projects, thirteen decisions.
 - The board rows that wait on him — the board page's "Sizi bekleyenler" lists them.
 
