@@ -40,25 +40,23 @@ design department, engineering-frontend-developer, media-creative-director and m
 seat lists them and opens one itself, reads only inside the plugin folder; every other seat gets nothing. Sol at xhigh
 found three A and three B, all fixed and re-proven live (`.planning/quick/20261013-b41-tasarim-becerileri/`).
 apple-design moved into the drawer.
+2026-10-14 — the seven older defects Sol found in B51 are on the board on his word, each in its turn: B65-B70, and
+the LiteLLM-key one under §2d's V2 memory ruling <!-- CEO-OK: b65-b70-older-defects-opened-2026-10-14 -->. Vercel
+Pro is not needed (his word): only Jev is used, through the AI Gateway on Hobby.
 
 ## Next
 
 1. B41: the first real design task in the company shows a seat opening a skill (the scheduler log's isolation line
    reads plugins=4); further slices (more skills, other departments) only on his word.
 2. B64: his answers to decisions 1-5, 8, 9, 11 and 12 → the design into the owning specs as registered adaptations
-   (one Sol pass) → the one-page plan, once.
+   (one Sol pass) → the one-page plan, once. His word 2026-10-14: Jev wherever it fits in the holding, not only
+   intake — found and designed at xhigh with B64.
 3. The `decompose` removal reaches the company only after Sol's pass — the refuter's preflight is repaired first.
 
 ## Waiting on his approval
 
 - B64's decisions 1-5, 8, 9, 11 and 12 on the page, each "önerim: evet"; several change a standing rule and say so.
-- Vercel: AI Gateway runs on Hobby (his card on file, $10 credit, $4 budget on team and key). Pro ($20/month) only if
-  client sites are hosted on Vercel; hosting them on the Hetzner server needs none — his word at the first client site.
 - Security: `fn_update_routing` is EXECUTE-able by anon in the company — inside B64's decision 6, closed first.
-- Found, each needs his word for a row: the eight Agent SDK readers do not check `is_error`; the SQL model
-  fallback ignores the lane and the tier floor; the HR org check counts only heads as roots; the routing seed is
-  half the live table; research tasks cannot pass the knowledge shelf; with the hook off the gate is skipped;
-  memory recall and the summarize lane need a LiteLLM key.
 - Excel turbo (`~/Desktop/Lİnk araştırmaları/Excel-turbo.xlsx`) — nine projects, thirteen decisions.
 - The board rows that wait on him — the board page's "Sizi bekleyenler" lists them.
 

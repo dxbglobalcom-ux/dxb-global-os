@@ -2338,5 +2338,13 @@
     "conditions": "His yes to the slice plan given in conversation on 2026-10-13 (b0d7d072) and re-stated in session 854807ea. A go for the build — not a LAW B acceptance of the built work, which waits for his eye.",
     "session": "Opus 5.5 session 854807ea, in conversation, 2026-10-13.",
     "where": "packages/gateway/plugins/dxb-design · scripts/library/register-design-skills.mjs · packages/gateway/src/runtime-profile.ts"
+  },
+  "b65-b70-older-defects-opened-2026-10-14": {
+    "date": "2026-10-14",
+    "what": "Board rows B65-B70 opened for six older defects Sol found during B51 (is_error unchecked, SQL fallback ignores lane/floor, HR org check counts only heads as roots, routing seed half the live table, research tasks cannot pass the knowledge shelf, the gate skipped with the hook off); the seventh (memory recall and summarize lane need a LiteLLM key) filed under the V2 memory ruling in §2d. Each is done in its turn, not now.",
+    "verbatim": "Bu 7 tane kusur çok önemli kusurlar... satırları aç. Hepsini aç. 1'den 7'ye kadar. Fakat tabii ki zamanı gelince yapılsın. · Oraya uyuyorsa oraya koy, uymuyorsa ayrı bir satır aç.",
+    "conditions": "An order to open rows, not a LAW B acceptance of any work; nothing is built.",
+    "session": "Opus 5.5 session, in conversation, 2026-10-14 (https://claude.ai/code/session_014LfegVePU2tLZ68UAV5ds5).",
+    "where": "HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md (B65-B70; §2d V2 memory)"
   }
 }
