@@ -27,33 +27,28 @@ not here. What is accepted is read from `scripts/governance/ceo-approvals.json`,
 
 ## Where we left off
 
-2026-10-14 — B64's plan is accepted (<!-- CEO-OK: b64-plan-his-yes-2026-10-14 -->; `.planning/quick/20261012-b64-is-akisi/PLAN.md`,
-his page https://claude.ai/code/artifact/2d0941e8-af63-4313-a656-f532353bc64f) with his four answers
-(<!-- CEO-OK: b64-q1-secrets-out-of-hermes-too-2026-10-14 --> <!-- CEO-OK: b64-q2-studio-creative-seats-opus-2026-10-14 -->
-<!-- CEO-OK: b64-q3-decision17-covers-everything-2026-10-14 --> <!-- CEO-OK: b64-q4-dept-head-accepts-dept-dream-2026-10-14 -->),
-all written into the owning specs. B64 now stands ready like an engine waiting to be fitted: he wants the board put in
-construction order before any more building. Four pieces of B64 step 1 were already built — on the construction
-engine only: the doors callable without a login closed (fn_update_routing and 13 more), Hamza's levels in written
-chat, a goal instead of an intent (`.planning/quick/20261014-b64-adim1/`); Sol's single pass is checking them.
-The board-order job is open: `.planning/quick/20261014-tahta-sirasi/PLAN.md` (his words verbatim; readers' files
-rows-A..D). B41's first slice is built and live, waiting for his eye
-<!-- CEO-OK: b41-design-skills-first-slice-2026-10-13 -->.
+2026-10-14 — The board is put in construction order and the holding reviewed top to bottom; the ordered board waits
+on one page for his four answers: https://claude.ai/code/artifact/63283c85-07f6-4d45-b6bf-242c7abb3e56 (the record:
+`.planning/quick/20261014-tahta-sirasi/ORDER.md`; the reviews and his three sources read in the same folder). B64's
+plan is accepted (<!-- CEO-OK: b64-plan-his-yes-2026-10-14 -->); its step 1 is built, Sol-checked and fixed on the
+construction engine only (`.planning/quick/20261014-b64-adim1/SOL.md`); the company is untouched. Today the company has
+no face for him: V1 closed on his word <!-- CEO-OK: v2-location-and-v1-dead-2026-08-01 -->, V2 not drawn, voice off until a dedicated
+microphone <!-- CEO-OK: jarvis-silent-listening-voice-04-okayed-2026-09-14 -->. B41's first slice waits
+for his eye <!-- CEO-OK: b41-design-skills-first-slice-2026-10-13 -->.
 
 ## Next
 
-1. The board-order job (`.planning/quick/20261014-tahta-sirasi/PLAN.md`): the six-area review of today's holding,
-   then the order, then one page to him. The order is the engineers' call — he said so; no construction until his
-   word after that page.
-2. Sol's findings on B64 step 1 (`.planning/quick/20261014-b64-adim1/SOL.md.raw`) fixed and committed; nothing of it
-   goes to the company before its rank comes.
-3. The `decompose` removal reaches the company only after Sol's pass — the refuter's preflight is repaired first.
+1. His answers on the page, then PLAN.md step 6 (his words registered, board law 4 rewritten, the ranks and new rows
+   written, the board page fixed) and step 5 (`pnpm board:order`) — `ORDER.md` "On his yes". No construction before it.
+2. Rank 1, the company database closed to the home network, the moment he says yes to it (one restart).
 
 ## Waiting on his approval
 
-- The ordered board, once, on one page — his word opens the new rows the review finds and replaces board law 4.
+- The ordered board and its 9 new rows; the database door today; the machine awake at night; the two other reports in
+  `~/Desktop/İNCELEMELER/` read too.
 - Hermes, when the holding stands — money out: the holding's server (B09/B11). The family later.
 - Kept for after the holding stands (his word, 14 Oct): where client sites are published; Vercel stays on Hobby.
-- Excel turbo (`~/Desktop/Lİnk araştırmaları/Excel-turbo.xlsx`) — nine projects, thirteen decisions.
+- Excel turbo (`~/Desktop/İNCELEMELER/Excel-turbo.xlsx`) — its open decisions come to him at their rows' turn.
 
 ## Where things live
 
