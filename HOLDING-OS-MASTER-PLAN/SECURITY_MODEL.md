@@ -47,9 +47,9 @@ Yok (yukarıda). İlişki: diğer spec'lerin "SECURITY_MODEL siciline" referansl
 | S1 | MFA / 2FA zorunluluğu | CEO kararı: tek kullanıcı, hız önce; kapatıldı | CEO kararı VEYA sistemin internete CEO-dışı kullanıcıya açılması | (bu dosya) |
 | S2 | Local erişim kısıtlama | geliştirme hızı; local açık kalır | VPS'in üretim-tek-kaynak olması + CEO kararı | BACKUP_PLAN ortamı  <!-- HISTORY --> |
 | S3 | API rate-limit + IP allowlist | dış-açık API yok (Caddy yalnız dashboard) | API'nin dışa açılması | API_CONTRACTS §16 |
-| S4 | Kolon-düzeyi şifreleme (at-rest) | tek-tenant VPS, disk şifreleme yeterli sayıldı | müşteri verisi (Outleteuro PII) tabloya girdiğinde | DATA_MODEL §14 |
+| S4 | Kolon-düzeyi şifreleme (at-rest) | tek-tenant VPS, disk şifreleme yeterli sayıldı | müşteri verisi (PII) tabloya girdiğinde | DATA_MODEL §14 |
 | S5 | Audit satır imzalama (tamper-evidence) | append-only grant modeli yeterli sayıldı | dış denetim/uyum ihtiyacı | AUDIT_AND_LOGGING §16 |
-| S6 | Credential rotasyon otomasyonu + kadans | rotasyon CEO-manuel (Phase 1 düzeni); bilinen bekleyen rotasyon kalemi CEO checklist'inde | Outleteuro canlı ödeme akışı ÖNCESİ zorunlu gözden geçirme | (bu dosya; Phase 1 checklist emsali) |
+| S6 | Credential rotasyon otomasyonu + kadans | rotasyon CEO-manuel (Phase 1 düzeni); bilinen bekleyen rotasyon kalemi CEO checklist'inde | ilk canlı ödeme akışı ÖNCESİ zorunlu gözden geçirme | (bu dosya; Phase 1 checklist emsali) |
 | S7 | 2-kişi kuralı (kritik değişimde ikinci onaycı) | N/A — tek insan var | ikinci yetkili insan katılırsa | PERMISSION_MODEL §100 notu |
 | S8 | Session sertleştirme (kısa TTL, cihaz bağlama) | CEO tek cihaz seti; mevcut Auth TTL yeterli | S1 ile birlikte | (bu dosya) |
 | S9 | CSP/headers sıkılaştırma turu | dış kullanıcı yok; Next.js varsayılanları | dışa açılma VEYA Phase sonu boş pencere | CEO_COMMAND_CENTER §16 |
@@ -110,7 +110,7 @@ gitleaks detect --source . --no-banner | tail -1                 # → no leaks 
 ## 25. Bağımlılıklar / 26. Riskler / 27. Edge case'ler
 
 - Bağımlılık: mevcut Phase 1-7 güvenlik varlıkları (canlı); hiçbir yeni kurulum yok.
-- Risk: sicilin unutulması → tetik koşulları Outleteuro/dışa-açılma fazlarının giriş kriterlerine yazılır (IMPLEMENTATION_ROADMAP D5'e madde: "Faz 11 girişinde S4+S6 zorunlu gözden geçirme").
+- Risk: sicilin unutulması → tetik koşulları dışa-açılma fazlarının giriş kriterlerine yazılır (IMPLEMENTATION_ROADMAP D5'e madde: "Faz 11 girişinde S4+S6 zorunlu gözden geçirme").
 - Edge: ertelenen kalemin tetiklenmesi Fable-sonrası döneme denk gelirse → Opus sicili okur, kalemi normal spec sürecinde açar (⛔: omurga gevşetme Opus'a KAPALI — yalnız eldeki en güçlü model + CEO).
 
 ## Opus-devralma notu

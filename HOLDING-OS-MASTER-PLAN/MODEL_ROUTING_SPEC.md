@@ -2,7 +2,7 @@
 
 > Dalga 2 · Yazar: Fable 5 bizzat · Üst: [[SYSTEM_ARCHITECTURE]] · Kardeşler: [[SETTINGS_AND_CONTROL_SPEC]] (6.1 anahtarları), [[COST_CONTROL_SPEC]] (bütçe kesişimi), [[AGENT_ORCHESTRATION_SPEC]] (D3, tüketici)
 > Direktif kaynağı: §19 (Model Orchestration Panel) + madde 6.1 (model rolleri) + madde 18 (model/görev dağılımı) + **CEO direktifi 2026-07-12** (ajan beyinleri dashboard'dan değiştirilebilir — §4b). **KAYITLI KARAR DEĞİŞİMİ (CEO 2026-07-12 ~01:00):** madde-18 "Sonnet YOK" daraltması RUNTIME için KALDIRILDI — Sonnet şirket içinde beyin olarak serbest; inşaat-dönemi yazarlık yasağı (model-routing-hierarchy) AYNEN sürer.
-> Kapsam ayrımı: bu spec ÜRÜN RUNTIME rotalamasıdır (holding ajanlarının model seçimi). İnşaat-dönemi yazarlık kuralları ayrı yönetişimdir (model-routing-hierarchy **v9**; korpus/execution yazarı **Opus 5 bizzat** — yedek katman yok, CEO 2026-07-25).
+> Kapsam ayrımı: bu spec ÜRÜN RUNTIME rotalamasıdır (holding ajanlarının model seçimi). İnşaat-dönemi yazarlık kuralları ayrı yönetişimdir (model-routing-hierarchy **v19**; korpus/execution yazarı **oturumu süren model bizzat — kadro Opus 5.5 (`claude-opus-5-5`), A-2026-09-23** — yedek katman yok, CEO 2026-07-25).
 
 ## 1. Amaç
 
@@ -100,18 +100,18 @@ Varsayılan atamalar (seed — CEO settings'ten değiştirir; ⛔ değişiklik C
 
 ### 4b. Ajan-seviyesi beyin: `agents.brain` — dashboard'dan değişim (CEO direktifi 2026-07-12, normatif)
 
-Canlı kolon: `agents.brain text NOT NULL DEFAULT 'glm-5.2'` (`20260707000002_registry.sql:14`). Bugünkü kadro-genelindeki tekdüzelik kolon DEFAULT'unun görüntüsüdür — iskelet üreticisi (`gen-workforce-dossiers.sh`) model ataması YAPMAZ; bu bir tasarım kararı değil, henüz koşulmamış rotalama atamasıdır (sicil alan 8 notu: "MODEL_ROUTING_SPEC slot kuralına tabi"). Persona dosyası model kopyası TUTMAZ (alan 9: "kaynak: canlı DB — kopya tutulmaz"); beyin gerçeği yalnız DB'dedir, dosyaya model adı yazmak ihlal.
+Canlı kolon: `agents.brain text NOT NULL DEFAULT fn_default_brain()` (`20261010010000_b51_catalogue_one_place.sql:147`; fonksiyonun güncel gövdesi `20261010090000_b51_sol_undo_and_default_fixes.sql:483`): `low_cost` koltuğunun modeli; etkin `low_cost` satırı yoksa ret, sabit model kimliği asla (A-2026-10-10 item 2). Ölçüm 2026-10-14 (inşaat motoru): varsayılan `claude-sonnet-5-5`'e çözülür; beyinler Opus 5.5 22 · Sonnet 5.5 183 · Fable 5.1 14. *(Tarihsel: kolon 2026-07-12'de `DEFAULT 'glm-5.2'` idi (`20260707000002_registry.sql:14`) ve kadro-genelindeki tekdüzelik o DEFAULT'un görüntüsüydü — iskelet üreticisi (`gen-workforce-dossiers.sh`) model ataması yapmıyordu (sicil alan 8 notu: "MODEL_ROUTING_SPEC slot kuralına tabi"). GLM 5.2 emekli ve yasaklıdır.)* Persona dosyası model kopyası TUTMAZ (alan 9: "kaynak: canlı DB — kopya tutulmaz"); beyin gerçeği yalnız DB'dedir, dosyaya model adı yazmak ihlal.
 
 **Katman ilişkisi (çözüm önceliği):**
 - Yeni kolon: `agents.brain_source text NOT NULL DEFAULT 'default'` — `default` (doldurulmamış placeholder) | `slot` (rotalama-atama geçişiyle §4 varsayılan tablosundan türetilmiş) | `ceo_override` (dashboard'dan CEO ataması). Migration: `0021g_agent_brain_source.sql` (0021x ailesi, §22'ye ek).
 - `fn_select_model` genişler: adım 0 — ajanın `brain_source='ceo_override'` ise model = `agents.brain`, kural taraması atlanır; aksi halde §3 zinciri aynen. Korkuluklar HER iki yolda istisnasız (tek istisna: CEO'nun teyitli tek-seferlik istisnası, aşağıdaki CEO dashboard maddesi — B64 decision 17): `banned=true` model hiçbir ajana atanamaz/seçilemez (bugün boş küme — mekanizma migration-only korunur), `mechanical_only` model yalnız mekanik görev-sınıfı role atanabilir (`role_level='ops_agent'`; verdict/onay üretemez), COST_CONTROL hard-stop her seçimi keser.
-- **Rotalama-atama geçişi** (tekdüzeliği gideren adım): E5.5 persona dalgaları bitince tek migration — her ajanın rol sınıfı → 13 slot eşlemesi → §4 varsayılanından `brain` yazılır, `brain_source='slot'`, decision_log'a toplu `routing_change`. Geçişe kadar glm-5.2 görünümü bilinen-placeholder'dır; slot kuralı değişince `brain_source='slot'` ajanlar yeniden çözülür, `ceo_override` ajanlar CEO temizleyene kadar sabit kalır.
+- **Rotalama-atama geçişi** (tekdüzeliği gideren adım): E5.5 persona dalgaları bitince tek migration — her ajanın rol sınıfı → 13 slot eşlemesi → §4 varsayılanından `brain` yazılır, `brain_source='slot'`, decision_log'a toplu `routing_change`. Geçişe kadar `brain_source='default'` satırının beyni bilinen-placeholder'dır — bugün `fn_default_brain()` (`low_cost` koltuğunun modeli, yukarıda); *(tarihsel: 2026-10-10'a dek placeholder `glm-5.2` idi, emekli ve yasaklı)*; slot kuralı değişince `brain_source='slot'` ajanlar yeniden çözülür, `ceo_override` ajanlar CEO temizleyene kadar sabit kalır.
 
 **Dashboard değişim kanalı (TEK yol):**
 - Yüzey: `EmployeeCommandPage`/`EmployeeCard` Control Mode rozeti + palette "X'in modelini değiştir" ([[CEO_COMMAND_CENTER_SPEC]] §8) → `POST /api/control/employees {op:'set_model', employee_id, model_id, rationale}`.
 - fn: `fn_update_agent_brain(employee_id, model_id, rationale)` — doğrulama: katalogda var + `status='active'` + `banned=false` + `mechanical_only` rol-sınıf kontrolü; yazım: `agents.brain` UPDATE + `brain_source='ceo_override'` + audit_log + decision_log(`routing_change`, aktör=`ceo`, gerekçe) + `settings` Broadcast (kernel cache invalidate — §9 yolu). Yanıt `{ok, change_id}`; undo settings_change_log/audit üzerinden. Doğrudan tablo UPDATE'i (psql/PostgREST) control seam dışıdır — audit'siz yazım ihlal.
 - **Eval-önce doktrini (CAIO):** ajan/CAIO-kaynaklı beyin-değişim önerisi eval-önce + kayıtlı yürür (CAIO persona hükmü). CEO dashboard değişimi hook'un ÜSTÜNDEDİR ([[FABLE_5_HOOK_SPEC]] CEO istisnası): a change that breaks no rule applies at once; one that conflicts with a holding rule (a code-kept limit of A-2026-10-14 item 1) is warned about once — *"Bu şu kuralla çelişiyor, yine yapayım mı?"* — and on his "devam" applies at once as a one-time exception, recorded as an `override` decision line while the rule itself stays (B64 decision 17); audit düşer ve CAIO'ya değişim-sonrası eval görevi otomatik kuyruklanır (`v_model_stats` 7 gün izleme; gerileme → bilgi-alert'i + geri-alma önerisi — approval DEĞİL, operasyon bilgisi).
-- Kapsam ayrımı (üstbilgi satırının tekrarı, karışma yasak): bu blok ÜRÜN RUNTIME beyinleridir; inşaat yazarlık hiyerarşisi (model-routing-hierarchy v13: tek yazar oturumu süren model — kadro Opus 5.5, A-2026-09-23 —, yedek yok, Sonnet defedildi, Haiku getir-götür) kim persona/kod yazar sorusudur — iki ağaç ayrıdır.
+- Kapsam ayrımı (üstbilgi satırının tekrarı, karışma yasak): bu blok ÜRÜN RUNTIME beyinleridir; inşaat yazarlık hiyerarşisi (model-routing-hierarchy v19: tek yazar oturumu süren model — kadro Opus 5.5, A-2026-09-23 —, yedek yok, Sonnet defedildi, Haiku getir-götür) kim persona/kod yazar sorusudur — iki ağaç ayrıdır.
 
 ### 4c. Yeni model ekleme + bağlama — dashboard'dan (CEO direktifi 2026-07-12 ~01:30, normatif)
 
@@ -157,8 +157,8 @@ The CEO read his own workforce page and asked *"183 sonnet nedir?"*. The honest 
 
 **The rule: the brain is a FLOOR, never a ceiling.**
 
-- It may **raise** a task's tier — a director whose brain is Opus 5 runs even routine gathering on Opus 5.
-- It may **never lower** one — a Sonnet-brained specialist writing outbound content still runs on Opus 5, because §4d puts that class at L1 and the class always wins.
+- It may **raise** a task's tier — a director whose brain is Opus 5.5 runs even routine gathering on Opus 5.5.
+- It may **never lower** one — a Sonnet-brained specialist writing outbound content still runs on Opus 5.5, because §4d puts that class at L1 and the class always wins.
 
 **Where the ordering lives:** `model_catalog.tier_floor` (`L1` best … `L4`), the best tier a model is allowed to serve. `fn_tier_rank(text)` turns it into a number (unknown → 99, so a typo can never win a comparison) and `fn_effective_tier(task_tier, agent_id)` performs the single comparison. No other place may re-derive quality order. `quality_score` is NOT that source — it is NULL on both Opus 5 and Sonnet and reflects eval history, not seat.
 
@@ -176,9 +176,9 @@ His order of 2026-07-26, closed with *"bunu unutma sakın"*, put two OpenAI mode
 
 Shape, settled with the CEO the same night after he rejected the first proposal (*"sen kendi cevabını üretmeyeceksen kalite düşmez mi ya? opus 5 bu saydıklarından daha güçlü değil mi"*):
 
-1. **Opus 5 writes the answer.** The strongest model in the roster produces the work — it is never demoted to a comparator that merely picks between weaker drafts. That was the original CNCL-01 error.
+1. **Opus 5.5 writes the answer.** The strongest model in the roster produces the work — it is never demoted to a comparator that merely picks between weaker drafts. That was the original CNCL-01 error.
 2. **The seats verify it against the brief.** They receive the answer and the brief and check it against the brief's "done" criteria with evidence — the wrong number, the missing constraint, the unverified claim, the risk not priced, a promise outside the price policy. They never look for a better version and never write a competing deliverable (his words of 2026-10-12, B64 decision 8).
-3. **Opus 5 revises and signs.** Every surviving objection is either fixed or answered in writing. The final artefact is Opus 5's, and the objections plus their disposition are recorded — a gate with no written trail is decoration.
+3. **Opus 5.5 revises and signs.** Every surviving objection is either fixed or answered in writing. The final artefact is Opus 5.5's, and the objections plus their disposition are recorded — a gate with no written trail is decoration.
 
 **Where it fires** (never on every task — a gate that runs everywhere is a tax, not a gate): everything that goes to a client (Sol); valuable delivery, money and contracts (Sol and Fable); and the internal L1 classes that bind the company's direction — `strategy`, `final-approval`, `architecture`, `research.synthesis` when the conclusion drives a purchase or an install — and any halal/risk verdict (Sol; Fable too when money or a contract is in it). The `routing_rules.needs_council` flag stays the switch for internal classes; the trigger for client-bound work is the job's destination, owned by AGENT_ORCHESTRATION (B64). <!-- OPEN: B64 -->
 

@@ -2,7 +2,7 @@
 
 > **Kaynak hüküm:** CEO BEKLENTİLER direktifi (2026-07-10, tam metin: [[00-CEO-DIRECTIVE-BEKLENTILER]]).
 > **Bağlayıcı sözleşme:** `~/.claude/plans/sana-s-yl-orm-konu-al-m-nce-agile-pebble.md` (CEO hizalaması 7 madde + yasak listesi).
-> **Yazar:** korpusun her satırı bizzat, inline yazılır; yazarlık devri yok (model routing **v9**). Güncel yazar: **Opus 5** (CEO 2026-07-25, U20). *Tarihsel: korpusun 31 spec'ini 2026-07-10'da Fable 5 bizzat yazdı.*
+> **Yazar:** korpusun her satırı bizzat, inline yazılır; yazarlık devri yok (model routing **v9**). Güncel yazar: **Opus 5.5** (`claude-opus-5-5`; CEO 2026-09-23, MODEL_ROUTING_SPEC A-2026-09-23). *Tarihsel: 2026-07-25'te yazarlık Opus 5'e geçti (U20).* *Tarihsel: korpusun 31 spec'ini 2026-07-10'da Fable 5 bizzat yazdı.*
 > **Süreç:** Plan-first. Korpus %100 → Fable execution (12 Temmuz son geceye kadar) → **Opus 5 devraldı (2026-07-25, U20 — inşaat yazarlığında yedek model katmanı yok)**.
 > **Port standardı:** 3000 (direktifteki 3100 düzeltildi — kayıtlı uyarlama #U1).
 

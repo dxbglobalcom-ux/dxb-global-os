@@ -21,7 +21,7 @@
 |-------|----------|-------|--------|
 | A Reads | PostgREST (`@supabase/ssr`, RSC'de) + `v_*` view'ları | `authenticated` + CEO claim; RLS | KALIR+GENİŞLER (0019 aggregate açık) |
 | B Mutations | Next.js route handler `/api/control/{alan}/{eylem}` → DB fn | session cookie (CEO) → fn içi rol denetimi | YENİ (0015 emsalinin genellemesi) |
-| C Ajan-içi | MCP gateway (8 grup: approval, audit, cost, crm, dashboard, memory, queue, registry) + LiteLLM | profil-başı least-privilege | KALIR |
+| C Ajan-içi | MCP gateway (9 grup: approval, audit, cost, crm, dashboard, media, memory, queue, registry) + LiteLLM | her el açık, iki duvar arkasında (CEO 2026-10-04, CAPABILITY_ARSENAL §1 item 5); B41'e dek derlenmiş departman profilleri | KALIR |
 
 Ajanlar B sınıfını ASLA çağırmaz (control-plane insan+sistem seamidir); ajan mutasyonları C üzerinden kendi MCP profiline izinli fn'lere gider. Hamza carries the CEO's word to a setting's one door through C, never B (B64 A1 below).
 

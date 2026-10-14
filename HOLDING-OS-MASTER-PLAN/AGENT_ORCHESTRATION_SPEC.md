@@ -92,7 +92,7 @@ Koşu içi her şey OBSERVABILITY tablolarına (buffer + 2sn flush deseni orada)
 
 ## 16. Security
 
-Ajan API erişimi yalnız LiteLLM virtual key (raw provider key hiçbir configde — sert kural, grep hedefi 0), with ONE registered exception: Hermes's own key, his exception, protected (B64 decision 15 <!-- CEO-OK: b64-decision15-hermes-holding-hands-and-eyes-2026-10-14 -->; SECURITY_MODEL O4). Jev rides LiteLLM's `vercel_ai_gateway/` route, its key in LiteLLM's environment like every provider key — no exception. MCP erişimi profil-başı (gateway, mevcut 14 profil KALIR); yeni çalışan profili HR akışında tanımlanır (madde 9), orchestrator profil ATAMAZ. Para-çıkışı: ajan outbox'a yazamaz — tek yol approval kararı (APPROVAL_ENGINE, DOKUNULMAZ).
+Ajan API erişimi yalnız LiteLLM virtual key (raw provider key hiçbir configde — sert kural, grep hedefi 0), with ONE registered exception: Hermes's own key, his exception, protected (B64 decision 15 <!-- CEO-OK: b64-decision15-hermes-holding-hands-and-eyes-2026-10-14 -->; SECURITY_MODEL O4). Jev rides LiteLLM's `vercel_ai_gateway/` route, its key in LiteLLM's environment like every provider key — no exception. MCP erişimi: her el açık, iki duvar arkasında (CEO 2026-10-04, CAPABILITY_ARSENAL §1 item 5 — least privilege'ın yerine, LAW A); B41 inşa edene dek koşan şey gateway'in derlenmiş departman profilleridir; yeni çalışan profili HR akışında tanımlanır (madde 9), orchestrator profil ATAMAZ. Para-çıkışı: ajan outbox'a yazamaz — tek yol approval kararı (APPROVAL_ENGINE, DOKUNULMAZ).
 
 ## 17. Error handling / 18. Retry / 19. Fallback
 

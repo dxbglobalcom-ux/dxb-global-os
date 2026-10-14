@@ -76,7 +76,7 @@ Holding OS'un tüm katmanlarının — çekirdek yürütme (kernel/kuyruk/ajanla
 │ pg-boss 12 (aynı Postgres; session-mode 5432)                        │
 │ Claude Agent SDK ajanları · LiteLLM proxy (virtual keys, hard-stop)  │
 │ packages/outbox-executor (the workers' outward exit; Hermes 2nd)     │
-│ packages/gateway + dxb-mcp (8 MCP, 14 least-privilege profil)        │
+│ packages/gateway + dxb-mcp (9 MCP; her el açık, iki duvar — CAP §1.5)│
 │ packages/memory-router (4-store kompozisyon)                         │
 ├─ VERİ — İKİ MOTOR, ARALARINDA DUVAR (B36, 2026-08-24) ───────────────┤
 │ ŞİRKET MOTORU  supabase_db_DxB_Global_OS · PG17 · public'te 60 tablo │

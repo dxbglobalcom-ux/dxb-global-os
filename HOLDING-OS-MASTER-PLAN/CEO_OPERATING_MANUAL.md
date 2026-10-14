@@ -30,7 +30,7 @@ hedefinizi bir tarife çevirir: cümleniz aynen kalır, yanına işin "bitti" ö
    rozetiyle. Cevap yazarsanız aynı konuşmada devam eder. Sayılar tek bir SQL görünümünden gelir
    (`v_ceo_briefing`) — hiçbir model yazmaz, dolayısıyla uydurma sayı imkânsızdır.
    **Kapatma anahtarı sizde:** `briefing.proactive.enabled` (ayarlar) ve günlük tavan
-   `briefing.proactive.max_per_day`. Aynı brifingi `Intelligence → /intelligence` sayfasında
+   `briefing.proactive.max_per_day`. Aynı brifingi `Komuta → Zekâ Akışı (/intelligence)` sayfasında
    sayfa hâlinde de görürsünüz (kaynak: `v_morning_briefing`).
    **B64 kurulunca brifing değişir:** yalnız istisnalar (kırmızıya dönen, takılan, sizi
    bekleyen), gelen işlerin tek satırı, Önemli mailler, yaklaşan teslim tarihleri, Hermes'in
@@ -46,17 +46,20 @@ hedefinizi bir tarife çevirir: cümleniz aynen kalır, yanına işin "bitti" ö
 4. Gerisi şirketin işi. Merak ettiğinizde `Live (/live)` canlı akışı, `Overview (/overview)`
    özet kokpiti gösterir.
 
-## 3. Yedi navigasyon grubu — ne nerede?
+## 3. Sekiz navigasyon grubu — ne nerede?
 
 | Grup | Ne işe yarar | Sayfalar |
 |---|---|---|
-| **Command** | Günlük yönetim masanız | Overview (özet kokpit, widget'lı) · Hamza ile Sohbet (/chat — sesli hat da burada) · Live (canlı akış) · Intelligence (brifing) · Approvals (onaylar, rozetli) · Alerts (alarmlar, rozetli) · Karşılama (dışarıdan gelen her mail ve mesaj, Müşteriler görünümüyle — B64 kurulunca) |
-| **Organization** | Şirketin insanları | Org (harita) · Companies · Departments (22 departman) · Directors · Employees · HR (yaşam döngüsü) |
-| **Operations** | İşin kendisi | Projects · Workflows · Tasks (rozetli) · Automations · Runtime |
-| **Intelligence** | Beyin ve bilgi | Models · Orchestration · Memory · Knowledge · Library (Kütüphane) · Skills · Plugins · MCP · Revenue (+Objectives/Opportunities/Portfolio) · CRM |
-| **Governance** | Denetim ve kural | Audit · Decisions · Risks · Policies · Permissions · Security |
-| **Finance** | Para | P&L (kazanç önce) · Costs · Tokens · Budgets · Providers · Capacity |
-| **System** | Makine dairesi | Settings · Integrations · Health · Logs · Backups |
+| **Komuta** | Günlük yönetim masanız | Yönetici Özeti (özet kokpit, widget'lı) · Hamza ile Sohbet (/chat — sesli hat da burada) · Canlı Operasyonlar (canlı akış) · Zekâ Akışı (brifing) · Onaylar (rozetli) · Uyarılar (rozetli) · Karşılama (dışarıdan gelen her mail ve mesaj, Müşteriler görünümüyle — B64 kurulunca) |
+| **Organizasyon** | Şirketin insanları | Holding Yapısı (harita) · Şirketler · Departmanlar (22 departman) · Direktörler · Çalışanlar · İK (yaşam döngüsü) |
+| **Operasyon** | İşin kendisi ve para kazanan işler | Projeler · Gelir İstihbaratı · Portföy · CRM · Fırsatlar · Hedefler · İş Akışları · Otomasyonlar |
+| **Zekâ** | Beyin ve bilgi | Modeller · Orkestrasyon · Bellek · Bilgi · Kütüphane · Yetenekler · Eklentiler · MCP Sunucuları |
+| **Yönetişim** | Kural ve karar | Kararlar · Riskler · Politikalar · Yetkiler · Güvenlik |
+| **Finans & Kaynaklar** | Para | Kâr & Zarar — Kazanç · Maliyetler · Tokenlar · Bütçeler · Sağlayıcılar · Kapasite |
+| **Sistem** | Makinenin ayarları | Ayarlar · Entegrasyonlar · Sistem Sağlığı · Yedekler |
+| **Makine Odası** | Robotların okuduğu telemetri | Denetim (Hook ihlalleri sekmesiyle) · Çalışma Zamanı · Kayıtlar |
+
+Görevler menüde yoktur; sayfa drill bağlantılarıyla açılır.
 
 ## 4. Drill-down haritası — "bu sayı nereden geliyor?"
 
@@ -121,7 +124,7 @@ Her alarm satırı olası neden + önerilen aksiyon + sorumlu çalışan taşır
 
 ## 8. Acil durum: Global Pause
 
-`System → Settings (/sys/settings)` → anahtar: **`os.global_pause`**. Açtığınızda şirket
+`Sistem → Ayarlar (/sys/settings)` → anahtar: **`os.global_pause`**. Açtığınızda şirket
 duraklar: yeni koşu başlamaz, dışa dönük hiçbir adım atılmaz. Bakım için ayrıca
 `os.maintenance_mode` vardır. Her iki anahtar da değişiklik günlüğüne yazılır ve GERİ ALINABİLİR
 (undo) — yanlışlıkla açtıysanız aynı yerden kapatın veya değişiklik geçmişinden geri alın.
@@ -219,7 +222,7 @@ in the same conversation.
    SQL view (`v_ceo_briefing`) and no model writes them, so an invented number is impossible.
    **You hold the switch:** `briefing.proactive.enabled` plus the daily ceiling
    `briefing.proactive.max_per_day`. The same briefing is also a page:
-   `Intelligence → /intelligence` (source: `v_morning_briefing`).
+   `Command → Intelligence Feed (/intelligence)` (source: `v_morning_briefing`).
    **With B64's build the briefing changes:** only the exceptions (turned red, stuck, waiting on
    you), one line on what came in, the Important mails, due dates coming close, what Hermes did
    overnight, and the dream's one line ("Dün gece N iş okundu, 3 şey bulundu, 1'i sizi
@@ -234,17 +237,20 @@ in the same conversation.
 4. The rest is the company's job. `Live (/live)` streams operations; `Overview (/overview)`
    is the widget cockpit.
 
-## 3. The seven navigation groups
+## 3. The eight navigation groups
 
 | Group | Purpose | Pages |
 |---|---|---|
-| **Command** | Your daily desk | Overview (widget cockpit) · Chat with Hamza (/chat — the voice line lives here) · Live · Intelligence (briefing) · Approvals (badged) · Alerts (badged) · Reception (every inbound mail and message, with the Customers view — with B64's build) |
-| **Organization** | The company's people | Org · Companies · Departments (22) · Directors · Employees · HR (lifecycle) |
-| **Operations** | The work itself | Projects · Workflows · Tasks (badged) · Automations · Runtime |
-| **Intelligence** | Brain & knowledge | Models · Orchestration · Memory · Knowledge · Library · Skills · Plugins · MCP · Revenue (+Objectives/Opportunities/Portfolio) · CRM |
-| **Governance** | Audit & rules | Audit · Decisions · Risks · Policies · Permissions · Security |
-| **Finance** | Money | P&L (earnings first) · Costs · Tokens · Budgets · Providers · Capacity |
-| **System** | Engine room | Settings · Integrations · Health · Logs · Backups |
+| **Command** | Your daily desk | Executive Overview (widget cockpit) · Chat with Hamza (/chat — the voice line lives here) · Live Operations · Intelligence Feed (briefing) · Approvals (badged) · Alerts (badged) · Reception (every inbound mail and message, with the Customers view — with B64's build) |
+| **Organization** | The company's people | Holding Structure (map) · Companies · Departments (22) · Directors · Employees · HR (lifecycle) |
+| **Operations** | The work itself and the money-making work | Projects · Revenue Intelligence · Portfolio · CRM · Opportunities · Objectives · Workflows · Automations |
+| **Intelligence** | Brain & knowledge | Models · Orchestration · Memory · Knowledge · Library · Skills · Plugins · MCP Servers |
+| **Governance** | Rules & decisions | Decisions · Risks · Policies · Permissions · Security |
+| **Finance & Resources** | Money | P&L — Earnings · Costs · Tokens · Budgets · Providers · Capacity |
+| **System** | The machine's settings | Settings · Integrations · System Health · Backups |
+| **Machine Room** | Telemetry the robots read | Audit (with the Hook Violations tab) · Runtime · Logs |
+
+Tasks has no menu row; the page opens from drill links.
 
 ## 4. Drill-down map — "where does this number come from?"
 

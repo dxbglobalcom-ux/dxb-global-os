@@ -28,7 +28,7 @@ Holding OS'un tüm birinci-sınıf varlıklarının tek şema sözlüğü: mevcu
 | `audit_log` | Denetim | KALIR; control-plane zorunlu hedefi |
 | `routing_rules` | Model/görev yönlendirme | **GENİŞLER** → model_catalog FK (§4.2) |
 | `memory_index`, `memory_embeddings` | Bellek indeksi + pgvector | KALIR |
-| `crm_clients/contacts/deals/requests` | CRM ailesi | KALIR (Outleteuro fazına hazır) |
+| `crm_clients/contacts/deals/requests` | CRM ailesi | KALIR |
 | `tool_pins` | Araç sürüm sabitleme | KALIR; library ailesine FK köprüsü |
 
 ## 4. Yeni tablo aileleri (DDL taslakları — migration numarasıyla)

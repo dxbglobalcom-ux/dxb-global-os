@@ -5,7 +5,7 @@
 
 ## 1. Amaç
 
-Kim (rol/çalışan) neye (kaynak) ne yapabilir (aksiyon) sorusunun TEK normatif matrisi. Yeni güvenlik icat etmez — mevcut dört mekanizmanın (DB rolleri+RLS, SECURITY DEFINER fn'ler, MCP least-privilege profiller, library_grants) tutarlı haritası + CEO'nun yetkileri UI'dan yönetme yolu. İlke: **yetki gerçeği DB ve gateway'dedir; UI ve hook yalnız yansıtır ve erken reddeder.**
+Kim (rol/çalışan) neye (kaynak) ne yapabilir (aksiyon) sorusunun TEK normatif matrisi. Yeni güvenlik icat etmez — mevcut dört mekanizmanın (DB rolleri+RLS, SECURITY DEFINER fn'ler, MCP profilleri — her el açık, iki duvar arkasında, CAPABILITY_ARSENAL §1 item 5, CEO 2026-10-04 —, library_grants) tutarlı haritası + CEO'nun yetkileri UI'dan yönetme yolu. İlke: **yetki gerçeği DB ve gateway'dedir; UI ve hook yalnız yansıtır ve erken reddeder.**
 
 ## 2. Gereksinimler
 
@@ -141,7 +141,7 @@ psql "$DB" -c "SET ROLE agent_profile_x; SELECT count(*) FROM agents;"         #
 
 ## 25. Bağımlılıklar
 
-0021x (kendisi) ← 0020x (role_level enum); 0024x grants (bileşkenin 3. ekseni — 0024x öncesi grant ekseni 'not_provisioned' döner, tavan+profil yaşar). Gateway 14 profil (mevcut); hook pre-gate entegrasyonu.
+0021x (kendisi) ← 0020x (role_level enum); 0024x grants (bileşkenin 3. ekseni — 0024x öncesi grant ekseni 'not_provisioned' döner, tavan+profil yaşar). Gateway derlenmiş profilleri (2026-10-14 ölçümü: 22 departman + 5 çalışan; her el açık, iki duvar arkasında — CAPABILITY_ARSENAL §1 item 5); hook pre-gate entegrasyonu.
 
 ## 26. Riskler / 27. Edge case'ler
 

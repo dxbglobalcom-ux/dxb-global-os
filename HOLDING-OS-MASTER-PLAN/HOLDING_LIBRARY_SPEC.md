@@ -62,7 +62,7 @@ CREATE TABLE library_change_log (            -- append-only
 ## 5. Component yapısı / 6. Backend yapısı
 
 - Kayıt fn ailesi: `control_library_{register_item,update_item,grant,revoke_grant}` — update her seferinde change_log satırı üretir (fn içi, atlanamaz).
-- Profil derleyici: mevcut registry→profil üretim yolu (Phase 7, 14 profil) KALIR; girdisine `library_grants` eklenir — derleme çıktısı değişince profil dosyaları yeniden yazılır + `system` kanalına olay.
+- Profil derleyici: mevcut registry→profil üretim yolu (Phase 7; 2026-10-14 ölçümü 22 departman + 5 çalışan profili; her el açık, iki duvar arkasında — CAPABILITY_ARSENAL §1 item 5) KALIR; girdisine `library_grants` eklenir — derleme çıktısı değişince profil dosyaları yeniden yazılır + `system` kanalına olay.
 - Usage log yazıcı: gateway çağrı yolunda asenkron (pg-boss `library.usage` job; ana çağrıyı BLOKLAMAZ, kayıp tek-satır tolere edilir — sayaçtır, audit değildir).
 
 ## 7. Frontend yapısı

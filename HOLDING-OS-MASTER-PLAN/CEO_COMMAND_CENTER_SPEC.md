@@ -28,7 +28,7 @@ CEO'nun holdingin TAMAMINI — şirket/departman/müdür/çalışan/ajan, proje/
 │ system health · active agents · critical alerts · tarih/saat         │
 │ CEO profili · emergency: Global Pause / Maintenance / quick settings │
 ├─ SOL ──────────┬─ ORTA: Command Canvas ─────────┬─ SAĞ ──────────────┤
-│ 7 grup nav     │ Route'a göre modül içeriği     │ Intelligence Ray:  │
+│ 8 grup nav     │ Route'a göre modül içeriği     │ Intelligence Ray:  │
 │ (§10 listesi)  │ Executive Overview = widget    │ approval özeti     │
 │ daraltılabilir │ grid (§25); diğer sayfalar     │ critical alerts    │
 │ (ikon moduna)  │ modül şablonları               │ live ticker        │
@@ -69,7 +69,7 @@ Kural: view'lar sadece OKUMA; hiçbir dashboard bileşeni tabloya doğrudan yazm
 |---------|--------|------------------|
 | `CommandShell` (5 katman) | SIFIRDAN | tüm (command) route'ları |
 | `CommandBar` + `GlobalSearch` + `CommandPalette` | SIFIRDAN | üst katman |
-| `SideNav` (7 grup, collapse) | SIFIRDAN | sol katman |
+| `SideNav` (8 grup — Makine Odası dahil, A4; collapse) | SIFIRDAN | sol katman |
 | `IntelligenceRail` (approval/alert/ticker/Important) | SIFIRDAN | sağ katman — the Important pane is A8 <!-- OPEN: B64 --> |
 | `AgentDock` | SIFIRDAN | alt katman — Hermes's chip lights while it works and carries its name, nothing more (A9) <!-- OPEN: B10 --> |
 | `WidgetGrid` + `WidgetFrame` + 17 widget (§25 listesi) | SIFIRDAN | Executive Overview + özel dashboard'lar |
