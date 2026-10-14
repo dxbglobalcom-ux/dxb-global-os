@@ -2419,7 +2419,6 @@
     "session": "Opus 5.5 sessions, in conversation, 2026-10-14 (https://claude.ai/code/session_01QPZ2FPLEqX1KUHp6XzW3aC; the second words in https://claude.ai/code/session_01RwXCxHvSGDoBMsrokB9GVN).",
     "where": ".planning/quick/20261012-b64-is-akisi/is-akisi.html (decisions 1-5, 8, 9, 11, 12, 16)"
   },
-
   "b64-plan-his-yes-2026-10-14": {
     "date": "2026-10-14",
     "what": "B64's one-page plan, as written (nine steps: Hamza's three hands first, Hermes when the holding stands), including the five methods taken from Omnigent that his decisions did not carry: an unpriced model counts as 'cost unknown', never 0; thresholds are asked once and remembered; a full subscription shows as full; secrets leave the agent's environment and dxb-mcp checks its caller; a step with money, a contract or identity is checked before it runs and stops at his gate.",
@@ -2459,5 +2458,13 @@
     "conditions": "Said after the example: the Sales memory says a client wants English, the last five jobs were in Turkish; the head accepts the correction; 'ödemeleri cuma onaylıyor' kind of rule comes to him.",
     "session": "Opus 5.5 session, in conversation, 2026-10-14 (https://claude.ai/code/session_01E1CBVUkc4S2qimjaLdThwY).",
     "where": ".planning/quick/20261012-b64-is-akisi/PLAN.md (questions 1-4; the plan's page https://claude.ai/code/artifact/2d0941e8-af63-4313-a656-f532353bc64f)"
+  },
+  "revenue-work-no-language-limit-2026-10-14": {
+    "date": "2026-10-14",
+    "what": "Everything the holding makes for the outside world is made in any language the work needs, with no language limit; the holding leans toward the language that earns the most in a halal way. Made a permanent rule on his word.",
+    "verbatim": "Yani bizim holdingimizin ana iki tane dili var. İngilizce ve Türkçe. Ama yani dolayısıyla biz dünyaya hitap eden bir holding olacağız. Müşteriler dünya çapında olabilir. Her dilden, her içerik, her şey oluşturabilir. İngilizce içerik de olabilir, Türkçe de olabilir. Tamam mı? Daha doğrusu yani hani bu konuda dil şeyi yok. Yani o yüzden nerede para çok kazanıyorsak yani helal yolla o dil üzerine yoğunlaşabiliriz yani. Anladın mı? — and, asked whether it should be a permanent rule for all the holding's revenue work: 'e tabi'",
+    "conditions": "Governs what the holding produces for the outside world; the authoring-language rule (§1) and the CEO-visible surfaces (EN/TR parity) are unchanged.",
+    "session": "Opus 5.5 session dxb-global-os-76, in conversation, 2026-10-14 (https://claude.ai/code/session_018bPg2sb9BZjw14HkbF8N2k).",
+    "where": "HOLDING-OS-MASTER-PLAN/00-CEO-DIRECTIVE-LANGUAGE.md §4 · .planning/board-rows/B43.md (Leg of 2026-10-14)"
   }
 }

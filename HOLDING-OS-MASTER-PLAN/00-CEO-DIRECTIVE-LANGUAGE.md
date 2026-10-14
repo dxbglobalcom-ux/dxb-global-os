@@ -20,3 +20,9 @@
 
 - Session bootstrap reads surface this directive via memory index + this file; violating it is a recorded deviation (master-plan fidelity class).
 - Wave/step closure records from D4b onward are written in English; roadmap table entries follow.
+
+## 4. The language of what the holding sells — no limit
+
+**Ordered 2026-10-14, made permanent on his word** <!-- CEO-OK: revenue-work-no-language-limit-2026-10-14 -->. The holding speaks to the world: its clients can be anywhere, and everything it makes for them — content, products, services, campaigns, client work of every kind — is made in whatever language the work needs, in any language at all. Where the holding chooses where to put its weight, it leans toward the language that earns the most in a halal way. His words: *"biz dünyaya hitap eden bir holding olacağız. Müşteriler dünya çapında olabilir. Her dilden, her içerik, her şey oluşturabilir… nerede para çok kazanıyorsak yani helal yolla o dil üzerine yoğunlaşabiliriz."*
+
+This section governs what the holding produces for the outside world. It changes neither §1 (repo and DB artifacts are written in English, the CEO conversation in Turkish) nor the CEO-visible surfaces, which stay one locale at a time with English and Turkish at parity.
