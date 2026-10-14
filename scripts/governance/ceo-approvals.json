@@ -2418,5 +2418,46 @@
     "conditions": "The first words were said directly after the lead's message naming, as what waited on him, decisions 1-5, 8, 9, 11, 12 and 16 of v14, each 'önerim: evet'; the lead read them as his yes to all ten. In the next session he said he had not really looked at the ten ('Ben onlara hani bakmadım ki tam olarak'), so they were held as not approved; the lead then put the ten before him in plain words, one line each, and he answered with the second words. Nothing is built; the design goes into the owning specs as registered adaptations, then the one-page plan comes to him once.",
     "session": "Opus 5.5 sessions, in conversation, 2026-10-14 (https://claude.ai/code/session_01QPZ2FPLEqX1KUHp6XzW3aC; the second words in https://claude.ai/code/session_01RwXCxHvSGDoBMsrokB9GVN).",
     "where": ".planning/quick/20261012-b64-is-akisi/is-akisi.html (decisions 1-5, 8, 9, 11, 12, 16)"
+  },
+
+  "b64-plan-his-yes-2026-10-14": {
+    "date": "2026-10-14",
+    "what": "B64's one-page plan, as written (nine steps: Hamza's three hands first, Hermes when the holding stands), including the five methods taken from Omnigent that his decisions did not carry: an unpriced model counts as 'cost unknown', never 0; thresholds are asked once and remembered; a full subscription shows as full; secrets leave the agent's environment and dxb-mcp checks its caller; a step with money, a contract or identity is checked before it runs and stops at his gate.",
+    "verbatim": "1'e de evet, planın tamamına evet, devam edin.",
+    "conditions": "Told in the same reply that a yes to the whole plan is a yes to the five Omnigent methods (step 7). Each step is its own job: tests first, the battery, one Sol pass, then a few lines to him.",
+    "session": "Opus 5.5 session, in conversation, 2026-10-14 (https://claude.ai/code/session_01E1CBVUkc4S2qimjaLdThwY).",
+    "where": ".planning/quick/20261012-b64-is-akisi/PLAN.md"
+  },
+  "b64-q1-secrets-out-of-hermes-too-2026-10-14": {
+    "date": "2026-10-14",
+    "what": "Omnigent's method 4 applies to Hermes too: no company key stands in Hermes's environment; Hermes reaches the database through the holding's tool and still does everything.",
+    "verbatim": "1'e de evet, planın tamamına evet, devam edin.",
+    "conditions": "Asked after a short example (a page hiding 'send me your password'; a leaked key cannot be taken back).",
+    "session": "Opus 5.5 session, in conversation, 2026-10-14 (https://claude.ai/code/session_01E1CBVUkc4S2qimjaLdThwY).",
+    "where": ".planning/quick/20261012-b64-is-akisi/PLAN.md (questions 1-4; the plan's page https://claude.ai/code/artifact/2d0941e8-af63-4313-a656-f532353bc64f)"
+  },
+  "b64-q2-studio-creative-seats-opus-2026-10-14": {
+    "date": "2026-10-14",
+    "what": "The studio's creative seats move from Fable 5.1 to Opus 5.5, after a 10-job side-by-side on the studio's own work; Fable stays the backup. The studio's head picks the effort per job: everyday creative work high, big work xhigh, and max for truly important work such as a brand or a big campaign.",
+    "verbatim": "2 ile ilgili Opus 5.5'e geçsin. Aynen. Hangi seviyede olacağına nasıl karar veriliyor? High mı olacak? X high mı? Yoksa max mi? Yani dediğim gibi Fable her zaman yedekte kalıyor. Opus'la ilerliyoruz. … Ya büyük kampanya gibi işlerde, tamam mı, Max de kullanılabilir. Yani gerçekten çok önemli bir iş yapıyoruzdur. Yani marka, anlatabildim mi? Stüdyodan bahsediyorum.",
+    "conditions": "'Aynen' answered the recommendation as written: Opus 5.5 after a 10-job side-by-side.",
+    "session": "Opus 5.5 session, in conversation, 2026-10-14 (https://claude.ai/code/session_01E1CBVUkc4S2qimjaLdThwY).",
+    "where": ".planning/quick/20261012-b64-is-akisi/PLAN.md (questions 1-4; the plan's page https://claude.ai/code/artifact/2d0941e8-af63-4313-a656-f532353bc64f)"
+  },
+  "b64-q3-decision17-covers-everything-2026-10-14": {
+    "date": "2026-10-14",
+    "what": "Decision 17 has no edges: his word over any holding rule — the Islamic boundaries included — is done as a one-time exception after one warning, and the rule stays. For money, a contract or identity his approval is still given on his approval card, not by voice.",
+    "verbatim": "Her şeyi kapsasın abi. Ama kapsa yani şu üçle ilgili sözünüz bir kuralı çelişince. Yani ben bir şeyi bir kural var o kuralı getirdin. Bu kurala göre olmuyor veya bu kuralla ilerleyeceğiz. Ben diyeceğim ki şöyle böyle. O zaman benim sözüm öncelikli yani. Ama kural değişmiyor yani. Anlatabildim mi? Yani sesim tamam onay kartıyla verirsin yani. Okey. … Üçle ilgili, evet, doğru anladın. Benim anayasamın bir önemi yok. Allah'ın anayasasının önemi var. Anladın mı? Ben Müslümanım ve bu şirkette şeriat kanunları geçerli tam olarak. Dolayısıyla ben bir şey söylüyorsam belki İslami olarak ben araştırmışımdır. … ben bir şey söylersem araştırmam sonucunda, anlatabiliyor muyum, sana şey verebilirim, istisna. Dolayısıyla bunu da kapsasın. Çünkü bazen hani siz yani belki bir noktayı karıştırıyor olabilirsiniz, şey yapabilirsiniz İslami olarak. Ben araştırmışımdır, sormuşumdur, şey yapmışımdır.",
+    "conditions": "The recommendation was to keep the Islamic boundaries outside; he chose to include them, giving his reason. The rule itself never changes by an exception.",
+    "session": "Opus 5.5 session, in conversation, 2026-10-14 (https://claude.ai/code/session_01E1CBVUkc4S2qimjaLdThwY).",
+    "where": ".planning/quick/20261012-b64-is-akisi/PLAN.md (questions 1-4; the plan's page https://claude.ai/code/artifact/2d0941e8-af63-4313-a656-f532353bc64f)"
+  },
+  "b64-q4-dept-head-accepts-dept-dream-2026-10-14": {
+    "date": "2026-10-14",
+    "what": "A dream proposal on a department's own memory is accepted by that department's head; a proposal on holding-wide memory or touching his rules comes to him.",
+    "verbatim": "Yok, evet diyorum bu şeyde, örnek dördüncüdeki örnekle ve anlattığın şeye.",
+    "conditions": "Said after the example: the Sales memory says a client wants English, the last five jobs were in Turkish; the head accepts the correction; 'ödemeleri cuma onaylıyor' kind of rule comes to him.",
+    "session": "Opus 5.5 session, in conversation, 2026-10-14 (https://claude.ai/code/session_01E1CBVUkc4S2qimjaLdThwY).",
+    "where": ".planning/quick/20261012-b64-is-akisi/PLAN.md (questions 1-4; the plan's page https://claude.ai/code/artifact/2d0941e8-af63-4313-a656-f532353bc64f)"
   }
 }

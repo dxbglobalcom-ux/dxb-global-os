@@ -165,7 +165,7 @@ Design: `.planning/quick/20261012-b64-is-akisi/is-akisi.html` (v15). Nothing bel
 - **A3 — Three reads (E04, E06).** <!-- CEO-OK: b64-decisions-1-5-8-9-11-12-16-his-yes-2026-10-14 --> The Reception view, the Customers view and the job desk view (§8c). They read the inbound record and the job record ([[DATA_MODEL]] B64 A2, A3); the Reception and Customers screens are drawn for him first.
 - **A4 — The backup pair is set by role (E23).** <!-- CEO-OK: b64-decision14-model-room-2026-10-14 --> `models` sets the pair — main brain ⇄ backup brain — by role, never a per-model fallback chain; `set_fallback`'s path closes with B66.
 - **A5 — Hermes's message door (E24).** <!-- CEO-OK: b64-decision15-hermes-holding-hands-and-eyes-2026-10-14 --> §16: if WhatsApp's or Telegram's channel needs a public endpoint, it is Hermes's gateway alone, on the holding's server; the holding's API stays closed to the outside. G4: the Hermes-only key is the one registered exception to "no raw provider key".
-- **A6 — `PRICE_UNKNOWN` (E29(1); in B64's plan for his yes).** A model with no price is "cost unknown", never 0; a budgeted job's call returns `PRICE_UNKNOWN` and the job waits until the price is entered ([[COST_CONTROL_SPEC]] B64).
+- **A6 — `PRICE_UNKNOWN` (E29(1), decided).** <!-- CEO-OK: b64-plan-his-yes-2026-10-14 --> A model with no price is "cost unknown", never 0; a budgeted job's call returns `PRICE_UNKNOWN` and the job waits until the price is entered ([[COST_CONTROL_SPEC]] B64).
 - **A7 — §24's example** no longer sets `orchestrator.primary_model` to `fable-5`: management work runs on Opus 5.5 (B64 decision 2's guide) and the model keys live in routing.
 
 ## Done definition (bu spec)

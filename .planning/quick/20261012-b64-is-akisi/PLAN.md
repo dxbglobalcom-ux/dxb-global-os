@@ -7,7 +7,7 @@ konuşmada görürsünüz; dışarıdan gelen her mail ve mesaj Karşılama'da c
 **Kanıtı:** `pnpm verify:b64` — tasarımdaki altı senaryo inşaat motorunda baştan sona koşar ve hepsi yeşil yanar.
 
 14 Ekim 2026. Tasarım: sürüm 15, bütün kararlarınız verildi (`is-akisi.html`). Her karar sahibi olan şartnameye
-kayıtlı uyarlama olarak yazıldı.
+kayıtlı uyarlama olarak yazıldı. Planı ve aşağıdaki dört konuyu 14 Ekim'de onayladınız.
 
 ## Sıra — her adım ayrı bir iş, biri bitmeden öbürü başlamaz
 
@@ -49,10 +49,11 @@ kayıtlı uyarlama olarak yazıldı.
    ortamındaki şirket anahtarları çıkarılır, işi ana sürecin aracı yapar. Ajanların kullandığı ortak araç da
    kendisini kimin çağırdığını denetler. Bu adımdaki beş madde (fiyatı bilinmeyenin "bilinmiyor" sayılması,
    eşiklerin sorulması, dolan aboneliğin görünmesi, anahtarların ortamdan çıkması, adımın onay kapısında durması)
-   kararlarınızda yoktu; başka bir sistemden, Omnigent'ten alındı ve bu planla onayınıza sunuluyor.
+   kararlarınızda yoktu; başka bir sistemden, Omnigent'ten alındı ve planla birlikte onayladınız.
 8. **Tek rüya.** Her gece günün işleri okunur; tekrar eden şeyler, çelişkiler ve eskiyen bilgiler bulunur. Öneri
-   hafızayı kendisi değiştirmez; kabul edilince holdingin ve Hermes'in hafızasına işlenir. Bugün hafızayı yalnız
-   siz değiştirirsiniz, bu yüzden her öneri size gelir (4. soru). Sabah ekranınızda tek satır durur. Ölçüsü şu: aynı iş
+   hafızayı kendisi değiştirmez; kabul edilince holdingin ve Hermes'in hafızasına işlenir. Bir bölümün kendi
+   hafızasına dair öneriyi o bölümün başkanı kabul eder; holdingin geneline ya da kurallarınıza dokunan öneri size
+   gelir. Sabah ekranınızda tek satır durur. Ölçüsü şu: aynı iş
    ikinci kez daha iyi ve daha ucuz yapılır.
 9. **Hermes, holding ayağa kalkınca.** Holdingin sunucusu kiralanır; para çıkışı olduğu için onayınızla. Hermes
    Docker'la kurulur ve her özelliği içeride denenir; biri çalışmazsa Docker'sız kurulur. Beyni kurulumda denenir: önce Claude aboneliğiniz, sonra
@@ -76,20 +77,15 @@ bakmadan hiçbir şey "kabul edildi" sayılmaz.
 - İş büyük. En çok zamanı başkanın işi birleştirmesi ve kontrolün gerçek denemesi alır. Bu yüzden her adım ayrı
   biter ve size ayrı gelir.
 
-## Sözünüzü bekleyen dört konu
+## Sözünüz — 14 Ekim
 
-1. **Şirket anahtarlarını ortamdan çıkarmak Hermes'e de uygulansın mı?** Uygulanırsa Hermes veritabanına
-   doğrudan değil, holdingin aracı üzerinden ulaşır ve yine her şeyi yapar. **Önerim: evet.** Gizli bir talimata
-   kanarsa anahtar elinde olmaz. Bir değişiklik geri alınabilir, ama sızan bir anahtar geri alınamaz.
-2. **Stüdyonun yaratıcı koltukları da Opus 5.5'e geçsin mi?** Bugün Fable'dalar (Eylül'deki sözünüz). Tasarım
-   ise "Fable üç yerde durur" diyor: yedek, plan hakemi ve kritik kapının ikinci koltuğu. **Önerim: evet, Opus 5.5
-   high; ama önce stüdyonun 10 işinde ikisi yan yana ölçülsün.** Fable 2,5 kat pahalı ve aynı büyük işi Opus
-   5.5'ten yavaş bitirdi. Yaratıcı işte ikisini henüz yan yana ölçmedik.
-3. **17. karar iki yerde dursun mu?** Sözünüz bir kuralla çelişince bir kerelik istisna yapılıyor. **Önerim:**
-   İslami sınırlar ile para, sözleşme ve kimlik onayı bunun dışında kalsın. İslami sınırda holding kendi işini
-   reddedebilir; bu sizin anayasanız. Onay da sesle değil onay kartınızdan verilir, çünkü sesin size ait olduğu
-   doğrulanamıyor.
-4. **Bir bölümün hafızasına dair rüya önerisini o bölümün başkanı kabul edebilsin mi?** Bugün hafızayı yalnız
-   siz değiştirirsiniz; bu yüzden her gece bütün öneriler size gelir. **Önerim: evet.** Holdingin geneline ya da
-   kurallarınıza dokunan öneri yine size gelir. Tasarımdaki sabah satırı ("3 şey bulundu, 1'i sizi bekliyor")
-   da bunu varsayıyor; bölümün kendi işini en iyi bilen başkanıdır.
+1. **Şirket anahtarları Hermes'te de ortamdan çıkar.** Hermes veritabanına holdingin aracı üzerinden ulaşır ve yine
+   her şeyi yapar.
+2. **Stüdyonun yaratıcı koltukları Opus 5.5'e geçer**, önce stüdyonun 10 işinde Fable ile yan yana ölçülür; Fable
+   yedekte kalır. Seviyeyi stüdyonun başkanı işe göre seçer: günlük işte high, büyük işte xhigh, marka ya da büyük
+   kampanya gibi gerçekten önemli işte max.
+3. **Sözünüz her kuralın önüne geçer, İslami sınırlar dahil.** Holding sizi bir kez uyarır; araştırmanıza dayanarak
+   "devam" derseniz sözünüz o seferlik yapılır, kural değişmez. Para, sözleşme ve kimlik onayı yine onay kartınızdan
+   verilir.
+4. **Bir bölümün kendi hafızasına dair rüya önerisini o bölümün başkanı kabul eder.** Holdingin geneline ya da
+   kurallarınıza dokunan öneri size gelir.

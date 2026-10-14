@@ -27,43 +27,36 @@ not here. What is accepted is read from `scripts/governance/ceo-approvals.json`,
 
 ## Where we left off
 
-2026-10-14 — B64's design, version 15 of his page (https://claude.ai/artifact/FvrKgh2Gr4Bus3rVdfKbAu; source
-`.planning/quick/20261012-b64-is-akisi/is-akisi.html`), is written into the owning specs as registered adaptations, and
-his one-page plan is ready (`.planning/quick/20261012-b64-is-akisi/PLAN.md`); Sol's single pass is checking both. On
-14 Oct, after reading them line by line, he said "Tamam, hepsine evet, devam edin" to decisions 1-5, 8, 9, 11, 12 and 16
-<!-- CEO-OK: b64-decisions-1-5-8-9-11-12-16-his-yes-2026-10-14 -->. Before that: 6, 7 and 10 (13 Oct) and, on 14 Oct, 13 — Opus 5.5 and Fable 5.1 back each other up
-<!-- CEO-OK: b64-decision13-backup-pair-opus-fable-2026-10-14 -->, 14 — the model room
-<!-- CEO-OK: b64-decision14-model-room-2026-10-14 -->, 15 — Hermes is the holding's 24/7 hands and eyes, inside the
-holding, one brain, no restrictions but his approval gate; its brain is tried at install on his Claude subscription
-first, then on a Hermes-only key on the Max plan's 100 $ monthly API credit
-<!-- CEO-OK: b64-decision15-hermes-holding-hands-and-eyes-2026-10-14 -->, 17 — his word over a holding rule is done as
-a one-time exception after one warning <!-- CEO-OK: b64-decision17-his-word-over-a-rule-as-exception-2026-10-14 -->,
-and 18 — one dream for the whole holding, Hermes inside it <!-- CEO-OK: b64-decision18-one-dream-holding-wide-2026-10-14 -->.
-The board's Hermes plan (§2d, B09-B11) was gone over at Ferrari level in the same frame; what he accepted is in those
-rows. The four-tool study is his page "Dört Araç"
-(https://claude.ai/artifact/KVMSsTv4psiR6tK1kVnUEA), brought in line with v14.
-B41's first slice is built and live, waiting for his eye <!-- CEO-OK: b41-design-skills-first-slice-2026-10-13 -->.
-B65-B70 are open for B51's older defects <!-- CEO-OK: b65-b70-older-defects-opened-2026-10-14 -->; B66 closes the old
-fallback whole <!-- CEO-OK: b66-old-fallback-closed-whole-2026-10-14 -->; dxb-team2 offers a side study to the team
-first <!-- CEO-OK: side-study-offered-to-the-team-2026-10-14 -->.
+2026-10-14 — B64's plan is accepted: on 14 Oct he said "1'e de evet, planın tamamına evet, devam edin"
+<!-- CEO-OK: b64-plan-his-yes-2026-10-14 --> — the one-page plan (`.planning/quick/20261012-b64-is-akisi/PLAN.md`,
+his page https://claude.ai/code/artifact/2d0941e8-af63-4313-a656-f532353bc64f), Omnigent's five methods inside it, and
+four answers: company keys leave Hermes's environment too <!-- CEO-OK: b64-q1-secrets-out-of-hermes-too-2026-10-14 -->;
+the studio's creative seats move to Opus 5.5 after a 10-job side-by-side, Fable the backup, max for a brand or a big
+campaign <!-- CEO-OK: b64-q2-studio-creative-seats-opus-2026-10-14 -->; decision 17 covers every rule, the Islamic
+boundaries included, approval still on his card <!-- CEO-OK: b64-q3-decision17-covers-everything-2026-10-14 -->; a
+department's head accepts dream proposals on its own memory <!-- CEO-OK: b64-q4-dept-head-accepts-dept-dream-2026-10-14 -->.
+All 18 design decisions (v15, https://claude.ai/artifact/FvrKgh2Gr4Bus3rVdfKbAu) and these answers are written into the
+owning specs; Sol's pass on them is fixed (`SOL-specs.md`). B41's first slice is built and live, waiting for his eye
+<!-- CEO-OK: b41-design-skills-first-slice-2026-10-13 -->. B65-B70 are open for B51's older defects
+<!-- CEO-OK: b65-b70-older-defects-opened-2026-10-14 -->; B66 closes the old fallback whole
+<!-- CEO-OK: b66-old-fallback-closed-whole-2026-10-14 -->.
 
 ## Next
 
-1. B64: Sol's findings on the specs and the plan fixed → the one-page plan goes to him once, with three questions
-   (Omnigent's method 4 on Hermes, the studio's Fable seats, decision 17's two edges). Hamza's first three hands come
-   first; Hermes when the holding stands.
+1. B64 step 1 — Hamza's three hands: close `fn_update_routing` to anon first, then the goal → brief → the head who
+   takes it, "neresindesiniz", and his effort words through one door. Each of the plan's nine steps is its own job
+   (tests first, battery, one Sol pass, a few lines to him); B65 and B66 finish in step 4. Decision 17 reaching the
+   Islamic boundaries also reaches every persona's §12 ("Halal boundaries are absolute", EMPLOYEE_PERSONA_STANDARD
+   :69) — aligned through the persona gate in step 6.
 2. The `decompose` removal reaches the company only after Sol's pass — the refuter's preflight is repaired first.
 
 ## Waiting on his approval
 
-- B64's one-page plan, once, after Sol's findings are fixed.
 - Hermes, when the holding stands — money out: the holding's server (B09/B11). Its brain is tried there: his Claude
   subscription first (no money out while extra usage stays off), then the Max plan's 100 $ API credit on a Hermes-only
   key, his exception to "no raw provider keys". The family later.
 - Kept for after the holding stands (his word, 14 Oct): where client sites are published is measured and talked then;
   Vercel stays on Hobby, Pro only if Vercel calls it commercial.
-- Security: `fn_update_routing` is EXECUTE-able by anon (closed first in decision 6); every agent child receives the
-  `DXB_*` values (database URL, department keys) and dxb-mcp checks no caller — in B64's plan (steps 1 and 7).
 - Excel turbo (`~/Desktop/Lİnk araştırmaları/Excel-turbo.xlsx`) — nine projects, thirteen decisions.
 - The board rows that wait on him — the board page's "Sizi bekleyenler" lists them.
 

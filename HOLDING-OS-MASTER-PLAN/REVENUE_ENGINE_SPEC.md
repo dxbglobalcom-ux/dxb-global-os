@@ -24,7 +24,7 @@ Give the Holding the missing economic brain: a binding **Objective Contract** fr
 ## 2. Requirements (binding G-rules)
 
 - G1. **Objective is fixed.** The system never reduces/reinterprets a CEO objective; it reports gaps and rotates the portfolio. Only the CEO edits an active objective.
-- G2. **Islamic boundaries are fixed** and machine-checked: no opportunity reaches `pilot` without `halal_verdict='halal'`; haram categories are auto-rejected at intake with recorded reason. Crypto/stock-trading excluded from scanning (CEO exclusion).
+- G2. **Islamic boundaries are fixed** and machine-checked: no opportunity reaches `pilot` without `halal_verdict='halal'`; haram categories are auto-rejected at intake with recorded reason. Crypto/stock-trading excluded from scanning (CEO exclusion). His own word over a rejection, after the one warning, is a one-time exception recorded as an override; the boundary is unchanged (decision 17 <!-- CEO-OK: b64-q3-decision17-covers-everything-2026-10-14 -->).
 - G3. **Hamza proposes, CEO decides** (D4): objectives can be born `proposed` (by orchestrator) but only CEO transition `proposed→active`. Proposals must carry research evidence refs — a proposal without opportunity citations is gate-rejected (anti-laziness rule).
 - G4. **Free-first / zero-capital-first** (D1): while `capital_limit=0`, scoring hard-filters `capital_required_eur=0` opportunities; capital raises are CEO-only.
 - G5. **Never fabricated revenue:** realized numbers come ONLY from `revenue_ledger` (append-only, audited). No projected number may render where a realized number is expected (P3 schema-first stays).
