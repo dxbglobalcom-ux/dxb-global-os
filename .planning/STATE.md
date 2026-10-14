@@ -46,12 +46,10 @@ Pro is not needed (his word): only Jev is used, through the AI Gateway on Hobby.
 
 ## Next
 
-1. B41: the first real design task in the company shows a seat opening a skill (the scheduler log's isolation line
-   reads plugins=4); further slices (more skills, other departments) only on his word.
-2. B64: his answers to decisions 1-5, 8, 9, 11 and 12 → the design into the owning specs as registered adaptations
+1. B64: his answers to decisions 1-5, 8, 9, 11 and 12 → the design into the owning specs as registered adaptations
    (one Sol pass) → the one-page plan, once. His word 2026-10-14: Jev wherever it fits in the holding, not only
    intake — found and designed at xhigh with B64.
-3. The `decompose` removal reaches the company only after Sol's pass — the refuter's preflight is repaired first.
+2. The `decompose` removal reaches the company only after Sol's pass — the refuter's preflight is repaired first.
 
 ## Waiting on his approval
 
