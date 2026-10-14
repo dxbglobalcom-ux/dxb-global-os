@@ -128,7 +128,8 @@ the date. The battery fails on an unregistered approval claim.
   human-eye confirmation` and listed apart. Door: `dxb-verify`.
 - **A fix must not break what stands around it; the tests show it.** Door: `dxb-verify`.
 - **Islamic boundaries are constitutional.** CEO-only. Code may refuse its own work against
-  them; code may never widen or narrow them.
+  them and warns him once; his word after that warning is done once as an exception, the boundary unchanged
+  <!-- CEO-OK: b64-q3-decision17-covers-everything-2026-10-14 -->; code may never widen or narrow them.
 - **Code: the session writes it; inside `dxb-team2` a fork, a `helper-writer` and the `builder`
   seat write too, every piece verified by the lead before it is committed**
   <!-- CEO-OK: helpers-write-code-under-lead-verification-2026-10-03 -->. Other subagents audit,

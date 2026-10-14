@@ -7,7 +7,9 @@ J="$1"; v="$2"
 d="$J/frames/$(basename "${v%.*}")-all"; mkdir -p "$d"
 if [ -z "$(ls "$d"/t*.jpg 2>/dev/null)" ]; then
   ffmpeg -v error -y -i "$v" -vf "fps=1" -q:v 3 "$d/t%04d.jpg" < /dev/null
-  ffmpeg -v error -y -i "$v" -vf "select='gt(scene,0.25)',showinfo" -vsync vfr -q:v 3 "$d/s%04d.jpg" < /dev/null 2> "$d/scene.log"
+  # -v info: showinfo's pts_time lines must reach scene.log, or the cut frames get no time and drop out.
+  # -fps_mode, not -vsync: this machine's ffmpeg no longer knows -vsync (measured 2026-10-14).
+  ffmpeg -v info -y -i "$v" -vf "select='gt(scene,0.25)',showinfo" -fps_mode vfr -q:v 3 "$d/s%04d.jpg" < /dev/null 2> "$d/scene.log"
 fi
 python3 -I - "$d" <<'PY'
 import sys, re, pathlib
