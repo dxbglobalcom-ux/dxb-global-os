@@ -21,8 +21,13 @@ import {
   buildBriefSnapshot,
   classifyLeg,
   legInstruction,
+  levelConfirmation,
+  splitLevelCommand,
   LEG_TASK_CLASS,
+  LEVEL_HOLD_MS,
+  STRATEGY_NOTICE_TR,
   type BriefSnapshot,
+  type ChatEffort,
   type ChatLeg,
 } from "./chat-legs.js";
 
@@ -41,10 +46,12 @@ export interface ChatAnswerInput {
   memoryLines: string[];
   /** The recall failed — Hamza is told so (prompt-core memoryBlock), never handed an empty memory. */
   memoryUnreachable?: boolean;
-  /** Which of Hamza's two legs answers this (CEO directive 2026-07-25). */
+  /** Which of Hamza's legs answers this (CEO directive 2026-07-25; normal leg B64 decision 3). */
   leg: ChatLeg;
-  /** Live company figures — present on the brief leg, null on strategy. */
+  /** Live company figures — present on the brief leg, null on the others. */
   snapshot: BriefSnapshot | null;
+  /** The level his own word holds on this conversation ("Max'a geç"); null = the leg row's effort. */
+  effortOverride: ChatEffort | null;
 }
 
 export interface DrainChatDeps {
@@ -94,7 +101,7 @@ async function defaultAnswer(db: Kysely<DB>, q: ChatAnswerInput): Promise<string
   // quality. Fallback chain keeps a pre-migration deployment answering: leg row
   // -> chat.answer -> voice.answer -> orchestration, every rung L1.
   let r;
-  const chain = [LEG_TASK_CLASS[q.leg], "chat.answer", "voice.answer", "orchestration"];
+  const chain = [...new Set([LEG_TASK_CLASS[q.leg], "chat.answer", "voice.answer", "orchestration"])];
   let routed: ReturnType<typeof route> | null = null;
   for (const task_class of chain) {
     try {
@@ -144,8 +151,9 @@ async function defaultAnswer(db: Kysely<DB>, q: ChatAnswerInput): Promise<string
       ...(companyIsolation() ?? {}),
       model: sdk.model,
       ...(sdk.fallbackModel ? { fallbackModel: sdk.fallbackModel } : {}),
-      // the routing row's effort through the one guard both answer lanes share (prompt-core, C2-2)
-      effort: routeEffort(r.effort),
+      // the routing row's effort through the one guard both answer lanes share (prompt-core, C2-2);
+      // his own level word on this conversation replaces the effort, never the model (B64 decision 3)
+      effort: q.effortOverride ?? routeEffort(r.effort),
       systemPrompt: system,
       tools: [],
       // maxTurns 1 starves the SDK of its final text turn (measured
@@ -164,6 +172,44 @@ async function defaultAnswer(db: Kysely<DB>, q: ChatAnswerInput): Promise<string
   throw new Error("chat answer: stream ended without result");
 }
 
+/** One change of the level held on a conversation, on the record (B64 decision 3). His word is
+ *  his act, passed on by Hamza; the hold ending after 30 quiet minutes is not his act, so it is
+ *  written as the system's, with the message of his that found it ended. */
+async function recordLevelChange(
+  db: Kysely<DB>,
+  c: { session_id: string; old: ChatEffort | null; new: ChatEffort | null; sentence: string; reason: "his_word" | "expired" },
+): Promise<void> {
+  if (c.old === c.new) return;
+  const his = c.reason === "his_word";
+  await db
+    .insertInto("audit_log")
+    .values({
+      actor: his ? "ceo" : "hamza",
+      actor_type: his ? "ceo" : "system",
+      action: "chat.level.changed",
+      task_id: null,
+      payload: JSON.stringify({ ...c, via: "hamza" }),
+    })
+    .execute();
+}
+
+/** His level word held on the conversation ("normal" ends the hold), and recorded. */
+async function holdLevel(
+  db: Kysely<DB>,
+  sessionId: string,
+  level: ChatEffort | "normal",
+  at: Date,
+  sentence: string,
+): Promise<void> {
+  const before = await db.selectFrom("chat_sessions").select(["effort_override"]).where("id", "=", sessionId).executeTakeFirst();
+  const held = level === "normal" ? null : level;
+  await db.updateTable("chat_sessions")
+    .set({ effort_override: held, effort_override_at: held ? at : null })
+    .where("id", "=", sessionId)
+    .execute();
+  await recordLevelChange(db, { session_id: sessionId, old: before?.effort_override ?? null, new: held, sentence, reason: "his_word" });
+}
+
 /** One resident drain pass: answer the OLDEST pending CEO message.
  *  Claim guard: status flips pending→answered/failed atomically at the end;
  *  a competing drain seeing non-pending skips (single scheduler by design). */
@@ -175,7 +221,7 @@ export async function drainChatMessages(deps: DrainChatDeps): Promise<DrainChatR
 
   const row = await db
     .selectFrom("chat_messages")
-    .select(["id", "content", "mode", "session_id"])
+    .select(["id", "content", "mode", "session_id", "created_at"])
     .where("role", "=", "ceo")
     .where("status", "=", "pending")
     .orderBy("created_at", "asc")
@@ -215,7 +261,35 @@ export async function drainChatMessages(deps: DrainChatDeps): Promise<DrainChatR
     return result;
   }
 
+  // B64 decision 3: his level word ("Max'a geç", "High'a in", "normale dön") is held on the
+  // conversation and confirmed in one line — deterministic, like the mute command above. Only his
+  // own pending chat rows reach this drain; voice mirrors and briefings are written answered.
+  // Standing alone it is answered here; at the start of a longer message the rest is answered
+  // below, at the new level, in the same turn.
+  const levelCommand = row.session_id ? splitLevelCommand(row.content) : null;
+  if (levelCommand && !levelCommand.rest && row.session_id) {
+    try {
+      await holdLevel(db, row.session_id, levelCommand.level, row.created_at, row.content);
+      await db.insertInto("chat_messages")
+        .values({ role: "hamza", content: levelConfirmation(levelCommand.level), mode: row.mode, status: "answered", error: null, intent_id: null, session_id: row.session_id })
+        .execute();
+      await db.updateTable("chat_messages").set({ status: "answered" }).where("id", "=", row.id).execute();
+      result.answered += 1;
+    } catch (e) {
+      await db.updateTable("chat_messages")
+        .set({ status: "failed", error: (e as Error).message.slice(0, 300) })
+        .where("id", "=", row.id)
+        .execute();
+      result.failed += 1;
+    }
+    return result;
+  }
+
   try {
+    if (levelCommand && row.session_id) {
+      await holdLevel(db, row.session_id, levelCommand.level, row.created_at, row.content);
+    }
+    const question = levelCommand?.rest || row.content;
     const hamza = await db
       .selectFrom("agents")
       .select(["persona_path"])
@@ -236,15 +310,42 @@ export async function drainChatMessages(deps: DrainChatDeps): Promise<DrainChatR
     const historyRows = await historyQuery.execute();
     const [head, recall] = await Promise.all([
       loadPersonaBody(repoRoot, hamza?.persona_path ?? null),
-      recallForAnswer(db, row.content, "chat", { recall: deps.recall }),
+      recallForAnswer(db, question, "chat", { recall: deps.recall }),
     ]);
     // Which leg — and, on the report leg, the live figures it is allowed to
     // quote. The snapshot is read AFTER the persona/memory fetch so it is as
     // fresh as possible when the model sees it.
-    const leg = classifyLeg(row.content);
+    // Plan mode on the board is plan talk: it never answers on the normal leg.
+    const classified = classifyLeg(question);
+    const leg: ChatLeg = row.mode === "plan" && classified === "normal" ? "strategy" : classified;
     const snapshot = leg === "brief" ? await buildBriefSnapshot(db, lang) : null;
+    // B64 decision 3: the level he holds on this conversation ends on its own after 30 minutes
+    // without a message from him; while it holds, each message of his renews it.
+    const session = row.session_id
+      ? await db.selectFrom("chat_sessions")
+          .select(["effort_override", "effort_override_at", "last_leg"])
+          .where("id", "=", row.session_id)
+          .executeTakeFirst()
+      : undefined;
+    let effortOverride: ChatEffort | null = session?.effort_override ?? null;
+    if (effortOverride && row.session_id) {
+      const since = new Date(row.created_at).getTime() - new Date(session!.effort_override_at ?? 0).getTime();
+      if (since > LEVEL_HOLD_MS) {
+        await recordLevelChange(db, { session_id: row.session_id, old: effortOverride, new: null, sentence: row.content, reason: "expired" });
+        effortOverride = null;
+      }
+      await db.updateTable("chat_sessions")
+        .set(effortOverride
+          ? { effort_override_at: row.created_at }
+          : { effort_override: null, effort_override_at: null })
+        .where("id", "=", row.session_id)
+        .execute();
+    }
+    // Said once, when the conversation moves onto the strategy leg at the row's xhigh; under his own
+    // level word Hamza is not at xhigh, so the sentence would be false and is not said.
+    const notice = leg === "strategy" && !effortOverride && session?.last_leg !== "strategy";
     const answerText = await produce({
-      message: row.content,
+      message: question,
       mode: row.mode,
       lang,
       history: historyRows.reverse().map((m) => ({ role: m.role, content: m.content })),
@@ -253,16 +354,20 @@ export async function drainChatMessages(deps: DrainChatDeps): Promise<DrainChatR
       memoryUnreachable: recall.unreachable,
       leg,
       snapshot,
+      effortOverride,
     });
     await db
       .insertInto("chat_messages")
-      .values({ role: "hamza", content: answerText, mode: row.mode, status: "answered", error: null, intent_id: null, session_id: row.session_id })
+      .values({ role: "hamza", content: [levelCommand ? levelConfirmation(levelCommand.level) : "", notice ? STRATEGY_NOTICE_TR : "", answerText].filter(Boolean).join("\n\n"), mode: row.mode, status: "answered", error: null, intent_id: null, session_id: row.session_id })
       .execute();
     await db
       .updateTable("chat_messages")
       .set({ status: "answered" })
       .where("id", "=", row.id)
       .execute();
+    if (row.session_id) {
+      await db.updateTable("chat_sessions").set({ last_leg: leg }).where("id", "=", row.session_id).execute();
+    }
     result.answered += 1;
   } catch (e) {
     await db

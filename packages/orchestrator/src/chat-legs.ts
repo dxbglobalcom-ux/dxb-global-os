@@ -11,11 +11,18 @@
 //
 // Both legs are L1. §4d is explicit: anything the CEO reads is Opus 5. The legs
 // differ in effort and in what they are handed, not in quality.
+//
+// B64 decision 3 (his yes, 2026-10-14) adds the NORMAL leg as the default:
+// greetings, ordinary talk and questions at medium. Until then every message but
+// a status question reached the strategy leg, which ran at max.
 
 import { sql, type Kysely } from "kysely";
 import type { DB } from "@dxb/shared";
 
-export type ChatLeg = "strategy" | "brief";
+export type ChatLeg = "normal" | "strategy" | "brief";
+
+/** The levels his words can hold on a conversation (chat_sessions.effort_override). */
+export type ChatEffort = "medium" | "high" | "xhigh" | "max";
 
 /**
  * Words that mean "tell me how it is going" in the CEO's actual writing — both
@@ -35,24 +42,123 @@ const BRIEF_MARKERS = [
 ];
 
 /**
+ * Words that mean money, plans, projects, architecture or a decision — both
+ * languages. Deliberately wide: a match sends the message UP to the strategy leg,
+ * and a false match costs only tokens.
+ */
+const STRATEGY_MARKERS = [
+  // Turkish
+  "plan", "strateji", "mimari", "mimar", "proje", "para", "kazan", "gelir", "kâr",
+  "euro", "avro", "dolar", "€", "$", "bütçe", "butce", "yatırım", "yatirim", "fiyat",
+  "satış", "satis", "müşteri", "musteri", "ürün", "urun", "hedef", "fırsat", "firsat",
+  "karar", "öncelik", "oncelik", "sözleşme", "sozlesme", "teklif", "anlaşma", "anlasma",
+  "sponsor", "marka", "açalım", "acalim", "başlayalım", "baslayalim", "işe al", "ise al",
+  // English
+  "strategy", "architecture", "money", "revenue", "profit", "budget", "invest", "price",
+  "pricing", "sales", "customer", "product", "priority", "decide", "decision", "deal",
+  "contract", "earn", "launch", "roadmap", "hire", "should we",
+];
+
+/**
  * Which leg answers this message.
  *
  * The safety rule the CEO set on 2026-07-25 is one-directional: **anything that
- * smells of money or planning goes UP, never down.** So `strategy` is the
- * default and `brief` is the narrow, explicitly-recognised case. Misrouting a
- * status question to the strategy leg costs a few tokens; misrouting a money
- * decision to the report leg costs a decision.
+ * smells of money or planning goes UP, never down.** So a strategy marker wins
+ * even beside a report word, `brief` is the narrow, explicitly-recognised case,
+ * and everything else is ordinary talk on the `normal` leg (B64 decision 3).
+ * Misrouting a chat line to the strategy leg costs a few tokens; misrouting a
+ * money decision down costs a decision.
  */
 export function classifyLeg(message: string): ChatLeg {
   const m = message.toLocaleLowerCase("tr");
-  return BRIEF_MARKERS.some((k) => m.includes(k)) ? "brief" : "strategy";
+  if (STRATEGY_MARKERS.some((k) => m.includes(k))) return "strategy";
+  return BRIEF_MARKERS.some((k) => m.includes(k)) ? "brief" : "normal";
 }
 
-/** Routing task_class per leg — the rows live in routing_rules, not here. */
+/** Routing task_class per leg — the rows live in routing_rules, not here.
+ *  The normal leg answers on `chat.answer`, the board's plain answer class
+ *  before the legs existed (20261014020000 sets it to medium). */
 export const LEG_TASK_CLASS: Record<ChatLeg, string> = {
+  normal: "chat.answer",
   strategy: "chat.strategy",
   brief: "chat.brief",
 };
+
+/** Said first when a conversation moves onto the strategy leg (§24ter, his words). */
+export const STRATEGY_NOTICE_TR = "Plan konuşuyoruz, xhigh'a geçtim; isterseniz max.";
+
+/** How long his level word holds without a message from him in that conversation. */
+export const LEVEL_HOLD_MS = 30 * 60 * 1000;
+
+// The level words, after normalisation (apostrophes dropped: "max'a" → "maxa").
+const LEVEL_WORDS: Record<string, ChatEffort> = {
+  max: "max", maxa: "max", xhigh: "xhigh", xhigha: "xhigh",
+  high: "high", higha: "high", medium: "medium", mediuma: "medium",
+};
+const LEVEL_VERBS = new Set(["geç", "gec", "in", "düşün", "dusun", "çık", "cik"]);
+// Filler allowed around a standalone command ("Hamza, max'a geç lütfen").
+const LEVEL_FILLER = new Set(["hamza", "lütfen", "lutfen", "artık", "artik", "hemen", "şimdi", "simdi", "tamam"]);
+
+/**
+ * His level word, or null. Only a short standalone command counts — every token
+ * is the level, its verb or filler — so a level word inside a longer text (a
+ * pasted mail, a quoted sentence) never changes Hamza's level (§24sexies 5).
+ * `"normal"` is his "normale dön": the held level ends.
+ */
+export function matchLevelCommand(message: string): ChatEffort | "normal" | null {
+  const tokens = message
+    .toLocaleLowerCase("tr")
+    .replace(/['’`´]/g, "")
+    .replace(/[^\p{L}\p{N}\s]/gu, " ")
+    .split(/\s+/)
+    .filter((t) => t && !LEVEL_FILLER.has(t));
+  if (tokens.length !== 2) return null;
+  const [word, verb] = tokens;
+  if (word === "normale" && (verb === "dön" || verb === "don" || verb === "geç" || verb === "gec")) return "normal";
+  const level = LEVEL_WORDS[word];
+  return level && LEVEL_VERBS.has(verb) ? level : null;
+}
+
+/**
+ * His level word at the START of a message, and what he said after it: "Max'a geç, şu planı
+ * düşün" → max, "şu planı düşün". The message is cut at its clause marks; leading clauses of
+ * filler alone ("Hamza,") are passed, and the first clause with words must be the level word
+ * itself — so "geçen hafta max'a geçmiştik" or a level word quoted later in a text changes
+ * nothing. `rest` is "" for a standalone command.
+ */
+export function splitLevelCommand(message: string): { level: ChatEffort | "normal"; rest: string } | null {
+  const clause = /[^,.;:!?\n]*[,.;:!?\n]*/gy;
+  let at = 0;
+  while (at < message.length) {
+    clause.lastIndex = at;
+    const m = clause.exec(message);
+    if (!m || m[0] === "") return null;
+    at += m[0].length;
+    const words = m[0].replace(/[,.;:!?\n]+$/, "");
+    const isFiller = words
+      .toLocaleLowerCase("tr")
+      .split(/\s+/)
+      .every((w) => !w || LEVEL_FILLER.has(w));
+    if (isFiller) continue;
+    const level = matchLevelCommand(words);
+    return level ? { level, rest: message.slice(at).trim() } : null;
+  }
+  return null;
+}
+
+const LEVEL_SUFFIX: Record<ChatEffort, string> = {
+  max: "Max'a geçtim; konu bitene kadar max'tayım.",
+  xhigh: "Xhigh'a geçtim; konu bitene kadar xhigh'dayım.",
+  high: "High'a geçtim; konu bitene kadar high'dayım.",
+  medium: "Medium'a geçtim; konu bitene kadar medium'dayım.",
+};
+
+/** Hamza's one-line confirmation of his level word. Turkish: the words are Turkish (as the mute confirmation). */
+export function levelConfirmation(level: ChatEffort | "normal"): string {
+  return level === "normal"
+    ? "Normale döndüm; sohbette medium, plan konuşunca xhigh."
+    : LEVEL_SUFFIX[level];
+}
 
 export interface BriefSnapshot {
   /** Rendered lines, already in the CEO's language, ready to inject. */
@@ -161,6 +267,12 @@ export async function buildBriefSnapshot(
  * the error, not the emptiness.
  */
 export function legInstruction(leg: ChatLeg, snapshot: BriefSnapshot | null, lang: "tr" | "en"): string {
+  if (leg === "normal") {
+    return [
+      "This is ordinary conversation: a greeting, a question, talk. Answer plainly, like a person.",
+      "If it turns to money, plans or a decision, think it through with him.",
+    ].join("\n");
+  }
   if (leg === "strategy") {
     return [
       "This is the MONEY AND PLANNING leg of the conversation: opportunities, projects,",

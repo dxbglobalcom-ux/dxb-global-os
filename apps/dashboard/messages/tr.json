@@ -35,7 +35,7 @@
     "errorCredentials": "Giriş bilgileri doğrulanamadı.",
     "errorTotp": "Kod doğrulanamadı. Yeniden dene.",
     "errorGeneric": "Bir sorun oluştu. Yeniden dene.",
-    "tagline": "Niyetin icraata dönüştüğü yer.",
+    "tagline": "Hedefin icraata dönüştüğü yer.",
     "taglineSub": "DXB Global holdinginin yapay zekâ yerlisi işletim sistemi."
   },
   "cockpit": {
@@ -144,19 +144,6 @@
     "title": "Tüm görevler",
     "empty": "Henüz görev yok.",
     "showingRecent": "en yeni"
-  },
-  "commandBar": {
-    "trigger": "Komut",
-    "shortcutHint": "⌘K",
-    "inputLabel": "Niyetini yaz",
-    "submit": "Gönder",
-    "recentTitle": "Son niyetler",
-    "errorTitle": "Gönderilemedi — kuyruğa hiçbir şey girmedi",
-    "placeholders": [
-      "Hafta sonu için pazarlama kampanya planı hazırla",
-      "Bu haftanın maliyetlerini departmana göre özetle",
-      "Yeni müşteri karşılama listesi hazırla"
-    ]
   },
   "intent": {
     "received": "alındı",
@@ -1300,7 +1287,7 @@
       "kpiSchedules": "Zamanlanmış iş",
       "kpiTriggeredWf": "Tetikli iş akışı",
       "kpiTriggeredWfOn": "Etkin",
-      "kpiIntents": "İşlenen niyet",
+      "kpiIntents": "İşlenen hedef",
       "schedulesTitle": "pg-boss zamanlamaları",
       "schedulesHint": "Kernel açılışında kaydedilir — tekrarlayan sinir sistemi (kira biçici, hız şalteri, hafıza sıkıştırma, İK taramaları). Salt-okunur: zamanlama kodla değişir, tıkla değil.",
       "schedulesEmpty": "Kayıtlı zamanlama yok.",

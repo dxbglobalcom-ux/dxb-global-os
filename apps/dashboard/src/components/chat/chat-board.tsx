@@ -287,7 +287,7 @@ export function ChatBoard({
       const res = await fetch("/api/intent", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ text: m.content.slice(0, 500), lang }),
+        body: JSON.stringify({ text: m.content, lang }),
       });
       if (res.ok) {
         setDispatchedIds((prev) => new Set(prev).add(m.id));

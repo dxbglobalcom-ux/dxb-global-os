@@ -560,6 +560,11 @@ export interface ChatSessionsTable {
   title: string | null;
   created_at: Generated<Timestamptz>;
   last_message_at: Generated<Timestamptz>;
+  // B64 decision 3 (migration 20261014020000): the level his own word holds on this
+  // conversation, when his last message renewed it, and the leg of the last turn.
+  effort_override: "medium" | "high" | "xhigh" | "max" | null;
+  effort_override_at: Date | null;
+  last_leg: "normal" | "strategy" | "brief" | null;
 }
 
 export interface DB {

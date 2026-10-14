@@ -35,7 +35,7 @@
     "errorCredentials": "Could not verify your credentials.",
     "errorTotp": "Code could not be verified. Try again.",
     "errorGeneric": "Something went wrong. Try again.",
-    "tagline": "Where intent becomes execution.",
+    "tagline": "Where goals become execution.",
     "taglineSub": "AI-native operating system of the DXB Global holding."
   },
   "cockpit": {
@@ -144,19 +144,6 @@
     "title": "All tasks",
     "empty": "No tasks yet.",
     "showingRecent": "most recent"
-  },
-  "commandBar": {
-    "trigger": "Command",
-    "shortcutHint": "⌘K",
-    "inputLabel": "State your intent",
-    "submit": "Send",
-    "recentTitle": "Recent intents",
-    "errorTitle": "Could not submit — nothing was queued",
-    "placeholders": [
-      "Draft a weekend marketing campaign plan",
-      "Summarize this week's costs by department",
-      "Prepare a client onboarding checklist"
-    ]
   },
   "intent": {
     "received": "received",
@@ -1300,7 +1287,7 @@
       "kpiSchedules": "Scheduled jobs",
       "kpiTriggeredWf": "Triggered workflows",
       "kpiTriggeredWfOn": "Enabled",
-      "kpiIntents": "Intents processed",
+      "kpiIntents": "Goals processed",
       "schedulesTitle": "pg-boss schedules",
       "schedulesHint": "Registered at kernel boot — the recurring nervous system (lease reaper, velocity breaker, memory compaction, HR sweeps). Read-only: schedules change with code, not clicks.",
       "schedulesEmpty": "No schedules registered.",

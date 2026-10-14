@@ -247,10 +247,11 @@ describe("sessions — the answer half only sees its own conversation", () => {
       expect(history).not.toContain("BUDGET_THREAD_MARKER");
 
       // The reply belongs to the same conversation, or the thread would answer
-      // itself into the void.
+      // itself into the void. ("should we" is a decision: since B64 the reply may open
+      // with the strategy leg's notice, so the answer is matched at the end.)
       const reply = await sql<{ session_id: string }>`
         SELECT session_id FROM chat_messages
-         WHERE role = 'hamza' AND content = 'answered'
+         WHERE role = 'hamza' AND content LIKE '%answered'
          ORDER BY created_at DESC LIMIT 1
       `.execute(trx);
       expect(reply.rows[0].session_id).toBe(mine.rows[0].id);

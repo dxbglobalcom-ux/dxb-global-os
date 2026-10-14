@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
+import { IntentBody } from "@/lib/intent-body";
 import { createClient } from "@/lib/supabase/server";
 
 // Intent seam (DASH-02): the dashboard's 2nd and last pre-CRM write path —
@@ -7,11 +8,8 @@ import { createClient } from "@/lib/supabase/server";
 // model call, no interpretation here: the kernel-side intake worker owns
 // classify→decompose→dispatch. Column-level grants (migration 0016) force
 // status='received'; anything beyond text/lang/source/actor is unwritable
-// from this session even if this code regressed.
-const IntentBody = z.object({
-  text: z.string().trim().min(1).max(500),
-  lang: z.enum(["tr", "en"]).default("en"),
-});
+// from this session even if this code regressed. The body schema lives in
+// lib/intent-body (his goal has no 500-character cap — B64 A1).
 
 export async function POST(request: Request): Promise<NextResponse> {
   const supabase = await createClient();

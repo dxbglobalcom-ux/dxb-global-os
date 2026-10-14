@@ -37,11 +37,21 @@ export {
   CRITICAL_GATE_TIMEOUT_MS,
   GATE_SETTING_KEY,
 } from "./critical-gate.js";
-export { classifyLeg, buildBriefSnapshot, legInstruction, LEG_TASK_CLASS } from "./chat-legs.js";
+export {
+  classifyLeg,
+  buildBriefSnapshot,
+  legInstruction,
+  LEG_TASK_CLASS,
+  matchLevelCommand,
+  splitLevelCommand,
+  levelConfirmation,
+  STRATEGY_NOTICE_TR,
+  LEVEL_HOLD_MS,
+} from "./chat-legs.js";
 // W2.6 — the proactive morning briefing: the holding opens the conversation.
 export { renderBriefing, readBriefingFacts, deliverMorningBriefing } from "./morning-briefing.js";
 export type { BriefingFacts, BriefingHeadline, RenderedBriefing, BriefingDelivery } from "./morning-briefing.js";
-export type { ChatLeg, BriefSnapshot } from "./chat-legs.js";
+export type { ChatLeg, ChatEffort, BriefSnapshot } from "./chat-legs.js";
 export type {
   CriticalGateInput,
   CriticalGateResult,
