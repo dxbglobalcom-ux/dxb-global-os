@@ -2498,5 +2498,13 @@
     "conditions": "Permission, not acceptance of any result (LAW B).",
     "session": "Opus 5.5 session 8 of 2026-10-14 (f06917d7-291b-4671-bd6e-84a75f1c1bb2), in conversation.",
     "where": "https://claude.ai/code/artifact/63283c85-07f6-4d45-b6bf-242c7abb3e56 · .planning/quick/20261014-tahta-sirasi/ORDER.md"
+  },
+  "watch-links-important-review-2026-10-14": {
+    "date": "2026-10-14",
+    "what": "The dxb-watch-links door gets a section for an important review: his exclusions verbatim in the brief and never evaluated; watching by content type (short reels, Shorts and carousels frame by frame or slide by slide; long talk videos from the whole transcript, a frame only where a repo name, code or table is on screen); two blind readers, Opus 5.5 high and Fable 5.1 high; the lead referees at max, switching itself through operator; moving results into his Excel is done by Sonnet. Not a new skill — the existing door owns it.",
+    "verbatim": "Bir de bunu skill'e çevirelim mi ya, bu inceleme şeyini? Böyle önemli şeyleri bu şekilde inceleyelim, videoları, repoları falan. Ne dersin? || … kısa videolar … Instagram'da … YouTube Reels'lerinde. O zaman kare kare izlenmesi … Karuselleri falan filan. … O zaman ne yapacağız? || evet, ekle",
+    "conditions": "Permanent door text on his yes to the proposal put to him in conversation (one section in dxb-watch-links, not a new skill).",
+    "session": "Opus 5.5 session 9 of 2026-10-14 (1e8f9809-3877-4f3e-b74b-3a19ef3f2c9d), in conversation.",
+    "where": ".claude/skills/dxb-watch-links/SKILL.md §5"
   }
 }

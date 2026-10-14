@@ -68,3 +68,24 @@ reader's `holding_puan`, `oturum_puan`, `oneri`, `ne_bu`, `izlendi`, `okundu` th
 Many links → `python3 -I $K/xlsx.py $J <file.xlsx>` (needs openpyxl in a venv) → `SendUserFile`, and
 two or three lines in Turkish: how many, which few are worth acting on, what waits on his yes.
 A few links → answer in the conversation, plainly. Nothing is installed or started without his word.
+
+## 5. An important review — two blind readers and a referee at max
+
+When he marks links as important ("önemli repo ve skiller var", "bu da önemli") or asks for them to be reviewed
+deeply, the review runs this way <!-- CEO-OK: watch-links-important-review-2026-10-14 -->:
+
+- **His exclusions go into the brief verbatim** ("these are not wanted") and are listed once, never evaluated.
+- **Watching follows the content, not one rule:** a short reel, a Short or a carousel carries its content on
+  the screen — every frame or slide is read (`watchall.sh`, `carousel.py`); a long talk video carries it in the
+  speech — the whole transcript is read, and a frame is taken only where a repo name, code or a table is on the
+  screen. A long video is never watched frame by frame.
+- **Two readers, blind to each other, at high:** Opus 5.5 and Fable 5.1 (`Agent`, `general-purpose`,
+  `model: opus` / `model: fable`, `effort: high`), one shared brief in the job folder; each writes only
+  `reader-<name>.md` and never opens the other's. Each opens every named repo or tool at its real source and
+  places it in the holding (board rank or row) and says whether the construction team should install it.
+- **The lead is the referee, at max:** when both are done the lead switches itself to `/effort max` through
+  `operator` (`operator shot` first: its own terminal in front, his prompt box empty; then the status line's
+  `effort` field read back), merges the two into `MERGE.md`, and names every split and its call.
+- **Cheap work goes to the cheap hand:** moving the merged result into his Excel or page is done by a Sonnet
+  agent (`model: sonnet`), never by a max or high reader.
+- Nothing is installed or started without his word.
