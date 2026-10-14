@@ -27,28 +27,32 @@ not here. What is accepted is read from `scripts/governance/ceo-approvals.json`,
 
 ## Where we left off
 
-2026-10-14 — The board is put in construction order and the holding reviewed top to bottom; the ordered board waits
-on one page for his four answers: https://claude.ai/code/artifact/63283c85-07f6-4d45-b6bf-242c7abb3e56 (the record:
-`.planning/quick/20261014-tahta-sirasi/ORDER.md`; the reviews and his three sources read in the same folder). B64's
-plan is accepted (<!-- CEO-OK: b64-plan-his-yes-2026-10-14 -->); its step 1 is built, Sol-checked and fixed on the
-construction engine only (`.planning/quick/20261014-b64-adim1/SOL.md`); the company is untouched. Today the company has
-no face for him: V1 closed on his word <!-- CEO-OK: v2-location-and-v1-dead-2026-08-01 -->, V2 not drawn, voice off until a dedicated
-microphone <!-- CEO-OK: jarvis-silent-listening-voice-04-okayed-2026-09-14 -->. B41's first slice waits
-for his eye <!-- CEO-OK: b41-design-skills-first-slice-2026-10-13 -->.
+2026-10-14 night — The ordered board is revised and waits on one page for his single answer:
+https://claude.ai/code/artifact/63283c85-07f6-4d45-b6bf-242c7abb3e56 (record: `.planning/quick/20261014-tahta-sirasi/ORDER.md`,
+57 ranks, 11 new rows). Before it, on his word, the Excel's 88 links were read again by two blind readers and merged
+(`.planning/quick/20261014-88-link/MERGE.md`) <!-- CEO-OK: excel-88-links-reviewed-before-the-board-2026-10-14 -->, and the
+two İNCELEMELER reports read <!-- CEO-OK: board-order-page-answers-2-3-4-2026-10-14 -->. Board line 2 is his bench rule:
+parts tested and set aside, the key turned once at the end <!-- CEO-OK: bench-rule-key-turned-once-2026-10-14 -->; the
+company's own engine (`dxb-scheduler`) is stopped until then <!-- CEO-OK: company-engine-stopped-until-the-key-turn-2026-10-14 -->.
+The company database door was already shut in the kernel (measured; R1's finding refuted). B64's plan is accepted
+(<!-- CEO-OK: b64-plan-his-yes-2026-10-14 -->); its step 1 is built and Sol-checked on the construction engine only. The
+company has no face today: V1 closed <!-- CEO-OK: v2-location-and-v1-dead-2026-08-01 -->, V2 not drawn, voice off until a
+dedicated microphone <!-- CEO-OK: jarvis-silent-listening-voice-04-okayed-2026-09-14 -->. B41's first slice waits for his
+eye <!-- CEO-OK: b41-design-skills-first-slice-2026-10-13 -->.
 
 ## Next
 
-1. His answers on the page, then PLAN.md step 6 (his words registered, board law 4 rewritten, the ranks and new rows
-   written, the board page fixed) and step 5 (`pnpm board:order`) — `ORDER.md` "On his yes". No construction before it.
-2. Rank 1, the company database closed to the home network, the moment he says yes to it (one restart).
+1. His yes on the page, then `ORDER.md` "On his yes": his words registered, board law 4 rewritten, Y1-Y11 opened as
+   B71-B81, the ranks written, the board page fixed, `pnpm board:order`. No construction before it.
+2. Then rank 1 (Y1): ports 4000 and 22 into the kernel wall (a root edit — his password), sign-up off.
 
 ## Waiting on his approval
 
-- The ordered board and its 9 new rows; the database door today; the machine awake at night; the two other reports in
-  `~/Desktop/İNCELEMELER/` read too.
+- The revised board order and its 11 new rows (one question on the page).
+- At their rows' turn: the subscription terms' money (9), the server and a Meta business account (33), his Islamic
+  rulings on depiction and the Excel decisions (47-50), where the holding's own site is hosted (48).
 - Hermes, when the holding stands — money out: the holding's server (B09/B11). The family later.
 - Kept for after the holding stands (his word, 14 Oct): where client sites are published; Vercel stays on Hobby.
-- Excel turbo (`~/Desktop/İNCELEMELER/Excel-turbo.xlsx`) — its open decisions come to him at their rows' turn.
 
 ## Where things live
 

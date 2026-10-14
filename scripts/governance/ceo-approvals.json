@@ -2466,5 +2466,37 @@
     "conditions": "Governs what the holding produces for the outside world; the authoring-language rule (§1) and the CEO-visible surfaces (EN/TR parity) are unchanged.",
     "session": "Opus 5.5 session dxb-global-os-76, in conversation, 2026-10-14 (https://claude.ai/code/session_018bPg2sb9BZjw14HkbF8N2k).",
     "where": "HOLDING-OS-MASTER-PLAN/00-CEO-DIRECTIVE-LANGUAGE.md §4 · .planning/board-rows/B43.md (Leg of 2026-10-14)"
+  },
+  "bench-rule-key-turned-once-2026-10-14": {
+    "date": "2026-10-14",
+    "what": "Every part of the holding is tested alone on the construction copy, fitted and set aside — never left running; the construction's own tools never stop; before the key is handed over the whole holding runs once end to end on the construction copy; then the key is turned once and everything starts together. It is what board line 2 ('the first row makes the company breathe') meant, so that line is rewritten to it (LAW A). Made a permanent rule on his word.",
+    "verbatim": "Her şey takılır, her parça test edilir, takılır. En sonunda marşa basılır. Anahtar takılır, çalıştırılır. … Tamam, döndüğü test edildi … Kenara konur. … Sürekli çalıştırma halinde bırakılmaz ki. || Yok ya, o yanlış anlaşılmış. İlk iş şirkete nefes aldırmak dediğim işte bu aslında. Her şeyi ilk iş her şeyi tamamıyla bitirmek, ondan sonra çalıştırmak anlamında dedim. || Evet, sözünüze göre o satır silmeli. || Evet, önerini kabul ediyorum. Kalıcı olsun tabii ki. || İnşaatla ilgili hiçbir şey durmasına gerek yok. Biz Ferrari'nin kendisinden bahsediyoruz. Yani holdingin kendisinden. || evet, bunu da kurala ekle (the whole holding run once end to end on the construction copy before the key)",
+    "conditions": "Governs when the holding's own parts run, not the construction: the construction's tools (backup, board page, operator, research Chrome, guards, vitrin, the construction engine) keep running. The morning jobs move into the key turn.",
+    "session": "Opus 5.5 session 8 of 2026-10-14 (f06917d7-291b-4671-bd6e-84a75f1c1bb2), in conversation.",
+    "where": "HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md line 2 · .planning/quick/20261014-tahta-sirasi/ORDER.md (rank 52, the key turn)"
+  },
+  "company-engine-stopped-until-the-key-turn-2026-10-14": {
+    "date": "2026-10-14",
+    "what": "The company's own engine, the resident scheduler (dxb-scheduler: briefings, revenue scan, HR and memory jobs, the written chat and voice drain), is stopped and disabled until the key turn; the construction's tools keep running. Done 2026-10-14 ~21:20 with `systemctl --user disable --now dxb-scheduler.service` → inactive, disabled.",
+    "verbatim": "Bunları da teslime kadar durdurmak gerekebilir. Evet. Tamam. … Ya para harcayıp harcamaması önemli mi? … Hani o sürekli o tekerleği döner halde bırakmak mantıklı mı yani? || Evet, önerini kabul ediyorum.",
+    "conditions": "Re-enabled only at the key turn (ORDER rank 52). The company database itself stays up; nothing is deleted.",
+    "session": "Opus 5.5 session 8 of 2026-10-14 (f06917d7-291b-4671-bd6e-84a75f1c1bb2), in conversation.",
+    "where": "HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md line 1 · .planning/quick/20261014-88-link/HIS-WORDS.md"
+  },
+  "excel-88-links-reviewed-before-the-board-2026-10-14": {
+    "date": "2026-10-14",
+    "what": "Before the board is written, the 88 links of the Excel are read again against today's holding by two readers blind to each other (Opus 5.5 high, Fable 5.1 high — an exception, on his word, to dxb-team2's no-Fable rule for this piece); the lead merges at max and is the referee; the result reaches him as one Turkish page and ORDER.md is updated from it.",
+    "verbatim": "Bir tane 88 tane üzerine çalışılmış bir Excel var, linklerin. … Tekrar üzerinde geçilmesi, bakılması elzem diye düşünüyorum. … önerim tahtayı yazmadan önce bunun yapılması. … Yani acelemiz yok. … Kafa yorulsun, beyin yorulsun. … çeşitlilik önemli. … İki kişi birden incelesin. (session 7, 1bb71f26-6c5f-4305-9f19-d44a21247dff) || tamam, bu şekilde yapılsın, yeni oturuma ilet (session 7) || ikisi arasındaki hakem sensin. (session 8)",
+    "conditions": "The 37 links he dropped on 2026-10-09 stay dropped. Permission to do the review, not acceptance of its result (LAW B).",
+    "session": "Opus 5.5 session 8 of 2026-10-14 (f06917d7-291b-4671-bd6e-84a75f1c1bb2), in conversation.",
+    "where": ".planning/quick/20261014-88-link/ (BRIEF.md, reader-opus.md, reader-fable.md, MERGE.md) · .planning/quick/20261014-tahta-sirasi/ORDER.md"
+  },
+  "board-order-page-answers-2-3-4-2026-10-14": {
+    "date": "2026-10-14",
+    "what": "His answers to the board-order page's questions 2-4: (2) the company database door — yes (measured already shut in the kernel since 2026-08-24; no restart needed); (3) the machine does NOT stay awake at night — the morning jobs go into the key turn; (4) the two İNCELEMELER reports are read too and feed the same merge. Question 1 (write the board in this order) is asked again with the revised order.",
+    "verbatim": "tmm yap. ama daha önce sorularımı cvpla bitince yaparsın ok. || Evet, üçüncü soru doğru. Dördüncü soru için de önerine evet.",
+    "conditions": "Permission, not acceptance of any result (LAW B).",
+    "session": "Opus 5.5 session 8 of 2026-10-14 (f06917d7-291b-4671-bd6e-84a75f1c1bb2), in conversation.",
+    "where": "https://claude.ai/code/artifact/63283c85-07f6-4d45-b6bf-242c7abb3e56 · .planning/quick/20261014-tahta-sirasi/ORDER.md"
   }
 }
