@@ -29,7 +29,7 @@ not here. What is accepted is read from `scripts/governance/ceo-approvals.json`,
 
 2026-10-14 night — The ordered board is revised and waits on one page for his single answer:
 https://claude.ai/code/artifact/63283c85-07f6-4d45-b6bf-242c7abb3e56 (record: `.planning/quick/20261014-tahta-sirasi/ORDER.md`,
-57 ranks, 11 new rows). Before it, on his word, the Excel's 88 links were read again by two blind readers and merged
+56 ranks, 10 new rows). Before it, on his word, the Excel's 88 links were read again by two blind readers and merged
 (`.planning/quick/20261014-88-link/MERGE.md`) <!-- CEO-OK: excel-88-links-reviewed-before-the-board-2026-10-14 -->, and the
 two İNCELEMELER reports read <!-- CEO-OK: board-order-page-answers-2-3-4-2026-10-14 -->. Board line 2 is his bench rule:
 parts tested and set aside, the key turned once at the end <!-- CEO-OK: bench-rule-key-turned-once-2026-10-14 -->; the
@@ -42,15 +42,15 @@ eye <!-- CEO-OK: b41-design-skills-first-slice-2026-10-13 -->.
 
 ## Next
 
-1. His yes on the page, then `ORDER.md` "On his yes": his words registered, board law 4 rewritten, Y1-Y11 opened as
-   B71-B81, the ranks written, the board page fixed, `pnpm board:order`. No construction before it.
+1. His yes on the page, then `ORDER.md` "On his yes": his words registered, board law 4 rewritten, the new rows opened as
+   B71-B80, the ranks written, the board page fixed, `pnpm board:order`. No construction before it.
 2. Then rank 1 (Y1): ports 4000 and 22 into the kernel wall (a root edit — his password), sign-up off.
 
 ## Waiting on his approval
 
-- The revised board order and its 11 new rows (one question on the page).
-- At their rows' turn: the subscription terms' money (9), the server and a Meta business account (33), his Islamic
-  rulings on depiction and the Excel decisions (47-50), where the holding's own site is hosted (48).
+- The revised board order and its 10 new rows (one question on the page).
+- At their rows' turn: the server and a Meta business account (32), his Islamic rulings on depiction and the Excel
+  decisions (46-49), where the holding's own site is hosted (47).
 - Hermes, when the holding stands — money out: the holding's server (B09/B11). The family later.
 - Kept for after the holding stands (his word, 14 Oct): where client sites are published; Vercel stays on Hobby.
 

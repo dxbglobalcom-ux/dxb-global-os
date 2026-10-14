@@ -51,7 +51,7 @@ it once the key turns. Every price is a vendor page, a survey or a reel's screen
 | 7 | **The holding's own site** + an **AI-visibility report** as the free door-opener | W017 W018 W044 W072 W073 W082 | new row Y11 → B28 | OF |
 | 8 | **Local SEO / AEO retainer** (Ahrefs survey: local SEO avg 1,557 $/month) | W072 W073 W097 W082 W087 | B28 | OF |
 | 9 | **Ad-account audit (read-only) → management** at 10–20 % of spend; a "halal audit" of placements; Ramadan/Eid packs | W096 W064 | B41 slice → B28 | OF |
-| 10 | **Reception / WhatsApp front desk as a service** — B64 step 5's own intake sold to small firms | W062 W116 W120 W123 W066 | B64 #25 → B28 | OF (terms check Y10 first) |
+| 10 | **Reception / WhatsApp front desk as a service** — B64 step 5's own intake sold to small firms | W062 W116 W120 W123 W066 | B64 #24 → B28 | OF |
 | 11 | **WordPress measured speed fix** (150–700 $ one-off) — cheapest door-opener | W122 W027 | B28 | OF |
 | 12 | **Halal-niche WordPress plugins as products** — prayer times, Hijri calendar, zakat calculator, halal schema | W027 W122 | B17 | O (F as reserve) |
 | 13 | **Premium scroll landing pages** — first niche halal travel / umrah operators, halal hotels | W044 W078 W017 W032 | B28 | OF |
@@ -73,7 +73,7 @@ account rotation, crypto/trading parts, riba-sourced advice, scare-number sellin
 
 ## 4. The machine moves — merged
 
-1. **The head's plan carries the tools of each part** — beside each part's model and level (B64 step 2, #14). This is
+1. **The head's plan carries the tools of each part** — beside each part's model and level (B64 step 2, #13). This is
    his "mutlaka" skill distributor (W051, W079, W093): the head asks, B41's chain supplies; never a self-install. OF.
 2. **B64 step 3's real check** takes three ready patterns: the browser-verify loop (W010), "a card closes only when
    its checks pass" (W101), and a per-citation auditor so research tasks can finish (W058 → B69). OF.
@@ -98,17 +98,10 @@ account rotation, crypto/trading parts, riba-sourced advice, scare-number sellin
 
 Already in B64: the human gets only "done" or "needs input"; most tokens go to verification; give the problem, not
 the solution; undo is cheap; the quota windows are shown; the pooled multi-account proxy was rejected.
-**New and real — candidate row Y10, "the subscription terms check"**: the holding runs its agents on Claude
-subscriptions (`.planning/research/STACK.md:144-145`, `mode=subscription`); B64 step 5 sends routine customer replies
-and step 9 puts Hermes on a rented server with a subscription as its brain. The report carries two warnings (serving
-outside users from a subscription is against the terms; subscription logins from server addresses are treated
-harshly — `Theo-Video-Raporu.md:79, :93`). What Anthropic's terms actually say is **UNVERIFIED — not read tonight**.
-A ban would stop every rank at once, so it is L1: read the current terms per seat, then decide which work needs an
-API key or a business plan (money out — his gate). Smaller carries: cache kept on one brain per task and measured
-apart (#18, #27); expiring quota spent on pre-approved read-only work only if the terms allow (#27); a timed undo
-test (#12, #25); a private network such as Tailscale as the way in, never the only lock (#1, #4).
-Not to adopt (named): account rotation, routing through one home address to hide servers, VPN or borrowed cards,
-serving customers from a personal subscription, decision 13's "second subscription at 95 %" until Y10 reads the terms.
+Smaller carries: cache kept on one brain per task and measured
+apart (#17, #26); expiring quota spent on pre-approved read-only work (#26); a timed undo
+test (#11, #24); a private network such as Tailscale as the way in, never the only lock (#1, #4).
+Not to adopt (named): account rotation, routing through one home address to hide servers, VPN or borrowed cards.
 One line for him, not the board: one git worktree per parallel writer in dxb-team2 (a door change — his word).
 
 ## 6. The Anthropic memory talk (helper, read-only) — what is new
@@ -146,20 +139,20 @@ says the memory brain stands on B64 step 8; ORDER's 30 → 31 is the right direc
 | Item | Verdict | Where it goes |
 |---|---|---|
 | X-1 channel line | keep, change: pilots first (bench, Law D), weekly line after; YouTube's own scheduling | Y8 |
-| X-2 client-finding engine | keep, narrow: leads + playbooks, stored as an earlier state of B64's client record | Y9 after #25 |
+| X-2 client-finding engine | keep, narrow: leads + playbooks, stored as an earlier state of B64's client record | Y9 after #24 |
 | X-3 local search package | keep, change: the own site first; entry products = visibility audit, speed fix | Y11 → B28 |
 | X-4 advertising | keep: read-only audit first, through B41's selling slice | B41 → B28 |
-| X-5 AI front desk | keep, change: email Reception for ourselves (#25) → WhatsApp via the Cloud API (#33) → phone (voice off, waits on a mic); Y10 before any customer reply | #25, #33, B28 |
+| X-5 AI front desk | keep, change: email Reception for ourselves (#24) → WhatsApp via the Cloud API (#32) → phone (voice off, waits on a mic) | #24, #32, B28 |
 | X-6 social media | keep: own-account proof first; the DM engine needs the server | B28 / B43 |
 | X-7 the OS itself / sponsors | change: the sponsor screen into B32's drawing list; selling the machine stays X-12 | B32 |
 | X-8 machine progress | merge: it is B41's leg and chain | B41 |
-| X-9 cost reduction | keep as two measurements, no build | B34 → #14 |
+| X-9 cost reduction | keep as two measurements, no build | B34 → #13 |
 | X-10 open the YouTube account | keep, re-timed: at the key turn (his identity step) | Y8 |
 | X-11 own row or under B43 | own row | Y8 |
 | X-12 sell the machine | his question; not now | — |
 | X-13 clipper programme | drop: answered by his word of 2026-08-07 | — |
 | X-14 bought accounts (W077) | his ruling; out by our reading | — |
-| X-15 refund guarantee | his Sharia ruling; meanwhile a cancel-anytime fixed scope, in #26's standard contract | #26 |
+| X-15 refund guarantee | his Sharia ruling; meanwhile a cancel-anytime fixed scope, in #25's standard contract | #25 |
 | X-16 "revenue during construction" sentence | answered by his bench rule of 14 Oct — shown to him once | — |
 | X-17 sponsorship scope | his one sentence at Y8's turn; the sponsorship is not in the ledger | Y8 |
 | X-18 B41 leg "başla" | overtaken: started 2026-10-13 | — |
@@ -171,6 +164,6 @@ says the memory brain stands on B64 step 8; ORDER's 30 → 31 is the right direc
 ## 9. What stays unsettled
 
 Every RPM and service price is a claim until our own data exists · Pocket TTS, LTX-2.5, Wan2GP unmeasured on our card ·
-Hermes' Cloud API adapter read from docs, not tried · what Anthropic's terms say about subscriptions (Y10) ·
+Hermes' Cloud API adapter read from docs, not tried ·
 Islamic rulings that are his alone: depiction in a history channel and in animation (ideas 5, 23), W077, the
 guarantee clause, affiliate checkouts with instalments · the YouTube sponsorship's scope · where the own site is hosted.
