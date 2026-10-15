@@ -54,7 +54,6 @@ microphone <!-- CEO-OK: jarvis-silent-listening-voice-04-okayed-2026-09-14 -->. 
 ## Waiting on his approval
 
 - The ordered board and its 10 new rows, after the walk.
-- The LiteLLM gateway's model credit: every chat model answered HTTP 402 (out of credit) — money out, his call.
 - At their ranks: the Supabase skills install (#3), DataForSEO (#47), Apify beyond the free plan (#48), Google OAuth
   for the Workspace CLI (#24), store accounts for a mobile app; claude-mem's telemetry off (recommended yes).
 - At their rows' turn: the server and a Meta business account (32), his Islamic rulings (46-49), the site's host (47).

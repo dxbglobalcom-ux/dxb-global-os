@@ -2522,5 +2522,21 @@
     "conditions": "Rests on the blind five-question test of 2026-10-15: both 23/25, Claude web 21, toolbox 21, Vane 7. The gateway credit (HTTP 402 behind LiteLLM) was put to him as his call and is not decided by this yes.",
     "session": "Opus 5.5 session 2263590f, in conversation, 2026-10-15.",
     "where": ".claude/skills/dxb-research/SKILL.md · .planning/quick/20261015-arama-testi/"
+  },
+  "scrollcraft-studio-first-2026-10-15": {
+    "date": "2026-10-15",
+    "what": "ScrollCraft's house rule 2: stills and clips come from the holding's own ComfyUI studio (scripts/studio.mjs still|shot — FLUX.1-Krea-dev, MiniMax H3), free and without approval; a paid engine (kie.ai, or a platform the holding subscribes to later) only for what the studio cannot do, inside a budget he approves once per site. Rules 1 and 3 unchanged.",
+    "verbatim": "Belki Hicksfield'da üye oluruz. Oradan kullanırız falan. … Yani şu an KIE.AI bir kenara çok şey yapmaya gerek yok yani. Stüdyoda işin içine katınca ikinci kural şöyle olur demişsin. Bu üç tane şeyden bahsediyor. Bu üçünde tamam. Gerekeni sen yap. Okey. Yani bu konuyla ilgili stüdyoyu bağlama vesaire falan.",
+    "conditions": "The bridge lives in the global skill ~/.claude/skills/scrollcraft/ (outside git); no paid engine is funded by this yes.",
+    "session": "Opus 5.5 session e64c19c8, in conversation, 2026-10-15.",
+    "where": "~/.claude/skills/scrollcraft/SKILL.md rule 2 · scripts/studio.mjs · scripts/doctor.mjs"
+  },
+  "openrouter-set-aside-2026-10-15": {
+    "date": "2026-10-15",
+    "what": "OpenRouter is set aside: no credit is bought, no work is routed to it; the holding works with two model companies, Anthropic and OpenAI. Board row B06 (kimi-3 exam, needed OpenRouter money) is removed. The LiteLLM gateway itself stays as the spec's contract.",
+    "verbatim": "open router'ı tam kenara koy. Gerekmiyor. Evet kenara at onu. … Ya kimi mimi bunları boş ver. Dediğim gibi iki şirketle çalışıyoruz. OpenAI ve Claude.",
+    "conditions": "Measured before his word: no real work through OpenRouter since 2026-07-26; all 213 agents and 39 routing rows on subscriptions. The memory embedding alias embed-small still routes through OpenRouter in vps/litellm/config.yaml; it moves when the V2 memory row is built.",
+    "session": "Opus 5.5 session e64c19c8, in conversation, 2026-10-15.",
+    "where": "HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md (B06 removed) · .planning/STATE.md"
   }
 }

@@ -112,7 +112,7 @@ decisions and his Islamic rulings (46-49).
 ## On his yes (PLAN.md step 6, then step 5)
 
 Register his words (PLAN.md's list + his answers + `HIS-WORDS.md`) in `scripts/governance/ceo-approvals.json`; rewrite
-board law 4; open Y1-Y9 and Y11 as B71-B80 (rows ≤ 1,600 bytes, detail in `.planning/board-rows/`); move B44/B45; close B06;
+board law 4; open Y1-Y9 and Y11 as B71-B80 (rows ≤ 1,600 bytes, detail in `.planning/board-rows/`); move B44/B45; B06 already gone (his word 2026-10-15);
 merge as above; findings and MERGE's carries into their row files; an ordered section on the board;
 `scripts/board/render.mjs`: ranks shown, Section-5 parse fixed, "Bugün yapılanlar"; `scripts/board/order-check.mjs` +
 `pnpm board:order` (test first, red); rulers 6/6; STATE's three headings rewritten.
