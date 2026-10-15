@@ -27,6 +27,8 @@ not here. What is accepted is read from `scripts/governance/ceo-approvals.json`,
 
 ## Where we left off
 
+2026-10-15 — The WhatsApp "Claude Code" group since 5 October was checked: what was already reviewed was skipped, the seven new links (and a note on the two Voxyz posts) went into a new last sheet of his Excel, "Ekim 9-15 linkleri" (record `.planning/quick/20261015-ekim-linkleri/RECORD.md`). Nothing installed; no row of the board changed.
+
 2026-10-14 night — His two YouTube videos and one X post were reviewed the way the 88 links were: two blind readers
 (Opus 5.5 high, Fable 5.1 high), the lead as referee at max, the result written by Sonnet into a new last sheet of his
 Excel, "Yeni eklenenler" (`Excel-turbo.xlsx`, desktop and repo copies identical; record
