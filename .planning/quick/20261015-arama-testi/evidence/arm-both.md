@@ -1,0 +1,21 @@
+## Q1
+answer: Latest release v0.8.162, published 2026-10-15 12:19:26 UTC. Several releases a day: v0.8.161 09:12 UTC the same day, v0.8.160 06:07 UTC.
+sources: https://github.com/heygen-com/hyperframes/releases, https://github.com/heygen-com/hyperframes/releases/tag/v0.8.162
+seconds: 8 · calls: 2
+## Q2
+answer: Starter $19/month billed monthly, ~$17/month billed annually (10% off); the $19 is prepaid usage, pay-as-you-go above; $0.2/CU, 64 GB RAM, 32 concurrent runs, chat support, Bronze Store discount. Free: $0, no card; $5/month usage for Store or own Actors at $0.2/CU, 16 GB Actor RAM, 5 concurrent runs, 5 datacenter proxy IPs, residential $8/GB, SERP $2.5/1,000, community support; free proxy only inside the platform; exceeding $5 blocks access until next cycle; unused credit does not roll over. (Third-party listings from July–August still say $29; the live official page shows $19, confirming a cut reported in week 37 of 2026.)
+sources: https://apify.com/pricing, https://pricingsaas.com/companies/apify/diffs/2026Q1, https://automationatlas.io/answers/apify-pricing-explained-2026/, https://www.costbench.com/software/web-scraping/apify/
+seconds: 29 · calls: 5
+## Q3
+answer: Typical 2026 range for a corporate dental clinic site ≈ 15,000–40,000 TL. Single page 5–15k, 5–10 page corporate 15–30k, 10+ pages 30–50k TL (egeadworks); health/clinic 15–40k, turnkey from 29,900 TL (websitesifiyatlari.tr); low-end Istanbul templates from 5,000 TL one-off, Istanbul agencies 10–25k TL (webhazir); premium annual packages 49,999 / 99,999 / 199,999 TL + VAT (atalay.tech); lilidea package 11,900 ₺; Armut 3,500–111,110 TL across all Istanbul web design jobs. All sellers' own pages; VAT often unclear. Every TL figure confirmed on the fetched page.
+sources: https://egeadworks.com/dis-klinigi-web-sitesi-fiyatlari/, https://websitesifiyatlari.tr/wordpress/saglik-klinik-wordpress-site/, https://webhazir.com/istanbul/dis-hekimi-web-sitesi, https://atalay.tech/sektorel-cozumler/dis-klinikleri-web-sitesi, https://lilidea.com/paket-incele/dis-klinigi-web-tasarimi, https://armut.com/fiyatlari/istanbul-web-tasarim_718_34
+seconds: 114 · calls: 16
+## Q4
+answer: October 2026 mood favours Claude Code (Opus 5.5); long r/codex threads describe a "Codexpocalypse" with Codex loyalists moving over. Why Claude: faster, more work per subscription ("1 Claude account is 2 Codex accounts"), cleaner less over-engineered code, better UI work. Why some stay with Codex: autonomous execution, architecture and complex debugging, fewer refusals (e.g. SSH tasks), quota resets. Complaints about Claude: refusals/guardrails, 5-hour limit. Many use both (Claude writes, Codex reviews); veterans note the lead flips every few months. Vocal threads (four read in full, dated Oct 1–9, 160–308 comments), not a head count.
+sources: https://www.reddit.com/r/codex/comments/1wyjx8u/openai_offers_5x_less_value_than_anthropic_at/, https://www.reddit.com/r/codex/comments/1x07or9/opus_55_sucks_do_not_migrate_to_claude/, https://www.reddit.com/r/codex/comments/1x1b1iy/the_great_codexpocalypse/, https://www.reddit.com/r/ChatGPTCoding/comments/1wve4ny/chatgpt_pro_100month_vs_claude_max_5x_100month/, https://botmonster.com/ai/opus-5-5-is-the-claude-comeback-reddit-was-waiting-for/, https://www.xda-developers.com/codex-cli-felt-safer-than-claude-code-but-it-cost-me-my-flow/
+seconds: 115 · calls: 15
+## Q5
+answer: Top 3 from live Google Maps results today (rating, then review count): 1. Kadıköy Diş Kliniği – Dt. Erdem Can & Ezgi Orhan (Caferağa/Moda) 5.0, 164 reviews; 2. Dentince Kadıköy (Eğitim Mah.) 4.9, 677; 3. Dentway Suadiye (Bağdat Cad. 404) 4.9, 519. Close behind at 4.9: İDentik Bağdat Cad. (475), Turkuaz (373), Dayıoğlu (334). Based on Google's first page (20 clinics), not a full census. Directory snapshots (Zavis, May–Sept) show older lower counts for the same clinics.
+sources: https://www.google.com/maps/search/diş+kliniği+Kadıköy (live results read 2026-10-15), https://www.zavis.ai/directory/istanbul/dental/kadikoy-day-oglu-dental-clinic-istanbul-8c896359, https://www.zavis.ai/directory/istanbul/dental/ozel-identik-ag-z-ve-dis-sagl-g-poliklinigi-bagdat-dental-clinic-istanbul-19630fe8
+seconds: 68 · calls: 4
+TOTAL seconds: 334

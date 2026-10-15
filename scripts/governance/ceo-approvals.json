@@ -2514,5 +2514,13 @@
     "conditions": "Permission, not acceptance of any result (LAW B). Every install waits on his word at its rank.",
     "session": "Opus 5.5 session 9 of 2026-10-14 (1e8f9809-3877-4f3e-b74b-3a19ef3f2c9d), in conversation.",
     "where": ".planning/quick/20261014-iki-video/MERGE.md · Excel-turbo.xlsx sheet 'Yeni eklenenler'"
+  },
+  "research-claude-web-and-toolbox-together-2026-10-15": {
+    "date": "2026-10-15",
+    "what": "The research door: every search, quick or deep, uses both Claude's own WebSearch/WebFetch and the holding's toolbox, never one alone; a number found on one side is checked on the other. A Google Maps places reader (scripts/maps.py) joins the toolbox now. Vane (ItzCrazyKns/Vane) is not taken.",
+    "verbatim": "sen normalde arama yap dediğim zaman hani kendin de Cloud'un web search şeylerini kullanıyorsun. Ve ben şunu istiyorum yani. Arama dediğim zaman hem Cloud'un hem de bizim search'ün ki kullanılsın. Bu bunu da bir test et bakalım … Araştırma kapısı falan çok önemli, aşırı önemli. Hatta en önemli konulardan başında yani geliyor bu. || (after the blind test and the lead's four proposals — Vane not taken, both sides on every search, a Google Maps reader built now, the gateway credit his call) Önerini kabul ediyorum.",
+    "conditions": "Rests on the blind five-question test of 2026-10-15: both 23/25, Claude web 21, toolbox 21, Vane 7. The gateway credit (HTTP 402 behind LiteLLM) was put to him as his call and is not decided by this yes.",
+    "session": "Opus 5.5 session 2263590f, in conversation, 2026-10-15.",
+    "where": ".claude/skills/dxb-research/SKILL.md · .planning/quick/20261015-arama-testi/"
   }
 }
