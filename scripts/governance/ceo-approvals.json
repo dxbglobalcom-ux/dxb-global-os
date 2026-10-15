@@ -2546,5 +2546,21 @@
     "conditions": "Not a law; a condition on the 2026-10-14 order. The engine is started for the trial and stopped after it.",
     "session": "Opus 5.5 session e64c19c8, in conversation, 2026-10-15.",
     "where": "HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md line 1 · .planning/STATE.md"
+  },
+  "memory-embeddings-local-cpu-2026-10-15": {
+    "date": "2026-10-15",
+    "what": "The V2 memory's embeddings: one small local model (embeddinggemma) on the CPU through Ollama, always loaded; writes never wait (pg-boss job with retry); recall falls back to full-text and links when the model is down; no cloud fallback; the studio's GPU gate counts its memory. Built when the V2 memory row is built, in its turn.",
+    "verbatim": "Embedding ile ilgili bir şeyler önerilerini kabul ediyorum. Gerekli olan hani. RAM zaten yükselteceğiz inşallah bu bilgisayarda RAM'ı. Hani iki katına çıkaracağız Allah'ın izniyle. 64 düşünüyorum. || Şu şu sizi bekleyenler kısmında yukarıdaki embedding düzenine evet mi? Evet. … Önerine evet. Bunda not al veya işte sıraya al.",
+    "conditions": "Rests on the CPU measurements of 2026-10-15 (scratchpad bench, three models). Queued with the V2 memory row, not built now.",
+    "session": "Opus 5.5 session e64c19c8, in conversation, 2026-10-15.",
+    "where": "HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md, the V2 memory row"
+  },
+  "studio-comes-back-by-itself-2026-10-15": {
+    "date": "2026-10-15",
+    "what": "The studio service dxb-comfyui comes back by itself after any exit (Restart=always, RestartSec=30; StartLimit 3 in 300 s kept), because earlyoom's SIGTERM is a clean exit and on-failure left it down. Done and tested: SIGTERM to the main process, back and answering in about 36 s.",
+    "verbatim": "Stüdyonun kendini geri açması konusunda evet.",
+    "conditions": "A deliberate systemctl stop still stops it.",
+    "session": "Opus 5.5 session e64c19c8, in conversation, 2026-10-15.",
+    "where": "~/.config/systemd/user/dxb-comfyui.service"
   }
 }
