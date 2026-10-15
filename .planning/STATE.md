@@ -27,42 +27,38 @@ not here. What is accepted is read from `scripts/governance/ceo-approvals.json`,
 
 ## Where we left off
 
-2026-10-15 — The WhatsApp "Claude Code" group since 5 October was checked: what was already reviewed was skipped, the seven new links (and a note on the two Voxyz posts) went into a new last sheet of his Excel, "Ekim 9-15 linkleri" (record `.planning/quick/20261015-ekim-linkleri/RECORD.md`). Nothing installed; no row of the board changed.
-
-2026-10-14 night — His two YouTube videos and one X post were reviewed the way the 88 links were: two blind readers
-(Opus 5.5 high, Fable 5.1 high), the lead as referee at max, the result written by Sonnet into a new last sheet of his
-Excel, "Yeni eklenenler" (`Excel-turbo.xlsx`, desktop and repo copies identical; record
-`.planning/quick/20261014-iki-video/MERGE.md`) <!-- CEO-OK: two-videos-reviewed-into-a-new-excel-sheet-2026-10-14 -->.
-Nothing was installed. The dxb-watch-links door now carries that review as its §5
-<!-- CEO-OK: watch-links-important-review-2026-10-14 -->. The ordered board still waits on one page for his single
-answer: https://claude.ai/code/artifact/63283c85-07f6-4d45-b6bf-242c7abb3e56 (record:
-`.planning/quick/20261014-tahta-sirasi/ORDER.md`). Before it, on his word, the Excel's 88 links were read again and merged
-(`.planning/quick/20261014-88-link/MERGE.md`) <!-- CEO-OK: excel-88-links-reviewed-before-the-board-2026-10-14 -->, and the
-two İNCELEMELER reports read <!-- CEO-OK: board-order-page-answers-2-3-4-2026-10-14 -->. Board line 2 is his bench rule:
-parts tested and set aside, the key turned once at the end <!-- CEO-OK: bench-rule-key-turned-once-2026-10-14 -->; the
-company's own engine (`dxb-scheduler`) is stopped until then <!-- CEO-OK: company-engine-stopped-until-the-key-turn-2026-10-14 -->.
-B64's plan is accepted (<!-- CEO-OK: b64-plan-his-yes-2026-10-14 -->); its design page is at version 16; step 1 is built
-and Sol-checked on the construction engine only. The company has no face today: V1 closed
-<!-- CEO-OK: v2-location-and-v1-dead-2026-08-01 -->, V2 not drawn, voice off until a dedicated microphone
-<!-- CEO-OK: jarvis-silent-listening-voice-04-okayed-2026-09-14 -->. B41's first slice waits for his eye
+2026-10-15 — Before his yes on the ordered board, he and the lead are walking the "Yeni eklenenler" sheet of his
+Excel one row at a time; every decision and his words are in `.planning/quick/20261014-tahta-sirasi/HIS-WORDS-2026-10-15.md`.
+YE01-YE16 decided (Supabase skills trimmed at #3; HyperFrames at #45, latest version behind a 5-second render test;
+Claude Security one narrow scan at #4; Humanizer at #45; Apify free plan at #48; Expo, Stripe and OpenSEO skills on
+the shelf `~/.local/share/dxb/skills/`; ScrollCraft merged to upstream 0.3.1 with our house rules; Playwright CLI,
+No AI Slop, CodeBurn install and Vane not taken). His Vane link led to a blind search test; on his yes the research
+door now uses Claude's web search and the toolbox together and gained a Google Maps reader (960ae054, Sol fixes
+9720ceca). The sheet "Ekim 9-15 linkleri" was added by a peer session (`.planning/quick/20261015-ekim-linkleri/`).
+Board line 2 is his bench rule <!-- CEO-OK: bench-rule-key-turned-once-2026-10-14 -->; the company engine stays stopped
+until the key turn <!-- CEO-OK: company-engine-stopped-until-the-key-turn-2026-10-14 -->. The company has no face
+today: V1 closed <!-- CEO-OK: v2-location-and-v1-dead-2026-08-01 -->, V2 not drawn, voice off until a dedicated
+microphone <!-- CEO-OK: jarvis-silent-listening-voice-04-okayed-2026-09-14 -->. B41's first slice waits for his eye
 <!-- CEO-OK: b41-design-skills-first-slice-2026-10-13 -->.
 
 ## Next
 
-1. His yes on the board page, then `ORDER.md` "On his yes": his words registered, board law 4 rewritten, the new rows
-   opened as B71-B80, the ranks written (each rank's carries take the tools of "Yeni eklenenler" from MERGE §3), the
-   board page fixed, `pnpm board:order`. No construction before it.
-2. Then rank 1 (Y1): ports 4000 and 22 into the kernel wall (a root edit — his password), sign-up off.
+1. Finish the walk: YE17 (claude-mem) to the sheet's last row, then the "Ekim 9-15 linkleri" sheet if he wants it.
+2. ScrollCraft's images: propose a bridge from `kie.mjs still|shot` to our ComfyUI studio (FLUX still, MiniMax H3
+   clip — measured free and working), kie.ai only where the studio falls short.
+3. A plan at xhigh, his order: how ChatGPT on Steroids (installed) joins the holding as an agent and as the stand-in
+   when Sol's quota runs out.
+4. Then the board page with every decision of the walk, his one yes, and `ORDER.md` "On his yes". No construction
+   before it except what he ordered in the walk.
 
 ## Waiting on his approval
 
-- The revised board order and its 10 new rows (one question on the page).
-- "Yeni eklenenler": each install at its rank (the first, the Supabase skills, when rank 3 starts); claude-mem's telemetry,
-  measured on by default — turn it off? (recommendation: yes); deleting the X1 transcription's 268 MB cache.
-- At their rows' turn: the server and a Meta business account (32), his Islamic rulings on depiction and the Excel
-  decisions (46-49), where the holding's own site is hosted (47).
-- Hermes, when the holding stands — money out: the holding's server (B09/B11). The family later.
-- Kept for after the holding stands (his word, 14 Oct): where client sites are published; Vercel stays on Hobby.
+- The ordered board and its 10 new rows, after the walk.
+- The LiteLLM gateway's model credit: every chat model answered HTTP 402 (out of credit) — money out, his call.
+- At their ranks: the Supabase skills install (#3), DataForSEO (#47), Apify beyond the free plan (#48), Google OAuth
+  for the Workspace CLI (#24), store accounts for a mobile app; claude-mem's telemetry off (recommended yes).
+- At their rows' turn: the server and a Meta business account (32), his Islamic rulings (46-49), the site's host (47).
+- Hermes, when the holding stands — the holding's server (B09/B11). Kept for later: where client sites are published.
 
 ## Where things live
 
