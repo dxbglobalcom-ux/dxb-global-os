@@ -131,8 +131,8 @@ def _place(p: list) -> dict:
     website, phone, category = _at(p, 7, 0), _at(p, 178, 0, 0), _at(p, 13, 0)
     return {
         "name": name,
-        "rating": rating if isinstance(rating, (int, float)) else None,
-        "reviews": reviews if isinstance(reviews, int) else None,
+        "rating": rating if isinstance(rating, (int, float)) and not isinstance(rating, bool) and 0 <= rating <= 5 else None,
+        "reviews": reviews if isinstance(reviews, int) and not isinstance(reviews, bool) and reviews >= 0 else None,
         "category": category if isinstance(category, str) else None,
         "address": address,
         "phone": phone if isinstance(phone, str) else None,
@@ -148,7 +148,7 @@ def parse(body: str) -> list[dict]:
     if data is None:
         _check_consent("", body)
         raise MapsError(4, "maps.py: yanıt Maps verisi değil ()]}' + JSON yok) — ayrıştırılamadı")
-    places = [_place(e[1]) for e in _results(data)]
+    places = [_place(e[1]) for e in _results(data) if e[1][11].strip()]     # a place without a name is no place
     if not places:
         raise MapsError(4, "maps.py: yanıtta yer yok — boş sonuç başarı sayılmaz")
     return places

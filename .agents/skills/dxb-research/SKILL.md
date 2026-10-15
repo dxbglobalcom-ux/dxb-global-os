@@ -27,13 +27,19 @@ S="/home/dxb/DxB Global OS/.agents/skills/dxb-research"; export PATH="$S/bin:$PA
   every single-source claim — and the writer folds what they found into the final answer. You write it
   yourself only for a quick question.
 
+**Both sides, every time** <!-- CEO-OK: research-claude-web-and-toolbox-together-2026-10-15 -->: on either road a
+search uses Claude's own WebSearch/WebFetch AND this toolbox, never one alone, and a number found on one side is
+checked on the other — the official page settles a disagreement. Measured 2026-10-15 on five questions, judged
+blind: both together 23/25, Claude web alone 21, the toolbox alone 21 (`.planning/quick/20261015-arama-testi/`).
+
 ## Where to look — one command per platform
 
 | Platform | Command |
 |---|---|
 | Everything at once (40 channels, seconds) | `bash "$S/scripts/sweep.sh" "<3-6 words>" <outdir> --tier max --pages 8` |
 | Web | WebSearch · `bash "$S/scripts/mcpx.sh" exa\|tavily\|parallel\|youcom\|firecrawl "<q>" 10` |
-| Google | `python3 "$S/scripts/hidden.py" google "<q>"` |
+| Google | `opencli google search "<q>" -f yaml` · `python3 "$S/scripts/hidden.py" google "<q>"` (Google itself is not read signed-in; it falls to Startpage, then Brave, by design) |
+| Google Maps (places, ratings, review counts) | `python3 "$S/scripts/maps.py" "<q>" [--limit N] [--json]` |
 | X | `opencli twitter search "<q>" -f yaml` · a thread: `opencli twitter thread <url> -f yaml` |
 | YouTube | `opencli youtube search "<q>" -f yaml` · `opencli youtube transcript <url> -f plain` · `opencli youtube comments <url> --limit 100 -f yaml` |
 | TikTok | `opencli tiktok search "<q>" --limit 20 -f yaml` |

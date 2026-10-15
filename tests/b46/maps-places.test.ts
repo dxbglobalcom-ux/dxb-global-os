@@ -99,4 +99,37 @@ describe("maps.py — places from Google Maps' own data", () => {
     expect(r.code).not.toBe(0);
     expect(r.out).toBe("");
   });
+
+  // empty-name / out-of-range / mixed-names are small built answers in the same `)]}'` + JSON shape:
+  // the results list at slot 64, each place a 179-slot list holding only a name (11) and rating/reviews (4.7/4.8).
+  it("a place without a name is no place: exit 4, nothing on stdout, one line saying why", () => {
+    const r = maps(["x", "--from-file", join(FIX, "empty-name.json.txt")]);
+    expect(r.code).toBe(4);
+    expect(r.out).toBe("");
+    expect(r.err.trim().split("\n")).toHaveLength(1);
+  });
+
+  it("a rating outside 0..5 or a negative review count is not printed as data — the field is null", () => {
+    const r = maps(["x", "--from-file", join(FIX, "out-of-range.json.txt"), "--json"]);
+    expect(r.code, r.err).toBe(0);
+    const places = JSON.parse(r.out) as Place[];
+    expect(places).toHaveLength(2);
+    expect(places[0].name).toBe("Klinik A");
+    expect(places[0].rating).toBeNull();
+    expect(places[0].reviews).toBe(12);
+    expect(places[1].name).toBe("Klinik B");
+    expect(places[1].rating).toBe(4.5);
+    expect(places[1].reviews).toBeNull();
+    const plain = maps(["x", "--from-file", join(FIX, "out-of-range.json.txt")]);
+    expect(plain.out).not.toContain("100");
+    expect(plain.out).not.toContain("-5");
+  });
+
+  it("among a named place and a blank-named one, only the named place is printed", () => {
+    const r = maps(["x", "--from-file", join(FIX, "mixed-names.json.txt")]);
+    expect(r.code, r.err).toBe(0);
+    const lines = r.out.trim().split("\n");
+    expect(lines).toHaveLength(1);
+    expect(lines[0]).toContain("Klinik A");
+  });
 });
