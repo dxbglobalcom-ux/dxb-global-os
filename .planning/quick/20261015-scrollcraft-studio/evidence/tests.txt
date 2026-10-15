@@ -1,0 +1,166 @@
+TAP version 13
+# Subtest: --ar maps to ~2 MP sizes, both sides multiples of 16
+ok 1 - --ar maps to ~2 MP sizes, both sides multiples of 16
+  ---
+  duration_ms: 6.247258
+  type: 'test'
+  ...
+# Subtest: still: posts a FLUX.1-Krea-dev graph carrying the prompt, polls, downloads the file
+ok 2 - still: posts a FLUX.1-Krea-dev graph carrying the prompt, polls, downloads the file
+  ---
+  duration_ms: 193.620147
+  type: 'test'
+  ...
+# Subtest: still --ref: no local edit model -> exit 3 STUDIO_CANNOT, nothing posted
+ok 3 - still --ref: no local edit model -> exit 3 STUDIO_CANNOT, nothing posted
+  ---
+  duration_ms: 21.366193
+  type: 'test'
+  ...
+# Subtest: shot: H3 FL2VA graph with first+last frame staged into input, 17k+5 frames, audio stripped
+ok 4 - shot: H3 FL2VA graph with first+last frame staged into input, 17k+5 frames, audio stripped
+  ---
+  duration_ms: 361.455799
+  type: 'test'
+  ...
+# Subtest: shot: staged frames are scaled/cropped to the clip size
+ok 5 - shot: staged frames are scaled/cropped to the clip size
+  ---
+  duration_ms: 241.489754
+  type: 'test'
+  ...
+# Subtest: shot --dur 20: beyond the studio's 15 s -> exit 3 STUDIO_CANNOT
+ok 6 - shot --dur 20: beyond the studio's 15 s -> exit 3 STUDIO_CANNOT
+  ---
+  duration_ms: 19.670839
+  type: 'test'
+  ...
+# Subtest: gate: low RAM -> exit 4 STUDIO_BUSY naming the condition, nothing posted
+ok 7 - gate: low RAM -> exit 4 STUDIO_BUSY naming the condition, nothing posted
+  ---
+  duration_ms: 39.558106
+  type: 'test'
+  ...
+# Subtest: gate: card busy with ANOTHER process -> exit 4
+ok 8 - gate: card busy with ANOTHER process -> exit 4
+  ---
+  duration_ms: 108.941845
+  type: 'test'
+  ...
+# Subtest: gate: ComfyUI's own resident model memory does not refuse the next job
+ok 9 - gate: ComfyUI's own resident model memory does not refuse the next job
+  ---
+  duration_ms: 184.631921
+  type: 'test'
+  ...
+# Subtest: gate: low swap -> exit 4
+ok 10 - gate: low swap -> exit 4
+  ---
+  duration_ms: 37.219636
+  type: 'test'
+  ...
+# Subtest: gate: ComfyUI queue busy -> exit 4
+ok 11 - gate: ComfyUI queue busy -> exit 4
+  ---
+  duration_ms: 41.48539
+  type: 'test'
+  ...
+# Subtest: ComfyUI execution error -> exit 1 naming the node and the message
+ok 12 - ComfyUI execution error -> exit 1 naming the node and the message
+  ---
+  duration_ms: 180.921583
+  type: 'test'
+  ...
+# Subtest: ComfyUI validation error at submit -> exit 1 naming the node error
+ok 13 - ComfyUI validation error at submit -> exit 1 naming the node error
+  ---
+  duration_ms: 144.329757
+  type: 'test'
+  ...
+# Subtest: probe: one line each for server, card, queue, models and gate
+ok 14 - probe: one line each for server, card, queue, models and gate
+  ---
+  duration_ms: 172.962552
+  type: 'test'
+  ...
+# Subtest: only 127.0.0.1 is contacted
+ok 15 - only 127.0.0.1 is contacted
+  ---
+  duration_ms: 20.277476
+  type: 'test'
+  ...
+# Subtest: gate: a missing, invalid or inconsistent reading refuses (exit 4), it never passes
+ok 16 - gate: a missing, invalid or inconsistent reading refuses (exit 4), it never passes
+  ---
+  duration_ms: 447.288248
+  type: 'test'
+  ...
+# Subtest: gate: a foreign GPU process started from ComfyUI's folder is counted (only the verified server is discounted)
+ok 17 - gate: a foreign GPU process started from ComfyUI's folder is counted (only the verified server is discounted)
+  ---
+  duration_ms: 109.430403
+  type: 'test'
+  ...
+# Subtest: gate: when the ComfyUI server process cannot be verified, nothing is discounted
+ok 18 - gate: when the ComfyUI server process cannot be verified, nothing is discounted
+  ---
+  duration_ms: 569.947822
+  type: 'test'
+  ...
+# Subtest: a redirect from ComfyUI is refused, never followed
+ok 19 - a redirect from ComfyUI is refused, never followed
+  ---
+  duration_ms: 35.167122
+  type: 'test'
+  ...
+# Subtest: shot: ffmpeg failing while staging leaves nothing in ComfyUI/input
+ok 20 - shot: ffmpeg failing while staging leaves nothing in ComfyUI/input
+  ---
+  duration_ms: 146.021811
+  type: 'test'
+  ...
+# Subtest: shot timeout: a pending job is deleted from ComfyUI's queue, then the inputs go
+ok 21 - shot timeout: a pending job is deleted from ComfyUI's queue, then the inputs go
+  ---
+  duration_ms: 499.680617
+  type: 'test'
+  ...
+# Subtest: shot timeout: a running job that does not stop keeps its inputs, named with the prompt id
+ok 22 - shot timeout: a running job that does not stop keeps its inputs, named with the prompt id
+  ---
+  duration_ms: 783.294108
+  type: 'test'
+  ...
+# Subtest: a remote image URL as frame or ref -> exit 3, nothing fetched or posted
+ok 23 - a remote image URL as frame or ref -> exit 3, nothing fetched or posted
+  ---
+  duration_ms: 58.662917
+  type: 'test'
+  ...
+# Subtest: shotSize: never above 1152x640 pixels, both sides >= 256; beyond 1:3 .. 3:1 -> exit 3
+ok 24 - shotSize: never above 1152x640 pixels, both sides >= 256; beyond 1:3 .. 3:1 -> exit 3
+  ---
+  duration_ms: 33.10992
+  type: 'test'
+  ...
+# Subtest: probe: installed but the gate refuses -> exit 4
+ok 25 - probe: installed but the gate refuses -> exit 4
+  ---
+  duration_ms: 147.272206
+  type: 'test'
+  ...
+# Subtest: doctor: studio ready = ok, busy now = busy (yellow), unreachable = FAIL (red)
+ok 26 - doctor: studio ready = ok, busy now = busy (yellow), unreachable = FAIL (red)
+  ---
+  duration_ms: 435.57795
+  type: 'test'
+  ...
+1..26
+# tests 26
+# suites 0
+# pass 26
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 5233.084187

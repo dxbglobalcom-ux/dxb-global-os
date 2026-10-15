@@ -1,0 +1,8 @@
+real still: exit 0, 69.95 s, ffprobe png,1920,1088
+real shot: see real-shot.log; ffprobe streams: video,1152,640,5.166667 (no audio stream)
+comfyui: reachable http://127.0.0.1:8188, version 0.34.0
+gpu: cuda:0 NVIDIA GeForce RTX 5060 Ti — VRAM used 1262 MiB, free 14584 MiB of 15847 MiB
+queue: 0 running, 0 pending
+models flux: ok (4 files)
+models h3: ok (5 files)
+gate: ok — card 987 MiB used outside ComfyUI (ComfyUI holds 308), RAM 22.3 GiB available, swap 28 % free

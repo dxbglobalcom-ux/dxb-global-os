@@ -1,0 +1,24 @@
+--- /tmp/claude-1000/-home-dxb-DxB-Global-OS/2263590f-21f3-4e52-94d4-188124a8c17e/scratchpad/scrollcraft-new/SKILL.md	2026-10-15 16:12:19.538155574 +0200
++++ /home/dxb/.claude/skills/scrollcraft/SKILL.md	2026-10-15 16:50:14.459198798 +0200
+@@ -32,12 +32,15 @@
+    for client work: a visitor-facing story page. **Never** for the holding's own command surface
+    (`apps/dashboard`, `apps/jarvis`, or V2's cockpit). That surface is an instrument the CEO
+    works at, not a page a visitor is told a story on.
+-2. **MONEY OUT STOPS AT THE CEO.** Generating imagery through `kie.ai` spends real money. No
+-   generation call is made — not one still, not one reroll, not one clip — until the CEO has
+-   approved that spend for that build, registered in `scripts/governance/ceo-approvals.json`.
+-   Building from the client's own photographs and footage needs no key and no spend and is the
+-   default route. Where this skill's own text says not to refuse a justified reroll, that is
+-   advice about image quality; it does not touch the approval gate, which is absolute.
++2. **THE STUDIO DRAWS FIRST; A PAID ENGINE ONLY WHERE IT FALLS SHORT, UNDER A BUDGET HE APPROVES ONCE PER SITE.**
++   Stills and clips come from the holding's own studio on its own GPU — `scripts/studio.mjs still|shot`, the
++   same arguments as `kie.mjs` (FLUX.1-Krea-dev stills, MiniMax H3 clips from a first and a last frame): free,
++   no approval needed. Wherever this file says `kie.mjs still` or `kie.mjs shot`, run `studio.mjs` with the
++   same arguments; `node <skill>/scripts/studio.mjs probe` replaces the credit probe. A paid engine — `kie.mjs`,
++   or a platform the holding subscribes to later — is used only for what the studio cannot do (`studio.mjs`
++   exits 3 and names it, e.g. a reference-guided edit), and only inside a budget the CEO approved once for that
++   site ("this site, at most N dollars"), registered in `scripts/governance/ceo-approvals.json`; inside it the
++   team generates and rerolls freely. Building from the client's own photographs and footage stays the default.
+ 3. **NO SECRET OF THE HOLDING GOES NEAR IT.** `scripts/kie.mjs` and `scripts/doctor.mjs` were
+    adapted on intake so that they read the key from the environment or from a `.env` in the
+    current directory only. Upstream walked up eight parent directories reading every `.env` it
