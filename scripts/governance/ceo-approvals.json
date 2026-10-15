@@ -2479,7 +2479,7 @@
     "date": "2026-10-14",
     "what": "The company's own engine, the resident scheduler (dxb-scheduler: briefings, revenue scan, HR and memory jobs, the written chat and voice drain), is stopped and disabled until the key turn; the construction's tools keep running. Done 2026-10-14 (journal: stopped 20:58:52) with `systemctl --user disable --now dxb-scheduler.service` → inactive, disabled.",
     "verbatim": "Bunları da teslime kadar durdurmak gerekebilir. Evet. Tamam. … Ya para harcayıp harcamaması önemli mi? … Hani o sürekli o tekerleği döner halde bırakmak mantıklı mı yani? || Evet, önerini kabul ediyorum.",
-    "conditions": "Re-enabled only at the key turn (ORDER rank 52). The company database itself stays up; nothing is deleted.",
+    "conditions": "Re-enabled only at the key turn (ORDER rank 52). The company database itself stays up; nothing is deleted. Exception on his word 2026-10-15: factory-trial-allowed-before-the-key-turn-2026-10-15.",
     "session": "Opus 5.5 session 8 of 2026-10-14 (f06917d7-291b-4671-bd6e-84a75f1c1bb2), in conversation.",
     "where": "HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md line 1 · .planning/quick/20261014-88-link/HIS-WORDS.md"
   },
@@ -2538,5 +2538,13 @@
     "conditions": "Measured before his word: no real work through OpenRouter since 2026-07-26; all 213 agents and 39 routing rows on subscriptions. The memory embedding alias embed-small still routes through OpenRouter in vps/litellm/config.yaml; it moves when the V2 memory row is built.",
     "session": "Opus 5.5 session e64c19c8, in conversation, 2026-10-15.",
     "where": "HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md (B06 removed) · .planning/STATE.md"
+  },
+  "factory-trial-allowed-before-the-key-turn-2026-10-15": {
+    "date": "2026-10-15",
+    "what": "Before the key turn, a part that has passed its tests may be tried in the factory (the company engine) with the company's own staff — e.g. the Media Studio's seats — when trying it there is the better test. A purposeful trial, not the engine left running idle. Written as a parenthesis beside the 2026-10-14 stop order.",
+    "verbatim": "Burada ben fabrikayı kapatmadım ki yani. Böyle bir şeyde fabrikada bir şeyler denenecekse denensin yani. … fabrika boşu boşuna çalışmasın ama bir şeyler denenecekse, hani orada denenebiliyorsa, orada denenmesi daha iyiyse orada denensin yani. Önce testlerden geçti, her şey güzel, certified, onaylandı … Tamam, şimdi gidelim fabrikada takalım bakalım nasıl çalışıyor gibi bir şey yapılacaksa … mesela bu kadroyla deneyelim bakalım. Yapılabilir. Hani buna izin var. Bu da not olarak geçsin yani. Hani bununla ilgili bir kural yazılmışsa veya şey varsa, hani bu parantez içerisinde bu da yazılsın.",
+    "conditions": "Not a law; a condition on the 2026-10-14 order. The engine is started for the trial and stopped after it.",
+    "session": "Opus 5.5 session e64c19c8, in conversation, 2026-10-15.",
+    "where": "HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md line 1 · .planning/STATE.md"
   }
 }

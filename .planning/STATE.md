@@ -36,7 +36,7 @@ No AI Slop, CodeBurn install and Vane not taken). His Vane link led to a blind s
 door now uses Claude's web search and the toolbox together and gained a Google Maps reader (960ae054, Sol fixes
 9720ceca). The sheet "Ekim 9-15 linkleri" was added by a peer session (`.planning/quick/20261015-ekim-linkleri/`).
 Board line 2 is his bench rule <!-- CEO-OK: bench-rule-key-turned-once-2026-10-14 -->; the company engine stays stopped
-until the key turn <!-- CEO-OK: company-engine-stopped-until-the-key-turn-2026-10-14 -->. The company has no face
+until the key turn <!-- CEO-OK: company-engine-stopped-until-the-key-turn-2026-10-14 --> (his word 2026-10-15 <!-- CEO-OK: factory-trial-allowed-before-the-key-turn-2026-10-15 -->: a part that has passed its tests may be tried in the factory, with the company's own staff, when trying it there is the better test — a purposeful trial, never the wheel left turning for nothing). The company has no face
 today: V1 closed <!-- CEO-OK: v2-location-and-v1-dead-2026-08-01 -->, V2 not drawn, voice off until a dedicated
 microphone <!-- CEO-OK: jarvis-silent-listening-voice-04-okayed-2026-09-14 -->. B41's first slice waits for his eye
 <!-- CEO-OK: b41-design-skills-first-slice-2026-10-13 -->.
