@@ -74,4 +74,4 @@ microphone <!-- CEO-OK: jarvis-silent-listening-voice-04-okayed-2026-09-14 -->. 
 | How do I do X? | `.claude/skills/dxb-*` — the doors |
 | The studio's evidence, film by film | `.planning/quick/20260903-media-studio-founding/` |
 | The films, the cast, the codes | `~/tools/h3/studio/KATALOG.md` · the vitrin |
-| Why was that decided back then? | `.planning/STATE-ARCHIVE.md` (§ "STATE.md as it stood on 2026-09-14" · § "B43 — the diary") and `.planning/_ARCHIVE/` |
+| Why was that decided back then? | `.planning/STATE-ARCHIVE.md` (§ "STATE.md as it stood on 2026-09-14" · § "B43 — the diary") |

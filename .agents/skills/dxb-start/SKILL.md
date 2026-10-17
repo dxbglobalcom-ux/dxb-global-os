@@ -32,8 +32,8 @@ are already in the opening: never re-read them.
 6. Only the code, tests, schemas and references that row needs
 
 **Do not** read the whole repository, the archive, other specs, other rows' research, or the
-rival reports unless the row names them. `.planning/STATE-ARCHIVE.md` and `_ARCHIVE/` are history:
-open them to answer *"why was this decided"*, never to learn the current state.
+rival reports unless the row names them. `.planning/STATE-ARCHIVE.md` is history:
+open it to answer *"why was this decided"*, never to learn the current state.
 
 ## Where things are
 

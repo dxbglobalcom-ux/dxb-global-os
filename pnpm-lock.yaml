@@ -158,16 +158,6 @@ importers:
         specifier: ^8.63.0
         version: 8.63.0(eslint@9.39.4(jiti@2.7.0))(typescript@6.0.3)
 
-  apps/jarvis:
-    dependencies:
-      '@dxb/shared':
-        specifier: workspace:*
-        version: link:../../packages/shared
-    devDependencies:
-      typescript:
-        specifier: 'catalog:'
-        version: 6.0.3
-
   packages/dxb-mcp:
     dependencies:
       '@dxb/memory-router':

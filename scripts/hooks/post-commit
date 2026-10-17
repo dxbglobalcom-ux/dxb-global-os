@@ -10,6 +10,9 @@ bash "$(git rev-parse --show-toplevel)/scripts/governance/sol-dump-sweep.sh" >/d
 # order is randomized per-process by PYTHONHASHSEED, so community assignments
 # churn run-to-run. Pinning it makes graphify-out reproducible.
 export PYTHONHASHSEED=0
+# No dated graph snapshots (graphify-out/<date>/): the canonical copy is .planning/graphs in git,
+# the labels live in .graphify_labels.json, and nothing ever read a snapshot. CEO 2026-10-17.
+export GRAPHIFY_NO_BACKUP=1
 
 # Git for Windows/MSYS hooks can inherit fragile pipe handles from GUI clients
 # and agent shells. Keep hook-triggered rebuilds sequential by default there;

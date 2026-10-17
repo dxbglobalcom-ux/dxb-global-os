@@ -45,9 +45,6 @@
     },
     {
       "path": "apps/dashboard"
-    },
-    {
-      "path": "apps/jarvis"
     }
   ]
 }

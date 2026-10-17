@@ -10,7 +10,7 @@
 //   - trust='include-quarantined' widens to both tiers and appends an audit_log
 //     'quarantined_recall' row in the same call — a gate, not a black hole
 // PROMPT CONTRACT: CLASSIFY_SYSTEM_PROMPT below is lifted VERBATIM from
-// tests/phase6/routing-spike.mjs (06-02 gate PASS 20/20, content hash
+// the 06-02 routing spike (gate PASS 20/20; the spike was removed 2026-10-17 and lives in git history; content hash
 // sha256:2eeccfde17360711e46a0c6c96ba181b1c6bc852fb69e9500159eb5a8cda7290).
 // Model/mode come from routing_rules task_class='memory.classify' at call time —
 // no model literal in this file; a missing row fails CLOSED (kernel policy

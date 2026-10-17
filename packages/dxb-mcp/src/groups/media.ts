@@ -127,7 +127,6 @@ export const PARAM_SCHEMAS = {
 } as const;
 
 export type MediaKind = keyof typeof PARAM_SCHEMAS;
-export const MEDIA_KINDS = Object.keys(PARAM_SCHEMAS) as MediaKind[];
 
 export function parseMediaParams(kind: MediaKind, params: unknown): Record<string, unknown> {
   return PARAM_SCHEMAS[kind].parse(params) as Record<string, unknown>;
