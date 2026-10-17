@@ -2570,5 +2570,13 @@
     "conditions": "Only these six rows close and only B44/B45 move; every other open row stays until his eye has seen it finished.",
     "session": "Opus 5.5 session 43ccafde, in conversation, 2026-10-17.",
     "where": "HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md Section 5 · 00-NOTE-CEO-COMPLAINT-LEDGER-2026-07-19.md C9"
+  },
+  "v1-code-removal-row-opened-2026-10-17": {
+    "date": "2026-10-17",
+    "what": "V1's code (apps/dashboard, 203 tracked files) is to be removed — his yes. It is opened as board row B81 on his word, not in the handover note devam84.md: asked which is better, the lead chose the board, the one register of open work (a handover note is read once and then is history). A separate job with its plan talked first, in its turn: 19 test files and the i18n gate every surface change must pass read this code, and the alert sentences are localized only inside it, so each needs its new home (or his word to retire it) before the code goes. B71-B80 stay reserved for the ordered board's new rows (ORDER.md), hence B81.",
+    "verbatim": "tmm silinsin lakin bunu \"ama 19 test ve her ekran değişikliğinde zorunlu olan dil kontrolü (i18n) bu koda bağlı. Silinirse önce bu kontrollere yeni bir yer bulmak gerekiyor; bu yüzden ayrı bir iş olarak, planı konuşularak yapılmalı. Önerim, sırası geldiğinde ele almak. Siz söylemediğiniz için tahtaya yazmadım.\" tahtada ilgili yere mutlaka koyulsun hatta şu devam84 mdyi oku istersen orda yapılacakların içine koyulsun veya soruyorum mühendis olarak hangisi daha uygun sence?",
+    "conditions": "Not now: in its turn, after its plan (at xhigh) has his yes. The quoted sentence is the lead's own, quoted back by him.",
+    "session": "Opus 5.5 session 43ccafde, in conversation, 2026-10-17.",
+    "where": "HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md row B81 · .planning/board-rows/B81.md"
   }
 }

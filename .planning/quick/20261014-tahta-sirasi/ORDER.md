@@ -54,7 +54,7 @@ built (MERGE §2, call 1).
 | 18 | B68 | L2 | 17 | |
 | 19 | B22 | L7 | — | rival 39/40 decision, six waves re-derived, C42 |
 | 20 | B03-bis | L7 | — (his login) | |
-| 21 | B32 | L7 | 19, 20 | B02, B18 merged; C27, C28, C32-C35, C61-C63, F-R3-4, F-R3-5, F-R4-7 as V2 requirements; design-pack word (§2d); the motion library (W042), drawing hands (W040, W032), the agent card with its autonomy label (W080), the blueprint with "next wake" and the sponsor pipeline (W121, X-7) |
+| 21 | B32 | L7 | 19, 20 | B02 merged (B18 closed 2026-10-17, V1 only); C27, C28, C32-C35 (C28 and C32-C35 closed 2026-10-17 as V1 rows — their words still reach B32 as V2 requirements), C61-C63, F-R3-4, F-R3-5, F-R4-7 as V2 requirements; design-pack word (§2d); the motion library (W042), drawing hands (W040, W032), the agent card with its autonomy label (W080), the blueprint with "next wake" and the sponsor pipeline (W121, X-7) |
 | 22 | V2 built surface by surface (§2d WHERE V2 LIVES / EVERY SURFACE), first the living home + Hamza chat | L7 | 21 | C26, C37, C52, C53, C56 (by absence), C60 (screen) |
 | 23 | B14 | L6 | 16, 22 | B64 scenario 1 |
 | 24 | B64 step 5 | L8 | 17, 22 | W-C42-4 mailbox, B05's Gmail-send third; prospects live as an earlier state of the client record (Y9's home); a timed undo of a misfiled mail |
@@ -91,8 +91,8 @@ built (MERGE §2, call 1).
 | 55 | B26 | L1 | his timing ("iş bitince") | |
 | 56 | B25 | L7 | his timing (after the holding) | |
 
-Merged / closed on his yes: B44, B45 → Section 5 (`b44-and-b45-accepted-by-his-eye-2026-09-16`); B06 closed (kimi-3
-retired + banned 2026-07-26); B09 → B11; B02, B18 → B32; C30 → B16. Stale cells to rewrite with the board: B03
+Merged / closed on his yes: B44, B45 → Section 5 (`b44-and-b45-accepted-by-his-eye-2026-09-16`; done 2026-10-17 on his word, `v1-only-board-rows-closed-2026-10-17`); B06 closed (kimi-3
+retired + banned 2026-07-26); B09 → B11; B02 → B32 (B18 closed 2026-10-17); C30 → B16. Stale cells to rewrite with the board: B03
 (HARDWARE gone; waits on B12 + mic), B08 (Waits-on contradicts itself; old model names), B29, B62 (K1 condition
 spent), B64 (Waits-on), C29, C40, C54, C55, C64, §2d order-of-work rows (replaced by his order — LAW A).
 Done today inside this job: F-R2-1/F-R4-1 (the chat guard, commit 8ab04815). Board-page bugs F-R5-1 (four closed rows
@@ -112,7 +112,7 @@ decisions and his Islamic rulings (46-49).
 ## On his yes (PLAN.md step 6, then step 5)
 
 Register his words (PLAN.md's list + his answers + `HIS-WORDS.md`) in `scripts/governance/ceo-approvals.json`; rewrite
-board law 4; open Y1-Y9 and Y11 as B71-B80 (rows ≤ 1,600 bytes, detail in `.planning/board-rows/`); move B44/B45; B06 already gone (his word 2026-10-15);
+board law 4; open Y1-Y9 and Y11 as B71-B80 (rows ≤ 1,600 bytes, detail in `.planning/board-rows/`); B44/B45 already moved (2026-10-17); B81 (V1's code leaves the repository) was opened 2026-10-17 on his word after this order was drawn — give it its rank on the page; B06 already gone (his word 2026-10-15);
 merge as above; findings and MERGE's carries into their row files; an ordered section on the board;
 `scripts/board/render.mjs`: ranks shown, Section-5 parse fixed, "Bugün yapılanlar"; `scripts/board/order-check.mjs` +
 `pnpm board:order` (test first, red); rulers 6/6; STATE's three headings rewritten.
