@@ -32,7 +32,7 @@ export {
   triggerRunNow,
   eventMatches,
 } from "./workflow/triggers.js";
-export { defaultWorkflowExecutor } from "./workflow/executor.js";
+export { defaultWorkflowExecutor, dxbInventoryNames } from "./workflow/executor.js";
 export { StepError } from "./workflow/types.js";
 export type {
   AgentWork,

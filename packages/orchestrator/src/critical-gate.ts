@@ -22,12 +22,12 @@
 // construction's ~/.codex.
 
 import { execFile } from "node:child_process";
-import { existsSync, readFileSync, readlinkSync, realpathSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
 import { tmpdir, userInfo } from "node:os";
-import { basename, dirname, join, resolve, sep } from "node:path";
+import { join, resolve, sep } from "node:path";
 import { z } from "zod";
-import { getDb } from "@dxb/shared";
+import { getDb, realPath } from "@dxb/shared";
 import { sql } from "kysely";
 
 /**
@@ -244,23 +244,6 @@ export function companyCodexHome(env: NodeJS.ProcessEnv = process.env): string {
     throw new Error(`the company Codex home ${home} is the construction's Codex home (${theirs}) or lies inside it — no challenger runs from there`);
   }
   return home;
-}
-
-/** The path with every link resolved — through parts that do not exist yet and through a dangling link. */
-function realPath(p: string, depth = 0): string {
-  try {
-    return realpathSync(p);
-  } catch {
-    // not there (yet), or a link whose target is not there
-  }
-  if (depth > 40) return p;
-  try {
-    return realPath(resolve(dirname(p), readlinkSync(p)), depth + 1);
-  } catch {
-    // not a link
-  }
-  const parent = dirname(p);
-  return parent === p ? p : join(realPath(parent, depth + 1), basename(p));
 }
 
 /** The MCP servers a Codex home's config.toml declares: the distinct `[mcp_servers.<name>]` tables,

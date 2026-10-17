@@ -20,7 +20,7 @@
 import { randomUUID } from "node:crypto";
 import { z } from "zod";
 import { type Kysely, type Transaction } from "kysely";
-import { llmCall, llmEmbed, type DB } from "@dxb/shared";
+import { appendAudit, llmCall, llmEmbed, type DB } from "@dxb/shared";
 import { cosineSearch, writeEmbedding } from "./adapters/pgvector.js";
 import { writeNote } from "./adapters/obsidian.js";
 import { writeRelationNote } from "./adapters/graphify.js";
@@ -200,19 +200,6 @@ export interface CommittedMemory {
   trust_tier: "trusted" | "quarantined";
   ref: string;
   contradicts: string | null;
-}
-
-async function appendAudit(
-  trx: Transaction<DB>,
-  actor: string,
-  action: string,
-  taskId: string | null,
-  payload: unknown,
-): Promise<void> {
-  await trx
-    .insertInto("audit_log")
-    .values({ actor, actor_type: "agent", action, task_id: taskId, payload: JSON.stringify(payload) })
-    .execute();
 }
 
 export async function commitMemory(

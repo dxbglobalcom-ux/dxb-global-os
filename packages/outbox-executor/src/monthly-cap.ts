@@ -33,12 +33,11 @@ import {
   getDb,
   keyUpdate,
   listDxbKeys,
-  DXB_KEY_ALIAS_PREFIX,
   LITELLM_SCHEMA,
   LITELLM_SPEND_TABLE,
 } from "@dxb/shared";
 import type { DB } from "@dxb/shared";
-import { CRITICAL_DEPARTMENTS } from "./breaker.js";
+import { CRITICAL_DEPARTMENTS, isCritical } from "./breaker.js";
 
 /** Warn the CEO here (COST_CONTROL_SPEC). */
 export const WARN_RATIO = 0.7;
@@ -54,12 +53,6 @@ export interface MonthlyCapResult {
   warned: boolean;
   blocked_aliases: string[];
   block_errors: string[];
-}
-
-function isCritical(keyAlias: string): boolean {
-  return CRITICAL_DEPARTMENTS.some(
-    (dept) => keyAlias === `${DXB_KEY_ALIAS_PREFIX}${dept.toLowerCase()}`,
-  );
 }
 
 /**

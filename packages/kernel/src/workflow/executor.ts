@@ -36,10 +36,10 @@ const WorkerJson = z.object({
   acceptance_map: z.record(z.string(), z.string()).default({}),
 });
 
-// Inventory cache — one in-memory dxb-mcp boot per process (worker-shim
-// idiom); profiles are re-read per run so grant changes stay live.
+// Inventory cache — one in-memory dxb-mcp boot per process, shared with the
+// worker-shim (it imports this); profiles are re-read per run so grant changes stay live.
 let inventoryToolNames: string[] | null = null;
-async function dxbInventoryNames(): Promise<string[]> {
+export async function dxbInventoryNames(): Promise<string[]> {
   if (!inventoryToolNames) {
     const inv = await readDxbMcpInventory();
     inventoryToolNames = inv.map((e) => mcpToolName(e.server, e.tool));

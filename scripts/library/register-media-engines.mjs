@@ -11,8 +11,8 @@
 // CEO context, md5 idempotency, re-run safe.
 //   node scripts/library/register-media-engines.mjs            # dry run
 //   node scripts/library/register-media-engines.mjs --apply
-import { createHash } from "node:crypto";
 import { createRequire } from "node:module";
+import { ceoActionFor } from "./ceo-action.mjs";
 
 const require = createRequire(new URL("../../packages/shared/package.json", import.meta.url));
 const pg = require("pg");
@@ -81,28 +81,7 @@ const ITEMS = [
   },
 ];
 
-async function ceoAction(client, payload, label) {
-  const key = `media-engines-${createHash("md5").update(JSON.stringify(payload)).digest("hex")}`;
-  await client.query("BEGIN");
-  try {
-    await client.query(
-      `SELECT set_config('request.jwt.claims',
-         '{"sub":"11111111-1111-4111-8111-111111111111","role":"authenticated"}', true)`,
-    );
-    const { rows } = await client.query("SELECT control_library_action($1::jsonb, $2) AS resp", [
-      JSON.stringify(payload),
-      key,
-    ]);
-    if (!rows[0].resp.ok) {
-      throw new Error(`${label}: ${rows[0].resp.error} ${rows[0].resp.detail ?? ""}`);
-    }
-    await client.query("COMMIT");
-    return rows[0].resp;
-  } catch (err) {
-    await client.query("ROLLBACK");
-    throw err;
-  }
-}
+const ceoAction = ceoActionFor({ keyPrefix: "media-engines" });
 
 const client = new pg.Client({ connectionString: DB_URL });
 await client.connect();

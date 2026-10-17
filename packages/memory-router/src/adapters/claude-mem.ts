@@ -13,11 +13,10 @@
 // directly — pointer rows are session-observation provenance, and the synced
 // facts' contradiction sweep is deferred to the 06-08 compaction cron.
 import { DatabaseSync } from "node:sqlite";
-import { readlinkSync, realpathSync } from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import type { Kysely } from "kysely";
-import type { DB } from "@dxb/shared";
+import { realPath, type DB } from "@dxb/shared";
 
 function defaultDbPath(): string {
   // The passwd home, not $HOME (A4): a company call runs with HOME set to the company Claude home.
@@ -26,23 +25,6 @@ function defaultDbPath(): string {
 
 function defaultProject(): string {
   return process.env.DXB_CLAUDE_MEM_PROJECT ?? "DxB Global OS";
-}
-
-/** The path with every link resolved — through parts that do not exist yet and through a dangling link. */
-function realPath(p: string, depth = 0): string {
-  try {
-    return realpathSync(p);
-  } catch {
-    // not there (yet), or a link whose target is not there
-  }
-  if (depth > 40) return p;
-  try {
-    return realPath(path.resolve(path.dirname(p), readlinkSync(p)), depth + 1);
-  } catch {
-    // not a link
-  }
-  const parent = path.dirname(p);
-  return parent === p ? p : path.join(realPath(parent, depth + 1), path.basename(p));
 }
 
 /** The construction's claude-mem (its sessions' observations) is not the company's memory (CEO

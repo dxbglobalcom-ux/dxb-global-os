@@ -1,7 +1,7 @@
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
-import { sql, type Kysely, type Transaction } from "kysely";
+import { sql, type Kysely } from "kysely";
 import { z } from "zod";
-import { TaskEnvelope, getDb, type DB } from "@dxb/shared";
+import { TaskEnvelope, appendAudit, getDb, type DB } from "@dxb/shared";
 import { assertTransition } from "../transitions.js";
 import {
   CallSheet,
@@ -49,19 +49,6 @@ async function seatsAssignedTo(
        AND x.agent_id = ANY(${agentIds}::uuid[])
   `.execute(db);
   return new Set(rows.rows.map((r) => r.agent_id));
-}
-
-async function appendAudit(
-  trx: Kysely<DB> | Transaction<DB>,
-  actor: string,
-  action: string,
-  taskId: string | null,
-  payload: unknown,
-): Promise<void> {
-  await trx
-    .insertInto("audit_log")
-    .values({ actor, actor_type: "agent", action, task_id: taskId, payload: JSON.stringify(payload) })
-    .execute();
 }
 
 /** An open project, or null for a project-less task. Throws on a closed or unknown one:

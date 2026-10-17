@@ -5,9 +5,9 @@
 // every write through control_library_action in CEO context, idempotent, re-run safe. The profile
 // compiler turns the grants into `_skills: ["dxb-design"]`; the runtime hands the plugin to those seats.
 //   DXB_DATABASE_URL=<engine> node scripts/library/register-design-skills.mjs --apply
-import { createHash } from "node:crypto";
 import { existsSync } from "node:fs";
 import { createRequire } from "node:module";
+import { ceoActionFor } from "./ceo-action.mjs";
 
 const require = createRequire(new URL("../../packages/shared/package.json", import.meta.url));
 const pg = require("pg");
@@ -39,28 +39,9 @@ const ITEM = {
 const DEPARTMENTS = ["design"];
 const SEATS = ["engineering-frontend-developer", "media-creative-director", "media-product-brand-consistency"];
 
-async function ceoAction(client, payload, label) {
-  // Sol's pass (B41): a fixed key replayed the stored answer of a grant revoked since — so the key
-  // carries the moment; re-run safety comes from the active-grant check before each write instead.
-  const key = `b41-design-skills-${createHash("md5").update(JSON.stringify(payload)).digest("hex")}-${Date.now()}`;
-  await client.query("BEGIN");
-  try {
-    await client.query(
-      `SELECT set_config('request.jwt.claims',
-         '{"sub":"11111111-1111-4111-8111-111111111111","role":"authenticated"}', true)`,
-    );
-    const { rows } = await client.query("SELECT control_library_action($1::jsonb, $2) AS resp", [
-      JSON.stringify(payload),
-      key,
-    ]);
-    if (!rows[0].resp.ok) throw new Error(`${label}: ${rows[0].resp.error} ${rows[0].resp.detail ?? ""}`);
-    await client.query("COMMIT");
-    return rows[0].resp;
-  } catch (err) {
-    await client.query("ROLLBACK");
-    throw err;
-  }
-}
+// Sol's pass (B41): a fixed key replayed the stored answer of a grant revoked since — so the key
+// carries the moment; re-run safety comes from the active-grant check before each write instead.
+const ceoAction = ceoActionFor({ keyPrefix: "b41-design-skills", stampKey: true });
 
 const client = new pg.Client({ connectionString: DB_URL });
 await client.connect();

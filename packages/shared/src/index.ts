@@ -74,3 +74,5 @@ export type {
 export { probeMedia, extractFrames, resolveMediaBinary } from "./media-probe.js";
 export type { MediaProbeSummary } from "./media-probe.js";
 export { sdkJsonSchema } from "./sdk-schema.js";
+export { realPath } from "./real-path.js";
+export { appendAudit } from "./audit.js";

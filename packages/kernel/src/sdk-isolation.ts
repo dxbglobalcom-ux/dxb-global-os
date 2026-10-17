@@ -1,7 +1,8 @@
-import { existsSync, readlinkSync, realpathSync } from "node:fs";
+import { existsSync } from "node:fs";
 import { userInfo } from "node:os";
-import { basename, dirname, isAbsolute, join, resolve, sep } from "node:path";
+import { dirname, isAbsolute, join, resolve, sep } from "node:path";
 import { fileURLToPath } from "node:url";
+import { realPath } from "@dxb/shared";
 
 // THE COMPANY'S MODEL CALLS ARE THE COMPANY'S, NOT THE CONSTRUCTION'S (CEO 2026-10-03: "evet tabi
 // hamza ve herşey herkes inşaattan ayrı olmalı ya!"; B43 plan ② before it, 2026-09-05).
@@ -49,23 +50,6 @@ export interface SdkIsolation {
   strictMcpConfig: true;
   cwd: string;
   env: Record<string, string>;
-}
-
-/** The path with every link resolved — through parts that do not exist yet and through a dangling link. */
-function realPath(p: string, depth = 0): string {
-  try {
-    return realpathSync(p);
-  } catch {
-    // not there (yet), or a link whose target is not there
-  }
-  if (depth > 40) return p;
-  try {
-    return realPath(resolve(dirname(p), readlinkSync(p)), depth + 1);
-  } catch {
-    // not a link
-  }
-  const parent = dirname(p);
-  return parent === p ? p : join(realPath(parent, depth + 1), basename(p));
 }
 
 /** The repository, from this module's own place (packages/kernel/{src,dist}/) — never from the cwd. */

@@ -17,7 +17,7 @@ import {
 // Phase 5 (kernel L1 wiring) — do not grow this list here.
 export const CRITICAL_DEPARTMENTS = ["kernel-L1"] as const;
 
-function isCritical(keyAlias: string): boolean {
+export function isCritical(keyAlias: string): boolean {
   return CRITICAL_DEPARTMENTS.some(
     (dept) => keyAlias === `${DXB_KEY_ALIAS_PREFIX}${dept.toLowerCase()}`,
   );

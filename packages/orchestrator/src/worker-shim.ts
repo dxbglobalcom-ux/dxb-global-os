@@ -25,12 +25,10 @@ import {
 } from "@dxb/observability";
 import {
   buildSdkToolOptions,
-  mcpToolName,
-  readDxbMcpInventory,
   resolveRuntimeProfile,
   type SdkToolOptions,
 } from "@dxb/gateway";
-import { companyIsolation, isolationReceipt, loadPolicy, sdkModel, type RoutingRule } from "@dxb/kernel";
+import { companyIsolation, dxbInventoryNames, isolationReceipt, loadPolicy, sdkModel, type RoutingRule } from "@dxb/kernel";
 import { loadPersonaBody, standingPrompt } from "@dxb/voice";
 import { recordSubscriptionSpend } from "./subscription-cap.js";
 
@@ -149,16 +147,8 @@ const WorkerJson = z.object({
 // R2.2 — tool surface cache (audit F-02/F-04): the dxb-mcp inventory is one
 // in-memory server boot; cache it per process. Profile files are re-read per
 // run (the 30s library recompile chain may swap them between runs — F-04
-// step 7: a revoked grant must not survive in a stale cache).
-let inventoryToolNames: string[] | null = null;
-
-async function dxbInventoryNames(): Promise<string[]> {
-  if (!inventoryToolNames) {
-    const inv = await readDxbMcpInventory();
-    inventoryToolNames = inv.map((e) => mcpToolName(e.server, e.tool));
-  }
-  return inventoryToolNames;
-}
+// step 7: a revoked grant must not survive in a stale cache). The cache itself
+// is @dxb/kernel's dxbInventoryNames — one per process for both executors.
 
 /**
  * What this task will actually execute with. Exported so the routing decision
