@@ -27,6 +27,11 @@ not here. What is accepted is read from `scripts/governance/ceo-approvals.json`,
 
 ## Where we left off
 
+2026-10-17 — The cleanup he ordered is done (`.planning/quick/20261017-temizlik/`, Sol: no A, two B fixed, battery
+green): dead code, the first plan's Phase files, the GSD-era project files and stale copies out; duplicated helpers
+down to one copy; graphify's dated snapshots off; six V1-only board rows closed on his word <!-- CEO-OK: v1-only-board-rows-closed-2026-10-17 -->, B02 kept open
+by his condition. Then the work below resumes where it stood.
+
 2026-10-15 — Before his yes on the ordered board, he and the lead are walking the "Yeni eklenenler" sheet of his
 Excel one row at a time; every decision and his words are in `.planning/quick/20261014-tahta-sirasi/HIS-WORDS-2026-10-15.md`.
 YE01-YE17 decided. YE17: claude-mem's telemetry off (done). Decided in the same walk: OpenRouter set aside, B06
