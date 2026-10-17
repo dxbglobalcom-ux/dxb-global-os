@@ -64,11 +64,15 @@ export function commitsBehind(repo = REPO) {
   }
 }
 
+// No dated snapshots (graphify-out/<date>/): the canonical copy below is the one kept, in git;
+// scripts/hooks/post-commit sets the same switch (CEO 2026-10-17).
+const GRAPHIFY_ENV = { ...process.env, GRAPHIFY_NO_BACKUP: "1" };
+
 function refresh() {
   console.log("[graph] extracting (code only, local AST, no key, nothing leaves this machine)…");
-  execFileSync("graphify", [".", "--update", "--code-only"], { cwd: REPO, stdio: "inherit" });
+  execFileSync("graphify", [".", "--update", "--code-only"], { cwd: REPO, stdio: "inherit", env: GRAPHIFY_ENV });
   console.log("[graph] clustering…");
-  execFileSync("graphify", ["cluster-only", "."], { cwd: REPO, stdio: "inherit" });
+  execFileSync("graphify", ["cluster-only", "."], { cwd: REPO, stdio: "inherit", env: GRAPHIFY_ENV });
 
   mkdirSync(path.join(REPO, CANON), { recursive: true });
   for (const f of ARTEFACTS) {

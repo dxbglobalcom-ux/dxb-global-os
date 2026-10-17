@@ -1,8 +1,8 @@
 {
-  "commit": "c5d436b5180557965777898d984af2da9cb2626c",
-  "built_at": "2026-10-06T18:58:50+02:00",
+  "commit": "64ca97c367a9188c2fc33a4c47097dd0443ee761",
+  "built_at": "2026-10-17T10:00:27+02:00",
   "synced_by": "scripts/governance/graph-refresh.mjs",
   "mode": "code-only (local AST — no LLM, no key, no outbound call)",
-  "nodes": 19091,
-  "edges": 25659
+  "nodes": 20730,
+  "edges": 27682
 }
