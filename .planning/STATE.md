@@ -2,7 +2,7 @@
 gsd_state_version: 1.0
 milestone: v2.0
 status: executing
-last_updated: "2026-10-14"
+last_updated: "2026-10-17"
 session_author: opus-5
 ---
 
@@ -27,14 +27,15 @@ not here. What is accepted is read from `scripts/governance/ceo-approvals.json`,
 
 ## Where we left off
 
-2026-10-17, afternoon — The walk paused for his RAM question, which grew into a study he ordered at max: can the
-studio serve about ten ad clients plus our own channel on this machine, does 64 GB help, and what renting a card or
-paying an API would cost. The report waits for his eye (artifact "Stüdyo Üretim Kapasitesi",
-https://claude.ai/artifact/VS3iYsHjvqCdChdZX7XFAn): 64 GB ends the RAM kills but not the throughput, which the card
-sets; one card at 8 steps carries about seventeen mid-size clients plus the channel; overflow goes per job to
-MiniMax's own H3 API, or to a rented card once its commercial terms are checked; no subscriptions. At his instruction
-a German mail went to CSL from dxbglobalcom@gmail.com about upgrading the PC bought on 25 July; their reply is awaited
-in that inbox.
+2026-10-17, evening — He read the capacity study (artifact "Stüdyo Üretim Kapasitesi") and turned it into the
+holding's media strategy: the studio connects to every leading generative-video platform (fal, Runware, WaveSpeed,
+kie.ai, MiniMax first), each shot is priced on every route and the best one for its quality is brought to him for one
+click before any spend, a scanner re-reads the platforms every 10–14 days, and our own channels become advertising
+inventory whose sponsors' ads the studio also produces. On his word it ran the valuable-work method: two plans
+(xhigh, max), Fable 5.1 judged (the max plan won, 20 items added, five false claims corrected by the lead). The plan
+waits for his eye: `.planning/quick/20261017-studio-platform-hub/FINAL.md`, beside his words verbatim and nine
+research reports. Found on the way: Veo 3.1's Gemini API models shut down 2026-10-22; YouTube's partner threshold
+doubles on 2027-02-01. CSL has not answered the RAM mail yet (dxbglobalcom@gmail.com).
 
 2026-10-17, morning — The cleanup he ordered is done (`.planning/quick/20261017-temizlik/`, Sol: no A, two B fixed,
 battery green); six V1-only board rows closed on his word <!-- CEO-OK: v1-only-board-rows-closed-2026-10-17 -->, B02 kept open
@@ -56,23 +57,30 @@ microphone <!-- CEO-OK: jarvis-silent-listening-voice-04-okayed-2026-09-14 -->. 
 
 ## Next
 
-1. His reading of the capacity study, and CSL's reply; then the RAM decision.
-2. The studio retest, in the factory with the Media Studio's staff: ScrollCraft's clip through H3 image-less at
+1. His eye on the studio platform-hub plan (FINAL.md, Part 1 in Turkish) and his one yes. On the yes the build starts at
+   high with the key-catcher, so his onboarding is clicks only ("İzin ver", "Create key", "Copy", "Öde"); the session
+   itself never opens an account, enters a key or pays. The B43 note waits for that yes (the row is at its size ceiling).
+2. CSL's reply in dxbglobalcom@gmail.com, then the RAM decision.
+3. The studio retest, in the factory with the Media Studio's staff: ScrollCraft's clip through H3 image-less at
    8 steps; stills from H3's best frame vs FLUX vs FLUX.2-klein-4B; a client-photo ad through H3; upscale or not,
    judged full screen by his eye. The records disagree on the standard (4 steps on 2026-09-04, 8 in the retest
    note); the retest settles it, and the studio's capacity doubles or halves with it. Then the bridge and
    ScrollCraft's rule 2 follow the result.
-3. Finish the walk: YE18 (Matt Pocock skills) to the sheet's last row, then "Ekim 9-15 linkleri" if he wants it.
-4. Plans he asked for, each talked first: how ChatGPT on Steroids (installed) joins the holding as an agent and as
-   Sol's stand-in; every studio revenue line (channels, MoneyPrinterTurbo, HyperFrames, OpenMontage, Open Design)
-   studied in order; a way for the team to work on his phone in the background without taking his screen.
-5. Then the board page with every decision of the walk, his one yes, and `ORDER.md` "On his yes". No construction
+4. Finish the walk: YE18 (Matt Pocock skills) to the sheet's last row, then "Ekim 9-15 linkleri" if he wants it.
+5. Plans he asked for, each talked first: how ChatGPT on Steroids (installed) joins the holding as an agent and as
+   Sol's stand-in; the studio revenue lines not covered by the platform-hub plan (MoneyPrinterTurbo, HyperFrames,
+   OpenMontage, Open Design) studied in order; a way for the team to work on his phone in the background.
+6. Then the board page with every decision of the walk, his one yes, and `ORDER.md` "On his yes". No construction
    before it except what he ordered in the walk.
 
 ## Waiting on his approval
 
+- The studio platform-hub and channels plan (FINAL.md): his yes, and the decisions and money-out moments it lists
+  (first top-ups, the model exam's ceiling, the first channel).
+- Whether three of his session orders become memory notes: no permission/terms questions about platforms; he only
+  clicks, never types; a seller never hears of the holding's AI business or income. Asked 2026-10-17, no answer yet.
 - The RAM upgrade: a second 2×16 GB kit (about 574 € in Germany, 36,999 TL in Turkey) or CSL's offer.
-- At the first client: a MiniMax or Alibaba API account; whether to ask MiniMax, our sponsor, for API credits.
+- Whether to ask MiniMax, our sponsor, for API credits.
 - The ordered board and its 10 new rows, after the walk.
 - At their ranks: the Supabase skills install (#3), DataForSEO (#47), Apify beyond the free plan (#48), Google OAuth
   for the Workspace CLI (#24), store accounts for a mobile app.
