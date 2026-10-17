@@ -27,11 +27,18 @@ not here. What is accepted is read from `scripts/governance/ceo-approvals.json`,
 
 ## Where we left off
 
-2026-10-17 — The cleanup he ordered is done (`.planning/quick/20261017-temizlik/`, Sol: no A, two B fixed, battery
-green): dead code, the first plan's Phase files, the GSD-era project files and stale copies out; duplicated helpers
-down to one copy; graphify's dated snapshots off; six V1-only board rows closed on his word <!-- CEO-OK: v1-only-board-rows-closed-2026-10-17 -->, B02 kept open
+2026-10-17, afternoon — The walk paused for his RAM question, which grew into a study he ordered at max: can the
+studio serve about ten ad clients plus our own channel on this machine, does 64 GB help, and what renting a card or
+paying an API would cost. The report waits for his eye (artifact "Stüdyo Üretim Kapasitesi",
+https://claude.ai/artifact/VS3iYsHjvqCdChdZX7XFAn): 64 GB ends the RAM kills but not the throughput, which the card
+sets; one card at 8 steps carries about seventeen mid-size clients plus the channel; overflow goes per job to
+MiniMax's own H3 API, or to a rented card once its commercial terms are checked; no subscriptions. At his instruction
+a German mail went to CSL from dxbglobalcom@gmail.com about upgrading the PC bought on 25 July; their reply is awaited
+in that inbox.
+
+2026-10-17, morning — The cleanup he ordered is done (`.planning/quick/20261017-temizlik/`, Sol: no A, two B fixed,
+battery green); six V1-only board rows closed on his word <!-- CEO-OK: v1-only-board-rows-closed-2026-10-17 -->, B02 kept open
 by his condition. V1's code is to go as its own job, its plan talked first: board row B81 <!-- CEO-OK: v1-code-removal-row-opened-2026-10-17 -->.
-Then the work below resumes where it stood.
 
 2026-10-15 — Before his yes on the ordered board, he and the lead are walking the "Yeni eklenenler" sheet of his
 Excel one row at a time; every decision and his words are in `.planning/quick/20261014-tahta-sirasi/HIS-WORDS-2026-10-15.md`.
@@ -49,17 +56,23 @@ microphone <!-- CEO-OK: jarvis-silent-listening-voice-04-okayed-2026-09-14 -->. 
 
 ## Next
 
-1. The studio retest, in the factory with the Media Studio's staff: ScrollCraft's clip through H3 image-less at
-   8 steps; stills from H3's best frame vs FLUX vs FLUX.2-klein-4B; a client-photo ad through H3; the 1080p SeedVR2
-   upscale in short segments. Then the bridge and ScrollCraft's rule 2 follow the result.
-2. Finish the walk: YE18 (Matt Pocock skills) to the sheet's last row, then "Ekim 9-15 linkleri" if he wants it.
-3. A plan at xhigh, his order: how ChatGPT on Steroids (installed) joins the holding as an agent and as the stand-in
-   when Sol's quota runs out.
-4. Then the board page with every decision of the walk, his one yes, and `ORDER.md` "On his yes". No construction
+1. His reading of the capacity study, and CSL's reply; then the RAM decision.
+2. The studio retest, in the factory with the Media Studio's staff: ScrollCraft's clip through H3 image-less at
+   8 steps; stills from H3's best frame vs FLUX vs FLUX.2-klein-4B; a client-photo ad through H3; upscale or not,
+   judged full screen by his eye. The records disagree on the standard (4 steps on 2026-09-04, 8 in the retest
+   note); the retest settles it, and the studio's capacity doubles or halves with it. Then the bridge and
+   ScrollCraft's rule 2 follow the result.
+3. Finish the walk: YE18 (Matt Pocock skills) to the sheet's last row, then "Ekim 9-15 linkleri" if he wants it.
+4. Plans he asked for, each talked first: how ChatGPT on Steroids (installed) joins the holding as an agent and as
+   Sol's stand-in; every studio revenue line (channels, MoneyPrinterTurbo, HyperFrames, OpenMontage, Open Design)
+   studied in order; a way for the team to work on his phone in the background without taking his screen.
+5. Then the board page with every decision of the walk, his one yes, and `ORDER.md` "On his yes". No construction
    before it except what he ordered in the walk.
 
 ## Waiting on his approval
 
+- The RAM upgrade: a second 2×16 GB kit (about 574 € in Germany, 36,999 TL in Turkey) or CSL's offer.
+- At the first client: a MiniMax or Alibaba API account; whether to ask MiniMax, our sponsor, for API credits.
 - The ordered board and its 10 new rows, after the walk.
 - At their ranks: the Supabase skills install (#3), DataForSEO (#47), Apify beyond the free plan (#48), Google OAuth
   for the Workspace CLI (#24), store accounts for a mobile app.
