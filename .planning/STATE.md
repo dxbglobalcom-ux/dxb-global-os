@@ -77,8 +77,6 @@ microphone <!-- CEO-OK: jarvis-silent-listening-voice-04-okayed-2026-09-14 -->. 
 
 - The studio platform-hub and channels plan (FINAL.md): his yes, and the decisions and money-out moments it lists
   (first top-ups, the model exam's ceiling, the first channel).
-- Whether three of his session orders become memory notes: no permission/terms questions about platforms; he only
-  clicks, never types; a seller never hears of the holding's AI business or income. Asked 2026-10-17, no answer yet.
 - The RAM upgrade: a second 2×16 GB kit (about 574 € in Germany, 36,999 TL in Turkey) or CSL's offer.
 - Whether to ask MiniMax, our sponsor, for API credits.
 - The ordered board and its 10 new rows, after the walk.
