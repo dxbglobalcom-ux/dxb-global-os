@@ -2562,5 +2562,13 @@
     "conditions": "A deliberate systemctl stop still stops it.",
     "session": "Opus 5.5 session e64c19c8, in conversation, 2026-10-15.",
     "where": "~/.config/systemd/user/dxb-comfyui.service"
+  },
+  "v1-only-board-rows-closed-2026-10-17": {
+    "date": "2026-10-17",
+    "what": "During the cleanup he ordered, the open board was sorted against what he rejected (V1's face, dead since 2026-08-01, and the first master plan). Six rows whose open work served V1 only are closed: B18 (the filter bar on V1's 58 command pages), C28 (V1's opportunities detail route), C32 (re-upgrading every V1 page — V2 is not a repair pass), C33 and C34 (the date on seven V1 components), C35 (V1's risk panel paragraphs). Each complaint keeps its words in its closed row and its row file; the needs that survive V1 live on in open rows (C61, the design law's progressive disclosure). B02 stays open: the symmetry defects are in no complaint record of his, and he made its removal conditional on that. B44 and B45, already accepted by his eye on 2026-09-16, move to the closed section. Nothing else on the board moves without his eye.",
+    "verbatim": "Eksikler tahtasında bazı kalemler bazı kalemlerin bazı işleri yapılmış, bazıları tamamlanmamış. O yüzden oradaki şeyler tamamıyla hani gözümle tamamlanmadan vesaire olmadan hiçbir yere alınmasın, silinmesin vesaire. Simetri kusur listesi eğer gerçekten bu benim şikayetlerim içerisinde varsa silinebilir. Yani diğerleri de işte önerdiğin gibi olabilir. Tamam mı? Tamam.",
+    "conditions": "Only these six rows close and only B44/B45 move; every other open row stays until his eye has seen it finished.",
+    "session": "Opus 5.5 session 43ccafde, in conversation, 2026-10-17.",
+    "where": "HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md Section 5 · 00-NOTE-CEO-COMPLAINT-LEDGER-2026-07-19.md C9"
   }
 }
