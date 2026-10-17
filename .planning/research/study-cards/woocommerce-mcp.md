@@ -35,7 +35,7 @@ The report that opened this card wrote that WooCommerce MCP is *"the free offici
 
 Rival source 38 measured the gap it closes:
 
-- The one storefront this holding owns is **WooCommerce** (`.planning/PROJECT.md:59` — *"outleteuro.com: existing WooCommerce/WordPress store, 73 brands, hosting live"*; `MASTER_PLAN.md:26` carries the CEO's own 2026-07-10 correction).
+- The one storefront this holding owns is **WooCommerce** (`MASTER_PLAN.md:26` and §6 Faz 11 carry it, with the CEO's own 2026-07-10 correction; the first project file, removed 2026-10-17 and kept in git history, read *"outleteuro.com: existing WooCommerce/WordPress store, 73 brands, hosting live"*).
 - **63 commerce, marketing, social-media and paid-media employees are written**, and there is **no connector of any kind** between them and that store.
 - **Revenue reaches the CEO's screen because a person types it into `revenue-entry-form.tsx`.**
 

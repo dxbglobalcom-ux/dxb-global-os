@@ -20,8 +20,8 @@
 |--------|--------------|-------------------------------|
 | R1 Social-media-driven demand & sales | 00-CEO-DIRECTIVE-SOCIAL-MEDIA-DEPT; social-media dept 12/12 | Content→publish→inbox ops COVERED; **monetization surface (shops/creator/affiliate) UNOWNED** |
 | R2 Own autonomous e-commerce companies (Outleteuro pilot: buy+sell fully autonomous WooCommerce store, then alt-OS spawn) | MASTER_PLAN §2/§6 Faz 11 (CEO verbal correction 2026-07-10) | **Full commerce operating cell UNOWNED** — platform, catalog, merchandising, orders, CRO, returns, analytics |
-| R3 Technology consultancy & applied automation for clients | PROJECT.md business model; engineering client-stack seats | Presales COVERED (sales-engineer); **solution architecture + client implementation UNOWNED**; deal pricing UNOWNED |
-| R4 Venture factory (spawn alt-OS companies) | MASTER_PLAN §6 Faz 11; PROJECT.md long-term model | Analysis COVERED (corporate-development-analyst — explicitly excludes build/launch); **thesis→live-company build UNOWNED** |
+| R3 Technology consultancy & applied automation for clients | the first project file's business model (removed 2026-10-17, in git history); engineering client-stack seats | Presales COVERED (sales-engineer); **solution architecture + client implementation UNOWNED**; deal pricing UNOWNED |
+| R4 Venture factory (spawn alt-OS companies) | MASTER_PLAN §6 Faz 11 | Analysis COVERED (corporate-development-analyst — explicitly excludes build/launch); **thesis→live-company build UNOWNED** |
 
 ## 2. Organization model (Fable decision, per delegated authority)
 
