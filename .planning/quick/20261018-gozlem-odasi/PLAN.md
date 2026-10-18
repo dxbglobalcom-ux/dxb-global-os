@@ -25,6 +25,8 @@ X (sizin hesabınız, yalnız okuma)
 **Ekibin kararları**
 - Kim: hepsi holdingin mevcut çalışanları. Gözcü Pazar İstihbaratı Lideri; deneyleri Araç Değerlendiricisi ile Model
   Değerlendirme Lideri yapar; rafı Bilgi Mimarı tutar; odanın başı Yapay Zekâ Direktörü.
+- Amaç: bu insanları her gün sizin yerinize çalışanlarımız takip eder; size yalnız işe yarayan gelir. Siz bir hesap
+  verirseniz ("bunu da takip edin") tek cümleyle listeye girer. İleride Instagram gibi başka kaynaklar aynı odaya eklenir.
 - Nerede: fabrika başlayınca holdingin kendi zamanlayıcısında, bu bilgisayarda. O güne kadar tezgâhta, bugün toplanan
   yaklaşık 600 paylaşımla kurulup sınanır; X'e tek okuma yapılmaz. Anahtar dönmeden hemen önce bir fabrika denemesi.
 - X'i okuma: sizin hesabınız, hiçbir şey yazmadan. Günde 4 kısa okuma, A katmanına günde bir tam okuma; oda günde en
