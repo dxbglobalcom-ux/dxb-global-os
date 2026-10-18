@@ -55,6 +55,8 @@ import urllib.parse
 import urllib.request
 from pathlib import Path
 
+import xgate
+
 # DXB_HIDDEN_PORT points this module (and bin/opencli) at a SECOND hidden Chrome — only for a test
 # that must not disturb the real one, e.g. the session guard run against an empty profile.
 HOST, PORT = "127.0.0.1", int(os.environ.get("DXB_HIDDEN_PORT") or 9333)
@@ -76,6 +78,14 @@ DISPLAY_NAME = "DxB hidden research Chrome (127.0.0.1:9333)"
 # launch anything for these sites — above all not the CEO's own Chrome.
 NO_SUCH_PROCESS = "dxb-no-such-process"
 APPS_YAML = Path.home() / ".opencli" / "apps.yaml"
+# X IS SENT NOWHERE BY apps.yaml. bin/opencli hands every X command its own window's address
+# (OPENCLI_CDP_ENDPOINT wins over apps.yaml, opencli dist/src/execution.js), so for X the file only
+# decides what a call that went AROUND the door does — the real opencli run directly, which would read
+# his account outside the X gate. Port 9 (discard) has nothing listening: that call fails closed, and
+# opencli's message names this displayName. A PATH wrapper cannot do it: ~/.npm-global/bin comes first.
+X_PORT = 9
+X_DISPLAY_NAME = "X only through the X gate — run opencli from the dxb-research door (bin/opencli)"
+_APP_LINE = re.compile(r'^  "?([^":#]+?)"?:\s*\{port:\s*(\d+)\b')
 APPS_HEADER = "# dxb-research: written by .claude/skills/dxb-research/scripts/hidden.py apps"
 # bin/opencli carries this string, so a shim never mistakes another copy of itself for opencli.
 SHIM_MARKER = b"DXB-HIDDEN-CHROME-SHIM"
@@ -358,18 +368,22 @@ def commands(root: Path) -> dict[str, dict[str, tuple[bool, str]]]:
 
 
 # ---------------------------------------------------------------- ~/.opencli/apps.yaml
+def _port_for(site: str) -> int:
+    return X_PORT if site in xgate.X_SITES else PORT
+
+
 def registered_sites() -> set[str]:
-    """Sites apps.yaml sends to 9333, read line by line from the file this module writes."""
+    """Sites apps.yaml registers where this module puts them — 9333, an X site at X_PORT — read line
+    by line from the file this module writes. (An exact port: "port: 9" is a prefix of "port: 9333".)"""
     try:
         text = APPS_YAML.read_text(encoding="utf-8")
     except OSError:
         return set()
     out = set()
     for line in text.splitlines():
-        s = line.strip()
-        if not line.startswith("  ") or s.startswith("#") or ":" not in s or f"port: {PORT}" not in s:
-            continue
-        out.add(s.split(":", 1)[0].strip().strip('"'))
+        m = _APP_LINE.match(line)
+        if m and int(m.group(2)) == _port_for(m.group(1).strip()):
+            out.add(m.group(1).strip())
     return out
 
 
@@ -399,14 +413,17 @@ def apps_valid(root: Path) -> bool:
     except OSError:
         return False
     stamp = RUN / "apps.ok"
+    # the rule is in the stamp too: a file accepted before X moved to X_PORT is judged again
+    passed = f"{digest} x-port-{X_PORT}"
     with contextlib.suppress(OSError):
-        if stamp.read_text().strip() == digest:
+        if stamp.read_text().strip() == passed:
             return True
     ports = _yaml_ports(root)
-    if ports is None or {k for k, v in ports.items() if v == PORT} != registered_sites():
+    if (ports is None or {k for k, v in ports.items() if v == _port_for(k)} != registered_sites()
+            or any(s in ports and ports[s] != X_PORT for s in xgate.X_SITES)):
         return False
     RUN.mkdir(parents=True, exist_ok=True)
-    stamp.write_text(digest + "\n")
+    stamp.write_text(passed + "\n")
     return True
 
 
@@ -423,12 +440,15 @@ def write_apps(root: Path) -> int:
         f"# processName/executableNames ({NO_SUCH_PROCESS}) match nothing on this machine: with 9333 down,",
         "# opencli's launcher has nothing to restart or launch (and on Linux its app discovery returns",
         "# null before any process is looked at), so the call fails with the displayName below.",
+        f"# X ({', '.join(sorted(xgate.X_SITES))}) is the exception: port {X_PORT}, where nothing listens. The",
+        "# door (bin/opencli) gives every X command its own window through the X gate; a direct call fails.",
         "# Regenerate after an opencli update: python3 <skill>/scripts/hidden.py apps",
         "apps:",
     ]
     for s in sites:
-        lines.append(f'  "{s}": {{port: {PORT}, processName: {NO_SUCH_PROCESS}, '
-                     f'executableNames: [{NO_SUCH_PROCESS}], displayName: "{DISPLAY_NAME}"}}')
+        name = X_DISPLAY_NAME if s in xgate.X_SITES else DISPLAY_NAME
+        lines.append(f'  "{s}": {{port: {_port_for(s)}, processName: {NO_SUCH_PROCESS}, '
+                     f'executableNames: [{NO_SUCH_PROCESS}], displayName: "{name}"}}')
     APPS_YAML.parent.mkdir(parents=True, exist_ok=True)
     tmp = APPS_YAML.with_name(".apps.yaml.tmp")
     tmp.write_text("\n".join(lines) + "\n", encoding="utf-8")
@@ -642,10 +662,32 @@ def _expand_js(label: str) -> str:
             " return n; })()") % json.dumps(label.strip().lower())
 
 
+def x_verdict(href: str, password: bool = False) -> str:
+    """What an X page's final address says — the X gate owns the judgement (xgate.judge_url)."""
+    return xgate.judge_url(href, password)
+
+
+def response_of(m: dict) -> tuple[str, int] | None:
+    """(url, status) of a Network.responseReceived event, else None."""
+    if m.get("method") != "Network.responseReceived":
+        return None
+    r = (m.get("params") or {}).get("response") or {}
+    return str(r.get("url") or ""), int(r.get("status") or 0)
+
+
 def read(url: str, wait: float = 1.5, expand: str | None = None, after: float = 2.0,
          timeout: float = 90.0, chunk: int = 20000, text: bool = False) -> dict | str:
     """Open `url` in its own window of the hidden Chrome and return the extract envelope — or,
-    with text=True, the whole page's visible text (sidebars included, which the extract drops)."""
+    with text=True, the whole page's visible text (sidebars included, which the extract drops).
+    An X address passes the X gate first (xgate.py): one X reader at a time, inside his budget."""
+    if xgate.is_x_url(url):
+        with xgate.call(f"read {url}") as gate:
+            return _read(url, wait, expand, after, timeout, chunk, text, gate)
+    return _read(url, wait, expand, after, timeout, chunk, text, None)
+
+
+def _read(url: str, wait: float, expand: str | None, after: float, timeout: float, chunk: int,
+          text: bool, gate) -> dict | str:
     end = time.monotonic() + timeout
 
     def left(cap: float) -> float:
@@ -668,6 +710,9 @@ def read(url: str, wait: float = 1.5, expand: str | None = None, after: float = 
             page = CDP(tab.ws)
             try:
                 page.send("Page.enable", {}, left(15))
+                # X's answer is in the responses as well as the address: a 429 on the document leaves
+                # the address as it was, and a page that is not X may redirect into it.
+                page.send("Network.enable", {}, left(15))
                 nav = page.send("Page.navigate", {"url": url}, left(30))
                 if nav.get("errorText"):
                     raise CDPError(f"navigation failed: {nav['errorText']}")
@@ -679,8 +724,24 @@ def read(url: str, wait: float = 1.5, expand: str | None = None, after: float = 
                     page.evaluate(_expand_js(expand), left(15))
                     time.sleep(left(after))
                 res = page.evaluate(extract_js, left(30))
+                seen, requests, seen_at = xgate.judge_responses(
+                    [r for r in map(response_of, page.events) if r])
+                if gate is not None:
+                    where = json.loads(page.evaluate(_WHERE_JS, left(10)) or "{}")
+                    verdict, detail = xgate.worst([
+                        (seen, seen_at),
+                        (x_verdict(where.get("url", ""), where.get("password", False)), where.get("url", ""))])
+                    gate.requests = requests
+                    gate.report(verdict, detail)
+                    if verdict != "ok":
+                        raise CDPError(f"X answered {verdict} at {detail}")
             finally:
                 page.close()
+    if gate is None and requests:
+        # an address that was not X reached X: counted after the fact, and refused (the content
+        # discarded, xgate.Refused raised) when X is closed, paused or over budget
+        if xgate.record(f"read {url}", seen, requests, detail=seen_at) != "ok":
+            raise CDPError(f"X answered {seen} at {seen_at}")
     if text:
         return str(res or "")
     if not isinstance(res, dict) or not res.get("ok"):
@@ -697,6 +758,8 @@ def read(url: str, wait: float = 1.5, expand: str | None = None, after: float = 
 # Each check is one read-only page in its own window of the hidden Chrome. His own Chrome is never
 # asked: it is never driven at all.
 # `password`: a password field on the page is a login wall, whatever language the page is in.
+_WHERE_JS = ("JSON.stringify({url: location.href,"
+             " password: !!document.querySelector('input[type=password]')})")
 _STATE_JS = ("JSON.stringify({url: location.href, title: document.title,"
              " password: !!document.querySelector('input[type=password]'),"
              " text: (document.body ? document.body.innerText : '').slice(0, 6000)})")
@@ -786,7 +849,13 @@ def signed_in() -> list[tuple[str, bool, str]]:
     out = []
     for site, url, judge in LIVE:
         try:
-            ok, why = judge(_state(url))
+            if xgate.is_x_url(url):
+                with xgate.call(f"signed-in {url}") as gate:
+                    st = _state(url)
+                    gate.report(xgate.judge_url(st.get("url", ""), st.get("password", False)), st.get("url", ""))
+            else:
+                st = _state(url)
+            ok, why = judge(st)
         except (Down, Locked):    # the Chrome, not the site: one line, not six rows saying "no session"
             raise
         except Exception as e:
@@ -932,7 +1001,7 @@ def main() -> int:
             if not apps_valid(found[1]):
                 print(f"!! {APPS_YAML} opencli'nin kendi YAML okuyucusundan gecmedi", file=sys.stderr)
                 return 1
-            print(f"{APPS_YAML}: {n} site -> 127.0.0.1:{PORT}")
+            print(f"{APPS_YAML}: {n} site -> 127.0.0.1:{PORT} (X -> {X_PORT}: yalniz bin/opencli kapisindan)")
             return 0
     except Down as e:
         print(str(e), file=sys.stderr)
@@ -943,6 +1012,9 @@ def main() -> int:
     except SlotTimeout as e:
         print(str(e), file=sys.stderr)
         return 75
+    except xgate.Refused as e:
+        print(str(e), file=sys.stderr)
+        return xgate.REFUSED
     except (CDPError, OSError, ValueError) as e:
         print(f"gizli Chrome okumasi basarisiz: {e}", file=sys.stderr)
         return 1

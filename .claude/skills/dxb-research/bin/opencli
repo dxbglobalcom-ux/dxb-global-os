@@ -17,17 +17,24 @@ hunters it launches) put this folder first on PATH, so every `opencli` they run 
 
 Why a window per call and not opencli's own `OPENCLI_CDP_ENDPOINT=http://…` mode: that mode picks
 ONE existing page (cdp.js selectCDPTarget), so parallel calls would drive and overwrite each other's
-tab. The sites themselves are routed to port 9333 by ~/.opencli/apps.yaml (hidden.py apps).
+tab. The sites themselves are routed to port 9333 by ~/.opencli/apps.yaml (hidden.py apps) — X to a
+port where nothing listens, so X is read through this door only.
 
 Every `opencli twitter <command>` also passes the X gate (scripts/xgate.py): one X reader at a time
-on the machine, inside his account's budget; its answer is read for a 429, a warning page or a
-login wall, and a refused call starts nothing.
+on the machine, inside his account's budget, and a refused call starts nothing. What X answered is
+read from X itself: a second DevTools client on the command's own window watches every response
+(a 429 on a later page, which opencli swallows and exits 0), then the window's final address, then a
+failed command's words; the worst of the three is recorded. Past xgate.RUNAWAY_MAX X responses in
+one command it is stopped.
 """
 import contextlib
 import os
 import signal
+import socket
 import subprocess
 import sys
+import threading
+import time
 from pathlib import Path
 
 sys.dont_write_bytecode = True     # the skill folder is read-only inside a hunter's jail
@@ -109,9 +116,75 @@ def run(real: str, argv: list[str], env: dict) -> int:
     return 128 - rc if rc < 0 else rc
 
 
-def run_captured(real: str, argv: list[str], env: dict) -> tuple[int, str]:
+class Watch:
+    """A second DevTools client on an X command's own window, watching its responses while opencli
+    drives it. Chrome 153 accepts a second client on a page's websocket and gives it the page's
+    Network events, the in-page fetches of the first client included (measured 2026-10-18)."""
+
+    def __init__(self, ws: str):
+        try:
+            self.cdp = hidden.CDP(ws)
+            self.cdp.send("Network.enable", {}, 10)
+        except (hidden.CDPError, OSError) as e:
+            # fail closed: an X call nobody watches is the call that drew 429 twice on 2026-10-18
+            raise xgate.Refused(f"X cagrisi yapilmadi: penceresi izlenemiyor (ikinci DevTools baglantisi: {e})") from None
+        self.responses: list[tuple[str, int]] = []
+        self.x_requests = 0
+        self.runaway = False
+        self._stop = threading.Event()
+        self._thread = threading.Thread(target=self._drain, daemon=True)
+        self._thread.start()
+
+    def _note(self, m: dict) -> None:
+        r = hidden.response_of(m)
+        if r:
+            self.responses.append(r)
+            if xgate.is_x_url(r[0]):
+                self.x_requests += 1
+                self.runaway = self.runaway or self.x_requests > xgate.RUNAWAY_MAX
+
+    def _drain(self) -> None:
+        signal.pthread_sigmask(signal.SIG_BLOCK, hidden._HELD)   # hidden.Tab: threads hold these
+        # A short timeout, so the stop is seen; a timeout inside recv leaves a partial frame in
+        # CDP._buf, whole for the next pass.
+        self.cdp.sock.settimeout(0.2)
+        while not self._stop.is_set():
+            try:
+                m = self.cdp._message()
+            except (socket.timeout, TimeoutError):
+                continue
+            except (hidden.CDPError, OSError, ValueError):
+                return
+            self._note(m)
+
+    def finish(self) -> list[tuple[str, str]]:
+        """Stop watching, ask the window where it ended up, close. Returns the (verdict, detail)
+        pairs: what the responses showed and what the final address shows."""
+        self._stop.set()
+        self._thread.join(5)
+        href = ""
+        with contextlib.suppress(hidden.CDPError, OSError, ValueError):
+            href = str(self.cdp.evaluate("location.href", 10) or "")
+        for m in self.cdp.events:          # events that came in while evaluate waited
+            self._note(m)
+        self.cdp.close()
+        seen, _, seen_at = xgate.judge_responses(self.responses)
+        return [(seen, seen_at), (xgate.judge_url(href), href)]
+
+
+def _stop(child: subprocess.Popen) -> tuple[bytes, bytes]:
+    child.terminate()
+    try:
+        return child.communicate(timeout=10)
+    except subprocess.TimeoutExpired:
+        child.kill()
+        return child.communicate()
+
+
+def run_captured(real: str, argv: list[str], env: dict, watch: Watch | None = None) -> tuple[int, str]:
     """run(), with the output held back until opencli ends so the X gate can read it, then passed on
-    unchanged. Returns (exit code, stderr + stdout)."""
+    unchanged. Returns (exit code, stderr + stdout). With a watch, a command that runs away past
+    xgate.RUNAWAY_MAX X responses is stopped like a hung one, exit 75."""
     child = subprocess.Popen([real, *argv], env=env, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
     def forward(signum, _frame):
@@ -120,19 +193,27 @@ def run_captured(real: str, argv: list[str], env: dict) -> tuple[int, str]:
 
     for s in (signal.SIGTERM, signal.SIGINT, signal.SIGHUP):
         signal.signal(s, forward)
-    try:
-        out, err = child.communicate(timeout=MAX_SECONDS)
-    except subprocess.TimeoutExpired:
-        say(f"opencli {MAX_SECONDS} sn'yi asti; durduruldu, penceresi kapatiliyor")
-        child.terminate()
+    end = time.monotonic() + MAX_SECONDS
+    while True:
         try:
-            out, err = child.communicate(timeout=10)
+            # a watched command is looked at every second (communicate keeps what it read so far)
+            out, err = child.communicate(timeout=max(0.01, min(1.0 if watch else MAX_SECONDS,
+                                                               end - time.monotonic())))
         except subprocess.TimeoutExpired:
-            child.kill()
-            out, err = child.communicate()
-        rc = 124
-    else:
+            if watch is not None and watch.runaway:
+                say(f"tek komut X'e {xgate.RUNAWAY_MAX}'dan fazla istek yapti ({watch.x_requests}); "
+                    "opencli durduruldu, penceresi kapatiliyor")
+                out, err = _stop(child)
+                rc = 75
+                break
+            if time.monotonic() < end:
+                continue
+            say(f"opencli {MAX_SECONDS} sn'yi asti; durduruldu, penceresi kapatiliyor")
+            out, err = _stop(child)
+            rc = 124
+            break
         rc = 128 - child.returncode if child.returncode < 0 else child.returncode
+        break
     sys.stdout.buffer.write(out)
     sys.stdout.flush()
     sys.stderr.buffer.write(err)
@@ -146,14 +227,16 @@ def is_x_call(argv: list[str]) -> bool:
 
 
 def through_x_gate(argv: list[str], go) -> int:
-    """Run `go` (which returns run_captured's pair) inside the X gate and record X's answer."""
+    """Run `go` inside the X gate and record the worst thing X answered. `go` returns run_captured's
+    pair, and from a watched window also (the watch's (verdict, detail) pairs, its X requests)."""
     try:
         with xgate.call("opencli " + " ".join(argv[:3])) as gate:
-            rc, text = go()
-            if rc == 0:
-                gate.report("ok")
-            else:
-                gate.report_text(text)
+            rc, text, *watched = go()
+            found = [xgate.text_verdict(text) if rc != 0 else ("ok", "")]
+            if watched:
+                found += watched[0]
+                gate.requests = watched[1]
+            gate.report(*xgate.worst(found))
             return rc
     except xgate.Refused as e:
         say(str(e))
@@ -206,7 +289,14 @@ def main() -> int:
             with hidden.Tab() as tab:
                 env = dict(os.environ, OPENCLI_CDP_ENDPOINT=tab.ws)
                 env.pop("OPENCLI_CDP_TARGET", None)
-                return run_captured(real, argv, env) if capture else run(real, argv, env)
+                if not capture:
+                    return run(real, argv, env)
+                watch = Watch(tab.ws)          # before opencli starts: a refused watch starts nothing
+                try:
+                    rc, text = run_captured(real, argv, env, watch)
+                finally:
+                    found = watch.finish()     # before the window closes: its final address
+                return rc, text, found, watch.x_requests
 
     try:
         if x:
