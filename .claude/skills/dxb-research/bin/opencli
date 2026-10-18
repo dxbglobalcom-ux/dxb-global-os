@@ -18,6 +18,10 @@ hunters it launches) put this folder first on PATH, so every `opencli` they run 
 Why a window per call and not opencli's own `OPENCLI_CDP_ENDPOINT=http://…` mode: that mode picks
 ONE existing page (cdp.js selectCDPTarget), so parallel calls would drive and overwrite each other's
 tab. The sites themselves are routed to port 9333 by ~/.opencli/apps.yaml (hidden.py apps).
+
+Every `opencli twitter <command>` also passes the X gate (scripts/xgate.py): one X reader at a time
+on the machine, inside his account's budget; its answer is read for a 429, a warning page or a
+login wall, and a refused call starts nothing.
 """
 import contextlib
 import os
@@ -30,6 +34,7 @@ sys.dont_write_bytecode = True     # the skill folder is read-only inside a hunt
 SCRIPTS = Path(__file__).resolve().parent.parent / "scripts"
 sys.path.insert(0, str(SCRIPTS))
 import hidden  # noqa: E402
+import xgate  # noqa: E402
 
 REFUSED = 3
 # The built-ins that never touch a browser. Everything else that is not a site — `browser`,
@@ -104,6 +109,57 @@ def run(real: str, argv: list[str], env: dict) -> int:
     return 128 - rc if rc < 0 else rc
 
 
+def run_captured(real: str, argv: list[str], env: dict) -> tuple[int, str]:
+    """run(), with the output held back until opencli ends so the X gate can read it, then passed on
+    unchanged. Returns (exit code, stderr + stdout)."""
+    child = subprocess.Popen([real, *argv], env=env, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+
+    def forward(signum, _frame):
+        with contextlib.suppress(ProcessLookupError):
+            child.send_signal(signum)
+
+    for s in (signal.SIGTERM, signal.SIGINT, signal.SIGHUP):
+        signal.signal(s, forward)
+    try:
+        out, err = child.communicate(timeout=MAX_SECONDS)
+    except subprocess.TimeoutExpired:
+        say(f"opencli {MAX_SECONDS} sn'yi asti; durduruldu, penceresi kapatiliyor")
+        child.terminate()
+        try:
+            out, err = child.communicate(timeout=10)
+        except subprocess.TimeoutExpired:
+            child.kill()
+            out, err = child.communicate()
+        rc = 124
+    else:
+        rc = 128 - child.returncode if child.returncode < 0 else child.returncode
+    sys.stdout.buffer.write(out)
+    sys.stdout.flush()
+    sys.stderr.buffer.write(err)
+    sys.stderr.flush()
+    return rc, err.decode("utf-8", "replace") + "\n" + out.decode("utf-8", "replace")
+
+
+def is_x_call(argv: list[str]) -> bool:
+    """A site command on X (its bare help does not reach X)."""
+    return len(argv) > 1 and argv[0] in xgate.X_SITES and not argv[1].startswith("-")
+
+
+def through_x_gate(argv: list[str], go) -> int:
+    """Run `go` (which returns run_captured's pair) inside the X gate and record X's answer."""
+    try:
+        with xgate.call("opencli " + " ".join(argv[:3])) as gate:
+            rc, text = go()
+            if rc == 0:
+                gate.report("ok")
+            else:
+                gate.report_text(text)
+            return rc
+    except xgate.Refused as e:
+        say(str(e))
+        return xgate.REFUSED
+
+
 def _exit_now(signum, _frame):
     raise SystemExit(128 + signum)   # unwinds the `with` blocks: a window already opened is closed
 
@@ -122,13 +178,19 @@ def main() -> int:
     root = hidden.package_root(real)
     if root is None:
         # a stand-in (the test benches and the ruler put one first on PATH): nothing behind it can
-        # reach a browser, and it must answer exactly as it would without this door
+        # reach a browser, and it must answer exactly as it would without this door — unless a test
+        # points the X gate at its own folder to prove the gate
+        if is_x_call(argv) and os.environ.get("DXB_XGATE_DIR"):
+            return through_x_gate(argv, lambda: run_captured(real, argv, dict(os.environ)))
         os.execv(real, [real, *argv])
     kind, why = classify(argv, root)
     if kind == "refuse":
         say(why)
         return REFUSED
+    x = is_x_call(argv)
     if kind == "plain":
+        if x:
+            return through_x_gate(argv, lambda: run_captured(real, argv, dict(os.environ)))
         os.execv(real, [real, *argv])
     if not hidden.apps_valid(root):
         say(f"{hidden.APPS_YAML} opencli'nin kendi YAML okuyucusundan gecmiyor; opencli onu sessizce yok "
@@ -138,13 +200,18 @@ def main() -> int:
     if not hidden.version():
         say(hidden.DOWN_MSG)
         return 69
-    try:
+    def in_a_window(capture: bool):
         hidden.reap()
         with hidden.slot(SLOT_WAIT):
             with hidden.Tab() as tab:
                 env = dict(os.environ, OPENCLI_CDP_ENDPOINT=tab.ws)
                 env.pop("OPENCLI_CDP_TARGET", None)
-                return run(real, argv, env)
+                return run_captured(real, argv, env) if capture else run(real, argv, env)
+
+    try:
+        if x:
+            return through_x_gate(argv, lambda: in_a_window(True))
+        return in_a_window(False)
     except hidden.Down:
         say(hidden.DOWN_MSG)
         return 69

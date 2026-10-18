@@ -55,6 +55,8 @@ import urllib.parse
 import urllib.request
 from pathlib import Path
 
+import xgate
+
 # DXB_HIDDEN_PORT points this module (and bin/opencli) at a SECOND hidden Chrome — only for a test
 # that must not disturb the real one, e.g. the session guard run against an empty profile.
 HOST, PORT = "127.0.0.1", int(os.environ.get("DXB_HIDDEN_PORT") or 9333)
@@ -642,10 +644,35 @@ def _expand_js(label: str) -> str:
             " return n; })()") % json.dumps(label.strip().lower())
 
 
+def x_verdict(href: str, password: bool = False) -> str:
+    """What an X page's final address says: 'frozen' (the access/verify page), 'session_dead' (a
+    login wall) or 'ok'. The address, never the body: the body is other people's posts. A t.co link
+    that left X for another site says nothing about his session."""
+    parts = urllib.parse.urlsplit(href or "")
+    host = (parts.hostname or "").lower()
+    if not xgate.is_x_url(href or "") or host == "t.co" or host.endswith(".t.co"):
+        return "ok"
+    path = parts.path
+    if path.startswith("/account/access") or "captcha" in path:
+        return "frozen"
+    if path.startswith(("/i/flow/login", "/login", "/i/flow/signup")) or password:
+        return "session_dead"
+    return "ok"
+
+
 def read(url: str, wait: float = 1.5, expand: str | None = None, after: float = 2.0,
          timeout: float = 90.0, chunk: int = 20000, text: bool = False) -> dict | str:
     """Open `url` in its own window of the hidden Chrome and return the extract envelope — or,
-    with text=True, the whole page's visible text (sidebars included, which the extract drops)."""
+    with text=True, the whole page's visible text (sidebars included, which the extract drops).
+    An X address passes the X gate first (xgate.py): one X reader at a time, inside his budget."""
+    if xgate.is_x_url(url):
+        with xgate.call(f"read {url}") as gate:
+            return _read(url, wait, expand, after, timeout, chunk, text, gate)
+    return _read(url, wait, expand, after, timeout, chunk, text, None)
+
+
+def _read(url: str, wait: float, expand: str | None, after: float, timeout: float, chunk: int,
+          text: bool, gate) -> dict | str:
     end = time.monotonic() + timeout
 
     def left(cap: float) -> float:
@@ -679,6 +706,12 @@ def read(url: str, wait: float = 1.5, expand: str | None = None, after: float = 
                     page.evaluate(_expand_js(expand), left(15))
                     time.sleep(left(after))
                 res = page.evaluate(extract_js, left(30))
+                if gate is not None:
+                    where = json.loads(page.evaluate(_WHERE_JS, left(10)) or "{}")
+                    verdict = x_verdict(where.get("url", ""), where.get("password", False))
+                    gate.report(verdict, where.get("url", ""))
+                    if verdict != "ok":
+                        raise CDPError(f"X answered {verdict} at {where.get('url', '')}")
             finally:
                 page.close()
     if text:
@@ -697,6 +730,8 @@ def read(url: str, wait: float = 1.5, expand: str | None = None, after: float = 
 # Each check is one read-only page in its own window of the hidden Chrome. His own Chrome is never
 # asked: it is never driven at all.
 # `password`: a password field on the page is a login wall, whatever language the page is in.
+_WHERE_JS = ("JSON.stringify({url: location.href,"
+             " password: !!document.querySelector('input[type=password]')})")
 _STATE_JS = ("JSON.stringify({url: location.href, title: document.title,"
              " password: !!document.querySelector('input[type=password]'),"
              " text: (document.body ? document.body.innerText : '').slice(0, 6000)})")
@@ -786,7 +821,13 @@ def signed_in() -> list[tuple[str, bool, str]]:
     out = []
     for site, url, judge in LIVE:
         try:
-            ok, why = judge(_state(url))
+            if xgate.is_x_url(url):
+                with xgate.call(f"signed-in {url}") as gate:
+                    st = _state(url)
+                    gate.report(x_verdict(st.get("url", ""), st.get("password", False)), st.get("url", ""))
+            else:
+                st = _state(url)
+            ok, why = judge(st)
         except (Down, Locked):    # the Chrome, not the site: one line, not six rows saying "no session"
             raise
         except Exception as e:
@@ -943,6 +984,9 @@ def main() -> int:
     except SlotTimeout as e:
         print(str(e), file=sys.stderr)
         return 75
+    except xgate.Refused as e:
+        print(str(e), file=sys.stderr)
+        return xgate.REFUSED
     except (CDPError, OSError, ValueError) as e:
         print(f"gizli Chrome okumasi basarisiz: {e}", file=sys.stderr)
         return 1
