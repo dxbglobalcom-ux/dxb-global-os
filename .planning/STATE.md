@@ -30,8 +30,8 @@ not here. What is accepted is read from `scripts/governance/ceo-approvals.json`,
 2026-10-18 — The Gözlem Odası, made simple on his word <!-- CEO-OK: gozlem-odasi-simple-plan-2026-10-18 -->: one smart agent looks at the people on his list (X, YouTube,
 Instagram, AI news sites, any account he gives) every two or three days and brings him only what the holding can use —
 no research, no bureaucracy; the reading on the cheapest models, the verdict on Opus. It is board row B82, built when
-the factory fully starts; the plan (`.planning/quick/20261018-gozlem-odasi/PLAN.md`, Bölüm 1 Turkish) waits for his
-eye beside his words verbatim; the watchlist page he has seen: https://claude.ai/artifact/D2Tg7ri7hLGXfxaMz2fZw2. Its
+the factory fully starts; the plan (`.planning/quick/20261018-gozlem-odasi/PLAN.md`, Bölüm 1 Turkish) has his eye
+(2026-10-18 <!-- CEO-OK: gozlem-odasi-plan-eye-2026-10-18 -->; the first draft's five design files deleted on his word); the watchlist page he has seen: https://claude.ai/artifact/D2Tg7ri7hLGXfxaMz2fZw2. Its
 step 1, the X gate (one X reader at a time inside his account's budget, stopping at X's first warning), is built into
 the research door now and protects his account today. His cost order is B51's move 7 <!-- CEO-OK: b51-cost-down-wherever-possible-2026-10-18 -->. Found: the research Chrome's
 control port (9333, six of his logins) accepts any local program without a password.
@@ -62,7 +62,7 @@ microphone <!-- CEO-OK: jarvis-silent-listening-voice-04-okayed-2026-09-14 -->. 
 
 1. The studio platform-hub plan is approved with his corrections and on the board (B43; FINAL.md Bölüm 0): built at its
    rank — accounts connected and infrastructure only, no money loaded, no exam now; channels become a separate study.
-2. The Gözlem Odası (B82): his eye on the plan; the build when the factory fully starts — step 1, the X gate, is in.
+2. The Gözlem Odası (B82): the plan has his eye; the build when the factory fully starts — step 1, the X gate, is in.
 3. RAM: his decision by 2026-10-28; it reopens sooner only if the studio needs it. He reads CSL's reply himself —
    the session does not open the mail.
 4. The studio retest. First the machine's reboot, at his own moment (he is working now): unattended-upgrades raised
@@ -84,8 +84,6 @@ microphone <!-- CEO-OK: jarvis-silent-listening-voice-04-okayed-2026-09-14 -->. 
 ## Waiting on his approval
 
 - Platform-hub plan, two open decisions: the studio tab drawn before B22's synthesis (B32's method); the `media` event channel.
-- The Gözlem Odası plan (PLAN.md, B82): his eye. And one word: may the first draft's five design files in its `team/`
-  folder (~37 KB) go? The lead advises yes; FACTS.md, the measured ground, stays.
 - The RAM upgrade, his decision by 2026-10-28: the lead advises the same Goodram 2×16 kit from Proshop (€580 with
   shipping, no coupon exists) over CSL's offer; with four sticks AMD guarantees only DDR5-3600, so 6000 is UNVERIFIED
   until installed and memory-tested.

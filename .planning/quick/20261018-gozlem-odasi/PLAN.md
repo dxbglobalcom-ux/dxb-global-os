@@ -1,9 +1,11 @@
 # Gözlem Odası — the plan (board row B82)
 
 **Status:** rewritten 2026-10-18 on his word — simple, pragmatic, no bureaucracy (HIS-WORDS §9-10). His yes is to this
-shape <!-- CEO-OK: gozlem-odasi-simple-plan-2026-10-18 -->; this written text waits for his eye. It is built when its time
+shape <!-- CEO-OK: gozlem-odasi-simple-plan-2026-10-18 -->; his eye is on this written text too (2026-10-18, "Onaylıyorum")
+<!-- CEO-OK: gozlem-odasi-plan-eye-2026-10-18 -->. It is built when its time
 comes: the factory's full start (HIS-WORDS §4). It replaces the first, heavier draft of the same day entirely; `team/`
-keeps that draft's research ground (FACTS.md: X access, the watchlist) — its proposals are not instructions.
+keeps only that draft's research ground (FACTS.md: X access, the watchlist); its five design files were deleted on his
+word.
 
 ## Bölüm 1 — plan (Türkçe)
 
