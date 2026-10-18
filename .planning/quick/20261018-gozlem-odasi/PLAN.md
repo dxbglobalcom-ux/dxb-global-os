@@ -1,7 +1,8 @@
-# Gözlem Odası — the plan (B42's "people on X" lane)
+# Gözlem Odası — the plan (B42's people lane: X first, then every platform he names)
 
-**Status: PROPOSED, waiting for his eye and his yes (2026-10-18).** Nothing outside this folder changes until he says
-yes (B42 PLAN.md:3-5). His words of this job verbatim: `HIS-WORDS.md`. The watchlist page:
+**Status: his yes, 2026-10-18** <!-- CEO-OK: gozlem-odasi-plan-yes-2026-10-18 --> — with his corrections of the same day
+(HIS-WORDS §6-8): watching and reading on the cheapest models, the verdict with Opus; every platform, not X alone; a
+team of one or two. His words of this job verbatim: `HIS-WORDS.md`. The watchlist page:
 https://claude.ai/artifact/D2Tg7ri7hLGXfxaMz2fZw2 (copy: `watchlist.html`). The team's ground and proposals: `team/`.
 Raw X reads of 2026-10-18 (the ~600-post fixture, video, mirror profiles): `~/.local/share/dxb/gozlem-odasi/raw-2026-10-18/`
 (outside the repository on purpose — third-party posts, 29 MB).
@@ -23,10 +24,12 @@ X (sizin hesabınız, yalnız okuma)
 ```
 
 **Ekibin kararları**
-- Kim: hepsi holdingin mevcut çalışanları. Gözcü Pazar İstihbaratı Lideri; deneyleri Araç Değerlendiricisi ile Model
-  Değerlendirme Lideri yapar; rafı Bilgi Mimarı tutar; odanın başı Yapay Zekâ Direktörü.
+- Kim: küçük bir ekip, holdingin mevcut çalışanlarından. Odayı Pazar İstihbaratı Lideri yürütür: izler, okur, ayıklar,
+  rafı tutar ve bulguyu size getirir. Bir şey denenecekse Araç Değerlendiricisi dener. Başka kimse yok.
 - Amaç: bu insanları her gün sizin yerinize çalışanlarımız takip eder; size yalnız işe yarayan gelir. Siz bir hesap
-  verirseniz ("bunu da takip edin") tek cümleyle listeye girer. İleride Instagram gibi başka kaynaklar aynı odaya eklenir.
+  verirseniz ("bunu da takip edin") tek cümleyle listeye girer.
+- Kaynaklar: yalnız X değil. Önce X (hesabınızı koruyan kapı hazır olunca), sonra YouTube, Instagram, yapay zekâ haber
+  siteleri ve sizin verdiğiniz her hesap ya da site. Hepsi aynı odaya girer, aynı ayıklamadan ve aynı yargıdan geçer.
 - Nerede: fabrika başlayınca holdingin kendi zamanlayıcısında, bu bilgisayarda. O güne kadar tezgâhta, bugün toplanan
   yaklaşık 600 paylaşımla kurulup sınanır; X'e tek okuma yapılmaz. Anahtar dönmeden hemen önce bir fabrika denemesi.
 - X'i okuma: sizin hesabınız, hiçbir şey yazmadan. Günde 4 kısa okuma, A katmanına günde bir tam okuma; oda günde en
@@ -71,6 +74,11 @@ Taken by the lead after three blind proposals (architect, security & reliability
 fully starts (HIS-WORDS.md).
 
 **Contract — registered adaptations, no new spec, no new row**
+- Sources (his correction, HIS-WORDS §8): `watch_sources` carries a `platform` column from the first migration (x ·
+  youtube · instagram · site · rss); X is the first reader because his account needs the gate; YouTube, sites and RSS
+  read through the research door's existing channels with no session of his; Instagram through his session is an
+  identity step asked at its turn. One owner seat (Market Intelligence Lead) and the Tool Evaluator for trials — the
+  other three seats of the first draft are dropped on his word ("belki bir kişi bile yeter").
 - CAPABILITY_ARSENAL_DOCTRINE §9: the watch lane (B42's people lane); a trial in a throwaway VM is NOT an install
   (otherwise every trial breaks INTEG-01's "study card before install"); a tool-less judge path for untrusted content
   (doctrine item 6 — department grants cannot be narrowed per employee, `generate-profiles.ts:50,275-305`, so judging
@@ -80,7 +88,7 @@ fully starts (HIS-WORDS.md).
 - The A9 shelf gate (`r42_knowledge_shelf_policy.sql:30`, severity block, applied at `post-task.ts:131-140`) is changed in
   its policy row so read passes do not loop REVISE — not dodged by contract wording.
 - The voice is a Monday section of `v_ceo_briefing` (`control_ceo_briefing_post` allows one slot a day,
-  `w26_proactive_briefing.sql:332-339`), at most three findings, labels written by the head at verdict time.
+  `w26_proactive_briefing.sql:332-339`), at most three findings, labels written by the room's owner at verdict time.
 - The screen goes through B32: drawn and shown before it is built, with honest dead states (429 with resume time,
   keyring locked, KVM gone, GECİKTİ when a pass is overdue).
 
