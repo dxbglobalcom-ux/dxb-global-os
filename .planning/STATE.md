@@ -27,6 +27,16 @@ not here. What is accepted is read from `scripts/governance/ceo-approvals.json`,
 
 ## Where we left off
 
+2026-10-18 — He asked for a "Gözlem Odası": a room in the holding that watches the world's most important AI engineers
+on X through his own account, judges what they share (hype, trash or useful), tries the promising in an isolated lab and
+tells him. Six helpers researched it (owners, X access, lab, two watchlists, reference systems); the watchlist is a page
+he has seen (https://claude.ai/artifact/D2Tg7ri7hLGXfxaMz2fZw2 — 17 A, 51 B, 10 official, rewritten in plain Turkish on
+his word). On his order the engineers decided WHERE and HOW themselves: three blind proposals and a cross-examination;
+WHEN is his and settled — the room runs when the factory fully starts. The room is B42's "people on X" lane, no new row.
+The plan waits for his eye and yes: `.planning/quick/20261018-gozlem-odasi/PLAN.md` (Part 1 Turkish), beside his words
+and the team's files; the raw X reads of the day sit outside the repo in `~/.local/share/dxb/gozlem-odasi/`. Found: the
+research Chrome's control port (9333, six of his logins) accepts any local program without a password.
+
 2026-10-17, evening — He read the capacity study (artifact "Stüdyo Üretim Kapasitesi") and turned it into the
 holding's media strategy: the studio connects to every leading generative-video platform (fal, Runware, WaveSpeed,
 kie.ai, MiniMax first), each shot is priced on every route and the best one for its quality is brought to him for one
@@ -60,9 +70,12 @@ microphone <!-- CEO-OK: jarvis-silent-listening-voice-04-okayed-2026-09-14 -->. 
 1. His eye on the studio platform-hub plan (FINAL.md, Part 1 in Turkish) and his one yes. On the yes the build starts at
    high with the key-catcher, so his onboarding is clicks only ("İzin ver", "Create key", "Copy", "Öde"); the session
    itself never opens an account, enters a key or pays. The B43 note waits for that yes (the row is at its size ceiling).
-2. RAM: his decision by 2026-10-28; it reopens sooner only if the studio needs it. He reads CSL's reply himself —
+2. His eye on the Gözlem Odası plan (`.planning/quick/20261018-gozlem-odasi/PLAN.md`) and his yes. On the yes the build
+   starts at high with step 1, the machine-wide X gate for the research door (it protects his account today), then B42's
+   row note and the doctrine adaptations named in Part 2.
+3. RAM: his decision by 2026-10-28; it reopens sooner only if the studio needs it. He reads CSL's reply himself —
    the session does not open the mail.
-3. The studio retest. First the machine's reboot, at his own moment (he is working now): unattended-upgrades raised
+4. The studio retest. First the machine's reboot, at his own moment (he is working now): unattended-upgrades raised
    the NVIDIA libraries to 595.99.02 on 2026-10-18 09:41 while the loaded driver is 595.91.07 (`nvidia-smi`:
    "Driver/library version mismatch"); the running ComfyUI (up since 2026-10-17 07:38) keeps working, a restarted
    one cannot use the card. Then, in the factory with the Media Studio's staff: ScrollCraft's clip through H3 image-less at
@@ -70,17 +83,19 @@ microphone <!-- CEO-OK: jarvis-silent-listening-voice-04-okayed-2026-09-14 -->. 
    judged full screen by his eye. The records disagree on the standard (4 steps on 2026-09-04, 8 in the retest
    note); the retest settles it, and the studio's capacity doubles or halves with it. Then the bridge and
    ScrollCraft's rule 2 follow the result.
-4. Finish the walk: YE18 (Matt Pocock skills) to the sheet's last row, then "Ekim 9-15 linkleri" if he wants it.
-5. Plans he asked for, each talked first: how ChatGPT on Steroids (installed) joins the holding as an agent and as
+5. Finish the walk: YE18 (Matt Pocock skills) to the sheet's last row, then "Ekim 9-15 linkleri" if he wants it.
+6. Plans he asked for, each talked first: how ChatGPT on Steroids (installed) joins the holding as an agent and as
    Sol's stand-in; the studio revenue lines not covered by the platform-hub plan (MoneyPrinterTurbo, HyperFrames,
    OpenMontage, Open Design) studied in order; a way for the team to work on his phone in the background.
-6. Then the board page with every decision of the walk, his one yes, and `ORDER.md` "On his yes". No construction
+7. Then the board page with every decision of the walk, his one yes, and `ORDER.md` "On his yes". No construction
    before it except what he ordered in the walk.
 
 ## Waiting on his approval
 
 - The studio platform-hub and channels plan (FINAL.md): his yes, and the decisions and money-out moments it lists
   (first top-ups, the model exam's ceiling, the first channel).
+- The Gözlem Odası plan (PLAN.md): his yes, which also carries the X-only copy of his X session for the room (an
+  identity step) and the lab's Ubuntu image; at step 3 one click on Claude's own consent page for the lab's model token.
 - The RAM upgrade, his decision by 2026-10-28: the lead advises the same Goodram 2×16 kit from Proshop (€580 with
   shipping, no coupon exists) over CSL's offer; with four sticks AMD guarantees only DDR5-3600, so 6000 is UNVERIFIED
   until installed and memory-tested.

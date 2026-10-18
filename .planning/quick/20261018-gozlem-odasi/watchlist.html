@@ -1,0 +1,393 @@
+<title>Gözlem Odası</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@500;600&family=Geist+Mono:wght@400;500&family=Inter:wght@400;500;600&display=swap">
+<style>
+/* Layout: one reading column; the watchlist is the page — header, how we chose, A tier, B tier by group, official channels, left out. Dark-first in the holding's obsidian and champagne. */
+:root {
+  --bg: #0B0D11;
+  --panel: #10131A;
+  --raise: #161A22;
+  --line: rgba(255,255,255,.07);
+  --line-strong: rgba(255,255,255,.12);
+  --fg: #E9E7E2;
+  --fg2: #A8ABB4;
+  --muted: #7A7F8C;
+  --gold: #D8B98C;
+  --gold-soft: rgba(216,185,140,.13);
+  --gold-line: rgba(216,185,140,.35);
+  --info: #7FA7C9;
+  --font-display: "Geist", "Inter", system-ui, sans-serif;
+  --font-body: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "Geist Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  color-scheme: dark;
+}
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    --bg: #F3F4F6; --panel: #FFFFFF; --raise: #ECEEF2;
+    --line: rgba(11,13,17,.09); --line-strong: rgba(11,13,17,.16);
+    --fg: #14171D; --fg2: #474D59; --muted: #6A707C;
+    --gold: #85632F; --gold-soft: rgba(133,99,47,.10); --gold-line: rgba(133,99,47,.38);
+    --info: #3E6C93;
+    color-scheme: light;
+  }
+}
+:root[data-theme="light"] {
+  --bg: #F3F4F6; --panel: #FFFFFF; --raise: #ECEEF2;
+  --line: rgba(11,13,17,.09); --line-strong: rgba(11,13,17,.16);
+  --fg: #14171D; --fg2: #474D59; --muted: #6A707C;
+  --gold: #85632F; --gold-soft: rgba(133,99,47,.10); --gold-line: rgba(133,99,47,.38);
+  --info: #3E6C93;
+  color-scheme: light;
+}
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+.wrap {
+  max-width: 1040px;
+  margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 40px 64px;
+  display: grid;
+  gap: 44px;
+}
+a { color: inherit; }
+a:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; border-radius: 3px; }
+
+header { display: grid; gap: 14px; }
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+h1 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(32px, 5vw, 44px);
+  line-height: 1.08;
+  letter-spacing: -.02em;
+  margin: 0;
+  text-wrap: balance;
+}
+.lede { margin: 0; max-width: 64ch; color: var(--fg2); font-size: 16px; }
+.counts {
+  display: flex; flex-wrap: wrap; gap: 10px 28px;
+  margin-top: 6px;
+  font-variant-numeric: tabular-nums;
+}
+.count { display: flex; align-items: baseline; gap: 8px; }
+.count b { font-family: var(--font-display); font-weight: 600; font-size: 26px; color: var(--fg); }
+.count span { color: var(--fg2); font-size: 14px; }
+.count.a b { color: var(--gold); }
+
+h2 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 22px;
+  letter-spacing: -.01em;
+  margin: 0;
+  text-wrap: balance;
+}
+h3 {
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-size: 12px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 0;
+}
+section { display: grid; gap: 16px; min-width: 0; }
+.section-head { display: grid; gap: 6px; }
+.section-head p { margin: 0; color: var(--fg2); max-width: 70ch; }
+
+.criteria {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  overflow: hidden;
+}
+.criteria div { background: var(--panel); padding: 16px 18px; display: grid; gap: 4px; align-content: start; min-width: 0; }
+.criteria strong { font-weight: 600; font-size: 14px; }
+.criteria span { color: var(--fg2); font-size: 14px; }
+
+.legend { display: flex; flex-wrap: wrap; gap: 8px 22px; font-size: 13px; color: var(--fg2); }
+.legend span { display: inline-flex; align-items: center; gap: 8px; }
+
+.people { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
+.person {
+  display: grid;
+  grid-template-columns: minmax(170px, 1.05fr) minmax(0, 1.2fr) minmax(0, 2.1fr) 128px;
+  gap: 6px 22px;
+  align-items: baseline;
+  padding: 13px 4px;
+  border-bottom: 1px solid var(--line);
+}
+.person > * { min-width: 0; }
+.who-col { display: grid; gap: 2px; }
+.handle {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  display: inline-flex; align-items: center; gap: 8px;
+  overflow-wrap: anywhere;
+}
+.handle:hover { text-decoration: underline; text-underline-offset: 3px; }
+.name { color: var(--fg2); font-size: 13.5px; }
+.role { color: var(--fg2); font-size: 14px; }
+.why { font-size: 14.5px; }
+.areas { display: flex; flex-wrap: wrap; gap: 4px 10px; font-size: 12.5px; color: var(--muted); justify-content: flex-end; }
+.dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  flex: none;
+  border: 1.5px solid var(--info);
+}
+.dot.seen { background: var(--info); }
+.mine {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  color: var(--gold);
+  border: 1px solid var(--gold-line);
+  border-radius: 4px;
+  padding: 0 6px;
+  white-space: nowrap;
+}
+.tier-a .people { border-top-color: var(--gold-line); }
+
+.group { display: grid; gap: 8px; min-width: 0; }
+.group + .group { margin-top: 18px; }
+
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chips a {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  text-decoration: none;
+  padding: 5px 10px;
+  border: 1px solid var(--line-strong);
+  border-radius: 6px;
+  background: var(--panel);
+}
+.chips a:hover { border-color: var(--gold-line); }
+
+.out { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 0 28px; }
+.out li { display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 12px; padding: 9px 0; border-bottom: 1px solid var(--line); font-size: 14px; }
+.out li > * { min-width: 0; }
+.out .handle { font-size: 13px; color: var(--fg2); }
+.out span:last-child { color: var(--fg2); }
+
+footer { color: var(--muted); font-size: 13px; display: grid; gap: 6px; border-top: 1px solid var(--line); padding-top: 18px; }
+footer p { margin: 0; max-width: 80ch; }
+
+@media (max-width: 760px) {
+  .wrap { padding-block: 28px 48px; gap: 36px; }
+  .person { grid-template-columns: minmax(0, 1fr); gap: 3px; padding: 14px 2px; }
+  .areas { justify-content: flex-start; }
+  .out li { grid-template-columns: minmax(0, 1fr); gap: 2px; }
+}
+</style>
+
+<div class="wrap">
+
+<header>
+  <div class="eyebrow">DXB Global · Gözlem Odası · 18 Ekim 2026</div>
+  <h1>Gözlem Odası</h1>
+  <p class="lede">X'te yapay zekâ dünyasının en önemli mühendislerini ve üreticilerini izleyecek odanın ilk izleme listesi. Oda her paylaşımı okur; abartı mı, çöp mü, gerçekten işe yarar mı diye tartar; umut vereni ayrı bir deneme odasında dener ve size söyler. Oda, fabrika tam başlayınca çalışır.</p>
+  <div class="counts">
+    <div class="count a"><b>17</b><span>kişi A katmanında: her paylaşımı okunur</span></div>
+    <div class="count"><b>51</b><span>kişi B katmanında: her gün özeti çıkarılır</span></div>
+    <div class="count"><b>10</b><span>resmî duyuru kanalı</span></div>
+  </div>
+</header>
+
+<section>
+  <div class="section-head">
+    <h2>Bu kişiler neden seçildi</h2>
+    <p>Üç araştırmacı adayları tek tek doğruladı: X'te sizin hesabınızdan yalnız okuyarak ve web kaynaklarından. Hiçbir hesabı takip etmedik, beğenmedik, hiçbir şey yazmadık.</p>
+  </div>
+  <div class="criteria">
+    <div><strong>Gerçek iş yapıyor</strong><span>Kendi kurduğu, kendi denediği şeyi anlatıyor. Başkasının haberini aktaran değil.</span></div>
+    <div><strong>Paylaştığı denenebilir</strong><span>Tarif, ayar ya da ölçüm veriyor. Biz de deneme odasında aynısını sınayabiliriz.</span></div>
+    <div><strong>Bu yıl aktif</strong><span>Son paylaşım tarihine ve haftada kaç kez yazdığına bakıldı.</span></div>
+    <div><strong>Holdinge dokunuyor</strong><span>Her satırın sağında yazar: Sistem (holdingin kendisi), Oturumlar (holdingi kuran mühendis oturumlarımız), Stüdyo, Gelir.</span></div>
+  </div>
+  <div class="legend">
+    <span><i class="dot seen"></i>Son paylaşımları X'ten okundu</span>
+    <span><i class="dot"></i>Web'den doğrulandı; ilk hafta X'ten okunacak</span>
+    <span><span class="mine">sizin takibinizde</span>Sizin zaten takip ettiğiniz hesap</span>
+  </div>
+</section>
+
+<section class="tier-a">
+  <div class="section-head">
+    <h2>A katmanı · her paylaşımı okunur</h2>
+    <p>Başta Anthropic'in Claude Code ekibi: holdingi üzerine kurduğumuz aracı yapan insanlar. Yanlarında en sağlam bağımsız ustalar.</p>
+  </div>
+  <ul class="people">
+    <li class="person"><div class="who-col"><a class="handle" href="https://x.com/bcherny" target="_blank" rel="noopener"><i class="dot seen"></i>@bcherny</a><span class="name">Boris Cherny</span></div><div class="role">Claude Code'u yaratan ve yöneten kişi, Anthropic</div><div class="why">Claude Code ekibinin kendi çalışma yöntemini gösterir; her yeni sürümü ilk o duyurur.</div><div class="areas"><span>Oturumlar</span><span>Sistem</span></div></li>
+    <li class="person"><div class="who-col"><a class="handle" href="https://x.com/_catwu" target="_blank" rel="noopener"><i class="dot seen"></i>@_catwu</a><span class="name">Cat Wu</span></div><div class="role">Claude Code'un ürün başkanı, Anthropic</div><div class="why">Az yazar; yazdığı hemen her şey Claude Code'a gelecek bir değişikliktir.</div><div class="areas"><span>Oturumlar</span></div></li>
+    <li class="person"><div class="who-col"><a class="handle" href="https://x.com/lydiahallie" target="_blank" rel="noopener"><i class="dot seen"></i>@lydiahallie</a><span class="name">Lydia Hallie</span></div><div class="role">Claude Code ekibi, Anthropic</div><div class="why">Claude Code'un ayarlarını tek tek anlatır. Oturumlarımızı hızlandıracak ve ucuzlatacak ayarlar buradan çıkar.</div><div class="areas"><span>Oturumlar</span></div></li>
+    <li class="person"><div class="who-col"><a class="handle" href="https://x.com/trq212" target="_blank" rel="noopener"><i class="dot seen"></i>@trq212</a><span class="name">Thariq Shihipar</span></div><div class="role">Claude Code ekibi, Anthropic</div><div class="why">Claude Code ile bir işin baştan sona nasıl düzenleneceğini gösterir.</div><div class="areas"><span>Oturumlar</span><span>Sistem</span></div></li>
+    <li class="person"><div class="who-col"><a class="handle" href="https://x.com/RLanceMartin" target="_blank" rel="noopener"><i class="dot seen"></i>@RLanceMartin</a><span class="name">Lance Martin</span></div><div class="role">Anthropic'te yapay zekâ çalışanları ürünü</div><div class="why">Yapay zekâ çalışanlarının hafızası ve büyük bir işi küçük yardımcılara bölmesi. Holdingin çalışan düzenine doğrudan dokunur.</div><div class="areas"><span>Sistem</span></div></li>
+    <li class="person"><div class="who-col"><a class="handle" href="https://x.com/ClaudeDevs" target="_blank" rel="noopener"><i class="dot seen"></i>@ClaudeDevs</a><span class="name">Claude geliştirici kanalı</span></div><div class="role">Anthropic'in resmî hesabı</div><div class="why">Claude Code'daki her değişiklik ilk burada duyurulur.</div><div class="areas"><span>Oturumlar</span><span>Sistem</span></div></li>
+    <li class="person"><div class="who-col"><a class="handle" href="https://x.com/karpathy" target="_blank" rel="noopener"><i class="dot"></i>@karpathy</a><span class="name">Andrej Karpathy</span></div><div class="role">Mayıs 2026'dan beri Anthropic'te</div><div class="why">Dünyanın en çok izlenen yapay zekâ mühendisi.</div><div class="areas"><span>Sistem</span></div></li>
+    <li class="person"><div class="who-col"><a class="handle" href="https://x.com/_philschmid" target="_blank" rel="noopener"><i class="dot seen"></i>@_philschmid</a><span class="name">Philipp Schmid</span></div><div class="role">Google DeepMind</div><div class="why">Google'ın yeni yapay zekâ modellerinde neyin çıktığını ve ne kadar tuttuğunu en net o yazar.</div><div class="areas"><span>Sistem</span><span>Stüdyo</span></div></li>
+    <li class="person"><div class="who-col"><a class="handle" href="https://x.com/simonw" target="_blank" rel="noopener"><i class="dot seen"></i>@simonw</a><span class="name">Simon Willison</span></div><div class="role">Bağımsız yazılımcı</div><div class="why">Her aracı kendisi dener ve kaynağını gösterir; abartıyı açıkça söyler.</div><div class="areas"><span>Sistem</span><span>Oturumlar</span></div></li>
+    <li class="person"><div class="who-col"><a class="handle" href="https://x.com/mattpocockuk" target="_blank" rel="noopener"><i class="dot seen"></i>@mattpocockuk</a><span class="name">Matt Pocock</span></div><div class="role">Yapay zekâyla yazılım eğitmeni</div><div class="why">Neredeyse her paylaşımı, oturumlarımızda hemen denenebilecek bir Claude Code kuralıdır.</div><div class="areas"><span>Oturumlar</span></div></li>
+    <li class="person"><div class="who-col"><a class="handle" href="https://x.com/dexhorthy" target="_blank" rel="noopener"><i class="dot seen"></i>@dexhorthy</a><span class="name">Dex Horthy</span></div><div class="role">HumanLayer'ın kurucusu</div><div class="why">Yapay zekâya doğru bilgiyi doğru miktarda vermenin ustası. Uzun yazıları okunur.</div><div class="areas"><span>Sistem</span><span>Oturumlar</span></div></li>
+    <li class="person"><div class="who-col"><a class="handle" href="https://x.com/HamelHusain" target="_blank" rel="noopener"><i class="dot seen"></i>@HamelHusain</a><span class="name">Hamel Husain</span></div><div class="role">Yapay zekâ ölçme eğitmeni</div><div class="why">Yapay zekânın işi doğru yapıp yapmadığını ölçmeyi öğretir. Kalite kontrolümüz için.</div><div class="areas"><span>Sistem</span></div></li>
+    <li class="person"><div class="who-col"><a class="handle" href="https://x.com/mitsuhiko" target="_blank" rel="noopener"><i class="dot"></i>@mitsuhiko</a><span class="name">Armin Ronacher</span></div><div class="role">Flask'ın yazarı, şirket kuruyor</div><div class="why">Yapay zekâyla yazılım yazmak üzerine derin, düşünülmüş yazılar.</div><div class="areas"><span>Oturumlar</span><span>Sistem</span></div></li>
+    <li class="person"><div class="who-col"><a class="handle" href="https://x.com/dotey" target="_blank" rel="noopener"><i class="dot seen"></i>@dotey</a><span class="name">宝玉</span></div><div class="role">Çince yazan anlatıcı</div><div class="why">Claude Code ekibinin nasıl çalıştığını Çince ve videolarla anlatır; hangi işe hangi modelin verileceğine dair ipuçları.</div><div class="areas"><span>Oturumlar</span></div></li>
+    <li class="person"><div class="who-col"><a class="handle" href="https://x.com/PJaccetturo" target="_blank" rel="noopener"><i class="dot seen"></i>@PJaccetturo</a><span class="name">PJ Ace</span></div><div class="role">Yapay zekâyla film ve reklam yapan stüdyo</div><div class="why">Her hafta bir reklamı nasıl ürettiğini adım adım paylaşır. Bir kısmı sponsorlu, ona göre okunur.</div><div class="areas"><span>Stüdyo</span><span>Gelir</span></div></li>
+    <li class="person"><div class="who-col"><a class="handle" href="https://x.com/Voxyz_ai" target="_blank" rel="noopener"><i class="dot seen"></i>@Voxyz_ai</a><span class="name">Vox <span class="mine">sizin takibinizde</span></span></div><div class="role">Claude Code tarifleri</div><div class="why">Her gün 5–6 hazır Claude Code tarifi. Çok yayılsın diye yazılıyor; her biri denenmeden güvenilmez.</div><div class="areas"><span>Oturumlar</span></div></li>
+    <li class="person"><div class="who-col"><a class="handle" href="https://x.com/PawelHuryn" target="_blank" rel="noopener"><i class="dot seen"></i>@PawelHuryn</a><span class="name">Paweł Huryn <span class="mine">sizin takibinizde</span></span></div><div class="role">Model karşılaştırmaları</div><div class="why">Yapay zekâ modellerini gerçek yazılım işlerinde kendisi yarıştırır ve sonuçları paylaşır.</div><div class="areas"><span>Oturumlar</span><span>Sistem</span></div></li>
+  </ul>
+</section>
+
+<section>
+  <div class="section-head">
+    <h2>B katmanı · her gün özeti çıkarılır</h2>
+    <p>Her gün okunur; oda yalnız değerli olanı öne çıkarır. Bir B hesabı art arda işe yarar şey getirirse A'ya çıkar.</p>
+  </div>
+
+  <div class="group">
+    <h3>Yapay zekâ şirketlerinden · 12</h3>
+    <ul class="people">
+      <li class="person"><div class="who-col"><a class="handle" href="https://x.com/katelyn_lesse" target="_blank" rel="noopener"><i class="dot seen"></i>@katelyn_lesse</a></div><div class="role">Claude Platform mühendislik başı, Anthropic</div><div class="why">Yapay zekâ çalışanlarını izlemek ve maliyetlerini düşürmek üzerine.</div><div class="areas"><span>Sistem</span></div></li>
+      <li class="person"><div class="who-col"><a class="handle" href="https://x.com/nateparrott" target="_blank" rel="noopener"><i class="dot seen"></i>@nateparrott</a></div><div class="role">Claude Design'ı kuran mühendis, Anthropic</div><div class="why">Claude ile hareketli tasarım ve sunum hazırlamak. Stüdyoya dokunur.</div><div class="areas"><span>Stüdyo</span></div></li>
+      <li class="person"><div class="who-col"><a class="handle" href="https://x.com/felixrieseberg" target="_blank" rel="noopener"><i class="dot seen"></i>@felixrieseberg</a></div><div class="role">Claude masaüstü uygulamalarının mühendislik lideri, Anthropic</div><div class="why">Claude'un bilgisayarda nasıl çalıştığına dair yenilikler.</div><div class="areas"><span>Oturumlar</span></div></li>
+      <li class="person"><div class="who-col"><a class="handle" href="https://x.com/dsp_" target="_blank" rel="noopener"><i class="dot seen"></i>@dsp_</a></div><div class="role">David Soria Parra, Anthropic</div><div class="why">Yapay zekâya araç bağlama standardının (MCP) ortak yaratıcısı; bu standardın nereye gittiği.</div><div class="areas"><span>Sistem</span></div></li>
+      <li class="person"><div class="who-col"><a class="handle" href="https://x.com/alexalbert__" target="_blank" rel="noopener"><i class="dot seen"></i>@alexalbert__</a></div><div class="role">Alex Albert, Anthropic</div><div class="why">Claude'a 3D programı Blender'ı kullandırıp video ürettiriyor.</div><div class="areas"><span>Stüdyo</span></div></li>
+      <li class="person"><div class="who-col"><a class="handle" href="https://x.com/eugeneyan" target="_blank" rel="noopener"><i class="dot"></i>@eugeneyan</a></div><div class="role">Eugene Yan, Anthropic</div><div class="why">Yapay zekâyı gerçek ürünlerde kullanmak üzerine uzun yazılar.</div><div class="areas"><span>Sistem</span></div></li>
+      <li class="person"><div class="who-col"><a class="handle" href="https://x.com/thsottiaux" target="_blank" rel="noopener"><i class="dot seen"></i>@thsottiaux</a></div><div class="role">Tibo Sottiaux, OpenAI'de Codex'in başı</div><div class="why">Rakip araç Codex'e her gün ne eklendiğini buradan görürüz. Çok yazar.</div><div class="areas"><span>Oturumlar</span></div></li>
+      <li class="person"><div class="who-col"><a class="handle" href="https://x.com/reach_vb" target="_blank" rel="noopener"><i class="dot seen"></i>@reach_vb</a></div><div class="role">OpenAI Codex ekibi</div><div class="why">Codex'i iyi kullanmanın pratik ipuçları.</div><div class="areas"><span>Oturumlar</span></div></li>
+      <li class="person"><div class="who-col"><a class="handle" href="https://x.com/steipete" target="_blank" rel="noopener"><i class="dot seen"></i>@steipete</a></div><div class="role">Peter Steinberger, Şubat 2026'dan beri OpenAI</div><div class="why">OpenClaw'un yaratıcısı; yapay zekâ çalışanı kurulumları.</div><div class="areas"><span>Sistem</span></div></li>
+      <li class="person"><div class="who-col"><a class="handle" href="https://x.com/jxnlco" target="_blank" rel="noopener"><i class="dot"></i>@jxnlco</a></div><div class="role">Jason Liu, OpenAI Codex ekibi</div><div class="why">Codex'i yapan ekipten pratik bilgiler.</div><div class="areas"><span>Sistem</span></div></li>
+      <li class="person"><div class="who-col"><a class="handle" href="https://x.com/OfficialLoganK" target="_blank" rel="noopener"><i class="dot seen"></i>@OfficialLoganK</a></div><div class="role">Logan Kilpatrick, Google</div><div class="why">Google'ın yeni Gemini modellerini ilk o duyurur.</div><div class="areas"><span>Sistem</span></div></li>
+      <li class="person"><div class="who-col"><a class="handle" href="https://x.com/fofrAI" target="_blank" rel="noopener"><i class="dot"></i>@fofrAI</a></div><div class="role">fofr, Google DeepMind</div><div class="why">Görsel ve video üreten modellerle denemeler.</div><div class="areas"><span>Stüdyo</span></div></li>
+    </ul>
+  </div>
+
+  <div class="group">
+    <h3>Bağımsız ustalar · 14</h3>
+    <ul class="people">
+      <li class="person"><div class="who-col"><a class="handle" href="https://x.com/badlogicgames" target="_blank" rel="noopener"><i class="dot seen"></i>@badlogicgames</a></div><div class="role">Mario Zechner</div><div class="why">Kendi yapay zekâ çalışanı yazılımını yazıyor; nasıl güvenli tutulacağını da anlatır.</div><div class="areas"><span>Sistem</span></div></li>
+      <li class="person"><div class="who-col"><a class="handle" href="https://x.com/GeoffreyHuntley" target="_blank" rel="noopener"><i class="dot seen"></i>@GeoffreyHuntley</a></div><div class="role">Geoffrey Huntley</div><div class="why">Yapay zekâyı bir işi bitirene kadar kendi kendine döndürüp çalıştırma yönteminin mucidi.</div><div class="areas"><span>Oturumlar</span></div></li>
+      <li class="person"><div class="who-col"><a class="handle" href="https://x.com/mitchellh" target="_blank" rel="noopener"><i class="dot seen"></i>@mitchellh</a></div><div class="role">Mitchell Hashimoto, Ghostty terminalinin yaratıcısı</div><div class="why">Yapay zekânın "çalışıyor, bekliyor, bitti" durumunu ekranda gösteren bir standart yazdı; Claude Code bunu destekliyor.</div><div class="areas"><span>Oturumlar</span></div></li>
+      <li class="person"><div class="who-col"><a class="handle" href="https://x.com/swyx" target="_blank" rel="noopener"><i class="dot seen"></i>@swyx</a></div><div class="role">swyx, Latent Space</div><div class="why">Her gün yüzlerce hesabı tarayan bir bültenin başında; alanda neyin konuşulduğunu gösterir.</div><div class="areas"><span>Oturumlar</span></div></li>
+      <li class="person"><div class="who-col"><a class="handle" href="https://x.com/thorstenball" target="_blank" rel="noopener"><i class="dot"></i>@thorstenball</a></div><div class="role">Thorsten Ball, Amp</div><div class="why">Yapay zekâyla yazılım yazmak üzerine yazılar.</div><div class="areas"><span>Oturumlar</span></div></li>
+      <li class="person"><div class="who-col"><a class="handle" href="https://x.com/kieranklaassen" target="_blank" rel="noopener"><i class="dot"></i>@kieranklaassen</a></div><div class="role">Kieran Klaassen, Every</div><div class="why">Claude Code ile her işten ders çıkarıp bir sonrakini kolaylaştıran çalışma düzeni.</div><div class="areas"><span>Oturumlar</span></div></li>
+      <li class="person"><div class="who-col"><a class="handle" href="https://x.com/hillelogram" target="_blank" rel="noopener"><i class="dot"></i>@hillelogram</a></div><div class="role">Hillel Wayne</div><div class="why">Yapay zekânın yazdığı kodu sağlam testlerle denetlemek.</div><div class="areas"><span>Sistem</span></div></li>
+      <li class="person"><div class="who-col"><a class="handle" href="https://x.com/sh_reya" target="_blank" rel="noopener"><i class="dot"></i>@sh_reya</a></div><div class="role">Shreya Shankar, araştırmacı</div><div class="why">Yapay zekânın yaptığı işi ölçme üzerine araştırmalar.</div><div class="areas"><span>Sistem</span></div></li>
+      <li class="person"><div class="who-col"><a class="handle" href="https://x.com/omarsar0" target="_blank" rel="noopener"><i class="dot"></i>@omarsar0</a></div><div class="role">Elvis Saravia, DAIR.AI</div><div class="why">Yapay zekâ çalışanları üzerine yeni bilimsel makaleleri özetler.</div><div class="areas"><span>Sistem</span></div></li>
+      <li class="person"><div class="who-col"><a class="handle" href="https://x.com/doodlestein" target="_blank" rel="noopener"><i class="dot seen"></i>@doodlestein</a></div><div class="role">Jeffrey Emanuel</div><div class="why">Birden çok yapay zekâyı birlikte çalıştırma kurulumları.</div><div class="areas"><span>Sistem</span></div></li>
+      <li class="person"><div class="who-col"><a class="handle" href="https://x.com/ggerganov" target="_blank" rel="noopener"><i class="dot"></i>@ggerganov</a></div><div class="role">Georgi Gerganov, llama.cpp</div><div class="why">Yapay zekâ modellerini kendi bilgisayarında çalıştırmanın en bilinen aracını yazdı.</div><div class="areas"><span>Sistem</span></div></li>
+      <li class="person"><div class="who-col"><a class="handle" href="https://x.com/rasbt" target="_blank" rel="noopener"><i class="dot"></i>@rasbt</a></div><div class="role">Sebastian Raschka</div><div class="why">Modellerin içinin nasıl çalıştığını açık ve anlaşılır anlatır.</div><div class="areas"><span>Sistem</span></div></li>
+      <li class="person"><div class="who-col"><a class="handle" href="https://x.com/copyconstruct" target="_blank" rel="noopener"><i class="dot"></i>@copyconstruct</a></div><div class="role">Cindy Sridharan</div><div class="why">Claude Code'a kural yazmadan önce ona beğendiğin kodu okutmak gibi yalın ipuçları.</div><div class="areas"><span>Oturumlar</span></div></li>
+      <li class="person"><div class="who-col"><a class="handle" href="https://x.com/Ga_Vasques" target="_blank" rel="noopener"><i class="dot seen"></i>@Ga_Vasques</a><span class="name"><span class="mine">sizin takibinizde</span></span></div><div class="role">Yapay zekâ araçlarını karşılaştırır</div><div class="why">Siyasetle karışık yazıyor; yalnız yapay zekâ paylaşımları alınır.</div><div class="areas"><span>Oturumlar</span></div></li>
+    </ul>
+  </div>
+
+  <div class="group">
+    <h3>Uzak Doğu · 13</h3>
+    <ul class="people">
+      <li class="person"><div class="who-col"><a class="handle" href="https://x.com/mizchi" target="_blank" rel="noopener"><i class="dot seen"></i>@mizchi</a></div><div class="role">Japonya, yazılım mühendisi</div><div class="why">Kodlama yapan yapay zekâ modellerini gerçek ve zor işlerde yarıştırır.</div><div class="areas"><span>Oturumlar</span></div></li>
+      <li class="person"><div class="who-col"><a class="handle" href="https://x.com/op7418" target="_blank" rel="noopener"><i class="dot seen"></i>@op7418</a><span class="name">歸藏</span></div><div class="role">Çin, tasarımcı</div><div class="why">Yeni yapay zekâ modelleri çıkınca hızlı ve ayrıntılı özetini çıkarır.</div><div class="areas"><span>Sistem</span><span>Stüdyo</span></div></li>
+      <li class="person"><div class="who-col"><a class="handle" href="https://x.com/oran_ge" target="_blank" rel="noopener"><i class="dot seen"></i>@oran_ge</a></div><div class="role">Çin, kurucu ve podcastçi</div><div class="why">Yapay zekâ işlerindeki başarısızlıklarını da açıkça yazar.</div><div class="areas"><span>Stüdyo</span><span>Gelir</span></div></li>
+      <li class="person"><div class="who-col"><a class="handle" href="https://x.com/wquguru" target="_blank" rel="noopener"><i class="dot"></i>@wquguru</a></div><div class="role">Yapay zekâ ve finans haberleri</div><div class="why">Yapay zekâ kullanım maliyetini düşürmek ve hangi işe hangi modelin verileceği.</div><div class="areas"><span>Oturumlar</span></div></li>
+      <li class="person"><div class="who-col"><a class="handle" href="https://x.com/chunxiangai" target="_blank" rel="noopener"><i class="dot"></i>@chunxiangai</a><span class="name">赵纯想</span></div><div class="role">Tayvan, kurucu</div><div class="why">Yapay zekâ yardımcılarına iş dağıtmanın kuralları ve gelir dersleri.</div><div class="areas"><span>Oturumlar</span><span>Gelir</span></div></li>
+      <li class="person"><div class="who-col"><a class="handle" href="https://x.com/shao__meng" target="_blank" rel="noopener"><i class="dot"></i>@shao__meng</a></div><div class="role">Eski teknoloji direktörü</div><div class="why">Yapay zekâ çalışanı sistemlerini parça parça söküp nasıl kurulduğunu anlatır.</div><div class="areas"><span>Sistem</span></div></li>
+      <li class="person"><div class="who-col"><a class="handle" href="https://x.com/chenchengpro" target="_blank" rel="noopener"><i class="dot"></i>@chenchengpro</a><span class="name">陈成</span></div><div class="role">Çin, umijs'in yaratıcısı</div><div class="why">Claude Code ekibine dair gözlemler.</div><div class="areas"><span>Oturumlar</span></div></li>
+      <li class="person"><div class="who-col"><a class="handle" href="https://x.com/AlchainHust" target="_blank" rel="noopener"><i class="dot"></i>@AlchainHust</a><span class="name">花叔</span></div><div class="role">Çin, kod yazmadan ürün çıkaran</div><div class="why">Kendi beyanına göre uygulama mağazasında ücretli kategoride birinci olmuş.</div><div class="areas"><span>Oturumlar</span><span>Gelir</span></div></li>
+      <li class="person"><div class="who-col"><a class="handle" href="https://x.com/tetumemo" target="_blank" rel="noopener"><i class="dot"></i>@tetumemo</a></div><div class="role">Japonya</div><div class="why">Yeni modelleri sınar, şemalarla anlatır.</div><div class="areas"><span>Stüdyo</span><span>Oturumlar</span></div></li>
+      <li class="person"><div class="who-col"><a class="handle" href="https://x.com/schroneko" target="_blank" rel="noopener"><i class="dot"></i>@schroneko</a></div><div class="role">Japonya, Claude ve Codex elçisi</div><div class="why">Japonya'daki Claude Code kullanıcılarının nabzı.</div><div class="areas"><span>Oturumlar</span></div></li>
+      <li class="person"><div class="who-col"><a class="handle" href="https://x.com/minorun365" target="_blank" rel="noopener"><i class="dot"></i>@minorun365</a></div><div class="role">Japonya, KDDI'da çalışıyor</div><div class="why">Şirket işlerinde Claude Code kullanımı; bu konuda kitabı var.</div><div class="areas"><span>Oturumlar</span></div></li>
+      <li class="person"><div class="who-col"><a class="handle" href="https://x.com/npaka123" target="_blank" rel="noopener"><i class="dot"></i>@npaka123</a></div><div class="role">Japonya, teknik kitap yazarı</div><div class="why">Yeni çıkan yapay zekâ araçlarının kullanım rehberini aynı gün yazar.</div><div class="areas"><span>Sistem</span></div></li>
+      <li class="person"><div class="who-col"><a class="handle" href="https://x.com/toyxyz3" target="_blank" rel="noopener"><i class="dot"></i>@toyxyz3</a></div><div class="role">Kore, çizer</div><div class="why">Yapay zekânın ürettiği görüntüyü 3D ve ComfyUI ile tam kontrol etmek.</div><div class="areas"><span>Stüdyo</span></div></li>
+    </ul>
+  </div>
+
+  <div class="group">
+    <h3>Stüdyo · video ve görsel · 6</h3>
+    <ul class="people">
+      <li class="person"><div class="who-col"><a class="handle" href="https://x.com/techhalla" target="_blank" rel="noopener"><i class="dot seen"></i>@techhalla</a></div><div class="role">Yapay zekâyla film çeken biri</div><div class="why">Hemen her videonun altına "bunu yapay zekâya şu komutla ürettirdim" diye tarifini koyar. Sahneyi önce basit bir 3D modelde kurup sonra yapay zekâya boyatır; böylece kamera ve hareket kontrollü olur.</div><div class="areas"><span>Stüdyo</span></div></li>
+      <li class="person"><div class="who-col"><a class="handle" href="https://x.com/CharaspowerAI" target="_blank" rel="noopener"><i class="dot seen"></i>@CharaspowerAI</a></div><div class="role">Pierrick Chevallier</div><div class="why">Stüdyomuzun kullandığı Seedance 2.5 ve MiniMax H3 video modelleri için yazdığı komutları eksiksiz paylaşır. Bazı paylaşımları yalnız dikkat çekmek için abartılı; oda onları ayıklar.</div><div class="areas"><span>Stüdyo</span></div></li>
+      <li class="person"><div class="who-col"><a class="handle" href="https://x.com/kevin_t_ngo" target="_blank" rel="noopener"><i class="dot seen"></i>@kevin_t_ngo</a><span class="name">Kevin Ngo <span class="mine">sizin takibinizde</span></span></div><div class="role">Kodla video ve animasyon</div><div class="why">Reklam filmlerini kod yazarak üretiyor.</div><div class="areas"><span>Stüdyo</span></div></li>
+      <li class="person"><div class="who-col"><a class="handle" href="https://x.com/AmirMushich" target="_blank" rel="noopener"><i class="dot"></i>@AmirMushich</a></div><div class="role">Eski Warner, PepsiCo ve Spotify tasarımcısı</div><div class="why">Gerçek markalar için yapay zekâyla reklam yapıyor.</div><div class="areas"><span>Stüdyo</span><span>Gelir</span></div></li>
+      <li class="person"><div class="who-col"><a class="handle" href="https://x.com/Diesol" target="_blank" rel="noopener"><i class="dot"></i>@Diesol</a></div><div class="role">Dave Clark, sinema yönetmeni</div><div class="why">Film sektörünün içinden, yapay zekâya gerçekçi bir bakış.</div><div class="areas"><span>Stüdyo</span></div></li>
+      <li class="person"><div class="who-col"><a class="handle" href="https://x.com/TheoMediaAI" target="_blank" rel="noopener"><i class="dot"></i>@TheoMediaAI</a></div><div class="role">Video platformlarını inceleyen biri</div><div class="why">Yapay zekâ video platformlarını yan yana karşılaştırır.</div><div class="areas"><span>Stüdyo</span></div></li>
+    </ul>
+  </div>
+
+  <div class="group">
+    <h3>Gelir · gerçek rakam paylaşanlar · 6</h3>
+    <ul class="people">
+      <li class="person"><div class="who-col"><a class="handle" href="https://x.com/yongfook" target="_blank" rel="noopener"><i class="dot"></i>@yongfook</a></div><div class="role">Bannerbear'ın kurucusu</div><div class="why">Görsel ve video üretimini otomatikleştiren bir ürün satıyor; stüdyonun yapacağı işe en yakın gelir örneği.</div><div class="areas"><span>Gelir</span><span>Stüdyo</span></div></li>
+      <li class="person"><div class="who-col"><a class="handle" href="https://x.com/dannypostma" target="_blank" rel="noopener"><i class="dot"></i>@dannypostma</a></div><div class="role">HeadshotPro'nun kurucusu</div><div class="why">Yapay zekâyla profesyonel portre fotoğrafı satan bir şirket; rakamlarını paylaşır.</div><div class="areas"><span>Gelir</span><span>Stüdyo</span></div></li>
+      <li class="person"><div class="who-col"><a class="handle" href="https://x.com/levelsio" target="_blank" rel="noopener"><i class="dot seen"></i>@levelsio</a></div><div class="role">Tek başına yapay zekâ uygulamaları yapıp satıyor</div><div class="why">Haftada yüze yakın paylaşım yapar; yalnız özetten okunur.</div><div class="areas"><span>Gelir</span></div></li>
+      <li class="person"><div class="who-col"><a class="handle" href="https://x.com/marclou" target="_blank" rel="noopener"><i class="dot"></i>@marclou</a></div><div class="role">Küçük yazılım ürünleri</div><div class="why">Her ürününün ne kadar kazandığını açıkça yazar.</div><div class="areas"><span>Gelir</span></div></li>
+      <li class="person"><div class="who-col"><a class="handle" href="https://x.com/tdinh_me" target="_blank" rel="noopener"><i class="dot"></i>@tdinh_me</a></div><div class="role">Tony Dinh, Vietnam</div><div class="why">Tek başına yaptığı ürünlerin gelirini açıkça yazar.</div><div class="areas"><span>Gelir</span></div></li>
+      <li class="person"><div class="who-col"><a class="handle" href="https://x.com/danshipper" target="_blank" rel="noopener"><i class="dot"></i>@danshipper</a></div><div class="role">Every'nin CEO'su</div><div class="why">Şirketini yapay zekâ çalışanlarıyla yürütüyor; bizim yaptığımıza en yakın örnek.</div><div class="areas"><span>Gelir</span><span>Sistem</span></div></li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <div class="section-head">
+    <h2>Resmî duyuru kanalları</h2>
+    <p>Yeni bir model ya da araç çıktığında ilk haber buradan gelir. Oda bunları kişi gibi değil, duyuru panosu gibi okur.</p>
+  </div>
+  <div class="chips">
+    <a href="https://x.com/claudeai" target="_blank" rel="noopener">@claudeai</a>
+    <a href="https://x.com/AnthropicAI" target="_blank" rel="noopener">@AnthropicAI</a>
+    <a href="https://x.com/OpenAIDevs" target="_blank" rel="noopener">@OpenAIDevs</a>
+    <a href="https://x.com/GoogleAIStudio" target="_blank" rel="noopener">@GoogleAIStudio</a>
+    <a href="https://x.com/Alibaba_Qwen" target="_blank" rel="noopener">@Alibaba_Qwen</a>
+    <a href="https://x.com/deepseek_ai" target="_blank" rel="noopener">@deepseek_ai</a>
+    <a href="https://x.com/MistralAI" target="_blank" rel="noopener">@MistralAI</a>
+    <a href="https://x.com/Kimi_Moonshot" target="_blank" rel="noopener">@Kimi_Moonshot</a>
+    <a href="https://x.com/Zai_org" target="_blank" rel="noopener">@Zai_org</a>
+    <a href="https://x.com/bunjavascript" target="_blank" rel="noopener">@bunjavascript</a>
+  </div>
+</section>
+
+<section>
+  <div class="section-head">
+    <h2>Bilerek dışarıda bırakılanlar</h2>
+    <p>Takipçisi çok, işe yarar bilgisi az. Abartı satan ya da incelediği platformdan para alan hesaplar odaya girmez.</p>
+  </div>
+  <ul class="out">
+    <li><a class="handle" href="https://x.com/rowancheung" target="_blank" rel="noopener">@rowancheung</a><span>Yalnız haber başlığı; kendi denediği bir iş yok.</span></li>
+    <li><a class="handle" href="https://x.com/minchoi" target="_blank" rel="noopener">@minchoi</a><span>Her şeye "inanılmaz" diyen heyecan.</span></li>
+    <li><a class="handle" href="https://x.com/hasantoxr" target="_blank" rel="noopener">@hasantoxr</a><span>Başkalarının paylaşımlarını yeniden paketler.</span></li>
+    <li><a class="handle" href="https://x.com/heyBarsee" target="_blank" rel="noopener">@heyBarsee</a><span>Beğeni toplamak için haber dizileri.</span></li>
+    <li><a class="handle" href="https://x.com/bindureddy" target="_blank" rel="noopener">@bindureddy</a><span>Kendi ürününün tanıtımı ve sert çıkışlar.</span></li>
+    <li><a class="handle" href="https://x.com/gregisenberg" target="_blank" rel="noopener">@gregisenberg</a><span>Her gün fikir; ortada sonuç yok.</span></li>
+    <li><a class="handle" href="https://x.com/rileybrown" target="_blank" rel="noopener">@rileybrown</a><span>Gösteri videoları ve medya şirketi.</span></li>
+    <li><a class="handle" href="https://x.com/DeRonin_" target="_blank" rel="noopener">@DeRonin_</a><span>Kanıtı olmayan "nasıl çok yayılırsın" tarifleri.</span></li>
+    <li><a class="handle" href="https://x.com/LinusEkenstam" target="_blank" rel="noopener">@LinusEkenstam</a><span>Sert çıkışlar ve satılık ortaklıklar.</span></li>
+    <li><a class="handle" href="https://x.com/MonetizationDon" target="_blank" rel="noopener">@MonetizationDon</a><span>Yirmiden fazla platformdan para alıyor.</span></li>
+    <li><a class="handle" href="https://x.com/MayorKingAI" target="_blank" rel="noopener">@MayorKingAI</a><span>İncelediği platformlardan para alıyor.</span></li>
+    <li><a class="handle" href="https://x.com/DynamicWebPaige" target="_blank" rel="noopener">@DynamicWebPaige</a><span>Paylaşımlarının çoğu Google Gemini'yi övmek.</span></li>
+  </ul>
+</section>
+
+<footer>
+  <p>Liste kalıcı değil. Oda çalıştıkça kimin gerçekten işe yarar şey getirdiğini sayar: getirenler öne çıkar, getirmeyenler düşer, A katmanının sık andığı yeni isimler listeye önerilir.</p>
+  <p>18 Ekim 2026'da derlendi. X'te sizin hesabınızdan yalnız okuma yapıldı; hiçbir hesap takip edilmedi, beğenilmedi, hiçbir şey yazılmadı.</p>
+</footer>
+
+</div>
