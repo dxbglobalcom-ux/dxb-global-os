@@ -13,9 +13,9 @@ yok. Fabrika tam başlayınca çalışır.
 
 ```
 X (sizin hesabınız, yalnız okuma)
-  → ayıklama: yüzlerce paylaşımdan konuyla ilgili olanlar
+  → ayıklama: yüzlerce paylaşımdan konuyla ilgili olanlar (en ucuz model)
   → aynı konudaki paylaşımlar tek dosyada toplanır
-  → derin okuma: yazı, kod, video
+  → derin okuma: yazı, kod, video (en ucuz model)
   → yargı: Opus hüküm verir, holdingin ikinci gözü Sol çürütmeye çalışır
   → Çöp · Rafa · Dene · Holdinge al
   → deneme odası: kapalı sanal makinede, kendi işlerimizle önce/sonra
@@ -116,7 +116,7 @@ subscription calls is UNVERIFIED and measured first.
 
 **Judging** — T0 plain code (dedupe, expand t.co without his session, artifact keys, his closed classes blocked by name
 and listed once — note `andrej-karpathy-skills` is closed while @karpathy is A tier); T1 Jev first, Sonnet 5.5 medium
-on doubt (Jev is OPEN under B64, its route measured at build; Haiku 4.5 retired, Haiku 5.5 still testing — not used);
+on doubt; the deep read on the cheapest model that passes the frozen-fixture test — his order of 2026-10-18 (HIS-WORDS §6): the watching and reading on the cheapest models, the verdict alone with Opus (Jev is OPEN under B64, its route measured at build; Haiku 4.5 retired, Haiku 5.5 still testing — not used);
 events by artifact key, heat counts independent organisations with a 24 h half-life and only orders the reading; deep
 read ≤ 8 events a day with evidence rows (V/T/R/U) and the research door's counter-evidence and second-source rounds;
 "do we already have it" (HAVE → B42 version lane, silent; HAVE-EQUIVALENT → must beat ours; NEW → a board row named).

@@ -22,3 +22,12 @@ Quoted from this session's conversation, in order. Session-only orders are marke
 
 "bu ne ya anlamadım rapordan birşey çekip aldım."
 (The lead explained both rows plainly and rewrote every line of the page in plain Turkish, version 2.)
+
+## 6. Which model does the room's work (after the plan was handed over)
+
+"bunları sadece en ucuz modellere yaptır anlaşıldı mı? ve
+  mümkün olduğunda maliyeti düşürün. bunu da tahtada yapılacaklar listesine koyun ok?"
+(The lead filed the cost order as B51's move 7 and asked what "bunları" meant, offering the studio as a second reading. He answered:)
+
+"Siz beni galiba yanlış anladınız. Hani en ucuz video modeli müşteri işine kaliteyi düşürebilir. Ne alaka yani, ben anlamadım. Seninle video işi ne alaka? Ya ben sadece dedim ki size, arkadaşım gidin şu önemli insanları takip edin. Bak basit anlatıyorum. Tamam mı? Gidin şu, yani oturun masa başına takip edin yani şu önemli insanları. Ne paylaşıyorlar? Önemli bir şey var mı? Bizim holdingimizde işe yarar mı? Tamam mı? Yararsa onu bir bana getirin. Bak şöyle bir şey var. Bu holdingin şurasıyla ilgili. İstersen denemesini yaparız. Şey yaparız. Değerlendiririz. Mesela atıyorum, bir örnek vereyim. Vox, O-V-O-X adamı bir şey paylaşıyor. Diyor, Opus'u şöyle kullanırız. Şöyle bir şey yapabilirsiniz Opus'la ilgili diye bir şey paylaşıyor mesela. Tamam mı? Bir stack paylaşıyor falan. Mesela bu stack faydalı olur mu bizim holdingde bir yerde falan? Veya birisi başka bir şey. Yani anlatabildim mi? Yani senin şu şeyini anlamadım ben kısaca. Stüdyoda riski şu: en ucuz video modeli müşteri işinde kaliteyi düşürebilir. Oradaki planlar her çekim için kalitesine göre en uygun fiyatı size getiriyordu. Bir riskim var. Ucuz model hükümde daha zayıf kalabilir. Abartılı paylaşım kaçınabilir ya da işe yarayanı atabilir. Tamam. Yani Opus hayır olsun yani hüküm şeyi yani. Onda olsun. Okey. Ama bu şey de dediğim gibi, bu kız anlamadım. Hani umarım şeyimi anlatabildin."
+(Dictated; read by the lead as: the room's watching and reading on the cheapest models, the verdict stays with Opus.)
