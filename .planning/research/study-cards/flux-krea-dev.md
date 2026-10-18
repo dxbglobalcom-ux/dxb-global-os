@@ -9,6 +9,7 @@
 - **Slug:** flux-krea-dev
 - **Category:** Media/content (image generation)
 - **Status:** ADOPT — **quality APPROVED by the CEO 2026-09-01** <!-- CEO-OK: flux-krea-quality-approved-2026-09-01 -->
+- **Use in our work:** free to use in the holding's work, client work included — his word, 2026-10-18 <!-- CEO-OK: flux-krea-dev-usable-in-our-work-2026-10-18 -->
   (*"flux çok güzel… 1-kalite onaylandı."*)
 - **Target Phase:** 10+ (DXB Media Studio, B43 step ③ — the image lane)
 - **Owner (dept/tier):** Creative / Social Media — image lane

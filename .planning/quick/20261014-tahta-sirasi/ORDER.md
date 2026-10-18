@@ -78,7 +78,7 @@ built (MERGE §2, call 1).
 | 42 | B42 | L3 | 39, 11 | scrollcraft upstream 0.3.1 diff (W078); OpenCut's headless mode watched (W031) |
 | 43 | B16 + C30 | L3 | 41 | |
 | 44 | B27 | L3 | — (his choice) | |
-| 45 | B43 | L7/L8 | 21, 34 | T-7, T-8, T-12, content-principles leg (peer commit 826fffb7) with W035's writing rules, through the blind test; HyperFrames and long→short lanes; the Islamic editorial check before any religious content |
+| 45 | B43 | L7/L8 | 21, 34 | T-7, T-8, T-12, content-principles leg (peer commit 826fffb7) with W035's writing rules, through the blind test; HyperFrames and long→short lanes; the Islamic editorial check before any religious content; the studio platform-hub plan rides on this row (FINAL.md, approved with his corrections 2026-10-18; channels left it for a separate study) |
 | 46 | NEW Y8 channel line (Excel X-1) | L8 | 5, 34, 45, 26 | three pilots to his eye first (Law D, a bench test), then the weekly line; YouTube's own scheduling; the account at the key turn; X-10, X-11, X-17, X-19 |
 | 47 | NEW Y11 the holding's own site | L8 | 45 | built on the bench, our own SEO/AEO case; live at the key turn; where it is hosted is his word |
 | 48 | NEW Y9 client-finding (Excel X-2, narrowed) | L8 | 24, 41, 47 | leads and niche playbooks inside B64's client record |

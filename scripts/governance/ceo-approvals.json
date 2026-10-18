@@ -2585,5 +2585,33 @@
     "verbatim": "bunları sadece en ucuz modellere yaptır anlaşıldı mı? ve mümkün olduğunda maliyeti düşürün. bunu da tahtada yapılacaklar listesine koyun ok?",
     "conditions": null,
     "where": "HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md B51 · .planning/board-rows/B51.md"
+  },
+  "studio-platform-hub-plan-approved-with-corrections-2026-10-18": {
+    "date": "2026-10-18",
+    "what": "The studio platform-hub plan (FINAL.md) is approved with his corrections and goes onto the board now, on row B43; its rank is set when the board is ordered. Accepted as written: what is built, the phase order, his clicks, one approval card per job, a scan every 10 days. Removed: today's prices and promo dates as inputs (the router reads the price when a job comes), the risks table, top-ups and the platform exam for now (accounts are opened and connected, the infrastructure and system built), the FLUX.2-pro-first rule for images, the channel part (a separate, more detailed study). Added: Higgsfield's API, and every account connected to the holding.",
+    "verbatim": "Ne kuruluyor kısmında orayı kabul ediyorum evet. Sırasını da yazmışsın evet. Tıklarınız tamam evet. … bir şey yüklemeyeceğiz, bir şey denemeyeceğiz şimdi ya. Para falan yüklemeyeceğiz. Hesapları açın, hesapları bağlayın. O kadar. Holding'e tüm hesapları bağlayın, o kadar. … Bağlantıları, altyapıyı ve sistemi kurun yani. … Bu plan olduğu gibi tahtaya geçecek. Ama ve lakin şimdi geçsin.",
+    "conditions": "No money loaded and no exam now; channels go to a separate study; Higgsfield by API only, never automation on its unlimited plan.",
+    "where": "HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md B43 · .planning/quick/20261017-studio-platform-hub/FINAL.md (Bölüm 0)"
+  },
+  "flux-krea-dev-usable-in-our-work-2026-10-18": {
+    "date": "2026-10-18",
+    "what": "FLUX.1-Krea-dev may be used freely in the holding's work; the records' non-commercial-licence concern is set aside on his word (a special arrangement he says the holding obtained).",
+    "verbatim": "Ya o Flux bir devin lisanslı ticari işe kapalı. Onu boş ver. Biz onu aldık şeyini. O seni ilgilendirmez. Tamam mı? O bizim holding için özel bir şey aldık biz. Sponsor. Bu benim sözüm. Yaz onu. O kadar. Flux rahat kullanılabilir bizim işlerimizde.",
+    "conditions": null,
+    "where": ".planning/quick/20261017-studio-platform-hub/FINAL.md (Bölüm 0) · .planning/research/study-cards/flux-krea-dev.md"
+  },
+  "islamic-exclusions-sponsors-and-work-2026-10-18": {
+    "date": "2026-10-18",
+    "what": "His Islamic ruling for sponsors and the studio's work: interest-bearing finance, music, alcohol, dating, and everything clearly sinful are excluded absolutely. Living-being depiction in children's animation was not ruled.",
+    "verbatim": "İslami hükümler benimdir. Evet. Orada yani faizli finans sponsorları falan bunlar kesin müzik bunlar falan istemiyorum. Alkol, flört, reklamlar falan hani böyle kesin net olan her şeyde günah olan her şeyi kesinlikle istemiyoruz.",
+    "conditions": null,
+    "where": ".planning/quick/20261017-studio-platform-hub/FINAL.md (Bölüm 0, Kararlar)"
+  },
+  "minimax-credit-request-dropped-2026-10-18": {
+    "date": "2026-10-18",
+    "what": "Asking MiniMax, our sponsor, for API credits is dropped and is never raised again.",
+    "verbatim": "Sponsorumuz Minimax API krizisini bunu boş ver. Bunu da bu kısmı da boş ver. API krizi isteme falan. Onu da bir daha gündeme getirme.",
+    "conditions": null,
+    "where": ".planning/quick/20261017-studio-platform-hub/FINAL.md (Bölüm 0) · .planning/STATE.md"
   }
 }

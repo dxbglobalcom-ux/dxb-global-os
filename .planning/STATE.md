@@ -42,8 +42,8 @@ holding's media strategy: the studio connects to every leading generative-video 
 kie.ai, MiniMax first), each shot is priced on every route and the best one for its quality is brought to him for one
 click before any spend, a scanner re-reads the platforms every 10–14 days, and our own channels become advertising
 inventory whose sponsors' ads the studio also produces. On his word it ran the valuable-work method: two plans
-(xhigh, max), Fable 5.1 judged (the max plan won, 20 items added, five false claims corrected by the lead). The plan
-waits for his eye: `.planning/quick/20261017-studio-platform-hub/FINAL.md`, beside his words verbatim and nine
+(xhigh, max), Fable 5.1 judged (the max plan won, 20 items added, five false claims corrected by the lead). The plan,
+approved with his corrections on 2026-10-18: `.planning/quick/20261017-studio-platform-hub/FINAL.md`, beside his words verbatim and nine
 research reports. Found on the way: Veo 3.1's Gemini API models shut down 2026-10-22; YouTube's partner threshold
 doubles on 2027-02-01. CSL has not answered the RAM mail yet (dxbglobalcom@gmail.com).
 
@@ -57,7 +57,7 @@ YE01-YE17 decided. YE17: claude-mem's telemetry off (done). Decided in the same 
 removed; ScrollCraft draws on the holding's own studio (bridge `studio.mjs`, Sol's findings fixed, 6527517d); the
 V2 memory's embeddings local on the CPU, queued on the memory row; the studio service comes back by itself.
 The studio retest he ordered for the next session is in HIS-WORDS (clip through H3's image-less path at 8 steps, in
-the factory with the Media Studio's staff; FLUX.1-Krea-dev is non-commercial to run). The sheet "Ekim 9-15 linkleri"
+the factory with the Media Studio's staff; FLUX.1-Krea-dev usable in our work, his word of 2026-10-18). The sheet "Ekim 9-15 linkleri"
 was added by a peer session (`.planning/quick/20261015-ekim-linkleri/`).
 Board line 2 is his bench rule <!-- CEO-OK: bench-rule-key-turned-once-2026-10-14 -->; the company engine stays stopped
 until the key turn <!-- CEO-OK: company-engine-stopped-until-the-key-turn-2026-10-14 --> (his word 2026-10-15 <!-- CEO-OK: factory-trial-allowed-before-the-key-turn-2026-10-15 -->: a part that has passed its tests may be tried in the factory, with the company's own staff, when trying it there is the better test — a purposeful trial, never the wheel left turning for nothing). The company has no face
@@ -67,9 +67,8 @@ microphone <!-- CEO-OK: jarvis-silent-listening-voice-04-okayed-2026-09-14 -->. 
 
 ## Next
 
-1. His eye on the studio platform-hub plan (FINAL.md, Part 1 in Turkish) and his one yes. On the yes the build starts at
-   high with the key-catcher, so his onboarding is clicks only ("İzin ver", "Create key", "Copy", "Öde"); the session
-   itself never opens an account, enters a key or pays. The B43 note waits for that yes (the row is at its size ceiling).
+1. The studio platform-hub plan is approved with his corrections and on the board (B43; FINAL.md Bölüm 0): built at its
+   rank — accounts connected and infrastructure only, no money loaded, no exam now; channels become a separate study.
 2. His eye on the Gözlem Odası plan (`.planning/quick/20261018-gozlem-odasi/PLAN.md`) and his yes. On the yes the build
    starts at high with step 1, the machine-wide X gate for the research door (it protects his account today), then B42's
    row note and the doctrine adaptations named in Part 2.
@@ -92,18 +91,15 @@ microphone <!-- CEO-OK: jarvis-silent-listening-voice-04-okayed-2026-09-14 -->. 
 
 ## Waiting on his approval
 
-- The studio platform-hub and channels plan (FINAL.md): his yes, and the decisions and money-out moments it lists
-  (first top-ups, the model exam's ceiling, the first channel).
+- Platform-hub plan, two open decisions: the studio tab drawn before B22's synthesis (B32's method); the `media` event channel.
 - The Gözlem Odası plan (PLAN.md): his yes, which also carries the X-only copy of his X session for the room (an
   identity step) and the lab's Ubuntu image; at step 3 one click on Claude's own consent page for the lab's model token.
 - The RAM upgrade, his decision by 2026-10-28: the lead advises the same Goodram 2×16 kit from Proshop (€580 with
   shipping, no coupon exists) over CSL's offer; with four sticks AMD guarantees only DDR5-3600, so 6000 is UNVERIFIED
   until installed and memory-tested.
-- Whether to ask MiniMax, our sponsor, for API credits.
 - The ordered board and its 10 new rows, after the walk.
 - At their ranks: the Supabase skills install (#3), DataForSEO (#47), Apify beyond the free plan (#48), Google OAuth
   for the Workspace CLI (#24), store accounts for a mobile app.
-- At the first client: the commercial still model (an Apache-2.0 model, or FLUX through its pay-per-use API).
 - At their rows' turn: the server and a Meta business account (32), his Islamic rulings (46-49), the site's host (47).
 - Hermes, when the holding stands — the holding's server (B09/B11). Kept for later: where client sites are published.
 
