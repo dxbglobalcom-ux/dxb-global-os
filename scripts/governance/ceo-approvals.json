@@ -2578,5 +2578,12 @@
     "conditions": "Not now: in its turn, after its plan (at xhigh) has his yes. The quoted sentence is the lead's own, quoted back by him.",
     "session": "Opus 5.5 session 43ccafde, in conversation, 2026-10-17.",
     "where": "HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md row B81 · .planning/board-rows/B81.md"
+  },
+  "b51-cost-down-wherever-possible-2026-10-18": {
+    "date": "2026-10-18",
+    "what": "Lowering the holding's cost wherever it can go down is put on the open work board, on his word. It is filed as move (7) of B51 (who does the work, who checks it and what it costs) — the row that already owns cost — not as a new row.",
+    "verbatim": "bunları sadece en ucuz modellere yaptır anlaşıldı mı? ve mümkün olduğunda maliyeti düşürün. bunu da tahtada yapılacaklar listesine koyun ok?",
+    "conditions": null,
+    "where": "HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md B51 · .planning/board-rows/B51.md"
   }
 }
