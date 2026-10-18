@@ -58,5 +58,5 @@ frame has been drawn with it, so its behaviour there is UNVERIFIED.**
 
 ## Where it sits beside the rest
 
-Image lane of B43 step ③. The paid hands (ChatGPT Image, Antigravity) stay available; this is the
+Image lane of B43 step ③. The paid hand ChatGPT Image stays available (Antigravity has only its free tier now — Google AI Pro cancelled, his word, 2026-10-18); this is the
 lane that makes the studio independent of them, which is the row's own standing duty.

@@ -60,8 +60,12 @@ microphone <!-- CEO-OK: jarvis-silent-listening-voice-04-okayed-2026-09-14 -->. 
 1. His eye on the studio platform-hub plan (FINAL.md, Part 1 in Turkish) and his one yes. On the yes the build starts at
    high with the key-catcher, so his onboarding is clicks only ("İzin ver", "Create key", "Copy", "Öde"); the session
    itself never opens an account, enters a key or pays. The B43 note waits for that yes (the row is at its size ceiling).
-2. CSL's reply in dxbglobalcom@gmail.com, then the RAM decision.
-3. The studio retest, in the factory with the Media Studio's staff: ScrollCraft's clip through H3 image-less at
+2. RAM: his decision by 2026-10-28; it reopens sooner only if the studio needs it. He reads CSL's reply himself —
+   the session does not open the mail.
+3. The studio retest. First the machine's reboot, at his own moment (he is working now): unattended-upgrades raised
+   the NVIDIA libraries to 595.99.02 on 2026-10-18 09:41 while the loaded driver is 595.91.07 (`nvidia-smi`:
+   "Driver/library version mismatch"); the running ComfyUI (up since 2026-10-17 07:38) keeps working, a restarted
+   one cannot use the card. Then, in the factory with the Media Studio's staff: ScrollCraft's clip through H3 image-less at
    8 steps; stills from H3's best frame vs FLUX vs FLUX.2-klein-4B; a client-photo ad through H3; upscale or not,
    judged full screen by his eye. The records disagree on the standard (4 steps on 2026-09-04, 8 in the retest
    note); the retest settles it, and the studio's capacity doubles or halves with it. Then the bridge and
@@ -77,7 +81,9 @@ microphone <!-- CEO-OK: jarvis-silent-listening-voice-04-okayed-2026-09-14 -->. 
 
 - The studio platform-hub and channels plan (FINAL.md): his yes, and the decisions and money-out moments it lists
   (first top-ups, the model exam's ceiling, the first channel).
-- The RAM upgrade: a second 2×16 GB kit (about 574 € in Germany, 36,999 TL in Turkey) or CSL's offer.
+- The RAM upgrade, his decision by 2026-10-28: the lead advises the same Goodram 2×16 kit from Proshop (€580 with
+  shipping, no coupon exists) over CSL's offer; with four sticks AMD guarantees only DDR5-3600, so 6000 is UNVERIFIED
+  until installed and memory-tested.
 - Whether to ask MiniMax, our sponsor, for API credits.
 - The ordered board and its 10 new rows, after the walk.
 - At their ranks: the Supabase skills install (#3), DataForSEO (#47), Apify beyond the free plan (#48), Google OAuth

@@ -21,7 +21,7 @@
 3. **A gate discipline that matches ours.** Its v1.22.0 release is a list of silent-success defects it hunted down and killed — a preview that returned `success` for an image that did not exist, a generator that exited 0 after every provider failed, a cost report that crashed on the unpriced entries a credential-less run produces. Its rule that "unpriced is not free, every total is a LOWER BOUND" is the same discipline as `dxb-verify`.
 
 ## Known Pitfalls
-- **Its two generation providers cost money:** images via **Vertex AI Nano Banana Pro**, video via **WaveSpeed Kling v3.0 Pro**. That is the half this holding can replace — the CEO's Google AI Pro subscription already generates images at $0.00 through Antigravity (board B31, 2026-08-26). **Nothing is keyed or paid without his word.**
+- **Its two generation providers cost money:** images via **Vertex AI Nano Banana Pro**, video via **WaveSpeed Kling v3.0 Pro**. That half was replaceable through the CEO's Google AI Pro subscription, which generated images at $0.00 through Antigravity (board B31, 2026-08-26) — **Google AI Pro cancelled (his word, 2026-10-18); Antigravity has only its free tier now.** **Nothing is keyed or paid without his word.**
 - Publishing is outward-facing: every post rides `APPROVAL_ENGINE_SPEC`'s gate. Its own approval ledger is an input to that gate, never a replacement for it.
 - ⛔ **The betting exclusion binds any campaign it produces** — the CEO's absolute line on board row B28, at any size.
 - It installs as a plugin carrying 20 skills, 25 commands and 5 agents into the session surface. The CEO's standing order of 2026-08-09 keeps the plugin surface to claude-mem + context7; **installing is his decision, not the author's.**
@@ -31,6 +31,6 @@
 
 ## Lifecycle Checklist
 - [x] STUDY (2026-08-26 — read live, on the CEO's order "Ferrari seviyesinde gerçekleştir")
-- [ ] INSTALL — needs the CEO's plugin decision AND a provider swap to the free image hand
+- [ ] INSTALL — needs the CEO's plugin decision AND a provider swap for its image half (the Antigravity hand has only its free tier since Google AI Pro was cancelled — his word, 2026-10-18)
 - [ ] ADOPT
 - [ ] EMBED
