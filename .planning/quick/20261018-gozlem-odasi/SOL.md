@@ -21,3 +21,4 @@ Found by the lead, older than this work (C): `sync-codex-mirror.sh --check` call
 neither the battery nor the commit hook runs it, so a door's change leaves Codex's mirror stale with nothing red.
 
 Live, after the fixes: one search through the gate, exit 0, 5 rows, `requests: 60`, verdict ok; X open.
+Final battery on 8a661d30: `BATTERY_GREEN` — 1,417 + 404 passed (`evidence/battery-final.txt`); the first run, before the fixes, is `evidence/battery.txt` (its one red was B7).
