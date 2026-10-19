@@ -2682,5 +2682,13 @@
     "conditions": "His order for how the door delivers; not a LAW B acceptance. 'Ekim 19-15' is his dictation of the tab 'Ekim 9-15 linkleri'.",
     "session": "Opus 5.5 session 9eccd05e — heard first-hand, 2026-10-19.",
     "where": ".claude/skills/dxb-watch-links/SKILL.md §4 §5 · .claude/skills/dxb-watch-links/xlsx.py"
+  },
+  "rival-39-40-closed-from-transcripts-2026-10-19": {
+    "date": "2026-10-19",
+    "what": "Rival reels 39 (Seedance vs local MiniMax H3) and 40 (invideo 'Agent 2') are closed from their transcripts: their frames and videos went in his sweep of 2026-09-21, and he chose the lead's recommendation over a re-fetch. Reports 39-dcnclj.md and 40-dcbpe7.md written transcript-only; ledger rows reported, NEXT: done. His 2026-08-31 decision is registered with it, never registered before: nVideo is not bought, its architecture is taken (report 40 §5 into B43/B32).",
+    "verbatim": "Yani rakip 39-40. Ben bir şeye karar vermiştik, evet. En video alınmayacak, mimarisi alınacak, evet, böyle bir şeyi konuştuk, onayladık. Ama niye kaydedilmiyor yani? Çok saçmalık yani. Ben bir şeye karar verdiriyoruz, tamam diyoruz. Komitleniyor falan filan, kaydedilmiyor. Neyse. Bunun öneri, aynen önerin.",
+    "conditions": "His 2026-08-31 words, carried by the session's task file (sources-rakip-39-40.md:142): 'nvideo sanırım pahalıydı biz onsuz yapıp sistemini alabiliriz.' Registered as his decision, not a LAW B acceptance of the reports.",
+    "session": "Opus 5.5 session 9eccd05e — heard first-hand, 2026-10-19.",
+    "where": ".planning/research/rival-intel/39-dcnclj.md · 40-dcbpe7.md · 00-LEDGER.md rows 39/40 · board B22 · ORDER.md rank 19"
   }
 }

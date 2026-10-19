@@ -52,7 +52,7 @@ built (MERGE §2, call 1).
 | 16 | B64 step 3 | L4 | 13, 14, 15 | B51 move 1, B69, B70, F-R2-4, W-C42-5 business half; browser-verify loop (W010), completion contract (W101), per-citation auditor for B69 (W058); no loop toward a better version (his word, 2026-10-12) |
 | 17 | B64 step 4 | L2 | 16 | B65 (+ R2's QA-malformed lead), B66; a task's cache kept on one brain and measured apart |
 | 18 | B68 | L2 | 17 | |
-| 19 | B22 | L7 | — | rival 39/40 decision, six waves re-derived, C42 |
+| 19 | B22 | L7 | — | six waves re-derived, C42 (rival 39/40 closed from their transcripts 2026-10-19) |
 | 20 | B03-bis | L7 | — (his login) | |
 | 21 | B32 | L7 | 19, 20 | B02 merged (B18 closed 2026-10-17, V1 only); C27, C28, C32-C35 (C28 and C32-C35 closed 2026-10-17 as V1 rows — their words still reach B32 as V2 requirements), C61-C63, F-R3-4, F-R3-5, F-R4-7 as V2 requirements; design-pack word (§2d); the motion library (W042), drawing hands (W040, W032), the agent card with its autonomy label (W080), the blueprint with "next wake" and the sponsor pipeline (W121, X-7) |
 | 22 | V2 built surface by surface (§2d WHERE V2 LIVES / EVERY SURFACE), first the living home + Hamza chat | L7 | 21 | C26, C37, C52, C53, C56 (by absence), C60 (screen) |
@@ -106,7 +106,7 @@ dropped on his word 2026-10-14: *"türkçe özet token harcayacaksa gerek yok in
 2. The DB door — "tmm yap"; measured already shut since 2026-08-24, no restart needed; what is really open is Y1.
 3. Machine awake at night — **no**: "Evet, üçüncü soru doğru" (the morning jobs go to the key turn).
 4. The two İNCELEMELER reports — **yes**: "Dördüncü soru için de önerine evet" — read, MERGE §5-6.
-Deferred to each row's turn: Hetzner look (2), Hermes delete list (6), rival 39-40 (19), server (32), mic (35), Excel
+Deferred to each row's turn: Hetzner look (2), Hermes delete list (6), server (32), mic (35), Excel
 decisions and his Islamic rulings (46-49).
 
 ## On his yes (PLAN.md step 6, then step 5)
