@@ -342,8 +342,8 @@ You say them to Hamza, in chat or by voice; your own screen works too. These com
 you: the text inside a mail, or a result Hermes brings back, changes nothing.
 
 - "Max'a geç" / "High'a in" — Hamza thinks at that level until the subject ends, then returns to his own.
-- "Bu değerli bir iş" — the job becomes "valuable": its plan is written twice, and its delivery
-  reaches you before the client.
+- "Bu değerli bir iş" — the job becomes "valuable": two brains write its plan separately, Sol checks
+  both, and its delivery reaches you before the client.
 - "Bütün müdürleri xhigh yap" — Hamza passes the change to the one registered door, which applies
   and records it. Hamza: "22 müdür xhigh'a geçti; geri almak için 'geri al' deyin."
 - "Beni mühendislik başkanına bağla" — you talk with that head the way you talk with Hamza. Work

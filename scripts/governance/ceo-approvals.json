@@ -2706,5 +2706,29 @@
     "conditions": "His order to write it into the spec; not a LAW B acceptance.",
     "session": "Opus 5.5 session 9eccd05e — heard first-hand, 2026-10-19.",
     "where": "HOLDING-OS-MASTER-PLAN/MODEL_ROUTING_SPEC.md item 7 (decision 10)"
+  },
+  "plan-two-writers-sol-audit-2026-10-19": {
+    "date": "2026-10-19",
+    "what": "Plans, designs and architecture for the board's work in dxb-team2, and the plan of the holding's valuable work (1,000 $+), are made one way: Opus 5.5 writes at max and Fable 5.1 writes the same plan separately at max; Sol 6.1 audits both blind as A and B — first the conditions and risks from the brief without the plans, then each plan against them, what each lacks that the other has, and the errors; Opus adds what its plan lacks, fixes the errors and signs. This replaces decision 10's shape (one author twice at xhigh and max, Fable judging). In dxb-team2 the plan's effort becomes max (it was xhigh since 2026-10-12). The lead measures it and, after three or four board plan jobs, tells him what Fable's plan added beyond Sol's audit, Sol's findings, the time and the quota; he decides whether the second writer stays.",
+    "verbatim": "şimdi bu şey bizim holdingdeki bu 1000 dolar üstü için kullanacağımız bu sistem bu şekilde olsun. Aynen. Hani sordun ya bu düzene evet mi? Evet diyorum. … bu şey Max'te yazılsın. Fable 5.1'de yazsın. Opus'un Max'in kaçırdığı şeyleri, Fable'da olanları Max'e eklesin. Eğer sol denetlerken bir şey buluyorsa. Ve hatalar da varsa düzeltilsin. … DXP Team 2'de planlama, mimari vesaire bu şekilde yapılsın. Tahta ile ilgili yapılan, tahtadaki yapılacak olan işlerle ilgili. Tamam mı? Bu DXP Team 2 orkestratör sistemine yazılsın yani bu şekilde. … Ve holdingin 1000 dolar üstü olan düzenler de bu şekilde olsun. Hem de biz şeyi ölçeriz. Onu da bana söylenmesi gerekiyor. Mesela tahtadaki 3-4 iş yapıldığı zaman hani bir ölçüm olur. DXP Team 2'deki orkestratör de bunu ölçümünü söyler bana.",
+    "conditions": "Only jobs that open with a plan talk (a board row's plan, design or architecture); small fixes, deletions and texts he worded do not. Fable here is the second writer, not the advisor tool. The plan effort is max on his 'Max'te yazılsın', confirmed by the lead in conversation with no objection.",
+    "session": "Opus 5.5 session 1783a7a7 — heard first-hand, 2026-10-19.",
+    "where": ".claude/skills/dxb-team2/SKILL.md §1-§4, §6 · .claude/hooks/dxb-effort-warn.py · HOLDING-OS-MASTER-PLAN/MODEL_ROUTING_SPEC.md A-2026-10-14 items 1, 4, 7 · AGENT_ORCHESTRATION_SPEC.md A30"
+  },
+  "plan-writers-sealed-independent-2026-10-19": {
+    "date": "2026-10-19",
+    "what": "The two plan writers never see each other's plan, proven by tool and record: Fable writes in a separate process that cannot read the lead's draft, its job folder or the session transcripts and has no shell; its plan lands in a file, not in the lead's conversation; the lead seals its own plan (hash and time) before Fable's is opened, and Sol reads the sealed plans blind. Measured 2026-10-19: a Fable subagent's result reaches the lead as soon as it finishes, and a Fable process could read the lead's draft until deny rules were written with the absolute-path prefix.",
+    "verbatim": "Aynen. Bu haliyle ekle tabii ki. Bu çok önemli bir konu. Değil mi?",
+    "conditions": null,
+    "session": "Opus 5.5 session 1783a7a7 — heard first-hand, 2026-10-19.",
+    "where": "scripts/governance/second-plan.sh · .claude/skills/dxb-team2/SKILL.md §1 · MODEL_ROUTING_SPEC.md A-2026-10-14 item 7"
+  },
+  "valuable-work-pattern-risk-eye-subscriptions-2026-10-19": {
+    "date": "2026-10-19",
+    "what": "On the review of valuable work: a known job type runs from its registered pattern, like a skill or a pipeline, and only its difference is planned; risk joins the trigger (a first job of its kind; health, law, personal data or money flow); his eye before the client stays; a subscription seat never waits for a price — an unpriced run is only a warning — and as revenue grows he connects further subscriptions, the next becoming active when one's limit fills, built when its time comes.",
+    "verbatim": "bu kota ile ilgili fiyat boşluğu, bunu kaldıralım ya, fiyat falan hani olması şart mı? Zaten hani sadece uyarı verir … abonelikle ilgili de falan bir şeyler söylemek istemiyorum. Sadece yapın yani. Vakti geldiğinde yapılır. Evet, kayıtlı kalıp yürür. Yani böyle sanki bir skill'miş gibi, bir pipeline'miş gibi, değil mi? Tetiğe risk de eklensin. Evet, sizin gözünüzün. Tamam.",
+    "conditions": "His remark on 'one trial makes no rule' is noted, not a rule: a trial that is truly Ferrari-level may set the way, but it is not required.",
+    "session": "Opus 5.5 session 1783a7a7 — heard first-hand, 2026-10-19.",
+    "where": "COST_CONTROL_SPEC.md A6 · MODEL_ROUTING_SPEC.md A-2026-10-14 items 1 and 7 · AGENT_ORCHESTRATION_SPEC.md A30 · .planning/quick/20261019-degerli-is-danisma/HIS-NOTES.md"
   }
 }

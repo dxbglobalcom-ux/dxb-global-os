@@ -2,9 +2,9 @@
 """DXB effort warning (UserPromptSubmit / `plan` / `build` / `off`): the CEO is told which /effort to switch to.
 
 The CEO's order of 2026-10-06: he opens a session at effort high and switches it himself with /effort;
-the session only warns him. Plan, design and architecture run at xhigh (the CEO's order of 2026-10-12, which
-replaced max with xhigh); the build at high. Fable's review of 2026-10-06 made the warning start by itself
-and arrive in time:
+the session only warns him. Plan, design and architecture run at max (the CEO's order of 2026-10-12, which
+replaced max with xhigh, and the CEO's order of 2026-10-19, which replaced xhigh with max); the build at high.
+Fable's review of 2026-10-06 made the warning start by itself and arrive in time:
 
   * `dxb-effort-warn.py plan|build|off`, run by the lead from Bash: sets (or, for `off`, removes) the
     mode of the session named by CLAUDE_CODE_SESSION_ID -- a file
@@ -13,11 +13,11 @@ and arrive in time:
     warning. `build` is run in the reply that asks him to approve the plan, so the high warning travels
     with the question and his "yes" can arrive at high.
   * UserPromptSubmit: while the session has a mode -- or, with none set, while his permission mode is
-    `plan` -- and its live level does not match it (plan: xhigh, build: high), each of his messages carries
+    `plan` -- and its live level does not match it (plan: max, build: high), each of his messages carries
     the warning into the session's context, and until he has switched the plan work itself waits (STOP).
     With no mode and no plan permission mode, a message that names a plan, a design or an architecture
     tells the lead, before it thinks about the substance, to decide whether the reply would be plan work;
-    if so, to open the dxb-team2 door, run `plan`, open with the xhigh line and stop -- at xhigh, only the door
+    if so, to open the dxb-team2 door, run `plan`, open with the max line and stop -- at max, only the door
     and `plan` (the CEO, 2026-10-12: the warning comes before the thinking; the door, too, with plan
     permission mode and no mode -- the CEO, 2026-10-09), and a session whose level is not high
     -- or not yet known: then the lead reads CLAUDE_EFFORT in Bash -- reminds the lead to warn him before
@@ -53,7 +53,7 @@ from datetime import datetime, timezone
 
 SESSION_ID = re.compile(r"[0-9a-f-]{8,}", re.IGNORECASE)
 LEVELS = ("low", "medium", "high", "xhigh", "max")
-WANTED = {"plan": "xhigh", "build": "high"}
+WANTED = {"plan": "max", "build": "high"}
 RUNTIME = os.environ.get("XDG_RUNTIME_DIR") or "/tmp"
 MODE_DIR = os.path.join(RUNTIME, "dxb-effort")
 CTX_DIR = os.path.join(RUNTIME, "claude-ctx")
@@ -62,7 +62,7 @@ DIR_FLAGS = os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW
 FILE_FLAGS = os.O_RDONLY | os.O_NOFOLLOW | os.O_NONBLOCK
 TAIL_BYTES = 256 * 1024
 SMALL_BYTES = 4 * 1024  # the mode file and the status line's record are a few dozen bytes
-PLAN_LINE = "⚠ Muhittin Bey, plan konuşmasındayız — /effort xhigh'a geçin."
+PLAN_LINE = "⚠ Muhittin Bey, plan konuşmasındayız — /effort max'a geçin."
 HIGH_LINE = "⚠ Muhittin Bey, plan bitti — koda geçmeden /effort high'a geçin."
 CODE_LINE = "⚠ Muhittin Bey, koda geçmeden /effort high'a geçin."
 LINES = {"plan": PLAN_LINE, "build": HIGH_LINE}
@@ -70,7 +70,7 @@ LINES = {"plan": PLAN_LINE, "build": HIGH_LINE}
 # planı yapmadan önce, sen kafanda düşünmeden önce bu uyarıyı yapmalısın." -- the warning comes first, and the plan,
 # design or architecture thinking waits for his switch; it is never done at high and warned about afterwards
 STOP = ("do not plan, design, propose or evaluate an architecture or a design in this reply -- that thinking "
-        "belongs at xhigh, after he switches. Answer only plain facts he asked, in a line or two, say in one line "
+        "belongs at max, after he switches. Answer only plain facts he asked, in a line or two, say in one line "
         "that you wait for his switch, and write no file")
 # the whole row is the command's output -- a quotation of it inside his own words is not a switch (Sol A3)
 SWITCHED = re.compile(r"<local-command-stdout>Set effort level to (low|medium|high|xhigh|max)\b[^<]*"
@@ -87,9 +87,9 @@ def warning(mode, level):
     if mode == "plan":
         return (
             f"This session is in PLAN mode under dxb-team2 and {runs}; the CEO's order (2026-10-06) is "
-            f"plan, design and architecture at xhigh (2026-10-12), switched by him with /effort. Begin your reply, "
+            f"plan, design and architecture at max (2026-10-19), switched by him with /effort. Begin your reply, "
             f"before anything else, with exactly this line:\n{PLAN_LINE}\n"
-            f"Then, until he has switched, {STOP}. Once he is at xhigh: in the reply that brings him the plan for "
+            f"Then, until he has switched, {STOP}. Once he is at max: in the reply that brings him the plan for "
             f"his yes, run `{COMMAND} build` and close that reply with the line it gives, so his yes can "
             f"arrive at high.")
     return (
@@ -295,7 +295,7 @@ def on_hook(data):
     if mode is not None:
         if level == WANTED[mode] and not door:
             return
-        # plan permission mode with no mode set: the door first, even when he is already at xhigh -- the case
+        # plan permission mode with no mode set: the door first, even when he is already at max -- the case
         # that started this, 2026-10-09 (the CEO: "plan konuşacağız dediğimde direkt DXP Team 2 açılmalı")
         if door:
             context = open_door() if level == WANTED[mode] else f"{open_door()}\n{warning(mode, level)}"

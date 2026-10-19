@@ -94,7 +94,7 @@ Varsayılan atamalar (seed — CEO settings'ten değiştirir; ⛔ değişiklik C
 | Rol slotu | Varsayılan | Not |
 |-----------|-----------|-----|
 | Ana orkestratör · kritik karar · review · planlama · kodlama · tasarım · araştırma · QA · HR · execution | `claude-opus-5-5` (**Claude Opus 5.5**) — the main brain | Opus 5 (`fable-5`; the id is kept for its history, CEO 2026-07-25) handed its seats to Opus 5.5 through the succession door on 2026-10-10 (A-2026-10-10 item 9). The rows B51 P6 put on `fable-5.1` the same day — `orchestration`, `strategy`, `architecture`, `final-approval`, the critical-decision seat and `orchestrator.critical_decision_model` — return to Opus 5.5 (B64, A-2026-10-14 item 1). <!-- OPEN: B64 --> |
-| Yedek orkestratör · emergency fallback | `fable-5.1` (**Claude Fable 5.1**) — the backup brain (B64 decision 13) | Written by role, not by name. On quota, overload or outage the other brain of the pair takes the work; on Fable it keeps its own effort, clamped to `high`..`xhigh`; Fable's judge seats fall to Sol 6.1, never to Opus; no work falls to a weaker model; both down → the work waits and he is told (A-2026-10-14 item 4). The July "no backup layer" (2026-07-25) now holds for construction authorship only. <!-- OPEN: B64 --> |
+| Yedek orkestratör · emergency fallback | `fable-5.1` (**Claude Fable 5.1**) — the backup brain (B64 decision 13) | Written by role, not by name. On quota, overload or outage the other brain of the pair takes the work; on Fable it keeps its own effort, clamped to `high`..`xhigh`; Fable's checking seat (the critical gate) falls to Sol 6.1, never to Opus; no work falls to a weaker model; both down → the work waits and he is told (A-2026-10-14 item 4). The July "no backup layer" (2026-07-25) now holds for construction authorship only. <!-- OPEN: B64 --> |
 | Hızlı görev · düşük maliyet | Jev first (LiteLLM `vercel_ai_gateway/` route), `claude-sonnet-5-5` at `medium` on doubt (B64 decision 7) | Sorting and routine internal work; its output is raw input, never a verdict. Sonnet and Haiku never run at `low`. `claude-haiku-4-5` is retired and banned (§4d roster). <!-- OPEN: B64 --> |
 | (atanabilir havuz — varsayılan slotu yok) | `claude-sonnet-5-5` (`banned=false`; Sonnet 5 → 5.5 on 2026-10-10) | CEO kararı 2026-07-12: runtime beyin olarak SERBEST; CEO settings/panel'den slot veya ajan-beyni atar. In the B64 guide it serves triage on doubt and, after its trial, Hamza's spoken normal talk — always at `medium` or above. |
 
@@ -145,7 +145,7 @@ The dividing line is **not** cost and **not** code-versus-text. It is a single q
 
 **Research, worked example (the CEO's own case — "which local video tools for the new PC"):** L3 opens the fan (many sources, parallel, cheap) → real tools verify what was gathered (scrapling/playwright, never model memory) → **L1 decides**: what fits 16 GB of VRAM, what the licence permits, what actually runs on Linux, what we install and what we discard. Gathering may be cheap. Concluding may not.
 
-**Roster.** In: Opus 5.5 (the main brain — L1 and the guide's standard and good work); Fable 5.1 in three places — the backup brain, valuable work's plan judge, the critical gate's second seat (the studio's creative seats leave Fable for Opus 5.5 after a 10-job side-by-side on the studio's own work, Fable staying their backup <!-- CEO-OK: b64-q2-studio-creative-seats-opus-2026-10-14 -->); Sonnet 5.5 (triage on doubt; Hamza's spoken normal talk after its trial; never at `low`); Jev (triage first, LiteLLM's `vercel_ai_gateway/` route); Sol 6.1 (the critical gate); a local model (L4, after the exam); plus DeepSeek V4 Pro held `mechanical_only` for bulk reads too large for the local tier — it may never produce a verdict. Haiku 5.5 stays `testing`, is not used for mail sorting (B64 decision 7) and never runs at `low`. Out, `status='retired'` + `banned=true`: haiku 4.5 · DeepSeek V4 Flash · Kimi 2.7 Code · Kimi 3 · GLM 5.2 · Qwen 3.6 Flash · MiniMax M3 · Codex 5.5. Rows are retired, never deleted (U20 precedent — `agent_runs`/`cost_ledger` history references them), and `banned=true` makes `fn_update_agent_brain` and the §4c onboarding flow refuse to re-hire one from the dashboard.
+**Roster.** In: Opus 5.5 (the main brain — L1 and the guide's standard and good work); Fable 5.1 in three places — the backup brain, valuable work's second plan writer, the critical gate's second seat (the studio's creative seats leave Fable for Opus 5.5 after a 10-job side-by-side on the studio's own work, Fable staying their backup <!-- CEO-OK: b64-q2-studio-creative-seats-opus-2026-10-14 -->); Sonnet 5.5 (triage on doubt; Hamza's spoken normal talk after its trial; never at `low`); Jev (triage first, LiteLLM's `vercel_ai_gateway/` route); Sol 6.1 (the critical gate); a local model (L4, after the exam); plus DeepSeek V4 Pro held `mechanical_only` for bulk reads too large for the local tier — it may never produce a verdict. Haiku 5.5 stays `testing`, is not used for mail sorting (B64 decision 7) and never runs at `low`. Out, `status='retired'` + `banned=true`: haiku 4.5 · DeepSeek V4 Flash · Kimi 2.7 Code · Kimi 3 · GLM 5.2 · Qwen 3.6 Flash · MiniMax M3 · Codex 5.5. Rows are retired, never deleted (U20 precedent — `agent_runs`/`cost_ledger` history references them), and `banned=true` makes `fn_update_agent_brain` and the §4c onboarding flow refuse to re-hire one from the dashboard.
 
 **Tier homogeneity (new invariant).** `packages/orchestrator/src/worker-shim.ts` resolves a task's model by `model_tier` alone. Before this law, one tier could resolve to four different models depending on row ordering. Every tier is now single-model, so *tier match == model match*. **A routing change that puts two different models on one tier reintroduces nondeterminism and is a defect**, not a preference. **Registered adaptation 2026-09-15 (audit F034; LAW A — the later word governs):** since 2026-09-05 the L1 tier carries two models on purpose — `fable-5` on the holding's rows and `fable-5.1` on the studio's department-scoped row `media.creative` (measured 2026-09-15: enabled L1 rows `fable-5` 11 · `fable-5.1` 1), by his rulings `studio-brain-fable-5-1-opus-5-standby-2026-09-05`, `top-tier-set-and-brain-switch-order-2026-09-13` and `studio-brains-open-set-defaults-switchable-2026-09-15`. The invariant is therefore restated: **the top tier is a SET {Fable 5.1, Opus 5.5, GPT-6 Astra when its lane answers, and any model he adds}; which member serves a seat is always an EXPLICIT row (department-scoped) or his override, never row order.** Default placement follows the B64 guide (A-2026-10-14 item 1): Opus 5.5 is the main brain and Fable 5.1 stands in its three places; any other placement is an explicit row or his word. Nondeterminism by row order stays a defect; two explicit rows on one tier are not. The sentence before this note is kept as the history it is.
 
@@ -490,21 +490,24 @@ RUNTIME tree. The design he answered decision by decision: `.planning/quick/2026
    | good work (the final text a client, a viewer or he reads; code that must be good) | Opus 5.5 `high` |
    | a head's or manager's own work (plan, decision, assembly, weekly scorecard) | Opus 5.5 `high`, `xhigh` or `max`, its own choice |
    | deep thinking (strategy, architecture, design, writing every new plan) | Opus 5.5 `xhigh` or `max` |
-   | valuable work's plan | Opus 5.5 `xhigh` and `max` — written twice (item 7) |
+   | valuable work's plan | Opus 5.5 `max`, and Fable 5.1 `max` writing it separately (item 7) |
    | a long unattended build (over half an hour) | Opus 5.5 `xhigh` |
    | final check | Opus 5.5 `high` |
-   | plan judge (valuable work only) | Fable 5.1 `high` |
+   | plan audit (valuable work only) | Sol 6.1 `high` (item 7) |
    | critical gate | Sol 6.1 `high`; Fable 5.1 `high` beside it on valuable delivery, money, contracts (§4e) |
 
-   A known job type runs from the head's registered pattern ([[WORKFLOW_ENGINE_SPEC]]); its plan is not rewritten.
+   A known job type runs from the head's registered pattern ([[WORKFLOW_ENGINE_SPEC]]), like a skill or a
+   pipeline; its plan is not rewritten — a valuable job of a known type plans only its difference from the pattern,
+   and Sol audits it (item 7) <!-- CEO-OK: valuable-work-pattern-risk-eye-subscriptions-2026-10-19 -->.
    **Value tiers:** simple — a registered pattern, no plan; normal — the head writes the plan at `xhigh` and keeps
-   it as a pattern; valuable — a deal of 1,000 $ or more, or his word "bu değerli bir iş" (item 7). **Code keeps
+   it as a pattern; valuable — a deal of 1,000 $ or more, his word "bu değerli bir iş", or risk: the first job of
+   its kind, or work touching health, law, personal data or a money flow (item 7). **Code keeps
    the limits:** the final text a human reads is never below Opus (§4d's one exception: spoken normal talk); heads
    and managers never below `high`; Sonnet and Haiku never at `low`; `max` a default nowhere — his word or a head's
    reasoned choice in thinking work opens it; no part over the job's budget. **Measurement corrects:** every choice
    is recorded with its reason; the guide is corrected with a test set built from our own jobs ([[TEST_STRATEGY]]);
    model names live in the catalogue, never in the guide. **Fable stands in three places** — the backup brain,
-   valuable work's plan judge, the critical gate's second seat — and is never burnt idly: the rows B51 P6 put on
+   valuable work's second plan writer, the critical gate's second seat — and is never burnt idly: the rows B51 P6 put on
    `fable-5.1` on 2026-10-10 (`orchestration`, `strategy`, `architecture`, `final-approval`, the critical-decision
    seat, and the default of `orchestrator.critical_decision_model`) move to Opus 5.5. The studio's creative seats
    (on Fable by his rulings of 2026-09-05 and 2026-09-15, §3) move to Opus 5.5 too, after a 10-job side-by-side on
@@ -522,8 +525,9 @@ RUNTIME tree. The design he answered decision by decision: `.planning/quick/2026
 4. **The backup pair (decision 13).** Written by role — main brain, backup brain — never by model name, so a new
    model taking a role carries the rule. Any failure (quota, overload, outage) → the other brain takes the work,
    critical work included. On Fable the work keeps its own effort clamped to `high`..`xhigh` (low, medium,
-   high → high; xhigh, max → xhigh). Fable's judge seats (plan judge, critical gate) fall to Sol 6.1, never to
-   Opus — Opus never audits its own plan. Hamza's spoken reply falls back to Opus 5.5 `low` for speed; work given
+   high → high; xhigh, max → xhigh). Fable's checking seat (the critical gate) falls to Sol 6.1, never to Opus —
+   no model audits what it wrote; Sol down → valuable work's plan audit waits for Sol and he is told, since both
+   other brains wrote the plan (item 7). Hamza's spoken reply falls back to Opus 5.5 `low` for speed; work given
    to him runs at its own level. No 70 % threshold: at 95 % of Fable's quota a second subscription is added —
    money out, at his gate ([[COST_CONTROL_SPEC]]). The holding switches by itself — sees the error, reruns on the
    backup at the right level, records "Opus düştü, işi Fable high'da yaptı" — and the old path closes (`fallback_of`,
@@ -538,14 +542,27 @@ RUNTIME tree. The design he answered decision by decision: `.planning/quick/2026
    the backup pair and the judges — today, the proposal, why, measured on our own test set. The big seats move on
    his one word; the mechanical seats move by themselves with one line to him (the B51 rule of 2026-10-09). Every
    standing assignment carries its date, who decided and why. The room's face on his screen is B08's brain panel.
-7. **Valuable work's two plans (decision 10).** A deal of 1,000 $ or more, or his word, makes a job valuable: the
-   head writes the plan twice, at `xhigh` and at `max`; the plan judge, Fable 5.1 `high`, picks the better and adds
-   what the other has and it lacks, changing nothing (Fable down → Sol 6.1, item 4). **The judge is blind**
-   <!-- CEO-OK: valuable-work-judge-blind-2026-10-19 -->: it receives the two plans as "A" and "B" in a random
-   order, with no effort, model, file name or writing time anywhere in what it reads, and the key stays with the
-   head until the verdict is written — a judge that knows which plan was written at which level is anchored, and
-   its verdict measures nothing. The flow is
-   [[AGENT_ORCHESTRATION_SPEC]]'s; the budget cap, 30 % of the deal, is [[COST_CONTROL_SPEC]]'s.
+7. **Valuable work's plan: two writers, one blind audit (decision 10, reshaped 2026-10-19)**
+   <!-- CEO-OK: b64-decision10-valuable-work-two-plans-fable-judge-2026-10-13 -->
+   <!-- CEO-OK: plan-two-writers-sol-audit-2026-10-19 --> <!-- CEO-OK: plan-writers-sealed-independent-2026-10-19 -->.
+   A deal of 1,000 $ or more, his word, or the risk of item 1 makes a job valuable. Two writers write the same
+   plan from the same brief, at the same time, in separate runs: the head, Opus 5.5 `max`, and Fable 5.1 `max`.
+   **Neither sees the other's plan, by tool:** Fable's run reads only the brief and the holding's own references,
+   never the head's draft or job folder, and has no shell; each plan is sealed (hash, time) when finished, the
+   head's before Fable's is opened. **Sol 6.1 `high` audits blind** <!-- CEO-OK: valuable-work-judge-blind-2026-10-19 -->:
+   first it writes, from the brief alone, the conditions the job must meet and its risks; then it reads the two
+   plans as "A" and "B" in a random order, with no effort, model, file name or writing time anywhere in what it
+   reads, the key staying with the head until the audit is written — a reader who knows which plan is whose is
+   anchored. Its one pass returns, for each plan, what it lacks that the other has; each plan's errors; and what
+   the brief needs that neither meets; it may read the sources a claim rests on (a law's text, an API's documents),
+   and it writes nothing into the plan. **The head adds** what its plan lacks, fixes the errors, checks every
+   unmeasured claim at its source, and signs — the §4e shape: the author revises and signs, the seat verifies. Its
+   plan is the base; Fable's brings what Opus missed. This replaces the 2026-10-13 shape (one author twice, at
+   `xhigh` and `max`, Fable picking): one model written twice is one mind tried twice, and in both trials the
+   shared errors were found by a checker's list, not by the comparison (`.planning/quick/20261019-degerli-is-danisma/`).
+   Whether the second writer earns its seat is measured on the construction's own plan jobs first (dxb-team2) and
+   told to him after three or four. The flow is [[AGENT_ORCHESTRATION_SPEC]]'s; the budget cap, 30 % of the deal,
+   is [[COST_CONTROL_SPEC]]'s.
 8. **Jev (decision 7).** Mail and routine sorting go to Jev first (`typesafe-ai/jev`, through his Vercel AI
    Gateway); what Jev is unsure of goes to Sonnet 5.5 `medium`; Haiku is not used for it. Jev rides the `litellm`
    lane through LiteLLM's `vercel_ai_gateway/` route (LiteLLM's documentation, read 2026-10-14), the gateway key in
