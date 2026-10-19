@@ -2,7 +2,7 @@
 gsd_state_version: 1.0
 milestone: v2.0
 status: executing
-last_updated: "2026-10-17"
+last_updated: "2026-10-19"
 session_author: opus-5
 ---
 
@@ -27,6 +27,14 @@ not here. What is accepted is read from `scripts/governance/ceo-approvals.json`,
 
 ## Where we left off
 
+2026-10-19 — The old handover notes on his desktop were weighed and the finished ones removed (to the trash). On his
+word: the core says his word is intent, tested before it is agreed <!-- CEO-OK: intent-not-spec-2026-10-19 -->, and that
+revenue does not wait while the holding is built <!-- CEO-OK: revenue-while-building-2026-10-19 -->; runtime isolation
+phase 3 accepted <!-- CEO-OK: isolation-phase3-accepted-by-his-word-2026-10-19 -->; rival 39-40 closed from their
+transcripts, nVideo's architecture taken <!-- CEO-OK: rival-39-40-closed-from-transcripts-2026-10-19 -->; new link
+batches become a dated tab in his one workbook <!-- CEO-OK: new-links-a-dated-tab-in-his-one-workbook-2026-10-19 -->;
+the YouTube sponsorship and his W077 ruling are in the ledger.
+
 2026-10-18 — The Gözlem Odası, made simple on his word <!-- CEO-OK: gozlem-odasi-simple-plan-2026-10-18 -->: one smart agent looks at the people on his list (X, YouTube,
 Instagram, AI news sites, any account he gives) every two or three days and brings him only what the holding can use —
 no research, no bureaucracy; the reading on the cheapest models, the verdict on Opus. It is board row B82, built when
@@ -35,10 +43,6 @@ the factory fully starts; the plan (`.planning/quick/20261018-gozlem-odasi/PLAN.
 step 1, the X gate (one X reader at a time inside his account's budget, stopping at X's first warning), is built into
 the research door now and protects his account today. His cost order is B51's move 7 <!-- CEO-OK: b51-cost-down-wherever-possible-2026-10-18 -->. Found: the research Chrome's
 control port (9333, six of his logins) accepts any local program without a password.
-
-2026-10-17, evening — He read the capacity study and turned it into the holding's media strategy (connect every
-leading video platform, price each shot on every route, his one click before any spend, our own channels as ad
-inventory); the plan was written twice and judged by Fable 5.1 (the max plan won).
 
 2026-10-17, morning — The cleanup he ordered is done (`.planning/quick/20261017-temizlik/`, Sol: no A, two B fixed,
 battery green); six V1-only board rows closed on his word <!-- CEO-OK: v1-only-board-rows-closed-2026-10-17 -->, B02 kept open
@@ -61,20 +65,20 @@ microphone <!-- CEO-OK: jarvis-silent-listening-voice-04-okayed-2026-09-14 -->. 
 ## Next
 
 1. The studio platform-hub plan is approved with his corrections and on the board (B43; FINAL.md Bölüm 0): built at its
-   rank — accounts connected and infrastructure only, no money loaded, no exam now; channels become a separate study.
+   rank — accounts connected and infrastructure only, no money loaded, no exam now; its first step raises the server's
+   LiteLLM pin (`vps/compose.yaml`, 1.91.0) to ≥ 1.97.0. The channels are a separate study, talked before January 2027.
 2. The Gözlem Odası (B82): the plan has his eye; the build when the factory fully starts — step 1, the X gate, is in.
 3. RAM: his decision by 2026-10-28; it reopens sooner only if the studio needs it. He reads CSL's reply himself —
    the session does not open the mail.
-4. The studio retest. First the machine's reboot, at his own moment (he is working now): unattended-upgrades raised
-   the NVIDIA libraries to 595.99.02 on 2026-10-18 09:41 while the loaded driver is 595.91.07 (`nvidia-smi`:
-   "Driver/library version mismatch"); the running ComfyUI (up since 2026-10-17 07:38) keeps working, a restarted
-   one cannot use the card. Then, in the factory with the Media Studio's staff: ScrollCraft's clip through H3 image-less at
-   8 steps; stills from H3's best frame vs FLUX vs FLUX.2-klein-4B; a client-photo ad through H3; upscale or not,
-   judged full screen by his eye. The records disagree on the standard (4 steps on 2026-09-04, 8 in the retest
-   note); the retest settles it, and the studio's capacity doubles or halves with it. Then the bridge and
-   ScrollCraft's rule 2 follow the result.
+4. The studio retest, when its turn comes (the machine rebooted 2026-10-19 07:38, the card works again). In the factory
+   with the Media Studio's staff: ScrollCraft's clip through H3 image-less at 8 steps, saved at a high quality (the
+   blocky clip was ComfyUI's 1.17 Mbit/s save); stills from H3's best frame vs FLUX vs FLUX.2-klein-4B; a client-photo
+   ad through H3; upscale or not, judged full screen by his eye. The standard: his two accepted UGC films (EYW-002C,
+   EYW-003) were made at 8 steps (`~/tools/h3/studio/KATALOG.md`); the 4-step key of 2026-09-04 is an author's
+   reading of his words about time. Then the bridge and ScrollCraft's rule 2 follow the result.
 5. The walk, one row at a time with him: YE18 waits for his word (lead's view: not the plugin; diagnosing-bugs and the
-   architecture skills as our own trimmed copies, installed at rank 3 like YE01), then YE19 to the last row.
+   architecture skills as our own trimmed copies, installed at rank 3 like YE01), then YE19 to the last row; then the
+   "Ekim 9-15 linkleri" sheet the same way.
 6. Plans he asked for, each talked first: how ChatGPT on Steroids (installed) joins the holding as an agent and as
    Sol's stand-in; the studio revenue lines not covered by the platform-hub plan (MoneyPrinterTurbo, HyperFrames,
    OpenMontage, Open Design) studied in order; a way for the team to work on his phone in the background.
@@ -83,6 +87,7 @@ microphone <!-- CEO-OK: jarvis-silent-listening-voice-04-okayed-2026-09-14 -->. 
 
 ## Waiting on his approval
 
+- The 4-step key (`engine-standard-4-steps-no-upscale-unless-asked-2026-09-04`) corrected to 8 steps — his word.
 - Platform-hub plan, two open decisions: the studio tab drawn before B22's synthesis (B32's method); the `media` event channel.
 - The RAM upgrade, his decision by 2026-10-28: the lead advises the same Goodram 2×16 kit from Proshop (€580 with
   shipping, no coupon exists) over CSL's offer; with four sticks AMD guarantees only DDR5-3600, so 6000 is UNVERIFIED
