@@ -370,7 +370,8 @@ by the memory reaper at 01:49-01:53 on 2026-07-28.
     - **THE OTHER HALF, measured on source 14 and it completes the rule:** on that page the one card
       marked `idle` — the Dev branch — emitted **0 pulses across all 180 frames** of the dense pass
       while the four live branches kept their **1.90 s** rotation. **The motion encodes the state: a
-      live part flows always, a part that is not live is still.**
+      live part flows always — idle included, resting but breathing (his word, 2026-10-19 <!-- CEO-OK: alive-at-rest-like-a-body-2026-10-19 -->) —
+      and a part that is down is still; DXB does not copy source 14's still idle card.**
     - **THE CORPUS AGREES, and it was measured across all 27 reports before this law was written**
       (2026-08-19): 25 carry a timed figure, and every filmed system surface on the queue moves
       permanently on a stated period against a static control in the same frames — **01** one sweep
@@ -496,10 +497,12 @@ are **P37-1 … P37-6** in `37-dcat9zpd0cn.md` §5.
 <!-- CEO-OK: alive-at-rest-like-a-body-2026-10-19 -->: the holding lives like a body. Even at rest the
 heart beats and the blood flows, and he sees it — Hamza is seen alive, the flows between the parts keep
 moving, the idle employee rests but breathes — on top of the real-time flow of work. Every beat rides the
-system's real liveness and stops when it stops, so it is never decoration. Reports 22 and 29 already
-measured it in his rivals: a `HEARTBEAT` on every employee card (22); two speeds of life on the closest
+system's real liveness and stops when it stops, so it is never decoration. Reports 22 and 29 measured
+such life in his rivals: a `HEARTBEAT` field on every employee card (22); two speeds of life on the closest
 one to DXB — the identity orb 96 × a still region, the memory graph 8 ×, "continuous, gentle, never
-still, never busy", the rest genuinely still (29). The synthesis takes it as a premise, not a question.
+still, never busy", the rest genuinely still (29). No film shows what drives a beat: binding every beat to
+the system's real liveness is our own condition, to be built and tested. The synthesis takes the whole as
+a premise, not a question.
 
 ---
 

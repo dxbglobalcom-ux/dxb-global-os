@@ -318,7 +318,8 @@ binding on every surface in W-C42-2 and W-C42-3:
    busy. **Read this with the CEO's ruling of 2026-08-19, which does not soften it and is not in
    conflict with it** (`DESIGN_SYSTEM.md` §9.1, ledger law 13): a **value** never moves to look busy,
    while a **live link** flows permanently because that flow is the surface reporting that the part
-   is up — and a link that is down or idle shows no flow at all. Two signals, two jobs: the flow says
+   is up — a link that is down shows no flow at all, while a part that is up but idle rests and breathes
+   <!-- CEO-OK: alive-at-rest-like-a-body-2026-10-19 -->. Two signals, two jobs: the flow says
    *up*, the state word and the number say *doing*.
 3. **The refusals are visible** — every pipeline card names the rule it will not break.
 4. **Outward actions look different from reads** — the distinction the whole governance rests on

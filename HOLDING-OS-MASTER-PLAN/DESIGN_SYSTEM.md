@@ -123,7 +123,7 @@ sistemin aktif her parçasının aktif olduğuğunu gösterior."* Aynı gün, do
 | # | Kural | Ölçülebilir karşılığı |
 |---|---|---|
 | M1 | **Canlı olan her bağlantı akar** — süs değil, "bu bağlantı ve bu parça ayakta" bildirimidir. Kimse ekrana bakmasa da akar | Her canlı kenar (edge) ilan edilmiş bir periyotla hareket eder; periyot tasarım belirtiminde yazılıdır |
-| M2 | **Canlı olmayan parça durur.** Ölü/boştaki bağlantıda hareket yoktur | Kaynak 14'te ölçüldü: `idle` işaretli tek dal 180 karede **0 atım**, canlı dört dal **1,90 sn** sırayla attı |
+| M2 | **Ölü parça durur; boştaki parça dinlenir ama nefes alır.** Kapalı ya da düşmüş bağlantıda hareket yoktur — bu düz çizgi de bir bilgidir; ayakta olup boşta bekleyen parça dinlenme ritminde akmaya devam eder (CEO, 2026-10-19 <!-- CEO-OK: alive-at-rest-like-a-body-2026-10-19 -->) | Canlılık sinyali kesildiği an hareket durur; sinyal geldikçe boşta da akar. Kaynak 14'te canlı dört dal **1,90 sn** sırayla attı |
 | M3 | **Yön anlam taşır** — işin gittiği yön | Girdi kanallarından içeri, araçlara dışarı, modele yukarı (kaynak 32) |
 | M4 | **Kenar başına sabit SÜRE, sabit hız değil** — uzun kenar da kısa kenar da aynı sürede geçilir | Kaynak 12: kenar başına **1,8 sn**; kaynak 14: **1,5 sn**; hız 23-203 px/sn arası değişir, süre değişmez |
 | M5 | **Tek periyot, kaydırılmış fazlar** — tahtanın tamamı tek ritimde, komşu kenarlar aynı anda atmaz | Kaynak 12: tahta periyodu **2,3-2,4 sn**, komşu kenar arası kayma **≈1,2 sn** |
