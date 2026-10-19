@@ -46,22 +46,23 @@ detail to the bottom · he changes anything at any moment, without having to mic
 
 **The standard is the Ferrari** (CEO, 2026-08-01): he ordered the car, not the drive — first place
 in a world competition, award standard, never amateur. Revenue and new companies come after; they
-are what the finished machine DOES — which does not mean revenue waits: while the holding is built,
-every halal revenue opportunity and every earning structure is weighed; what can be set up
-now is set up at once, tested first if it can be, inside the approval gate; what cannot is
-planned, put on the board, and set up once the holding is built and running.
-<!-- CEO-OK: revenue-while-building-2026-10-19 -->
+are what the finished machine DOES — which does not mean revenue waits: while it is built, every
+halal revenue opportunity and earning structure is weighed; what can be set up now is set up at
+once, tested first if it can be, inside the approval gate; what cannot is planned, put on the board
+and set up once the Ferrari-level digital holding is built and running.
+<!-- CEO-OK: revenue-now-2026-10-19 -->
 
 **The first law of V2 — IT MUST BE ALIVE** (*"CANSIZ DÜZ KİTAP GİBİ ORGANİZMA YOK SIFIR CANLILIK"*,
 2026-08-02). What the rival queue found, in one place:
 
 - The company is visibly working, and it keeps working when nobody is watching. A surface is
-  permanently attached to what the system is doing; it is not a page opened to find out.
-- You watch the work move: work travels between the workers on screen, the one who is working
-  lights up and is named, the idle one is still — **motion IS state**.
-- Movement means a real movement. A value moves until it is true and then stops; nothing loops for
-  decoration; rest is part of the design; **zero is a real answer**.
-- The surface follows the human: what is being talked about is what stands on the screen, put there
+  permanently attached to what the system is doing, not a page opened to find out.
+- You watch the work move between the workers: the one working lights up and is named, the idle
+  one rests yet breathes — **motion IS state**.
+- Like a body it lives at rest too: Hamza and the flows between its parts pulse on real liveness,
+  and stop only when it does. A value moves until true; nothing moves for decoration;
+  **zero is a real answer**.
+- The surface follows the human: what is talked about stands on the screen, put there
   by the system and not by a click, within seconds.
 - The machine says when it last knew, and when it wakes next.
 - **His acceptance test:** he opens a screen, touches nothing, and within minutes something changes

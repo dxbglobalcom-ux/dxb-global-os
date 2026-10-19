@@ -492,6 +492,15 @@ invent a new shot; the four free engines are the cameras it lacks; nothing in ei
 so the distribution leg is ours under `00-CEO-DIRECTIVE-SOCIAL-MEDIA-DEPT.md`. The buildable parts
 are **P37-1 … P37-6** in `37-dcat9zpd0cn.md` §5.
 
+**THE SYNTHESIS CARRIES HIS PICTURE OF LIFE — added 2026-10-19 on his word**
+<!-- CEO-OK: alive-at-rest-like-a-body-2026-10-19 -->: the holding lives like a body. Even at rest the
+heart beats and the blood flows, and he sees it — Hamza is seen alive, the flows between the parts keep
+moving, the idle employee rests but breathes — on top of the real-time flow of work. Every beat rides the
+system's real liveness and stops when it stops, so it is never decoration. Reports 22 and 29 already
+measured it in his rivals: a `HEARTBEAT` on every employee card (22); two speeds of life on the closest
+one to DXB — the identity orb 96 × a still region, the memory graph 8 ×, "continuous, gentle, never
+still, never busy", the rest genuinely still (29). The synthesis takes it as a premise, not a question.
+
 ---
 
 # MOVED HERE FROM THE OPEN WORK BOARD — 2026-08-10, on the CEO’s order

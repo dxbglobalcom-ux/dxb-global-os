@@ -52,12 +52,13 @@ and set up once the Ferrari-level digital holding is built and running.
 2026-08-02). What the rival queue found, in one place:
 
 - The company is visibly working, and it keeps working when nobody is watching. A surface is
-  permanently attached to what the system is doing; it is not a page opened to find out.
-- You watch the work move: work travels between the workers on screen, the one who is working
-  lights up and is named, the idle one is still — **motion IS state**.
-- Movement means a real movement. A value moves until it is true and then stops; nothing loops for
-  decoration; rest is part of the design; **zero is a real answer**.
-- The surface follows the human: what is being talked about is what stands on the screen, put there
+  permanently attached to what the system is doing, not a page opened to find out.
+- You watch the work move between the workers: the one working lights up and is named, the idle
+  one rests yet breathes — **motion IS state**.
+- Like a body it lives at rest too: Hamza and the flows between its parts pulse on real liveness,
+  and stop only when it does. A value moves until true; nothing moves for decoration;
+  **zero is a real answer**.
+- The surface follows the human: what is talked about stands on the screen, put there
   by the system and not by a click, within seconds.
 - The machine says when it last knew, and when it wakes next.
 - **His acceptance test:** he opens a screen, touches nothing, and within minutes something changes
