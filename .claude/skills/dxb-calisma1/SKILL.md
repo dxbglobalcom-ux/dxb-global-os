@@ -19,6 +19,10 @@ His words, 2026-10-09: *"iş değişir ama bu tarz isteğim bakidir."* He made i
 
 ## The flow, A to Z
 
+Steps 3-8 take the place of dxb-team2 §1's plan step — no two sealed full plans, no Sol audit before the plan
+goes to him: here the plan is written in halves and cross-checked, and Sol comes once, after the build (step 15).
+He keeps the two methods apart on purpose, to try both on the same kind of job and compare them.
+
 1. **The job is given.** He opens both sessions and tells one or both "… çalışma1 ile yapın".
 2. **The lead is known** (the rule above).
 3. **Sitting down.** The two find each other; each reads the other's conversation from its transcript first, then talks.
