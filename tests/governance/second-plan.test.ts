@@ -8,7 +8,7 @@
 import { spawnSync } from "node:child_process";
 import { chmodSync, existsSync, mkdtempSync, readdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
-import { join, resolve } from "node:path";
+import { dirname, join, resolve } from "node:path";
 import { afterAll, describe, expect, it } from "vitest";
 
 const TOOL = resolve(__dirname, "../../scripts/governance/second-plan.sh");
@@ -19,6 +19,9 @@ afterAll(() => {
     // a job that never reached reveal leaves its watcher running
     const pid = join(d, "job", "sealed", "watch.pid");
     if (existsSync(pid)) try { process.kill(Number(readFileSync(pid, "utf8"))); } catch { /* already gone */ }
+    // and its output folder in the runtime dir, which only reveal removes
+    const raw = join(d, "job", "sealed", "raw.path");
+    if (existsSync(raw)) rmSync(dirname(readFileSync(raw, "utf8").trim()), { recursive: true, force: true });
     rmSync(d, { recursive: true, force: true });
   }
 });
