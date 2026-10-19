@@ -40,7 +40,8 @@ word: the core says his word is intent, tested before it is agreed <!-- CEO-OK: 
 revenue does not wait while the holding is built <!-- CEO-OK: revenue-now-2026-10-19 -->; runtime isolation
 phase 3 accepted <!-- CEO-OK: isolation-phase3-accepted-by-his-word-2026-10-19 -->; rival 39-40 closed from their
 transcripts, nVideo's architecture taken <!-- CEO-OK: rival-39-40-closed-from-transcripts-2026-10-19 -->; new link
-batches become a dated tab in his one workbook <!-- CEO-OK: new-links-a-dated-tab-in-his-one-workbook-2026-10-19 -->;
+batches become a dated tab in his one workbook <!-- CEO-OK: new-links-a-dated-tab-in-his-one-workbook-2026-10-19 -->,
+scored for technology and revenue apart <!-- CEO-OK: link-tabs-carry-technology-and-revenue-2026-10-19 -->;
 the YouTube sponsorship and his W077 ruling are in the ledger; his Çalışma 1 working style is the door `dxb-calisma1`
 <!-- CEO-OK: calisma1-door-2026-10-19 --> (he will try it and dxb-team2's plan method on the same kind of job).
 
