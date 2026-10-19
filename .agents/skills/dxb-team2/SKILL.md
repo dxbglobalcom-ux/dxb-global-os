@@ -56,16 +56,19 @@ and the risks — in his language, short; not who writes, which the lead chooses
 before it goes to him; not a small job. Neither writer sees the other's plan, by tool, not by promise
 <!-- CEO-OK: plan-writers-sealed-independent-2026-10-19 -->:
 1. The lead writes the brief once — his words verbatim, the scope, the facts measured — and starts the
-   second writer: `scripts/governance/second-plan.sh start <job> <brief>` runs Fable 5.1 at `max` in its own
-   process, with the brief alone, no shell, and no read of `/tmp`, the job folder or the transcripts.
+   second writer: `scripts/governance/second-plan.sh start <job> <brief>` runs Fable 5.1 at `max` walled off
+   in bwrap — the brief and a copy of HEAD only, no shell; the lead's scratchpad, the live tree, the
+   transcripts and its memory do not exist inside — and a watcher on Fable's output starts with it.
 2. The lead writes its own plan at `max` in its scratchpad and seals it (`second-plan.sh seal`) before it
-   opens Fable's (`reveal`); `SEALS.log` records the order.
-3. `second-plan.sh blind` gives Sol the two as "A" and "B" in a random order, with no model or effort named.
-   Sol (`refuter.sh`) first writes, from the brief alone, the conditions and risks the job carries; then, for
-   each plan, what it lacks that the other has, its errors, and what the brief needs that neither meets. It
-   may read the sources a claim rests on and writes nothing into the plan.
+   opens Fable's (`reveal`); anything that read Fable's output before `reveal` voids the job, and
+   `SEALS.log` records every step with its time and hash.
+3. `second-plan.sh blind` puts the brief, "A" and "B" — a random order, no model or effort named — in
+   `<job>/blind/`; `second-plan.sh audit <job> <sol-brief> [effort]` runs Sol (`refuter.sh`) with the key,
+   the originals and the transcripts denied. Sol first writes, from the brief alone, the conditions and
+   risks the job carries; then, for each plan, what it lacks that the other has, its errors, and what the
+   brief needs that neither meets. It may read the sources a claim rests on and writes nothing into the plan.
 4. The lead's plan is the base: it adds what Fable's brought, fixes the errors, checks each unmeasured claim
-   at its source, and signs. Sol down → the plan waits for Sol; neither writer audits.
+   at its source, and signs (`second-plan.sh sign`). Sol down → the plan waits for Sol; neither writer audits.
 5. **The measure:** the job folder keeps `sealed/` and Sol's audit; one line per job goes into
    `.planning/quick/20261019-degerli-is-danisma/MEASURE.md` — what Fable's plan added that Sol's audit had not
    found, Sol's findings, the minutes, the quota. After three or four plan jobs the lead tells him the table,

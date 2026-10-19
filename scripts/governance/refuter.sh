@@ -19,6 +19,7 @@
 # Usage:
 #   scripts/governance/refuter.sh "<claim + where to measure it>"                  # effort high
 #   scripts/governance/refuter.sh --effort xhigh "<claim + where to measure it>"   # medium, high or xhigh
+#   scripts/governance/refuter.sh --deny-read /abs/path [--deny-read …] "<claim>"   # paths the audit may not read
 #   scripts/governance/refuter.sh --proof                                          # prove it cannot write
 #   scripts/governance/refuter.sh --install-profile                                # copy the tracked profile into ~/.codex
 #
@@ -39,12 +40,24 @@ cd "$ROOT"
 
 PROFILE="refuter"
 EFFORT="high"
+# --deny-read only NARROWS what the read-only sandbox may read (a Codex permissions profile: the whole
+# disk readable and nothing writable, as the profile's own read-only mode, minus each named path —
+# measured 2026-10-19 with `codex sandbox`: a denied path answers "Permission denied", a write still
+# "Read-only file system"). The blind plan audit (second-plan.sh audit) uses it to keep the key, the
+# original plans and the lead's transcripts out of Sol's reach.
+DENY=()
 while :; do
   case "${1:-}" in
     --effort)
       case "${2:-}" in
         medium|high|xhigh) EFFORT="$2"; shift 2 ;;
         *) echo "REFUTER_FAIL: --effort takes medium, high or xhigh." >&2; exit 1 ;;
+      esac ;;
+    --deny-read)
+      case "${2:-}" in
+        /*) case "$2" in *'"'*|*'\\'*) echo "REFUTER_FAIL: --deny-read path may not hold a quote or a backslash: $2" >&2; exit 1 ;; esac
+            DENY+=("$2"); shift 2 ;;
+        *) echo "REFUTER_FAIL: --deny-read takes an absolute path." >&2; exit 1 ;;
       esac ;;
     *) break ;;
   esac
@@ -223,6 +236,14 @@ if [ -z "${BRIEF//[[:space:]]/}" ]; then
 fi
 PROMPT="$BRIEF"
 
+PERMS=()
+if [ ${#DENY[@]} -gt 0 ]; then
+  fs='":root"="read"'
+  for d in "${DENY[@]}"; do fs+=",\"$d\"=\"deny\""; done
+  PERMS=(-c "permissions.refuter_blind.filesystem={$fs}" -c 'default_permissions="refuter_blind"')
+  echo "AUDIT deny-read: ${DENY[*]}" >&2
+fi
+
 LOG_DIR="$HOME/.local/state/dxb"; mkdir -p "$LOG_DIR"
 echo "AUDIT effort=$EFFORT" >&2
 
@@ -240,7 +261,7 @@ attempt=0
 while :; do
   printf '%s\t%s\ttry=%s\n' "$(date -Iseconds)" "$EFFORT" "$((attempt + 1))" >> "$LOG_DIR/audits.log"
   set +e
-  codex -p "$PROFILE" "${REACH[@]}" -c "model_reasoning_effort=\"$EFFORT\"" exec "${OPTS[@]}" -- "$PROMPT" < /dev/null 2> "$ERRF" | tee "$OUTF"
+  codex -p "$PROFILE" "${REACH[@]}" "${PERMS[@]}" -c "model_reasoning_effort=\"$EFFORT\"" exec "${OPTS[@]}" -- "$PROMPT" < /dev/null 2> "$ERRF" | tee "$OUTF"
   st=("${PIPESTATUS[@]}")
   set -e
   rc=${st[0]}

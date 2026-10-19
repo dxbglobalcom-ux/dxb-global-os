@@ -87,6 +87,7 @@ HOST_FILES=(
   # dxb-team2 job 1 (2026-09-28): the auditor's read-only hand. Its credential is
   # ~/.config/dxb/sol-reader.env, outside the repository and outside the wall.
   tests/governance/sol-db-reach.test.ts
+  tests/governance/second-plan.test.ts  # builds Fable's bwrap box; no bwrap starts inside the sandbox's own
   # dxb-team2 (2026-10-06, Fable's review B5): the gates the door stands on live in the CEO's home
   # (~/.claude/hooks — the context gate, the cost gate, the status line), which the sandboxed user
   # cannot read; inside the wall these three files skipped 33 cases, so BATTERY_GREEN proved none of them.

@@ -82,3 +82,22 @@
 - `/proc`, alternatif yollar/bağlar, diğer hafıza depoları, miras alınan ortam ve lead süreci üzerinden erişim gerçek Fable ile saldırgan biçimde sınanmamış. Bunların çalıştığını da kapalı olduğunu da iddia etmiyorum.
 - [battery.raw:1033](</home/dxb/DxB Global OS/.planning/quick/20261019-degerli-is-danisma/battery.raw:1033>) gerçekten `BATTERY_GREEN`; fakat verilen bilgiye göre test edilen araç sürümü son `_run` değişikliğinden önceydi. Sonraki 8/8 hedefli koşu ve gerçek smoke, son commit için tam bataryanın yerini tutmuyor.
 - **Correction required:** A/B düzeltmelerinden sonra erişim sınırlarını gerçek araçlarla sınayın ve son içerik üzerinde gerekli regresyon kanıtını alın.
+
+## Fixed 2026-10-19 (devam89) — no second Sol round (dxb-team2 §4)
+- **A1** — Fable's output is written to a private tmpfs folder under /run/user and watched on its inode by
+  `scripts/governance/second-plan-watch.py` from before Fable starts; `reveal` refuses when anything read it or
+  when the watcher is gone. Every later step re-verifies the hashes it sealed. Not a wall — the lead and Fable
+  share a Unix user; a wall would need a second OS user (sudo). The first real run caught one open by an
+  unknown program on the file inside the repository, which is why the output left the repository.
+- **A2** — Fable runs in bwrap: the home, /tmp, /var/tmp, /dev/shm and the runtime dir are empty; HEAD's
+  `git archive` (no .git), an account-only ~/.claude.json and the credentials file are put back; fresh /proc,
+  cleared environment. Real run (smoke-job3): it got HEAD's .claude/CLAUDE.md only — no memory, no git status;
+  a shell inside the same box finds the scratchpad, Desktop and live tree absent.
+- **A3** — `blind` writes brief, A and B to `<job>/blind/`; key, originals and SEALS.log stay in `sealed/`;
+  `audit` runs refuter.sh with `--deny-read` (a Codex permissions profile) over sealed/, /tmp, /var/tmp,
+  the runtime dir, ~/.claude, ~/.claude-mem and the Desktop. `codex sandbox` with that profile: "Permission
+  denied" on key.md; the real exec session recorded the restricted profile.
+- **B3** — SEALS.log records start, Fable's end with exit and stream hash, seal, reveal, blind, Sol's start
+  and end, and the signed plan (`sign`).
+- Tests 12/12 (`tests/governance/second-plan.test.ts`, now in the battery's host half: no bwrap starts inside
+  the sandbox's own); typecheck clean; battery BATTERY_GREEN.
