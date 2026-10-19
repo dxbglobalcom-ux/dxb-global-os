@@ -2738,5 +2738,13 @@
     "conditions": "Same conversation: 'Burada çelişki yok. DXP2'de Fable danışman değil, mühendislerden hani mühendislerden bir tanesi yani … Aynen öyle, istisna.' · 'Ya çalışma eforuyla ilgili max önermişsin ya, max de olsun, aynen.' · 'Sadece kendi konusuyla ilgili olan eski oturumlar kapanır. … bir önceki devreden oturumlar kapatılır yani.' · on the lead: 'İşte evet. DXP iki tim liderlik yapıyor bu işe.' · 'Bu çalışma 1 bu şekilde kaydedilsin.' Not a LAW B acceptance.",
     "session": "Opus 5.5 session 9eccd05e — heard first-hand, 2026-10-19.",
     "where": ".claude/skills/dxb-calisma1/SKILL.md (mirror .agents/skills/dxb-calisma1/SKILL.md)"
+  },
+  "valuable-work-page-and-seal-evidence-2026-10-19": {
+    "date": "2026-10-19",
+    "what": "His eye on the B64 design page is-akisi.html, decision 10 (two writers, Sol's blind audit) and decision 13's changed sentence: accepted. The second-plan tool's guard on the lead reading Fable's output early stays evidence (a watcher that voids the job), not a wall (a second OS user, sudo), for now; it is looked at again with the measure after three or four plan jobs. The freeze guard killing a parentless process whose arguments contain \"mcp\" goes to row B62's fix.",
+    "verbatim": "Tamamdır. Beni bekleyen iş dediğin kara 13. karar. Baktım ona. Tamam. Okeyledim. Diğer önerin de işte tamam diyorum. Hani MCP süreci öldürüyor falan. Onun için de tamam. Donma koruyucusu var ya, onunla ilgili.",
+    "conditions": null,
+    "session": "Opus 5.5 session ff4b392f — heard first-hand, 2026-10-19.",
+    "where": ".planning/quick/20261012-b64-is-akisi/is-akisi.html · scripts/governance/second-plan.sh · .planning/board-rows/B62.md"
   }
 }

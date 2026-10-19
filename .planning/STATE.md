@@ -32,7 +32,8 @@ not here. What is accepted is read from `scripts/governance/ceo-approvals.json`,
 Opus signs. The "they never see each other" proof is now the tool's (`scripts/governance/second-plan.sh`): Fable is
 walled off in bwrap with the brief and HEAD only, a read of its output before the reveal voids the job, Sol cannot
 read the key or the originals — measured by a real Fable and Sol run. After three or four plan jobs the measure goes
-to him (`.planning/quick/20261019-degerli-is-danisma/MEASURE.md`).
+to him (`.planning/quick/20261019-degerli-is-danisma/MEASURE.md`). His eye is on the design page's decisions 10 and 13
+<!-- CEO-OK: valuable-work-page-and-seal-evidence-2026-10-19 -->; next is YE19 of the walk.
 
 2026-10-19 — The old handover notes on his desktop were weighed and the finished ones removed (to the trash). On his
 word: the core says his word is intent, tested before it is agreed <!-- CEO-OK: intent-not-spec-2026-10-19 -->, and that
@@ -96,7 +97,6 @@ microphone <!-- CEO-OK: jarvis-silent-listening-voice-04-okayed-2026-09-14 -->. 
 
 ## Waiting on his approval
 
-- His eye on decision 10 (and 13's changed sentence) of the B64 design page `is-akisi.html`, opened on his screen.
 - The 4-step key (`engine-standard-4-steps-no-upscale-unless-asked-2026-09-04`) corrected to 8 steps — his word.
 - Platform-hub plan, two open decisions: the studio tab drawn before B22's synthesis (B32's method); the `media` event channel.
 - The RAM upgrade, his decision by 2026-10-28: the lead advises the same Goodram 2×16 kit from Proshop (€580 with
