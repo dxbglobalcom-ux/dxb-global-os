@@ -42,11 +42,11 @@ detail to the bottom · he changes anything at any moment, without having to mic
 
 **The standard is the Ferrari** (CEO, 2026-08-01): he ordered the car, not the drive — first place
 in a world competition, award standard, never amateur. Revenue and new companies come after; they
-are what the finished machine DOES — which does not mean revenue waits: while the holding is built,
-every halal revenue opportunity and every earning structure is weighed; what can be set up
-now is set up at once, tested first if it can be, inside the approval gate; what cannot is
-planned, put on the board, and set up once the holding is built and running.
-<!-- CEO-OK: revenue-while-building-2026-10-19 -->
+are what the finished machine DOES — which does not mean revenue waits: while it is built, every
+halal revenue opportunity and earning structure is weighed; what can be set up now is set up at
+once, tested first if it can be, inside the approval gate; what cannot is planned, put on the board
+and set up once the Ferrari-level digital holding is built and running.
+<!-- CEO-OK: revenue-now-2026-10-19 -->
 
 **The first law of V2 — IT MUST BE ALIVE** (*"CANSIZ DÜZ KİTAP GİBİ ORGANİZMA YOK SIFIR CANLILIK"*,
 2026-08-02). What the rival queue found, in one place:

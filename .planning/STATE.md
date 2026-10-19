@@ -37,7 +37,7 @@ to him (`.planning/quick/20261019-degerli-is-danisma/MEASURE.md`). His eye is on
 
 2026-10-19 — The old handover notes on his desktop were weighed and the finished ones removed (to the trash). On his
 word: the core says his word is intent, tested before it is agreed <!-- CEO-OK: intent-not-spec-2026-10-19 -->, and that
-revenue does not wait while the holding is built <!-- CEO-OK: revenue-while-building-2026-10-19 -->; runtime isolation
+revenue does not wait while the holding is built <!-- CEO-OK: revenue-now-2026-10-19 -->; runtime isolation
 phase 3 accepted <!-- CEO-OK: isolation-phase3-accepted-by-his-word-2026-10-19 -->; rival 39-40 closed from their
 transcripts, nVideo's architecture taken <!-- CEO-OK: rival-39-40-closed-from-transcripts-2026-10-19 -->; new link
 batches become a dated tab in his one workbook <!-- CEO-OK: new-links-a-dated-tab-in-his-one-workbook-2026-10-19 -->;
