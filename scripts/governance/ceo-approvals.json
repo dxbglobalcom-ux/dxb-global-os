@@ -2730,5 +2730,13 @@
     "conditions": "His remark on 'one trial makes no rule' is noted, not a rule: a trial that is truly Ferrari-level may set the way, but it is not required.",
     "session": "Opus 5.5 session 1783a7a7 — heard first-hand, 2026-10-19.",
     "where": "COST_CONTROL_SPEC.md A6 · MODEL_ROUTING_SPEC.md A-2026-10-14 items 1 and 7 · AGENT_ORCHESTRATION_SPEC.md A30 · .planning/quick/20261019-degerli-is-danisma/HIS-NOTES.md"
+  },
+  "calisma1-door-2026-10-19": {
+    "date": "2026-10-19",
+    "what": "His standing working style Çalışma 1 (2026-10-09: two equal chief engineers, Opus 5.5 and Fable 5.1, one plan in halves, cross-checked, built through dxb-team2) becomes the door .claude/skills/dxb-calisma1, with what he added today: Fable sits as an engineer, not an advisor (the exception to dxb-team2's no-Fable line); the job's lead is dxb-team2's lead — the session he wrote the job to, Opus if both; the A-to-Z flow; only this job's old sessions are closed when the screen is crowded; the plan at max. The desktop note was its only copy until now.",
+    "verbatim": "skill'e dönüştürüp depoya koyabilirsin.",
+    "conditions": "Same conversation: 'Burada çelişki yok. DXP2'de Fable danışman değil, mühendislerden hani mühendislerden bir tanesi yani … Aynen öyle, istisna.' · 'Ya çalışma eforuyla ilgili max önermişsin ya, max de olsun, aynen.' · 'Sadece kendi konusuyla ilgili olan eski oturumlar kapanır. … bir önceki devreden oturumlar kapatılır yani.' · on the lead: 'İşte evet. DXP iki tim liderlik yapıyor bu işe.' · 'Bu çalışma 1 bu şekilde kaydedilsin.' Not a LAW B acceptance.",
+    "session": "Opus 5.5 session 9eccd05e — heard first-hand, 2026-10-19.",
+    "where": ".claude/skills/dxb-calisma1/SKILL.md (mirror .agents/skills/dxb-calisma1/SKILL.md)"
   }
 }
