@@ -50,7 +50,9 @@ by his condition. V1's code is to go as its own job, its plan talked first: boar
 
 2026-10-15 — Before his yes on the ordered board, he and the lead are walking the "Yeni eklenenler" sheet of his
 Excel one row at a time; every decision and his words are in `.planning/quick/20261014-tahta-sirasi/HIS-WORDS-2026-10-15.md`.
-YE01-YE17 decided. YE17: claude-mem's telemetry off (done). Decided in the same walk: OpenRouter set aside, B06
+YE01-YE18 decided. YE17: claude-mem's telemetry off (done). YE18 (2026-10-19): Pocock's diagnosis loop and design
+principles as our own trimmed copies (`references/engineering-craft/`), wired into the construction now, the holding's
+engineers bound when their work starts <!-- CEO-OK: ye18-pocock-skills-trimmed-for-both-2026-10-19 -->. Decided in the same walk: OpenRouter set aside, B06
 removed; ScrollCraft draws on the holding's own studio (bridge `studio.mjs`, Sol's findings fixed, 6527517d); the
 V2 memory's embeddings local on the CPU, queued on the memory row; the studio service comes back by itself.
 The studio retest he ordered for the next session is in HIS-WORDS (clip through H3's image-less path at 8 steps, in
@@ -76,9 +78,8 @@ microphone <!-- CEO-OK: jarvis-silent-listening-voice-04-okayed-2026-09-14 -->. 
    ad through H3; upscale or not, judged full screen by his eye. The standard: his two accepted UGC films (EYW-002C,
    EYW-003) were made at 8 steps (`~/tools/h3/studio/KATALOG.md`); the 4-step key of 2026-09-04 is an author's
    reading of his words about time. Then the bridge and ScrollCraft's rule 2 follow the result.
-5. The walk, one row at a time with him: YE18 waits for his word (lead's view: not the plugin; diagnosing-bugs and the
-   architecture skills as our own trimmed copies, installed at rank 3 like YE01), then YE19 to the last row; then the
-   "Ekim 9-15 linkleri" sheet the same way.
+5. The walk, one row at a time with him: YE19 next, then to the last row; then the "Ekim 9-15 linkleri" sheet the
+   same way.
 6. Plans he asked for, each talked first: how ChatGPT on Steroids (installed) joins the holding as an agent and as
    Sol's stand-in; the studio revenue lines not covered by the platform-hub plan (MoneyPrinterTurbo, HyperFrames,
    OpenMontage, Open Design) studied in order; a way for the team to work on his phone in the background.

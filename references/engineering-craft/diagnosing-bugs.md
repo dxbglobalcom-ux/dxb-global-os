@@ -4,6 +4,8 @@ Trimmed copy of mattpocock/skills `diagnosing-bugs` (MIT, see LICENSE and SOURCE
 
 A discipline for hard bugs. Skip phases only when explicitly justified.
 
+In this repository the diagnoser (the `debugger` agent) writes no file. It runs commands that change nothing; a loop, harness, test or tagged probe that needs a file is specified by it and written — and removed again — by the lead, a fork or a helper-writer. The fix is written the same way.
+
 When exploring the codebase, read the spec in `HOLDING-OS-MASTER-PLAN/` that owns the area you are touching, to get a clear mental model of the relevant modules (this repository has no `GLOSSARY.md` and no ADRs).
 
 ## Redact
@@ -110,7 +112,7 @@ Tool preference:
 
 ## Phase 5: Fix + regression test
 
-In this repository the diagnoser does not write the fix: it hands the lead the red command, the minimised repro, the confirmed hypothesis and the regression test's seam; whoever writes the fix (lead, fork, helper-writer) follows Phase 5 and 6.
+The diagnoser hands the lead the red command, the minimised repro, the confirmed hypothesis and the regression test's seam; whoever writes the fix (lead, fork, helper-writer) follows Phase 5 and 6.
 
 Write the regression test **before the fix**, but only if there is a **correct seam** for it.
 
