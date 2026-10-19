@@ -1,13 +1,21 @@
-# xlsx.py <job-dir> <out.xlsx> — the readers' rows + the lead's plan -> one spreadsheet for the CEO.
+# xlsx.py <job-dir> <workbook.xlsx> [<tab name>] — the readers' rows + the lead's plan -> his spreadsheet.
+# With a tab name: one new sheet of that name (the batch's dates and title, e.g. "Ekim 9-15 linkleri") is
+# added to the existing workbook, every other sheet untouched — the way new batches go into his one workbook.
+# Without it: a new workbook (Özet, Plan, Öncelikli, Tüm linkler).
 # Inputs: items.tsv (id, date, links, ceo_note), rows/*.jsonl (readers; a later file overrides an
 # earlier one by id), plan.jsonl (the lead: may correct holding_puan/oturum_puan/oneri/tahta/ne_bu/izlendi, and carries
 # plan, nerede, tahta, kim, onay, risk, sira). Needs openpyxl (a venv: python3 -m venv v; v/bin/pip install openpyxl).
 import csv, json, glob, sys, os
-from openpyxl import Workbook
+from openpyxl import Workbook, load_workbook
 from openpyxl.styles import Font, Alignment, PatternFill
 from openpyxl.utils import get_column_letter
 
 J, OUT = sys.argv[1], sys.argv[2]
+TAB = sys.argv[3] if len(sys.argv) > 3 else None
+if TAB is not None:
+    if not os.path.exists(OUT): sys.exit(f"no workbook at {OUT} — a tab is added to an existing workbook only")
+    if not TAB.strip() or len(TAB) > 31 or any(ch in TAB for ch in '[]:*?/\\'):
+        sys.exit(f"bad tab name {TAB!r}: 1-31 characters, none of [ ] : * ? / \\")
 items = {r["id"]: r for r in csv.DictReader(open(f"{J}/items.tsv", encoding="utf-8"), delimiter="\t")}
 
 def jsonl(path):
@@ -61,9 +69,16 @@ def sheet(ws, rows):
         if r[11].value in OFILL: r[11].fill = PatternFill("solid", fgColor=OFILL[r[11].value])
     ws.freeze_panes = "D2"; ws.auto_filter.ref = ws.dimensions
 
+allrows = [row(i) for i in items]
+if TAB is not None:
+    wb = load_workbook(OUT)
+    if TAB in wb.sheetnames: sys.exit(f"the workbook already has a tab {TAB!r}")
+    sheet(wb.create_sheet(TAB), allrows)
+    wb.save(OUT)
+    print("added tab", TAB, "to", OUT, "rows", len(allrows))
+    sys.exit(0)
 wb = Workbook()
 ws0 = wb.active; ws0.title = "Özet"
-allrows = [row(i) for i in items]
 pri = sorted([r for r in allrows if r[11] in ("Kur", "Dene") or r[5] + r[7] >= 4], key=lambda r: (-(r[5] + r[7]), r[0]))
 counts = {}
 for r in allrows: counts[r[11]] = counts.get(r[11], 0) + 1

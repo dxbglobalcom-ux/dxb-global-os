@@ -65,8 +65,14 @@ reader's `holding_puan`, `oturum_puan`, `oneri`, `ne_bu`, `izlendi`, `okundu` th
 
 ## 4. Give it to him
 
-Many links → `python3 -I $K/xlsx.py $J <file.xlsx>` (needs openpyxl in a venv) → `SendUserFile`, and
-two or three lines in Turkish: how many, which few are worth acting on, what waits on his yes.
+Many links → a new tab in his ONE workbook, never a new file <!-- CEO-OK: new-links-a-dated-tab-in-his-one-workbook-2026-10-19 -->:
+the master is `.planning/research/watch-links/2026-10-08-whatsapp/turbo/Excel-turbo.xlsx` (committed), his
+copy `~/Desktop/İNCELEMELER/Excel-turbo.xlsx`. First compare the two (`sha256sum`): if his copy differs it holds
+his edits — ask him before writing. Then `python3 -I $K/xlsx.py $J <master> "<dates> <title>"` (needs openpyxl
+in a venv; the tab named like "Ekim 9-15 linkleri", ≤ 31 characters), commit, copy the master over his copy
+(not while `~/Desktop/İNCELEMELER/.~lock.Excel-turbo.xlsx#` exists — his LibreOffice has it open; ask him to
+close it), `SendUserFile`, and two or three lines in Turkish: how many, which few are worth acting on, what
+waits on his yes. A new file (`xlsx.py $J <file.xlsx>`, no tab name) only when he asks for one.
 A few links → answer in the conversation, plainly. Nothing is installed or started without his word.
 
 ## 5. An important review — two blind readers and a referee at max
@@ -93,6 +99,6 @@ deeply, the review runs this way <!-- CEO-OK: watch-links-important-review-2026-
   `max`; while the level is unknown or different it does not merge and tells him. The merge goes into
   `MERGE.md`, naming every split and its call.
 - **Cheap work goes to the cheap hand when Sonnet can do it:** a Sonnet agent (`model: sonnet`) moves the
-  referee's merge into his Excel — a new sheet in the workbook he names, or `xlsx.py`'s `rows/` and
-  `plan.jsonl` schema for a new file — keeping every call of the referee.
+  referee's merge into his Excel — a new dated tab in his one workbook (§4) — keeping every call of the
+  referee.
 - Nothing is installed or started without his word.

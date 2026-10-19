@@ -2674,5 +2674,13 @@
     "conditions": "His Islamic ruling (CEO-only). Money out (buying a page) and identity steps (accounts) still stop at him under the approval gate.",
     "session": "Opus 5.5 session 9eccd05e — heard first-hand, 2026-10-19.",
     "where": ".planning/research/watch-links/2026-10-08-whatsapp/gelir-turu/lider.jsonl (W077) · .planning/quick/20261014-tahta-sirasi/sources-excel-turbo.md X-14"
+  },
+  "new-links-a-dated-tab-in-his-one-workbook-2026-10-19": {
+    "date": "2026-10-19",
+    "what": "A new batch of links he sends goes into his one review workbook (Excel-turbo.xlsx — master committed under .planning/research/watch-links/2026-10-08-whatsapp/turbo/, his copy in ~/Desktop/İNCELEMELER/) as a new tab named by its dates and title, like the existing 'Ekim 9-15 linkleri' — not a new file. The watch-links door (SKILL.md §4, §5) and its xlsx.py (a tab-name argument adds one sheet to the existing workbook, every other sheet untouched) carry it.",
+    "verbatim": "Excel ile ilgili şöyle, zaten incelemeler dosyasına bakarsan orada bir Excel şeyi var. Excel çalışması var. Ama aynı Excel dosyasının içerisinde alt sütuna tarih geçilebilir yani. Anlatabiliyor muyum? Tarih ve işte başlık. Hani o güzel altta açılıyor ya her sayfa yeni. Mesela şu an baktığımız zaman incelemeler Excel Turbo. Bak burada Ekim 19-15 linkleri. Tamam mı? Gördün mü?",
+    "conditions": "His order for how the door delivers; not a LAW B acceptance. 'Ekim 19-15' is his dictation of the tab 'Ekim 9-15 linkleri'.",
+    "session": "Opus 5.5 session 9eccd05e — heard first-hand, 2026-10-19.",
+    "where": ".claude/skills/dxb-watch-links/SKILL.md §4 §5 · .claude/skills/dxb-watch-links/xlsx.py"
   }
 }
