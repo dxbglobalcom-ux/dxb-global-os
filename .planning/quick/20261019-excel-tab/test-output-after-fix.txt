@@ -1,0 +1,21 @@
+## new tab
+items 2 rows 1 plan 0 missing ['W902']
+added tab Ekim 16-19 linkleri to /tmp/claude-1000/-home-dxb-DxB-Global-OS/9eccd05e-09ae-4876-968e-742a112a3d39/scratchpad/xt/wb.xlsx rows 2
+exit=0
+## case-variant of an existing tab (Sol B)
+items 2 rows 1 plan 0 missing ['W902']
+the workbook already has a tab 'ekim 9-15 linkleri'
+exit=1
+## same name, other case
+items 2 rows 1 plan 0 missing ['W902']
+the workbook already has a tab 'EKIM 16-19 LINKLERI'
+exit=1
+## save failure leaves workbook intact (read-only dir)
+exit=1
+PermissionError: [Errno 13] Permission denied: '/tmp/claude-1000/-home-dxb-DxB-Global-OS/9eccd05e-09ae-4876-968e-742a112a3d39/scratchpad/xt/ro/.477526.tmp.wb.xlsx'
+workbook unchanged: yes
+## temp files left
+2
+## compare
+after ['Özet', 'Projeler', 'Öncelikli', 'Tüm linkler', 'Değişenler', 'Yeni eklenenler', 'Ekim 9-15 linkleri', 'Ekim 16-19 linkleri']
+old sheets identical values: True

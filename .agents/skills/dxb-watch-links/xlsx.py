@@ -72,9 +72,18 @@ def sheet(ws, rows):
 allrows = [row(i) for i in items]
 if TAB is not None:
     wb = load_workbook(OUT)
-    if TAB in wb.sheetnames: sys.exit(f"the workbook already has a tab {TAB!r}")
+    if TAB.casefold() in [n.casefold() for n in wb.sheetnames]: sys.exit(f"the workbook already has a tab {TAB!r}")
+    before = list(wb.sheetnames)
     sheet(wb.create_sheet(TAB), allrows)
-    wb.save(OUT)
+    # Saved beside the workbook first and read back; only a whole, checked file replaces his workbook.
+    tmp = os.path.join(os.path.dirname(os.path.abspath(OUT)), f".{os.getpid()}.tmp.{os.path.basename(OUT)}")
+    try:
+        wb.save(tmp)
+        chk = load_workbook(tmp, read_only=True); got = chk.sheetnames; chk.close()
+        if got != before + [TAB]: sys.exit(f"the saved copy has tabs {got}, expected {before + [TAB]} — workbook untouched")
+        os.replace(tmp, OUT)
+    finally:
+        if os.path.exists(tmp): os.remove(tmp)
     print("added tab", TAB, "to", OUT, "rows", len(allrows))
     sys.exit(0)
 wb = Workbook()

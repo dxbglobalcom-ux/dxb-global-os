@@ -67,12 +67,14 @@ reader's `holding_puan`, `oturum_puan`, `oneri`, `ne_bu`, `izlendi`, `okundu` th
 
 Many links → a new tab in his ONE workbook, never a new file <!-- CEO-OK: new-links-a-dated-tab-in-his-one-workbook-2026-10-19 -->:
 the master is `.planning/research/watch-links/2026-10-08-whatsapp/turbo/Excel-turbo.xlsx` (committed), his
-copy `~/Desktop/İNCELEMELER/Excel-turbo.xlsx`. First compare the two (`sha256sum`): if his copy differs it holds
-his edits — ask him before writing. Then `python3 -I $K/xlsx.py $J <master> "<dates> <title>"` (needs openpyxl
-in a venv; the tab named like "Ekim 9-15 linkleri", ≤ 31 characters), commit, copy the master over his copy
-(not while `~/Desktop/İNCELEMELER/.~lock.Excel-turbo.xlsx#` exists — his LibreOffice has it open; ask him to
-close it), `SendUserFile`, and two or three lines in Turkish: how many, which few are worth acting on, what
-waits on his yes. A new file (`xlsx.py $J <file.xlsx>`, no tab name) only when he asks for one.
+copy `~/Desktop/İNCELEMELER/Excel-turbo.xlsx`. In this order — his unsaved edits are never overwritten:
+(1) while `~/Desktop/İNCELEMELER/.~lock.Excel-turbo.xlsx#` exists his LibreOffice holds the file — ask him to save
+and close it, and wait; (2) compare the two (`sha256sum`): if his copy differs it holds his edits — stop and ask
+him; (3) note his copy's hash, then `<venv>/bin/python -I "$K/xlsx.py" "$J" <master> "<dates> <title>"` (the tab
+named like "Ekim 9-15 linkleri", ≤ 31 characters) and commit; (4) right before copying the master over his copy,
+check again that no lock file exists and his copy's hash is the one noted — if not, stop and ask him; then copy,
+`SendUserFile`, and two or three lines in Turkish: how many, which few are worth acting on, what waits on his
+yes. A new file (`xlsx.py "$J" <file.xlsx>`, no tab name) only when he asks for one.
 A few links → answer in the conversation, plainly. Nothing is installed or started without his word.
 
 ## 5. An important review — two blind readers and a referee at max

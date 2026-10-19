@@ -1,0 +1,26 @@
+## run 1 (new tab)
+items 2 rows 1 plan 0 missing ['W902']
+added tab Ekim 16-19 linkleri to /tmp/claude-1000/-home-dxb-DxB-Global-OS/9eccd05e-09ae-4876-968e-742a112a3d39/scratchpad/xt/wb.xlsx rows 2
+exit=0
+## run 2 (same name)
+items 2 rows 1 plan 0 missing ['W902']
+the workbook already has a tab 'Ekim 16-19 linkleri'
+exit=1
+## bad name
+bad tab name 'a/b': 1-31 characters, none of [ ] : * ? / \
+exit=1
+## missing workbook
+no workbook at /tmp/claude-1000/-home-dxb-DxB-Global-OS/9eccd05e-09ae-4876-968e-742a112a3d39/scratchpad/xt/nope.xlsx — a tab is added to an existing workbook only
+exit=1
+## no tab name (new file)
+items 2 rows 1 plan 0 missing ['W902']
+saved /tmp/claude-1000/-home-dxb-DxB-Global-OS/9eccd05e-09ae-4876-968e-742a112a3d39/scratchpad/xt/new.xlsx priority 1 {'Dene': 1, 'OKUNMADI': 1}
+exit=0
+## compare
+before ['Özet', 'Projeler', 'Öncelikli', 'Tüm linkler', 'Değişenler', 'Yeni eklenenler', 'Ekim 9-15 linkleri']
+after  ['Özet', 'Projeler', 'Öncelikli', 'Tüm linkler', 'Değişenler', 'Yeni eklenenler', 'Ekim 9-15 linkleri', 'Ekim 16-19 linkleri']
+old sheets identical values: True
+['No', 'Tarih', 'Başlık', 'Ne bu', 'Tür', 'Holding (0-3)', 'Holding için neden', 'Oturum (0-3)', 'Oturum için neden', 'Bizde zaten var mı', 'Tahta satırı', 'Öneri', 'Not', 'Uygulama planı', 'Sizin notunuz', 'Link(ler)', 'Neye bakıldı', 'Okundu mu']
+['W901', '2026-10-19', 'Deneme', 'x', None, 2, None, 1, None, None, None, 'Dene', None, None, 'bak', 'https://example.com/a', None, 'hayır — sonuç yok']
+rows 3
+newfile ['Özet', 'Plan', 'Öncelikli', 'Tüm linkler']
