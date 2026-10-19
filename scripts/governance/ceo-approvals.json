@@ -2634,5 +2634,13 @@
     "verbatim": "Onaylıyorum, silmeyi de commit et.",
     "conditions": "Earlier in the same talk: \"Tamam sen onu sil ya.\" and \"ben şimdi dediğim hani şeye koyarsınız. İlgili satırda ilgili yere. ... vakti gelince yapılır. Sırası gelince.\"",
     "where": ".planning/quick/20261018-gozlem-odasi/PLAN.md · HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md B82"
+  },
+  "isolation-phase3-accepted-by-his-word-2026-10-19": {
+    "date": "2026-10-19",
+    "what": "Phase 3 of the runtime isolation (every company Claude call in its own Claude home and working folder; the memory router's path into the construction's claude-mem cut) — finished 2026-10-04 and dropped from STATE without his eye — is ACCEPTED on his word when the lead brought it back from the 2026-10-04 handover note.",
+    "verbatim": "Şimdi şu birinci şey, üçüncü faz bitti ama gözünüzden geçmedi. Şirket tarafının izolasyonunun. Tamam, o gözden geçti diye say onu. Okeyle onu.",
+    "conditions": "A LAW B acceptance by his word, not by a look at the work.",
+    "session": "Opus 5.5 session 9eccd05e — heard first-hand, 2026-10-19.",
+    "where": "packages/kernel/src/sdk-isolation.ts · .planning/quick/20261003-runtime-isolation/ (phase 3) · isolation-phase3-plan-and-memory-path-2026-10-03"
   }
 }

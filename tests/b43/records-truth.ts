@@ -134,6 +134,8 @@ export const C = {
     // onayladım. Kapat orayı."); the records spell its items "four equal arrangements", "code bundle 2",
     // "the auto-memory fixes" and "the outside review's item 4".
     { id: "eye-waiting-list-accepted-2026-10-08", subject: /four equal arrangements|code bundle 2|auto-memory fixes|outside review's item 4/i },
+    // Runtime isolation phase 3, accepted by his word 2026-10-19; the records spell it "isolation phase 3" / "Phase 3 of the runtime isolation".
+    { id: "isolation-phase3-accepted-by-his-word-2026-10-19", subject: /isolation phase 3|phase 3 of the runtime isolation/i },
   ],
   /**
    * R4 — the ruler cannot be forgotten: every acceptance of his eye registered in the ledger from
