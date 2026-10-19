@@ -130,7 +130,7 @@ links) and get no block of their own.
 - On the board already: NONE as a ruling; B28.md:16 describes the agency position with "guarantee delivery" (a delivery promise, not a refund clause).
 - Would integrate into the holding: the contract form of every agency service.
 - Layer: L5
-- Board: note for row B28 — the clause stays out until his Sharia ruling; put to him as a question.
+- Decided 2026-10-19 by his ruling: permitted (ledger `w077-bought-pages-and-reedited-viral-videos-permitted-2026-10-19`); it goes into the channels study.
 
 ### X-16 — Decision 7: write his "build revenue systems during construction" sentence beside the Ferrari sentence (CLAUDE.md)
 - Says: "Evet, bir cümle: 'Ferrari kurulurken yapılabilecek gelir üretim sistemleri aynı anda kurulur; yapılamayanlar tahtaya yazılır …' Sizin 'yazılsın' sözünüzle".
