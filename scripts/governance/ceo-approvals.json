@@ -2754,5 +2754,13 @@
     "conditions": "'şimdilik … sonra bakarız' — standing until he revisits it (the studio retest may bring it back to him). Not a LAW B acceptance of any film.",
     "session": "Opus 5.5 session 9eccd05e — heard first-hand, 2026-10-19.",
     "where": "/home/dxb/tools/h3/studio/KATALOG.md · STATE NEXT 4 (the studio retest) · scripts/studio.mjs (its defaults follow at the retest)"
+  },
+  "link-tabs-carry-technology-and-revenue-2026-10-19": {
+    "date": "2026-10-19",
+    "what": "Every new link tab in his review workbook carries the holding's two purposes apart: Teknoloji (0-3) with Teknolojiye katkısı, and Gelir (0-3) with Gelire katkısı, beside the Holding score — the pair the 2026-10-08 'Tüm linkler' sheet had. The readers write teknoloji_puan/teknoloji_katki/gelir_puan/gelir_katki (reader.md), xlsx.py prints them.",
+    "verbatim": "evet eklensin",
+    "conditions": "His answer to the lead's question, shown on the example of the tab 'Ekim 9-15 linkleri' (which has no such columns) and a MoneyPrinterTurbo row. Not a LAW B acceptance.",
+    "session": "Opus 5.5 session 9eccd05e — heard first-hand, 2026-10-19.",
+    "where": ".claude/skills/dxb-watch-links/reader.md · xlsx.py · SKILL.md §4"
   }
 }

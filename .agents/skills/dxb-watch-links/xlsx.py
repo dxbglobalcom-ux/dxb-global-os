@@ -29,7 +29,8 @@ for f in sorted(glob.glob(f"{J}/rows/*.jsonl")):
     for o in jsonl(f): res[o["id"]] = o
 plan = {o["id"]: o for o in jsonl(f"{J}/plan.jsonl")} if os.path.exists(f"{J}/plan.jsonl") else {}
 for i, o in plan.items():
-    for k in ("holding_puan", "oturum_puan", "oneri", "tahta", "ne_bu", "izlendi", "okundu"):
+    for k in ("holding_puan", "teknoloji_puan", "teknoloji_katki", "gelir_puan", "gelir_katki", "oturum_puan",
+              "oneri", "tahta", "ne_bu", "izlendi", "okundu"):
         if k in o and i in res: res[i][k] = o[k]
 print("items", len(items), "rows", len(res), "plan", len(plan), "missing", [i for i in items if i not in res])
 
@@ -37,17 +38,23 @@ def num(v):
     try: return int(v)
     except Exception: return 0
 
-HEAD = ["No", "Tarih", "Başlık", "Ne bu", "Tür", "Holding (0-3)", "Holding için neden", "Oturum (0-3)",
-        "Oturum için neden", "Bizde zaten var mı", "Tahta satırı", "Öneri", "Not", "Uygulama planı",
-        "Sizin notunuz", "Link(ler)", "Neye bakıldı", "Okundu mu"]
-WIDTH = [6, 11, 32, 55, 13, 9, 45, 9, 45, 35, 11, 11, 45, 60, 40, 45, 30, 25]
+# The holding's two purposes, technology and revenue, each scored and explained (his order, 2026-10-19).
+HEAD = ["No", "Tarih", "Başlık", "Ne bu", "Tür", "Holding (0-3)", "Holding için neden", "Teknoloji (0-3)",
+        "Teknolojiye katkısı", "Gelir (0-3)", "Gelire katkısı", "Oturum (0-3)", "Oturum için neden",
+        "Bizde zaten var mı", "Tahta satırı", "Öneri", "Not", "Uygulama planı", "Sizin notunuz", "Link(ler)",
+        "Neye bakıldı", "Okundu mu"]
+WIDTH = [6, 11, 32, 55, 13, 9, 45, 9, 40, 9, 40, 9, 45, 35, 11, 11, 45, 60, 40, 45, 30, 25]
+C = {h: k for k, h in enumerate(HEAD)}
+SCORES = [C["Holding (0-3)"], C["Teknoloji (0-3)"], C["Gelir (0-3)"], C["Oturum (0-3)"]]
+HOLD, OTUR, ONERI = C["Holding (0-3)"], C["Oturum (0-3)"], C["Öneri"]
 FILL = {3: "C6EFCE", 2: "E2F0D9", 1: "FFF2CC", 0: "F2F2F2"}
 OFILL = {"Kur": "C6EFCE", "Dene": "DDEBF7", "Araştır": "FFF2CC", "İzle": "F2F2F2", "Gerek yok": "F8CBAD"}
 
 def row(i):
     it, o = items[i], res.get(i, {})
     return [i, it.get("date", ""), o.get("baslik", ""), o.get("ne_bu", ""), o.get("tur", ""),
-            num(o.get("holding_puan")), o.get("holding_neden", ""), num(o.get("oturum_puan")),
+            num(o.get("holding_puan")), o.get("holding_neden", ""), num(o.get("teknoloji_puan")),
+            o.get("teknoloji_katki", ""), num(o.get("gelir_puan")), o.get("gelir_katki", ""), num(o.get("oturum_puan")),
             o.get("oturum_neden", ""), o.get("zaten_var", ""), o.get("tahta", ""), o.get("oneri", "OKUNMADI"),
             o.get("not", ""), plan.get(i, {}).get("plan", ""), it.get("ceo_note", ""), it.get("links", ""),
             o.get("izlendi", ""), o.get("okundu", "hayır — sonuç yok")]
@@ -64,9 +71,9 @@ def sheet(ws, rows):
     for r in rows: ws.append(r)
     for r in ws.iter_rows(min_row=2):
         for c in r: c.alignment = Alignment(wrap_text=True, vertical="top")
-        for col in (5, 7):
+        for col in SCORES:
             if isinstance(r[col].value, int): r[col].fill = PatternFill("solid", fgColor=FILL.get(r[col].value, "FFFFFF"))
-        if r[11].value in OFILL: r[11].fill = PatternFill("solid", fgColor=OFILL[r[11].value])
+        if r[ONERI].value in OFILL: r[ONERI].fill = PatternFill("solid", fgColor=OFILL[r[ONERI].value])
     ws.freeze_panes = "D2"; ws.auto_filter.ref = ws.dimensions
 
 allrows = [row(i) for i in items]
@@ -88,9 +95,9 @@ if TAB is not None:
     sys.exit(0)
 wb = Workbook()
 ws0 = wb.active; ws0.title = "Özet"
-pri = sorted([r for r in allrows if r[11] in ("Kur", "Dene") or r[5] + r[7] >= 4], key=lambda r: (-(r[5] + r[7]), r[0]))
+pri = sorted([r for r in allrows if r[ONERI] in ("Kur", "Dene") or r[HOLD] + r[OTUR] >= 4], key=lambda r: (-(r[HOLD] + r[OTUR]), r[0]))
 counts = {}
-for r in allrows: counts[r[11]] = counts.get(r[11], 0) + 1
+for r in allrows: counts[r[ONERI]] = counts.get(r[ONERI], 0) + 1
 ws0.append([f"{len(items)} kayıt; {len(res)} tanesi içeriğinden incelendi; {len(plan)} tanesinin uygulama planı var."])
 ws0["A1"].font = Font(bold=True, size=13)
 ws0.append([]); ws0.append(["Öneri", "Adet"]); ws0["A3"].font = ws0["B3"].font = Font(bold=True)

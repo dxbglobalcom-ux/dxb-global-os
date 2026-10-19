@@ -61,11 +61,13 @@ for the holding, for the sessions — do we already have it, which board row it 
 worth acting on, write the plan in `$J/plan.jsonl`, one line per id:
 `{"id","sira","plan" (what we would do),"nerede" (where in the holding or the construction),"tahta",
 "kim","onay" (what needs his yes — money out, identity, install),"risk"}` — and you may correct the
-reader's `holding_puan`, `oturum_puan`, `oneri`, `ne_bu`, `izlendi`, `okundu` there (your `tahta` replaces theirs).
+reader's `holding_puan`, `teknoloji_puan`, `teknoloji_katki`, `gelir_puan`, `gelir_katki`, `oturum_puan`, `oneri`,
+`ne_bu`, `izlendi`, `okundu` there (your `tahta` replaces theirs).
 
 ## 4. Give it to him
 
-Many links → a new tab in his ONE workbook, never a new file <!-- CEO-OK: new-links-a-dated-tab-in-his-one-workbook-2026-10-19 -->:
+Many links → a new tab in his ONE workbook, never a new file <!-- CEO-OK: new-links-a-dated-tab-in-his-one-workbook-2026-10-19 -->,
+every link scored and explained for technology and for revenue <!-- CEO-OK: link-tabs-carry-technology-and-revenue-2026-10-19 -->:
 the master is `.planning/research/watch-links/2026-10-08-whatsapp/turbo/Excel-turbo.xlsx` (committed), his
 copy `~/Desktop/İNCELEMELER/Excel-turbo.xlsx`. In this order — his unsaved edits are never overwritten:
 (1) while `~/Desktop/İNCELEMELER/.~lock.Excel-turbo.xlsx#` exists his LibreOffice holds the file — ask him to save

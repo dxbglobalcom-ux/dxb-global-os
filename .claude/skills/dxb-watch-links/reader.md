@@ -34,9 +34,12 @@ Output: one JSON object per line, appended to $J/rows/{OUTFILE} as soon as each 
 TURKISH with correct Turkish characters (names, URLs, code unchanged). Keys:
 {"id","baslik" (the actual tool/idea),"ne_bu" (2-4 sentences, from the content),"izlendi","tur"
 ("repo|araç|model|strateji|eğitim|gelir fikri|CEO fikri|gürültü"),"okundu" ("evet|kısmen|hayır" + why),
-"holding_puan" 0-3,"holding_neden","oturum_puan" 0-3,"oturum_neden","zaten_var","tahta","oneri"
+"holding_puan" 0-3,"holding_neden","teknoloji_puan" 0-3,"teknoloji_katki","gelir_puan" 0-3,"gelir_katki",
+"oturum_puan" 0-3,"oturum_neden","zaten_var","tahta","oneri"
 ("Kur|Dene|Araştır|İzle|Gerek yok"),"not" (risk, cost, licence, approval step, Islamic boundary, his note answered)}
 holding_puan is how much it advances the machine or makes the holding earn (the purpose in context.md).
+Its two halves are scored apart: teknoloji_puan — how much it advances the machine (teknoloji_katki says how);
+gelir_puan — how much it makes the holding earn (gelir_katki says how).
 Score: 0 nothing · 1 minor · 2 real, needs building or a first test · 3 strong, act on it. Be critical both
 ways: a money road is never dropped for a fixable risk, and a hollow claim is never let through.
 Finish with only: lines written, and ids you could not fully examine and why.
