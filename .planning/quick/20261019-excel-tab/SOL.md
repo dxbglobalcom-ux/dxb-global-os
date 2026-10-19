@@ -12,3 +12,9 @@ stay byte-identical (Sol's own read-only comparison).
 | C | C | Older than this work: the door's command left `$K` and `$J` unquoted though the path has a space | quoted in the rewritten line |
 
 Raw: `sol.raw` (not committed). Tests before and after the fixes: `test-output.txt`, `test-output-after-fix.txt`.
+
+## Second pass — the technology and revenue columns (52cd1bb4), Sol 6.1 medium
+
+No A, B or C. Verified: the four columns sit right after "Holding için neden" and the values follow the same order;
+no code still reads a moved column by position (colours, priority, counts go by name); reader.md makes the four keys
+required; the `.agents` mirror is equivalent; the ledger entry carries his "evet eklensin". Raw: `sol2.raw`.
