@@ -80,20 +80,18 @@ microphone <!-- CEO-OK: jarvis-silent-listening-voice-04-okayed-2026-09-14 -->. 
    rank — accounts connected and infrastructure only, no money loaded, no exam now; its first step raises the server's
    LiteLLM pin (`vps/compose.yaml`, 1.91.0) to ≥ 1.97.0. The channels are a separate study, talked before January 2027.
 2. The Gözlem Odası (B82): the plan has his eye; the build when the factory fully starts — step 1, the X gate, is in.
-3. RAM: his decision by 2026-10-28; it reopens sooner only if the studio needs it. He reads CSL's reply himself —
-   the session does not open the mail.
-4. The studio retest, when its turn comes (the machine rebooted 2026-10-19 07:38, the card works again). In the factory
+3. The studio retest, when its turn comes (the machine rebooted 2026-10-19 07:38, the card works again). In the factory
    with the Media Studio's staff: ScrollCraft's clip through H3 image-less at 8 steps, saved at a high quality (the
    blocky clip was ComfyUI's 1.17 Mbit/s save); stills from H3's best frame vs FLUX vs FLUX.2-klein-4B; a client-photo
    ad through H3; upscale or not, judged full screen by his eye. The standard is the recipe of the films he accepted
    — 8 steps on the road the studio's system names, no 4-step take <!-- CEO-OK: studio-standard-8-steps-his-liked-recipe-2026-10-19 -->; `studio.mjs`'s
    defaults follow it. Then the bridge and ScrollCraft's rule 2 follow the result.
-5. The walk, one row at a time with him: YE19 next, then to the last row; then the "Ekim 9-15 linkleri" sheet the
+4. The walk, one row at a time with him: YE19 next, then to the last row; then the "Ekim 9-15 linkleri" sheet the
    same way.
-6. Plans he asked for, each talked first: how ChatGPT on Steroids (installed) joins the holding as an agent and as
+5. Plans he asked for, each talked first: how ChatGPT on Steroids (installed) joins the holding as an agent and as
    Sol's stand-in; the studio revenue lines not covered by the platform-hub plan (MoneyPrinterTurbo, HyperFrames,
    OpenMontage, Open Design) studied in order; a way for the team to work on his phone in the background.
-7. Then the board page with every decision of the walk, his one yes, and `ORDER.md` "On his yes". No construction
+6. Then the board page with every decision of the walk, his one yes, and `ORDER.md` "On his yes". No construction
    before it except what he ordered in the walk.
 
 ## Waiting on his approval
@@ -105,9 +103,6 @@ microphone <!-- CEO-OK: jarvis-silent-listening-voice-04-okayed-2026-09-14 -->. 
 - Valuable work, three open questions for his word, one at a time: a "neither plan is workable" outcome; the 30 %
   cap's base for a job with no deal; a plan's own cost estimate.
 - Platform-hub plan, two open decisions: the studio tab drawn before B22's synthesis (B32's method); the `media` event channel.
-- The RAM upgrade, his decision by 2026-10-28: the lead advises the same Goodram 2×16 kit from Proshop (€580 with
-  shipping, no coupon exists) over CSL's offer; with four sticks AMD guarantees only DDR5-3600, so 6000 is UNVERIFIED
-  until installed and memory-tested.
 - The ordered board and its 10 new rows, after the walk.
 - At their ranks: the Supabase skills install (#3), DataForSEO (#47), Apify beyond the free plan (#48), Google OAuth
   for the Workspace CLI (#24), store accounts for a mobile app.
