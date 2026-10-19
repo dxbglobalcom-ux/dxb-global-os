@@ -123,7 +123,7 @@ Madde 4 sınırı: yeni auth mekanizması YOK — mevcut Supabase Auth session +
 
 ## 17. Error handling / 18. Retry / 19. Fallback
 
-Hata kod sözlüğü (bağlayıcı): `VALIDATION_FAILED` · `PERMISSION_DENIED` · `APPROVAL_REQUIRED` (mutasyon onaya dönüştü — yanıt `approval_id` taşır) · `BUDGET_EXCEEDED` · `PRICE_UNKNOWN` (B64: a budgeted job waits until its model's price is entered — never counted as 0) · `CONFLICT_STALE` (optimistic concurrency: beklenen sürüm eskimiş) · `IDEMPOTENCY_MISMATCH` (aynı key farklı gövde) · `RATE_LIMITED` · `INTERNAL`. Retry: yalnız `retryable:true` (RATE_LIMITED, INTERNAL-geçici); istemci aynı Idempotency-Key ile tekrar eder. Fallback: Broadcast kopuksa UI snapshot re-fetch'e düşer (EVENT_MODEL §17).
+Hata kod sözlüğü (bağlayıcı): `VALIDATION_FAILED` · `PERMISSION_DENIED` · `APPROVAL_REQUIRED` (mutasyon onaya dönüştü — yanıt `approval_id` taşır) · `BUDGET_EXCEEDED` · `PRICE_UNKNOWN` (B64: only for an API-metered model row with no price — a budgeted job waits until that price is entered, never counted as 0; a subscription seat never returns it, its run goes on with a `cost unknown` warning — COST_CONTROL A6) · `CONFLICT_STALE` (optimistic concurrency: beklenen sürüm eskimiş) · `IDEMPOTENCY_MISMATCH` (aynı key farklı gövde) · `RATE_LIMITED` · `INTERNAL`. Retry: yalnız `retryable:true` (RATE_LIMITED, INTERNAL-geçici); istemci aynı Idempotency-Key ile tekrar eder. Fallback: Broadcast kopuksa UI snapshot re-fetch'e düşer (EVENT_MODEL §17).
 
 ## 20. Test planı / 21. Acceptance criteria
 
@@ -165,7 +165,7 @@ Design: `.planning/quick/20261012-b64-is-akisi/is-akisi.html` (v15). Nothing bel
 - **A3 — Three reads (E04, E06).** <!-- CEO-OK: b64-decisions-1-5-8-9-11-12-16-his-yes-2026-10-14 --> The Reception view, the Customers view and the job desk view (§8c). They read the inbound record and the job record ([[DATA_MODEL]] B64 A2, A3); the Reception and Customers screens are drawn for him first.
 - **A4 — The backup pair is set by role (E23).** <!-- CEO-OK: b64-decision14-model-room-2026-10-14 --> `models` sets the pair — main brain ⇄ backup brain — by role, never a per-model fallback chain; `set_fallback`'s path closes with B66.
 - **A5 — Hermes's message door (E24).** <!-- CEO-OK: b64-decision15-hermes-holding-hands-and-eyes-2026-10-14 --> §16: if WhatsApp's or Telegram's channel needs a public endpoint, it is Hermes's gateway alone, on the holding's server; the holding's API stays closed to the outside. G4: the Hermes-only key is the one registered exception to "no raw provider key".
-- **A6 — `PRICE_UNKNOWN` (E29(1), decided).** <!-- CEO-OK: b64-plan-his-yes-2026-10-14 --> A model with no price is "cost unknown", never 0; a budgeted job's call returns `PRICE_UNKNOWN` and the job waits until the price is entered ([[COST_CONTROL_SPEC]] B64).
+- **A6 — `PRICE_UNKNOWN` (E29(1), decided).** <!-- CEO-OK: b64-plan-his-yes-2026-10-14 --> A model with no price is "cost unknown", never 0; a subscription seat (today Fable 5.1, Sol 6.1) never waits for a price — its run goes on with a `cost unknown` warning and is counted against the subscription's quota; only an API-metered row with no price makes a budgeted job's call return `PRICE_UNKNOWN`, and the job waits until that price is entered ([[COST_CONTROL_SPEC]] A6).
 - **A7 — §24's example** no longer sets `orchestrator.primary_model` to `fable-5`: management work runs on Opus 5.5 (B64 decision 2's guide) and the model keys live in routing.
 
 ## Done definition (bu spec)

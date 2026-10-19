@@ -311,8 +311,8 @@ and Hermes's recorded, reversible computer work (SECURITY_MODEL O2); (3) every h
 - Retry: pg-boss `retryLimit/retryDelay/retryBackoff` job-tipi başına; approval-bekleyen işler retry DEĞİL park (state machine).
 - Model fallback — the backup pair (B64 decision 13) <!-- CEO-OK: b64-decision13-backup-pair-opus-fable-2026-10-14 -->,
   written by role: main brain Opus 5.5 ⇄ backup brain Fable 5.1. A model failing for any reason (quota, overload,
-  outage) → the other takes the work, at the work's own effort (on Fable clamped to high..xhigh); Fable's judge seats
-  fall to Sol 6.1, never to Opus; Hamza's spoken reply falls back to Opus 5.5 low for speed. No work ever falls to a
+  outage) → the other takes the work, at the work's own effort (on Fable clamped to high..xhigh); Fable's checking seat
+  (the critical gate) falls to Sol 6.1, never to Opus; Hamza's spoken reply falls back to Opus 5.5 low for speed. No work ever falls to a
   weaker model. The holding switches by itself and records it (*"Opus düştü, işi Fable high'da yaptı"*); the old
   `model_catalog.fallback_of` chain closes (B66). Both brains down → the work waits and he is told. Hermes is the one
   exception (decision 16): its work waits for Opus and never moves to Fable. Owner: MODEL_ROUTING_SPEC.

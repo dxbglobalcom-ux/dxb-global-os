@@ -87,7 +87,7 @@ Adım config'inde secret taşınamaz (Zod şemaları credential alanı içermez;
 - Adım hatası sınıflaması SYSTEM_ARCHITECTURE §17 üçlüsü: transient → retry adımı/policy; policy (hook reddi) → escalation (FABLE_5_HOOK zinciri); fatal → run failed + `alerts` kanalına `alert.raised`.
 - Retry adımı: `{max_attempts, backoff_s, on_exhaust: 'fail'|'fallback'|'escalate'}`.
 - Fallback adımı: `{alternate_steps:[...]}` — ana adım tükenince alternatif zincir; a model's failure is a separate mechanism — the backup pair, never a weaker model; the old `model_catalog` fallback chain closes (B66; AGENT_ORCHESTRATION A31).
-- Bütçe/token/timeout enforcement: adım başlamadan `cost_ledger` koşu toplamı kontrol — a model with no price makes the total unknown, never 0, and a budgeted run waits until a price is entered; alerts at 70 % and 90 %; at 100 % a non-critical run stops before its next step (`BUDGET_EXCEEDED`) (B64 A10); token_limit LiteLLM virtual key üstünden koşu-etiketli sayaç; timeout_s pg-boss job `expireInSeconds` karşılığı (approval parkı hariç).
+- Bütçe/token/timeout enforcement: adım başlamadan `cost_ledger` koşu toplamı kontrol — a model with no price makes the total unknown, never 0; a subscription seat's run goes on with a `cost unknown` warning and counts against its quota, and only an API-metered row with no price holds a budgeted run until its price is entered (COST_CONTROL A6); alerts at 70 % and 90 %; at 100 % a non-critical run stops before its next step (`BUDGET_EXCEEDED`) (B64 A10); token_limit LiteLLM virtual key üstünden koşu-etiketli sayaç; timeout_s pg-boss job `expireInSeconds` karşılığı (approval parkı hariç).
 - Review adımı fail: `{on_fail:'retry_prev'|'fallback'|'escalate'|'fail'}` — varsayılan `retry_prev`, the review's notes riding the retry; `escalate` reaches the line's owner, and him only as a morning exception (B64 A9).
 
 ## 20. Test planı / 21. Acceptance criteria
@@ -138,7 +138,8 @@ psql "$DB" -c "SELECT status FROM workflow_runs ORDER BY started_at DESC LIMIT 1
 > run's `agent_runs` rows is the enforcement source (single-source cost rule
 > intact). Timeout excludes approval-park time by subtracting decided
 > approvals' open intervals. Since B64 a row whose model carries no price
-> makes this sum unknown, never 0 — and a budgeted run waits on it (A10
+> makes this sum unknown, never 0 — a subscription seat's run goes on with
+> a warning, and only an API-metered unpriced row holds a budgeted run (A10
 > below). <!-- OPEN: B64 -->
 > **A5 — snapshot result bookkeeping:** the runner appends a `result`
 > object into the run's own `steps_snapshot` entry as each step closes —
@@ -174,7 +175,7 @@ Source: his design page v15, `.planning/quick/20261012-b64-is-akisi/is-akisi.htm
 - **A7 — A line is recurring work with an owner (decision 9).** A calendar or an event starts a line's run through its line card (`workflows.trigger` cron | event); every run is a small job and passes the same checks as any job (AGENT_ORCHESTRATION A28). The line's owner — the head of its department — may change the line's definition within the limits he drew; the limits themselves stay his: the line's autonomy step (the four boxes and his step decision, board row B15) and its budget. Every change makes a new `version` (§10), is audited and can be undone. Today only he can change a line.
 - **A8 — A known job type runs from a pattern (decision 2).** A head's registered pattern for a known job type carries the plan, the seats and each part's brain and effort: a simple job runs from it with no plan, and a normal job's first plan is saved as one (AGENT_ORCHESTRATION A30). It is the stored template the B43 gap above names; the owner may deviate, and the deviation is recorded. A line sets its own value tier from its card.
 - **A9 — How a line is checked.** Every part gets the automatic check. A judge (`review` step) stays on a line only until he raises its autonomy step: a line that runs on its own carries automatic checks only, and every job still gets a final check. A failed review returns the work to its owner with the review's notes, riding the retry (§17); it reaches him only as a morning exception.
-- **A10 — Money in a line.** A model with no price makes the cost unknown, never 0 €; a budgeted run waits until a price is entered (COST_CONTROL). Budgets alert at 70 % and 90 %; at 100 % a non-critical run stops before its next step. A model that fails is replaced by the backup pair, never by a weaker model (AGENT_ORCHESTRATION A31).
+- **A10 — Money in a line.** A model with no price makes the cost unknown, never 0 €; a subscription seat (today Fable 5.1, Sol 6.1) never waits for a price — its run goes on with a `cost unknown` warning and counts against the subscription's quota — and only an API-metered row with no price holds a budgeted run until its price is entered (COST_CONTROL A6). Budgets alert at 70 % and 90 %; at 100 % a non-critical run stops before its next step. A model that fails is replaced by the backup pair, never by a weaker model (AGENT_ORCHESTRATION A31).
 
 ## Done definition (bu spec)
 

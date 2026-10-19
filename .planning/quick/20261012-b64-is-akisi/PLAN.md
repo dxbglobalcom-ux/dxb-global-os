@@ -23,13 +23,14 @@ kayıtlı uyarlama olarak yazıldı. Planı ve aşağıdaki dört konuyu 14 Ekim
    Temmuz'dan kalan 51 sesli kayıt kendiliğinden çalıştırılmaz.
 2. **İşin sahibi ve işin masası.** İşi alan başkan planı yazar. Her parçanın modelini ve düşünme seviyesini
    seçer, nedenini bir satırla yazar. Parçaları birleştirir, kendisi dener ve teslim eder. İşin tarifi, planı,
-   parçaları ve maliyeti tek yerde durur. Her başkana bir rehber verilir; sınırları kod korur. Değerli işte plan
-   iki kez yazılır ve Fable hakem olur. Değerli işin bütçesi anlaşmanın en fazla %30'udur.
+   parçaları ve maliyeti tek yerde durur. Her başkana bir rehber verilir; sınırları kod korur. Değerli işte planı
+   iki ayrı beyin yazar, Opus 5.5 max ve Fable 5.1 max, birbirini görmeden; Sol ikisini kör denetler, Opus
+   eksikleri ekler, hataları düzeltir ve imzalar. Değerli işin bütçesi anlaşmanın en fazla %30'udur.
 3. **Kontrol ve kritik kapı.** Kontrol, işi tarifteki "bitti" ölçütüne göre gerçekten açıp çalıştırarak sınar;
    daha iyisini aramaz. Geçmeyen iş, kontrolün notlarıyla sahibine döner. Müşteriye giden her şeye Sol bakar.
    Değerli teslimde, parada ve sözleşmede yanına Fable gelir. İkisi birden düşerse iş bekler ve size haber gelir.
-4. **Yedek çift ve model odası.** Opus düşerse işi Fable alır, Fable düşerse Opus. Fable'ın hakem koltukları düşerse Opus değil
-   Sol bakar; Opus kendi planını denetlemez. Geçiş kayda yazılır; hiçbir iş
+4. **Yedek çift ve model odası.** Opus düşerse işi Fable alır, Fable düşerse Opus. Fable'ın kritik kapıdaki koltuğu düşerse Opus değil
+   Sol bakar; hiçbir model kendi yazdığını denetlemez. Geçiş kayda yazılır; hiçbir iş
    daha zayıf bir modele düşmez. Eski yedek yolu kapanır; B65 ve B66 bu adımda biter. Fable'ın kotası %95'e
    gelince ikinci abonelik için onayınız istenir. Yeni bir model çıkınca size tek sayfalık öneri gelir.
 5. **Dışarıdan gelen iş.** Gmail bağlanır. Gelen maili önce Jev ayırır, emin olmadığını Sonnet ayırır. İş maili
