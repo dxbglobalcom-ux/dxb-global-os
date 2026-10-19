@@ -98,6 +98,12 @@ microphone <!-- CEO-OK: jarvis-silent-listening-voice-04-okayed-2026-09-14 -->. 
 
 ## Waiting on his approval
 
+- Two proposals of 2026-10-19, which he marked important for the holding and the build: a motion item in the eye
+  pass (a changed live surface recorded for minutes; every motion tied to real work; the pulse stops when the system
+  stops) and a measurement (one page from the same design decisions at medium, at high, and at high with two
+  screenshot rounds, side by side for his eye). Words: the handover note `~/Desktop/devir89.md`.
+- Valuable work, three open questions for his word, one at a time: a "neither plan is workable" outcome; the 30 %
+  cap's base for a job with no deal; a plan's own cost estimate.
 - Platform-hub plan, two open decisions: the studio tab drawn before B22's synthesis (B32's method); the `media` event channel.
 - The RAM upgrade, his decision by 2026-10-28: the lead advises the same Goodram 2×16 kit from Proshop (€580 with
   shipping, no coupon exists) over CSL's offer; with four sticks AMD guarantees only DDR5-3600, so 6000 is UNVERIFIED
