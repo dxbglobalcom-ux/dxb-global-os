@@ -540,7 +540,11 @@ RUNTIME tree. The design he answered decision by decision: `.planning/quick/2026
    standing assignment carries its date, who decided and why. The room's face on his screen is B08's brain panel.
 7. **Valuable work's two plans (decision 10).** A deal of 1,000 $ or more, or his word, makes a job valuable: the
    head writes the plan twice, at `xhigh` and at `max`; the plan judge, Fable 5.1 `high`, picks the better and adds
-   what the other has and it lacks, changing nothing (Fable down → Sol 6.1, item 4). The flow is
+   what the other has and it lacks, changing nothing (Fable down → Sol 6.1, item 4). **The judge is blind**
+   <!-- CEO-OK: valuable-work-judge-blind-2026-10-19 -->: it receives the two plans as "A" and "B" in a random
+   order, with no effort, model, file name or writing time anywhere in what it reads, and the key stays with the
+   head until the verdict is written — a judge that knows which plan was written at which level is anchored, and
+   its verdict measures nothing. The flow is
    [[AGENT_ORCHESTRATION_SPEC]]'s; the budget cap, 30 % of the deal, is [[COST_CONTROL_SPEC]]'s.
 8. **Jev (decision 7).** Mail and routine sorting go to Jev first (`typesafe-ai/jev`, through his Vercel AI
    Gateway); what Jev is unsure of goes to Sonnet 5.5 `medium`; Haiku is not used for it. Jev rides the `litellm`

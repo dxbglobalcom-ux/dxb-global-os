@@ -2698,5 +2698,13 @@
     "conditions": null,
     "session": "Opus 5.5 session 1783a7a7 — heard first-hand, 2026-10-19.",
     "where": "references/engineering-craft/ · ~/.claude/agents/debugger.md · ~/.claude/agents/helper-writer.md · ~/.claude/agents/builder.md · .claude/skills/dxb-team2/SKILL.md §3 §5 · .planning/quick/20261014-tahta-sirasi/HIS-WORDS-2026-10-15.md (YE18)"
+  },
+  "valuable-work-judge-blind-2026-10-19": {
+    "date": "2026-10-19",
+    "what": "B64 decision 10's plan judge is blind: it gets the two plans as A and B in a random order, with no effort, model, file name or writing time in what it reads; the key stays with the head until the verdict. Written into MODEL_ROUTING_SPEC item 7. Found when he asked whether the judge knew: the 2026-10-13 test was blind (max won clearly, both judges), the 2026-10-17 platform-hub judging was not (files named PLAN-max / PLAN-xhigh).",
+    "verbatim": "O kesinlikle o şartname konulmalı ya. Kesinlikle bilmeyecek. Hakem hiçbirinin ne olduğunu bilmeyecek. Bunu düzgün olarak yaz. Ne anladık o zaman yani hakemden? Eğer biliyorsa birinin max'te olduğunu, birisinin x-side olduğunu veya medium'da olduğunu. O durumda anchoring diyorsunuz galiba. Olur.",
+    "conditions": "His order to write it into the spec; not a LAW B acceptance.",
+    "session": "Opus 5.5 session 9eccd05e — heard first-hand, 2026-10-19.",
+    "where": "HOLDING-OS-MASTER-PLAN/MODEL_ROUTING_SPEC.md item 7 (decision 10)"
   }
 }
