@@ -127,6 +127,10 @@ four, not the default.
   — inside the 4-minute rule (§7), so the lead starts no battery while writers are testing.
 - Each writer gets a spec it can work from alone: the files, the
   behaviour, the measured facts it must not re-litigate, the test it writes first, what it reports.
+- Whoever writes — lead, fork, `helper-writer`, `builder` — writes by the principles in
+  `references/engineering-craft/codebase-design.md` and, before hand-over, checks only its own lines once
+  against its 12 smells: fixed there, or named with a reason. No extra agent, no extra round; the lead
+  never sends work back on a smell <!-- CEO-OK: ye18-pocock-skills-trimmed-for-both-2026-10-19 -->.
 - The lead verifies each piece before it is committed — reads the diff, runs its tests — and commits
   only what it verified. Nobody else commits.
 - A piece that fails: a medium writer's goes to the lead or a fork at `high`; one that failed twice at
@@ -167,7 +171,8 @@ alone (STATE, the board) is checked by the rulers on commit instead.
 
 ## 5. Tests
 
-- New behaviour is proven by a test written first — red before the code, green after.
+- New behaviour is proven by a test written first — red before the code, green after. A test that can
+  never go red — one that recomputes its expected value the way the code does — is a defect.
 - After each piece, its own tests. After Sol's fixes, the touched tests again.
 - **Code changed → `pnpm typecheck`, then the battery, before Sol** — Sol reads its output instead of
   marking it unverified, and reads the engine only after the battery has stopped writing to it

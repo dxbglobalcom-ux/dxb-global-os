@@ -2690,5 +2690,13 @@
     "conditions": "His 2026-08-31 words, carried by the session's task file (sources-rakip-39-40.md:142): 'nvideo sanırım pahalıydı biz onsuz yapıp sistemini alabiliriz.' Registered as his decision, not a LAW B acceptance of the reports.",
     "session": "Opus 5.5 session 9eccd05e — heard first-hand, 2026-10-19.",
     "where": ".planning/research/rival-intel/39-dcnclj.md · 40-dcbpe7.md · 00-LEDGER.md rows 39/40 · board B22 · ORDER.md rank 19"
+  },
+  "ye18-pocock-skills-trimmed-for-both-2026-10-19": {
+    "date": "2026-10-19",
+    "what": "YE18 (mattpocock/skills, MIT) decided: not the plugin; two pieces as our own trimmed copies in references/engineering-craft/, one copy for the construction now and the holding's engineering department when its work starts. diagnosing-bugs goes into the debugger agent (no theory before one red command; the hypotheses go to the lead, never to him). codebase-design's principles go to the writing seats; improve-codebase-architecture is not taken. code-review is not taken as a reviewer: its 12 smells become the writer's self-check of its own lines before hand-over, and the lead never sends work back on a smell. tdd is not taken; one line goes into dxb-team2 §5: a test that can never go red is a defect. He said start now, as a team.",
+    "verbatim": "Diğer türlü önerilerine evet diyorum. … tmm önerilerini kabul ediyorum. işe başlayın ekip olarak.",
+    "conditions": null,
+    "session": "Opus 5.5 session 1783a7a7 — heard first-hand, 2026-10-19.",
+    "where": "references/engineering-craft/ · ~/.claude/agents/debugger.md · ~/.claude/agents/helper-writer.md · ~/.claude/agents/builder.md · .claude/skills/dxb-team2/SKILL.md §3 §5 · .planning/quick/20261014-tahta-sirasi/HIS-WORDS-2026-10-15.md (YE18)"
   }
 }
