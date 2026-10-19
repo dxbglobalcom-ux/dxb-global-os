@@ -573,7 +573,7 @@
   },
   "engine-standard-4-steps-no-upscale-unless-asked-2026-09-04": {
     "date": "2026-09-04",
-    "what": "The engine standard is 4 sampling steps (a 15 s take ≈ 14 min; 8 steps = 19 min is too slow for him). Upscaling only when he asks for it; 1080p is the ceiling he chose over 2K for UGC.",
+    "what": "Upscaling only when he asks for it; 1080p is the ceiling he chose over 2K for UGC. (Corrected 2026-10-19, LAW A: the sentence 'The engine standard is 4 sampling steps (a 15 s take ≈ 14 min; 8 steps = 19 min is too slow for him)' was the author's reading of his words about time, never his words, and is deleted on his word — the standard is now studio-standard-8-steps-his-liked-recipe-2026-10-19.)",
     "verbatim": "15 saniye 10 dk 14 dk bitiriorlardu ya / 1k tmm / yok 1080 gerek yok.",
     "conditions": null,
     "where": "EYW-003 EKIP.md; STATE 2026-09-04"
@@ -2746,5 +2746,13 @@
     "conditions": null,
     "session": "Opus 5.5 session ff4b392f — heard first-hand, 2026-10-19.",
     "where": ".planning/quick/20261012-b64-is-akisi/is-akisi.html · scripts/governance/second-plan.sh · .planning/board-rows/B62.md"
+  },
+  "studio-standard-8-steps-his-liked-recipe-2026-10-19": {
+    "date": "2026-10-19",
+    "what": "The studio's standard for every video is the recipe of the full-quality films he liked: 8 sampling steps (EYW-002C and EYW-003, KATALOG lines 39-40), a real photograph as the human reference, a long detailed prompt, a high save quality. 4 steps is not used (no 4-step draft either: a draft plus the 8-step film takes longer than the 8-step film alone, and a 4-step draft is not shown to predict the 8-step result). The price, measured in the catalogue: 4 steps 10 min 25 s (EYW-004), 8 steps 19.0 min (EYW-003) — the studio makes about half as many takes in the same time. Replaces the 4-step sentence of engine-standard-4-steps-no-upscale-unless-asked-2026-09-04.",
+    "verbatim": "Benim beğendiğim şey kalsın sistem, beğenmediğim sistem 4 adım ve o iptal yani o. Bilmiyorum, bu şekilde olur mu mühendis olarak sana soruyorum. · nyse şimdilik eet diyelim sonra bakarız ok.",
+    "conditions": "'şimdilik … sonra bakarız' — standing until he revisits it (the studio retest may bring it back to him). Not a LAW B acceptance of any film.",
+    "session": "Opus 5.5 session 9eccd05e — heard first-hand, 2026-10-19.",
+    "where": "/home/dxb/tools/h3/studio/KATALOG.md · STATE NEXT 4 (the studio retest) · scripts/studio.mjs (its defaults follow at the retest)"
   }
 }

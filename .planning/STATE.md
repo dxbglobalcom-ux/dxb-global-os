@@ -84,9 +84,9 @@ microphone <!-- CEO-OK: jarvis-silent-listening-voice-04-okayed-2026-09-14 -->. 
 4. The studio retest, when its turn comes (the machine rebooted 2026-10-19 07:38, the card works again). In the factory
    with the Media Studio's staff: ScrollCraft's clip through H3 image-less at 8 steps, saved at a high quality (the
    blocky clip was ComfyUI's 1.17 Mbit/s save); stills from H3's best frame vs FLUX vs FLUX.2-klein-4B; a client-photo
-   ad through H3; upscale or not, judged full screen by his eye. The standard: his two accepted UGC films (EYW-002C,
-   EYW-003) were made at 8 steps (`~/tools/h3/studio/KATALOG.md`); the 4-step key of 2026-09-04 is an author's
-   reading of his words about time. Then the bridge and ScrollCraft's rule 2 follow the result.
+   ad through H3; upscale or not, judged full screen by his eye. The standard is the recipe of the films he accepted
+   — 8 steps, no 4-step take <!-- CEO-OK: studio-standard-8-steps-his-liked-recipe-2026-10-19 -->; `studio.mjs`'s
+   defaults follow it. Then the bridge and ScrollCraft's rule 2 follow the result.
 5. The walk, one row at a time with him: YE19 next, then to the last row; then the "Ekim 9-15 linkleri" sheet the
    same way.
 6. Plans he asked for, each talked first: how ChatGPT on Steroids (installed) joins the holding as an agent and as
@@ -97,7 +97,6 @@ microphone <!-- CEO-OK: jarvis-silent-listening-voice-04-okayed-2026-09-14 -->. 
 
 ## Waiting on his approval
 
-- The 4-step key (`engine-standard-4-steps-no-upscale-unless-asked-2026-09-04`) corrected to 8 steps — his word.
 - Platform-hub plan, two open decisions: the studio tab drawn before B22's synthesis (B32's method); the `media` event channel.
 - The RAM upgrade, his decision by 2026-10-28: the lead advises the same Goodram 2×16 kit from Proshop (€580 with
   shipping, no coupon exists) over CSL's offer; with four sticks AMD guarantees only DDR5-3600, so 6000 is UNVERIFIED
