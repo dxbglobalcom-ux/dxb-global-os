@@ -33,7 +33,8 @@ revenue does not wait while the holding is built <!-- CEO-OK: revenue-while-buil
 phase 3 accepted <!-- CEO-OK: isolation-phase3-accepted-by-his-word-2026-10-19 -->; rival 39-40 closed from their
 transcripts, nVideo's architecture taken <!-- CEO-OK: rival-39-40-closed-from-transcripts-2026-10-19 -->; new link
 batches become a dated tab in his one workbook <!-- CEO-OK: new-links-a-dated-tab-in-his-one-workbook-2026-10-19 -->;
-the YouTube sponsorship and his W077 ruling are in the ledger.
+the YouTube sponsorship and his W077 ruling are in the ledger; his Çalışma 1 working style is the door `dxb-calisma1`
+<!-- CEO-OK: calisma1-door-2026-10-19 --> (he will try it and dxb-team2's plan method on the same kind of job).
 
 2026-10-18 — The Gözlem Odası, made simple on his word <!-- CEO-OK: gozlem-odasi-simple-plan-2026-10-18 -->: one smart agent looks at the people on his list (X, YouTube,
 Instagram, AI news sites, any account he gives) every two or three days and brings him only what the holding can use —
