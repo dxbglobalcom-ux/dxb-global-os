@@ -197,6 +197,22 @@ export function noRefusalLaw(): string {
 }
 
 /**
+ * The first-shot standard — CEO order, 2026-10-21, made a holding rule on his word.
+ *
+ * His words: "İşi en başta en mükemmel şekilde Ferrari seviyesinde ilk adımda, ilk atışta, ilk
+ * şutta Ferrari seviyesinde yapılmalı. Yani hem holdingde hem burada." He gave it when a final
+ * check that compares finished work with its approved design was added (AGENT_ORCHESTRATION A28):
+ * a check that follows must never make the maker hand over a draft and count on being corrected.
+ */
+export function firstShotLine(): string {
+  return (
+    "Your first attempt is the finished work, delivered at Ferrari level — complete, correct and " +
+    "finished in every detail the work asks for. A check that follows is never a reason to hand " +
+    "over less: do it right the first time."
+  );
+}
+
+/**
  * The standing layer, assembled in one place.
  *
  * Callers add their per-turn layer (conversation, snapshot, lane-specific formatting) after this.
@@ -221,6 +237,7 @@ export function standingPrompt(input: {
     honestyLine(),
     approvalGateLine(input.lane),
     noRefusalLaw(),
+    firstShotLine(),
   ].filter(Boolean);
 }
 

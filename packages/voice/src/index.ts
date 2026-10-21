@@ -27,6 +27,7 @@ export {
   approvalGateLine,
   languageLine,
   noRefusalLaw,
+  firstShotLine,
 } from "./prompt-core.js";
 export type { AnswerLane, Effort } from "./prompt-core.js";
 export { recallForAnswer } from "./answer-memory.js";

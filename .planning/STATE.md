@@ -31,7 +31,10 @@ not here. What is accepted is read from `scripts/governance/ceo-approvals.json`,
 "Minimalism" label that made them his general wish is gone — his words: *"bu kurallar kalabilir ama bu benim herşeyde
 sadelik istediğim anlamına gelmez."* Changed: `00-CEO-DIRECTIVE-DESIGN-VERIFICATION.md` A1.4 (53e9cb51, aa0ca775), the
 memory note now `ceo-card-rules-2026-07-17`, claude-mem observation 38112 deleted. The 2026-10-20 session
-(`40f6660d`) that weighed his notes on beauty, effort and the eye pass was cut by a power outage before his answer.
+(`40f6660d`) that weighed his notes on beauty, effort and the eye pass resumed after the outage and got his answers:
+every employee now carries the first-shot Ferrari standard <!-- CEO-OK: first-shot-ferrari-holding-rule-2026-10-21 -->;
+the holding's final check compares client visual work with its approved design (A28) <!-- CEO-OK: visual-check-compares-approved-design-2026-10-21 -->;
+no motion item and no memory note (the rule exists in the core).
 
 2026-10-19 — Valuable work (1,000 $+) and every dxb-team2 plan now run with two writers and one blind audit
 <!-- CEO-OK: plan-two-writers-sol-audit-2026-10-19 -->: Opus max and Fable max write apart, Sol audits A and B blind,
@@ -82,7 +85,10 @@ microphone <!-- CEO-OK: jarvis-silent-listening-voice-04-okayed-2026-09-14 -->. 
 
 ## Next
 
-1. The studio platform-hub plan is approved with his corrections and on the board (B43; FINAL.md Bölüm 0): built at its
+1. In hand (session `40f6660d`): a separate engineer account so the eye check runs on his screens (B03-bis)
+   <!-- CEO-OK: engineer-account-holds-the-keys-2026-10-21 -->; then one page from the 13 October clinic brief built four
+   ways, Ultra Code once, side by side for his eye <!-- CEO-OK: four-way-quality-measurement-2026-10-21 -->.
+1b. The studio platform-hub plan is approved with his corrections and on the board (B43; FINAL.md Bölüm 0): built at its
    rank — accounts connected and infrastructure only, no money loaded, no exam now; its first step raises the server's
    LiteLLM pin (`vps/compose.yaml`, 1.91.0) to ≥ 1.97.0. The channels are a separate study, talked before January 2027.
 2. The Gözlem Odası (B82): the plan has his eye; the build when the factory fully starts — step 1, the X gate, is in.
@@ -102,12 +108,6 @@ microphone <!-- CEO-OK: jarvis-silent-listening-voice-04-okayed-2026-09-14 -->. 
 
 ## Waiting on his approval
 
-- The 2026-10-20 proposals (session `40f6660d`, which widened the two of devir89; the label one is settled above):
-  three additions to the eye pass (compare with the approved design, list the differences, fix, look again; a motion
-  item — a live surface recorded for minutes, every motion tied to real work, the pulse stops when the system stops;
-  an eye other than the maker's), the same in the client delivery check; his one login for B03-bis when the first
-  screen job starts; one page measured four ways (high, max, high with the look-and-fix loop and a separate eye, Ultra
-  Code) from the 2026-10-13 clinic brief; a memory note that a word for one job is never his general rule.
 - claude-mem: five more observations still carry the label (38114, 9153, 38124, 8060, 38123) — delete or keep.
 - Valuable work, three open questions for his word, one at a time: a "neither plan is workable" outcome; the 30 %
   cap's base for a job with no deal; a plan's own cost estimate.

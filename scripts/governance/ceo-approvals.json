@@ -2770,5 +2770,37 @@
     "conditions": "Every pulse rides the system's real liveness and stops when it stops (the engineer's condition, no objection from him).",
     "session": "Opus 5.5 session ff4b392f — heard first-hand, 2026-10-19.",
     "where": ".claude/CLAUDE.md (the first law of V2) · HOLDING-OS-MASTER-PLAN/DESIGN_SYSTEM.md §9.1 M2 · ORGANIZATION_ENGINE_SPEC.md A4 · OBSERVABILITY_SPEC.md (Hermes alive and simple) · 00-BOARD-OPEN-WORK.md (zero is a real answer) · .planning/research/rival-intel/00-LEDGER.md (law 13; Closing stage 1)"
+  },
+  "visual-check-compares-approved-design-2026-10-21": {
+    "date": "2026-10-21",
+    "what": "In the running holding, every visual work for a client — a site, a page, an app screen, a picture, a film — is checked against the design the client approved: the final check holds the approved design beside the finished work and lists every difference. The client's approval of the design is the binding one; his eye on deals of 1,000 $ or more stays as it is.",
+    "verbatim": "Tamam, ikinci hususla ilgili söylediğin şey, eksik tek şey olan şey, kabul ediyorum, evet. Yani web sitesi gibi veya herhangi bir holdingin yapacağı bütün herhangi holdingle ilgili, müşterilerin işleriyle ilgili hususlarda görsellik açısından bu önemli olmalı. Aynen öyle, karşılaştırma yapmalı. Bunu ekleyebilirsin, evet. — (on the client's approval) Yani şöyle, ben de bakarım. Müşteri de bakar. İkimizden birinin onayı olur herhalde.",
+    "conditions": "No bureaucracy and no endless loops: the check looks once, lists, and the work returns to its owner only when it fails (his words of the same talk: \"Çok bunu böyle şey yapmaya gerek yok … maliyeti de düşünmemiz lazım\").",
+    "session": "Opus 5.5 session 40f6660d — heard first-hand, 2026-10-21.",
+    "where": "HOLDING-OS-MASTER-PLAN/AGENT_ORCHESTRATION_SPEC.md A28"
+  },
+  "first-shot-ferrari-holding-rule-2026-10-21": {
+    "date": "2026-10-21",
+    "what": "A holding rule, on his yes when asked whether it should become one: the first attempt is the finished work, at Ferrari level; a check that follows is never a reason to hand over less — in the holding and in the construction. Every employee carries it in the standing layer on every lane.",
+    "verbatim": "Yani böyle bir kural var diye işi kaypak yapmasın yani. Bizim maliyetimizi yükseltmesinler yani. Anlatabildim mi? İşi en başta en mükemmel şekilde Ferrari seviyesinde ilk adımda, ilk atışta, ilk şutta Ferrari seviyesinde yapılmalı. Yani hem holdingde hem burada. — (asked: holdingin kuralı olsun mu?) Evet, yani bizim işlerdeki seviyeyi bilsin yani çalışanlarımız ilk seferde. Evet, tüm evet, onu da evet.",
+    "conditions": null,
+    "session": "Opus 5.5 session 40f6660d — heard first-hand, 2026-10-21.",
+    "where": "packages/voice/src/prompt-core.ts firstShotLine() · .claude/skills/dxb-hamza-context/SKILL.md (the standing layer's table)"
+  },
+  "four-way-quality-measurement-2026-10-21": {
+    "date": "2026-10-21",
+    "what": "One measurement, run once: the home page of the 13 October clinic brief built four ways from the same brief — today's way (high, one shot); medium with one look-and-fix round and a separate eye; high with one look-and-fix round and a separate eye; Ultra Code. The maker is not told a check follows. The four pages, each with its time and quota, go side by side on his screen. If a cheaper way reaches Ultra Code, Ultra Code's good parts join our own way and the cost stays low.",
+    "verbatim": "Bir de o testi yapalım yani, ne yapalım, kaçarı yok, ben de merak ediyorum ne çıkacak. — Yedi, tamam. Yani yedi ile ilgili şey, haklısın. Yani evet, brief'in sabitlemediği çok sayıda küçük zevk kararı var. Doğru, medium o kararları küçük zevk kararlarını falan hani şey göz ardı ediyor olabilir dediğin gibi. Aynen. Evet, önerini kabul ediyorum.",
+    "conditions": "Ultra Code is expensive — used once, in this measurement only.",
+    "session": "Opus 5.5 session 40f6660d — heard first-hand, 2026-10-21.",
+    "where": ".planning/quick/20261021-dort-yollu-olcum/"
+  },
+  "engineer-account-holds-the-keys-2026-10-21": {
+    "date": "2026-10-21",
+    "what": "The engineers hold the dashboard's login and keys for the whole build, so the real-browser eye check runs (board row B03-bis). On the engineer's advice, a separate engineer account, not his own: his account and its second factor stay his, and the audit log never records an engineer's act as the CEO's. The key lives in the vault, never in the repo or any output; when the holding is 100 % finished the engineer account is closed.",
+    "verbatim": "Birincisi o giriş kısmı var ya, panele giriş kısmı. … Dashboard'a giriş kısmı. Şifre falan. Gerekiyorsa onu bizimkiler girsin. Siz girebilirsiniz. İnşaata bak şimdi, inşaatı yapan insan inşaatın içine rahat girebilmeli. … Al kardeşim, anahtar sende de duracak. Tamam mı? Oradaki bütün şifre ve anahtar girişi sizde duracak. Bu kadar. Sadece her şey biter. Her şey tamamıyla A'dan Z'ye %100 biter. Tamam mı? Ondan sonra değiştiririz onu. — (asked: ayrı mühendis hesabı olsun mu?) Tamam, o şekilde yap. — Bu B03 bis bilmem ne falan, onu dedik size zaten yani. Bunun halledin yani, mühendislik giriş istediğiniz gibi girin, şey yapın.",
+    "conditions": "Closed when the holding is finished.",
+    "session": "Opus 5.5 session 40f6660d — heard first-hand, 2026-10-21.",
+    "where": "HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md B03-bis"
   }
 }
