@@ -27,6 +27,12 @@ not here. What is accepted is read from `scripts/governance/ceo-approvals.json`,
 
 ## Where we left off
 
+2026-10-21, evening — The check of client work is re-seated in the specs on his word (B64; AGENT_ORCHESTRATION A28/A30/A32,
+MODEL_ROUTING §4e; 833b7c13, 2b57926e, Sol's two B fixed): Sol 6.1 high reads it and tries what runs, Fable 5.1 high
+reads it, no separate Opus final check <!-- CEO-OK: final-check-sol-fable-and-four-walkers-2026-10-21 -->; the four
+first-user walkers are one Quality skill, the customer's eye, entering by the client web/app pattern, the owner's gap
+judgement or his word <!-- CEO-OK: customer-eye-skill-gap-rule-2026-10-21 -->. Spec only, nothing built.
+
 2026-10-21, midday — The WhatsApp links since 15 Oct 11:40 (16 new) are the sheet "Ekim 15-21 linkleri" of his one
 workbook (`.planning/quick/20261021-ekim-linkleri/RECORD.md`). On his word: REA (`rea`, reverse engineering) and Ghidra
 installed on the shelf — his ruling, reverse engineering is engineering, not kul hakkı; TasteSkill updated to 2.1.4,
@@ -94,9 +100,9 @@ microphone <!-- CEO-OK: jarvis-silent-listening-voice-04-okayed-2026-09-14 -->. 
 
 ## Next
 
-1. In hand: the fifth way — the clinic home page built by the 1,000 $ way itself (Opus max and Fable max plans
-   sealed, Sol's blind plan audit, a fresh Opus max merges and signs, a fresh builder at high, one check), shown to him
-   ALONE (the four are already open). Then the Ultra Code decision and the four-first-users trial (his Excel EK22).
+1. His test, next: the holding's own employees produce one 1,000 $+ job through the valuable-work system three times —
+   every seat at medium, at high, at max — shown to him blind, side by side; the parts still under construction named
+   in the result. Unrelated to the clinic work. The job is still to be chosen (his, or one the lead proposes).
 1b. The studio platform-hub plan is approved with his corrections and on the board (B43; FINAL.md Bölüm 0): built at its
    rank — accounts connected and infrastructure only, no money loaded, no exam now; its first step raises the server's
    LiteLLM pin (`vps/compose.yaml`, 1.91.0) to ≥ 1.97.0. The channels are a separate study, talked before January 2027.
@@ -117,8 +123,8 @@ microphone <!-- CEO-OK: jarvis-silent-listening-voice-04-okayed-2026-09-14 -->. 
 
 ## Waiting on his approval
 
-- After the fifth page: whether Ultra Code joins the holding (the lead advises no); a trial of the four first-user
-  walkers inside the single final check (EK22); deleting the obsolete `scripts/test/e2e-login.mjs`.
+- Whether Ultra Code joins the holding (the real one was never run — arm B was an imitation); deleting the obsolete
+  `scripts/test/e2e-login.mjs`.
 - From "Ekim 15-21 linkleri", each a start on his word: the claude-security scan of the repository (he said later,
   with making it private), the file-size lock in the pre-commit hook, Revid's paid plan (39 $/month, money out),
   REA opened to the holding's own employees (part of B41).
