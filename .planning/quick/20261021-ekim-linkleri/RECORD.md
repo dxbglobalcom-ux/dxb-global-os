@@ -11,11 +11,9 @@ His order (2026-10-21): review what came since Thursday 11:40, the same way as b
   address bar, titles confirmed by YouTube oEmbed) and a screenshot of Vox's TasteSkill v2 post (EK14, post found).
 
 ## Reviewed → new sheet "Ekim 15-21 linkleri" (EK09–EK24)
-- Three Opus · medium readers, the lead judged and wrote the plan (14 of 16 carry one).
-- Not fully watched: EK17 (112-min X video; audio download failed — identified from 12 frames as a re-upload of
-  DeepLearning.AI's "AI Agents in LangGraph", scored 0), EK11 (speech-to-text broke 3:50–10:00, covered by 9 frames).
+- Three Opus · medium readers, the lead judged and wrote the plan (15 of 16 carry one).
+- Not fully watched: EK11 (speech-to-text broke 3:50–10:00, covered by 9 frames).
 - Rank 1 is the claude-security scan because the repository is public (`gh repo view` → `"visibility":"PUBLIC"`).
-- Nothing installed from the links.
 
 ## His corrections the same day
 - REA (EK10): his ruling — reverse engineering is engineering, not kul hakkı; kul hakkı is copying the same thing and
