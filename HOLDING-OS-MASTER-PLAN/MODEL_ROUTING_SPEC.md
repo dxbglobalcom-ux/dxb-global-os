@@ -495,7 +495,7 @@ RUNTIME tree. The design he answered decision by decision: `.planning/quick/2026
    | final check of internal work | Opus 5.5 `high` |
    | plan audit (valuable work only) | Sol 6.1 `high` (item 7) |
    | check of client work (the critical gate) | Sol 6.1 `high` reads and tries what runs, Fable 5.1 `high` reads, blind to each other; a routine client message Sol alone (§4e) |
-   | the customer's eye (four first-user walkers, where [[AGENT_ORCHESTRATION_SPEC]] A28 puts it) | Opus 5.5 `high` |
+   | the customer's eye (four first-user walkers, where [[AGENT_ORCHESTRATION_SPEC]] A28 puts it) | Opus 5.5, effort by the owner, starting at `medium` |
 
    A known job type runs from the head's registered pattern ([[WORKFLOW_ENGINE_SPEC]]), like a skill or a
    pipeline; its plan is not rewritten — a valuable job of a known type plans only its difference from the pattern,

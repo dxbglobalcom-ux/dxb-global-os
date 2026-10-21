@@ -2818,5 +2818,13 @@
     "conditions": "Spec text only (B64 open, nothing built). Measured on one web page, one run; the other kinds of work are unmeasured and enter by the owner's judgement.",
     "session": "Opus 5.5 session 9e5b6c48 — heard first-hand, 2026-10-21.",
     "where": "HOLDING-OS-MASTER-PLAN/AGENT_ORCHESTRATION_SPEC.md A28; MODEL_ROUTING_SPEC.md §4e and the guide"
+  },
+  "customer-eye-owner-picks-walkers-and-effort-2026-10-21": {
+    "date": "2026-10-21",
+    "what": "The customer's eye: on new client web or app work all four walkers walk; elsewhere (a changed path, other client work) the owner picks which walkers and how many the work needs, with its reason. The owner picks their effort too, starting at medium — Anthropic's advice for Opus 5.5 (start at medium, test levels on your own work, keep xhigh and max for measured gains), verified at the source the same day; the walkers were measured only at high. Every walk records which walker found what, and the guide is corrected from it.",
+    "verbatim": "Güzel, tamam. … Bu son öneriyi spekte yazmak. Bunu yaz tamam. Okey.",
+    "conditions": "Spec text only (B64 open). Medium against high for the walkers is unmeasured; a later web job measures it.",
+    "session": "Opus 5.5 session 9e5b6c48 — heard first-hand, 2026-10-21.",
+    "where": "HOLDING-OS-MASTER-PLAN/AGENT_ORCHESTRATION_SPEC.md A28; MODEL_ROUTING_SPEC.md guide"
   }
 }
