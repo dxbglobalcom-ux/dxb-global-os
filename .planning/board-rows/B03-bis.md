@@ -30,3 +30,7 @@ CEO (one login)
 ## What closes it
 
 A CEO-minted `storageState` on disk, and a re-mint cadence recorded so the leg does not silently lapse again
+
+## Done notes
+
+- ✓ 2026-10-21 — engineer account on the construction engine; eye-check copy on :3100 proven EN/TR at 1280/1920, overflow 0
