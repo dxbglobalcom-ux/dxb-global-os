@@ -1,42 +1,37 @@
-// CEO storageState minting, WITHOUT a human at the keyboard.
+// The ENGINEER's storageState, minted without a human at the keyboard (board row B03-bis).
 //
-// e2e-login.mjs opens a headed window and waits for the CEO — correct when a
-// human is there, useless when the design battery must run inside a session.
-// This script mints the same artifact through the app's OWN auth stack:
-// @supabase/ssr writes the session cookies itself (name, chunking and encoding
-// are the library's business, never guessed here), and we hand that cookie jar
-// to Playwright as a storageState.
+// CEO 2026-10-21 (ledger engineer-account-holds-the-keys-2026-10-21): the engineers hold the dashboard
+// login for the whole build, through their own account — not his. That account lives on the
+// CONSTRUCTION engine only (scripts/test/engineer-account.mjs): every signed-in user is the CEO to the
+// database (fn_succession_actor), so on the company engine an engineer would act and be audited as him.
+// The dashboard under the eye check therefore runs against the construction API, e.g.
+//   NEXT_PUBLIC_SUPABASE_URL=http://127.0.0.1:54421 NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=<construction key>
 //
-// Credentials come from apps/dashboard/.env.local — the same DXB_CEO_EMAIL /
-// DXB_CEO_PASSWORD pair the project's own seed-ceo-user.ts uses. Nothing is
-// printed: the output is a chmod-600 file outside the repo.
+// @supabase/ssr writes the session cookies itself (name, chunking and encoding are the library's
+// business, never guessed here), and that cookie jar becomes a Playwright storageState. Credentials come
+// from chmod-600 files under ~/.dxb; nothing is printed; the output is a chmod-600 file outside the repo.
 //
-//   node scripts/test/e2e-state-mint.mjs        (:3000 / supabase must be up)
-import { readFileSync, mkdirSync, writeFileSync, chmodSync } from "node:fs";
-import { homedir } from "node:os";
-import { join } from "node:path";
+//   node scripts/test/engineer-account.mjs   (once; idempotent)
+//   node scripts/test/e2e-state-mint.mjs
+import { writeFileSync, chmodSync } from "node:fs";
 import { createRequire } from "node:module";
+import {
+  CONSTRUCTION_API_FILE,
+  ENGINEER_LOGIN_FILE,
+  ENGINEER_STATE_FILE,
+  readPrivateEnv,
+  assertConstructionEngine,
+} from "./engineer-env.mjs";
 
 const require = createRequire(new URL("../../apps/dashboard/package.json", import.meta.url));
 const { createServerClient } = require("@supabase/ssr");
 
-// .env.local, parsed here rather than depended on: this script runs from the
-// repo root where Next's loader is not in play.
-const envPath = new URL("../../apps/dashboard/.env.local", import.meta.url);
-const env = {};
-for (const line of readFileSync(envPath, "utf8").split("\n")) {
-  const t = line.trim();
-  if (!t || t.startsWith("#") || !t.includes("=")) continue;
-  const i = t.indexOf("=");
-  env[t.slice(0, i).trim()] = t.slice(i + 1).trim().replace(/^["']|["']$/g, "");
-}
-
-const url = env.NEXT_PUBLIC_SUPABASE_URL;
-const key = env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY;
-const email = env.DXB_CEO_EMAIL;
-const password = env.DXB_CEO_PASSWORD;
-if (!url || !key || !email || !password) {
-  console.error("missing env in apps/dashboard/.env.local");
+const api = readPrivateEnv(CONSTRUCTION_API_FILE);
+const url = assertConstructionEngine(api.API_URL);
+const key = api.PUBLISHABLE_KEY || api.ANON_KEY;
+const { EMAIL: email, PASSWORD: password } = readPrivateEnv(ENGINEER_LOGIN_FILE);
+if (!key || !email || !password) {
+  console.error(`missing values in ${CONSTRUCTION_API_FILE} or ${ENGINEER_LOGIN_FILE}`);
   process.exit(1);
 }
 
@@ -78,8 +73,7 @@ const state = {
   origins: [],
 };
 
-const out = join(homedir(), ".dxb", "e2e-state.json");
-mkdirSync(join(homedir(), ".dxb"), { recursive: true });
+const out = ENGINEER_STATE_FILE;
 writeFileSync(out, JSON.stringify(state));
 chmodSync(out, 0o600);
 console.log(`storageState saved: ${out} (${state.cookies.length} cookies, chmod 600)`);

@@ -313,6 +313,19 @@ function listCompanyProcesses() {
   return found;
 }
 
+/**
+ * The construction site's eye-check copy of the dashboard (board row B03-bis, 2026-10-21) is a
+ * next-server too, and it rightly carries the construction engine — it is not the CEO's panel. It is
+ * told apart by the stamp its launcher writes (scripts/test/dashboard-eye.mjs) AND by carrying no
+ * company address; a stamped process that names a company port stays a company process and is judged
+ * as one. Pinned by tests/b03bis/eye-separation.test.ts.
+ */
+export function isConstructionEyeProcess(envLines) {
+  const stamped = envLines.includes("DXB_DASHBOARD_LAUNCHER=scripts/test/dashboard-eye.mjs");
+  const company = envLines.some((l) => /:5432[12]\b/.test(l));
+  return stamped && !company;
+}
+
 /** One process's environment, as NAME=VALUE lines. Values are never printed. */
 function readEnv(pid) {
   try {
@@ -715,6 +728,7 @@ async function main() {
   const carriers = [];
   for (const p of listCompanyProcesses()) {
     const env = readEnv(p.pid);
+    if (isConstructionEyeProcess(env)) continue;
     const bad = env.filter((l) => l.includes(`:${CONSTRUCTION_PORT}/`) || /DXB_CONSTRUCTION/.test(l));
     if (bad.length) carriers.push(`${p.name} (pid ${p.pid}): ${bad.map((l) => l.split("=")[0]).join(", ")}`);
   }
