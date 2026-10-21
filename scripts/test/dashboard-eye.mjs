@@ -10,10 +10,11 @@
 // The environment is built by buildEyeEnv (scripts/test/engineer-env.mjs): every DXB_ / NEXT_PUBLIC_
 // name and any company address dropped, the construction API, key and database put in, and the
 // launcher stamp apps/dashboard/src/instrumentation.ts asks for. A construction file that names a
-// company port refuses to start. The separation gate knows the stamp
-// (scripts/governance/company-untouched.mjs, isConstructionEyeProcess).
+// company port refuses to start. Next would load apps/dashboard/.env* on top of that environment, so it
+// runs where those files read as nothing (withoutCompanyEnvFiles, bwrap). The separation gate knows this
+// server (scripts/governance/company-untouched.mjs, isConstructionEyeProcess) — on :3100 only.
 //
-//   node scripts/test/dashboard-eye.mjs          # next dev on 127.0.0.1:3100 (DXB_EYE_PORT to change)
+//   node scripts/test/dashboard-eye.mjs          # next dev on 127.0.0.1:3100
 //   node scripts/test/engineer-account.mjs       # once
 //   node scripts/test/e2e-state-mint.mjs         # the engineer's storageState
 //
@@ -21,19 +22,22 @@
 import { spawn } from "node:child_process";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
-import { CONSTRUCTION_API_FILE, readPrivateEnv, buildEyeEnv } from "./engineer-env.mjs";
+import {
+  CONSTRUCTION_API_FILE,
+  EYE_PORT,
+  readPrivateEnv,
+  buildEyeEnv,
+  withoutCompanyEnvFiles,
+} from "./engineer-env.mjs";
 
 const REPO = join(dirname(fileURLToPath(import.meta.url)), "..", "..");
-const port = process.env.DXB_EYE_PORT ?? "3100";
-if (port === "3000") throw new Error("refused: :3000 is the CEO's panel's port");
 
 const env = buildEyeEnv(process.env, readPrivateEnv(CONSTRUCTION_API_FILE));
-console.log(`dashboard (eye check): dev on 127.0.0.1:${port}, construction engine only.`);
-const child = spawn(
-  "pnpm",
-  ["--filter", "@dxb/dashboard", "exec", "next", "dev", "-H", "127.0.0.1", "-p", port],
-  { cwd: REPO, env, stdio: "inherit", detached: true },
-);
+console.log(`dashboard (eye check): dev on 127.0.0.1:${EYE_PORT}, construction engine only.`);
+const [cmd, ...args] = withoutCompanyEnvFiles(join(REPO, "apps", "dashboard"), [
+  "pnpm", "--filter", "@dxb/dashboard", "exec", "next", "dev", "-H", "127.0.0.1", "-p", EYE_PORT,
+]);
+const child = spawn(cmd, args, { cwd: REPO, env, stdio: "inherit", detached: true });
 // pnpm → next → next-server: a signal to pnpm alone leaves the server listening (measured
 // 2026-10-21), so the whole process group goes.
 for (const sig of ["SIGINT", "SIGTERM"]) process.on(sig, () => process.kill(-child.pid, sig));

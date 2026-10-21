@@ -11,7 +11,7 @@
 import { describe, it, expect } from "vitest";
 import { mkdtempSync, writeFileSync, chmodSync } from "node:fs";
 import { tmpdir } from "node:os";
-import { join } from "node:path";
+import { basename, join } from "node:path";
 import {
   parseEnvText,
   readPrivateEnv,
@@ -20,6 +20,8 @@ import {
   assertConstructionDatabase,
   buildEyeEnv,
   EYE_LAUNCHER,
+  EYE_ORIGIN,
+  ENGINEER_STATE_FILE,
 } from "../../scripts/test/engineer-env.mjs";
 
 // The company database's address, built from its port so no line of the battery carries it whole (B36).
@@ -54,6 +56,30 @@ describe("B03-bis — the engineer login's guards", () => {
     expect(assertConstructionEngine("http://127.0.0.1:54421")).toBe("http://127.0.0.1:54421");
   });
 
+  // Audit B1, 2026-10-21: an unparseable address threw the raw string — its password with it — to stderr.
+  it("refuses an unparseable address without repeating it", () => {
+    const secret = "pw-that-must-not-print";
+    for (const check of [assertConstructionEngine, assertConstructionDatabase]) {
+      let thrown: unknown;
+      try {
+        check(`postgresql://u:${secret}@[not-a-host/postgres`);
+      } catch (e) {
+        thrown = e;
+      }
+      expect(thrown).toBeInstanceOf(Error);
+      const e = thrown as Error;
+      expect(e.message).toMatch(/refused/);
+      expect(`${e.message} ${e.stack} ${JSON.stringify(e)}`).not.toContain(secret);
+    }
+  });
+
+  // Audit B3, 2026-10-21: the engineer's session went to the shared e2e-state.json that the company
+  // panel's tools (dead-click-sweep, Playwright defaults) read against :3000.
+  it("keeps the engineer's session in its own file, bound to the eye copy's origin", () => {
+    expect(basename(ENGINEER_STATE_FILE)).not.toBe("e2e-state.json");
+    expect(EYE_ORIGIN).toBe("http://127.0.0.1:3100");
+  });
+
   it("makes a long random password, different each time", () => {
     const a = newEngineerPassword();
     const b = newEngineerPassword();
@@ -78,6 +104,15 @@ describe("B03-bis — the eye-check mode's environment", () => {
     expect(assertConstructionDatabase(api.DB_URL)).toBe(api.DB_URL);
   });
 
+  // Audit A1, 2026-10-21: the driver applies query parameters over the visible address, so
+  // ".../postgres?port=<company>" behind a construction port reached the company's database.
+  it("judges the address the driver will connect to, not the one it shows", () => {
+    expect(() => assertConstructionDatabase(`${api.DB_URL}?port=${COMPANY_DB_PORT}`)).toThrow(/company/);
+    for (const query of ["host=10.0.0.1", "hostaddr=10.0.0.1", "service=x", "options=-c%20a%3Db"]) {
+      expect(() => assertConstructionDatabase(`${api.DB_URL}?${query}`)).toThrow(/refused/);
+    }
+  });
+
   it("builds a stamped environment pointing at the construction engine only", () => {
     const env = buildEyeEnv(
       {
@@ -94,6 +129,8 @@ describe("B03-bis — the eye-check mode's environment", () => {
     expect(env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY).toBe("pk");
     expect(env.DXB_DATABASE_URL).toBe(api.DB_URL);
     expect(env.DXB_DASHBOARD_LAUNCHER).toBe(EYE_LAUNCHER);
+    // Measured 2026-10-21: the first eye proof passed only because .env.local brought this back (audit A3).
+    expect(env.NEXT_PUBLIC_DXB_MFA_ENFORCED).toBe("false");
     expect(({ ...env } as Record<string, unknown>).DXB_COMPANY_DATABASE_URL).toBeUndefined();
     expect(Object.values(env).join(" ")).not.toMatch(/:5432[12]\b/);
   });

@@ -89,6 +89,12 @@ import { createRequire } from "node:module";
 import { randomBytes } from "node:crypto";
 import { scan } from "../b36/count-company-fallbacks.mjs";
 import { CONSTRUCTION_MARKS, sweepSql, parseSweep } from "../b36/construction-marks.mjs";
+import {
+  EYE_LAUNCHER,
+  EYE_PORT,
+  assertConstructionEngine,
+  assertConstructionDatabase,
+} from "../test/engineer-env.mjs";
 
 const REPO = fileURLToPath(new URL("../..", import.meta.url));
 const COMPANY_CONTAINER = "supabase_db_DxB_Global_OS";
@@ -308,22 +314,53 @@ function listCompanyProcesses() {
     const m = /^\s*(\d+)\s+(.*)$/.exec(l);
     if (!m) continue;
     if (/\bsh -c\b/.test(m[2])) continue;
-    for (const [re, name] of want) if (re.test(m[2])) found.push({ pid: m[1], name });
+    for (const [re, name] of want) if (re.test(m[2])) found.push({ pid: m[1], name, args: m[2] });
   }
   return found;
 }
 
 /**
  * The construction site's eye-check copy of the dashboard (board row B03-bis, 2026-10-21) is a
- * next-server too, and it rightly carries the construction engine — it is not the CEO's panel. It is
- * told apart by the stamp its launcher writes (scripts/test/dashboard-eye.mjs) AND by carrying no
- * company address; a stamped process that names a company port stays a company process and is judged
- * as one. Pinned by tests/b03bis/eye-separation.test.ts.
+ * next-server too, and it rightly carries the construction engine — it is not the CEO's panel. Only
+ * that server is told apart, and only when every one of these holds: it is a next-server; an ancestor
+ * is its launcher (scripts/test/dashboard-eye.mjs) and another is `next dev -p 3100`; it carries the
+ * launcher's stamp and no company address; and its database and API, read by the driver's own parser
+ * (engineer-env.mjs), are the construction engine's. No other company process is ever exempt.
+ * `proc` is { args, env: NAME=VALUE lines, ancestors: argv arrays }. Pinned by
+ * tests/b03bis/eye-separation.test.ts.
  */
-export function isConstructionEyeProcess(envLines) {
-  const stamped = envLines.includes("DXB_DASHBOARD_LAUNCHER=scripts/test/dashboard-eye.mjs");
-  const company = envLines.some((l) => /:5432[12]\b/.test(l));
-  return stamped && !company;
+export function isConstructionEyeProcess(proc) {
+  if (!/next-server/.test(proc.args)) return false;
+  const launched = proc.ancestors.some((argv) => argv.some((w) => w.endsWith(`/${EYE_LAUNCHER}`)));
+  const onEyePort = proc.ancestors.some(
+    (argv) => argv.includes("dev") && argv.some((w, i) => w === "-p" && argv[i + 1] === EYE_PORT),
+  );
+  const stamped = proc.env.includes(`DXB_DASHBOARD_LAUNCHER=${EYE_LAUNCHER}`);
+  const company = proc.env.some((l) => /:5432[12]\b/.test(l));
+  if (!launched || !onEyePort || !stamped || company) return false;
+  const value = (name) => (proc.env.find((l) => l.startsWith(`${name}=`)) ?? "").slice(name.length + 1);
+  try {
+    assertConstructionDatabase(value("DXB_DATABASE_URL"));
+    assertConstructionEngine(value("NEXT_PUBLIC_SUPABASE_URL"));
+  } catch {
+    return false;
+  }
+  return true;
+}
+
+/** The argv of a process and of each of its ancestors, nearest first, read from /proc. */
+function readAncestors(pid) {
+  const out = [];
+  for (let p = pid; p && p !== "1" && out.length < 32; ) {
+    try {
+      out.push(readFileSync(`/proc/${p}/cmdline`, "utf8").split("\0").filter(Boolean));
+      const stat = readFileSync(`/proc/${p}/stat`, "utf8"); // "pid (comm) state ppid …"; comm may hold ")"
+      p = stat.slice(stat.lastIndexOf(")") + 2).split(" ")[1];
+    } catch {
+      break;
+    }
+  }
+  return out;
 }
 
 /** One process's environment, as NAME=VALUE lines. Values are never printed. */
@@ -728,7 +765,7 @@ async function main() {
   const carriers = [];
   for (const p of listCompanyProcesses()) {
     const env = readEnv(p.pid);
-    if (isConstructionEyeProcess(env)) continue;
+    if (isConstructionEyeProcess({ args: p.args, env, ancestors: readAncestors(p.pid) })) continue;
     const bad = env.filter((l) => l.includes(`:${CONSTRUCTION_PORT}/`) || /DXB_CONSTRUCTION/.test(l));
     if (bad.length) carriers.push(`${p.name} (pid ${p.pid}): ${bad.map((l) => l.split("=")[0]).join(", ")}`);
   }

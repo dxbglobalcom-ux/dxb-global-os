@@ -19,6 +19,7 @@ import {
   CONSTRUCTION_API_FILE,
   ENGINEER_LOGIN_FILE,
   ENGINEER_STATE_FILE,
+  EYE_ORIGIN,
   readPrivateEnv,
   assertConstructionEngine,
 } from "./engineer-env.mjs";
@@ -63,7 +64,7 @@ const state = {
   cookies: [...jar].map(([name, value]) => ({
     name,
     value,
-    domain: "localhost",
+    domain: new URL(EYE_ORIGIN).hostname, // the eye copy only; never the CEO's panel on localhost:3000
     path: "/",
     expires: Math.floor(Date.now() / 1000) + 60 * 60 * 8,
     httpOnly: false,

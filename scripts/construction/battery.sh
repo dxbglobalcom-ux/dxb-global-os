@@ -58,6 +58,7 @@ HOST_FILES=(
   tests/b36/live-drills.host.test.ts   # enters the construction container: creates and drops roles
   tests/ops/freeze-guard.test.ts       # reads this machine's process tree and its systemd units
   tests/ops/dashboard-launcher.host.test.ts  # asks WHICH process is serving the CEO's dashboard
+  tests/b03bis/eye-env-files.host.test.ts  # starts a bwrap box, which cannot open inside the sandbox
   # B46 — the research engine's own battery. Each case COPIES the engine out of .claude/skills
   # and runs the real scripts against stubbed binaries; inside the sandbox (uid 997) the copy
   # is refused and every case dies on `cp`. The engine is the author's side of the house, not
