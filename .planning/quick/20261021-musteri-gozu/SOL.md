@@ -8,3 +8,10 @@ Verdict: 2 A, 2 B, 1 C.
 - B1 (second walk "found none new") — real, fixed: three small new spots named (2b57926e).
 - B2 (EROFS raw error not in the cited folder) — real, fixed: the source is session d93800c8's transcript (2b57926e).
 - C (TIMES.log breaker "no" vs REPORT 4/4) — no conflict: TIMES.log's "no" is "would come back", not first success.
+
+# Sol 6.1 (medium, blind) on e1c2a2bd — 2026-10-21
+
+Verdict: 0 A, 2 B, 1 C — all fixed.
+- B1 (the second walk still fixed at four) — fixed: "fresh walkers of the same kinds".
+- B2 (MODEL_ROUTING §4e and the guide row still said "four") — fixed.
+- C (the per-walker counts are "found alone"; the impatient walker shared one) — the sentence now says so.
