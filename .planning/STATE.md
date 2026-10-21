@@ -27,6 +27,12 @@ not here. What is accepted is read from `scripts/governance/ceo-approvals.json`,
 
 ## Where we left off
 
+2026-10-21, midday — The WhatsApp links since 15 Oct 11:40 (16 new) are the sheet "Ekim 15-21 linkleri" of his one
+workbook (`.planning/quick/20261021-ekim-linkleri/RECORD.md`). On his word: REA (`rea`, reverse engineering) and Ghidra
+installed on the shelf — his ruling, reverse engineering is engineering, not kul hakkı; TasteSkill updated to 2.1.4,
+still closed; the four-first-users method passed to `40f6660d`. Claude Code "Projects" weighed: not needed now (the
+holding is its own orchestrator). Found: the GitHub repository is public — kept as it is for now, on his word.
+
 2026-10-21 — The 2026-07-17 card rules (no "…" truncation, no info-free field, one-sentence notes) stay, but the
 "Minimalism" label that made them his general wish is gone — his words: *"bu kurallar kalabilir ama bu benim herşeyde
 sadelik istediğim anlamına gelmez."* Changed: `00-CEO-DIRECTIVE-DESIGN-VERIFICATION.md` A1.4 (53e9cb51, aa0ca775), the
@@ -34,7 +40,10 @@ memory note now `ceo-card-rules-2026-07-17`, claude-mem observation 38112 delete
 (`40f6660d`) that weighed his notes on beauty, effort and the eye pass resumed after the outage and got his answers:
 every employee now carries the first-shot Ferrari standard <!-- CEO-OK: first-shot-ferrari-holding-rule-2026-10-21 -->;
 the holding's final check compares client visual work with its approved design (A28) <!-- CEO-OK: visual-check-compares-approved-design-2026-10-21 -->;
-no motion item and no memory note (the rule exists in the core).
+no motion item and no memory note (the rule exists in the core). B03-bis: the engineers' own login on the construction engine and an eye-check
+copy of the panel on :3100 (cbee7498, 52b1f456; Sol's three A and five B fixed). The four-way measurement ran: his blind eye
+put C (high, one shot, 135k tokens) and D (medium with one check round) first; Ultra Code (1.28 M tokens) was not chosen
+(`.planning/quick/20261021-dort-yollu-olcum/`, key.md, TIMES.log).
 
 2026-10-19 — Valuable work (1,000 $+) and every dxb-team2 plan now run with two writers and one blind audit
 <!-- CEO-OK: plan-two-writers-sol-audit-2026-10-19 -->: Opus max and Fable max write apart, Sol audits A and B blind,
@@ -85,9 +94,9 @@ microphone <!-- CEO-OK: jarvis-silent-listening-voice-04-okayed-2026-09-14 -->. 
 
 ## Next
 
-1. In hand (session `40f6660d`): a separate engineer account so the eye check runs on his screens (B03-bis)
-   <!-- CEO-OK: engineer-account-holds-the-keys-2026-10-21 -->; then one page from the 13 October clinic brief built four
-   ways, Ultra Code once, side by side for his eye <!-- CEO-OK: four-way-quality-measurement-2026-10-21 -->.
+1. In hand: the fifth way — the clinic home page built by the 1,000 $ way itself (Opus max and Fable max plans
+   sealed, Sol's blind plan audit, a fresh Opus max merges and signs, a fresh builder at high, one check), shown to him
+   ALONE (the four are already open). Then the Ultra Code decision and the four-first-users trial (his Excel EK22).
 1b. The studio platform-hub plan is approved with his corrections and on the board (B43; FINAL.md Bölüm 0): built at its
    rank — accounts connected and infrastructure only, no money loaded, no exam now; its first step raises the server's
    LiteLLM pin (`vps/compose.yaml`, 1.91.0) to ≥ 1.97.0. The channels are a separate study, talked before January 2027.
@@ -98,8 +107,8 @@ microphone <!-- CEO-OK: jarvis-silent-listening-voice-04-okayed-2026-09-14 -->. 
    ad through H3; upscale or not, judged full screen by his eye. The standard is the recipe of the films he accepted
    — 8 steps on the road the studio's system names, no 4-step take <!-- CEO-OK: studio-standard-8-steps-his-liked-recipe-2026-10-19 -->; `studio.mjs`'s
    defaults follow it. Then the bridge and ScrollCraft's rule 2 follow the result.
-4. The walk, one row at a time with him: YE19 next, then to the last row; then the "Ekim 9-15 linkleri" sheet the
-   same way.
+4. The walk, one row at a time with him: YE19 next, then to the last row; then the "Ekim 9-15 linkleri" and
+   "Ekim 15-21 linkleri" sheets the same way.
 5. Plans he asked for, each talked first: how ChatGPT on Steroids (installed) joins the holding as an agent and as
    Sol's stand-in; the studio revenue lines not covered by the platform-hub plan (MoneyPrinterTurbo, HyperFrames,
    OpenMontage, Open Design) studied in order; a way for the team to work on his phone in the background.
@@ -108,6 +117,11 @@ microphone <!-- CEO-OK: jarvis-silent-listening-voice-04-okayed-2026-09-14 -->. 
 
 ## Waiting on his approval
 
+- After the fifth page: whether Ultra Code joins the holding (the lead advises no); a trial of the four first-user
+  walkers inside the single final check (EK22); deleting the obsolete `scripts/test/e2e-login.mjs`.
+- From "Ekim 15-21 linkleri", each a start on his word: the claude-security scan of the repository (he said later,
+  with making it private), the file-size lock in the pre-commit hook, Revid's paid plan (39 $/month, money out),
+  REA opened to the holding's own employees (part of B41).
 - claude-mem: five more observations still carry the label (38114, 9153, 38124, 8060, 38123) — delete or keep.
 - Valuable work, three open questions for his word, one at a time: a "neither plan is workable" outcome; the 30 %
   cap's base for a job with no deal; a plan's own cost estimate.
