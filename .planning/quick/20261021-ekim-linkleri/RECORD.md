@@ -16,3 +16,14 @@ His order (2026-10-21): review what came since Thursday 11:40, the same way as b
   DeepLearning.AI's "AI Agents in LangGraph", scored 0), EK11 (speech-to-text broke 3:50–10:00, covered by 9 frames).
 - Rank 1 is the claude-security scan because the repository is public (`gh repo view` → `"visibility":"PUBLIC"`).
 - Nothing installed from the links.
+
+## His corrections the same day
+- REA (EK10): his ruling — reverse engineering is engineering, not kul hakkı; kul hakkı is copying the same thing and
+  selling it under its name. The "fake stars" doubt was withdrawn after measuring (88,680 forks, 1,582 open issues,
+  1,255 watchers, daily pushes). Installed on his word: `rea` CLI (npm rea-agents 6.7.0), its skill on the shelf,
+  Ghidra 12.1.4 (sha256 matches the release digest) + Temurin JDK 21 (sha256 OK); `rea doctor` passes all 8 Ghidra
+  checks and a real `rea analyze --provider ghidra` on an ELF returned evidence. No MCP registration.
+- EK17: audio re-downloaded, the full transcript (1,651 lines) read at its intro and closing, the code lessons mapped;
+  it is DeepLearning.AI's 2024 "AI Agents in LangGraph". Concepts kept as a Hamza checklist under B64; no LangGraph.
+- TasteSkill updated 1.0.0 → 2.1.4 on his word, still disabled; the old copy went to the trash.
+- The four-first-users method (EK22) was passed to session 40f6660d on his word; it is in that session's transcript.
