@@ -2810,5 +2810,13 @@
     "conditions": "Written into the spec by a fresh session (his order). Measured on one page and one run; where the walkers sit and when a second walk runs are the engineers' to settle inside the spec that owns the contract.",
     "session": "Opus 5.5 session d93800c8 — heard first-hand, 2026-10-21.",
     "where": ".planning/quick/20261021-dort-yollu-olcum/ (TIMES.log, arm-5/, arm-5/walkers/)"
+  },
+  "customer-eye-skill-gap-rule-2026-10-21": {
+    "date": "2026-10-21",
+    "what": "The four first-user walkers become one skill, the customer's eye, in the holding's library, owned by the Quality department's Evidence Collector; it does not repeat the check of whether the work works (Sol's trial, the API tester), it asks whether the person who will use it can. It enters a job three ways: by itself on client web and app work whose user path is new or changed; by the owner's judgement with a one-line reason on client work a person uses where the department has no check, its check is not built, or its check missed the same defect twice; or by his word. Work no person touches does not get it; no film provision; a second walk only when a walker did not reach first success; Sol tries only work that runs.",
+    "verbatim": "Onu ben bilemem. Onu sizler bilmesi lazım. Veya mühendisler, hani o an o şeyi, muhakemeyi o an yapılması lazım. … Bu arada o şey düzeltilmiş önerimde ikisini kabul ediyorum. … Gerek yok ya film konusunda, tamam mı? Sadece o senin dediğin şey hani bu şekilde girsin. Eğer gerekirse biz şey yaparız. Gerekirse ben derim hani 4 ajanlı kontrol. … Gerçi işte bunları zaten kontrol eden bir şey var. Bu yani yedek böyle bir müşteri gözünden bakma skili galiba. … yaz",
+    "conditions": "Spec text only (B64 open, nothing built). Measured on one web page, one run; the other kinds of work are unmeasured and enter by the owner's judgement.",
+    "session": "Opus 5.5 session 9e5b6c48 — heard first-hand, 2026-10-21.",
+    "where": "HOLDING-OS-MASTER-PLAN/AGENT_ORCHESTRATION_SPEC.md A28; MODEL_ROUTING_SPEC.md §4e and the guide"
   }
 }
