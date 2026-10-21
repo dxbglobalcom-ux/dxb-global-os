@@ -42,7 +42,7 @@ every employee now carries the first-shot Ferrari standard <!-- CEO-OK: first-sh
 the holding's final check compares client visual work with its approved design (A28) <!-- CEO-OK: visual-check-compares-approved-design-2026-10-21 -->;
 no motion item and no memory note (the rule exists in the core). B03-bis: the engineers' own login on the construction engine and an eye-check
 copy of the panel on :3100 (cbee7498, 52b1f456; Sol's three A and five B fixed). The four-way measurement ran: his blind eye
-put C (high, one shot, 135k tokens) and D (medium with one check round) first; Ultra Code (1.28 M tokens) was not chosen
+put C (high, one shot, 135k tokens) and D (medium with one check round) first; B (1.28 M tokens) was not chosen — and B was not Ultra Code but a 9-agent imitation the lead wrote itself; the real Ultra Code was never run
 (`.planning/quick/20261021-dort-yollu-olcum/`, key.md, TIMES.log).
 
 2026-10-19 — Valuable work (1,000 $+) and every dxb-team2 plan now run with two writers and one blind audit

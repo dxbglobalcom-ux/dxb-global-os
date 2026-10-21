@@ -2802,5 +2802,13 @@
     "conditions": "Closed when the holding is finished.",
     "session": "Opus 5.5 session 40f6660d — heard first-hand, 2026-10-21.",
     "where": "HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md B03-bis"
+  },
+  "final-check-sol-fable-and-four-walkers-2026-10-21": {
+    "date": "2026-10-21",
+    "what": "After the measurement on the fifth page's first draft: (1) the separate Opus 5.5 high final check is dropped; the check is done by Sol 6.1 high, which TRIES the work in a browser and reads it, and Fable 5.1 high, which reads it — each blind to the other; Sol and Fable together found all four of Opus's findings and Sol alone found the one serious defect (stale consent sent as given), which Opus and both reading seats missed. (2) The four first-user walkers (his Excel EK22: impatient, skeptic, phone, breaker) join the checking of client web and app work; on the same page they found seven usability defects no other check found. Shown to him as measured on one page, one run.",
+    "verbatim": "Şimdi bu söyleri, bu şeyi onaylıyorum ben. Opus'un şu Opus'la, yani şu şey işte, ilk taslak üzerinde ölçülen sonuç da kısmı ve işte bu dört ajan olayını. Sağ taraftakine bir prompt hazırlayalım, o yapsın.",
+    "conditions": "Written into the spec by a fresh session (his order). Measured on one page and one run; where the walkers sit and when a second walk runs are the engineers' to settle inside the spec that owns the contract.",
+    "session": "Opus 5.5 session d93800c8 — heard first-hand, 2026-10-21.",
+    "where": ".planning/quick/20261021-dort-yollu-olcum/ (TIMES.log, arm-5/, arm-5/walkers/)"
   }
 }
