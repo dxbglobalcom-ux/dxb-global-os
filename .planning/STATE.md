@@ -2,7 +2,7 @@
 gsd_state_version: 1.0
 milestone: v2.0
 status: executing
-last_updated: "2026-10-19"
+last_updated: "2026-10-21"
 session_author: opus-5
 ---
 
@@ -26,6 +26,12 @@ REWRITES them at its end — replaces, never appends;** what they held before go
 not here. What is accepted is read from `scripts/governance/ceo-approvals.json`, never from memory.
 
 ## Where we left off
+
+2026-10-21 — The 2026-07-17 card rules (no "…" truncation, no info-free field, one-sentence notes) stay, but the
+"Minimalism" label that made them his general wish is gone — his words: *"bu kurallar kalabilir ama bu benim herşeyde
+sadelik istediğim anlamına gelmez."* Changed: `00-CEO-DIRECTIVE-DESIGN-VERIFICATION.md` A1.4 (53e9cb51, aa0ca775), the
+memory note now `ceo-card-rules-2026-07-17`, claude-mem observation 38112 deleted. The 2026-10-20 session
+(`40f6660d`) that weighed his notes on beauty, effort and the eye pass was cut by a power outage before his answer.
 
 2026-10-19 — Valuable work (1,000 $+) and every dxb-team2 plan now run with two writers and one blind audit
 <!-- CEO-OK: plan-two-writers-sol-audit-2026-10-19 -->: Opus max and Fable max write apart, Sol audits A and B blind,
@@ -96,10 +102,13 @@ microphone <!-- CEO-OK: jarvis-silent-listening-voice-04-okayed-2026-09-14 -->. 
 
 ## Waiting on his approval
 
-- Two proposals of 2026-10-19, which he marked important for the holding and the build: a motion item in the eye
-  pass (a changed live surface recorded for minutes; every motion tied to real work; the pulse stops when the system
-  stops) and a measurement (one page from the same design decisions at medium, at high, and at high with two
-  screenshot rounds, side by side for his eye). Words: the handover note `~/Desktop/devir89.md`.
+- The 2026-10-20 proposals (session `40f6660d`, which widened the two of devir89; the label one is settled above):
+  three additions to the eye pass (compare with the approved design, list the differences, fix, look again; a motion
+  item — a live surface recorded for minutes, every motion tied to real work, the pulse stops when the system stops;
+  an eye other than the maker's), the same in the client delivery check; his one login for B03-bis when the first
+  screen job starts; one page measured four ways (high, max, high with the look-and-fix loop and a separate eye, Ultra
+  Code) from the 2026-10-13 clinic brief; a memory note that a word for one job is never his general rule.
+- claude-mem: five more observations still carry the label (38114, 9153, 38124, 8060, 38123) — delete or keep.
 - Valuable work, three open questions for his word, one at a time: a "neither plan is workable" outcome; the 30 %
   cap's base for a job with no deal; a plan's own cost estimate.
 - Platform-hub plan, two open decisions: the studio tab drawn before B22's synthesis (B32's method); the `media` event channel.
