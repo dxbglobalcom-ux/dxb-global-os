@@ -2826,5 +2826,21 @@
     "conditions": "Spec text only (B64 open). Medium against high for the walkers is unmeasured; a later web job measures it.",
     "session": "Opus 5.5 session 9e5b6c48 — heard first-hand, 2026-10-21.",
     "where": "HOLDING-OS-MASTER-PLAN/AGENT_ORCHESTRATION_SPEC.md A28; MODEL_ROUTING_SPEC.md guide"
+  },
+  "scrollcraft-kie-removed-sil-2026-10-22": {
+    "date": "2026-10-22",
+    "what": "kie.ai removed from the ScrollCraft skill; stills and clips come only from the holding's own studio (FLUX.1-Krea-dev, MiniMax H3) or ChatGPT image.",
+    "verbatim": "Evet, sil ya, sil. Aynen.",
+    "conditions": "Done in 20bb976a; the upstream README/EXAMPLES keep four kie lines verbatim.",
+    "session": "Opus 5.5 session 7540da29 — heard first-hand, 2026-10-22 15:49.",
+    "where": "HOLDING-OS-MASTER-PLAN/CAPABILITY_ARSENAL_DOCTRINE.md (scrollcraft row)"
+  },
+  "personas-rewritten-facing-outside-after-holding-built-2026-10-22": {
+    "date": "2026-10-22",
+    "what": "Board row C41 widened: once the holding is built out in full detail, every persona is rewritten facing the outside world (clients, revenue, every technology job) and knowing what the holding holds (the Media Studio, skills, tools).",
+    "verbatim": "O zaman bizim holdingin her şeyi en detaylı şekline kadar kurulmalı. Ondan sonra personeller bu holdinge bak personeller oluşturulmalı. … İleriki günlerde yapmamız lazım. — Buraya bağla ya.",
+    "conditions": "Ordered work for the coming days, not now; not a law.",
+    "session": "Opus 5.5 session 7c8051c6 — heard first-hand, 2026-10-22 ~22:20.",
+    "where": "HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md C41"
   }
 }
