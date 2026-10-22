@@ -2,7 +2,7 @@
 gsd_state_version: 1.0
 milestone: v2.0
 status: executing
-last_updated: "2026-10-21"
+last_updated: "2026-10-22"
 session_author: opus-5
 ---
 
@@ -26,6 +26,16 @@ REWRITES them at its end — replaces, never appends;** what they held before go
 not here. What is accepted is read from `scripts/governance/ceo-approvals.json`, never from memory.
 
 ## Where we left off
+
+2026-10-22 — The landing-page test for the fictional Kadıköy clinic ran (`.planning/quick/20261022-iki-yol/`, untracked:
+RUNBOOK.md, TIMES.log). B, the 1,000 $ way, planned the whole 32-page site: his "only a landing page" never reached its
+5,661-word brief (yesterday's 397-word brief gave a 2,292-word plan; today's gave 20,683) — about 12 hours, ~5 M tokens,
+~4 h 45 min of it quota waits. Why B came out cold, measured: taste-skill 2.1.4's bans (shadows, gradients, cream, the
+accent serif, icon cards, card grids) with no pictures to replace them; kol-3/kol-4's flat rule came from the conductor's
+own job text; the personas hold no such trait but are written for the holding's screens and knew nothing of the
+studio. After a Ferrari pass (six studio stills), the build and one fix round carrying yesterday's craft, B is at
+https://claude.ai/artifact/FZnLXvzUdhQdHGsJvvSp51; every test page sits in his desktop folder "Örnek landing pageler".
+kie.ai left ScrollCraft (20bb976a); C41 widened to the persona rewrite (009cab6e).
 
 2026-10-21, evening — The check of client work is re-seated in the specs on his word (B64; AGENT_ORCHESTRATION A28/A30/A32,
 MODEL_ROUTING §4e; 833b7c13, 2b57926e, Sol's two B fixed): Sol 6.1 high reads it and tries what runs, Fable 5.1 high
@@ -100,6 +110,8 @@ microphone <!-- CEO-OK: jarvis-silent-listening-voice-04-okayed-2026-09-14 -->. 
 
 ## Next
 
+0. His eye on B's page; then A, B and kol-3 side by side if he still wants it. After the holding is built out, C41: every
+   persona rewritten facing the outside world and knowing the holding's studio, skills and tools.
 1. His test, next: the holding's own employees produce one 1,000 $+ job through the valuable-work system three times —
    every seat at medium, at high, at max — shown to him blind, side by side; the parts still under construction named
    in the result. Unrelated to the clinic work. The job is still to be chosen (his, or one the lead proposes).
@@ -123,6 +135,9 @@ microphone <!-- CEO-OK: jarvis-silent-listening-voice-04-okayed-2026-09-14 -->. 
 
 ## Waiting on his approval
 
+- From the 22 Oct test, each proposed and not started: taste-skill kept out of client work; a light lane for small,
+  low-risk jobs (one-page direction, build, the owner's look) with the heavy lane only for money, data and contracts;
+  a blind test of a persona against the bare model on the same brief.
 - Whether Ultra Code joins the holding (the real one was never run — arm B was an imitation); deleting the obsolete
   `scripts/test/e2e-login.mjs`.
 - From "Ekim 15-21 linkleri", each a start on his word: the claude-security scan of the repository (he said later,
