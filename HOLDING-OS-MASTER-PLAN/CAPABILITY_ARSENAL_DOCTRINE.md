@@ -204,7 +204,7 @@ rules apply to this class and only to this class:
 
 | Skill | Pinned | Vendored | Scan | Live proof | Money |
 |---|---|---|---|---|---|
-| **scrollcraft** — outward-facing scroll-driven websites for the holding's own companies and for client work | upstream `e957985` (2026-08-23), MIT | `tools/scrollcraft/` → `bash tools/scrollcraft/install.sh` | `.planning/research/skillspector/scrollcraft-e957985.txt` — CRITICAL headline, 15 issues, every one triaged at source in the study card; one REAL finding fixed in our copy (the `.env` walk) | 2026-08-27 proof build: page served, 47 frames shot, `no dead scroll detected`, contact sheet read by eye | free. `kie.ai` image generation is the only paid path and is shut: no key is set, and house rule 2 in our copy of `SKILL.md` puts every generation call behind a registered CEO approval |
+| **scrollcraft** — outward-facing scroll-driven websites for the holding's own companies and for client work | upstream `e957985` (2026-08-23), MIT | `tools/scrollcraft/` → `bash tools/scrollcraft/install.sh` | `.planning/research/skillspector/scrollcraft-e957985.txt` — CRITICAL headline, 15 issues, every one triaged at source in the study card; one REAL finding fixed in our copy (the `.env` walk) | 2026-08-27 proof build: page served, 47 frames shot, `no dead scroll detected`, contact sheet read by eye | free. Stills and clips come only from the holding's own studio (`scripts/studio.mjs`: FLUX.1-Krea-dev, MiniMax H3) or ChatGPT image; kie.ai was removed from the skill on the CEO's order of 2026-10-22 |
 
 Card: `.planning/research/study-cards/scrollcraft.md`. Build workspace `var/scrollcraft/`
 (gitignored, outside the pnpm workspace globs), resolved through the repo-root `.scrollcraft.json`.

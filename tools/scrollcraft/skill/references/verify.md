@@ -1,5 +1,9 @@
 # Verify
 
+For the approved collection’s functional, fallback, and deployment acceptance
+procedure, also read [approved-collection.md §7](approved-collection.md#7-require-visual-and-functional-evidence-before-delivery). Test the final files, preserve
+failed evidence, and identify the rerun that resolves each finding.
+
 A scroll page cannot be checked by looking at it. It has no single state: every
 scroll position is a different frame, and the failures live between the two you
 happened to look at. So walk it mechanically.
@@ -203,27 +207,6 @@ transform parks it on its first screenful. The engine now hands the stage back
 as a native scroll region, so confirm on the sheet that the rail shows real
 content and that items past the fold can still be got to. Nothing in the harness
 reports this; it reads as a page behaving correctly.
-
-**Credit accounting.** `kie.mjs probe` reports a balance, not a delta, so a
-build's spend is a before-and-after subtraction. That subtraction is only valid
-if nothing else is generating against the same key. When builds run in parallel,
-or when a settlement lands late, the deltas overlap and each build will claim
-some of another's spend (three parallel builds each read the same 7597 → 7067 and
-each reported 530). Either serialise generation, or cost the build from the
-per-call model prices in [assets.md](assets.md) against the calls you actually
-made, and treat the probe delta as a ceiling.
-
-**And the per-call sum overstates real spend in the other direction.** Two
-reconciliations against the account ledger, each with no other consumer, put
-actual debits at roughly **0.4x** the documented unit rates: a fleet whose
-per-call sums came to ~1447 credits was debited 530, and a three-build run whose
-per-call sums came to 2252 was debited 856. Both land near the same ratio. So a
-build report should say what the per-call sum is *and* that it is a planning
-ceiling rather than the amount billed. Reporting the sum as the cost is the
-honest default, because it never under-claims; reporting it as *measured* spend
-is wrong. Neither number is the other's substitute: the probe delta bounds a
-parallel run from above, the per-call sum bounds a serial one from above, and
-only a ledger read with a single consumer settles it.
 
 **Mobile.** Pinned stages use `100svh` so the URL bar does not cause a jump.
 Copy reflows and does not collide with the fixed bar. Confirm the phone encodes

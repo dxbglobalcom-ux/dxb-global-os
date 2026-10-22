@@ -1,8 +1,113 @@
-# scrollcraft changelog
+# scroll-craft changelog
 
 Dated notes on what changed in the skill and which build's finding drove it.
 Builds live in `OtherWorlds/Ultimate Websites/builds/`; each carries a
 `BUILD-REPORT.md`.
+
+## 2026-10-22: kie.ai removed on the CEO's order: studio.mjs is the only engine
+
+- `scripts/kie.mjs` deleted. Stills and clips come from `scripts/studio.mjs`
+  (FLUX.1-Krea-dev, MiniMax H3), ChatGPT image as the other still source, or
+  the client's own photographs and footage. No paid engine, no budget clause,
+  no credit probe.
+- `doctor.mjs` no longer looks for a key or reads a balance; generation
+  readiness is `studio.mjs probe`.
+
+## 2026-09-30: security and Windows fixes, release 0.3.1
+
+No change to how pages are planned, built, or animated.
+
+- `serve.mjs` (issue #9, reported by ukama-dev): binds to 127.0.0.1 by
+  default instead of every interface, so nothing else on the network can read
+  the build folder. New `--lan` flag for real-phone testing prints the LAN URL
+  and warns that the folder is readable on that network. The root check now
+  requires a path separator, so `builds/acme` no longer serves `builds/acme-v2`,
+  and a malformed URL gets a 400 instead of crashing the server.
+- `doctor.mjs`, `shoot.mjs`, `worldflight-assert.mjs` (issue #8, reported by
+  Calgeroth): the browser lookup now checks Edge's real install path
+  (`Program Files (x86)`) and per-user Chrome installs under `%LOCALAPPDATA%`.
+- Engine (issue #6, patch by mkreyman): `ScrollCraft.mount()` now returns an
+  api with an idempotent `destroy()` that removes that mount's window
+  listeners, stops both rAF loops, disconnects its IntersectionObservers,
+  revokes its clip blob URLs, and removes it from `ScrollCraft.instances`.
+  Needed only under client-side routers that re-mount. A page that never calls
+  `destroy()` behaves exactly as before: an A/B run of the old and new engine
+  on four builds (including worldflight) matched on every sampled element
+  state at eight scroll positions, with no console errors.
+- Skill text: personal attributions reworded as neutral standards. The rules
+  themselves are unchanged. SKILL.md Step 5 mentions `--lan` next to the
+  real-phone paragraph.
+
+## 2026-09-04: approved ten-site rebuild, public release 0.3.0
+
+Nate approved the rebuilt ten-site collection and requested that its process
+become the standard. Added `references/approved-collection.md`: authentic brand
+research, layer contracts, photographic/3D selection, complete compositing
+assets, meaningful pointer and scroll choreography, independent page structures,
+useful controls, compact-phone art direction, exact WebGL posters, and final
+package verification. All ten sites are documented as worked examples.
+
+Explicit creative delegation now supports an authored brief without a forced
+interview. Page length is a pacing guideline rather than a filler quota. The
+verification harness disables native pointer lock/capture before navigation.
+The public release also includes the Sonder hero-depth reference. No engine
+behavior or existing video-decoder fixes are changed in this release.
+
+
+## 2026-09-01: skill renamed to `scroll-craft` to match the repo
+
+The repo, the skill and the invocation now share one spelling. The skill was
+`scrollcraft` (no dash) while the repo was `scroll-craft`, so the two never
+matched. The skill directory, its frontmatter `name`, and the invocation are
+now `scroll-craft`: invoke it as `/nateherk-design:scroll-craft`.
+
+The engine is deliberately left as `scrollcraft`. The files `scrollcraft.js`
+and `scrollcraft.css`, the `.scrollcraft.json` workspace config, the
+`SCROLLCRAFT_*` environment variables, and the default `scrollcraft` workspace
+folder keep their names. Every build already made copies the engine files by
+those names and resolves its workspace by that config, so renaming them would
+break existing builds and setups for no real gain. The skill is `scroll-craft`;
+its engine is `scrollcraft`.
+
+## 2026-09-01: counters tick up on entry; fade-in documented properly
+
+Asked for directly: "numbers tick up when they come into view." The count
+device existed only inside pinned acts, scrubbed by act progress, so a stat
+row in an ordinary flow section could not count at all. The flow fade-in
+existed, but the devices.md example lacked the `data-sc-in` attribute that
+makes it fire.
+
+**Engine, `engine/scrollcraft.js`**
+
+- A `[data-sc-count]` outside any `data-sc-act` now ticks once on entry
+  (IntersectionObserver at half visibility, fires once) from the first value
+  to the second over `data-sc-count-ms` (default 1400ms), cubic ease-out, same
+  `formatNum` rules as the act counter. Reduced motion writes the final value.
+  Act counters are unchanged.
+
+**Docs**
+
+- `references/devices.md` §7 gains "Numbers that tick up when they come into
+  view", with the pairing rule (counter inside a `data-sc-in` stack).
+- §8 example fixed to carry `data-sc-in`, plus "What a premium fade-in is made
+  of".
+
+## 2026-09-01: layered scenes documented under `parallax`
+
+Driven by a live homepage rebuilt on a reference site's layered hero. Three
+cut-out planes plus the product, rates measured from the reference DOM (far
+lags 31%, mid 17%, product 20%, foreground and copy at 1x), and four rounds of
+fixes that are now rules: planes solid below their silhouette, a shaped
+foreground so the product's button survives the scroll, a faded section floor
+over the clip line, `max-width: none` on planes, no transform transition on a
+parallaxed element, new filenames for replaced art.
+
+**Docs**
+
+- `references/devices.md` §6 gains "Layered scenes: where the premium feel
+  actually comes from".
+- `SKILL.md` Step 3 lists "Layer the hero" among the things that decide premium
+  versus generated.
 
 ## 2026-08-23: iOS clip priming hardened; real-device diagnostic added
 

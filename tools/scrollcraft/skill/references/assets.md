@@ -1,41 +1,25 @@
 # Assets
 
-Generation through kie.ai, then encoding for scrubbing. All of it via
-`scripts/kie.mjs` and `scripts/encode.sh`.
+Generation in the holding's own studio, then encoding for scrubbing. All of it via
+`scripts/studio.mjs` and `scripts/encode.sh`.
 
 ```bash
-node <skill>/scripts/kie.mjs probe                     # credit check first
-node <skill>/scripts/kie.mjs still "<prompt>" out/01.png --ar 16:9 [--ref brand.png]
-node <skill>/scripts/kie.mjs shot  "<move>"   out/01.png out/01.mp4 --dur 5 [--tail end.png]
+node <skill>/scripts/studio.mjs probe                     # is the studio ready now
+node <skill>/scripts/studio.mjs still "<prompt>" out/01.png --ar 16:9 [--quality high]
+node <skill>/scripts/studio.mjs shot  "<move>"   out/01.png out/01.mp4 --dur 5 [--tail end.png]
 bash  <skill>/scripts/encode.sh out/01.mp4 assets/01.mp4
 bash  <skill>/scripts/encode.sh out/01.mp4 assets/01-m.mp4 mobile
 ```
 
-Models: `seedream/5-pro-text-to-image` (and `-image-to-image` when you pass
-`--ref`) for stills, `kling/v2-1-pro` for camera moves. `aspect_ratio`,
-`quality` and `output_format` are all required by seedream; omitting any one
-returns a bare "This field is required" that does not name the field.
+Engines: FLUX.1-Krea-dev for stills (about 2 MP; `--ar 16:9` gives 1920x1088, any
+W:H works and both sides land on multiples of 16), MiniMax H3 for clips from a first
+and a last frame (`--tail` pins the last frame; 16:9 heads give 1152x640, clips stay
+between 1:3 and 3:1). `--quality high` runs 28 steps instead of 20. `studio.mjs`
+exits 3 (STUDIO_CANNOT) and names the reason when the studio cannot make something,
+for example a reference-guided edit: then use ChatGPT image or the client's own
+material. ChatGPT image is the other source for a still.
 
-**seedream rejects most aspect ratios, and does not say which it takes.** An
-unsupported value fails at `createTask` with `"This aspect_ratio is not within
-the range of allowed options"` and no list, which reads like a malformed request
-rather than a menu problem. Nothing is charged, so the cost is a wasted round
-trip and the time to work out that the string itself was fine.
-
-| `--ar` | Status | Returns |
-|---|---|---|
-| `16:9` | works | 2736x1520 |
-| `9:16` | works | 1520x2736 |
-| `3:4` | works | 1776x2352 |
-| `4:5` | **rejected** | n/a |
-
-The returned pixel dimensions are near the ratio rather than exactly it, so
-derive layout from the file, not from the string you asked for. Treat the table
-as the verified set rather than as the whole allowed list: **use a value from it,
-and if you need another, send one throwaway call before writing a wave of
-prompts around it.** `4:5` is the one that catches people, because it is the
-standard portrait social ratio and every other generator takes it. `3:4` is the
-portrait to reach for here.
+Derive layout from the file's real pixel size, not from the ratio you asked for.
 
 ---
 
@@ -82,35 +66,10 @@ FF=$(ls -d "$HOME"/AppData/Local/Microsoft/WinGet/Packages/Gyan.FFmpeg_*/ffmpeg-
 4. **Read every PNG before using it.** Generation is cheap; shipping a bad frame
    is not.
 
-**Pass the real brand object as `--ref`.** For anything with packaging, a logo,
-or a product, hand seedream the actual asset. A label that drifts between shots
-is the first thing a client notices. It holds up remarkably well: the same can
-reads correctly across a dark kitchen, a hard-light flat-lay and a studio
-backdrop when the cutout is passed every time.
-
----
-
-**Published unit costs** (kie.ai, as of August 2026): `seedream/5-pro` still =
-**28 credits**, `kling/v2-1-pro` 5s clip = **160 credits**. A seven-still,
-two-clip page is therefore around 520 credits. `kie.mjs probe` reports a balance,
-not a delta, so plan the spend from these numbers and probe before and after to
-confirm. Do not trust a probe delta as this build's cost if anything else is
-running against the same key (see [verify.md](verify.md)).
-
-**Plan against those rates; expect the ledger to debit roughly 0.4x of them.**
-Two reconciliations against the account with no other consumer put actual debits
-at about 38% of the per-call sum: 1447 summed against 530 debited, and 2252
-summed against 856 debited. That puts a still nearer ~11 credits and a 5s kling
-clip nearer ~61, though those are back-derived from two samples rather than
-published, so do not quote them as rates.
-
-The practical consequence: **every budget cap in this skill is conservative, and
-a build that comes in at its per-call cap has real headroom.** Keep planning at
-28 and 160, because a ceiling that never under-claims is the right one to hold a
-build to, and because the ratio is an observation about billing rather than a
-published price that will hold. But do not refuse a justified reroll on a cap
-computed at the documented rates, and do not report a per-call sum as measured
-spend.
+**Never let the engine draw the brand object.** For anything with packaging, a
+logo, or a product, use the client's own photograph of it, or ChatGPT image with
+the real asset as its reference; the studio has no reference-guided edit. A label
+that drifts between shots is the first thing a client notices.
 
 ---
 
@@ -185,7 +144,7 @@ head, so the joint is frame-identical:
 
 ```bash
 ffmpeg -y -sseof -0.05 -i leg1.mp4 -frames:v 1 -q:v 2 seam1.png
-node kie.mjs shot "<move>" seam1.png leg2.mp4 --dur 5
+node studio.mjs shot "<move>" seam1.png leg2.mp4 --dur 5
 ```
 
 Extract the seam frame from the **encoded** clip, not the source: re-encoding

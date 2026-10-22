@@ -47,7 +47,9 @@ const CHROME = [
   // Windows
   "C:/Program Files/Google/Chrome/Application/chrome.exe",
   "C:/Program Files (x86)/Google/Chrome/Application/chrome.exe",
+  "C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe",
   "C:/Program Files/Microsoft/Edge/Application/msedge.exe",
+  process.env.LOCALAPPDATA && `${process.env.LOCALAPPDATA}/Google/Chrome/Application/chrome.exe`,
   // macOS
   "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
   "/Applications/Chromium.app/Contents/MacOS/Chromium",
@@ -72,6 +74,17 @@ const page = await browser.newPage({
   viewport: { width: W, height: H },
   deviceScaleFactor: 2,
   reducedMotion: REDUCED ? "reduce" : "no-preference",
+});
+
+// Headless Chrome can still reach desktop-wide cursor APIs on Windows.
+// Install before navigation; synthetic in-page movement needs no native lock.
+await page.addInitScript(() => {
+  Element.prototype.requestPointerLock = function () {
+    return Promise.reject(new Error("Native pointer lock disabled during verification"));
+  };
+  Element.prototype.setPointerCapture = function () {};
+  Element.prototype.releasePointerCapture = function () {};
+  Document.prototype.exitPointerLock = function () {};
 });
 
 const consoleErrors = [];

@@ -3,7 +3,6 @@
  * Preflight. Run this BEFORE the interview, not after the first failure.
  *
  *   node scripts/doctor.mjs            check everything
- *   node scripts/doctor.mjs --probe    also spend one API call to read the balance
  *
  * Every check that can fail deep inside a build with a misleading message is
  * checked here with an honest one. The three that actually bite:
@@ -12,7 +11,8 @@
  *     scale, fps, psnr and the webp muxer, then fails with "No option name
  *     near ..." or "Unable to choose an output format", both of which read as
  *     a mistake in your command rather than a missing feature.
- *   - no KIE_AI_API_KEY, which only matters if you are generating assets.
+ *   - no studio (ComfyUI) reachable, which only matters if you are generating
+ *     assets.
  *   - playwright-core resolving from the wrong directory. It is required from
  *     the BUILD folder, not from the skill.
  */
@@ -26,7 +26,7 @@ import { paths } from "./workspace.mjs";
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const rows = [];
-const add = (sev, name, ok, detail, fix) => rows.push({ sev, name, ok, detail, fix });
+const add = (sev, name, ok, detail, fix, state) => rows.push({ sev, name, ok, detail, fix, state });
 
 const run = (cmd, args) => {
   try {
@@ -106,7 +106,9 @@ const chrome = [
   // Windows
   "C:/Program Files/Google/Chrome/Application/chrome.exe",
   "C:/Program Files (x86)/Google/Chrome/Application/chrome.exe",
+  "C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe",
   "C:/Program Files/Microsoft/Edge/Application/msedge.exe",
+  process.env.LOCALAPPDATA && `${process.env.LOCALAPPDATA}/Google/Chrome/Application/chrome.exe`,
   // macOS
   "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
   "/Applications/Chromium.app/Contents/MacOS/Chromium",
@@ -121,19 +123,25 @@ const chrome = [
 add("verify", "Chrome", Boolean(chrome), chrome || "not found",
   "Install Chrome, or set SCROLLCRAFT_CHROME to an executable.");
 
-// ------------------------------------------------------------- kie key ----
-// DXB ADAPTATION (2026-08-27, CAPABILITY_ARSENAL_DOCTRINE INTEG-01 triage, finding PE3):
-// no upward walk through parent directories. Environment first, then `.env` in the current
-// directory only, so this probe can never read a secret belonging to the holding.
-function findKey() {
-  if (process.env.KIE_AI_API_KEY) return "env";
-  const p = path.join(process.cwd(), ".env");
-  if (fs.existsSync(p) && /^\s*KIE_AI_API_KEY\s*=\s*\S+/m.test(fs.readFileSync(p, "utf8"))) return p;
-  return null;
+// -------------------------------------------------------------- studio ----
+// The holding's own GPU studio (ComfyUI) is the only generator: studio.mjs probe.
+// Three states from its exit code: 0 ready (ok) · 4 installed but busy now (busy, not an
+// installation fault) · anything else unreachable or a model missing (FAIL).
+let studioOut = "", studioOk = false, studioBusy = false;
+try {
+  studioOut = execFileSync(process.execPath, [path.join(HERE, "studio.mjs"), "probe"],
+    { encoding: "utf8", stdio: ["ignore", "pipe", "pipe"], timeout: 30_000 });
+  studioOk = true;
+} catch (e) {
+  studioBusy = e.status === 4;
+  studioOut = String(e.stdout || "") || String(e.stderr || e.message);
 }
-const keyWhere = findKey();
-add("optional", "KIE_AI_API_KEY", Boolean(keyWhere), keyWhere || "not set",
-  "Only needed to GENERATE imagery. Building from your own photos and footage needs no key and no spend. Copy .env.example to .env to set one.");
+add("optional", "studio (ComfyUI)", studioOk,
+  studioOut.trim().split("\n").join("\n      "),
+  studioBusy
+    ? "Installed and ready; the safety gate refuses right now (see the gate line). Generate again once the card, RAM or queue is free."
+    : "Only needed to GENERATE imagery. Start it with `systemctl --user start dxb-comfyui.service`; building from the client's own photos and footage needs no studio.",
+  studioOk ? undefined : studioBusy ? "busy" : "down");
 
 // ----------------------------------------------------------- workspace ----
 let ws = null;
@@ -148,7 +156,9 @@ try {
 }
 
 // -------------------------------------------------------------- report ----
-const mark = (r) => (r.ok ? "\u001b[32m ok \u001b[0m" : r.sev === "required" ? "\u001b[31mFAIL\u001b[0m" : "\u001b[33mwarn\u001b[0m");
+const mark = (r) => (r.ok ? "\u001b[32m ok \u001b[0m"
+  : r.state === "busy" ? "\u001b[33mbusy\u001b[0m"
+  : r.sev === "required" || r.state === "down" ? "\u001b[31mFAIL\u001b[0m" : "\u001b[33mwarn\u001b[0m");
 console.log("\nscrollcraft preflight\n");
 for (const r of rows) {
   console.log(` [${mark(r)}] ${r.name.padEnd(22)} ${r.detail}`);
@@ -156,7 +166,7 @@ for (const r of rows) {
 }
 
 const hardFails = rows.filter((r) => !r.ok && r.sev === "required");
-const softFails = rows.filter((r) => !r.ok && r.sev !== "required");
+const softFails = rows.filter((r) => !r.ok && r.sev !== "required" && r.state !== "busy");
 console.log("");
 if (hardFails.length) {
   console.log(`\u001b[31m${hardFails.length} required check(s) failed. Fix these before building.\u001b[0m\n`);
@@ -166,9 +176,3 @@ console.log(softFails.length
   ? `\u001b[33mReady, with ${softFails.length} optional item(s) missing (see above).\u001b[0m\n`
   : "\u001b[32mReady.\u001b[0m\n");
 
-if (process.argv.includes("--probe") && keyWhere) {
-  const { execFileSync: x } = await import("node:child_process");
-  try {
-    console.log("credit: " + x(process.execPath, [path.join(HERE, "kie.mjs"), "probe"], { encoding: "utf8" }).trim().replace(/^credit:\s*/, ""));
-  } catch (e) { console.log("balance probe failed: " + e.message); }
-}

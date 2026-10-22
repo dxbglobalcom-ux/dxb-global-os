@@ -173,6 +173,7 @@ Lay every generated asset side by side and look for:
   correcting it in CSS; a filter over a full-bleed image flattens it.
 - **One level of realism.** A photoreal hero followed by a rendered-looking
   product shot is worse than either style used consistently.
-- **The brand object identical everywhere.** Pass the real packaging, logo or
-  product shot as `--ref` on every prompt that includes it. A label that drifts
-  between shots is the thing a client notices first.
+- **The brand object identical everywhere.** Use the client's own photograph of
+  the packaging, logo or product, or ChatGPT image with the real asset as its
+  reference; never let the studio draw it. A label that drifts between shots is
+  the thing a client notices first.
