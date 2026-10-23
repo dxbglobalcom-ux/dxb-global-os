@@ -27,14 +27,19 @@ not here. What is accepted is read from `scripts/governance/ceo-approvals.json`,
 
 ## Where we left off
 
-2026-10-23 — The report he ordered is on his desktop: `Personalar Raporu 2026-10-23.pdf` (12 pages, Turkish) — why the
-holding's employees made a worse clinic page (22 Oct A) than one plain session (21 Oct C), and how personas should be
-written. Measured by five read-only Fable 5.1 helpers on his word this session, each claim checked at its source by the
-lead; nothing in the repository changed. In short: the frame came mostly from the owner's plan (software architect: no
-images, no "holding luxury", reviews dropped, structure fixed before design) and taste-skill's bans with no pictures; the
-personas narrowed it (design and frontend written for the holding's own dashboard, Burj Al Arab the department's only bar,
-the Ferrari level in 0 of 213 bodies, the studio unknown, "beauty is not this role's verdict"); and the 21 Oct 1,000 $
-page, made with no persona, came out bad too — the paper-first arrangement is the common cause.
+2026-10-23 — The report he ordered is on his desktop: `Personalar Raporu 2026-10-23.pdf`, second version (6 pages,
+Turkish; the first, 12-page version angered him — it named pictures and the studio as causes, but the good 21 Oct page
+had neither). What it says: the same Opus, with no picture and no skill, made a beautiful page alone; inside the holding
+it was wrapped in layers that say "make no mistake", none that says "make it beautiful" — the owner (a software
+architect, picked by sales) banned the look in his plan and dropped the client's reviews; the designer wrote 22 bans and
+took three skills' "don'ts" without their "do's"; the builder's persona says beauty is not its verdict; quality guards the
+spec; every element that made the plain page beautiful was on those lists. The 21 Oct 1,000 $ page (no persona) failed by
+the same machine: two text plans judged for soundness, never for beauty; "build exactly what the plan decides"; checks
+that by spec look for no better version; ~8 % of its tokens went to the page itself. The system it proposes: every layer
+earns its place against bare Opus in a blind test; broad master personas with the holding's level; short briefs; one
+master designs and builds from two or three visual drafts; a beauty eye; his verdicts as memory. A sealed Fable plan
+(`.planning/quick/20261023-calisan-sistemi/`, started 11:07 on a brief written before his correction) is not to be used
+as it stands.
 
 2026-10-22 — The landing-page test for the fictional Kadıköy clinic ran (`.planning/quick/20261022-iki-yol/`, untracked:
 RUNBOOK.md, TIMES.log). B, the 1,000 $ way, planned the whole 32-page site: his "only a landing page" never reached its
@@ -145,13 +150,13 @@ microphone <!-- CEO-OK: jarvis-silent-listening-voice-04-okayed-2026-09-14 -->. 
 
 ## Waiting on his approval
 
-- From the persona report (23 Oct), each with the lead's recommendation: (1) a three-arm blind test on the 21 Oct
-  365-word brief — bare Opus, today's UI-designer persona, a short persona on the report's skeleton — after the weekly
-  reset (Sat 25 Oct 10:00); (2) the Burj Al Arab / seven-star / dashboard-first lines taken out of the design and
-  frontend personas now (C41's first part), the full rewrite at C41's turn; (3) taste-skill kept out of client work,
-  replaced by "no photo → the studio makes it" and a positive visual direction in the brief; (4) in design-led client
-  work the look owned by the design side (a spec change — a two-writer plan on his yes). Still open from 22 Oct: a
-  light lane for small, low-risk jobs, the heavy lane only for money, data and contracts.
+- From the persona report (23 Oct, second version), each with the lead's recommendation: (1) the skills' ban lists
+  taken out of client design work, only their "how to make it more beautiful" parts kept — now; (2) the restrictive
+  persona lines removed (dashboard-first, the Burj Al Arab bar, "beauty is not this role's verdict", "luxury is a
+  fantasy signal") — now, C41's first part, the full rewrite at C41's turn; (3) a blind test on the 21 Oct 365-word
+  brief — bare Opus, a cleaned master, today's designer — after the weekly reset (Sat 25 Oct 10:00); (4) the new design
+  flow (one master, visual drafts, a beauty eye, the bare-Opus yardstick) written into the specs after the test, by a
+  two-writer plan. Still open from 22 Oct: a light lane for small, low-risk jobs.
 - Whether Ultra Code joins the holding (the real one was never run — arm B was an imitation); deleting the obsolete
   `scripts/test/e2e-login.mjs`.
 - From "Ekim 15-21 linkleri", each a start on his word: the claude-security scan of the repository (he said later,
