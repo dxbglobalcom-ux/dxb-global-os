@@ -2,7 +2,7 @@
 gsd_state_version: 1.0
 milestone: v2.0
 status: executing
-last_updated: "2026-10-22"
+last_updated: "2026-10-23"
 session_author: opus-5
 ---
 
@@ -26,6 +26,15 @@ REWRITES them at its end — replaces, never appends;** what they held before go
 not here. What is accepted is read from `scripts/governance/ceo-approvals.json`, never from memory.
 
 ## Where we left off
+
+2026-10-23 — The report he ordered is on his desktop: `Personalar Raporu 2026-10-23.pdf` (12 pages, Turkish) — why the
+holding's employees made a worse clinic page (22 Oct A) than one plain session (21 Oct C), and how personas should be
+written. Measured by five read-only Fable 5.1 helpers on his word this session, each claim checked at its source by the
+lead; nothing in the repository changed. In short: the frame came mostly from the owner's plan (software architect: no
+images, no "holding luxury", reviews dropped, structure fixed before design) and taste-skill's bans with no pictures; the
+personas narrowed it (design and frontend written for the holding's own dashboard, Burj Al Arab the department's only bar,
+the Ferrari level in 0 of 213 bodies, the studio unknown, "beauty is not this role's verdict"); and the 21 Oct 1,000 $
+page, made with no persona, came out bad too — the paper-first arrangement is the common cause.
 
 2026-10-22 — The landing-page test for the fictional Kadıköy clinic ran (`.planning/quick/20261022-iki-yol/`, untracked:
 RUNBOOK.md, TIMES.log). B, the 1,000 $ way, planned the whole 32-page site: his "only a landing page" never reached its
@@ -110,11 +119,12 @@ microphone <!-- CEO-OK: jarvis-silent-listening-voice-04-okayed-2026-09-14 -->. 
 
 ## Next
 
-0. His eye on B's page; then A, B and kol-3 side by side if he still wants it. After the holding is built out, C41: every
-   persona rewritten facing the outside world and knowing the holding's studio, skills and tools.
+0. His eye on the persona report (desktop, 23 Oct) and its four decisions (below). After the holding is built out, C41:
+   every persona rewritten facing the outside world and knowing the holding's studio, skills and tools.
 1. His test, next: the holding's own employees produce one 1,000 $+ job through the valuable-work system three times —
    every seat at medium, at high, at max — shown to him blind, side by side; the parts still under construction named
-   in the result. Unrelated to the clinic work. The job is still to be chosen (his, or one the lead proposes).
+   in the result. Unrelated to the clinic work. The job is still to be chosen (his, or one the lead proposes). The report
+   advises running it after the blind persona test and the design-persona cleanup, or it measures the same frame again.
 1b. The studio platform-hub plan is approved with his corrections and on the board (B43; FINAL.md Bölüm 0): built at its
    rank — accounts connected and infrastructure only, no money loaded, no exam now; its first step raises the server's
    LiteLLM pin (`vps/compose.yaml`, 1.91.0) to ≥ 1.97.0. The channels are a separate study, talked before January 2027.
@@ -135,9 +145,13 @@ microphone <!-- CEO-OK: jarvis-silent-listening-voice-04-okayed-2026-09-14 -->. 
 
 ## Waiting on his approval
 
-- From the 22 Oct test, each proposed and not started: taste-skill kept out of client work; a light lane for small,
-  low-risk jobs (one-page direction, build, the owner's look) with the heavy lane only for money, data and contracts;
-  a blind test of a persona against the bare model on the same brief.
+- From the persona report (23 Oct), each with the lead's recommendation: (1) a three-arm blind test on the 21 Oct
+  365-word brief — bare Opus, today's UI-designer persona, a short persona on the report's skeleton — after the weekly
+  reset (Sat 25 Oct 10:00); (2) the Burj Al Arab / seven-star / dashboard-first lines taken out of the design and
+  frontend personas now (C41's first part), the full rewrite at C41's turn; (3) taste-skill kept out of client work,
+  replaced by "no photo → the studio makes it" and a positive visual direction in the brief; (4) in design-led client
+  work the look owned by the design side (a spec change — a two-writer plan on his yes). Still open from 22 Oct: a
+  light lane for small, low-risk jobs, the heavy lane only for money, data and contracts.
 - Whether Ultra Code joins the holding (the real one was never run — arm B was an imitation); deleting the obsolete
   `scripts/test/e2e-login.mjs`.
 - From "Ekim 15-21 linkleri", each a start on his word: the claude-security scan of the repository (he said later,
