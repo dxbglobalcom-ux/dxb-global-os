@@ -144,6 +144,8 @@ microphone <!-- CEO-OK: jarvis-silent-listening-voice-04-okayed-2026-09-14 -->. 
 1. His eye on the two desktop reports (24-25 Oct); then the plan talk at max on how visual 1,000 $ work is made — the
    test points to one master designing and building, the beauty eye at the first visual draft (the persona report's
    decision 4). Arm 2 (one Opus at xhigh) was not run. Tools: `.planning/quick/20261024-zeytin-tek-kol/tools/`.
+   His idea at night, to be talked at max first: one landing page joining the best sides of the three, with a studio
+   hero video, hover, motion and 3D. The handover for it is on his desktop: `Devir 2026-10-25.md`.
 1b. The studio platform-hub plan is approved with his corrections and on the board (B43; FINAL.md Bölüm 0): built at its
    rank — accounts connected and infrastructure only, no money loaded, no exam now; its first step raises the server's
    LiteLLM pin (`vps/compose.yaml`, 1.91.0) to ≥ 1.97.0. The channels are a separate study, talked before January 2027.
