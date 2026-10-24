@@ -1,0 +1,3 @@
+`delivery/index.html` hazır. Kurgusal bir aile çiftliği olan **Sarnıçlı Zeytinlik** (Urla, 1958) için Türkçe, tek dosyalık bir landing page. Fotoğraf yok; çizimler, şişeler, zeytin ağacı kesiti ve tadım kadehi kodla çizildi. Sepet ve sipariş formu, gün ve kişi seçerek hasat günü rezervasyonu ve takvime ekleme dosyası tamamen tarayıcıda çalışıyor.
+
+Headless Chrome ile 1440 ve 390 genişlikte ekran görüntüsü alıp gördüğüm sorunları düzelttim. Sipariş, rezervasyon ve form hatası akışlarını da ayrı bir test kopyasında otomatik tıklatarak denedim; hepsi çalıştı. Kapanış bölümündeki görünmeyen bir güneş çizimini en son kaldırdım; bu değişiklikten sonra yeniden görüntü almadım.

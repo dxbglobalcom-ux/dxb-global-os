@@ -2,7 +2,7 @@
 gsd_state_version: 1.0
 milestone: v2.0
 status: executing
-last_updated: "2026-10-24"
+last_updated: "2026-10-25"
 session_author: opus-5
 ---
 
@@ -29,8 +29,13 @@ not here. What is accepted is read from `scripts/governance/ceo-approvals.json`,
 
 2026-10-24 — The 1,000 $ way, run alone (no holding persona; plan picks the levels; last check Sol only;
 jury once), on one landing page for a fictional Urla olive farm, each seat walled in bwrap outside the repository.
-Report on his desktop: `1000 Dolar Sistemi Testi 2026-10-24.pdf`; the page: "Örnek landing pageler / 11-24ekim-zeytin-
-1000-dolar-akisi.html"; record: `.planning/quick/20261024-zeytin-tek-kol/`. With no deadline or budget the signed plan
+Reports on his desktop: `1000 Dolar Sistemi Testi 2026-10-24.pdf` and `Üç Sayfa Karşılaştırma 2026-10-25.pdf`; the
+pages: "Örnek landing pageler / 24 Ekim - Urla Zeytin"; record: `.planning/quick/20261024-zeytin-tek-kol/`. Then the
+same brief by one bare Opus: high in 14 min (3.16 $), max in 37 min (8.20 $). Sol, blind and visual only, ranked them
+high 7.5/6.8 (Design/Creativity), max 7.2/7.0, the 1,000 $ way 6.7/7.0. Diagnosed overnight: the brief and the task
+text held none of the limits — both plan writers made "the bar testable" (budgets, motion limits, technical tests); Sol
+flagged the plan's cart, calendar and booking as widening (its brief, the lead's, said "one page, widening is an
+error") and the merge banned them; the one whole-page design step (max) died on the lead's box login fault. With no deadline or budget the signed plan
 was 14 steps, its own estimate 19 h (the jury gate grew out of the brief's bar through Sol's audit and the merge); on a
 22:45 deadline the owner re-planned to 10 steps and delivered 22:02 (58 min of it a 5-hour quota stop). The jury vs 16
 award winners: Usability and Content 1st, Design 17th of 17, Creativity 15th — gate failed; Sol: works, not at award
@@ -136,9 +141,9 @@ microphone <!-- CEO-OK: jarvis-silent-listening-voice-04-okayed-2026-09-14 -->. 
 
 0. His eye on the persona report (desktop, 23 Oct) and its four decisions (below). After the holding is built out, C41:
    every persona rewritten facing the outside world and knowing the holding's studio, skills and tools.
-1. His test, next: the same olive-farm brief by one bare Opus at high, at xhigh and at max (arms 1-3, held back on a
-   word on 24 Oct), blind among themselves, beside the 1,000 $ page — the tools are in `.planning/quick/20261024-zeytin-
-   tek-kol/tools/`. Then the persona-employee run of the valuable-work system, after the persona cleanup.
+1. His eye on the two desktop reports (24-25 Oct); then the plan talk at max on how visual 1,000 $ work is made — the
+   test points to one master designing and building, the beauty eye at the first visual draft (the persona report's
+   decision 4). Arm 2 (one Opus at xhigh) was not run. Tools: `.planning/quick/20261024-zeytin-tek-kol/tools/`.
 1b. The studio platform-hub plan is approved with his corrections and on the board (B43; FINAL.md Bölüm 0): built at its
    rank — accounts connected and infrastructure only, no money loaded, no exam now; its first step raises the server's
    LiteLLM pin (`vps/compose.yaml`, 1.91.0) to ≥ 1.97.0. The channels are a separate study, talked before January 2027.

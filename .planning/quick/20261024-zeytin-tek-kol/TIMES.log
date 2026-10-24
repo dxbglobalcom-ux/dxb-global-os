@@ -64,3 +64,8 @@
 2026-10-24 22:19:38 seat-r9 end rc=0 seconds=50 turns=3 tokens=491109 out_tokens=3368 cost_usd=3.3843208000000002 session=61ad56fb-6a01-40b8-b0b8-3ce8805dc825 error=False
 2026-10-24 22:22:56 seat-type start model=claude-opus-5-5 effort=high
 2026-10-24 22:25:45 seat-type end rc=0 seconds=169 turns=26 tokens=692013 out_tokens=8752 cost_usd=0.6275954 session=e909ce65-1a69-4656-9f01-354c2869b28f error=False
+2026-10-24 22:35:01 arm1 start model=claude-opus-5-5 effort=high
+2026-10-24 22:48:53 arm1 end rc=0 seconds=831 turns=55 tokens=2775921 out_tokens=84385 cost_usd=3.1562216000000007 session=ee9d191f-b918-4b97-a805-ce1de3bacbab error=False
+2026-10-24 23:48:23 arm3 start model=claude-opus-5-5 effort=max
+2026-10-25 00:25:30 arm3 end rc=0 seconds=2227 turns=55 tokens=7757621 out_tokens=244277 cost_usd=8.196310600000002 session=fca6aae7-f843-4a01-8d7c-67e13d12a695 error=False
+2026-10-25 00:33:18 sol-judge end rc=0 seconds=455 tokens=156,080
