@@ -1,0 +1,23 @@
+site                       offic  D    U    Cr   Co   wtd   delta
+Sleep Well Creatives       8.03  8.4  7.3  8.5  7.6  8.01  -0.02
+Maxima Therapy             7.73  8.0  7.2  7.8  7.6  7.68  -0.05
+Champions For Good         7.69  8.0  7.2  8.0  7.2  7.68  -0.01
+Ponpon Mania               7.64  8.0  6.8  8.3  7.2  7.62  -0.02
+Aupale Vodka               7.5  7.9  7.0  7.3  7.6  7.48  -0.02
+Gary (partial)             7.5  7.8  6.8  8.0  7.2  7.48  -0.02
+La Revoltosa (partial)     7.45  7.6  7.0  7.5  7.8  7.42  -0.03
+/zeroz                     7.41  7.8  6.6  7.8  6.8  7.34  -0.07
+SOM (partial)              7.36  7.5  7.3  6.9  7.6  7.33  -0.03
+Don Molinico               7.35  7.6  6.9  7.1  7.6  7.29  -0.06
+Bucks Sauce                7.34  7.3  7.3  7.0  8.0  7.31  -0.03
+Crav Burgers               7.25  7.3  7.2  7.3  7.0  7.24  -0.01
+sakazuki                   7.23  7.7  6.4  7.2  6.8  7.12  -0.11
+Ciao Energy                7.22  7.6  6.6  7.4  6.6  7.16  -0.06
+Planetono                  7.22  7.4  6.6  7.6  6.8  7.14  -0.08
+KOKUYO                     7.13  7.3  6.6  7.3  6.8  7.04  -0.09
+Yelkovan (ours)              -   7.2  8.0  7.0  8.4  7.52
+Design     median 7.65  ours 7.2  < median  rank 17/17 (top quarter = rank <= 4)
+Usability  median 6.95  ours 8.0  >= median  rank 1/17 (top quarter = rank <= 4)
+Creativity median 7.45  ours 7.0  < median  rank 15/17 (top quarter = rank <= 4)
+Content    median 7.20  ours 8.4  >= median  rank 1/17 (top quarter = rank <= 4)
+weighted: bench median 7.33, ours 7.52, rank 5/17

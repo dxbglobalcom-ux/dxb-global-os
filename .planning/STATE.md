@@ -2,7 +2,7 @@
 gsd_state_version: 1.0
 milestone: v2.0
 status: executing
-last_updated: "2026-10-23"
+last_updated: "2026-10-24"
 session_author: opus-5
 ---
 
@@ -26,6 +26,16 @@ REWRITES them at its end — replaces, never appends;** what they held before go
 not here. What is accepted is read from `scripts/governance/ceo-approvals.json`, never from memory.
 
 ## Where we left off
+
+2026-10-24 — The 1,000 $ way, run alone (no holding persona; plan picks the levels; last check Sol only;
+jury once), on one landing page for a fictional Urla olive farm, each seat walled in bwrap outside the repository.
+Report on his desktop: `1000 Dolar Sistemi Testi 2026-10-24.pdf`; the page: "Örnek landing pageler / 11-24ekim-zeytin-
+1000-dolar-akisi.html"; record: `.planning/quick/20261024-zeytin-tek-kol/`. With no deadline or budget the signed plan
+was 14 steps, its own estimate 19 h (the jury gate grew out of the brief's bar through Sol's audit and the merge); on a
+22:45 deadline the owner re-planned to 10 steps and delivered 22:02 (58 min of it a 5-hour quota stop). The jury vs 16
+award winners: Usability and Content 1st, Design 17th of 17, Creativity 15th — gate failed; Sol: works, not at award
+level. His eye: "genel itibariyle güzel", 7.3-7.7 of 10, not 9. Type scale fixed on his note (H2 66→51 px). ~100 $ at
+API prices.
 
 2026-10-23 — The report he ordered is on his desktop: `Personalar Raporu 2026-10-23.pdf`, second version (6 pages,
 Turkish; the first, 12-page version angered him — it named pictures and the studio as causes, but the good 21 Oct page
@@ -126,10 +136,9 @@ microphone <!-- CEO-OK: jarvis-silent-listening-voice-04-okayed-2026-09-14 -->. 
 
 0. His eye on the persona report (desktop, 23 Oct) and its four decisions (below). After the holding is built out, C41:
    every persona rewritten facing the outside world and knowing the holding's studio, skills and tools.
-1. His test, next: the holding's own employees produce one 1,000 $+ job through the valuable-work system three times —
-   every seat at medium, at high, at max — shown to him blind, side by side; the parts still under construction named
-   in the result. Unrelated to the clinic work. The job is still to be chosen (his, or one the lead proposes). The report
-   advises running it after the blind persona test and the design-persona cleanup, or it measures the same frame again.
+1. His test, next: the same olive-farm brief by one bare Opus at high, at xhigh and at max (arms 1-3, held back on a
+   word on 24 Oct), blind among themselves, beside the 1,000 $ page — the tools are in `.planning/quick/20261024-zeytin-
+   tek-kol/tools/`. Then the persona-employee run of the valuable-work system, after the persona cleanup.
 1b. The studio platform-hub plan is approved with his corrections and on the board (B43; FINAL.md Bölüm 0): built at its
    rank — accounts connected and infrastructure only, no money loaded, no exam now; its first step raises the server's
    LiteLLM pin (`vps/compose.yaml`, 1.91.0) to ≥ 1.97.0. The channels are a separate study, talked before January 2027.
