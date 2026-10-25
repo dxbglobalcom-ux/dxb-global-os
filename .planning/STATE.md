@@ -27,15 +27,27 @@ not here. What is accepted is read from `scripts/governance/ceo-approvals.json`,
 
 ## Where we left off
 
+2026-10-25 — Two olive-farm runs, then the merge he asked for. (1) One master with two helpers (copywriter,
+illustrator) inside its own live page vs one master alone, same brief, Opus high: 36.5 min and 10.09 $ vs 10.5 min and
+2.28 $; the lead's eye: the team page more refined in its middle, the single page stronger at first sight — the team
+did not clearly win (the master called each helper once, no note round). (2) His merge order: Yeldeğirmeni (the
+two-helper page) as the base, the other four pages' features without their brands, studio stills and a hero video,
+hover, motion and 3D — one master, Opus high, ScrollCraft and the studio, 55 min, 15.84 $. Delivered for his eye:
+"Örnek landing pageler / 24 Ekim - Urla Zeytin / 25-ekim-birlesik-yeldegirmeni.html" (one 13 MB file, sent to his
+phone) and the folder beside it; runs in `/home/dxb/test-kutu/20261025-usta-ekip/` and `20261025-birlesik/`. The
+master restarted `dxb-comfyui` twice when the studio's gate refused on swap.
+
 2026-10-24 — The 1,000 $ way, run alone (no holding persona; plan picks the levels; last check Sol only;
 jury once), on one landing page for a fictional Urla olive farm, each seat walled in bwrap outside the repository.
 Reports on his desktop: `1000 Dolar Sistemi Testi 2026-10-24.pdf` and `Üç Sayfa Karşılaştırma 2026-10-25.pdf`; the
 pages: "Örnek landing pageler / 24 Ekim - Urla Zeytin"; record: `.planning/quick/20261024-zeytin-tek-kol/`. Then the
 same brief by one bare Opus: high in 14 min (3.16 $), max in 37 min (8.20 $). Sol, blind and visual only, ranked them
-high 7.5/6.8 (Design/Creativity), max 7.2/7.0, the 1,000 $ way 6.7/7.0. Diagnosed overnight: the brief and the task
-text held none of the limits — both plan writers made "the bar testable" (budgets, motion limits, technical tests); Sol
-flagged the plan's cart, calendar and booking as widening (its brief, the lead's, said "one page, widening is an
-error") and the merge banned them; the one whole-page design step (max) died on the lead's box login fault. With no deadline or budget the signed plan
+high 7.5/6.8 (Design/Creativity), max 7.2/7.0, the 1,000 $ way 6.7/7.0. Measured 25 Oct from the job's own files: the
+limits came from the plans, not the brief or the task text, but they were performance and robustness rules — the plan
+asked for scroll reveals, a drawn travel map and a live order; it banned only taking over the scroll, a cart kept across
+reloads, the calendar file and booking codes (Sol flagged those as widening; its brief, the lead's, said so). What
+holds: the one whole-page design step (max) died on the lead's box login fault and the build seat inherited its
+decisions on a clock; the parts went to 14 fresh seats, each "do this part only", none seeing another's work. With no deadline or budget the signed plan
 was 14 steps, its own estimate 19 h (the jury gate grew out of the brief's bar through Sol's audit and the merge); on a
 22:45 deadline the owner re-planned to 10 steps and delivered 22:02 (58 min of it a 5-hour quota stop). The jury vs 16
 award winners: Usability and Content 1st, Design 17th of 17, Creativity 15th — gate failed; Sol: works, not at award
@@ -144,8 +156,8 @@ microphone <!-- CEO-OK: jarvis-silent-listening-voice-04-okayed-2026-09-14 -->. 
 1. His eye on the two desktop reports (24-25 Oct); then the plan talk at max on how visual 1,000 $ work is made — the
    test points to one master designing and building, the beauty eye at the first visual draft (the persona report's
    decision 4). Arm 2 (one Opus at xhigh) was not run. Tools: `.planning/quick/20261024-zeytin-tek-kol/tools/`.
-   His idea at night, to be talked at max first: one landing page joining the best sides of the three, with a studio
-   hero video, hover, motion and 3D. The handover for it is on his desktop: `Devir 2026-10-25.md`.
+   His idea of that night — one page joining the best sides, with a studio hero video, hover, motion and 3D — was
+   built on 25 Oct (above) and waits for his eye; the handover `Devir 2026-10-25.md` on his desktop is still unread.
 1b. The studio platform-hub plan is approved with his corrections and on the board (B43; FINAL.md Bölüm 0): built at its
    rank — accounts connected and infrastructure only, no money loaded, no exam now; its first step raises the server's
    LiteLLM pin (`vps/compose.yaml`, 1.91.0) to ≥ 1.97.0. The channels are a separate study, talked before January 2027.
