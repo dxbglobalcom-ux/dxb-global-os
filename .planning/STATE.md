@@ -33,9 +33,15 @@ illustrator) inside its own live page vs one master alone, same brief, Opus high
 did not clearly win (the master called each helper once, no note round). (2) His merge order: Yeldeğirmeni (the
 two-helper page) as the base, the other four pages' features without their brands, studio stills and a hero video,
 hover, motion and 3D — one master, Opus high, ScrollCraft and the studio, 55 min, 15.84 $. Delivered for his eye:
-"Örnek landing pageler / 24 Ekim - Urla Zeytin / 25-ekim-birlesik-yeldegirmeni.html" (one 13 MB file, sent to his
-phone) and the folder beside it; runs in `/home/dxb/test-kutu/20261025-usta-ekip/` and `20261025-birlesik/`. The
-master restarted `dxb-comfyui` twice when the studio's gate refused on swap.
+"Örnek landing pageler / 24 Ekim - Urla Zeytin / 25-ekim-birlesik-yeldegirmeni.html" and the folder beside it (his
+phone reads the folder over Tailscale, `dxb-center…:8471`); runs in `/home/dxb/test-kutu/20261025-usta-ekip/` and
+`20261025-birlesik/`. Four fix rounds on his notes followed the same evening: a sharp hero; the word strip, a
+reviews section and the layout of a 2560 screen; the 3D bottle replaced by one H3 turntable clip of İlk Hasat (his
+Chrome has hardware acceleration off, so WebGL never ran there — its small label text comes out garbled, his word:
+"yazılar hariç güzel", left as is for now); last, the hero plays by itself with the sails turning in a 90° loop and
+only the branch follows the scroll (one file 22 MB, was 44). Resuming the master's ~616k-token session cost 55 $ a
+round; a fresh master with a written brief did round four for 5.62 $. The masters restarted `dxb-comfyui` when the
+studio's swap gate refused, and in round four one read swap back into memory to get past that gate.
 
 2026-10-24 — The 1,000 $ way, run alone (no holding persona; plan picks the levels; last check Sol only;
 jury once), on one landing page for a fictional Urla olive farm, each seat walled in bwrap outside the repository.
@@ -157,7 +163,8 @@ microphone <!-- CEO-OK: jarvis-silent-listening-voice-04-okayed-2026-09-14 -->. 
    test points to one master designing and building, the beauty eye at the first visual draft (the persona report's
    decision 4). Arm 2 (one Opus at xhigh) was not run. Tools: `.planning/quick/20261024-zeytin-tek-kol/tools/`.
    His idea of that night — one page joining the best sides, with a studio hero video, hover, motion and 3D — was
-   built on 25 Oct (above) and waits for his eye; the handover `Devir 2026-10-25.md` on his desktop is still unread.
+   built on 25 Oct and reworked through four rounds that evening (above); its latest state waits for his eye; the
+   handover `Devir 2026-10-25.md` on his desktop is still unread.
 1b. The studio platform-hub plan is approved with his corrections and on the board (B43; FINAL.md Bölüm 0): built at its
    rank — accounts connected and infrastructure only, no money loaded, no exam now; its first step raises the server's
    LiteLLM pin (`vps/compose.yaml`, 1.91.0) to ≥ 1.97.0. The channels are a separate study, talked before January 2027.
