@@ -39,7 +39,8 @@ phone reads the folder over Tailscale, `dxb-center…:8471`); runs in `/home/dxb
 reviews section and the layout of a 2560 screen; the 3D bottle replaced by one H3 turntable clip of İlk Hasat (his
 Chrome has hardware acceleration off, so WebGL never ran there — its small label text comes out garbled, his word:
 "yazılar hariç güzel", left as is for now); last, the hero plays by itself with the sails turning in a 90° loop and
-only the branch follows the scroll (one file 22 MB, was 44). Resuming the master's ~616k-token session cost 55 $ a
+only the branch follows the scroll — he chose the whole 5 s take over the 3.2 s quarter-turn loop (one file 28 MB,
+was 44). Resuming the master's ~616k-token session cost 55 $ a
 round; a fresh master with a written brief did round four for 5.62 $. The masters restarted `dxb-comfyui` when the
 studio's swap gate refused, and in round four one read swap back into memory to get past that gate.
 
