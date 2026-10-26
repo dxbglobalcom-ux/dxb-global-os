@@ -81,8 +81,8 @@ Onay merkezi: `/approvals`. Yedi karar aksiyonunuz var (ölçülü, canlı):
 - **PARA-ÇIKIŞI ASLA TOPLU İŞLENMEZ.** Toplu onay yalnız düşük-risk rutin kalemler içindir;
   para-çıkışı, sözleşme ve kimlik adımları TEK TEK, gerekçe okuyarak karara bağlanır.
   (Para GİRİŞİ onay istemez — yerleşik kural.)
-- **delegate ne zaman?** Karar teknik derinlik istiyorsa ve güvendiğiniz bir direktör varsa —
-  karar o çalışana devredilir, izi `delegated_to` ile kayda geçer.
+- **delegate ne zaman?** Karar teknik derinlik istiyorsa — karar işin ustasına ya da hattın kalıcı
+  sahibine devredilir, izi `delegated_to` ile kayda geçer.
 - **reanalyze ne zaman?** Gerekçe zayıfsa veya bilgi eskiyse — talep yeniden analize gider,
   yeni koşu kanıtıyla döner. "Emin değilim" hissinin doğru düğmesi budur; reddetmek değil.
 - **request_info ne zaman?** Tek bir eksik cevap varsa (maliyet? alternatif?) — talep edene soru döner.
@@ -132,7 +132,7 @@ duraklar: yeni koşu başlamaz, dışa dönük hiçbir adım atılmaz. Bakım i�
 
 ## 9. Control Mode — modeli ve parayı siz yönetirsiniz
 
-- **Model rozeti:** Her çalışan kartında beyin rozeti (hangi model) görünür; direktör/çalışan
+- **Model rozeti:** Her çalışan kartında beyin rozeti (hangi model) görünür; her çalışanın
   modeli dashboard'dan değiştirilebilir (kayıtlı karar 2026-07-12: şirket RUNTIME beyni serbest).
   **B64 kurulunca kod şu sınırları korur:** ustalar high'ın altına inmez; Sonnet
   ve Haiku low'da çalışmaz; max hiçbir yerde varsayılan olmaz; okuduğunuz son metin Opus'un altına
@@ -272,8 +272,8 @@ Approval center: `/approvals`. Seven decision actions (measured live):
 - **MONEY-OUT IS NEVER PROCESSED IN BULK.** Batch decisions are for low-risk routine items
   only; money-out, contracts, and identity steps are decided ONE BY ONE with the rationale
   read. (Money-IN needs no approval — standing rule.)
-- **When delegate?** The decision needs technical depth and you trust a director — the
-  decision transfers with a recorded `delegated_to` trail.
+- **When delegate?** The decision needs technical depth — it goes to the job's master or the
+  line's standing owner, and the decision transfers with a recorded `delegated_to` trail.
 - **When reanalyze?** The rationale is weak or stale — the request goes back for a fresh
   analysis run and returns with new evidence. This is the correct button for "not sure",
   not reject.
@@ -325,7 +325,7 @@ maintenance. Both keys are change-logged and UNDO-able.
 
 ## 9. Control Mode — you govern the models and the money
 
-- **Model badge:** every employee card shows its brain (model); director/employee brains are
+- **Model badge:** every employee card shows its brain (model); every employee's brain is
   switchable from the dashboard (registered ruling 2026-07-12: runtime brains are free choice).
   **With B64's build the code keeps these limits:** masters never below high; Sonnet and
   Haiku never at low; max never a default; the final text you read never below Opus (voice normal

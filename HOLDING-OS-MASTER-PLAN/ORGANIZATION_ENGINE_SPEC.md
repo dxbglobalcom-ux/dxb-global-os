@@ -5,7 +5,7 @@
 
 ## 1. Amaç
 
-Holding organizasyonunun (holding → company → department → director → senior_specialist → specialist → ops_agent → sub_agent) DB'de birinci-sınıf, UI'da interaktif-graf olarak yaşaması. İki yüz: (a) **okuma** — org graph 7 görünüm modunda, her node tıklanabilir, sonsuz drill-down; (b) **yazma** — CEO'nun madde 2 org yetkileri (taşı, bağla, askıya al, müdür değiştir, model grubu ata) tek yazım seamından, audit'li ve geri-alınabilir.
+Holding organizasyonunun (holding → company → department → senior_specialist → specialist → ops_agent → sub_agent; departmanın başında müdür düğümü yoktur, işin sahibi işin türünün ustasıdır — B64 v2) DB'de birinci-sınıf, UI'da interaktif-graf olarak yaşaması. İki yüz: (a) **okuma** — org graph 7 görünüm modunda, her node tıklanabilir, sonsuz drill-down; (b) **yazma** — CEO'nun madde 2 org yetkileri (taşı, bağla, askıya al, usta değiştir, model grubu ata) tek yazım seamından, audit'li ve geri-alınabilir.
 
 ## 2. Gereksinimler
 
@@ -121,7 +121,7 @@ Madde 4 sınırları içinde: yeni kimlik katmanı yok; RLS deseni DATA_MODEL §
 
 ## 21. Acceptance criteria
 
-- CEO org grafında bir uzmanı başka müdüre sürükler → 2sn içinde graf yeni yapıyı gösterir, audit_log satarı sorgulanabilir, çalışan koşusu kesilmemiştir (G6 kanıtı).
+- CEO org grafında bir uzmanı başka departmana sürükler → 2sn içinde graf yeni yapıyı gösterir, audit_log satarı sorgulanabilir, çalışan koşusu kesilmemiştir (G6 kanıtı).
 - 7 mod anahtarı < 500ms'de overlay değiştirir (topoloji yeniden çekilmez — network sekmesinde tek hafif istek).
 - Her node tıklanınca madde 5.3 setinin TAMAMI drawer'da dolu (boş alan = ilgili view eksik = kabul reddi).
 
@@ -151,7 +151,7 @@ curl -s localhost:3000/api/org/graph.json?mode=cost | jq '.nodes | length'  # �
 ## 26. Riskler / 27. Edge case'ler
 
 - Riskler: graf kütüphanesi bundle ağırlığı (ultrawide'da 60fps hedefi — ölçülmeden kabul yok); Broadcast patch sıra bozulması (çözüm: patch'te `version` sayacı, eskisi düşürülür).
-- Edge: müdürsüz departman (director_id NULL) — graf "vekâlet" rozetiyle gösterir, HR alert'i açılır; no work waits on it, since work is routed by the job-type menu and work with no owner goes through the "unclear" door to Hamza (B64 A2; B64 v2 <!-- CEO-OK: b64-v2-plan-and-six-decisions-his-yes-2026-10-26 --> <!-- CEO-OK: b64-v2-heads-and-dept-budgets-go-owner-by-job-2026-10-26 -->); çalışan kendi kendinin müdürü — trigger reddi; aynı anda iki taşıma (CEO + HR) — satır kilidi fn içinde (`SELECT ... FOR UPDATE`), ikinci işlem güncel durumla yeniden doğrulanır; company arşivi — altındaki tüm departman/çalışan arşivlenmeden RED.
+- Edge: müdürsüz departman (director_id NULL) olağandır — grafta departmanın uzmanları görünür, rozet ve HR alert'i yoktur; no work waits on it, since work is routed by the job-type menu and work with no owner goes through the "unclear" door to Hamza (B64 A2; B64 v2 <!-- CEO-OK: b64-v2-plan-and-six-decisions-his-yes-2026-10-26 --> <!-- CEO-OK: b64-v2-heads-and-dept-budgets-go-owner-by-job-2026-10-26 -->); çalışan kendi kendinin müdürü — trigger reddi; aynı anda iki taşıma (CEO + HR) — satır kilidi fn içinde (`SELECT ... FOR UPDATE`), ikinci işlem güncel durumla yeniden doğrulanır; company arşivi — altındaki tüm departman/çalışan arşivlenmeden RED.
 
 ## Registered adaptations — B64 how work reaches the holding (2026-10-14) <!-- CEO-OK: b64-decisions-1-5-8-9-11-12-16-his-yes-2026-10-14 -->
 

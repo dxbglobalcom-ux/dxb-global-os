@@ -232,7 +232,7 @@ tahmin değil ölçüm olması.
 
 Birinci-sınıf varlıklar ve sahipleri — tam şema [[DATA_MODEL]]:
 
-- **Org ailesi:** `companies, org_units(departments genişler), employees(agents genişler), employee_records, personas` — hiyerarşi: holding→company→department→director→senior→specialist→ops_agent→sub_agent (`employees.parent_id` + `role_level` enum).
+- **Org ailesi:** `companies, org_units(departments genişler), employees(agents genişler), employee_records, personas` — hiyerarşi: holding→company→department→senior→specialist→ops_agent→sub_agent, no director level (B64 v2: a job type's master owns the job) (`employees.parent_id` + `role_level` enum).
 - **Kontrol ailesi:** `settings_registry, settings_values, settings_change_log, model_catalog, routing_rules` (extended in place by 0021x — model_id + role_slot; the draft name `model_routing_rules` was never created).
 - **Görünürlük ailesi:** `agent_runs, decision_log, tool_calls, file_changes` (+ mevcut `task_events, audit_log, cost_ledger`).
 - **İş ailesi:** `projects, workflows, workflow_steps, workflow_runs` (+ mevcut `tasks, intents, approvals, outbox`).

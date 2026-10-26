@@ -14,7 +14,7 @@
 
 **YENİ:**
 - `voice_core` migration family 0029x: `voice_identities`, `voice_calls` (+ RLS + control fns).
-- Call-line service (thin): audio in → STT → intent → orchestrator → director answer → TTS → audio out.
+- Call-line service (thin): audio in → STT → intent → orchestrator → Hamza or the job's master answers → TTS → audio out.
 - Dashboard `/voice` call surface (push-to-talk v1) — §31 route addition, built in R3.1.
 - Events `voice.*` on Broadcast.
 

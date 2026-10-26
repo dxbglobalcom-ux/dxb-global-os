@@ -221,7 +221,7 @@ The target is not a decorative dashboard. It is a living AI-native holding opera
 Hamza is the persistent general manager and central operating intelligence of the holding:
 
 - one coherent identity across chat, voice, dashboards, meetings and system control;
-- knows the Kernel Holding system, company structure, directors, departments, policies, data and tools;
+- knows the Kernel Holding system, company structure, masters, departments, policies, data and tools;
 - can navigate and operate the system, not merely answer questions;
 - changes position and presentation intelligently according to context;
 - visibly responds while speaking;
@@ -304,7 +304,7 @@ No production implementation may begin until the following package is complete a
 3. Navigation and page map
 4. Live-data contracts and honest-empty-state rules
 5. Hamza identity and action architecture
-6. Director/meeting-room architecture
+6. Master/meeting-room architecture
 7. Revenue/profit-centred operating model
 
 ### Phase 4 — Visual design approval package
@@ -316,7 +316,7 @@ The CEO requires visual presentation, not text-only descriptions:
 3. every major page shown visually;
 4. normal, loading, empty, error, permission and live-update states;
 5. Hamza in idle, listening, speaking, thinking, acting and repositioning states;
-6. director identities and meeting-room view;
+6. master identities and meeting-room view;
 7. Chat/Voice redesign;
 8. charts, network flows and live connections using real or clearly labelled sample data;
 9. responsive and performance strategy;

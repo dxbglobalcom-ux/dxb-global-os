@@ -18,11 +18,11 @@ uyarlama olarak yazıldı. Planın tamamı, Sol'un denetimi ve bulguları:
 ## Sıra — her adım ayrı bir iş, biri bitmeden öbürü başlamaz
 
 1. **Hamza'nın üç eli.** (14 Ekim'de kuruldu.) Hedefinizi konuşarak anlar, tarife yazar; tarifte cümleniz aynen
-   kalır. "Neresindesiniz" dediğinizde durumu masadan getirir. "Max'a geç", "Bütün ustaları xhigh yap" gibi
-   sözlerinizi tek kapıya iletir; "geri al" derseniz geri alınır. "Beni bu işin ustasına bağla" dediğinizde açık bir
-   işin ustasıyla, Hamza'yla konuştuğunuz gibi konuşursunuz; gerisi Hamza'dadır. Ekranınızda "niyet" sözü ve tek
-   satırlık kutu yoktur.
-2. **İş türü ve işin ustası.** İş dört kapıdan girer: siz (Hamza), müşteri maili ve mesajı (Karşılama), takvim ya
+   kalır. "Neresindesiniz" dediğinizde durumu getirir. "Max'a geç" gibi sözlerinizi tek kapıya iletir; "geri al"
+   derseniz geri alınır. Ekranınızda "niyet" sözü ve tek satırlık kutu yoktur.
+2. **İş türü ve işin ustası.** Hamza'nın elleri ustalara bağlanır: "Neresindesiniz" dediğinizde durum işin
+   masasından gelir; "Bütün ustaları xhigh yap" sözü ustalara gider; "Beni bu işin ustasına bağla" dediğinizde açık
+   bir işin ustasıyla, Hamza'yla konuştuğunuz gibi konuşursunuz, gerisi Hamza'dadır. İş dört kapıdan girer: siz (Hamza), müşteri maili ve mesajı (Karşılama), takvim ya
    da olay (hat kartı), holdingin kendi gelir işi. Tutar, kayıtlı müşteri, dil ve tarih koddan okunur. Müşteriyi
    kimin karşıladığı ve teklif → kabul → imzalı anlaşma → iş sırası değişmez. Jev, 8-12 türlük menüden işin türünü
    seçer ve ne kadar emin olduğunu söyler; 0,80'in altında Sonnet, o da emin değilse Hamza karar verir. Menüde
@@ -36,8 +36,11 @@ uyarlama olarak yazıldı. Planın tamamı, Sol'un denetimi ve bulguları:
    dersini ilgili departmanın dolabına yazar. Kanal, gelir motoru, aylık paket ve holdingde açılan şirket gibi
    sürekli işler takvimi, bütçesi ve hedefi olan kalıcı bir sahibe bağlanır.
 3. **Kontrol ve kritik kapı.** Kontrol, işi tarifteki "bitti" ölçütüne göre gerçekten açıp çalıştırarak sınar;
-   daha iyisini aramaz. Geçmeyen iş, kontrolün notlarıyla ustasına döner. Müşteriye giden her şeye Sol bakar ve
-   çalışan işi dener; yanında Fable okur; müşteri gözü yürür. İkisi birden düşerse iş bekler ve size haber gelir.
+   daha iyisini aramaz. Geçmeyen iş, kontrolün notlarıyla ustasına döner. Müşteriye giden işe iki koltuk birbirini
+   görmeden bakar: Sol okur ve çalışan işi açıp dener, Fable okur; ayrıca bir Opus son kontrolü yoktur. Rutin müşteri
+   mesajına yalnız Sol bakar. Müşteri gözü, kullanıcı yolu yeni ya da değişmiş müşteri sitesinde ve uygulamasında
+   kendiliğinden yürür; başka işte usta gerekçesiyle çağırır ya da siz istersiniz. Sol ile Fable birden düşerse iş
+   bekler ve size haber gelir.
 4. **Yedek çift ve model odası.** Opus düşerse işi Fable alır, Fable düşerse Opus. Fable'ın kritik kapıdaki koltuğu
    düşerse Opus değil Sol bakar; hiçbir model kendi yazdığını denetlemez. Geçiş kayda yazılır; hiçbir iş daha zayıf
    bir modele düşmez. Eski yedek yolu kapanır; B65 ve B66 bu adımda biter. Fable'ın kotası %95'e gelince ikinci

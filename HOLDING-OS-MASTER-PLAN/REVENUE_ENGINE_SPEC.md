@@ -105,7 +105,7 @@ Empty states honest ("0 opportunities — first scan scheduled …"), no dummy m
 - **Two halves on the existing worker rail.** `commissionScoutingRun` opens ONE **staffed** research task in Strategy (staffed matters: an agent-less task runs tool-LESS by default-deny, and a market scan without tools is the defect); `harvestScoutingRuns` turns a finished run's findings into `opportunities` through `control_opportunity_register`, each row carrying the run, the pages it cited and the tools it called. Both halves run inside `revenue.scan`; harvest first, so a finished run frees the single open-run slot.
 - **Bounded by design:** one open run at a time, a pipeline floor (`revenue.discovery.pipeline_floor`), a candidate cap, and an off switch — a daily job can never become a queue of scouts talking to the same internet. `revenue_scout_runs` is the ledger that makes "harvested exactly once" true rather than hoped.
 - **Refusals are recorded, never silent:** a candidate citing no URL is refused `no_evidence`; an invented engine is refused `unknown_engine`; the counts and reasons land in `revenue_scout_runs.outcome` and `audit_log`. "Found nothing" and "made something up" must never look the same afterwards.
-- **Discovery finds; it never rules.** Rows land at `discovered` with `halal_verdict='pending'` — the verdict belongs to the CEO or the risk-audit head (§13, separation of duties).
+- **Discovery finds; it never rules.** Rows land at `discovered` with `halal_verdict='pending'` — the verdict belongs to the CEO or the risk-audit department's halal reviewer (§13, separation of duties).
 
 **FOUR DEFECTS THE HOLDING'S OWN GATES CAUGHT, all mine, all fixed:**
 1. **No project link.** The pre-task hook refused the task five times ("do not conflict with holding goals") and the ladder blocked it. The gate was right — a scan with no home in the portfolio is orphan work. Weakening it was never an option and `control_project_action` create is CEO-only, so the standing project `revenue-discovery` ships as data (migration `20260726009100`).
@@ -209,7 +209,7 @@ objectives 1─n portfolio_allocations n─1 opportunities n─1 revenue_engines
 
 ## 13. Authorization
 
-RLS: authenticated read on views; base tables deny direct writes (control-seam P4). Fn guards: `activate/close/allocate/rotate/stop/set capital` = CEO actor only; `register/score` = system jobs + strategy dept agents; `set_halal_verdict` = CEO or risk-audit dept head ONLY (never the proposing agent — separation of duties). Grants mirrored in PERMISSION_MODEL §append.
+RLS: authenticated read on views; base tables deny direct writes (control-seam P4). Fn guards: `activate/close/allocate/rotate/stop/set capital` = CEO actor only; `register/score` = system jobs + strategy dept agents; `set_halal_verdict` = CEO or the risk-audit department's halal reviewer ONLY (never the proposing agent — separation of duties). Grants mirrored in PERMISSION_MODEL §append.
 
 ## 14-15. Logging & Audit
 

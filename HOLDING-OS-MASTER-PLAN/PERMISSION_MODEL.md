@@ -43,7 +43,7 @@ Mevcut-varlık eşlemesi: Katman 1-3 KALIR (0014 RLS deseni yeni tablolara kopya
 | Approval TALEBİ açma | ✓ | ✓ | (its role_level) | ✓ | ✓ | — | — |
 | Approval KARARI | — (yalnız CEO) | — | (its role_level) | — | — | — | — |
 | Outbox yazımı | — (yalnız fn_decide_approval) | — | (its role_level) | — | — | — | — |
-| Org/settings mutasyonu | — (yalnız CEO — his word carried by Hamza through the one door included, G1-ter; HR delege fn'leri system) | — | — (a line's standing owner: its own line's definition only, within his limits — §4-bis) | — | — | — | — |
+| Org/settings mutasyonu | — (yalnız CEO — his word carried by Hamza through the one door included, G1-ter; HR delege fn'leri system) | — | ✓ for a line's standing owner on its own line's definition only, within his limits (§4-bis 1); every other org/settings mutation — | — | — | — | — |
 | Model self-override (brain and effort choice) | — (carries his word to the one door, G1-ter) | — | ✓ (each part of its job, reasoned, within code's limits; own work never below Opus 5.5 high — §4-bis) | — | — | — | — |
 
 **§4-bis (registered adaptation, B64, CEO 2026-10-14 <!-- CEO-OK: b64-decisions-1-5-8-9-11-12-16-his-yes-2026-10-14 -->; reshaped by B64 v2, CEO 2026-10-26 <!-- CEO-OK: b64-v2-plan-and-six-decisions-his-yes-2026-10-26 --> <!-- CEO-OK: b64-v2-heads-and-dept-budgets-go-owner-by-job-2026-10-26 -->).** The last two rows above changed by his decisions; the seed keeps its 60 role_level cells, their two director cells read —, and the powers those cells held, with cross-department staffing of its own job, sit with ¹ the job owner (master) — a subject that is not a role_level but a seat's relation to a job, checked at the job (codes at build), never seeded. <!-- OPEN: B64 -->

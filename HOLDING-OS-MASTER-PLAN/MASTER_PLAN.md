@@ -66,7 +66,7 @@ Kanıt tabanı: repo durumu 2026-07-10, commit `3744db8` sonrası. Doğrulama ko
 | # | Direktif istediği | Mevcut durum | Boşluk sınıfı | Kapatan spec |
 |---|-------------------|--------------|---------------|--------------|
 | G1 | Executive Command Center (§§1-39: katmanlı kompozisyon, 26+ sayfa, widget sistemi) | 5-6 sayfalık kokpit; RET | **SIFIRDAN** | CEO_COMMAND_CENTER_SPEC, DESIGN_SYSTEM |
-| G2 | Holding→Company→Dept→Director→Specialist→Agent→Sub-agent hiyerarşisi + interaktif org graph + drag-drop | `departments` + `agents` (2 seviye); companies/directors/hiyerarşi YOK | **YENİ şema + motor** | ORGANIZATION_ENGINE_SPEC, DATA_MODEL |
+| G2 | Holding→Company→Dept→Specialist→Agent→Sub-agent hiyerarşisi + interaktif org graph + drag-drop | `departments` + `agents` (2 seviye); companies/directors/hiyerarşi YOK | **YENİ şema + motor** | ORGANIZATION_ENGINE_SPEC, DATA_MODEL |
 | G3 | HR Operating System (yaşam döngüsü: oluştur→eğit→değerlendir→terfi→arşivle) | YOK (personas dizini statik dosya) | **YENİ** | HR_OPERATING_SYSTEM_SPEC, EMPLOYEE_PERSONA_STANDARD |
 | G4 | Opus 5 Intelligence & Discipline Hook (runtime policy + pre/post-task validation + quality gates) | Governance kuralları memory/doc'ta; runtime enforcement kısmi (hooks.workflow_guard) | **YENİ runtime katmanı** | FABLE_5_HOOK_SPEC |
 | G5 | Settings = tam kontrol merkezi (orkestratör/model/çalışan/bütçe/approval politikaları CEO-değiştirilebilir) | YOK (config dosyaları + memory; UI'dan değişmez) | **YENİ** | SETTINGS_AND_CONTROL_SPEC, MODEL_ROUTING_SPEC |

@@ -132,6 +132,11 @@ and `KIND_STORE` are untouched (⛔ above); both items ride the router as it sta
   server as part of the holding's memory: registered as a `memory_source` in the library bridge (§4), written through
   this router and its redaction gate (§16). The holding's memory is the source; an accepted dream change is written into
   both (A1.3). Schema at build.
+- **A3 Hamza's conversation summary, and what a handover needs from memory (B64 v2)** <!-- CEO-OK: b64-v2-plan-and-six-decisions-his-yes-2026-10-26 --> <!-- OPEN: B64 -->
+  — the day's conversation runs in one append-only session and its compaction summary keeps every decision he gave
+  (written to miss nothing first, to be short second), the next day starting from the previous day's (AGENT_ORCHESTRATION A29 (11), steps from A29 (6)); the summary serves
+  the conversation only and changes no memory — a durable change goes A1's way. The holding's shared memory must let a
+  successor reach anything it needs at once by searching the job's desk and this memory (A29 (12)).
 
 ## Opus-devralma notu
 
