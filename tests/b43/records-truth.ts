@@ -136,6 +136,8 @@ export const C = {
     { id: "eye-waiting-list-accepted-2026-10-08", subject: /four equal arrangements|code bundle 2|auto-memory fixes|outside review's item 4/i },
     // Runtime isolation phase 3, accepted by his word 2026-10-19; the records spell it "isolation phase 3" / "Phase 3 of the runtime isolation".
     { id: "isolation-phase3-accepted-by-his-word-2026-10-19", subject: /isolation phase 3|phase 3 of the runtime isolation/i },
+    // The merged olive-farm landing page (Yeldeğirmeni, 25 Oct), accepted as it stands by his eye 2026-10-26; the records spell it "the merged olive page".
+    { id: "olive-merged-page-accepted-by-his-eye-2026-10-26", subject: /merged olive page/i },
   ],
   /**
    * R4 — the ruler cannot be forgotten: every acceptance of his eye registered in the ledger from
