@@ -31,7 +31,7 @@ Where the work stands today exists **once**: `.planning/STATE.md`.
 ## WHAT THIS HOLDING IS — read once; it does not change
 
 **DXB Global AI-Native Holding OS** — the executive command platform for one whole holding:
-companies, departments, directors, AI employees, projects, tasks, models, costs, decisions,
+companies, departments, masters, AI employees, projects, tasks, models, costs, decisions,
 approvals, workflows, skills, knowledge, memory, risks and audit, all seen, entered, changed and
 controlled from one place. It is **not** an admin panel, a project dashboard, an approval screen,
 a task manager or a SaaS panel — each is a named rejection in the CEO's own directive, and a

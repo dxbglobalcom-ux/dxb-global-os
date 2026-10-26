@@ -63,7 +63,7 @@ Kayıtlı ekler: `memory_index.run_id uuid` + `memory_index.scope text DEFAULT '
 
 - Yazım: yalnız memory-router üzerinden (ajan profillerinde store'lara doğrudan yazım yolu yok; dosya-store dizinleri MCP dosya araçlarının profil kapsamı dışında).
 - Okuma: `holding` scope herkese, `dept:` scope profil eşleşmesine; CEO tümünü görür.
-- Editing and archiving: the CEO through the control seam; HR processes only propose (an employee's archive yields a clean-up proposal for its scope, never a deletion). The one dream (A1) only proposes too; an accepted proposal is written through the router like any write (B64 decision 18). <!-- CEO-OK: b64-decision18-one-dream-holding-wide-2026-10-14 --> Who accepts a dream proposal <!-- CEO-OK: b64-q4-dept-head-accepts-dept-dream-2026-10-14 -->: one on a department's own memory (`dept:<id>`) is accepted by that department's head; one on holding-wide memory (`holding`) or touching his rules comes to him through the same control seam.
+- Editing and archiving: the CEO through the control seam; HR processes only propose (an employee's archive yields a clean-up proposal for its scope, never a deletion). The one dream (A1) only proposes too; an accepted proposal is written through the router like any write (B64 decision 18). <!-- CEO-OK: b64-decision18-one-dream-holding-wide-2026-10-14 --> Who accepts a dream proposal: one on a department's own memory (`dept:<id>`) is accepted by Hamza; one on holding-wide memory (`holding`) or touching his rules comes to him through the same control seam (B64 v2, decision 3) <!-- CEO-OK: b64-v2-plan-and-six-decisions-his-yes-2026-10-26 --> <!-- CEO-OK: b64-v2-heads-and-dept-budgets-go-owner-by-job-2026-10-26 -->.
 
 ## 14. Logging / 15. Audit
 
@@ -100,7 +100,7 @@ psql "$DB" -c "SELECT count(*) FROM library_items WHERE kind='memory_source';"  
 
 - Bağımlılık: pgvector (0010), memory-router paketi, dxb-mcp memory grubu, library ailesi (0024x — envanter köprüsü için önce gelmeli).
 - Risk: dosya-store büyümesi repo'yu şişirir → eşik: `memory-store/` 500MB'ta System Health uyarısı; arşiv stratejisi (eski artifact'ler Storage Box'a) BACKUP_PLAN döngüsüne bağlanır.
-- Edge: aynı olgunun çift yazımı → embeddings benzerlik eşiğiyle dedup önerisi (otomatik silme YOK; the proposal follows the dream's acceptance path, §13 and A1: on `dept:<id>` its department's head accepts it, on `holding` or touching his rules it waits on the CEO <!-- CEO-OK: b64-q4-dept-head-accepts-dept-dream-2026-10-14 -->); çalışan arşivlendiğinde scope'lu kayıtları → kalır, sahibi `archived` işaretli; Opus döneminde classify kalitesi düşerse → `needs_reclassify` kuyruğu büyür, eşik alarmı CEO'ya.
+- Edge: aynı olgunun çift yazımı → embeddings benzerlik eşiğiyle dedup önerisi (otomatik silme YOK; the proposal follows the dream's acceptance path, §13 and A1: on `dept:<id>` Hamza accepts it, on `holding` or touching his rules it waits on the CEO — B64 v2, decision 3 <!-- CEO-OK: b64-v2-plan-and-six-decisions-his-yes-2026-10-26 --> <!-- CEO-OK: b64-v2-heads-and-dept-budgets-go-owner-by-job-2026-10-26 -->); çalışan arşivlendiğinde scope'lu kayıtları → kalır, sahibi `archived` işaretli; Opus döneminde classify kalitesi düşerse → `needs_reclassify` kuyruğu büyür, eşik alarmı CEO'ya.
 
 ## Registered adaptations (B64, 2026-10-14 — CEO-visible; no silent deviation)
 
@@ -114,9 +114,9 @@ and `KIND_STORE` are untouched (⛔ above); both items ride the router as it sta
      contradictions and stale knowledge are found, and a few memory changes are proposed.
   2. Each proposal carries the runs it was seen in, how many times it was seen, and why it is needed.
   3. A proposal never edits memory itself. Accepted, it is written through this router into the holding's memory and
-     into Hermes's (A2), so the two never diverge. Who accepts (§13) <!-- CEO-OK: b64-q4-dept-head-accepts-dept-dream-2026-10-14 -->: a proposal
-     on a department's own memory (`dept:<id>`) is accepted by that department's head; one on holding-wide memory
-     (`holding`) or touching his rules comes to him.
+     into Hermes's (A2), so the two never diverge. Who accepts (§13): a proposal on a department's
+     own memory (`dept:<id>`) is accepted by Hamza; one on holding-wide memory (`holding`) or touching his rules comes
+     to him (B64 v2, decision 3) <!-- CEO-OK: b64-v2-plan-and-six-decisions-his-yes-2026-10-26 --> <!-- CEO-OK: b64-v2-heads-and-dept-budgets-go-owner-by-job-2026-10-26 -->.
   4. One line on his screen in the morning: *"Dün gece N iş okundu, 3 şey bulundu, 1'i sizi bekliyor."* The line is
      drawn by CEO_COMMAND_CENTER_SPEC; its numbers come from this dream.
   5. The bar: the same job done a second time is better and cheaper — read from the holding's own runs (the check's

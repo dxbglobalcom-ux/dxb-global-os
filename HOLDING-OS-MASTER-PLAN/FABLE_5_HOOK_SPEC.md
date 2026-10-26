@@ -95,7 +95,7 @@ CREATE TABLE hook_violations (
 
 ## 7. Escalation zinciri
 
-`çalışan → the job's owner (the head of its department) → Hamza → CEO` — he is reached only for his own items (money, a contract, identity, an outward critical step, a valuable delivery, a decision that is his); a failed part never reaches him as an approval item, it returns to its owner with the check's notes (B64, A19). Her sıçrama decision_log'a; zincir `settings 'hook.escalation_chain'` ile departman bazında özelleştirilebilir. Escalation SONUÇ üretmek zorunda: açık escalation 24s cevapsız kalırsa alert `critical` (kaybolmuş sorumluluk = ihlal).
+`çalışan → the job's master → Hamza → CEO` — he is reached only for his own items (money, a contract, identity, an outward critical step, a valuable delivery, a decision that is his); a failed part never reaches him as an approval item, it returns to its owner with the check's notes (B64, A19). Her sıçrama decision_log'a; zincir `settings 'hook.escalation_chain'`'de durur ve departmana göre özelleştirilmez (B64 v2). Escalation SONUÇ üretmek zorunda: açık escalation 24s cevapsız kalırsa alert `critical` (kaybolmuş sorumluluk = ihlal). <!-- CEO-OK: b64-v2-plan-and-six-decisions-his-yes-2026-10-26 --> <!-- CEO-OK: b64-v2-heads-and-dept-budgets-go-owner-by-job-2026-10-26 -->
 
 ## 8. API'ler / 9. Event yapısı / 10. State yönetimi
 
@@ -126,7 +126,7 @@ Hook motoru hatası (policy yüklenemedi, DB erişilemez): **fail-closed** — s
 ## 20. Test planı
 
 - Birim: 17 standardın her mekanizması için en az 1 RED + 1 PASS vakası (34 vaka tabanı).
-- Entegrasyon: kanıtsız "done" iddiası → REVISE; revizyon limiti aşımı → ESCALATE → müdür decision_log satırı.
+- Entegrasyon: kanıtsız "done" iddiası → REVISE; revizyon limiti aşımı → ESCALATE → işin ustasının decision_log satırı (B64 v2). <!-- CEO-OK: b64-v2-plan-and-six-decisions-his-yes-2026-10-26 -->
 - Fail-closed: DB kesintisi simülasyonu → spawn yok + alert; kuyruk birikimi sonrası otomatik akış.
 
 ## 21. Acceptance criteria

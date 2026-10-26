@@ -232,13 +232,14 @@ Hamza is the persistent general manager and central operating intelligence of th
 
 Voice direction: achieve **JARVIS-class quality**—calm, precise, premium and human-like—using an original or properly licensed voice. Do not clone or imitate a real performer’s protected voice without rights.
 
-### Directors and meeting room
+### Masters and meeting room
 
-- Approximately 20 department directors must have distinct identities and domain expertise.
-- Each director needs a coherent visual symbol, role, status and knowledge boundary.
-- A meeting-room view must place Hamza centrally with the relevant directors around it.
+- Approximately 10 masters — each the owner of one job type — must have distinct identities and domain expertise (B64 v2, decision 2). <!-- CEO-OK: b64-v2-plan-and-six-decisions-his-yes-2026-10-26 --> <!-- CEO-OK: b64-v2-heads-and-dept-budgets-go-owner-by-job-2026-10-26 -->
+- Each master needs a coherent visual symbol, role, status and knowledge boundary.
+- A meeting-room view must place Hamza centrally with the masters around it; a master with an open job shows live.
 - Conversation, decisions, tasks, dissent, confidence and outcomes must be visible and traceable.
-- Director visuals may follow the same holographic language as Hamza, but must remain individually recognisable.
+- Master visuals may follow the same holographic language as Hamza, but must remain individually recognisable.
+- The room's new look is drawn for the CEO before it is built.
 
 ### Chat, voice and action execution
 

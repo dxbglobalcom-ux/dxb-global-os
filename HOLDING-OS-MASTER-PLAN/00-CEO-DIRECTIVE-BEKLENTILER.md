@@ -22,7 +22,7 @@ dashboardda ben herşeyi kendin manuel değiştirebilmeli ve aynı zaman her det
       sadece yüzeysel plan yazıldı fable 5 tarafından. ben bütün planın a'dan z ye n      yapılacağı dahi fable 5 tarafından yazılması gerek" bu eğer 12sine kadar yetişmezse.
       öncelik outleteuro değil zira outleteuro bu holding kurulduktan sonra, holding yönetimi
       ve uzmanlarıyla yapacağı bir proje. önce DxB Global AI-Native Holding OS'mini %100        mükemmel tamamlayıp sonra bu holdinging ilk projesi outleteuro olacaktı. planım buydu.
-        Baştaki orkestratör, departman müdürleri, departmanların içindeki uzman çalışanlar ve
+        Baştaki orkestratör, departmanların içindeki uzman çalışanlar ve <!-- CEO-OK: b64-v2-plan-and-six-decisions-his-yes-2026-10-26 --> <!-- CEO-OK: b64-v2-heads-and-dept-budgets-go-owner-by-job-2026-10-26 -->
         getir götür işi yapacak her ajan; hangi model olursa olsun. Fable 5 zekası ve
         disipliniyle HOOK'lanmak zorunda olacaktı. şirketin içindeki her çalışanın personası
         Fable 5 tarafından TEMBELLİK YAPILMADAN- en kaliteli şekilde yazılacak sicili
@@ -371,7 +371,7 @@ Menü grupları:
 * Holding Structure
 * Companies
 * Departments
-* Directors
+* Masters <!-- CEO-OK: b64-v2-plan-and-six-decisions-his-yes-2026-10-26 -->
 * Employees
 * HR Operating System
 
@@ -451,7 +451,7 @@ Global search yalnızca sayfa araması yapmamalıdır.
 Şunları arayabilmelidir:
 
 * Çalışan
-* Müdür
+* Usta <!-- CEO-OK: b64-v2-plan-and-six-decisions-his-yes-2026-10-26 -->
 * Departman
 * Şirket
 * Proje
@@ -471,7 +471,7 @@ Command palette üzerinden doğrudan aksiyon alınabilmelidir.
 
 Örnek:
 
-* “Marketing Director modelini değiştir”
+* “Reklam ustasının modelini değiştir” <!-- CEO-OK: b64-v2-plan-and-six-decisions-his-yes-2026-10-26 -->
 * “Son 24 saatte başarısız olan workflow’ları göster”
 * “En çok token kullanan çalışanları aç”
 * “Outleteuro projesini durdur”
@@ -591,7 +591,6 @@ Aşağıdaki yapı izlenebilmelidir:
 Holding
 → Company
 → Department
-→ Director
 → Senior Specialist
 → Specialist
 → Operations Agent
@@ -682,7 +681,7 @@ Bu mod aktif olduğunda:
 * Düzenleme kontrolleri görünür
 * Organizasyon değişiklikleri yapılabilir
 * Modeller değiştirilebilir
-* Müdürler değiştirilebilir
+* Ustalar değiştirilebilir <!-- CEO-OK: b64-v2-plan-and-six-decisions-his-yes-2026-10-26 -->
 * Çalışanlar taşınabilir
 * Workflow durdurulabilir
 * Görev yeniden atanabilir
@@ -1507,7 +1506,7 @@ CEO bu sistem üzerinden holdingin:
 
 Bütün şirketlerini
 Bütün departmanlarını
-Bütün müdürlerini
+Bütün ustalarını <!-- CEO-OK: b64-v2-plan-and-six-decisions-his-yes-2026-10-26 -->
 Bütün uzman çalışanlarını
 Bütün alt ajanlarını
 Bütün projelerini
@@ -1542,7 +1541,7 @@ Hangi ajanın hangi işi yaptığını görebilmeli
 Hangi modelin kullanıldığını görebilmeli
 Model seçimini değiştirebilmeli
 Çalışanların yetkilerini değiştirebilmeli
-Müdürleri değiştirebilmeli
+Ustaları değiştirebilmeli <!-- CEO-OK: b64-v2-plan-and-six-decisions-his-yes-2026-10-26 -->
 Çalışanları başka departmana taşıyabilmeli
 Çalışanları devre dışı bırakabilmeli
 Yeni çalışan oluşturabilmeli
@@ -1637,8 +1636,7 @@ Holding organizasyonu grafik olarak görülebilmelidir:
 
 Holding
 → Şirket
-→ Departman
-→ Departman Müdürü
+→ Departman <!-- CEO-OK: b64-v2-plan-and-six-decisions-his-yes-2026-10-26 --> <!-- CEO-OK: b64-v2-heads-and-dept-budgets-go-owner-by-job-2026-10-26 -->
 → Kıdemli Uzman
 → Uzman
 → Operasyon Ajanı
@@ -1669,9 +1667,7 @@ görülebilmelidir.
 
 Drag-and-drop ile organizasyon değişiklikleri yapılabilmelidir.
 
-Bir müdür başka departmana taşınabilmeli.
 
-Bir çalışan başka müdüre bağlanabilmeli.
 
 Bir model başka çalışan grubuna atanabilmeli.
 
@@ -1721,15 +1717,8 @@ değiştirilebilmelidir.
 
 Department Settings
 
-Her departman için:
+Her departman için: <!-- CEO-OK: b64-v2-plan-and-six-decisions-his-yes-2026-10-26 --> <!-- CEO-OK: b64-v2-heads-and-dept-budgets-go-owner-by-job-2026-10-26 -->
 
-Müdür
-Müdür modeli
-Müdür persona’sı
-Müdür yetkileri
-Departman bütçesi
-Departman token limiti
-Approval seviyesi
 Workflow kuralları
 Departman hedefleri
 KPI’lar
@@ -1936,7 +1925,6 @@ Persona oluşturma
 Sicil oluşturma
 Model atama
 Departmana atama
-Müdüre bağlama
 Yetki atama
 Skill atama
 Plugin atama
@@ -1947,7 +1935,6 @@ Test görevleri
 Probation süreci
 Terfi
 Departman değişikliği
-Müdür değişikliği
 Model değişikliği
 Askıya alma
 Devre dışı bırakma
@@ -2095,7 +2082,7 @@ Proje amacı
 Holding stratejisiyle ilişkisi
 Proje sahibi
 Departmanlar
-Müdürler
+Ustalar <!-- CEO-OK: b64-v2-plan-and-six-decisions-his-yes-2026-10-26 -->
 Çalışanlar
 Aktif workflow’lar
 Master plan
@@ -2296,7 +2283,7 @@ Holding organizasyon yapısı
 
 Faz 3
 
-Orchestrator, departman müdürleri ve çalışan sistemi
+Orchestrator ve çalışan sistemi <!-- CEO-OK: b64-v2-plan-and-six-decisions-his-yes-2026-10-26 --> <!-- CEO-OK: b64-v2-heads-and-dept-budgets-go-owner-by-job-2026-10-26 -->
 
 Faz 4
 

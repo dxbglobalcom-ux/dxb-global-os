@@ -333,10 +333,10 @@ production dead at 12:29. The local lane removes that single point of failure. C
 Design: `.planning/quick/20261012-b64-is-akisi/is-akisi.html`.
 
 **Hermes — the holding's 24/7 hands and eyes (decision 15)** <!-- CEO-OK: b64-decision15-hermes-holding-hands-and-eyes-2026-10-14 --> <!-- OPEN: B11 -->
-- Used in every area, like Jev: Hamza and every head give it computer work — open sites, fill forms, research, follow
+- Used in every area, like Jev: Hamza and every master give it computer work — open sites, fill forms, research, follow
   up — and the result returns to whoever gave it. It runs the night work into his morning brief. It is the holding's
-  outward message door: WhatsApp's official business channel and Telegram, each message reaching Hamza or the job's
-  head. It passes CAPTCHAs itself.
+  outward message door: WhatsApp's official business channel and Telegram; each message it carries in reaches the
+  Reception desk, which gives it to Hamza or the job's master (B64 v2). It passes CAPTCHAs itself. <!-- CEO-OK: b64-v2-plan-and-six-decisions-his-yes-2026-10-26 --> <!-- CEO-OK: b64-v2-heads-and-dept-budgets-go-owner-by-job-2026-10-26 -->
 - It writes its own skills from its work and uses the holding's; when its own skill does not serve, it falls back to the
   holding's (HOLDING_LIBRARY_SPEC A10; item 3's exception).
 - No restriction beyond his approval gate, and for now no watchdog and no spend limit. Money, a contract, identity and

@@ -12,7 +12,7 @@
 > functions functionally, without copying their branding, text, design, or code.
 >
 > The department must include agents for:
-> 1. **Social Media Orchestrator Agent** — coordinates the whole department, receives user/client requests, assigns tasks, tracks status, reports results.
+> 1. **Social Media Orchestrator Agent** — the standing owner of the social-media operation (channels), with a schedule, a budget and a target; user/client requests come to it as a standing operation; it tracks status and reports results. One-off social-media jobs go to the content/social master (B64 v2). <!-- CEO-OK: b64-v2-plan-and-six-decisions-his-yes-2026-10-26 --> <!-- CEO-OK: b64-v2-heads-and-dept-budgets-go-owner-by-job-2026-10-26 -->
 > 2. **Social Account Connector Agent** — connecting/managing accounts: Instagram, Facebook, TikTok, LinkedIn, YouTube Shorts, X/Twitter, Threads, Pinterest, Bluesky, Mastodon, Google Business, future channels.
 > 3. **Content Strategy Agent** — weekly/monthly content plans, campaign ideas, posting strategy, platform-specific angles, brand voice rules.
 > 4. **Copywriting Agent** — captions, hooks, hashtags, CTAs, short-form scripts, threads, LinkedIn posts, product posts, platform variations.
@@ -40,7 +40,7 @@
 ## 3. Fable işleme kararları (add/subtract yetkisiyle)
 
 1. **12 rol AYNEN kabul** — çıkarma yok. Gerekçe: her rol ayrı çıktı sözleşmesi taşır; birleştirme (örn. Analytics+Reporting) ajans-müşteri raporlama hattını tek boğaza sokar.
-2. **Departman statüsü:** tam departman (`social-media`), pod değil — CEO metni açık ("Create a new Social Media Department"). Head = Social Media Orchestrator (role_level='director'; departman-içi koordinasyon). Hedef org 18→**19 departman**.
+2. **Departman statüsü:** tam departman (`social-media`), pod değil — CEO metni açık ("Create a new Social Media Department"). Social Media Orchestrator = sosyal medya operasyonunun (kanallar) kalıcı sahibi — takvimi, bütçesi ve hedefiyle; talepler ona sürekli iş olarak gelir; tek seferlik sosyal medya işi içerik ve sosyal medya ustasına gider (B64 v2). <!-- CEO-OK: b64-v2-plan-and-six-decisions-his-yes-2026-10-26 --> <!-- CEO-OK: b64-v2-heads-and-dept-budgets-go-owner-by-job-2026-10-26 --> Hedef org 18→**19 departman**.
 3. **Marketing sınır sözleşmesi:** marketing = içerik/growth STRATEJİSİ ve kanal uzmanlığı (tiktok-strategist, instagram-curator vb. marketing'de KALIR); social-media = OPERASYON (hesap bağlama, takvim, yayın, inbox, onay akışı, müşteri workspace, rapor). Kampanya stratejisi marketing'den girdi alır; yayın operasyonu social-media'dan çıkar. Çatışma protokolü persona §7'lerde yazılır.
 4. **data-ai sınırı:** Social MCP/API Agent departmanın DIŞA AÇILAN yüzüdür (drafts/schedule/analyze API aksiyonları); MCP altyapı sahipliği data-ai/specialized-mcp-builder'da kalır.
 5. **Dış-yüz onay kapıları:** yayınlama (publish) DIŞA DÖNÜK eylemdir — Approval Workflow Agent'ın final-approver zinciri APPROVAL_ENGINE_SPEC'e bağlanır; müşteri-görünür rapor gönderimi rutin dış iletişim sınıfındadır (otonom, CEO onayı gerekmez), ücretli reklam/para-çıkışı bu departmanda YOKTUR (paid-media'da kalır).

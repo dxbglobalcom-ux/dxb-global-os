@@ -34,13 +34,13 @@ Kanıt tabanı: repo durumu 2026-07-10, commit `3744db8` sonrası. Doğrulama ko
 | Varlık | İçerik | Kanıt komutu → beklenen |
 |--------|--------|------------------------|
 | Postgres şeması (19 migration) | 18 tablo: `agents, approvals, audit_log, budget_state, cost_ledger, crm_clients, crm_contacts, crm_deals, crm_requests, departments, intents, memory_embeddings, memory_index, outbox, routing_rules, task_events, tasks, tool_pins` | `ls db/migrations \| wc -l` → 19; `grep -rhoiE "create table [a-z_]+" db \| sort -u \| wc -l` → 18 |
-| `packages/kernel` | İntent→plan→task döngüsü, pg-boss üstünde. Since B64 (2026-10-14): his goal enters as Hamza's brief and the owning head writes the plan ([[AGENT_ORCHESTRATION_SPEC]] B64) <!-- OPEN: B64 --> | `ls packages/kernel/src` → dosyalar |
+| `packages/kernel` | İntent→plan→task döngüsü, pg-boss üstünde. Since B64 (2026-10-14): his goal enters as Hamza's brief and the master of the job's type writes the plan ([[AGENT_ORCHESTRATION_SPEC]] B64; B64 v2) <!-- CEO-OK: b64-v2-plan-and-six-decisions-his-yes-2026-10-26 --> <!-- CEO-OK: b64-v2-heads-and-dept-budgets-go-owner-by-job-2026-10-26 --> <!-- OPEN: B64 --> | `ls packages/kernel/src` → dosyalar |
 | `packages/orchestrator` | Görev yönlendirme + routing_rules tüketimi | `ls packages/orchestrator` |
 | `packages/outbox-executor` | The one exit for outward actions the holding's own workers take (after approval where the action needs one); Hermes's computer work is the second, named path (B64 decision 15, SECURITY_MODEL O2) <!-- CEO-OK: b64-decision15-hermes-holding-hands-and-eyes-2026-10-14 --> | `ls packages/outbox-executor` |
 | `packages/memory-router` | 4-store kompozisyon (06-02 spike 20/20) | `ls packages/memory-router` |
 | `packages/gateway` + `packages/dxb-mcp` | MCP gateway + 9 DXB MCP grubu (media dahil), derlenmiş departman profilleri — her el açık, iki duvar arkasında (CEO 2026-10-04, CAPABILITY_ARSENAL §1 item 5) | `ls packages/gateway packages/dxb-mcp` |
 | `packages/shared` | Zod şemaları, ortak tipler | `ls packages/shared` |
-| LiteLLM proxy yapılandırması | Departman-başı virtual key + bütçe hard-stop | `.planning/research/STACK.md` Stack Patterns |
+| LiteLLM proxy yapılandırması | Virtual key + bütçe hard-stop; departman bütçe kapsamı değildir, harcamada yalnız etikettir (B64 v2) <!-- CEO-OK: b64-v2-plan-and-six-decisions-his-yes-2026-10-26 --> <!-- CEO-OK: b64-v2-heads-and-dept-budgets-go-owner-by-job-2026-10-26 --> | `.planning/research/STACK.md` Stack Patterns |
 | Hetzner erişimi | hcloud context `dxb`; Storage Box `dxb-backup-1` + subaccount CANLI | `hcloud context list` → dxb |
 
 ### 3.2 Ürün/arayüz katmanı — DEĞİŞİR

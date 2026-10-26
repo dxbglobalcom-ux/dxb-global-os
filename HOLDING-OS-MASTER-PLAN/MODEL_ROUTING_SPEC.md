@@ -40,7 +40,7 @@ task (kernel) ─→ orchestrator.select_model(task)
 
 **Kayıtlı adaptasyon (2026-09-03, B43 — CEO onaylı plan, `studio-hands-build-plan-approved-2026-09-03`):** adım 2'nin *departman* ayağı canlıdır. `routing_rules.department_id` (E6.1 deltası, canlı kolon) artık `resolveExecutionRoute` tarafından okunur: çalışanın kendi departmanına bağlı kural aynı katmanda önce gelir; departmana bağlı bir satır başka bir departman için ASLA seçilmez; departmansız satırlar eski davranışla devam eder. İlk departman satırı stüdyonundur: `media.creative` · L1 · `fable-5` · effort **`xhigh`** (CEO hükmü 2026-09-03: *"max gerek yok xhigh olsun"*) — `effort` CHECK kısıtı ve dört TS dökümü aynı gün `xhigh` ile genişletildi (migration `20260903190000_b43_media_hands.sql`). Kanıt: `tests/b43/media-hands.test.ts` §3. **Aynı gün akşamı, iki-beyin denemesi (CEO: *"iki beyinlede denemek lazım"*, `two-brain-trial-run-approved-2026-09-03`):** stüdyo için ikinci bir departman satırı — `media.creative` · L1 · `fable-5.1` (katalog: *Claude Fable 5.1*, SDK: `claude-fable-5-1`) · `xhigh` · öncelik 40 · **`enabled=false`** — migration `20260903210000_b43_two_brains.sql`. Deneme, iki satırın `enabled` bayrağını koşular arasında çevirir (kart tek, koşular ardışık). **CEO hükmü 2026-09-05 (*"Fable 5.1 olsun, Opus 5 yedek"*, `studio-brain-fable-5-1-opus-5-standby-2026-09-05`): stüdyonun beyni `fable-5.1` (Claude Fable 5.1) — satırı `enabled=true`, öncelik 50; `fable-5` (Claude Opus 5) satırı kapalı yedek, öncelik 40; `audit_log` `routing_change`. `loadPolicy` her koşuda yalnız açık satırları okur, servis yeniden başlatılmadan geçerli.** Kanıt: aynı test §6 ve `routing_rules` sorgusu. **CEO kararı 2026-10-14 (B64) <!-- CEO-OK: b64-q2-studio-creative-seats-opus-2026-10-14 -->: stüdyonun yaratıcı koltukları, stüdyonun kendi işlerinde 10 işlik yan yana denemeden sonra Fable 5.1'den Opus 5.5'e geçer; Fable 5.1 yedekte kalır; effort'u işe göre stüdyonun başı seçer (§4d A-2026-10-14 madde 1).**
 
-**Registered adaptation (2026-09-15, B43 / B08 — CEO rulings `top-tier-set-and-brain-switch-order-2026-09-13` and `studio-brains-open-set-defaults-switchable-2026-09-15`; audit F034, W4):** the studio's brain is a DEFAULT MAP, not a restriction. Defaults: the director, the screenwriter and every creative seat → the smartest model of the day (Claude Fable 5.1 at `xhigh` on the `media.creative` department row above until his word of 2026-10-14 <!-- CEO-OK: b64-q2-studio-creative-seats-opus-2026-10-14 -->: they move to Opus 5.5 after a 10-job side-by-side on the studio's own work, Fable 5.1 stays the backup, and the studio's head picks the effort per job — §4d A-2026-10-14 item 1); every other employee → Claude Opus 5 (`fable-5`). Not restricted to those two: GPT Solo 5.6 (`codex-5.6`, catalogue `testing` today), GPT Astra 6 (no catalogue row yet; the Codex CLI upgrade first — B08 step 1) or another model may serve any seat. Every brain is changeable at any moment by the CEO or by Hamza on his word (§4b `fn_update_agent_brain` / `fn_update_routing`, audited), and a new model is addable from inside the studio (§4c drawer reached from the studio tab). Consequence for §4d: the top tier is a SET, and which member serves a seat is always an explicit routing row or his override — see the §4d note. Measured 2026-09-15 after W10: enabled L1 rows `fable-5` 11 · `fable-5.1` 1 (`media.creative`, dept-scoped) · 16 slot rows without a model; the 14 studio seats' `agents.brain` reads **`fable-5.1`** — the model of the enabled `media.creative` row — and the two ASSIGNED seats read `fable-5`, because they route by their own home departments (audit F035, closed). **Registered adaptation (2026-09-15, W10):** the label no longer has to be corrected by hand behind §4b's doors — `trg_agents_brain_follows_routing` on `routing_rules` moves the `brain` of a department's SLOT-derived seats whenever that department's enabled `media.creative` row changes, and never touches a `ceo_override` brain, which is the CEO's own choice and outranks the router. What §4b writes, the trigger follows; the doors themselves are unchanged. Nothing of the panel is built; B08 step (7) carries it.
+**Registered adaptation (2026-09-15, B43 / B08 — CEO rulings `top-tier-set-and-brain-switch-order-2026-09-13` and `studio-brains-open-set-defaults-switchable-2026-09-15`; audit F034, W4):** the studio's brain is a DEFAULT MAP, not a restriction. Defaults: the director, the screenwriter and every creative seat → the smartest model of the day (Claude Fable 5.1 at `xhigh` on the `media.creative` department row above until his word of 2026-10-14 <!-- CEO-OK: b64-q2-studio-creative-seats-opus-2026-10-14 -->: they move to Opus 5.5 after a 10-job side-by-side on the studio's own work, Fable 5.1 stays the backup, and the studio job type's master picks the effort per job — §4d A-2026-10-14 item 1, B64 v2 <!-- CEO-OK: b64-v2-plan-and-six-decisions-his-yes-2026-10-26 -->); every other employee → Claude Opus 5 (`fable-5`). Not restricted to those two: GPT Solo 5.6 (`codex-5.6`, catalogue `testing` today), GPT Astra 6 (no catalogue row yet; the Codex CLI upgrade first — B08 step 1) or another model may serve any seat. Every brain is changeable at any moment by the CEO or by Hamza on his word (§4b `fn_update_agent_brain` / `fn_update_routing`, audited), and a new model is addable from inside the studio (§4c drawer reached from the studio tab). Consequence for §4d: the top tier is a SET, and which member serves a seat is always an explicit routing row or his override — see the §4d note. Measured 2026-09-15 after W10: enabled L1 rows `fable-5` 11 · `fable-5.1` 1 (`media.creative`, dept-scoped) · 16 slot rows without a model; the 14 studio seats' `agents.brain` reads **`fable-5.1`** — the model of the enabled `media.creative` row — and the two ASSIGNED seats read `fable-5`, because they route by their own home departments (audit F035, closed). **Registered adaptation (2026-09-15, W10):** the label no longer has to be corrected by hand behind §4b's doors — `trg_agents_brain_follows_routing` on `routing_rules` moves the `brain` of a department's SLOT-derived seats whenever that department's enabled `media.creative` row changes, and never touches a `ceo_override` brain, which is the CEO's own choice and outranks the router. What §4b writes, the trigger follows; the doors themselves are unchanged. Nothing of the panel is built; B08 step (7) carries it.
 
 ## 4. Veri modeli
 
@@ -162,7 +162,7 @@ The CEO read his own workforce page and asked *"183 sonnet nedir?"*. The honest 
 
 **Where the ordering lives:** `model_catalog.tier_floor` (`L1` best … `L4`), the best tier a model is allowed to serve. `fn_tier_rank(text)` turns it into a number (unknown → 99, so a typo can never win a comparison) and `fn_effective_tier(task_tier, agent_id)` performs the single comparison. No other place may re-derive quality order. `quality_score` is NOT that source — it is NULL on both Opus 5 and Sonnet and reflects eval history, not seat.
 
-**Deliberately fail-open toward the task's own tier.** An unassigned task, a `brain_source='default'` placeholder, an unrated model, a retired or banned one — all leave the task exactly where the routing table put it. A raised tier with no enabled routing row falls back to the task's tier in `resolveExecutionRoute`. **A floor is an upgrade path, never a new failure mode.** One edge is closed by B64 decision 11: a head's or a manager's run never falls below Opus 5.5 at `high` — the fail-open path included (A-2026-10-14 item 3). <!-- OPEN: B64 -->
+**Deliberately fail-open toward the task's own tier.** An unassigned task, a `brain_source='default'` placeholder, an unrated model, a retired or banned one — all leave the task exactly where the routing table put it. A raised tier with no enabled routing row falls back to the task's tier in `resolveExecutionRoute`. **A floor is an upgrade path, never a new failure mode.** One edge is closed by B64 decision 11: a master's or a standing owner's run never falls below Opus 5.5 at `high` — the fail-open path included (A-2026-10-14 item 3; B64 v2). <!-- OPEN: B64 --> <!-- CEO-OK: b64-v2-plan-and-six-decisions-his-yes-2026-10-26 --> <!-- CEO-OK: b64-v2-heads-and-dept-budgets-go-owner-by-job-2026-10-26 -->
 
 **Guardrails are absolute; a floor or any agent/CAIO source never bypasses them:** `banned` models are never selected; `mechanical_only` models never serve a verdict-capable slot; the budget hard-stop still cuts every non-critical selection. A `ceo_override` brain that fails any of these is neither silently applied nor silently rerouted: he is warned once — *"Bu şu kuralla çelişiyor, yine yapayım mı?"* (§4b) — and on his "devam" it applies as a one-time exception, recorded as an `override` decision line naming the rule, while the rule itself stays (B64 decision 17); without his "devam" it falls through to the normal rule scan and the refusal is written into the decision's `considered` list — it never strands the task.
 
@@ -396,7 +396,8 @@ place to move and nothing waits for a code change or a restart.
    `routing_rules.model_id` equals `model` (the FK moves to `model` once the SQL readers read it — later).
    `agents.brain` gains a foreign key; its default (and `fn_hr_create_employee`'s) was `glm-5.2`, retired
    and banned — it now follows the `low_cost` seat's model (`fn_default_brain()`). Since B64 a default brain is
-   never Jev, and a head's or a manager's is never below Opus 5.5 `high` (decision 11, A-2026-10-14 item 3). <!-- OPEN: B64 -->
+   never Jev, and a master's or a standing owner's is never below Opus 5.5 `high` (decision 11, A-2026-10-14
+   item 3; B64 v2). <!-- OPEN: B64 --> <!-- CEO-OK: b64-v2-plan-and-six-decisions-his-yes-2026-10-26 --> <!-- CEO-OK: b64-v2-heads-and-dept-budgets-go-owner-by-job-2026-10-26 -->
 3. **The judges are a setting, not routing rows.** Measured: as slot rows they would be refused by the
    fixed slot list and a department-less L1 row at priority ≥ 100 would take every L1 task's route.
    `gate.challengers` is validated on every write by a trigger (exactly two, different, active, effort
@@ -479,16 +480,16 @@ place to move and nothing waits for a code change or a restart.
 RUNTIME tree. The design he answered decision by decision: `.planning/quick/20261012-b64-is-akisi/is-akisi.html`
 (v15). Nothing below is built yet; each item is the law the build delivers.
 
-1. **The guide — who chooses a brain (decision 2).** The job's owner — the head of the department that takes it —
+1. **The guide — who chooses a brain (decision 2).** The job's owner — the master of the job's type (B64 v2) —
    chooses every part's model and effort by its own judgement and writes the reason in one line; in doubt it reads
-   the guide, which every head is given:
+   the guide, which every master is given <!-- CEO-OK: b64-v2-plan-and-six-decisions-his-yes-2026-10-26 --> <!-- CEO-OK: b64-v2-heads-and-dept-budgets-go-owner-by-job-2026-10-26 -->:
 
    | Work | Model · effort |
    |---|---|
    | sorting and routine internal work (mail, labels, an internal summary) | Jev first; Sonnet 5.5 `medium` on doubt |
    | standard work (research, analysis, a draft, ordinary code) | Opus 5.5 `medium` |
    | good work (the final text a client, a viewer or he reads; code that must be good) | Opus 5.5 `high` |
-   | a head's or manager's own work (plan, decision, assembly, weekly scorecard) | Opus 5.5 `high`, `xhigh` or `max`, its own choice |
+   | a master's or standing owner's own work (plan, decision, assembly) | Opus 5.5 `high`, `xhigh` or `max`, its own choice |
    | deep thinking (strategy, architecture, design, writing every new plan) | Opus 5.5 `xhigh` or `max` |
    | valuable work's plan | Opus 5.5 `max`, and Fable 5.1 `max` writing it separately (item 7) |
    | a long unattended build (over half an hour) | Opus 5.5 `xhigh` |
@@ -497,22 +498,25 @@ RUNTIME tree. The design he answered decision by decision: `.planning/quick/2026
    | check of client work (the critical gate) | Sol 6.1 `high` reads and tries what runs, Fable 5.1 `high` reads, blind to each other; a routine client message Sol alone (§4e) |
    | the customer's eye (first-user walkers, where [[AGENT_ORCHESTRATION_SPEC]] A28 puts it) | Opus 5.5, effort by the owner, starting at `medium` |
 
-   A known job type runs from the head's registered pattern ([[WORKFLOW_ENGINE_SPEC]]), like a skill or a
+   A known job type runs from its job type's registered pattern ([[WORKFLOW_ENGINE_SPEC]] A8), like a skill or a
    pipeline; its plan is not rewritten — a valuable job of a known type plans only its difference from the pattern,
-   and Sol audits it (item 7) <!-- CEO-OK: valuable-work-pattern-risk-eye-subscriptions-2026-10-19 -->.
-   **Value tiers:** simple — a registered pattern, no plan; normal — the head writes the plan at `xhigh` and keeps
-   it as a pattern; valuable — a deal of 1,000 $ or more, his word "bu değerli bir iş", or risk: the first job of
+   and Sol audits it (item 7) <!-- CEO-OK: valuable-work-pattern-risk-eye-subscriptions-2026-10-19 -->. A pattern
+   belongs to the job type, not to a seat: a plan is registered as the type's pattern when the same type has
+   finished well a second time, never from a normal job's first plan; one-off work leaves no pattern (B64 v2)
+   <!-- CEO-OK: b64-v2-plan-and-six-decisions-his-yes-2026-10-26 -->.
+   **Value tiers:** simple — a registered pattern, no plan; normal — the master writes the plan at `xhigh`;
+   valuable — a deal of 1,000 $ or more, his word "bu değerli bir iş", or risk: the first job of
    its kind, or work touching health, law, personal data or a money flow (item 7). **Code keeps
-   the limits:** the final text a human reads is never below Opus (§4d's one exception: spoken normal talk); heads
-   and managers never below `high`; Sonnet and Haiku never at `low`; `max` a default nowhere — his word or a head's
-   reasoned choice in thinking work opens it; no part over the job's budget. **Measurement corrects:** every choice
+   the limits:** the final text a human reads is never below Opus (§4d's one exception: spoken normal talk); masters
+   and standing owners never below `high`; Sonnet and Haiku never at `low`; `max` a default nowhere — his word or a
+   master's reasoned choice in thinking work opens it; no part over the job's budget. **Measurement corrects:** every choice
    is recorded with its reason; the guide is corrected with a test set built from our own jobs ([[TEST_STRATEGY]]);
    model names live in the catalogue, never in the guide. **Fable stands in three places** — the backup brain,
    valuable work's second plan writer, the critical gate's second seat — and is never burnt idly: the rows B51 P6 put on
    `fable-5.1` on 2026-10-10 (`orchestration`, `strategy`, `architecture`, `final-approval`, the critical-decision
    seat, and the default of `orchestrator.critical_decision_model`) move to Opus 5.5. The studio's creative seats
    (on Fable by his rulings of 2026-09-05 and 2026-09-15, §3) move to Opus 5.5 too, after a 10-job side-by-side on
-   the studio's own work; Fable 5.1 stays their backup. The studio's head picks the effort per job: everyday
+   the studio's own work; Fable 5.1 stays their backup. The studio job type's master picks the effort per job (B64 v2): everyday
    creative work `high`, big work `xhigh`, `max` for truly important work such as a brand or a big campaign — `max`
    is still a default nowhere. <!-- CEO-OK: b64-q2-studio-creative-seats-opus-2026-10-14 -->
 2. **Hamza's levels, model side (decision 3).** Normal chat, questions and the briefing: Opus 5.5 `medium`. Plan,
@@ -520,9 +524,9 @@ RUNTIME tree. The design he answered decision by decision: `.planning/quick/2026
    Today `chat.strategy` carries `max` and every message but a status question reaches it — fixed. Spoken normal
    talk moves to Sonnet 5.5 `medium` after a 20-sentence side-by-side with today's Opus 5.5 `low` (first voice,
    1-1.3 s, B12, and Hamza's character). The speech itself is [[VOICE_INTERACTION_SPEC]] §24ter's.
-3. **Heads and managers never below `high` (decision 11).** Their own thinking runs on Opus 5.5 at `high`, `xhigh`
-   or `max`, their own choice. §4f's floor gains this effort floor: no fail-open path, no default brain
-   (`fn_default_brain()`) and no model picker puts one below it.
+3. **Masters and standing owners never below `high` (decision 11; B64 v2).** Their own thinking runs on Opus 5.5
+   at `high`, `xhigh` or `max`, their own choice. §4f's floor gains this effort floor: no fail-open path, no default
+   brain (`fn_default_brain()`) and no model picker puts one below it. <!-- CEO-OK: b64-v2-plan-and-six-decisions-his-yes-2026-10-26 --> <!-- CEO-OK: b64-v2-heads-and-dept-budgets-go-owner-by-job-2026-10-26 -->
 4. **The backup pair (decision 13).** Written by role — main brain, backup brain — never by model name, so a new
    model taking a role carries the rule. Any failure (quota, overload, outage) → the other brain takes the work,
    critical work included. On Fable the work keeps its own effort clamped to `high`..`xhigh` (low, medium,
@@ -547,16 +551,16 @@ RUNTIME tree. The design he answered decision by decision: `.planning/quick/2026
    <!-- CEO-OK: b64-decision10-valuable-work-two-plans-fable-judge-2026-10-13 -->
    <!-- CEO-OK: plan-two-writers-sol-audit-2026-10-19 --> <!-- CEO-OK: plan-writers-sealed-independent-2026-10-19 -->.
    A deal of 1,000 $ or more, his word, or the risk of item 1 makes a job valuable. Two writers write the same
-   plan from the same brief, at the same time, in separate runs: the head, Opus 5.5 `max`, and Fable 5.1 `max`.
+   plan from the same brief, at the same time, in separate runs: the job's master, Opus 5.5 `max`, and Fable 5.1 `max` (B64 v2 <!-- CEO-OK: b64-v2-plan-and-six-decisions-his-yes-2026-10-26 -->).
    **Neither sees the other's plan, by tool:** Fable's run reads only the brief and the holding's own references,
-   never the head's draft or job folder, and has no shell; each plan is sealed (hash, time) when finished, the
-   head's before Fable's is opened. **Sol 6.1 `high` audits blind** <!-- CEO-OK: valuable-work-judge-blind-2026-10-19 -->:
+   never the master's draft or job folder, and has no shell; each plan is sealed (hash, time) when finished, the
+   master's before Fable's is opened. **Sol 6.1 `high` audits blind** <!-- CEO-OK: valuable-work-judge-blind-2026-10-19 -->:
    first it writes, from the brief alone, the conditions the job must meet and its risks; then it reads the two
    plans as "A" and "B" in a random order, with no effort, model, file name or writing time anywhere in what it
-   reads, the key staying with the head until the audit is written — a reader who knows which plan is whose is
+   reads, the key staying with the master until the audit is written — a reader who knows which plan is whose is
    anchored. Its one pass returns, for each plan, what it lacks that the other has; each plan's errors; and what
    the brief needs that neither meets; it may read the sources a claim rests on (a law's text, an API's documents),
-   and it writes nothing into the plan. **The head adds** what its plan lacks, fixes the errors, checks every
+   and it writes nothing into the plan. **The master adds** what its plan lacks, fixes the errors, checks every
    unmeasured claim at its source, and signs — the §4e shape: the author revises and signs, the seat verifies. Its
    plan is the base; Fable's brings what Opus missed. This replaces the 2026-10-13 shape (one author twice, at
    `xhigh` and `max`, Fable picking): one model written twice is one mind tried twice, and in both trials the
@@ -571,9 +575,21 @@ RUNTIME tree. The design he answered decision by decision: `.planning/quick/2026
    at build. Measured 2026-10-13 on 70 synthetic mails (Turkish, English, Arabic; six hiding an instruction): Jev
    69/70 in 0.3 s, Sonnet 5.5 `medium` 70/70 in 2.4 s, Haiku 5.5 `high` 68/70 in 1.7 s; Jev's cost for the 70:
    0.0025 $.
+   **The job-type menu (B64 v2)** <!-- CEO-OK: b64-v2-plan-and-six-decisions-his-yes-2026-10-26 --> <!-- CEO-OK: b64-v2-heads-and-dept-budgets-go-owner-by-job-2026-10-26 -->.
+   Work is routed to an owner by its type, not by department: a registered menu of 8-12 job types, each with a
+   two- or three-sentence "when chosen" card and a few example jobs, and an "unclear" door always present; there is
+   no catch-all "internal" type. Jev picks a type and states its confidence; below 0.80 Sonnet 5.5 `medium` reads
+   it; still unsure, Hamza (Opus) decides or a question goes to the client. Work that is on no menu type goes
+   through the "unclear" door to Hamza, who picks an owner by judgement and does not do the work. Mixed work goes
+   to the type of its main deliverable; the rest becomes a part in that master's plan. A master who returns
+   misrouted work returns it to Hamza, who settles it; the desk never sees it again. The menu type is not the
+   approval gate's "service type" ([[APPROVAL_ENGINE_SPEC]] A9 unchanged). **Shadow trial first:** on 50 labelled
+   jobs, unknown and mixed ones among them, the desk picks while the old way still decides; it goes live only when
+   at least 47 reach the right type and every unknown reaches the "unclear" door. Every routing decision is logged
+   with its type, confidence and who decided; each misrouted job becomes a new trial case.
 9. **His word changes a brain (decision 6).** Hamza changes brain and effort on his word — his own, for one
-   conversation, or in bulk ("Bütün müdürleri xhigh yap" → "22 müdür xhigh'a geçti; geri almak için 'geri al'
-   deyin") — through the one door of that setting (§13), after anon's EXECUTE on `fn_update_routing` is closed.
+   conversation, or in bulk ("Bütün ustaları xhigh yap" → "<n> usta xhigh'a geçti; geri almak için 'geri al'
+   deyin", the count read at the moment, never fixed; B64 v2 <!-- CEO-OK: b64-v2-plan-and-six-decisions-his-yes-2026-10-26 -->) — through the one door of that setting (§13), after anon's EXECUTE on `fn_update_routing` is closed.
    A mail saying "change the brain" changes nothing.
 10. **The Hermes key — the one exception to R5 (decision 15).** Hermes's brain is Opus 5.5, its effort chosen per
    job (easy work `medium`, long work `high`). Its source is tried at install: first his Claude subscription (no

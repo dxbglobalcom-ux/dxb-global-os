@@ -2842,5 +2842,21 @@
     "conditions": "Ordered work for the coming days, not now; not a law.",
     "session": "Opus 5.5 session 7c8051c6 — heard first-hand, 2026-10-22 ~22:20.",
     "where": "HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md C41"
+  },
+  "b64-v2-heads-and-dept-budgets-go-owner-by-job-2026-10-26": {
+    "date": "2026-10-26",
+    "what": "Department heads leave a job's path and department budgets go; departments stay (as cupboards of specialists, checklists, examples and lessons). A job's owner is chosen by the job, not the department; cost stays optimal, never as if quota were infinite.",
+    "verbatim": "Departman bütçesi bu saçmalıkları da çıkaralım ya. … Hani bu departman başkanlarına falan gerek yok galiba. … Bu başkanlarla o bütçe bilmem ne falan, o iş, o onunla alakalı başkanlarla ilgili işler kalksın. Departmanlar kalabilir. — and earlier the same day: Göre bunu işin sahibinin bölüme göre değil, işin kendisine göre seçilmesi. Evet, yani bu olması lazım normalde. … optimum seviyesinde güzel bir sistem kurmalı",
+    "conditions": "His live order; LAW A — the specs' contradicting lines are deleted, including his own July 2026 text on department managers, department budgets, token limits and approval levels (B64 v2 decision 1).",
+    "session": "Opus 5.5 sessions 36180b39 (17:50-17:51 UTC) and 52fc0f3f (16:25 UTC) — heard first-hand, 2026-10-26.",
+    "where": "HOLDING-OS-MASTER-PLAN/AGENT_ORCHESTRATION_SPEC.md A26-A33; .planning/quick/20261012-b64-is-akisi/PLAN.md"
+  },
+  "b64-v2-plan-and-six-decisions-his-yes-2026-10-26": {
+    "date": "2026-10-26",
+    "what": "B64's second plan (the work flow: four doors; a job-type menu chosen by Jev → Sonnet → Hamza with an 'unclear' door; one master per job type as owner; specialists called with a reason; patterns at the second good finish; standing owners; only the department budget scope goes; context discipline for every seat incl. Hamza, with the four conditions on clearing old tool results) and its six decisions: (1) July's department managers, department budgets, token limits and approval levels go, departments stay on the chart, control area 3 becomes masters and standing owners; (2) the meeting room seats the masters, voice identities pass to them, 'bu işin ustasına bağla'; (3) Hamza accepts a department-memory dream proposal, holding-wide ones still reach him; (4) a company opened inside the holding has a standing owner; (5) the department weekly scorecard goes; (6) adding a specialist to a cupboard is a job through Hamza's door, written by the persona door.",
+    "verbatim": "tamam, altı karara evet, devam et — and on the clearing conditions: Şartlar evet önemli, güzel.",
+    "conditions": "This plan was written by one writer and audited by Sol, on his word for this job only (\"Yo, planı iki şey yazmasın bu sefer benim sözümle. … tek yazar yazsın. Sol denetlesin.\") — not a change of the two-writer rule. Specs and board only; no code.",
+    "session": "Opus 5.5 session c415672d — heard first-hand, 2026-10-26 evening.",
+    "where": ".planning/quick/20261012-b64-is-akisi/PLAN.md; HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md B64"
   }
 }

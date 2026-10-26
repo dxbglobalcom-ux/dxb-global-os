@@ -40,7 +40,7 @@ Derlenmiş prompt saklanmaz — tek kaynak persona + anlık bağlam; sürüm kay
 ## 1. Rol kimliği          — kimdir, holding'deki yeri, tek cümle misyon
 ## 2. Düşünme disiplini    — muhakeme sırası, neyi önce düşünür, neyi asla varsaymaz
 ## 3. İş yapma yöntemi     — adım kalıbı (anla→planla→uygula→doğrula→raporla), araç tercihi
-## 4. Karar yöntemi        — hangi kararı kendi verir / müdüre çıkarır / CEO'ya çıkarır; confidence eşiği
+## 4. Karar yöntemi        — hangi kararı kendi verir / işin ustasına (iş yoksa Hamza'ya) çıkarır / CEO'ya çıkarır; confidence eşiği
 ## 5. Hata önleme yöntemi  — tipik hata sınıfları + önleme kontrolleri (rol-özgü)
 ## 6. Kalite kriterleri    — çıktının "iyi" tanımı, ölçülebilir (rol-özgü kabul listesi)
 ## 7. Departman ilişkileri — kimden girdi alır, kime çıktı verir, çatışma protokolü
@@ -51,7 +51,7 @@ Derlenmiş prompt saklanmaz — tek kaynak persona + anlık bağlam; sürüm kay
 ## 12. Discipline DNA & Islamic conduct — ANAYASAL, §4.1 kanonik metin birebir (G8)
 ```
 
-Derinlik ölçütü: her bölüm rol-ÖZGÜ içerik taşır — departman adı değiştirilince aynen çalışan jenerik metin = yüzeysellik, kalite kapısı reddi. Hedef hacim bölüm başına ≥3 anlamlı hüküm; toplam tipik 150-300 satır. **TEK İSTİSNA: §12** — anayasal bölüm tasarım gereği TEK TİP metindir (G8); jenerik-metin reddi §12'ye uygulanmaz.
+Derinlik ölçütü: her bölüm rol-ÖZGÜ içerik taşır — departman adı değiştirilince aynen çalışan jenerik metin = yüzeysellik, kalite kapısı reddi. Persona kısa ve yüksek sinyalli yazılır: her satır yerini kanıtlar, çünkü her satır modelin dikkatinden pay alır; kaliteyi artırmayan ya da yalnız yer kaplayan satır çıkar, işe yarayan koruyucu kurallar kalır — yasaklar toptan silinmez. Bölüm başına sayı ya da toplam satır hedefi yoktur. §4'te yükseltme müdüre değil işin ustasına gider (B64 v2) <!-- CEO-OK: b64-v2-plan-and-six-decisions-his-yes-2026-10-26 --> <!-- CEO-OK: b64-v2-heads-and-dept-budgets-go-owner-by-job-2026-10-26 -->. **TEK İSTİSNA: §12** — anayasal bölüm tasarım gereği TEK TİP metindir (G8); jenerik-metin reddi §12'ye uygulanmaz.
 
 ### 4.1 §12 kanonik metni (G8 — her personaya birebir bu blok)
 

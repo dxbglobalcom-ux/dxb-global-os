@@ -22,7 +22,7 @@ Proje katmanı salt veri+görünümdür: yürütme motoru DEĞİLDİR (görevler
 | Kalem(ler) | Karşılık |
 |------------|----------|
 | Amaç, strateji ilişkisi, sahibi | `projects.purpose, strategy_link, owner_employee_id` (mevcut 4.4) |
-| Departmanlar, müdürler, çalışanlar | üyelik türetilir: proje görevlerinin/koşularının atanmışları (`v_project_command` hesaplar) + sabit çekirdek kadro **kayıtlı ek** `project_members` |
+| Departmanlar, çalışanlar | üyelik türetilir: proje görevlerinin/koşularının atanmışları (`v_project_command` hesaplar) + sabit çekirdek kadro **kayıtlı ek** `project_members` (B64 v2, karar 1) <!-- CEO-OK: b64-v2-plan-and-six-decisions-his-yes-2026-10-26 --> <!-- CEO-OK: b64-v2-heads-and-dept-budgets-go-owner-by-job-2026-10-26 --> |
 | Aktif workflow'lar | `workflows` ilişkisi — **kayıtlı ek** `workflows.project_id uuid` nullable |
 | Master plan, fazlar, milestone'lar | **kayıtlı ek** `project_milestones` (faz = milestone `phase` türü; plan gövdesi repo'da, `plan_ref` yolu) |
 | Görevler, alt görevler | `tasks(project_id)` + mevcut alt-görev deseni (task parent zinciri task_events'te) |
@@ -142,7 +142,7 @@ curl -s "localhost:3000/api/... v_project_command?slug=eq.dxb-global-os" | jq '.
 
 - Bağımlılık: 0023x (projects/tasks köprüsü), 0022x (corr zinciri), EVENT_MODEL projects kanalı.
 - Risk: üyelik türetimi (koşulardan) ile sabit kadro (project_members) çelişirse → görünüm ikisini ayrı etiketler ("kadro" / "fiilen çalıştı") — çelişki bilgidir, gizlenmez.
-- Edge: projesiz görevler → "Unassigned" sanal grubu (Command View dışında, Operations'ta); proje arşivi → koşan workflow varsa fn reddi (önce durdur); tarihsiz milestone → zaman ekseninde "planlanmamış" rayında; a company opened inside the holding (an ad agency, a media company) runs the same flow, its jobs owned by that company's heads (B64 E09 — AGENT_ORCHESTRATION A26-A27 <!-- CEO-OK: b64-decisions-1-5-8-9-11-12-16-his-yes-2026-10-14 -->); the Outleteuro pilot this line once carried as a separate sub-OS was cancelled (INDEX U19, CEO 2026-07-19). A job is not a project record: its one place is the job desk (AGENT_ORCHESTRATION A27).
+- Edge: projesiz görevler → "Unassigned" sanal grubu (Command View dışında, Operations'ta); proje arşivi → koşan workflow varsa fn reddi (önce durdur); tarihsiz milestone → zaman ekseninde "planlanmamış" rayında; a company opened inside the holding (an ad agency, a media company) runs the same flow under a standing owner with a schedule, a budget and a target, its jobs owned by the master of their type (B64 E09, B64 v2 decision 4 — AGENT_ORCHESTRATION A26-A27 <!-- CEO-OK: b64-decisions-1-5-8-9-11-12-16-his-yes-2026-10-14 --> <!-- CEO-OK: b64-v2-plan-and-six-decisions-his-yes-2026-10-26 --> <!-- CEO-OK: b64-v2-heads-and-dept-budgets-go-owner-by-job-2026-10-26 -->); the Outleteuro pilot this line once carried as a separate sub-OS was cancelled (INDEX U19, CEO 2026-07-19). A job is not a project record: its one place is the job desk (AGENT_ORCHESTRATION A27).
 
 ## Registered adaptations — E9.4 execution (2026-07-14, Fable K1; CEO-visible)
 

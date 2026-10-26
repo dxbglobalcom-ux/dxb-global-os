@@ -19,7 +19,7 @@ Günde ~15 dakikalık bir rutinle tüm holdingi yönetebilirsiniz.
 **Holdinge iş verirken hedef verirsiniz** (B64 kurulunca): bir mühendise iş yazar gibi geniş bir
 tarif — ne istendiği, nasıl olacağı, özellikleri. Tek satırlık "niyet" kutusu kalkar. Hamza
 hedefinizi bir tarife çevirir: cümleniz aynen kalır, yanına işin "bitti" ölçütü ve değeri yazılır.
-İşi o işi alan bölümün başkanı yürütür, sonuç aynı konuşmada size gelir.
+İşi, işin türüne göre seçilen ustası baştan sona yürütür; sonuç aynı konuşmada size gelir. <!-- CEO-OK: b64-v2-plan-and-six-decisions-his-yes-2026-10-26 --> <!-- CEO-OK: b64-v2-heads-and-dept-budgets-go-owner-by-job-2026-10-26 -->
 
 ## 2. Günlük rutin (sabah, ~15 dk)
 
@@ -115,10 +115,11 @@ Her alarm satırı olası neden + önerilen aksiyon + sorumlu çalışan taşır
   işleri kendiliğinden DURDURUR (hard-stop).
 - **Hard-stop'tan çıkış (release) SİZİN kararınızdır** — sistem kendi kendine devam etmez.
   Costs/Budgets sayfasından durumu görür, bütçe anahtarlarını Control Mode'dan değiştirirsiniz.
-- Departman bütçesi: `department.budget_eur` anahtarı (Settings). Çalışan başı limit:
-  `employee.budget_limit_eur`. Görev başı tavan: `orchestrator.max_cost_per_task_eur`.
-- **B64 kurulunca:** bütçe holding → şirket → bölüm → iş diye iner. %70'te ve %90'da uyarı gelir;
-  %100'de kritik olmayan yeni iş durur. Değerli bir işin bütçesi anlaşmanın en fazla %30'udur
+- Çalışan başı limit: `employee.budget_limit_eur`. Görev başı tavan:
+  `orchestrator.max_cost_per_task_eur`.
+- **B64 kurulunca:** bütçe holding → şirket → proje → iş diye iner; sürekli bir işin de kendi
+  bütçesi olur. Departman bütçesi yoktur; harcama yine departmana göre etiketlenir. <!-- CEO-OK: b64-v2-plan-and-six-decisions-his-yes-2026-10-26 --> <!-- CEO-OK: b64-v2-heads-and-dept-budgets-go-owner-by-job-2026-10-26 -->
+  %70'te ve %90'da uyarı gelir; %100'de kritik olmayan yeni iş durur. Değerli bir işin bütçesi anlaşmanın en fazla %30'udur
   (1.000 $'lık işte 300 $). Fiyatı bilinmeyen bir model "0 $" sayılmaz, "maliyet bilinmiyor"
   sayılır. Hermes'e şimdilik harcama sınırı konmaz (15. karar).
 
@@ -133,13 +134,13 @@ duraklar: yeni koşu başlamaz, dışa dönük hiçbir adım atılmaz. Bakım i�
 
 - **Model rozeti:** Her çalışan kartında beyin rozeti (hangi model) görünür; direktör/çalışan
   modeli dashboard'dan değiştirilebilir (kayıtlı karar 2026-07-12: şirket RUNTIME beyni serbest).
-  **B64 kurulunca kod şu sınırları korur:** başkanlar ve yöneticiler high'ın altına inmez; Sonnet
+  **B64 kurulunca kod şu sınırları korur:** ustalar high'ın altına inmez; Sonnet
   ve Haiku low'da çalışmaz; max hiçbir yerde varsayılan olmaz; okuduğunuz son metin Opus'un altına
   inmez (sesli normal konuşma sizin notunuzla Sonnet'te). Bir sınırı aşan seçiminizde holding bir
-  kez uyarır; "devam" derseniz yapılır.
+  kez uyarır; "devam" derseniz yapılır. <!-- CEO-OK: b64-v2-plan-and-six-decisions-his-yes-2026-10-26 -->
 - **Kim seçer:** Model seçimi yönlendirme kurallarındadır; Settings'teki eski `orchestrator.*`
   model anahtarları artık yazılmaz. B64 kurulunca her işin her parçası için hangi modelin, hangi
-  düşünme seviyesinde çalışacağını işin sahibi (bölüm başkanı) seçer ve nedenini bir satırla yazar;
+  düşünme seviyesinde çalışacağını işin sahibi (işin ustası) seçer ve nedenini bir satırla yazar; <!-- CEO-OK: b64-v2-plan-and-six-decisions-his-yes-2026-10-26 -->
   arada kalırsa rehbere bakar. Koltuklar model adıyla değil rolüyle yazılır: ana beyin, yedek
   beyin. Bir model düşerse işi öbürü alır (Opus 5.5 ile Fable 5.1 birbirinin yedeği).
   Simülasyon: /ai/models sayfasının sandbox'ı gerçek yazım yapmadan sonucu gösterir.
@@ -155,10 +156,11 @@ sizden gelir: bir mailin içindeki yazı ya da Hermes'in getirdiği bir sonuç h
 
 - "Max'a geç" / "High'a in" — Hamza o konu bitene kadar o seviyede düşünür, sonra kendi ayarına döner.
 - "Bu değerli bir iş" — iş "değerli" olur: plan iki kez yazılır, teslim müşteriden önce size gelir.
-- "Bütün müdürleri xhigh yap" — Hamza değişikliği tek kayıtlı kapıya iletir; kapı uygular ve
-  kaydeder. Hamza: "22 müdür xhigh'a geçti; geri almak için 'geri al' deyin."
-- "Beni mühendislik başkanına bağla" — o başkanla Hamza'yla konuştuğunuz gibi konuşursunuz.
-  Konuşmadan bir iş doğarsa sahibi o başkandır; Hamza konuşmayı bilir.
+- "Bütün ustaları xhigh yap" — Hamza değişikliği tek kayıtlı kapıya iletir; kapı uygular ve
+  kaydeder. Hamza kaç ustanın geçtiğini söyler: "10 usta xhigh'a geçti; geri almak için 'geri al'
+  deyin." <!-- CEO-OK: b64-v2-plan-and-six-decisions-his-yes-2026-10-26 -->
+- "Beni bu işin ustasına bağla" — açık bir işin ustasıyla Hamza'yla konuştuğunuz gibi konuşursunuz.
+  Konuşmadan bir iş doğarsa o işe aittir; Hamza konuşmayı bilir. Başka her şey Hamza'ya gider. <!-- CEO-OK: b64-v2-plan-and-six-decisions-his-yes-2026-10-26 --> <!-- CEO-OK: b64-v2-heads-and-dept-budgets-go-owner-by-job-2026-10-26 -->
 - "Sitenin neresindesiniz, tasarımı getirin" — Hamza işin durumunu ve son hâlini aynı konuşmaya getirir.
 - "Gönderin" — sizi bekleyen bir teslim müşteriye gider.
 - **Sözünüz bir kuralla çelişirse** holding bir kez uyarır: "Bu şu kuralla çelişiyor, yine yapayım
@@ -177,13 +179,14 @@ sizden gelir: bir mailin içindeki yazı ya da Hermes'in getirdiği bir sonuç h
 ## 11. Sesli hat (Voice) — dürüst durum
 
 `Command → Hamza ile Sohbet (/chat)`: sesli hat bu sayfadadır (24 Temmuz'dan beri `/voice` buraya
-yönlenir). Tıkla-konuş; Hamza kendisi cevap verir. Listeden bir başkan seçerseniz o başkan kendi
-kayıtlı sesiyle cevap verir (€0 hat). **Açık kusur defteri var (U15):** STT gecikmeleri ve
+yönlenir). Tıkla-konuş; Hamza kendisi cevap verir. Listeden birini seçerseniz o kendi kayıtlı
+sesiyle cevap verir (€0 hat); B64 kurulunca listede açık işlerin ustaları durur. <!-- CEO-OK: b64-v2-plan-and-six-decisions-his-yes-2026-10-26 --> **Açık kusur defteri var (U15):** STT gecikmeleri ve
 yanlış-dil çözümlemesi ölçüldü; çözüm planı `00-NOTE-R32-VOICE-REMEDIATION-PLAN` — sizinle ortak
 test seansı gerektirir. O kapanana kadar sesli hat "çalışır ama pürüzlü" statüsündedir.
 
-**B64 kurulunca:** "Beni şu başkana bağla" dediğinizde — sohbette de seste de — o başkanla
-Hamza'yla konuştuğunuz gibi konuşursunuz; konuşma panoda durur, Hamza da bilir. Hamza normal
+**B64 kurulunca:** "Beni bu işin ustasına bağla" dediğinizde — sohbette de seste de — o işin
+ustasıyla Hamza'yla konuştuğunuz gibi konuşursunuz; konuşma panoda durur, Hamza da bilir. Başka her
+şeye Hamza cevap verir. <!-- CEO-OK: b64-v2-plan-and-six-decisions-his-yes-2026-10-26 --> Hamza normal
 konuşmada orta seviyede düşünür; plan konuşulunca kendisi bir üst seviyeye geçer ve söyler. Uzun
 düşünürken önce "Düşünüyorum, Muhittin Bey" der, uzun cevabı ekrana da koyar. Hedef: Hamza'nın
 sesi 1–1,3 saniyede gelir.
@@ -209,8 +212,8 @@ the whole holding.
 **You give the holding a goal** (with B64's build): a broad brief, the way a task is written for an
 engineer — what is wanted, how it should be, its features. The one-line "intent" box goes. Hamza
 turns your goal into a brief: your sentence stays verbatim, beside it the job's "done" criteria and
-its value. The head of the department that takes the job runs it, and the result comes back to you
-in the same conversation.
+its value. The master of the job's type runs it end to end, and the result comes back to you in the
+same conversation. <!-- CEO-OK: b64-v2-plan-and-six-decisions-his-yes-2026-10-26 --> <!-- CEO-OK: b64-v2-heads-and-dept-budgets-go-owner-by-job-2026-10-26 -->
 
 ## 2. Daily routine (morning, ~15 min)
 
@@ -305,9 +308,11 @@ Every alert carries probable cause + suggested action + responsible employee. Mu
   HARD-STOPS non-critical work by itself.
 - **Release from hard-stop is YOUR decision** — the system never resumes itself. See state
   on Costs/Budgets; change budget keys in Control Mode.
-- Department budget: `department.budget_eur`. Per-employee: `employee.budget_limit_eur`.
-  Per-task ceiling: `orchestrator.max_cost_per_task_eur`.
-- **With B64's build:** the budget descends holding → company → department → job. Alerts at 70%
+- Per-employee: `employee.budget_limit_eur`. Per-task ceiling:
+  `orchestrator.max_cost_per_task_eur`.
+- **With B64's build:** the budget descends holding → company → project → job; a line of recurring
+  work has its own budget too. There is no department budget; spend is still tagged by department.
+  <!-- CEO-OK: b64-v2-plan-and-six-decisions-his-yes-2026-10-26 --> <!-- CEO-OK: b64-v2-heads-and-dept-budgets-go-owner-by-job-2026-10-26 --> Alerts at 70%
   and 90%; at 100% non-critical new work stops. A valuable job's budget is at most 30% of the deal
   (300 $ on a 1,000 $ job). A model with no price counts as "cost unknown", never 0 $. For now no
   spend limit is put on Hermes (decision 15).
@@ -322,14 +327,14 @@ maintenance. Both keys are change-logged and UNDO-able.
 
 - **Model badge:** every employee card shows its brain (model); director/employee brains are
   switchable from the dashboard (registered ruling 2026-07-12: runtime brains are free choice).
-  **With B64's build the code keeps these limits:** heads and managers never below high; Sonnet and
+  **With B64's build the code keeps these limits:** masters never below high; Sonnet and
   Haiku never at low; max never a default; the final text you read never below Opus (voice normal
   talk on Sonnet by your note). A choice of yours that breaks a limit gets one warning; on your
-  "devam" it is done.
+  "devam" it is done. <!-- CEO-OK: b64-v2-plan-and-six-decisions-his-yes-2026-10-26 -->
 - **Who chooses:** model choice lives in the routing rules; the old `orchestrator.*` model keys in
-  Settings are no longer written. With B64's build, the job's owner (the department head) chooses
+  Settings are no longer written. With B64's build, the job's owner (its master) chooses
   each part's model and thinking level and writes the reason in one line; in doubt, it reads the
-  guide. Seats are written by role, not by model name: main brain, backup brain. When a model
+  guide. <!-- CEO-OK: b64-v2-plan-and-six-decisions-his-yes-2026-10-26 --> Seats are written by role, not by model name: main brain, backup brain. When a model
   drops, the other takes the work (Opus 5.5 and Fable 5.1 back each other up).
   The /ai/models sandbox simulates routing without writing anything.
 - **Approval thresholds:** `orchestrator.human_approval_threshold` and
@@ -344,10 +349,12 @@ you: the text inside a mail, or a result Hermes brings back, changes nothing.
 - "Max'a geç" / "High'a in" — Hamza thinks at that level until the subject ends, then returns to his own.
 - "Bu değerli bir iş" — the job becomes "valuable": two brains write its plan separately, Sol checks
   both, and its delivery reaches you before the client.
-- "Bütün müdürleri xhigh yap" — Hamza passes the change to the one registered door, which applies
-  and records it. Hamza: "22 müdür xhigh'a geçti; geri almak için 'geri al' deyin."
-- "Beni mühendislik başkanına bağla" — you talk with that head the way you talk with Hamza. Work
-  born in that conversation is that head's; Hamza knows of the conversation.
+- "Bütün ustaları xhigh yap" — Hamza passes the change to the one registered door, which applies
+  and records it. Hamza says how many masters moved: "10 usta xhigh'a geçti; geri almak için
+  'geri al' deyin." <!-- CEO-OK: b64-v2-plan-and-six-decisions-his-yes-2026-10-26 -->
+- "Beni bu işin ustasına bağla" — you talk with an open job's master the way you talk with Hamza.
+  Work born in that conversation belongs to that job; Hamza knows of the conversation. Anything else
+  goes to Hamza. <!-- CEO-OK: b64-v2-plan-and-six-decisions-his-yes-2026-10-26 --> <!-- CEO-OK: b64-v2-heads-and-dept-budgets-go-owner-by-job-2026-10-26 -->
 - "Sitenin neresindesiniz, tasarımı getirin" — Hamza brings the job's status and latest state into
   the same conversation.
 - "Gönderin" — a delivery waiting on you goes to its client.
@@ -367,13 +374,14 @@ credentials handed to you IN ADVANCE.
 ## 11. Voice line — honest state
 
 `Command → Chat with Hamza (/chat)`: the voice line lives on this page (`/voice` redirects here
-since 2026-07-24). Click-to-talk; Hamza answers himself. Pick a head from the list and that head
-answers in its own registered voice (€0 line). **An open defect ledger exists (U15):** measured
+since 2026-07-24). Click-to-talk; Hamza answers himself. Pick someone from the list and it answers
+in its own registered voice (€0 line); with B64's build the list holds the masters of open jobs. <!-- CEO-OK: b64-v2-plan-and-six-decisions-his-yes-2026-10-26 --> **An open defect ledger exists (U15):** measured
 STT delays and wrong-language decoding; remediation plan = `00-NOTE-R32-VOICE-REMEDIATION-PLAN`,
 requires a joint test session with you. Until it closes, the voice line is "working but rough".
 
-**With B64's build:** when you say "Beni şu başkana bağla" — in chat or by voice — you talk with
-that head the way you talk with Hamza; the conversation stands on the board and Hamza knows of it.
+**With B64's build:** when you say "Beni bu işin ustasına bağla" — in chat or by voice — you talk
+with that job's master the way you talk with Hamza; the conversation stands on the board and Hamza
+knows of it. Hamza answers everything else. <!-- CEO-OK: b64-v2-plan-and-six-decisions-his-yes-2026-10-26 -->
 Hamza thinks at medium in normal talk; when a plan is discussed he moves up a level himself and
 says so. Thinking long, he first says "Düşünüyorum, Muhittin Bey" and puts a long answer on the
 screen too. The target: Hamza's voice arrives within 1-1.3 seconds.

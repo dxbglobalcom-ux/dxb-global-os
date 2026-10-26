@@ -24,9 +24,9 @@ Governing formula (Talep §2, verbatim ruling):
 |---|--------|
 | D1 | **Free-first growth:** build with zero/minimal-cost capabilities first; paid upgrades (e.g. OpenAI Realtime **mini**) only after the Holding earns profit — "the Holding must produce profit so it can develop itself" |
 | D2 | **First binding objective: €50 net profit** once the system is fully tested and working (not €10k initially; targets scale up afterwards) |
-| D3 | **Voice v1 scope:** NOT a meeting room — an orchestrator-mediated call line to ask a director a question when needed. Full Moderated-Mode boardroom architecture is spec'd at "add-later" level and deferred until revenue funds it |
+| D3 | **Voice v1 scope:** NOT a meeting room — an orchestrator-mediated call line to ask a job's master a question when needed (B64 v2, decision 2). Full Moderated-Mode boardroom architecture is spec'd at "add-later" level and deferred until revenue funds it <!-- CEO-OK: b64-v2-plan-and-six-decisions-his-yes-2026-10-26 --> <!-- CEO-OK: b64-v2-heads-and-dept-budgets-go-owner-by-job-2026-10-26 --> |
 | D4 | **Hamza may PROPOSE objectives; the CEO always decides.** Proposals must never come from laziness — the research architecture must be very strong (advanced tools: Scrapling/Camoufox/deerflow class, not mainstream defaults) |
-| D5 | **Islamic tone, holding-wide:** every director/persona speaks with devout tone (İnşaAllah, MaşaAllah, Bismillah) — "a fully devout holding, tied to its religion, like us." Enters EMPLOYEE_PERSONA_STANDARD together with Discipline DNA |
+| D5 | **Islamic tone, holding-wide:** every master/persona speaks with devout tone (İnşaAllah, MaşaAllah, Bismillah) — "a fully devout holding, tied to its religion, like us." Enters EMPLOYEE_PERSONA_STANDARD together with Discipline DNA (B64 v2) <!-- CEO-OK: b64-v2-plan-and-six-decisions-his-yes-2026-10-26 --> |
 | D6 | **fable-method adaptation approved** ("do it most excellently") — adapted content, never embedded external text (agency-agents precedent) |
 | D7 | **Claude ecosystem sweep:** all excellent skills/plugins/tools from the Claude library get intake into the Holding Library (study-before-install discipline) |
 | D8 | Desktop research backlog (`repo vb şeyler.odt`, 25 items) enters the Library research pass |

@@ -72,7 +72,7 @@ Tam persona-gövdesi okuma matrisi E5.0'ın çıktısıdır (aşağıda); bu tab
 |---|---|---|---|---|---|---|
 | GAP-01 | BLOCKER | `grep signOut src/` → 0 | oturum kapatılamaz; paylaşılan makinede kalıcı CEO oturumu | E6.0 (yeni) | F/O | logout → `/login`; geri tuşu korumalı sayfa açmaz; çoklu sekme senkron |
 | GAP-02 | BLOCKER | personas=0, persona_id bağlı agent=0 | "153 çalışan" iddiası boş; aktivasyon kapısı hiçbir şeyi geçiremez | E5.1-E5.5 | **F** | persona satırı + quality_gate=passed + agents.persona_id dolu |
-| GAP-03 | BLOCKER | director_id 0/14, manager_id 153'ü NULL | hiyerarşi/escalation yok; orphan=153 | E5.0+E5.3 | **F** | her aktif departmanda head; worker'da manager_id; orphan=0 |
+| GAP-03 | BLOCKER | director_id 0/14, manager_id 153'ü NULL | hiyerarşi/escalation yok; orphan=153 | E5.0+E5.3 | **F** | worker'da manager_id; orphan=0 (B64 v2: departman başkanı kabul ölçütü değil) <!-- CEO-OK: b64-v2-plan-and-six-decisions-his-yes-2026-10-26 --> <!-- CEO-OK: b64-v2-heads-and-dept-budgets-go-owner-by-job-2026-10-26 --> |
 | GAP-04 | CRITICAL | ModuleWaiting=34/41 nav | dashboard %83 kabuk | E6-E12 blok-içi kapanış + E12.3 kapısı | F/O | `grep -rl ModuleWaiting src/app | wc -l` → 0 |
 | GAP-05 | CRITICAL | CRM 5 rota legacy'de; company context yok | multi-company holding iddiası shell'de temsilsiz | E12.4 (yeni) | F/O | CRM + company switch yeni shell'de + izolasyon testi |
 | GAP-06 | CRITICAL | shell'de mutation yüzeyi 0 | "gör+incele+değiştir+kontrol" şartının 2 bacağı yok | E6 | F/O | control fn + audit + Broadcast zinciri testli |

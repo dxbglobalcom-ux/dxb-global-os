@@ -11,9 +11,9 @@ HR = holding'in AI çalışan yaşam döngüsü motoru: oluşturma → donatma �
 
 | Modül (direktif) | Mekanizma |
 |------------------|-----------|
-| Çalışan oluşturma | `fn_hr_create_employee` — `draft` durumda doğar |
+| Çalışan oluşturma | `fn_hr_create_employee` — `draft` durumda doğar. A specialist is added to a department's cupboard as a job through Hamza's door, its persona written through the persona door (B64 v2, decision 6) <!-- CEO-OK: b64-v2-plan-and-six-decisions-his-yes-2026-10-26 --> |
 | Persona oluşturma · Sicil oluşturma | EMPLOYEE_PERSONA akışı (`fn_persona_submit` + sicil satırı otomatik) |
-| Model atama · Departmana atama · Müdüre bağlama | create/move fn parametreleri (ORG fn'lerine delege — ikinci yazım yolu yok). A head's or a manager's brain is never assigned below Opus 5.5 at `high`, the default brain included, and the model guide is handed to every head (owner: [[MODEL_ROUTING_SPEC]] §4f and A-2026-10-14 items 1 and 3; B64 decisions 2 and 11) <!-- CEO-OK: b64-decisions-1-5-8-9-11-12-16-his-yes-2026-10-14 --> <!-- OPEN: B64 --> |
+| Model atama · Departmana atama · Müdüre bağlama | create/move fn parametreleri (ORG fn'lerine delege — ikinci yazım yolu yok). A master's brain is never assigned below Opus 5.5 at `high`, the default brain included, and the model guide is handed to every master (owner: [[MODEL_ROUTING_SPEC]] §4f and A-2026-10-14 items 1 and 3; B64 decisions 2 and 11; B64 v2) <!-- CEO-OK: b64-decisions-1-5-8-9-11-12-16-his-yes-2026-10-14 --> <!-- CEO-OK: b64-v2-plan-and-six-decisions-his-yes-2026-10-26 --> <!-- CEO-OK: b64-v2-heads-and-dept-budgets-go-owner-by-job-2026-10-26 --> <!-- OPEN: B64 --> |
 | Yetki atama · Skill atama · Plugin atama · Tool erişimi | `library_grants` + MCP profil bağlama (`fn_hr_grant`) |
 | Eğitim verme | eğitim paketi = persona revizyonu + library `training` item ataması; `training_needs` düşülür |
 | Performans değerlendirme | günlük HR job'ı: run/violation/review verisinden KPI skoru → `performance_history` |
@@ -142,7 +142,7 @@ psql "$DB" -c "SELECT name FROM pgboss.schedule WHERE name LIKE 'hr.%';" # → 4
 
 - Risk: HR-factory persona kalitesi (Opus dönemi) — panzehir: şablon + mekanik kapı + CEO örneklem onayı (PERSONA §26 sıralaması); kalite düşüşü trendi HR panelinde metrik.
 - Risk: performans skoru oyunlaşır (ajan skoru şişirecek davranış öğrenir) — skor formülü çok-kaynaklı (run başarı + hook ihlal + review + maliyet verimi), formül `settings`te CEO-görünür.
-- Edge: müdür arşivlenirken ekibi (yetim-müdür kuralı ORG'da — HR devir sihirbazı zinciri yeniden bağlar); probation'da süresiz kalma (`hr.probation_max_days` aşımı alert + otomatik değerlendirme zorlaması); tüm departman askıya alınırsa (workflow'ları da duraklar — ORCHESTRATION dispatch departman durumunu okur); ilk kuruluş kadro yüklemesi — 153 legacy + Fable'ın olmazsa-olmaz ekleri (EMPLOYEE_PERSONA_STANDARD G7, CEO sözlü ek hükmü 2026-07-10) — (toplu import YOK — her çalışan aynı sihirbaz yolundan, script'lenmiş ama aynı fn'lerle; kayıt-dışı yol açılmaz).
+- Edge: müdür arşivlenirken ekibi (yetim-müdür kuralı ORG'da — HR devir sihirbazı zinciri yeniden bağlar; bu raporlama zinciri iş yönlendirmez, işin sahibi iş türünün ustasıdır — B64 v2 <!-- CEO-OK: b64-v2-plan-and-six-decisions-his-yes-2026-10-26 --> <!-- CEO-OK: b64-v2-heads-and-dept-budgets-go-owner-by-job-2026-10-26 -->); probation'da süresiz kalma (`hr.probation_max_days` aşımı alert + otomatik değerlendirme zorlaması); tüm departman askıya alınırsa (workflow'ları da duraklar — ORCHESTRATION dispatch departman durumunu okur); ilk kuruluş kadro yüklemesi — 153 legacy + Fable'ın olmazsa-olmaz ekleri (EMPLOYEE_PERSONA_STANDARD G7, CEO sözlü ek hükmü 2026-07-10) — (toplu import YOK — her çalışan aynı sihirbaz yolundan, script'lenmiş ama aynı fn'lerle; kayıt-dışı yol açılmaz).
 
 ## Done definition (bu spec)
 

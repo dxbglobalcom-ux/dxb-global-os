@@ -87,7 +87,7 @@ Orchestration sayfasında “ana beyinler” gerçekten görünmelidir:
 - Orchestrator/Fable katmanı, 13 rol slotu, atanmış model, fallback zinciri ve policy kaynağı.
 - Hangi task’ı hangi modelin neden aldığı; karar kaydı ve maliyeti.
 - Sonnet-ban gibi yasakların yalnız metin değil DB/function testiyle reddi.
-- Agent hierarchy: CEO Office → department head → specialist/worker; orphan worker 0.
+- Agent hierarchy: CEO Office → department → specialist/worker; each job's master and each line's standing owner visible; orphan worker 0 (B64 v2). <!-- CEO-OK: b64-v2-plan-and-six-decisions-his-yes-2026-10-26 --> <!-- CEO-OK: b64-v2-heads-and-dept-budgets-go-owner-by-job-2026-10-26 -->
 - Queue, retries, parked/dead-letter, timeout, cancellation ve manual intervention görünürlüğü.
 - Prompt/persona/version, skill, MCP grant ve autonomy seviyesinin çalıştırılan run ile izlenebilir bağı.
 - Model health, rate limit, fallback, kalite/eval skoru, hallucination/prompt-injection/red-team bulguları.
@@ -128,7 +128,7 @@ Aşağıdakiler final turda unutulamaz:
 
 Mevcut roster güçlü bazı uzmanlar içeriyor; ancak ağırlığı dijital ajans/marketing/engineering şablonlarıdır. Örneğin yaklaşık 30 Marketing ve 41 “Specialized” kayıt varken kurumsal yönetim, HR, hukuk, strateji, risk, güvenlik, müşteri başarısı ve holding operasyonu aynı olgunlukta değildir.
 
-Yeni hedef “daha çok persona dosyası” değildir. Hedef: **büyük hedefli, çok şirketli, AI-native holdingin her kritik kabiliyetinde net owner, head, yedekleme, yetki, KPI ve workflow bulunmasıdır.**
+Yeni hedef “daha çok persona dosyası” değildir. Hedef: **büyük hedefli, çok şirketli, AI-native holdingin her kritik kabiliyetinde net owner, yedekleme, yetki, KPI ve workflow bulunmasıdır.** <!-- CEO-OK: b64-v2-plan-and-six-decisions-his-yes-2026-10-26 --> <!-- CEO-OK: b64-v2-heads-and-dept-budgets-go-owner-by-job-2026-10-26 -->
 
 ### 3.1 Önce kanıtlı kadro gap matrisi
 
@@ -141,7 +141,7 @@ Kurallar:
 - Dosya adına bakarak “var” demeyin; persona gövdesini ve gerçek görev kapsamını okuyun.
 - Aynı işi yapan 5 yüzeysel persona yerine bir güçlü owner + gerektiğinde specialist pod tercih edin.
 - “Specialized” kalıcı çöp çekmecesi olamaz. Her persona gerçek bir departmana ve yöneticiye taşınmalıdır.
-- Her departmanda `head` olmak zorunda; her worker’ın escalation zinciri olmalı.
+- Her worker’ın escalation zinciri olmalı: işin ustasına, sürekli işte kalıcı sahibine (B64 v2). <!-- CEO-OK: b64-v2-plan-and-six-decisions-his-yes-2026-10-26 --> <!-- CEO-OK: b64-v2-heads-and-dept-budgets-go-owner-by-job-2026-10-26 -->
 - Tek kritik persona/tek hata noktası varsa deputy veya failover tanımlayın.
 - Legacy persona aktivasyondan önce v2 kalite kapısını geçmelidir. Sadece yeniden formatlamak yasaktır.
 - Persona = doküman değil canlı çalışan: registry, employee record, model slotu, skill, MCP profile, permission, autonomy, budget, KPI, workflow ve dashboard görünürlüğü birlikte tamamlanmalıdır.
@@ -217,7 +217,7 @@ Bu liste tavan değil tabandır. Gap audit; holdingin gerçek ürünleri, hedef 
 Her `add` kararı şu alanlarla teslim edilir:
 
 - Neden mevcut 153 içinde karşılığı yok veya neden mevcut rol yetersiz?
-- Department, manager/head, peers, escalation ve deputy/failover.
+- Department, peers, escalation ve deputy/failover. <!-- CEO-OK: b64-v2-plan-and-six-decisions-his-yes-2026-10-26 --> <!-- CEO-OK: b64-v2-heads-and-dept-budgets-go-owner-by-job-2026-10-26 -->
 - Mission, measurable outcomes/KPI, owned workflows ve output contracts.
 - Decision scope, authority limits, forbidden actions ve CEO escalation şartı.
 - Default model + fallback, effort tier ve cost budget.
@@ -278,8 +278,7 @@ Numaralandırmayı mevcut bağımlılık düzenini bozmadan ekip belirlesin; fak
 - Legacy persona:
 - v2 persona:
 - Aktif/dormant:
-- Head sayısı ve head’siz departman:
-- Orphan/escalation’sız worker:
+- Orphan/escalation’sız worker: <!-- CEO-OK: b64-v2-plan-and-six-decisions-his-yes-2026-10-26 --> <!-- CEO-OK: b64-v2-heads-and-dept-budgets-go-owner-by-job-2026-10-26 -->
 - Mevcut departman:
 - Önerilen yeni departman/pod:
 - Önerilen yeni persona:
@@ -310,7 +309,7 @@ Final raporda en az şu iddialar kanıtlanmalıdır:
 - Restore drill başarıyla yapılmıştır; yalnız backup dosyasının varlığı kabul edilmez.
 - EN/TR, accessibility, responsive ve failure-state testleri geçer.
 - 153 legacy kaydın her biri için keep/merge/rewrite/retire kararı vardır; CEO onayı olmadan rol silinmez.
-- Her aktif departmanda head, escalation ve measurable outcome vardır.
+- Her aktif departmanda escalation ve measurable outcome vardır. <!-- CEO-OK: b64-v2-plan-and-six-decisions-his-yes-2026-10-26 --> <!-- CEO-OK: b64-v2-heads-and-dept-budgets-go-owner-by-job-2026-10-26 -->
 - Her yeni zorunlu persona canlı employee olarak registry + model + skill + MCP + permission + budget + dashboard + audit zincirinde görünür.
 - Persona sayısı değil capability coverage raporlanır.
 - Kanıtsız “done”, “complete”, “production-ready” ifadesi = otomatik RET.

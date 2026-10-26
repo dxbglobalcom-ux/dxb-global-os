@@ -33,23 +33,24 @@ Mevcut-varlık eşlemesi: Katman 1-3 KALIR (0014 RLS deseni yeni tablolara kopya
 
 `role_level` başına yapılabilecek aksiyonların TAVANI (grant bile tavanı aşamaz):
 
-| Aksiyon | orchestrator | director | senior_spec | specialist | ops_agent | sub_agent |
-|---------|:---:|:---:|:---:|:---:|:---:|:---:|
-| Görev oluşturma (departman-içi) | ✓ | ✓ | ✓ | — | — | — |
-| Görev oluşturma (departmanlar-arası) | ✓ | ✓(escalation) | — | — | — | — |
-| Sub-agent spawn | ✓ | ✓ | ✓ | ✓ | ✓(limitli) | — |
-| Dosya yazımı (repo, grant'li yol) | ✓ | ✓ | ✓ | ✓ | ✓ | ✓(parent yolu) |
-| Memory yazımı | ✓ | ✓ | ✓ | ✓ | ✓ | — |
-| Approval TALEBİ açma | ✓ | ✓ | ✓ | ✓ | — | — |
-| Approval KARARI | — (yalnız CEO) | — | — | — | — | — |
-| Outbox yazımı | — (yalnız fn_decide_approval) | — | — | — | — | — |
-| Org/settings mutasyonu | — (yalnız CEO — his word carried by Hamza through the one door included, G1-ter; HR delege fn'leri system) | ✓(own line's definition only, within his limits — §4-bis) | — | — | — | — |
-| Model self-override (brain and effort choice) | — (carries his word to the one door, G1-ter) | ✓(owner: each part of its job, reasoned, within code's limits; own work never below Opus 5.5 high — §4-bis) | — | — | — | — |
+| Aksiyon | orchestrator | director | job owner (master)¹ | senior_spec | specialist | ops_agent | sub_agent |
+|---------|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+| Görev oluşturma (departman-içi) | ✓ | ✓ | (its role_level) | ✓ | — | — | — |
+| Görev oluşturma (departmanlar-arası) | ✓ | ✓(escalation) | ✓ (staffs its own job: calls a specialist from any department's cupboard, with a reason — §4-bis) | — | — | — | — |
+| Sub-agent spawn | ✓ | ✓ | (its role_level) | ✓ | ✓ | ✓(limitli) | — |
+| Dosya yazımı (repo, grant'li yol) | ✓ | ✓ | (its role_level) | ✓ | ✓ | ✓ | ✓(parent yolu) |
+| Memory yazımı | ✓ | ✓ | (its role_level) | ✓ | ✓ | ✓ | — |
+| Approval TALEBİ açma | ✓ | ✓ | (its role_level) | ✓ | ✓ | — | — |
+| Approval KARARI | — (yalnız CEO) | — | (its role_level) | — | — | — | — |
+| Outbox yazımı | — (yalnız fn_decide_approval) | — | (its role_level) | — | — | — | — |
+| Org/settings mutasyonu | — (yalnız CEO — his word carried by Hamza through the one door included, G1-ter; HR delege fn'leri system) | — | — (a line's standing owner: its own line's definition only, within his limits — §4-bis) | — | — | — | — |
+| Model self-override (brain and effort choice) | — (carries his word to the one door, G1-ter) | — | ✓ (each part of its job, reasoned, within code's limits; own work never below Opus 5.5 high — §4-bis) | — | — | — | — |
 
-**§4-bis (registered adaptation, B64, CEO 2026-10-14 <!-- CEO-OK: b64-decisions-1-5-8-9-11-12-16-his-yes-2026-10-14 -->).** The two rows above changed by his decisions; the seed keeps its 60 cells, and the two changed director cells carry their conditions (codes at build). <!-- OPEN: B64 -->
-1. **A line's owner** — the head of its department — may change its own line's definition within the limits he drew; the limits (its autonomy step, its budget) stay his (decision 9; WORKFLOW_ENGINE A7).
-2. **A job's owner chooses** each part's brain and effort with a one-line reason, the guide in doubt; heads and managers choose high, xhigh or max for their own work; code keeps the limits (decisions 2 and 11; MODEL_ROUTING §4d). The routing table no longer decides alone — it enforces and records.
-3. **The Reception desk's routing** — a registered client's request to the account's owner, a new sender's to sales — is the system's work on the list of which work each department takes (ORGANIZATION_ENGINE A2), not an agent's cross-department task creation; the "Görev oluşturma (departmanlar-arası)" row does not bind it.
+**§4-bis (registered adaptation, B64, CEO 2026-10-14 <!-- CEO-OK: b64-decisions-1-5-8-9-11-12-16-his-yes-2026-10-14 -->; reshaped by B64 v2, CEO 2026-10-26 <!-- CEO-OK: b64-v2-plan-and-six-decisions-his-yes-2026-10-26 --> <!-- CEO-OK: b64-v2-heads-and-dept-budgets-go-owner-by-job-2026-10-26 -->).** The last two rows above changed by his decisions; the seed keeps its 60 role_level cells, their two director cells read —, and the powers those cells held, with cross-department staffing of its own job, sit with ¹ the job owner (master) — a subject that is not a role_level but a seat's relation to a job, checked at the job (codes at build), never seeded. <!-- OPEN: B64 -->
+1. **A line's owner** — its standing owner, with a schedule, a budget and a target, not the head of a department (B64 v2, decision 4) — may change its own line's definition within the limits he drew; the limits (its autonomy step, its budget) stay his (decision 9; WORKFLOW_ENGINE A7).
+2. **A job's owner — the master of its type — chooses** each part's brain and effort with a one-line reason, the guide in doubt; masters and standing owners choose high, xhigh or max for their own work; code keeps the limits (decisions 2 and 11; MODEL_ROUTING §4d). The routing table no longer decides alone — it enforces and records.
+3. **The Reception desk's routing** — who receives a client is unchanged: a registered client's request to the account's owner, a new sender's to sales, an ownerless one to Hamza — is the system's work on the job-type menu (ORGANIZATION_ENGINE A2; MODEL_ROUTING A-2026-10-14 item 8), not an agent's cross-department task creation; the "Görev oluşturma (departmanlar-arası)" row does not bind it.
+4. **A job's master staffs its own job** from any department's cupboard, calling a specialist with a reason into that job only; it creates no work in a department's name (B64 v2).
 
 ```sql
 -- 0021x içinde (kontrol ailesi)

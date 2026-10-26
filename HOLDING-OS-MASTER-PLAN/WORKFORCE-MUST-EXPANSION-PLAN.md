@@ -43,7 +43,7 @@ Columns per [[00-CEO-DIRECTIVE-GAP-AUDIT]] §3.1: `capability | department | req
 
 | Capability | Dept | Required role | Existing | Cov | Missing (authority/workflow/skill-MCP) | Risk if absent | Decision |
 |---|---|---|---|---|---|---|---|
-| Store P&L + total commercial result | commerce | Head of Commerce | none (CMO=demand, cross-border=strategy) | 0 | P&L authority; store operating cadence; store MCP profile | Autonomous store has no accountable owner; Outleteuro pilot cannot be accepted | **ADD (director)** |
+| Store P&L + total commercial result | commerce | Head of Commerce | none (CMO=demand, cross-border=strategy) | 0 | P&L held by the store line's standing owner (B64 v2) <!-- CEO-OK: b64-v2-plan-and-six-decisions-his-yes-2026-10-26 --> <!-- CEO-OK: b64-v2-heads-and-dept-budgets-go-owner-by-job-2026-10-26 -->; store operating cadence; store MCP profile | Autonomous store has no accountable owner; Outleteuro pilot cannot be accepted | **ADD (director)** |
 | Store platform engineering (WooCommerce/WordPress: checkout, HPOS, plugin lifecycle, webhooks, Action Scheduler, staging/release, scale) | commerce | WooCommerce & WordPress Commerce Architect | engineering-cms-developer | 30% — persona self-limits to code/platform engineering, "does not operate stores"; generic multi-CMS | Store-platform ownership; release/rollback workflow for live store; Woo-specific depth | Platform breaks under autonomous operation; no one owns checkout integrity | **ADD (senior)**; boundary record vs cms-developer (client CMS work) |
 | Automation & integration mesh (store↔CRM↔accounting↔inventory↔shipping↔email↔social shops) | commerce | Commerce Automation & Integration Engineer | data-ai workflow-architect | 20% — generic workflow engine, not commerce-domain operator | Integration ownership; failure/retry runbooks for order-money flows | "Full automation" promise (CEO) undeliverable; silent order/money leaks | **ADD (senior)**; boundary vs workflow-architect (engine vs domain) |
 | Catalog/PIM automation (product data truth, 73-brand feed) | commerce | Catalog & PIM Automation Specialist | none | 0 | Catalog write authority; feed workflows; PIM tooling | Outleteuro's own KPI (Catalog Automation Rate) unowned | **ADD** |
@@ -94,29 +94,29 @@ Columns per [[00-CEO-DIRECTIVE-GAP-AUDIT]] §3.1: `capability | department | req
 | Corporate communications & reputation | marketing (corp-comms pod) | Corporate Communications Lead | none (F4); brand-guardian=identity only | 10% | Crisis with no comms owner | **ADD (promise-debt)** |
 | Deputy/failover for critical single-owner roles | all | deputy map | none (F3) | 0 | Single point of failure org-wide | **MAP + in-body §2 for new personas** (§6) |
 
-## 4. MUST-A roster — 19 new personas (Fable in person, §3.3 contract each; v2: +2 Fable-discovery seats)
+## 4. MUST-A roster — 19 new personas (Fable in person, §3.3 contract each; v2: +2 Fable-discovery seats) — each persona belongs to its cupboard (B64 v2) <!-- CEO-OK: b64-v2-plan-and-six-decisions-his-yes-2026-10-26 --> <!-- CEO-OK: b64-v2-heads-and-dept-budgets-go-owner-by-job-2026-10-26 -->
 
-| # | Persona | Dept / pod | Level | Manager | Deputy (in-body §2) | Wave |
-|---|---------|-----------|-------|---------|--------------------|------|
-| 1 | Revenue Growth Specialist | revops | specialist | RevOps Head | sales-pipeline-analyst | D7-A |
-| 2 | CRM & Data Steward | revops | specialist | RevOps Head | revenue-reporting-agent | D7-A |
-| 3 | Pricing & Deal Desk Manager | revops | specialist | RevOps Head | sales-proposal-strategist | D7-A |
-| 4 | Onboarding & Implementation Lead | customer-success (consultancy-delivery pod) | specialist | Head of CS | project-shepherd | D7-A |
-| 5 | Corporate Communications Lead | marketing (corp-comms pod) | specialist | CMO | design-brand-guardian | D7-A |
-| 6 | Head of Commerce | commerce | **director** | CEO (dept head) | marketing-cross-border-ecommerce | D7-B |
-| 7 | WooCommerce & WordPress Commerce Architect | commerce | senior_specialist | Head of Commerce | engineering-cms-developer | D7-B |
-| 8 | Commerce Automation & Integration Engineer | commerce | senior_specialist | Head of Commerce | data-ai workflow-architect | D7-B |
-| 9 | Catalog & PIM Automation Specialist | commerce | specialist | Head of Commerce | Commerce Automation Engineer (#8) | D7-B |
-| 10 | Merchandising, Pricing & Promotions Manager | commerce | specialist | Head of Commerce | Head of Commerce (#6) | D7-B |
-| 11 | **Stock-Lot & Liquidation Sourcing Specialist** (Fable discovery) | commerce | specialist | Head of Commerce | Merchandising Manager (#10) | D7-B |
-| 12 | Inventory, Order & Fulfillment Manager | commerce | specialist | Head of Commerce | finance supply-chain-strategist | D7-B |
-| 13 | CRO & Checkout Optimization Specialist | commerce | specialist | Head of Commerce | marketing-growth-hacker | D7-B |
-| 14 | Commerce Customer Ops & Returns Specialist | commerce | specialist | Head of Commerce | cs support-responder | D7-B |
-| 15 | Commerce Analytics & Revenue Intelligence Specialist | commerce | specialist | Head of Commerce | data-ai analytics-reporter | D7-B |
-| 16 | Venture Builder (New Company Launch Lead) | strategy (venture-studio pod) | senior_specialist | Head of Strategy | corporate-development-analyst | D7-C |
-| 17 | Business Automation Solutions Architect | customer-success (consultancy-delivery pod) | senior_specialist | Head of CS | sales-engineer | D7-C |
-| 18 | **Managed Automation Services Engineer** (Fable discovery) | customer-success (consultancy-delivery pod) | specialist | Head of CS | Business Automation Solutions Architect (#17) | D7-C |
-| 19 | Social Commerce & Creator/Affiliate Lead | social-media | specialist | Social Media Orchestrator | social-media content-strategist | D7-C |
+| # | Persona | Cupboard (dept) / pod | Level | Deputy (in-body §2) | Wave |
+|---|---------|-----------|-------|--------------------|------|
+| 1 | Revenue Growth Specialist | revops | specialist | sales-pipeline-analyst | D7-A |
+| 2 | CRM & Data Steward | revops | specialist | revenue-reporting-agent | D7-A |
+| 3 | Pricing & Deal Desk Manager | revops | specialist | sales-proposal-strategist | D7-A |
+| 4 | Onboarding & Implementation Lead | customer-success (consultancy-delivery pod) | specialist | project-shepherd | D7-A |
+| 5 | Corporate Communications Lead | marketing (corp-comms pod) | specialist | design-brand-guardian | D7-A |
+| 6 | Head of Commerce | commerce | **director** | marketing-cross-border-ecommerce | D7-B |
+| 7 | WooCommerce & WordPress Commerce Architect | commerce | senior_specialist | engineering-cms-developer | D7-B |
+| 8 | Commerce Automation & Integration Engineer | commerce | senior_specialist | data-ai workflow-architect | D7-B |
+| 9 | Catalog & PIM Automation Specialist | commerce | specialist | Commerce Automation Engineer (#8) | D7-B |
+| 10 | Merchandising, Pricing & Promotions Manager | commerce | specialist | Head of Commerce (#6) | D7-B |
+| 11 | **Stock-Lot & Liquidation Sourcing Specialist** (Fable discovery) | commerce | specialist | Merchandising Manager (#10) | D7-B |
+| 12 | Inventory, Order & Fulfillment Manager | commerce | specialist | finance supply-chain-strategist | D7-B |
+| 13 | CRO & Checkout Optimization Specialist | commerce | specialist | marketing-growth-hacker | D7-B |
+| 14 | Commerce Customer Ops & Returns Specialist | commerce | specialist | cs support-responder | D7-B |
+| 15 | Commerce Analytics & Revenue Intelligence Specialist | commerce | specialist | data-ai analytics-reporter | D7-B |
+| 16 | Venture Builder (New Company Launch Lead) | strategy (venture-studio pod) | senior_specialist | corporate-development-analyst | D7-C |
+| 17 | Business Automation Solutions Architect | customer-success (consultancy-delivery pod) | senior_specialist | sales-engineer | D7-C |
+| 18 | **Managed Automation Services Engineer** (Fable discovery) | customer-success (consultancy-delivery pod) | specialist | Business Automation Solutions Architect (#17) | D7-C |
+| 19 | Social Commerce & Creator/Affiliate Lead | social-media | specialist | social-media content-strategist | D7-C |
 
 Constitutional constants in every persona: money-out/contract/external-comm CEO gates; sales-DNA in commercial seats; Evidence-Before-Done; LiteLLM virtual keys; least-privilege MCP; English authorship. Boundary records written BOTH ways (new persona §7 + existing persona noted in wave record).
 
@@ -137,7 +137,7 @@ Constitutional constants in every persona: money-out/contract/external-comm CEO 
 ## 6. Deputy/failover contract (F3 remediation)
 
 1. **New personas (17):** §2 carries `Deputy:` line + takeover protocol (trigger, temporary authority grant, resume handback) — in-body from birth.
-2. **`DEPUTY-FAILOVER-MAP.md`** (D7-D deliverable): holding-wide map for critical single-owner roles — columns `role | deputy | takeover trigger | temporary authority | memory/context access | resume protocol`. Initial SPOF set (audit F3 + heads): Privacy/DPO→legal-compliance-checker · Backup & DR Officer→platform sre · IAM & Secrets Officer→security-engineer · Payroll Manager→bookkeeper-controller · AI Observability & FinOps→fpa-analyst · Board/Decision Secretary→executive-operations-manager · every dept head→named senior in dept.
+2. **`DEPUTY-FAILOVER-MAP.md`** (D7-D deliverable): holding-wide map for critical single-owner roles — columns `role | deputy | takeover trigger | temporary authority | memory/context access | resume protocol`. Initial SPOF set (audit F3): Privacy/DPO→legal-compliance-checker · Backup & DR Officer→platform sre · IAM & Secrets Officer→security-engineer · Payroll Manager→bookkeeper-controller · AI Observability & FinOps→fpa-analyst · Board/Decision Secretary→executive-operations-manager · every master and standing owner→a named deputy (B64 v2). <!-- CEO-OK: b64-v2-plan-and-six-decisions-his-yes-2026-10-26 --> <!-- CEO-OK: b64-v2-heads-and-dept-budgets-go-owner-by-job-2026-10-26 -->
 3. Existing-persona §2 amendments (179 bodies): **honest follow-up list** (§11) — map is authoritative until amendments land.
 
 ## 7. Wave plan (all persona authorship: Fable in person — K2)

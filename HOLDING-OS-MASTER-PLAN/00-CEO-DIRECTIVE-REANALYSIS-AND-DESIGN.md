@@ -45,7 +45,7 @@ re-analysis the directive requires. **Board rows C42 and B22 carry this.**
 
 **Implementation.** No production implementation of the redesign may begin before the CEO has
 approved a complete **visual** design package — every major page, every state, Hamza in every
-state, the directors and the meeting room, the chat and voice surfaces. His words: *"SİSTEM ÖNCE
+state, the masters and the meeting room (B64 v2, decision 2), the chat and voice surfaces. <!-- CEO-OK: b64-v2-plan-and-six-decisions-his-yes-2026-10-26 --> <!-- CEO-OK: b64-v2-heads-and-dept-budgets-go-owner-by-job-2026-10-26 --> His words: *"SİSTEM ÖNCE
 DESIGN OLARAK BANA SUNULACAK GERÇEĞE GEÇMEDEN ÖNCE… BEĞENMEDİĞİMİ ASLA ONAYLAMAM."*
 
 ## What is in the package

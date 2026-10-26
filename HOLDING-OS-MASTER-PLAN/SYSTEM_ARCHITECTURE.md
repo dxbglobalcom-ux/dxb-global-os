@@ -11,10 +11,10 @@ Holding OS'un tüm katmanlarının — çekirdek yürütme (kernel/kuyruk/ajanla
 
 - R1. The holding's running flow is never broken while it is rebuilt. What runs today is the July chain
   (intent → kernel → task → agent → approval → outbox); B64's flow replaces it step by step — his goal → Hamza's brief →
-  the owner (the head of the department that takes the job) → specialists → the check → delivery, with his approval gate
-  and the outbox at the outward end (B64 decision 1, AGENT_ORCHESTRATION_SPEC).
-  <!-- CEO-OK: b64-decisions-1-5-8-9-11-12-16-his-yes-2026-10-14 --> <!-- OPEN: B64 -->
-- R2. Her çalışan varlık (şirket/departman/müdür/çalışan/ajan) DB'de birinci-sınıf kayıttır; UI saf projeksiyondur (şema-önce ilkesi, roadmap kararıyla uyumlu).
+  the owner (the master of the job's type) → specialists it calls with a reason → the check → delivery, with his approval
+  gate and the outbox at the outward end (B64 decision 1, B64 v2, AGENT_ORCHESTRATION_SPEC).
+  <!-- CEO-OK: b64-decisions-1-5-8-9-11-12-16-his-yes-2026-10-14 --> <!-- CEO-OK: b64-v2-plan-and-six-decisions-his-yes-2026-10-26 --> <!-- CEO-OK: b64-v2-heads-and-dept-budgets-go-owner-by-job-2026-10-26 --> <!-- OPEN: B64 -->
+- R2. Her çalışan varlık (şirket/departman/çalışan/ajan) DB'de birinci-sınıf kayıttır (B64 v2) <!-- CEO-OK: b64-v2-plan-and-six-decisions-his-yes-2026-10-26 -->; UI saf projeksiyondur (şema-önce ilkesi, roadmap kararıyla uyumlu).
 - R3. CEO'nun her ayar değişikliği tek yazım seamı üzerinden geçer (SECURITY DEFINER fonksiyon deseni — migration 0015 emsali) ve audit'e düşer.
 - R4. Canlılık: UI güncellemeleri Supabase Realtime **Broadcast** ile (postgres_changes YASAK — STACK.md sert kuralı).
 - R5. Yeni yetenekler öncelikle **kütüphane + tablo + view** olarak eklenir, yeni resident servis
@@ -208,9 +208,9 @@ Design: `.planning/quick/20261012-b64-is-akisi/is-akisi.html` (decisions 15 and 
 6. **Its outward path** — sites, forms, its WhatsApp (official business channel) and Telegram door — is the second named
    path beside the outbox (R7, SECURITY_MODEL O2): every step recorded, every change reversible; money, a contract,
    identity and an outward critical step stop at his gate; at the payment step Hermes stops and he pays.
-7. **Its work.** Hamza and every head give it computer work through the holding's one queue (AGENT_ORCHESTRATION_SPEC),
+7. **Its work.** Hamza and every master give it computer work through the holding's one queue (AGENT_ORCHESTRATION_SPEC),
    the night shift included; the result returns to whoever gave it and lands in the holding's own runs. Its memory lives
-   inside the holding (MEMORY_ARCHITECTURE A2).
+   inside the holding (MEMORY_ARCHITECTURE A2). <!-- CEO-OK: b64-v2-plan-and-six-decisions-his-yes-2026-10-26 --> <!-- CEO-OK: b64-v2-heads-and-dept-budgets-go-owner-by-job-2026-10-26 -->
 8. **When Opus is down** (decision 16), its work waits and never moves to Fable; the giver tells him *"Hermes'in beyni
    şu an kapalı, işiniz sırada"*. Quota or credit full → decision 13's alert; a second subscription or extra credit is
    money out at his gate.
