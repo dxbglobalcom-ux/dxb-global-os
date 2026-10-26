@@ -35,7 +35,9 @@ and keeps its context lean (AGENT_ORCHESTRATION A26-A33) — the plan and its si
 <!-- CEO-OK: b64-v2-plan-and-six-decisions-his-yes-2026-10-26 -->. Written by one writer on his word for this job
 only; 38 specs, the board, B64's `PLAN.md` and his page `is-akisi.html`, the July directive's copy (caa4750d); Sol's
 blind pass (one A, seven B) fixed (e79a81fb, `.planning/quick/20261012-b64-is-akisi/SOL-v2.md`). Specs only: the code
-still asks for a head per department.
+still asks for a head per department. The same night: every halal/haram ruling comes to him
+<!-- CEO-OK: halal-verdicts-come-to-him-2026-10-26 -->; the platform-hub plan's two decisions wait for B22's
+synthesis <!-- CEO-OK: platform-hub-two-decisions-after-b22-synthesis-2026-10-26 -->.
 The merged olive page (Yeldeğirmeni, 25 Oct) is accepted by his eye as it stands (26 Oct)
 <!-- CEO-OK: olive-merged-page-accepted-by-his-eye-2026-10-26 -->. Measured on its fix rounds: resuming the master's
 ~616k-token session cost 16.4, 15.0 and 8.2 $ a round; a fresh master with a written brief did another fix for
@@ -48,30 +50,26 @@ Earlier days (the persona report of 23 Oct, the 1,000 $ way of 24 Oct, the olive
 0. His eye on the persona report (desktop, `Personalar Raporu 2026-10-23.pdf`) and its four decisions (below). After the
    holding is built out, C41: every persona rewritten facing the outside world and knowing the holding's studio, skills
    and tools; the job-type masters' personas are one leg of it.
-1. B64's build, each step its own job, started on his word, at high: first the code that still asks for a head
-   (`scripts/org/workforce-gate.mjs` "every active department has a head", `tests/e125/activation-contract.test.ts`,
-   the voice fn's `role_level='director'`, the Directors page and `/org/directors`); then the job-type menu and its
-   50-job shadow trial, the masters written and blind-tested against bare Opus, the meeting room drawn for his eye
-   before it is built (decision 2).
-2. His eye on the two desktop reports of 24-25 Oct (`1000 Dolar Sistemi Testi 2026-10-24.pdf`,
+1. His eye on the two desktop reports of 24-25 Oct (`1000 Dolar Sistemi Testi 2026-10-24.pdf`,
    `Üç Sayfa Karşılaştırma 2026-10-25.pdf`).
-3. The studio platform-hub plan is approved with his corrections and on the board (B43; FINAL.md Bölüm 0): built at its
+2. The studio platform-hub plan is approved with his corrections and on the board (B43; FINAL.md Bölüm 0): built at its
    rank — accounts connected and infrastructure only, no money loaded, no exam now; its first step raises the server's
    LiteLLM pin (`vps/compose.yaml`, 1.91.0) to ≥ 1.97.0. The channels are a separate study, talked before January 2027.
-4. The Gözlem Odası (B82): the plan has his eye; the build when the factory fully starts — step 1, the X gate, is in.
-5. The studio retest, when its turn comes (the machine rebooted 2026-10-19 07:38, the card works again). In the factory
+3. The Gözlem Odası (B82): the plan has his eye; the build when the factory fully starts — step 1, the X gate, is in.
+4. The studio retest, when its turn comes (the machine rebooted 2026-10-19 07:38, the card works again). In the factory
    with the Media Studio's staff: ScrollCraft's clip through H3 image-less at 8 steps, saved at a high quality (the
    blocky clip was ComfyUI's 1.17 Mbit/s save); stills from H3's best frame vs FLUX vs FLUX.2-klein-4B; a client-photo
    ad through H3; upscale or not, judged full screen by his eye. The standard is the recipe of the films he accepted
    — 8 steps on the road the studio's system names, no 4-step take <!-- CEO-OK: studio-standard-8-steps-his-liked-recipe-2026-10-19 -->; `studio.mjs`'s
    defaults follow it. Then the bridge and ScrollCraft's rule 2 follow the result.
-6. The walk, one row at a time with him: YE19 next, then to the last row; then the "Ekim 9-15 linkleri" and
+5. The walk, one row at a time with him: YE19 next, then to the last row; then the "Ekim 9-15 linkleri" and
    "Ekim 15-21 linkleri" sheets the same way.
-7. Plans he asked for, each talked first: how ChatGPT on Steroids (installed) joins the holding as an agent and as
+6. Plans he asked for, each talked first: how ChatGPT on Steroids (installed) joins the holding as an agent and as
    Sol's stand-in; the studio revenue lines not covered by the platform-hub plan (MoneyPrinterTurbo, HyperFrames,
    OpenMontage, Open Design) studied in order; a way for the team to work on his phone in the background.
-8. Then the board page with every decision of the walk, his one yes, and `ORDER.md` "On his yes". No construction
-   before it except what he ordered in the walk.
+7. Then the board page with every decision of the walk, his one yes, and `ORDER.md` "On his yes". No construction
+   before it except what he ordered in the walk; the factory is built in that order, from the foundation up — B64's
+   build too (the code that still asks for a head, the job-type menu, the masters) takes its place there.
 
 ## Waiting on his approval
 
@@ -82,17 +80,15 @@ Earlier days (the persona report of 23 Oct, the 1,000 $ way of 24 Oct, the olive
   brief — bare Opus, a cleaned master, today's designer — after the weekly reset (Sat 25 Oct 10:00); (4) the new design
   flow (one master, visual drafts, a beauty eye, the bare-Opus yardstick) written into the specs after the test, by a
   two-writer plan. Still open from 22 Oct: a light lane for small, low-risk jobs.
-- B64 v2, the halal verdict on a revenue opportunity: the risk-audit head's right now sits with the risk-audit
-  department's halal reviewer beside him, never the proposing agent — the lead's recommendation; or his alone.
 - Whether Ultra Code joins the holding (the real one was never run — arm B was an imitation); deleting the obsolete
   `scripts/test/e2e-login.mjs`.
 - From "Ekim 15-21 linkleri", each a start on his word: the claude-security scan of the repository (he said later,
   with making it private), the file-size lock in the pre-commit hook, Revid's paid plan (39 $/month, money out),
-  REA opened to the holding's own employees (part of B41).
+  REA opened to the holding's own employees (part of B41) — at the end of the order.
 - claude-mem: five more observations still carry the label (38114, 9153, 38124, 8060, 38123) — delete or keep.
 - Valuable work, three open questions for his word, one at a time: a "neither plan is workable" outcome; the 30 %
   cap's base for a job with no deal; a plan's own cost estimate.
-- Platform-hub plan, two open decisions: the studio tab drawn before B22's synthesis (B32's method); the `media` event channel.
+- Platform-hub plan, two open decisions — after B22's synthesis: the studio tab's drawing (B32's method); the `media` event channel.
 - The ordered board and its 10 new rows, after the walk.
 - At their ranks: the Supabase skills install (#3), DataForSEO (#47), Apify beyond the free plan (#48), Google OAuth
   for the Workspace CLI (#24), store accounts for a mobile app.

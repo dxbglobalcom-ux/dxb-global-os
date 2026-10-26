@@ -2868,5 +2868,21 @@
     "conditions": "This plan was written by one writer and audited by Sol, on his word for this job only (\"Yo, planı iki şey yazmasın bu sefer benim sözümle. … tek yazar yazsın. Sol denetlesin.\") — not a change of the two-writer rule. Specs and board only; no code.",
     "session": "Opus 5.5 session c415672d — heard first-hand, 2026-10-26 evening (verbatim_on_conditions: his answer on the four conditions for clearing old tool results).",
     "where": ".planning/quick/20261012-b64-is-akisi/PLAN.md; HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md B64"
+  },
+  "halal-verdicts-come-to-him-2026-10-26": {
+    "date": "2026-10-26",
+    "what": "Every halal/haram ruling comes to him: the halal verdict on a revenue opportunity is the CEO's alone (REVENUE_ENGINE `set_halal_verdict`); he researches it and rules. Asked after B64 v2 removed the risk-audit head's right to rule.",
+    "verbatim": "helal haramla ilgili hükümler Allah'ın izniyle bana gelsin, ben araştırıp bakarım ona göre, tamam.",
+    "conditions": "Replaces the risk-audit head (and the interim 'halal reviewer' of e79a81fb) as the verdict holder; the Islamic gate itself is unchanged.",
+    "session": "Opus 5.5 session 1c43dea1 — heard first-hand, 2026-10-26 ~22:50.",
+    "where": "HOLDING-OS-MASTER-PLAN/REVENUE_ENGINE_SPEC.md G2 discovery rule and fn guards"
+  },
+  "platform-hub-two-decisions-after-b22-synthesis-2026-10-26": {
+    "date": "2026-10-26",
+    "what": "The platform-hub plan's two open decisions (the studio tab drawn before B22's synthesis; the new `media` event channel) wait for B22's synthesis: B22 is to be done and is very important; what comes out of it may change things in the holding's structure.",
+    "verbatim": "7 ile ilgili platform merkezi planı 2 karar. Ve 22 yapılacak. O çok önemli. Sentezi görelim. Ondan sonra belki oradan çıkan şeyler, bazı şeyler değişebilir. Holding yapısıyla ilgili.",
+    "conditions": "Neither decision is taken now; both come back after B22's synthesis.",
+    "session": "Opus 5.5 session 1c43dea1 — heard first-hand, 2026-10-26 ~22:50.",
+    "where": ".planning/quick/20261017-studio-platform-hub/FINAL.md Kararlar"
   }
 }
