@@ -67,9 +67,12 @@ Earlier days (the persona report of 23 Oct, the 1,000 $ way of 24 Oct, the olive
 6. Plans he asked for, each talked first: how ChatGPT on Steroids (installed) joins the holding as an agent and as
    Sol's stand-in; the studio revenue lines not covered by the platform-hub plan (MoneyPrinterTurbo, HyperFrames,
    OpenMontage, Open Design) studied in order; a way for the team to work on his phone in the background.
-7. Then the board page with every decision of the walk, his one yes, and `ORDER.md` "On his yes". No construction
-   before it except what he ordered in the walk; the factory is built in that order, from the foundation up — B64's
-   build too (the code that still asks for a head, the job-type menu, the masters) takes its place there.
+7. Then the board page with every decision of the walk, his one yes, and `ORDER.md` "On his yes".
+8. No construction starts yet. The board is mixed today: first the links are studied, more is added to the board and
+   B22's synthesis is made; then the board is ordered again like a factory, from the foundation to the roof (the
+   earlier report on that order is redone with the additions); only then does the build begin, row by row in that
+   order — B64's build included.
+9. Tomorrow: today's B64 v2 plan is gone over again from the start with him.
 
 ## Waiting on his approval
 
