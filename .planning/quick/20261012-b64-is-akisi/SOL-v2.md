@@ -21,3 +21,16 @@ stand unchanged. One A, seven B, two C.
 | 8 | B | "Şartlar evet önemli, güzel." not found in the supplied transcripts | Drops: his words are in session c415672d's own transcript, word for word; the supplied files predate that talk |
 | 9 | C | The page's older examples (:340 separate Opus final check, :374 Fable only on valuable campaigns) disagree with A28 of 21 Oct | Report only |
 | 10 | C | The Turkish manual mixes English (:42 navigation labels, :62, :68, :84 "delegate") | Report only |
+
+## Second change, same night — the halal verdict and the platform-hub decisions (48fdf29e)
+
+Auditor: GPT-6.1 Sol, `refuter.sh --effort medium`, one blind read-only pass, 2026-10-26 ~22:53. Raw dump:
+`SOL-v2-halal.md.raw` (out of git). Verdict: **REFUTED** — one A, one C.
+
+| # | Grade | Finding | Disposition |
+|---|---|---|---|
+| 1 | A | FINAL.md :73-74 still drew the studio tab before B22's synthesis and kept both decisions at "evet" | Both decisions open, after B22's synthesis; the timing and the "evet"s removed |
+| 2 | C | MODEL_ROUTING :139 gave "halal verdicts" to L1, :183 sent "any halal/risk verdict" through the model gate | Fixed in this pass all the same — his live word that night deletes it (LAW A): L1 does halal screening, the verdict is his; the gate fires on risk verdicts |
+
+His clarification the same night (clearly haram has no place and is rejected at intake, never reaching him) written into
+REVENUE_ENGINE :108 and the ledger entry.

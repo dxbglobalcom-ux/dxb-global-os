@@ -69,9 +69,9 @@ Bu bölüm 18 Ekim'de planın yapımından çıktı. Kanallar ayrı ve daha deta
 
 **18 Ekim'de verildi:** planın tamamı düzeltmeleriyle evet · hesaplar Bölüm 0'daki liste · her iş için tek onay kartı (tavan içinde yeniden çekim serbest) · tarama 10 günde bir.
 
-**26 Ekim, sözünüz: ikisi de B22'nin sentezinden sonra** <!-- CEO-OK: platform-hub-two-decisions-after-b22-synthesis-2026-10-26 --> — B22 yapılacak; sentezden holdingin yapısında değişen şeyler çıkabilir (17 Ekim listesinde 5 ve 6):
-1. Stüdyo sekmesinin çizimi B22 sentezinden önce, B32'nin yöntemiyle: tek ekran, sizinle → **evet**.
-2. Canlı akış için yeni olay kanalı "media" (yeni kanal yalnız sizin onayınızla açılır) → **evet**.
+**Açık — B22'nin sentezinden sonra konuşulur** (26 Ekim, sözünüz <!-- CEO-OK: platform-hub-two-decisions-after-b22-synthesis-2026-10-26 -->: B22 yapılacak; sentezden holdingin yapısında değişen şeyler çıkabilir) — 17 Ekim listesinde 5 ve 6:
+1. Stüdyo sekmesinin çizimi, B32'nin yöntemiyle: tek ekran, sizinle.
+2. Canlı akış için yeni olay kanalı "media" (yeni kanal yalnız sizin onayınızla açılır).
 
 **İslami sınırlar — sizin hükmünüz (18 Ekim):** faizli finans, müzik, alkol, flört ve açıkça günah olan her şey kesinlikle yok; bahis ve tahmin piyasası zaten dışarıda. Çocuk animasyonunda canlı tasviri açık; kanal çalışmasıyla size gelir.
 

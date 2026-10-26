@@ -2871,8 +2871,9 @@
   },
   "halal-verdicts-come-to-him-2026-10-26": {
     "date": "2026-10-26",
-    "what": "Every halal/haram ruling comes to him: the halal verdict on a revenue opportunity is the CEO's alone (REVENUE_ENGINE `set_halal_verdict`); he researches it and rules. Asked after B64 v2 removed the risk-audit head's right to rule.",
+    "what": "Every halal/haram ruling comes to him: the halal verdict on a revenue opportunity is the CEO's alone (REVENUE_ENGINE `set_halal_verdict`; no model gives one); he researches it and rules. What is clearly haram in Islam (gambling, alcohol, tobacco, fornication, obscenity and the like) has no place at all and is rejected at intake without reaching him. Asked after B64 v2 removed the risk-audit head's right to rule.",
     "verbatim": "helal haramla ilgili hükümler Allah'ın izniyle bana gelsin, ben araştırıp bakarım ona göre, tamam.",
+    "verbatim_clarified": "Yani belli başlı zaten helal meseleleri var, helal haram meseleleri. Çok açık olarak kumar, içki, sigara, bilmem ne falan, fuhuş, bilmem ne, müstehcenlik, bu tarz şeyler kesinlikle yer yok. Yani kesin hükmü belli olan haramlar İslam'da bellidir yani.",
     "conditions": "Replaces the risk-audit head (and the interim 'halal reviewer' of e79a81fb) as the verdict holder; the Islamic gate itself is unchanged.",
     "session": "Opus 5.5 session 1c43dea1 — heard first-hand, 2026-10-26 ~22:50.",
     "where": "HOLDING-OS-MASTER-PLAN/REVENUE_ENGINE_SPEC.md G2 discovery rule and fn guards"
