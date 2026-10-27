@@ -27,6 +27,8 @@ not here. What is accepted is read from `scripts/governance/ceo-approvals.json`,
 
 ## Where we left off
 
+2026-10-27 — B64 v2 gone over again with him. On his word <!-- CEO-OK: b64-after-the-deal-and-plan-merge-rule-2026-10-27 -->: the client flow after the deal is in the specs (REVENUE §7sexies 6 — an open job's messages go to its desk, revisions inside the contract are the same job, the first delivery of a 1,000 $ job reaches him and revisions go after the checks, a signed deal's master is found by code, B05 is B64's prerequisite); a valuable job's two plans merge by his rule (the stronger plan the base, what it lacks added unless it breaks the look or the system, the more beautiful of two, inside the brief, budget and due date; no second audit); his page's 1,000 $ site example follows A27/A28; B01, B05, B67 aligned (034eb500). Sol: no A, one B, seven C — fixed (c39c6e3f, `.planning/quick/20261027-b64-inceleme/SOL.md`). His video (Chase AI, "The Agentic OS Setup That Will 10x Claude Code", 25 Jun 2026): the oldest of that series, "10x" only in its title, nothing the holding lacks; its one cheap idea — mining our own sessions for repeated work with no door — offered, not started.
+
 2026-10-26 — B64 v2, how work flows, is in the specs: department heads leave a job's path and department budgets
 go, departments stay as cupboards of specialists, checklists and lessons
 <!-- CEO-OK: b64-v2-heads-and-dept-budgets-go-owner-by-job-2026-10-26 -->; one master per job type owns a job end to
@@ -72,7 +74,6 @@ Earlier days (the persona report of 23 Oct, the 1,000 $ way of 24 Oct, the olive
    through one by one with him (useful to the holding or not, where each belongs); B22's synthesis is made; then the board is ordered again like a factory, from the foundation to the roof (the
    earlier report on that order is redone with the additions); only then does the build begin, row by row in that
    order — B64's build included.
-9. Tomorrow: today's B64 v2 plan is gone over again from the start with him.
 
 ## Waiting on his approval
 
