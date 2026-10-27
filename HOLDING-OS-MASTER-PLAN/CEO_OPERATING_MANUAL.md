@@ -88,9 +88,11 @@ Onay merkezi: `/approvals`. Yedi karar aksiyonunuz var (ölçülü, canlı):
 - **request_info ne zaman?** Tek bir eksik cevap varsa (maliyet? alternatif?) — talep edene soru döner.
 - 24 saatten uzun bekleyen para-çıkışı onayı otomatik HIGH alarm üretir (para bekletilmez).
 - **B64 kurulunca size gelenler:**
-  - Anlaşması 1.000 $ ve üstü olan her işin teslimi, müşteriye gitmeden önce size gelir. Notunuz
-    olursa düzeltilir. Kartta müşterinin teslim tarihi durur; tarih yaklaşınca Hamza sabah
+  - Anlaşması 1.000 $ ve üstü olan bir işin ilk teslimi, müşteriye gitmeden önce size gelir. Notunuz
+    olursa düzeltilir. Sözleşmedeki düzeltme turları içindeki teslim kontrollerden sonra gider;
+    isterseniz herhangi bir teslimi yine görürsünüz. Kartta müşterinin teslim tarihi durur; tarih yaklaşınca Hamza sabah
     hatırlatır. Bakamayacaksanız tek kelime yeter: "gönderin".
+    <!-- CEO-OK: b64-after-the-deal-and-plan-merge-rule-2026-10-27 -->
   - Daha küçük tek seferlik işlerde yalnız her yeni hizmet türünün ilk teslimi size gelir.
   - Fiyat politikasını ve standart sözleşme metnini bir kez onaylarsınız. Bunlara uyan teklif ve
     sözleşme size gelmez; uymayan her şey gelir. Reklam harcaması size gelir.
@@ -281,9 +283,11 @@ Approval center: `/approvals`. Seven decision actions (measured live):
   returns to the requester.
 - A money-out approval pending > 24h auto-raises a HIGH alert (money must not sit).
 - **What reaches you with B64's build:**
-  - Every delivery of a job whose deal is 1,000 $ or more reaches you before the client. A note
-    from you → it is corrected. The card carries the client's due date; as it nears, Hamza reminds
-    you in the morning. If you cannot look, one word is enough: "gönderin".
+  - The first delivery of a job whose deal is 1,000 $ or more reaches you before the client. A note
+    from you → it is corrected. A revision inside the contract's rounds goes out after the checks;
+    you may still ask for any delivery. The card carries the client's due date; as it nears, Hamza
+    reminds you in the morning. If you cannot look, one word is enough: "gönderin".
+    <!-- CEO-OK: b64-after-the-deal-and-plan-merge-rule-2026-10-27 -->
   - In smaller one-off jobs, only the first delivery of each new service type reaches you.
   - You approve the price policy and the standard contract text once. Offers and contracts inside
     them no longer reach you; everything outside does. Ad spend reaches you.

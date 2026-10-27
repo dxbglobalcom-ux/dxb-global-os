@@ -24,7 +24,8 @@ uyarlama olarak yazıldı. Planın tamamı, Sol'un denetimi ve bulguları:
    masasından gelir; "Bütün ustaları xhigh yap" sözü ustalara gider; "Beni bu işin ustasına bağla" dediğinizde açık
    bir işin ustasıyla, Hamza'yla konuştuğunuz gibi konuşursunuz, gerisi Hamza'dadır. İş dört kapıdan girer: siz (Hamza), müşteri maili ve mesajı (Karşılama), takvim ya
    da olay (hat kartı), holdingin kendi gelir işi. Tutar, kayıtlı müşteri, dil ve tarih koddan okunur. Müşteriyi
-   kimin karşıladığı ve teklif → kabul → imzalı anlaşma → iş sırası değişmez. Jev, 8-12 türlük menüden işin türünü
+   kimin karşıladığı ve teklif → kabul → imzalı anlaşma → iş sırası değişmez. İmzalı anlaşmanın ustasını, fiyat politikasındaki
+   hizmetten kod bulur. Bu bilgisi olmayan işte Jev, 8-12 türlük menüden işin türünü
    seçer ve ne kadar emin olduğunu söyler; 0,80'in altında Sonnet, o da emin değilse Hamza karar verir. Menüde
    olmayan iş "belirsiz" kapısından Hamza'ya gider. Masa önce 50 etiketli işte gölgede denenir; en az 47'sini doğru
    yere, bilinmeyenlerin hepsini "belirsiz" kapısına gönderirse devreye girer. Her türün bir ustası vardır
@@ -34,8 +35,7 @@ uyarlama olarak yazıldı. Planın tamamı, Sol'un denetimi ve bulguları:
    max, birbirini görmeden; Sol ikisini birleşmeden önce kör denetler, usta eksikleri ekler, hataları düzeltir ve
    imzalar. Birleştirmede güçlü plan temel alınır; öbüründe olup bunda eksik olan eklenir, "gereksiz" denip atılmaz,
    yalnız görüntüyü ya da sistemi bozuyorsa alınmaz; ikisinde aynısı varsa daha güzeli seçilir; eklenen her şey
-   tarifin, bütçenin ve teslim tarihinin içinde kalır. İmzalı anlaşmanın ustasını, fiyat politikasındaki hizmetten
-   kod bulur. Değerli
+   tarifin, bütçenin ve teslim tarihinin içinde kalır. Değerli
    işin bütçesi anlaşmanın en fazla %30'udur. Aynı tür iş ikinci kez iyi bitince planı kalıp olur. İş bitince usta
    dersini ilgili departmanın dolabına yazar. Kanal, gelir motoru, aylık paket ve holdingde açılan şirket gibi
    sürekli işler takvimi, bütçesi ve hedefi olan kalıcı bir sahibe bağlanır.

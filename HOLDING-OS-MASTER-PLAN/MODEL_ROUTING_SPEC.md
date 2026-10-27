@@ -561,8 +561,11 @@ RUNTIME tree. The design he answered decision by decision: `.planning/quick/2026
    anchored. Its one pass returns, for each plan, what it lacks that the other has; each plan's errors; and what
    the brief needs that neither meets; it may read the sources a claim rests on (a law's text, an API's documents),
    and it writes nothing into the plan. **The master adds** what its plan lacks, fixes the errors, checks every
-   unmeasured claim at its source, and signs — the §4e shape: the author revises and signs, the seat verifies. Its
-   plan is the base; Fable's brings what Opus missed. This replaces the 2026-10-13 shape (one author twice, at
+   unmeasured claim at its source, and signs — the §4e shape: the author revises and signs, the seat verifies. The
+   stronger of the two plans is the base, whoever wrote it; what the base lacks is added from the other, never
+   dropped as unnecessary, left out only if it breaks the look or the system; of two equal items the more
+   beautiful is kept; all inside the brief, the budget and the due date
+   <!-- CEO-OK: b64-after-the-deal-and-plan-merge-rule-2026-10-27 -->. This replaces the 2026-10-13 shape (one author twice, at
    `xhigh` and `max`, Fable picking): one model written twice is one mind tried twice, and in both trials the
    shared errors were found by a checker's list, not by the comparison (`.planning/quick/20261019-degerli-is-danisma/`).
    Whether the second writer earns its seat is measured on the construction's own plan jobs first (dxb-team2) and
@@ -578,7 +581,10 @@ RUNTIME tree. The design he answered decision by decision: `.planning/quick/2026
    **The job-type menu (B64 v2)** <!-- CEO-OK: b64-v2-plan-and-six-decisions-his-yes-2026-10-26 --> <!-- CEO-OK: b64-v2-heads-and-dept-budgets-go-owner-by-job-2026-10-26 -->.
    Work is routed to an owner by its type, not by department: a registered menu of 8-12 job types, each with a
    two- or three-sentence "when chosen" card and a few example jobs, and an "unclear" door always present; there is
-   no catch-all "internal" type. Jev picks a type and states its confidence; below 0.80 Sonnet 5.5 `medium` reads
+   no catch-all "internal" type. A signed deal's type, and so its master, is found by code from its service in
+   the price policy ([[REVENUE_ENGINE_SPEC]] §7sexies 6); the classifiers below read only work without that fact —
+   his goals, mails, unclear work <!-- CEO-OK: b64-after-the-deal-and-plan-merge-rule-2026-10-27 -->.
+   For that work Jev picks a type and states its confidence; below 0.80 Sonnet 5.5 `medium` reads
    it; still unsure, Hamza (Opus) decides or a question goes to the client. Work that is on no menu type goes
    through the "unclear" door to Hamza, who picks an owner by judgement and does not do the work. Mixed work goes
    to the type of its main deliverable; the rest becomes a part in that master's plan. A master who returns
