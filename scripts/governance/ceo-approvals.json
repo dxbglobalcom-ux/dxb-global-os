@@ -2885,5 +2885,14 @@
     "conditions": "Neither decision is taken now; both come back after B22's synthesis.",
     "session": "Opus 5.5 session 1c43dea1 — heard first-hand, 2026-10-26 ~22:50.",
     "where": ".planning/quick/20261017-studio-platform-hub/FINAL.md Kararlar"
+  },
+  "b64-after-the-deal-and-plan-merge-rule-2026-10-27": {
+    "date": "2026-10-27",
+    "what": "From the B64 v2 review: (2) a short 'after the deal' part — a message about an open job goes to that job's desk, the account owner stays the client's one voice, revision rounds inside the contract are the same job and more is a new offer, only the first delivery of a 1,000 $+ job reaches him and a revision delivery goes after the checks, the service list sits in the price policy so a signed deal's master is found by code, B05 tied to B64 as its prerequisite (rounds, deposit and payment schedule go into the standard contract he approves once); (3) his flow page's site example rewritten to the spec and A30 tied to A9; (4) B67 and B01 aligned, rows owning the same work merged when the board is re-ordered. The extra blind test of the two-writer plan is dropped; the merge rule of a valuable plan as he stated it, with the guard he approved: the stronger plan is the base, what it lacks is added from the other and never dropped as 'unnecessary', left out only if it breaks the look or the system, of two equal items the more beautiful one is kept, nothing is rewritten as 'better', and what is added stays inside the brief, the budget and the due date; Sol reads both plans before the merge, no second audit after it.",
+    "verbatim": "Şimdi senin şu iki ve üçüncü önerilerini kabul ediyorum. … bürokrasiyi çok fazla bürokrasi istemiyoruz yani. Minimum. Ve gerekli olan sadece. … iki tane plan yazılıyor. Birisi güçlü olan temel alınıyor. Diğeri de ondan eksik kalan şeyleri alıp oraya koyuyor. Tamam mı? Eksik kalan. Tamamlamadığı. Hani daha iyi falan değil. … Yani bu gereksizdir falan deyip de oraya koymamazlık olmaması lazım. Onu koyması lazım. Ancak bütün böyle şeyi gerçekten bozuyorsa hani görüntüyü ne bileyim sistemi bozuyorsa alınmaz yani. Veya aynı şeyi yapan iki iş aynısı varsa daha güzel olanı alınır. … İki ve üçü dediğim gibi önlerimi kabul ediyorum. Dörtle de ilgili önlerimi kabul ediyorum.",
+    "verbatim_approval": "Tamam,. High moduna geçtim. Onaylıyorum. Okey, devam edebilirsin.",
+    "conditions": "Minimum bureaucracy, quality not given up. The guard (inside the brief, the budget and the due date) was the lead's question, answered by 'Onaylıyorum'.",
+    "session": "Opus 5.5 session a4dee17c — heard first-hand, 2026-10-27.",
+    "where": "HOLDING-OS-MASTER-PLAN/REVENUE_ENGINE_SPEC.md §7sexies · APPROVAL_ENGINE_SPEC A9 · AGENT_ORCHESTRATION_SPEC A26/A30 · board B64, B05, B67, B01"
   }
 }

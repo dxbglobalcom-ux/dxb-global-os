@@ -31,12 +31,17 @@ uyarlama olarak yazıldı. Planın tamamı, Sol'un denetimi ve bulguları:
    (yaklaşık 10, mevcut personalardan ya da yeni, kısa yazılır; her biri personasız Opus'la kör denenir). Usta
    planı işin değerine göre yazar, bütünü önce kendisi tasarlar ve kurar, uzmanı herhangi bir dolaptan gerekçeyle
    çağırır, birleştirir, dener ve teslim eder. Değerli işte planı iki ayrı beyin yazar, Opus 5.5 max ve Fable 5.1
-   max, birbirini görmeden; Sol ikisini kör denetler, usta eksikleri ekler, hataları düzeltir ve imzalar. Değerli
+   max, birbirini görmeden; Sol ikisini birleşmeden önce kör denetler, usta eksikleri ekler, hataları düzeltir ve
+   imzalar. Birleştirmede güçlü plan temel alınır; öbüründe olup bunda eksik olan eklenir, "gereksiz" denip atılmaz,
+   yalnız görüntüyü ya da sistemi bozuyorsa alınmaz; ikisinde aynısı varsa daha güzeli seçilir; eklenen her şey
+   tarifin, bütçenin ve teslim tarihinin içinde kalır. İmzalı anlaşmanın ustasını, fiyat politikasındaki hizmetten
+   kod bulur. Değerli
    işin bütçesi anlaşmanın en fazla %30'udur. Aynı tür iş ikinci kez iyi bitince planı kalıp olur. İş bitince usta
    dersini ilgili departmanın dolabına yazar. Kanal, gelir motoru, aylık paket ve holdingde açılan şirket gibi
    sürekli işler takvimi, bütçesi ve hedefi olan kalıcı bir sahibe bağlanır.
 3. **Kontrol ve kritik kapı.** Kontrol, işi tarifteki "bitti" ölçütüne göre gerçekten açıp çalıştırarak sınar;
-   daha iyisini aramaz. Geçmeyen iş, kontrolün notlarıyla ustasına döner. Müşteriye giden işe iki koltuk birbirini
+   daha iyisini aramaz. Müşterinin görsel işinde (site, sayfa, uygulama ekranı, resim, film) tasarımı yapımdan önce
+   müşteri onaylar. Geçmeyen iş, kontrolün notlarıyla ustasına döner. Müşteriye giden işe iki koltuk birbirini
    görmeden bakar: Sol okur ve çalışan işi açıp dener, Fable okur; ayrıca bir Opus son kontrolü yoktur. Rutin müşteri
    mesajına yalnız Sol bakar. Müşteri gözü, kullanıcı yolu yeni ya da değişmiş müşteri sitesinde ve uygulamasında
    kendiliğinden yürür; başka işte usta gerekçesiyle çağırır ya da siz istersiniz. Sol ile Fable birden düşerse iş
@@ -50,10 +55,15 @@ uyarlama olarak yazıldı. Planın tamamı, Sol'un denetimi ve bulguları:
    finansın arşivine, spam Gmail'in çöpüne gider; çöpe giden 30 gün içinde geri alınabilir. Karşılama bölümünde her
    şey canlı akar. Müşteriler görünümü aynı kayıtları müşteriye göre toplar. Bu ekranın çizimi önce size gelir.
    Rutin müşteri cevabı, Sol baktıktan sonra sizi beklemeden gider.
-6. **Size gelenler ve sözünüz.** Anlaşması 1.000 $ ve üstü olan işlerin teslimi müşteriden önce size gelir.
-   Küçük işlerde yalnız her yeni hizmet türünün ilk teslimi gelir. Teslim tarihi kartta durur, Hamza sabah
+6. **Size gelenler ve sözünüz.** Anlaşması 1.000 $ ve üstü olan işlerin ilk teslimi müşteriden önce size gelir;
+   sözleşmedeki düzeltme turlarının içindeki sonraki teslim kontrollerden geçince sizi beklemeden gider. Küçük işlerde yalnız her yeni hizmet türünün ilk teslimi gelir. Teslim tarihi kartta durur, Hamza sabah
    hatırlatır; "gönderin" demeniz yeter. Fiyat politikasını ve standart sözleşmeyi bir kez onaylarsınız. Sözünüz
    bir kuralla çelişirse holding sizi bir kez uyarır, kararı siz verirsiniz.
+
+   **Anlaşmadan sonra.** <!-- CEO-OK: b64-after-the-deal-and-plan-merge-rule-2026-10-27 --> Müşterinin açık işle
+   ilgili mesajı o işin masasına gider; müşterinin karşısında tek ses hesabın sahibidir. Sözleşmedeki düzeltme
+   turları aynı iştir, fazlası yeni tekliftir. Tur sayısı, kapora, ödeme takvimi ve kabul, bir kez onayladığınız
+   standart sözleşmede yazar. İmza, ödeme ve mail gönderme B05'e bağlıdır.
 7. **Hatlar, makine, para ve bağlam.** Takvim, tekrar eden işi kendisi başlatır. Hattın kalıcı sahibi hattı sizin
    çizdiğiniz sınırlar içinde değiştirebilir. Bütün işler tek kuyrukta, belli bir sırayla yürür; ustalar
    aboneliklerin kalan kotasına göre sıraya girer ve her iş tahmini bir token bütçesi taşır. Bütçe holding, şirket,
