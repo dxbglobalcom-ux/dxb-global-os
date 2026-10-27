@@ -73,7 +73,9 @@ Earlier days (the persona report of 23 Oct, the 1,000 $ way of 24 Oct, the olive
 8. No construction starts yet. The board is mixed and still being filled: the links stay in his Excel and are gone
    through one by one with him (useful to the holding or not, where each belongs); B22's synthesis is made; then the board is ordered again like a factory, from the foundation to the roof (the
    earlier report on that order is redone with the additions); only then does the build begin, row by row in that
-   order — B64's build included.
+   order — B64's build included. In that re-ordering, rows that own the same work as B64 get one owner: W-C42-5
+   (the task as a document, stop, resume) and C39's dream half fold into B64's job desk and its one dream
+   <!-- CEO-OK: b64-after-the-deal-and-plan-merge-rule-2026-10-27 -->.
 
 ## Waiting on his approval
 
