@@ -27,6 +27,14 @@ not here. What is accepted is read from `scripts/governance/ceo-approvals.json`,
 
 ## Where we left off
 
+2026-10-28 — Talked B64 through with him; on his word into the specs (d37916c1, Sol's findings fixed in 5745d93f,
+21b7f0ad): specialists come through the queue onto the job desk; no turn cap or budget cuts a running job, 30 % only
+warns, at 100 % only new work stops; eye-facing work (design at max, the code that carries the look at xhigh/max) with
+the studio and the design skills as one whole; the client first gets a built sample (a site's landing page), then
+page by page, in groups on a big site; the video's three ideas noted in B10, C60, B64. His trial (B64 item 6) is
+RUNNING since 16:12: a 3-page site for the fictional Mavi Kuşak Çini Atölyesi — arm A the site master and four
+specialists, arm B one session — each a fresh headless session walled in bwrap (`/home/dxb/deneme-1/run-kol.sh`,
+logs and TIMES.log in `/home/dxb/deneme-1/logs/`, the sites in `kol-a/site`, `kol-b/site`).
 2026-10-27 — B64 v2 gone over again with him. On his word <!-- CEO-OK: b64-after-the-deal-and-plan-merge-rule-2026-10-27 -->: the client flow after the deal is in the specs (REVENUE §7sexies 6 — an open job's messages go to its desk, revisions inside the contract are the same job, the first delivery of a 1,000 $ job reaches him and revisions go after the checks, a signed deal's master is found by code, B05 is B64's prerequisite); a valuable job's two plans merge by his rule (the stronger plan the base, what it lacks added unless it breaks the look or the system, the more beautiful of two, inside the brief, budget and due date; no second audit); his page's 1,000 $ site example follows A27/A28; B01, B05, B67 aligned (034eb500). Sol: no A, one B, seven C — fixed (c39c6e3f, `.planning/quick/20261027-b64-inceleme/SOL.md`). His video (Chase AI, "The Agentic OS Setup That Will 10x Claude Code", 25 Jun 2026): the oldest of that series, "10x" only in its title, nothing the holding lacks; its one cheap idea — mining our own sessions for repeated work with no door — offered, not started.
 
 2026-10-26 — B64 v2, how work flows, is in the specs: department heads leave a job's path and department budgets
@@ -49,25 +57,27 @@ Earlier days (the olive runs, the walk, the studio):
 
 ## Next
 
-0. After the holding is built out, C41: every persona rewritten facing the outside world and knowing the holding's
+0. The trial's two sites to his eye, side by side, saying which arm made which, with time, cost and tokens from the
+   logs; its result decides A27's rule on when a master splits work.
+1. After the holding is built out, C41: every persona rewritten facing the outside world and knowing the holding's
    studio, skills and tools; the job-type masters' personas are one leg of it.
-1. The studio platform-hub plan is approved with his corrections and on the board (B43; FINAL.md Bölüm 0): built at its
+2. The studio platform-hub plan is approved with his corrections and on the board (B43; FINAL.md Bölüm 0): built at its
    rank — accounts connected and infrastructure only, no money loaded, no exam now; its first step raises the server's
    LiteLLM pin (`vps/compose.yaml`, 1.91.0) to ≥ 1.97.0. The channels are a separate study, talked before January 2027.
-2. The Gözlem Odası (B82): the plan has his eye; the build when the factory fully starts — step 1, the X gate, is in.
-3. The studio retest, when its turn comes (the machine rebooted 2026-10-19 07:38, the card works again). In the factory
+3. The Gözlem Odası (B82): the plan has his eye; the build when the factory fully starts — step 1, the X gate, is in.
+4. The studio retest, when its turn comes (the machine rebooted 2026-10-19 07:38, the card works again). In the factory
    with the Media Studio's staff: ScrollCraft's clip through H3 image-less at 8 steps, saved at a high quality (the
    blocky clip was ComfyUI's 1.17 Mbit/s save); stills from H3's best frame vs FLUX vs FLUX.2-klein-4B; a client-photo
    ad through H3; upscale or not, judged full screen by his eye. The standard is the recipe of the films he accepted
    — 8 steps on the road the studio's system names, no 4-step take <!-- CEO-OK: studio-standard-8-steps-his-liked-recipe-2026-10-19 -->; `studio.mjs`'s
    defaults follow it. Then the bridge and ScrollCraft's rule 2 follow the result.
-4. The walk, one row at a time with him: YE19 next, then to the last row; then the "Ekim 9-15 linkleri" and
+5. The walk, one row at a time with him: YE19 next, then to the last row; then the "Ekim 9-15 linkleri" and
    "Ekim 15-21 linkleri" sheets the same way.
-5. Plans he asked for, each talked first: how ChatGPT on Steroids (installed) joins the holding as an agent and as
+6. Plans he asked for, each talked first: how ChatGPT on Steroids (installed) joins the holding as an agent and as
    Sol's stand-in; the studio revenue lines not covered by the platform-hub plan (MoneyPrinterTurbo, HyperFrames,
    OpenMontage, Open Design) studied in order; a way for the team to work on his phone in the background.
-6. Then the board page with every decision of the walk, his one yes, and `ORDER.md` "On his yes".
-7. No construction starts yet. The board is mixed and still being filled: the links stay in his Excel and are gone
+7. Then the board page with every decision of the walk, his one yes, and `ORDER.md` "On his yes".
+8. No construction starts yet. The board is mixed and still being filled: the links stay in his Excel and are gone
    through one by one with him (useful to the holding or not, where each belongs); B22's synthesis is made; then the board is ordered again like a factory, from the foundation to the roof (the
    earlier report on that order is redone with the additions); only then does the build begin, row by row in that
    order — B64's build included. In that re-ordering, rows that own the same work as B64 get one owner: W-C42-5
