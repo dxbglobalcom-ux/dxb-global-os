@@ -2894,5 +2894,45 @@
     "conditions": "Minimum bureaucracy, quality not given up. The guard (inside the brief, the budget and the due date) was the lead's question, answered by 'Onaylıyorum'.",
     "session": "Opus 5.5 session a4dee17c — heard first-hand, 2026-10-27.",
     "where": "HOLDING-OS-MASTER-PLAN/REVENUE_ENGINE_SPEC.md §7sexies · APPROVAL_ENGINE_SPEC A9 · AGENT_ORCHESTRATION_SPEC A26/A30 · board B64, B05, B67, B01"
+  },
+  "specialists-through-the-queue-2026-10-28": {
+    "date": "2026-10-28",
+    "what": "A specialist that does a part of a job is called through the holding's queue onto the job desk — it shows on his screen by name, its cost is written to the job, its part outlives a handover; Claude Code's in-session subagent serves only the master's short read-only searches. The lead's proposal, accepted.",
+    "verbatim": "O boşlukla ilgili şeyin hani şu önerini aslında kabul ediyorum ama bana kısa bir örnek verir misin bununla ilgili?",
+    "conditions": "He asked for a short example (given: a four-page clinic site) and later what exactly would be written; told it is this one sentence in A27.",
+    "session": "Opus 5.5 session c7e01692 — heard first-hand, 2026-10-28.",
+    "where": "HOLDING-OS-MASTER-PLAN/AGENT_ORCHESTRATION_SPEC.md A27"
+  },
+  "no-cap-cuts-a-running-job-2026-10-28": {
+    "date": "2026-10-28",
+    "what": "No seat carries a fixed turn cap (the code's 4 / 12 / 40 and the voice answer's 4 go at B64's build) and no budget stops a running job; the master watches its workers, the brief's criteria and the due date bound the work, and a job can always be stopped or cancelled. A valuable job's 30 % of the deal becomes a warning to him, never a stop.",
+    "verbatim": "Yani 4 ile ilgili sunduğun öneriyi kabul ediyorum. … Sabit tur sınırı niye koyuyoruz ki? Yani koymayalım. … Bu tarz sınırlamalar kalksın yani. … Yani iş devam etsin. Yani bütçeye falan takılmasın tamamlamıyla. Ama sınırsız bütçemiz de varmış gibi de çalışılmasın yani. … Bu bütçenin en fazla anlaşmanın %30'u kuralı falan bu gerek yok yani. Dediğim gibi bu da bir yerde işi durdurabilir yani. Ne bileyim. Bunu kaldır. Uyarı olarak kalabilir.",
+    "conditions": "Not as if the budget were unlimited — the master works economically by the brief and the due date. The company chain (COST_CONTROL A5: alerts, new non-critical work stops at 100 %) and the money-out approval gate are unchanged; they stop new work, never a running job.",
+    "session": "Opus 5.5 session c7e01692 — heard first-hand, 2026-10-28.",
+    "where": "HOLDING-OS-MASTER-PLAN/AGENT_ORCHESTRATION_SPEC.md A29, A30, B43 turn-budget note · COST_CONTROL_SPEC.md A5 · REVENUE_ENGINE_SPEC.md §7sexies · DATA_MODEL.md"
+  },
+  "eye-facing-work-xhigh-max-studio-skills-2026-10-28": {
+    "date": "2026-10-28",
+    "what": "Eye-facing work — design, visuals, beauty and the code that carries the look, for a client or for the holding's own screens and Hamza's — runs at xhigh or max, never below; the master uses the studio's whole team and hands and the holding's design skills as one synchronized whole. Logic code stays at high; the studio's everyday creative work moves from high to xhigh.",
+    "verbatim": "Göze hitap eden her konuda yani tasarım ve görsellik ve güzellik çekicilik bununla ilgili bütün konularda yapılırken veya kodun dışında her şey bu seviyelerde yapılsın. Çünkü bütün insanlar için bu çok önemli yani. … Bir sitenin mükemmelliği ile ilgili ne gerekiyorsa X-High ve Max seviyesinde göze hitap eden kısımların bütün kodlarında güzellikle ilgili X-High ve Max mimari planlamada ve aynı zamanda nasıl desem, ve aynı zamanda stüdyonun tüm ekip şeyleri ve bizim design skill'lerimiz. Bunların hepsini usta, adı usta, usta bir şeye kucaklayıp hepsini güzelce bir şey halinde, senkronize halinde şey yapılmalı yani, kullanılmalı. … Tamam ikinci ile ilgili şeyini kabul ediyorum.",
+    "conditions": "His observation: on visual work xhigh looks a notch better than high, max a notch better than xhigh. Observed on the 2026-10-28 trial as well.",
+    "session": "Opus 5.5 session c7e01692 — heard first-hand, 2026-10-28.",
+    "where": "HOLDING-OS-MASTER-PLAN/MODEL_ROUTING_SPEC.md A-2026-10-14 item 1 (guide row, the limits, the studio's levels) · AGENT_ORCHESTRATION_SPEC.md A27"
+  },
+  "design-skill-bans-are-design-knowledge-2026-10-28": {
+    "date": "2026-10-28",
+    "what": "The design skills' bans are design knowledge put there to make design better; a cold page is not blamed on them. Some are taken out, within reason, case by case, when B41 copies the skills onto the holding's desk.",
+    "verbatim": "O yasaklar makul seviyede olanlar, yani şey olanlar kaldırılabilir. Tamam mı? Ama ya, bir şeyin yasak olması, yani bir beceri niye yasak konulmuş? Demek ki işi kötüleştireceği için yasak konulmuş. Dolayısıyla yasak diye, yasak var diye yani iş güzel olmadı değil yani. Bu kesinlikle, bunu reddediyorum. … Ama bu yasaklar tabii ki kaldırılmalı bazıları yani.",
+    "conditions": "Which bans go is decided case by case; none is removed wholesale.",
+    "session": "Opus 5.5 session c7e01692 — heard first-hand, 2026-10-28.",
+    "where": ".planning/board-rows/B41.md"
+  },
+  "trial-team-vs-one-session-2026-10-28": {
+    "date": "2026-10-28",
+    "what": "A short, fair trial finished the same day: a 3-page professional site for a fictional client worth 2,000-3,000 $; arm A a site master and specialists on one desk under A27/A29, arm B one Claude Code session orchestrating alone; same brief, model, levels, studio and design skills; outside the construction's folder; neither arm told it is tested; no customer's eye, no two-plan step, no check chain; both start together; his eye judges, told who made which.",
+    "verbatim": "Bakalım bu ekip mi güzel yapıyor yoksa tek başına bir tane orkestra eden, hani mesela Claude'da bir tane şey açtık, orkestra ediyor. O mu güzel yapıyor? … Boş ver. 3 sayfalık şey, tam site kısmı tamam, 3 sayfalık şey kısmını yapın, tamam, bir deneme yapalım. … Yani şöyle söyleyeyim, bu iki işte bugün bitmesini istiyoruz yani, tamam mı?",
+    "conditions": "Personas for the trial written now at the holding's level; the full rewrite stays C41's, after the holding is built. Not a LAW B acceptance of anything.",
+    "session": "Opus 5.5 session c7e01692 — heard first-hand, 2026-10-28.",
+    "where": ".planning/board-rows/B64.md item 6"
   }
 }

@@ -489,6 +489,7 @@ RUNTIME tree. The design he answered decision by decision: `.planning/quick/2026
    | sorting and routine internal work (mail, labels, an internal summary) | Jev first; Sonnet 5.5 `medium` on doubt |
    | standard work (research, analysis, a draft, ordinary code) | Opus 5.5 `medium` |
    | good work (the final text a client, a viewer or he reads; code that must be good) | Opus 5.5 `high` |
+   | eye-facing work — design, visuals, beauty, and the code that carries the look, for a client or for the holding's own screens and Hamza's | Opus 5.5 `xhigh` or `max`, never below; the studio's whole team and the design skills used as one whole <!-- CEO-OK: eye-facing-work-xhigh-max-studio-skills-2026-10-28 --> |
    | a master's or standing owner's own work (plan, decision, assembly) | Opus 5.5 `high`, `xhigh` or `max`, its own choice |
    | deep thinking (strategy, architecture, design, writing every new plan) | Opus 5.5 `xhigh` or `max` |
    | valuable work's plan | Opus 5.5 `max`, and Fable 5.1 `max` writing it separately (item 7) |
@@ -508,8 +509,8 @@ RUNTIME tree. The design he answered decision by decision: `.planning/quick/2026
    valuable — a deal of 1,000 $ or more, his word "bu değerli bir iş", or risk: the first job of
    its kind, or work touching health, law, personal data or a money flow (item 7). **Code keeps
    the limits:** the final text a human reads is never below Opus (§4d's one exception: spoken normal talk); masters
-   and standing owners never below `high`; Sonnet and Haiku never at `low`; `max` a default nowhere — his word or a
-   master's reasoned choice in thinking work opens it; no part over the job's budget. **Measurement corrects:** every choice
+   and standing owners never below `high`; Sonnet and Haiku never at `low`; `max` a default nowhere — his word, a
+   master's reasoned choice in thinking work or eye-facing work opens it; eye-facing work never below `xhigh`. **Measurement corrects:** every choice
    is recorded with its reason; the guide is corrected with a test set built from our own jobs ([[TEST_STRATEGY]]);
    model names live in the catalogue, never in the guide. **Fable stands in three places** — the backup brain,
    valuable work's second plan writer, the critical gate's second seat — and is never burnt idly: the rows B51 P6 put on
@@ -517,8 +518,8 @@ RUNTIME tree. The design he answered decision by decision: `.planning/quick/2026
    seat, and the default of `orchestrator.critical_decision_model`) move to Opus 5.5. The studio's creative seats
    (on Fable by his rulings of 2026-09-05 and 2026-09-15, §3) move to Opus 5.5 too, after a 10-job side-by-side on
    the studio's own work; Fable 5.1 stays their backup. The studio job type's master picks the effort per job (B64 v2): everyday
-   creative work `high`, big work `xhigh`, `max` for truly important work such as a brand or a big campaign — `max`
-   is still a default nowhere. <!-- CEO-OK: b64-q2-studio-creative-seats-opus-2026-10-14 -->
+   creative work `xhigh`, `max` for big or truly important work such as a brand or a big campaign — creative work is
+   eye-facing, never below `xhigh` <!-- CEO-OK: eye-facing-work-xhigh-max-studio-skills-2026-10-28 -->. <!-- CEO-OK: b64-q2-studio-creative-seats-opus-2026-10-14 -->
 2. **Hamza's levels, model side (decision 3).** Normal chat, questions and the briefing: Opus 5.5 `medium`. Plan,
    architecture or strategy talk: `xhigh`, said aloud; "Max'a geç" or "High'a in" holds until the subject ends.
    Today `chat.strategy` carries `max` and every message but a status question reaches it — fixed. Spoken normal

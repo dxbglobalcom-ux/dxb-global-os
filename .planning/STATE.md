@@ -44,33 +44,30 @@ The merged olive page (Yeldeğirmeni, 25 Oct) is accepted by his eye as it stand
 <!-- CEO-OK: olive-merged-page-accepted-by-his-eye-2026-10-26 -->. Measured on its fix rounds: resuming the master's
 ~616k-token session cost 16.4, 15.0 and 8.2 $ a round; a fresh master with a written brief did another fix for
 5.62 $ — about three times cheaper a turn, not a controlled test.
-Earlier days (the persona report of 23 Oct, the 1,000 $ way of 24 Oct, the olive runs, the walk, the studio):
+Earlier days (the olive runs, the walk, the studio):
 `.planning/STATE-ARCHIVE.md` § "Moved out of STATE.md on 2026-10-26 night".
 
 ## Next
 
-0. His eye on the persona report (desktop, `Personalar Raporu 2026-10-23.pdf`) and its four decisions (below). After the
-   holding is built out, C41: every persona rewritten facing the outside world and knowing the holding's studio, skills
-   and tools; the job-type masters' personas are one leg of it.
-1. His eye on the two desktop reports of 24-25 Oct (`1000 Dolar Sistemi Testi 2026-10-24.pdf`,
-   `Üç Sayfa Karşılaştırma 2026-10-25.pdf`).
-2. The studio platform-hub plan is approved with his corrections and on the board (B43; FINAL.md Bölüm 0): built at its
+0. After the holding is built out, C41: every persona rewritten facing the outside world and knowing the holding's
+   studio, skills and tools; the job-type masters' personas are one leg of it.
+1. The studio platform-hub plan is approved with his corrections and on the board (B43; FINAL.md Bölüm 0): built at its
    rank — accounts connected and infrastructure only, no money loaded, no exam now; its first step raises the server's
    LiteLLM pin (`vps/compose.yaml`, 1.91.0) to ≥ 1.97.0. The channels are a separate study, talked before January 2027.
-3. The Gözlem Odası (B82): the plan has his eye; the build when the factory fully starts — step 1, the X gate, is in.
-4. The studio retest, when its turn comes (the machine rebooted 2026-10-19 07:38, the card works again). In the factory
+2. The Gözlem Odası (B82): the plan has his eye; the build when the factory fully starts — step 1, the X gate, is in.
+3. The studio retest, when its turn comes (the machine rebooted 2026-10-19 07:38, the card works again). In the factory
    with the Media Studio's staff: ScrollCraft's clip through H3 image-less at 8 steps, saved at a high quality (the
    blocky clip was ComfyUI's 1.17 Mbit/s save); stills from H3's best frame vs FLUX vs FLUX.2-klein-4B; a client-photo
    ad through H3; upscale or not, judged full screen by his eye. The standard is the recipe of the films he accepted
    — 8 steps on the road the studio's system names, no 4-step take <!-- CEO-OK: studio-standard-8-steps-his-liked-recipe-2026-10-19 -->; `studio.mjs`'s
    defaults follow it. Then the bridge and ScrollCraft's rule 2 follow the result.
-5. The walk, one row at a time with him: YE19 next, then to the last row; then the "Ekim 9-15 linkleri" and
+4. The walk, one row at a time with him: YE19 next, then to the last row; then the "Ekim 9-15 linkleri" and
    "Ekim 15-21 linkleri" sheets the same way.
-6. Plans he asked for, each talked first: how ChatGPT on Steroids (installed) joins the holding as an agent and as
+5. Plans he asked for, each talked first: how ChatGPT on Steroids (installed) joins the holding as an agent and as
    Sol's stand-in; the studio revenue lines not covered by the platform-hub plan (MoneyPrinterTurbo, HyperFrames,
    OpenMontage, Open Design) studied in order; a way for the team to work on his phone in the background.
-7. Then the board page with every decision of the walk, his one yes, and `ORDER.md` "On his yes".
-8. No construction starts yet. The board is mixed and still being filled: the links stay in his Excel and are gone
+6. Then the board page with every decision of the walk, his one yes, and `ORDER.md` "On his yes".
+7. No construction starts yet. The board is mixed and still being filled: the links stay in his Excel and are gone
    through one by one with him (useful to the holding or not, where each belongs); B22's synthesis is made; then the board is ordered again like a factory, from the foundation to the roof (the
    earlier report on that order is redone with the additions); only then does the build begin, row by row in that
    order — B64's build included. In that re-ordering, rows that own the same work as B64 get one owner: W-C42-5
@@ -79,13 +76,7 @@ Earlier days (the persona report of 23 Oct, the 1,000 $ way of 24 Oct, the olive
 
 ## Waiting on his approval
 
-- From the persona report (23 Oct, second version), each with the lead's recommendation: (1) the skills' ban lists
-  taken out of client design work, only their "how to make it more beautiful" parts kept — now; (2) the restrictive
-  persona lines removed (dashboard-first, the Burj Al Arab bar, "beauty is not this role's verdict", "luxury is a
-  fantasy signal") — now, C41's first part, the full rewrite at C41's turn; (3) a blind test on the 21 Oct 365-word
-  brief — bare Opus, a cleaned master, today's designer — after the weekly reset (Sat 25 Oct 10:00); (4) the new design
-  flow (one master, visual drafts, a beauty eye, the bare-Opus yardstick) written into the specs after the test, by a
-  two-writer plan. Still open from 22 Oct: a light lane for small, low-risk jobs.
+- Still open from 22 Oct: a light lane for small, low-risk jobs.
 - Whether Ultra Code joins the holding (the real one was never run — arm B was an imitation); deleting the obsolete
   `scripts/test/e2e-login.mjs`.
 - From "Ekim 15-21 linkleri", each a start on his word: the claude-security scan of the repository (he said later,
@@ -93,7 +84,7 @@ Earlier days (the persona report of 23 Oct, the 1,000 $ way of 24 Oct, the olive
   REA opened to the holding's own employees (part of B41) — at the end of the order.
 - claude-mem: five more observations still carry the label (38114, 9153, 38124, 8060, 38123) — delete or keep.
 - Valuable work, three open questions for his word, one at a time: a "neither plan is workable" outcome; the 30 %
-  cap's base for a job with no deal; a plan's own cost estimate.
+  warning line's base for a job with no deal; a plan's own cost estimate.
 - Platform-hub plan, two open decisions — after B22's synthesis: the studio tab's drawing (B32's method); the `media` event channel.
 - The ordered board and its 10 new rows, after the walk.
 - At their ranks: the Supabase skills install (#3), DataForSEO (#47), Apify beyond the free plan (#48), Google OAuth
