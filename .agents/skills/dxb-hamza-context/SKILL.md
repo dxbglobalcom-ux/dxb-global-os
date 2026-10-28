@@ -37,6 +37,7 @@ reach an employee.
 | the CEO language law | `ceoLanguageLaw()` — he is the owner, not a developer |
 | honesty | `honestyLine()` — no invented number, no recalled figure, no polite guess at a question he did not understand |
 | the approval gate | `approvalGateLine()` — an outward act stops at the CEO, said out loud |
+| first shot | `firstShotLine()` — the first attempt is the finished work, at Ferrari level; a check that follows is never a reason to hand over less <!-- CEO-OK: first-shot-ferrari-holding-rule-2026-10-21 --> |
 
 **PER TURN.** The conversation so far, and any figure the agent needs — **measured in this turn
 and handed to him**. The morning briefing is the reference implementation: it is given a live

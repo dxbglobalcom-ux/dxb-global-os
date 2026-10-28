@@ -2913,7 +2913,7 @@
   },
   "eye-facing-work-xhigh-max-studio-skills-2026-10-28": {
     "date": "2026-10-28",
-    "what": "Eye-facing work — design, visuals, beauty and the code that carries the look, for a client or for the holding's own screens and Hamza's — runs at xhigh or max, never below; the master uses the studio's whole team and hands and the holding's design skills as one synchronized whole. Logic code stays at high; the studio's everyday creative work moves from high to xhigh.",
+    "what": "Eye-facing work, for a client or for the holding's own screens and Hamza's: design, visual drafts and the design system run at max; the code that carries the look (layout, type, colour, motion) at xhigh or max — in the construction at max, since xhigh is the bottom of the code curve (FrontierCode 51.4 %); all other code stays where the guide puts it (ordinary code medium, code that must be good high). The master uses the studio's whole team and hands and the holding's design skills as one synchronized whole. The studio's everyday creative work moves from high to xhigh, a work's visual design to max.",
     "verbatim": "Göze hitap eden her konuda yani tasarım ve görsellik ve güzellik çekicilik bununla ilgili bütün konularda yapılırken veya kodun dışında her şey bu seviyelerde yapılsın. Çünkü bütün insanlar için bu çok önemli yani. … Bir sitenin mükemmelliği ile ilgili ne gerekiyorsa X-High ve Max seviyesinde göze hitap eden kısımların bütün kodlarında güzellikle ilgili X-High ve Max mimari planlamada ve aynı zamanda nasıl desem, ve aynı zamanda stüdyonun tüm ekip şeyleri ve bizim design skill'lerimiz. Bunların hepsini usta, adı usta, usta bir şeye kucaklayıp hepsini güzelce bir şey halinde, senkronize halinde şey yapılmalı yani, kullanılmalı. … Tamam ikinci ile ilgili şeyini kabul ediyorum.",
     "conditions": "His observation: on visual work xhigh looks a notch better than high, max a notch better than xhigh. Observed on the 2026-10-28 trial as well.",
     "session": "Opus 5.5 session c7e01692 — heard first-hand, 2026-10-28.",
@@ -2934,5 +2934,21 @@
     "conditions": "Personas for the trial written now at the holding's level; the full rewrite stays C41's, after the holding is built. Not a LAW B acceptance of anything.",
     "session": "Opus 5.5 session c7e01692 — heard first-hand, 2026-10-28.",
     "where": ".planning/board-rows/B64.md item 6"
+  },
+  "client-gets-a-built-sample-first-2026-10-28": {
+    "date": "2026-10-28",
+    "what": "No visual draft goes to the client. After the job starts, the first thing the client receives is a real, built sample — for a site, its landing page; after the client's approval the other pages follow, the client asked how to continue, page by page recommended. The check holds the approved sample beside each later part. On a 1,000 $+ job that sample is the first delivery, which reaches him before the client (APPROVAL_ENGINE A9). Replaces the 2026-10-21 rule that the client approves the visual design before the build.",
+    "verbatim": "Şimdi şöyle, müşteriye biz hani görsel taslağı da yollamayalım. … her şey olduktan sonra, işe başlandıktan sonra müşteriye bir numune belki şey gider, hani landing page kısmı gider yani. Onay aldıktan sonra diğer page belki gidilir. Hani veya sorulur, siz nasıl ilerleyelim? Hani page mi ilerleyelim? Ya page ilerlemek daha iyi bence.",
+    "conditions": "Page by page is his preference, offered to the client as the recommendation; the client may choose otherwise.",
+    "session": "Opus 5.5 session c7e01692 — heard first-hand, 2026-10-28.",
+    "where": "HOLDING-OS-MASTER-PLAN/AGENT_ORCHESTRATION_SPEC.md A27, A28 · APPROVAL_ENGINE_SPEC.md A9"
+  },
+  "video-ideas-replay-lead-share-limits-2026-10-28": {
+    "date": "2026-10-28",
+    "what": "Three ideas from the video 'Kendi Yapay Zeka Ekibimi Kurdum. Ben Kod Yazmıyorum.' (Avenox, 2026-09-26) are noted where their work sits: a replay of a finished night with every number from real runs (B10, drawn in B32); the master's share of a job's work shown on its desk (C60, AGENT_ORCHESTRATION A29 (7)); B64's build reads the subscription windows to decide how many masters run at once, a stale or failed read counting as unknown (B64). The fourth idea (a worktree per writer) is not taken.",
+    "verbatim": "Şeyle ilgili video sonucu geldi. Orayla ilgili şeyler yazmışsın. Tamam. Önerilerini kabul ediyorum. Evet.",
+    "conditions": "Notes only; each is built at its row's turn.",
+    "session": "Opus 5.5 session c7e01692 — heard first-hand, 2026-10-28.",
+    "where": ".planning/board-rows/B10.md · .planning/board-rows/C60.md · .planning/board-rows/B64.md"
   }
 }

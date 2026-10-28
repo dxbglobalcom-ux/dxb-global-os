@@ -118,11 +118,12 @@ Her alarm satırı olası neden + önerilen aksiyon + sorumlu çalışan taşır
 - **Hard-stop'tan çıkış (release) SİZİN kararınızdır** — sistem kendi kendine devam etmez.
   Costs/Budgets sayfasından durumu görür, bütçe anahtarlarını Control Mode'dan değiştirirsiniz.
 - Çalışan başı limit: `employee.budget_limit_eur`. Görev başı tavan:
-  `orchestrator.max_cost_per_task_eur`.
+  `orchestrator.max_cost_per_task_eur` (bugünkü kod; B64 kurulunca tahmin, ölçüm ve uyarıya döner, çalışan işi kesmez).
 - **B64 kurulunca:** bütçe holding → şirket → proje → iş diye iner; sürekli bir işin de kendi
   bütçesi olur. Departman bütçesi yoktur; harcama yine departmana göre etiketlenir. <!-- CEO-OK: b64-v2-plan-and-six-decisions-his-yes-2026-10-26 --> <!-- CEO-OK: b64-v2-heads-and-dept-budgets-go-owner-by-job-2026-10-26 -->
-  %70'te ve %90'da uyarı gelir; %100'de kritik olmayan yeni iş durur. Değerli bir işin bütçesi anlaşmanın en fazla %30'udur
-  (1.000 $'lık işte 300 $). Fiyatı bilinmeyen bir model "0 $" sayılmaz, "maliyet bilinmiyor"
+  %70'te ve %90'da uyarı gelir; %100'de kritik olmayan yeni iş kabul edilmez, çalışan iş sonuna kadar sürer, size hemen
+  söylenir ve sizin sözünüzle durur. Bir işin maliyeti işi hiçbir zaman kesmez: değerli bir işin maliyeti anlaşmanın %30'unu
+  geçince (1.000 $'lık işte 300 $) size uyarı gelir, iş devam eder <!-- CEO-OK: no-cap-cuts-a-running-job-2026-10-28 -->. Fiyatı bilinmeyen bir model "0 $" sayılmaz, "maliyet bilinmiyor"
   sayılır. Hermes'e şimdilik harcama sınırı konmaz (15. karar).
 
 ## 8. Acil durum: Global Pause
@@ -313,12 +314,13 @@ Every alert carries probable cause + suggested action + responsible employee. Mu
 - **Release from hard-stop is YOUR decision** — the system never resumes itself. See state
   on Costs/Budgets; change budget keys in Control Mode.
 - Per-employee: `employee.budget_limit_eur`. Per-task ceiling:
-  `orchestrator.max_cost_per_task_eur`.
+  `orchestrator.max_cost_per_task_eur` (today's code; with B64's build it becomes an estimate, a measurement and a warning, never cutting a running job).
 - **With B64's build:** the budget descends holding → company → project → job; a line of recurring
   work has its own budget too. There is no department budget; spend is still tagged by department.
   <!-- CEO-OK: b64-v2-plan-and-six-decisions-his-yes-2026-10-26 --> <!-- CEO-OK: b64-v2-heads-and-dept-budgets-go-owner-by-job-2026-10-26 --> Alerts at 70%
-  and 90%; at 100% non-critical new work stops. A valuable job's budget is at most 30% of the deal
-  (300 $ on a 1,000 $ job). A model with no price counts as "cost unknown", never 0 $. For now no
+  and 90%; at 100% no new non-critical work is accepted, while a running job goes on to its end, you are told at
+  once and your word stops it. A job's cost never cuts the job: when a valuable job's cost passes 30% of the deal
+  (300 $ on a 1,000 $ job) you get a warning and the work goes on <!-- CEO-OK: no-cap-cuts-a-running-job-2026-10-28 -->. A model with no price counts as "cost unknown", never 0 $. For now no
   spend limit is put on Hermes (decision 15).
 
 ## 8. Emergency: Global Pause
