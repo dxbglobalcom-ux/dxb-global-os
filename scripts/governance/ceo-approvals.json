@@ -2939,9 +2939,10 @@
     "date": "2026-10-28",
     "what": "No visual draft goes to the client. After the job starts, the first thing the client receives is a real, built sample — for a site, its landing page; after the client's approval the other pages follow, the client asked how to continue, page by page recommended. The check holds the approved sample beside each later part. On a 1,000 $+ job that sample is the first delivery, which reaches him before the client (APPROVAL_ENGINE A9). Replaces the 2026-10-21 rule that the client approves the visual design before the build.",
     "verbatim": "Şimdi şöyle, müşteriye biz hani görsel taslağı da yollamayalım. … her şey olduktan sonra, işe başlandıktan sonra müşteriye bir numune belki şey gider, hani landing page kısmı gider yani. Onay aldıktan sonra diğer page belki gidilir. Hani veya sorulur, siz nasıl ilerleyelim? Hani page mi ilerleyelim? Ya page ilerlemek daha iyi bence.",
-    "conditions": "Page by page is his preference, offered to the client as the recommendation; the client may choose otherwise.",
+    "conditions": "Page by page is his preference, offered to the client as the recommendation; the client may choose otherwise. Added the same day on his yes: page by page on a small site, in groups of pages on a big one.",
     "session": "Opus 5.5 session c7e01692 — heard first-hand, 2026-10-28.",
-    "where": "HOLDING-OS-MASTER-PLAN/AGENT_ORCHESTRATION_SPEC.md A27, A28 · APPROVAL_ENGINE_SPEC.md A9"
+    "where": "HOLDING-OS-MASTER-PLAN/AGENT_ORCHESTRATION_SPEC.md A27, A28 · APPROVAL_ENGINE_SPEC.md A9",
+    "verbatim_2": "Evet, büyük sitelerde bu olayı uzatır ya. Küçük sitede anca. Büyük sitede de sayfa grupları halinde, aynen. Tamam. Bunu eklersin."
   },
   "video-ideas-replay-lead-share-limits-2026-10-28": {
     "date": "2026-10-28",
@@ -2950,5 +2951,13 @@
     "conditions": "Notes only; each is built at its row's turn.",
     "session": "Opus 5.5 session c7e01692 — heard first-hand, 2026-10-28.",
     "where": ".planning/board-rows/B10.md · .planning/board-rows/C60.md · .planning/board-rows/B64.md"
+  },
+  "master-studies-luxury-sites-for-principles-2026-10-28": {
+    "date": "2026-10-28",
+    "what": "When the site master and its team are written — after the team-or-one-session trial's result — the master studies a handful of the world's best luxury landing pages near the client's field for their principles (rhythm, type, restraint, motion) and never copies a page. The lead's recommendation to note it in B64, answered yes.",
+    "verbatim": "Yani lüks site örneklerine bakılabilir yani. Oradaki şeylere. Veya bakılmasa mı? Ne düşünüyorsun? Şimdilik böyle yapalım da. … Önerinin ikisine de evet. Tamam, ikisine de evet.",
+    "conditions": "Not added to today's trial; looked at again after its result.",
+    "session": "Opus 5.5 session c7e01692 — heard first-hand, 2026-10-28.",
+    "where": ".planning/board-rows/B64.md item 5"
   }
 }
