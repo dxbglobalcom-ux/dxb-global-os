@@ -31,8 +31,10 @@ not here. What is accepted is read from `scripts/governance/ceo-approvals.json`,
 21b7f0ad): specialists come through the queue onto the job desk; no turn cap or budget cuts a running job, 30 % only
 warns, at 100 % only new work stops; eye-facing work (design at max, the code that carries the look at xhigh/max) with
 the studio and the design skills as one whole; the client first gets a built sample (a site's landing page), then
-page by page, in groups on a big site; the video's three ideas noted in B10, C60, B64. His trial (B64 item 6) is
-RUNNING since 16:12: a 3-page site for the fictional Mavi Kuşak Çini Atölyesi — arm A the site master and four
+page by page, in groups on a big site; the video's three ideas noted in B10, C60, B64; a full 5-hour window is met
+first by Max 20x, then a second subscription (17f69817, 6199a3a5). His trial (B64 item 6) is RUNNING since 16:12
+(both arms hit the 5-hour limit at 17:04/17:13, resumed 20:13; on his word B is paused and resumes when A has
+finished — `devam2.sh`, `sonra-b.sh`; the watchers resume at the reset time the limit message names): a 3-page site for the fictional Mavi Kuşak Çini Atölyesi — arm A the site master and four
 specialists, arm B one session — each a fresh headless session walled in bwrap (`/home/dxb/deneme-1/run-kol.sh`,
 logs and TIMES.log in `/home/dxb/deneme-1/logs/`, the sites in `kol-a/site`, `kol-b/site`).
 2026-10-27 — B64 v2 gone over again with him. On his word <!-- CEO-OK: b64-after-the-deal-and-plan-merge-rule-2026-10-27 -->: the client flow after the deal is in the specs (REVENUE §7sexies 6 — an open job's messages go to its desk, revisions inside the contract are the same job, the first delivery of a 1,000 $ job reaches him and revisions go after the checks, a signed deal's master is found by code, B05 is B64's prerequisite); a valuable job's two plans merge by his rule (the stronger plan the base, what it lacks added unless it breaks the look or the system, the more beautiful of two, inside the brief, budget and due date; no second audit); his page's 1,000 $ site example follows A27/A28; B01, B05, B67 aligned (034eb500). Sol: no A, one B, seven C — fixed (c39c6e3f, `.planning/quick/20261027-b64-inceleme/SOL.md`). His video (Chase AI, "The Agentic OS Setup That Will 10x Claude Code", 25 Jun 2026): the oldest of that series, "10x" only in its title, nothing the holding lacks; its one cheap idea — mining our own sessions for repeated work with no door — offered, not started.
