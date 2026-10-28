@@ -2962,10 +2962,11 @@
   },
   "second-subscription-for-the-5-hour-window-2026-10-28": {
     "date": "2026-10-28",
-    "what": "The 5-hour window belongs to the whole subscription, so the backup brain cannot cover it: when the holding's work grows a second subscription is connected (money out, at his gate) and a full 5-hour window moves the work to the other subscription; with one subscription the work waits and resumes from its desk at the reset time. The weekly window keeps Opus → Fable and the 95 % proposal. The lead's recommendation, answered yes.",
+    "what": "The 5-hour window belongs to the whole subscription, so the backup brain cannot cover it: when the holding's work grows a second subscription is connected (money out, at his gate) and a full 5-hour window moves the work to the other subscription; with one subscription the work waits and resumes from its desk at the reset time. The weekly window keeps Opus → Fable and the 95 % proposal. The lead's recommendation, answered yes. Refined the same day on his word: the first step is raising the plan from Max 5x to Max 20x; a second subscription only if that too fills.",
     "verbatim": "Önerini kabul ediyorum. Çünkü şu kısım doğru. Evet, haftalıkta %95'e varırsa aynen. Ama haftalıkta dolmuyor ki sadece. Günlükte de dolabiliyor. O yüzden önerine evet.",
     "conditions": "Earlier in the same talk: 'Zaten birkaç iş alırsak hemen şey planımız ortaya. İkinci abonelik bağlandırılacak yani. Bir aboneliğin günlük kotası giderse ikinci aboneliğin günlük kotası başlar.' Connecting it is money out and stays at his gate.",
     "session": "Opus 5.5 session c7e01692 — heard first-hand, 2026-10-28.",
-    "where": "HOLDING-OS-MASTER-PLAN/COST_CONTROL_SPEC.md A7 · OBSERVABILITY_SPEC.md · RISK_REGISTER.md"
+    "where": "HOLDING-OS-MASTER-PLAN/COST_CONTROL_SPEC.md A7 · OBSERVABILITY_SPEC.md · RISK_REGISTER.md",
+    "verbatim_2": "Yani zaten bu Max planının iki şeyi var. Biri 107 dolarlık, biri de diğer iki katı. Hani 20x'lik olanı var. Bu 5x'lik. 20x'lik de günlük zaten 20x kota veriyor. O yüzden onun yeteceğini düşünüyorum. O aboneliğe geçeriz. Eğer iş fazla gelirse."
   }
 }
