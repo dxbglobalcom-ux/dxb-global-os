@@ -94,8 +94,9 @@ Earlier days (the olive runs, the walk, the studio):
 - The web office, five questions (report § 9 and file 4): the name DxB Global Web-Studio; the general site master and
   core team written now (C41's first slice, ahead of its turn); the next trial on the Mavi Kuşak brief now; the 213
   personas read and marked for the web office by helpers; Y9 (client finding) and Y11 (the holding's own site) joined
-  to the web office plan. Also: close the three phone previews (:8800-8802) and put the trial's 219 studio outputs
-  back.
+  to the web office plan. Morning read first: `~/Desktop/DxB Global Web-Studio/0 - SABAH İLK OKUNACAK …`; his cut-off
+  "Hamza'nın elleri şimdi şey yapacak" asked. The trial's 219 studio outputs are back, classified, in
+  `ComfyUI/output/scrollcraft/proje-mavi-kusak-cini-2026-10-28/`; whether to classify the rest of the studio output the same way.
 - Still open from 22 Oct: a light lane for small, low-risk jobs.
 - Whether Ultra Code joins the holding (the real one was never run — arm B was an imitation); deleting the obsolete
   `scripts/test/e2e-login.mjs`.
