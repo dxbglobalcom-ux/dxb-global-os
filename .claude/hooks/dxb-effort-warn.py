@@ -130,10 +130,18 @@ def unknown_reminder():
 
 
 def code_reminder(level):
+    short = ("" if level != "medium" else
+             " Short code is the exception (his word, 2026-10-29): a few dozen lines of narrow glue, a merge or a "
+             "setting, tried at once, is written at medium with no warning. The measure is what an error costs, "
+             "not the line count: code that deletes or moves data, touches money or the approval gate, security "
+             "or permissions, runs in parallel or changes many places at once still waits for high, and the "
+             "code that carries a client's look for max.")
+    which = ("code that needs high" if level == "medium" else
+             "any code at all (his word, 2026-10-29: no code is ever written at low, however short)")
     return (f"This session runs at {level}, not high, and has no dxb-team2 effort mode; the CEO's order "
-            f"(2026-10-06) is code at high. If your reply writes code, open it, before anything else, with "
-            f"exactly this line:\n{CODE_LINE}\nand write no code until he has switched. If the talk is a plan, "
-            f"a design or an architecture, run `{COMMAND} plan` instead. Otherwise ignore this.")
+            f"(2026-10-06) is code at high.{short} If your reply writes {which}, open it, before "
+            f"anything else, with exactly this line:\n{CODE_LINE}\nand write no code until he has switched. If "
+            f"the talk is a plan, a design or an architecture, run `{COMMAND} plan` instead. Otherwise ignore this.")
 
 
 def session_name(session_id):
