@@ -96,8 +96,9 @@ Earlier days (the olive runs, the walk, the studio):
   personas read and marked for the web office by helpers; Y9 (client finding) and Y11 (the holding's own site) joined
   to the web office plan. Morning read first: `~/Desktop/DxB Global Web-Studio/0 - SABAH İLK OKUNACAK …`; his cut-off
   "Hamza'nın elleri şimdi şey yapacak" asked. The studio's ScrollCraft output is a library on his word
-  (`ComfyUI/output/scrollcraft/KUTUPHANE.tsv`, four project folders; rejected and broken in the trash, not emptied): emptying the
-  trash, and whether the studio looks in the library before it generates.
+  (`ComfyUI/output/scrollcraft/KUTUPHANE.tsv`, four project folders; rejected and broken deleted for good).
+  On his word: approved and used studio output goes into the library — a step of the web office plan; looking there before
+  generating waits until the library is rich.
 - Still open from 22 Oct: a light lane for small, low-risk jobs.
 - Whether Ultra Code joins the holding (the real one was never run — arm B was an imitation); deleting the obsolete
   `scripts/test/e2e-login.mjs`.
