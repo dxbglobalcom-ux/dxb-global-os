@@ -3,6 +3,7 @@
 > CEO Direktifi B6 ana çıktısı. Soru: *"Bu kütüphaneyle DXB içinde AYRICA neler yapılabilir — gerçek müşteri, gerçek kârlılık; fiziki şirketin yapamayacağı/yavaş kalacağı kazançlar hangi yapılar kurulursa mümkün?"*
 > Format (her fırsat): **Mekanizma** (ne kurulur, hangi kaynaklar birleşir) · **Müşteri/ödeyen** · **Fiziki şirket neden yapamaz** · **Faz** · **Gate'ler**.
 > Durum: **W1 — 12 fırsat + 4 Fable ek önerisi (2026-07-09). Her dalga sonunda güncellenir, CEO'ya sunulur.**
+> **2026-11-01:** 12 videodan çıkan gelir yolları §D'de (#17–#26), vakti gelince yapılsın diye, kaynak iziyle.
 
 ## A. Külliyat-türevli fırsatlar
 
@@ -115,3 +116,126 @@
 | 5 | #13/#14 (LLM-Ops/Audit) | Kanıtımız üretimde; B2B güven ürünleri, düşük ek maliyet |
 
 > Kapanış kuralı: Bu belge her dalga sonunda güncellenir ve CEO'ya tabloyla sunulur; Phase-10 planlaması bu belgenin FINAL hali olmadan açılamaz (B6 sert kapı).
+
+## D. Kasım 1 videolarından gelir yolları (2026-11-01) — vakti gelince yapılır
+
+> **Ne bu bölüm:** CEO'nun 1 Kasım'da izletip analiz ettirdiği 12 videodan çıkan bütün para yöntemleri; hiçbiri şimdi yapılmıyor, vakti gelince yapılsın diye burada duruyor. Dokuz hat (#17–#25), sonra listesi (#26), hükmünü bekleyenler ve geçmeyenler. Yapım sırası tahtanın yeniden dizilişinde konur; hatların kararları Rapor 2 §8'de (K1–K12, İ1–İ7, P1).
+> **İz — kafası karışan buraya gider:**
+> - Rapor: `~/Desktop/Gelir Kaynakları/2 - Gelir üretim hatları ve kararlarınız 2026-11-01.pdf` (kaynağı `W/rapor2.html`)
+> - `W` = `.planning/research/watch-links/2026-11-01-gelir/` — hakem kararları `W/MERGE.md` (M#n), video satırları `W/rows/merged.jsonl`, okuyucu analizleri `W/readers/<grup>-<opus|fable>.md`
+> - Kısaltma: A avenox · T tilbury · K koerner · S ses · Y yeni; -O opus, -F fable (örn. `T-F 2.2` = `W/readers/tilbury-fable.md` "Yöntem 2.2"). Video linki dakikasıyla verilir.
+> - Excel: `~/Desktop/İNCELEMELER/Excel-turbo.xlsx`, sayfa "Kasım 1 incelemeleri".
+
+### 17. H1 — Yerel aday siteleri: kendi sitemiz, aylık kira (VARLIK)
+- **Mekanizma:** "şehir + hizmet" sitesi kurulur, Google'da üste taşınır, gelen aramalar yerel bir firmaya aylık sabit kirayla yönlendirilir. Site "bağımsız yönlendirme hizmeti" olduğunu açıkça söyler (M#10). Ferrari hâli: keşif istasyonu niş × şehir kombinasyonlarını veriyle puanlar; aramalar kaydedilir, kiracıya aylık "X arama, Y iş" raporu; firma ayrılırsa aramalar bir sonrakine, varlık holdingde.
+- **Videodan gelen yöntemler:**
+  - Sıralat-kirala (aylık sabit kira) — [xUZYy3hCRUM 02:06](https://www.youtube.com/watch?v=xUZYy3hCRUM&t=126) · Koerner'in 11 $'lık siteleri [JhyVSrQPVSg 24:32](https://www.youtube.com/watch?v=JhyVSrQPVSg&t=1472) · `K-O 3.1`, `K-F`
+  - Fiyat seçeneği: arama başına ücret ya da %10 komisyon — [xUZYy3hCRUM 14:33](https://www.youtube.com/watch?v=xUZYy3hCRUM&t=873) · `K-O 3.2` (raporda yok)
+- **Helal:** kira ve komisyon geçer; kendini firma gibi gösteren site ve ücretli backlink geçmez (M#10, M#11).
+- **İlk deneme:** 2 site, İngilizce pazar, helal niş, 90 gün; ~22 $ alan adı, takip numarası, DataForSEO 50 $ (P1).
+- **Karar / satırlar:** K3, P1 · sahipsiz; en yakın W-C42-6, B28, Y9.
+
+### 18. H2 — Niş dizinler, kimsenin elinde olmayan veriyle (VARLIK)
+- **Mekanizma:** tek konulu dizin; nişi veri seçer, veri ajanlarla toplanıp her hafta tazelenir (fiyat, saat, Türkçe konuşan personel, helal sertifikası). Holdinge yakışan nişler: Avrupa'da helal restoran/kasap, Almanya'da Türkçe konuşan hekim/avukat, cami etkinlikleri; yanında saf ticari nişler. Dizindeki işletmeler H5 ve H7'nin adayıdır.
+- **Videodan gelen yöntemler** (hepsi [-u0JuVUdPQA](https://www.youtube.com/watch?v=-u0JuVUdPQA), `K-O 2.2–2.5`, `K-F V2`):
+  - Öne çıkan ilan + aday formu / aday satışı — [10:23](https://www.youtube.com/watch?v=-u0JuVUdPQA&t=623), [17:42](https://www.youtube.com/watch?v=-u0JuVUdPQA&t=1062)
+  - Özel veri + 19 $'lık rehber (H3 ile) — [06:19](https://www.youtube.com/watch?v=-u0JuVUdPQA&t=379), [40:35](https://www.youtube.com/watch?v=-u0JuVUdPQA&t=2435)
+  - Dizinde görüntülü reklam — [42:39](https://www.youtube.com/watch?v=-u0JuVUdPQA&t=2559) · hüküm İ1
+  - Dizinde affiliate — [38:32](https://www.youtube.com/watch?v=-u0JuVUdPQA&t=2312) · hüküm İ3
+  - Çıkış: dizini varlık olarak satmak (yıllık gelirin ~3 katı) — [34:21](https://www.youtube.com/watch?v=-u0JuVUdPQA&t=2061) · `K-O 2.5` (raporda yok)
+  - Dizin verisini abonelikle satmak (ayda 50 $) — [10:23](https://www.youtube.com/watch?v=-u0JuVUdPQA&t=623) · okuyucular ayrıldı: `K-O 2.3` kamuya açık/izinli veriyse geçer, `K-F V2-D` kişisel veri AB/TR'de geçmez; hakem kararı yok, yapılırsa yalnız kişisel olmayan veriyle.
+- **İlk deneme:** masa başında 10 niş puanı (0 $, 1 gün), en iyisinde 1 dizin, 90 gün.
+- **Karar / satırlar:** K4, İ1, İ3 · sahipsiz; en yakın REV #1/#4.
+
+### 19. H3 — Dijital ürün atölyesi ve mağaza (VARLIK)
+- **Mekanizma:** holdingin her gün ürettiği araştırma ürüne çevrilir: araştırma masası yazar, Sol doğrular, stüdyo tasarlar, 11 dilde çıkar. Satış verisi bir sonraki ürünü seçer; 30 günde satmayan kapanır. Mağaza: Stan (29 $/ay) ya da vergiyi üstlenen mağaza (Lemon Squeezy, Gumroad); vergiyi üstlenen mağaza B05 çözülmeden tahsilatı açar (M#6). CEO'nun 31 Ekim notunun iki maddesi bu hat.
+- **Videodan gelen yöntemler** — Stan'in on ürün tipi ekrandan okundu: [LlhTEttKcwQ 27:22](https://www.youtube.com/watch?v=LlhTEttKcwQ&t=1642) · `T-O M8`, `T-F 3.1`:
+  - Dijital ürün (oyun kitabı, şablon, Ramazan planlayıcısı; Tilbury'nin 12 $'lık 30 günlük kitabı, 7 günde 23 satış) · Koerner'in 19 $'lık iş planı PDF'i ([JhyVSrQPVSg](https://www.youtube.com/watch?v=JhyVSrQPVSg) açıklaması)
+  - Custom Product: ücretli sektör incelemesi, stüdyonun ve web ofisinin kapı açıcısı (Rapor 1 A)
+  - Coaching Call: birebir görüşme (31 Ekim notundaki "benim vereceğim hizmet")
+  - eCourse ("ajanlarla şirket işletmek"; kanıtsız kurs satılmaz, `K-O 3.3`) · Webinar/etkinlik ([2uyhavEACdo 07:43](https://www.youtube.com/watch?v=2uyhavEACdo&t=463), [hriu0irRcpE 24:46](https://www.youtube.com/watch?v=hriu0irRcpE&t=1486))
+  - Recurring Membership: aylık sektör/trend özeti (REV #4); Koerner'in 5 $/ay YouTube üyeliği · `K-O 1.7`
+  - Community: ücretli topluluk (Doruk 117 × 59 $ — [oL2xB4DiXEo 18:15](https://www.youtube.com/watch?v=oL2xB4DiXEo&t=1095); Kyle — [xUZYy3hCRUM 38:21](https://www.youtube.com/watch?v=xUZYy3hCRUM&t=2301)) · `Y-O Yöntem 2`; kitle ve vaka olunca
+  - Collect Emails: ücretsiz mıknatıs, adayı satış hattına düşürür (Y9)
+  - AI Twin: karakterin abonelikli sohbet botu — `T-O` (raporda yok; İ5'e bağlı)
+  - URL/Media ve Stan Referral: başkasının ürünü — hüküm İ3
+- **İlk deneme:** DxB markasıyla 3 ürün (yerel aday sitesi oyun kitabı, "yapay zekâ çalışanıyla ilk 30 gün", Ramazan planlayıcısı) + bir mağaza hesabı (kimlik adımı, CEO'nun tıkı), 30 gün.
+- **Karar / satırlar:** K5, İ3 · mağaza sahipsiz; yüz B43 §4-E, ödeme B05, mağaza W-C42-6, kurs B04.
+
+### 20. H4 — Holdingin kendi kanalları: kanal fabrikası (VARLIK)
+- **Mekanizma:** saatle dönen dokuz istasyon: niş istihbaratı (her dilde kanal normalinin 3 katı izlenen videolar) → tarz analizi ve özgün senaryo → kanalın görsel kitabı → yerel kartta gece üretim (0 $) → anlatım → zaman damgasından otomatik montaj → kalite kapısı (ilk 3 video CEO'nun gözüne) → zamanlı yayın → 7. gün ölçümü. Çok dilli ses izi: her dil yeni pazar. Kollar: DxB markalı kanal, yüzsüz niş kanallar, sanal sunucu (B43).
+- **Videodan gelen yöntemler:**
+  - Kitle, satışın kendisidir: daha kötü ürünü hazır kitlesi olan çok satar; para izlenmeden değil, kitledeki binde bir alıcıdan — [FqsAALrRhj4 18. dk](https://www.youtube.com/watch?v=FqsAALrRhj4&t=1080), 44. dk · `A-O`, `A-F S2`
+  - Yüzsüz çizim kanalı üretim hattı (tarz çıkar, özgün senaryo, tek ana istem + referans çizimle 100+ görsel) — [HN_1kEGNu3Y](https://www.youtube.com/watch?v=HN_1kEGNu3Y) · `Y-O`, `Y-F`; zamanlama M#26, canlı tasviri İ7, reklam İ1
+  - Sanal karakter / AI influencer (sponsor + ürün) — [LlhTEttKcwQ 01:14](https://www.youtube.com/watch?v=LlhTEttKcwQ&t=74), [ytAW1_g2IfI 18:53](https://www.youtube.com/watch?v=ytAW1_g2IfI&t=1133) · `T-O`, `T-F 2.6`; etiket İ5 (M#17)
+  - Marka anlaşması / helal sponsor — [LlhTEttKcwQ 23:16](https://www.youtube.com/watch?v=LlhTEttKcwQ&t=1396), [OxQ47jXQApk 19:57](https://www.youtube.com/watch?v=OxQ47jXQApk&t=1197) · `T-F 3.3`
+  - Kişisel marka zinciri (reklam → marka anlaşması → kendi ürünü) — [OxQ47jXQApk 19:57](https://www.youtube.com/watch?v=OxQ47jXQApk&t=1197) · `Y-F Y12`
+  - Niş istihbarat motorunu (outlier puanı) veri aboneliği olarak satmak — [HN_1kEGNu3Y 01:27](https://www.youtube.com/watch?v=HN_1kEGNu3Y&t=87) · `Y-O` "ileride" (raporda yok; REV #4 ile)
+- **Zaman:** 1 Şubat 2027'den sonra YouTube programına giriş 8.000 izlenme saati (bugün 4.000); önce giren etkilenmez (`.planning/research/R5-youtube-ai-rules-and-risks.md` satır 13).
+- **İlk deneme:** kanal açmadan tek pilot video (8 dk, İngilizce eğitim ya da tarih), uçtan uca fabrikadan, 0 $, 1 hafta.
+- **Karar / satırlar:** K6, K8, İ1, İ5, İ7 · B43 (beş kararı 25 Eylül'den beri bekliyor), B28, C41; `content_monetization` motoru sahipsiz.
+
+### 21. H5 — Web ofisi: premium site + aylık bakım + dışa ulaşma makinesi (HİZMET)
+- **Mekanizma:** web ofisi planı (`~/Desktop/DxB Global Web-Studio/`, beş soru CEO'da). Hat ancak aylık bakım + ölçüm raporu paketiyle ve orta boy müşteriyle yaşar; yerel işletme tek seferlik siteye birkaç yüz dolar öder.
+- **Videodan gelen yöntemler:**
+  - Landing page + aylık optimizasyon — [ytAW1_g2IfI 07:30](https://www.youtube.com/watch?v=ytAW1_g2IfI&t=450) · `T-O M3`, `T-F 2.3`; REV #5
+  - Yerel site yenileme (TL çapası 10–20 bin ₺) — [hriu0irRcpE 13:46](https://www.youtube.com/watch?v=hriu0irRcpE&t=826), [oL2xB4DiXEo 06:05](https://www.youtube.com/watch?v=oL2xB4DiXEo&t=365) · `T-O M12`, `T-F 4.4`, `Y-F Y2`
+  - Dışa ulaşma makinesi: haritada 4+ yıldız, 50+ yorum, randevu linki yok → 1–10 puanlı denetim → kişiye özel video → firmaya özel demo — [JhyVSrQPVSg 30:27](https://www.youtube.com/watch?v=JhyVSrQPVSg&t=1827) · `K-O 1.5`; sahte talep formu ve kişisel telefon çıkarıldı
+  - Bekleyen fırsat: WordPress site yenileme (K10)
+- **Karar / satırlar:** web ofisinin beş sorusu, Y9, Y11, İ6, K10 · B64.
+
+### 22. H6 — Stüdyo ajansı + uzun videodan aylık kısa paket + yazı kolu (HİZMET)
+- **Mekanizma:** B28'in ajans koltuğu (pazaryeri değil). Müşteriye görsel, video ve yazı içerik; aylık tekrarlayan paketler.
+- **Videodan gelen yöntemler:**
+  - Uzun videodan aylık kısa paket: webinar/podcast'ten ayda 10–15 dikey klip (OpenShorts) — [GZtLsvklYBI 19:30](https://www.youtube.com/watch?v=GZtLsvklYBI&t=1170) · `S-O`, `S-F`; K7
+  - **Hayalet yazarlık:** müşterinin sesiyle LinkedIn, bülten, reklam metni (Claude Projects + araştırma + Typefully/Kit); müşteri kendi adıyla yayınladığını bilerek alır — [ytAW1_g2IfI 03:49](https://www.youtube.com/watch?v=ytAW1_g2IfI&t=229) · `T-F 2.2` (tam blok; `T-O M2`'nin "M9 ile aynı" notu yanlış yer gösterir). Rapor 2'de yalnız adı geçer. Hat: aday bulma (Y9) → yazı örneği (ilk temas CEO onayından) → sözleşme → haftalık tarama, taslak, Sol, müşteri onayı, yayın → aylık ölçüm raporu. İlk deneme: holdingin kendi hesapları (Y11) için 2 hafta, haftada 3 LinkedIn + 1 bülten, <20 $/hafta.
+  - **İçerik dönüştürme:** müşterinin podcast/videosu → bülten, gönderiler, kısa video senaryoları; Gadzhi'nin A seviyesi — [hriu0irRcpE 05:00](https://www.youtube.com/watch?v=hriu0irRcpE&t=300) · `T-O M10`, `T-F 4.2`; REV #2/#6. Rapor 2'de yalnız adı geçer. İlk deneme: holdingin kendi uzun içeriğinden 1 bülten + 3 gönderi + 2 senaryo, 1 gün, <5 $.
+  - Emlak ilan görseli ve gezinti videosu (olmayan özellik eklenmez) — [hriu0irRcpE 00:51](https://www.youtube.com/watch?v=hriu0irRcpE&t=51) · `T-O M9`, `T-F 4.1`; ücretsiz örnek İ6
+  - Yapay zekâ reklam filmi: yapay olduğu belli sunucu; sahte "kullandım, bayıldım" tanıklığı geçmez — [hriu0irRcpE 17:48](https://www.youtube.com/watch?v=hriu0irRcpE&t=1068), [FqsAALrRhj4 10. dk](https://www.youtube.com/watch?v=FqsAALrRhj4&t=600) · `T-O M13`; etiket İ5
+  - Müşteriye sponsorlu içerik biçimi ("içeriğime karışma") — [FqsAALrRhj4 26. dk](https://www.youtube.com/watch?v=FqsAALrRhj4&t=1560) · `A-O`, `A-F #10` (raporda yok)
+  - Higgsfield "kendini film karakteriyle değiştir" kalıbı — [FqsAALrRhj4 20. dk](https://www.youtube.com/watch?v=FqsAALrRhj4&t=1200) · `A-F #8` (raporda yok)
+- **Karar / satırlar:** K7, İ5, İ6 · B28, B43, REV #2/#6, B64.
+
+### 23. H7 — "Sonuç gelirse öde" ön büro (HİZMET)
+- **Mekanizma:** kendi CRM'imiz, WhatsApp Business ve politika sınırlı ajan: politika dışında kendi başına cevap vermez, her konuşma kayıtlı, ay sonunda müşteriyle mutabakat. Sesli resepsiyonist B12'de ses hızlanınca eklenir.
+- **Videodan gelen yöntemler:**
+  - Yapay zekâ resepsiyonist (telefonu açar, randevu alır) — [ytAW1_g2IfI 14:25](https://www.youtube.com/watch?v=ytAW1_g2IfI&t=865), demo [JhyVSrQPVSg 30:27](https://www.youtube.com/watch?v=JhyVSrQPVSg&t=1827) · `T-O M5`, `T-F 2.5`; REV #7/#12
+  - Ölü aday canlandırma, randevu başına ücret — [hriu0irRcpE 09:55](https://www.youtube.com/watch?v=hriu0irRcpE&t=595), Avenox C [FqsAALrRhj4 56. dk](https://www.youtube.com/watch?v=FqsAALrRhj4&t=3360) · `T-O`, `T-F`; ücret biçimi İ4 (M#16)
+  - Müşteri destek botu — [hriu0irRcpE 21:23](https://www.youtube.com/watch?v=hriu0irRcpE&t=1283) · `T-O M14`, `T-F 4.6`; REV #7
+  - Bekleyen fırsat: B2B randevu ayarlama (K10)
+  - Sesli dikey platform (ör. emlak), dakika başı ücret — [oL2xB4DiXEo 06:05](https://www.youtube.com/watch?v=oL2xB4DiXEo&t=365) · `Y-O`, `Y-F Y2`; B12'deki gecikme çözülmeden satılmaz (raporda yok; REV #12)
+- **Karar / satırlar:** K10, İ4 · B12, B05, B64.
+
+### 24. H8 — Yerelleştirme ve dublaj (HİZMET)
+- **Mekanizma:** tek ürün, "kanalınız 11 dilde": konuşmacı ayırma, çeviri, klon sesi zamana oturtma, vokal ayırma, her dilde geri-transkript doğruluk ölçümü; müşterinin kendi sesi yazılı rızasıyla. Ses: Voice Studio ve Voicebox ikisi de sistemde, duruma göre biri, biri olmazsa öteki; ElevenLabs ücretli yedek (B12, VOICE_INTERACTION_SPEC §3.2).
+- **Videodan gelen yöntemler:**
+  - İçerik üreticisine dublaj: Avenox'un kendisi alıcı — [FqsAALrRhj4 56. dk](https://www.youtube.com/watch?v=FqsAALrRhj4&t=3360) · `A-O`, `A-F`
+  - Reklam filminin 11 dil sürümü — [GZtLsvklYBI](https://www.youtube.com/watch?v=GZtLsvklYBI) · `S-F §5 #3`
+  - Rızalı ses klonu ve tasarlanmış marka sesi — [GZtLsvklYBI 01:41](https://www.youtube.com/watch?v=GZtLsvklYBI&t=101) · `S-O §4`, `S-F §4`; `voice_identities`'te rıza alanı yok
+- **İlk deneme:** iki stüdyonun motorları kör dinlemede (Türkçe, Körfez Arapçası, İngilizce), 0 $, yarım gün.
+- **Karar / satırlar:** K8 (4 Eylül "videoda yapay ses yok" hükmü bu hat için açılsın mı) · B12, B43, B28 3.7.
+
+### 25. H9 — Dijital kadro kurulumu, eğitim ve danışmanlık (HİZMET)
+- **Mekanizma:** beş istasyon: ücretli keşif raporu (kapı açıcı) → kadro tasarımı (persona fabrikasından 3–5 çalışan) → kurulum (müşterinin sunucusuna yerel model ya da bizim motorumuz) → 30 gün devir ve eğitim → aylık bakım. Satılan şey holdingin kendi düzeni; kanıtı holdingin kendisi.
+- **Videodan gelen yöntemler:**
+  - Ajan kurulumu + aylık bakım; "50 $'lık yazılımı 500 $'lık hizmet olarak sat" — [FqsAALrRhj4 50. dk](https://www.youtube.com/watch?v=FqsAALrRhj4&t=3000), [oL2xB4DiXEo 02:43](https://www.youtube.com/watch?v=oL2xB4DiXEo&t=163) · `Y-O`, `Y-F Y1`; REV #15, #9; M#28 → K12
+  - Yerinde yerel model ("veriniz sizde kalır"; sağlık, telekom, sanayi) — [oL2xB4DiXEo 08:24](https://www.youtube.com/watch?v=oL2xB4DiXEo&t=504) · `Y-O Yöntem 1`, `Y-F Y3`
+  - Ücretli keşif / veri egemenliği denetimi — `oL2xB4DiXEo` · Avenox D
+  - Özel eğitilmiş uzman modeli API olarak kiralamak (kurulumun içinde; GPU kiralama hayır) — [oL2xB4DiXEo](https://www.youtube.com/watch?v=oL2xB4DiXEo) 12–13. dk · `Y-F Y3` (raporda yok; B34)
+  - Kurumsal "ikinci beyin" — [FqsAALrRhj4 32. dk](https://www.youtube.com/watch?v=FqsAALrRhj4&t=1920) · `A-O` (raporda yok; REV #9)
+  - Bekleyen fırsatlar: yapay zekâ danışmanlığı, GDPR denetimi, sunum tasarımı (K10)
+- **İlk deneme:** holdingin kendi kurulumu dış gözle paket (kılavuz + fiyat sayfası); yerel tezgâhta tek demo: Türkçe çağrı kaydı → özet → CRM notu; 0 $, 1 hafta.
+- **Karar / satırlar:** K10, K12 · B64 ("kurulum" iş tipi), B33/B34, B04.
+
+### 26. Sonra listesi — vakti daha uzak
+- **Kendi ürün markası** (stoklu, malın sahibi olarak; önce bekleme listesi, Kickstarter ön satışı) — [OxQ47jXQApk 04:34](https://www.youtube.com/watch?v=OxQ47jXQApk&t=274) · `Y-O Yöntem A`, `Y-F Y7`. Neden sonra: sermaye sınırı 0, kitle yok; kanal hattından sonra.
+- **Emlak fırsat masası** (piyasanın altındaki ilanı yatırımcıya bulma ücreti) — [OxQ47jXQApk 15:23](https://www.youtube.com/watch?v=OxQ47jXQApk&t=923) · `Y-O`, `Y-F`; M#22. Neden sonra: yatırımcı ağı ve aracılık kaydı ister; Körfez ev sahası olarak.
+- **Konsinye ve ölü stok satışı** — [JhyVSrQPVSg 14:12](https://www.youtube.com/watch?v=JhyVSrQPVSg&t=852), [OxQ47jXQApk 08:15](https://www.youtube.com/watch?v=OxQ47jXQApk&t=495) · `K-O 1.2`, `K-F V1-B`. Neden sonra: fiziksel eşya ister, ölçeğe küçük.
+- **Teklif toplama ajanı** — [JhyVSrQPVSg 01:50](https://www.youtube.com/watch?v=JhyVSrQPVSg&t=110) · `K-O 1.1`, `K-F V1-A`. Gelir değil tasarruf: holdingin kendi alımlarında.
+- **Yapay zekâ ile uygulama / SaaS** — [ytAW1_g2IfI 22:29](https://www.youtube.com/watch?v=ytAW1_g2IfI&t=1349), [FqsAALrRhj4 28. dk](https://www.youtube.com/watch?v=FqsAALrRhj4&t=1680) · `T-O M7`, `T-F 2.7`; Rapor 1 E. Ajanı ürünleştirmek (tazminat bulucu, telefonla hatırlatıcı) — [JhyVSrQPVSg 38:31](https://www.youtube.com/watch?v=JhyVSrQPVSg&t=2311) · `K-O 1.6`.
+
+### Hükmü CEO'da bekleyenler (Rapor 2 §8)
+İ1 seçemediğimiz reklam · İ2 dropshipping ([ytAW1_g2IfI 11:02](https://www.youtube.com/watch?v=ytAW1_g2IfI&t=662), [JhyVSrQPVSg 19:02](https://www.youtube.com/watch?v=JhyVSrQPVSg&t=1142); öneri hayır) · İ3 affiliate ([FqsAALrRhj4 42. dk](https://www.youtube.com/watch?v=FqsAALrRhj4&t=2520), [LlhTEttKcwQ 24:16](https://www.youtube.com/watch?v=LlhTEttKcwQ&t=1456); öneri yalnız onaylı tek helal ürün) · İ4 randevu başına ücret · İ5 yapay zekâ etiketi · İ6 ücretsiz örnek · İ7 çizgi insan ve hayvan.
+
+### Geçmeyenler — tekrar önerilmez
+Klip pazaryeri (Content Rewards: kripto kumar ve müstehcen kampanyalar; [ytAW1_g2IfI 00:27](https://www.youtube.com/watch?v=ytAW1_g2IfI&t=27), `T-O M1`) · borsa, kripto, faizli krediyle mağaza, ticari gayrimenkul (`Y-F Y9`, `A-F`) · müstehcen dizinler · ücretli backlink (M#11) · kendini firma gibi gösteren site ve sahte işletme profili (M#10) · sahte tanıklıklı reklam ve gizlenen yapaylıkla influencer (`T-O M13`, `T-F 2.6`) · sağlık iddialı karakter ürünü · ünlü/rakip sesinin klonu (`S-F §4.1`) · dışa ulaşmada sahte talep formu ve kişisel telefon (`K-O 1.5`) · müzik (18 Ekim hükmü, M#7).
