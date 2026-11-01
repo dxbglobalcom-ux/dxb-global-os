@@ -73,7 +73,7 @@ Two spoken shapes, one pipeline: (a) "Beni bu işin ustasına bağla" — he tal
 
 ### 3.2 Voice supply
 
-Each master voice = one voicebox cloned profile (reference audio → stable voice). Hamza's voice = the flagship clone, chosen once by the CEO from generated candidates, then frozen (Talep §5.10 stability). Turkish output via Chatterbox Multilingual engine; English supported by the same profile. Registry (`voice_identities`) maps agent → engine + profile ref, so voices survive model changes (V7).
+Each master voice = one cloned profile in one of the two voice studios below (reference audio → stable voice). Hamza's voice = the flagship clone, chosen once by the CEO from generated candidates, then frozen (Talep §5.10 stability); when the layer moves a voice to the other studio, the same reference audio keeps it the same voice. Turkish output through the engine measured best for it — today Voicebox's Chatterbox Multilingual, Voice Studio's engines tested beside it. Registry (`voice_identities`) maps agent → studio + engine + profile ref, so voices survive model changes (V7).
 
 > **Registered adaptation 2026-11-01 (his order, in-chat) <!-- CEO-OK: voice-studio-and-voicebox-both-in-the-system-2026-11-01 -->:** two voice studios, one voice
 > layer. Voice Studio (`debpalash/VoiceStudio` — about nineteen engines: OmniVoice, VoxCPM2, IndexTTS, CosyVoice,

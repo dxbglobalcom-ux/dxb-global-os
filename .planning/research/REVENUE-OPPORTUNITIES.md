@@ -121,6 +121,7 @@
 
 > **Ne bu bölüm:** CEO'nun 1 Kasım'da izletip analiz ettirdiği 12 videodan çıkan bütün para yöntemleri; hiçbiri şimdi yapılmıyor, vakti gelince yapılsın diye burada duruyor. Dokuz hat (#17–#25), sonra listesi (#26), hükmünü bekleyenler ve geçmeyenler. Yapım sırası tahtanın yeniden dizilişinde konur; hatların kararları Rapor 2 §8'de (K1–K12, İ1–İ7, P1).
 > **Kural (CEO, 2026-11-01):** her hat, temelini kuran tahta satırıyla birlikte kurulur ve tezgâhta denenir; satışa holdingin anahtarı çevrilince açılır. Rapor 2'nin "şimdi deneme" maddeleri bu tezgâh denemesine kaydı. Sahibi olmayan beş hat (H1, H2, H3, H4'ün gelir tarafı, H7) ve gelir motoru tahtada **B83**'te; diğer hatlar kendi satırlarında not olarak durur (B04, B05, B12, B28, B33, B34, B43, B64, C41).
+> **Pazar tek ülke değil (CEO, 2026-11-01):** Almanya, Körfez, Avrupa ve her yer; TL rakamları yalnız Türkiye pazarının fiyat çapasıdır.
 > **İz — kafası karışan buraya gider:**
 > - Rapor: `~/Desktop/Gelir Kaynakları/2 - Gelir üretim hatları ve kararlarınız 2026-11-01.pdf` (kaynağı `W/rapor2.html`)
 > - `W` = `.planning/research/watch-links/2026-11-01-gelir/` — hakem kararları `W/MERGE.md` (M#n), video satırları `W/rows/merged.jsonl`, okuyucu analizleri `W/readers/<grup>-<opus|fable>.md`
@@ -205,7 +206,7 @@
   - Müşteri destek botu — [hriu0irRcpE 21:23](https://www.youtube.com/watch?v=hriu0irRcpE&t=1283) · `T-O M14`, `T-F 4.6`; REV #7
   - Bekleyen fırsat: B2B randevu ayarlama (K10)
   - Sesli dikey platform (ör. emlak), dakika başı ücret — [oL2xB4DiXEo 06:05](https://www.youtube.com/watch?v=oL2xB4DiXEo&t=365) · `Y-O`, `Y-F Y2`; B12'deki gecikme çözülmeden satılmaz (raporda yok; REV #12)
-- **Karar / satırlar:** K10, İ4 · **B83**, B64 (karşılama masası), B12, B05.
+- **Karar / satırlar:** K10, İ4 · **B83** (müşteriye kurulan ön büro), B64 (kurulum ve bakım işlerinin holding içindeki yönlendirmesi), B12, B05.
 
 ### 24. H8 — Yerelleştirme ve dublaj (HİZMET)
 - **Mekanizma:** tek ürün, "kanalınız 11 dilde": konuşmacı ayırma, çeviri, klon sesi zamana oturtma, vokal ayırma, her dilde geri-transkript doğruluk ölçümü; müşterinin kendi sesi yazılı rızasıyla. Ses: Voice Studio ve Voicebox ikisi de sistemde, duruma göre biri, biri olmazsa öteki; ElevenLabs ücretli yedek (B12, VOICE_INTERACTION_SPEC §3.2).
@@ -219,7 +220,7 @@
 ### 25. H9 — Dijital kadro kurulumu, eğitim ve danışmanlık (HİZMET)
 - **Mekanizma:** beş istasyon: ücretli keşif raporu (kapı açıcı) → kadro tasarımı (persona fabrikasından 3–5 çalışan) → kurulum (müşterinin sunucusuna yerel model ya da bizim motorumuz) → 30 gün devir ve eğitim → aylık bakım. Satılan şey holdingin kendi düzeni; kanıtı holdingin kendisi.
 - **Videodan gelen yöntemler:**
-  - Ajan kurulumu + aylık bakım; "50 $'lık yazılımı 500 $'lık hizmet olarak sat" — [FqsAALrRhj4 50. dk](https://www.youtube.com/watch?v=FqsAALrRhj4&t=3000), [oL2xB4DiXEo 02:43](https://www.youtube.com/watch?v=oL2xB4DiXEo&t=163) · `Y-O`, `Y-F Y1`; REV #15, #9; M#28 → K12
+  - Ajan kurulumu + aylık bakım; "50 $'lık yazılımı 500 $'lık hizmet olarak sat" — [FqsAALrRhj4 58. dk](https://www.youtube.com/watch?v=FqsAALrRhj4&t=3480), [oL2xB4DiXEo 02:43](https://www.youtube.com/watch?v=oL2xB4DiXEo&t=163) · `Y-O`, `Y-F Y1`; REV #15, #9; M#28 → K12
   - Yerinde yerel model ("veriniz sizde kalır"; sağlık, telekom, sanayi) — [oL2xB4DiXEo 08:24](https://www.youtube.com/watch?v=oL2xB4DiXEo&t=504) · `Y-O Yöntem 1`, `Y-F Y3`
   - Ücretli keşif / veri egemenliği denetimi — `oL2xB4DiXEo` · Avenox D
   - Özel eğitilmiş uzman modeli API olarak kiralamak (kurulumun içinde; GPU kiralama hayır) — [oL2xB4DiXEo](https://www.youtube.com/watch?v=oL2xB4DiXEo) 12–13. dk · `Y-F Y3` (raporda yok; B34)
@@ -232,7 +233,7 @@
 - **Kendi ürün markası** (stoklu, malın sahibi olarak; önce bekleme listesi, Kickstarter ön satışı) — [OxQ47jXQApk 04:34](https://www.youtube.com/watch?v=OxQ47jXQApk&t=274) · `Y-O Yöntem A`, `Y-F Y7`. Neden sonra: sermaye sınırı 0, kitle yok; kanal hattından sonra.
 - **Emlak fırsat masası** (piyasanın altındaki ilanı yatırımcıya bulma ücreti) — [OxQ47jXQApk 15:23](https://www.youtube.com/watch?v=OxQ47jXQApk&t=923) · `Y-O`, `Y-F`; M#22. Neden sonra: yatırımcı ağı ve aracılık kaydı ister; Körfez ev sahası olarak.
 - **Konsinye ve ölü stok satışı** — [JhyVSrQPVSg 14:12](https://www.youtube.com/watch?v=JhyVSrQPVSg&t=852), [OxQ47jXQApk 08:15](https://www.youtube.com/watch?v=OxQ47jXQApk&t=495) · `K-O 1.2`, `K-F V1-B`. Neden sonra: fiziksel eşya ister, ölçeğe küçük.
-- **Teklif toplama ajanı** — [JhyVSrQPVSg 01:50](https://www.youtube.com/watch?v=JhyVSrQPVSg&t=110) · `K-O 1.1`, `K-F V1-A`. Gelir değil tasarruf: holdingin kendi alımlarında.
+- **Teklif toplama ajanı** — [JhyVSrQPVSg 01:50](https://www.youtube.com/watch?v=JhyVSrQPVSg&t=110) · `K-O 1.1`, `K-F V1-A`. İki biçimi var: holdingin kendi alımlarında tasarruf; ve müşteri adına teklif toplama danışmanlığı, %3–6 ya da sabit ücretle. Neden sonra: müşteri ağı ve sektör bilgisi ister.
 - **Yapay zekâ ile uygulama / SaaS** — [ytAW1_g2IfI 22:29](https://www.youtube.com/watch?v=ytAW1_g2IfI&t=1349), [FqsAALrRhj4 28. dk](https://www.youtube.com/watch?v=FqsAALrRhj4&t=1680) · `T-O M7`, `T-F 2.7`; Rapor 1 E. Ajanı ürünleştirmek (tazminat bulucu, telefonla hatırlatıcı) — [JhyVSrQPVSg 38:31](https://www.youtube.com/watch?v=JhyVSrQPVSg&t=2311) · `K-O 1.6`.
 
 ### Hükmü CEO'da bekleyenler (Rapor 2 §8)

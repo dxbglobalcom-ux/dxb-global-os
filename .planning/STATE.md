@@ -86,7 +86,7 @@ Earlier days: `.planning/STATE-ARCHIVE.md` § "Moved out of STATE.md on 2026-11-
 - Revenue, Rapor 2 (`~/Desktop/Gelir Kaynakları/2 - Gelir üretim hatları ve kararlarınız 2026-11-01.pdf`, § 8):
   K2, K8, K9, K10, K11 and the halal questions İ1–İ7 (K1 and K6 answered; K3–K5, K7, K12 and P1 moved to each
   line's bench test, B83). Also asked: whether his 1 Nov licence word becomes a standing rule beyond the memory
-  note; one Sol pass over the day's spec and ledger commits (recommended).
+  note.
 - The web office, five questions (report § 9 and file 4): the name DxB Global Web-Studio; the general site master and
   core team written now (C41's first slice, ahead of its turn); the next trial on the Mavi Kuşak brief now; the 213
   personas read and marked for the web office by helpers; Y9 (client finding) and Y11 (the holding's own site) joined

@@ -261,7 +261,7 @@ Reverse order drops; FK swap rollback = restore CHECK from engines snapshot (`SE
 3. **R1.3** cycle jobs + scoring + settings seed → `SELECT name FROM pgboss.schedule WHERE name LIKE 'revenue%';` → 4 rows; manual `SELECT control_opportunity_score(...)` returns dims.
 4. **R1.4** dashboard 4 surfaces → Playwright route proofs + i18n purity + RULE #0 evidence set.
 5. **R1.5** hook policy + halal screen wiring → hook test: flagged task rejected + decision_log row.
-6. Objective seed (draft €50) → `SELECT status,amount_eur FROM objectives;` → `draft | 50`.
+6. No seeded objective (G6): a target enters only through the objective door (§7bis), on his click.
 
 ## 25. Dependencies
 
