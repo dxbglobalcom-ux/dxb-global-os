@@ -40,17 +40,19 @@ incelemeleri". Voicebox is unused, not weak (0 profiles); Hamza speaks Piper on 
 treated as licensed (never raised again) is in memory. The July €50 objective is void on his word and
 left D2, MASTER_PLAN, REVENUE_ENGINE_SPEC G6 and the board; no fixed figure replaces it. His voice order: Voice
 Studio and Voicebox both installed in the system and tested, used by situation, one covering for the other —
-written into B12 (B43 links it) and VOICE_INTERACTION_SPEC §3.2.
+written into B12 (B43 links it) and VOICE_INTERACTION_SPEC §3.2. The same evening, on his word: every revenue path
+of the twelve videos is in the revenue list (REVENUE-OPPORTUNITIES §D, #17–#26, each with its source trace); a line
+is built with the row that builds its base, tested on the bench, and opens for sale when the key is turned — the
+nine related rows carry the note, and the five lines no row owns plus the revenue engine are the new row B83
+(REVENUE_ENGINE_SPEC §7septies). The channel talk stays later.
 2026-10-29 — His Mavi Kuşak trial is judged (arm A far ahead, 330 $; arm C a disappointment, 37 $); the web office
 plan talk is open — analysis, five questions and the proposal in `~/Desktop/DxB Global Web-Studio/`.
 Earlier days: `.planning/STATE-ARCHIVE.md` § "Moved out of STATE.md on 2026-11-01".
 
 ## Next
 
-0. Revenue — his answers to Rapor 2's decisions (§ 8). On his yes to a line: its plan by two sealed writers and Sol's
-   blind audit (dxb-team2, max), a registered adaptation in REVENUE_ENGINE_SPEC, one board row linking B05, B17, B28,
-   B43, B64, W-C42-6, C41, B12, B41, B04; wave-1 tests (~100 $ money out) inside the gate. Time-bound: YouTube's
-   entry threshold doubles on 2027-02-01 (K6).
+0. Revenue — the lines are on the board (B83 and the notes on its nine related rows); each is built at its row's rank
+   in the board's reorder and bench-tested with it, sold when the key is turned. His open Rapor 2 decisions below.
 1. The web office plan talk (dxb-team2, max), from `~/Desktop/DxB Global Web-Studio/`: his answers to the five
    questions below; then the plan by two sealed writers and Sol's blind audit, once to him. A27's rule on when a
    master splits work waits for the next trial run with the holding's own setup.
@@ -58,7 +60,7 @@ Earlier days: `.planning/STATE-ARCHIVE.md` § "Moved out of STATE.md on 2026-11-
    studio, skills and tools; the job-type masters' personas are one leg of it.
 3. The studio platform-hub plan is approved with his corrections and on the board (B43; FINAL.md Bölüm 0): built at its
    rank — accounts connected and infrastructure only, no money loaded, no exam now; its first step raises the server's
-   LiteLLM pin (`vps/compose.yaml`, 1.91.0) to ≥ 1.97.0. The channels are a separate study, talked before January 2027 (Rapor 2 K6 asks to pull it forward).
+   LiteLLM pin (`vps/compose.yaml`, 1.91.0) to ≥ 1.97.0. The channels are a separate study, talked later (his word, 2026-11-01).
 4. The Gözlem Odası (B82): the plan has his eye; the build when the factory fully starts — step 1, the X gate, is in.
 5. The studio retest, when its turn comes (the machine rebooted 2026-10-19 07:38, the card works again). In the factory
    with the Media Studio's staff: ScrollCraft's clip through H3 image-less at 8 steps, saved at a high quality (the
@@ -82,8 +84,9 @@ Earlier days: `.planning/STATE-ARCHIVE.md` § "Moved out of STATE.md on 2026-11-
 ## Waiting on his approval
 
 - Revenue, Rapor 2 (`~/Desktop/Gelir Kaynakları/2 - Gelir üretim hatları ve kararlarınız 2026-11-01.pdf`, § 8):
-  K1–K12, the halal questions İ1–İ7, P1 (~100 $ for the first tests); "önerdiğin gibi" answers all. Also asked in
-  one line: whether his 1 Nov licence word becomes a standing rule beyond the memory note.
+  K2, K8, K9, K10, K11 and the halal questions İ1–İ7 (K1 and K6 answered; K3–K5, K7, K12 and P1 moved to each
+  line's bench test, B83). Also asked: whether his 1 Nov licence word becomes a standing rule beyond the memory
+  note; one Sol pass over the day's spec and ledger commits (recommended).
 - The web office, five questions (report § 9 and file 4): the name DxB Global Web-Studio; the general site master and
   core team written now (C41's first slice, ahead of its turn); the next trial on the Mavi Kuşak brief now; the 213
   personas read and marked for the web office by helpers; Y9 (client finding) and Y11 (the holding's own site) joined

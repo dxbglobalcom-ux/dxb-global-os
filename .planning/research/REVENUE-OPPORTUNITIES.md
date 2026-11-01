@@ -120,6 +120,7 @@
 ## D. Kasım 1 videolarından gelir yolları (2026-11-01) — vakti gelince yapılır
 
 > **Ne bu bölüm:** CEO'nun 1 Kasım'da izletip analiz ettirdiği 12 videodan çıkan bütün para yöntemleri; hiçbiri şimdi yapılmıyor, vakti gelince yapılsın diye burada duruyor. Dokuz hat (#17–#25), sonra listesi (#26), hükmünü bekleyenler ve geçmeyenler. Yapım sırası tahtanın yeniden dizilişinde konur; hatların kararları Rapor 2 §8'de (K1–K12, İ1–İ7, P1).
+> **Kural (CEO, 2026-11-01):** her hat, temelini kuran tahta satırıyla birlikte kurulur ve tezgâhta denenir; satışa holdingin anahtarı çevrilince açılır. Rapor 2'nin "şimdi deneme" maddeleri bu tezgâh denemesine kaydı. Sahibi olmayan beş hat (H1, H2, H3, H4'ün gelir tarafı, H7) ve gelir motoru tahtada **B83**'te; diğer hatlar kendi satırlarında not olarak durur (B04, B05, B12, B28, B33, B34, B43, B64, C41).
 > **İz — kafası karışan buraya gider:**
 > - Rapor: `~/Desktop/Gelir Kaynakları/2 - Gelir üretim hatları ve kararlarınız 2026-11-01.pdf` (kaynağı `W/rapor2.html`)
 > - `W` = `.planning/research/watch-links/2026-11-01-gelir/` — hakem kararları `W/MERGE.md` (M#n), video satırları `W/rows/merged.jsonl`, okuyucu analizleri `W/readers/<grup>-<opus|fable>.md`
@@ -133,7 +134,7 @@
   - Fiyat seçeneği: arama başına ücret ya da %10 komisyon — [xUZYy3hCRUM 14:33](https://www.youtube.com/watch?v=xUZYy3hCRUM&t=873) · `K-O 3.2` (raporda yok)
 - **Helal:** kira ve komisyon geçer; kendini firma gibi gösteren site ve ücretli backlink geçmez (M#10, M#11).
 - **İlk deneme:** 2 site, İngilizce pazar, helal niş, 90 gün; ~22 $ alan adı, takip numarası, DataForSEO 50 $ (P1).
-- **Karar / satırlar:** K3, P1 · sahipsiz; en yakın W-C42-6, B28, Y9.
+- **Karar / satırlar:** K3, P1 · **B83**; ayrıca B05 (kira tahsilatı).
 
 ### 18. H2 — Niş dizinler, kimsenin elinde olmayan veriyle (VARLIK)
 - **Mekanizma:** tek konulu dizin; nişi veri seçer, veri ajanlarla toplanıp her hafta tazelenir (fiyat, saat, Türkçe konuşan personel, helal sertifikası). Holdinge yakışan nişler: Avrupa'da helal restoran/kasap, Almanya'da Türkçe konuşan hekim/avukat, cami etkinlikleri; yanında saf ticari nişler. Dizindeki işletmeler H5 ve H7'nin adayıdır.
@@ -145,7 +146,7 @@
   - Çıkış: dizini varlık olarak satmak (yıllık gelirin ~3 katı) — [34:21](https://www.youtube.com/watch?v=-u0JuVUdPQA&t=2061) · `K-O 2.5` (raporda yok)
   - Dizin verisini abonelikle satmak (ayda 50 $) — [10:23](https://www.youtube.com/watch?v=-u0JuVUdPQA&t=623) · okuyucular ayrıldı: `K-O 2.3` kamuya açık/izinli veriyse geçer, `K-F V2-D` kişisel veri AB/TR'de geçmez; hakem kararı yok, yapılırsa yalnız kişisel olmayan veriyle.
 - **İlk deneme:** masa başında 10 niş puanı (0 $, 1 gün), en iyisinde 1 dizin, 90 gün.
-- **Karar / satırlar:** K4, İ1, İ3 · sahipsiz; en yakın REV #1/#4.
+- **Karar / satırlar:** K4, İ1, İ3 · **B83**; en yakın REV #1/#4.
 
 ### 19. H3 — Dijital ürün atölyesi ve mağaza (VARLIK)
 - **Mekanizma:** holdingin her gün ürettiği araştırma ürüne çevrilir: araştırma masası yazar, Sol doğrular, stüdyo tasarlar, 11 dilde çıkar. Satış verisi bir sonraki ürünü seçer; 30 günde satmayan kapanır. Mağaza: Stan (29 $/ay) ya da vergiyi üstlenen mağaza (Lemon Squeezy, Gumroad); vergiyi üstlenen mağaza B05 çözülmeden tahsilatı açar (M#6). CEO'nun 31 Ekim notunun iki maddesi bu hat.
@@ -160,7 +161,7 @@
   - AI Twin: karakterin abonelikli sohbet botu — `T-O` (raporda yok; İ5'e bağlı)
   - URL/Media ve Stan Referral: başkasının ürünü — hüküm İ3
 - **İlk deneme:** DxB markasıyla 3 ürün (yerel aday sitesi oyun kitabı, "yapay zekâ çalışanıyla ilk 30 gün", Ramazan planlayıcısı) + bir mağaza hesabı (kimlik adımı, CEO'nun tıkı), 30 gün.
-- **Karar / satırlar:** K5, İ3 · mağaza sahipsiz; yüz B43 §4-E, ödeme B05, mağaza W-C42-6, kurs B04.
+- **Karar / satırlar:** K5, İ3 · atölye ve mağaza **B83**; yüz B43 §4-E, ödeme B05, mağaza W-C42-6, kurs B04.
 
 ### 20. H4 — Holdingin kendi kanalları: kanal fabrikası (VARLIK)
 - **Mekanizma:** saatle dönen dokuz istasyon: niş istihbaratı (her dilde kanal normalinin 3 katı izlenen videolar) → tarz analizi ve özgün senaryo → kanalın görsel kitabı → yerel kartta gece üretim (0 $) → anlatım → zaman damgasından otomatik montaj → kalite kapısı (ilk 3 video CEO'nun gözüne) → zamanlı yayın → 7. gün ölçümü. Çok dilli ses izi: her dil yeni pazar. Kollar: DxB markalı kanal, yüzsüz niş kanallar, sanal sunucu (B43).
@@ -173,7 +174,7 @@
   - Niş istihbarat motorunu (outlier puanı) veri aboneliği olarak satmak — [HN_1kEGNu3Y 01:27](https://www.youtube.com/watch?v=HN_1kEGNu3Y&t=87) · `Y-O` "ileride" (raporda yok; REV #4 ile)
 - **Zaman:** 1 Şubat 2027'den sonra YouTube programına giriş 8.000 izlenme saati (bugün 4.000); önce giren etkilenmez (`.planning/research/R5-youtube-ai-rules-and-risks.md` satır 13).
 - **İlk deneme:** kanal açmadan tek pilot video (8 dk, İngilizce eğitim ya da tarih), uçtan uca fabrikadan, 0 $, 1 hafta.
-- **Karar / satırlar:** K6, K8, İ1, İ5, İ7 · B43 (beş kararı 25 Eylül'den beri bekliyor), B28, C41; `content_monetization` motoru sahipsiz.
+- **Karar / satırlar:** K6, K8, İ1, İ5, İ7 · gelir tarafı (`content_monetization` motoru) **B83**; üretim B43 (beş kararı 25 Eylül'den beri bekliyor), kart B33, anlatım B12; B28, C41. K6: kanal konuşması sonra (CEO, 2026-11-01).
 
 ### 21. H5 — Web ofisi: premium site + aylık bakım + dışa ulaşma makinesi (HİZMET)
 - **Mekanizma:** web ofisi planı (`~/Desktop/DxB Global Web-Studio/`, beş soru CEO'da). Hat ancak aylık bakım + ölçüm raporu paketiyle ve orta boy müşteriyle yaşar; yerel işletme tek seferlik siteye birkaç yüz dolar öder.
@@ -204,7 +205,7 @@
   - Müşteri destek botu — [hriu0irRcpE 21:23](https://www.youtube.com/watch?v=hriu0irRcpE&t=1283) · `T-O M14`, `T-F 4.6`; REV #7
   - Bekleyen fırsat: B2B randevu ayarlama (K10)
   - Sesli dikey platform (ör. emlak), dakika başı ücret — [oL2xB4DiXEo 06:05](https://www.youtube.com/watch?v=oL2xB4DiXEo&t=365) · `Y-O`, `Y-F Y2`; B12'deki gecikme çözülmeden satılmaz (raporda yok; REV #12)
-- **Karar / satırlar:** K10, İ4 · B12, B05, B64.
+- **Karar / satırlar:** K10, İ4 · **B83**, B64 (karşılama masası), B12, B05.
 
 ### 24. H8 — Yerelleştirme ve dublaj (HİZMET)
 - **Mekanizma:** tek ürün, "kanalınız 11 dilde": konuşmacı ayırma, çeviri, klon sesi zamana oturtma, vokal ayırma, her dilde geri-transkript doğruluk ölçümü; müşterinin kendi sesi yazılı rızasıyla. Ses: Voice Studio ve Voicebox ikisi de sistemde, duruma göre biri, biri olmazsa öteki; ElevenLabs ücretli yedek (B12, VOICE_INTERACTION_SPEC §3.2).
