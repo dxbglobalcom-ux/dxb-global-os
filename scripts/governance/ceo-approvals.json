@@ -2969,12 +2969,13 @@
     "where": "HOLDING-OS-MASTER-PLAN/COST_CONTROL_SPEC.md A7 · OBSERVABILITY_SPEC.md · RISK_REGISTER.md",
     "verbatim_2": "Yani zaten bu Max planının iki şeyi var. Biri 107 dolarlık, biri de diğer iki katı. Hani 20x'lik olanı var. Bu 5x'lik. 20x'lik de günlük zaten 20x kota veriyor. O yüzden onun yeteceğini düşünüyorum. O aboneliğe geçeriz. Eğer iş fazla gelirse."
   },
-  "revenue-target-500k-eur-2026-11-01": {
+  "fifty-euro-objective-void-no-fixed-figure-2026-11-01": {
     "date": "2026-11-01",
-    "what": "The holding's current target is €500,000. The €50 net-profit first objective of 2026-07-17 (directive D2) is void and is never used as a basis for an analysis, a plan or a sizing; the €50 draft row in the company database predates this word.",
+    "what": "The €50 net-profit first objective of 2026-07-17 (directive D2) is void and is never a basis for an analysis, a plan or a sizing. No fixed figure replaces it: a sum he names to show scale is an illustration, not a target.",
     "verbatim": "Ya bizim 50 euro şeyimiz yok ya. O öylesine çok eskide kalmış bir şey. Onu baz alıp şey yapmayın ha. Analiz yapmayın. Ya 50 euro değil ya. 500 bin euro aslında şu anki hedef.",
-    "conditions": "Said after reading Rapor 2's measured line 'tek hedef €50 net, taslak'. The period (monthly or yearly) and the measure (net profit or revenue) were asked of him the same day; the target enters the company through the objective door on his click.",
+    "verbatim_2": "Ben onu öylesine söyledim ya. 500 bin de olur, 5 milyar euro da olur yani, fark etmez.",
+    "conditions": "The first sentence was recorded the same day as a €500,000 target in four records; his second sentence corrected it within the hour and that wording was removed (LAW A). The €50 draft row in the company database predates this word and is not a basis; a target enters through the objective door on his click.",
     "session": "Opus 5.5 session 060d89e4 — heard first-hand, 2026-11-01.",
-    "where": "HOLDING-OS-MASTER-PLAN/00-CEO-DIRECTIVE-REVENUE-FIRST.md D2 · MASTER_PLAN.md §1 item 2 · REVENUE_ENGINE_SPEC.md G6 · 00-BOARD-OPEN-WORK.md (THE FERRARI) · ~/Desktop/Gelir Kaynakları/ Rapor 2"
+    "where": "HOLDING-OS-MASTER-PLAN/00-CEO-DIRECTIVE-REVENUE-FIRST.md D2 · MASTER_PLAN.md §1 item 2 · REVENUE_ENGINE_SPEC.md G6"
   }
 }

@@ -84,3 +84,13 @@ proposal in turbo/kararlar.jsonl, not his approval.
     animalaftercare.com: 28.6K clicks / 1.62M impressions in 16 months; pool sheet ≥47 firms, 7 quotes
     130K-190K $; tier board A: repurposing, ad creatives · B: real-estate content, lead reactivation, support ·
     B/C: website makeovers.
+
+## Round 3 — his two corrections the same evening
+
+30. **The target figure.** He said the July €50 is void and "500 bin euro aslında şu anki hedef"; recorded as a
+    €500,000 target in four records, then corrected by him within the hour: "500 bin de olur, 5 milyar euro da
+    olur … fark etmez". CALL: the €50 stays void, no fixed figure replaces it; the 500k wording removed (LAW A);
+    ledger key fifty-euro-objective-void-no-fixed-figure-2026-11-01 carries both sentences.
+31. **Voice Studio, not Voicebox.** He asked about Voice Studio; the report had steered the test to Voicebox's
+    engines plus a separately installed VoxCPM2, though VoxCPM2 ships inside Voice Studio and the licence reason
+    against Voice Studio was gone. CALL: install Voice Studio in Voicebox's place (K8), blind test inside it.
