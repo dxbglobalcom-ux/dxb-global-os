@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<title>Gelir Üretim Hatları — Rapor 2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #14181f; --muted: #5b6472; --line: #d9dde3; --soft: #f3f5f8; --accent: #8a1c1c;
+    --gold: #a07a2c; --ok: #1f6b45; --warn: #9a5b00;
+  }
+  @page { size: A4; margin: 15mm 15mm 16mm 15mm; }
+  * { box-sizing: border-box; }
+  html, body { background: #fff; }
+  body { font-family: "Inter", "Noto Sans", "DejaVu Sans", sans-serif; color: var(--ink); font-size: 9.6pt; line-height: 1.45; margin: 0; }
+  .kicker { letter-spacing: .32em; font-size: 7.6pt; color: var(--muted); text-transform: uppercase; border-bottom: 1px solid var(--line); padding-bottom: 6px; }
+  h1 { font-family: "Source Serif 4", Georgia, serif; font-size: 25pt; line-height: 1.12; margin: 16px 0 6px; letter-spacing: -.01em; }
+  .sub { color: var(--muted); font-size: 10pt; margin-bottom: 14px; }
+  h2 { font-family: "Source Serif 4", Georgia, serif; font-size: 14.5pt; margin: 20px 0 6px; padding-top: 4px; border-top: 2px solid var(--ink); break-after: avoid; }
+  h2 .n { color: var(--accent); margin-right: 6px; }
+  h3 { font-size: 10.6pt; margin: 14px 0 4px; break-after: avoid; }
+  h3 .tag { font-size: 7.6pt; font-weight: 600; letter-spacing: .06em; padding: 1px 6px; border-radius: 3px; margin-left: 6px; vertical-align: 1px; }
+  .varlik { background: #e7f1ec; color: var(--ok); }
+  .hizmet { background: #f6efe2; color: var(--warn); }
+  p { margin: 4px 0 6px; }
+  .box { background: var(--soft); border-left: 3px solid var(--accent); padding: 9px 12px; margin: 10px 0; }
+  .box p { margin: 3px 0; }
+  ul { margin: 4px 0 6px 0; padding-left: 16px; }
+  li { margin: 2px 0; }
+  table { width: 100%; border-collapse: collapse; margin: 6px 0 10px; font-size: 8.7pt; }
+  th { text-align: left; font-weight: 600; background: var(--soft); border-bottom: 1px solid var(--ink); padding: 4px 6px; vertical-align: bottom; }
+  td { border-bottom: 1px solid var(--line); padding: 4px 6px; vertical-align: top; }
+  tr { break-inside: avoid; }
+  .flow { display: flex; flex-wrap: wrap; gap: 4px; align-items: stretch; margin: 8px 0 4px; }
+  .st { flex: 1 1 0; min-width: 0; border: 1px solid var(--line); border-top: 3px solid var(--ink); padding: 5px 6px; font-size: 7.9pt; background: #fff; }
+  .st b { display: block; font-size: 8.4pt; margin-bottom: 2px; }
+  .loop { font-size: 8pt; color: var(--muted); text-align: center; margin-bottom: 8px; }
+  .line { border: 1px solid var(--line); padding: 8px 10px 6px; margin: 8px 0; }
+  .kv dt, .kv dd { break-inside: avoid; }
+  .line h3 { margin-top: 0; }
+  .kv { display: grid; grid-template-columns: 92px 1fr; gap: 2px 10px; }
+  .kv dt { color: var(--muted); font-weight: 600; font-size: 8.4pt; }
+  .kv dd { margin: 0; }
+  .q { font-weight: 600; color: var(--accent); }
+  .dec td:first-child { font-weight: 700; white-space: nowrap; }
+  .rec { color: var(--ok); font-weight: 600; white-space: nowrap; }
+  .small { font-size: 8pt; color: var(--muted); }
+  .two { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .claim { color: var(--warn); font-weight: 600; }
+  .pb { break-before: page; }
+</style>
+</head>
+<body>
+
+<div class="kicker">DXB Global Holding · Gelir Kaynakları · Rapor 2</div>
+<h1>Gelir Üretim Hatları</h1>
+<div class="sub">On iki video, holdingin bugünkü gelir motoru, dokuz hattın Ferrari hâli ve sizden beklenen kararlar · 1 Kasım 2026</div>
+
+<div class="box">
+  <p><b>Kısaca.</b> Holdingin gelir motoru kâğıtta var, sahada yok: şartnamesi yazılı, kodu kısmen kurulu; bugün gelir defterinde 0 satır, iş akışı motorunda 0 akış var, tek hedef taslakta duruyor ve 5 fırsat 26 Temmuz'dan beri helal kararınızı bekliyor.</p>
+  <p>Videoların ortak ve ölçülebilen dersi şu: para, işi yapan makineye, müşteriye ve dağıtıma sahip olana akar. Makine bizde; müşteri ve dağıtım henüz yok.</p>
+  <p><b>Önerim:</b> dokuz gelir üretim hattı, iki aile. <b>Varlık hatları</b> (kendi yerel sitelerimiz, niş dizinlerimiz, dijital ürünlerimiz, kanallarımız) müşteri beklemeden başlar; token bir kez harcanır, varlık aylarca kazanır. <b>Hizmet hatları</b> (web ofisi, stüdyo ajansı, "sonuç gelirse öde" ön büro, yerelleştirme, kurulum ve eğitim) müşteri, sözleşme ve tahsilat ister. Dokuzu da aynı makinenin üzerinde koşar; makine bir kez kurulur.</p>
+  <p><b>Zamanı olan tek karar:</b> YouTube, 1 Şubat 2027'den sonra para kazanmaya giriş barajını 4.000'den 8.000 izlenme saatine çıkarıyor; o tarihten önce programa giren kanal etkilenmiyor. Kanal konuşmasını Ocak öncesine bırakmıştınız; bu tarih onu Kasım'a çekmek için tek somut sebep (K6).</p>
+  <p><b>Sizden:</b> 8. bölümdeki kararlar, her biri evet ya da hayır. İlk denemelerin toplam para çıkışı yaklaşık 100 $.</p>
+</div>
+
+<h2><span class="n">1</span>Holdingin itici gücü</h2>
+<p>Mark Tilbury'nin "zengin olmak için 5 yılın kaldı" videosu (2uyhavEACdo) bir uyarı gibi sunuluyor; gerçekte Iman Gadzhi'nin 7–15 Kasım'daki "AI Income Challenge" etkinliğinin fragmanı. "5 yıl" sayısına kendisi de "sadece bir teori" diyor. Ama altındaki tez üç bağımsız ölçümle tutuyor:</p>
+<ul>
+  <li><b>Anthropic Economic Index (Ocak 2026):</b> görevlerinin en az dörtte birinde yapay zekâ kullanılan işlerin oranı bir yılda %36'dan %49'a çıktı.</li>
+  <li><b>Stanford, "Canaries" (Ağustos 2026 güncellemesi):</b> yapay zekâya en açık işlerde 22–25 yaşındakilerin istihdamı beklenenin yaklaşık %19 altında; etki işten çıkarmadan değil, işe almamaktan geliyor.</li>
+  <li><b>ABD Çalışma İstatistikleri (2026 2. çeyrek):</b> üretimden çalışana giden pay %52,8; 1947'den beri en düşük.</li>
+</ul>
+<p><b>Tezin özü:</b> bir sorunu çözmenin maliyeti sıfıra yaklaştıkça değer, saatini satana değil; makineye, müşteri ilişkisine ve dağıtıma sahip olana kalır. DxB bu denklemin doğru tarafında kuruldu: iş gücünün sahibi. Eksik olan müşteri ve dağıtım; bu raporun hatlarının yarısı tam bunun için varlık hattı.</p>
+<p>Sizin iki cümlenizin üstüne kurulmuş öneri (değiştirmek sizin elinizde):</p>
+<table>
+  <tr><th style="width:90px">İtici güç</th><td>Kazanç, işi yapan makineye, müşteriye ve dağıtıma sahip olana akar. DxB üçünün de sahibi olmak için kuruldu.</td></tr>
+  <tr><th>Misyon</th><td>DxB Global, yapay zekâ çalışanlarından oluşan iş gücünün sahibidir: dünyaya bitmiş ve ölçülmüş iş satar, kendi varlıklarını kurup işletir, teknolojisini her gün ileri taşır ve helal yoldan kesintisiz gelir üretir.</td></tr>
+  <tr><th>Vizyon</th><td>Ferrari seviyesinde, yarışmada birinciliğe aday, sürekli gelir üreten dijital holding: araçlar herkese aynı anda gelirken müşteriye giden yolu ilk açan.</td></tr>
+  <tr><th>İlke</th><td>Hakkıyla iş, helal kazanç: aldatma, faiz ve kumar yok; söz, sicilin taşıdığı kadar verilir.</td></tr>
+</table>
+
+<h2><span class="n">2</span>Ne izlendi, gerçekte ne</h2>
+<p class="small">Her video iki bağımsız okuyucu (Opus ve Fable) tarafından transkriptin tamamı okunarak incelendi; okuyucular birbirinin yazdığını görmedi. Ayrıldıkları her noktada kararı ben verdim. Adı geçen her araç, site ve rakam kaynağında kontrol edildi; ekranda duran kritik sayılar videodan kare alınarak okundu. <span class="claim">İddia</span> = yalnız konuşanın sözü.</p>
+<table>
+  <tr><th style="width:24%">Video</th><th style="width:30%">Gerçekte ne</th><th>Holdinge kattığı</th></tr>
+  <tr><td>Avenox · FqsAALrRhj4<br><span class="small">27 Eki · 1:02:41 · ikinci okuma</span></td><td>Tek kişinin görüş konuşması; sponsorsuz, kanalın sponsorları (Higgsfield, Kimi) içinde övülüyor.</td><td>Hizmet yeni yazılımdır (Sequoia: yazılıma 1 $, hizmete 6 $ — özgün metinden okundu); asıl dağıtım kendi kitlen; konuşmacının kendisi kanal dublajı alıcısı → H4, H8.</td></tr>
+  <tr><td>Mark Tilbury · 2uyhavEACdo<br><span class="small">17 Eki · 10:49 · 1,5 M izlenme</span></td><td>Gadzhi etkinliğinin fragmanı.</td><td>İtici güç tezi (bölüm 1).</td></tr>
+  <tr><td>Mark Tilbury · ytAW1_g2IfI<br><span class="small">25 Tem · 25:22 · 2,8 M</span></td><td>Yedi "tembel" yöntem; dropshipping bölümü AutoDS sponsorlu; hiçbir yöntemde gelir rakamı yok.</td><td>Çoğu holdingde var; resepsiyonist ve hayalet yazarlık → H7, H5.</td></tr>
+  <tr><td>Mark Tilbury · LlhTEttKcwQ<br><span class="small">21 Eyl · 33:19 · 8,4 M</span></td><td>7 günlük sanal influencer denemesi; Higgsfield ortaklık kodu. Sonuç: 23 satış × 12 $ = 276 $ ciro (sözle); gider kartı ekranda 118,52 $ (Higgsfield 99 $, PayPal 19,52 $); kâr 157 $. 1.000 $ hedefi tutmadı.</td><td>Sizin linkinizdeki 27:30 tam Stan Store'un ürün tipi ekranı: notunuzdaki iki madde bu iki dakikada birleşiyor → H3, H4.</td></tr>
+  <tr><td>Mark Tilbury · hriu0irRcpE<br><span class="small">24 Eki · 26:24 · 0,8 M</span></td><td>Gadzhi ile yedi yöntem; en iyisi ("S") etkinliğe saklanıyor. Ekrandaki seviye tahtası: A içerik dönüştürme ve reklam kreatifi; B emlak içeriği, ölü aday canlandırma, müşteri desteği; B–C site yenileme.</td><td>Ölü aday canlandırma, emlak ilan görselleri, içerik dönüştürme → H7, H6.</td></tr>
+  <tr><td>Chris Koerner · JhyVSrQPVSg<br><span class="small">21 Eki · 48:15</span></td><td>Altı haftalık ajan denemesi; GoHighLevel sponsorlu. Örneklerin hiçbiri ona gelir getirmemiş; geliri kurs, 19 $'lık PDF ve sponsor.</td><td>Dışa ulaşma makinesi (müşteri bulmanın somut tarifi), 11 $'lık yerel siteler → H5, H1.</td></tr>
+  <tr><td>Chris Koerner · -u0JuVUdPQA<br><span class="small">31 Eki · 48:28</span></td><td>Konuk Frey Chu, niş dizinler; Viktor sponsorlu; konuk kurs satıyor. Ekrandaki Ahrefs tahmini: 3 aylık entitysearch.us ayda ~42.900 ziyaret, geoblackout.com ~134.000.</td><td>Özel veriyle dizin + öne çıkan ilan + 19 $'lık rehber → H2, H3.</td></tr>
+  <tr><td>Chris Koerner · xUZYy3hCRUM<br><span class="small">6 May · 48:02 · 0,47 M · ilk turda incelendi</span></td><td>Konuk Kyle, "website landlord". Başlıktaki 104 bin $ ortaklarıyla şirketin aylık toplamı; Kyle'ın payı ~35 bin $ (<span class="claim">iddia</span>). "104K" ekranda yok; küçük resimdeki "$3.5K/DAY" sözünden geliyor. Konuk 2.980 $'lık kurs satıyor.</td><td>Sıralat-kirala yerel aday siteleri → H1.</td></tr>
+  <tr><td>The Next New Thing · GZtLsvklYBI<br><span class="small">6 Eki · 32:30 · 0,4 M</span></td><td>On ücretli araca on açık kaynak ikame; Zapier sponsorlu. Gelirle ilgisi dolaylı; araç karşılaştırması Excel'de.</td><td>Ses (VoxCPM2, VoiceStudio'nun dublaj tezgâhı), OpenShorts → H8, H6.</td></tr>
+  <tr><td>Doruk Yalçınsoy · oL2xB4DiXEo<br><span class="small">30 Eki · 19:22 · ikinci tur</span></td><td>Şirketlere ajan ve yerel model kurulumu; "şirket başına 4–5 bin $" (<span class="claim">iddia</span>). Kanıtlı tek sayı TÜİK: Türk girişimlerinde yapay zekâ kullanımı bir yılda %7,5'ten %14'e. Konuşmacının asıl geliri ücretli topluluğu (117 üye × 59 $/ay).</td><td>Kurulum hattının Ferrari hâli ve "veriniz sizde kalır" yerinde kurulum → H9.</td></tr>
+  <tr><td>Yüzsüz Ninja · HN_1kEGNu3Y<br><span class="small">27 Eki · 7:59 · ikinci tur</span></td><td>Claude Code ile yüzsüz çizim kanalı hattı. "Ayda 3.000 $" adı verilmeyen başka bir kanalın sayısı; anlatıcının kendi kanalı 426 abone. Niş aracı Nichle'ın ortaklık linki açıklamada.</td><td>Kanal fabrikası: hattın yarısı gerçek ve ucuz, kurgu elle; bizde uçtan uca otomatik ve çok dilli → H4.</td></tr>
+  <tr><td>Mark Tilbury · OxQ47jXQApk<br><span class="small">2024 videosu, başlığı "(2026)" yapılmış · ikinci tur</span></td><td>Kendi yedi gelir yolunu puanlıyor; aracı kurum (Trading 212) sponsorlu. Dördü sermaye ya da faizli kredi istiyor.</td><td>Yeni hat yok; kendi ürün markası ve fırsat bulma "sonra" listesine.</td></tr>
+</table>
+
+<h2><span class="n">3</span>Bugün holdingin gelir motoru</h2>
+<p class="small">Şirket veritabanından yalnız okuyarak ölçüldü, 1 Kasım 2026.</p>
+<table>
+  <tr><th style="width:26%">Parça</th><th>Durum</th></tr>
+  <tr><td>Gelir şartnamesi</td><td>Döngü yazılı ve kurulu: hedef kapısı → keşif motoru → helal ve sermaye kapıları → tahsis → proje ve görev (26 Temmuz). Müşteri akışı ve "fiyat politikası ile standart sözleşme bir kez onaylanır" kuralı B64'le şartnamede (14 Ekim).</td></tr>
+  <tr><td>Hedef</td><td>Tek hedef "€50 net", net kâr; taslak.</td></tr>
+  <tr><td>Gelir motorları</td><td>Altı motor (e-ticaret, fiziksel ürün, sosyal satış, içerik, danışmanlık, girişim); hepsi "aday". Stüdyo ajansı, web ofisi, yerel siteler, dizinler ve dijital ürün için motor yok. Motor açmak ve sahibini atamak yalnız sizin elinizde.</td></tr>
+  <tr><td>Fırsatlar</td><td>5 fırsat 26 Temmuz'dan beri helal kararınızı bekliyor: WordPress site yenileme, B2B randevu ayarlama, yapay zekâ danışmanlığı, GDPR denetimi, sunum tasarımı.</td></tr>
+  <tr><td>Para</td><td>Gelir defteri 0 satır; maliyet defteri 43 satır; sermaye sınırı 0.</td></tr>
+  <tr><td>İş akışı motoru</td><td>0 akış, 0 adım, 0 koşu. Hatların saatle dönmesi bunu bekliyor.</td></tr>
+  <tr><td>Tahsilat</td><td>B05 (ödeme, imza, e-posta gönderimi) Outleteuro iptalinden beri donmuş.</td></tr>
+</table>
+<p><b>Sonuç:</b> eksik olan fikir değil; hatlar ve onları saatle döndüren iş akışı. Bu bir inşaat hâli, alarm değil.</p>
+
+<h2><span class="n">4</span>Tasarım: tek makine, dokuz hat</h2>
+<p>Her hat aynı sekiz istasyondan geçer. İstasyonların çoğunun sahibi OS'te zaten var; yeni olan, onları hat hâlinde bağlamak ve saate oturtmak.</p>
+<div class="flow">
+  <div class="st"><b>1 Keşif</b>Fırsatı veri seçer: hacim, rakip gücü, değer. Haftalık, kendiliğinden.</div>
+  <div class="st"><b>2 Süzgeç</b>Helal kapısı ve sermaye kapısı; listeyi siz belirlersiniz.</div>
+  <div class="st"><b>3 Üretim</b>Stüdyo, web ofisi, araştırma masası. Gece kuyruğunda.</div>
+  <div class="st"><b>4 Kalite</b>Sol denetimi, Ferrari çıtası, gerekirse sizin gözünüz.</div>
+  <div class="st"><b>5 Satış</b>Fiyat politikası ve standart sözleşme bir kez onayınızla; kampanya bir kez onaylanır.</div>
+  <div class="st"><b>6 Tahsilat</b>B05 ya da vergiyi üstlenen mağaza.</div>
+  <div class="st"><b>7 Ölçüm</b>Gelir − maliyet = net kâr, hat hat; ekranda canlı.</div>
+  <div class="st"><b>8 Büyüt / kapat</b>30, 60, 90. gün kuralı; öneri kendiliğinden gelir.</div>
+</div>
+<div class="loop">↺ 8. istasyon 1.'yi besler: satanın benzeri aranır, satmayan kapanır</div>
+
+<h3>Videolardakinden farkı: Ferrari burada</h3>
+<ul>
+  <li><b>Bir kişi değil, makine.</b> Videolarda tek kişi sezgiyle 10–100 varlık kurmuş. Bizde keşif istasyonu her hafta binlerce kombinasyonu veriyle puanlar; varlık sayısını sınırlayan şey satış ve sizin dikkatiniz olur, el değil.</li>
+  <li><b>Dürüstlük satış avantajı.</b> Videolardaki yöntemlerin yarısı kendini firma gibi gösteren siteye, sahte tanıklığa, uydurma geçmişe ve satın alınmış linke dayanıyor. Bizde hiçbiri yok: hem İslami sınır, hem de platform cezasına karşı kalkan.</li>
+  <li><b>Her varlık her hafta ölçülür.</b> Sıra, arama, form, satış ekranda; satmayan kapanır, satanın benzeri kurulur.</li>
+  <li><b>Hatlar birbirini besler.</b> Dizinin verisi yerel sitelerin kiracı listesini, kiracı listesi dışa ulaşma makinesinin adaylarını, adaylar web ofisinin müşterilerini besler; dizinin kitlesi dijital ürünü alır; her teslim kanala vaka olur ve yeni müşteri getirir. Tek kişinin kuramayacağı şey bu çark.</li>
+</ul>
+
+<h3>İki aile ve token</h3>
+<table>
+  <tr><th style="width:12%">Aile</th><th style="width:34%">Hatlar</th><th style="width:20%">Token</th><th style="width:14%">Müşteri gerekir mi</th><th>Darboğaz</th></tr>
+  <tr><td><b>Varlık</b></td><td>H1 yerel aday siteleri · H2 niş dizinler · H3 dijital ürün atölyesi · H4 kendi kanallarımız</td><td>Bir kez (kurulum) + hafif tazeleme</td><td>Hayır: önce varlık, sonra satış</td><td>Arama motorunda sıralama ve zaman (30–90 gün)</td></tr>
+  <tr><td><b>Hizmet</b></td><td>H5 web ofisi + bakım · H6 stüdyo ajansı · H7 "sonuç gelirse öde" ön büro · H8 yerelleştirme ve dublaj · H9 kurulum ve eğitim</td><td>Her müşteri, her ay</td><td>Evet</td><td>Satış, sözleşme, tahsilat (B05)</td></tr>
+</table>
+<p><b>Optimum:</b> iki Max aboneliği bağlanırsa kapasite iki katına çıkar; en yüksek "token başına gelir" varlık hatlarında, çünkü token bir kez harcanır ve varlık aylarca kazanır. Varlıkların üretimi ve tazelenmesi gece kuyruğunda koşar. Ölçülmüş birim maliyetler: landing page tek usta 37 $, ekip 330 $ (API değeri, 28–29 Ekim); 1.000 $'lık iş ~100 $ (24 Ekim); stüdyo filmi yerel kartta 0 $. Varlık hatlarının birim maliyeti ilk denemede ölçülür.</p>
+
+<h2><span class="n">5</span>Hatlar tek tek</h2>
+<p class="small">Her hatta: videodaki hâli, zayıf yeri, bizim Ferrari hâlimiz, ilk deneme ve karar. Karar numaraları 8. bölümdeki tabloya bağlı.</p>
+
+<div class="line">
+<h3>H1 · Yerel aday siteleri — kendi sitemiz, aylık kira <span class="tag varlik">VARLIK</span></h3>
+<dl class="kv">
+  <dt>Videoda</dt><dd>Kyle (xUZYy3hCRUM): "şehir + hizmet" sitesi kurar, Google'da ilk sayfaya taşır, gelen aramaları yerel bir firmaya aylık sabit kirayla yönlendirir. Site başı gider ~25 $/ay, ortalama kira ~600 $/ay (<span class="claim">iddia</span>; kurs satıyor). Koerner'in 11 $'lık iki sitesi bir ayda 3 aday getirdi; siteler açık, geliri 0 $. En sağlam kanıt ekranda: Koerner'in hiç işletmediği hayvan kremasyonu alan adı (animalaftercare.com) 16 ayda 28.600 tık ve 1,62 milyon gösterim almış (Search Console).</dd>
+  <dt>Zayıf yeri</dt><dd>Site kendini firma gibi gösteriyor (Laredo sitesi ve Kyle'ın ekrandaki "NOLA Auto Glass Pros" sitesi böyle), satın alınmış link, sözleşmesiz kira, ayda %20 kart reddi, birbirinin kopyası şablon siteler (Google'ın "doorway" kuralına yakın).</dd>
+  <dt>Ferrari hâli</dt><dd>Keşif istasyonu her hafta binlerce "niş × şehir" kombinasyonunu veriyle puanlar: arama hacmi, haritadaki firma sayısı ve yorum kalitesi, rakip sitelerin gücü, tık başı reklam fiyatı (adayın değeri). Web ofisi her siteyi gerçek içerikle kurar (yerel fiyat aralıkları, kontrol listesi, rehber); site "bağımsız yönlendirme hizmeti" olduğunu açıkça söyler. Aramalar kaydedilir ve yazıya dökülür; kiracı firmaya her ay "bu ay size X arama, Y iş" raporu gider. Firma ayrılırsa aramalar bir sonrakine yönlenir; varlık holdingde kalır. Kısa standart sözleşme, otomatik tahsilat takibi.</dd>
+  <dt>İlk deneme</dt><dd>2 site, İngilizce pazar (model ve veri araçları orada kanıtlı), helal niş (cam tamiri, vinç, epoksi zemin, çatı gibi); 90 gün. Ölçü: 30/60/90. günde sıra, arama ve form sayısı, ilk firmanın ücretsiz haftada kapattığı iş. Para çıkışı: 2 alan adı (~22 $), 2 takip numarası (~1–2 $/ay), DataForSEO 50 $ (H2 ile ortak).</dd>
+  <dt>Karar</dt><dd class="q">K3</dd>
+</dl>
+</div>
+
+<div class="line">
+<h3>H2 · Niş dizinler — kimsenin elinde olmayan veriyle <span class="tag varlik">VARLIK</span></h3>
+<dl class="kv">
+  <dt>Videoda</dt><dd>Frey Chu (-u0JuVUdPQA): tek konulu dizin; ilki 4 yılda ~150.000 $ (<span class="claim">iddia</span>), zirvede ayda 2.300–3.000 $ (reklam + 19 $'lık rehber). %30'u tutmuyor; para 6–12 ayda geliyor. Ekrandaki Ahrefs tahmini: 3 aylık bir dizin (entitysearch.us) ayda ~42.900 ziyaret alıyor.</dd>
+  <dt>Zayıf yeri</dt><dd>Gelirin yarısı seçemediğimiz reklamdan; büyüme satın alınmış linke dayanıyor; yapay zekâ özetleri "bilgi alıp çıkan" dizinin trafiğini yiyor.</dd>
+  <dt>Ferrari hâli</dt><dd>Nişi veri seçer (Frey'in testi kendiliğinden koşar: aramada zayıf ama trafik alan dizin var mı, haritada zor mu bulunuyor). Kimsenin elinde olmayan veri ajanlarla toplanır ve her hafta tazelenir: fiyat, saat, uygunluk, Türkçe konuşan personel, helal sertifikası. Yapay zekâ özetlerine karşı tek kalkan bu. Gelir: öne çıkan ilan, aday formu, 19 $'lık rehber (H3), helal sponsor. Dizindeki işletmeler web ofisinin ve ön büronun adayıdır; onlara gerçek veriyle gideriz ("ilanınız bu ay N kez görüldü"). Holdinge yakışan nişler: Avrupa şehirlerinde helal restoran ve kasap, Almanya'da Türkçe konuşan hekim ve avukat, cami ve İslami merkez etkinlikleri; yanında saf ticari nişler.</dd>
+  <dt>İlk deneme</dt><dd>Masa başında 10 niş puanlanır (0 $, 1 gün); en iyisinde 1 dizin, 90 gün. Ölçü: dizine giren sayfa, 30/60/90. gün ziyaret, ilk öne çıkan ilan talebi.</dd>
+  <dt>Karar</dt><dd class="q">K4 · İ1</dd>
+</dl>
+</div>
+
+<div class="line">
+<h3>H3 · Dijital ürün atölyesi ve mağaza <span class="tag varlik">VARLIK</span></h3>
+<dl class="kv">
+  <dt>Videoda</dt><dd>Tilbury: sanal karakterin kitlesine 12 $'lık 30 günlük çalışma kitabı; 7 günde 23 satış. Koerner her bölümün konusunu 19 $'lık iş planı PDF'i olarak satıyor. 31 Ekim notunuzun iki maddesi (influencer ile dijital ürün; stan.store) tam bu hat.</dd>
+  <dt>Stan'in on tipi</dt><dd>Ekrandan okundu; holdingin her birinde satacağı: <b>Digital Product</b> (oyun kitabı, şablon, Ramazan planlayıcısı) · <b>eCourse</b> ("ajanlarla şirket işletmek"; kanıtı holdingin kendisi) · <b>Coaching Call</b> (notunuzdaki "benim vereceğim hizmet": birebir görüşme) · <b>Recurring Membership</b> (aylık sektör ve trend özeti) · <b>Webinar</b> · <b>Community</b> · <b>Custom Product</b> (ücretli sektör incelemesi; stüdyonun ve web ofisinin kapı açıcısı, B05 beklemeden satılır) · <b>Collect Emails</b> (ücretsiz mıknatıs; adayı satış hattına düşürür) · <b>URL / Media</b> (başkasının ürünü; İ3) · <b>Stan Referral Link</b>.</dd>
+  <dt>Ferrari hâli</dt><dd>Holding her gün araştırma üretiyor; atölye onu ürüne çevirir: araştırma masası yazar, Sol doğrular, stüdyo tasarlar, 11 dilde çıkar (bir ürün, on bir vitrin). Satış verisi bir sonraki ürünü seçer; 30 günde satmayan kapanır. Mağaza: Stan ayda 29 $; daha ucuz yollar ve vergi yükünü üstlenen mağazalar (Lemon Squeezy, Gumroad gibi) var. Vergiyi üstlenen bir mağaza B05 çözülmeden tahsilatı açar. Fiyatlar ilk denemede ölçülür.</dd>
+  <dt>İlk deneme</dt><dd>DxB markasıyla 3 ürün (yerel aday sitesi oyun kitabı; "yapay zekâ çalışanıyla ilk 30 gün"; Ramazan planlayıcısı), bir mağaza hesabı (kimlik adımı, sizin tıkınız); 30 gün. Ölçü: ziyaret, satış, iade.</dd>
+  <dt>Karar</dt><dd class="q">K5 · İ3</dd>
+</dl>
+</div>
+
+<div class="line">
+<h3>H4 · Holdingin kendi kanalları <span class="tag varlik">VARLIK</span></h3>
+<dl class="kv">
+  <dt>Videoda</dt><dd>Avenox'un ana tezi: daha kötü ürünü hazır kitlesi olan onlarca kat fazla satar; para izlenmeden değil, kitlenin içindeki binde bir alıcıdan gelir. Tilbury'nin denemesinde kazanan hesap önceden kestirilemedi; biyografide "yapay zekâ" yazması ilgiyi düşürmedi (hesaplar ekranda 359, 2.643 ve 3.699 takipçi). Yüzsüz Ninja (HN_1kEGNu3Y): başka dilde tutmuş videonun yazım tarzını çıkar, kendi konunla sıfırdan senaryo yaz, tek "ana istem" ve referans çizimle 100+ görseli toplu üret, kurguda elle diz.</dd>
+  <dt>Zayıf yeri</dt><dd>Gelir rakamı başkasının kanalının tahmini; kurgu elle, tek dil, tek niş. YouTube kalıpla seri üretilmiş içeriğin parasını keser ve bunu bütün kanal üzerinden değerlendirir.</dd>
+  <dt>Ferrari hâli</dt><dd><b>Kanal fabrikası</b>, saatle dönen dokuz istasyon: niş istihbaratı (her dilde "kanalının normalinin 3 katı izlenen" videoları kendi tarayıcımız bulur) → tarz analizi ve özgün senaryo (19 Ekim hükmünüzle yeniden kurgu serbest) → kanalın görsel kitabı → yerel kartta gece üretim (0 $) → anlatım → zaman damgasından otomatik montaj (elle dizme yok) → kalite kapısı (özgünlük, karakter tutarlılığı; ilk 3 video sizin gözünüze) → zamanlı yayın → 7. gün ölçümü, sonuç niş istihbaratına döner. <b>Çok dilli ses izi:</b> YouTube tek videoya birden çok dilde ses yükletiyor; aynı görsellerle her dil yeni bir pazar. Kollar: DxB markalı kanal (makinenin gerçek işi; "binde bir" alıcı hizmet hatlarına gelir), yüzsüz niş kanallar, sanal sunucu (B43 planı; beş kararı 25 Eylül'den beri sizde). Gelir ucu: reklam (İ1), helal sponsor, kendi ürünümüz (H3), kitle büyüyünce ücretli topluluk. Hızlandırıcı: hazır sayfa ya da kanal satın almak 19 Ekim hükmünüzle serbest (para çıkışı).</dd>
+  <dt>Zaman</dt><dd>1 Şubat 2027'den sonra programa giriş 1.000 abone + 8.000 izlenme saati (bugün 4.000). Programa o tarihten önce giren kanal etkilenmiyor. Üç ayda 4.000 saate ulaşmak ancak güçlü bir başlangıçla olur; bekledikçe baraj iki katına çıkar.</dd>
+  <dt>Engel</dt><dd>4 Eylül hükmünüz videoda yapay sesi kapattı ("MiniMax H3'ün kendi sesi olsun"). Anlatım ya H3'ün kendi sesiyle (İngilizce konuşuyor, Türkçe konuşmuyor) ya da K8'de açacağınız tasarlanmış sesle yapılır. Çizgi insan ve hayvan kullanılıp kullanılmayacağı İ7.</dd>
+  <dt>Token</dt><dd>Fabrika bir kez kurulur; video başına senaryo, istem ve denetim için okuyucuların tahmini 100–300 bin token, görsel ve ses yerel kartta. Her video yıllarca izlenen bir varlıktır; ek dil yalnız çeviri ve ses kadar yük getirir.</dd>
+  <dt>İlk deneme</dt><dd>Kanal açmadan tek pilot video (8 dakika, İngilizce eğitim ya da tarih; 8 Ekim'de önerilen uyku/bilim belgeseli de aday), uçtan uca fabrikadan; 0 $ nakit, 1 hafta. Ölçü: insan dakikası, token, kart saati ve sizin notunuz. Beğenirseniz kanal hesabı sizin tıkınızla açılır, haftada 2 video.</dd>
+  <dt>Karar</dt><dd class="q">K6 · K8 · İ1 · İ5 · İ7</dd>
+</dl>
+</div>
+
+<div class="line">
+<h3>H5 · Web ofisi: premium site + aylık bakım + dışa ulaşma makinesi <span class="tag hizmet">HİZMET</span></h3>
+<dl class="kv">
+  <dt>Durum</dt><dd>Web ofisi planı sizin beş sorunuzu bekliyor (29 Ekim); bu rapor yeni soru açmaz, ona iki şey ekler.</dd>
+  <dt>Eklenen</dt><dd><b>Müşteri bulmanın somut tarifi</b> (Koerner, JhyVSrQPVSg): haritada 4+ yıldız, 50+ yorum, randevu linki yok, sahibi yorumlara cevap vermiyor → 1–10 puanlı tek sayfa denetim → kişiye özel kısa video → o firmaya özel demo. Bizde denetimi gerçek veriden ajanlar yazar, videoyu stüdyo yapar, demoyu web ofisi kurar. Videodaki iki adım çıkarılır: firmanın cevap süresini ölçmek için sahte talep formu doldurmak ve sahibin kişisel telefonunu bulup aramak.<br><b>Fiyat tabanı:</b> yerel işletme tek seferlik siteye birkaç yüz dolar öder; bu hat ancak aylık bakım + ölçüm raporu paketiyle ve orta boy müşteriyle yaşar.</dd>
+  <dt>Karar</dt><dd class="q">Web ofisi kararlarınızın içinde (Y9) · İ6</dd>
+</dl>
+</div>
+
+<div class="line">
+<h3>H6 · Stüdyo ajansı (B28) + uzun videodan aylık kısa paket <span class="tag hizmet">HİZMET</span></h3>
+<dl class="kv">
+  <dt>Eklenen</dt><dd><b>Yapay zekâ reklam filmi:</b> videolardaki biçim, var olmayan bir kişinin "kullandım, bayıldım" tanıklığı; bu aldatma ve ABD'de 2024'ten beri yasak. Bizim biçimimiz ürünü gösteren, yapay olduğu belli sunucu. <b>Emlak ilan görselleri:</b> ışık ve açı düzeltilir, olmayan özellik eklenmez; yüksek bilet sektörü, B28'in sektör menüsüne girer. <b>Uzun videodan aylık kısa paket:</b> müşterinin webinar ya da podcast'inden ayda 10–15 dikey klip, altyazılı, planlı yayınla (OpenShorts); ucuz, tekrarlayan bir giriş ürünü.</dd>
+  <dt>İlk deneme</dt><dd>OpenShorts'u stüdyoya kurup kendi uzun videomuzda (0 $, 1 gün). Ölçü: klip başı süre, isabetli an seçimi, sizin gözünüz.</dd>
+  <dt>Karar</dt><dd class="q">K7 · İ5</dd>
+</dl>
+</div>
+
+<div class="line">
+<h3>H7 · "Sonuç gelirse öde" ön büro <span class="tag hizmet">HİZMET</span></h3>
+<dl class="kv">
+  <dt>Videoda</dt><dd>Gadzhi ve Tilbury (hriu0irRcpE, ytAW1_g2IfI): işletmenin eski adaylarını mesajla geri kazanıp randevu başına ücret almak; yapay zekâ resepsiyonist; destek botu; içerik dönüştürme. Rakamlar <span class="claim">iddia</span>.</dd>
+  <dt>Ferrari hâli</dt><dd>Kendi CRM'imiz, WhatsApp Business ve politika sınırlı ajan: politika dışında asla kendi başına cevap vermez, her konuşma kayıtlı, ay sonunda müşteriyle mutabakat. "Sonuç gelirse öde" fiyatı portföyü olmayan bir ajansın ilk müşteriyi kazanmasının en kısa yolu. Sesli resepsiyonist B12'de ses hızlanınca eklenir. Bekleyen "B2B randevu ayarlama" fırsatı bu hatta bağlanır.</dd>
+  <dt>Karar</dt><dd class="q">K10 · İ4</dd>
+</dl>
+</div>
+
+<div class="line">
+<h3>H8 · Yerelleştirme ve dublaj <span class="tag hizmet">HİZMET</span></h3>
+<dl class="kv">
+  <dt>Videoda</dt><dd>Avenox'un kendisi alıcı: "videolarımı kaliteli dublajlanmış, kusursuz yerelleştirilmiş görmek istiyorum; 3–4 ay zarar etmeyi göze alırım." Stüdyonun 11 dil kalemi yalnız reklam filmine bakıyor; içerik üreticisi alıcı olarak hiç yazılmamış.</dd>
+  <dt>Ferrari hâli</dt><dd>Tek ürün: "kanalınız 11 dilde." VoiceStudio'nun dublaj tezgâhı (konuşmacı ayırma, zamanlama, vokal ayırma), en iyi ses motoru, her dilde geri-transkript doğruluk ölçümü, müşterinin kendi sesi yazılı rızasıyla.</dd>
+  <dt>Ses</dt><dd>Voicebox zayıf değil, hiç kullanılmamış: kayıtlı ses profili 0, son üretim 17 Ağustos. Hamza'nın bugünkü sesi işlemcide koşan Piper. Türkçe dahil 30 dil konuşan VoxCPM2 en güçlü aday (üreticinin tablosunda Türkçe ses benzerliği 87,1, ElevenLabs 59,6; <span class="claim">bizim kartta ölçülmedi</span>).</dd>
+  <dt>İlk deneme</dt><dd>Üç motor kör dinlemede (kurulu Chatterbox, Chatterbox V3, VoxCPM2), Türkçe, Körfez Arapçası ve İngilizce reklam metni; doğruluk, hız, sizin kulağınız; 0 $, yarım gün. Kazanan Hamza'nın sesine (B12) ve bu hatta gider.</dd>
+  <dt>Karar</dt><dd class="q">K8</dd>
+</dl>
+</div>
+
+<div class="line">
+<h3>H9 · Kurulum, eğitim ve danışmanlık <span class="tag hizmet">HİZMET</span></h3>
+<dl class="kv">
+  <dt>Videoda</dt><dd>Avenox: Türkiye'de asgari ücretli bir çalışanın şirkete maliyeti ~1.000 $/ay; 50 $'lık yazılımı 500 $'lık hizmet olarak sat. Doruk Yalçınsoy (oL2xB4DiXEo): şirketin sunucusuna ajan ve yerel model kurup kurulum + aylık bakım almak; veriyi dışarı vermek istemeyen sektörler (sağlık, telekom, sanayi). Koerner, Kyle ve Doruk'un kanıtlı geliri kurs ve ücretli topluluk.</dd>
+  <dt>Ferrari hâli</dt><dd><b>Dijital kadro kurulumu</b>, beş istasyon: ücretli keşif raporu (şirketin maaşla yaptırdığı tekrarlayan işler; kapı açıcı) → kadro tasarımı (persona fabrikamızdan 3–5 çalışan, görev sözleşmeleriyle) → kurulum (müşterinin kendi sunucusuna, "veriniz sizde kalır" seçeneğiyle yerel model; ya da bizim motorumuza) → 30 gün devir ve eğitim → aylık bakım (model güncellemesi, maliyet raporu, yeni görev). Satılan şey bir araç değil, holdingin kendi düzeni: persona fabrikası, orkestratör, onay kapısı, maliyet defteri. Kanıtı holdingin kendisi. Sonra: eCourse, birebir görüşme ve ücretli topluluk (Stan tipleri); kanıtsız kurs satılmaz. Bekleyen "yapay zekâ danışmanlığı" fırsatı buraya bağlanır.</dd>
+  <dt>Token</dt><dd>Paket bir kez yazılır (ağır); müşteri başına kurulum orta, bakım hafif; yerel modelde çalışma tokeni müşterinin donanımında.</dd>
+  <dt>İlk deneme</dt><dd>Holdingin kendi kurulumu dış gözle paket olarak yazılır (kılavuz + fiyat sayfası) ve yerel tezgâhta tek demo kurulur: Türkçe çağrı kaydı → özet → CRM notu, hepsi makinede. 0 $, 1 hafta.</dd>
+  <dt>Karar</dt><dd class="q">K10 · K12</dd>
+</dl>
+</div>
+<h3>Sonra listesi ve dışarıda kalanlar</h3>
+<table>
+  <tr><th style="width:26%">Ne</th><th>Neden şimdi değil / neden hiç</th></tr>
+  <tr><td>Kendi ürün markası (Tilbury, OxQ47jXQApk)</td><td>Stoklu, malın sahibi olarak; önce bekleme listesiyle talep ölçülür, üretim yalnız talep kanıtlanınca. Sermaye sınırı 0 ve kitle yok; kanal hattından sonra.</td></tr>
+  <tr><td>Emlak fırsat masası (Tilbury)</td><td>Yatırımcıya piyasanın altındaki ilanı bulup bulma ücreti; sermayesiz, yüksek bilet. Yatırımcı ağı ve aracılık kaydı ister; Körfez ev sahası olarak sonra.</td></tr>
+  <tr><td>Konsinye ve ölü stok satışı (Koerner, Tilbury)</td><td>Fiziksel eşya ve yerel varlık ister; dijital holdingin ölçeğine küçük.</td></tr>
+  <tr><td>Teklif toplama ajanı (Koerner)</td><td>Gelir değil, tasarruf: holdingin kendi alımlarında kullanılır.</td></tr>
+  <tr><td>Borsa, perakende mağaza, ticari gayrimenkul, kripto, klip pazaryerleri, müstehcen dizinler</td><td>Hükümleriniz (alım-satım yok, faiz yok, pazaryeri değil ajans koltuğu) ve İslami sınır. Tekrar sorulmaz.</td></tr>
+</table>
+
+<h2><span class="n">6</span>Sıra: üç dalga</h2>
+<table>
+  <tr><th style="width:16%">Dalga</th><th style="width:44%">Ne</th><th>Neden şimdi / neden sonra</th></tr>
+  <tr><td><b>1 · Şimdi</b><br><span class="small">deneme, inşaat sürerken</span></td><td>H1 (2 site) · H2 (10 niş puanı + 1 dizin) · H3 (3 ürün + mağaza) · H4 (pilot video) · H6'nın OpenShorts denemesi · H9 demosu · ses denemesi</td><td>Müşteri beklemez, token bir kez harcanır, toplam ~100 $. Kurallarınız: gelir beklemez; şimdi kurulabilen önce denenir, onay kapısının içinde. Kanal için takvim 1 Şubat.</td></tr>
+  <tr><td><b>2 · Web ofisi ve B05 ile</b></td><td>H5 · H6 · H7 · H9 satışı</td><td>Müşteri, sözleşme ve tahsilat ister; fiyat politikası ve standart sözleşme bir kez onayınıza gelir.</td></tr>
+  <tr><td><b>3 · Kararlarınızla</b></td><td>H8 dublaj · sanal sunucu · eğitim ve topluluk · "sonra" listesi</td><td>Ses kararı, B43'ün beş kararı, önce vaka ve kitle.</td></tr>
+</table>
+<p>OS'e kurulum: her hat gelir şartnamesine (REVENUE_ENGINE_SPEC) kayıtlı bir uyarlama ve iş akışı motorunda bir akış olur. Yapım sırası tahtanın yeniden dizilişinde konur; bu rapor sıra yazmaz.</p>
+
+<h2><span class="n">7</span>Rapor 1'e düzeltmeler</h2>
+<table>
+  <tr><th style="width:36%">Rapor 1</th><th>Transkript ve ölçüm</th></tr>
+  <tr><td>"Hallederiz de, arkada çöz"</td><td>Cümlenin tamamı: "Yapamasan da yapabilirim de; 'hallederiz' de" (34. dk). Yapamayacağı işi vaat etmek; ahlak çerçevenize aykırı. Bizim kuralımız: söz, sicilin taşıdığı kadar verilir.</td></tr>
+  <tr><td>Emlak reklamı "60–70 milyon izlenme"</td><td>Konuşmacı "sanırım, tam hatırlamıyorum" diyor (20. dk). Sahne silah ve dikkat çekmek için kadın kullanıyor; örnek diye sunulmaz.</td></tr>
+  <tr><td>Gelir hattı tahtaya tek satır, her ilk temas ve teklif size</td><td>Hattın sözleşmesi zaten gelir şartnamesinde; doğrusu oraya kayıtlı uyarlama + tek satır (K1). Kayıtlı kararınız (B64, 5. karar): fiyat politikası ve standart sözleşme bir kez onaylanır; içindeki teklif size gelmez.</td></tr>
+  <tr><td>Ana sayı aylık tekrarlayan gelir</td><td>Direktifiniz ve hedefin kendisi net kâr; doğrusu net kâr başta, aylık tekrarlayan gelir yanında (K2).</td></tr>
+  <tr><td>Kanalın ~60 videosu · "Kendi alanında uzmanlık: Güçlü"</td><td>Kanalda 80–90 video var (56. dk). Üretimde güçlüyüz; müşteri sektörlerinde ağımız yok. Bu, varlık hatlarını ve H9'u öne çeker.</td></tr>
+  <tr><td>Sequoia oranı "özgün metinden değil"</td><td>Özgün makale okundu: "For every dollar spent on software, six are spent on services" (Julien Bek, 5 Mart 2026).</td></tr>
+</table>
+
+<h2 class="pb"><span class="n">8</span>Kararlarınız</h2>
+<p>Her biri evet ya da hayır. Hepsine önerdiğim gibi derseniz tek söz yeter: <b>"önerdiğin gibi."</b> Evet dediğiniz hat için plan iki ayrı yazarla yazılır, Sol denetler ve size bir kez gelir; tahtaya ve şartnameye o zaman işlenir.</p>
+<table class="dec">
+  <tr><th style="width:6%">#</th><th style="width:66%">Karar</th><th>Önerim</th></tr>
+  <tr><td>K1</td><td>Gelir üretim hatları tek sistem olarak kurulsun: gelir şartnamesine kayıtlı uyarlama + tahtaya tek satır; ilişkili satırlara referans (B05, B17, B28, B43, B64, W-C42-6, C41, B12, B41, B04). B17 bu raporla kapanır.</td><td class="rec">Evet</td></tr>
+  <tr><td>K2</td><td>Ana sayı net kâr (defterden), yanında aylık tekrarlayan gelir.</td><td class="rec">Evet</td></tr>
+  <tr><td>K3</td><td>H1 yerel aday siteleri: 2 site, 90 gün.</td><td class="rec">Evet</td></tr>
+  <tr><td>K4</td><td>H2 niş dizin: 10 niş puanı + 1 dizin, 90 gün.</td><td class="rec">Evet</td></tr>
+  <tr><td>K5</td><td>H3 dijital ürün: DxB markasıyla 3 ürün + bir mağaza hesabı.</td><td class="rec">Evet</td></tr>
+  <tr><td>K6</td><td>H4 kanal fabrikası: Ocak öncesine bıraktığınız kanal konuşması şimdi yapılsın; kanal açmadan tek pilot video bu hafta üretilsin (0 $). Beğenirseniz kanal Kasım'da açılır (hesap sizin tıkınız), 1 Şubat barajından önce programa girmek hedeflenir. Sanal sunucu B43'ün beş kararından sonra.</td><td class="rec">Evet</td></tr>
+  <tr><td>K7</td><td>OpenShorts stüdyoya kurulsun, kendi uzun videomuzda denensin.</td><td class="rec">Evet</td></tr>
+  <tr><td>K8</td><td>Ses: VoxCPM2 tezgâha misafir kurulsun, üç motorlu kör deneme yapılsın. Sonra, dinledikten sonra: 4 Eylül hükmünüz kendi kanal anlatımımız ve müşterinin istediği dublaj için tasarlanmış sese açılsın mı?</td><td class="rec">Deneme: evet · hüküm: kulağınızla</td></tr>
+  <tr><td>K9</td><td>1. bölümdeki itici güç, misyon, vizyon ve ilke cümleleri holdingin cümlesi olarak yazılsın (personalar, site, Hamza'nın brifingi).</td><td class="rec">Evet</td></tr>
+  <tr><td>K10</td><td>26 Temmuz'dan beri bekleyen 5 fırsat helal sayılsın ve hatlara bağlansın (WordPress site → H5; B2B randevu → H7; yapay zekâ danışmanlığı, GDPR denetimi, sunum tasarımı → H9 ve H5).</td><td class="rec">Evet</td></tr>
+  <tr><td>K11</td><td>B05 (tahsilat, imza, e-posta gönderimi) 2. dalgadan önce çözülsün.</td><td class="rec">Evet</td></tr>
+  <tr><td>K12</td><td>H9 dijital kadro kurulumu: holdingin kendi düzeni dış gözle paket olarak yazılsın, yerel tezgâhta tek demo kurulsun (0 $); iş masasına (B64) "kurulum" iş tipi olarak girsin.</td><td class="rec">Evet</td></tr>
+  <tr><td colspan="3" style="background:var(--soft);font-weight:600">Arada kalanlar — hüküm sizin</td></tr>
+  <tr><td>İ1</td><td>Seçemediğimiz reklam. YouTube'da kumar ve alkol reklamı varsayılan olarak kapalı; flört ve 200'e kadar kategori kapatılabiliyor, ama yalnız uzun videonun izleme sayfasında. Shorts ve akıştaki reklam seçilemiyor; faizli finans için ayrı bir kategori görünmüyor (stüdyoda bakılacak). Dizinlerde görüntülü reklam da tamamen süzülemiyor.</td><td class="rec">Uzun videoda engellerle evet; Shorts ve dizin reklamı hayır</td></tr>
+  <tr><td>İ2</td><td>Elde olmayan malı satmak (dropshipping, "ajanlı dropshipping").</td><td class="rec">Hayır, şimdilik</td></tr>
+  <tr><td>İ3</td><td>Başkasının ürününü komisyonla satmak (affiliate).</td><td class="rec">Yalnız tek tek onaylanmış helal ürün</td></tr>
+  <tr><td>İ4</td><td>"Sonuç gelirse öde" ücreti (randevu başına).</td><td class="rec">Sabit kurulum + tanımı yazılı randevu ücreti</td></tr>
+  <tr><td>İ5</td><td>Yapay zekâ etiketi: stüdyo reklamında, sanal karakterde ve kanalda açıkça söylensin (B28'in açık sorusu). Kurgusal karakter olur; uydurma uzmanlık, sağlık iddiası ve birinci ağızdan ürün tanıklığı olmaz.</td><td class="rec">Etiket</td></tr>
+  <tr><td>İ6</td><td>Ücretsiz örnek: "deneme için ücretsiz video yok" hükmünüz aynen; yazı örneği, 37 $'lık örnek site ve en çok 5 iyileştirilmiş fotoğraf kapı açıcı olarak serbest olsun.</td><td class="rec">Evet</td></tr>
+  <tr><td>İ7</td><td>Kanal fabrikasında çizgi insan ve hayvan karakter kullanılabilir mi? 18 Ekim'de çocuk animasyonu için canlı tasviri hükme bağlanmamıştı.</td><td class="rec">Hüküm sizin; hayırsa harita, nesne ve sembol tarzıyla kurulur</td></tr>
+  <tr><td colspan="3" style="background:var(--soft);font-weight:600">Para çıkışı</td></tr>
+  <tr><td>P1</td><td>İlk deneme bütçesi ~100 $: 3 alan adı (~33 $), 2 takip numarası (~1–2 $/ay), DataForSEO 50 $ (tek sefer). Mağaza ve kanal hesapları açılışı sizin tıkınızla.</td><td class="rec">Evet</td></tr>
+</table>
+
+<h2><span class="n">9</span>Kanıt notu</h2>
+<ul class="small">
+  <li>Kanıtlı: şirket ölçümleri (bölüm 3), Stan'in on ürün tipi (ekran, LlhTEttKcwQ 27:40), Tilbury'nin 276 $ sonucu, Sequoia oranı, Anthropic, Stanford ve ABD Çalışma İstatistikleri sayıları, Voicebox ve Hamza'nın ses ölçümü, videolarda adı geçen sitelerin açık olup olmadığı.</li>
+  <li>İddia: video sahiplerinin kendi gelir rakamları (Kyle'ın 100 bin $'ı, Frey'in 150 bin $'ı, Gadzhi'nin etkinlik cirosu, "ayda 5–10 bin $" türü sözler). Çoğu konuşmacı aynı anda kurs ya da etkinlik satıyor.</li>
+  <li>Ölçülmedi: ses motorlarının bizim karttaki hızı ve sesi, mağaza fiyatları, varlık hatlarının birim maliyeti; hepsi ilk denemede ölçülür.</li>
+  <li>Ham analizler, okuyucu dosyaları ve hakem kararları oturum klasöründe; bütün linkler puanlarıyla Excel'inizde "Kasım 1 incelemeleri" sayfasında.</li>
+</ul>
+
+</body>
+</html>

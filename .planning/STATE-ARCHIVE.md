@@ -2669,3 +2669,40 @@ microphone <!-- CEO-OK: jarvis-silent-listening-voice-04-okayed-2026-09-14 -->. 
 - At their rows' turn: the server and a Meta business account (32), his Islamic rulings (46-49), the site's host (47).
 - Hermes, when the holding stands — the holding's server (B09/B11). Kept for later: where client sites are published.
 
+
+## Moved out of STATE.md on 2026-11-01 (revenue review session) — the dated paragraphs of 26-28 Oct as they stood
+
+2026-10-28 — B64 talked through on his word into the specs (d37916c1, 5745d93f, 21b7f0ad, 17f69817, 6199a3a5).
+2026-10-27 — B64 v2 gone over again with him. On his word <!-- CEO-OK: b64-after-the-deal-and-plan-merge-rule-2026-10-27 -->: the client flow after the deal is in the specs (REVENUE §7sexies 6 — an open job's messages go to its desk, revisions inside the contract are the same job, the first delivery of a 1,000 $ job reaches him and revisions go after the checks, a signed deal's master is found by code, B05 is B64's prerequisite); a valuable job's two plans merge by his rule (the stronger plan the base, what it lacks added unless it breaks the look or the system, the more beautiful of two, inside the brief, budget and due date; no second audit); his page's 1,000 $ site example follows A27/A28; B01, B05, B67 aligned (034eb500). Sol: no A, one B, seven C — fixed (c39c6e3f, `.planning/quick/20261027-b64-inceleme/SOL.md`). His video (Chase AI, "The Agentic OS Setup That Will 10x Claude Code", 25 Jun 2026): the oldest of that series, "10x" only in its title, nothing the holding lacks; its one cheap idea — mining our own sessions for repeated work with no door — offered, not started.
+
+2026-10-26 — B64 v2, how work flows, is in the specs: department heads leave a job's path and department budgets
+go, departments stay as cupboards of specialists, checklists and lessons
+<!-- CEO-OK: b64-v2-heads-and-dept-budgets-go-owner-by-job-2026-10-26 -->; one master per job type owns a job end to
+end, specialists come by a reason, standing work has a standing owner, and every seat, Hamza included, starts small
+and keeps its context lean (AGENT_ORCHESTRATION A26-A33) — the plan and its six decisions have his yes
+<!-- CEO-OK: b64-v2-plan-and-six-decisions-his-yes-2026-10-26 -->. Written by one writer on his word for this job
+only; 38 specs, the board, B64's `PLAN.md` and his page `is-akisi.html`, the July directive's copy (caa4750d); Sol's
+blind pass (one A, seven B) fixed (e79a81fb, `.planning/quick/20261012-b64-is-akisi/SOL-v2.md`). Specs only: the code
+still asks for a head per department. The same night: every halal/haram ruling comes to him
+<!-- CEO-OK: halal-verdicts-come-to-him-2026-10-26 -->; the platform-hub plan's two decisions wait for B22's
+synthesis <!-- CEO-OK: platform-hub-two-decisions-after-b22-synthesis-2026-10-26 -->.
+The merged olive page (Yeldeğirmeni, 25 Oct) is accepted by his eye as it stands (26 Oct)
+<!-- CEO-OK: olive-merged-page-accepted-by-his-eye-2026-10-26 -->. Measured on its fix rounds: resuming the master's
+~616k-token session cost 16.4, 15.0 and 8.2 $ a round; a fresh master with a written brief did another fix for
+5.62 $ — about three times cheaper a turn, not a controlled test.
+Earlier days (the olive runs, the walk, the studio):
+`.planning/STATE-ARCHIVE.md` § "Moved out of STATE.md on 2026-10-26 night".
+
+(The 2026-10-29 paragraph, full, as it stood:)
+
+2026-10-29 — His trial (B64 item 6, the Mavi Kuşak 3-page site, `/home/dxb/deneme-1/`, commits 3b70a92, 24e3170) is
+over and judged by his eye: arm A (master + four specialists, max, 28 Oct 22:28 → 29 Oct 06:59, 330 $, 8.4 h model
+time) far ahead; arm C (one master alone, A's brief byte for byte, 29 Oct 13:38-15:57, 37 $) a disappointment to him;
+the first, cut-short A also beat C; B (one session, no Ferrari bar) finished 28 Oct 20:55, ~28 $. No arm tested the
+holding's own setup: A's master and specialists were written for this çini job, not A26-A27's general master and
+cupboard specialists. On his word the web office plan talk opened: the deep analysis, his answers' questions and a
+proposal (name "DxB Global Web-Studio", a general site master and a short dedicated core team, the next trial on the
+same brief with the holding's tools, Ultra Code's best-of-several applied to the landing-page sample) are in
+`~/Desktop/DxB Global Web-Studio/` (1 his words + the handover, 2 the report, 3 the reply, 4 Mert Durmazer's
+AgencyOS re-weighed: client finding is the web office's missing front door; proposed Y9 + Y11 with it). His
+short-code effort word (medium for a few lines of narrow glue, never code at low) is in the effort hook.
