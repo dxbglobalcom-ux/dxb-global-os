@@ -37,7 +37,8 @@ in two families — asset (local lead sites, niche directories, digital products
 studio agency, pay-on-result front office, localisation and dubbing, digital-team setup) — each with its Ferrari
 version and first test; Report 1's fixes; his decisions K1–K12, İ1–İ7, P1. His Excel has the tab "Kasım 1
 incelemeleri". Voicebox is unused, not weak (0 profiles); Hamza speaks Piper on the CPU. His word that every tool is
-treated as licensed (never raised again) is in memory.
+treated as licensed (never raised again) is in memory. The target is €500,000 on his word — the €50 of
+2026-07-17 left D2, MASTER_PLAN, REVENUE_ENGINE_SPEC G6 and the board; its period and measure are his K2.
 2026-10-29 — His Mavi Kuşak trial is judged (arm A far ahead, 330 $; arm C a disappointment, 37 $); the web office
 plan talk is open — analysis, five questions and the proposal in `~/Desktop/DxB Global Web-Studio/`.
 Earlier days: `.planning/STATE-ARCHIVE.md` § "Moved out of STATE.md on 2026-11-01".
