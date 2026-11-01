@@ -230,7 +230,7 @@ Unit: state machines (every §10 transition legal/illegal), score determinism, h
 
 ## 21. Acceptance criteria
 
-1. CEO creates+activates €50 objective from dashboard; `v_objective_progress` renders target/realized/gap from real ledger math.
+1. CEO creates+activates an objective from dashboard; `v_objective_progress` renders target/realized/gap from real ledger math.
 2. Seeded scan job registers a fixture opportunity; scoring writes 12 dims; haram fixture auto-`review`+blocked from `piloting` (fn error text cites G2).
 3. Hamza-path proposal without evidence_refs is rejected by fn (G3 proof).
 4. New engine created via control fn (no migration); ledger row accepted with new engine slug; enum-era rows intact.

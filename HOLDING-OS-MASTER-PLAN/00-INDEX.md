@@ -115,7 +115,7 @@ Wave 4 closing note: spec'lerin "kayıtlı ek"leri (yeni kolon/tablo/fn envanter
 | U6 | Visual direction: Iron Man / JARVIS HUD; champagne + obsidian kept; login and shell themes merged | CEO 2026-07-11 | [[DESIGN_SYSTEM]] |
 | U7 | Dashboard recovery moved ahead of E4; CEO chose design recipe C (DXB Hybrid) off a 22-reference board | CEO 2026-07-11 | `references/design-direction/` + `command-nav.ts` |
 | U8 | Route table gains `/ai/mcp`; TR/EN switch moved to the command bar | CEO eye test 2026-07-11 | [[CEO_COMMAND_CENTER_SPEC]] §7 |
-| U9 | Revenue-First wave D1-D9: free-first growth, first target €50, voice v1, Islamic tone, library sweep | CEO 2026-07-16/17 | [[00-CEO-DIRECTIVE-REVENUE-FIRST]] |
+| U9 | Revenue-First wave D1-D9: free-first growth, no fixed figure as a basis (D2, 2026-11-01), voice v1, Islamic tone, library sweep | CEO 2026-07-16/17 | [[00-CEO-DIRECTIVE-REVENUE-FIRST]] |
 | U10 | Revenue engines become data, not a frozen list | "Engines are a floor, not a ceiling" | [[REVENUE_ENGINE_SPEC]] §0/§11 |
 | U11 | Persona template 11 → 12 sections; §12 Discipline DNA & Islamic conduct is constitutional, identical in every persona | CEO D5 + D6 | [[EMPLOYEE_PERSONA_STANDARD]] G8 |
 | U12 | The separate runner package was never born; its duties live in three existing parts — the spec line is cancelled | Audit F-05 | [[AGENT_ORCHESTRATION_SPEC]] A9 |

@@ -38,7 +38,9 @@ studio agency, pay-on-result front office, localisation and dubbing, digital-tea
 version and first test; Report 1's fixes; his decisions K1–K12, İ1–İ7, P1. His Excel has the tab "Kasım 1
 incelemeleri". Voicebox is unused, not weak (0 profiles); Hamza speaks Piper on the CPU. His word that every tool is
 treated as licensed (never raised again) is in memory. The July €50 objective is void on his word and
-left D2, MASTER_PLAN, REVENUE_ENGINE_SPEC G6 and the board; no fixed figure replaces it.
+left D2, MASTER_PLAN, REVENUE_ENGINE_SPEC G6 and the board; no fixed figure replaces it. His voice order: Voice
+Studio and Voicebox both installed in the system and tested, used by situation, one covering for the other —
+written into B12 (B43 links it) and VOICE_INTERACTION_SPEC §3.2.
 2026-10-29 — His Mavi Kuşak trial is judged (arm A far ahead, 330 $; arm C a disappointment, 37 $); the web office
 plan talk is open — analysis, five questions and the proposal in `~/Desktop/DxB Global Web-Studio/`.
 Earlier days: `.planning/STATE-ARCHIVE.md` § "Moved out of STATE.md on 2026-11-01".

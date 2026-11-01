@@ -94,3 +94,8 @@ proposal in turbo/kararlar.jsonl, not his approval.
 31. **Voice Studio, not Voicebox.** He asked about Voice Studio; the report had steered the test to Voicebox's
     engines plus a separately installed VoxCPM2, though VoxCPM2 ships inside Voice Studio and the licence reason
     against Voice Studio was gone. CALL: install Voice Studio in Voicebox's place (K8), blind test inside it.
+32. **Voice, his decision.** Not Voice Studio in Voicebox's place: both installed in the holding's system, both
+    tested, used by situation, one covering when the other fails; ElevenLabs the paid twin. Written on his order
+    into B12 (B43 links it), VOICE_INTERACTION_SPEC §3.2 (registered adaptation) and the ledger
+    (voice-studio-and-voicebox-both-in-the-system-2026-11-01). The voice spec's two €50 gates (V3, §3.3) became
+    "realized net profit above zero" (D1), and the index summary and an acceptance line lost the €50.
