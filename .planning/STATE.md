@@ -84,8 +84,8 @@ Earlier days: `.planning/STATE-ARCHIVE.md` § "Moved out of STATE.md on 2026-11-
 ## Waiting on his approval
 
 - Revenue, Rapor 2 (`~/Desktop/Gelir Kaynakları/2 - Gelir üretim hatları ve kararlarınız 2026-11-01.pdf`, § 8):
-  K8 (after he listens to the voices) and İ4 (the pay-on-result fee, explained 2 Nov). The rest answered 2 Nov
-  (K2, K9, K10, K11, İ1–İ3, İ6 as recommended; İ5 and İ7 his own rulings — REVENUE-OPPORTUNITIES §D). Also asked: whether his 1 Nov licence word becomes a standing rule beyond the memory
+  K8 (after he listens to the voices). The rest answered 2 Nov (K2, K9, K10 for now, K11, İ1–İ3, İ6 as
+  recommended; İ4 a package; İ5 and İ7 his own rulings — REVENUE-OPPORTUNITIES §D). Also asked: whether his 1 Nov licence word becomes a standing rule beyond the memory
   note.
 - The web office, five questions (report § 9 and file 4): the name DxB Global Web-Studio; the general site master and
   core team written now (C41's first slice, ahead of its turn); the next trial on the Mavi Kuşak brief now; the 213
