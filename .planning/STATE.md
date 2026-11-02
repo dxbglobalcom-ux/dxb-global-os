@@ -27,6 +27,17 @@ not here. What is accepted is read from `scripts/governance/ceo-approvals.json`,
 
 ## Where we left off
 
+2026-11-02 — Revenue, closing Rapor 2 and one more video, on his word. His Rapor 2 rulings are written where the work
+sits (ledger `rapor2-decisions-his-yes-and-rulings-2026-11-02`; REVENUE-OPPORTUNITIES §D "Rapor 2 §8 hükümleri"; B83,
+B05, B28, C41, REVENUE_ENGINE_SPEC §7septies 5): K2, K9, K11, İ1–İ3, İ6 as recommended; K10 halal for now (the five
+26 Jul rows stay `pending` in the company database until each comes before him); İ4 a package (fixed fee + defined
+per-appointment fee); İ5 no AI label anywhere for now, the legal side researched when the work starts; İ7 drawn
+characters free, nothing indecent; K8 waits on his ear. The Koerner Office (Chris Koerner) is a source channel on B83,
+a team to mine it when its turn comes. Nate Herk's "4 Claude Systems" (BQJRLZ2q_Ns) watched by Sonnet, analysed at
+xhigh on his word, then rewritten after his rebuke (the methods are real; analyse them as systems to build — memory
+`revenue-videos-are-real-systems-to-build-2026-11-02`): Rapor 3 in `~/Desktop/Gelir Kaynakları/` — company brain and
+field voice note → document in H9, the intake chain in H7, Creator OS in H6, one shared sales pipe with the web
+office's client finding; three counted halal for now. Then the web office's five questions were put to him again.
 2026-11-01 — Revenue, on his word (dxb-team2; the watch-links important review): twelve videos (Avenox second
 pass, Mark Tilbury ×5, Chris Koerner ×3, Doruk Yalçınsoy, Yüzsüz Ninja, the open-source tools video) read in full by
 two blind readers each (Opus + Fable), the decisive screens fetched, merged by the lead at max
@@ -51,10 +62,11 @@ Earlier days: `.planning/STATE-ARCHIVE.md` § "Moved out of STATE.md on 2026-11-
 
 ## Next
 
-0. Revenue — the lines are on the board (B83 and the notes on its nine related rows); each is built at its row's rank
-   in the board's reorder and bench-tested with it, sold when the key is turned. His open Rapor 2 decisions below.
+0. Revenue — the lines are on the board (B83 and the notes on its related rows); each is built at its row's rank
+   in the board's reorder and bench-tested with it, sold when the key is turned. Rapor 3's suggested order for Nate
+   Herk's systems (company brain first, built on the holding's own V2 memory) goes into that reorder.
 1. The web office plan talk (dxb-team2, max), from `~/Desktop/DxB Global Web-Studio/`: his answers to the five
-   questions below; then the plan by two sealed writers and Sol's blind audit, once to him. A27's rule on when a
+   questions below (put to him again 2026-11-02; he is reading); then the plan by two sealed writers and Sol's blind audit, once to him. A27's rule on when a
    master splits work waits for the next trial run with the holding's own setup.
 2. After the holding is built out, C41: every persona rewritten facing the outside world and knowing the holding's
    studio, skills and tools; the job-type masters' personas are one leg of it.
