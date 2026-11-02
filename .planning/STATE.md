@@ -100,6 +100,11 @@ Earlier days: `.planning/STATE-ARCHIVE.md` § "Moved out of STATE.md on 2026-11-
 
 ## Waiting on his approval
 
+- The 12 personas the scan flagged against the showy rule, read line by line on 2 Nov evening: 3 clearly against
+  (design-ui-designer, engineering-frontend-developer, project-shepherd), 3 partly (head-of-design,
+  testing-evidence-collector, document-generator), 6 not (inner screen, infrastructure or code work). Whether to fix
+  them through dxb-persona under his 31 Oct word ("nereden bulursan bul yok et") waits on his word; the report's
+  "31 Ekim'de dokunma" sentence was wrong and is corrected in RAPOR.md, rapor.html and his file 5.
 - His eye on site D (Mavi Kuşak, one Opus alone, 2 Nov) beside A, B and C — on the phone as well
   (`.planning/quick/20261102-mavi-kusak-tek-opus/NOTE.md`).
 - Revenue, Rapor 2 (`~/Desktop/Gelir Kaynakları/2 - Gelir üretim hatları ve kararlarınız 2026-11-01.pdf`, § 8):

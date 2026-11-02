@@ -90,7 +90,7 @@ Stüdyoya bir tarz dolabı girdi. Varsayılan tarz gösterişli ve lüks ev tarz
 | Başka bir personayla aynı işi yapıyor | 29 |
 | Gösteriş kuralınıza ters düşebilecek bir satır taşıyor | 12 |
 
-Ters düşebilecek satırlar, 31 Ekim'deki temizlikten sonra da kalmış olanlar: analytics-reporter, media-delivery-qc, engineering-frontend-developer, project-shepherd, head-of-design, testing-evidence-collector, design-ui-designer, platform-head, document-generator, design-whimsy-injector, minimal-change-engineer, social-media-orchestrator. Bir kısmı sadelik değil, işin doğası (örneğin en az değişiklik yapan mühendis); her biri ayrıca okunmalı. 31 Ekim'deki sözünüzle personalara dokunulmadı.
+Ters düşebilecek satırlar, 31 Ekim'deki temizlikten sonra da kalmış olanlar: analytics-reporter, media-delivery-qc, engineering-frontend-developer, project-shepherd, head-of-design, testing-evidence-collector, design-ui-designer, platform-head, document-generator, design-whimsy-injector, minimal-change-engineer, social-media-orchestrator. Bir kısmı sadelik değil, işin doğası (örneğin en az değişiklik yapan mühendis); her biri ayrıca okunmalı. Tarama salt okunur yapıldı; hiçbirine dokunulmadı. Düzeltme 2 Kasım akşamı: 31 Ekim'deki sözünüz "dokunma" değil, "nereden bulursan bul yok et"tir (onay defteri, sites-showy-luxury-wow-plainness-words-banned-2026-10-31); bu satırlar o temizlikte gözden kaçmış. Satır satır okununca: 3'ü açıkça ters (design-ui-designer, engineering-frontend-developer, project-shepherd), 3'ü kısmen (head-of-design, testing-evidence-collector, document-generator), 6'sı ters değil — iç ekran, altyapı ya da kod işi. Düzeltilip düzeltilmeyeceği sizin sözünüzü bekliyor.
 
 ## 4 Sırada
 
