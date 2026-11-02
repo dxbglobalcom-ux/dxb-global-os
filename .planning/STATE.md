@@ -108,7 +108,8 @@ Earlier days: `.planning/STATE-ARCHIVE.md` § "Moved out of STATE.md on 2026-11-
   note.
 - DxB Web Studio (the web office; name his word 2026-11-02): his answers — no master or core team written yet,
   no trial yet; first how the studio works is decided from the four files in `~/Desktop/DxB Global Web-Studio/`
-  (read 2026-11-02); the 213 personas scanned by content (read-only) and linked to the studio — reference or
+  (read 2026-11-02); the 213 personas scanned by content 2026-11-02 (read-only; 13 core, 69 ring — report file 5 in
+  that folder, PDF and .md) and to be linked to the studio — reference or
   copy, how departments and their people relate to it, and the studio's own area on the dashboard (its team seen
   like the Media Studio's) are the plan's questions, talked at max; Y9 and Y11 later, markers left in ORDER.md.
   The studio's ScrollCraft output is a library on his word (`ComfyUI/output/scrollcraft/KUTUPHANE.tsv`); approved
