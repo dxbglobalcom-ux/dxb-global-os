@@ -236,6 +236,9 @@
 - **Teklif toplama ajanı** — [JhyVSrQPVSg 01:50](https://www.youtube.com/watch?v=JhyVSrQPVSg&t=110) · `K-O 1.1`, `K-F V1-A`. İki biçimi var: holdingin kendi alımlarında tasarruf; ve müşteri adına teklif toplama danışmanlığı, %3–6 ya da sabit ücretle. Neden sonra: müşteri ağı ve sektör bilgisi ister.
 - **Yapay zekâ ile uygulama / SaaS** — [ytAW1_g2IfI 22:29](https://www.youtube.com/watch?v=ytAW1_g2IfI&t=1349), [FqsAALrRhj4 28. dk](https://www.youtube.com/watch?v=FqsAALrRhj4&t=1680) · `T-O M7`, `T-F 2.7`; Rapor 1 E. Ajanı ürünleştirmek (tazminat bulucu, telefonla hatırlatıcı) — [JhyVSrQPVSg 38:31](https://www.youtube.com/watch?v=JhyVSrQPVSg&t=2311) · `K-O 1.6`.
 
+### Kaynak kanallar — vakti gelince ekip tarar
+- **The Koerner Office — Chris Koerner** · <https://www.youtube.com/@thekoerneroffice/videos> · CEO, 2026-11-02: *"Bu linkin sahibi kayda geçsin. Bu adamda farklı gelir kaynakları elde etme gelir üretmeyle ilgili videoları var. … Daha sonra vakti gelince not olarak tahtaya yazılsın ilgili satıra. Buradan istifade edilsin. Ekip çalıştırılsın."* Okunanlar (1 Kasım): JhyVSrQPVSg, -u0JuVUdPQA, xUZYy3hCRUM (`K-O`, `K-F`). Kanalın geri kalanı okunmadı; 2 Kasım'da son 40 videonun başlığı alındı, çoğu podcast bölümü ve aynı bölümün "[NO ADS]" ikizi var (ikizler bir kez okunur). Vakti gelince bir ekip videoları izler; çıkan her yöntem bu bölüme kaynak iziyle yazılır ve ilgili hattın satırına bağlanır (B83).
+
 ### Hükmü CEO'da bekleyenler (Rapor 2 §8)
 İ1 seçemediğimiz reklam · İ2 dropshipping ([ytAW1_g2IfI 11:02](https://www.youtube.com/watch?v=ytAW1_g2IfI&t=662), [JhyVSrQPVSg 19:02](https://www.youtube.com/watch?v=JhyVSrQPVSg&t=1142); öneri hayır) · İ3 affiliate ([FqsAALrRhj4 42. dk](https://www.youtube.com/watch?v=FqsAALrRhj4&t=2520), [LlhTEttKcwQ 24:16](https://www.youtube.com/watch?v=LlhTEttKcwQ&t=1456); öneri yalnız onaylı tek helal ürün) · İ4 randevu başına ücret · İ5 yapay zekâ etiketi · İ6 ücretsiz örnek · İ7 çizgi insan ve hayvan.
 
