@@ -69,7 +69,7 @@ export default async function ChatPage({
     .from("v_chat_threads")
     // `has_briefing` exists on the view and is deliberately NOT read here: the
     // thread's own name says "sabah brifingi", so a second marker beside it
-    // would be an information-free field (CEO minimalism ruling 2026-07-18).
+    // would be an information-free field (CEO no-empty-field ruling 2026-07-18).
     .select("id, title, title_tr, last_message_at, messages, has_voice")
     .order("last_message_at", { ascending: false })
     .limit(30);

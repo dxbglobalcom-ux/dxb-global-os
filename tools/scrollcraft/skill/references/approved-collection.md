@@ -37,7 +37,7 @@ Before generating assets, write a layer contract:
 | Far environment | Clean background plate | Smallest displacement | No duplicate extracted subject |
 | Midground | Architecture, landscape, or a meaningful product surface | Moderate displacement | Establishes scale and distance |
 | Focal subject | Real product, alpha cutout, or rendered object | Deliberate travel/rotation | Stays on its support when grounded |
-| Near foreground | Cutout, framing element, or physical detail | Strongest restrained displacement | Frames the subject; preserves key copy |
+| Near foreground | Cutout, framing element, or physical detail | Strongest displacement | Frames the subject; preserves key copy |
 | Atmosphere | Light, mist, dust, or translucent material if appropriate | Slow independent change | Creates separation without washing out the page |
 | Typography and controls | Semantic HTML | Stable or carefully staged | Complete headline and primary action remain readable |
 

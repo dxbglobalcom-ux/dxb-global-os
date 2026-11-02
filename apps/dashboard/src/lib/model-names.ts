@@ -31,7 +31,7 @@ export async function fetchModelNames(supabase: {
 
 /**
  * The label to show. Falls back to the id rather than to an empty cell: an
- * honest technical string beats a blank one (CEO minimalism ruling — a field is
+ * honest technical string beats a blank one (CEO no-empty-field ruling — a field is
  * rendered only when its value is informative, and the id still is).
  */
 export function modelLabel(names: ModelNameMap | undefined, id: string): string {

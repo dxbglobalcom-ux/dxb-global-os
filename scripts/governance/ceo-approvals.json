@@ -2978,6 +2978,14 @@
     "session": "Opus 5.5 session 060d89e4 — heard first-hand, 2026-11-01.",
     "where": "HOLDING-OS-MASTER-PLAN/00-CEO-DIRECTIVE-REVENUE-FIRST.md D2 · MASTER_PLAN.md §1 item 2 · REVENUE_ENGINE_SPEC.md G6"
   },
+  "sites-showy-luxury-wow-plainness-words-banned-2026-10-31": {
+    "date": "2026-10-31",
+    "what": "Websites and visual work, a client's or a holding company's, are showy and luxurious and make whoever opens them say 'wow'. No plan, brief, persona, skill or design note steers them toward plainness, and the words of that direction are banned in them (examples: sade, sadelik, basit, yalın, minimal, minimalist, gösterişsiz, 'gösteriş yok', abartısız; restraint, understated, simple, 'less is more', 'never glitz / flashy'). The one exception: the CEO or the client asks for it explicitly in their own words, and the plan quotes them. Accessibility (reduced motion, contrast) is not plainness and stays. The same day, on his order, every standing restraint rule was deleted from personas, specs, the design plugin and ScrollCraft (LAW A).",
+    "verbatim": "Lan şu sadelik madelik falan filan bunun hepsini yok et lan. Nereden bulursan bul yok et hepsini. … Ya gösteriş yok, ne ya? Ya bu tarz şeyler kelimeler belirlensin, tamam mı? Ve yasaklansın. Örnek verilsin yani, sadelik, gösteriş yok. Tamam mı? Bunun aksi belli işte CEO tarafından belirtilmedikçe veya müşteri tarafından kesinlikle planlar bu yönde yasaklanmıştır. Bir web sitede gösteriş yok ifadesi yasaktır. Aksine gösterişli olmalı. Lüks olmalı. Açan wow demeli. Anlatabildim mi? Aynı şey sadelik için de geçer. Basit. Kelimesi için de geçer. Minimalist. Kelimesi için de geçer. Böyle bir şey yok ya. Abi görsel tatminkarlık isteyen işlerde web sitesi ofisi bu ya. En mükemmel göze hitap eden şekilde yapılmalı.",
+    "conditions": "Told where it would be written (AGENT_ORCHESTRATION A27, ScrollCraft's DXB house rules, memory), he answered: 'Tamam, yapıştır gitsin, bitirince işi.' His own directive text for the holding's command surface (00-CEO-DIRECTIVE-BEKLENTILER.md: 'Motion sakin', 'Kullanma: Flashy effects') was not touched — his own sentences, his call.",
+    "session": "Opus 5.5 session c5276ca5 — heard first-hand, 2026-10-31.",
+    "where": "HOLDING-OS-MASTER-PLAN/AGENT_ORCHESTRATION_SPEC.md A27 · tools/scrollcraft/skill/SKILL.md DXB house rule 4"
+  },
   "voice-studio-and-voicebox-both-in-the-system-2026-11-01": {
     "date": "2026-11-01",
     "what": "Voice Studio (debpalash/VoiceStudio) and Voicebox (jamiepine/voicebox) — the holding's ElevenLabs alternatives — are both installed inside the holding's system and both tested; the voice layer uses them by situation, and when one fails the other is used. Written to the board's related rows on his order.",

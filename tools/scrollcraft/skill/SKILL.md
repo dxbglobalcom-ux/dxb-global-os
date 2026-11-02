@@ -25,7 +25,7 @@ allowed-tools: Bash, Read, Write, Edit, Glob, Grep, AskUserQuestion
 ## DXB HOUSE RULES — these override anything below them
 
 This is the DXB Global Holding's own copy of the upstream skill, vendored at
-`tools/scrollcraft/` and merged with upstream release 0.3.1 (commit `75d81f7`) on 2026-10-15; first vendored at `e957985`. Three rules bind it here and they
+`tools/scrollcraft/` and merged with upstream release 0.3.1 (commit `75d81f7`) on 2026-10-15; first vendored at `e957985`. Four rules bind it here and they
 outrank every instruction further down this file.
 
 1. **OUTWARD-FACING SITES ONLY.** Use this for the websites of the holding's own companies and
@@ -41,6 +41,13 @@ outrank every instruction further down this file.
    client's own material.
 3. **NO SECRET OF THE HOLDING GOES NEAR IT.** No script in this skill reads a key, a `.env` or any
    other secret. Do not add one that does.
+4. **SHOWY, LUXURIOUS, WOW: NEVER PLAIN.** The site is showy and luxurious, and whoever opens it
+   says "wow". No plan, brief, direction or design note steers it toward plainness, and the words
+   of that direction are banned in them, for example: sade, sadelik, basit, yalın, minimal,
+   minimalist, gösterişsiz, "gösteriş yok", abartısız; restraint, understated, simple,
+   "less is more", "never glitz / flashy". The one exception: the CEO or the client asks for it
+   explicitly, in their own words, and the plan quotes those words. Accessibility (reduced motion,
+   contrast) is not plainness and stays.
 
 Intake record: study card `.planning/research/study-cards/scrollcraft.md` · security scan
 `.planning/research/skillspector/scrollcraft-e957985.txt`.
@@ -93,7 +100,7 @@ readable and the scene tells one clear story.
 
 Read [references/hero-depth.md](references/hero-depth.md) before planning the hero
 or generating its assets. It covers clean plates, genuine alpha cutouts, shared
-contact anchors, typography between planes, restrained scroll choreography,
+contact anchors, typography between planes, scroll choreography,
 mobile art direction, and visual acceptance, with the approved Sonder example.
 Use the composition that fits the chosen grammar; do not repeat Sonder's scene
 or impose pinning on a grammar that forbids it. Honor explicit static or simpler

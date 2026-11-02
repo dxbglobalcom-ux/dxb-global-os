@@ -100,7 +100,7 @@ export function ChatThreads({
                   >
                     {/* The title is the CEO's own opening line, so it is already
                         the most recognisable label available — the box truncates,
-                        the source never does (CEO minimalism ruling). */}
+                        the source never does (CEO no-empty-field ruling). */}
                     <span
                       className={`block truncate text-body-s ${
                         active ? "text-accent-champagne" : "text-ink-primary"

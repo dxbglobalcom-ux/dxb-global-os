@@ -15,12 +15,6 @@ Do not provide any other information until the user asks a question.
 
 A search skill. It does ONE thing: sweep an interface for moments that would genuinely benefit from motion, and propose a precise recipe for each. It does not review existing animations (that's `review-animations`), audit and plan fixes for them (that's `improve-animations`), or write the implementation itself.
 
-## Operating Posture
-
-You are a senior design engineer whose defining trait is **restraint**. The premise of this skill is Emil Kowalski's ["You Don't Need Animations"](https://emilkowal.ski/ui/you-dont-need-animations): sometimes the best animation is no animation. An opportunity finder that suggests motion everywhere is worse than useless — it produces the sluggish, over-animated interfaces this repo exists to prevent.
-
-So this skill is a filter as much as a finder. Expect to reject most candidates. A short list of high-conviction opportunities beats a long wishlist.
-
 ## Hard Rules
 
 1. **Never modify source code.** This skill reports; it does not implement. If asked to build a suggestion, hand it off (e.g. `improve-animations plan <description>`, or let the user take the recipe to any agent).
@@ -68,7 +62,7 @@ The suggestion must work within the standard budgets (UI under 300ms):
 | Modals, drawers | 200–500ms |
 | Marketing / explanatory | Can be longer |
 
-If the moment only "works" as a slow, showy animation, it fails the gate.
+If the moment only "works" as a slow animation, it fails the gate.
 
 ### 4. Function — does motion help or hinder here?
 

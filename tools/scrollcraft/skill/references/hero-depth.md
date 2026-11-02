@@ -26,9 +26,9 @@ Use supplied photography or authorized image-generation tools. For a photographi
 
 Atmosphere can occupy both a rear and a front plane when it supports the scene. It should create separation, not obscure the subject or wash out the whole image.
 
-## Choreograph restrained motion
+## Choreograph motion
 
-- Use one coherent camera idea and purposeful transitions. Premium means controlled movement and good timing, not constant movement everywhere.
+- Use one coherent camera idea and purposeful transitions.
 - Native sticky scrolling with independently transformed planes can provide depth without WebGL or a generated video. Choose heavier tools only when they improve the requested experience.
 - Keep essential copy and calls to action as semantic HTML. Establish deliberate layer order for typography, subject, foreground, and atmosphere.
 - Prefer composited transforms and opacity, a shared scroll progress value, and requestAnimationFrame updates. Avoid rendering the whole page again on every scroll tick.

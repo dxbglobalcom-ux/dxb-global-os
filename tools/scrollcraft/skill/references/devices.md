@@ -313,7 +313,7 @@ exists to avoid.
 
 ## 6. `parallax`: layers at different rates
 
-Depth from differential movement. Subtle or nothing: past roughly 200px of total
+Depth from differential movement. Past roughly 200px of total
 travel it stops reading as depth and starts reading as a bug.
 
 ```html
@@ -463,8 +463,7 @@ over 620ms on an ease-out curve, children staggered so the eye is led down the
 stack in reading order, and the trigger set slightly inside the viewport
 (`-12%` bottom margin) so it fires when the reader is looking, not when the
 first pixel clears the fold. A fade with no rise reads as a loading glitch. A
-rise past 24px reads as a slide. Larger, slower, or bouncier is never more
-premium; the restraint is the signal.
+rise past 24px reads as a slide.
 
 **A flow section directly after a pinned act takes reduced padding.** The pinned
 stage needs a full viewport to scroll off, and full `--sc-section` padding on

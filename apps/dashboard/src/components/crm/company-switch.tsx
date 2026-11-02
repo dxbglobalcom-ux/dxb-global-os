@@ -19,7 +19,7 @@ export function CompanySwitch({
   const router = useRouter();
   if (all.length <= 1) {
     // Single-company holding: an info-free selector may not render
-    // (CEO minimalism ruling) — the honest state is the company name.
+    // (CEO no-empty-field ruling) — the honest state is the company name.
     return (
       <span className="font-data text-caption text-ink-muted">
         {all[0]?.name ?? ""}

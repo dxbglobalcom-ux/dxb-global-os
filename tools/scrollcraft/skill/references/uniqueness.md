@@ -456,7 +456,7 @@ The full range is available when the brand's vibe asks for it:
 | Playful | Bouncy, coloured, informal | Kids, games, consumer apps, community |
 | Retro | Specific to a decade, not vaguely nostalgic | Heritage brands, music, anything with a real lineage |
 | Dense | Information-forward, small type, high count | Data products, catalogues, reference, finance |
-| Editorial | Paper, folios, measure, restraint | Long-form substance |
+| Editorial | Paper, folios, measure | Long-form substance |
 | Premium-minimal | Quiet, dark, one accent, air | Luxury, and only when asked for |
 
 Go where the interview points. If the human says "loud" and the page comes back

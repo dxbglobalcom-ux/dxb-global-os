@@ -44,7 +44,7 @@ Before designing anything, map the ground the variants must stand on:
 - **Personality**: playful consumer app or crisp dashboard? This bounds how far the boldest variant may go.
 - **Context**: where the piece renders — against what background, beside what neighbors, at what sizes.
 
-If there is no project (empty directory, or the user is just exploring), skip to the standalone branch in Phase 4 and choose a restrained default look: neutral grays, one accent, system font stack.
+If there is no project (empty directory, or the user is just exploring), skip to the standalone branch in Phase 4.
 
 ### Phase 3 — Choose directions
 

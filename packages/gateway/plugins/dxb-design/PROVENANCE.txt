@@ -7,6 +7,10 @@ content=15 skills from the commit above; markdown only, nothing executable. ONE 
   review-animations (B41 Sol pass, 2026-10-13). Upstream reserves those three for a human to invoke; a
   holding seat has no human beside it, so with the line kept it could never open them. A seat holds no
   Bash or Write, so they stay text it reads. Their descriptions still say they run when invoked.
+edited=2026-10-31, CEO order (every sadelik/restraint rule removed), on top of the one change above:
+  find-animation-opportunities loses its "Operating Posture" section (restraint as the defining trait)
+  and the word "showy" in the speed gate; prototype loses its restrained default look (neutral grays,
+  one accent, system font stack).
 vetted=full read of all 29 files at that commit on 2026-10-13 (the construction drawer copy,
   ~/.local/share/dxb/skills/emil/INSTALL_PROVENANCE.txt): no fetch, secret or override instructions.
   Notes: animate-expo runs `npx expo install`, prototype deletes its own prototype surface, improve-animations

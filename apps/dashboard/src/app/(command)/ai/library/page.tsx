@@ -243,7 +243,7 @@ export default async function LibraryPage({
               <div className="overflow-x-auto">
                 {/* List = scan surface: name · owner · review · updated.
                     Version (406/439 empty), access and usage counts are
-                    info-thin at row level (CEO minimalism ruling — zeros are
+                    info-thin at row level (CEO no-empty-field ruling — zeros are
                     noise); the detail panel's fields + Erişim/Kullanım tabs
                     carry them. min-w keeps columns readable in a narrow
                     container — the wrapper then scrolls instead of clipping. */}
