@@ -41,7 +41,7 @@ const O=process.argv[2]; const B='http://localhost:8765/';
  ok('bad e-mail rejected', await p.evaluate(()=>document.querySelector('[data-alan=ulasim]').classList.contains('yanlis')));
  await p.fill('#eposta','ayse@ornek.com');
  // file
- await p.setInputFiles('#gorsel',{name:'mutfak.png',mimeType:'image/png',buffer:require('fs').readFileSync('/home/dxb/Desktop/Mavi Kuşak - Opus tek başına 2026-11-02/img/kusak.webp')});
+ await p.setInputFiles('#gorsel',{name:'mutfak.png',mimeType:'image/png',buffer:require('fs').readFileSync('/home/dxb/Desktop/Örnek landing pageler/28 Ekim - Mavi Kuşak Çini/D - Opus tek başına, 20 dakika (2 Kasım)/img/kusak.webp')});
  await p.waitForTimeout(300); ok('image preview', (await p.locator('.onizleme figure').count())===1);
  // reload keeps text
  await p.reload({waitUntil:'networkidle'}); await p.waitForTimeout(500);

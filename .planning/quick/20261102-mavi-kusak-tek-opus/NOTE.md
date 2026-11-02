@@ -22,6 +22,6 @@ one hour at most.
 Where it is:
 - viewable: `~/Desktop/Örnek landing pageler/28 Ekim - Mavi Kuşak Çini/D - Opus tek başına, 20 dakika (2 Kasım)/`
   (same folder now also holds arms A, A-first, B and C, copied from `~/deneme-1/`, and the brief);
-  also `~/Desktop/Mavi Kuşak - Opus tek başına 2026-11-02/`
+  (the separate desktop copy was deleted on his word, 2 Nov evening — identical, checked with diff -rq)
 - phone: https://claude.ai/artifact/WM2enaVXTkPWiCtnv4ZPSP (private)
 - code: `site/` here
