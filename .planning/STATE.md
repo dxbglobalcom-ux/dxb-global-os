@@ -65,8 +65,8 @@ Earlier days: `.planning/STATE-ARCHIVE.md` § "Moved out of STATE.md on 2026-11-
 0. Revenue — the lines are on the board (B83 and the notes on its related rows); each is built at its row's rank
    in the board's reorder and bench-tested with it, sold when the key is turned. Rapor 3's suggested order for Nate
    Herk's systems (company brain first, built on the holding's own V2 memory) goes into that reorder.
-1. The web office plan talk (dxb-team2, max), from `~/Desktop/DxB Global Web-Studio/`: his answers to the five
-   questions below (put to him again 2026-11-02; he is reading); the style cupboard and its first card, Precision,
+1. The DxB Web Studio plan talk (dxb-team2, max), from `~/Desktop/DxB Global Web-Studio/`: how the studio works,
+   the persona links and its dashboard area (his answers 2026-11-02, below); the style cupboard and its first card, Precision,
    agreed as input (`.planning/quick/20261102-tarz-dolabi/DESIGN.md`, his yes 2026-11-02); then the plan by two sealed writers and Sol's blind audit, once to him. A27's rule on when a
    master splits work waits for the next trial run with the holding's own setup.
 2. After the holding is built out, C41: every persona rewritten facing the outside world and knowing the holding's
@@ -100,14 +100,13 @@ Earlier days: `.planning/STATE-ARCHIVE.md` § "Moved out of STATE.md on 2026-11-
   K8 (after he listens to the voices). The rest answered 2 Nov (K2, K9, K10 for now, K11, İ1–İ3, İ6 as
   recommended; İ4 a package; İ5 and İ7 his own rulings — REVENUE-OPPORTUNITIES §D). Also asked: whether his 1 Nov licence word becomes a standing rule beyond the memory
   note.
-- The web office, five questions (report § 9 and file 4): the name DxB Global Web-Studio; the general site master and
-  core team written now (C41's first slice, ahead of its turn); the next trial on the Mavi Kuşak brief now; the 213
-  personas read and marked for the web office by helpers; Y9 (client finding) and Y11 (the holding's own site) joined
-  to the web office plan. Morning read first: `~/Desktop/DxB Global Web-Studio/0 - SABAH İLK OKUNACAK …`; his cut-off
-  "Hamza'nın elleri şimdi şey yapacak" asked. The studio's ScrollCraft output is a library on his word
-  (`ComfyUI/output/scrollcraft/KUTUPHANE.tsv`, four project folders; rejected and broken deleted for good).
-  On his word: approved and used studio output goes into the library — a step of the web office plan; looking there before
-  generating waits until the library is rich.
+- DxB Web Studio (the web office; name his word 2026-11-02): his answers — no master or core team written yet,
+  no trial yet; first how the studio works is decided from the four files in `~/Desktop/DxB Global Web-Studio/`
+  (read 2026-11-02); the 213 personas scanned by content (read-only) and linked to the studio — reference or
+  copy, how departments and their people relate to it, and the studio's own area on the dashboard (its team seen
+  like the Media Studio's) are the plan's questions, talked at max; Y9 and Y11 later, markers left in ORDER.md.
+  The studio's ScrollCraft output is a library on his word (`ComfyUI/output/scrollcraft/KUTUPHANE.tsv`); approved
+  and used studio output goes into it — a step of the plan; looking there before generating waits until it is rich.
 - Still open from 22 Oct: a light lane for small, low-risk jobs.
 - Whether Ultra Code joins the holding (the real one was never run — arm B was an imitation); deleting the obsolete
   `scripts/test/e2e-login.mjs`.

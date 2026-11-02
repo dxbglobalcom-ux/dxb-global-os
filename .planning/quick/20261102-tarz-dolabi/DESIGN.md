@@ -1,6 +1,6 @@
-# The Web-Studio's style cupboard — design agreed in the talk (2026-11-02)
+# DxB Web Studio's style cupboard — design agreed in the talk (2026-11-02)
 
-Input to the web office plan (DxB Global Web-Studio). Talked at max, his yes the same day
+Input to the web office plan (DxB Web Studio — the name, his word 2026-11-02). Talked at max, his yes the same day
 <!-- CEO-OK: web-studio-style-cupboard-precision-2026-11-02 -->. Nothing is built now: the card is written
 and tested with the web office build, at its rank.
 

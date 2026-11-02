@@ -179,7 +179,7 @@
 - **Karar / satırlar:** K6, K8, İ1, İ5, İ7 · gelir tarafı (`content_monetization` motoru) **B83**; üretim B43 (beş kararı 25 Eylül'den beri bekliyor), kart B33, anlatım B12; B28, C41. K6: kanal konuşması sonra (CEO, 2026-11-01).
 
 ### 21. H5 — Web ofisi: premium site + aylık bakım + dışa ulaşma makinesi (HİZMET)
-- **Mekanizma:** web ofisi planı (`~/Desktop/DxB Global Web-Studio/`, beş soru CEO'da). Hat ancak aylık bakım + ölçüm raporu paketiyle ve orta boy müşteriyle yaşar; yerel işletme tek seferlik siteye birkaç yüz dolar öder.
+- **Mekanizma:** DxB Web Studio (adı CEO'nun sözü, 2026-11-02; plan konuşması `~/Desktop/DxB Global Web-Studio/`). Hat ancak aylık bakım + ölçüm raporu paketiyle ve orta boy müşteriyle yaşar; yerel işletme tek seferlik siteye birkaç yüz dolar öder.
 - **Videodan gelen yöntemler:**
   - Landing page + aylık optimizasyon — [ytAW1_g2IfI 07:30](https://www.youtube.com/watch?v=ytAW1_g2IfI&t=450) · `T-O M3`, `T-F 2.3`; REV #5
   - Yerel site yenileme (TL çapası 10–20 bin ₺) — [hriu0irRcpE 13:46](https://www.youtube.com/watch?v=hriu0irRcpE&t=826), [oL2xB4DiXEo 06:05](https://www.youtube.com/watch?v=oL2xB4DiXEo&t=365) · `T-O M12`, `T-F 4.4`, `Y-F Y2`
