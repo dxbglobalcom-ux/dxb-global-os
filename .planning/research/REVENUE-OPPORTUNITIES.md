@@ -4,6 +4,7 @@
 > Format (her fırsat): **Mekanizma** (ne kurulur, hangi kaynaklar birleşir) · **Müşteri/ödeyen** · **Fiziki şirket neden yapamaz** · **Faz** · **Gate'ler**.
 > Durum: **W1 — 12 fırsat + 4 Fable ek önerisi (2026-07-09). Her dalga sonunda güncellenir, CEO'ya sunulur.**
 > **2026-11-01:** 12 videodan çıkan gelir yolları §D'de (#17–#26), vakti gelince yapılsın diye, kaynak iziyle.
+> **2026-11-02:** Nate Herk'in dört sistemi ([BQJRLZ2q_Ns](https://www.youtube.com/watch?v=BQJRLZ2q_Ns)) H6, H7 ve H9'a yöntem olarak eklendi; yeni hat açılmadı.
 
 ## A. Külliyat-türevli fırsatlar
 
@@ -125,7 +126,7 @@
 > **İz — kafası karışan buraya gider:**
 > - Rapor: `~/Desktop/Gelir Kaynakları/2 - Gelir üretim hatları ve kararlarınız 2026-11-01.pdf` (kaynağı `W/rapor2.html`)
 > - `W` = `.planning/research/watch-links/2026-11-01-gelir/` — hakem kararları `W/MERGE.md` (M#n), video satırları `W/rows/merged.jsonl`, okuyucu analizleri `W/readers/<grup>-<opus|fable>.md`
-> - Kısaltma: A avenox · T tilbury · K koerner · S ses · Y yeni; -O opus, -F fable (örn. `T-F 2.2` = `W/readers/tilbury-fable.md` "Yöntem 2.2"). Video linki dakikasıyla verilir.
+> - Kısaltma: A avenox · T tilbury · K koerner · S ses · Y yeni; -O opus, -F fable (örn. `T-F 2.2` = `W/readers/tilbury-fable.md` "Yöntem 2.2"). Video linki dakikasıyla verilir. · N nate-herk (`.planning/research/watch-links/2026-11-02-nate-herk/`): `N-O 2.4` = o klasördeki `ANALIZ.md` §2.4; izleyici kaydı `WATCH.md`.
 > - Excel: `~/Desktop/İNCELEMELER/Excel-turbo.xlsx`, sayfa "Kasım 1 incelemeleri".
 
 ### 17. H1 — Yerel aday siteleri: kendi sitemiz, aylık kira (VARLIK)
@@ -196,6 +197,7 @@
   - Yapay zekâ reklam filmi: yapay olduğu belli sunucu; sahte "kullandım, bayıldım" tanıklığı geçmez — [hriu0irRcpE 17:48](https://www.youtube.com/watch?v=hriu0irRcpE&t=1068), [FqsAALrRhj4 10. dk](https://www.youtube.com/watch?v=FqsAALrRhj4&t=600) · `T-O M13`; etiket İ5
   - Müşteriye sponsorlu içerik biçimi ("içeriğime karışma") — [FqsAALrRhj4 26. dk](https://www.youtube.com/watch?v=FqsAALrRhj4&t=1560) · `A-O`, `A-F #10` (raporda yok)
   - Higgsfield "kendini film karakteriyle değiştir" kalıbı — [FqsAALrRhj4 20. dk](https://www.youtube.com/watch?v=FqsAALrRhj4&t=1200) · `A-F #8` (raporda yok)
+  - **Üretici işletim sistemi (Creator OS):** ürünü kanıtlı koçun sesiyle haftalık içerik; 20–30 gönderisinden ses profili, 3 örnek parça (İ6'nın yazı örneği), beğenirse bir platform bir ay, sonra tam kurulum + aylık ücret. Müşterinin klon sesi ve görüntüsüyle video yalnız yazılı rızayla ve K8 hükmünden sonra (H8); kadın müşterinin kendi görüntüsüyle kendi içeriği kadro kanununun 15 Eylül ekine girer mi, hüküm onda (video kolu açılacağı gün sorulur). Fiyat iddia: ~3.600 $ + ayda 197 $ — [BQJRLZ2q_Ns 04:42](https://www.youtube.com/watch?v=BQJRLZ2q_Ns&t=282), satış [06:12](https://www.youtube.com/watch?v=BQJRLZ2q_Ns&t=372) · `N-O 2.3`; müşterinin rehberi H3, sitesi H5. İlk deneme: H6'nın denemesine 0 $'lık ses profili kör testi eklenir (Sol gerçek ve üretilmiş parçayı ayırmaya çalışır).
 - **Karar / satırlar:** K7, İ5, İ6 · B28, B43, REV #2/#6, B64.
 
 ### 23. H7 — "Sonuç gelirse öde" ön büro (HİZMET)
@@ -206,6 +208,8 @@
   - Müşteri destek botu — [hriu0irRcpE 21:23](https://www.youtube.com/watch?v=hriu0irRcpE&t=1283) · `T-O M14`, `T-F 4.6`; REV #7
   - Bekleyen fırsat: B2B randevu ayarlama (K10)
   - Sesli dikey platform (ör. emlak), dakika başı ücret — [oL2xB4DiXEo 06:05](https://www.youtube.com/watch?v=oL2xB4DiXEo&t=365) · `Y-O`, `Y-F Y2`; B12'deki gecikme çözülmeden satılmaz (raporda yok; REV #12)
+  - **Başvuru → ödeme → form → randevu zinciri:** ilgi formu CRM'e düşer; SMS ve e-postayla ödeme bağlantısı; ödeyince başvuru formu ve feragatname imzalanana kadar hatırlatmayla; sonra randevu bağlantısı ve takip. Alıcı: randevuyla çalışan, adayı formdan ya da telefondan gelip bekleyen, sahibi elle kovalayan işletme (talep kısıtlı). Satış: "geçen ay kaç form, kaç ödeme?"; akış tek sayfada çizilir, insan isteyen adım işaretlenir. Fiyat iddia: 2.200 $ + aynı müşteriden 6.000 $'lık ikinci iş; İ4'ün paketine (sabit ücret + randevu başına ücret) ikinci örnek. Ödeme bağlantısında taksit ve "sonra öde" kapalı, gecikme cezası yazılmaz. Gönderi kolu H6 hayalet yazarlık — [BQJRLZ2q_Ns 02:11](https://www.youtube.com/watch?v=BQJRLZ2q_Ns&t=131), alıcı [03:30](https://www.youtube.com/watch?v=BQJRLZ2q_Ns&t=210) · `N-O 2.2`; B05 (ödeme, imza, e-posta)
+- **İlk deneme:** inşaat motorunda 40 sahte başvuru → CRM → yerel posta tuzağına takip e-postası ve sahte ödeme bağlantısı → randevu; kaçan aday sayısı ölçülür (kabul 0); 0 $, 1 gün. Gerçek ödeme ve imza B05'le — `N-O 2.2`.
 - **Karar / satırlar:** K10, İ4 · **B83** (müşteriye kurulan ön büro), B64 (kurulum ve bakım işlerinin holding içindeki yönlendirmesi), B12, B05.
 
 ### 24. H8 — Yerelleştirme ve dublaj (HİZMET)
@@ -221,13 +225,15 @@
 - **Mekanizma:** beş istasyon: ücretli keşif raporu (kapı açıcı) → kadro tasarımı (persona fabrikasından 3–5 çalışan) → kurulum (müşterinin sunucusuna yerel model ya da bizim motorumuz) → 30 gün devir ve eğitim → aylık bakım. Satılan şey holdingin kendi düzeni; kanıtı holdingin kendisi.
 - **Videodan gelen yöntemler:**
   - Ajan kurulumu + aylık bakım; "50 $'lık yazılımı 500 $'lık hizmet olarak sat" — [FqsAALrRhj4 58. dk](https://www.youtube.com/watch?v=FqsAALrRhj4&t=3480), [oL2xB4DiXEo 02:43](https://www.youtube.com/watch?v=oL2xB4DiXEo&t=163) · `Y-O`, `Y-F Y1`; REV #15, #9; M#28 → K12
+  - **Sahadan sesli not → imzaya hazır belge:** işçibaşı WhatsApp'tan kendi dilinde konuşur; kayıt yazıya döner, işin kaydıyla eşleşir, firmanın kendi formunda markalı PDF taslak olur, sorumlu imzalar. Eksik alan uydurulmaz, işçibaşına kendi dilinde geri sorulur; özgün ses kanıt olarak saklanır. Satış: "ekibiniz en çok hangi belgeden nefret ediyor?" — önce o tek belge, sonra sıradaki. Pazar var ve hazır yazılım ucuz (Compa: WhatsApp sesli notundan şantiye raporu, kullanıcı başı ayda 30–40 $, beta); fark müşterinin kendi formu ve sistemi, yeni uygulama yok, çok dilli ekip (Türkçe, Urduca, Arapça konuşan işçibaşı → Almanca ya da İngilizce belge). Fiyat iddia: £4.500 (~6.000 $) tek seferlik — [BQJRLZ2q_Ns 00:22](https://www.youtube.com/watch?v=BQJRLZ2q_Ns&t=22), satış [01:07](https://www.youtube.com/watch?v=BQJRLZ2q_Ns&t=67), tek belge [02:01](https://www.youtube.com/watch?v=BQJRLZ2q_Ns&t=121) · `N-O 2.1`; REV #12. Kulak B12, çıkarım B34, WhatsApp kapısı H7 ile (B83).
   - Yerinde yerel model ("veriniz sizde kalır"; sağlık, telekom, sanayi) — [oL2xB4DiXEo 08:24](https://www.youtube.com/watch?v=oL2xB4DiXEo&t=504) · `Y-O Yöntem 1`, `Y-F Y3`
   - Ücretli keşif / veri egemenliği denetimi — `oL2xB4DiXEo` · Avenox D
   - Özel eğitilmiş uzman modeli API olarak kiralamak (kurulumun içinde; GPU kiralama hayır) — [oL2xB4DiXEo](https://www.youtube.com/watch?v=oL2xB4DiXEo) 12–13. dk · `Y-F Y3` (raporda yok; B34)
-  - Kurumsal "ikinci beyin" — [FqsAALrRhj4 32. dk](https://www.youtube.com/watch?v=FqsAALrRhj4&t=1920) · `A-O` (raporda yok; REV #9)
+  - **Kurumsal "ikinci beyin" / şirket beyni:** şirketin belgesi, süreci, müşteri geçmişi tek beyinde; herkes sorar, kaynaklı cevap alır; üstüne rol bazlı günlük brifing, toplantı dökümünü dosyalama, her yeni aday için araştırma özeti. Tek temel bir kez kurulur, müşteri başına bağlayıcılar ve yetki haritası; kabul testi müşterinin her hafta sorduğu 20 soru. Holdingin kendi V2 hafızası (tahta Bölüm 2d) hem ürün hem kanıt. Claude'un kendi bağlayıcıları "bağla ve sor"u sıradanlaştırdı; satılan düzen, yetki, dayanak denetimi, yerinde model ve aylık bakım. Fiyatlar iddia: 15.000 $ × 17 (9'u aylıkta), 2.000 $ özel kurulum; Stripe paneli (NZ$234k, 1 Haz–4 Eyl 2026) gerçek ama kime ve hangi işe ait olduğu yazmıyor — [FqsAALrRhj4 32. dk](https://www.youtube.com/watch?v=FqsAALrRhj4&t=1920) · `A-O` (raporda yok); [BQJRLZ2q_Ns 06:31](https://www.youtube.com/watch?v=BQJRLZ2q_Ns&t=391), fiyatlar [08:37](https://www.youtube.com/watch?v=BQJRLZ2q_Ns&t=517) · `N-O 2.4`; REV #9
+  - **Ücretli keşfin ilk sorusu — talep mi kısıtlı, arz mı:** daha çok müşteri isteyene içerik ve başvuru hunisi (H6, H7); işi zaten taşıyana aday göndermek yük, ona sesli not → belge ve şirket beyni — [BQJRLZ2q_Ns 10:08](https://www.youtube.com/watch?v=BQJRLZ2q_Ns&t=608) · `N-O 3`
   - Bekleyen fırsatlar: yapay zekâ danışmanlığı, GDPR denetimi, sunum tasarımı (K10)
-- **İlk deneme:** holdingin kendi kurulumu dış gözle paket (kılavuz + fiyat sayfası); yerel tezgâhta tek demo: Türkçe çağrı kaydı → özet → CRM notu; 0 $, 1 hafta.
-- **Karar / satırlar:** K10, K12 · B64 ("kurulum" iş tipi), B33/B34, B04.
+- **İlk deneme:** holdingin kendi kurulumu dış gözle paket (kılavuz + fiyat sayfası); yerel tezgâhta tek demo: Türkçe çağrı kaydı → özet → CRM notu; 0 $, 1 hafta. Ek (BQJRLZ2q_Ns): sesli not → form → PDF tezgâhı (yerel kulak ve yerel model, 0 $, yarım gün) ve holdingin kendi külliyatında 20 soruluk şirket beyni ölçümü (0 $, 1–2 gün; V2 hafızasının kabul testiyle aynı) — `N-O 2.1`, `N-O 2.4`.
+- **Karar / satırlar:** K10, K12 · B64 ("kurulum" iş tipi), B33/B34, B04, B12 (sahadan sesli notun kulağı), V2 hafıza satırı (tahta Bölüm 2d; şirket beyni).
 
 ### 26. Sonra listesi — vakti daha uzak
 - **Kendi ürün markası** (stoklu, malın sahibi olarak; önce bekleme listesi, Kickstarter ön satışı) — [OxQ47jXQApk 04:34](https://www.youtube.com/watch?v=OxQ47jXQApk&t=274) · `Y-O Yöntem A`, `Y-F Y7`. Neden sonra: sermaye sınırı 0, kitle yok; kanal hattından sonra.

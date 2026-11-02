@@ -1,0 +1,368 @@
+language: en
+[00:00] So these four cloud systems can be sold for around $3,700.
+[00:03] And they're all things that anyone who knows
+[00:05] the basics of cloud can build and sell.
+[00:07] Now I know this because these four systems were built
+[00:09] and sold by members of my own community.
+[00:11] So I know that anyone can do the same.
+[00:13] That's why today I'm gonna show you what each system is,
+[00:15] why people will pay for them,
+[00:16] and how you can sell them yourself.
+[00:17] Now make sure you stick to the end of the video
+[00:19] because the last one that I go through
+[00:20] sold for the most money,
+[00:21] and I think that it has the highest demand right now.
+[00:23] All right, so the first system is a voice note
+[00:25] to document system.
+[00:26] And it's the simplest one to build.
+[00:28] Basically someone in the field sends a voice note
+[00:30] and it comes back as a finished branded document.
+[00:32] Jody built this for a construction company.
+[00:34] Their foreman basically have to fill out
+[00:36] site registers, risk assessments, and plant registers,
+[00:39] but nobody wants to actually type all of that stuff up
+[00:42] after a long day on site.
+[00:43] So the paperwork was always just days behind.
+[00:45] But now after the system has been implemented,
+[00:47] the foreman just sends a voice note on WhatsApp
+[00:50] and then it gets transcribed,
+[00:51] it gets matched to the job record for that project,
+[00:53] and it gets turned into a branded PDF
+[00:55] that's saved automatically to the company's SharePoint
+[00:57] and sent to whoever needs it.
+[00:58] Now everything obviously here starts with a draft,
+[01:00] so a person still reviews and signs it off,
+[01:02] but Jody was able to charge 4,500 pounds for this,
+[01:05] which is around $6,000.
+[01:07] When you wanna pitch something like this,
+[01:08] you have to lead with the time and the risk.
+[01:10] You ask the owner how many hours a week
+[01:12] their foreman are spending on paperwork.
+[01:13] If five foremen each spend five hours,
+[01:15] that's 25 paid hours a week,
+[01:17] that's going into typing that can be automated.
+[01:19] And you can put a real dollar figure on that number.
+[01:22] And then you can also point out that the paperwork,
+[01:23] just sitting days behind the work,
+[01:25] is a real safety and compliance risk.
+[01:26] Now against those two things,
+[01:28] 4,500 pounds or $6,000 is very easy to justify
+[01:31] for a business owner.
+[01:31] And nobody has to learn anything new in the process
+[01:34] because everyone already knows how to send a voice note
+[01:36] and everyone already knows the content
+[01:38] that would go into one of these branded documents.
+[01:40] Because when you're communicating this type of stuff
+[01:42] to a stakeholder or a business owner,
+[01:44] you have to think about the hidden costs,
+[01:45] meaning the cost of business
+[01:47] isn't just how much they have to pay.
+[01:49] There's also things to think about like time cost,
+[01:51] the risk, change management,
+[01:52] things like that that actually matter to a business owner.
+[01:55] So to sell something like this,
+[01:56] pick a trade where people aren't sitting at a desk all day.
+[01:58] Something like construction or plumbing or electrical.
+[02:01] Ask the owner which document their team
+[02:03] hates filling out the most.
+[02:04] And you can build the automation for just that one.
+[02:06] Once it works for that one,
+[02:07] then maybe add in the next document
+[02:09] and keep automating a lot of this repetitive manual work.
+[02:11] Okay, so system two is an intake and follow-up funnel.
+[02:14] It basically takes a lead from a social post
+[02:16] to a paid booked call
+[02:18] without the owner having to chase anyone down.
+[02:20] So this one kind of has two parts.
+[02:22] The first one writes social posts
+[02:23] for multiple platforms every week in the owner's voice.
+[02:26] The second one then kicks in
+[02:27] when someone fills out an interest form
+[02:29] from one of those posts.
+[02:30] So you're kind of helping them generate the lead
+[02:31] and then turn that lead into a booked appointment.
+[02:33] So they go into the CRM
+[02:35] and they get a text and an email with a payment link.
+[02:37] Once they pay, the intake form and the waivers
+[02:39] go out with reminders until they're actually signed
+[02:41] and then they get a booking link with a Zoom confirmation
+[02:43] and of course follow-up reminders.
+[02:45] So Lewis from my community built this
+[02:47] for a semi-retired doctor
+[02:49] who didn't want to hire a marketing team
+[02:50] or a whole front desk staff.
+[02:52] So he charged $2,200 for this
+[02:55] and it saved the client about 15 hours a week
+[02:57] and the client hired him again for another $6,000.
+[02:59] Now this is one of the easiest to pitch
+[03:01] because it ties directly to revenue.
+[03:03] You know, ask how many people filled out a form last month
+[03:05] and how many people actually paid.
+[03:06] If 40 people filled it out, but only 10 people paid,
+[03:08] then this system can go after, you know, the other 30
+[03:11] and the few extra clients a month
+[03:12] can cover that entire fee
+[03:14] that they paid up front for this project.
+[03:16] Now this video right here isn't a deep dive into pricing.
+[03:19] It's more about the systems
+[03:20] that people are selling and the positioning.
+[03:21] If you guys want to check out a full video
+[03:23] where I break down the way that I do value-based pricing
+[03:26] and I'll tag that right up here so you can check that out.
+[03:28] But anyways, for something like this,
+[03:29] for this type of system,
+[03:30] I would look for three things
+[03:31] when I'm looking to find a buyer.
+[03:33] The first one is I would look for a business
+[03:34] that runs on bookings.
+[03:35] The second one is I would look for a business
+[03:37] where their leads come in through a form or a phone call
+[03:39] and then they just kind of sit there
+[03:40] and there's not a lot of follow-up.
+[03:42] And then the third thing is that the owner
+[03:43] is actually chasing people manually right now
+[03:45] or someone on the team is manually chasing people.
+[03:47] And if all three of those things are true,
+[03:49] then they probably need an automation like this.
+[03:51] So then what you would do is you would map their flow
+[03:53] from first contact to booked call on one page
+[03:55] and then you would mark which steps
+[03:57] inside of that process need a human
+[03:59] and then you can automate the rest in between.
+[04:01] And then you can basically just record a short demo
+[04:03] and send it out.
+[04:03] Now Upwork is a really good place to look for work
+[04:06] and to find clients.
+[04:07] And that is where Lewis found this client in this example.
+[04:09] By the way, guys, I've got this completely free SOP for you
+[04:12] about getting your first A automation client.
+[04:14] It's gonna go over the exact steps that has been proven
+[04:16] for hundreds of our AIS plus members
+[04:18] to get their first paid gigs.
+[04:20] It goes over the one sentence service pitch
+[04:21] that can get you started today.
+[04:23] Why your first client should cost you money.
+[04:25] The five minute video that answers
+[04:26] can this person actually deliver
+[04:27] before you've actually received any money.
+[04:29] What to do when you have zero case studies.
+[04:31] There's so many good things in here
+[04:33] that are gonna help you out.
+[04:34] Even if you already do have clients,
+[04:35] I would recommend grabbing this
+[04:36] because like I said, it's yours completely free.
+[04:39] So if you wanna grab this,
+[04:40] there's a link for it down in the description.
+[04:41] Let's get back to the video.
+[04:42] All right, now system number three is pretty cool.
+[04:44] It's a creator OS.
+[04:45] It's kind of similar to that first piece
+[04:47] of system two that we just talked about.
+[04:48] So this one makes content in the creator's own voice
+[04:51] and likeness and it's one that can easily,
+[04:53] very easily turn into monthly recurring revenue.
+[04:55] Charles, another member of my community,
+[04:57] built this for a woman who teaches women in their fifties
+[04:59] digital and affiliate marketing.
+[05:01] She was making all of the content by hand
+[05:03] that you just couldn't keep up.
+[05:04] So her system that she got uses her cloned voice
+[05:07] and her likeness to make narrated videos
+[05:09] and on brand images without her filming
+[05:11] or writing basically anything.
+[05:12] Charles also came in here over delivered,
+[05:14] built her a six page site, a print on demand store,
+[05:17] a 101 page guide that she sells for about 200 bucks.
+[05:20] Also a nine email nurture sequence,
+[05:22] SEO for 12 pages and the lead capture quiz.
+[05:24] So he definitely over delivered here.
+[05:26] He charged about $3,600 for this project.
+[05:29] And then she asked basically for him
+[05:30] to get on a monthly retainer before he even offered one.
+[05:32] So he gets 197 bucks a month on top.
+[05:35] So the way that I would pitch this one would be on growth.
+[05:37] You know, all of these were obviously looking to pitch
+[05:39] some sort of business outcome,
+[05:40] not the functionality or the technical requirements
+[05:42] of the build creators and business owners
+[05:44] already know that more content typically means
+[05:46] more attention, which typically means more leads
+[05:48] and more leads means more sales.
+[05:49] And that obviously is what businesses want.
+[05:52] So show them how much more they could put out
+[05:55] and then do the math on their actual product or service.
+[05:57] So for example, with $197 guide,
+[06:00] she only needs about 19 extra sales on those guides
+[06:02] to cover the $3,600 fee that she paid upfront.
+[06:06] And since she needs new content every single week,
+[06:08] the monthly fee is easy to justify as well,
+[06:10] especially if it's actually working.
+[06:12] So to sell something like this, pick a creator or a coach
+[06:14] who already sells something
+[06:15] and already has a backend that is proven.
+[06:17] Take 20 to 30 of their posts, build a voice profile,
+[06:20] write three pieces in their voice
+[06:22] and then send them over something like,
+[06:23] hey, you know, I built this for you.
+[06:24] It's kind of a creator OS.
+[06:26] Here are three pieces that it wrote.
+[06:27] Tell me what you think.
+[06:28] If they like it, then offer to run one platform for a month
+[06:30] and then sell them the full build and a monthly fee.
+[06:33] All right, so system number four is a company brain.
+[06:35] Super cool.
+[06:36] And like I said at the start,
+[06:37] these automations, at least in this bunch,
+[06:39] are selling for the most money
+[06:40] and has insanely high demand.
+[06:42] It's an AI that knows everything that a business knows.
+[06:44] It's kind of like your own personal AI OS,
+[06:45] but it's more for your business.
+[06:46] It's for your company.
+[06:47] Like their documents, processes, client history.
+[06:49] So anyone on the team can ask it a question
+[06:51] and get an accurate real-time answer.
+[06:53] So you could have one that connects tons of different tools
+[06:55] like Drive, Calendar, Gmail, Asana, HubSpot.
+[06:57] It can send daily briefings.
+[06:59] It can write project recaps.
+[07:00] It can file every single meeting transcript
+[07:01] into the right folder.
+[07:02] It can organize that kind of stuff.
+[07:03] Every business has this problem
+[07:05] and it's just going to continue growing
+[07:06] as every person on the team is building their own
+[07:08] sort of like personal agents and personal AI OSs.
+[07:10] Because answers are so spread across people's heads
+[07:13] and things are lost in Slack channels
+[07:14] and there's a bunch of documents.
+[07:15] So when you pitch something like this,
+[07:16] lead with the hours the team loses
+[07:18] when they're looking for things.
+[07:20] Ask how much time people spend searching for information
+[07:22] or waiting for someone else to answer.
+[07:23] If a 20-person team each loses two hours a week,
+[07:25] that's 40 hours a week of payroll.
+[07:27] And then you can also say that new hires
+[07:29] that get brought into the system
+[07:30] are going to get up to speed faster because of the system.
+[07:32] And I actually saw the study where they said
+[07:34] about 50% of employees' times,
+[07:36] especially as the organization size grows,
+[07:38] is spent doing the scavenger hunt.
+[07:39] Essentially thinking, oh, you know,
+[07:41] I remember someone sent me that doc, but where is it?
+[07:42] Or, oh, I remember someone said that to me,
+[07:44] but was that an email or Slack or where was it?
+[07:46] And this type of offer is very sticky
+[07:48] because once a business actually learns
+[07:50] to efficiently rely on something like this,
+[07:51] they're not gonna be able to turn it off.
+[07:52] But there is also one of the other costs
+[07:54] that we talked about, hidden cost of change management.
+[07:56] It does kind of take a team a while
+[07:58] to get upskilled into this
+[08:00] and to be able to actually make that culture shift
+[08:02] of reaching for this first
+[08:03] rather than just doing it the old way,
+[08:05] which is exactly what it means to become AI native,
+[08:07] which is what I talk about in my book,
+[08:08] which is right up here.
+[08:09] But anyways, on your end, you can build this once
+[08:11] and then you can basically reuse that system for every client
+[08:14] because you figure out how to organize stuff.
+[08:15] So you can build one for yourself first
+[08:17] so that you have a real demo
+[08:18] and you can actually be your own living proof
+[08:20] of the value of it.
+[08:21] And then you can pick one type of business.
+[08:22] So you can find their questions
+[08:23] that their team asks every week
+[08:25] and you can connect only the tools
+[08:26] that they actually need where those answers live.
+[08:28] You could add in other things on top of this, right?
+[08:30] Like a daily briefing or different cloud code routines
+[08:33] or whatever it is, you can add things on top of it
+[08:35] now that the context is already there and it's a real time.
+[08:37] But anyways, two members of my community
+[08:39] sell this in different ways.
+[08:40] Jeanette charges $15,000 and has sold 17 of these
+[08:43] on the same foundation.
+[08:44] She then adds role-based dashboards
+[08:46] or document generators and tools that run on their own
+[08:48] like a research brief for every new lead.
+[08:50] And nine of those 17 clients
+[08:51] stayed on a monthly plan after the build.
+[08:54] And then we also have Kiran who charges $2,000
+[08:56] and builds each one custom for clients in different countries.
+[08:59] He's made around $137 since June
+[09:01] and he just got hired to build 30 of these for one company.
+[09:04] So you guys can go high ticket with a template like Jeanette
+[09:06] or you can go lower ticket and custom like Kiran
+[09:09] and then from there the relationship just keeps on growing.
+[09:11] So those are the four systems that you can sell with cloud.
+[09:14] Every member that I've mentioned picked one system
+[09:16] and got really good at it
+[09:17] and found the businesses that needed it.
+[09:19] I wouldn't put too much pressure on that whole idea
+[09:21] of niching down, try things, get some data
+[09:23] but ultimately like to achieve true scale
+[09:25] and to also be able to deliver the best possible results.
+[09:28] Niching down is a good idea once you have enough data
+[09:31] and once you have enough experience
+[09:32] to make a confident decision.
+[09:33] And then when you pitch any of them
+[09:35] obviously lead with a business outcome.
+[09:36] There has to be a big enough business reason
+[09:38] for them to put money and risk on you.
+[09:41] So think of yourself as a business growth person
+[09:42] who happens to use AI when AI is the right fit
+[09:45] and then you have to obviously prove
+[09:46] that you can drive real business results.
+[09:48] Now, a lot of these systems that I mentioned today
+[09:50] are a great foot in the door.
+[09:51] They also make good portfolio projects
+[09:53] but the way to have the biggest impact
+[09:55] and earn the most trust inside a business
+[09:57] is to just go after their constraints
+[09:58] which is exactly what we did.
+[10:00] when I was still running the agency day to day,
+[10:01] we weren't just picking one solution
+[10:03] and sort of like productizing it.
+[10:05] We were helping the business grow.
+[10:06] We were tackling their constraints.
+[10:08] And that means at the highest level,
+[10:09] you figure out if they are demand constrained
+[10:11] or supply constrained.
+[10:12] A demand constrained business needs more customers.
+[10:14] So something like the content system
+[10:15] or the intake funnel actually grows it.
+[10:17] But a supply constrained business already has more work
+[10:19] than they can handle.
+[10:21] So sending them more leads doesn't really grow anything.
+[10:23] It just adds more stress
+[10:24] and it makes the whole process even less efficient.
+[10:26] So you have to actually think about the scenario
+[10:28] that the business is in
+[10:29] before you can sort of like prescribe the right solution
+[10:31] to actually grow their business.
+[10:33] So for example, that supply constrained company,
+[10:35] you know, they need more capacity.
+[10:36] They need the voice note system
+[10:37] or they need the company brain
+[10:38] that gives their team time back.
+[10:40] And in the description of this video,
+[10:41] I've linked our community
+[10:42] where you can meet other entrepreneurs
+[10:44] and business owners who are building AI agencies
+[10:45] and using AI to run their own businesses
+[10:47] and selling systems like what we talked about here.
+[10:49] So it's a great place to connect.
+[10:50] But anyways, that is going to do it for this one.
+[10:52] If you guys enjoyed, you learned something new,
+[10:53] please give it a like.
+[10:54] It helps me out a ton.
+[10:55] And as always, I appreciate you guys
+[10:56] maintenance and the video.
+[10:57] And I'll see y'all in the next one.
+[10:58] Thanks everyone.
