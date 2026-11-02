@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<title>Dört Yapay Zekâ Sistemi — Rapor 3</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #14181f; --muted: #5b6472; --line: #d9dde3; --soft: #f3f5f8; --accent: #8a1c1c;
+    --gold: #a07a2c; --ok: #1f6b45; --warn: #9a5b00;
+  }
+  @page { size: A4; margin: 15mm 15mm 16mm 15mm; }
+  * { box-sizing: border-box; }
+  html, body { background: #fff; }
+  body { font-family: "Inter", "Noto Sans", "DejaVu Sans", sans-serif; color: var(--ink); font-size: 9.6pt; line-height: 1.45; margin: 0; }
+  .kicker { letter-spacing: .32em; font-size: 7.6pt; color: var(--muted); text-transform: uppercase; border-bottom: 1px solid var(--line); padding-bottom: 6px; }
+  h1 { font-family: "Source Serif 4", Georgia, serif; font-size: 25pt; line-height: 1.12; margin: 16px 0 6px; letter-spacing: -.01em; }
+  .sub { color: var(--muted); font-size: 10pt; margin-bottom: 14px; }
+  h2 { font-family: "Source Serif 4", Georgia, serif; font-size: 14.5pt; margin: 20px 0 6px; padding-top: 4px; border-top: 2px solid var(--ink); break-after: avoid; }
+  h2 .n { color: var(--accent); margin-right: 6px; }
+  h3 { font-size: 10.6pt; margin: 14px 0 4px; break-after: avoid; }
+  h3 .tag { font-size: 7.6pt; font-weight: 600; letter-spacing: .06em; padding: 1px 6px; border-radius: 3px; margin-left: 6px; vertical-align: 1px; }
+  .varlik { background: #e7f1ec; color: var(--ok); }
+  .hizmet { background: #f6efe2; color: var(--warn); }
+  p { margin: 4px 0 6px; }
+  .box { background: var(--soft); border-left: 3px solid var(--accent); padding: 9px 12px; margin: 10px 0; }
+  .box p { margin: 3px 0; }
+  ul { margin: 4px 0 6px 0; padding-left: 16px; }
+  li { margin: 2px 0; }
+  table { width: 100%; border-collapse: collapse; margin: 6px 0 10px; font-size: 8.7pt; }
+  th { text-align: left; font-weight: 600; background: var(--soft); border-bottom: 1px solid var(--ink); padding: 4px 6px; vertical-align: bottom; }
+  td { border-bottom: 1px solid var(--line); padding: 4px 6px; vertical-align: top; }
+  tr { break-inside: avoid; }
+  .flow { display: flex; flex-wrap: wrap; gap: 4px; align-items: stretch; margin: 8px 0 4px; }
+  .st { flex: 1 1 0; min-width: 0; border: 1px solid var(--line); border-top: 3px solid var(--ink); padding: 5px 6px; font-size: 7.9pt; background: #fff; }
+  .st b { display: block; font-size: 8.4pt; margin-bottom: 2px; }
+  .loop { font-size: 8pt; color: var(--muted); text-align: center; margin-bottom: 8px; }
+  .line { border: 1px solid var(--line); padding: 8px 10px 6px; margin: 8px 0; }
+  .kv dt, .kv dd { break-inside: avoid; }
+  .line h3 { margin-top: 0; }
+  .kv { display: grid; grid-template-columns: 92px 1fr; gap: 2px 10px; }
+  .kv dt { color: var(--muted); font-weight: 600; font-size: 8.4pt; }
+  .kv dd { margin: 0; }
+  .q { font-weight: 600; color: var(--accent); }
+  .dec td:first-child { font-weight: 700; white-space: nowrap; }
+  .rec { color: var(--ok); font-weight: 600; white-space: nowrap; }
+  .small { font-size: 8pt; color: var(--muted); }
+  .two { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .claim { color: var(--warn); font-weight: 600; }
+  .pb { break-before: page; }
+</style>
+</head>
+<body>
+
+<div class="kicker">DXB Global Holding · Gelir Kaynakları · Rapor 3</div>
+<h1>Dört Yapay Zekâ Sistemi</h1>
+<div class="sub">Nate Herk'in topluluğunun kurup sattığı dört sistem, holdingde nasıl kurulur, nasıl satılır, nasıl gelir getirir · 2 Kasım 2026</div>
+
+<div class="box">
+  <p><b>Kısaca.</b> Video, Nate Herk'in topluluğundaki kişilerin Claude ile kurup işletmelere sattığı dört sistemi anlatıyor: sesli nottan belge, başvuru ve takip hunisi, üretici işletim sistemi (Creator OS) ve şirket beyni. Her birinin kimin için yapıldığını, ne kadara satıldığını ve nasıl satıldığını söylüyor. Kurulumun ayrıntısını göstermiyor; o bizim işimiz.</p>
+  <p><b>Hüküm:</b> dördü de holdingin gelir hattı olur. Yeni bir hat açılmıyor, dördü zaten var olan üç hattın içine oturuyor: sesli nottan belge ile şirket beyni H9'a (dijital kadro kurulumu), başvuru hunisi H7'ye (ön büro), Creator OS H6'ya (stüdyo ajansı). Dördü aynı satış makinesini kullanıyor (4. bölüm).</p>
+  <p><b>En güçlüsü şirket beyni:</b> fiyatı en yüksek, aylık geliri en sağlam, ve kurmak holdingin kendi makinesini ilerletiyor; çünkü önce kendimize kuracağız ve bu, 1 Ağustos'ta onayladığınız ama henüz kurulmamış V2 hafızanın ta kendisi. <b>En ucuz denenecek olan sesli nottan belge:</b> kulak ve yerel model makinede duruyor.</p>
+  <p><b>Helal:</b> sesli nottan belge, başvuru hunisi ve şirket beyni için bugün "şimdilik helal" dediniz; kayda geçti. Hiçbiri şimdi kurulmuyor: her biri kendi satırıyla, sırası gelince kurulur, tezgâhta denenir, anahtar çevrilince satılır (B83).</p>
+</div>
+
+<h2><span class="n">1</span>Videoda ne var</h2>
+<table>
+  <tr><th>Sistem</th><th>Kim kurdu, kime</th><th>Fiyatı</th><th>Müşteriye kazancı</th></tr>
+  <tr><td><b>Sesli not → belge</b></td><td>Jody, bir inşaat şirketine</td><td>4.500 £ (~6.000 $), tek seferlik</td><td>Şefler evrak yazmaz; belgeler artık günlerce geride kalmaz</td></tr>
+  <tr><td><b>Başvuru ve takip hunisi</b></td><td>Lewis, yarı emekli bir doktora; müşteriyi Upwork'te buldu</td><td>2.200 $; aynı müşteri 6.000 $'lık ikinci işi verdi</td><td>Haftada 15 saat; pazarlama ekibi ve ön büro tutmadan</td></tr>
+  <tr><td><b>Creator OS</b></td><td>Charles, ellili yaşlardaki kadınlara dijital pazarlama öğreten bir eğitmene</td><td>~3.600 $ + ayda 197 $; aylığı müşteri kendisi istedi</td><td>Çekim ve yazı yapmadan, kendi sesi ve görüntüsüyle içerik</td></tr>
+  <tr><td><b>Şirket beyni</b></td><td>Jeanette aynı temel üzerinde 17 firmaya; Kieren her ülkede müşteriye özel</td><td>Jeanette 15.000 $ (17 satış, 9'u aylık planda); Kieren 2.000 $, Haziran'dan beri ~137 bin $, bir şirketten 30 kurulum</td><td>Ekip bilgi aramaya saat kaybetmez; yeni çalışan hızlı uyum sağlar</td></tr>
+</table>
+<p>Videonun ortak satış dersi: teknik özellik değil iş sonucu satılır. Müşteriye saati, riski ve "gizli maliyeti" (zaman, risk, alışma süreci) rakamla gösterirsin; sonra ücret kolayca kendini öder. Dar başlanır, oturunca genişletilir. Önce kendine kurarsın, kendi canlı demonu olursun.</p>
+
+<h2><span class="n">2</span>Dört sistem, holdingde</h2>
+
+<div class="line">
+<h3>2.1 Sesli not → imzaya hazır belge <span class="tag hizmet">H9</span></h3>
+<dl class="kv">
+  <dt>Ne</dt><dd>Sahadaki şef WhatsApp'tan sesli not atar; not yazıya döner, o projenin kaydıyla eşleşir, firmanın markalı belgesi olur (şantiye defteri, risk değerlendirmesi, makine kaydı), firmanın dosya sistemine kaydedilir ve ilgiliye gider. Her belge taslaktır; bir insan bakar ve imzalar.</dd>
+  <dt>Alıcı</dt><dd>Masa başında oturmayan iş kolları: inşaat, tesisat, elektrik, iskele, tesis yönetimi, temizlik, güvenlik; 5–50 şef çalıştıran firma. Holdingin keskin kapısı çok dil: Almanya'da Türkçe ya da Lehçe, Körfez'de Urduca ya da Arapça konuşan şef kendi dilinde konuşur, belge Almanca ya da İngilizce çıkar.</dd>
+</dl>
+<div class="flow">
+  <div class="st"><b>1 Bul</b>sahada çalışan firmalar; dizinler, dışa ulaşma</div>
+  <div class="st"><b>2 Sor</b>kaç şef, haftada kaç saat evrak, en nefret edilen belge hangisi</div>
+  <div class="st"><b>3 Hesapla</b>5 şef × 5 saat = haftada 25 ücretli saat + geride kalan evrakın uyum riski</div>
+  <div class="st"><b>4 Göster</b>o belgenin boş formu; bizim bir sesli notumuzdan doldurulmuş örneği</div>
+  <div class="st"><b>5 Sat</b>tek belge türü: kurulum + aylık bakım</div>
+  <div class="st"><b>6 Büyü</b>oturunca sıradaki belge, her biri ayrı ücret</div>
+</div>
+<p><b>Çalışma akışı:</b> sesli not müşterinin WhatsApp Business numarasına gelir → holdingin hattına düşer → dili tanınır ve yazıya dökülür → proje listesiyle eşleşir, emin değilse şefe sorar → alanlar formun şablonuna yerleşir → eksik zorunlu alan uydurulmaz, şefe kendi dilinde geri sorulur → markalı PDF → sorumluya taslak, tek dokunuşla imza → firmanın SharePoint ya da Drive'ına kayıt, ilgiliye gönderim → haftada bir uyum özeti: kaç belge zamanında, hangisi geride.</p>
+<p><b>Gelir:</b> her belge türü bir kurulum ücreti, üstüne aylık bakım (şef ya da belge başına). Jody'nin fiyatı çapa: tek sistem 4.500 £. Bizim maliyetimiz düşük: yazıya dökme ve çıkarma makinede, WhatsApp mesaj ücreti müşterinin hesabında.</p>
+<p><b>Elimizde:</b> kulak (Speaches, whisper large-v3-turbo yüklü), yerel model, PDF için Chrome, video hattının sesi yazıya döken kodu. <b>Eksik:</b> WhatsApp kapısı, şablon doldurucu, imza ekranı, SharePoint ve Drive bağlantısı, müşteri verisinin ayrımı.</p>
+<p><b>Ferrari farkı:</b> çok dil, geri sorma, her alanın sesli notun hangi saniyesinden geldiği, fotoğraf ve konum, imzasız belgenin dışarı çıkmaması, 7/24 bakım.</p>
+<p class="small">Satırlar: H9 (#25) · kulak B12 · model B34 · WhatsApp kapısı B83 (H7 ile ortak) · sözleşme ve fatura B05 · "kurulum" iş tipi B64. İlk tezgâh denemesi: altı yazılı senaryo, sesi üretilir, şantiye gürültüsü eklenir, yazıya dökülür, forma işlenir, PDF çıkar; ölçülen alan doğruluğu ve uydurulan alan sayısı (kabul 0); 0 $, yarım gün.</p>
+</div>
+
+<div class="line">
+<h3>2.2 Başvuru ve takip hunisi <span class="tag hizmet">H7</span></h3>
+<dl class="kv">
+  <dt>Ne</dt><dd>İki parça. Birincisi sahibin sesiyle her hafta birden çok platforma gönderi yazar. İkincisi o gönderilerden gelen ilgiyi, kimse kovalamadan ödenmiş randevuya çevirir.</dd>
+  <dt>Alıcı</dt><dd>Üç işareti taşıyan işletme: randevuyla çalışır; adayı form ya da telefonla gelir ve bekler; sahibi ya da bir çalışanı adayları elle kovalar. Klinik, fizyoterapi, koç, danışman, dil kursu, umre organizatörü, hukuk bürosunun ön kabulü.</dd>
+</dl>
+<div class="flow">
+  <div class="st"><b>1 Bul</b>Upwork, dışa ulaşma, dizinlerimizdeki işletmeler</div>
+  <div class="st"><b>2 Sor</b>"geçen ay kaç kişi form doldurdu, kaçı ödedi?"</div>
+  <div class="st"><b>3 Hesapla</b>40 formdan 10 ödeme: kalan 30'dan birkaçı ücreti çıkarır</div>
+  <div class="st"><b>4 Çiz</b>ilk temastan randevuya akış tek sayfada; insan isteyen adımlar işaretli</div>
+  <div class="st"><b>5 Göster</b>kısa demo videosu (stüdyomuz)</div>
+  <div class="st"><b>6 Sat</b>paket: sabit aylık + randevu başına (İ4)</div>
+</div>
+<p><b>Çalışma akışı:</b> sahibin sesiyle haftalık gönderi (H6'nın yazı kolu) → ilgi formu → CRM kaydı → SMS ve e-postayla ödeme bağlantısı (taksit ve "sonra öde" kapalı) → ödeyince başvuru formu ve feragatname, imzalanana kadar hatırlatma → randevu bağlantısı ve görüntülü görüşme onayı → hatırlatmalar → gelmeyene yeni randevu → ay sonu raporu: form, ödeme, randevu, kurtarılan aday.</p>
+<p><b>Gelir:</b> bugün kararlaştırdığınız paket: sabit aylık ücret ve üstüne randevu başına ücret; gönderi kolu ayrıca aylık. İlk iş ikinci işi getirir: Lewis'in müşterisi 2.200 $'ın ardından 6.000 $'lık iş verdi.</p>
+<p><b>Elimizde:</b> CRM tabloları (boş), hatırlatma zamanlayıcısı, e-posta denemesi. <b>Eksik:</b> ödeme bağlantısı, e-imza, gerçek e-posta gönderimi (üçü B05), SMS, takvim ve randevu, WhatsApp.</p>
+<p><b>Ferrari farkı:</b> politika sınırlı ajan 7/24 cevap verir, politika dışını insana bırakır; her konuşma kayıtlı; çok dilli; ay sonunda müşteriyle mutabakat.</p>
+<p class="small">Satırlar: H7 (#23) B83 · gönderi kolu H6 · B05 · B64. İlk tezgâh denemesi: 40 sahte başvuru inşaat motorunda akıştan geçer; kaçan aday sayısı ölçülür (kabul 0); 0 $, 1 gün. B05 açılmadan satılmaz.</p>
+</div>
+
+<div class="line">
+<h3>2.3 Creator OS — üreticinin işletim sistemi <span class="tag hizmet">H6</span></h3>
+<dl class="kv">
+  <dt>Ne</dt><dd>Koçun ya da üreticinin kendi sesi ve görüntüsüyle anlatımlı videolar ve markasına uygun görseller; o çekim yapmaz, yazı yazmaz. Charles üstüne altı sayfalık site, baskılı ürün mağazası, ~200 $'a satılan 101 sayfalık rehber, dokuz e-postalık besleme dizisi, 12 sayfa SEO ve aday toplama testi de kurdu.</dd>
+  <dt>Alıcı</dt><dd>Zaten bir şey satan, satış arka ucu çalışan, ama içerik yetiştiremeyen koç ya da üretici. Holding için ayrıca Türkçe, Arapça ve Almanca konuşan kişisel markalar; H8 ile aynı içerik başka dillerde.</dd>
+</dl>
+<div class="flow">
+  <div class="st"><b>1 Seç</b>ürünü ve arka ucu kanıtlı üretici</div>
+  <div class="st"><b>2 Profil</b>20–30 gönderisinden yazı sesi</div>
+  <div class="st"><b>3 Örnek</b>onun sesiyle 3 parça: "bunu senin için yaptım"</div>
+  <div class="st"><b>4 Deneme</b>beğenirse bir platform bir ay</div>
+  <div class="st"><b>5 Sat</b>tam kurulum + aylık ücret</div>
+  <div class="st"><b>6 Büyü</b>site, rehber, e-posta dizisi, başka diller</div>
+</div>
+<p><b>Satış gerekçesi büyüme:</b> daha çok içerik daha çok dikkat, aday ve satış demek; hesap müşterinin kendi ürünüyle yapılır: 197 $'lık rehberden 19 ek satış 3.600 $'lık kurulumu öder.</p>
+<p><b>Çalışma akışı:</b> yazı sesi profili → haftalık içerik takvimi → taslaklar → müşteri onayı → yayın → aylık ölçüm; yazılı rızayla klonlanan sesle anlatımlı video; stüdyoda markaya uygun görsel; ek paket olarak site (Web-Studio), rehber (H3), e-posta dizisi ve SEO.</p>
+<p><b>Gelir:</b> kurulum + aylık ücret; başka dil (H8) ve ek ürünler ayrı fiyat.</p>
+<p><b>Elimizde:</b> stüdyo (ComfyUI), Voicebox, site için ScrollCraft ve Web-Studio. <b>Eksik:</b> kişinin kendi görüntüsüyle konuşan video hattı (ölçülmedi), rıza kaydı, dijital ürün atölyesi.</p>
+<p><b>Açılış şartı:</b> yazı kolu hemen kurulabilir. Video kolunu K8 açar (müşterinin klon sesi). Kadın müşterinin kendi görüntüsüyle kendi içeriğinin 15 Eylül kadro ekine girip girmediği, video kolu açılacağı gün size sorulur.</p>
+<p class="small">Satırlar: H6 (#22) · H8 (#24) · H3 · H5 · B28 · B43 · B12. İlk tezgâh denemesi: kamuya açık bir üreticinin 30 gönderisinden profil, 3 yeni parça; Sol, gerçek ve üretilmiş parçaları ayırmaya çalışır; ayıramadığı oran kabul ölçüsü olur; 0 $.</p>
+</div>
+
+<div class="line">
+<h3>2.4 Şirket beyni <span class="tag hizmet">H9</span></h3>
+<dl class="kv">
+  <dt>Ne</dt><dd>İşletmenin bildiği her şeyi bilen yapay zekâ: belgeleri, süreçleri, müşteri geçmişi. Ekipten herkes sorar, doğru ve güncel cevap alır. Drive, Takvim, Gmail, Asana ve HubSpot'a bağlanır; günlük brifing gönderir, proje özeti yazar, her toplantı dökümünü doğru klasöre koyar.</dd>
+  <dt>Alıcı</dt><dd>10–200 kişilik, bilgisi kafalara, yazışmalara ve belgelere dağılmış firmalar: ajans, danışmanlık, hukuk, mali müşavirlik, mühendislik, emlak yönetimi, okul, çok şubeli işletme. Almanya ve Körfez'de en keskin kapı "veriniz sizde kalır": müşterinin sunucusunda yerel model.</dd>
+</dl>
+<div class="flow">
+  <div class="st"><b>1 Kendine kur</b>holdingin kendi beyni canlı demo olur</div>
+  <div class="st"><b>2 İş türü seç</b>bir sektörle başla</div>
+  <div class="st"><b>3 Hesapla</b>20 kişi × haftada 2 saat = 40 maaş saati; yeni çalışan hızlı uyum</div>
+  <div class="st"><b>4 Soruları topla</b>ekibin her hafta sorduğu 20 soru</div>
+  <div class="st"><b>5 Bağla</b>yalnız cevapların yaşadığı araçlar</div>
+  <div class="st"><b>6 Sat</b>kurulum + aylık plan; ekler ayrı</div>
+</div>
+<p><b>Çalışma akışı:</b> bağlayıcılar → belgeler dizinlenir → rol bazlı yetki haritası (maaş, insan kaynakları ve sözleşme herkese açılmaz) → soru → kaynağıyla cevap; kaynak yoksa "bilmiyorum" → her cevap belgeye karşı denetlenir → üstüne rol bazlı günlük brifing, proje özeti, toplantı dökümünü dosyalama, her yeni aday için araştırma özeti, belge üreticileri, rol panoları → 30 gün eğitim, çünkü ekibin önce beyne başvurmayı öğrenmesi zaman alır → aylık bakım: 20 sorunun skoru korunur ve büyür.</p>
+<p><b>Gelir — iki yol:</b> Jeanette tek temeli 17 kez 15.000 $'a sattı, 9'u aylık planda kaldı; Kieren her birini özel kurup 2.000 $ alıyor ve bir şirketten 30 kurulum işi aldı. Holdingin fabrikası Jeanette'in yoluna uyuyor: tek temel bir kez kurulur, müşteri başına yalnız bağlayıcılar ve yetki haritası değişir. Bu iş yapışkandır: ekip bir kez alışınca kapatamaz, aylık gelir kalıcıdır.</p>
+<p><b>Elimizde:</b> hafıza yönlendirici (pgvector, Obsidian, claude-mem, graphify), yerel gömme modelleri, makinede duran ama kullanılmayan dayanak denetçisi modeli, CEO brifingi, persona fabrikası. <b>Eksik:</b> holdingin kendi V2 hafızası (onaylı, kurulmadı), Drive, Gmail ve HubSpot bağlayıcıları, rol kapsamının kodda uygulanması.</p>
+<p><b>Ferrari farkı:</b> uydurma cevap 0, her cevap kaynaklı; belgeye gömülü talimat karantinada; yerinde model; çok dil; kabul testi müşterinin kendi 20 sorusu.</p>
+<p class="small">Satırlar: H9 (#25) · tahtadaki V2 hafıza satırı · B34 · B64 · C41 · B05 · B04. İlk tezgâh denemesi: holdingin kendi şartnameleri ve tahtası, bilgisi dağınık gerçek bir şirket gibi kullanılır; 20 soru, kaynaklı cevap, uydurma sayısı (kabul 0); 0 $, 1–2 gün. Aynı ölçüm V2 hafızasının kabul testidir.</p>
+</div>
+
+<h2><span class="n">3</span>Hangisi önce</h2>
+<table>
+  <tr><th>Sıra</th><th>Sistem</th><th>Neden</th></tr>
+  <tr><td><b>1</b></td><td>Şirket beyni</td><td>En yüksek fiyat ve en sağlam aylık gelir. Önce holdingin kendi beyni kurulur: makine ilerler, satılacak ürünün demosu ve kanıtı da o olur.</td></tr>
+  <tr><td><b>2</b></td><td>Sesli not → belge</td><td>En ucuz deneme; kulak ve model hazır. Eksik olan WhatsApp kapısı, H7 ile ortak kurulur.</td></tr>
+  <tr><td><b>3</b></td><td>Başvuru hunisi</td><td>Ödeme, imza ve e-posta (B05) ile WhatsApp ve SMS ister; K11 kararınızla B05 ikinci dalgadan önce çözülüyor.</td></tr>
+  <tr><td><b>4</b></td><td>Creator OS</td><td>Yazı kolu H6 ile hemen gelir; video kolu K8'i ve konuşan görüntü hattını bekler.</td></tr>
+</table>
+<p>Bu sıra bir öneridir; tahtanın yeniden dizilişinde her satırın yerine konur.</p>
+
+<h2><span class="n">4</span>Dördünün ortak satış makinesi</h2>
+<div class="flow">
+  <div class="st"><b>Teşhis</b>müşteri talep mi kısıtlı, arz mı?</div>
+  <div class="st"><b>Bul</b>dışa ulaşma (H5), dizinler (H2), Upwork</div>
+  <div class="st"><b>Göster</b>kendi kurduğumuz demo, yazı örneği (İ6)</div>
+  <div class="st"><b>Sözleş</b>teklif, sözleşme, tahsilat (B05)</div>
+  <div class="st"><b>Kur</b>"kurulum" iş tipi, usta ve uzmanlar (B64)</div>
+  <div class="st"><b>Devret</b>30 gün eğitim (B04)</div>
+  <div class="st"><b>Bakım</b>aylık sürekli iş</div>
+  <div class="st"><b>Ölç</b>net kâr defterde (K2)</div>
+</div>
+<p><b>Teşhis videonun en değerli dersi:</b> daha çok müşteri isteyen işletmeye (talep kısıtlı) içerik ve başvuru hunisi satılır; işi zaten kaldıramayan işletmeye (arz kısıtlı) aday göndermek yalnız yük olur, ona sesli nottan belge ve şirket beyni satılır. Bu soru H9'un ücretli keşif görüşmesinin ilk sorusu olur.</p>
+<p><b>Holdinge uygulanınca:</b> holding bugün talep kısıtlı; makine var, müşteri ve dağıtım yok. Dört sistemin satışı, web ofisinin müşteri bulma işiyle (Y9) aynı boruyu kullanır; o boru bir kez kurulur, dört sistem ve web ofisi birlikte satılır.</p>
+
+<h2><span class="n">5</span>Sizden</h2>
+<ul>
+  <li><b>Helal:</b> sesli nottan belge, başvuru hunisi ve şirket beyni için "şimdilik helal" dediniz; her biri önünüze geldiğinde yeniden konuşulur. Kayda geçti.</li>
+  <li><b>Hesaplar, sırası gelince:</b> Upwork hesabı, holdingin WhatsApp Business numarası, ödeme ve e-imza hesapları sizin tıkınız.</li>
+  <li><b>Creator OS'un video kolu:</b> açılacağı gün K8 ve kadro eki sorusu size gelir.</li>
+</ul>
+<p class="small">Kaynak: <a href="https://www.youtube.com/watch?v=BQJRLZ2q_Ns">BQJRLZ2q_Ns</a> (Nate Herk, 27 Ekim 2026), transkript baştan sona okundu, 54 kare. Dakikalar: sesli not 0:23, huni 2:11, Creator OS 4:42, şirket beyni 6:33, teşhis 10:08. İzleyici kaydı ve elimizdekilerin dosya yolları: <code>.planning/research/watch-links/2026-11-02-nate-herk/</code>. Yöntemler gelir listesinde: REVENUE-OPPORTUNITIES §D H6, H7, H9.</p>
+
+</body>
+</html>
