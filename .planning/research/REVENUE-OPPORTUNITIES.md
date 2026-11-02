@@ -185,6 +185,7 @@
   - Yerel site yenileme (TL çapası 10–20 bin ₺) — [hriu0irRcpE 13:46](https://www.youtube.com/watch?v=hriu0irRcpE&t=826), [oL2xB4DiXEo 06:05](https://www.youtube.com/watch?v=oL2xB4DiXEo&t=365) · `T-O M12`, `T-F 4.4`, `Y-F Y2`
   - Dışa ulaşma makinesi: haritada 4+ yıldız, 50+ yorum, randevu linki yok → 1–10 puanlı denetim → kişiye özel video → firmaya özel demo — [JhyVSrQPVSg 30:27](https://www.youtube.com/watch?v=JhyVSrQPVSg&t=1827) · `K-O 1.5`; sahte talep formu ve kişisel telefon çıkarıldı
   - Bekleyen fırsat: WordPress site yenileme (K10)
+- **Tarz dolabı (CEO, 2026-11-02 <!-- CEO-OK: web-studio-style-cupboard-precision-2026-11-02 -->):** varsayılan ev tarzı (gösterişli, lüks, wow); ilk ek kart Precision, yalnız müşteri ya da CEO kendi sözüyle isteyince açılır; müşteri "şu site gibi" derse o siteden yeni kart çıkar — `.planning/quick/20261102-tarz-dolabi/DESIGN.md`.
 - **Karar / satırlar:** web ofisinin beş sorusu, Y9, Y11, İ6, K10 · B64.
 
 ### 22. H6 — Stüdyo ajansı + uzun videodan aylık kısa paket + yazı kolu (HİZMET)

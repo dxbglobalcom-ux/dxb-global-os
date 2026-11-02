@@ -66,7 +66,8 @@ Earlier days: `.planning/STATE-ARCHIVE.md` § "Moved out of STATE.md on 2026-11-
    in the board's reorder and bench-tested with it, sold when the key is turned. Rapor 3's suggested order for Nate
    Herk's systems (company brain first, built on the holding's own V2 memory) goes into that reorder.
 1. The web office plan talk (dxb-team2, max), from `~/Desktop/DxB Global Web-Studio/`: his answers to the five
-   questions below (put to him again 2026-11-02; he is reading); then the plan by two sealed writers and Sol's blind audit, once to him. A27's rule on when a
+   questions below (put to him again 2026-11-02; he is reading); the style cupboard and its first card, Precision,
+   agreed as input (`.planning/quick/20261102-tarz-dolabi/DESIGN.md`, his yes 2026-11-02); then the plan by two sealed writers and Sol's blind audit, once to him. A27's rule on when a
    master splits work waits for the next trial run with the holding's own setup.
 2. After the holding is built out, C41: every persona rewritten facing the outside world and knowing the holding's
    studio, skills and tools; the job-type masters' personas are one leg of it.
