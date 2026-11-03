@@ -27,6 +27,15 @@ not here. What is accepted is read from `scripts/governance/ceo-approvals.json`,
 
 ## Where we left off
 
+2026-11-03 evening — Site E, on his word: one Opus alone at max built the Mavi Kuşak site from the brief only
+(17:45 → 18:31, 46 minutes; nothing of A–D opened; only the 28 Ekim folder's library images, none generated). On
+his mid-run word the missing details were completed as if the client gave them (Kılıçaslan Caddesi No: 112,
+phone, e-mail, hours) with a real İznik map drawn from OpenStreetMap tiles, Google Maps links and schema.org
+business data. Three pages: the tile you can turn over (the seal and R.T. on its back), the making of a tile on the
+scroll (body → slip → pounced dots → paint → milky glaze → kiln → gloss), twelve pieces in four groups with a
+close look and "Bu parçayı sor" carrying the piece into the form, and the form (consent gate, draft kept, request
+number kept after reload). Checked at 1440 and 390 px and once live in his Chrome. Folder `E - Opus tek başına,
+max, 46 dakika (3 Kasım)` beside A–D; phone link and details in `.planning/quick/20261103-mavi-kusak-max/NOTE.md`.
 2026-11-03 evening — The DxB Web Studio plan talk at max (dxb-team2). His folder read whole: "ayrıca bunada bak.md" is
 file 3 plus file 4's uncorrected draft; the usta-uzman note is superseded by file 2 §6. Site D's session traced against
 arms A, B and C: D ran inside the construction with the holding's core and the 31 Oct showy rule in its opening memory,
@@ -37,8 +46,8 @@ the platforms and the award bar (Awwwards 40/30/20/10). File 7 in his folder (md
 `.planning/quick/20261103-web-studio-kesif/`): the finding, the studio's proposed shape — one master, the studio's
 cupboard, one fresh eye, heavy machinery only on valuable work — and five decisions.
 File 6 corrected on his word <!-- CEO-OK: ceo-liked-features-are-taste-not-rules-2026-11-03 -->: a taste note, not a rule.
-Board row B84 DXB WEB STUDIO opened on his word <!-- CEO-OK: b84-web-studio-row-opened-2026-11-03 -->. Site E (one Opus, max) is being built by
-another session.
+Board row B84 DXB WEB STUDIO opened on his word <!-- CEO-OK: b84-web-studio-row-opened-2026-11-03 -->. Site E (one Opus, max) is
+built — the entry above.
 2026-11-03 — On his word, the 6 of the 12 flagged personas were corrected for the showy rule (3 clearly against:
 design-ui-designer, engineering-frontend-developer, project-shepherd; 3 partly: head-of-design, testing-evidence-collector,
 document-generator): only the plainness lines rewritten, accessibility kept; the 6 not against untouched. Synced as v4
@@ -89,7 +98,7 @@ Earlier days: `.planning/STATE-ARCHIVE.md` § "Moved out of STATE.md on 2026-11-
    Herk's systems (company brain first, built on the holding's own V2 memory) goes into that reorder.
 1. DxB Web Studio (B84): his answers to file 7's five decisions; then the plan by two sealed writers and Sol's blind
    audit, once to him — its brief carries files 0–7, the style cupboard (`.planning/quick/20261102-tarz-dolabi/DESIGN.md`,
-   his yes 2026-11-02) and the two research files. Site E joins the comparison when its session finishes. A27's rule on
+   his yes 2026-11-02) and the two research files. Site E is finished (his eye first) and joins the comparison. A27's rule on
    when a master splits work waits for the next trial run with the holding's own setup.
 2. After the holding is built out, C41: every persona rewritten facing the outside world and knowing the holding's
    studio, skills and tools; the job-type masters' personas are one leg of it.
@@ -118,6 +127,8 @@ Earlier days: `.planning/STATE-ARCHIVE.md` § "Moved out of STATE.md on 2026-11-
 
 ## Waiting on his approval
 
+- His eye on site E (Mavi Kuşak, one Opus alone at max, 3 Nov) beside A–D — on the phone as well
+  (`.planning/quick/20261103-mavi-kusak-max/NOTE.md`); the invented contact details are listed there for the real ones.
 - DxB Web Studio (B84), file 7 in `~/Desktop/DxB Global Web-Studio/`, five decisions: the studio's shape (one master,
   the cupboard, one fresh eye); valuable web work by 2–3 independent homepage samples instead of written plans; six
   short seats written new, library personas called by reference; four runs that measure the construction's share; the
