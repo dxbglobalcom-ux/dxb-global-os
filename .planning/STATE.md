@@ -36,18 +36,17 @@ scroll (body → slip → pounced dots → paint → milky glaze → kiln → gl
 close look and "Bu parçayı sor" carrying the piece into the form, and the form (consent gate, draft kept, request
 number kept after reload). Checked at 1440 and 390 px and once live in his Chrome. Folder `E - Opus tek başına,
 max, 46 dakika (3 Kasım)` beside A–D; phone link and details in `.planning/quick/20261103-mavi-kusak-max/NOTE.md`.
-2026-11-03 evening — The DxB Web Studio plan talk at max (dxb-team2). His folder read whole: "ayrıca bunada bak.md" is
-file 3 plus file 4's uncorrected draft; the usta-uzman note is superseded by file 2 §6. Site D's session traced against
-arms A, B and C: D ran inside the construction with the holding's core and the 31 Oct showy rule in its opening memory,
-used 37 library images (19 of them arm A's, none generated), took its signature move from the brief's own sentence,
-20 minutes at high; the arms ran in a sealed box (no core, no memory, no skill but ScrollCraft). Two helpers researched
-WordPress/WooCommerce (WordPress's own agent-skills, MCP adapter, WooCommerce's MCP, WP-CLI, Playground, Studio) and
-the platforms and the award bar (Awwwards 40/30/20/10). File 7 in his folder (md + PDF; source and research in
-`.planning/quick/20261103-web-studio-kesif/`): the finding, and the proposal re-tied to file 2 (the 29 Oct proposal
-stands; only what D added is listed) — and five decisions.
-File 6 corrected on his word <!-- CEO-OK: ceo-liked-features-are-taste-not-rules-2026-11-03 -->: a taste note, not a rule.
-Board row B84 DXB WEB STUDIO opened on his word <!-- CEO-OK: b84-web-studio-row-opened-2026-11-03 -->. Site E (one Opus, max) is
-built — the entry above.
+2026-11-03 night — The DxB Web Studio plan is agreed in the talk and written into B84's row file ("The plan"):
+eleven decisions on his word <!-- CEO-OK: b84-web-studio-plan-agreed-2026-11-03 --> — the 29 Oct proposal plus the talk;
+every job from a decided build brief (MERIDIAN and the outletcity teardown are examples in the shared cupboard, not the
+standard); the client's reference is the bar, and the design may be identical (copying = images, names, content);
+the home page by three independent hands; one closing look with Sol, one round; seven short seats; one shared cupboard
+for every office; client finding at Y9/Y11's rank; the Agent SDK runtime; film from the Media Studio. The four-run
+measurement and the Mavi Kuşak re-run are dropped; nothing is built until B84's rank. Measured in the talk: site D was
+built entirely at high; his eye judged site E (max) worse than D, cause not measured; outletcity's logo wall is one
+video — a still night photo pushing in ~7 % and back, two logo sets fading. Fable's sealed plan merged; Sol did not run
+(he agreed the decisions himself and ordered the job finished). File 6 is a taste note, not a rule
+<!-- CEO-OK: ceo-liked-features-are-taste-not-rules-2026-11-03 -->; file 7's §4 and table carry errors the row file corrects.
 2026-11-03 — On his word, the 6 of the 12 flagged personas were corrected for the showy rule (3 clearly against:
 design-ui-designer, engineering-frontend-developer, project-shepherd; 3 partly: head-of-design, testing-evidence-collector,
 document-generator): only the plainness lines rewritten, accessibility kept; the 6 not against untouched. Synced as v4
@@ -96,10 +95,9 @@ Earlier days: `.planning/STATE-ARCHIVE.md` § "Moved out of STATE.md on 2026-11-
 0. Revenue — the lines are on the board (B83 and the notes on its related rows); each is built at its row's rank
    in the board's reorder and bench-tested with it, sold when the key is turned. Rapor 3's suggested order for Nate
    Herk's systems (company brain first, built on the holding's own V2 memory) goes into that reorder.
-1. DxB Web Studio (B84): his answers to file 7's five decisions; then the plan by two sealed writers and Sol's blind
-   audit, once to him — its brief carries files 0–7, the style cupboard (`.planning/quick/20261102-tarz-dolabi/DESIGN.md`,
-   his yes 2026-11-02) and the two research files. Site E is finished (his eye first) and joins the comparison. A27's rule on
-   when a master splits work waits for the next trial run with the holding's own setup.
+1. DxB Web Studio (B84): the plan is agreed and in the row file; the studio is set up at B84's rank in the board's
+   reorder, in the order written there (cupboard index and example briefs → seven seats → hands and the WordPress kit →
+   the machine with B64 → the dashboard area with B43 → selling with B83/Y9/Y11).
 2. After the holding is built out, C41: every persona rewritten facing the outside world and knowing the holding's
    studio, skills and tools; the job-type masters' personas are one leg of it.
 3. The studio platform-hub plan is approved with his corrections and on the board (B43; FINAL.md Bölüm 0): built at its
@@ -127,20 +125,14 @@ Earlier days: `.planning/STATE-ARCHIVE.md` § "Moved out of STATE.md on 2026-11-
 
 ## Waiting on his approval
 
-- His eye on site E (Mavi Kuşak, one Opus alone at max, 3 Nov) beside A–D — on the phone as well
-  (`.planning/quick/20261103-mavi-kusak-max/NOTE.md`); the invented contact details are listed there for the real ones.
-- DxB Web Studio (B84), file 7 in `~/Desktop/DxB Global Web-Studio/`, five decisions: file 2's 29 Oct proposal with
-  file 7 §4's additions as the plan's base; valuable web work by 2–3 independent homepage samples instead of written plans; six
-  short seats written new, library personas called by reference; four runs that measure the construction's share; the
-  duplicate file deleted.
+- DxB Web Studio: deleting the duplicate "ayrıca bunada bak.md" in his folder (file 3 + file 4's uncorrected draft).
 - Revenue, Rapor 2 (`~/Desktop/Gelir Kaynakları/2 - Gelir üretim hatları ve kararlarınız 2026-11-01.pdf`, § 8):
   K8 (after he listens to the voices). The rest answered 2 Nov (K2, K9, K10 for now, K11, İ1–İ3, İ6 as
   recommended; İ4 a package; İ5 and İ7 his own rulings — REVENUE-OPPORTUNITIES §D). Also asked: whether his 1 Nov licence word becomes a standing rule beyond the memory
   note.
-- DxB Web Studio, standing answers (2026-11-02): no master or core team written and no trial before the plan; the
-  213 personas scanned (13 core, 69 ring, file 5); the studio's area on the dashboard is the plan's; Y9 and Y11 later,
+- DxB Web Studio, standing answers (2026-11-02): the 213 personas scanned (13 core, 69 ring, file 5); Y9 and Y11 later,
   markers in ORDER.md. The studio's ScrollCraft output is a library on his word (`ComfyUI/output/scrollcraft/KUTUPHANE.tsv`);
-  approved and used output goes into it — a step of the plan; looking there before generating waits until it is rich.
+  approved and used output goes into it; looking there before generating waits until it is rich.
 - Still open from 22 Oct: a light lane for small, low-risk jobs.
 - Whether Ultra Code joins the holding (the real one was never run — arm B was an imitation); deleting the obsolete
   `scripts/test/e2e-login.mjs`.
