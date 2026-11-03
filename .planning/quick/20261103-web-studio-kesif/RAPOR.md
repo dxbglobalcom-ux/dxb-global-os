@@ -15,7 +15,7 @@ Sizin kurallarınız D'nin elindeydi, kutudaki kolların elinde yoktu. Ama tek f
 
 Bütün denemelerin dersi aynı: işi yazıyla bölen "kâğıt hattı" her seferinde kaybetti. Kazanan hep bütünü tek elden tasarlayan güçlü bir akıl oldu.
 
-Önerim, stüdyonun üç parça üzerine kurulması: **bir usta, stüdyonun dolabı, tek bir taze göz.** Ağır makine yalnız değerli işte çalışır.
+Önerinin aslı 2. dosyadaki 29 Ekim önerisi; o esas kalır. D'den çıkan ek şu: usta her işe holdingin zevki ve stüdyonun dolabıyla açılır, taze göz de her hareketi iki ekranda dener (4. bölüm).
 
 WordPress ve WooCommerce için WordPress'in kendi resmî ajan araç seti var. Tahtada stüdyonun satırı yoktu; sözünüzle **B84** açıldı.
 
@@ -162,54 +162,41 @@ Bu makinede PHP ve Composer kurulu değil. Kurulum stüdyonun yapımında, sıra
 - **"ayrıca bunada bak.md":** içinde yeni bir şey yok. 3. dosyanın aynısı ile 4. dosyanın düzeltilmeden önceki hâlinden oluşuyor. 29 Ekim'de düzelttirdiğiniz "Onunkinin çoğu vitrin" cümlesi hâlâ içinde.
 - **Usta-uzman notu:** kopya değil. C'nin sonucu gelmeden yazılmış bir karar notu. 2. dosyanın 6. bölümü onu sonuçla yeniden tartıp 4. maddesini geri aldı; güncel hâli orada.
 
-## 4 Önerim: DxB Web Studio nasıl çalışır
+## 4 Önerim: 2. dosyanın önerisi esas; D'den sonra eklenenler
 
-**Bir usta, bir dolap, bir göz.** D'nin tesadüfen sahip olduğunu stüdyo her işe bilerek verir.
+29 Ekim önerisi (2. dosya, 7. ve 8. bölüm) yerinde duruyor. O öneride şunlar var:
+- genel site ustası ve kısa çekirdek ekip;
+- gerektiğinde kendi dolabından çağrılan uzmanlar;
+- işin on adımlık yolu;
+- değerli işte ana sayfanın Ultra Code yöntemiyle 2-3 bağımsız elden çıkması;
+- sanat yönetmeninin taze gözü;
+- mihenk taşı brifler;
+- stüdyonun ne satacağı.
 
-1. **Usta.** Her işin tek sahibi güçlü bir oturumdur. Bütünü kendisi tasarlar, işin kalbini (ana sayfa ve imza hareketi) kendi eliyle kurar ve siteyi bitirir. Holdingin içinde, stüdyonun dolabıyla açılır.
-2. **Dolap.** Her iş bununla açılır:
-    - tarz kartı: varsayılan ev tarzı; Precision gibi kartlar yalnız istenince açılır;
-    - hareket tarifleri: beğendiğiniz hareketlerin nasıl yapıldığı (perde gibi açılış, ele alınan karo, kaydırınca dönen karo, desenin dolması); yalnız brif isterse kullanılır;
-    - zevk notlarınız: kural değil;
-    - müşterinin alanındaki en iyi sitelerin ilkeleri;
-    - resim kütüphanesi ve Media Studio'nun elleri;
+2 Kasım'da evet dediğiniz tarz dolabı ve 213 persona taraması da girdi olarak duruyor. Bu rapor o öneriyi yeniden yazmaz. Aşağıda yalnız D'den ve bugünkü araştırmadan sonra eklenenler var:
+
+1. **Usta her işe holdingin içinde, stüdyonun dolabıyla açılır.** D'nin tesadüfen sahip olduğu bağlam bilerek verilir:
+    - tarz kartı;
+    - beğendiğiniz hareketlerin tarifi (zorunlu değil);
+    - zevk notlarınız (kural değil);
+    - resim kütüphanesi;
     - tasarım becerileri;
-    - platform kitleri: el yazımı kod, WordPress/WooCommerce, Shopify.
-3. **Göz.** Teslimden önce tek tur yapılır:
-    - İşi yapmamış sanat yönetmeni siteyi Awwwards'ın dört başlığıyla puanlar: tasarım %40, kullanılabilirlik %30, yaratıcılık %20, içerik %10.
-    - Her imza hareketini telefonda ve masaüstünde ayrı ayrı dener.
-    - Müşteri gözü siteyi telefonda baştan sona yürür.
-    - Erişilebilirlik, hız, form ve taşma kontrolleri saniyeler içinde otomatik koşar.
-    - Bulgular ustaya döner.
-4. **Uzman yalnız dört yerde çağrılır:**
-    - ustanın elinde olmayan iş: fotoğraf ve video, WordPress/WooCommerce, Shopify;
-    - kontrol listesi isteyen alan: SEO ve yapay zekâ araması, KVKK/GDPR, erişilebilirlik;
-    - hacim: tasarım onaylanınca çok sayfa paralel yapılır;
-    - taze göz.
-5. **Değerli iş** (1.000 $ ve üstü ya da sizin sözünüz). Ana sayfa numunesini 2-3 bağımsız el, farklı açılardan gerçekten yapar. En güzeli seçilir, öbürlerinin iyi yanları eklenir. Numune önce size, sonra müşteriye gider. Bu, Ultra Code'un yöntemini (bağımsız denemeler, en iyisinin seçimi, öbürlerinin iyi yanlarının eklenmesi) yalnız bu karar adımına uygulamaktır.
-6. **Belge yok.** İş kayıtlı bir kalıp gibi yürür (19 Ekim sözünüz). Tek yazı brif kartıdır: müşterinin sözü, "bitti" ölçüsü, tarih, bütçe ve tarz. Zeytin işindeki 19 saatlik plan bir daha olmaz.
-7. **Ders ve kütüphane.** Her işin süresi, maliyeti ve sizin hükmünüz kaydolur. Onaylanan resim kütüphaneye, beğendiğiniz hareket tarif dolabına girer. Stüdyoda bir şey değiştiğinde (model, beceri, koltuk) üç sabit brif yeniden koşulur: Mavi Kuşak, Urla zeytin, diş kliniği. Sonuç, o güne kadarki en iyisiyle yan yana konur.
-8. **Paneldeki alanı.** Media Studio'nunki gibi olur. Orada şunlar durur:
-    - çalışırken görünen ekip;
-    - her işin aşaması;
-    - gözünüzü bekleyen numuneler;
-    - kütüphane;
-    - yayındaki müşteri sitelerinin hızı ve ayakta olup olmadığı.
-9. **Ne satar.** Dünyanın her yerine şunları satar:
-    - site ve landing page;
-    - e-ticaret;
-    - SEO ve yapay zekâ aramasında görünürlük;
-    - çok dilli site;
-    - WordPress hız onarımı ve yenileme;
-    - sürekli gelir için aylık bakım ve SEO paketleri.
+    - platform kitleri.
 
-Sonra plan, cevaplarınızla iki ayrı yazar ve Sol'un kör denetimiyle yazılır ve bir kez önünüze gelir. Planın sınaması şudur: aynı Mavi Kuşak brifi stüdyonun bu düzeniyle yapılır ve A, D ve E ile yan yana gözünüze gelir.
+    29 Ekim önerisinin 8. bölümü denemeyi "inşaatın mühendislik kuralları yüklenmeden" kurmayı söylüyordu. D'den çıkan ek şu: mühendislik kuralları yüklenmez, ama holdingin zevki ve çıtası yüklenir.
+2. **Kütüphane bugünden işe yarıyor.** D'nin güzelliğinin bir kısmı kütüphanedeki hazır resimlerden geldi; kütüphanede bugün 103 resim var. "Üretmeden önce kütüphaneye bakılsın" adımına "kütüphane zenginleşince" demiştiniz. Plan bu adımı yeniden önünüze getirir.
+3. **Göz iki ekranda bakar.** Sanat yönetmeni her imza hareketini telefonda ve masaüstünde ayrı ayrı dener. Siteyi Awwwards'ın dört başlığıyla puanlar: tasarım %40, kullanılabilirlik %30, yaratıcılık %20, içerik %10. A'daki "telefonda var, masaüstünde yok" sorunu bu adımla yakalanır.
+4. **Değerli web işinde plan, numunenin kendisidir.** 2. dosyanın 4. adımı zaten 2-3 bağımsız ana sayfa numunesi diyordu. Yeni olan şu: B64'ün "iki ayrı yazılı plan" kuralı web işinde bu numunelerle karşılanır.
+5. **Çekirdeğe WordPress/WooCommerce uzmanı girer.** Platform kitleri 3. bölümdeki araştırmadan alınır.
+6. **Açık sorular planda cevaplanır.** Paneldeki stüdyo alanı (Media Studio'nunki gibi) ve 2 Kasım'daki öbür sorular planın konusu.
+
+Sonra plan, cevaplarınızla iki ayrı yazar ve Sol'un kör denetimiyle yazılır ve bir kez önünüze gelir. Bu planda 29 Ekim önerisi, 2 Kasım cevaplarınız ve bu ekler birleşir. Planın sınaması şudur: aynı Mavi Kuşak brifi stüdyonun bu düzeniyle yapılır ve A, D ve E ile yan yana gözünüze gelir.
 
 ## 5 Sizden kararlar
 
 Her biri tek kelimeyle cevaplanır; önerim hepsinde evet.
 
-1. **Biçim.** Stüdyo 4. bölümdeki gibi kurulsun mu: bir usta, stüdyonun dolabı, tek taze göz; uzman yalnız dört yerde; ağır makine yalnız değerli işte?
+1. **Biçim.** 29 Ekim önerisi, 4. bölümdeki eklerle planın temeli olsun mu?
 2. **Değerli web işi.** B64'ün 10. kararındaki "iki ayrı plan" kuralı, web işlerinde 2-3 bağımsız ana sayfa numunesiyle karşılansın mı? Gerekçe: sitede plan tasarımın kendisidir; yazılı plan bütün denemelerde kaybetti.
 3. **Personalar.** Stüdyonun altı koltuğu, her müşteriye uyacak kısa (yaklaşık 2 KB) genel kimlikler olarak yeni yazılsın mı? Kütüphanedeki personalar kopyalanmaz; gerektiğinde kendi dolabından adıyla çağrılır. Gerekçeler:
     - 2 KB'lık uzmanlar Mavi Kuşak'ta iyi iş çıkardı.
