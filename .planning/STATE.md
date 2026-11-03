@@ -43,8 +43,8 @@ used 37 library images (19 of them arm A's, none generated), took its signature 
 20 minutes at high; the arms ran in a sealed box (no core, no memory, no skill but ScrollCraft). Two helpers researched
 WordPress/WooCommerce (WordPress's own agent-skills, MCP adapter, WooCommerce's MCP, WP-CLI, Playground, Studio) and
 the platforms and the award bar (Awwwards 40/30/20/10). File 7 in his folder (md + PDF; source and research in
-`.planning/quick/20261103-web-studio-kesif/`): the finding, the studio's proposed shape — one master, the studio's
-cupboard, one fresh eye, heavy machinery only on valuable work — and five decisions.
+`.planning/quick/20261103-web-studio-kesif/`): the finding, and the proposal re-tied to file 2 (the 29 Oct proposal
+stands; only what D added is listed) — and five decisions.
 File 6 corrected on his word <!-- CEO-OK: ceo-liked-features-are-taste-not-rules-2026-11-03 -->: a taste note, not a rule.
 Board row B84 DXB WEB STUDIO opened on his word <!-- CEO-OK: b84-web-studio-row-opened-2026-11-03 -->. Site E (one Opus, max) is
 built — the entry above.
@@ -129,8 +129,8 @@ Earlier days: `.planning/STATE-ARCHIVE.md` § "Moved out of STATE.md on 2026-11-
 
 - His eye on site E (Mavi Kuşak, one Opus alone at max, 3 Nov) beside A–D — on the phone as well
   (`.planning/quick/20261103-mavi-kusak-max/NOTE.md`); the invented contact details are listed there for the real ones.
-- DxB Web Studio (B84), file 7 in `~/Desktop/DxB Global Web-Studio/`, five decisions: the studio's shape (one master,
-  the cupboard, one fresh eye); valuable web work by 2–3 independent homepage samples instead of written plans; six
+- DxB Web Studio (B84), file 7 in `~/Desktop/DxB Global Web-Studio/`, five decisions: file 2's 29 Oct proposal with
+  file 7 §4's additions as the plan's base; valuable web work by 2–3 independent homepage samples instead of written plans; six
   short seats written new, library personas called by reference; four runs that measure the construction's share; the
   duplicate file deleted.
 - Revenue, Rapor 2 (`~/Desktop/Gelir Kaynakları/2 - Gelir üretim hatları ve kararlarınız 2026-11-01.pdf`, § 8):
