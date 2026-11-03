@@ -3033,5 +3033,13 @@
     "conditions": "His 'birinci öneri' is the session's proposal made at max: each related row gets the note 'this row also builds revenue line H#, bench-tested with it, sold when the key is turned', and one row is opened for the lines no row owns and the revenue engine. Rapor 2 K1 is answered by it; K6 answered — the channel talk stays later, after he was told YouTube's entry threshold doubles on 2027-02-01. Rapor 2's 'now' tests (K3-K5, K7, K12, P1) move to each line's bench test. When anything is built follows the board's reorder. On the ~100 $ of first-test money (Rapor 2 P1) he said: \"Tamam, olur. Okey. Sonra ya, sonra.\" — no spending now; the money a line's build needs comes to him when that build needs it.",
     "session": "Opus 5.5 session 1ddf1036 — heard first-hand, 2026-11-01.",
     "where": "00-BOARD-OPEN-WORK.md B83, and the notes on B04, B05, B12, B28, B33, B34, B43, B64, C41 (W-C42-6 points at B83) · REVENUE_ENGINE_SPEC.md §7septies · .planning/research/REVENUE-OPPORTUNITIES.md §D"
+  },
+  "six-flagged-personas-corrected-for-the-showy-rule-2026-11-03": {
+    "date": "2026-11-03",
+    "what": "Of the 12 personas the 2 Nov Web Studio scan flagged against the showy rule, the 3 clearly against (design-ui-designer, engineering-frontend-developer, project-management-project-shepherd) and the 3 partly against (head-of-design, testing-evidence-collector, document-generator) are corrected under his 31 Oct rule (sites-showy-luxury-wow-plainness-words-banned-2026-10-31): only the plainness/restraint lines were rewritten, accessibility floors kept. The 6 read as not against (inner screen, infrastructure or code work) are not touched. This supersedes the 2 Nov condition 'nothing in a persona changes' for these six only.",
+    "verbatim": "Tamam, o 12 persona olan kişiye, yani what I want to say is like, you know, you can change what they call 3 out of 3, yeah, the partial and also the one explicitly telling, you know. All right.",
+    "conditions": "Read by the session as: the 3 clear + the 3 partial, not the 6 'not'. Synced to the company database as v4 with author opus-5, gate passed, bound through fn_persona_bind. design-whimsy-injector (edited on 31 Oct, never synced) went in the same run so the 31 Oct edit reaches the live agent. Wider persona rewriting stays with C41.",
+    "session": "Opus 5.5 session f5a8f917 — heard first-hand, 2026-11-03.",
+    "where": "personas/design/design-ui-designer.md · personas/engineering/engineering-frontend-developer.md · personas/project-management/project-management-project-shepherd.md · personas/design/head-of-design.md · personas/quality/testing-evidence-collector.md · personas/ceo/document-generator.md · .planning/quick/20261102-web-studio-personalar/RAPOR.md"
   }
 }

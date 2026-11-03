@@ -27,6 +27,12 @@ not here. What is accepted is read from `scripts/governance/ceo-approvals.json`,
 
 ## Where we left off
 
+2026-11-03 — On his word, the 6 of the 12 flagged personas were corrected for the showy rule (3 clearly against:
+design-ui-designer, engineering-frontend-developer, project-shepherd; 3 partly: head-of-design, testing-evidence-collector,
+document-generator): only the plainness lines rewritten, accessibility kept; the 6 not against untouched. Synced as v4
+(opus-5), gate passed, bound; design-whimsy-injector's 31 Oct edit, never synced, went with them. verify 7/7 MATCH, persona
+tests 33/33. Ledger `six-flagged-personas-corrected-for-the-showy-rule-2026-11-03`; RAPOR.md, rapor.html and his file 5
+(md + PDF) updated. The Web Studio plan talk waits for `/effort max`.
 2026-11-02 evening — On his word, one Opus alone built the Mavi Kuşak site from the brief only (no team, no Sol,
 nothing else read; 20:40 → 20:59; studio library images, contact details invented): three pages, checked at 1440 and
 390 px. All Mavi Kuşak sites (A, A-first, B, C and this one, D) are now together in `~/Desktop/Örnek landing pageler/28 Ekim - Mavi
@@ -100,11 +106,6 @@ Earlier days: `.planning/STATE-ARCHIVE.md` § "Moved out of STATE.md on 2026-11-
 
 ## Waiting on his approval
 
-- The 12 personas the scan flagged against the showy rule, read line by line on 2 Nov evening: 3 clearly against
-  (design-ui-designer, engineering-frontend-developer, project-shepherd), 3 partly (head-of-design,
-  testing-evidence-collector, document-generator), 6 not (inner screen, infrastructure or code work). Whether to fix
-  them through dxb-persona under his 31 Oct word ("nereden bulursan bul yok et") waits on his word; the report's
-  "31 Ekim'de dokunma" sentence was wrong and is corrected in RAPOR.md, rapor.html and his file 5.
 - His eye on site D (Mavi Kuşak, one Opus alone, 2 Nov) beside A, B and C — on the phone as well
   (`.planning/quick/20261102-mavi-kusak-tek-opus/NOTE.md`).
 - Revenue, Rapor 2 (`~/Desktop/Gelir Kaynakları/2 - Gelir üretim hatları ve kararlarınız 2026-11-01.pdf`, § 8):
