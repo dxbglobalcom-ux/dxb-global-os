@@ -3041,5 +3041,21 @@
     "conditions": "Read by the session as: the 3 clear + the 3 partial, not the 6 'not'. Synced to the company database as v4 with author opus-5, gate passed, bound through fn_persona_bind. design-whimsy-injector (edited on 31 Oct, never synced) went in the same run so the 31 Oct edit reaches the live agent. Wider persona rewriting stays with C41.",
     "session": "Opus 5.5 session f5a8f917 — heard first-hand, 2026-11-03.",
     "where": "personas/design/design-ui-designer.md · personas/engineering/engineering-frontend-developer.md · personas/project-management/project-management-project-shepherd.md · personas/design/head-of-design.md · personas/quality/testing-evidence-collector.md · personas/ceo/document-generator.md · .planning/quick/20261102-web-studio-personalar/RAPOR.md"
+  },
+  "b84-web-studio-row-opened-2026-11-03": {
+    "date": "2026-11-03",
+    "what": "Board row B84 DXB WEB STUDIO opened on his word: one row holds everything about the holding's web office — set up inside the holding like the Media Studio, making award-level sites clients say 'wow' to. No row owned it before (B83's line H5 waited for 'the web office row, when it opens').",
+    "verbatim": "Bu konuda yani tahtada bizim DxB Web Studio ofisi ile ilgili bir satır açılıp herhalde oraya bütün web sitesiyle ilgili ne varsa dışarıya dönük yani müşteriye mükemmel web siteleri yapmak için Ferrari seviyesinde tamam mı? Web siteleri yapmak için insanların baktığında wow diyebileceği web siteleri yapmak için bir ofis açmamız gerekiyordu. Holdingin içerisinde bunu tabii ki holdingin içerisinde kuracağız.",
+    "conditions": "He said 'herhalde' (probably), as if a row might already exist; none did, so it was opened. A row's opening, not a plan's yes: the studio's plan goes through two writers and Sol's audit and comes to him once; nothing is built before the board's reorder.",
+    "session": "Opus 5.5 session 2cc6f122 — heard first-hand, 2026-11-03.",
+    "where": "HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md B84 · .planning/board-rows/B84.md · ~/Desktop/DxB Global Web-Studio/7 - D neden güzel çıktı ve Web Studio önerisi 2026-11-03.md"
+  },
+  "ceo-liked-features-are-taste-not-rules-2026-11-03": {
+    "date": "2026-11-03",
+    "what": "The features he liked and disliked on the Mavi Kuşak sites (file 6 in his Web-Studio folder) are a taste note, not a rule: no site is required to carry them; they are kept so the studio knows his eye, and may help somewhere. File 6 was corrected from 'the studio's permanent input … liked moves carried to the next job' to this.",
+    "verbatim": "Bu arada benim beğendiğim özellikler de hani genel anlamda bütün sitelerde işte kar olacak, dönecek bilmem ne falan filan yok. Ben hani bu web sitelerdeki tarzları, beğendiğim şeyleri sadece söyledim. Hani belki bir yerde işe yarar, ne bileyim, hani bir taste olarak bir söylemek istedim. Nerelerini beğendim, nerelerini beğenmedim yani gibi bazı şeyleri dile getirmek istedim. Ama bu hani bütün web siteleri bu şeyde DxB Web Studio'yu kuruyoruz, ofisi kuruyoruz, bu ofisi holdingin içerisinde böyle olacak gibi bir şey yok. Yani öyle.",
+    "conditions": "Not a law; how file 6 is read. The described moves (his 'bu tarif çok önemli') stay available for a brief that calls for one.",
+    "session": "Opus 5.5 session 2cc6f122 — heard first-hand, 2026-11-03.",
+    "where": "~/Desktop/DxB Global Web-Studio/6 - CEO'nun beğendiği özellikler 2026-11-03.md"
   }
 }
