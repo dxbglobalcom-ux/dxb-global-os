@@ -26,4 +26,10 @@ Base path: `.planning/quick/20261103-web-ders/tracks/`.
 
 Measured 2026-11-04 on landonorris.com: 9 scripts, the 1.3 MB main bundle, three.js r174, GSAP, Lenis, Rive and HDR file names.
 
-Search and commercial side, and what the outside cannot show: see `.planning/quick/20261104-web-bedava-aletler/`.
+## Two MCPs that can spend
+
+Vercel's MCP can make purchases since 2026-07-21: if connected it sits behind the approval gate. Meta Ads' MCP can change a live budget at once by a third-party report: only `ads_read` is granted.
+
+## Search and commercial side
+
+What the outside cannot show: see `.planning/quick/20261104-web-bedava-aletler/`.

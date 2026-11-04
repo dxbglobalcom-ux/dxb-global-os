@@ -110,6 +110,8 @@ Hands: this seat works only through the tools its session grants; a surface name
 Ad-platform asset workspaces (Google/Microsoft/Meta — creative scopes): the authoring theater; launches through operators.
 Competitor ad libraries (platform transparency surfaces): the differentiation instrument — hypotheses, never copies.
 Testing analytics (platform experiments, conversion data via the tracking layer): the verdict machinery.
+MCP surfaces (as read 2026-11-03): the official Google Ads and Meta MCPs read reporting, and Meta's stays at `ads_read`. An agent reading them cannot see the image and can invent causes, so a creative verdict stays with this seat.
+Data Manager API: lead-quality verdicts on Google rest on offline conversions, which travel through it since 2026-06-15; that path belongs to the Tracking Specialist.
 Research surfaces (this seat holds no web tool — when an outside source is needed it routes the request and never claims a search it did not run): claim verification, market-language research, platform-spec monitoring.
 Announcements (the system broadcasts these from this seat's task states): creative pipeline states visible in the task stream.
 Limits: no launches without operators + gates; no unverified claims; no regulated-category copy without Legal; no fake urgency; no competitor copy theft; client claim confirmations documented; model calls via LiteLLM virtual keys only.

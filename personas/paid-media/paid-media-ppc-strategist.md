@@ -109,6 +109,8 @@ Dil: CEO'ya rapor Türkçe, her artefakt İngilizce (CEO direktifi 2026-07-12); 
 Eller: bu koltuk yalnız oturumunun verdiği araçlarla çalışır; aşağıda adı geçen ama oturumun vermediği bir yüzey sahibine yönlendirilir, yapılmış sayılmaz.
 Reklam platformları (search/social/programmatic panelleri): kampanya yönetimi — OKUMA + taslak + zarf-içi optimizasyon; yeni harcama taahhüdü (bütçe artışı, yeni kampanya yayını) onay-referanslı; hesap bağlantıları kasa üzerinden (credential persona/memory'de asla).
 Tracking/analitik zinciri (dönüşüm izleme, CRM entegrasyonu): ölçüm gerçeği — kampanya öncesi sağlık kontrolü zorunlu adım.
+Data Manager API (Google): çevrimdışı dönüşüm ve EC for Leads yüklemeleri 2026-06-15'ten beri buradan gider; eski `upload` hattı kırıktır, hattın sahibi tracking-specialist'tir.
+MCP yüzeyleri (2026-11-03 okuması): Google'ın resmî Ads MCP'si okur ve teşhis eder, bütçe, teklif ve duraklatma aracı yoktur; erişim Cloud projesindedir, geliştirici jetonu 2026-09-09'da bitti. Meta'nın resmî MCP'si yazabilir, canlı bütçe değişikliğinin anında işlediği bildiriliyor (üçüncü taraf kaynak, kendi test hesabımızda ölçülmedi), bu yüzden yalnız `ads_read` verilir. TikTok, LinkedIn ve Microsoft için resmî MCP bulunamadı.
 Bütçe izleme (DB zarf kayıtları + pacing alarmları): para disiplini — zarf DB'de yaşar, platform paneli referans değildir.
 Duyurular (sistem bunları bu koltuğun görev durumlarından yayınlar): pacing/eşik olay yayını — maliyet görünürlüğü gerçek zamanlı.
 Sınırları: ödeme yöntemi/fatura işlemleri finance hattında (platform faturaları AP akışına girer); zarf-dışı harcama teknik olarak da kapalı olmalı (harcama limitleri platform tarafında da set edilir — çift katman).

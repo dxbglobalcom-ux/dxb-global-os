@@ -11,10 +11,11 @@
 - **Trigger Type:** mcp-profile
 - **Source:** https://woocommerce.com/posts/woocommerce-mcp/ — published **2026-04-15**, author Kamlesh Vidhani
 - **What it actually is, measured 2026-08-20 at the vendor's own page — three parts, not one:** (1) a **feature built into WooCommerce itself**, switched on at `WooCommerce > Settings > Advanced > Features`; (2) the **WordPress MCP Adapter**, open source, a separate repository; (3) `@automattic/mcp-wordpress-remote`, a **local Node proxy** on our machine.
-- **Requirements:** **WooCommerce 10.7** (or 10.3+) · **WordPress 6.9+** (for the core Abilities API) · **Node.js 22+**. Then a REST API key, and the MCP client configured with it.
-- **Status at the vendor: DEVELOPER PREVIEW**, their own word, and their own advice is to put it on **a staging site** first.
+- **Requirements:** **WooCommerce 10.7** (or 10.3+) · **WordPress 6.9+** (for the core Abilities API) · **Node.js 22+**. Then an Application Password for a dedicated user (or WP-CLI locally), and the MCP client configured with it.
+- **Status at the vendor: DEVELOPER PREVIEW** (still so, read 2026-11-03), their own word, and their own advice is to put it on **a staging site** first.
 - **Licence / price:** **Free — no vendor, no subscription.** The feature ships inside WooCommerce; the adapter is open source.
-- **What an agent gets, exactly:** `products-list` · `products-get` · `products-create` · `products-update` · `products-delete` · `orders-list` · `orders-get` · `orders-create` · `orders-update`. Custom abilities can be added.
+- **Endpoint, read 2026-11-03:** no endpoint of its own any more. The `mcp-adapter` plugin serves `/wp-json/mcp/mcp-adapter-default-server` with three meta-tools that discover and run abilities. WooCommerce 11.3 removed `/wp-json/woocommerce/mcp` (it answers 410) and the `products-list` style names.
+- **What an agent gets, exactly:** seven abilities: query, create, update and delete products (delete goes to trash by default); query orders, change an order's status, add an order note. Coupons, customers, refunds, shipping, tax and settings are not among them; those go through REST and WP-CLI. Custom abilities can be added.
 
 ## CORRECTION — this is NOT the free version of Sell The Trend
 

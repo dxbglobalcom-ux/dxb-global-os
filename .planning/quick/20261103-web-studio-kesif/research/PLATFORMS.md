@@ -35,20 +35,20 @@ Read-only helper (Opus 5.5 · medium), briefed by the lead in the Web Studio pla
 | Option | Open/paid | Agent control | Price | Note |
 |---|---|---|---|---|
 | WooCommerce | open | woocommerce 10,576★ | free | the holding already runs one |
-| Shopify | paid | dev-mcp | from €27/mo | widest global coverage |
+| Shopify | paid | dev-mcp | from €27/mo | widest global coverage; Shopify Payments opens no business in Turkey or Saudi Arabia |
 | Medusa | open | medusa 37,071★; SGFGOV/medusa-mcp 70★ | self-host | headless |
 | Saleor | open | saleor 23,502★ (BSD-3) | self-host | GraphQL |
-| Stripe | paid | stripe/ai 2,033★ (toolkit + MCP) | not measured | global |
-| Paddle | paid, merchant of record | PaddleHQ/paddle-mcp-server 49★ | 5 % + 50¢ | handles the seller's tax |
+| Stripe | paid | stripe/ai 2,033★ (toolkit + MCP) | not measured | opens no business in Turkey or Saudi Arabia (UAE yes); Managed Payments (+3.5 %) sells digital products only |
+| Paddle | paid, merchant of record | PaddleHQ/paddle-mcp-server 49★ | 5 % + 50¢ | handles the seller's tax; digital products only, physical delivery prohibited |
 | Lemon Squeezy | paid, merchant of record | community MCP (3★) | 5 % + 50¢ | digital products |
-| iyzico | paid (TR) | iyzico/iyzipay-node 246★ | not measured | beside Stripe for Turkish clients |
+| iyzico | paid (TR) | iyzico/iyzipay-node 246★ | not measured | for Turkish clients, where Stripe is not available |
 | PayTR | paid (TR) | czaydev/better-payment 226★ wraps it | not measured | |
 
 **Hosting and deploy**
 
 | Option | Open/paid | Agent control | Price | Note |
 |---|---|---|---|---|
-| Vercel | paid | official MCP `https://mcp.vercel.com`; CLI | Hobby $0; Pro $20/mo incl. $20 usage | best for Next.js |
+| Vercel | paid | official MCP `https://mcp.vercel.com`; CLI | Hobby $0 but closed to commercial use, client work needs Pro; Pro $20/mo incl. $20 usage | best for Next.js; the MCP can make purchases since 2026-07-21, so if connected it sits behind the approval gate |
 | Netlify | paid | netlify/netlify-mcp 69★; CLI 1,935★ | free; $9; $20/mo | |
 | Cloudflare Pages/Workers | paid | cloudflare/mcp-server-cloudflare 4,441★ | free 100k req/day; from $5/mo; static assets free | edge + DNS |
 | Coolify on Hetzner | open | coollabsio/coolify 65,582★; hetznercloud/cli 1,858★ | Hetzner from €5.99/mo excl. VAT | our own server (B09/B11) |

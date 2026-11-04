@@ -109,6 +109,8 @@ Language: Turkish to the CEO, English in every artifact (CEO directive 2026-07-1
 Hands: this seat works only through the tools its session grants; a surface named below that the session does not grant is routed to its owner, never claimed as done.
 Ad platforms (Meta Ads Manager, LinkedIn Campaign Manager, TikTok Ads — operator scopes with envelope-aligned limits): the spend theater; platform-level caps set to envelopes where supported.
 Audience tooling (CAPI/pixel surfaces, CRM-sync interfaces under consent gates): the engineering layer.
+MCP surfaces (as read 2026-11-03): Meta's official MCP, open to every developer since 2026-07-16, reports and diagnoses signals. New objects arrive paused, yet a budget edit on a live object reportedly applies at once (third-party source, unmeasured on our own test account), so only `ads_read` is granted. No official MCP was found for TikTok or LinkedIn, so those stay on exports and API.
+Data Manager API: Google's path for offline and enhanced-conversions-for-leads uploads since 2026-06-15, owned by the Tracking Specialist. Meta, TikTok and LinkedIn keep their own conversion APIs.
 Analytics (platform reporting + blended dashboards with the tracking layer): the dual-view truth.
 Research surfaces (this seat holds no web tool — when an outside source is needed it routes the request and never claims a search it did not run): platform-change monitoring, policy updates, benchmark context.
 Announcements (the system broadcasts these from this seat's task states): program/pacing states visible in the task stream.

@@ -5,6 +5,7 @@
 > Durum: **W1 — 12 fırsat + 4 Fable ek önerisi (2026-07-09). Her dalga sonunda güncellenir, CEO'ya sunulur.**
 > **2026-11-01:** 12 videodan çıkan gelir yolları §D'de (#17–#26), vakti gelince yapılsın diye, kaynak iziyle.
 > **2026-11-02:** Nate Herk'in dört sistemi ([BQJRLZ2q_Ns](https://www.youtube.com/watch?v=BQJRLZ2q_Ns)) H6, H7 ve H9'a yöntem olarak eklendi; yeni hat açılmadı. Satış ve çalışma akışları, gelir yolu: Rapor 3 (`~/Desktop/Gelir Kaynakları/3 - …pdf`). Sesli not → belge, şirket beyni ve başvuru zinciri şimdilik helal sayılır (CEO, 2026-11-02 <!-- CEO-OK: nate-herk-four-systems-halal-for-now-2026-11-02 -->).
+> **2026-11-04:** Web derin çalışmasının gelir yolları (dosya 9 §5) H5'e (#21) yöntem olarak eklendi; yeni hat açılmadı. H1 ve H2'ye politika riski yazıldı (dosya 9 §6). Kararlar 6 ve 7 (CEO, 2026-11-04 <!-- CEO-OK: b84-web-study-nine-decisions-2026-11-04 -->).
 
 ## A. Külliyat-türevli fırsatlar
 
@@ -135,6 +136,7 @@
   - Sıralat-kirala (aylık sabit kira) — [xUZYy3hCRUM 02:06](https://www.youtube.com/watch?v=xUZYy3hCRUM&t=126) · Koerner'in 11 $'lık siteleri [JhyVSrQPVSg 24:32](https://www.youtube.com/watch?v=JhyVSrQPVSg&t=1472) · `K-O 3.1`, `K-F`
   - Fiyat seçeneği: arama başına ücret ya da %10 komisyon — [xUZYy3hCRUM 14:33](https://www.youtube.com/watch?v=xUZYy3hCRUM&t=873) · `K-O 3.2` (raporda yok)
 - **Helal:** kira ve komisyon geçer; kendini firma gibi gösteren site ve ücretli backlink geçmez (M#10, M#11).
+- **Politika riski:** şehir × hizmet çoğaltması Google'ın doorway ve ölçekli içerik politikasına temas eder; sanal adres işletme profili (GBP) alamaz. M#10 açıklaması dürüstlüğü çözer, politika riskini çözmez; sayı büyüdükçe risk büyür — Web deep study, 2026-11-04, file 9 section 6, Ek 1.
 - **İlk deneme:** 2 site, İngilizce pazar, helal niş, 90 gün; ~22 $ alan adı, takip numarası, DataForSEO 50 $ (P1).
 - **Karar / satırlar:** K3, P1 · **B83**; ayrıca B05 (kira tahsilatı).
 
@@ -147,6 +149,7 @@
   - Dizinde affiliate — [38:32](https://www.youtube.com/watch?v=-u0JuVUdPQA&t=2312) · hüküm İ3
   - Çıkış: dizini varlık olarak satmak (yıllık gelirin ~3 katı) — [34:21](https://www.youtube.com/watch?v=-u0JuVUdPQA&t=2061) · `K-O 2.5` (raporda yok)
   - Dizin verisini abonelikle satmak (ayda 50 $) — [10:23](https://www.youtube.com/watch?v=-u0JuVUdPQA&t=623) · okuyucular ayrıldı: `K-O 2.3` kamuya açık/izinli veriyse geçer, `K-F V2-D` kişisel veri AB/TR'de geçmez; hakem kararı yok, yapılırsa yalnız kişisel olmayan veriyle.
+- **Politika riski:** gerçek ve tazelenen özel veri varsa dizin ayakta durur; yoksa şehir ve hizmet çoğaltması Google'ın doorway politikasına temas eder; sanal adres işletme profili (GBP) alamaz — Web deep study, 2026-11-04, file 9 section 6, Ek 1.
 - **İlk deneme:** masa başında 10 niş puanı (0 $, 1 gün), en iyisinde 1 dizin, 90 gün.
 - **Karar / satırlar:** K4, İ1, İ3 · **B83**; en yakın REV #1/#4.
 
@@ -185,8 +188,19 @@
   - Yerel site yenileme (TL çapası 10–20 bin ₺) — [hriu0irRcpE 13:46](https://www.youtube.com/watch?v=hriu0irRcpE&t=826), [oL2xB4DiXEo 06:05](https://www.youtube.com/watch?v=oL2xB4DiXEo&t=365) · `T-O M12`, `T-F 4.4`, `Y-F Y2`
   - Dışa ulaşma makinesi: haritada 4+ yıldız, 50+ yorum, randevu linki yok → 1–10 puanlı denetim → kişiye özel video → firmaya özel demo — [JhyVSrQPVSg 30:27](https://www.youtube.com/watch?v=JhyVSrQPVSg&t=1827) · `K-O 1.5`; sahte talep formu ve kişisel telefon çıkarıldı
   - Bekleyen fırsat: WordPress site yenileme (K10)
+- **Web derin çalışmasından gelen yöntemler** (kaynak: Web deep study, 2026-11-04, file 9 section 5 — `~/Desktop/DxB Global Web-Studio/9 - Web işi derin çalışma 2026-11-04.md`; rakamlar çoğunlukla satıcı sayfasıdır, müşteri ödemesi ölçümü değil, gösterge olarak okunur):
+  - **Kampanya mikrositesi:** lüksün kapısı; dükkânı marka kendisi işletir. Tek 3B anlı marka sitesi 20–50 bin $, hikâyeli 3B 50–100 bin $ · Ek 6 §7
+  - **Teknik SEO denetimi:** kapı açıcı; ortalama 700–1.000 $ · §5
+  - **Taşıma güvencesi:** fiyat kaynağı bulunamadı; 892 alan adı taşımasında ortalama toparlanma 523 gün (üçüncü taraf tahmini veri), müşteri korkusu gerçek · Ek 1
+  - **Aylık SEO:** en sık 501–2.000 $ (Ek 1 §7'de en yaygın dilim 501–1.000 $, %20,4) · Ek 1 §7
+  - **Yapay zekâ görünürlük denetimi ve aylık ölçüm:** 1.500–5.000 $ bir kerelik, aylık 3.000 $'dan. Satılmaz: llms.txt, sıra garantisi, sayfa adedi · Ek 2 §7
+  - **Ölçüm denetimi, kurulum, aylık bakım:** bu sırayla; sGTM kurulumu 4.500–12.000 $ · Ek 4 §7
+  - **Reklam yönetimi ve kreatif:** harcamanın %10–20'si; stüdyo kreatifi ucuzlatır, tek müşteriden iki gelir; haram kategori müşterisi alınmaz · Ek 4 §7; kreatif tarafı REV #2, H6 (#22)
+  - **Elle erişilebilirlik denetimi:** küçük site 1.250–2.750 $; mahkemeler ciddi: Carrefour kararı, ABD'de 3.117 dava · Ek 5
+  - **Holdingin kendi gösteri işi:** Lusion ve OFF+BRAND büyük müşteriyi kendi deney işleriyle aldı; holdingin müşterisiz bir gösteri işi olur, gerçek jüriye gitmesi "birinciliğe aday" sözünü ilk kez dışarıdan ölçer. Başvuru ücreti para çıkışıdır, CEO'nun kapısında <!-- CEO-OK: b84-web-study-nine-decisions-2026-11-04 --> · §5, Ek 6
+  - Zaten bu hatta, yeniden yazılmadı: kurumsal ve landing site (özel tek sayfa 3–5 bin $; Framer/Webflow hareketli 12–40 bin $) → yukarıdaki landing yöntemi, REV #5; aylık bakım (89–359 $, üst kademe 499–1.500 $; değer geri yükleme denemesi, saha hızı, rıza ve erişilebilirlik taramasında) → hattın Mekanizması · §5, Ek 5
 - **Tarz dolabı (CEO, 2026-11-02 <!-- CEO-OK: web-studio-style-cupboard-precision-2026-11-02 -->):** varsayılan ev tarzı (gösterişli, lüks, wow); ilk ek kart Precision, yalnız müşteri ya da CEO kendi sözüyle isteyince açılır; müşteri "şu site gibi" derse o siteden yeni kart çıkar — `.planning/quick/20261102-tarz-dolabi/DESIGN.md`.
-- **Karar / satırlar:** web ofisinin beş sorusu, Y9, Y11, İ6, K10 · B64.
+- **Karar / satırlar:** web ofisinin beş sorusu, Y9, Y11, İ6, K10 · B64, B84.
 
 ### 22. H6 — Stüdyo ajansı + uzun videodan aylık kısa paket + yazı kolu (HİZMET)
 - **Mekanizma:** B28'in ajans koltuğu (pazaryeri değil). Müşteriye görsel, video ve yazı içerik; aylık tekrarlayan paketler.
