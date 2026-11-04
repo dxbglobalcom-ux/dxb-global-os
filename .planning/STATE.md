@@ -27,25 +27,12 @@ not here. What is accepted is read from `scripts/governance/ceo-approvals.json`,
 
 ## Where we left off
 
-2026-11-04 — The deep web study is delivered, and he answered its nine decisions (B84). On the night of 3 Nov he questioned the
-office again (who works on a site, one master or the team) and ordered the whole web trade studied properly: SEO,
-AEO/GEO, e-commerce, ads and measurement, infrastructure, studios, tools, and the 31 unreviewed links of his two
-WhatsApp groups. One MD on his desktop, `~/Desktop/DxB Global Web-Studio/9 - Web işi derin çalışma 2026-11-04.md`:
-sections 1–8 are what the lead tells him, section 7 his nine decisions, the appendices the seven tracks, the link
-table and the community sweep. His workbook has the tab "Kasım 3-4 web linkleri". His yes to the recommendations
-<!-- CEO-OK: b84-web-study-nine-decisions-2026-11-04 --> rewrote B84's row file: three core seats, hands called by the job
-and the machine; rounds inside the build and one closing round; the teardown by REA and the measuring script together,
-search and commercial side included, famous sites as the default, `operator` where the background cannot enter. A
-correction to file 9 goes into `.planning/quick/20261103-web-ders/top.md` and `assemble.py` rebuilds it.
-2026-11-03 evening — Site E, on his word: one Opus alone at max built the Mavi Kuşak site from the brief only
-(17:45 → 18:31, 46 minutes; nothing of A–D opened; only the 28 Ekim folder's library images, none generated). On
-his mid-run word the missing details were completed as if the client gave them (Kılıçaslan Caddesi No: 112,
-phone, e-mail, hours) with a real İznik map drawn from OpenStreetMap tiles, Google Maps links and schema.org
-business data. Three pages: the tile you can turn over (the seal and R.T. on its back), the making of a tile on the
-scroll (body → slip → pounced dots → paint → milky glaze → kiln → gloss), twelve pieces in four groups with a
-close look and "Bu parçayı sor" carrying the piece into the form, and the form (consent gate, draft kept, request
-number kept after reload). Checked at 1440 and 390 px and once live in his Chrome. Folder `E - Opus tek başına,
-max, 46 dakika (3 Kasım)` beside A–D; phone link and details in `.planning/quick/20261103-mavi-kusak-max/NOTE.md`.
+2026-11-04 afternoon — B84's corrections are in: records, nine personas (v4, live), revenue roads, cupboard. Free tools
+measured in his file 10: real Google rank through his Chrome, links and popularity free, no key needed for the motion
+judge. The fleet stopped at the usage limit: its answer and the Screaming Frog part are missing.
+2026-11-04 — The deep web study is delivered and he answered its nine decisions <!-- CEO-OK: b84-web-study-nine-decisions-2026-11-04 -->:
+B84's row file is rewritten (three core seats, called hands, the machine). File 9 is in his folder; a correction goes into
+`.planning/quick/20261103-web-ders/top.md` and `assemble.py` rebuilds it.
 2026-11-03 night — The DxB Web Studio plan is agreed in the talk and written into B84's row file ("The plan"):
 eleven decisions on his word <!-- CEO-OK: b84-web-studio-plan-agreed-2026-11-03 --> — the 29 Oct proposal plus the talk;
 every job from a decided build brief (MERIDIAN and the outletcity teardown are examples in the shared cupboard, not the
@@ -61,6 +48,7 @@ Earlier days: `.planning/STATE-ARCHIVE.md` § "Moved out of STATE.md on 2026-11-
 
 ## Next
 
+0a. Web study leftovers (B84): the fleet's writer for Screaming Frog, file 9's header, the eye measurement, `agy` check.
 0. Revenue — the lines are on the board (B83 and the notes on its related rows); each is built at its row's rank
    in the board's reorder and bench-tested with it, sold when the key is turned. Rapor 3's suggested order for Nate
    Herk's systems (company brain first, built on the holding's own V2 memory) goes into that reorder.

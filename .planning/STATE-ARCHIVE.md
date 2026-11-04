@@ -2750,3 +2750,15 @@ nine related rows carry the note, and the five lines no row owns plus the revenu
 (REVENUE_ENGINE_SPEC §7septies). The channel talk stays later.
 2026-10-29 — His Mavi Kuşak trial is judged (arm A far ahead, 330 $; arm C a disappointment, 37 $); the web office
 plan talk is open — analysis, five questions and the proposal in `~/Desktop/DxB Global Web-Studio/`.
+
+## Moved out of STATE.md on 2026-11-04 afternoon — Site E as it stood
+
+2026-11-03 evening — Site E, on his word: one Opus alone at max built the Mavi Kuşak site from the brief only
+(17:45 → 18:31, 46 minutes; nothing of A–D opened; only the 28 Ekim folder's library images, none generated). On
+his mid-run word the missing details were completed as if the client gave them (Kılıçaslan Caddesi No: 112,
+phone, e-mail, hours) with a real İznik map drawn from OpenStreetMap tiles, Google Maps links and schema.org
+business data. Three pages: the tile you can turn over (the seal and R.T. on its back), the making of a tile on the
+scroll (body → slip → pounced dots → paint → milky glaze → kiln → gloss), twelve pieces in four groups with a
+close look and "Bu parçayı sor" carrying the piece into the form, and the form (consent gate, draft kept, request
+number kept after reload). Checked at 1440 and 390 px and once live in his Chrome. Folder `E - Opus tek başına,
+max, 46 dakika (3 Kasım)` beside A–D; phone link and details in `.planning/quick/20261103-mavi-kusak-max/NOTE.md`.
