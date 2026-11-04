@@ -1,0 +1,20 @@
+language: en
+[00:00] You're paying for software that has a free twin on GitHub.
+[00:03] Here are nine.
+[00:04] Number one, Open Higgs Field replaces Higgs Field.
+[00:07] Number two, Voice Studio replaces 11 Labs.
+[00:10] It runs on your machine.
+[00:12] Number three, Open SEO replaces SEMrush
+[00:14] with Rank Tracking, Backlinks, and Site Audits.
+[00:18] Number four, Winora replaces Notion AI using local models.
+[00:22] Number five, OpenWhisper replaces WhisperFlow.
+[00:25] You can dictate into any app online or offline.
+[00:28] Number six, OpenProject replaces Asana.
+[00:32] Number seven, Cal.com replaces Calendly with Google and Outlook Sync.
+[00:36] Number eight, ChatWoot replaces Intercom,
+[00:39] putting every lead and client message in one inbox.
+[00:42] Number nine, Cap replaces Loom.
+[00:44] That's $297.49 a month, $3,570 a year back in your pocket.
+[00:51] And if you have a favorite app,
+[00:52] you can reverse engineer it with Claude Code.
+[00:55] Comment free for all nine links.

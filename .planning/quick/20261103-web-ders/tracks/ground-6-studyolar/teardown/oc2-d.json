@@ -1,0 +1,463 @@
+{
+ "url": "https://www.outletcity.com/de/metzingen/",
+ "tag": "oc2-d",
+ "mode": "desktop",
+ "navErr": null,
+ "loadT": 12262,
+ "first": {
+  "mux": [
+   {
+    "tag": "MUX-PLAYER",
+    "pid": "iiseYXJXrAj5uAmtw01IjwryviQfJ00UsqILu1JqhVPQE",
+    "y": 1641,
+    "w": 1440,
+    "h": 810
+   },
+   {
+    "tag": "MUX-PLAYER",
+    "pid": "aCOKw1KYROk01gwNThmrh00DctPz01zwVzayU9ds3LP8Zg",
+    "y": 6387,
+    "w": 1440,
+    "h": 810
+   }
+  ],
+  "title": "Outletcity Metzingen • Fashion bis 70%* reduziert | Designer Outlet",
+  "h": 8471,
+  "videos": [
+   {
+    "src": "blob:https://www.outletcity.com/bdd8ef7d-cf6b-4f2a-9302-03995926743c",
+    "w": 1920,
+    "h": 1080,
+    "dur": 8.007999,
+    "cw": 1440,
+    "ch": 810,
+    "y": 1641,
+    "auto": false,
+    "loop": true,
+    "muted": true,
+    "paused": false
+   },
+   {
+    "src": "blob:https://www.outletcity.com/b738d98f-7a21-4990-966a-7b868a07f20b",
+    "w": 1920,
+    "h": 1080,
+    "dur": 10.8,
+    "cw": 1440,
+    "ch": 810,
+    "y": 6387,
+    "auto": false,
+    "loop": true,
+    "muted": true,
+    "paused": false
+   }
+  ],
+  "canvases": [],
+  "imgCount": 48,
+  "lazy": 27,
+  "svgCount": 43,
+  "nodes": 1046,
+  "textLen": 4992,
+  "libs": {
+   "three": false,
+   "threeRev": null,
+   "gsap": false,
+   "ScrollTrigger": false,
+   "lenis": false,
+   "next": false,
+   "nuxt": true,
+   "webflow": false,
+   "jquery": false,
+   "react": false,
+   "rive": false,
+   "lottie": false,
+   "astro": false,
+   "gen": null
+  },
+  "scripts": [
+   "https://analytics.tiktok.com/i18n/pixel/static/identify_9fbdaf50.js",
+   "https://analytics.tiktok.com/i18n/pixel/static/main.MTJjYzk1MmQ1MA.js",
+   "https://wave.outbrain.com/mtWavesBundler/handler/00926d81a4cf70576f295af612d28b23e3",
+   "https://wave.outbrain.com/mtWavesBundler/handler/00926d81a4cf70576f295af612d28b23e3",
+   "https://gum.criteo.com/sync?c=11&r=2&j=tealium_criteo_function",
+   "https://www.redditstatic.com/ads/pixel.js?pixel_id=a2_idu1d7obnsdr",
+   "https://www.googletagmanager.com/gtag/destination?id=DC-11067940&cx=c&gtm=4e6b21",
+   "https://connect.facebook.net/signals/config/513456738765125?v=2.9.435&r=stable&domain=www.outletcity.com&hme=4453c87d489b6902031c012cadd2731893cd69feb64fe8a61b339727247a7703&ex_m=118%2C242%2C171%2C27%2C82%2C83%2C162%2C78%2C77%2C11%2C181%2C102%2C20%2C153%2C141%2C46%2C85%2C90%2C149%2C176%2C183%2C8%2C4%2C5%2C7%2C6%2C3%2C103%2C115%2C32%2C17%2C31%2C18%2C33%2C34%2C35%2C37%2C55%2C163%2C87%2C126%2C22%2C24%2C51%2C47%2C49%2C48%2C95%2C104%2C108%2C124%2C160%2C164%2C53%2C125%2C29%2C26%2C133%2C79%2C43%2C166%2C165%2C167%2C157%2C155%2C30%2C42%2C66%2C123%2C178%2C80%2C21%2C128%2C93%2C76%2C23%2C97%2C98%2C130%2C96%2C151%2C150%2C154%2C109%2C177%2C180%2C41%2C56%2C127%2C54%2C161%2C72%2C185%2C110%2C184%2C211%2C263%2C84%2C283%2C282%2C281%2C14%2C25%2C28%2C40%2C62%2C117%2C68%2C10%2C73%2C111%2C112%2C113%2C119%2C144%2C38%2C36%2C146%2C147%2C148%2C143%2C142%2C172%2C86%2C175%2C173%2C174%2C57%2C69%2C67%2C137%2C19%2C179%2C52%2C333%2C334%2C335%2C332%2C349%2C371%2C256%2C238%2C70%2C239%2C237%2C374%2C365%2C59%2C257%2C121%2C145%2C92%2C135%2C61%2C134%2C140%2C139%2C65%2C74%2C168%2C88%2C89%2C129%2C44%2C39%2C60%2C63%2C114%2C182%2C1%2C138%2C16%2C136%2C12%2C2%2C64%2C105%2C15%2C75%2C71%2C132%2C101%2C100%2C187%2C188%2C106%2C107%2C9%2C116%2C186%2C58%2C158%2C99%2C91%2C81%2C131%2C120%2C169%2C50%2C159%2C0%2C94%2C152%2C156%2C170%2C45%2C122%2C13%2C189",
+   "https://connect.facebook.net/en_US/fbevents.js",
+   "https://www.googletagmanager.com/gtag/destination?id=AW-1028380096&cx=c&gtm=4e6b21",
+   "https://static.criteo.net/js/ld/ld.js",
+   "https://tags.tiqcdn.com/libs/tealiumjs/latest/tealium_collect.min.js",
+   "https://amplify.outbrain.com/cp/obtp.js",
+   "https://analytics.tiktok.com/i18n/pixel/events.js?sdkid=COBVHJJC77U321J0J2KG&lib=ttq",
+   "https://www.googletagmanager.com/gtag/js?id=G-HY0XLBL3VS&cx=c&gtm=4e6b21",
+   "https://uc.outletcity.com/?settingsId=Gp2gN6eDC",
+   "https://www.outletcity.com/_onsite/o43-4xE2.js",
+   "https://app.usercentrics.eu/browser-ui/latest/loader.js",
+   "https://app.usercentrics.eu/browser-ui/3.113.0/index.module.js",
+   "https://www.googletagmanager.com/gtm.js?id=GTM-KJ9GCLSJ",
+   "data:text/javascript,(()%3D%3E%7Bconst%20el%3Ddocument.getElementById('v-0-0-0-15')%3Bif(!window.calcObjectPosition%7C%7C!el)return%3Bel.style.objectPosition%3DcalcObjectPosition(%7Bx%3A0.5%2Cy%3A0.5%7D%2C0.829%2Cel.width%2Fel.height)%7D)()",
+   "https://tr.outbrain.com/cachedClickId?marketerId=00926d81a4cf70576f295af612d28b23e3,00926d81a4cf70576f295af612d28b23e3",
+   "https://sslwidget.criteo.com/event?a=12204&v=5.52.0&p0=e%3Dce%26m%3D%255B%255D&p1=e%3Dexd%26site_type%3Dd&p2=e%3Dvh&p3=e%3Dvh&p4=e%3Ddis&bundle=pHCuQl9oRHVzSHhCMUJPU0dOY1htejZGQWtEN0clMkZNU0tFZW1HdHlkbmdlbGhSRzV0UVdxRGRxY2clMkZvN1pIMDBPTG9iSVV0TiUyQmYlMkJJNk9WeDBOSVd0eGREUVNOYUZhZUYlMkZVb0xScUdwNEpKYkVzcHFMWDNUMWVvVlNldER1ZFFlOURucyUyQk81V3F5S3pITE44TFNQb29LNnlzdnclM0QlM0Q&sc=%7B%22fbp%22%3A%22fb.1.1793745465785.61052032997860313%22%2C%22ttp%22%3A%2201M6HRZCGJ1K5G6DQ1BRN7ZF6A_.tt.1.1793745465875%22%7D&tld=outletcity.com&fu=https%253A%252F%252Fwww.outletcity.com%252Fde%252Fmetzingen%252F&ceid=d218b1c4-b940-4e2d-8187-cdf4cd47523c"
+  ]
+ },
+ "last": {
+  "mux": [
+   {
+    "tag": "MUX-PLAYER",
+    "pid": "iiseYXJXrAj5uAmtw01IjwryviQfJ00UsqILu1JqhVPQE",
+    "y": 1641,
+    "w": 1440,
+    "h": 810
+   },
+   {
+    "tag": "MUX-PLAYER",
+    "pid": "aCOKw1KYROk01gwNThmrh00DctPz01zwVzayU9ds3LP8Zg",
+    "y": 6387,
+    "w": 1440,
+    "h": 810
+   }
+  ],
+  "title": "Outletcity Metzingen • Fashion bis 70%* reduziert | Designer Outlet",
+  "h": 8471,
+  "videos": [
+   {
+    "src": "blob:https://www.outletcity.com/bdd8ef7d-cf6b-4f2a-9302-03995926743c",
+    "w": 1920,
+    "h": 1080,
+    "dur": 8.007999,
+    "cw": 1440,
+    "ch": 810,
+    "y": 1641,
+    "auto": false,
+    "loop": true,
+    "muted": true,
+    "paused": false
+   },
+   {
+    "src": "blob:https://www.outletcity.com/b738d98f-7a21-4990-966a-7b868a07f20b",
+    "w": 1920,
+    "h": 1080,
+    "dur": 10.8,
+    "cw": 1440,
+    "ch": 810,
+    "y": 6387,
+    "auto": false,
+    "loop": true,
+    "muted": true,
+    "paused": false
+   }
+  ],
+  "canvases": [],
+  "imgCount": 48,
+  "lazy": 27,
+  "svgCount": 39,
+  "nodes": 1051,
+  "textLen": 4992,
+  "libs": {
+   "three": false,
+   "threeRev": null,
+   "gsap": false,
+   "ScrollTrigger": false,
+   "lenis": false,
+   "next": false,
+   "nuxt": true,
+   "webflow": false,
+   "jquery": false,
+   "react": false,
+   "rive": false,
+   "lottie": false,
+   "astro": false,
+   "gen": null
+  },
+  "scripts": [
+   "https://analytics.tiktok.com/i18n/pixel/static/identify_9fbdaf50.js",
+   "https://analytics.tiktok.com/i18n/pixel/static/main.MTJjYzk1MmQ1MA.js",
+   "https://wave.outbrain.com/mtWavesBundler/handler/00926d81a4cf70576f295af612d28b23e3",
+   "https://wave.outbrain.com/mtWavesBundler/handler/00926d81a4cf70576f295af612d28b23e3",
+   "https://gum.criteo.com/sync?c=11&r=2&j=tealium_criteo_function",
+   "https://www.redditstatic.com/ads/pixel.js?pixel_id=a2_idu1d7obnsdr",
+   "https://www.googletagmanager.com/gtag/destination?id=DC-11067940&cx=c&gtm=4e6b21",
+   "https://connect.facebook.net/signals/config/513456738765125?v=2.9.435&r=stable&domain=www.outletcity.com&hme=4453c87d489b6902031c012cadd2731893cd69feb64fe8a61b339727247a7703&ex_m=118%2C242%2C171%2C27%2C82%2C83%2C162%2C78%2C77%2C11%2C181%2C102%2C20%2C153%2C141%2C46%2C85%2C90%2C149%2C176%2C183%2C8%2C4%2C5%2C7%2C6%2C3%2C103%2C115%2C32%2C17%2C31%2C18%2C33%2C34%2C35%2C37%2C55%2C163%2C87%2C126%2C22%2C24%2C51%2C47%2C49%2C48%2C95%2C104%2C108%2C124%2C160%2C164%2C53%2C125%2C29%2C26%2C133%2C79%2C43%2C166%2C165%2C167%2C157%2C155%2C30%2C42%2C66%2C123%2C178%2C80%2C21%2C128%2C93%2C76%2C23%2C97%2C98%2C130%2C96%2C151%2C150%2C154%2C109%2C177%2C180%2C41%2C56%2C127%2C54%2C161%2C72%2C185%2C110%2C184%2C211%2C263%2C84%2C283%2C282%2C281%2C14%2C25%2C28%2C40%2C62%2C117%2C68%2C10%2C73%2C111%2C112%2C113%2C119%2C144%2C38%2C36%2C146%2C147%2C148%2C143%2C142%2C172%2C86%2C175%2C173%2C174%2C57%2C69%2C67%2C137%2C19%2C179%2C52%2C333%2C334%2C335%2C332%2C349%2C371%2C256%2C238%2C70%2C239%2C237%2C374%2C365%2C59%2C257%2C121%2C145%2C92%2C135%2C61%2C134%2C140%2C139%2C65%2C74%2C168%2C88%2C89%2C129%2C44%2C39%2C60%2C63%2C114%2C182%2C1%2C138%2C16%2C136%2C12%2C2%2C64%2C105%2C15%2C75%2C71%2C132%2C101%2C100%2C187%2C188%2C106%2C107%2C9%2C116%2C186%2C58%2C158%2C99%2C91%2C81%2C131%2C120%2C169%2C50%2C159%2C0%2C94%2C152%2C156%2C170%2C45%2C122%2C13%2C189",
+   "https://connect.facebook.net/en_US/fbevents.js",
+   "https://www.googletagmanager.com/gtag/destination?id=AW-1028380096&cx=c&gtm=4e6b21",
+   "https://static.criteo.net/js/ld/ld.js",
+   "https://tags.tiqcdn.com/libs/tealiumjs/latest/tealium_collect.min.js",
+   "https://amplify.outbrain.com/cp/obtp.js",
+   "https://analytics.tiktok.com/i18n/pixel/events.js?sdkid=COBVHJJC77U321J0J2KG&lib=ttq",
+   "https://www.googletagmanager.com/gtag/js?id=G-HY0XLBL3VS&cx=c&gtm=4e6b21",
+   "https://uc.outletcity.com/?settingsId=Gp2gN6eDC",
+   "https://www.outletcity.com/_onsite/o43-4xE2.js",
+   "https://app.usercentrics.eu/browser-ui/latest/loader.js",
+   "https://app.usercentrics.eu/browser-ui/3.113.0/index.module.js",
+   "https://www.googletagmanager.com/gtm.js?id=GTM-KJ9GCLSJ",
+   "data:text/javascript,(()%3D%3E%7Bconst%20el%3Ddocument.getElementById('v-0-0-0-15')%3Bif(!window.calcObjectPosition%7C%7C!el)return%3Bel.style.objectPosition%3DcalcObjectPosition(%7Bx%3A0.5%2Cy%3A0.5%7D%2C0.829%2Cel.width%2Fel.height)%7D)()",
+   "https://tr.outbrain.com/cachedClickId?marketerId=00926d81a4cf70576f295af612d28b23e3,00926d81a4cf70576f295af612d28b23e3",
+   "https://sslwidget.criteo.com/event?a=12204&v=5.52.0&p0=e%3Dce%26m%3D%255B%255D&p1=e%3Dexd%26site_type%3Dd&p2=e%3Dvh&p3=e%3Dvh&p4=e%3Ddis&bundle=pHCuQl9oRHVzSHhCMUJPU0dOY1htejZGQWtEN0clMkZNU0tFZW1HdHlkbmdlbGhSRzV0UVdxRGRxY2clMkZvN1pIMDBPTG9iSVV0TiUyQmYlMkJJNk9WeDBOSVd0eGREUVNOYUZhZUYlMkZVb0xScUdwNEpKYkVzcHFMWDNUMWVvVlNldER1ZFFlOURucyUyQk81V3F5S3pITE44TFNQb29LNnlzdnclM0QlM0Q&sc=%7B%22fbp%22%3A%22fb.1.1793745465785.61052032997860313%22%2C%22ttp%22%3A%2201M6HRZCGJ1K5G6DQ1BRN7ZF6A_.tt.1.1793745465875%22%7D&tld=outletcity.com&fu=https%253A%252F%252Fwww.outletcity.com%252Fde%252Fmetzingen%252F&ceid=d218b1c4-b940-4e2d-8187-cdf4cd47523c"
+  ]
+ },
+ "agg": {
+  "html": {
+   "n": 17,
+   "bytes": 75189,
+   "load": 75189,
+   "scroll": 0
+  },
+  "image": {
+   "n": 72,
+   "bytes": 2400097,
+   "load": 2201451,
+   "scroll": 198646
+  },
+  "js": {
+   "n": 109,
+   "bytes": 2170409,
+   "load": 2133103,
+   "scroll": 37306
+  },
+  "css": {
+   "n": 1,
+   "bytes": 15701,
+   "load": 15701,
+   "scroll": 0
+  },
+  "font": {
+   "n": 6,
+   "bytes": 116337,
+   "load": 116337,
+   "scroll": 0
+  },
+  "json": {
+   "n": 7,
+   "bytes": 33992,
+   "load": 33992,
+   "scroll": 0
+  },
+  "video": {
+   "n": 9,
+   "bytes": 5529402,
+   "load": 5529402,
+   "scroll": 0
+  },
+  "other": {
+   "n": 35,
+   "bytes": 15341,
+   "load": 13858,
+   "scroll": 1483
+  }
+ },
+ "top": [
+  {
+   "b": 2273891,
+   "c": "video",
+   "u": "https://chunk-oci-us-phoenix-1-vop1.edgemv.mux.com/v1/chunk/7ubsanbTmPUVO00uKrFkz6n5dbCB7rtjbTQ6A0002w3wv6gf7PaS00AJeIkWOmksLCG3uB02bysfqNYZZW2JZprh00",
+   "cl": "2271416",
+   "p": "load"
+  },
+  {
+   "b": 1199442,
+   "c": "video",
+   "u": "https://chunk-oci-us-phoenix-1-vop1.edgemv.mux.com/v1/chunk/HLNXIAUs1eSp6lwgRkjV2yHS3k7BAEbuPNTzsQjSFg8Pg28M00TVJFwUwtpUZId6OxXLRipixK9j01YSykC00SOJCV",
+   "cl": "1197560",
+   "p": "load"
+  },
+  {
+   "b": 1139253,
+   "c": "video",
+   "u": "https://chunk-oci-us-phoenix-1-vop1.edgemv.mux.com/v1/chunk/00QUaC8IOe01tGY6iLGMt16Hd7jcnvs1veOchI6U2hbYPpHBSNUSO00Wf02pd4ZGSyg39I6ZA2HxPWT95nPO34DTtq",
+   "cl": "1137400",
+   "p": "load"
+  },
+  {
+   "b": 752107,
+   "c": "image",
+   "u": "https://stc.outletcity.com/i/acd711647316c8e5780d62e2a6c8004878aa4578-2064x3669.jpg?auto=format&fit=max&q=75&w=1548",
+   "cl": "751402",
+   "p": "load"
+  },
+  {
+   "b": 621589,
+   "c": "video",
+   "u": "https://chunk-oci-us-phoenix-1-vop1.edgemv.mux.com/v1/chunk/00cpSBSJ6fK12Fxk4Dp018Spa1yxhV6t7Il01A02aUwJxo2ipZ2VlFuBjFYgqliSW5dBVl7OLiUU2LWHGXaM5OwiJe",
+   "cl": "620024",
+   "p": "load"
+  },
+  {
+   "b": 588096,
+   "c": "js",
+   "u": "https://www.outletcity.com/_onsite/o43-4xE2.js",
+   "p": "load"
+  },
+  {
+   "b": 332272,
+   "c": "image",
+   "u": "https://stc.outletcity.com/i/d0e0fdfc2cdd2e3d04dbb8fdc7d9d4990f04e03a-4800x3200.jpg?auto=format&fit=max&q=75&rect=201,0,1745,3200&w=1745",
+   "cl": "331414",
+   "p": "load"
+  },
+  {
+   "b": 287521,
+   "c": "video",
+   "u": "https://chunk-oci-us-phoenix-1-vop1.edgemv.mux.com/v1/chunk/mRDk8Co5d5N2noIC6Ls9eAbAdJIZrQpK3UK366cPMjofBbNH501S5RQ01XiOLtqHso9mTxXkkuvZ02x6wyJtj5oH3Q",
+   "cl": "286136",
+   "p": "load"
+  },
+  {
+   "b": 222967,
+   "c": "image",
+   "u": "https://stc.outletcity.com/i/27dc966b4acea10bbed94413e6a0560d308a4987-2064x3669.jpg?auto=format&fit=max&q=75&w=1548",
+   "cl": "222578",
+   "p": "load"
+  },
+  {
+   "b": 187659,
+   "c": "image",
+   "u": "https://stc.outletcity.com/i/0691dcb796e4dbab6c02efcc93b12e4571b9ab90-2064x3669.jpg?auto=format&fit=max&q=75&w=1548",
+   "cl": "187239",
+   "p": "load"
+  },
+  {
+   "b": 184905,
+   "c": "js",
+   "u": "https://www.googletagmanager.com/gtm.js?id=GTM-KJ9GCLSJ",
+   "cl": "184407",
+   "p": "load"
+  },
+  {
+   "b": 184788,
+   "c": "js",
+   "u": "https://www.googletagmanager.com/gtag/js?id=G-HY0XLBL3VS&cx=c&gtm=4e6b21",
+   "cl": "184722",
+   "p": "load"
+  },
+  {
+   "b": 168720,
+   "c": "js",
+   "u": "https://www.googletagmanager.com/gtag/destination?id=AW-1028380096&cx=c&gtm=4e6b21",
+   "cl": "168656",
+   "p": "load"
+  },
+  {
+   "b": 151980,
+   "c": "image",
+   "u": "https://stc.outletcity.com/i/1e3416e9b5158da069bd0a1de18bbb4f4bd045ea-3873x2582.jpg?auto=format&fit=crop&fp-x=0.5&fp-y=0.5&h=900&q=75&w=1600",
+   "cl": "151289",
+   "p": "load"
+  },
+  {
+   "b": 147490,
+   "c": "js",
+   "u": "https://www.googletagmanager.com/gtag/destination?id=DC-11067940&cx=c&gtm=4e6b21",
+   "cl": "147428",
+   "p": "load"
+  },
+  {
+   "b": 132205,
+   "c": "image",
+   "u": "https://stc.outletcity.com/i/86151731bc569762a743bc8945c0b8f69bdb403b-4792x3196.jpg?auto=format&fit=max&q=75&w=1797",
+   "cl": "131867",
+   "p": "load"
+  },
+  {
+   "b": 130681,
+   "c": "image",
+   "u": "https://stc.outletcity.com/i/d0e0fdfc2cdd2e3d04dbb8fdc7d9d4990f04e03a-4800x3200.jpg?auto=format&fit=crop&fp-x=0.5&fp-y=0.5&h=900&q=75&w=1600",
+   "cl": "130454",
+   "p": "load"
+  },
+  {
+   "b": 124368,
+   "c": "js",
+   "u": "https://app.usercentrics.eu/browser-ui/3.113.0/index.module.js",
+   "cl": "124319",
+   "p": "load"
+  },
+  {
+   "b": 117302,
+   "c": "js",
+   "u": "https://connect.facebook.net/en_US/fbevents.js",
+   "cl": "114279",
+   "p": "load"
+  },
+  {
+   "b": 113019,
+   "c": "js",
+   "u": "https://analytics.tiktok.com/i18n/pixel/static/main.MTJjYzk1MmQ1MA.js",
+   "cl": "112310",
+   "p": "load"
+  },
+  {
+   "b": 99299,
+   "c": "js",
+   "u": "https://connect.facebook.net/signals/config/513456738765125?v=2.9.435&r=stable&domain=www.outletcity.com&hme=4453c87d489b6902031c012cadd2731893cd69feb",
+   "cl": "98015",
+   "p": "load"
+  },
+  {
+   "b": 77267,
+   "c": "image",
+   "u": "https://stc.outletcity.com/i/7fb734428561bd2e8afd9ff06ca3fd2e9a788d5e-3873x2582.jpg?auto=format&fit=crop&fp-x=0.5&fp-y=0.5&h=900&q=75&w=1600",
+   "cl": "76948",
+   "p": "load"
+  }
+ ],
+ "hostTop": [
+  [
+   "chunk-oci-us-phoenix-1-vop1.edgemv.mux.com",
+   5521696
+  ],
+  [
+   "stc.outletcity.com",
+   2220212
+  ],
+  [
+   "www.outletcity.com",
+   1028552
+  ],
+  [
+   "www.googletagmanager.com",
+   685903
+  ],
+  [
+   "connect.facebook.net",
+   216601
+  ],
+  [
+   "app.usercentrics.eu",
+   200812
+  ],
+  [
+   "analytics.tiktok.com",
+   158113
+  ],
+  [
+   "image.mux.com",
+   133651
+  ],
+  [
+   "outletcity.freetls.fastly.net",
+   36910
+  ],
+  [
+   "static.criteo.net",
+   28731
+  ],
+  [
+   "api.usercentrics.eu",
+   23236
+  ],
+  [
+   "www.redditstatic.com",
+   19540
+  ],
+  [
+   "amplify.outbrain.com",
+   18601
+  ],
+  [
+   "tags.tiqcdn.com",
+   11241
+  ]
+ ],
+ "total": 10356468,
+ "n": 256,
+ "server": "Apache"
+}

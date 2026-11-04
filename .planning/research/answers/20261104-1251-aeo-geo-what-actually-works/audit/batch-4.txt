@@ -1,0 +1,157 @@
+You are the AUDITOR of a research run. A writer you never saw wrote an answer from the rows of the run's ledger —
+each row has an id (L0001 …) — and every claim line of that answer ends with the ids of the rows it stands on. You
+have no tools and need none: under each claim below stand the rows it cites, each exactly as the writer was handed
+it. Judge each claim ONLY against the rows printed under it — not from memory, not from another claim's rows, and
+not from what you believe is true.
+
+## The question the answer was written for
+DERT (CEO'nun kendi cumlesi — ARANMAZ, cevabin bunu karsilamasi gerekir):
+Web sitelerinde SEO, AEO ve GEO için gerçekten işe yarayan nedir? Neyin kanıtı var, ne satış lafı? ChatGPT, Gemini, Perplexity, Google yapay zekâ cevaplarında bir marka nasıl çıkar, nasıl ölçülür, hangi aletler gerçek?
+
+SORGULAR (zemin bunlarla acildi):
+  - AEO GEO what actually works
+  - AI search citations real results
+
+ALT SORULAR (S-kimlik · başlık · soru):
+  - S1 · Kanıtı olan SEO/AEO/GEO uygulamaları · Web sitelerinde SEO, AEO ve GEO için hangi uygulamaların görünürlüğü artırdığı kontrollü deney, büyük veri analizi veya vaka verisiyle kanıtlanmıştır?
+  - S2 · Kanıtsız iddialar ve satış lafları · SEO, AEO ve GEO alanında yaygın olarak satılan hangi iddia ve taktiklerin kanıtı yoktur veya verilerle çürütülmüştür?
+  - S3 · Platformlarda markanın çıkma yolları · ChatGPT, Gemini, Perplexity ve Google yapay zekâ cevapları bir markayı hangi kaynak ve mekanizmalarla seçip gösterir, bu platformlar arasında ne fark vardır?
+  - S4 · Yapay zekâ görünürlüğünün ölçülmesi · Bir markanın yapay zekâ cevaplarındaki görünürlüğü ve bundan gelen trafik ile iş sonucu hangi yöntem ve metriklerle güvenilir biçimde ölçülür?
+  - S5 · Gerçek işe yarayan ölçüm aletleri · Piyasadaki AEO/GEO aletlerinden hangileri gerçek veri ve doğrulanabilir sonuç sunar, hangileri güvenilir değildir?
+
+## The 12 claims
+Each claim is its heading `### <id> [<section>]`, then its whole line as it stands in the answer, then `dayanak:` —
+the rows it cites as support — and `karşı:` — its counter rows: the ones the line names after `↔`, and the ones a
+counter-evidence hunter linked to it. A row is `[id] platform · @author · date · "passage" · address`; a row that says
+`gövde yok` carries nothing to judge by. A heading that ends `· hüküm` is the answer's first line: its verdict.
+
+### C037 [S2]
+| Tarihi veya başlığı güncellemek yeterlidir | Simülasyonda yıl eklemek atıfı sıfırladı, yalnız tarih değiştirmek işe yaramaz deniyor [L1341, L1393] ↔ video ve gözlemsel çalışma aksini söylüyor [L1257, L1533] | 6 satırın 4'ü karşı |
+dayanak:
+  [L1341] x · @Mike Taylor (Every) · 2026-10-27 · "After: "The Ultimate Guide to Prompt Engineering (Updated 2026)": 0 percent" · https://t.co/P7V4CFtz5M
+  [L1393] x · @Carlos Silva (Semrush) · 2026-09-30 · "Updating the publish date alone doesn't help — the content itself needs genuinely new information, current examples, or corrected details for that recency signal to mean anything." · https://t.co/MwUMENO4qP
+karşı:
+  [L1257] youtube · @Henry Purchase · ? · "even if you just update the last updated date, even if you didn't change the content at all, that will actually boost your ranking." · https://www.youtube.com/watch?v=bwShZP758Xg
+  [L1533] web · @TJ Robertson (TJ Digital) · 2026-10-25 · "The biggest single difference was the year in the title: pages with it had more than twice the odds of being cited." · https://tjrobertson.com/ai-citation-study/
+
+### C038 [S2]
+| GEO skoru atıfı öngörür | Kalibrasyon çalışmasında odds ratio 0,9625, p değeri 0,7172 çıktı ve anlamlı alt sonuç yok [L1333, L1334] | 2 satır, tek kaynak; karşı satır arandı, bulunmadı |
+dayanak:
+  [L1333] web · @Juan Camilo Auriti · 2026-10-27 · "The result: an odds ratio of 0.9625 with a p-value of 0.7172." · https://dev.to/juanauriti/my-calibration-study-found-the-geo-score-doesnt-predict-ai-citations-heres-the-data-56ep
+  [L1334] web · @Juan Camilo Auriti · 2026-10-27 · "None of them were significant." · https://dev.to/juanauriti/my-calibration-study-found-the-geo-score-doesnt-predict-ai-citations-heres-the-data-56ep
+karşı: (yok)
+
+### C039 [S2]
+| SEO öldü, üç ayrı oyun var | Yaygın görüş işin eski dijital pazarlama ve SEO'nun devamı olduğudur [L1312, L1129] ↔ aksi satırlar veri göstermiyor [L1407, L1433] | 17 satırın 12'si SEO'nun devamı diyor |
+dayanak:
+  [L1312] quora · @Chris McElroy · 2026-10-17 · "Everything you can recommend for GEO or AI search optimization or AEO is the same list of things that digital marketers have been doing for years." · https://www.quora.com/Is-traditional-SEO-dead-in-2026-How-can-I-rank-my-website-on-AI-search-engines-like-Gemini-or-Perplexity?topAns=1477743901434668
+  [L1129] reddit · @akash_09_ · 2025-12 · "if you know the SEO, you know 80% of GEO/AEO." · https://www.reddit.com/r/DigitalMarketing/comments/1pd7lti/can_someone_explain_geo_and_aeo_in_a_simple_way/
+karşı:
+  [L1407] tiktok · @isiqat · ? · "SEO is dead. The future is GEO and it's changing everything." · https://www.tiktok.com/@isiqat/video/7527986439049596177
+  [L1433] tiktok · @the.mat.rogers · ? · "The operators who lock in all three right now own their markets in 18 months." · https://www.tiktok.com/@the.mat.rogers/video/7636001229260295454
+
+### C040 [S2]
+| Toplu içerik ve kestirme yol kalıcıdır | 1.000 yazılık denemede site Google'dan düştü ve 122.834 ChatGPT cevabında sıfır atıf aldı [L1483, L1485, L1702] ↔ kısa vadede işe yaradığını söyleyen satırlar var [L1138, L1274] | 5 satırın 3'ü karşı |
+dayanak:
+  [L1483] substack · @Cat Valverde · 2026-10-28 · "The result was zero ChatGPT citations out of 122,834 tracked ChatGPT answers." · https://humanlayers.substack.com/p/what-happened-when-someone-published
+  [L1485] substack · @Cat Valverde · 2026-10-28 · "For Google properties, search penalty = AI search penalty." · https://humanlayers.substack.com/p/what-happened-when-someone-published
+  [L1702] web · @OtterlyAI · 2026-08-05 · "Both test sites were deindexed by Google without any warning." · https://otterly.ai/blog/geo-experiment-2000-ai-blogs-google-penalization/
+karşı:
+  [L1138] youtube · @Kevin (Ahrefs videosu) · ? · "There's lots of room for spam. does room for simple tactics and the hard reality is it works. Will it work forever? No." · https://www.youtube.com/watch?v=RwKKLnyXCig
+  [L1274] youtube · @Henry Purchase · ? · "you can publish five to 10 of these articles and you can instantly see results of your brand getting boosted visibility" · https://www.youtube.com/watch?v=bwShZP758Xg
+
+### C041 [S2]
+| Reklam atıf getirir | AI Mode reklamverenlerinin yalnız %11,53'ü satın aldığı kelimede organik kaynak oldu ve reklamın cevabı etkilemediği söyleniyor [L1560, L1342] | 3 satırın 3'ü karşı; karşı satır arandı, bulunmadı |
+dayanak:
+  [L1560] substack · @AI Native (Pepper) · 2026-10-22 · "Only 11.53% of AI Mode advertisers were also cited as an organic source on the keyword they bought." · https://peppercontentinc.substack.com/p/100000-advertisers-later-the-ai-ad
+  [L1342] youtube · @Exposure Ninja · ? · "Ads do not influence the answers that these AI tools give you yet, okay?" · https://www.youtube.com/watch?v=y3el5Cwpyk8
+karşı: (yok)
+
+### C042 [S2]
+| Vaka rakamları genel sonuç verir | Hukuk bürosu ve pipeline vakaları tek taraflı beyandır [L1134, L0353] ↔ hayatta kalan vaka yanlılığı ve gerçek çalışma azlığı belirtiliyor [L1230, L1467] | 11 vaka satırı, 2 eleştiri |
+dayanak:
+  [L1134] linkedin · @Benjamin Bounketh · 2026-08-10 · "A law firm we work with went from 6 organic calls a month to 77 after we fixed how AI engines understand and recommend them." · https://www.linkedin.com/posts/benjamin-bounketh-a30a84_google-just-published-guidance-on-optimizing-activity-7492697546436415488-L8-O
+  [L0353] x · @wleatherman9 · 2026-11-03 · "the cleanest AEO result i've seen reported this year: 101 conversions and ~$500k in pipeline in 60 days. the mechanism was boring. direct answer content on buyer questions where no competitor held a citation. those empty queries still exist in most categories." · https://x.com/i/status/2117406427182481655
+karşı:
+  [L1230] linkedin · @Hridoy Chowdhury · 2026-07-21 · "The dentist case is a nice clean before and after, but I'd argue it's survivorship bias." · https://www.linkedin.com/posts/seo-expert-in-london_aeo-and-geo-arent-replacing-seo-theyre-activity-7485335622518378496-U-zs
+  [L1467] hackernews · @vincko · 2026-03 · "Many case studies, few actual studies." · https://news.ycombinator.com/item?id=47457472
+
+### C043 [S3]
+| Google AI Overviews | Google dizini ve çekirdek sistemler [L1171, L1285] | Sıralamayı izliyor, ama ilk 10 bağı %76'dan %38'e indi [L1463, L1304] ↔ BrightEdge organik sıralanan atıf payının %32,3'ten yükseldiğini bildirdi [L1590] | Ortalama iki günde bir yenileniyor ve atıfların %45'ten fazlası değişiyor; ardışık iki günde aynı siteleri atıflayanlar %11 [L1299, L1349] | 7 satırın 6'sı |
+dayanak:
+  [L1171] x · @codyschneider · 2026-10-19 · "gemini + ai overviews = google index" · https://x.com/i/status/2112272612088840439
+  [L1285] x · @alexgroberman · 2026-10-30 · "Google says its generative AI features are rooted in the same core ranking and quality systems as traditional Search." · https://x.com/alexgroberman/status/2116196567275438376
+  [L1463] web · @Louise Linehan (Ahrefs) · 2026-05-31 · "In other words, AI Overviews follow the SERPs—AI assistants don't." · https://ahrefs.com/blog/ai-search-overlap/
+  [L1304] x · @Aaron Haynes (Loganix) · 2026-03-16 · "Top-10 Google ranking gave a 76% chance of appearing in AI Overviews in July 2025. By March 2026, that dropped to 38%." · https://t.co/cNR8v4Eydk
+karşı:
+  [L1590] web · @BrightEdge · 2025-09-18 · "of AI Overview citations now rank organically (up from 32.3%)" · https://www.brightedge.com/resources/weekly-ai-search-insights/rank-overlap-after-16-months-of-aio
+  [L1299] youtube · @Sam Oh (Ahrefs) · ? · "Now, one thing to keep in mind, over 45% of citations change when AI overviews refresh, and that happens on average every 2 days." · https://www.youtube.com/watch?v=uza9GX0E2mw
+  [L1349] web · @Juan Camilo Auriti · 2026-10-27 · "found that only 11% of Google AI Overviews cited the same sites two days in a row." · https://dev.to/juanauriti/my-calibration-study-found-the-geo-score-doesnt-predict-ai-citations-heres-the-data-56ep
+
+### C044 [S3]
+| Google AI Mode | Google dizini; Google cevapların %17'sinde kendini atıflıyor [L1287, L1223] | Moz'da atıfların %12'si ilk 10 ile eşleşiyor, başka veride %88'i dışarıda [L1224, L1147] | AI Overviews ile atıf örtüşmesi %12–13,7 [L1529, L1290] ↔ işletme düzeyinde örtüşme yaklaşık %29 [L1234] | 7 satırın 6'sı |
+dayanak:
+  [L1287] x · @dudelemonweb · 2026-10-31 · "That holds for AI Mode because it retrieves from Google's own index, but Ahrefs found only 12% of the URLs cited by ChatGPT, Gemini and Copilot rank in Google's top 10 for the same prompt, so good SEO only gets you part of the way into those answers." · https://x.com/alexgroberman/status/2116196567275438376
+  [L1223] x · @alexgroberman · 2026-03-21 · "Google now cites itself in 17% of all AI Mode answers." · https://x.com/i/status/2035344574135075054
+  [L1224] x · @alexgroberman · 2026-03-21 · "A separate Moz analysis of 40,000 keywords found that only 12% of AI Mode citations match URLs in the top 10 organic results for the same query." · https://x.com/i/status/2035344574135075054
+  [L1147] x · @kokasexton · 2026-11-02 · "88% of Google AI Mode citations come from outside the organic top 10." · https://x.com/i/status/2117361861783965828
+  [L1529] web · @TJ Robertson (TJ Digital) · 2026-10-25 · "AI Mode and AI Overviews shared 12% of their cited pages, and ChatGPT shared about 5% with either one." · https://tjrobertson.com/ai-citation-study/
+  [L1290] youtube · @Sam Oh (Ahrefs) · ? · "The citation overlap between AI overviews and AI mode is only 13.7%." · https://www.youtube.com/watch?v=uza9GX0E2mw
+karşı:
+  [L1234] x · @alexgroberman · 2026-10-22 · "BrightLocal found Google AI Mode and AI Overviews shared only about 29% of the businesses surfaced in the study." · https://x.com/i/status/2113289836610392567
+
+### C045 [S3]
+| ChatGPT | Her cevapta yeniden yazılan sorgular; ücretsiz cevapların %14,4'ü web araması yaptı [L1514, L1554] | Atıfların %12'si veya kesin URL'de %9,4'ü Google üst sonuçlarında [L1381, L1159] ↔ yaklaşık %50'si Google'da 1. sırada [L1256] | Ortak kalan pay iki haftada %40, on haftada %14 [L1505] | 6 satırın 4'ü |
+dayanak:
+  [L1514] web · @arXiv 2610.15033 · 2026-10 · "Both rewrite the question anew on every answer: between two runs on the same day, ChatGPT's queries overlap by 2.7% (Jaccard) and its cited pages by 15%." · https://arxiv.org/html/2610.15033v1
+  [L1554] linkedin · @AI For Search · 2026-09-20 · "Only 14.4% of free ChatGPT responses ran a web search at all." · https://www.linkedin.com/posts/aiforsearch_what-moves-citation-and-what-kills-it-%F0%9D%97%95%F0%9D%97%B2%F0%9D%97%B0%F0%9D%97%BC%F0%9D%97%BA%F0%9D%97%B2-activity-7507287433072295936-bKFF
+  [L1381] web · @Louise Linehan · 2026-05-31 · "In a dataset of 15,000 prompts, we found that—on average—only 12% of links cited by ChatGPT, Gemini, and Copilot appear in Google's top 10 results for the same prompt." · https://ahrefs.com/blog/ai-search-overlap/
+  [L1159] x · @georg_singer · 2026-11-02 · "With GPT-5.3 Instant, 9.4% of the cited URLs showed up there at exact URL level." · https://x.com/i/status/2117318586934890803
+karşı:
+  [L1256] x · @alexgroberman · 2026-05-24 · "Almost 50% of ChatGPT citations came from pages ranking #1 on Google." · https://x.com/i/status/2058573688698810686
+  [L1505] web · @arXiv 2610.15033 · 2026-10 · "Two weeks later, 40% (ChatGPT), 47% (Gemini) and 22% (Perplexity) is still shared, and ten weeks later only 14%, 29% and 0%." · https://arxiv.org/html/2610.15033v1
+
+### C046 [S3]
+| Gemini | Google dizini [L1171] | Atıfların %12'si Google ilk 10'da [L1381] ↔ başka ölçümde %5,6 [L1601] | Ortak kalan pay iki haftada %47, on haftada %29 [L1505] | 4 satırın 3'ü |
+dayanak:
+  [L1171] x · @codyschneider · 2026-10-19 · "gemini + ai overviews = google index" · https://x.com/i/status/2112272612088840439
+  [L1381] web · @Louise Linehan · 2026-05-31 · "In a dataset of 15,000 prompts, we found that—on average—only 12% of links cited by ChatGPT, Gemini, and Copilot appear in Google's top 10 results for the same prompt." · https://ahrefs.com/blog/ai-search-overlap/
+karşı:
+  [L1601] web · @arXiv 2610.15033 · 2026-10 · "ChatGPT retrieves and 5.6% of those Gemini cites are in the top 10, although Gemini is grounded on Google" · https://arxiv.org/html/2610.15033v1
+  [L1505] web · @arXiv 2610.15033 · 2026-10 · "Two weeks later, 40% (ChatGPT), 47% (Gemini) and 22% (Perplexity) is still shared, and ten weeks later only 14%, 29% and 0%." · https://arxiv.org/html/2610.15033v1
+
+### C047 [S3]
+| Perplexity | Reddit payı ChatGPT'deki düşüşte korunmuş [L1537, L1133] ↔ İspanyolca panelde pay dokuz haftada %5,6'dan %0,1'e indi [L1589] | Google ile hizalanması en güçlü motor [L1394] | Ortak kalan pay iki haftada %22, on haftada %0 [L1505] | 5 satırın 4'ü |
+dayanak:
+  [L1537] x · @shalintripathi · 2026-11-03 · "engines don't agree either. in august chatgpt's reddit citations fell off a cliff (one tracker: 3.83% to 0.52% share) while perplexity's held. the cause is still argued about." · https://x.com/i/status/2117676768920477758
+  [L1133] hackernews · @vood · 2026-01 · "External research from Q2 2025 showed 47% Reddit citations on Perplexity." · https://news.ycombinator.com/item?id=46510233
+karşı:
+  [L1589] web · @José Redondo (vilnux) · 2026-10-13 · "Almost never. In our panel of 9 brands and 770 questions in Spanish, the share of Perplexity answers citing reddit.com fell from 5.6% in week 33 to 0.1% in week 41 of 2026." · https://www.vilnux.com/research/perplexity-stops-citing-reddit
+  [L1394] x · @Carlos Silva (Semrush) · 2026-09-30 · "Perplexity has the strongest alignment with Google, and ChatGPT the weakest, though it still leans on authoritative domains." · https://t.co/MwUMENO4qP
+  [L1505] web · @arXiv 2610.15033 · 2026-10 · "Two weeks later, 40% (ChatGPT), 47% (Gemini) and 22% (Perplexity) is still shared, and ten weeks later only 14%, 29% and 0%." · https://arxiv.org/html/2610.15033v1
+
+### C048 [S3]
+| Copilot | Bing aracında atıf raporu var; 1.000 yazılık denemede atıfların %69'unu verdi [L1173, L1484] | Atıfların %12'si Google ilk 10'da [L1381] | — | 3 satır; karşı satır arandı, bulunmadı |
+dayanak:
+  [L1173] x · @codyschneider · 2026-10-19 · "set up bing webmaster tools, it has an ai performance report now that shows copilot citations" · https://x.com/i/status/2112272612088840439
+  [L1484] substack · @Cat Valverde · 2026-10-28 · "Of Site 2's 3,934 total citations, 2,718 came from Copilot alone, 69% of the total." · https://humanlayers.substack.com/p/what-happened-when-someone-published
+  [L1381] web · @Louise Linehan · 2026-05-31 · "In a dataset of 15,000 prompts, we found that—on average—only 12% of links cited by ChatGPT, Gemini, and Copilot appear in Google's top 10 results for the same prompt." · https://ahrefs.com/blog/ai-search-overlap/
+karşı: (yok)
+
+## Your verdict on each claim — one of three
+- `ok` — the rows under it say what the line says, and every number in the line is one those rows bear (a count of
+  rows the line gives is borne when that many rows under it say so).
+- `corrected` — the rows say less than the line, or something other, or a `karşı` row under it is not named in the
+  line. Then write the line yourself, as it should stand in the answer:
+  - Turkish, in the writer's own grammar: the claim, then the ids it stands on in square brackets, `… [L0042, L0107]`;
+    the counter-evidence after `↔`, `… [L0042] ↔ … [L0051]`, once in the line;
+  - only ids printed under THIS claim, in its `dayanak` or its `karşı` — the same ids or a subset, at least one, and never an id whose row is marked `(yazara verilmeyen satır)`;
+  - no quote of a source's words, no address, no `http`, no domain;
+  - the WHOLE line, a drop-in replacement: a list item keeps its mark (`- `); a table row stays a table row,
+    `| … | … |`, with the same number of cells.
+- `removed` — no row cited under it supports the line. The verdict (`· hüküm`) is never removed: when its rows do not
+  bear it, correct it.
+
+Give every one of the 12 claims one entry: its `reason` one sentence in Turkish, its `line` only when the verdict is
+`corrected`. Output ONLY valid JSON — no code fence, nothing before or after it:
+{"verdicts":[{"id":"C007","verdict":"ok","reason":"..."},{"id":"C008","verdict":"corrected","reason":"...","line":"..."},{"id":"C009","verdict":"removed","reason":"..."}]}

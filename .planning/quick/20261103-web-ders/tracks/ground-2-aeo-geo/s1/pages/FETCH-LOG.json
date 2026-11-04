@@ -1,0 +1,418 @@
+[
+  {
+    "url": "https://lobste.rs/~raymii",
+    "read": true,
+    "door": "scrapling",
+    "cached_snapshot": false,
+    "liveness": "alive",
+    "doors_tried": 3,
+    "attempts": [
+      {
+        "door": "media-transcript",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a media url"
+      },
+      {
+        "door": "pdf-text",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a pdf url"
+      },
+      {
+        "door": "scrapling",
+        "ok": true,
+        "ms": 947,
+        "bytes": 803,
+        "wall": false,
+        "error": null
+      }
+    ],
+    "bytes": 803,
+    "file": "04-lobste.rs.md"
+  },
+  {
+    "url": "https://scholar.google.com/citations?user=wLLFzRUAAAAJ&hl=en",
+    "read": true,
+    "door": "scrapling",
+    "cached_snapshot": false,
+    "liveness": "alive",
+    "doors_tried": 3,
+    "attempts": [
+      {
+        "door": "media-transcript",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a media url"
+      },
+      {
+        "door": "pdf-text",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a pdf url"
+      },
+      {
+        "door": "scrapling",
+        "ok": true,
+        "ms": 1362,
+        "bytes": 9595,
+        "wall": false,
+        "error": null
+      }
+    ],
+    "bytes": 9595,
+    "file": "06-google.com.md"
+  },
+  {
+    "url": "https://stackoverflow.com/questions/72665931/random-binary-tree-prove-that-the-height-is-ologn-with-high-probability",
+    "read": true,
+    "door": "opencli-reader",
+    "cached_snapshot": false,
+    "liveness": "alive",
+    "doors_tried": 5,
+    "attempts": [
+      {
+        "door": "media-transcript",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a media url"
+      },
+      {
+        "door": "pdf-text",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a pdf url"
+      },
+      {
+        "door": "scrapling",
+        "ok": false,
+        "ms": 748,
+        "bytes": 59,
+        "wall": true,
+        "error": null
+      },
+      {
+        "door": "scrapling-stealth",
+        "ok": false,
+        "ms": 2320,
+        "bytes": 59,
+        "wall": true,
+        "error": null
+      },
+      {
+        "door": "opencli-reader",
+        "ok": true,
+        "ms": 1121,
+        "bytes": 5854,
+        "wall": false,
+        "error": null
+      }
+    ],
+    "bytes": 5854,
+    "file": "02-stackoverflow.com.md"
+  },
+  {
+    "url": "https://www.google.com/goto?url=CAESwQEB6zswFXUqFzThcpcyyRJe460Mkl6-EnXBz5T58yv7IBrXQ1gq0pb4L4l0x_QpbT0eNCfAi8n__cveOytoNVhsNntwfS5Qu9sgi4Q4kxwerityEEstcEL7lrJvYxyTHL2XRmPYorg5NnVIthZNZwBxHz6e5NqkK-9yoxDEIEeJNMM5kAK07JW0_lGeBj0aepl2OfY41tcCowRECjHcl8CCHiDjKoQaPPZb3lF_jsUIP4kxmqmp6jWjyES8uGdSiTcJ",
+    "read": true,
+    "door": "firecrawl-scrape",
+    "cached_snapshot": false,
+    "liveness": "alive",
+    "doors_tried": 8,
+    "attempts": [
+      {
+        "door": "media-transcript",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a media url"
+      },
+      {
+        "door": "pdf-text",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a pdf url"
+      },
+      {
+        "door": "scrapling",
+        "ok": false,
+        "ms": 792,
+        "bytes": 59,
+        "wall": true,
+        "error": null
+      },
+      {
+        "door": "scrapling-stealth",
+        "ok": false,
+        "ms": 2503,
+        "bytes": 649,
+        "wall": true,
+        "error": null
+      },
+      {
+        "door": "opencli-reader",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "no platform adapter for this url"
+      },
+      {
+        "door": "browser-signed-in",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "no signed-in browser site for this url"
+      },
+      {
+        "door": "tavily-extract",
+        "ok": false,
+        "ms": 429,
+        "bytes": 365,
+        "wall": true,
+        "error": "rc=1 "
+      },
+      {
+        "door": "firecrawl-scrape",
+        "ok": true,
+        "ms": 4670,
+        "bytes": 1235,
+        "wall": false,
+        "error": null
+      }
+    ],
+    "bytes": 1235,
+    "file": "05-google.com.md"
+  },
+  {
+    "url": "https://www.niemanlab.org/2025/03/ai-search-engines-fail-to-produce-accurate-citations-in-over-60-of-tests-according-to-new-tow-center-study/",
+    "read": true,
+    "door": "scrapling-stealth",
+    "cached_snapshot": false,
+    "liveness": "alive",
+    "doors_tried": 4,
+    "attempts": [
+      {
+        "door": "media-transcript",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a media url"
+      },
+      {
+        "door": "pdf-text",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a pdf url"
+      },
+      {
+        "door": "scrapling",
+        "ok": false,
+        "ms": 753,
+        "bytes": 966,
+        "wall": true,
+        "error": null
+      },
+      {
+        "door": "scrapling-stealth",
+        "ok": true,
+        "ms": 2624,
+        "bytes": 15576,
+        "wall": false,
+        "error": null
+      }
+    ],
+    "bytes": 15576,
+    "file": "01-niemanlab.org.md"
+  },
+  {
+    "url": "https://www.v2ex.com/t/1246461",
+    "read": true,
+    "door": "firecrawl-scrape",
+    "cached_snapshot": false,
+    "liveness": "alive",
+    "doors_tried": 8,
+    "attempts": [
+      {
+        "door": "media-transcript",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a media url"
+      },
+      {
+        "door": "pdf-text",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a pdf url"
+      },
+      {
+        "door": "scrapling",
+        "ok": false,
+        "ms": 562,
+        "bytes": 59,
+        "wall": true,
+        "error": null
+      },
+      {
+        "door": "scrapling-stealth",
+        "ok": false,
+        "ms": 2161,
+        "bytes": 644,
+        "wall": true,
+        "error": null
+      },
+      {
+        "door": "opencli-reader",
+        "ok": false,
+        "ms": 658,
+        "bytes": 303,
+        "wall": false,
+        "error": null
+      },
+      {
+        "door": "browser-signed-in",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "no signed-in browser site for this url"
+      },
+      {
+        "door": "tavily-extract",
+        "ok": false,
+        "ms": 418,
+        "bytes": 365,
+        "wall": true,
+        "error": "rc=1 "
+      },
+      {
+        "door": "firecrawl-scrape",
+        "ok": true,
+        "ms": 4844,
+        "bytes": 12039,
+        "wall": false,
+        "error": null
+      }
+    ],
+    "bytes": 12039,
+    "file": "07-v2ex.com.md"
+  },
+  {
+    "url": "https://www.youtube.com/watch?v=0uyGXR16ssY",
+    "read": true,
+    "door": "media-transcript",
+    "cached_snapshot": false,
+    "liveness": "alive",
+    "doors_tried": 1,
+    "attempts": [
+      {
+        "door": "media-transcript",
+        "ok": true,
+        "ms": 5686,
+        "bytes": 3410,
+        "wall": false,
+        "error": null
+      }
+    ],
+    "bytes": 3410,
+    "file": "03-youtube.com.md"
+  },
+  {
+    "url": "https://zhuanlan.zhihu.com/p/2100309033013994426",
+    "read": true,
+    "door": "firecrawl-scrape",
+    "cached_snapshot": false,
+    "liveness": "alive",
+    "doors_tried": 8,
+    "attempts": [
+      {
+        "door": "media-transcript",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a media url"
+      },
+      {
+        "door": "pdf-text",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a pdf url"
+      },
+      {
+        "door": "scrapling",
+        "ok": false,
+        "ms": 1002,
+        "bytes": 35,
+        "wall": false,
+        "error": null
+      },
+      {
+        "door": "scrapling-stealth",
+        "ok": false,
+        "ms": 2690,
+        "bytes": 0,
+        "wall": false,
+        "error": null
+      },
+      {
+        "door": "opencli-reader",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "no platform adapter for this url"
+      },
+      {
+        "door": "browser-signed-in",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "no signed-in browser site for this url"
+      },
+      {
+        "door": "tavily-extract",
+        "ok": false,
+        "ms": 451,
+        "bytes": 365,
+        "wall": true,
+        "error": "rc=1 "
+      },
+      {
+        "door": "firecrawl-scrape",
+        "ok": true,
+        "ms": 7251,
+        "bytes": 35352,
+        "wall": false,
+        "error": null
+      }
+    ],
+    "bytes": 35352,
+    "file": "08-zhihu.com.md"
+  }
+]

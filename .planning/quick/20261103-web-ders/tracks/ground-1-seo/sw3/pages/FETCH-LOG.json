@@ -1,0 +1,449 @@
+[
+  {
+    "url": "http://searchengineland.com/too-much-seo-google%E2%80%99s-working-on-an-%E2%80%9Cover-optimization%E2%80%9D-penalty-for-that-115627",
+    "read": true,
+    "door": "scrapling-stealth",
+    "cached_snapshot": false,
+    "liveness": "alive",
+    "doors_tried": 4,
+    "attempts": [
+      {
+        "door": "media-transcript",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a media url"
+      },
+      {
+        "door": "pdf-text",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a pdf url"
+      },
+      {
+        "door": "scrapling",
+        "ok": false,
+        "ms": 1075,
+        "bytes": 980,
+        "wall": true,
+        "error": null
+      },
+      {
+        "door": "scrapling-stealth",
+        "ok": true,
+        "ms": 9966,
+        "bytes": 40828,
+        "wall": false,
+        "error": null
+      }
+    ],
+    "bytes": 40828,
+    "file": "01-searchengineland.com.md"
+  },
+  {
+    "url": "https://lobste.rs/s/s6zfxg/robots_txt_pitfalls_what_i_learned_hard",
+    "read": true,
+    "door": "scrapling",
+    "cached_snapshot": false,
+    "liveness": "alive",
+    "doors_tried": 3,
+    "attempts": [
+      {
+        "door": "media-transcript",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a media url"
+      },
+      {
+        "door": "pdf-text",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a pdf url"
+      },
+      {
+        "door": "scrapling",
+        "ok": true,
+        "ms": 774,
+        "bytes": 13395,
+        "wall": false,
+        "error": null
+      }
+    ],
+    "bytes": 13395,
+    "file": "05-lobste.rs.md"
+  },
+  {
+    "url": "https://stackoverflow.com/questions/25080859/ajx-and-google-seo",
+    "read": true,
+    "door": "opencli-reader",
+    "cached_snapshot": false,
+    "liveness": "alive",
+    "doors_tried": 5,
+    "attempts": [
+      {
+        "door": "media-transcript",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a media url"
+      },
+      {
+        "door": "pdf-text",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a pdf url"
+      },
+      {
+        "door": "scrapling",
+        "ok": false,
+        "ms": 441,
+        "bytes": 59,
+        "wall": true,
+        "error": null
+      },
+      {
+        "door": "scrapling-stealth",
+        "ok": false,
+        "ms": 2893,
+        "bytes": 59,
+        "wall": true,
+        "error": null
+      },
+      {
+        "door": "opencli-reader",
+        "ok": true,
+        "ms": 1714,
+        "bytes": 1359,
+        "wall": false,
+        "error": null
+      }
+    ],
+    "bytes": 1359,
+    "file": "03-stackoverflow.com.md"
+  },
+  {
+    "url": "https://www.google.com/goto?url=CAESeAHrOzAV3Xhsq45Lu_dtDgB4VYNVy2P-o14oY1pCIk9QBCu_djtK90v-KMmTMC0ssOma8T7Ih-iUCeVNOc1WlcPoLz7tqJ4y7Gx_RXAkW3BTGTCD2uE-er8h5xS9g4dL38AuMtJOjsrQeGZVB1xf8hfbyQfA8GXJOQ",
+    "read": true,
+    "door": "firecrawl-scrape",
+    "cached_snapshot": false,
+    "liveness": "alive",
+    "doors_tried": 8,
+    "attempts": [
+      {
+        "door": "media-transcript",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a media url"
+      },
+      {
+        "door": "pdf-text",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a pdf url"
+      },
+      {
+        "door": "scrapling",
+        "ok": false,
+        "ms": 563,
+        "bytes": 59,
+        "wall": true,
+        "error": null
+      },
+      {
+        "door": "scrapling-stealth",
+        "ok": false,
+        "ms": 3221,
+        "bytes": 649,
+        "wall": true,
+        "error": null
+      },
+      {
+        "door": "opencli-reader",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "no platform adapter for this url"
+      },
+      {
+        "door": "browser-signed-in",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "no signed-in browser site for this url"
+      },
+      {
+        "door": "tavily-extract",
+        "ok": false,
+        "ms": 775,
+        "bytes": 365,
+        "wall": true,
+        "error": "rc=1 "
+      },
+      {
+        "door": "firecrawl-scrape",
+        "ok": true,
+        "ms": 2815,
+        "bytes": 1065,
+        "wall": false,
+        "error": null
+      }
+    ],
+    "bytes": 1065,
+    "file": "06-google.com.md"
+  },
+  {
+    "url": "https://www.instagram.com/p/DRHy1evjTZM/",
+    "read": false,
+    "door": null,
+    "cached_snapshot": false,
+    "liveness": "blocked",
+    "doors_tried": 12,
+    "attempts": [
+      {
+        "door": "media-transcript",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a media url"
+      },
+      {
+        "door": "pdf-text",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a pdf url"
+      },
+      {
+        "door": "scrapling",
+        "ok": false,
+        "ms": 2153,
+        "bytes": 22149,
+        "wall": true,
+        "error": null
+      },
+      {
+        "door": "scrapling-stealth",
+        "ok": false,
+        "ms": 5361,
+        "bytes": 22566,
+        "wall": true,
+        "error": null
+      },
+      {
+        "door": "opencli-reader",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "no platform adapter for this url"
+      },
+      {
+        "door": "browser-signed-in",
+        "ok": false,
+        "ms": 40193,
+        "bytes": 0,
+        "wall": false,
+        "error": "instagram browser rc=75 gizli Chrome'daki 8 pencerenin hepsi 40 sn dolu kaldi\n"
+      },
+      {
+        "door": "tavily-extract",
+        "ok": false,
+        "ms": 421,
+        "bytes": 365,
+        "wall": true,
+        "error": "rc=1 "
+      },
+      {
+        "door": "firecrawl-scrape",
+        "ok": false,
+        "ms": 377,
+        "bytes": 0,
+        "wall": false,
+        "error": "isError: Tool 'firecrawl_scrape' execution failed: We apologize for the inconvenience but we do not support this site. If you are part of an enterprise and wan"
+      },
+      {
+        "door": "exa-fetch",
+        "ok": false,
+        "ms": 271,
+        "bytes": 0,
+        "wall": false,
+        "error": "isError: MCP error -32602: Input validation error: Invalid arguments for tool web_fetch_exa: Required at urls"
+      },
+      {
+        "door": "playwright",
+        "ok": false,
+        "ms": 3789,
+        "bytes": 4232,
+        "wall": true,
+        "error": null
+      },
+      {
+        "door": "jina-reader",
+        "ok": false,
+        "ms": 3249,
+        "bytes": 20839,
+        "wall": true,
+        "error": null
+      },
+      {
+        "door": "curl",
+        "ok": false,
+        "ms": 418,
+        "bytes": 9,
+        "wall": false,
+        "error": null
+      }
+    ],
+    "bytes": 0
+  },
+  {
+    "url": "https://www.quora.com/",
+    "read": true,
+    "door": "firecrawl-scrape",
+    "cached_snapshot": false,
+    "liveness": "alive",
+    "doors_tried": 8,
+    "attempts": [
+      {
+        "door": "media-transcript",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a media url"
+      },
+      {
+        "door": "pdf-text",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a pdf url"
+      },
+      {
+        "door": "scrapling",
+        "ok": false,
+        "ms": 383,
+        "bytes": 59,
+        "wall": true,
+        "error": null
+      },
+      {
+        "door": "scrapling-stealth",
+        "ok": false,
+        "ms": 5279,
+        "bytes": 649,
+        "wall": true,
+        "error": null
+      },
+      {
+        "door": "opencli-reader",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "no platform adapter for this url"
+      },
+      {
+        "door": "browser-signed-in",
+        "ok": false,
+        "ms": 40151,
+        "bytes": 0,
+        "wall": false,
+        "error": "quora browser rc=75 gizli Chrome'daki 8 pencerenin hepsi 40 sn dolu kaldi\n"
+      },
+      {
+        "door": "tavily-extract",
+        "ok": false,
+        "ms": 433,
+        "bytes": 365,
+        "wall": true,
+        "error": "rc=1 "
+      },
+      {
+        "door": "firecrawl-scrape",
+        "ok": true,
+        "ms": 523,
+        "bytes": 803,
+        "wall": false,
+        "error": null
+      }
+    ],
+    "bytes": 803,
+    "file": "07-quora.com.md"
+  },
+  {
+    "url": "https://www.youtube.com/watch?v=xsVTqzratPs",
+    "read": true,
+    "door": "media-transcript",
+    "cached_snapshot": false,
+    "liveness": "alive",
+    "doors_tried": 1,
+    "attempts": [
+      {
+        "door": "media-transcript",
+        "ok": true,
+        "ms": 8134,
+        "bytes": 117352,
+        "wall": false,
+        "error": null
+      }
+    ],
+    "bytes": 117352,
+    "file": "04-youtube.com.md"
+  },
+  {
+    "url": "https://x.com/i/status/2117287021756506296",
+    "read": true,
+    "door": "scrapling",
+    "cached_snapshot": false,
+    "liveness": "alive",
+    "doors_tried": 3,
+    "attempts": [
+      {
+        "door": "media-transcript",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a media url"
+      },
+      {
+        "door": "pdf-text",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a pdf url"
+      },
+      {
+        "door": "scrapling",
+        "ok": true,
+        "ms": 1049,
+        "bytes": 5181,
+        "wall": false,
+        "error": null
+      }
+    ],
+    "bytes": 5181,
+    "file": "02-x.com.md"
+  }
+]

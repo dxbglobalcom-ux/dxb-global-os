@@ -1,0 +1,231 @@
+Title: Testing the Impact of Schema Markup for SEO
+URL: https://www.searchpilot.com/resources/case-studies/testing-schema-markup
+Published: 2024-06-27T15:38:49.000Z
+Author: SearchPilot team
+Highlights:
+Schema markup, also known as structured data, is a type of microdata that enhances the understanding of web content for search engines. By adding schema markup to a website, it can create more informative search results, which are often displayed as rich snippets and can significantly improve a website’s visibility. Google is a strong advocate of schema markup and provides detailed guidelines and tools to help SEOs implement and validate structured data effectively. The primary purpose of schema markup is to help search engines better understand the content of web pages. By providing additional context and meaning to content, schema markup enables search engines to present more informative and relevant search results to users. Another benefit of using schema markup is the ability to achieve enhanced search results through rich snippets, which can lead to increased visibility and improved click-through rates.
+
+---
+
+Title: A Year of SEO Testing with SearchPilot
+URL: https://www.searchpilot.com/resources/blog/a-year-of-seo-testing-with-searchpilot
+Published: 2019-11-06T00:00:00.000Z
+Author: Tim Allen
+Highlights:
+We have an eCommerce site and we have product pages. The title for the product pages are so-so, it’s what you’d expect, it’s the name of the product followed by the brand.
+
+ 
+
+We go okay, what if we put their USP? What if we put a common USP like Free Shipping that they offer and their competitors don’t, into the title tag? More people would click on it, we would get more traffic.
+
+...
+
+We’ve got this Ford car and Ford vehicles and we look at both of those and we do some work and we say, “we think Google understands that in this particular case, these are synonyms.” We don’t need both of these words. So we could cut one of them and we can just have a punchy title. If we remove one of those, more people would click it and we would gain clicks and we don’t lose in relevance. Fantastic, so I got a little bit of beta breath. At this point where I’m like, oh boy, this isn’t going to be bad.
+
+...
+
+“…title tags do have a notable effect.”
+
+Firstly, title tags do have a notable effect. By and large, they change traffic between five to 15% when they did make a change. Secondly, writing title tags is hard. 56% of the title tags failed. Outright failed and were bad for our clients. Only 6% were actually successful. Now, there’s a little bit of selection bias here because the websites who come to us and the websites we were working with are typically people who care about SEO. So we’re not going from nothing here. We’re going for people who have already thought about the titles, but it’s still clearly very hard when you’re in that position. Which unfortunately means we apologize to Tom. It’s just really hard to write title tags. He’s not particularly bad at it.
+
+...
+
+## Test 10: Instead of Category Text Using Structured Data ~ Positive
+
+Then we move on to structured data and dangerous assumptions. For number 10 there was something very appealing about structured data.
+
+ 
+
+There’s something still appealing about the fact, I’m a technical person. People, I’m a nerd. I think a lot of us in this industry are, and this is really an appeal to the idea that, if I know something technical that you don’t, I can get a leg up on you. I can outwit you, I can outsmart you. Just by knowing something that you haven’t bothered to learn. And it posses and comes from a good place but it is a thing. And so at this point, I’d love to test this.
+
+We go back to these category pages where we would add that text to help people understand it, because category pages are a lot of images and not much text. What if instead of writing that as your text, what if instead I just marked it up to describe the page? What if instead I added structured data to say, this is 20 products on a category page?
+
+So we roll this one out on a really big website, really big multi country eCommerce brand. And it does really well. I can increase his traffic by 11%, and I’m like, that’s better than I ever hoped for. Before we get too excited here, there are multiple countries.
+
+...
+
+## Test 12, 13, & 14: Rolling out Structured Data to More Clients ~ Negative
+
+We get all this, we build it out and we rolled it out. We roll it across these multiple sites.
+
+We roll it out on the first site and it’s null. The second site is null and by the time we get to the third site, “not again.” I go eat a large helping of humble pie. In this previous lesson I finally learned it, there really isn’t that best practice people. When you put it out there, you seem like an idiot.
+
+“We did find something more interesting, which was that structured data outside of rich snippets could occasionally have these large big traffic swings, but it was incredibly inconsistent.”
+
+We did find something more interesting, which was that structured data outside of rich snippets could occasionally have these large big traffic swings, but it was incredibly inconsistent. My best theory as to why it worked for that one eCommerce site rather than the other three, and this is absolutely a rationalization, so take this with a grain of salt, was that the eCommerce site where it did work had a lot of category pages that were closely connected together. They were very similar topically and Google needed more help in picking that, and that wasn’t the case in the other ones.
+
+...
+
+## Test 15: Adding Review Schema ~ Positive
+
+We’re on test 15, I carry along on the structured data, and we’re working with a listing site at this point. I just want consistency and we go to the most consistent of all of them, which is the review mark. Write those five stars in the SERPs. For the listing site, we go and collect a bunch of reviews for a lot of their category pages.
+
+ 
+
+We spend quite a lot of time doing it. They spent a lot of time doing it. We roll it out and we thought, “surely this works.” Surely adding review snippets to these pages works, and it does, it increases the traffic by 16%. It was a good experience for users. It helped them, it added the right trust signals, it did exactly what you would expect it to do, which is fantastic.
+
+---
+
+Title: Expanding Your Title Tag Testing Strategy - Why Title Tags Still Matter in 2026
+URL: https://www.searchpilot.com/resources/case-studies/expanding-your-title-tag-testing-strategy
+Published: 2025-09-01T12:39:07.000Z
+Author: Noe Servin
+Highlights:
+To find out what actually works, we’ve run a series of controlled SEO split tests across different industries. Just like with our internal linking experiments, the results reveal both clear wins and some surprising losses. Here are a few of the more interesting ones we’ve run.
+
+### Extra Keywords in Title Tags
+
+Title tags are often the first place SEOs try to squeeze in more keywords. The logic is simple, if one keyword is good, then surely more must be better. For an e-commerce customer, we tested this on product listing pages by appending extra variations to the titles. A page that originally had the title “Women’s Dresses” became “Women’s Dresses Best Women’s Dresses, Dresses for Women, Stylish Women’s Dresses”. Despite the broader keyword coverage, the test was inconclusive at the 95 percent confidence level. There was no measurable uplift in organic sessions for the variant group. This suggests that repeating near duplicate phrases doesn’t add value and can make titles look cluttered or spammy.
+
+### Destination City or Airport Codes
+
+For a customer of ours in the travel industry, we looked at whether adding airport codes to titles could capture more searches. Travelers sometimes search using codes such as LHR or JFK, so it seemed logical to include them in title tags. We changed titles like “Flights to London” to “Flights to London (LHR)” and also experimented with four letter city codes. The result was a clear negative, organic traffic to the variant pages dropped by 16 percent at the 95 percent confidence level. While codes may appear in query data, for most users they added confusion rather than clarity. The takeaway is that insider jargon doesn’t always translate into SEO gains.
+
+### Asking a Question About Cost
+
+Many users type full questions into Google, especially around pricing. For a retail customer we wanted to see whether titles phrased as questions could better capture this intent. We tested changing titles from descriptive formats like “Dental Implants Options and Pricing” to question based phrasing such as “How Much Do Dental Implants Cost?”. The result was a win, with the question based titles delivering more than a five percent uplift in organic sessions. By mirroring the way users search, the variant titles felt more relevant and drove more clicks.
+
+### Age Ranges in Titles
+
+For a customer of ours in the care industry, we wanted to test whether adding age ranges into titles could make them more relevant. Parents and caregivers often refine their searches by age, so it felt like a natural qualifier to highlight. A page originally titled “Care Services in London” was updated to “Care Services in London (Ages 5 to 12)”. The result was positive, with about a four percent uplift in organic sessions at a 90 percent confidence level. This suggests that clear, specific qualifiers can make titles more appealing to the intended audience.
+
+### Static vs Dynamic Prices in Titles
+
+For a travel rental customer we compared the impact of static prices versus dynamic prices in title tags for location pages. Price transparency can be a powerful driver of clicks, but only if the information is accurate. We ran two tests to compare static and dynamic pricing in titles. Static prices such as “Apartments in Paris from €59” led to a negative seven percent result. Outdated prices misled users and discouraged clicks. Dynamic prices that were updated automatically from live feeds saw a ten percent uplift in organic sessions. The comparison makes the lesson clear: freshness matters. Prices can improve click through rate, but only when they are accurate and current.
+
+...
+
+Both versions performed worse.
+
+...
+
+Looking across these experiments, a few themes emerge. Adding more keywords doesn’t always help and can make titles worse. Titles that mirror how users actually search, whether as questions or with qualifiers like age ranges, tend to perform best. Accurate, fresh details like dynamic pricing can deliver strong results, while outdated or unnecessary information can actively harm performance. Above all, these tests show the importance of experimentation. Even the smallest changes to a title can move the needle significantly, and the only way to know for sure is to test. Results may vary across sites and industries and we always recommend testing changes first.
+
+---
+
+Title: How does adding 'best' to title tags impact SEO performance?
+URL: https://www.searchpilot.com/resources/case-studies/adding-best-to-title-tags
+Published: 2024-10-17T15:54:51.000Z
+Author: Nuha Miah
+Highlights:
+## What was changed
+
+We inserted the word "best" to the start of title tags for the variant group of pages.
+
+## Results
+
+This A/B test resulted in a positive impact to organic traffic at the 95% confidence interval, with an estimated 11% increase in organic sessions. 
+
+From this result, we can conclude that the hypothesis was correct: incorporating the word "best" as a lever for buyers improved Google’s understanding of the page and better matched users’ search intent - enticing them to click into the page. The alignment in language not only increased the organic sessions but also improved Google’s understanding of the page's relevance for such searches.
+
+The success of this test highlights the importance of continually optimizing title tags to better align with user intent and search behavior. It’s clear from this test that using language that resonates with users’ search terms can drive more traffic.
+
+...
+
+However, it's important to consider that this result might not be universal across all industries or product types. In some niches, especially those with more price-sensitive customers, other terms such as “cheap” or “affordable” might be more effective. Therefore, while this result is promising, further testing on different keywords and product categories could reveal additional insights into optimizing title tags.
+
+...
+
+- By detecting changes in performance of the variant pages compared to the control, we know that the measured effect was not caused by seasonality, sitewide changes, Google algorithm updates, competitor changes, or any other external impact.
+- The statistical analysis compares the actual outcome to a forecast, and comes with a credible interval so we know how certain we are the effect is real.
+- We measure the impact on organic traffic in order to capture changes to rankings and/or changes to
+
+---
+
+Title: Can Shortening Truncated Title Tags Improve SEO Performance?
+URL: https://www.searchpilot.com/resources/case-studies/shortening-title-tags-and-removing-keywords
+Published: 2022-07-04T23:00:00.000Z
+Author: SearchPilot team
+Highlights:
+In this week’s #SPQUIZ we asked our followers what impact they thought, shortening truncated title tags and removing the words “find” and “book”, would have on organic traffic.
+
+...
+
+Our followers this week were split between positive, negative and inconclusive. Nearly half of the respondents thought it would be negative. Those who thought it would be positive - only 21% - were correct! This change improved organic traffic.
+
+...
+
+This week’s case study explores the effect of shortening a travel industry customer’s title tags by removing words such as “Find” and “Book,” as well as state names. The customer previously tested adding dynamic prices to their titles and realized that on some pages, the titles were too long, and prices were truncated out of the SERP.
+
+...
+
+The outcome of this SEO split test was a positive impact on organic traffic, with an 11% uplift. This result shows that in this particular case, having the price be visible to the user in the SERP was more important than including state names, and action keywords such as “Find” or “Book”. It also confirms that eliminating content can be just as effective as adding new content though it is also important to highlight that while these changes were successful in this particular case, that does not guarantee that it would always work out this way.
+
+---
+
+Title: Removing “Compare” from title tags
+URL: https://www.searchpilot.com/resources/case-studies/removing-compare-from-title-tags
+Published: 2024-07-11T16:12:58.000Z
+Author: Daniel Haugen
+Highlights:
+## What was changed
+
+We settled on a variant title tag template that removed the ‘Compare’ long-tail focus keyword from the title tag, also reducing the character count of the title tag. 
+
+## Results
+
+This test resulted in a statistically significant and positive impact to organic traffic, with an estimated 24% increase in organic sessions at 95% confidence.
+
+The result of this experiment is strong evidence that the hypothesis was correct. Whether it was a reduction of the title tag character count, the removal of the ‘Compare’ keyword, or a mixture of both, our test measured a substantial result proving the variant title tag template to be the winner in this experiment. After ending the test we did see examples of Google respecting the new title tags in search results. Therefore, making it possible that the variant template had a better click-through rate associated with it. After the test had run, the website utilized SearchPilot’s MetaCMS to publish the winning title tag template to the site to gain some additional traffic while waiting on their development team to implement the changes themselves. If you want a refresher on how title tags impact SEO, the different ways to implement them, and examples of real-world SEO test case studies on title tag changes, then check out this blog post.
+
+---
+
+Title: 10 SEO A/B tests that delivered over 10% more traffic + a bonus 50% winner
+URL: https://www.searchpilot.com/resources/blog/10-seo-ab-tests-with-an-impact-of-over-10-percent
+Published: 2024-03-25T16:17:30.000Z
+Author: Craig Bradford
+Highlights:
+### 1 - Does the position of your brand in title tags matter?
+
+Moving the brand name to the front of title tags increased organic traffic by over 15% for a well-known retail brand.
+
+Should your brand name be at the start or end of your title tags? Like a lot of things, it depends. If you have a well-known brand, having your brand at the front might help with recognition and trust, but it might also come with the trade-off of moving keywords to the back of the title. This customer was a well-known brand with local retail stores. In their case, moving their brand to the front of the title increased organic traffic by over 15%. For further details, you can read the full case study where should the brand appear in title tags?
+
+### 2 - Adding dynamic pricing to title tags
+
+Static prices in title tags cut organic traffic by 7%, but real-time dynamic prices increased it by 10%.
+
+This travel customer wanted to know if adding pricing information to their title tags would increase organic traffic. The test was done in two parts. Firstly they tested adding static pricing, for example, “from $300”. This resulted in a drop of 7%. As a follow-up to this, they tested making the pricing information dynamic so that the titles would change with real-time price changes. This had the opposite impact and increased traffic by 10%. This would suggest that Google cares that the information presented in the search results is as accurate as possible. For more details, you can read the full case study should you add price information to title tags.
+
+### 3 - Highlighting freshness in title tags
+
+Adding “Updated Daily” to a listings site’s title tags increased organic traffic by an estimated 11%.
+
+We've previously seen positive results from adding dates and/or years to title tags to show freshness, but this test tried to take that one step further by adding "Updated Daily" in the title tags of a listings website. The test was positive and had an estimated impact of 11%. For more details, read the full case study, can improving freshness signals in titles benefit SEO?
+
+### 4 - Shortening title tags
+
+Shortening a travel site’s title tags, including removing words like “find” and “book”, increased organic traffic by 11%.
+
+For years many SEO reporting tools have flagged titles that were too long as a warning. But is it really a big deal? This case study tested shortening title tags and removing certain keywords on a travel site. This was particularly interesting because the test was on a travel site and one of the ways they shortened the titles was to remove words like “find” and “book” from titles. That could be considered high risk if you don’t have a testing tool like SearchPilot. The goal was to see if shortening title tags would ensure that prices were shown in the title. The test resulted in an increase of 11%. You can read the full case study here are shorter titles better for SEO?
+
+### 5 - Adding ‘Best’ into title tags
+
+Adding “The Best” to an editorial site’s title tags increased click-through rate by 10%.
+
+This editorial site wanted to see if they could increase their click-through rates by adding “The Best” to their titles. For instance, instead of “Basketball tips: Read up on our basketball tips,” they changed it to “The Best Basketball Tips…”. This change was respected in the search results and resulted in a 10% increase in organic traffic. For more insights, you can read the full case study can incorporating ‘the best’ into your title tag improve organic traffic?
+
+---
+
+Title: A Look Back at the Most Surprising Tests of 2025
+URL: https://www.searchpilot.com/resources/case-studies/a-look-back-at-the-most-surprising-tests-of-2025
+Published: 2025-12-19T17:59:32.000Z
+Author: SearchPilot team
+Highlights:
+### Testing Rearranging the Title Tag
+
+On a healthcare site, our test moved the page’s location (city/clinic name) to the very start of the title tag, rather than after the service name, to make key local information more prominent for users browsing SERPs. The result was a statistically significant +8.5% uplift (95% confidence), potentially driven by a ~0.7% increase in click-through rate (CTR).
+
+This shows how title tag structure and information priority still matter in 2025; a seemingly minor change can have a significant impact. For local or service-oriented SEO, presenting the most relevant information (location) first can improve relevance and CTR, potentially outweighing small ranking fluctuations.
+
+If your pages target local intent, this is a low-effort, high-upside test to run. This also reinforces classic SEO best practice: put your strongest, most relevant keywords early in the title.
+
+...
+
+### Testing All-Caps Title Tags
+
+On listing pages in the travel industry, the title tags were rewritten in full uppercase — to see whether the visual difference in SERPs would draw more attention and clicks. When we polled you all, many of you were skeptical, thinking this test would be negative or inconclusive, though in one aspect, you were right. 
+
+On desktop, there was no statistically significant change. On mobile, however, the test saw a +14% increase in organic traffic. Again, a relatively small change had a noteworthy impact, adding another example of the attention the mobile experience deserves. 
+
+This test brought to our attention a relatively overlooked aspect of SEO: how users interact with SERPs differently on mobile versus desktop. Too often, we get caught up in the on-page mobile experience.

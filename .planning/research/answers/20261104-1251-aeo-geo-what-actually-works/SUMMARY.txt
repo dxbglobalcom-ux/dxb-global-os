@@ -1,0 +1,68 @@
+AVCI            SURE   PARA  KAYNAK  FETCH   ADD  ACILAN KAPILAR
+x           392/600s   5.15    1189      4    25  akademik browser cn defter quora x
+video       345/600s   3.66      94      1    29  cn defter
+forums      367/600s   3.05     456      0     0  cn defter hn quora reddit
+counter     517/600s   5.36     888      0    26  akademik cn defter
+TOPLAM                17.23    2558
+   (SURE = saniye / zaman asimi · KAYNAK = hatasiz arac cagrisinin actigi adres · FETCH, ADD = evidence.py komutu)
+
+DEFTER — evidence.jsonl, makine sayimi (BULUNDU = ayri adres · GOVDELI = govdesi okunmus ayri adres)
+PLATFORM         BULUNDU  GOVDELI
+x                    226      226
+threads                1        1
+bluesky                1        1
+youtube               34       20
+tiktok                44       44
+instagram              0        0
+reddit                10        9
+hackernews            16       16
+stackoverflow          0        0
+quora                 84       77
+linkedin              24       24
+facebook               8        8
+substack              15       15
+medium                23       23
+github                88       88
+chinese              130      130
+web                  447      437
+TOPLAM              1151     1119
+   satir: 1577 · satir sahibi: ground 1113 · x 184 · video 108 · counter 86 · forums 85
+
+AVCILARIN KENDI SATIRLARI — avcinin BEYANI, sayim degil (sayim: yukaridaki DEFTER)
+   [x] PLATFORM x: En güçlü kanıtlar şunlar: Google'ın Mayıs 2026 rehberi llms.txt'i, parçalamayı ve yapay zekâya özel yeniden yazımı gereksiz sayıyor; Search Atlas ve Ahrefs (Haziran 2026) llms.txt'in etkisini bulamadı; arXiv 
+   [x] PLATFORM threads: ilgili satır yok; zemin listesi boştu, oturumsuz gelen hidden.py araması "No results" gösterdi, bu yüzden Threads gerçekten taranmış sayılmaz. — satırlar: L1477
+   [x] PLATFORM bluesky: ilgili satır yok; arama sayfası "Search is currently unavailable when logged out" dedi, açık API 403 döndü, opencli bluesky search yalnızca hesap listesi verdi, bu yüzden gönderiler okunamadı. — satırla
+   [x] KULLANDIGIM SATIRLAR: 40 kimlik — defterde 40 · DEFTERDE YOK 0
+   [x] okunacak adres kalmadi (avcinin kendi satiri)
+   [video] PLATFORM youtube: Ahrefs verisi marka bahsi, YouTube, tazelik ve liste içeriklerini öne çıkarıyor, kelime sayısını eliyor; platformların kaynakları çok az örtüşüyor, tıklama ölçümü eksik kalıyor, "müşteriye sorma" en doğ
+   [video] PLATFORM tiktok: Çoğu satır yalnız açıklama metni verdi, video konuşması ve yorum okunamadı, bu yüzden kanıt gücü zayıf; yine de "SEO öldü" ve "hemen girin" türü satış lafları ile GEO'yu coğrafi hedefleme sanan yanlış ta
+   [video] PLATFORM instagram: ilgili satır yok
+   [video] KULLANDIGIM SATIRLAR: 87 kimlik — defterde 87 · DEFTERDE YOK 0
+   [video] okunacak adres kalmadi (avcinin kendi satiri)
+   [forums] PLATFORM reddit: Çoğunluk "yeniden paketlenmiş SEO" diyor, azınlık ise iyi SEO'nun atıfı garanti etmediğini, üçüncü taraf bahsedilmelerin ve bot erişiminin ayrıca önemli olduğunu savunuyor; ölçümde sabit promptların temi
+   [forums] PLATFORM hackernews: Kuşkucu ton hâkim; AI cevaplarının kararsız olduğu, aletlerin aynı veri sağlayıcılarının sarmalayıcısı olduğu ve gerçek prompt dağılımının bilinemediği söyleniyor; ChatGPT trafiğinin yüksek dönüşüm s
+   [forums] PLATFORM stackoverflow: İlgili satır yok; zemin hiç adres getirmedi ve ben ek arama yapmadım, lobste.rs'i de aramadım.
+   [forums] PLATFORM quora: İçeriğin neredeyse tamamı ajans ve alet tanıtımıdır, kanıt taşımaz; değerli görünen rakamlar Dageno tanıtım yazısından ikinci eldir ve asıl kaynaktan doğrulanmalıdır; listede kapalı kapı olarak kayıtlı ad
+   [forums] KULLANDIGIM SATIRLAR: 67 kimlik — defterde 67 · DEFTERDE YOK 0
+   [forums] okunacak adres kalmadi (avcinin kendi satiri)
+   [counter] PLATFORM linkedin: Platform bitti; L0748'in kuyruğu okundu ve önceki kısmilik kapandı. Kuyruktaki yararlı veriler başkalarının aktarımıdır: Ford ChatGPT'de bahiste üst sıralarda, atıfta çok gerilerde; ücretsiz ChatGPT ce
+   [counter] PLATFORM facebook: Yalnızca "sonuçta yine SEO" diyen grup yorumları var, bağımsız kanıt yok; batch bu platformda bitti. Benim hatam: L0065'in ortası önceki turda head ile kesildi ve orayı görmedim. — satırlar: L1441, L14
+   [counter] PLATFORM substack: Platform bitti. En güçlü kanıt yine Otterly'nin deneyidir, ama deneyi yapan alıntı takip aleti satıyor. Yeni olarak, Search Central Live Bengaluru notları Google'ın llms.txt kullanmadığını ve sıralanam
+   [counter] PLATFORM medium: Okunanlar kanıt taşımıyor, çoğu ajans veya satıcı görüşüdür; "ayrı strateji gerekmez" diyen SEO uzmanı yazısı görüştür. Atıf oranının araçlar arasında standart olmadığı notu ölçüm için doğru bir uyarıdır
+   [counter] PLATFORM chinese: Bu turda girildi. Rednote satırlarının çoğu kaynaksız tanım veya hizmet tanıtımıdır, tek vaka iddiası müşterinin kendi denemesidir ve kontrolsüzdür. En değerli satırlar zhihu'dadır: Google raporu yalnız
+   [counter] PLATFORM github: Okunan tek satır iç eksik analizidir, etki kanıtı taşımıyor; batch bu platformda bitti. Benim hatam: L0682'nin son büyük parçası önceki turda tail ile atıldı ve görülmedi. — satırlar: L1333
+   [counter] PLATFORM web: L0794 tamamlandı ve kısmilik kapandı: FAQ ve schema üç motorda da etkisiz, başlık eşleşmesi ChatGPT'de etkisiz, en iyi paragraf eşleşmesi hepsinde etkili; eşleşen paragraf sayfanın başında olmak zorunda değ
+   [counter] KULLANDIGIM SATIRLAR: 83 kimlik — defterde 83 · DEFTERDE YOK 0
+
+AVCILARIN KENDI HUKUMLERI — yan yana, celiski gizlenemesin diye:
+   [x] Kanıt, GEO'nun ayrı bir hile değil SEO'nun devamı olduğunu gösteriyor: indekslenebilir sayfa, ilk satırda doğrudan cevap, özgün veri ve üçüncü taraf bahsi işe yarıyor; llms.txt, özel işaretleme ve tek
+   [video] Videolarda en güçlü kanıt, SEO'nun temel olmayı sürdürdüğünü, görünürlüğü ise üçüncü taraf marka bahislerinin taşıdığını gösteriyor; ancak bu veriler korelasyon ve çoğu ölçüm aleti satan firmalardan g
+   [forums] Forumlarda baskın görüş, AEO/GEO'nun ayrı bir disiplin değil SEO'nun içerik ve marka katmanı olduğudur; llms.txt kanıtsız satış kalemidir, prompt takibi tek ölçümde güvenilmezdir ve gerçek iş sonucunu
+   [counter] Karşı tez güçlendi: FAQ bloğu ve schema aynı site içinde hiçbir motorda etki göstermiyor, otorite de sayfa başına değil sayfa sayısı üzerinden çalışıyor, sayfa düzeyinde sağlam çıkan tek şey paragrafı
+   (Hangisinin dogru oldugu makinenin isi degildir; hepsini bir arada gormek odur.)
+
+INSAN (sayildi): 257 ayri kisi · 549 yorum · 25 baslik — crowd.sh'in makine sayimi.
+
+GENIS ZEMIN (filo acti, avcilardan once): 2 dil/sorgu · 83 kanal dosyasi, 69 tanesi dolu · GOOGLE (2 kapi) 57310 bayt · DUCKDUCKGO 22806 bayt · okunan sayfa govdesi 16
+
+raporlar: /home/dxb/DxB Global OS/.planning/quick/20261103-web-ders/fleet-aeo-geo-2/HUNTER-*.md

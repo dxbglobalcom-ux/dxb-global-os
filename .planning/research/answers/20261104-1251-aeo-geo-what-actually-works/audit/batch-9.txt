@@ -1,0 +1,133 @@
+You are the AUDITOR of a research run. A writer you never saw wrote an answer from the rows of the run's ledger —
+each row has an id (L0001 …) — and every claim line of that answer ends with the ids of the rows it stands on. You
+have no tools and need none: under each claim below stand the rows it cites, each exactly as the writer was handed
+it. Judge each claim ONLY against the rows printed under it — not from memory, not from another claim's rows, and
+not from what you believe is true.
+
+## The question the answer was written for
+DERT (CEO'nun kendi cumlesi — ARANMAZ, cevabin bunu karsilamasi gerekir):
+Web sitelerinde SEO, AEO ve GEO için gerçekten işe yarayan nedir? Neyin kanıtı var, ne satış lafı? ChatGPT, Gemini, Perplexity, Google yapay zekâ cevaplarında bir marka nasıl çıkar, nasıl ölçülür, hangi aletler gerçek?
+
+SORGULAR (zemin bunlarla acildi):
+  - AEO GEO what actually works
+  - AI search citations real results
+
+ALT SORULAR (S-kimlik · başlık · soru):
+  - S1 · Kanıtı olan SEO/AEO/GEO uygulamaları · Web sitelerinde SEO, AEO ve GEO için hangi uygulamaların görünürlüğü artırdığı kontrollü deney, büyük veri analizi veya vaka verisiyle kanıtlanmıştır?
+  - S2 · Kanıtsız iddialar ve satış lafları · SEO, AEO ve GEO alanında yaygın olarak satılan hangi iddia ve taktiklerin kanıtı yoktur veya verilerle çürütülmüştür?
+  - S3 · Platformlarda markanın çıkma yolları · ChatGPT, Gemini, Perplexity ve Google yapay zekâ cevapları bir markayı hangi kaynak ve mekanizmalarla seçip gösterir, bu platformlar arasında ne fark vardır?
+  - S4 · Yapay zekâ görünürlüğünün ölçülmesi · Bir markanın yapay zekâ cevaplarındaki görünürlüğü ve bundan gelen trafik ile iş sonucu hangi yöntem ve metriklerle güvenilir biçimde ölçülür?
+  - S5 · Gerçek işe yarayan ölçüm aletleri · Piyasadaki AEO/GEO aletlerinden hangileri gerçek veri ve doğrulanabilir sonuç sunar, hangileri güvenilir değildir?
+
+## The 10 claims
+Each claim is its heading `### <id> [<section>]`, then its whole line as it stands in the answer, then `dayanak:` —
+the rows it cites as support — and `karşı:` — its counter rows: the ones the line names after `↔`, and the ones a
+counter-evidence hunter linked to it. A row is `[id] platform · @author · date · "passage" · address`; a row that says
+`gövde yok` carries nothing to judge by. A heading that ends `· hüküm` is the answer's first line: its verdict.
+
+### C097 [S0]
+- Başlıkta yıl kullanımı çözülmedi: gözlemsel çalışma iki katından fazla atıf olasılığı buluyor, bu tek kaynak ↔ simülasyon ise atıfı sıfırlıyor (2 satır) [L1533] ↔ [L1341].
+dayanak:
+  (yok)
+karşı:
+  [L1533] web · @TJ Robertson (TJ Digital) · 2026-10-25 · "The biggest single difference was the year in the title: pages with it had more than twice the odds of being cited." · https://tjrobertson.com/ai-citation-study/
+  [L1341] x · @Mike Taylor (Every) · 2026-10-27 · "After: "The Ultimate Guide to Prompt Engineering (Updated 2026)": 0 percent" · https://t.co/P7V4CFtz5M
+
+### C098 [S0]
+- Basın bültenlerinin değeri çözülmedi: Notified verisi alt başlıklı bültenlerde %61 fazla atıf veriyor, ama satıcı korelasyonudur ↔ Loganix testinde hiç bülten atıflanmadı (5 satır) [L1156, L1158, L1721] ↔ [L1302, L1715].
+dayanak:
+  (yok)
+karşı:
+  [L1156] x · @ericosiu · 2026-10-30 · "New data from Notified (GlobeNewswire): ~26,670 releases, 850,000+ citation events from ChatGPT and Claude." · https://x.com/i/status/2116274935169511839
+  [L1158] x · @ericosiu · 2026-10-30 · "Vendor data, correlations only." · https://x.com/i/status/2116274935169511839
+  [L1721] web · @Notified · 2026-10-29 · "Press releases built around topical subheadings receive 61% more AI citations." · https://www.globenewswire.com/news-release/2026/10/29/3391327/0/en/press-releases-with-descriptive-section-headings-receive-61-more-ai-citations-new-notified-study-finds.html
+  [L1302] x · @Aaron Haynes (Loganix) · 2026-03-16 · "We tested 100s of category queries across 10 verticals on ChatGPT, Gemini, and Perplexity. Zero press releases were cited." · https://t.co/cNR8v4Eydk
+  [L1715] web · @Geoptimizer · ? · "Notified found that 99.3% of GlobeNewswire releases were cited by ChatGPT or Claude, while Loganix ran 100 "best X in Y" queries and found zero press-release domains in the answers." · https://www.geoptimizer.io/blog/press-releases-ai-visibility
+
+### C099 [S0]
+- Sayfa yapısı çözülmedi: iki çalışma tablo ve yapılı öğelerle atfı ilişkilendiriyor ↔ diğeri etkisini düz buluyor (3 satır) [L1476, L1749] ↔ [L1506].
+dayanak:
+  (yok)
+karşı:
+  [L1476] web · @? · ? · "The pages ChatGPT and Google's AI cite tend to answer the question in their first lines, show they've been updated in the past year, and include prices, tables and first-hand experience. Pages that ranked in Google's top 10 for the same question but never came up in the AI's searches had those thin…" · https://tjrobertson.com/ai-citation-study/
+  [L1749] web · @ScriptWalker (SISTRIX) · ? · "SISTRIX analyzed 96,418 URLs and found pages with a table of contents were 1.7x as likely to be cited by AI, Article schema 1.6x and tables with header rows 1.5x, while llms.txt showed no measurable effect." · https://scriptwalker.app/en/blog/ai-citation-website-structure-sistrix-96418-urls-study
+  [L1506] web · @arXiv 2610.15033 · 2026-10 · "Third, length, outbound links, headings, lists and tables show no effect, and their partial-effect curves are flat." · https://arxiv.org/html/2610.15033v1
+
+### C100 [S0]
+- Search Console ayrımı çözülmedi: iki kaynak yapay zekâ gösterimi raporlandığını söylüyor ↔ HubSpot ayrı trafik kaynağı olmadığını söylüyor (3 satır) [L1572, L1750] ↔ [L1448].
+dayanak:
+  (yok)
+karşı:
+  [L1572] chinese · @艾默霏数智科技 · ? · "这份报表给的东西很明确:**AI 概览和 AI 模式里,指向你网站的链接被展示了多少次。**" · https://zhuanlan.zhihu.com/p/2101330401440671463
+  [L1750] web · @Google Search Central · 2026-06 · "How often URLs from your site appeared in generative AI features in Search" · https://developers.google.com/search/blog/2026/06/gen-ai-performance-reports
+  [L1448] x · @Erica Santiago (HubSpot) · 2026-10-14 · "Google Search Console does not categorize AI Overview impressions or clicks as a distinct traffic source." · https://t.co/pndpDH3UMU
+
+### C101 [S0]
+- GA4 yeterliliği çözülmedi: otomatik kanal yeterli deniyor, bu tek kaynak ↔ bir site %95'in üzerinde eksik sayım bildiriyor (2 satır) [L1493] ↔ [L1521].
+dayanak:
+  (yok)
+karşı:
+  [L1493] reddit · @derp-n-serp · 2026-08 · "Just link GA4 - its automatically sorting AI into a default traffic source channel." · https://reddit.com/r/ecommerce/comments/1vz1hk0/do_we_even_still_need_to_hire_an_agency_for_this/
+  [L1521] reddit · @startages · 2026-07 · "Don't rely on GA4 though, it undercounts by a lot, like over 95% missed from my own website numbers." · https://reddit.com/r/AISearchLab/comments/1v0dms2/
+
+### C102 [S0]
+- Kararlılık çözülmedi: bir kullanıcı marka adının koşular arasında kararlı olduğunu, Conductor aday kümesinin oturduğunu söylüyor ↔ SparkToro aynı listenin tekrarlanmasının yüzde birin altında olduğunu buldu (3 satır) [L1486, L1759] ↔ [L1424].
+dayanak:
+  (yok)
+karşı:
+  [L1486] reddit · @marintkael · 2026-07 · "Whether you get named at all is pretty stable run to run." · https://reddit.com/r/AISearchLab/comments/1uvn828/how_are_you_tracking_ai_visibility/
+  [L1759] web · @Conductor · ? · "AI agrees on the consideration set but has no consistent view on who should lead it." · https://www.conductor.com/academy/ai-recommendation-consistency-analysis/
+  [L1424] web · @Rand Fishkin · 2026-01 · "To get mathematical about it, **there's a <1 in 100 chance that ChatGPT or Google's AI, if asked 100X, will give you the same list of brands in any two responses**." · https://sparktoro.com/blog/new-research-ais-are-highly-inconsistent-when-recommending-brands-or-products-marketers-should-take-care-when-tracking-ai-visibility/
+
+### C103 [S0]
+- Dönüşüm değeri çözülmedi: Ahrefs bir ölçümde kayıtların %12,1'ini yapay zekâya bağlıyor ↔ aynı firma başka bir ölçümde dönüşümlerin yaklaşık %3'ünü veriyor (3 satır) [L1236, L1353] ↔ [L1321].
+dayanak:
+  (yok)
+karşı:
+  [L1236] youtube · @Ahrefs · ? · "AI search traffic was just 0.5% of our visits, but it drove 12.1% of our sign-ups." · https://www.youtube.com/watch?v=58MR03s0ev8
+  [L1353] x · @Koka Sexton (Chief Content Marketer) · 2026-10-15 · "As [Foundation Inc's GEO research](https://foundationinc.co/lab/generative-engine-optimization) shows, ChatGPT drives only 0.5% of visits yet accounts for 12.1% of new signups, converting at roughly 24 times the average rate." · https://t.co/LOaQVPXpjY
+  [L1321] youtube · @Sam Oh (Ahrefs) · ? · "At Hrefs, around 3% of our conversions came from AI over the last year based on self-reported data." · https://www.youtube.com/watch?v=uza9GX0E2mw
+
+### C104 [S0]
+- Tıklama kaybı çözülmedi: Ahrefs %58 düşüş tahmini veriyor ve çoğu çalışma %50–60 bildiriyor ↔ 36 sitelik bir portföy düşüş görmüyor (3 satır) [L1282, L1260] ↔ [L1168].
+dayanak:
+  (yok)
+karşı:
+  [L1282] youtube · @Sam Oh (Ahrefs) · ? · "the presence of an AI overview on Google reduces the click-through rate for the number one ranking page by 58%." · https://www.youtube.com/watch?v=uza9GX0E2mw
+  [L1260] linkedin · @Cyrus Shepard · 2026-05 · "• Google AI Overviews dramatically drop CTRs to publishers. Almost every study shows a 50-60% drop when AI Overviews are present" · https://www.linkedin.com/posts/cyrusshepard_do-google-ai-citations-actually-matter-to-activity-7460020867461468160-p5T5
+  [L1168] x · @iraiansar · 2026-11-03 · "None of the 36 sites I run opted out of AI Overviews, and 8 weeks of Search Console show no fall in their click-through rate: 2.53% in the week to Oct 30, inside its 2.22% to 2.69% range since Sep 5." · https://x.com/i/status/2117675618695561501
+
+### C105 [S0]
+- ChatGPT'nin cevap başına kaynak sayısı çözülmedi: iki ölçüm düşüş gösteriyor ↔ başka bir ölçüm yaklaşık 5 kat artış gösteriyor (3 satır) [L1205, L1720] ↔ [L1623].
+dayanak:
+  (yok)
+karşı:
+  [L1205] linkedin · @Abhilash Kasliwal · 2026-08-05 · "ChatGPT reduced the number of sources it cites per answer, from ~9 to ~4 (~50% drop!!!) between May and July." · https://www.linkedin.com/posts/abhilashkasliwal_something-very-intreresting-is-happening-activity-7490656013440684032-zjyK
+  [L1720] web · @Groundbase · ? · "In our measurement, ChatGPT went from an average of twenty displayed sources per answer to twelve." · https://www.groundbase.be/en/blog/ai-search-engines/your-citations-are-collapsing-your-visibility-isnt/
+  [L1623] web · @Andy Francos · 2026-08-16 · "Sources per answer went up roughly 5x." · https://newsletter.befranc.co.uk/p/chatgpt-5-5-to-5-6-what-changed
+
+### C106 [S0]
+- Doğrudan cevapla açılış oranı aynı çalışmanın aktarımlarında farklıdır: bir aktarım %20'ye %5 veriyor ↔ diğeri %23'e %14 veriyor (2 satır) [L1494] ↔ [L1641].
+dayanak:
+  (yok)
+karşı:
+  [L1494] x · @MattClark220 · ? · "Pages with an author byline had 28% lower odds of being cited in a new study of 193,507 AI answers. The author can't explain it and won't drop bylines over it. Neither will I. I'd fix the opening instead. 20% of cited pages led with a direct answer. 5% of passed-over ones did. https://t.co/NrLlS4Qg…" · https://x.com/i/status/2116147328289853875
+  [L1641] web · @? · ? · "[Home](/en/)/[News](/en/news)/TJ Digital: 23% of AI-cited pages open w... The agency TJ Digital analyzed 193 507 ChatGPT and Google answers. 23% of cited pages opened with a direct answer, versus 14% of pages that were found but not cited. The gap is small, and analyst TJ Robertson calls it a corre…" · https://news.hamidun.com/en/news/15060/tj-digital-23-of-ai-cited-pages-open-with-a-direct-answer-ve
+
+## Your verdict on each claim — one of three
+- `ok` — the rows under it say what the line says, and every number in the line is one those rows bear (a count of
+  rows the line gives is borne when that many rows under it say so).
+- `corrected` — the rows say less than the line, or something other, or a `karşı` row under it is not named in the
+  line. Then write the line yourself, as it should stand in the answer:
+  - Turkish, in the writer's own grammar: the claim, then the ids it stands on in square brackets, `… [L0042, L0107]`;
+    the counter-evidence after `↔`, `… [L0042] ↔ … [L0051]`, once in the line;
+  - only ids printed under THIS claim, in its `dayanak` or its `karşı` — the same ids or a subset, at least one, and never an id whose row is marked `(yazara verilmeyen satır)`;
+  - no quote of a source's words, no address, no `http`, no domain;
+  - the WHOLE line, a drop-in replacement: a list item keeps its mark (`- `); a table row stays a table row,
+    `| … | … |`, with the same number of cells.
+- `removed` — no row cited under it supports the line. The verdict (`· hüküm`) is never removed: when its rows do not
+  bear it, correct it.
+
+Give every one of the 10 claims one entry: its `reason` one sentence in Turkish, its `line` only when the verdict is
+`corrected`. Output ONLY valid JSON — no code fence, nothing before or after it:
+{"verdicts":[{"id":"C007","verdict":"ok","reason":"..."},{"id":"C008","verdict":"corrected","reason":"...","line":"..."},{"id":"C009","verdict":"removed","reason":"..."}]}

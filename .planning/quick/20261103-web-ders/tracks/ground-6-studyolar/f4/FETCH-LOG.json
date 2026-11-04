@@ -1,0 +1,639 @@
+[
+  {
+    "url": "https://basement.studio/people",
+    "read": true,
+    "door": "scrapling",
+    "cached_snapshot": false,
+    "liveness": "alive",
+    "doors_tried": 3,
+    "attempts": [
+      {
+        "door": "media-transcript",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a media url"
+      },
+      {
+        "door": "pdf-text",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a pdf url"
+      },
+      {
+        "door": "scrapling",
+        "ok": true,
+        "ms": 557,
+        "bytes": 22248,
+        "wall": false,
+        "error": null
+      }
+    ],
+    "bytes": 22248,
+    "file": "01-basement.studio.md"
+  },
+  {
+    "url": "https://darkroom.engineering/about",
+    "read": true,
+    "door": "scrapling",
+    "cached_snapshot": false,
+    "liveness": "alive",
+    "doors_tried": 3,
+    "attempts": [
+      {
+        "door": "media-transcript",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a media url"
+      },
+      {
+        "door": "pdf-text",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a pdf url"
+      },
+      {
+        "door": "scrapling",
+        "ok": true,
+        "ms": 560,
+        "bytes": 9154,
+        "wall": false,
+        "error": null
+      }
+    ],
+    "bytes": 9154,
+    "file": "08-darkroom.engineering.md"
+  },
+  {
+    "url": "https://dogstudio.co/studio",
+    "read": true,
+    "door": "scrapling",
+    "cached_snapshot": false,
+    "liveness": "alive",
+    "doors_tried": 3,
+    "attempts": [
+      {
+        "door": "media-transcript",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a media url"
+      },
+      {
+        "door": "pdf-text",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a pdf url"
+      },
+      {
+        "door": "scrapling",
+        "ok": true,
+        "ms": 549,
+        "bytes": 17567,
+        "wall": false,
+        "error": null
+      }
+    ],
+    "bytes": 17567,
+    "file": "05-dogstudio.co.md"
+  },
+  {
+    "url": "https://exoape.com/studio",
+    "read": true,
+    "door": "scrapling",
+    "cached_snapshot": false,
+    "liveness": "alive",
+    "doors_tried": 3,
+    "attempts": [
+      {
+        "door": "media-transcript",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a media url"
+      },
+      {
+        "door": "pdf-text",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a pdf url"
+      },
+      {
+        "door": "scrapling",
+        "ok": true,
+        "ms": 588,
+        "bytes": 7287,
+        "wall": false,
+        "error": null
+      }
+    ],
+    "bytes": 7287,
+    "file": "04-exoape.com.md"
+  },
+  {
+    "url": "https://immersive-g.com/about",
+    "read": false,
+    "door": null,
+    "cached_snapshot": false,
+    "liveness": "dead",
+    "doors_tried": 4,
+    "attempts": [
+      {
+        "door": "media-transcript",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a media url"
+      },
+      {
+        "door": "pdf-text",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a pdf url"
+      },
+      {
+        "door": "scrapling",
+        "ok": false,
+        "ms": 312,
+        "bytes": 16,
+        "wall": false,
+        "error": null
+      },
+      {
+        "door": "scrapling-stealth",
+        "ok": false,
+        "ms": 1353,
+        "bytes": 16,
+        "wall": false,
+        "error": null
+      }
+    ],
+    "bytes": 0
+  },
+  {
+    "url": "https://locomotive.ca/en/studio",
+    "read": true,
+    "door": "scrapling",
+    "cached_snapshot": false,
+    "liveness": "alive",
+    "doors_tried": 3,
+    "attempts": [
+      {
+        "door": "media-transcript",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a media url"
+      },
+      {
+        "door": "pdf-text",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a pdf url"
+      },
+      {
+        "door": "scrapling",
+        "ok": true,
+        "ms": 905,
+        "bytes": 733,
+        "wall": false,
+        "error": null
+      }
+    ],
+    "bytes": 733,
+    "file": "03-locomotive.ca.md"
+  },
+  {
+    "url": "https://lusion.co/about",
+    "read": true,
+    "door": "scrapling",
+    "cached_snapshot": false,
+    "liveness": "alive",
+    "doors_tried": 3,
+    "attempts": [
+      {
+        "door": "media-transcript",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a media url"
+      },
+      {
+        "door": "pdf-text",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a pdf url"
+      },
+      {
+        "door": "scrapling",
+        "ok": true,
+        "ms": 703,
+        "bytes": 4709,
+        "wall": false,
+        "error": null
+      }
+    ],
+    "bytes": 4709,
+    "file": "02-lusion.co.md"
+  },
+  {
+    "url": "https://offbrand.studio/about",
+    "read": false,
+    "door": null,
+    "cached_snapshot": false,
+    "liveness": "dead",
+    "doors_tried": 4,
+    "attempts": [
+      {
+        "door": "media-transcript",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a media url"
+      },
+      {
+        "door": "pdf-text",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a pdf url"
+      },
+      {
+        "door": "scrapling",
+        "ok": false,
+        "ms": 2343,
+        "bytes": 0,
+        "wall": false,
+        "error": "rc=1 ite-packages/curl_cffi/requests/session.py\", line 739, in _request_once\n    raise error(str(e), e.code, rsp) from e\ncurl_cffi.requests.exceptions.DNSError: Failed to perform, curl: (6) Could not resolve host: offbrand.studio. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.\n"
+      },
+      {
+        "door": "scrapling-stealth",
+        "ok": false,
+        "ms": 3417,
+        "bytes": 0,
+        "wall": false,
+        "error": "rc=1 tion.py\", line 504, in wrap_api_call\n    raise rewrite_error(error, f\"{parsed_st['apiName']}: {error}\") from None\npatchright._impl._errors.Error: Page.goto: net::ERR_NAME_NOT_RESOLVED at https://offbrand.studio/about\nCall log:\n  - navigating to \"https://offbrand.studio/about\", waiting until \"load\"\n\n"
+      }
+    ],
+    "bytes": 0
+  },
+  {
+    "url": "https://resn.co.nz/#!/about",
+    "read": false,
+    "door": null,
+    "cached_snapshot": false,
+    "liveness": "dead",
+    "doors_tried": 4,
+    "attempts": [
+      {
+        "door": "media-transcript",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a media url"
+      },
+      {
+        "door": "pdf-text",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a pdf url"
+      },
+      {
+        "door": "scrapling",
+        "ok": false,
+        "ms": 373,
+        "bytes": 122,
+        "wall": false,
+        "error": null
+      },
+      {
+        "door": "scrapling-stealth",
+        "ok": false,
+        "ms": 2956,
+        "bytes": 320,
+        "wall": false,
+        "error": null
+      }
+    ],
+    "bytes": 0
+  },
+  {
+    "url": "https://tympanus.net/codrops/2026/09/15/vivid-turning-a-visual-experiment-into-an-interactive-webflow-experience/",
+    "read": true,
+    "door": "scrapling-stealth",
+    "cached_snapshot": false,
+    "liveness": "alive",
+    "doors_tried": 4,
+    "attempts": [
+      {
+        "door": "media-transcript",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a media url"
+      },
+      {
+        "door": "pdf-text",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a pdf url"
+      },
+      {
+        "door": "scrapling",
+        "ok": false,
+        "ms": 334,
+        "bytes": 286,
+        "wall": false,
+        "error": null
+      },
+      {
+        "door": "scrapling-stealth",
+        "ok": true,
+        "ms": 4271,
+        "bytes": 21908,
+        "wall": false,
+        "error": null
+      }
+    ],
+    "bytes": 21908,
+    "file": "16-tympanus.net.md"
+  },
+  {
+    "url": "https://tympanus.net/codrops/2026/10/12/chasing-the-moment/",
+    "read": true,
+    "door": "scrapling-stealth",
+    "cached_snapshot": false,
+    "liveness": "alive",
+    "doors_tried": 4,
+    "attempts": [
+      {
+        "door": "media-transcript",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a media url"
+      },
+      {
+        "door": "pdf-text",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a pdf url"
+      },
+      {
+        "door": "scrapling",
+        "ok": false,
+        "ms": 294,
+        "bytes": 286,
+        "wall": false,
+        "error": null
+      },
+      {
+        "door": "scrapling-stealth",
+        "ok": true,
+        "ms": 4558,
+        "bytes": 20838,
+        "wall": false,
+        "error": null
+      }
+    ],
+    "bytes": 20838,
+    "file": "15-tympanus.net.md"
+  },
+  {
+    "url": "https://tympanus.net/codrops/2026/10/18/real-folds-real-fire/",
+    "read": true,
+    "door": "scrapling-stealth",
+    "cached_snapshot": false,
+    "liveness": "alive",
+    "doors_tried": 4,
+    "attempts": [
+      {
+        "door": "media-transcript",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a media url"
+      },
+      {
+        "door": "pdf-text",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a pdf url"
+      },
+      {
+        "door": "scrapling",
+        "ok": false,
+        "ms": 420,
+        "bytes": 286,
+        "wall": false,
+        "error": null
+      },
+      {
+        "door": "scrapling-stealth",
+        "ok": true,
+        "ms": 3418,
+        "bytes": 27916,
+        "wall": false,
+        "error": null
+      }
+    ],
+    "bytes": 27916,
+    "file": "14-tympanus.net.md"
+  },
+  {
+    "url": "https://tympanus.net/codrops/2026/10/27/songs-of-hyrule-from-a-fans-idea-to-a-three-js-mini-game-in-a-few-days/",
+    "read": true,
+    "door": "scrapling-stealth",
+    "cached_snapshot": false,
+    "liveness": "alive",
+    "doors_tried": 4,
+    "attempts": [
+      {
+        "door": "media-transcript",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a media url"
+      },
+      {
+        "door": "pdf-text",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a pdf url"
+      },
+      {
+        "door": "scrapling",
+        "ok": false,
+        "ms": 473,
+        "bytes": 286,
+        "wall": false,
+        "error": null
+      },
+      {
+        "door": "scrapling-stealth",
+        "ok": true,
+        "ms": 2472,
+        "bytes": 33351,
+        "wall": false,
+        "error": null
+      }
+    ],
+    "bytes": 33351,
+    "file": "13-tympanus.net.md"
+  },
+  {
+    "url": "https://www.hirebase.org/company/hermes/jobs/cdi-developpeur-back-end-paiement-h-f-1",
+    "read": true,
+    "door": "scrapling-stealth",
+    "cached_snapshot": false,
+    "liveness": "alive",
+    "doors_tried": 4,
+    "attempts": [
+      {
+        "door": "media-transcript",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a media url"
+      },
+      {
+        "door": "pdf-text",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a pdf url"
+      },
+      {
+        "door": "scrapling",
+        "ok": false,
+        "ms": 341,
+        "bytes": 59,
+        "wall": true,
+        "error": null
+      },
+      {
+        "door": "scrapling-stealth",
+        "ok": true,
+        "ms": 1433,
+        "bytes": 807,
+        "wall": false,
+        "error": null
+      }
+    ],
+    "bytes": 807,
+    "file": "07-hirebase.org.md"
+  },
+  {
+    "url": "https://www.itsoffbrand.com/about",
+    "read": true,
+    "door": "scrapling",
+    "cached_snapshot": false,
+    "liveness": "alive",
+    "doors_tried": 3,
+    "attempts": [
+      {
+        "door": "media-transcript",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a media url"
+      },
+      {
+        "door": "pdf-text",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a pdf url"
+      },
+      {
+        "door": "scrapling",
+        "ok": true,
+        "ms": 686,
+        "bytes": 7376,
+        "wall": false,
+        "error": null
+      }
+    ],
+    "bytes": 7376,
+    "file": "11-itsoffbrand.com.md"
+  },
+  {
+    "url": "https://www.unseen.co/studio",
+    "read": true,
+    "door": "scrapling",
+    "cached_snapshot": false,
+    "liveness": "alive",
+    "doors_tried": 3,
+    "attempts": [
+      {
+        "door": "media-transcript",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a media url"
+      },
+      {
+        "door": "pdf-text",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a pdf url"
+      },
+      {
+        "door": "scrapling",
+        "ok": true,
+        "ms": 1232,
+        "bytes": 2247,
+        "wall": false,
+        "error": null
+      }
+    ],
+    "bytes": 2247,
+    "file": "09-unseen.co.md"
+  }
+]

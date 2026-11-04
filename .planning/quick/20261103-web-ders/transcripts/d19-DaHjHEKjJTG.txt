@@ -1,0 +1,8 @@
+language: en
+[00:00] Turn your coding agent into a full video production studio.
+[00:04] Open Montage is the world's first open-source egenic video framework.
+[00:08] 12 pipelines, 52 tools, over 500 skills.
+[00:13] Generate real footage videos from code with Piper TTS built in so you pay zero for API keys.
+[00:19] Claude Code becomes your production house.
+[00:22] 9,000 stars and MIT licensed.
+[00:25] Link in bio.

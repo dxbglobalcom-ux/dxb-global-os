@@ -1,0 +1,354 @@
+[
+  {
+    "url": "https://designmonks.substack.com/p/10-best-ai-web-design-companies-in",
+    "read": true,
+    "door": "scrapling",
+    "cached_snapshot": false,
+    "liveness": "alive",
+    "doors_tried": 3,
+    "attempts": [
+      {
+        "door": "media-transcript",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a media url"
+      },
+      {
+        "door": "pdf-text",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a pdf url"
+      },
+      {
+        "door": "scrapling",
+        "ok": true,
+        "ms": 645,
+        "bytes": 6296,
+        "wall": false,
+        "error": null
+      }
+    ],
+    "bytes": 6296,
+    "file": "08-substack.com.md"
+  },
+  {
+    "url": "https://dev.to/morlixcms/how-to-budget-for-a-website-a-practical-cost-breakdown-3im",
+    "read": true,
+    "door": "scrapling",
+    "cached_snapshot": false,
+    "liveness": "alive",
+    "doors_tried": 3,
+    "attempts": [
+      {
+        "door": "media-transcript",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a media url"
+      },
+      {
+        "door": "pdf-text",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a pdf url"
+      },
+      {
+        "door": "scrapling",
+        "ok": true,
+        "ms": 943,
+        "bytes": 15144,
+        "wall": false,
+        "error": null
+      }
+    ],
+    "bytes": 15144,
+    "file": "06-dev.to.md"
+  },
+  {
+    "url": "https://juejin.cn/post/7505357994621698086",
+    "read": true,
+    "door": "scrapling",
+    "cached_snapshot": false,
+    "liveness": "alive",
+    "doors_tried": 3,
+    "attempts": [
+      {
+        "door": "media-transcript",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a media url"
+      },
+      {
+        "door": "pdf-text",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a pdf url"
+      },
+      {
+        "door": "scrapling",
+        "ok": true,
+        "ms": 745,
+        "bytes": 4257,
+        "wall": false,
+        "error": null
+      }
+    ],
+    "bytes": 4257,
+    "file": "05-juejin.cn.md"
+  },
+  {
+    "url": "https://lobste.rs/~heyyfernanda",
+    "read": true,
+    "door": "scrapling",
+    "cached_snapshot": false,
+    "liveness": "alive",
+    "doors_tried": 3,
+    "attempts": [
+      {
+        "door": "media-transcript",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a media url"
+      },
+      {
+        "door": "pdf-text",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a pdf url"
+      },
+      {
+        "door": "scrapling",
+        "ok": true,
+        "ms": 755,
+        "bytes": 744,
+        "wall": false,
+        "error": null
+      }
+    ],
+    "bytes": 744,
+    "file": "02-lobste.rs.md"
+  },
+  {
+    "url": "https://publicdomainreview.org",
+    "read": true,
+    "door": "scrapling",
+    "cached_snapshot": false,
+    "liveness": "alive",
+    "doors_tried": 3,
+    "attempts": [
+      {
+        "door": "media-transcript",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a media url"
+      },
+      {
+        "door": "pdf-text",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a pdf url"
+      },
+      {
+        "door": "scrapling",
+        "ok": true,
+        "ms": 456,
+        "bytes": 13266,
+        "wall": false,
+        "error": null
+      }
+    ],
+    "bytes": 13266,
+    "file": "07-publicdomainreview.org.md"
+  },
+  {
+    "url": "https://www.v2ex.com/t/1244774",
+    "read": true,
+    "door": "firecrawl-scrape",
+    "cached_snapshot": false,
+    "liveness": "alive",
+    "doors_tried": 8,
+    "attempts": [
+      {
+        "door": "media-transcript",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a media url"
+      },
+      {
+        "door": "pdf-text",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a pdf url"
+      },
+      {
+        "door": "scrapling",
+        "ok": false,
+        "ms": 440,
+        "bytes": 59,
+        "wall": true,
+        "error": null
+      },
+      {
+        "door": "scrapling-stealth",
+        "ok": false,
+        "ms": 1544,
+        "bytes": 644,
+        "wall": true,
+        "error": null
+      },
+      {
+        "door": "opencli-reader",
+        "ok": false,
+        "ms": 777,
+        "bytes": 222,
+        "wall": false,
+        "error": null
+      },
+      {
+        "door": "browser-signed-in",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "no signed-in browser site for this url"
+      },
+      {
+        "door": "tavily-extract",
+        "ok": false,
+        "ms": 451,
+        "bytes": 365,
+        "wall": true,
+        "error": "rc=1 "
+      },
+      {
+        "door": "firecrawl-scrape",
+        "ok": true,
+        "ms": 1196,
+        "bytes": 4463,
+        "wall": false,
+        "error": null
+      }
+    ],
+    "bytes": 4463,
+    "file": "03-v2ex.com.md"
+  },
+  {
+    "url": "https://www.youtube.com/watch?v=dnBelEJ9m8o",
+    "read": true,
+    "door": "media-transcript",
+    "cached_snapshot": false,
+    "liveness": "alive",
+    "doors_tried": 1,
+    "attempts": [
+      {
+        "door": "media-transcript",
+        "ok": true,
+        "ms": 5735,
+        "bytes": 11374,
+        "wall": false,
+        "error": null
+      }
+    ],
+    "bytes": 11374,
+    "file": "01-youtube.com.md"
+  },
+  {
+    "url": "https://www.zhihu.com/question/36789824/answer/2098322678142783642",
+    "read": true,
+    "door": "firecrawl-scrape",
+    "cached_snapshot": false,
+    "liveness": "alive",
+    "doors_tried": 8,
+    "attempts": [
+      {
+        "door": "media-transcript",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a media url"
+      },
+      {
+        "door": "pdf-text",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a pdf url"
+      },
+      {
+        "door": "scrapling",
+        "ok": false,
+        "ms": 651,
+        "bytes": 35,
+        "wall": false,
+        "error": null
+      },
+      {
+        "door": "scrapling-stealth",
+        "ok": false,
+        "ms": 45093,
+        "bytes": 0,
+        "wall": false,
+        "error": "rc=124 timeout"
+      },
+      {
+        "door": "opencli-reader",
+        "ok": false,
+        "ms": 7026,
+        "bytes": 0,
+        "wall": false,
+        "error": "rc=77 ok: false\nerror:\n  code: AUTH_REQUIRED\n  message: Failed to fetch question data from Zhihu\n  help: Please open Chrome or"
+      },
+      {
+        "door": "browser-signed-in",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "no signed-in browser site for this url"
+      },
+      {
+        "door": "tavily-extract",
+        "ok": false,
+        "ms": 416,
+        "bytes": 365,
+        "wall": true,
+        "error": "rc=1 "
+      },
+      {
+        "door": "firecrawl-scrape",
+        "ok": true,
+        "ms": 6625,
+        "bytes": 14276,
+        "wall": false,
+        "error": null
+      }
+    ],
+    "bytes": 14276,
+    "file": "04-zhihu.com.md"
+  }
+]

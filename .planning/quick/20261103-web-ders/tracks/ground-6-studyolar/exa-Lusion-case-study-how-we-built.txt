@@ -1,0 +1,294 @@
+Title: Case Study of Lusion by Lusion: Winner of Site of the Month May
+URL: https://www.awwwards.com/case-study-for-lusion-by-lusion-winner-of-site-of-the-month-may.html
+Published: 2019-06-17T00:00:00.000Z
+Author: N/A
+Highlights:
+Lusion is a small digital studio focussed on real-time animations. This is our first official studio website, which took us on-and-off roughly a year to complete while we juggled the day-to-day of establishing a new studio during its first year. It’s one of our proudest achievements to date.
+
+...
+
+It’s clear to most that we are developers at heart. The rationale behind our design choices was relatively simple: to create something fun for ourselves as well as being able to demonstrate our technical knowledge. We thought that if we decided on being in vogue by using a gorgeously minimalist design theme, it may not give us the freedom in the creative and technical aspects of our website as we would like in order to emotionally engage our audience with our studio’s identity - we build epic, real-time, interactive experiences to blow people’s minds.
+
+...
+
+There were plenty of beautifully crafted WebGL experiences in the market already.
+
+...
+
+There is an area of real-time graphics applications, especially for the web, which is pretty much untouched in our opinion - which is customised assets. If we were building our website using the traditional design workflow: creatives -> design -> development. The “assets” preparation we are talking about here for a 3D website would probably be a 3D designer creating some 3D models and then the real-time graphics developers implementing these 3d models in different shading for the 3D environment and that’s it! 
+
+However, if the design team and the development team work together, they can do something far better than that! In our case, every single visual on our website uses some custom assets in order to maximise the creatives. 
+
+For example: The interactive cloth simulation on the homepage was pre-calculated in Houdini FX. In Houdini FX, we used a finger-like geometry dragging on the cloth to simulate 4 different directions and stored the simulation results into one ArrayBuffer and then in the real-time application, we blended the values based on the dynamic user interactions. Obviously, the results do not look as perfect as a proper cloth simulation because there’s a lot of missing information. However, by adding some real-time distortion, the results look somewhat realistic and it only costs 220KB(Gzip) for the ArrayBuffer and a fraction of render budget for the effect. 
+
+For the contact scene, we used a similar idea by pre-calculating the cloth simulation of the character into 3 directions (Running straight, running to the left and running to the right). But this time instead of storing the values into the ArrayBuffer, we stored them into 2 PNG textures - one for the positions and one for the normals. This allowed the real-time application to assign a specific animation frame to the model dynamically. This technique is called vertex animation. In general, this technique requires a huge data size for the animation. For example, a 1.1 second animated model with 1024 vertices (rather low-ploy already) requires 792KB (1.1 sec * 60 fps * 1,024 vertices * 3 axis * 4 bytes) just for one direction of the position values. On our desktop version, we even used 4,096 vertices for the cloth model so we had to do a bit of optimization:
+
+1. Instead of using keyframe for every single frame, we only used 11 keyframes for the total 66 frames animation and we interpolated the values in real-time.
+2. Instead of storing the value into a 32bit float data, we stored it into a 16bit integer data with a divider which we could use to retrieve the value back in the WebGL Shader.
+3. Use PNG image for the LZW compression. [Doesn’t use PNG optimization because we need full precision.]
+
+With these optimizations, the file size of the cloth vertex animation including both position and normal values in all 3 directions goes down to 983KB for desktop(4096 vertices) and 246KB for mobile(1024 vertices).
+
+...
+
+As well as using customised assets to improve the simulation, we can also use them to improve our real-time rendering quality. For example, in our desktop homepage, there is a Beethoven 3D model, we pre-rendered the normal, ambient-occlusion, thickness and 2 sets of diffused illuminations of the 3D model into an image. Combining with 2 sets of matcap images, we could render a translucent object with 2 different states dynamically.
+
+To push it even further, we also experimented with video assets. In the big screen scene in our homepage, we used the offline rendering engine - Redshift3D to render a simple 3D scene into a high quality static video. Then we exported the camera placement into a JSON file and also saved the 3D scene as GLTF format for real-time rendering. The scene is really simple so it is pretty fast to render and small to download (150KB). In the real-time application, we rendered the 3D scene with a point light following the user’s cursor and we also give the user a bit of freedom to look around with the camera by rotating the camera with a small amount of angle (~1.72 deg).
+
+The tricky part here is to find a way to remap the static video image back to the real-time render: First we needed to match to the exact timestamp between the video and the real-time rendering. Depending on the browser implementation, on some browsers, we couldn’t get the accurate timestamp via video.currentTime. We had to encode the frame counter value in binary into the video and use the `readPixels()` call in WebGL decode the frame counter in real-time. It is rather expensive to run but it was the only universal solution we could think of to hack around it. Then, we could easily get the light information from the video by reprojecting the camera matrix in real-time to the 3D geometries.
+
+On top of that, adding the real-time reflection, analytical volumetric light, interactive blurry 3D texts, etc., we delivered an interactive 3D scene with high fidelity offline rendering quality visual for our website.
+
+## Technologies
+
+Frontend Frameworks and Libraries: Backend Technologies: 
+
+We made our site generator in node.js to build the website.
+
+Server Architecture:
+
+The website is purely static.
+
+Tools:
+
+- Houdini FX
+- Redshift3D
+- three.js
+- tweenlite
+- budo
+- webpack
+- less
+
+---
+
+Title: Lusion | Communication Arts
+URL: https://www.commarts.com/webpicks/lusion
+Published: 2019-05-23T07:00:00.000Z
+Author: N/A
+Highlights:
+Background: At Lusion, we provide high-quality, real-time development services to ad agencies and design studios alike. Most of the production studios out there would use well-staged videos on their websites, but we believe that in order to sell our real-time development capacity, the best thing to do—as a small studio—is to show what we can do in real-time. Hence, we built our website this way to get shocking reactions.
+
+Favorite features: Generative animations and cloth simulations. Generative animations are at the core of our art installations and data visualizations. Cloth simulation has never been an easy task—especially trying to get it to work on low-end devices. That way the cloth animations on the site show our ability ton create real-time graphics, as well as proving to potential clients how we come up with alternative solutions to problems.
+
+Design process: The website was built heavily with Houdini FX. We generated a lot of custom assets and cut down on bytes as much as we could. The most challenging part of the website was to unify any smaller visuals into a meaningful experience. We used sound, overlaid objects and masks to make transitions between different visuals seamless.
+
+Navigation structure: Unlike most of the WebGL experiences out there, our website uses a long scrolling, one-page navigation system instead of a full-screen one. We also used the infamous scroll-jacking effect mainly due to the performance and glitching issue on some slower devices.
+
+Technology: We designed and developed the site in Houdini FX, Photoshop and Visual Studio Code. We generated a lot of the vertex animations for the visuals in Houdini. All WebGL scenes were powered by ThreeJS. We rendered video in Redshift3D, which we also used to combine video with real-time animations.
+
+---
+
+Title: N/A
+URL: https://blog.lusion.co/oryzo-bts-part-2-7-3d-design-and-motion-graphics
+Published: N/A
+Author: N/A
+Highlights:
+At Lusion, we care more about the final experience than any particular tool. The pipeline follows the idea, not the other way around. That principle has led us to use a wide mix of software depending on what each project actually needs.
+
+For Oryzo, which relied heavily on 3D imagery and motion, we primarily used SideFX Houdini for scene building and Maxon Redshift for rendering. Houdini, while traditionally associated with visual effects in the Hollywood movies, has become a core part of our workflow for building flexible systems that translate well into interactive web work. Redshift, being GPU accelerated, gave us the speed we needed to iterate quickly on lighting, textures, and final renders.
+
+With that foundation in place, the next step was to define the main visual anchors of the campaign.
+
+...
+
+One of the biggest technical challenges was preserving the fidelity of that scene once it moved into a web based environment. We tried image sequences and video, but they lacked the interactivity we wanted. We also tested real time PBR rendering, but it did not quite reach the visual quality we were aiming for.
+
+So we explored Gaussian Splatting as a way to translate high quality rendered scenes into something that could still run in real time with WebGL. We tested two tools for this workflow: Jawset’s Postshot (paid) and the open source Lichtfeld Studio (free).
+
+In most of our production tests, Postshot gave us better quality and faster processing times. That said, Lichtfeld Studio has continued to improve and now includes features like LOD support, so it is still very much worth exploring.
+
+...
+
+To generate the dataset, we rendered multiple camera perspectives in Houdini and processed them through Postshot to create the splats. We also split the scene into multiple splats for compositing inside the web experience, which we will talk about more in later parts.
+
+...
+
+To streamline that process, we used GSOPs, a third party Houdini toolset for Gaussian splats, which made it much easier to export COLMAP data and move efficiently from Houdini into Postshot.
+
+...
+
+The scene itself was built through a mix of sourced assets and custom work. Some areas, like the background trays, included many small objects that would have been tedious to place manually. For those, we used rigid body simulations to let the objects settle naturally into place.
+
+...
+
+We used splats only for the props and the desk reflections.
+
+...
+
+We started from a high quality 3D scan of a real hand that we purchased from 3D Scan Store, then modified it to give it one extra finger.
+
+...
+
+We then built a rig in Houdini using KineFX. Even though rigging can become very complex, the motion we needed was fairly contained, so a relatively simple setup was enough to give us the control we wanted.
+
+...
+
+For the packaging, we used Houdini’s Vellum system to simulate realistic stretching and material behaviour. You could approach this with sculpting or more traditional polygon modelling, but simulation made more sense for us because we already knew the geometry would need to tear later.
+
+That made the process feel closer to a real material study rather than a purely static model.
+
+We used two planes with different physical properties to represent two different materials. The front side was a flimsy transparent plastic with lower stiffness. The back side was a soft metallic layer that was stiffer and more resistant to bending. We then applied attraction forces that behaved like a vacuum seal. To add more realism and wrinkling, the attraction force on the upper layer was multiplied by a noise distorted radial wave pattern, as shown below.
+
+...
+
+The cork itself was built using a VDB modelling setup combined with procedural noise to create the right look and feel. It already felt visually convincing, but then we pushed it further by treating it as a microscopic world that also needed to loop seamlessly across the horizontal scroll.
+
+...
+
+To create that asset, we experimented with an AI assisted pipeline. We generated multiple reference views using Nano Banana Pro via Google Flow, processed them through Hunyuan’s 3D generator, then refined the result in ZBrush and added procedural detailing before baking it back into textures.
+
+...
+
+From there, the film transitions into a more
+
+---
+
+Title: Lusion: Where Digital Craft Meets Ambitious Experimentation | Codrops
+URL: https://tympanus.net/codrops/2026/04/13/lusion-where-digital-craft-meets-ambitious-experimentation/
+Published: 2026-04-13T00:00:00.000Z
+Author: N/A
+Highlights:
+Hi, we are Lusion. We are a digital production studio based in Bristol making interactive websites, real time visuals, and digital work that usually ends up being more ambitious than it probably needs to be.
+
+We like building things from scratch. Not because it sounds nice on a case study, but because the best ideas usually fall apart the moment you force them into a template. So every project gets its own system, its own logic, and its own flavour.
+
+...
+
+Why / How: We created Oryzo AI to see how far an intentionally absurd idea could go when treated with real craft. Rather than making it a one off visual joke, we built it as a fully realised campaign world, turning a simple cork coaster into the centrepiece of a premium AI product launch. This gave us the chance to combine immersive web design, 3D production, motion, satire, and supporting content across social posts, founder video, Product Hunt, and open-weight GitHub page, all executed with the same level of care we would bring to a real brand story.
+
+...
+
+The truth is, we had never made a film like this before. But the opportunity felt too special to ignore, so we said yes and figured it out through making. Over an intense 3 week production, we learned, designed, and built in parallel, translating Porsche’s “Driven by Dreams” ethos into a visual journey that moved from abstraction and imagination towards the silhouette of the original 356.
+
+---
+
+Title: Lusion - Of The Oak
+URL: https://lusion.co/projects/of_the_oak/
+Published: N/A
+Author: N/A
+Highlights:
+We built a robust Houdini to WebGL pipeline that compresses complex 3D tree, branch, and node structures into a custom web format, reducing the download size to just 3.5 MB while leveraging WebGL instancing for fast delivery.
+
+...
+
+MLF approached us to create a web companion for Of The Oak, their physical installation created in collaboration with Royal Botanic Gardens, Kew. Designed to extend the project beyond the installation itself, the experience gave onsite visitors a more interactive way to engage with the work while also making it accessible to online audiences.
+
+The website helped bridge the physical and digital experience, offering a space for visitors to explore the project in greater depth and learn more about its story, ideas, and context.
+
+---
+
+Title: 🪶 Case Study: My Little Storybook | by Pauline | Medium
+URL: https://medium.com/@PaulineStich/case-study-my-little-storybook-6f4293db9aba
+Published: 2024-03-25T14:09:42.000Z
+Author: Pauline
+Highlights:
+My Little Storybook is an interactive story built with Three.js of a bird family crossing the river. With the concept inspired by Japanese anime, we created a storytelling web experience.
+
+...
+
+In October 2021, we developed a WebGL storytelling demo at Lusion. With the concept inspired by Japanese anime, we created a storytelling web experience.
+
+...
+
+## Some notes of my responsibilities for My Little Storybook:
+
+As a designer and front-end developer, my challenges included:
+
+- Storytelling: Create a captivating story
+- 3D models: Create the bird characters (mama bird, babies), model the river, terrain, plants, rocks, fishes
+- 2D animations: Animation with Procreate (frog, expressions, fireflies, wolf,.. etc)
+- Designing the UI components in Figma (preloader, button, cursor with multiple states, about page)
+- Front-end development and animation of the UI with tools like gsap
+
+...
+
+## 3D models
+
+As most of the assets are organic, I decided to sculpt them. It feels “natural” to do it this way. I also used this technique in Choo-Choo World.
+
+What is important is that:
+
+- Every detail is crafted
+- All the textures are using a stylized technique within Substance
+
+Through this process, I hope to add a more stylized, hand crafted touch to the final scene.
+
+Tools used: Cinema 4D, Zbrush, Nomad Sculpt (Ipad), Substance painter
+
+...
+
+Most of the repetitive assets were instanced (grass, rocks, fishes, dust, shadows).
+
+Instancing is a technique that allows you to draw many copies of the same 3D object efficiently by reusing the same geometry data and applying different transformations (position, rotation, scale) to each instance.
+
+Instead of sending geometry data for each individual copy to the GPU, you only send it once and then specify the transformations for each instance. This saves memory and improves performance when rendering repetitive objects like grass, rocks, etc.
+
+---
+
+Title: Mark Nguyen
+URL: http://mark-n.co/projects/lusion-reverse-engineered/
+Published: N/A
+Author: Mark Nguyen
+Highlights:
+A recreation of lusion.co, the Awwwards 2023 site of the year by the renowned Lusion creative production studio. 
+
+3D assets, threejs rendering code, HTML/CSS, shaders made my me
+
+...
+
+What I love about the site is how it seemlessly transitions from 2D to 3D. You begin feeling like it's a regular website and then additional layers reveal that you're getting yourself in to something much more.
+
+...
+
+If you scroll, you'll notice that we have what seem like regular HTML blocks with some 3D content embedded. But then some 3D elements can move and animate between different boxes. 
+
+ To achieve this, I have a full screen ` ` behind our HTML, as demonstrated in the video. 
+
+## Mapping HTML to 3D positions
+
+ Positions are defined using HTML flex/grid layout (it's much nicer than doing it in a 3d engine!). I then calculate a screen-position-to-world coordinate, thus enabling pixel perfect positioning of 3D objects in a responsive manner. 
+
+## Interactive physics
+
+First, I create some interesting lights, model some spheres and apply a glossy material on it.
+
+ I use Rapier.js for physics track a collider to the mouse position. 
+
+An attractive force is applied, giving the balls a gravitional pull to the center.
+
+ The results were lacklustre to begin with, but with some custom code to add an additional impulse force, thereby making the relatively small mouse movements much larger and more powerful. With that, we have a rather fun ball smasher. 
+
+ Finally a procedurally generated mesh with rounded corners is rendered before the balls, which writes to the stencil buffer. 
+
+ The balls do a stencil test, thus enabling me to mask off an area, giving the impression of a window in to the ball pit world.
+
+...
+
+Now this effect, had me really stumped. It took me approximately 7 attempts to mimic this seemingly simple animation of a mesh dancing and becoming a larger version of itself. 
+
+ I tried mesh deformations, animating it in Blender, applying springs to the bones and numerous others techniques. In the end, I coded the animation entirely mathematically, using a custom vertex shader. 
+
+ In the vertex shader, I drive the entire animation using a single value that goes from 0 to 1. Let's call this `animateProgress`. 
+
+ I then determine areas of the mesh that I'd like to affect using its `uv` coordinates and the `animateProgress` value. 
+
+ You can think of these areas like masks that grow and shrink. I use these masks to determine which areas to affect by rotation, translation and scale.
+
+---
+
+Title: CineShader VR Review. A cinematic immersive experience | by Lusion Ltd | Lusion | Medium
+URL: https://medium.com/lusion-ltd/cineshader-vr-review-43906ef0036c
+Published: 2021-01-21T12:45:56.000Z
+Author: Lusion Ltd
+Highlights:
+This project was an opportunity for us to give a try to VR on web with the use of the recent WebXR API.
+
+...
+
+After that, the “docked board” idea came naturally: it’s the most simple way to display interactive and readable content in VR. To make it quickly, we tried using three-mesh-ui to do the UI placements and troika-three-text to render the texts in webgl. The setup was easy and quick! However we were facing performance issues: the libraries created a lot of useless geometries and layers, and they can be really slow to render and it affected the overall user experience.
+
+...
+
+The final version of the interface uses canvas2D to draw images and texts as textures on simple planes.
+
+So back to the start, we decided to write our own UI system using multiple canvas2D as textures on simple planes. It was surprisingly easy to do, more performant and very flexible (you can draw whatever you want in canvas). The only tricky part was the gallery ‘selector’, where we had to determine the selected cell depending on the raycasted position on the plane. Anyway, we saved ~20fps and ~300ko on the js build by making our own system!

@@ -1,0 +1,212 @@
+{
+ "secs": [
+  {
+   "tag": "DIV",
+   "cls": "bg-gray-95",
+   "y": 0,
+   "h": 8033,
+   "img": 43,
+   "mux": 2,
+   "txt": "-30 %* extra | Flash Deals | Am 09.11. bei stündlich wechselnden Marken | Jetzt Angebo"
+  },
+  {
+   "tag": "SECTION",
+   "cls": "relative overflow-hidden h-[--fallback-lsh] supports-dvh:h-[--first-ss",
+   "y": 0,
+   "h": 900,
+   "img": 3,
+   "mux": 0,
+   "txt": "-30 %* extra | Flash Deals | Am 09.11. bei stündlich wechselnden Marken | Jetzt Angebo"
+  },
+  {
+   "tag": "SECTION",
+   "cls": "relative overflow-hidden bg-black-primary",
+   "y": 1641,
+   "h": 810,
+   "img": 1,
+   "mux": 1,
+   "txt": "Alles mindestens -60 %* ​ | Online Shop Pop-Up Sale | Vom 16.11. – 05.12. in der Out"
+  },
+  {
+   "tag": "SECTION",
+   "cls": "py-15",
+   "y": 2451,
+   "h": 733,
+   "img": 5,
+   "mux": 0,
+   "txt": "Store Neueröffnungen & Sample Sales in Metzingen | Vom 02. – 14.11. bis zu -50 %* | "
+  },
+  {
+   "tag": "SECTION",
+   "cls": "relative overflow-hidden bg-black-primary",
+   "y": 3184,
+   "h": 810,
+   "img": 3,
+   "mux": 0,
+   "txt": "Im Online Shop | Midseason Sale | Zum Online Shop"
+  },
+  {
+   "tag": "SECTION",
+   "cls": "py-15",
+   "y": 3994,
+   "h": 773,
+   "img": 10,
+   "mux": 0,
+   "txt": "Restaurants & Cafés vor Ort | Neueröffnung | 60 SECONDS TO NAPOLI |  | Neapolitanische P"
+  },
+  {
+   "tag": "SECTION",
+   "cls": "relative overflow-hidden bg-black-primary",
+   "y": 4767,
+   "h": 810,
+   "img": 3,
+   "mux": 0,
+   "txt": "Turkish Airlines Miles&Smiles | Meilensammeln mit Turkish Airlines in der Outletci"
+  },
+  {
+   "tag": "SECTION",
+   "cls": "relative overflow-hidden bg-black-primary",
+   "y": 5577,
+   "h": 810,
+   "img": 3,
+   "mux": 0,
+   "txt": "Porsche Tennis Grand Prix 2027 | Vom 10. – 18.04.2027 in der Stuttgarter Porsche-A"
+  },
+  {
+   "tag": "SECTION",
+   "cls": "relative overflow-hidden bg-black-primary",
+   "y": 6387,
+   "h": 810,
+   "img": 1,
+   "mux": 1,
+   "txt": "Entdecken Sie alle Stores"
+  },
+  {
+   "tag": "SECTION",
+   "cls": "relative overflow-hidden h-[--fallback-lsh]",
+   "y": 7197,
+   "h": 836,
+   "img": 2,
+   "mux": 0,
+   "txt": "Europas größtes Outlet¹ im Portrait |  | In der Outletcity Metzingen, die nur 30 Min"
+  },
+  {
+   "tag": "SECTION",
+   "cls": "",
+   "y": 8093,
+   "h": 108,
+   "img": 0,
+   "mux": 0,
+   "txt": "Unternehmen | Outletcity AG | Karriere | Presse & Promotions | Vermietung"
+  },
+  {
+   "tag": "SECTION",
+   "cls": "",
+   "y": 8093,
+   "h": 108,
+   "img": 0,
+   "mux": 0,
+   "txt": "Service | Hilfe & Kontakt | Lageplan | Studentenrabatt | Gruppen"
+  },
+  {
+   "tag": "SECTION",
+   "cls": "",
+   "y": 8241,
+   "h": 74,
+   "img": 0,
+   "mux": 0,
+   "txt": "Outletcity App laden | Outletcity App im App Store laden | Outletcity App bei Google"
+  },
+  {
+   "tag": "SECTION",
+   "cls": "",
+   "y": 8241,
+   "h": 74,
+   "img": 0,
+   "mux": 0,
+   "txt": "Folgen Sie uns auf | Facebook | Instagram | WhatsApp | WeChat | TikTok | Tripadvisor | Youtube"
+  },
+  {
+   "tag": "SECTION",
+   "cls": "",
+   "y": 0,
+   "h": 0,
+   "img": 5,
+   "mux": 0,
+   "txt": "Flash DealsBahlsen Sample SaleOnline Shop Pop-Up SaleLindt Christmas Pop-up Stor"
+  },
+  {
+   "tag": "SECTION",
+   "cls": "rem64:mb-0 mb-10",
+   "y": 0,
+   "h": 0,
+   "img": 0,
+   "mux": 0,
+   "txt": "Meistgesuchte BegriffeOnline ShopLageplanKarriereMoxy Outletcity MetzingenLuxusÖ"
+  },
+  {
+   "tag": "SECTION",
+   "cls": "",
+   "y": 0,
+   "h": 0,
+   "img": 0,
+   "mux": 0,
+   "txt": "Angesagte StoresBOSSNIKEPRADA"
+  }
+ ],
+ "ai": [],
+ "aimg": [],
+ "alts": [],
+ "css": {
+  "kf": 2,
+  "tr": 3,
+  "sticky": 2,
+  "anim": 2
+ },
+ "io": 40,
+ "raf": 95,
+ "sc": 19,
+ "gen": 1,
+ "jsonld": [
+  "{\"@context\":\"https://schema.org\",\"@type\":\"ShoppingCenter\",\"name\":\"Outletcity Metzingen\",\"@id\":\"https://www.outletcity.co"
+ ],
+ "heroImgs": [
+  {
+   "s": "data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0",
+   "w": 20,
+   "h": 11,
+   "alt": ""
+  },
+  {
+   "s": "https://stc.outletcity.com/i/0691dcb796e4dbab6c02efcc93b12e4571b9ab90-2064x3669.jpg?auto=format&fit=max&q=75&w",
+   "w": 1440,
+   "h": 2560,
+   "alt": ""
+  },
+  {
+   "s": "https://stc.outletcity.com/i/fc304bee2da3b4c3a1edb55f235342f5ac6587d3-3873x2178.jpg?auto=format&fit=max&q=75&w",
+   "w": 1713,
+   "h": 964,
+   "alt": ""
+  },
+  {
+   "s": "https://stc.outletcity.com/i/27dc966b4acea10bbed94413e6a0560d308a4987-2064x3669.jpg?auto=format&fit=max&q=75&w",
+   "w": 1440,
+   "h": 2560,
+   "alt": ""
+  },
+  {
+   "s": "https://stc.outletcity.com/i/acd711647316c8e5780d62e2a6c8004878aa4578-2064x3669.jpg?auto=format&fit=max&q=75&w",
+   "w": 1440,
+   "h": 2560,
+   "alt": ""
+  },
+  {
+   "s": "https://stc.outletcity.com/i/d0e0fdfc2cdd2e3d04dbb8fdc7d9d4990f04e03a-4800x3200.jpg?auto=format&fit=max&q=75&r",
+   "w": 1439,
+   "h": 2640,
+   "alt": ""
+  }
+ ],
+ "pic": 20
+}

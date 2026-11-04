@@ -1,0 +1,10 @@
+language: en
+[00:00] Your AI agent cannot generate leads because it cannot read the internet.
+[00:03] Here's how I fixed that.
+[00:05] I integrated Scrapling into Hermes agent and now it pulls real leads from any website automatically.
+[00:11] Scrapling bypasses Cloudflare, handles JavaScript heavy sites and never breaks when a website redesigns.
+[00:17] I can just open Telegram, drop one prompt into my Hermes agent and say get me 50 dentists from California.
+[00:23] The agent goes out, hits every relevant site on the internet and builds the list until it reaches the goal.
+[00:29] You can run multiple Hermes agents in one group and split the work across all of them so it finishes even faster.
+[00:36] This is the lead gen setup nobody is showing you.
+[00:38] Comment, scrape below and I will send the setup link.

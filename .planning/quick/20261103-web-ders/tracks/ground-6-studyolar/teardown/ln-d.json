@@ -1,0 +1,614 @@
+{
+ "url": "https://landonorris.com/",
+ "tag": "ln-d",
+ "mode": "desktop",
+ "navErr": null,
+ "loadT": 17187,
+ "first": {
+  "title": "McLaren Formula 1 Driver — Lando Norris",
+  "h": 13577,
+  "videos": [],
+  "canvases": [
+   {
+    "w": 60,
+    "h": 60,
+    "cw": 60,
+    "ch": 60,
+    "pos": "static"
+   },
+   {
+    "w": 36,
+    "h": 36,
+    "cw": 37,
+    "ch": 37,
+    "pos": "static"
+   },
+   {
+    "w": 0,
+    "h": 0,
+    "cw": 0,
+    "ch": 0,
+    "pos": "static"
+   },
+   {
+    "w": 300,
+    "h": 150,
+    "cw": 0,
+    "ch": 0,
+    "pos": "static"
+   },
+   {
+    "w": 1440,
+    "h": 900,
+    "cw": 1440,
+    "ch": 900,
+    "pos": "static"
+   },
+   {
+    "w": 73,
+    "h": 62,
+    "cw": 73,
+    "ch": 63,
+    "pos": "static"
+   },
+   {
+    "w": 80,
+    "h": 42,
+    "cw": 81,
+    "ch": 43,
+    "pos": "static"
+   },
+   {
+    "w": 800,
+    "h": 571,
+    "cw": 800,
+    "ch": 571,
+    "pos": "static"
+   },
+   {
+    "w": 80,
+    "h": 42,
+    "cw": 81,
+    "ch": 43,
+    "pos": "static"
+   },
+   {
+    "w": 212,
+    "h": 161,
+    "cw": 213,
+    "ch": 162,
+    "pos": "static"
+   },
+   {
+    "w": 13,
+    "h": 13,
+    "cw": 13,
+    "ch": 13,
+    "pos": "static"
+   },
+   {
+    "w": 13,
+    "h": 13,
+    "cw": 13,
+    "ch": 13,
+    "pos": "static"
+   },
+   {
+    "w": 75,
+    "h": 37,
+    "cw": 75,
+    "ch": 37,
+    "pos": "static"
+   },
+   {
+    "w": 10,
+    "h": 10,
+    "cw": 10,
+    "ch": 10,
+    "pos": "static"
+   },
+   {
+    "w": 10,
+    "h": 10,
+    "cw": 10,
+    "ch": 10,
+    "pos": "static"
+   },
+   {
+    "w": 0,
+    "h": 0,
+    "cw": 0,
+    "ch": 0,
+    "pos": "static"
+   },
+   {
+    "w": 1061,
+    "h": 665,
+    "cw": 1062,
+    "ch": 665,
+    "pos": "static"
+   },
+   {
+    "w": 46,
+    "h": 46,
+    "cw": 47,
+    "ch": 47,
+    "pos": "static"
+   },
+   {
+    "w": 174,
+    "h": 113,
+    "cw": 174,
+    "ch": 113,
+    "pos": "static"
+   },
+   {
+    "w": 10,
+    "h": 10,
+    "cw": 10,
+    "ch": 10,
+    "pos": "static"
+   },
+   {
+    "w": 1440,
+    "h": 900,
+    "cw": 1440,
+    "ch": 900,
+    "pos": "static"
+   }
+  ],
+  "imgCount": 133,
+  "lazy": 131,
+  "svgCount": 85,
+  "nodes": 1771,
+  "textLen": 3332,
+  "libs": {
+   "three": true,
+   "threeRev": "174",
+   "gsap": false,
+   "ScrollTrigger": false,
+   "lenis": true,
+   "next": false,
+   "nuxt": false,
+   "webflow": true,
+   "jquery": true,
+   "react": false,
+   "rive": true,
+   "lottie": false,
+   "astro": false,
+   "gen": null
+  },
+  "scripts": [
+   "https://www.googletagmanager.com/gtag/js?id=G-P8L2KTXDN0&gtg_health=1",
+   "https://landonorris.com/avljl2rk9q5pNjdiNWEwMmRjNWQzMzg5NjBiMTdhN2U5/7ZblqsTeeE5q7zjxhGjeEUmRx4o",
+   "https://lando.itsoffbrand.io/dev-js/lando-by-OFF+BRAND.05.js",
+   "https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js?site=67b5a02dc5d338960b17a7e9",
+   "https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/js/lando-offbrand.schunk.7321a5097fb66f41.js",
+   "https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/js/lando-offbrand.751e0867.148dc658e77a3916.js"
+  ]
+ },
+ "last": {
+  "title": "McLaren Formula 1 Driver — Lando Norris",
+  "h": 13577,
+  "videos": [],
+  "canvases": [
+   {
+    "w": 60,
+    "h": 60,
+    "cw": 50,
+    "ch": 50,
+    "pos": "static"
+   },
+   {
+    "w": 36,
+    "h": 36,
+    "cw": 37,
+    "ch": 37,
+    "pos": "static"
+   },
+   {
+    "w": 0,
+    "h": 0,
+    "cw": 0,
+    "ch": 0,
+    "pos": "static"
+   },
+   {
+    "w": 300,
+    "h": 150,
+    "cw": 0,
+    "ch": 0,
+    "pos": "static"
+   },
+   {
+    "w": 1440,
+    "h": 900,
+    "cw": 1440,
+    "ch": 900,
+    "pos": "static"
+   },
+   {
+    "w": 73,
+    "h": 62,
+    "cw": 73,
+    "ch": 63,
+    "pos": "static"
+   },
+   {
+    "w": 80,
+    "h": 42,
+    "cw": 81,
+    "ch": 43,
+    "pos": "static"
+   },
+   {
+    "w": 800,
+    "h": 571,
+    "cw": 800,
+    "ch": 571,
+    "pos": "static"
+   },
+   {
+    "w": 80,
+    "h": 42,
+    "cw": 81,
+    "ch": 43,
+    "pos": "static"
+   },
+   {
+    "w": 212,
+    "h": 161,
+    "cw": 213,
+    "ch": 162,
+    "pos": "static"
+   },
+   {
+    "w": 13,
+    "h": 13,
+    "cw": 13,
+    "ch": 13,
+    "pos": "static"
+   },
+   {
+    "w": 13,
+    "h": 13,
+    "cw": 13,
+    "ch": 13,
+    "pos": "static"
+   },
+   {
+    "w": 75,
+    "h": 37,
+    "cw": 75,
+    "ch": 37,
+    "pos": "static"
+   },
+   {
+    "w": 10,
+    "h": 10,
+    "cw": 10,
+    "ch": 10,
+    "pos": "static"
+   },
+   {
+    "w": 10,
+    "h": 10,
+    "cw": 10,
+    "ch": 10,
+    "pos": "static"
+   },
+   {
+    "w": 0,
+    "h": 0,
+    "cw": 0,
+    "ch": 0,
+    "pos": "static"
+   },
+   {
+    "w": 1061,
+    "h": 665,
+    "cw": 1062,
+    "ch": 665,
+    "pos": "static"
+   },
+   {
+    "w": 46,
+    "h": 46,
+    "cw": 47,
+    "ch": 47,
+    "pos": "static"
+   },
+   {
+    "w": 174,
+    "h": 113,
+    "cw": 174,
+    "ch": 113,
+    "pos": "static"
+   },
+   {
+    "w": 10,
+    "h": 10,
+    "cw": 10,
+    "ch": 10,
+    "pos": "static"
+   },
+   {
+    "w": 1440,
+    "h": 900,
+    "cw": 1440,
+    "ch": 900,
+    "pos": "static"
+   }
+  ],
+  "imgCount": 198,
+  "lazy": 196,
+  "svgCount": 109,
+  "nodes": 2093,
+  "textLen": 3332,
+  "libs": {
+   "three": true,
+   "threeRev": "174",
+   "gsap": false,
+   "ScrollTrigger": false,
+   "lenis": true,
+   "next": false,
+   "nuxt": false,
+   "webflow": true,
+   "jquery": true,
+   "react": false,
+   "rive": true,
+   "lottie": false,
+   "astro": false,
+   "gen": null
+  },
+  "scripts": [
+   "https://www.googletagmanager.com/gtag/js?id=G-P8L2KTXDN0&gtg_health=1",
+   "https://landonorris.com/avljl2rk9q5pNjdiNWEwMmRjNWQzMzg5NjBiMTdhN2U5/7ZblqsTeeE5q7zjxhGjeEUmRx4o",
+   "https://lando.itsoffbrand.io/dev-js/lando-by-OFF+BRAND.05.js",
+   "https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js?site=67b5a02dc5d338960b17a7e9",
+   "https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/js/lando-offbrand.schunk.7321a5097fb66f41.js",
+   "https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/js/lando-offbrand.751e0867.148dc658e77a3916.js"
+  ]
+ },
+ "agg": {
+  "html": {
+   "n": 2,
+   "bytes": 45183,
+   "load": 45183,
+   "scroll": 0
+  },
+  "image": {
+   "n": 92,
+   "bytes": 4829591,
+   "load": 2840394,
+   "scroll": 1989197
+  },
+  "css": {
+   "n": 1,
+   "bytes": 32053,
+   "load": 32053,
+   "scroll": 0
+  },
+  "js": {
+   "n": 7,
+   "bytes": 614335,
+   "load": 614335,
+   "scroll": 0
+  },
+  "font": {
+   "n": 2,
+   "bytes": 192097,
+   "load": 192097,
+   "scroll": 0
+  },
+  "other": {
+   "n": 4,
+   "bytes": 286749,
+   "load": 286749,
+   "scroll": 0
+  },
+  "3d/rive": {
+   "n": 13,
+   "bytes": 1820267,
+   "load": 1820267,
+   "scroll": 0
+  },
+  "json": {
+   "n": 2,
+   "bytes": 6684,
+   "load": 6684,
+   "scroll": 0
+  }
+ },
+ "top": [
+  {
+   "b": 478428,
+   "c": "3d/rive",
+   "u": "https://lando.itsoffbrand.io/gl/models/tracks/tracks-06-test.glb",
+   "cl": "477540",
+   "p": "load"
+  },
+  {
+   "b": 425025,
+   "c": "image",
+   "u": "https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/68302ff5ff89a9a4afb8c19e_ln-home-helm-large.webp",
+   "cl": "424534",
+   "p": "scroll"
+  },
+  {
+   "b": 387554,
+   "c": "3d/rive",
+   "u": "https://lando.itsoffbrand.io/gl/hdri/studio_small_08_1k--light.hdr",
+   "cl": "386788",
+   "p": "load"
+  },
+  {
+   "b": 381068,
+   "c": "js",
+   "u": "https://lando.itsoffbrand.io/dev-js/lando-by-OFF+BRAND.05.js",
+   "p": "load"
+  },
+  {
+   "b": 359733,
+   "c": "3d/rive",
+   "u": "https://lando.itsoffbrand.io/gl/models/disco-02.glb",
+   "cl": "358984",
+   "p": "load"
+  },
+  {
+   "b": 322199,
+   "c": "image",
+   "u": "https://lando.itsoffbrand.io/gl/textures/helmet/webp/gold/Norris_Helmet_mat_BaseColor.webp",
+   "cl": "321508",
+   "p": "load"
+  },
+  {
+   "b": 292749,
+   "c": "image",
+   "u": "https://lando.itsoffbrand.io/gl/textures/head/webp/diffuse.webp",
+   "cl": "292106",
+   "p": "load"
+  },
+  {
+   "b": 286384,
+   "c": "image",
+   "u": "https://lando.itsoffbrand.io/gl/textures/head/webp/shadow-softer-edit.webp",
+   "cl": "285764",
+   "p": "load"
+  },
+  {
+   "b": 284123,
+   "c": "image",
+   "u": "https://lando.itsoffbrand.io/gl/textures/head/webp/shadow.webp",
+   "cl": "283478",
+   "p": "load"
+  },
+  {
+   "b": 203456,
+   "c": "other",
+   "u": "https://unpkg.com/@rive-app/canvas-lite@2.26.4/rive.wasm",
+   "p": "load"
+  },
+  {
+   "b": 177645,
+   "c": "image",
+   "u": "https://lando.itsoffbrand.io/gl/textures/helmet/webp/disco/Norris_Helmet_mat_BaseColor.webp",
+   "cl": "177136",
+   "p": "load"
+  },
+  {
+   "b": 176248,
+   "c": "3d/rive",
+   "u": "https://lando.itsoffbrand.io/gl/hdri/studio_small_08_1k--faded.hdr",
+   "cl": "175712",
+   "p": "load"
+  },
+  {
+   "b": 174349,
+   "c": "js",
+   "u": "https://landonorris.com/avljl2rk9q5pNjdiNWEwMmRjNWQzMzg5NjBiMTdhN2U5/7ZblqsTeeE5q7zjxhGjeEUmRx4o",
+   "cl": "173925",
+   "p": "load"
+  },
+  {
+   "b": 172904,
+   "c": "image",
+   "u": "https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/67d18655b032045a4dc78e56_ln4-hp-lando-head.webp",
+   "cl": "172392",
+   "p": "load"
+  },
+  {
+   "b": 167990,
+   "c": "font",
+   "u": "https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/67bc6274c5b4108b123aa4d5_MonaSans-VariableFont_wdth%2Cwght.woff2",
+   "cl": "167476",
+   "p": "load"
+  },
+  {
+   "b": 150675,
+   "c": "image",
+   "u": "https://lando.itsoffbrand.io/gl/textures/head/webp/normal.webp",
+   "cl": "150168",
+   "p": "load"
+  },
+  {
+   "b": 139993,
+   "c": "3d/rive",
+   "u": "https://lando.itsoffbrand.io/gl/models/helmet-21.glb",
+   "cl": "139492",
+   "p": "load"
+  },
+  {
+   "b": 117060,
+   "c": "image",
+   "u": "https://lando.itsoffbrand.io/gl/fonts/Brier-Bold-02.webp",
+   "cl": "116588",
+   "p": "load"
+  },
+  {
+   "b": 115349,
+   "c": "image",
+   "u": "https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/67d43d6e276c436a378a1da6_ln-360-helm-1.webp",
+   "cl": "114916",
+   "p": "scroll"
+  },
+  {
+   "b": 102410,
+   "c": "image",
+   "u": "https://cdn.prod.website-files.com/67b5a02dc5d338960b17a7e9/67d18655b032045a4dc78e53_ln4-hp-lando-helmet.webp",
+   "cl": "101974",
+   "p": "load"
+  },
+  {
+   "b": 101353,
+   "c": "image",
+   "u": "https://lando.itsoffbrand.io/gl/textures/helmet/webp/disco/disco_lens-flare-15.webp",
+   "cl": "100940",
+   "p": "load"
+  },
+  {
+   "b": 84773,
+   "c": "image",
+   "u": "https://lando.itsoffbrand.io/gl/textures/noise/noise-03.webp",
+   "cl": "84350",
+   "p": "load"
+  }
+ ],
+ "hostTop": [
+  [
+   "lando.itsoffbrand.io",
+   4386888
+  ],
+  [
+   "cdn.prod.website-files.com",
+   2712415
+  ],
+  [
+   "assets.itsoffbrand.io",
+   272302
+  ],
+  [
+   "landonorris.com",
+   219532
+  ],
+  [
+   "unpkg.com",
+   203456
+  ],
+  [
+   "d3e54v103j8qbb.cloudfront.net",
+   31981
+  ],
+  [
+   "www.googletagmanager.com",
+   385
+  ],
+  [
+   "region1.google-analytics.com",
+   0
+  ]
+ ],
+ "total": 7826959,
+ "n": 123,
+ "server": "cloudflare"
+}

@@ -1,0 +1,873 @@
+[
+  {
+    "url": "https://activetheory.net/about",
+    "read": false,
+    "door": null,
+    "cached_snapshot": false,
+    "liveness": "blocked",
+    "doors_tried": 10,
+    "attempts": [
+      {
+        "door": "media-transcript",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a media url"
+      },
+      {
+        "door": "pdf-text",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a pdf url"
+      },
+      {
+        "door": "scrapling",
+        "ok": false,
+        "ms": 332,
+        "bytes": 71,
+        "wall": true,
+        "error": null
+      },
+      {
+        "door": "scrapling-stealth",
+        "ok": false,
+        "ms": 45087,
+        "bytes": 0,
+        "wall": false,
+        "error": "rc=124 timeout"
+      },
+      {
+        "door": "opencli-reader",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "no platform adapter for this url"
+      },
+      {
+        "door": "tavily-extract",
+        "ok": false,
+        "ms": 424,
+        "bytes": 365,
+        "wall": true,
+        "error": "rc=1 "
+      },
+      {
+        "door": "firecrawl-scrape",
+        "ok": false,
+        "ms": 21002,
+        "bytes": 0,
+        "wall": false,
+        "error": "isError: Tool 'firecrawl_scrape' execution failed: All scraping engines failed to retrieve content from this URL. Engines tried: [index, fire-engine;chrome-cdp"
+      },
+      {
+        "door": "exa-fetch",
+        "ok": false,
+        "ms": 262,
+        "bytes": 0,
+        "wall": false,
+        "error": "isError: MCP error -32602: Input validation error: Invalid arguments for tool web_fetch_exa: Required at urls"
+      },
+      {
+        "door": "jina-reader",
+        "ok": false,
+        "ms": 2886,
+        "bytes": 163,
+        "wall": false,
+        "error": null
+      },
+      {
+        "door": "curl",
+        "ok": false,
+        "ms": 98,
+        "bytes": 69,
+        "wall": true,
+        "error": null
+      }
+    ],
+    "bytes": 0
+  },
+  {
+    "url": "https://basement.studio/",
+    "read": true,
+    "door": "scrapling",
+    "cached_snapshot": false,
+    "liveness": "alive",
+    "doors_tried": 3,
+    "attempts": [
+      {
+        "door": "media-transcript",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a media url"
+      },
+      {
+        "door": "pdf-text",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a pdf url"
+      },
+      {
+        "door": "scrapling",
+        "ok": true,
+        "ms": 433,
+        "bytes": 14304,
+        "wall": false,
+        "error": null
+      }
+    ],
+    "bytes": 14304,
+    "file": "07-basement.studio.md"
+  },
+  {
+    "url": "https://basement.studio/contact",
+    "read": true,
+    "door": "scrapling",
+    "cached_snapshot": false,
+    "liveness": "alive",
+    "doors_tried": 3,
+    "attempts": [
+      {
+        "door": "media-transcript",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a media url"
+      },
+      {
+        "door": "pdf-text",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a pdf url"
+      },
+      {
+        "door": "scrapling",
+        "ok": true,
+        "ms": 409,
+        "bytes": 496,
+        "wall": false,
+        "error": null
+      }
+    ],
+    "bytes": 496,
+    "file": "06-basement.studio.md"
+  },
+  {
+    "url": "https://blog.lusion.co/oryzo-bts-part-3-7-web-design",
+    "read": true,
+    "door": "scrapling-stealth",
+    "cached_snapshot": false,
+    "liveness": "alive",
+    "doors_tried": 4,
+    "attempts": [
+      {
+        "door": "media-transcript",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a media url"
+      },
+      {
+        "door": "pdf-text",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a pdf url"
+      },
+      {
+        "door": "scrapling",
+        "ok": false,
+        "ms": 743,
+        "bytes": 0,
+        "wall": false,
+        "error": null
+      },
+      {
+        "door": "scrapling-stealth",
+        "ok": true,
+        "ms": 4287,
+        "bytes": 1084,
+        "wall": false,
+        "error": null
+      }
+    ],
+    "bytes": 1084,
+    "file": "16-lusion.co.md"
+  },
+  {
+    "url": "https://blog.lusion.co/oryzo-bts-part-7-7-closing",
+    "read": true,
+    "door": "scrapling-stealth",
+    "cached_snapshot": false,
+    "liveness": "alive",
+    "doors_tried": 4,
+    "attempts": [
+      {
+        "door": "media-transcript",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a media url"
+      },
+      {
+        "door": "pdf-text",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a pdf url"
+      },
+      {
+        "door": "scrapling",
+        "ok": false,
+        "ms": 1006,
+        "bytes": 0,
+        "wall": false,
+        "error": null
+      },
+      {
+        "door": "scrapling-stealth",
+        "ok": true,
+        "ms": 2081,
+        "bytes": 1084,
+        "wall": false,
+        "error": null
+      }
+    ],
+    "bytes": 1084,
+    "file": "17-lusion.co.md"
+  },
+  {
+    "url": "https://darkroom.engineering/",
+    "read": true,
+    "door": "scrapling",
+    "cached_snapshot": false,
+    "liveness": "alive",
+    "doors_tried": 3,
+    "attempts": [
+      {
+        "door": "media-transcript",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a media url"
+      },
+      {
+        "door": "pdf-text",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a pdf url"
+      },
+      {
+        "door": "scrapling",
+        "ok": true,
+        "ms": 407,
+        "bytes": 9619,
+        "wall": false,
+        "error": null
+      }
+    ],
+    "bytes": 9619,
+    "file": "08-darkroom.engineering.md"
+  },
+  {
+    "url": "https://dogstudio.co/contact",
+    "read": true,
+    "door": "scrapling",
+    "cached_snapshot": false,
+    "liveness": "alive",
+    "doors_tried": 3,
+    "attempts": [
+      {
+        "door": "media-transcript",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a media url"
+      },
+      {
+        "door": "pdf-text",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a pdf url"
+      },
+      {
+        "door": "scrapling",
+        "ok": true,
+        "ms": 417,
+        "bytes": 4116,
+        "wall": false,
+        "error": null
+      }
+    ],
+    "bytes": 4116,
+    "file": "14-dogstudio.co.md"
+  },
+  {
+    "url": "https://exoape.com/",
+    "read": true,
+    "door": "scrapling",
+    "cached_snapshot": false,
+    "liveness": "alive",
+    "doors_tried": 3,
+    "attempts": [
+      {
+        "door": "media-transcript",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a media url"
+      },
+      {
+        "door": "pdf-text",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a pdf url"
+      },
+      {
+        "door": "scrapling",
+        "ok": true,
+        "ms": 563,
+        "bytes": 5752,
+        "wall": false,
+        "error": null
+      }
+    ],
+    "bytes": 5752,
+    "file": "09-exoape.com.md"
+  },
+  {
+    "url": "https://immersive-g.com/",
+    "read": true,
+    "door": "scrapling",
+    "cached_snapshot": false,
+    "liveness": "alive",
+    "doors_tried": 3,
+    "attempts": [
+      {
+        "door": "media-transcript",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a media url"
+      },
+      {
+        "door": "pdf-text",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a pdf url"
+      },
+      {
+        "door": "scrapling",
+        "ok": true,
+        "ms": 399,
+        "bytes": 4430,
+        "wall": false,
+        "error": null
+      }
+    ],
+    "bytes": 4430,
+    "file": "13-immersive-g.com.md"
+  },
+  {
+    "url": "https://locomotive.ca/en/contact",
+    "read": true,
+    "door": "scrapling",
+    "cached_snapshot": false,
+    "liveness": "alive",
+    "doors_tried": 3,
+    "attempts": [
+      {
+        "door": "media-transcript",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a media url"
+      },
+      {
+        "door": "pdf-text",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a pdf url"
+      },
+      {
+        "door": "scrapling",
+        "ok": true,
+        "ms": 334,
+        "bytes": 675,
+        "wall": false,
+        "error": null
+      }
+    ],
+    "bytes": 675,
+    "file": "10-locomotive.ca.md"
+  },
+  {
+    "url": "https://lusion.co/about",
+    "read": true,
+    "door": "scrapling",
+    "cached_snapshot": false,
+    "liveness": "alive",
+    "doors_tried": 3,
+    "attempts": [
+      {
+        "door": "media-transcript",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a media url"
+      },
+      {
+        "door": "pdf-text",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a pdf url"
+      },
+      {
+        "door": "scrapling",
+        "ok": true,
+        "ms": 799,
+        "bytes": 4709,
+        "wall": false,
+        "error": null
+      }
+    ],
+    "bytes": 4709,
+    "file": "15-lusion.co.md"
+  },
+  {
+    "url": "https://obys.agency/",
+    "read": true,
+    "door": "scrapling",
+    "cached_snapshot": false,
+    "liveness": "alive",
+    "doors_tried": 3,
+    "attempts": [
+      {
+        "door": "media-transcript",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a media url"
+      },
+      {
+        "door": "pdf-text",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a pdf url"
+      },
+      {
+        "door": "scrapling",
+        "ok": true,
+        "ms": 672,
+        "bytes": 12258,
+        "wall": false,
+        "error": null
+      }
+    ],
+    "bytes": 12258,
+    "file": "11-obys.agency.md"
+  },
+  {
+    "url": "https://resn.co.nz/",
+    "read": true,
+    "door": "firecrawl-scrape",
+    "cached_snapshot": false,
+    "liveness": "alive",
+    "doors_tried": 7,
+    "attempts": [
+      {
+        "door": "media-transcript",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a media url"
+      },
+      {
+        "door": "pdf-text",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a pdf url"
+      },
+      {
+        "door": "scrapling",
+        "ok": false,
+        "ms": 309,
+        "bytes": 122,
+        "wall": false,
+        "error": null
+      },
+      {
+        "door": "scrapling-stealth",
+        "ok": false,
+        "ms": 3669,
+        "bytes": 320,
+        "wall": false,
+        "error": null
+      },
+      {
+        "door": "opencli-reader",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "no platform adapter for this url"
+      },
+      {
+        "door": "tavily-extract",
+        "ok": false,
+        "ms": 505,
+        "bytes": 365,
+        "wall": true,
+        "error": "rc=1 "
+      },
+      {
+        "door": "firecrawl-scrape",
+        "ok": true,
+        "ms": 634,
+        "bytes": 13495,
+        "wall": false,
+        "error": null
+      }
+    ],
+    "bytes": 13495,
+    "file": "18-resn.co.nz.md"
+  },
+  {
+    "url": "https://thefwa.com/about",
+    "read": true,
+    "door": "scrapling",
+    "cached_snapshot": false,
+    "liveness": "alive",
+    "doors_tried": 3,
+    "attempts": [
+      {
+        "door": "media-transcript",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a media url"
+      },
+      {
+        "door": "pdf-text",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a pdf url"
+      },
+      {
+        "door": "scrapling",
+        "ok": true,
+        "ms": 330,
+        "bytes": 701,
+        "wall": false,
+        "error": null
+      }
+    ],
+    "bytes": 701,
+    "file": "03-thefwa.com.md"
+  },
+  {
+    "url": "https://tympanus.net/codrops/2025/12/05/from-illusions-to-optimization-the-creative-webgl-worlds-of-adrian-gubrica/",
+    "read": true,
+    "door": "scrapling-stealth",
+    "cached_snapshot": false,
+    "liveness": "alive",
+    "doors_tried": 4,
+    "attempts": [
+      {
+        "door": "media-transcript",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a media url"
+      },
+      {
+        "door": "pdf-text",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a pdf url"
+      },
+      {
+        "door": "scrapling",
+        "ok": false,
+        "ms": 289,
+        "bytes": 286,
+        "wall": false,
+        "error": null
+      },
+      {
+        "door": "scrapling-stealth",
+        "ok": true,
+        "ms": 3789,
+        "bytes": 17104,
+        "wall": false,
+        "error": null
+      }
+    ],
+    "bytes": 17104,
+    "file": "01-tympanus.net.md"
+  },
+  {
+    "url": "https://tympanus.net/codrops/2026/05/18/merlin-the-code-boutique-turning-motion-into-digital-magic/",
+    "read": true,
+    "door": "scrapling-stealth",
+    "cached_snapshot": false,
+    "liveness": "alive",
+    "doors_tried": 4,
+    "attempts": [
+      {
+        "door": "media-transcript",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a media url"
+      },
+      {
+        "door": "pdf-text",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a pdf url"
+      },
+      {
+        "door": "scrapling",
+        "ok": false,
+        "ms": 298,
+        "bytes": 286,
+        "wall": false,
+        "error": null
+      },
+      {
+        "door": "scrapling-stealth",
+        "ok": true,
+        "ms": 3564,
+        "bytes": 15848,
+        "wall": false,
+        "error": null
+      }
+    ],
+    "bytes": 15848,
+    "file": "20-tympanus.net.md"
+  },
+  {
+    "url": "https://www.awwwards.com/jury/",
+    "read": true,
+    "door": "firecrawl-scrape",
+    "cached_snapshot": false,
+    "liveness": "alive",
+    "doors_tried": 7,
+    "attempts": [
+      {
+        "door": "media-transcript",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a media url"
+      },
+      {
+        "door": "pdf-text",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a pdf url"
+      },
+      {
+        "door": "scrapling",
+        "ok": false,
+        "ms": 416,
+        "bytes": 9,
+        "wall": false,
+        "error": null
+      },
+      {
+        "door": "scrapling-stealth",
+        "ok": false,
+        "ms": 1232,
+        "bytes": 9,
+        "wall": false,
+        "error": null
+      },
+      {
+        "door": "opencli-reader",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "no platform adapter for this url"
+      },
+      {
+        "door": "tavily-extract",
+        "ok": false,
+        "ms": 481,
+        "bytes": 365,
+        "wall": true,
+        "error": "rc=1 "
+      },
+      {
+        "door": "firecrawl-scrape",
+        "ok": true,
+        "ms": 587,
+        "bytes": 8707,
+        "wall": false,
+        "error": null
+      }
+    ],
+    "bytes": 8707,
+    "file": "19-awwwards.com.md"
+  },
+  {
+    "url": "https://www.cssdesignawards.com/how-it-works",
+    "read": true,
+    "door": "scrapling",
+    "cached_snapshot": false,
+    "liveness": "alive",
+    "doors_tried": 3,
+    "attempts": [
+      {
+        "door": "media-transcript",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a media url"
+      },
+      {
+        "door": "pdf-text",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a pdf url"
+      },
+      {
+        "door": "scrapling",
+        "ok": true,
+        "ms": 1557,
+        "bytes": 1022,
+        "wall": false,
+        "error": null
+      }
+    ],
+    "bytes": 1022,
+    "file": "05-cssdesignawards.com.md"
+  },
+  {
+    "url": "https://www.cssdesignawards.com/judges",
+    "read": true,
+    "door": "scrapling",
+    "cached_snapshot": false,
+    "liveness": "alive",
+    "doors_tried": 3,
+    "attempts": [
+      {
+        "door": "media-transcript",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a media url"
+      },
+      {
+        "door": "pdf-text",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a pdf url"
+      },
+      {
+        "door": "scrapling",
+        "ok": true,
+        "ms": 1880,
+        "bytes": 4271,
+        "wall": false,
+        "error": null
+      }
+    ],
+    "bytes": 4271,
+    "file": "04-cssdesignawards.com.md"
+  },
+  {
+    "url": "https://www.webbyawards.com/judging-criteria/",
+    "read": true,
+    "door": "scrapling",
+    "cached_snapshot": false,
+    "liveness": "alive",
+    "doors_tried": 3,
+    "attempts": [
+      {
+        "door": "media-transcript",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a media url"
+      },
+      {
+        "door": "pdf-text",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a pdf url"
+      },
+      {
+        "door": "scrapling",
+        "ok": true,
+        "ms": 333,
+        "bytes": 31050,
+        "wall": false,
+        "error": null
+      }
+    ],
+    "bytes": 31050,
+    "file": "02-webbyawards.com.md"
+  }
+]

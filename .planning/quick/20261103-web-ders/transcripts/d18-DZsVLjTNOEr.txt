@@ -1,0 +1,36 @@
+language: en
+[00:00] While everyone was watching flawed computer use
+[00:01] and open AI operator,
+[00:02] ByteDance quietly dropped a free AI
+[00:04] that takes over your whole computer.
+[00:05] 36,000 stars, Apache 2.0.
+[00:07] And every virtual assistant on the planet
+[00:09] just lost their egg.
+[00:10] It's called UiTar's desktop.
+[00:11] And it doesn't just click links like a browser bot.
+[00:12] It actually sees your screen.
+[00:13] It reads what's on it like a human,
+[00:15] moves your mouse, types every key,
+[00:16] and finishes the task on its own.
+[00:17] And here's the part nobody is talking about.
+[00:19] Flawed computer use, open AI operator.
+[00:21] Google Project Mariner.
+[00:21] Every single one is locked behind a paid API.
+[00:24] ByteDance just open sourced the exact same thing for free.
+[00:26] You download the desktop app.
+[00:27] You turn on the free remote operator,
+[00:28] no setup, no config.
+[00:29] Then you just tell it what to do.
+[00:30] Say book me a flight and it opens the browser and books it.
+[00:32] Say clean up my inbox and it reads every email and sorts it.
+[00:35] Say pull these PDFs into a spreadsheet
+[00:36] and it does it while you walk away.
+[00:38] Now think about who this replaces.
+[00:39] Every virtual assistant, every data entry shop,
+[00:41] every freelancer charging 5,000 a month
+[00:42] to click buttons all day.
+[00:43] Open AI and Anthropic locked this behind a paywall.
+[00:46] ByteDance just gave it away.
+[00:47] Comment TARS and I will send you the GitHub link
+[00:48] with a full setup guide.
+[00:49] Follow for more such videos.

@@ -1,0 +1,91 @@
+{
+ "url": "https://www.cartier.com/en-us/home",
+ "tag": "ca-d",
+ "mode": "desktop",
+ "navErr": null,
+ "loadT": 11719,
+ "first": {
+  "mux": [],
+  "title": "Access Denied",
+  "h": 900,
+  "videos": [],
+  "canvases": [],
+  "imgCount": 0,
+  "lazy": 0,
+  "svgCount": 0,
+  "nodes": 7,
+  "textLen": 207,
+  "libs": {
+   "three": false,
+   "threeRev": null,
+   "gsap": false,
+   "ScrollTrigger": false,
+   "lenis": false,
+   "next": false,
+   "nuxt": false,
+   "webflow": false,
+   "jquery": false,
+   "react": false,
+   "rive": false,
+   "lottie": false,
+   "astro": false,
+   "gen": null
+  },
+  "scripts": []
+ },
+ "last": {
+  "mux": [],
+  "title": "Access Denied",
+  "h": 900,
+  "videos": [],
+  "canvases": [],
+  "imgCount": 0,
+  "lazy": 0,
+  "svgCount": 0,
+  "nodes": 7,
+  "textLen": 207,
+  "libs": {
+   "three": false,
+   "threeRev": null,
+   "gsap": false,
+   "ScrollTrigger": false,
+   "lenis": false,
+   "next": false,
+   "nuxt": false,
+   "webflow": false,
+   "jquery": false,
+   "react": false,
+   "rive": false,
+   "lottie": false,
+   "astro": false,
+   "gen": null
+  },
+  "scripts": []
+ },
+ "agg": {
+  "html": {
+   "n": 1,
+   "bytes": 723,
+   "load": 723,
+   "scroll": 0
+  }
+ },
+ "top": [
+  {
+   "b": 723,
+   "c": "html",
+   "u": "https://www.cartier.com/en-us/home",
+   "cl": "387",
+   "p": "load"
+  }
+ ],
+ "hostTop": [
+  [
+   "www.cartier.com",
+   723
+  ]
+ ],
+ "total": 723,
+ "n": 1,
+ "server": "AkamaiGHost"
+}

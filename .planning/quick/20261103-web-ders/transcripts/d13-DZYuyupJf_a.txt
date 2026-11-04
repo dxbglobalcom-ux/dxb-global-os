@@ -1,0 +1,44 @@
+language: en
+[00:00] Collod code is amazing, but you have to be careful.
+[00:02] I spent thousands of dollars last month and I didn't have to because of one simple thing.
+[00:08] And so pay attention and I'm going to tell you what that is.
+[00:11] So I have a digital marketing agency for local service businesses.
+[00:15] I've got a few dozen accounts and we build websites in all that jazz
+[00:19] and we were executing cloud code very heavily last month.
+[00:23] And I got a bill for thousands of dollars at the end of the month.
+[00:26] And I was kind of thinking like, is that normal?
+[00:28] I have a match plan and all that kind of stuff.
+[00:31] I thought I got a certain amount included every day.
+[00:34] Like maybe we were just hitting code really hard.
+[00:37] And so I asked Claude after going to Claude console to see how many
+[00:42] tokens we used, which was about two billion last month.
+[00:45] I asked if it was normal given what I was doing and it was like, no,
+[00:49] what the hell were you doing?
+[00:51] So I had to further investigate and it's one simple trick.
+[00:56] It's called clearing the terminal history.
+[00:58] I did not know that I was building websites and all sorts of things on
+[01:03] the same terminal for a client for the entire month.
+[01:06] So when something was being built, I would just keep going back
+[01:11] to that terminal for that client and just keep it moving because
+[01:17] I thought that having that history was important.
+[01:21] So I didn't forget.
+[01:22] So from what I understand, Claude code doesn't have history, doesn't
+[01:26] have memory.
+[01:27] So every single time you're done batching something and it's committed
+[01:31] and it's pushed through, you have to clear the terminal history or it's
+[01:35] going to continue working off the entire history of that terminal.
+[01:40] So you can imagine after working on one company's terminal for a week
+[01:45] or two weeks, the amount of data in that terminal in that history was
+[01:51] just tremendous and every single new prompt that I was pushing through
+[01:54] was pulling in the entire context of that terminal and using that as tokens.
+[01:59] So I definitely screwed myself there and spent thousands of dollars
+[02:03] that I didn't need to and the fix is very simple.
+[02:07] All you have to do after a prompt is completed is hit backslash clear
+[02:14] and it'll pop up.
+[02:15] It'll turn blue and then you hit enter.
+[02:17] That's in Claude code.
+[02:20] Once that's in Claude code.
+[02:22] So once you process that prompt and it builds it and it's committed
+[02:27] and it's pushed, you have to clear the terminal history by typing in
+[02:33] backslash clear, it'll turn blue, then you hit enter and you'll see
+[02:37] the terminal history disappears and then you put in your next prompt.

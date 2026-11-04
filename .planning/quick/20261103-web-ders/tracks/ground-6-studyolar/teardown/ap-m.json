@@ -1,0 +1,297 @@
+{
+ "url": "https://www.apple.com/iphone-17-pro/",
+ "tag": "ap-m",
+ "mode": "mobile",
+ "navErr": null,
+ "loadT": 12273,
+ "first": {
+  "mux": [],
+  "title": "iPhone - Apple",
+  "h": 30435,
+  "videos": [],
+  "canvases": [],
+  "imgCount": 35,
+  "lazy": 0,
+  "svgCount": 122,
+  "nodes": 3002,
+  "textLen": 83892,
+  "libs": {
+   "three": false,
+   "threeRev": null,
+   "gsap": false,
+   "ScrollTrigger": false,
+   "lenis": false,
+   "next": false,
+   "nuxt": false,
+   "webflow": false,
+   "jquery": false,
+   "react": false,
+   "rive": false,
+   "lottie": false,
+   "astro": false,
+   "gen": null
+  },
+  "scripts": [
+   "https://www.apple.com/v/iphone/home/cl/built/scripts/overview/head.built.js",
+   "https://www.apple.com/api-www/global-elements/global-header/v1/assets/globalheader.umd.js",
+   "https://www.apple.com/ac/includes/acmi-handler/scripts/acmi-head.built.js",
+   "https://www.apple.com/metrics/ac-analytics/2.30.0/scripts/ac-analytics.js",
+   "https://www.apple.com/metrics/ac-analytics/2.30.0/scripts/auto-init.js",
+   "https://www.apple.com/ac/globalfooter/8/en_US/scripts/ac-globalfooter.built.js",
+   "https://www.apple.com/ac/localeswitcher/4/en_US/scripts/localeswitcher.built.js",
+   "https://www.apple.com/v/iphone/home/cl/built/scripts/overview/main.built.js",
+   "https://www.apple.com/ac/ac-films/7.5.1/scripts/autofilms.built.js",
+   "https://www.apple.com/ac/includes/acmi-handler/scripts/autopricing-toggle.built.js",
+   "https://www.apple.com/ac/pricing/latest-1/scripts/autopricing.built.js"
+  ]
+ },
+ "last": {
+  "mux": [],
+  "title": "iPhone - Apple",
+  "h": 30435,
+  "videos": [],
+  "canvases": [],
+  "imgCount": 35,
+  "lazy": 0,
+  "svgCount": 122,
+  "nodes": 2989,
+  "textLen": 83892,
+  "libs": {
+   "three": false,
+   "threeRev": null,
+   "gsap": false,
+   "ScrollTrigger": false,
+   "lenis": false,
+   "next": false,
+   "nuxt": false,
+   "webflow": false,
+   "jquery": false,
+   "react": false,
+   "rive": false,
+   "lottie": false,
+   "astro": false,
+   "gen": null
+  },
+  "scripts": [
+   "https://www.apple.com/v/iphone/home/cl/built/scripts/overview/head.built.js",
+   "https://www.apple.com/api-www/global-elements/global-header/v1/assets/globalheader.umd.js",
+   "https://www.apple.com/ac/includes/acmi-handler/scripts/acmi-head.built.js",
+   "https://www.apple.com/metrics/ac-analytics/2.30.0/scripts/ac-analytics.js",
+   "https://www.apple.com/metrics/ac-analytics/2.30.0/scripts/auto-init.js",
+   "https://www.apple.com/ac/globalfooter/8/en_US/scripts/ac-globalfooter.built.js",
+   "https://www.apple.com/ac/localeswitcher/4/en_US/scripts/localeswitcher.built.js",
+   "https://www.apple.com/v/iphone/home/cl/built/scripts/overview/main.built.js",
+   "https://www.apple.com/ac/ac-films/7.5.1/scripts/autofilms.built.js",
+   "https://www.apple.com/ac/includes/acmi-handler/scripts/autopricing-toggle.built.js",
+   "https://www.apple.com/ac/pricing/latest-1/scripts/autopricing.built.js"
+  ]
+ },
+ "agg": {
+  "html": {
+   "n": 1,
+   "bytes": 58232,
+   "load": 58232,
+   "scroll": 0
+  },
+  "css": {
+   "n": 7,
+   "bytes": 122208,
+   "load": 122208,
+   "scroll": 0
+  },
+  "js": {
+   "n": 11,
+   "bytes": 607328,
+   "load": 607328,
+   "scroll": 0
+  },
+  "image": {
+   "n": 37,
+   "bytes": 871625,
+   "load": 424309,
+   "scroll": 447316
+  },
+  "font": {
+   "n": 8,
+   "bytes": 1050040,
+   "load": 1050040,
+   "scroll": 0
+  },
+  "json": {
+   "n": 7,
+   "bytes": 99057,
+   "load": 99057,
+   "scroll": 0
+  }
+ },
+ "top": [
+  {
+   "b": 235167,
+   "c": "font",
+   "u": "https://www.apple.com/wss/fonts/SF-Pro-Text/v3/sf-pro-text_semibold.woff2",
+   "cl": "234260",
+   "p": "load"
+  },
+  {
+   "b": 226042,
+   "c": "font",
+   "u": "https://www.apple.com/wss/fonts/SF-Pro-Text/v3/sf-pro-text_light.woff2",
+   "cl": "225132",
+   "p": "load"
+  },
+  {
+   "b": 221447,
+   "c": "font",
+   "u": "https://www.apple.com/wss/fonts/SF-Pro-Text/v3/sf-pro-text_regular.woff2",
+   "cl": "220536",
+   "p": "load"
+  },
+  {
+   "b": 167197,
+   "c": "js",
+   "u": "https://www.apple.com/api-www/global-elements/global-header/v1/assets/globalheader.umd.js",
+   "cl": "166301",
+   "p": "load"
+  },
+  {
+   "b": 130328,
+   "c": "font",
+   "u": "https://www.apple.com/wss/fonts/SF-Pro-Display/v3/sf-pro-display_semibold.woff2",
+   "cl": "129484",
+   "p": "load"
+  },
+  {
+   "b": 127526,
+   "c": "js",
+   "u": "https://www.apple.com/v/iphone/home/cl/built/scripts/overview/main.built.js",
+   "cl": "126683",
+   "p": "load"
+  },
+  {
+   "b": 117900,
+   "c": "font",
+   "u": "https://www.apple.com/wss/fonts/SF-Pro-Display/v3/sf-pro-display_regular.woff2",
+   "cl": "117056",
+   "p": "load"
+  },
+  {
+   "b": 113419,
+   "c": "js",
+   "u": "https://www.apple.com/ac/ac-films/7.5.1/scripts/autofilms.built.js",
+   "p": "load"
+  },
+  {
+   "b": 104385,
+   "c": "js",
+   "u": "https://www.apple.com/metrics/ac-analytics/2.30.0/scripts/ac-analytics.js",
+   "p": "load"
+  },
+  {
+   "b": 89270,
+   "c": "font",
+   "u": "https://www.apple.com/wss/fonts/SF-Pro-Text/v3/sf-pro-text_regular-italic.woff2",
+   "cl": "88432",
+   "p": "load"
+  },
+  {
+   "b": 85530,
+   "c": "image",
+   "u": "https://www.apple.com/v/iphone/home/cl/images/overview/augment/watch__f3c6xxw7rgey_small_2x.jpg",
+   "cl": "84734",
+   "p": "scroll"
+  },
+  {
+   "b": 81268,
+   "c": "image",
+   "u": "https://www.apple.com/v/iphone/home/cl/images/overview/priority-router/hero_iphone_duo__cvgy57jsl44m_small_2x.jpg",
+   "cl": "80481",
+   "p": "load"
+  },
+  {
+   "b": 69890,
+   "c": "image",
+   "u": "https://www.apple.com/v/iphone/home/cl/images/overview/augment/mac__f6iw5loluqie_small_2x.jpg",
+   "cl": "69103",
+   "p": "scroll"
+  },
+  {
+   "b": 61355,
+   "c": "css",
+   "u": "https://www.apple.com/v/iphone/home/cl/built/styles/overview.built.css",
+   "cl": "60560",
+   "p": "load"
+  },
+  {
+   "b": 58232,
+   "c": "html",
+   "u": "https://www.apple.com/iphone/",
+   "cl": "57441",
+   "p": "load"
+  },
+  {
+   "b": 57657,
+   "c": "image",
+   "u": "https://www.apple.com/v/iphone/home/cl/images/overview/augment/airpods__ctp50i4y3d26_small_2x.jpg",
+   "cl": "56879",
+   "p": "scroll"
+  },
+  {
+   "b": 56930,
+   "c": "js",
+   "u": "https://www.apple.com/ac/localeswitcher/4/en_US/scripts/localeswitcher.built.js",
+   "p": "load"
+  },
+  {
+   "b": 49281,
+   "c": "image",
+   "u": "https://www.apple.com/v/iphone/home/cl/images/overview/essentials/iphone_accessories__ds7uejsudeoi_small_2x.jpg",
+   "cl": "48513",
+   "p": "scroll"
+  },
+  {
+   "b": 45909,
+   "c": "json",
+   "u": "https://www.apple.com/api-www/global-elements/global-header/v1/flyouts?locale=en_US",
+   "cl": "45560",
+   "p": "load"
+  },
+  {
+   "b": 45909,
+   "c": "json",
+   "u": "https://www.apple.com/api-www/global-elements/global-header/v1/flyouts?locale=en_US",
+   "cl": "45560",
+   "p": "load"
+  },
+  {
+   "b": 39938,
+   "c": "image",
+   "u": "https://www.apple.com/v/iphone/home/cl/images/overview/essentials/airtag__diuuc9009hci_small_2x.jpg",
+   "cl": "39169",
+   "p": "scroll"
+  },
+  {
+   "b": 33994,
+   "c": "image",
+   "u": "https://www.apple.com/v/iphone/home/cl/images/overview/incentive/setup__cic7bl08ukgi_small_2x.jpg",
+   "cl": "33225",
+   "p": "scroll"
+  }
+ ],
+ "hostTop": [
+  [
+   "www.apple.com",
+   2806746
+  ],
+  [
+   "securemetrics.apple.com",
+   1744
+  ],
+  [
+   "",
+   0
+  ]
+ ],
+ "total": 2808490,
+ "n": 71,
+ "server": "Apple"
+}

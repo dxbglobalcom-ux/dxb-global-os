@@ -1,0 +1,25 @@
+language: en
+[00:00] Clot can now fix your entire SEO such that you actually rank on Google search and on
+[00:04] AI search with just four skills.
+[00:06] So before you spend thousands on hiring an SEO consultant, try this.
+[00:09] First, use the auditor to check exactly where you're ranking on Google search because it
+[00:13] will connect directly to Google search console.
+[00:15] It will crawl your whole site and run 180 technical checks to tell you exactly what your
+[00:18] rank is.
+[00:19] Then instead of guessing whether or not AI tools are recommending you, use the AI search
+[00:22] spy.
+[00:23] It will check if your brand is actually showing up on chart GPT, perplexity and Google AI
+[00:26] overviews.
+[00:27] Before your appearance and tell you why you're being skipped out of 100, then use the diagnoser
+[00:31] to stop guessing what to write to fix this.
+[00:33] To give you 15 easy wins, tweak immediately such that you start ranking on page one of
+[00:37] search.
+[00:38] She will also tell you the exact questions people are asking chart GPT that you should
+[00:40] be writing answers to on your blog.
+[00:42] Then finally, instead of waiting for an agency to come and execute all this, use the fixer.
+[00:46] Clot will write your schema, your llms.txt and give you the blogs and copy changers
+[00:50] for your website.
+[00:51] You need to track all of this using a live report like this, which will run as a schedule
+[00:55] task and show you a graph that you can track over time.
+[00:57] Comment as you and I will send you the whole setup guide and this will day 17 of work
+[01:00] with co-work and I will see you in the next one.

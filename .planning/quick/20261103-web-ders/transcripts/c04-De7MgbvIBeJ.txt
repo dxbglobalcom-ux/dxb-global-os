@@ -1,0 +1,34 @@
+language: tr
+[00:00] Selamlar, bu videoda agintation reposuna bakacağız.
+[00:02] Ne işe yarıyor agintation reposu, sitelerde istediğiniz yeri spesifik olarak agint
+[00:07] ınıza söyleyip bunları değiştirebileceğiniz bir yardımcı araş aslında.
+[00:10] Bunu anlatmanız gerekiyor.
+[00:11] Abi ben şuradaki şunu değiştirmek istiyorum diye bir saat dil dökmeniz gerekiyor.
+[00:15] Fakat agintation reposu direkt olarak klik seçeneğiyle derdinizi anlatmayı çözdüğünü
+[00:20] söylüyor.
+[00:21] Peki ben bu agintation nasıl kuracağım diyorsanız, şuradaki github reposunun linkini
+[00:24] kopyalıyorsunuz, kılığa aldığımıza geliyorsunuz, buraya diyorsunuz ki bu repoyu kurmak istiyor.
+[00:29] Sağ tarafta gördüğünüz şu butona bastığınızda burada artık web sitesinin css unsurlarını
+[00:34] seçebiliyorsunuz.
+[00:35] Mesela diyebilirsiniz ki şuraya bu üçlü sol tarafa logoya yanaşsın diyelim.
+[00:41] Şuraya tıklayayım, trn ülke bayrı olsun.
+[00:44] İkinci yorumu yaptım.
+[00:45] Şimdi eğer revizyedenizi tamamladıysanız şu alt kısımda copy feedback seçeneği
+[00:48] var.
+[00:49] C tuşuna bastığınızda da çalışıyor.
+[00:50] Bunu kopyaladınız ve tekrardan kılığa da geldiniz.
+[00:53] Şöyle yapıştırıyorsunuz.
+[00:54] Şimdi bu yapıştırdığınızda sizin anlatmaya çalıştığınızdan çok daha kompakt, çok
+[00:57] daha da e yayın anlayacağı nereye nasıl müdahale edeceğini çok net bir şekilde söyleyen
+[01:02] bir prompt vermiş oluyorsunuz.
+[01:03] Şimdi tamamını yaptığını söylüyor.
+[01:07] Buraya gelelim.
+[01:08] Geldik baktık.
+[01:09] İşte menüyü sol tarafa yaslamış.
+[01:10] Burayı ülke bayraklarıyla değiştirmiş.
+[01:12] Bir de en altta headerimizi yayacaktı yanlış hatırlamıyorsam yazılar başlığı tüm satırda.
+[01:18] Videonun uzun ve adım adım nasıl yapıldığı versiyonu Youtube'da olacak artık.
+[01:22] Yorumlara Alevya'da roket emoji'si bırakırsanız bütün linkleri ve dökümanları size mesaj
+[01:28] olarak iletebilirim.
+[01:29] Kendinize çok iyi bakın.
+[01:30] Hoşçakalın.

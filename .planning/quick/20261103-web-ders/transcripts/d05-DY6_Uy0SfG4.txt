@@ -1,0 +1,37 @@
+language: en
+[00:00] I installed these five repos on every Cloud Code project.
+[00:02] Number one is SuperPower, which finally makes
+[00:04] Cloud actually plan before it even starts coding.
+[00:07] It runs through a full loop of research, specs, plan,
+[00:09] test, and then built.
+[00:11] Your agent finally stops guessing and start thinking
+[00:13] like a senior dev.
+[00:14] Number two is everything Cloud Code,
+[00:16] which is basically a full performance system
+[00:18] packed into one install.
+[00:20] It handles context way better, run task faster,
+[00:22] and ship with prebuilt skills right out of the box.
+[00:25] It works across Cloud Code, cursor, code, exit, open code.
+[00:28] And already crossed 120k stars.
+[00:30] Number three is your UX Pro Max.
+[00:32] And honestly, without this, Cloud builds
+[00:34] the exact same boarding landing pages every time.
+[00:36] So what this skill does is it forces a real design direction
+[00:40] before any code gets written.
+[00:41] So your typography, color system, animation,
+[00:44] and everything actually feels very intentional.
+[00:46] Sitting at 78k stars right now.
+[00:48] Number four is Cloud Mem, which finally gives Cloud
+[00:50] persistent memory cross-session.
+[00:52] So you stop re-explaining your project every single time.
+[00:55] You start a new chat, and it just remembers
+[00:57] your code base, your preferences, your context,
+[00:59] and all of it.
+[01:00] Already have 78k stars right now.
+[01:03] Number five is NITEN MCP, which connects Cloud Code directly
+[01:06] to NITEN for backend automation.
+[01:08] So instead of guessing whether a workflow actually runs,
+[01:11] Cloud can test it and validate it for you.
+[01:13] If you already use NITEN, then this one
+[01:15] is highly non-negotiable.
+[01:16] Comment, repose, and I'll send all the links in your DM.

@@ -1,0 +1,279 @@
+{
+ "url": "https://igloo.inc/",
+ "tag": "ig-d",
+ "mode": "desktop",
+ "navErr": null,
+ "loadT": 15910,
+ "first": {
+  "mux": [],
+  "title": "Igloo Inc.",
+  "h": 900,
+  "videos": [],
+  "canvases": [],
+  "imgCount": 0,
+  "lazy": 0,
+  "svgCount": 0,
+  "nodes": 27,
+  "textLen": 0,
+  "libs": {
+   "three": true,
+   "threeRev": "165",
+   "gsap": false,
+   "ScrollTrigger": false,
+   "lenis": false,
+   "next": false,
+   "nuxt": false,
+   "webflow": false,
+   "jquery": false,
+   "react": false,
+   "rive": false,
+   "lottie": false,
+   "astro": false,
+   "gen": null
+  },
+  "scripts": [
+   "https://www.igloo.inc/assets/index-2e130bc1.js"
+  ]
+ },
+ "last": {
+  "mux": [],
+  "title": "Igloo Inc.",
+  "h": 900,
+  "videos": [],
+  "canvases": [],
+  "imgCount": 0,
+  "lazy": 0,
+  "svgCount": 0,
+  "nodes": 27,
+  "textLen": 0,
+  "libs": {
+   "three": true,
+   "threeRev": "165",
+   "gsap": false,
+   "ScrollTrigger": false,
+   "lenis": false,
+   "next": false,
+   "nuxt": false,
+   "webflow": false,
+   "jquery": false,
+   "react": false,
+   "rive": false,
+   "lottie": false,
+   "astro": false,
+   "gen": null
+  },
+  "scripts": [
+   "https://www.igloo.inc/assets/index-2e130bc1.js"
+  ]
+ },
+ "agg": {
+  "html": {
+   "n": 1,
+   "bytes": 837,
+   "load": 837,
+   "scroll": 0
+  },
+  "js": {
+   "n": 4,
+   "bytes": 461040,
+   "load": 461040,
+   "scroll": 0
+  },
+  "image": {
+   "n": 2,
+   "bytes": 0,
+   "load": 0,
+   "scroll": 0
+  },
+  "3d/rive": {
+   "n": 65,
+   "bytes": 11588989,
+   "load": 11588989,
+   "scroll": 0
+  },
+  "other": {
+   "n": 3,
+   "bytes": 345306,
+   "load": 345306,
+   "scroll": 0
+  },
+  "json": {
+   "n": 1,
+   "bytes": 1779,
+   "load": 1779,
+   "scroll": 0
+  },
+  "audio": {
+   "n": 18,
+   "bytes": 2950364,
+   "load": 2950364,
+   "scroll": 0
+  }
+ },
+ "top": [
+  {
+   "b": 1529684,
+   "c": "audio",
+   "u": "https://www.igloo.inc/assets/audio/music-highq.ogg",
+   "cl": "1527578",
+   "p": "load"
+  },
+  {
+   "b": 1288306,
+   "c": "3d/rive",
+   "u": "https://www.igloo.inc/assets/images/scroll-datatexture.ktx2",
+   "cl": "1286436",
+   "p": "load"
+  },
+  {
+   "b": 1136169,
+   "c": "3d/rive",
+   "u": "https://www.igloo.inc/assets/images/cubes/cube3_normal.ktx2",
+   "cl": "1134430",
+   "p": "load"
+  },
+  {
+   "b": 1078901,
+   "c": "3d/rive",
+   "u": "https://www.igloo.inc/assets/images/cubes/cube1_normal.ktx2",
+   "cl": "1077177",
+   "p": "load"
+  },
+  {
+   "b": 843658,
+   "c": "3d/rive",
+   "u": "https://www.igloo.inc/assets/images/igloo/igloo_exploded_color.ktx2",
+   "cl": "842242",
+   "p": "load"
+  },
+  {
+   "b": 837980,
+   "c": "3d/rive",
+   "u": "https://www.igloo.inc/assets/images/volumes/peachesbody_64.ktx2",
+   "cl": "836620",
+   "p": "load"
+  },
+  {
+   "b": 630833,
+   "c": "3d/rive",
+   "u": "https://www.igloo.inc/assets/images/floor_color.ktx2",
+   "cl": "629652",
+   "p": "load"
+  },
+  {
+   "b": 629950,
+   "c": "3d/rive",
+   "u": "https://www.igloo.inc/assets/images/igloo/ground_sansigloo_color.ktx2",
+   "cl": "628793",
+   "p": "load"
+  },
+  {
+   "b": 626507,
+   "c": "3d/rive",
+   "u": "https://www.igloo.inc/assets/images/igloo/ground_color.ktx2",
+   "cl": "625325",
+   "p": "load"
+  },
+  {
+   "b": 610752,
+   "c": "audio",
+   "u": "https://www.igloo.inc/assets/audio/room.ogg",
+   "cl": "609688",
+   "p": "load"
+  },
+  {
+   "b": 593094,
+   "c": "3d/rive",
+   "u": "https://www.igloo.inc/assets/images/igloo/mountain_color.ktx2",
+   "cl": "591988",
+   "p": "load"
+  },
+  {
+   "b": 573937,
+   "c": "audio",
+   "u": "https://www.igloo.inc/assets/audio/wind.ogg",
+   "cl": "572916",
+   "p": "load"
+  },
+  {
+   "b": 534378,
+   "c": "3d/rive",
+   "u": "https://www.igloo.inc/assets/images/igloo/igloo_color.ktx2",
+   "cl": "533374",
+   "p": "load"
+  },
+  {
+   "b": 423486,
+   "c": "js",
+   "u": "https://www.igloo.inc/assets/App3D-d68cb154.js",
+   "p": "load"
+  },
+  {
+   "b": 319347,
+   "c": "3d/rive",
+   "u": "https://www.igloo.inc/assets/images/volumes/x_64.ktx2",
+   "cl": "318476",
+   "p": "load"
+  },
+  {
+   "b": 240899,
+   "c": "3d/rive",
+   "u": "https://www.igloo.inc/assets/images/cubes/cube3_roughness.ktx2",
+   "cl": "240240",
+   "p": "load"
+  },
+  {
+   "b": 237343,
+   "c": "3d/rive",
+   "u": "https://www.igloo.inc/assets/images/cubes/cube1_roughness.ktx2",
+   "cl": "236683",
+   "p": "load"
+  },
+  {
+   "b": 233938,
+   "c": "3d/rive",
+   "u": "https://www.igloo.inc/assets/images/cubes/overpass_logo_color.ktx2",
+   "cl": "233248",
+   "p": "load"
+  },
+  {
+   "b": 230964,
+   "c": "other",
+   "u": "https://www.igloo.inc/assets/libs/basis/basis_transcoder.wasm",
+   "p": "load"
+  },
+  {
+   "b": 229463,
+   "c": "3d/rive",
+   "u": "https://www.igloo.inc/assets/images/shattered_ring2_color.ktx2",
+   "cl": "228809",
+   "p": "load"
+  },
+  {
+   "b": 222460,
+   "c": "3d/rive",
+   "u": "https://www.igloo.inc/assets/geometries/igloo.drc",
+   "p": "load"
+  },
+  {
+   "b": 219456,
+   "c": "3d/rive",
+   "u": "https://www.igloo.inc/assets/images/shattered_ring_color.ktx2",
+   "cl": "218729",
+   "p": "load"
+  }
+ ],
+ "hostTop": [
+  [
+   "www.igloo.inc",
+   15319083
+  ],
+  [
+   "",
+   29232
+  ]
+ ],
+ "total": 15348315,
+ "n": 94,
+ "server": "cloudflare"
+}

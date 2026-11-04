@@ -1,0 +1,190 @@
+{
+ "url": "https://eu.louisvuitton.com/eng-e1/homepage",
+ "tag": "lv-d",
+ "mode": "desktop",
+ "navErr": null,
+ "loadT": 12011,
+ "first": {
+  "mux": [],
+  "title": "LOUIS VUITTON",
+  "h": 978,
+  "videos": [],
+  "canvases": [],
+  "imgCount": 1,
+  "lazy": 0,
+  "svgCount": 1,
+  "nodes": 32,
+  "textLen": 238,
+  "libs": {
+   "three": false,
+   "threeRev": null,
+   "gsap": false,
+   "ScrollTrigger": false,
+   "lenis": false,
+   "next": false,
+   "nuxt": false,
+   "webflow": false,
+   "jquery": false,
+   "react": false,
+   "rive": false,
+   "lottie": false,
+   "astro": false,
+   "gen": null
+  },
+  "scripts": [
+   "https://js-cdn.dynatrace.com/jstag/1623d230d17/bf87812ugi/cd4b81bc366868c3_complete.js"
+  ]
+ },
+ "last": {
+  "mux": [],
+  "title": "LOUIS VUITTON",
+  "h": 978,
+  "videos": [],
+  "canvases": [],
+  "imgCount": 1,
+  "lazy": 0,
+  "svgCount": 1,
+  "nodes": 32,
+  "textLen": 238,
+  "libs": {
+   "three": false,
+   "threeRev": null,
+   "gsap": false,
+   "ScrollTrigger": false,
+   "lenis": false,
+   "next": false,
+   "nuxt": false,
+   "webflow": false,
+   "jquery": false,
+   "react": false,
+   "rive": false,
+   "lottie": false,
+   "astro": false,
+   "gen": null
+  },
+  "scripts": [
+   "https://js-cdn.dynatrace.com/jstag/1623d230d17/bf87812ugi/cd4b81bc366868c3_complete.js"
+  ]
+ },
+ "agg": {
+  "html": {
+   "n": 1,
+   "bytes": 3855,
+   "load": 3855,
+   "scroll": 0
+  },
+  "image": {
+   "n": 1,
+   "bytes": 144289,
+   "load": 144289,
+   "scroll": 0
+  },
+  "js": {
+   "n": 1,
+   "bytes": 153059,
+   "load": 153059,
+   "scroll": 0
+  },
+  "font": {
+   "n": 2,
+   "bytes": 0,
+   "load": 0,
+   "scroll": 0
+  },
+  "other": {
+   "n": 4,
+   "bytes": 1239,
+   "load": 1007,
+   "scroll": 232
+  }
+ },
+ "top": [
+  {
+   "b": 153059,
+   "c": "js",
+   "u": "https://js-cdn.dynatrace.com/jstag/1623d230d17/bf87812ugi/cd4b81bc366868c3_complete.js",
+   "p": "load"
+  },
+  {
+   "b": 144289,
+   "c": "image",
+   "u": "https://www.louisvuitton.com/images/is/image/content/dam/lv/editorial-content/maintenance_page/maintenance-page-desktop.jpg?wid=1440",
+   "cl": "143802",
+   "p": "load"
+  },
+  {
+   "b": 3855,
+   "c": "html",
+   "u": "https://eu.louisvuitton.com/eng-e1/homepage",
+   "cl": "3247",
+   "p": "load"
+  },
+  {
+   "b": 388,
+   "c": "other",
+   "u": "https://bf87812ugi.bf.dynatrace.com/bf?type=js3&sn=v_4_srv_-2D25128_sn_CFUPT6OUKSMD6R9NSO0QTB6LBAMJ6037&svrid=-25128&flavor=cors&vi=UFTDHIDCOTLFOGNURH",
+   "cl": "220",
+   "p": "load"
+  },
+  {
+   "b": 387,
+   "c": "other",
+   "u": "https://bf87812ugi.bf.dynatrace.com/bf?type=js3&sn=v_4_srv_14_sn_CFUPT6OUKSMD6R9NSO0QTB6LBAMJ6037_app-3Acd4b81bc366868c3_1_ol_0_perc_100000_mul_1&svri",
+   "cl": "220",
+   "p": "load"
+  },
+  {
+   "b": 232,
+   "c": "other",
+   "u": "https://bf87812ugi.bf.dynatrace.com/bf?sc=5&ty=js&pv=4&ai=cd4b81bc366868c3&en=z6ukq7lm&cr=1793024672065&av=1.347.4&cy=event&bc=1462798284&co=snappy&si",
+   "cl": "66",
+   "p": "load"
+  },
+  {
+   "b": 232,
+   "c": "other",
+   "u": "https://bf87812ugi.bf.dynatrace.com/bf?sc=5&ty=js&pv=4&ai=cd4b81bc366868c3&en=z6ukq7lm&cr=1793024672065&av=1.347.4&cy=event&bc=1274062235&co=snappy&si",
+   "cl": "66",
+   "p": "scroll"
+  },
+  {
+   "b": 0,
+   "c": "font",
+   "u": "https://tp.louisvuitton.com/fonts/bin/LouisVuitton-Regular.woff2",
+   "cl": "3247",
+   "p": "load"
+  },
+  {
+   "b": 0,
+   "c": "font",
+   "u": "https://tp.louisvuitton.com/fonts/bin/LouisVuitton-Regular.woff",
+   "cl": "3246",
+   "p": "load"
+  }
+ ],
+ "hostTop": [
+  [
+   "js-cdn.dynatrace.com",
+   153059
+  ],
+  [
+   "www.louisvuitton.com",
+   144289
+  ],
+  [
+   "eu.louisvuitton.com",
+   3855
+  ],
+  [
+   "bf87812ugi.bf.dynatrace.com",
+   1239
+  ],
+  [
+   "tp.louisvuitton.com",
+   0
+  ]
+ ],
+ "total": 302442,
+ "n": 9,
+ "server": "AkamaiGHost"
+}

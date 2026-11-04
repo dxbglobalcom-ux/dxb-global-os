@@ -1,0 +1,141 @@
+You are the AUDITOR of a research run. A writer you never saw wrote an answer from the rows of the run's ledger —
+each row has an id (L0001 …) — and every claim line of that answer ends with the ids of the rows it stands on. You
+have no tools and need none: under each claim below stand the rows it cites, each exactly as the writer was handed
+it. Judge each claim ONLY against the rows printed under it — not from memory, not from another claim's rows, and
+not from what you believe is true.
+
+## The question the answer was written for
+DERT (CEO'nun kendi cumlesi — ARANMAZ, cevabin bunu karsilamasi gerekir):
+Web sitelerinde SEO, AEO ve GEO için gerçekten işe yarayan nedir? Neyin kanıtı var, ne satış lafı? ChatGPT, Gemini, Perplexity, Google yapay zekâ cevaplarında bir marka nasıl çıkar, nasıl ölçülür, hangi aletler gerçek?
+
+SORGULAR (zemin bunlarla acildi):
+  - AEO GEO what actually works
+  - AI search citations real results
+
+ALT SORULAR (S-kimlik · başlık · soru):
+  - S1 · Kanıtı olan SEO/AEO/GEO uygulamaları · Web sitelerinde SEO, AEO ve GEO için hangi uygulamaların görünürlüğü artırdığı kontrollü deney, büyük veri analizi veya vaka verisiyle kanıtlanmıştır?
+  - S2 · Kanıtsız iddialar ve satış lafları · SEO, AEO ve GEO alanında yaygın olarak satılan hangi iddia ve taktiklerin kanıtı yoktur veya verilerle çürütülmüştür?
+  - S3 · Platformlarda markanın çıkma yolları · ChatGPT, Gemini, Perplexity ve Google yapay zekâ cevapları bir markayı hangi kaynak ve mekanizmalarla seçip gösterir, bu platformlar arasında ne fark vardır?
+  - S4 · Yapay zekâ görünürlüğünün ölçülmesi · Bir markanın yapay zekâ cevaplarındaki görünürlüğü ve bundan gelen trafik ile iş sonucu hangi yöntem ve metriklerle güvenilir biçimde ölçülür?
+  - S5 · Gerçek işe yarayan ölçüm aletleri · Piyasadaki AEO/GEO aletlerinden hangileri gerçek veri ve doğrulanabilir sonuç sunar, hangileri güvenilir değildir?
+
+## The 12 claims
+Each claim is its heading `### <id> [<section>]`, then its whole line as it stands in the answer, then `dayanak:` —
+the rows it cites as support — and `karşı:` — its counter rows: the ones the line names after `↔`, and the ones a
+counter-evidence hunter linked to it. A row is `[id] platform · @author · date · "passage" · address`; a row that says
+`gövde yok` carries nothing to judge by. A heading that ends `· hüküm` is the answer's first line: its verdict.
+
+### C061 [S4]
+- Kişisel hesapla elle kontrol yanıltır, çünkü kişiselleştirme, konum ve hesap geçmişi gürültü ekliyor (2 satırın 2'si) [L1361, L1469].
+dayanak:
+  [L1361] youtube · @Exposure Ninja · ? · "It knows you work there, so you can't trust individual answers, which is why checking your own AI visibility by hand doesn't work" · https://www.youtube.com/watch?v=y3el5Cwpyk8
+  [L1469] hackernews · @marzapower · 2026-03 · "This is actually a fundamental limitation of prompt-monitoring approaches — personalization, location variance, account history all introduce noise that's hard to control." · https://news.ycombinator.com/item?id=47457472
+karşı: (yok)
+
+### C062 [S4]
+- Bahis, atıf ve öneri ayrı sayılmalıdır, çünkü biri diğerini getirmiyor (7 satırın 7'si) [L1332, L1464].
+dayanak:
+  [L1332] x · @Wellows fiyat sayfası · 2026-11 · "Two checks, not one: where an answer names you outright, and where your domain sits inside the pages it cites without ever saying your name." · https://t.co/zrcjsJiHMU
+  [L1464] substack · @Pritam Roy · 2026-10-29 · "You can be cited in an answer that recommends someone else." · https://pritamr.substack.com/p/axo-vs-geo
+karşı: (yok)
+
+### C063 [S4]
+- Google yalnız gösterim düzeyinde bir ölçü veriyor; AI Overviews ve AI Mode bağlantı gösterimleri raporlanıyor, ama ziyaret ve iş sonucu arasındaki parça boş kalıyor (4 satırın 4'ü) [L1572, L1576, L1708, L1710].
+dayanak:
+  [L1572] chinese · @艾默霏数智科技 · ? · "这份报表给的东西很明确:**AI 概览和 AI 模式里,指向你网站的链接被展示了多少次。**" · https://zhuanlan.zhihu.com/p/2101330401440671463
+  [L1576] chinese · @艾默霏数智科技 · ? · "Google 的 AI 回答只给你曝光,第三方助手只给你访问,中间那截永远是空的。" · https://zhuanlan.zhihu.com/p/2101330401440671463
+  [L1708] web · @Search Engine Journal · 2026-11-02 · "However, the page doesn't list clicks, CTR, or queries." · https://www.searchenginejournal.com/google-ai-click-reporting-uk-deadline/595663/
+  [L1710] web · @Google · ? · "The generative AI performance report includes impressions for the following generative AI capabilities on Google Search:" · https://support.google.com/webmasters/answer/16984139?hl=en
+karşı: (yok)
+
+### C064 [S4]
+- Bing atıf payını gösteriyor, ama atfı tıklama, sıralama ve iş sonucundan ayrı tutuyor (2 satırın 2'si) [L1444, L1518].
+dayanak:
+  [L1444] tiktok · @harrysandersseo · ? · "It's called Citation Share, the exact percentage of AI answers that cite you instead of your competitor." · https://www.tiktok.com/@harrysandersseo/video/7673404909294800145
+  [L1518] substack · @David Scott · 2026-11-03 · "But Microsoft explicitly distinguishes citations from clicks, rankings, and business outcomes." · https://answerengineplaybook.substack.com/p/search-rankings-vs-ai-recommendations-ea0
+karşı: (yok)
+
+### C065 [S4]
+- Ziyaret ölçümü GA4 yönlendirmesiyle başlar, ama alt sınırdır ↔ bir sitede %95'in üzerinde eksik sayım bildirildi ve OpenAI güncellemesi görünür trafiği düşürdü (4 satırın 4'ü) [L1493, L1468] ↔ [L1521, L1573].
+dayanak:
+  (yok)
+karşı:
+  [L1493] reddit · @derp-n-serp · 2026-08 · "Just link GA4 - its automatically sorting AI into a default traffic source channel." · https://reddit.com/r/ecommerce/comments/1vz1hk0/do_we_even_still_need_to_hire_an_agency_for_this/
+  [L1468] hackernews · @vincko · 2026-03 · "This tends to be a lower bound, since it's not always set correctly." · https://news.ycombinator.com/item?id=47457472
+  [L1521] reddit · @startages · 2026-07 · "Don't rely on GA4 though, it undercounts by a lot, like over 95% missed from my own website numbers." · https://reddit.com/r/AISearchLab/comments/1v0dms2/
+  [L1573] substack · @Doug Bell - Cannonball GTM · 2026-10-20 · "He also had a number from the week we recorded: an OpenAI update removed tracking on roughly half of ChatGPT referral traffic, and his clients saw a 40 to 60 percent drop in what their analytics could see, overnight, with nothing changed on their side." · https://cannonballgtm.substack.com/p/retrieved-or-invisible-what-ai-thinks
+
+### C066 [S4]
+- Yönlendiren bilgisi olmayan ve derin sayfaya inen trafik vekil işaret olarak izlenebilir; markalı sorgu artışı ve sunucu günlüğü de aynı vekil listededir (2 satırın 2'si) [L1351, L1743].
+dayanak:
+  [L1351] x · @Koka Sexton (Chief Content Marketer) · 2026-10-15 · "Also track zero-referrer traffic that lands on deep content pages; many AI interfaces don't pass referrer headers, so that becomes a proxy signal for AI-driven visits." · https://t.co/LOaQVPXpjY
+  [L1743] web · @TDM Insights · 2026-06 · "The proxies worth charting are branded-query lift in Search Console, Direct-channel spikes on deep content pages, and AI-crawler hits in your server logs." · https://tdminsights.com/insights/how-to-measure-ai-traffic-with-no-referrer/
+karşı: (yok)
+
+### C067 [S4]
+- Bot günlükleri kullanıcı tetikli ChatGPT ziyaretini ayırabilir, ama tarama atıf demek değildir (2 satırın 2'si) [L1311, L1522].
+dayanak:
+  [L1311] web · @Ali Almoosawi · 2026-10 · "Mostly by user agent. OAI-SearchBot crawls for ChatGPT search, while ChatGPT-User only shows up when a person asks ChatGPT about a specific page." · https://www.producthunt.com/products/ranktune
+  [L1522] reddit · @Capable-Kiwi-3368 · 2026-07 · "At the same time, crawling doesn't mean citation, so maybe bot data is just a supporting signal(?)" · https://reddit.com/r/AISearchLab/comments/1v0dms2/
+karşı: (yok)
+
+### C068 [S4]
+- Trafik ölçeği küçüktür: satırlar yapay zekânın payını ortalama yaklaşık %0,25, organik dönüşümün ise yaklaşık %3'ü düzeyinde veriyor (7 ölçek satırının 7'si) [L1319, L1194].
+dayanak:
+  [L1319] youtube · @Sam Oh (Ahrefs) · ? · "According to our data, AI referral traffic accounts for about 0.25% of a site's total traffic on average." · https://www.youtube.com/watch?v=uza9GX0E2mw
+  [L1194] x · @EntrepreneurDB · 2026-11-03 · "For every 100 conversions organic search sends you, AI refers you just three." · https://x.com/i/status/2117693295765942395
+karşı:
+  [L1596] web · @Danny Goodwin (SEL) · 2026-02-26 · "GA4 referral data likely understates ChatGPT's influence." · https://searchengineland.com/chatgpt-vs-non-branded-organic-search-conversions-470321
+  [L1597] web · @Vercel · ? · "That's up from 4.8% the previous month, and 1% six months ago." · https://vercel.com/blog/how-were-adapting-seo-for-llms-and-ai-search
+  [L1603] web · @Vercel · ? · "ChatGPT now refers [around 10% of new Vercel signups]" · https://vercel.com/blog/how-were-adapting-seo-for-llms-and-ai-search
+
+### C069 [S4]
+- Tıklama temelli atıf eksik kalabilir: müşteriye sorma yöntemi Peec AI'ya göre yaklaşık %23 pay gösterdi, Ahrefs'in kendi beyan verisinde bu oran yaklaşık %3'tür (2 satır, ikisi de satıcı) [L1498, L1321].
+dayanak:
+  [L1498] tiktok · @Malte Landwehr (Peec AI) · ? · "Your analytics might say 0% of leads come from AI. Ask your customers, and it's more like 23%." · https://www.tiktok.com/@malte.landwehr/video/7658201410474970390
+  [L1321] youtube · @Sam Oh (Ahrefs) · ? · "At Hrefs, around 3% of our conversions came from AI over the last year based on self-reported data." · https://www.youtube.com/watch?v=uza9GX0E2mw
+karşı: (yok)
+
+### C070 [S4]
+- Yapay zekâ ziyaretleri daha iyi dönüşüyor görünüyor ↔ satın alma kararına yakın kullanıcı seçilimi bunu açıklayabilir (7 satırın 6'sı) [L1236, L1329, L1583] ↔ [L1272].
+dayanak:
+  (yok)
+karşı:
+  [L1236] youtube · @Ahrefs · ? · "AI search traffic was just 0.5% of our visits, but it drove 12.1% of our sign-ups." · https://www.youtube.com/watch?v=58MR03s0ev8
+  [L1329] youtube · @Exposure Ninja · ? · "42% better conversion from AI-referred visits than other traffic to US retail sites." · https://www.youtube.com/watch?v=y3el5Cwpyk8
+  [L1583] web · @? · ? · "Check my site's SEO SEO ChatGPT ecommerce traffic converts 31% higher than non-branded organic search DG By Danny Goodwin Published: February 26, 2026 at 9:55 am Add as Preferred Source ChatGPT ecommerce traffic converted 31% higher than non-branded organic search across 94 ecommerce sites in 2025,…" · https://searchengineland.com/chatgpt-vs-non-branded-organic-search-conversions-470321
+  [L1272] x · @victor_explore · 2026-05-24 · "chatbot traffic converting better because the user already finished their own sales pitch in the prompt" · https://x.com/alexgroberman/status/2058541332797464897
+
+### C071 [S4]
+- AI Overviews 1. sıradaki sayfanın tıklama oranını %58 düşürüyor deniyor, ama bu gözlemsel tahmindir ↔ 36 sitede 8 haftalık düşüş görülmedi (5 satırın 4'ü) [L1282, L1359] ↔ [L1168].
+dayanak:
+  (yok)
+karşı:
+  [L1282] youtube · @Sam Oh (Ahrefs) · ? · "the presence of an AI overview on Google reduces the click-through rate for the number one ranking page by 58%." · https://www.youtube.com/watch?v=uza9GX0E2mw
+  [L1359] web · @Tarek Reslan · 2026-01-27 · "That doesn't mean every AI Overview causes a 58% drop. It's an observational estimate." · https://cxl.com/blog/aeo-geo-seo-reality-check/
+  [L1168] x · @iraiansar · 2026-11-03 · "None of the 36 sites I run opted out of AI Overviews, and 8 weeks of Search Console show no fall in their click-through rate: 2.53% in the week to Oct 30, inside its 2.22% to 2.69% range since Sep 5." · https://x.com/i/status/2117675618695561501
+
+### C072 [S4]
+- Atıf doğruluk kanıtı değildir: bir denetimde atıfların %74,5'i bağlı cümleyi destekledi, başka çalışmada AI Overviews iddialarının %11'i kaynakça desteklenmedi (2 satırın 2'si) [L1429, L1259].
+dayanak:
+  [L1429] tiktok · @dgm.america · ? · "Stanford researchers audited four AI search engines: only 74.5% of citations actually supported the sentence they were attached to, and barely half of all sentences were fully backed." · https://www.tiktok.com/@dgm.america/video/7701303998216670485
+  [L1259] x · @OwenGregorian · 2026-11-03 · "The analysis showed that 11 percent of the generated claims were not supported by the cited pages." · https://x.com/i/status/2117607084829138992
+karşı: (yok)
+
+## Your verdict on each claim — one of three
+- `ok` — the rows under it say what the line says, and every number in the line is one those rows bear (a count of
+  rows the line gives is borne when that many rows under it say so).
+- `corrected` — the rows say less than the line, or something other, or a `karşı` row under it is not named in the
+  line. Then write the line yourself, as it should stand in the answer:
+  - Turkish, in the writer's own grammar: the claim, then the ids it stands on in square brackets, `… [L0042, L0107]`;
+    the counter-evidence after `↔`, `… [L0042] ↔ … [L0051]`, once in the line;
+  - only ids printed under THIS claim, in its `dayanak` or its `karşı` — the same ids or a subset, at least one, and never an id whose row is marked `(yazara verilmeyen satır)`;
+  - no quote of a source's words, no address, no `http`, no domain;
+  - the WHOLE line, a drop-in replacement: a list item keeps its mark (`- `); a table row stays a table row,
+    `| … | … |`, with the same number of cells.
+- `removed` — no row cited under it supports the line. The verdict (`· hüküm`) is never removed: when its rows do not
+  bear it, correct it.
+
+Give every one of the 12 claims one entry: its `reason` one sentence in Turkish, its `line` only when the verdict is
+`corrected`. Output ONLY valid JSON — no code fence, nothing before or after it:
+{"verdicts":[{"id":"C007","verdict":"ok","reason":"..."},{"id":"C008","verdict":"corrected","reason":"...","line":"..."},{"id":"C009","verdict":"removed","reason":"..."}]}

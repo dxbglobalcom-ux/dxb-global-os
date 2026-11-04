@@ -1,0 +1,1 @@
+MCP ERROR (quota): You reached the monthly keyless Tavily limit. To continue immediately, pay via x402 agentic payment (https://docs.tavily.com/documentation/machine-payments/x402) or sign up at https://tavily.com for a Tavily API key. You can also earn 36 more keyless credits by answering 2 short questions about this agent — POST your answers to /keyless/bonus.

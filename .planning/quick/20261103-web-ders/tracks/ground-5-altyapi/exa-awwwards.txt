@@ -1,0 +1,365 @@
+Title: Case Study: Cobo
+URL: https://www.awwwards.com/case-study-cobo.html
+Published: N/A
+Author: N/A
+Highlights:
+# Case Study: Cobo
+
+- Niccolò Miranda PRO 
+
+## To celebrate their 35th anniversary, Cobo wanted to underline their worldwide experience in plastic injection moulding through an unusual immersive experience. The aim was to showcase their products and know-how basing the whole art direction on the fluid plastic concept.
+
+...
+
+We were stoked to build an interactive landing page as possible for users, while remaining consistent within the project scope. Using Three.js, we were able to re-create the viscosity and elasticity of the plastic material. Many color variants and effects have been tested to achieve the best efficiency/content result.
+
+The interactions were based on three effects:
+
+- Waves (the plastic mixing process)
+- Amplitude (corporate vision and growth)
+- Parallax (change and depth effect)
+
+Interactive 3D Organic Blob
+
+Since liquid real-time simulation requires a high computation capabilities, the main struggle here was to do this bunch of stuff without losing client side performances. To counter it, we used GPGPU computation, that is to say that we do the most part of the computation on the graphic card (GPU) side in order to reduce computation on CPU, things such as lights rendering and shape deformations. That’s how we get 60FPS on most devices, even on mobile.
+
+## Turning interactions smoothly and efficiently
+
+The rise of WebGL is allowing creative developers to bring up projects to a next level, but it's definitely hard to find new ones every time. Moving closer to the home page, the strategy was to create a solid web identity concept with a fluid macro effect that could connect users with the contents and make them have a pleasant digital experience. Due to the high size of the js bundle, we opted to use a macro-reveal effect for all images based on different interactions. To achieve this we used Three.js and WebGL.
+
+Motion Distortion Image Effect (on Scroll/Click)
+
+Motion Distortion Image Effect (on Hover)
+
+The main technical challenge was to mix smoothly DOM and WebGL. Because of the difference between these technologies we had to create custom tools in order to transform DOM images in WebGL plane, with the same position and same size while applying distortion effects.
+
+The Metal
+
+Code is definitely a UX challenge. Even before the project started, gray was chosen to be used for a transition effect. To reduce the feeling of loading and break down the average waiting time, we used a blend-mode pages transition which represents the metal.
+
+...
+
+### ➭ CMS / Hosting
+
+- Webflow
+
+- WebGL
+- Three.js 
+- GSAP
+
+...
+
+Currently young jury member at Awwwards.
+
+---
+
+Title: Case Study: HATOM - Brand new experience
+URL: https://www.awwwards.com/case-study-hatom-brand-new-experience.html
+Published: 2025-01-30T00:00:00.000Z
+Author: N/A
+Highlights:
+### Challenges
+
+Optimizing performance for the detailed 3D environments and animations while ensuring responsiveness was a primary challenge. The long-press interactions, revealing unique environmental variations, and the 3D models required extensive processing, especially for mobile devices. Ensuring smooth load times and accessibility across platforms demanded strategic asset management and design adaptations to deliver a seamless experience without compromising quality.
+
+### Innovative Solutions
+
+To address these challenges, we employed WebGL to achieve high-quality visuals with minimal load impact. A custom preloading sequence allowed assets to load progressively, maintaining a smooth user experience. The long-press interaction was refined for both desktop and mobile, adapting the 3D models and animations for responsive performance. These solutions allowed us to bring Hatom Labs’ vision to life, delivering a captivating, interactive journey through the griffin’s evolution and showcasing the core components of their ecosystem.
+
+...
+
+### Technologies
+
+Frontend Framework: Vue.js/ Nuxt.js
+
+Styles: Sass preprocessor + BEM naming convention
+
+WebGL: Three.js
+
+3D Assets: Blender
+
+Motion: GSAP
+
+Scroll manager: Lenis
+
+CMS: Strapi
+
+Audio: Howler
+
+Deployment and analytics: Vercel
+
+---
+
+Title: Resn’s Pioneer - Corn Revolutionized wins Site of the Month July 2020
+URL: https://www.awwwards.com/resns-pioneer-corn-revolutionized-wins-site-of-the-month-july-2020.html
+Published: 2020-08-19T00:00:00.000Z
+Author: N/A
+Highlights:
+Performance matters, so we take pride in optimizing our projects to create a superior experience. We leverage a wide array of techniques like lazy loading, GPU-compressed textures for 3D assets, and serving optimized content for different devices.
+
+We are continually developing and optimizing Jelly, incorporating new learnings and techniques into our approach. With Pioneer - Corn Revolutionized, we were able to push the technology to achieve unparalleled photorealism with convincing depth of field, dynamic lighting, and thousands of animated particles while maintaining consistent stroke widths and smooth edges regardless of screen size or pixel density.
+
+## UI in WebGL
+
+We designed a user interface that was smooth and elegant which would highlight Pioneer’s technological prowess. We wanted to strike the right balance between simple and sophisticated, including some unique interactions.
+
+Mixing DOM animations on top of a WebGL context has always caused performance problems for us, so we decided to create most of the UI and text in WebGL. The aim was to optimize performance and allow for more creative freedom with the animations.
+
+There were a few issues we needed to tackle in DOM/canvas animations:
+
+- To keep consistent stroke widths and have smooth anti-aliased edges, we used the derivative functions dFdx and fwidth, which maintained the precision regardless of screen size or pixel density. 
+- WebGL doesn’t come with Pointer Events, such as clicks and rollovers, so we had to create our own from scratch using bounding boxes and hit detections. 
+
+After creating the first icon we were able to easily reuse that common functionality across all UI elements.
+
+---
+
+Title: Case Study: Mat Voyce
+URL: https://www.awwwards.com/case-study-mat-voyce-designing-a-digital-home-for-a-kinetic-creative.html
+Published: 2025-02-24T00:00:00.000Z
+Author: N/A
+Highlights:
+## Feb 24, 2025
+
+# Case Study: Mat Voyce
+
+- Uncommon Design Group PRO 
+
+# Designing a digital home for a kinetic creative
+
+Mat Voyce’s work isn’t just visual—it moves, breathes, and interacts with its audience. As a type designer and animator renowned for his kinetic typography, Mat needed a website that did more than display his portfolio. It had to feel alive, mirroring his movement and personality to every project.
+
+...
+
+## Overcoming the biggest challenge: scaling kinetic typography
+
+Bringing Mat Voyce’s signature kinetic typography to the web was a unique challenge. Our goal was to preserve the impact of large-scale animated lettering while ensuring smooth performance and seamless motion.
+
+#### Scaling typography beyond the viewport
+
+ Mat’s animated typography extends beyond traditional layouts. To maintain proportionality across different screen sizes, we implemented a dynamic scaling system that automatically adjusts text ratios, ensuring a fluid visual experience across all devices.
+
+#### Optimising performance & smooth motion
+
+ Animating large SVG-based typography can be resource-intensive. To optimise rendering, we:
+
+- Leveraged GSAP for timeline-based animations, enhancing browser efficiency.
+- Utilised React Three Fiber (R3F) to shift rendering to WebGL, reducing CPU load and maintaining smooth frame rates. This wasn’t just about making things look good—it was about preserving the integrity of Mat’s work without compromising site performance. Using a combination of HTML5, CSS3, and JavaScript—specifically leveraging GSAP for smooth animations—we crafted a site that kept transitions fluid while maintaining fast load times. After extensive testing and refining, we found the perfect balance between maintaining visual fidelity and ensuring the site ran smoothly across different devices and internet speeds.
+
+## Lessons learned and what we’d do differently
+
+Building a site that serves both as a showcase and an experience required balancing creativity with functionality. One of the key lessons we learned was the importance of refining performance continuously. While we spent months debugging and optimising, earlier integration of performance testing would have streamlined the process.
+
+If we could start over, we would refine our approach to communication across time zones. Coordinating a globally distributed team presented unforeseen challenges, from aligning feedback cycles to ensuring smooth collaboration despite geographical constraints. Establishing a more structured workflow earlier in the project would have streamlined decision-making and improved efficiency.
+
+#### Smart asset loading strategy
+
+ To ensure a seamless user experience without sacrificing performance, we optimised asset handling by:
+
+- Lazy-loading & preloading: Ensuring essential animations load efficiently while deferring non-critical content.
+- Asset compression: Every image, video, and animation was fine-tuned to maintain high quality while improving load times.
+
+#### >Advanced optimisation techniques
+
+- Enhancing video experience: Integrated video streaming to improve playback performance.
+- Balancing GIF vs. Lottie: Used GIFs over Lottie animations in some cases to minimise rendering load while maintaining visual quality.
+- Optimising GIF playback with FreezeFrame: Implemented FreezeFrame.js to control GIF playback, reducing unnecessary resource consumption.
+- Leveraging WebGL & Canvas: For complex effects, we combined WebGL & Canvas API to offload rendering from the CPU, ensuring smooth and efficient graphics performance.
+- Asset optimisation: Every media element was compressed and fine-tuned to balance quality and loading speed. We ensured seamless navigation even on lower-speed connections by employing optimised JavaScript and carefully structured back-end logic.
+
+...
+
+This project was led by Founder and Design Director Oliver Muñoz and produced in collaboration with Senior UI Designer and Awwwards Jury Huy Phan and Lead Developer and Awwwards Jury Hon Q. Tran. Custom animated illustrations by Mat Voyce.
+
+---
+
+Title: Siena Film Foundation – Case Study
+URL: https://www.awwwards.com/siena-film-foundation-case-study.html
+Published: 2025-05-28T00:00:00.000Z
+Author: N/A
+Highlights:
+## Technical Aspects
+
+To handle intensive WebGL assets efficiently, we adopted GPU texture compression, server-side optimization, and effective channel packing. We streamlined development by leveraging Webflow's flexibility combined with custom WebGL integrations.
+
+Additionally, we implemented a sophisticated post-processing and blur system, applying directional blur effects—horizontal on work pages, vertical on the homepage. This dynamically adjusts blur intensity and saturation based on slider interaction speed, effectively managing visual motion and enhancing user experience through controlled cinematic transitions.
+
+Animations and interactions were expertly managed using GSAP, paired with Lenis for scroll management, ensuring smooth performance across devices.
+
+## Technologies
+
+- WebGL & 3D Integration: Three.js for advanced WebGL rendering.
+- Frontend Frameworks: Webflow with custom WebGL integrations.
+- Animation & Interaction: GSAP animations, Lenis for smooth scrolling.
+- Backend & CMS: Webflow CMS for content management.
+
+---
+
+Title: 2018: Year in Review by Green Chameleon Wins Site of the Month March
+URL: https://www.awwwards.com/2018-year-in-review-by-green-chameleon-wins-site-of-the-month-march.html
+Published: 2019-04-12T00:00:00.000Z
+Author: N/A
+Highlights:
+## Performance
+
+Three.js has some pretty handy frustum culling stuff built in which helped a great deal when it comes to only rendering what is visible, but we needed to extend this functionality to handle when videos should be played and paused as you travel through the timeline. We wanted the user to be able to travel through the timeline as fast as they wanted whilst keeping it as smooth as possible, and constantly playing and pausing videos restricted this. So, we only updated video states when moving at a slow enough speed to keep things as lightweight as possible.
+
+...
+
+## Device Video Limits
+
+HTML Video element limits wasn’t something we knew about until we stress tested with a few dozen videos. At first we saw a hard limit of 16 videos when testing on an iPad so we tested on a number of other mobile devices and lower spec machines where we came to the conclusion it must be a hardware limitation. We overcame this on these devices by only loading the metadata which includes the video dimensions and the first frame that was required to build the timeline, then clearing the video element and moving onto the next one. The video would then only play once the item had been opened.
+
+...
+
+There are two gesturing hands in the timeline that we intentionally kept as 2D assets after discovering the faux-3D effect they take on when changing camera perspective. This illusion broke when trying to animate the object so we rendered a video of the end hand waving in a real 3D space to get the lighting and shadows correct. This meant having a solid background in the video which covered elements behind it but this didn’t match the design, nor could we reliably match the compressed video colours with a WebGL colour. So we used solid green and made multiple passes in a shader to discard it, rendering it transparent. It’s not perfect but it’s the first time we’ve tried this and we think it came out pretty well!
+
+## Technologies
+
+Our hosting provider is Digital Ocean, the server is running Nginx on the HTTP2 protocol with brotli/gzip compression. This along with optimising assets as much as possible means we can serve the site in ~20Mb.
+
+Aside from HTML and CSS which was used to create the UI around the edge of the screen and the entrance and loading screen, WebGL was at the core of the site – specifically the Three.js library. There were two main challenges that quickly became apparent in the development process: keeping up performance with so many objects in the 3D space, and getting past the device’s limits when it comes to videos.
+
+---
+
+Title: Creativity and Mobile Performance: One World, One Face by Adoratorio
+URL: https://www.awwwards.com/creativity-and-mobile-performance-one-world-one-face-by-adoratorio.html
+Published: 2018-09-12T00:00:00.000Z
+Author: N/A
+Highlights:
+Creativity and Mobile Performance: One World, One Face by Adoratorio
+
+## Sep 12, 2018
+
+# Creativity and Mobile Performance: One World, One Face by Adoratorio
+
+Presenting a new series of case studies on Creativity and Mobile Performance which delve into Mobile Excellence Award winning projects. This badge, born from a collaboration between Google and Awwwards, aims to improve performance, accessibility and other important aspects such as semantics and best practice on the mobile web.
+
+These case studies will unveil the challenges winning sites have overcome to achieve quality projects which fuse design and usability. We hope you find them useful for understanding how to manage the performance and accessibility of your mobile websites. To make sure your site achieves the Google seal of approval, follow the items in the Mobile Excellence Guidelines.
+
+...
+
+## Mobile-First
+
+So, was Owof “Mobile-First”? Yes and no. Design-wise, we made our first sketches on desktop frames, only to soon transfer them to mobile. The same was done with transitions and effects, born from the idea that they had to give their best on both platforms. Desktop gave us the chance to test and focus on new technologies which brought us to a face recognition feature in the form of “Add your face”, while mobile allowed us to put the most importance on the articles themselves and therefore to the work of our photographer, video maker and copywriter.
+
+> Different platforms call for different experiences.
+
+On all our projects we’re captivated by matters of mobile, responsive and progressive web apps. This means that even if a website is conceived for desktop fruition, this won’t mean we’ll spend less time on mobile, as the project would be, otherwise, incomplete.
+
+...
+
+Talking about differences from mobile to desktop, the big change is to be found in “Add your face”, which couldn’t be implemented on mobile (Ios may put a spoke in your wheel from time to time). We could, in the future, fix this by implementing it in a Web App.
+
+There are a multitude of small differences that are hard to notice on the first visit, mainly focusing on layout, animations, entry effects and such. As an example, the rotation of the faces found throughout the site are triggered by mouse movement on desktop, while through the gyroscope on mobile or that many elements that are animated with a magnet effect on desktop, are instead static on mobile.
+
+> Desktop gives more room to “play” as a user, while we prioritized solidity and ease of use on mobile.
+
+Even though we have no specific strategy for PWA development, we initially performed in-depth studies on them, only to in the end choose a PWA optimized Vue boiler which we customized to better suit our project and needs. This customization mainly concerned service workers as, even if they are automatically generated, they had to be tweaked here and there to be used at their fullest.
+
+One World One Face - Google Maps
+
+## Technical Stuff
+
+Now to the elephant(s) in the room and probably the most interesting yet technical topics: optimization, performances and best practices.
+
+> It may sound like a catchphrase, but performance optimization plays a huge role in our development flow.
+
+Which, in common words, means it takes a long ass time and dedication. Let’s proceed with order and focus on how we handled images. To optimize performances we introduced Webp images (through webp converter, quality level 80% as advised by Google themselves) which are already set for Chrome visualization, while, for other browsers, we prepared a fallback to .png format (optimized through TinyPng) and streamlined the vector files via SvgOMG. Another detail we took care of was not to implement the Google Maps Iframe but rather link a static image linked to maps itself (as we had no need to actively navigate), this way further improving the experience.
+
+One World One Face - Loader & Video
+
+To further improve performances we implemented a lazy load for images not currently on display, that coupled with a transition effect, improves both actual and perceived loading times. This is also true for the website’s introduction (which may be called a loader, even though not technically one), which works as a hiding effect for background loading on one hand, and as an overview of the project on the other, since we wanted the user to have an idea of what they were about to experience. To deal with image and text entry animations we employed GSAP, while for videos and header of each article we used Pixi,js.
+
+For the WebGL components, namely all the different faces and the distortion effect found in all the article’s header, we used three.js, the most complete library to manage a 3D ambience setup and camera.
+
+Aside from image compression and the reduction of js and css files which are nowadays standard, due to the high size of the js bundle we decided to implement dynamic imports to integrate the website WebGL libraries, improving performance and resulting in a clearer code structure as a nice side effect.
+
+## To lay on a bench(mark)
+
+This is what we did to improve our website’s performance, but how did we test the actual results? An awesome benchmark was represented by the Google and Awwwards Mobile Excellence Guidelines used alongside the Development Award Guidelines which allowed us to test ourselves out and see how close we were to the goal.
+
+Parallel to this incredible checklist (leaving the standard cross-device/browser checks out) we tested on many platforms such as Google Lighthouse, Page Speed, TestMySite and GTmetrix.
+
+...
+
+## Legibility is key
+
+In terms of UX, in the last phases of the project, we realized it was better to modify the menu when switching from index to single article, which now appears as a band when scrolling upwards and added an horizontal scrolling bar to accompany the user while browsing the articles themselves. Talking about browsing articles, we paid extra attention to font dimensions, color and background in order to achieve the better degree of legibility possible.
+
+> We paid extra attention to font dimensions, colour and background
+
+For the hosting provider we went with Google Firebase, with the direct consequence that the application itself and all its files are hosted and served through Google’s CDN in a geographically distributed system.
+
+## We love a challenge
+
+An issue we faced during mobile development, aside from the ordinary worries about animations and WebGL, was related to the interaction between Chrome and our index slider. Chrome allows some actions that are activated when scrolling over the maximum ranges of a page (i.e. page refresh). To fix this we proceeded with Hammer.js by binding all the elements onto the slider container which prevented this issue from occurring and eventually disabling the option to scroll the cities list altogether in favor of sliding alone.
+
+Aside from this we didn’t face any major issue cross-browser and our internal cross-device tests went smoothly (we perform them internally without the use of 3rd party tools as we own a decent array of devices).
+
+...
+
+We wanted to place the biggest challenge at the end of the article: our “Add your face” feature. We knew from the get-go we would have to face this challenge as enabling everyone to participate, even those who couldn’t physically reach us during our travels, was an imperative. The major issue was to integrate the face detect library needed to obtain the coordinates (in our case clmtrakr) with Pixi to process the image (cutting, post-production, scaling and rotating) to match the pattern structured for the Face of the World.
+
+---
+
+Title: Case Study: For the Love of Bread by Nightjar
+URL: https://www.awwwards.com/case-study-for-the-love-of-bread-by-nightjar.html
+Published: 2021-09-01T00:00:00.000Z
+Author: N/A
+Highlights:
+One final hurdle, at the time, some iPhones had an issue playing video onto a WebGLcanvas. It would not throw any errors, but the video would not be displayed in the canvas. Our solution was to detect the iPhone version and use an mp4 for those devices, while using HLS for all other users.
+
+...
+
+## Technologies
+
+Nightjar are always pushing the boundaries and exploring new technologies. For the frontend, we built the site using server side rendered React, and for the backend we used the Sanity CMS. Videos were streamed using Mux, which we synced with Sanity. For animations, we used GSAP and WebGL for the displacement and color shift effect when the user scrolls through the videos.
+
+---
+
+Title: Savor: Reimagining the Future of Fat
+URL: https://www.awwwards.com/savor-reimagining-the-future-of-fat.html
+Published: 2025-12-03T00:00:00.000Z
+Author: N/A
+Highlights:
+Scroll-c
+
+...
+
+To bring Savor’s story to life, we used a hybrid motion architecture combining GSAP, Rive, and WebGL. These scroll-controlled diagrams were central to the storytelling experience.
+
+This was our first time using text and images inside Rive. After some initial prototyping confirmed Rive’s text and line rendering were accurate, we used it for most of the diagrams on the site. Developers handled scroll synchronisation and parallax matching, while motion designers had full creative control over the animation content, a workflow that dramatically increased the build efficiency.
+
+...
+
+The logo reveal, used in both the footer and the mobile menu, is one of our favourite details. The goal was to make the logo look like butter melting in reverse. I guess that’s technically congealing, but that doesn’t sound quite as mouthwatering.
+
+To achieve this, we explored several approaches:
+
+- CSS Filters: Using a gradient mask with brightness and contrast animation. It worked conceptually, but in practice caused distortion and poor performance.
+- Rive SVG Animation: Seemed promising, but we didn't manage to find an approach that allowed us to maintain a smooth and sharp logo.
+- WebGL: The final solve. Through the good times and the bad, we can always rely on our trusty ol’ mate, WebGL. Using a Signed Distance Field version of the logo, we were able to transition back and forth between the states within the fragment shader. It was the only approach that gave us both performance and quality we needed.
+
+The Bubble Transition
+
+The bubble transition is a scroll effect that was meant to represent… well, a bubble.
+
+We first attempted to achieve this in Rive, but we found that the more pixels being drawn within the Rive canvas, the worse the performance. So, once again, we turned to WebGL, but we quickly ran into multiple context issues. As this is a CMS-driven site, the page component numbers needed to be dynamic. Some of these components require WebGL rendering, and that meant the client could run into problems with WebGL contexts piling up.
+
+Our solution was to rebuild the effect using TWGL.js, a lightweight WebGL library, allowing us to control the bubble shape with precision while maintaining hardware acceleration. Visually, the effect was simple: two Bézier curves forming an organic wipe between sections. Though the shader itself was straightforward, the real challenge lay in the architecture around it—synchronising timing, scroll states, and z-depth layering across a single shared WebGL context.
+
+The result is a transition that feels fluid and tactile while maintaining top-tier performance across devices.
+
+---
+
+Title: Case Study: Erin G.Wesley - Cinematographer
+URL: https://www.awwwards.com/case-study-erin-g-wesley-cinematographer.html
+Published: 2022-07-26T00:00:00.000Z
+Author: N/A
+Highlights:
+From the technical perspective, the most challenging part was the video gallery on the Home page. To make this gallery work seamless, we needed to combine several technologies at once. We connected our custom scroll and DOM elements with Pixi.js and added shaders. The focus of the work was really on revising and optimizing the experience working with videos. We had to make them load quickly and play smoothly on any device, anywhere. Erin reaches a global audience with her professional work, so we had to plan for a wide variety of devices, connections and experiences.
+
+...
+
+For performance improvements we needed to revise chunks of the project until there was no excess code. It allowed us to achieve really high scores in Google Lighthouse and Performance in Chrome DevTools.

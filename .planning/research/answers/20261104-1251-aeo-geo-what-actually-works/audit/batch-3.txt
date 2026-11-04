@@ -1,0 +1,150 @@
+You are the AUDITOR of a research run. A writer you never saw wrote an answer from the rows of the run's ledger —
+each row has an id (L0001 …) — and every claim line of that answer ends with the ids of the rows it stands on. You
+have no tools and need none: under each claim below stand the rows it cites, each exactly as the writer was handed
+it. Judge each claim ONLY against the rows printed under it — not from memory, not from another claim's rows, and
+not from what you believe is true.
+
+## The question the answer was written for
+DERT (CEO'nun kendi cumlesi — ARANMAZ, cevabin bunu karsilamasi gerekir):
+Web sitelerinde SEO, AEO ve GEO için gerçekten işe yarayan nedir? Neyin kanıtı var, ne satış lafı? ChatGPT, Gemini, Perplexity, Google yapay zekâ cevaplarında bir marka nasıl çıkar, nasıl ölçülür, hangi aletler gerçek?
+
+SORGULAR (zemin bunlarla acildi):
+  - AEO GEO what actually works
+  - AI search citations real results
+
+ALT SORULAR (S-kimlik · başlık · soru):
+  - S1 · Kanıtı olan SEO/AEO/GEO uygulamaları · Web sitelerinde SEO, AEO ve GEO için hangi uygulamaların görünürlüğü artırdığı kontrollü deney, büyük veri analizi veya vaka verisiyle kanıtlanmıştır?
+  - S2 · Kanıtsız iddialar ve satış lafları · SEO, AEO ve GEO alanında yaygın olarak satılan hangi iddia ve taktiklerin kanıtı yoktur veya verilerle çürütülmüştür?
+  - S3 · Platformlarda markanın çıkma yolları · ChatGPT, Gemini, Perplexity ve Google yapay zekâ cevapları bir markayı hangi kaynak ve mekanizmalarla seçip gösterir, bu platformlar arasında ne fark vardır?
+  - S4 · Yapay zekâ görünürlüğünün ölçülmesi · Bir markanın yapay zekâ cevaplarındaki görünürlüğü ve bundan gelen trafik ile iş sonucu hangi yöntem ve metriklerle güvenilir biçimde ölçülür?
+  - S5 · Gerçek işe yarayan ölçüm aletleri · Piyasadaki AEO/GEO aletlerinden hangileri gerçek veri ve doğrulanabilir sonuç sunar, hangileri güvenilir değildir?
+
+## The 12 claims
+Each claim is its heading `### <id> [<section>]`, then its whole line as it stands in the answer, then `dayanak:` —
+the rows it cites as support — and `karşı:` — its counter rows: the ones the line names after `↔`, and the ones a
+counter-evidence hunter linked to it. A row is `[id] platform · @author · date · "passage" · address`; a row that says
+`gövde yok` carries nothing to judge by. A heading that ends `· hüküm` is the answer's first line: its verdict.
+
+### C025 [S1]
+- Cevabı sayfanın başında vermek gözlemsel olarak atıfla birlikte gidiyor: ChatGPT atıflarının %44,2'si sayfanın ilk %30'undan geliyor, atıflanan sayfaların %20'si doğrudan cevapla açılırken geçilenlerde bu oran %5'tir ↔ üniversite çalışması ilgili paragrafın başta olması gerekmediğini buldu (3 satırın 2'si) [L1215, L1494] ↔ [L1563].
+dayanak:
+  (yok)
+karşı:
+  [L1215] x · @alexgroberman · 2026-10-31 · "A separate study from Kevin Indig analyzing 1.2 million AI answers and more than 18,000 verified citations found that 44.2% of ChatGPT citations came from the first 30% of the page." · https://x.com/i/status/2116537348871913956
+  [L1494] x · @MattClark220 · ? · "Pages with an author byline had 28% lower odds of being cited in a new study of 193,507 AI answers. The author can't explain it and won't drop bylines over it. Neither will I. I'd fix the opening instead. 20% of cited pages led with a direct answer. 5% of passed-over ones did. https://t.co/NrLlS4Qg…" · https://x.com/i/status/2116147328289853875
+  [L1563] web · @arXiv 2610.15033 · ? · "It need not be at the top: the engines find it wherever it is." · https://arxiv.org/html/2610.15033v1
+
+### C026 [S1]
+- Bu açılış bulgusu korelasyondur ve araştırmayı yapan firma GEO hizmeti satıyor (3 satırın 3'ü) [L1542, L1716, L1717].
+dayanak:
+  [L1542] x · @MattClark220 · 2026-11-02 · "Correlation only, and TJ Digital sells GEO services." · https://x.com/i/status/2117248972444008643
+  [L1716] web · @Hamidun News · 2026-11-02 · "The agency that collected the data sells SEO and GEO services itself." · https://news.hamidun.com/en/news/15060/tj-digital-23-of-ai-cited-pages-open-with-a-direct-answer-ve
+  [L1717] web · @GeoSearchLeads · 2026-10-28 · "The findings offer useful GEO signals, but they show correlation rather than a proven ranking formula." · https://blog.geosearchleads.com/ai-citations-direct-answers-study/
+karşı: (yok)
+
+### C027 [S1]
+- Özgün ve doğrulanabilir veri desteklenir, ama Princeton çalışmasının %40'ı genel beklenti değil, belirli bir ölçümde üst sınırdır (5 satırın 3'ü destek, 2'si sınır) [L1153, L1405] ↔ [L1382].
+dayanak:
+  [L1153] x · @mahims · 2026-11-03 · "A Princeton-led study (GEO, KDD 2024) found that adding real statistics, named sources and citations made pages up to 40% more visible in AI answers." · https://x.com/i/status/2117488932732494224
+  [L1405] x · @Google Search Central · 2026-05-15 · "Creating content that people find unique, compelling, and useful will likely influence your" · https://t.co/EK9AqC9PZ4
+karşı:
+  [L1382] web · @Euracle · 2024-08-25 · "Its headline finding of **up to 40% visibility improvement is a maximum, not an average.**" · https://www.euracle.com/blog/aeo-vs-geo-vs-seo
+
+### C028 [S1]
+- Üçüncü taraf bahsi en tutarlı sinyaldir: Ahrefs'in yaklaşık 75 bin marka verisinde web bahisleri 0,66–0,71, YouTube bahisleri yaklaşık 0,74, organik trafik yaklaşık 0,27 korelasyon gösteriyor; bir başka veride atıfların %84'ü kazanılmış medyadan geliyor ↔ üniversite çalışmasında bağlantılar atıflardan sonra ölçüldüğü için yön kurulamıyor (3 satırın 2'si) [L1536, L1378] ↔ [L1509].
+dayanak:
+  (yok)
+karşı:
+  [L1536] x · @shalintripathi · 2026-11-03 · "so what lines up with getting pulled in? ahrefs looked at ~75k brands. ai visibility tracked brand mentions around the web (0.66 to 0.71) and youtube mentions (~0.74) far more than organic traffic (~0.27)." · https://x.com/i/status/2117676768920477758
+  [L1378] youtube · @Exposure Ninja · ? · "But, 84% of all citations across those platforms come from earned media, i.e. not your website, someone else's website." · https://www.youtube.com/watch?v=y3el5Cwpyk8
+  [L1509] web · @arXiv 2610.15033 · 2026-10 · "As the links were measured after the citations, the direction is not established." · https://arxiv.org/html/2610.15033v1
+
+### C029 [S1]
+- Aynı site içinde sayfa özellikleri sayfalar arası farkın azını açıklıyor ve içerik etkisi sıralama üzerinden geliyor, bu tek kaynak ↔ başka çalışmalar aynı sıradaki sayfalarda içeriğin alan adı kadar önemli olduğunu ve atıfların çoğunun üst sonuçların dışında kaldığını bildiriyor (4 satırın 2'si) [L1346, L1507] ↔ [L1626, L1627].
+dayanak:
+  (yok)
+karşı:
+  [L1346] web · @Chen, Koudas · 2026-10 · "properties nevertheless explain little of the variation between pages of a website." · https://arxiv.org/html/2610.15033v1
+  [L1507] web · @arXiv 2610.15033 · 2026-10 · "Content thus matters mainly through the ranking: what counts is which pages the engine retrieves and how high." · https://arxiv.org/html/2610.15033v1
+  [L1626] web · @Anthony Lee · ? · "Among pages that already rank, what the page says matters as much as what domain it is on." · https://aiplusautomation.com/research/what-gets-me-cited-by-ai
+  [L1627] web · @Parse · ? · "So roughly 4 in 5 pages ChatGPT Search cites are not in any of the five top-10 lists, and about 2 in 3 for Google AI Mode." · https://parse.gl/research/ai-citations-vs-search-results
+
+### C030 [S1]
+- Simülasyonda başlık ve açıklama değişikliği atıfı 240 oturumda 2'den 240'a çıkardı; canlı trafik sınanmadı; karşı satır arandı, bulunmadı (3 satırın 3'ü, tek kaynak) [L1337, L1339, L1335].
+dayanak:
+  [L1337] x · @Mike Taylor (Every) · 2026-10-27 · "Before (cited in two of 240 sessions)" · https://t.co/P7V4CFtz5M
+  [L1339] x · @Mike Taylor (Every) · 2026-10-27 · "After (cited in 240 of 240 sessions)" · https://t.co/P7V4CFtz5M
+  [L1335] x · @Mike Taylor (Every) · 2026-10-27 · "This experiment was a simulation, not a test with live traffic, so we don't know yet whether the process drives agent traffic to our site." · https://t.co/P7V4CFtz5M
+karşı: (yok)
+
+### C031 [S1]
+- Sayfanın yalnız getirilip atıflanmaması görünürlüğü oynatmıyor, oran 1,13 katta kalıyor (1 satır, tek kaynak) [L1217].
+dayanak:
+  [L1217] linkedin · @Jochen Madler · 2026-08-04 · "Here's a hint: for prompts where a page is only sourced (via a fanout query) but not cited, it does not move AI visibility (1.13x higher)." · https://www.linkedin.com/posts/jochen-madler_does-geo-even-work-surprisingly-nobody-activity-7490435533412786176-rDDE
+karşı: (yok)
+
+### C032 [S1]
+- Bu taktikler sayfa çekildikten sonra alıntılanma biçimini etkiliyor olabilir, ama motorun sayfayı çekip çekmeyeceğini belirlemiyor ↔ bir uygulayıcı paragrafa üç sayı ekledikten 11 gün sonra Perplexity atfı aldığını bildiriyor (5 satırın 4'ü) [L1534, L1535, L1699, L1700] ↔ [L1637].
+dayanak:
+  (yok)
+karşı:
+  [L1534] x · @shalintripathi · 2026-11-03 · "the part people skip: a 2026 survey of 45 GEO studies found no tactic with a stable effect on getting discovered across engines." · https://x.com/i/status/2117676768920477758
+  [L1535] x · @shalintripathi · 2026-11-03 · "those tactics change how you get quoted once an engine has already pulled your page. they don't decide whether it pulls you in" · https://x.com/i/status/2117676768920477758
+  [L1699] web · @RanketAI · 2026-07-22 · "but evidence that techniques increase retrieval itself is far weaker." · https://www.ranketai.com/en/blog/deep-dive-geo-critical-survey-45-studies-2026-07-22
+  [L1700] web · @GEAFirst · 2026-08 · "no reviewed technique demonstrates a stable, longitudinal, cross platform causal effect on organic discoverability." · https://geafirst.com/geo-evidence-survey-45-studies-august-2026/
+  [L1637] web · @Ken Imoto · 2026-06-24 · "The citation rendered as an inline numbered source with the 300 ms statistic verbatim in the answer text." · https://kenimoto.dev/blog/perplexity-cited-3-numbers-11d/
+
+### C033 [S2]
+| llms.txt görünürlüğü artırır | Dosya büyük ölçüde okunmuyor, otorite kontrol edilince etkisi kalmıyor ve Google kullanmadığını söylüyor; son madde tek katılımcının notudur [L1374, L1363, L1564] ↔ yalnız bir taktik listesi öneriyor [L1308] | 17 satırın 16'sı etkisiz |
+dayanak:
+  [L1374] x · @Louise Linehan (Ahrefs) · 2026-06-15 · "Of the ~38,000 domains with a valid file, 97% saw no requests for it whatsoever in May." · https://t.co/Qt1DBnAGOP
+  [L1363] x · @Manick Bhan (Search Atlas) · 2026-06-19 · "Higher-authority sites tend to publish better-structured /llms.txt files, while the file itself adds no measurable visibility lift once authority is controlled for." · https://t.co/bZCEdect1c
+  [L1564] substack · @Ishant Sharma · 2026-10-31 · "Google said it doesn't use the instructions or data in llms.txt files." · https://ishantsharmahustlemarketers.substack.com/p/is-seo-dead-here-is-what-google-said
+karşı:
+  [L1308] x · @borjafat · 2026-10-27 · "232. Add llms.txt for compatible agents to give them an index of your pages." · https://x.com/i/status/2115204396715794813
+  [L1599] web · @topb2d (Resend) · 2025-02-22 · "After 60 days, the product was mentioned in 2.4x more LLM-generated responses for target queries" · https://topb2d.com/experiments/llms-txt-citation-increase
+
+### C034 [S2]
+| FAQ ve schema atıf getirir | Aynı site içinde etki yok ve Google gereklilik saymıyor [L1561, L1425] ↔ ajans vakası ve uygulayıcı yorumu aksini söylüyor [L1377, L1197] | 10 satırın 7'si etkisiz |
+dayanak:
+  [L1561] web · @arXiv 2610.15033 · ? · "FAQ blocks and schema.org markup have no effect for any engine." · https://arxiv.org/html/2610.15033v1
+  [L1425] x · @Google Search Central · 2026-05-15 · "* **Overfocusing on structured data**: Structured data isn't required for" · https://t.co/EK9AqC9PZ4
+karşı:
+  [L1377] youtube · @Exposure Ninja · ? · "We did this partly by adding schema across 12 different page types and restructuring the content so it's more easy to extract." · https://www.youtube.com/watch?v=y3el5Cwpyk8
+  [L1197] x · @AetherC0de · 2026-10-29 · "One primary entity per URL plus a stable @id in JSON-LD fixes more "AEO" problems than rewriting copy." · https://x.com/semrush/status/2115745711312560254
+
+### C035 [S2]
+| İçerik parçalanmalı ve her alt sorguya sayfa açılmalı | Google parçalama gerekmediğini söylüyor, ölçekli içerik spam politikasına giriyor ve her varyasyona sayfa açmaya karşı uyarıyor [L1404, L1406, L1701] ↔ bir uygulayıcı parçalama etkisi bildiriyor [L1141] | 6 satırın 5'i karşı |
+dayanak:
+  [L1404] x · @Google Search Central · 2026-05-15 · "**"Chunking" content:** There's no requirement to break your content into tiny" · https://t.co/EK9AqC9PZ4
+  [L1406] x · @Google Search Central · 2026-05-15 · "[scaled content abuse spam policy](/search/docs/essentials/spam-policies#scaled-content)." · https://t.co/EK9AqC9PZ4
+  [L1701] web · @The Decoder · 2026-05-16 · "The company also warns site owners against spinning up separate pages for every possible search variation." · https://the-decoder.com/google-says-geo-and-aeo-are-a-myth-and-traditional-seo-is-all-you-need-for-ai-search/
+karşı:
+  [L1141] x · @keklabz · 2026-10-28 · "It was shaping how models chunk and retrieve us (entity graph + spam-clean structure)." · https://x.com/i/status/2115390302789996646
+
+### C036 [S2]
+| Uzunluk, başlık, liste ve tablo atıf getirir | Büyük ölçümler etki bulmuyor [L1506, L1240] ↔ başka çalışma ve yorum tablo ile bölüm etkisi bildiriyor [L1476, L1489] | 5 satırın 2'si etkisiz, 3'ü etkili |
+dayanak:
+  [L1506] web · @arXiv 2610.15033 · 2026-10 · "Third, length, outbound links, headings, lists and tables show no effect, and their partial-effect curves are flat." · https://arxiv.org/html/2610.15033v1
+  [L1240] youtube · @Ahrefs · ? · "We analyzed 174,000 pages cited in AI overviews, and the correlation between word count and getting cited is basically zero." · https://www.youtube.com/watch?v=58MR03s0ev8
+karşı:
+  [L1476] web · @? · ? · "The pages ChatGPT and Google's AI cite tend to answer the question in their first lines, show they've been updated in the past year, and include prices, tables and first-hand experience. Pages that ranked in Google's top 10 for the same question but never came up in the AI's searches had those thin…" · https://tjrobertson.com/ai-citation-study/
+  [L1489] reddit · @Used-Conference-1859 · 2026-07 · "Sometimes the winning page isn't stronger overall — it simply has the specific comparison table, statistic, FAQ, or wording that the model needed for that prompt." · https://reddit.com/r/AISearchLab/comments/1uvn828/how_are_you_tracking_ai_visibility/
+
+## Your verdict on each claim — one of three
+- `ok` — the rows under it say what the line says, and every number in the line is one those rows bear (a count of
+  rows the line gives is borne when that many rows under it say so).
+- `corrected` — the rows say less than the line, or something other, or a `karşı` row under it is not named in the
+  line. Then write the line yourself, as it should stand in the answer:
+  - Turkish, in the writer's own grammar: the claim, then the ids it stands on in square brackets, `… [L0042, L0107]`;
+    the counter-evidence after `↔`, `… [L0042] ↔ … [L0051]`, once in the line;
+  - only ids printed under THIS claim, in its `dayanak` or its `karşı` — the same ids or a subset, at least one, and never an id whose row is marked `(yazara verilmeyen satır)`;
+  - no quote of a source's words, no address, no `http`, no domain;
+  - the WHOLE line, a drop-in replacement: a list item keeps its mark (`- `); a table row stays a table row,
+    `| … | … |`, with the same number of cells.
+- `removed` — no row cited under it supports the line. The verdict (`· hüküm`) is never removed: when its rows do not
+  bear it, correct it.
+
+Give every one of the 12 claims one entry: its `reason` one sentence in Turkish, its `line` only when the verdict is
+`corrected`. Output ONLY valid JSON — no code fence, nothing before or after it:
+{"verdicts":[{"id":"C007","verdict":"ok","reason":"..."},{"id":"C008","verdict":"corrected","reason":"...","line":"..."},{"id":"C009","verdict":"removed","reason":"..."}]}

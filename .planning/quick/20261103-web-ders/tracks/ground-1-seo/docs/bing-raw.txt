@@ -1,0 +1,13 @@
+  media-transcript   --         0ms        0b  not a media url
+  pdf-text           --         0ms        0b  not a pdf url
+  scrapling          --      1455ms       89b  WALL
+  scrapling-stealth  --      3564ms    17067b  WALL
+  opencli-reader     --         0ms        0b  no platform adapter for this url
+  browser-signed-in  --         0ms        0b  no signed-in browser site for this url
+  tavily-extract     --       441ms      365b  WALL  rc=1 
+  firecrawl-scrape   OK       653ms    15507b
+
+read=True door=firecrawl-scrape liveness=alive bytes=15507
+
+{
+  "markdown": "# Bing Webmaster Guidelines\n\nThese guidelines describe how Bing discovers, crawls, indexes, evaluates, and surfaces content across Bing search experiences, Copilot, and grounding API results.\n\n**Following these guidelines helps ensure your URLs are eligible for:**\n\n- Indexing and ranking\n- Grounding results and citations\n- Sustained visibility and qualified traffic\n\nFailure to follow these guidelines may result in reduced visibility in Bing search, reduced eligibility for grounding experiences, or delisting from the Bing index.\n\n# 1\\. SEO Fundamentals Still Apply to Grounding and AI Experiences\n\nBing and Copilot search experiences rely on the same core crawling, indexing, and ranking foundation as traditional search. SEO best practices that support discovery, indexing accuracy, and content clarity also support eligibility for AI-generated experiences, grounding results, and citations.\n\nPractices that support:\n\n- Crawl efficiency\n- Indexing accuracy\n- URL consolidation\n- Content clarity and structure\n- Authority and trust signals\n\nAlso support:\n\n- Eligibility for grounding results\n- Long‑term visibility across Bing, Copilot, and AI‑powered search experiences.\n\nContent that is discoverable, accurate, well-structured, and created for users performs best across all search experiences.\n\n**2\\. Make URLs Easy for Bing and Copilot to Discover**Bing relies on clear discovery and crawl signals to find, render, and index content accurate

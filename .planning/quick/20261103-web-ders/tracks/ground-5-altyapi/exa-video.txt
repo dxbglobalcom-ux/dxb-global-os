@@ -1,0 +1,449 @@
+Title: INP on Media-Heavy Sites: Debugging Interaction Latency with LoAF and scheduler.yield() | Mintec Blog
+URL: https://mintec.co/blog/inp-media-performance-debug/
+Published: 2026-07-02T00:00:00.000Z
+Author: N/A
+Highlights:
+## The Real Case: Our Luxury Brand Portal
+
+The project where we learned the most about media-site INP was a luxury brand portal with 4K image galleries and a full-screen autoplay video hero. The initial data was sobering:
+
+| Before | After |
+| --- | --- |
+| INP: 340ms (p75 on CrUX) | INP: 98ms |
+| LCP: 6.2s (with video) | LCP: 1.2s (with poster + Server Island) |
+| Lighthouse Performance: 72 | Lighthouse Performance: 99 |
+
+We brought INP from 340ms down to 98ms using three techniques — but before applying any fix, we needed to know exactly what was causing the latency. That's where LoAF and scheduler.yield() come in.
+
+...
+
+On our luxury project, this revealed something Lighthouse never showed: the third-party video player was running a bandwidth detection script every time the user interacted with the gallery, blocking the main thread for ~180ms per interaction. Without LoAF, we would have optimized the wrong components.
+
+...
+
+### The Measured Impact
+
+After implementing scheduler.yield() across all three components, INP dropped from 340ms to 140ms — a 59% improvement. Combined with Server Islands for the hero video (reducing the player's initial load), we reached the final 98ms.
+
+| Technique | INP Reduction | Effort |
+| --- | --- | --- |
+| LoAF diagnostics + scheduler.yield() in gallery | -120ms | 1 day |
+| Server Island for hero video | -80ms | 2 days |
+| Conditional lazy loading of third-party scripts | -42ms | 1 day |
+
+...
+
+The third part of the fix is architectural: if your media site loads heavy scripts on every page, you're giving away performance for free. Astro's Server Islands pattern — which we've applied across three production projects this year — lets you defer interactive components without blocking initial render.
+
+On our luxury portal, we moved the video player to a Server Island. The static HTML shell serves a 12KB AVIF poster frame, and the full player (with all its scripts) loads only when the user scrolls to it. Result: the base page INP dropped from 340ms to 98ms because the player no longer blocked the main thread during initial interactions.
+
+We've covered Server Islands vs PPR for content sites and the hero video dilemma in depth — both are complementary reads if you're migrating toward this architecture.
+
+---
+
+Title: Luxury Wellness Brand Website with CloudFront HLS Streaming
+URL: https://contra.com/community/hiikaTgJ-luxury-wellness-brand-website-with-cloud-front
+Published: N/A
+Author: N/A
+Highlights:
+• Mar 18
+
+INCLUDE: Luxury wellness brand site with video-first marketing. HLS adaptive bitrate streaming via CloudFront CDN for zero-buffer playback across all devices and connection speeds. Accessible video player with poster frames, mute/unmute controls, and mobile-safe autoplay.
+
+Hybrid architecture: Webflow handles the editorial frontend with pixel-perfect design freedom, Shopify handles transactions and checkout. No traditional theme constraints. Full GDPR compliance with European consent management.
+
+Core Web Vitals passed: LCP 1.7s, CLS 0, FCP 1.0s, TTFB 0.4s. Lighthouse SEO 100. Webflow, Shopify, HLS.js, CloudFront, AWS. Delivered at Yumeda Studio.
+
+---
+
+Title: Engineering a 4K Cinema Portfolio Website That Loads Instantly | X078
+URL: https://x078.com/en/articles/building-high-performance-cinema-portfolio-website-webxtek-4k-streaming/
+Published: 2026-10-18T22:33:43.000Z
+Author: Joana Malaquias
+Highlights:
+> Direct Answer: Embedding six heavy Vimeo/YouTube iframes on a Squarespace or WordPress homepage loads 14MB of third-party tracking scripts and freezes mobile browsers with a 6-second black spinner. Engineered alongside Webxtek Studio, a modern cinema portfolio uses static Astro HTML at the edge, serves an instant <40KB AVIF hero poster frame for a sub-0.8s Largest Contentful Paint (LCP), and lazy-hydrates an adaptive HLS / AV1 edge video stream only after the first paint completes.
+
+...
+
+Engineered alongside Webxtek Studio, a modern cinema portfolio uses static Astro HTML at the edge, serves an instant <40KB AVIF hero poster frame for a sub-0.8s Largest Contentful Paint (LCP), and lazy-hydrates an adaptive HLS / AV1 edge video stream only after the first paint completes.
+
+When a crew arrives at a historic estate in Sintra, Douro, or Lake Como without a clear exposure, audio, and movement plan, they either miss fleeting emotional moments or disrupt the atmosphere of the room. Here is the exact production setup we use on set:
+
+```
+# Webxtek High-Performance 4K Cinema Portfolio Architecture
+[EDGE_FRONTEND]   Framework="Astro_Static_SSR" --LCP_Hero_Poster="AVIF_<40KB (<0.8s_Load)"
+[VIDEO_PIPELINE]  Header_Reel="AV1_WebM_3.2Mbps" | Full_Films="Adaptive_HLS_Edge_CDN"
+[FACADE_PATTERN]  Zero_Third_Party_Iframes_on_Load -> Instantiate_4K_Player_On_Click
+```
+
+---
+
+Title: Hero video without hurting LCP: adaptive streaming / ZanReal
+URL: https://zanreal.com/blog/video-at-the-top-of-a-page-without-the-wait
+Published: 2026-09-22T07:52:41.000Z
+Author: Mateusz Janota
+Highlights:
+Instead of one file you produce a ladder: the same footage encoded several times, from a small low-bitrate rendition up to full HD. Each rendition is cut into segments of a few seconds, and a playlist file, an `.m3u8` under HLS, describes what exists.
+
+Building the ladder is an FFmpeg job, and it belongs in your build or asset pipeline rather than in a request handler: it runs once per clip, not once per visitor. The DJ portfolio we built for Seweryn Durczok encodes its own rungs at deploy time, from the same event footage the whole site is selling.
+
+...
+
+At playback time the player does something a plain ` ` tag cannot: it measures real throughput as segments arrive and picks the rendition for the next one accordingly. On a weak connection the behaviour is not "buffer for six seconds", it is "drop to a lower rung and keep playing".
+
+Three things follow:
+
+- Playback starts on a low rung, so the first frame is never far away. The visitor waits for one short segment, not for a file. Quality climbs afterwards, as the player learns what the connection can sustain, and nobody notices the first two seconds being softer the way they notice a hero that has not started yet.
+- It goes down as well as up. Mobile bandwidth is not merely low, it is uneven. A player that only climbs stalls the first time somebody walks into a lift, and a stall mid-hero reads worse than a slow start, because the page has already promised motion and then taken it away.
+- Only watched segments are fetched. Somebody who scrolls past after three seconds has fetched three seconds, not the head of a 1080p master. Nothing is queued in front of the frame you actually want.
+
+## The poster owns the first paint
+
+The stream gets the first frame close but cannot get it to zero, because even a fast first segment is a network round trip away. The hero needs a poster image to hold the screen for that round trip, and that poster is almost certainly your Largest Contentful Paint element, the thing your page speed is measured on. It is not a placeholder for the video. Treat it as the first paint it is:
+
+- Serve it as AVIF or WebP with a JPEG fallback, sized for the viewport rather than once for the largest screen you support.
+- Do not lazy-load it. It is above the fold and it is the LCP candidate, and `loading="lazy"` on it is the most common way teams push out their own LCP by a second.
+- Keep the video payload lazy instead. The poster paints, the stream starts, and the handover happens when the first segment is decodable.
+- Match the poster to the first frame. If they differ visibly, the handover reads as a glitch rather than as playback beginning.
+
+Get the ordering right and the video stops competing with your Core Web Vitals, because the measured element is an image you fully control and the stream arrives behind it rather than in front of it. The visitor gets picture, then motion, instead of nothing and then everything at once.
+
+...
+
+- `Save-Data`, and the reduced-data preference where it is available, says the visitor is on a connection or a plan where your hero is not the priority. Fetched segments are paid for by somebody, and a visitor who has asked you not to spend their ... Serve the poster and offer play as an explicit choice.
+
+...
+
+Safari and iOS play HLS natively. Point a ` ` element at the `.m3u8` and it works, with the platform's own adaptive logic. Everything else needs a JavaScript player, `HLS.js` being the standard choice, which uses Media Source Extensions to feed segments to the video element itself.
+
+So: feature detect native HLS support first, use it where it exists, and load the player library only where it does not. Loading it unconditionally ships a payload to iOS users whose browser was never going to need it, and puts that payload on the critical path in front of a hero whose entire point was to start quickly.
+
+---
+
+Title: Why Adaptive Streaming Beats Static MP4 for Hero Videos | Avatar Technics
+URL: https://avatartechnics.com/work/insight-hls-adaptive-video
+Published: 2025-04-10T14:59:50.000Z
+Author: Patrick Tully
+Highlights:
+Instead of delivering one massive MP4 file, HLS adaptive streaming breaks video into small chunks across multiple quality levels. The player automatically selects the best version for each viewer in real time. 
+
+Key benefits include:
+
+- 🚀 Faster starts – Only a small segment loads first, so playback begins instantly. 
+- 📱 Optimized for every device & connection – Users on mobile data get lighter streams, while desktop users enjoy full quality. 
+- 🎬 Buffer-free playback – Quality adjusts dynamically as network conditions change. 
+- 🔒 More efficient delivery – Users only download the portions they actually watch. 
+- 🌍 Scalable & compatible – Supported natively across iOS, Android, and all modern browsers. 
+- 🛠 Drop-in replacement – Swap your existing MP4 hero video with a single line of code. No redesign, no rebuild—just faster video.
+
+...
+
+## Real-World Results: Tune Up Fitness
+
+ We implemented adaptive streaming for Tune Up Fitness Worldwide, replacing a looping 11.4 MB MP4 hero video with HLS adaptive streaming. 
+
+ 47% 
+
+ bandwidth reduction
+
+ 97% 
+
+ lighter initial pageload
+
+ +10–20 
+
+ PageSpeed mobile score pnts
+
+ Visitors now experience faster page loads, smoother playback, and improved PageSpeed scores - while the brand delivers significantly less data each month resulting in nearly 50% CDN egress cost savings. 
+
+## A Direct Comparison You Can See
+
+Want to see the difference for yourself? We set up a side-by-side demo with Google Lighthouse performance scores:
+
+- Streaming Video Hero (HLS) → Performance Score: 100%
+- Static MP4 Video Hero → Performance Score: 74%
+
+ The difference is clear: adaptive streaming not only reduces bandwidth and improves video quality, it also drives higher performance scores across the board.
+
+---
+
+Title: How to load HD video heroes without crashing CVR or spiking bounce (example from Prada) | Izaac Barratt
+URL: https://www.linkedin.com/posts/izaac-barratt_how-to-load-hd-video-heroes-without-crashing-activity-7416947153689812994-C0c0
+Published: 2026-01-13T00:00:00.000Z
+Author: Izaac Barratt
+Highlights:
+Luxury shoppers are particular. If you've ever asked for help in brick-and-mortar luxury retailer... wow. Cush leather seats, dedicated staff to take your requests. Occasionally some complimentary whiskey / Champagne.
+
+People that spend big do not dilly dally - they won't suffer negligence. Ecommerce is the exact same.
+
+Reports from Google + Deloitte show the luxury niche has the biggest increase in funnel progression from site speed. The inverse is also true - slow sites cost luxury brands big. So using a brand like Prada is a great way to spy on how to load videos quickly.
+
+Their INP + CLS is bad (sorry guys), but their LCP for homepage is great. Avg 2.1s (based on CRUX aggregate data). This means their pages load way faster than most D2C, and they're always serving videos.
+
+Their 3-step process:
+1) First, download a tiny preview image (milliseconds).
+2) Then, split the video into two segments:
+2a) Part 1 (5kb - loads first)
+2b) Part 2 (20kb - loads after)
+
+Part 1 is much smaller, and that's on purpose.
+
+Once we have the first part of the video, which arrives quickly - we can then display the first frame as a placeholder. This means, even if their whole video takes +10s to download - we have a visual to display in < 2s.
+
+The result is a smooth transition between nothing-on-screen, to ambient background video.
+
+Honorary mentions on the optimisation side:
+- Video is mobile first (in both size and resolution)
+- Total file size < 30kb (this is good for video)
+
+This is how they display ambient video heroes without crashing sales!
+
+---
+
+Title: The Hero Video Dilemma: When Design Wants Video but Performance Demands a Poster | Mintec Blog
+URL: https://mintec.co/blog/video-lcp-hero-performance-2026/
+Published: 2026-07-01T00:00:00.000Z
+Author: N/A
+Highlights:
+On our latest project with a Latin American design marketplace, the hero video was adding 3.2 seconds to LCP on the original version. After applying the strategies in this article, we got it down to 1.8 seconds — without losing autoplay or visual quality. Here is exactly how we did it.
+
+...
+
+## The poster-first strategy: your LCP element should be an image, not a video
+
+This is the single most important architectural decision you can make.
+
+Instead of making the browser wait for the video's first frame to be renderable, give it a high-quality poster image that becomes the LCP element. The video downloads in the background and starts playing when ready.
+
+```
+---
+// Astro component: HeroVideo.astro
+// The poster IS the LCP element. The video loads lazily behind it.
+---
+
+<div class="hero-video-container">
+  <img
+    src="/images/hero-poster.webp"
+    alt=""
+    class="hero-poster"
+    width="1920"
+    height="1080"
+    decoding="async"
+    fetchpriority="high"
+  />
+  <video
+    autoplay
+    muted
+    loop
+    playsinline
+    preload="none"
+    poster="/images/hero-poster.webp"
+    class="hero-video"
+    data-lazy-video
+  >
+    <source src="/video/hero-av1.mp4" type="video/mp4; codecs=av01" />
+    <source src="/video/hero-hevc.mp4" type='video/mp4; codecs="hvc1"' />
+    <source src="/video/hero-h264.mp4" type='video/mp4; codecs="avc1"' />
+  </video>
+</div>
+
+```
+
+Key details:
+
+- `fetchpriority="high"` on the poster ` ` tells the browser this is the most important render-blocking resource.
+- `preload="none"` on the ` ` prevents the browser from downloading any video data during initial page load.
+- The poster must be WebP — not JPEG, not PNG. On our project, moving from JPEG to WebP cut the poster from 280 KB to 74 KB, shaving 200ms off LCP.
+
+...
+
+Option 1: Static MP4 from CDN with edge cache
+
+- Pros: total simplicity, the CDN caches the full file, minimal first-byte latency
+- Cons: no bitrate adaptation, a 10MB file downloads fully even on 3G
+- Best for: videos <15 seconds, <5MB
+
+Option 2: HLS/VOD with dynamic packaging (Mux, Cloudflare Stream, bunny.net)
+
+- Pros: automatic bitrate adaptation, thumbnail previews, integrated analytics
+- Cons: third-party dependency, more DNS/TLS requests, potential startup latency
+- Best for: videos >30 seconds, multiple resolutions
+
+For the typical hero video, Option 1 with a fast CDN (Cloudflare, Bunny) gives the best balance. On our project we used Cloudflare with edge caching and R2 as origin — time-to-first-byte was ~40ms on cold cache and ~5ms on warm cache.
+
+...
+
+There are cases where a poster isn't negotiable — the client wants video as the hero. For these, use a hybrid architecture:
+
+1. The poster is the initial LCP element — image loads immediately
+2. Video downloads with `preload="auto"` but at low priority via a wrapping element with `loading="lazy"`
+3. When the video has enough buffer, do a CSS cross-fade transition that replaces the poster
+4. Audio never plays — autoplay with muted is the only option without user interaction
+
+...
+
+## What we learned from the real project
+
+Our client was a design marketplace serving Mexico, Colombia, and Brazil. The original site shipped an 18MB hero video (H.264, 1080p, 30fps) with no codec optimization or strategic preloading.
+
+Before and after metrics:
+
+| Metric | Before | After | Improvement |
+| --- | --- | --- | --- |
+| LCP | 4.7s | 1.8s | 62% |
+| INP (P75) | 320ms | 175ms | 45% |
+| Page weight | 21.8 MB | 4.2 MB | 81% |
+| Video downloaded | 18 MB (full) | 3.1 MB (AV1) | 83% |
+| Video TTFB | 1.8s | 40ms (warm CDN) | 98% |
+
+The biggest single win was moving the moov atom to the front (1.2s reduction in time-to-first-frame). The second was switching from H.264 to AV1 with HEVC fallback (18MB to 3.1MB).
+
+---
+
+Title: Handled Entertainment
+URL: https://eyalgantz.com/work/handled
+Published: N/A
+Author: N/A
+Highlights:
+Handled Entertainment is a New York content studio that shoots vertical-first films for brands including Shake Shack, Grubhub, Walmart, and Bobby Flay, and Eyal Gantz designed and built its new website from scratch. A film studio's portfolio lives or dies on playback, and the old Wix site could not carry an 80-film catalogue: video-heavy pages have to load instantly, dozens of reels cannot all stream at once, and a vertical-first library deserves a viewing experience closer to a feed than a grid of thumbnails. Gantz re-encoded the entire library through an ffmpeg pipeline so every reel is a compact MP4 with its own poster that loads only when it enters the viewport, then built the site on Laravel 12 and Laravel Vapor with a custom cinematic scroll engine: GSAP with ScrollTrigger and Lenis on desktop, and a scroll-snap Projection Room feed on mobile. Every legacy URL survived the migration through 301s.
+
+...
+
+I re-encoded the entire film library into a lean delivery pipeline (every reel a compact MP4 with its own poster, loading only when it enters the viewport) and built the site on a custom cinematic scroll engine: GSAP + Lenis on desktop, a scroll-snap "Projection Room" feed on mobile. The migration off Wix kept every legacy URL alive with 301s and shipped with a full SEO/GEO pass.
+
+...
+
+## What were the results?
+
+80 films in the catalogue, lazy-streamed
+
+Wix → Laravel migration, legacy 301s intact
+
+9:16 "Projection Room" mobile feed
+
+---
+
+Title: How I built a scroll-driven video hero that still scores 100 — WPS
+URL: https://www.worldprogramming.org/posts/how-i-built-a-scroll-driven-video-hero-that-still-scores-100-eyoptt
+Published: 2026-09-20T11:08:28.000Z
+Author: N/A
+Highlights:
+# How I built a scroll-driven video hero that still scores 100
+
+A ten second film scrubbed by scroll, streamed while it downloads, that still scores 100 on Lighthouse. The build, the code, and the four traps that cost me the most time.
+
+...
+
+The hero on my site is a ten second film. Your scroll is its timeline: scroll down and the camera descends, scroll back and it climbs. It streams while it downloads, it never loads at all on phones, and the page still scores 100 for performance in Lighthouse.
+
+Here is how it works, and the four traps that cost me the most time.
+
+## The idea 
+
+A video that plays on scroll is not a video that autoplays. There is no playback at all. The page maps scroll position to `video.currentTime`, so the viewer is scrubbing, exactly like dragging the playhead in a video editor. The hero is seven screens tall and pinned, and five caption bands fade in and out across that distance.
+
+...
+
+Scroll drives the video and five caption bands about sixty times a second. Routing that through React state would mean a re-render per animation frame, which is exactly the cost this design cannot afford. So React owns the markup, and a hook owns the loop, writing to nodes through refs, only when a value actually changed.
+
+...
+
+## 3.
+
+...
+
+The first version fetched the whole file, then started. On a normal connection that meant the picture sat frozen for eight to fourteen seconds after the page had visibly finished loading. Anyone who scrolled immediately thought the site was broken.
+
+The fix has two halves. First, the file is encoded as a fragmented MP4, with a keyframe and a fragment every eight frames:
+
+...
+
+When more data lands, anything marked `behind` is re-seeked, so the picture catches up on its own. Measured on the live site: the picture starts following the scroll 1.5 seconds after the page opens, and the whole file is in by 3.3 seconds. Before, nothing moved for twelve.
+
+...
+
+1. A page fade that hid the Largest Contentful Paint. The page faded in from `opacity: 0`. Chrome discards text first painted at zero opacity, and a compositor fade never repaints it, so mobile had no measurable LCP at all: a failed Core Web Vital, and a performance score of zero. Removing the fade fixed it.
+2. Prerendering revealed the headline three times. The split-text animation renders a blurred copy and a sharp copy over the real line. Invisible in a client-rendered page; in prerendered HTML, search engines and link previews read "Hadi MoussawiHadi MoussawiHadi Moussawi". Now the animated copies carry no text: their letters are drawn with `content: attr(data-ch)`, which is not page text.
+3. A strict Content-Security-Policy broke the prerendered page. Prerendered HTML arrives with about 120 inline `style` attributes: per-letter animation offsets, the FAQ's collapsed height, the form's hidden spam trap. `style-src 'self'` blocks those at parse time, and React does not reapply them on hydration. The fix is to allow inline style attributes while `style-src-elem 'self'` still forbids inline ` ` blocks.
+4. A cached copy of the old video broke the new player. Files in `/assets` are cached for a week. When the re-encoded, fragmented file shipped under the same name, returning visitors kept the old one, which Media Source cannot play, so the hero failed outright for them. A new file name misses every stale cache. This is the one I would most want you to remember.
+
+## What it measures 
+
+- Lighthouse on the live site: 100 performance, 100 accessibility, 100 best practices, 100 SEO.
+- Largest Contentful Paint 0.47s on desktop, 1.64s on mobile.
+- The page is prerendered, so about 1,450 words are readable with JavaScript switched off.
+- Worst-case text contrast over the moving film, measured pixel by pixel: 8.76:1.
+
+## Would I do it again? 
+
+For a portfolio, a venue, a product launch: yes. For a business that needs to answer a question and take a booking: no, and I would say so. The interesting part is not the effect. It is that a page can carry a ten-second film and still load faster than most text-only sites, if every heavy thing is made optional and nothing lies to the browser.
+
+---
+
+Title: Video Poster Images and LCP: Making Heroes Fast | FP Guide
+URL: https://frontend-performance.com/image-media-optimization/video-performance-optimization/video-poster-images-and-lcp/
+Published: N/A
+Author: N/A
+Highlights:
+This guide focuses on the LCP mechanics of Video Performance Optimization, within Image & Media Optimization. When a hero section is built around a video, the largest element in the viewport is the video element — and what the browser paints there first is either the `poster` image or, if there is none, the first decoded frame. In Chromium, both are eligible LCP candidates: the poster as an image, and the first frame of a video as a video-type candidate. Whichever paints first with the largest area defines LCP until something larger replaces it.
+
+That makes the poster one of the most important images on the page, and one of the most commonly neglected: a full-resolution PNG export of a video frame, referenced only in a `poster` attribute (which the preload scanner may discover late), downloaded at default priority, sometimes larger than a mobile-sized video rendition. Fix the poster and the video hero's LCP behaves like any well-optimised image hero.
+
+...
+
+## Root Cause Analysis
+
+1. Missing poster. LCP waits for video bytes and decoding of the first frame, which is far slower than an image.
+
+2. Oversized poster. Full-resolution lossless frames weigh hundreds of kilobytes to megabytes.
+
+3. Late discovery and low priority. Posters set by JavaScript or inside client-rendered components are found late; the `poster` attribute may not be fetched at high priority.
+
+4. Poster replaced too early. If the video starts playing before the poster finishes, the first frame can become a later, larger LCP candidate.
+
+...
+
+### 2. Preload the poster with high priority
+
+```html
+<link rel="preload" as="image" href="/media/hero-poster-1280.avif" fetchpriority="high"
+      imagesrcset="/media/hero-poster-640.avif 640w, /media/hero-poster-1280.avif 1280w" imagesizes="100vw">
+<video autoplay muted loop playsinline preload="metadata" width="1280" height="720" poster="/media/hero-poster-1280.avif">
+  <source src="/media/hero-720.webm" type="video/webm">
+  <source src="/media/hero-720.mp4" type="video/mp4">
+</video>
+<!-- trade-off: the poster attribute has no srcset; the preload's imagesrcset
+     picks the best file for the device, but the attribute still names one URL.
+     Keep them consistent or use the overlay approach below. -->
+
+```
+
+Expected outcome: the poster paints early as the LCP element; the video takes over afterwards.
+
+### 3. Use an image overlay for full responsive control
+
+Render a real ` ` with `srcset`, `sizes` and `fetchpriority="high"` absolutely positioned over (or instead of) the video until it starts playing, then fade the image out.
+
+...
+
+On slow connections, attach the video sources after `load` (or after the poster's `load` event), so video bytes never compete with the poster.
+
+...
+
+## Worked Example: An Automotive Landing Page
+
+A car manufacturer's model pages opened with a full-bleed video hero, no poster and `preload="auto"`. LCP on mobile was the first video frame at 4.6s p75. The team generated 640px and 1280px AVIF posters (70KB and 150KB), added an ` ` overlay with `fetchpriority="high"`, switched the video to `preload="metadata"`, and started playback after the overlay image loaded. LCP p75 dropped to 1.9s, with the poster as the LCP element on 96% of page views; the video still began playing within a second of LCP on typical connections.
+
+## Choosing the Poster Frame
+
+The poster is what most users see first, and what users with autoplay blocked or reduced motion see permanently. Choose it deliberately: a frame that communicates the product or message on its own, with legible composition at mobile sizes, and visually continuous with the video's first frame so the transition is seamless. Avoid frames with text that becomes illegible when compressed, and avoid very dark or very busy frames that compress poorly. A designer's two minutes here often matters more than the codec choice.
+
+...
+
+Streaming players. HLS/DASH players initialise via JavaScript; posters must not depend on that JavaScript to appear.
+
+Reduced motion. With `prefers-reduced-motion`, keep only the poster — which is now the permanent hero image.
+
+...
+
+On 2G or with data saver, skip the video entirely and serve the poster as a static hero.

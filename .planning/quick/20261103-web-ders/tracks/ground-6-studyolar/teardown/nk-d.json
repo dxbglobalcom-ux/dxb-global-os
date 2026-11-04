@@ -1,0 +1,477 @@
+{
+ "url": "https://www.nike.com/",
+ "tag": "nk-d",
+ "mode": "desktop",
+ "navErr": null,
+ "loadT": 13280,
+ "first": {
+  "mux": [],
+  "title": "Nike. Just Do It. Nike DE",
+  "h": 5046,
+  "videos": [
+   {
+    "src": "blob:https://www.nike.com/ca978170-842f-4cf6-a794-f55874584ddd",
+    "w": 1600,
+    "h": 900,
+    "dur": 16,
+    "cw": 1440,
+    "ch": 700,
+    "y": 96,
+    "auto": true,
+    "loop": false,
+    "muted": true,
+    "paused": true
+   },
+   {
+    "src": "blob:https://www.nike.com/8e5f4e8e-b0c9-4c57-920b-0411343bcc3c",
+    "w": 1600,
+    "h": 900,
+    "dur": 16,
+    "cw": 1440,
+    "ch": 700,
+    "y": 96,
+    "auto": true,
+    "loop": false,
+    "muted": true,
+    "paused": true
+   },
+   {
+    "src": "https://static.nike.com/a/images/f_mp4/h_997,c_limit/c7ed3960-707f-46b4-8e3f-15b5e7ef482a/nike-just-do-it.gif",
+    "w": 996,
+    "h": 996,
+    "dur": 5.528341,
+    "cw": 666,
+    "ch": 666,
+    "y": 1526,
+    "auto": true,
+    "loop": true,
+    "muted": true,
+    "paused": false
+   }
+  ],
+  "canvases": [],
+  "imgCount": 51,
+  "lazy": 42,
+  "svgCount": 129,
+  "nodes": 3403,
+  "textLen": 3560,
+  "libs": {
+   "three": false,
+   "threeRev": null,
+   "gsap": false,
+   "ScrollTrigger": false,
+   "lenis": false,
+   "next": true,
+   "nuxt": false,
+   "webflow": false,
+   "jquery": false,
+   "react": false,
+   "rive": false,
+   "lottie": false,
+   "astro": false,
+   "gen": null
+  },
+  "scripts": [
+   "https://scripts.clarity.ms/0.8.77-beta/clarity.js",
+   "https://analytics.tiktok.com/i18n/pixel/static/identify_9fbdaf50.js",
+   "https://www.clarity.ms/tag/uet/5424734",
+   "https://analytics.tiktok.com/i18n/pixel/static/main.MTJjYzk1MmQ1MA.js",
+   "https://tr.snapchat.com/config/com/20634084-7fa1-4691-8aec-fefe00263e00.js?v=3.61.0-2610191940",
+   "https://pagead2.googlesyndication.com/pagead/js/r20261102/r20110914/elements/html/omrhp.js",
+   "https://s.pinimg.com/ct/lib/main.80c2b6ae.js",
+   "https://bat.bing.com/bat.js",
+   "https://www.redditstatic.com/ads/pixel.js",
+   "https://connect.facebook.net/signals/config/351341038378023?v=2.9.435&r=stable&domain=www.nike.com&hme=4453c87d489b6902031c012cadd2731893cd69feb64fe8a61b339727247a7703&ex_m=118%2C242%2C171%2C27%2C82%2C83%2C162%2C78%2C77%2C11%2C181%2C102%2C20%2C153%2C141%2C46%2C85%2C90%2C149%2C176%2C183%2C8%2C4%2C5%2C7%2C6%2C3%2C103%2C115%2C32%2C17%2C31%2C18%2C33%2C34%2C35%2C37%2C55%2C163%2C87%2C126%2C22%2C24%2C51%2C47%2C49%2C48%2C95%2C104%2C108%2C124%2C160%2C164%2C53%2C125%2C29%2C26%2C133%2C79%2C43%2C166%2C165%2C167%2C157%2C155%2C30%2C42%2C66%2C123%2C178%2C80%2C21%2C128%2C93%2C76%2C23%2C97%2C98%2C130%2C96%2C151%2C150%2C154%2C109%2C177%2C180%2C41%2C56%2C127%2C54%2C161%2C72%2C185%2C110%2C184%2C211%2C263%2C84%2C283%2C282%2C281%2C14%2C25%2C28%2C40%2C62%2C117%2C68%2C10%2C73%2C111%2C112%2C113%2C119%2C144%2C38%2C36%2C146%2C147%2C148%2C143%2C142%2C172%2C86%2C175%2C173%2C174%2C57%2C69%2C67%2C137%2C19%2C179%2C52%2C333%2C334%2C335%2C332%2C349%2C371%2C256%2C238%2C70%2C239%2C237%2C374%2C365%2C59%2C257%2C121%2C145%2C92%2C135%2C61%2C134%2C140%2C139%2C65%2C74%2C168%2C88%2C89%2C129%2C44%2C39%2C60%2C63%2C114%2C182%2C1%2C138%2C16%2C136%2C12%2C2%2C64%2C105%2C15%2C75%2C71%2C132%2C101%2C100%2C187%2C188%2C106%2C107%2C9%2C116%2C186%2C58%2C158%2C99%2C91%2C81%2C131%2C120%2C169%2C50%2C159%2C0%2C94%2C152%2C156%2C170%2C45%2C122%2C13%2C189",
+   "https://connect.facebook.net/en_US/fbevents.js",
+   "https://analytics.tiktok.com/i18n/pixel/events.js?sdkid=CU95O3RC77U5D2GJASTG&lib=ttq",
+   "https://sc-static.net/scevent.min.js",
+   "https://s.pinimg.com/ct/core.js",
+   "https://www.dwin1.com/16329.js",
+   "https://www.nike.com/mtrx9k/uFj3l8bZFkg7GboA6WSNOchF-9BDc9F6cthpEd1_0-lBuKaK5oUlBDIviV3dB9YXxWT72wpzjTx8i39Kg3ChkIU",
+   "https://www.nike.com/mtrx9k/uFj3l8bZFkgvGqZs53j5LalU-9BDc9F6cthpEd1_0-lBuKaK5oUlBDIviV3dB9YXxWT72wpzjTx8i39Kg3ChkIU",
+   "https://www.googletagmanager.com/gtm.js?id=GTM-NTF2X45&gtg_health=1",
+   "https://www.nike.com/mtrx9k/uFj3l8bZFSZTesEPnhaDW95r4NEfbNttbdRzH_B0-eBGqYyf1oUdBAcrgh7MWYgM3mCp0UMq1T57jy0QgpCF",
+   "https://www.nike.com/mtrx9k/?id=GTM-NTF2X45&l=marketingClientDataLayer",
+   "https://www.nike.com/static/privacy-core/public/privacy-core.js",
+   "https://www.nike.com/static/analytics-client/public/analytics-client.min.js",
+   "https://www.nike.com/static/uxf/web-shell-client/v1/bundle.umd.js",
+   "https://www.nike.com/static/experience/shop-components/public/nike-shop-client.js",
+   "https://www.nike.com/static/experience/experimentation-eng/gridiron/gridiron.js",
+   "https://www.nike.com/static/experience/experimentation-eng/optimization-client/optimization-client.js",
+   "https://www.nike.com/static/experience/experimentation-eng/bellotti/playmaker/playmaker.js",
+   "https://www.nike.com/_next/static/chunks/polyfills-42372ed130431b0a.js",
+   "https://www.nike.com/_next/static/chunks/739.9426a0c8c563acde.js",
+   "https://www.nike.com/_next/static/chunks/webpack-9ec76f1d1e29a50a.js"
+  ]
+ },
+ "last": {
+  "mux": [],
+  "title": "Nike. Just Do It. Nike DE",
+  "h": 5046,
+  "videos": [
+   {
+    "src": "blob:https://www.nike.com/ca978170-842f-4cf6-a794-f55874584ddd",
+    "w": 1600,
+    "h": 900,
+    "dur": 16,
+    "cw": 1440,
+    "ch": 700,
+    "y": 96,
+    "auto": true,
+    "loop": false,
+    "muted": true,
+    "paused": true
+   },
+   {
+    "src": "blob:https://www.nike.com/8e5f4e8e-b0c9-4c57-920b-0411343bcc3c",
+    "w": 1600,
+    "h": 900,
+    "dur": 15.140124,
+    "cw": 1440,
+    "ch": 700,
+    "y": 96,
+    "auto": true,
+    "loop": false,
+    "muted": true,
+    "paused": false
+   },
+   {
+    "src": "https://static.nike.com/a/images/f_mp4/h_997,c_limit/c7ed3960-707f-46b4-8e3f-15b5e7ef482a/nike-just-do-it.gif",
+    "w": 996,
+    "h": 996,
+    "dur": 5.528341,
+    "cw": 666,
+    "ch": 666,
+    "y": 1526,
+    "auto": true,
+    "loop": true,
+    "muted": true,
+    "paused": false
+   }
+  ],
+  "canvases": [],
+  "imgCount": 51,
+  "lazy": 42,
+  "svgCount": 129,
+  "nodes": 3402,
+  "textLen": 3560,
+  "libs": {
+   "three": false,
+   "threeRev": null,
+   "gsap": false,
+   "ScrollTrigger": false,
+   "lenis": false,
+   "next": true,
+   "nuxt": false,
+   "webflow": false,
+   "jquery": false,
+   "react": false,
+   "rive": false,
+   "lottie": false,
+   "astro": false,
+   "gen": null
+  },
+  "scripts": [
+   "https://scripts.clarity.ms/0.8.77-beta/clarity.js",
+   "https://analytics.tiktok.com/i18n/pixel/static/identify_9fbdaf50.js",
+   "https://www.clarity.ms/tag/uet/5424734",
+   "https://analytics.tiktok.com/i18n/pixel/static/main.MTJjYzk1MmQ1MA.js",
+   "https://tr.snapchat.com/config/com/20634084-7fa1-4691-8aec-fefe00263e00.js?v=3.61.0-2610191940",
+   "https://pagead2.googlesyndication.com/pagead/js/r20261102/r20110914/elements/html/omrhp.js",
+   "https://s.pinimg.com/ct/lib/main.80c2b6ae.js",
+   "https://bat.bing.com/bat.js",
+   "https://www.redditstatic.com/ads/pixel.js",
+   "https://connect.facebook.net/signals/config/351341038378023?v=2.9.435&r=stable&domain=www.nike.com&hme=4453c87d489b6902031c012cadd2731893cd69feb64fe8a61b339727247a7703&ex_m=118%2C242%2C171%2C27%2C82%2C83%2C162%2C78%2C77%2C11%2C181%2C102%2C20%2C153%2C141%2C46%2C85%2C90%2C149%2C176%2C183%2C8%2C4%2C5%2C7%2C6%2C3%2C103%2C115%2C32%2C17%2C31%2C18%2C33%2C34%2C35%2C37%2C55%2C163%2C87%2C126%2C22%2C24%2C51%2C47%2C49%2C48%2C95%2C104%2C108%2C124%2C160%2C164%2C53%2C125%2C29%2C26%2C133%2C79%2C43%2C166%2C165%2C167%2C157%2C155%2C30%2C42%2C66%2C123%2C178%2C80%2C21%2C128%2C93%2C76%2C23%2C97%2C98%2C130%2C96%2C151%2C150%2C154%2C109%2C177%2C180%2C41%2C56%2C127%2C54%2C161%2C72%2C185%2C110%2C184%2C211%2C263%2C84%2C283%2C282%2C281%2C14%2C25%2C28%2C40%2C62%2C117%2C68%2C10%2C73%2C111%2C112%2C113%2C119%2C144%2C38%2C36%2C146%2C147%2C148%2C143%2C142%2C172%2C86%2C175%2C173%2C174%2C57%2C69%2C67%2C137%2C19%2C179%2C52%2C333%2C334%2C335%2C332%2C349%2C371%2C256%2C238%2C70%2C239%2C237%2C374%2C365%2C59%2C257%2C121%2C145%2C92%2C135%2C61%2C134%2C140%2C139%2C65%2C74%2C168%2C88%2C89%2C129%2C44%2C39%2C60%2C63%2C114%2C182%2C1%2C138%2C16%2C136%2C12%2C2%2C64%2C105%2C15%2C75%2C71%2C132%2C101%2C100%2C187%2C188%2C106%2C107%2C9%2C116%2C186%2C58%2C158%2C99%2C91%2C81%2C131%2C120%2C169%2C50%2C159%2C0%2C94%2C152%2C156%2C170%2C45%2C122%2C13%2C189",
+   "https://connect.facebook.net/en_US/fbevents.js",
+   "https://analytics.tiktok.com/i18n/pixel/events.js?sdkid=CU95O3RC77U5D2GJASTG&lib=ttq",
+   "https://sc-static.net/scevent.min.js",
+   "https://s.pinimg.com/ct/core.js",
+   "https://www.dwin1.com/16329.js",
+   "https://www.nike.com/mtrx9k/uFj3l8bZFkg7GboA6WSNOchF-9BDc9F6cthpEd1_0-lBuKaK5oUlBDIviV3dB9YXxWT72wpzjTx8i39Kg3ChkIU",
+   "https://www.nike.com/mtrx9k/uFj3l8bZFkgvGqZs53j5LalU-9BDc9F6cthpEd1_0-lBuKaK5oUlBDIviV3dB9YXxWT72wpzjTx8i39Kg3ChkIU",
+   "https://www.googletagmanager.com/gtm.js?id=GTM-NTF2X45&gtg_health=1",
+   "https://www.nike.com/mtrx9k/uFj3l8bZFSZTesEPnhaDW95r4NEfbNttbdRzH_B0-eBGqYyf1oUdBAcrgh7MWYgM3mCp0UMq1T57jy0QgpCF",
+   "https://www.nike.com/mtrx9k/?id=GTM-NTF2X45&l=marketingClientDataLayer",
+   "https://www.nike.com/static/privacy-core/public/privacy-core.js",
+   "https://www.nike.com/static/analytics-client/public/analytics-client.min.js",
+   "https://www.nike.com/static/uxf/web-shell-client/v1/bundle.umd.js",
+   "https://www.nike.com/static/experience/shop-components/public/nike-shop-client.js",
+   "https://www.nike.com/static/experience/experimentation-eng/gridiron/gridiron.js",
+   "https://www.nike.com/static/experience/experimentation-eng/optimization-client/optimization-client.js",
+   "https://www.nike.com/static/experience/experimentation-eng/bellotti/playmaker/playmaker.js",
+   "https://www.nike.com/_next/static/chunks/polyfills-42372ed130431b0a.js",
+   "https://www.nike.com/_next/static/chunks/739.9426a0c8c563acde.js",
+   "https://www.nike.com/_next/static/chunks/webpack-9ec76f1d1e29a50a.js"
+  ]
+ },
+ "agg": {
+  "html": {
+   "n": 17,
+   "bytes": 311906,
+   "load": 311906,
+   "scroll": 0
+  },
+  "font": {
+   "n": 16,
+   "bytes": 353951,
+   "load": 353951,
+   "scroll": 0
+  },
+  "css": {
+   "n": 18,
+   "bytes": 156081,
+   "load": 156081,
+   "scroll": 0
+  },
+  "js": {
+   "n": 219,
+   "bytes": 4728633,
+   "load": 4702571,
+   "scroll": 26062
+  },
+  "other": {
+   "n": 68,
+   "bytes": 21477,
+   "load": 13241,
+   "scroll": 8236
+  },
+  "json": {
+   "n": 89,
+   "bytes": 138150,
+   "load": 125767,
+   "scroll": 12383
+  },
+  "image": {
+   "n": 77,
+   "bytes": 1031226,
+   "load": 1030506,
+   "scroll": 720
+  },
+  "video": {
+   "n": 37,
+   "bytes": 5299426,
+   "load": 5299426,
+   "scroll": 0
+  },
+  "audio": {
+   "n": 11,
+   "bytes": 291956,
+   "load": 291956,
+   "scroll": 0
+  }
+ },
+ "top": [
+  {
+   "b": 2350604,
+   "c": "video",
+   "u": "https://assets.nmp.nike.com/video/406b501eeb5c8927/406b501eeb5c8927video_3_000000002.cmfv",
+   "cl": "2350036",
+   "p": "load"
+  },
+  {
+   "b": 1651742,
+   "c": "video",
+   "u": "https://assets.nmp.nike.com/video/406b501eeb5c8927/406b501eeb5c8927video_3_000000001.cmfv",
+   "cl": "1649321",
+   "p": "load"
+  },
+  {
+   "b": 827681,
+   "c": "video",
+   "u": "https://assets.nmp.nike.com/video/406b501eeb5c8927/406b501eeb5c8927video_1_000000003.cmfv",
+   "cl": "827154",
+   "p": "load"
+  },
+  {
+   "b": 462535,
+   "c": "video",
+   "u": "https://static.nike.com/a/images/f_mp4/h_997,c_limit/c7ed3960-707f-46b4-8e3f-15b5e7ef482a/nike-just-do-it.gif",
+   "cl": "461858",
+   "cr": "bytes 0-461857/461858",
+   "p": "load"
+  },
+  {
+   "b": 404100,
+   "c": "js",
+   "u": "https://nikeconsumerservices.my.site.com/ESWWebGermanGuest1710549394784/webruntime/view/8bed6cd54662b59489a849733b580dac/prod/en-US/home_view",
+   "p": "load"
+  },
+  {
+   "b": 397326,
+   "c": "js",
+   "u": "https://api.nike.com/149e9513-01fa-4fb0-aad4-566afd725d1b/2d206a39-8ed7-437e-a3be-862e0f06eea3/ips.js?KP_UIDz=02dSIzyx4xxnk9auifJskcBGUOziGI5oLgwHbNzD",
+   "cl": "396157",
+   "p": "load"
+  },
+  {
+   "b": 385189,
+   "c": "js",
+   "u": "https://api.nike.com/149e9513-01fa-4fb0-aad4-566afd725d1b/2d206a39-8ed7-437e-a3be-862e0f06eea3/ips.js?KP_UIDz=02eqfPd8U5ATbpVgZqkvts6sYSdCKTeUoPAKKCuC",
+   "cl": "383929",
+   "p": "load"
+  },
+  {
+   "b": 209183,
+   "c": "js",
+   "u": "https://www.nike.com/mtrx9k/?id=GTM-NTF2X45&l=marketingClientDataLayer",
+   "cl": "208567",
+   "p": "load"
+  },
+  {
+   "b": 200789,
+   "c": "js",
+   "u": "https://www.nike.com/mtrx9k/uFj3l8bZFkg7GboA6WSNOchF-9BDc9F6cthpEd1_0-lBuKaK5oUlBDIviV3dB9YXxWT72wpzjTx8i39Kg3ChkIU",
+   "cl": "200200",
+   "p": "load"
+  },
+  {
+   "b": 199482,
+   "c": "js",
+   "u": "https://www.nike.com/mtrx9k/uFj3l8bZFkgvGqZs53j5LalU-9BDc9F6cthpEd1_0-lBuKaK5oUlBDIviV3dB9YXxWT72wpzjTx8i39Kg3ChkIU",
+   "cl": "198892",
+   "p": "load"
+  },
+  {
+   "b": 195634,
+   "c": "js",
+   "u": "https://static-assets.nike.com/video-player/2.2.0/nike-one-video-player.min.js",
+   "cl": "195204",
+   "p": "load"
+  },
+  {
+   "b": 194292,
+   "c": "image",
+   "u": "https://static.nike.com/a/images/f_auto/dpr_1.0,cs_srgb/h_2157,c_limit/a0df66d9-217b-4d8c-83bb-3c109c88c789/nike-just-do-it.jpg",
+   "cl": "193780",
+   "p": "load"
+  },
+  {
+   "b": 160159,
+   "c": "js",
+   "u": "https://www.nike.com/mtrx9k/uFj3l8bZFSZTesEPnhaDW95r4NEfbNttbdRzH_B0-eBGqYyf1oUdBAcrgh7MWYgM3mCp0UMq1T57jy0QgpCF",
+   "cl": "159587",
+   "p": "load"
+  },
+  {
+   "b": 154761,
+   "c": "js",
+   "u": "https://connect.facebook.net/signals/config/351341038378023?v=2.9.435&r=stable&domain=www.nike.com&hme=4453c87d489b6902031c012cadd2731893cd69feb64fe8a",
+   "p": "load"
+  },
+  {
+   "b": 149026,
+   "c": "html",
+   "u": "https://www.nike.com/de/",
+   "p": "load"
+  },
+  {
+   "b": 148645,
+   "c": "html",
+   "u": "https://www.nike.com/de/",
+   "p": "load"
+  },
+  {
+   "b": 124049,
+   "c": "js",
+   "u": "https://www.nike.com/static/bellotti/playcard/_reco/public/1575286df5ef4d909e03/index.umd.js",
+   "cl": "123320",
+   "p": "load"
+  },
+  {
+   "b": 122092,
+   "c": "js",
+   "u": "https://www.nike.com/static/cssf/async-chat/_reco/public/f69d92b16fce09b5971a/index.umd.js",
+   "cl": "121309",
+   "p": "load"
+  },
+  {
+   "b": 121623,
+   "c": "audio",
+   "u": "https://assets.nmp.nike.com/video/406b501eeb5c8927/406b501eeb5c8927audio_000000001.cmfa",
+   "cl": "121110",
+   "p": "load"
+  },
+  {
+   "b": 117302,
+   "c": "js",
+   "u": "https://connect.facebook.net/en_US/fbevents.js",
+   "cl": "114279",
+   "p": "load"
+  },
+  {
+   "b": 116056,
+   "c": "audio",
+   "u": "https://assets.nmp.nike.com/video/406b501eeb5c8927/406b501eeb5c8927audio_000000002.cmfa",
+   "cl": "115545",
+   "p": "load"
+  },
+  {
+   "b": 113019,
+   "c": "js",
+   "u": "https://analytics.tiktok.com/i18n/pixel/static/main.MTJjYzk1MmQ1MA.js",
+   "cl": "112310",
+   "p": "load"
+  }
+ ],
+ "hostTop": [
+  [
+   "assets.nmp.nike.com",
+   5128847
+  ],
+  [
+   "www.nike.com",
+   2973637
+  ],
+  [
+   "static.nike.com",
+   1486912
+  ],
+  [
+   "api.nike.com",
+   867669
+  ],
+  [
+   "nikeconsumerservices.my.site.com",
+   728267
+  ],
+  [
+   "connect.facebook.net",
+   272063
+  ],
+  [
+   "static-assets.nike.com",
+   212568
+  ],
+  [
+   "analytics.tiktok.com",
+   156442
+  ],
+  [
+   "pagead2.googlesyndication.com",
+   81290
+  ],
+  [
+   "nikeconsumerservices.my.salesforce-scrt.com",
+   70791
+  ],
+  [
+   "web-sdk-cdn.singular.net",
+   48062
+  ],
+  [
+   "s.pinimg.com",
+   40950
+  ],
+  [
+   "js-agent.newrelic.com",
+   35367
+  ],
+  [
+   "s.go-mpulse.net",
+   34901
+  ]
+ ],
+ "total": 12332806,
+ "n": 552,
+ "server": "unified-edge-router"
+}

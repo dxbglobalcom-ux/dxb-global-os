@@ -1,0 +1,438 @@
+Title: Site of the Year — Award Site Teardowns
+URL: https://rickcreates.com/year
+Published: N/A
+Author: N/A
+Highlights:
+# Site of the Year Teardowns
+
+Each year Awwwards names one Site of the Year and the FWA names one FWA of the Year. This section tears down those winners year by year. Each report examines the concept, visual design, interaction and front-end build behind the award, with performance and asset data measured in a real browser.
+
+...
+
+Cinematic Scroll
+- 2024 Awwwards 7.92 FWA 86 points SOTY
+
+## Igloo Inc I g l o o I n c
+
+Igloo Inc is the website of Igloo, a crypto consumer-brand company. The site freezes the company and its brands into a field of ice, and scrolling down sends the camera from an igloo on a snowy mountain deep into the ice. At the start, the screen shows that igloo, and when the cursor comes near, its ice blocks lift and glow one by one. The camera then passes through an ice fog with rainbow edges, past ice blocks holding two brands and a glowing ring, and stops in front of a penguin made of well over a hundred thousand particles. When the visitor keeps scrolling, the camera returns to the igloo.
+
+Cinematic Scroll
+
+---
+
+Title: Sites Of The Year - Awwwards
+URL: https://www.awwwards.com/websites/sites_of_the_year/
+Published: N/A
+Author: N/A
+Highlights:
+# Sites Of The Year
+
+ Best selection of Sites Of The Year for your inspiration... Read more 
+
+Sites Of The Year on Awwwards, the awards that recognize the talent and effort of the best web designers, developers and agencies in the world.
+
+- 
+
+ WEBSITE Lando Norris
+
+ 
+
+ 
+
+### OFF+BRAND.
+
+ PRO 
+
+ DEV 
+
+ Developer Award 
+
+ SOTY 
+
+ Site Of The Year 2025 
+- 
+
+ WEBSITE Messenger
+
+ 
+
+ 
+
+### abeto
+
+ DEV 
+
+ Developer Award 
+
+ SOTY 
+
+ Site Of The Year 2025 
+- 
+
+ WEBSITE Igloo Inc
+
+ 
+
+ 
+
+### abeto
+
+ AH 
+
+ Business & Services Honors Jul 2024 
+
+ DEV 
+
+ Developer Award 
+
+ SOTY 
+
+ Site Of The Year 2024 
+- 
+
+ PROMOTED 
+- 
+
+ WEBSITE Don't Board Me
+
+ 
+
+ 
+
+### The First The Last
+
+ PRO 
+
+ DEV 
+
+ Developer Award 
+
+ SOTY 
+
+ Site Of The Year 2024 
+- 
+
+ WEBSITE Opal Tadpole
+
+ 
+
+ 
+
+### Claudio Guglieri
+
+ DEV 
+
+ Developer Award 
+
+ SOTY 
+
+ Site Of The Year 2024 
+- 
+
+ WEBSITE Lusion v3
+
+---
+
+Title: Annual Awards - Hall of Fame
+URL: https://www.awwwards.com/annual-awards/hall-of-fame/2024
+Published: N/A
+Author: N/A
+Highlights:
+## Only the brightest digital creators make our winners list
+
+### Digital design is a revolution—our winners are trailblazers turning pixels into masterpieces and innovation into legacy. Join us in celebrating the creative geniuses reshaping our digital world.
+
+- 2025
+- 2024
+- 2023
+- 2022
+- 2021
+- 2020
+
+- Site of the Year Igloo Inc
+- Developer Site of the Year Igloo Inc
+- E-commerce of the Year Opal Tadpole
+- Agency of the Year Locomotive
+- Studio of the Year Immersive Garden
+- Independent of the Year Jesper Landberg
+- Site of the Year Users' Choice Don't Board Me
+
+---
+
+Title: Holographik website
+URL: https://holographik.co/work/accordion
+Published: N/A
+Author: N/A
+Highlights:
+Holographik website
+
+# Accordion
+
+## Redefining the online presence of a production company
+
+Brand
+
+Accordion is a production company with over seven years of experience bringing creative projects to life. Known for their ability to nurture artistic talent and deliver visually compelling work, Accordion reached a point where their digital presence no longer reflected the sophistication and ambition of their current output. They approached us with a clear goal: to reimagine their website as a contemporary showcase of their evolving creative identity.
+
+‍
+
+From the beginning, our focus was on clarity and curation. Accordion works with a wide range of artists, each with a distinct style and voice, so the challenge was to design a visual identity that celebrates that diversity while maintaining a strong, cohesive presence for the production company itself. We built a clean and deliberate layout that functions as a flexible canvas—elevating each featured work without overwhelming it.
+
+‍
+
+The new website employs a monochrome color palette, allowing the content to speak for itself while maintaining a unified aesthetic. Subtle but intentional motion graphics guide the viewer through the experience, enhancing navigation without drawing attention away from the showcased projects. Every design element, whether in contrast or harmony, was chosen to create a rhythm across the site that reflects the editorial precision of Accordion’s approach to storytelling.
+
+‍
+
+The result is a digital experience that balances restraint and impact. It gives space to the artists, clarity to the content, and a confident new voice to Accordion’s brand.
+
+### Industry
+
+Entertainment, Creative
+
+### Team
+
+Thierry Rolin
+
+Franko Komljenović
+
+Vito Balen
+
+### What we did
+
+Website
+
+### Awards
+
+Awwwards — Site of the Day
+
+Awwwards — Development Award
+
+Awwwards — Site of the Year 2024 nomination
+
+Project info
+
+---
+
+Title: Website Inspiration: Three Immersive Digital Experiences from Awwwards — DesignGather
+URL: https://www.designgather.com/blog/website-inspiration-three-immersive-digital-experiences-from-awwwards/
+Published: 2026-10-29T09:29:14.000Z
+Author: N/A
+Highlights:
+## 01 — Igloo Inc
+
+Designed by abeto — Awwwards
+
+Igloo Inc received Awwwards recognition including Business & Services Honors, Developer Award, and Site of the Year 2024.
+
+The experience is built around a cold, monochromatic visual world that immediately establishes the brand atmosphere.
+
+Large 3D environments, soft lighting, snowy surfaces, and restrained interface elements make the site feel less like a conventional corporate presentation and more like an explorable digital space.
+
+The first screen is especially effective because the interface barely competes with the scene. Small pieces of typography sit quietly at the edges while the 3D environment carries most of the visual weight.
+
+As the experience continues, the same visual language shifts into darker, more abstract compositions. Objects dissolve into particles, content appears inside spacious overlays, and interaction feels integrated into the world rather than placed on top of it.
+
+What stands out is the consistency: interface, environment, typography, and motion all belong to the same system.
+
+## 02 — Lusion v3
+
+Lusion — Awwwards
+
+Lusion v3 was awarded Awwwards Site of the Year 2023 as well as a Developer Award.
+
+---
+
+Title: Case Study: Building Sparkk's Website
+URL: https://www.awwwards.com/case-study-building-sparkks-website.html
+Published: 2024-11-20T00:00:00.000Z
+Author: N/A
+Highlights:
+Case Study: Building Sparkk's Website
+
+## Nov 20, 2024
+
+# Case Study: Building Sparkk's Website
+
+## In 2024, Sparkk embarked on an ambitious project: to create a new website in-house that would reflect our expertise in innovation, our boundless creativity, and our universe heavily inspired by video games.
+
+The site had to be both fun and corporate, offering dynamic, interactive navigation while remaining professional to attract our B2B clients.
+
+We also wanted to showcase our skills in design and innovation through the presentation of our case studies and services, all within a visual environment that would blend 3D and interactivity.
+
+## Website Objectives
+
+1. Fun and Corporate: Strike a balance between a dynamic navigation experience and a professional brand image.
+2. Innovation and Creativity: Highlight our ability to create modern, interactive web experiences.
+3. Interactive Navigation: Make the site engaging with fun animations and interactions.
+4. Presenting Our Work and Services: Showcase our expertise through detailed case studies.
+
+---
+
+Title: Den of Wolves – Heimdal Studio®
+URL: https://www.heimdal.studio/projects/den-of-wolves
+Published: N/A
+Author: N/A
+Highlights:
+Den of Wolves – Heimdal Studio®
+
+# Den of Wolves
+
+2024
+
+## A digital experience encouraging community teamwork to explore the lore of Den of Wolves, the upcoming game from 10 Chambers.
+
+### Project information
+
+A digital experience encouraging teamwork to explore the lore of Den of Wolves, the upcoming game from 10 Chambers. To keep the community engaged during the game development process, this immersive experience took the form of a hacking tool hidden within the teaser page. A range of single and multiplayer puzzles acted as tools to decrypt content and lore from Den of Wolves, encrypted using custom WebGL shaders. PETSCII art was used alongside a brutalist palette to create a visual world closer to real-world hacking tools than the glossy interfaces of Hollywood movies.
+
+Website
+
+### Core team
+
+### Paul Witherden
+
+Design Director & Lead Designer
+
+For the design of the Den of Wolves experience I really wanted to create something that felt authentic, inspired by real-world hacking tools. I established strict visual constraints for the palette, typography, PETSCII illustrations, motion and even icons. Not everyone will notice the smaller details but my aim was to reward those that do.
+
+### Press
+
+FWA Site of the Day
+
+Awwwards Site of the Day
+
+Awwwards Developer Award 
+
+CSSDA Website of the Day 
+
+CSSDA UI Award 
+
+CSSDA UX Award 
+
+CSSDA Innovation Award 
+
+Communication Arts interview
+
+### Credits
+
+Client
+
+10 Chambers
+
+Agency
+
+North Kingdom
+
+Design Direction
+
+Paul Witherden
+
+UI Design
+
+Paul Witherden
+
+Motion Design
+
+Paul Witherden
+
+Creative Direction
+
+Magnus Östergren
+
+3D Design
+
+Mathias Lindgren
+
+UX Design
+
+Adria Verdaguer
+
+Kenny Lindström, Sander van den Borne
+
+Thomas Oger
+
+Miha Klasinc, Anton Nystedt, Einar Öberg, Nick White
+
+Type Design
+
+Dinamo
+
+ABC Diatype Mono, Disket Mono
+
+---
+
+Title: Medium
+URL: https://medium.com/@PaulineStich/case-study-gemini-0e105783dbf7
+Published: 2024-03-19T20:53:22.000Z
+Author: Pauline
+Highlights:
+Medium
+
+# 🛞 Case Study: Gemini
+
+Pauline
+
+Mar 19, 2024
+
+Gemini ~ a WebGL car demo configurator.
+
+🔗 see online
+
+## The project
+
+In November 2021, we developed a WebGL car configurator at Lusion.
+
+### Purpose
+
+- Create a new project/experiment every month.
+- To promote Lusion skills and creativity.
+- To learn new technologies in a short amount of time.
+
+All of this, by pushing the boundaries of what’s possible in the realm of web development.
+
+### Target audience
+
+Awwwards and WebGl pixel-perfect lovers, 3D enthusiasts, car companies and car lovers (to attract any potential client who would be interested in building an online car configurator).
+
+### Some notes of my responsibilities for Gemini*:
+
+As a designer and front-end developer, my challenges included:
+
+- Bringing new/interesting ideas: a slow-motion effect when click & hold, combined with an animated hud effect
+- Designing the UI components in Figma (preloader, a hud, cursor with multiple states, about page)
+- Front-end development and animation of the UI with tools like gsap
+
+* Please note: The initial experiment was crafted by Edan Kwan and Patrick Heintzman. I participated in refining the experiment to enhance its quality for submission to Awwwards (and we did win a Site of the Day 🥳). My responsibilities primarily involved researching and analyzing current trends on Awwwards, and to help them finalize Gemini.
+
+## The team
+
+We had 3 developers.
+
+Tech Director: Edan Kwan Creative Developer: Patrick Heintzman Frontend Developer and UI design: Pauline Stichelbaut
+
+...
+
+## Process
+
+Problem: The experiment has a lot of potential but itsn’t polished enough to be submitted to Awwwards. Lusion is a new studio who aims to gain more visibility for strategic growth. To do so, we need to create work that is outstanding and innovate in the web design field.
+
+Solution: By exploring new design trends, technologies, and approaches to push boundaries and create standout work that captivates audiences. We contributed to refining the UI and enhance its quality for submission to Awwwards by:
+
+- Adding Interactive Elements: Incorporate animations and micro-interactions to engage users. Example: when you click and hold, you enter a cinematic mode, with a majestic leopard running next to the car and the hud appears. This creates a ‘wow’ effect that the user wasn’t expecting. By overdelivering, you create memorable experiences (you captivate your audience and create new fans!).
+- Visual Hierarchy: size, color, and spacing to guide user attention.
+- Minimalist Design Approach: Focus on simplicity and clarity. We don’t need too much elements that could distract our users from the experience.
+
+...
+
+We received a lot of kind words and support, which means a lot for us! 🥰
+
+...
+
+## Final Thoughts
+
+Gemini introduces unique design elements, creative animations, and innovative features that demonstrate Lusion’s creativity and expertise in the field.
+
+I really love all the craftsman involved in Gemini. Again, all the attention to details is incredible, which has resulted in two well-deserved recognitions. 😍
+
+We will keep up the excellent work, and continue pushing the boundaries of what’s possible in the realm of web development! 😊🚀

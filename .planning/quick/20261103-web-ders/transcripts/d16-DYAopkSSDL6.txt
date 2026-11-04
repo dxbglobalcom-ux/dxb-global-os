@@ -1,0 +1,25 @@
+language: en
+[00:00] Open AI, drop codec CLI, and it's 10 times cheaper
+[00:02] than cloud code to run a full content factory.
+[00:05] Look right here, everything starts from a simple prompt.
+[00:07] I upload just one photo of my product,
+[00:09] and I tell it, make me Amazon list images,
+[00:11] or 50 UGC ads.
+[00:12] And look at this, lighting, angles, reflections,
+[00:15] it's all perfect from one request.
+[00:17] From a single input, that's insane.
+[00:19] But here's where things really level up.
+[00:21] Plug in Higgs field skills,
+[00:22] and now you can generate basically any type of content.
+[00:25] UGC, CGI, demo, cinematic, literally everything.
+[00:29] It doesn't just generate content,
+[00:30] the agent creates folders, plans the shots,
+[00:33] writes captions, and then posts everything automatically.
+[00:36] Your entire content team is now in a terminal.
+[00:38] Man, this isn't just a tool anymore.
+[00:40] This is a full-time employee.
+[00:42] It works 24 seven, pumping out hundreds of videos.
+[00:45] So all that you do is connect codecs, add the skills,
+[00:48] and you've got a complete content factory running locally.
+[00:51] Set up takes like five minutes.
+[00:52] Comment codecs, and I'll send you the full guide.

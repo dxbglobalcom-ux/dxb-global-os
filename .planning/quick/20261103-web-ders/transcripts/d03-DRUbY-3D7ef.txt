@@ -1,0 +1,8 @@
+language: en
+[00:00] Google just launched Pamelli. It's their new AI agent that automates your entire marketing stack,
+[00:03] and it's completely free. You just paste in your website links, and the AI will actually scan
+[00:07] your whole website, all of its visuals, all your voice, and literally everything. And then it'll
+[00:11] generate multiple campaign ideas based on your brand, complete with all the content, captions,
+[00:15] visuals, and everything you need all on its own. Plus all the assets are easily editable,
+[00:19] so you can tweak the campaigns however you want. So want to give it a try for yourself?
+[00:22] Just comment in marketing down below and I'll DM you the link directly.

@@ -1,0 +1,226 @@
+Title: Hreflang: The Easy Guide for Beginners
+URL: https://ahrefs.com/blog/hreflang-tags/
+Published: 2019-06-07T00:12:50.000Z
+Author: Joshua Hardwick
+Highlights:
+When we ran a study on hreflang across 374,756 domains, we found that 67% of the hreflang implementations had issues. Here are the most common issues:
+
+But don't let that put you off. Hreflang isn't that complicated to understand, and you can automate it to a large extent. (We'll talk about that later on.)
+
+---
+
+Title: Hreflang Study and Interesting Issues - Brighton SEO 2023 Patrick Stox - Speaker Deck
+URL: https://speakerdeck.com/patrickstox/hreflang-study-and-interesting-issues-brighton-seo-2023-patrick-stox
+Published: 2023-09-14T20:48:31.000Z
+Author: N/A
+Highlights:
+1. ### @patrickstox #brightonseo The most common hreflang issues across 374,756 domains 
+
+ Patrick Stox Ahrefs Speakerdeck.com/patrickstox @patrickstox
+
+...
+
+the most complex aspects of SEO (if not the most complex one). Feels as easy as a meta-tag, but it gets really hard quickly. John Mueller - Google 
+4. ### @patrickstox #brightonseo 67% Of Domains Have Hreflang Issues At least 
+
+ one hreflang issue 
+5. ### @patrickstox #brightonseo Pages missing x-default Pages missing self-referencing hreflang tags 
+
+ Hreflang tags reference redirected or broken pages Pages missing reciprocal tags Hreflang tags pointing to non-canonical URLs Pages with incorrect hreflang values Pages with inconsistent hreflang values More than on page referenced for the same language The same page referenced for more than one language Top Hreflang Issues 
+6. ### @patrickstox #brightonseo 56.3% of Domains Have Pages Missing X-Default Annotations 
+
+ Missing x-default 
+7. ### @patrickstox #brightonseo X-default Is Not Required 
+8. ### @patrickstox #brightonseo It Works By Most Specific Match 1. Language-country 
+
+ 2. Language 3. X-default 
+9. ### @patrickstox #brightonseo 18% Of Domains Have Pages Missing Self-Referencing Hreflang 
+
+ Tags Missing self-referencing hreflang tags 
+10. ### @patrickstox #brightonseo Self-Referencing Hreflang Tags Are Not Required 
+11. ### @patrickstox #brightonseo 16.9% of Domains Have Hreflang Tags Referencing Redirected 
+
+ Or Broken Pages Hreflang tags reference redirected or broken pages 
+12. ### @patrickstox #brightonseo 15.3% Of Domains Have Pages Missing Reciprocal Hreflang 
+
+ Tags Missing reciprocal hreflang tags 
+13. ### @patrickstox #brightonseo Hreflang Tags Work In Pairs
+
+...
+
+24.
+
+...
+
+25. ### @patrickstox #brightonseo Same Word - English 
+26. ### @patrickstox #brightonseo Same Word - Spanish
+
+...
+
+### @patrickstox #brightonseo 8% Of Domains Have Hreflang Tags Pointing To
+
+...
+
+30. ### @patrickstox #brightonseo 4.6% Of Domains Have Pages With Incorrect Hreflang 
+
+ Values Incorrect hreflang values
+
+...
+
+39. ### @patrickstox #brightonseo 3.2% Of Domains Have Pages With Inconsistent Language
+
+...
+
+### @patrickstox #brightonseo 2.5% Of Domains Have More Than One Page
+
+---
+
+Title: Data & Studies — Ahrefs Blog
+URL: https://ahrefs.com/blog/category/data-studies/page/6/
+Published: N/A
+Author: N/A
+Highlights:
+Patrick Stox
+
+August 31, 2023
+
+### We Studied Over 1 Million Domains to Find the Most Common Technical SEO Issues
+
+Patrick Stox
+
+August 10, 2023
+
+### Over 67% of Domains Using Hreflang Have Issues (Study of 374,756 Domains)
+
+Patrick Stox
+
+July 9, 2023
+
+###
+
+---
+
+Title: What Is Hreflang and How To Implement It the Right Way in 2025
+URL: https://backlinko.com/hreflang-tag
+Published: 2024-03-29T11:13:21.000Z
+Author: Yongi Barnard
+Highlights:
+However, it’s important to understand that hreflang is a signal, not a directive. This means while it guides search engines, there’s no guarantee they’ll always display the exact version you specify.
+
+...
+
+The main benefits of hreflang tags are:
+
+- Your users are directed to the most relevant version of your website
+- They can help the international versions of your pages rank for locally relevant keywords
+- They help ensure Google understands that the different versions of the page aren’t duplicates, minimizing duplicate content issues
+
+To get these benefits, you need to implement hreflang correctly. But an Ahrefs study found that 67% of websites have issues with their hreflang tags.
+
+---
+
+Title: Hreflang error rates: what's actually sourced, and what isn't
+URL: https://seomadman.com/blog/hreflang-error-prevalence-2026
+Published: 2026-07-29T00:00:00.000Z
+Author: Adam Hafez
+Highlights:
+## The short answer
+
+Two numbers circulate in hreflang advice: 72% of sites have a critical error per an "Ahrefs 2026 State of SEO survey," and one error invalidates 40% of implementations per Google's documentation. Neither traces to a real source. Ahrefs' real 2023 study found 67% of domains had some issue. Google's documentation describes real failure modes: reciprocity, x-default, and canonical alignment.
+
+...
+
+- A commonly cited "72% of multi-country sites, Ahrefs 2026 State of SEO survey" statistic does not appear anywhere on ahrefs.com.
+- A commonly cited "a single error invalidates roughly 40% of implementations, per Google" claim does not appear anywhere on developers.google.com.
+- Ahrefs did publish a real hreflang study in August 2023 covering 374,756 domains, finding 67% had at least one issue, most often a missing x-default.
+- Google's documentation states plainly that hreflang tags without a reciprocal return link are ignored, not partially applied.
+- The x-default value is documented as optional and recommended, never as a requirement Google enforces.
+
+...
+
+The 72% figure is usually presented as coming from an Ahrefs survey. Ahrefs does publish real, well-documented hreflang research, which makes the claim easy to believe without checking. But no page on ahrefs.com states that 72% of multi-country sites have a critical hreflang error, and no survey matching that name and year was found. The number appears to circulate purely through repetition across downstream SEO blogs, each one citing the last.
+
+What Ahrefs actually published is a hreflang study dated 10 August 2023, built from a crawl of 374,756 domains using hreflang tags. Its real headline finding is that 67% of those domains had at least one issue, and its most common single problem was a missing x-default tag, present on 56.3% of the affected domains, followed by missing self-referencing tags and broken or redirected references. That is a real, dated, citable number, three years old at the time of writing and about all domains with hreflang rather than multi-country sites specifically. It is a plausible ancestor of the “72%” claim, close enough in shape that a rounding or a misremembering could explain the drift, but it is not the same statistic and it does not support the “2026” framing.
+
+The second claim, that a single error invalidates roughly 40% of implementations per Google Search Central, fares worse: it does not appear anywhere in Google’s developer documentation at all. Google’s real documentation explains rules, not live error rates on the wild web, and Google has never published a percentage of hreflang implementations it considers broken. Attributing a specific quantified statistic to Google when Google’s own site contains nothing matching it is a more serious sourcing failure than an outdated Ahrefs number, because it invents institutional authority rather than merely misquoting a real one.
+
+...
+
+### Findings
+
+- The claim "72% of multi-country sites have at least one critical hreflang error, per Ahrefs' 2026 State of SEO survey" does not match any page on ahrefs.com; no survey by that name was found.
+- Ahrefs' real, dated hreflang study (10 August 2023, a crawl of 374,756 domains) reports 67% of domains using hreflang had at least one issue, with missing x-default the single most common at 56.3% of those domains.
+- The claim that a single error invalidates roughly 40% of implementations, attributed to Google Search Central, does not appear anywhere in Google's developer documentation; Google does not publish a live error-rate statistic for hreflang in the wild.
+- Google's localized-versions documentation states directly that if two pages do not both point to each other, the tags are ignored, which is a rule about behavior, not a rate.
+- Google's canonicalization documentation instructs site owners using hreflang to point each language's canonical at a page in the same language, tying hreflang correctness to canonical correctness rather than treating them as independent.
+
+Limitations: This piece could not independently verify a real, current error-rate percentage for hreflang implementations in the wild, because no credible primary source stating one was found. That absence is itself the finding, not a gap to be filled with a substitute number: a percentage invented once by an SEO blog can circulate with growing specificity, gaining a fake survey name and a fake year, until it reads as more solid than the sources that actually exist. The Ahrefs 2023 study is real but is three years old at the time of publication and was not re-run for this piece, so it should be read as historical context, not a current measurement.
+
+...
+
+No credible primary source was found. It does not appear on ahrefs.com, and no "Ahrefs 2026 State of SEO survey" could be located. Treat any piece citing it without a working link to ahrefs.com as unsourced.
+
+...
+
+### What does Ahrefs' real hreflang study actually say?
+
+Published 10 August 2023 and based on a crawl of 374,756 domains using hreflang, it found 67% had at least one issue, the most common being a missing x-default tag at 56.3% of those domains, followed by missing self-referencing tags and broken references.
+
+---
+
+Title: International SEO Audit
+URL: https://patrickstox.com/international-seo/international-seo-audit/
+Published: 2026-06-25T13:56:07.000Z
+Author: AI Authored by AI v2
+Highlights:
+An international SEO audit checks how a site signals language and country to search engines across six areas: URL/domain structure (start with a locale inventory — market, URL pattern, canonical, alternate method), hreflang, geo-redirects (test across a request-state matrix — IP, Accept-Language, cookie, deep links), technical signals (html lang, Content-Language, JS rendering, pagination), content localization, and country-level performance. Hreflang is the core — my Brighton SEO 2023 study of 374,756 domains found 67% of domains using hreflang have at least one error. The GSC International Targeting report is gone (removed Sept 22, 2022), so auditors now lean on crawlers like Ahrefs Site Audit (with its hreflang cluster graph) and Screaming Frog. Prioritize missing return tags and broken URLs over x-default and self-referential tags. Keep observed performance data (GSC, GA4) separate from Ahrefs' estimates — neither alone proves why a market underperforms.
+
+...
+
+He’s right. When I studied 374,756 domains for my Brighton SEO 2023 talk, 67% of the domains using hreflang had at least one error. Two thirds. These are problems you simply don’t have on a single-language site, which is why international audits need their own process.
+
+...
+
+### The nine error types
+
+From my Brighton SEO 2023 study (The Most Common Hreflang Issues Across 374,756 Domains, the largest hreflang study to date — nearly 10× larger than any other), here are the errors to hunt for, with how common each is:
+
+| Error | % of hreflang-using domains |
+| --- | --- |
+| Missing x-default | 56.3% |
+| Missing self-referencing tags | 18.0% |
+| Tags pointing to redirected/broken pages | 16.9% |
+| Missing reciprocal (return) tags | 15.3% |
+| Tags pointing to non-canonical URLs | 8.0% |
+| Incorrect hreflang values (wrong language/country codes) | 4.6% |
+| Inconsistent language attributes (hreflang vs html lang) | 3.2% |
+| Multiple pages for the same language | 2.5% |
+| Same page for multiple languages | 2.5% |
+
+67% of domains using hreflang have at least one issue. But not all errors are equal, and this is the nuance most checklists miss:
+
+- Missing return tags are the most functionally damaging. If page A references page B but B doesn’t link back to A, Google may ignore the whole annotation pair. “If page X links to page Y, page Y must link back to page X.”
+- Missing x-default is the most common (56.3%) but not strictly required — it’s a recommended fallback, not a hard requirement.
+- Self-referencing tags are a best practice, not a requirement either. 18% miss them and many still work fine. Fix for robustness, but it’s not a critical blocker.
+- Value errors are real breakers: using `jp` instead of `ja` for Japanese, typos like `js` for `ja`, three-letter codes (`gbr` instead of `gb`), `la` (Laos) misused for Latin America. Use ISO 639-1 for language and ISO 3166-1 Alpha-2 for region. (Google does tolerate some things — underscores like `en_gb`, the specially reserved `en-UK`, relative URLs, UTF-8 encoded characters.)
+- Inconsistent URL formats (trailing slash, http vs https) and orphaned locale URLs (hreflang pointing at 404s or redirects) quietly break clusters too. Alternate URLs must be fully qualified with the transport method — `https://example.com/page`, not `//example.com/page` or `/page`.
+
+...
+
+### Ahrefs Site Audit hreflang checks
+
+Ahrefs Site Audit runs a specific set of hreflang checks I lean on:
+
+1. Hreflang annotation invalid (wrong ISO codes, e.g. `en-en` or `en-uk`)
+2. Self-referencing hreflang annotation missing
+3. Page referenced for more than one language
+4. More than one page for the same language
+5. Hreflang and HTML lang mismatch
+6. Missing reciprocal hreflang (no return tag)
+7. Hreflang to non-canonical
+8. Hreflang to broken page
+9. HTML lang attribute missing / hreflang defined but HTML lang missing
+
+### Ahrefs hreflang cluster visualization (the differentiator)
+
+This is the part no competing guide calls out, and it genuinely changed how I audit. In Site Audit, open the URL Details panel for any page, go to the Hreflangs tab, and you see the page’s full hreflang cluster rendered as a network graph — every page in the cluster as a node, every annotation as an edge. Errors are highlighted in red, so a missing or mistakenly-added link in the cluster jumps out visually.

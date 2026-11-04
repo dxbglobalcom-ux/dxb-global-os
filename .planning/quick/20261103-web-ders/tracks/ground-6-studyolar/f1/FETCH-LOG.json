@@ -1,0 +1,710 @@
+[
+  {
+    "url": "https://blog.lusion.co/",
+    "read": true,
+    "door": "scrapling",
+    "cached_snapshot": false,
+    "liveness": "alive",
+    "doors_tried": 3,
+    "attempts": [
+      {
+        "door": "media-transcript",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a media url"
+      },
+      {
+        "door": "pdf-text",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a pdf url"
+      },
+      {
+        "door": "scrapling",
+        "ok": true,
+        "ms": 875,
+        "bytes": 2571,
+        "wall": false,
+        "error": null
+      }
+    ],
+    "bytes": 2571,
+    "file": "15-lusion.co.md"
+  },
+  {
+    "url": "https://blog.lusion.co/oryzo-bts-part-2-7-3d-design-and-motion-graphics",
+    "read": true,
+    "door": "scrapling",
+    "cached_snapshot": false,
+    "liveness": "alive",
+    "doors_tried": 3,
+    "attempts": [
+      {
+        "door": "media-transcript",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a media url"
+      },
+      {
+        "door": "pdf-text",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a pdf url"
+      },
+      {
+        "door": "scrapling",
+        "ok": true,
+        "ms": 1164,
+        "bytes": 21239,
+        "wall": false,
+        "error": null
+      }
+    ],
+    "bytes": 21239,
+    "file": "05-lusion.co.md"
+  },
+  {
+    "url": "https://inprofile.net/the-art-of-digital-horology-inside-the-extraordinary-lab-by-immersive-garden/",
+    "read": true,
+    "door": "scrapling",
+    "cached_snapshot": false,
+    "liveness": "alive",
+    "doors_tried": 3,
+    "attempts": [
+      {
+        "door": "media-transcript",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a media url"
+      },
+      {
+        "door": "pdf-text",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a pdf url"
+      },
+      {
+        "door": "scrapling",
+        "ok": true,
+        "ms": 800,
+        "bytes": 40603,
+        "wall": false,
+        "error": null
+      }
+    ],
+    "bytes": 40603,
+    "file": "04-inprofile.net.md"
+  },
+  {
+    "url": "https://medium.com/active-theory/prometheus-2d3c05b88ec0",
+    "read": true,
+    "door": "scrapling-stealth",
+    "cached_snapshot": false,
+    "liveness": "alive",
+    "doors_tried": 4,
+    "attempts": [
+      {
+        "door": "media-transcript",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a media url"
+      },
+      {
+        "door": "pdf-text",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a pdf url"
+      },
+      {
+        "door": "scrapling",
+        "ok": false,
+        "ms": 599,
+        "bytes": 59,
+        "wall": true,
+        "error": null
+      },
+      {
+        "door": "scrapling-stealth",
+        "ok": true,
+        "ms": 3471,
+        "bytes": 18078,
+        "wall": false,
+        "error": null
+      }
+    ],
+    "bytes": 18078,
+    "file": "09-medium.com.md"
+  },
+  {
+    "url": "https://medium.com/active-theory/the-story-of-technology-built-at-active-theory-5d17ae0e3fb4",
+    "read": true,
+    "door": "scrapling-stealth",
+    "cached_snapshot": false,
+    "liveness": "alive",
+    "doors_tried": 4,
+    "attempts": [
+      {
+        "door": "media-transcript",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a media url"
+      },
+      {
+        "door": "pdf-text",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a pdf url"
+      },
+      {
+        "door": "scrapling",
+        "ok": false,
+        "ms": 544,
+        "bytes": 59,
+        "wall": true,
+        "error": null
+      },
+      {
+        "door": "scrapling-stealth",
+        "ok": true,
+        "ms": 3403,
+        "bytes": 26932,
+        "wall": false,
+        "error": null
+      }
+    ],
+    "bytes": 26932,
+    "file": "10-medium.com.md"
+  },
+  {
+    "url": "https://rickcreates.com/year",
+    "read": true,
+    "door": "scrapling",
+    "cached_snapshot": false,
+    "liveness": "alive",
+    "doors_tried": 3,
+    "attempts": [
+      {
+        "door": "media-transcript",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a media url"
+      },
+      {
+        "door": "pdf-text",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a pdf url"
+      },
+      {
+        "door": "scrapling",
+        "ok": true,
+        "ms": 699,
+        "bytes": 6553,
+        "wall": false,
+        "error": null
+      }
+    ],
+    "bytes": 6553,
+    "file": "13-rickcreates.com.md"
+  },
+  {
+    "url": "https://tympanus.net/codrops/2026/04/13/lusion-where-digital-craft-meets-ambitious-experimentation/",
+    "read": true,
+    "door": "scrapling-stealth",
+    "cached_snapshot": false,
+    "liveness": "alive",
+    "doors_tried": 4,
+    "attempts": [
+      {
+        "door": "media-transcript",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a media url"
+      },
+      {
+        "door": "pdf-text",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a pdf url"
+      },
+      {
+        "door": "scrapling",
+        "ok": false,
+        "ms": 275,
+        "bytes": 286,
+        "wall": false,
+        "error": null
+      },
+      {
+        "door": "scrapling-stealth",
+        "ok": true,
+        "ms": 2099,
+        "bytes": 12342,
+        "wall": false,
+        "error": null
+      }
+    ],
+    "bytes": 12342,
+    "file": "06-tympanus.net.md"
+  },
+  {
+    "url": "https://tympanus.net/codrops/tag/case-study/",
+    "read": true,
+    "door": "scrapling-stealth",
+    "cached_snapshot": false,
+    "liveness": "alive",
+    "doors_tried": 4,
+    "attempts": [
+      {
+        "door": "media-transcript",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a media url"
+      },
+      {
+        "door": "pdf-text",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a pdf url"
+      },
+      {
+        "door": "scrapling",
+        "ok": false,
+        "ms": 444,
+        "bytes": 286,
+        "wall": false,
+        "error": null
+      },
+      {
+        "door": "scrapling-stealth",
+        "ok": true,
+        "ms": 3601,
+        "bytes": 21506,
+        "wall": false,
+        "error": null
+      }
+    ],
+    "bytes": 21506,
+    "file": "08-tympanus.net.md"
+  },
+  {
+    "url": "https://tympanus.net/codrops/tag/studio-spotlight/",
+    "read": true,
+    "door": "scrapling-stealth",
+    "cached_snapshot": false,
+    "liveness": "alive",
+    "doors_tried": 4,
+    "attempts": [
+      {
+        "door": "media-transcript",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a media url"
+      },
+      {
+        "door": "pdf-text",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a pdf url"
+      },
+      {
+        "door": "scrapling",
+        "ok": false,
+        "ms": 340,
+        "bytes": 286,
+        "wall": false,
+        "error": null
+      },
+      {
+        "door": "scrapling-stealth",
+        "ok": true,
+        "ms": 2271,
+        "bytes": 18449,
+        "wall": false,
+        "error": null
+      }
+    ],
+    "bytes": 18449,
+    "file": "07-tympanus.net.md"
+  },
+  {
+    "url": "https://www.awwwards.com/annual-awards-2024/site-of-the-year",
+    "read": true,
+    "door": "firecrawl-scrape",
+    "cached_snapshot": false,
+    "liveness": "alive",
+    "doors_tried": 7,
+    "attempts": [
+      {
+        "door": "media-transcript",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a media url"
+      },
+      {
+        "door": "pdf-text",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a pdf url"
+      },
+      {
+        "door": "scrapling",
+        "ok": false,
+        "ms": 677,
+        "bytes": 9,
+        "wall": false,
+        "error": null
+      },
+      {
+        "door": "scrapling-stealth",
+        "ok": false,
+        "ms": 1506,
+        "bytes": 9,
+        "wall": false,
+        "error": null
+      },
+      {
+        "door": "opencli-reader",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "no platform adapter for this url"
+      },
+      {
+        "door": "tavily-extract",
+        "ok": false,
+        "ms": 423,
+        "bytes": 365,
+        "wall": true,
+        "error": "rc=1 "
+      },
+      {
+        "door": "firecrawl-scrape",
+        "ok": true,
+        "ms": 584,
+        "bytes": 3168,
+        "wall": false,
+        "error": null
+      }
+    ],
+    "bytes": 3168,
+    "file": "14-awwwards.com.md"
+  },
+  {
+    "url": "https://www.awwwards.com/case-study-david-whyte-experience-by-immersive-garden.html",
+    "read": true,
+    "door": "firecrawl-scrape",
+    "cached_snapshot": false,
+    "liveness": "alive",
+    "doors_tried": 7,
+    "attempts": [
+      {
+        "door": "media-transcript",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a media url"
+      },
+      {
+        "door": "pdf-text",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a pdf url"
+      },
+      {
+        "door": "scrapling",
+        "ok": false,
+        "ms": 434,
+        "bytes": 9,
+        "wall": false,
+        "error": null
+      },
+      {
+        "door": "scrapling-stealth",
+        "ok": false,
+        "ms": 1372,
+        "bytes": 9,
+        "wall": false,
+        "error": null
+      },
+      {
+        "door": "opencli-reader",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "no platform adapter for this url"
+      },
+      {
+        "door": "tavily-extract",
+        "ok": false,
+        "ms": 575,
+        "bytes": 365,
+        "wall": true,
+        "error": "rc=1 "
+      },
+      {
+        "door": "firecrawl-scrape",
+        "ok": true,
+        "ms": 702,
+        "bytes": 9704,
+        "wall": false,
+        "error": null
+      }
+    ],
+    "bytes": 9704,
+    "file": "03-awwwards.com.md"
+  },
+  {
+    "url": "https://www.awwwards.com/igloo-inc-case-study.html",
+    "read": true,
+    "door": "firecrawl-scrape",
+    "cached_snapshot": false,
+    "liveness": "alive",
+    "doors_tried": 7,
+    "attempts": [
+      {
+        "door": "media-transcript",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a media url"
+      },
+      {
+        "door": "pdf-text",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a pdf url"
+      },
+      {
+        "door": "scrapling",
+        "ok": false,
+        "ms": 441,
+        "bytes": 9,
+        "wall": false,
+        "error": null
+      },
+      {
+        "door": "scrapling-stealth",
+        "ok": false,
+        "ms": 1338,
+        "bytes": 9,
+        "wall": false,
+        "error": null
+      },
+      {
+        "door": "opencli-reader",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "no platform adapter for this url"
+      },
+      {
+        "door": "tavily-extract",
+        "ok": false,
+        "ms": 604,
+        "bytes": 365,
+        "wall": true,
+        "error": "rc=1 "
+      },
+      {
+        "door": "firecrawl-scrape",
+        "ok": true,
+        "ms": 644,
+        "bytes": 13674,
+        "wall": false,
+        "error": null
+      }
+    ],
+    "bytes": 13674,
+    "file": "01-awwwards.com.md"
+  },
+  {
+    "url": "https://www.awwwards.com/interview-immersive-garden-win-studio-and-developer-site-of-the-year.html",
+    "read": true,
+    "door": "firecrawl-scrape",
+    "cached_snapshot": false,
+    "liveness": "alive",
+    "doors_tried": 7,
+    "attempts": [
+      {
+        "door": "media-transcript",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a media url"
+      },
+      {
+        "door": "pdf-text",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a pdf url"
+      },
+      {
+        "door": "scrapling",
+        "ok": false,
+        "ms": 431,
+        "bytes": 9,
+        "wall": false,
+        "error": null
+      },
+      {
+        "door": "scrapling-stealth",
+        "ok": false,
+        "ms": 1344,
+        "bytes": 9,
+        "wall": false,
+        "error": null
+      },
+      {
+        "door": "opencli-reader",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "no platform adapter for this url"
+      },
+      {
+        "door": "tavily-extract",
+        "ok": false,
+        "ms": 607,
+        "bytes": 365,
+        "wall": true,
+        "error": "rc=1 "
+      },
+      {
+        "door": "firecrawl-scrape",
+        "ok": true,
+        "ms": 3290,
+        "bytes": 6660,
+        "wall": false,
+        "error": null
+      }
+    ],
+    "bytes": 6660,
+    "file": "02-awwwards.com.md"
+  },
+  {
+    "url": "https://www.mux.com/case-studies/active-theory",
+    "read": true,
+    "door": "scrapling",
+    "cached_snapshot": false,
+    "liveness": "alive",
+    "doors_tried": 3,
+    "attempts": [
+      {
+        "door": "media-transcript",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a media url"
+      },
+      {
+        "door": "pdf-text",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a pdf url"
+      },
+      {
+        "door": "scrapling",
+        "ok": true,
+        "ms": 1317,
+        "bytes": 7377,
+        "wall": false,
+        "error": null
+      }
+    ],
+    "bytes": 7377,
+    "file": "11-mux.com.md"
+  },
+  {
+    "url": "https://www.topinteractiveagencies.com/digital/agency/leaders/active-theory-michael-antony-modena-we-have-a-tech-driven-creative-culture/",
+    "read": true,
+    "door": "scrapling",
+    "cached_snapshot": false,
+    "liveness": "alive",
+    "doors_tried": 3,
+    "attempts": [
+      {
+        "door": "media-transcript",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a media url"
+      },
+      {
+        "door": "pdf-text",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a pdf url"
+      },
+      {
+        "door": "scrapling",
+        "ok": true,
+        "ms": 1321,
+        "bytes": 32446,
+        "wall": false,
+        "error": null
+      }
+    ],
+    "bytes": 32446,
+    "file": "12-topinteractiveagencies.com.md"
+  }
+]

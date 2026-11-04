@@ -1,0 +1,137 @@
+language: en
+[00:00] What if you could create a landing page like this
+[00:02] without writing a single line of code?
+[00:04] Everything you're seeing from the characters
+[00:06] to the smooth transitions and responsive design
+[00:08] was built almost entirely with AI.
+[00:11] In this video,
+[00:12] I'll show you how I found a design reference on Behance,
+[00:15] use ChatGPT to break it down,
+[00:17] Gemini to generate the characters,
+[00:19] Mid Journey to create the visuals,
+[00:21] and Google AI Studio to bring everything together
+[00:24] into a fully responsive landing page.
+[00:26] Then we'll turn it into a fully editable WordPress website
+[00:30] that can be managed directly from the WordPress block editor.
+[00:34] Let's get started.
+[00:35] The first thing I needed was a design reference,
+[00:37] so I headed over to Behance
+[00:38] and found a landing page
+[00:40] that matched the style I was looking for.
+[00:42] Instead of trying to figure everything out myself,
+[00:45] I took a screenshot and dropped it into ChatGPT.
+[00:48] Then I asked it to break down the entire design,
+[00:51] including the layout, sections, typography, spacing,
+[00:55] colors, and overall structure.
+[00:58] Now I have a complete blueprint to work with.
+[01:01] Next, I needed the assets.
+[01:03] For the character, I used Gemini.
+[01:04] I generated a few variations
+[01:06] and selected the one that fit the design best.
+[01:09] Then I moved over to Mid Journey.
+[01:10] Using Mid Journey,
+[01:11] I created the background visuals and motion elements
+[01:14] that would be used throughout the landing page.
+[01:16] Once everything was ready, it was time to build.
+[01:19] I opened Google AI Studio, uploaded the reference image,
+[01:23] pasted in the design breakdown from ChatGPT,
+[01:25] and asked it to recreate the landing page.
+[01:29] A few seconds later, I had the first version.
+[01:32] It wasn't perfect,
+[01:33] but it gave me a solid starting point.
+[01:35] From there, I refined the prompts, adjusted the layout,
+[01:38] improved the sections,
+[01:39] and kept iterating until the design
+[01:40] started matching the original reference.
+[01:43] Now let's bring the design to life with our custom assets.
+[01:47] First, I'll import the hero character
+[01:49] and background video that we generated earlier.
+[01:51] Inside Google AI Studio,
+[01:53] all custom assets need to be placed inside the public folder,
+[01:56] so I'll upload both files and save the project.
+[01:59] After refreshing the page, the background video is now playing,
+[02:03] and the hero character is displayed correctly.
+[02:06] Sometimes AI Studio might not connect the assets properly
+[02:09] on the first attempt.
+[02:10] If that happens,
+[02:11] simply ask it to verify the implementation,
+[02:14] reconnect the asset paths, and update the code.
+[02:17] Now, the landing page isn't just a replica
+[02:20] of the original design.
+[02:21] It has its own unique visuals,
+[02:23] custom character, and animated background
+[02:26] that make it feel like a completely original project.
+[02:28] Now, let's clean things up
+[02:30] and make the design feel more polished.
+[02:32] First, I'll refine the typography
+[02:34] by adjusting the font styles, colors, and hierarchy
+[02:37] to better match the original design.
+[02:39] Then, I'll add the Japanese translations
+[02:41] beneath the main headings
+[02:43] to give the page that authentic, anime-inspired aesthetic.
+[02:46] Next, I'll resize and reposition the character cards,
+[02:49] improve the spacing, and fine-tune the overall layout
+[02:52] so everything feels balanced and intentional.
+[02:55] With the visual polish out of the way,
+[02:57] let's make the page interactive.
+[02:59] Instead of displaying a single static character,
+[03:02] I'll connect each character card to the hero section.
+[03:06] Now, whenever I click on a character card,
+[03:08] the hero character updates instantly.
+[03:11] After a few refinements to the animations and transitions,
+[03:14] the interaction feels smooth and natural.
+[03:18] Now that all the main elements are in place,
+[03:20] it's time to make sure the experience works everywhere.
+[03:23] I'll ask Google AI Studio to optimize the layout
+[03:26] for different screen sizes
+[03:28] and improve the responsive behavior across the entire page.
+[03:32] After a few iterations,
+[03:33] the design adapts perfectly to desktop and mobile devices.
+[03:38] At this point, the landing page is really coming together.
+[03:40] The typography is polished.
+[03:43] The layout feels balanced.
+[03:44] The character switcher is fully functional.
+[03:46] The custom assets are integrated,
+[03:48] and the entire design is responsive across all screen sizes.
+[03:52] Now let's make it editable in WordPress.
+[03:55] Instead of converting the entire project
+[03:57] into a traditional WordPress theme,
+[03:59] I'm going to use anti-gravity
+[04:01] to recreate the landing page as native Gutenberg blocks.
+[04:04] To do that, click on code,
+[04:06] and on the right side, you'll see an export option.
+[04:09] Click it, and you'll get two choices.
+[04:11] Export to anti-gravity or download as zip.
+[04:15] Choose whichever works best for you.
+[04:16] In this case, I'm going with the export to anti-gravity.
+[04:20] Once you click it,
+[04:20] your project will open directly inside anti-gravity.
+[04:24] From there, we'll convert it into a WordPress theme.
+[04:27] Ask it to rebuild every section
+[04:28] using editable WordPress components.
+[04:31] This includes the hero section, feature sections,
+[04:34] testimonials, buttons, images, and content blocks.
+[04:38] Once the conversion is complete,
+[04:40] I'll copy the Gutenberg block markup from anti-gravity.
+[04:43] Next, I'll jump into WordPress.
+[04:45] I'll create a new page, click the plus icon,
+[04:48] search for custom HTML, and add the block to the page.
+[04:52] Next, click on edit HTML,
+[04:55] and paste the code you copied from anti-gravity.
+[04:58] Click update, and your landing page
+[05:00] will instantly appear inside WordPress.
+[05:03] Now, if you want to make the page fully editable,
+[05:05] click the three dot menu on the block,
+[05:08] and select convert to blocks.
+[05:11] WordPress will automatically transform the entire page
+[05:14] into native Gutenberg blocks.
+[05:16] From here, you can easily edit the text, change colors,
+[05:20] adjust font sizes, and customize button styles,
+[05:23] all directly inside the WordPress block editor
+[05:26] without touching any code, and that's it.
+[05:28] From a single design reference to a fully responsive
+[05:31] and fully editable WordPress landing page
+[05:33] powered almost entirely by AI.
+[05:36] If you found this helpful,
+[05:37] leave a like and subscribe for more tutorials like this.
+[05:40] Thanks for watching, and I'll see you in the next one.

@@ -1,0 +1,3 @@
+language: en
+[00:00] A developer paid me $25k to replace your CRM with this, check it out.
+[00:36] If you want to know more about it, come into our system and I'll send you the live demo so you can try it out by yourself.

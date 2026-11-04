@@ -1,0 +1,434 @@
+[
+  {
+    "url": "https://lobste.rs/s/fxulig/impact_google_s_manifest_version_3_update",
+    "read": true,
+    "door": "scrapling",
+    "cached_snapshot": false,
+    "liveness": "alive",
+    "doors_tried": 3,
+    "attempts": [
+      {
+        "door": "media-transcript",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a media url"
+      },
+      {
+        "door": "pdf-text",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a pdf url"
+      },
+      {
+        "door": "scrapling",
+        "ok": true,
+        "ms": 955,
+        "bytes": 18233,
+        "wall": false,
+        "error": null
+      }
+    ],
+    "bytes": 18233,
+    "file": "02-lobste.rs.md"
+  },
+  {
+    "url": "https://www.google.com/goto?url=CAESlAEB6zswFYy0L1piKKOk0jwNO5HvPvUl4YDRhsKrurg7eSWCyReeNCXLBVXycIkJKySpDNJYAUVqw_R0_bgF6FfI8sAXXcpKX1amqnPxlI2zurYfv0jmbd7ElR5_zXaA1efRVDl1RJrxUEICXHGK5029aIrG7-s2rReLTfZ9u-u_vmpoVZmUYM4EWwa5cMNk1w0THZhY",
+    "read": true,
+    "door": "firecrawl-scrape",
+    "cached_snapshot": false,
+    "liveness": "alive",
+    "doors_tried": 8,
+    "attempts": [
+      {
+        "door": "media-transcript",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a media url"
+      },
+      {
+        "door": "pdf-text",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a pdf url"
+      },
+      {
+        "door": "scrapling",
+        "ok": false,
+        "ms": 740,
+        "bytes": 59,
+        "wall": true,
+        "error": null
+      },
+      {
+        "door": "scrapling-stealth",
+        "ok": false,
+        "ms": 1551,
+        "bytes": 649,
+        "wall": true,
+        "error": null
+      },
+      {
+        "door": "opencli-reader",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "no platform adapter for this url"
+      },
+      {
+        "door": "browser-signed-in",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "no signed-in browser site for this url"
+      },
+      {
+        "door": "tavily-extract",
+        "ok": false,
+        "ms": 989,
+        "bytes": 365,
+        "wall": true,
+        "error": "rc=1 "
+      },
+      {
+        "door": "firecrawl-scrape",
+        "ok": true,
+        "ms": 1971,
+        "bytes": 1132,
+        "wall": false,
+        "error": null
+      }
+    ],
+    "bytes": 1132,
+    "file": "03-google.com.md"
+  },
+  {
+    "url": "https://www.instagram.com/p/DRHy1evjTZM/",
+    "read": true,
+    "door": "browser-signed-in",
+    "cached_snapshot": false,
+    "liveness": "alive",
+    "doors_tried": 6,
+    "attempts": [
+      {
+        "door": "media-transcript",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a media url"
+      },
+      {
+        "door": "pdf-text",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a pdf url"
+      },
+      {
+        "door": "scrapling",
+        "ok": false,
+        "ms": 896,
+        "bytes": 22149,
+        "wall": true,
+        "error": null
+      },
+      {
+        "door": "scrapling-stealth",
+        "ok": false,
+        "ms": 3444,
+        "bytes": 21923,
+        "wall": true,
+        "error": null
+      },
+      {
+        "door": "opencli-reader",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "no platform adapter for this url"
+      },
+      {
+        "door": "browser-signed-in",
+        "ok": true,
+        "ms": 34005,
+        "bytes": 19512,
+        "wall": false,
+        "error": null
+      }
+    ],
+    "bytes": 19512,
+    "file": "05-instagram.com.md"
+  },
+  {
+    "url": "https://www.quora.com/",
+    "read": true,
+    "door": "firecrawl-scrape",
+    "cached_snapshot": false,
+    "liveness": "alive",
+    "doors_tried": 8,
+    "attempts": [
+      {
+        "door": "media-transcript",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a media url"
+      },
+      {
+        "door": "pdf-text",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a pdf url"
+      },
+      {
+        "door": "scrapling",
+        "ok": false,
+        "ms": 610,
+        "bytes": 59,
+        "wall": true,
+        "error": null
+      },
+      {
+        "door": "scrapling-stealth",
+        "ok": false,
+        "ms": 1539,
+        "bytes": 649,
+        "wall": true,
+        "error": null
+      },
+      {
+        "door": "opencli-reader",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "no platform adapter for this url"
+      },
+      {
+        "door": "browser-signed-in",
+        "ok": false,
+        "ms": 40225,
+        "bytes": 0,
+        "wall": false,
+        "error": "quora browser rc=75 gizli Chrome'daki 8 pencerenin hepsi 40 sn dolu kaldi\n"
+      },
+      {
+        "door": "tavily-extract",
+        "ok": false,
+        "ms": 427,
+        "bytes": 365,
+        "wall": true,
+        "error": "rc=1 "
+      },
+      {
+        "door": "firecrawl-scrape",
+        "ok": true,
+        "ms": 565,
+        "bytes": 803,
+        "wall": false,
+        "error": null
+      }
+    ],
+    "bytes": 803,
+    "file": "04-quora.com.md"
+  },
+  {
+    "url": "https://www.rednote.com/search_result/69bb562d0000000022025d10?xsec_token=ABnmqQn58JCzrFq7Uo7fxFQAiWrWc2vnDms4kTxYa_k1c=&xsec_source=",
+    "read": true,
+    "door": "scrapling",
+    "cached_snapshot": false,
+    "liveness": "alive",
+    "doors_tried": 3,
+    "attempts": [
+      {
+        "door": "media-transcript",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a media url"
+      },
+      {
+        "door": "pdf-text",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a pdf url"
+      },
+      {
+        "door": "scrapling",
+        "ok": true,
+        "ms": 1144,
+        "bytes": 1686,
+        "wall": false,
+        "error": null
+      }
+    ],
+    "bytes": 1686,
+    "file": "08-rednote.com.md"
+  },
+  {
+    "url": "https://www.v2ex.com/t/1250724",
+    "read": true,
+    "door": "opencli-reader",
+    "cached_snapshot": false,
+    "liveness": "alive",
+    "doors_tried": 5,
+    "attempts": [
+      {
+        "door": "media-transcript",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a media url"
+      },
+      {
+        "door": "pdf-text",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a pdf url"
+      },
+      {
+        "door": "scrapling",
+        "ok": false,
+        "ms": 626,
+        "bytes": 59,
+        "wall": true,
+        "error": null
+      },
+      {
+        "door": "scrapling-stealth",
+        "ok": false,
+        "ms": 1486,
+        "bytes": 644,
+        "wall": true,
+        "error": null
+      },
+      {
+        "door": "opencli-reader",
+        "ok": true,
+        "ms": 1004,
+        "bytes": 435,
+        "wall": false,
+        "error": null
+      }
+    ],
+    "bytes": 435,
+    "file": "06-v2ex.com.md"
+  },
+  {
+    "url": "https://www.youtube.com/watch?v=ZesNLJFD9_Y",
+    "read": true,
+    "door": "media-transcript",
+    "cached_snapshot": false,
+    "liveness": "alive",
+    "doors_tried": 1,
+    "attempts": [
+      {
+        "door": "media-transcript",
+        "ok": true,
+        "ms": 4861,
+        "bytes": 11011,
+        "wall": false,
+        "error": null
+      }
+    ],
+    "bytes": 11011,
+    "file": "01-youtube.com.md"
+  },
+  {
+    "url": "https://zhuanlan.zhihu.com/p/1964033168899306492",
+    "read": true,
+    "door": "firecrawl-scrape",
+    "cached_snapshot": false,
+    "liveness": "alive",
+    "doors_tried": 8,
+    "attempts": [
+      {
+        "door": "media-transcript",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a media url"
+      },
+      {
+        "door": "pdf-text",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a pdf url"
+      },
+      {
+        "door": "scrapling",
+        "ok": false,
+        "ms": 660,
+        "bytes": 35,
+        "wall": false,
+        "error": null
+      },
+      {
+        "door": "scrapling-stealth",
+        "ok": false,
+        "ms": 2759,
+        "bytes": 0,
+        "wall": false,
+        "error": null
+      },
+      {
+        "door": "opencli-reader",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "no platform adapter for this url"
+      },
+      {
+        "door": "browser-signed-in",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "no signed-in browser site for this url"
+      },
+      {
+        "door": "tavily-extract",
+        "ok": false,
+        "ms": 443,
+        "bytes": 365,
+        "wall": true,
+        "error": "rc=1 "
+      },
+      {
+        "door": "firecrawl-scrape",
+        "ok": true,
+        "ms": 6175,
+        "bytes": 33784,
+        "wall": false,
+        "error": null
+      }
+    ],
+    "bytes": 33784,
+    "file": "07-zhihu.com.md"
+  }
+]

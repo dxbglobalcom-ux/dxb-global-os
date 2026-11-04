@@ -1,0 +1,144 @@
+You are the AUDITOR of a research run. A writer you never saw wrote an answer from the rows of the run's ledger —
+each row has an id (L0001 …) — and every claim line of that answer ends with the ids of the rows it stands on. You
+have no tools and need none: under each claim below stand the rows it cites, each exactly as the writer was handed
+it. Judge each claim ONLY against the rows printed under it — not from memory, not from another claim's rows, and
+not from what you believe is true.
+
+## The question the answer was written for
+DERT (CEO'nun kendi cumlesi — ARANMAZ, cevabin bunu karsilamasi gerekir):
+Web sitelerinde SEO, AEO ve GEO için gerçekten işe yarayan nedir? Neyin kanıtı var, ne satış lafı? ChatGPT, Gemini, Perplexity, Google yapay zekâ cevaplarında bir marka nasıl çıkar, nasıl ölçülür, hangi aletler gerçek?
+
+SORGULAR (zemin bunlarla acildi):
+  - AEO GEO what actually works
+  - AI search citations real results
+
+ALT SORULAR (S-kimlik · başlık · soru):
+  - S1 · Kanıtı olan SEO/AEO/GEO uygulamaları · Web sitelerinde SEO, AEO ve GEO için hangi uygulamaların görünürlüğü artırdığı kontrollü deney, büyük veri analizi veya vaka verisiyle kanıtlanmıştır?
+  - S2 · Kanıtsız iddialar ve satış lafları · SEO, AEO ve GEO alanında yaygın olarak satılan hangi iddia ve taktiklerin kanıtı yoktur veya verilerle çürütülmüştür?
+  - S3 · Platformlarda markanın çıkma yolları · ChatGPT, Gemini, Perplexity ve Google yapay zekâ cevapları bir markayı hangi kaynak ve mekanizmalarla seçip gösterir, bu platformlar arasında ne fark vardır?
+  - S4 · Yapay zekâ görünürlüğünün ölçülmesi · Bir markanın yapay zekâ cevaplarındaki görünürlüğü ve bundan gelen trafik ile iş sonucu hangi yöntem ve metriklerle güvenilir biçimde ölçülür?
+  - S5 · Gerçek işe yarayan ölçüm aletleri · Piyasadaki AEO/GEO aletlerinden hangileri gerçek veri ve doğrulanabilir sonuç sunar, hangileri güvenilir değildir?
+
+## The 12 claims
+Each claim is its heading `### <id> [<section>]`, then its whole line as it stands in the answer, then `dayanak:` —
+the rows it cites as support — and `karşı:` — its counter rows: the ones the line names after `↔`, and the ones a
+counter-evidence hunter linked to it. A row is `[id] platform · @author · date · "passage" · address`; a row that says
+`gövde yok` carries nothing to judge by. A heading that ends `· hüküm` is the answer's first line: its verdict.
+
+### C085 [S5]
+- Tek seferlik sorgu yapan aletler güvenilir değildir ve kullanıcılar aylık 70–200 doların üstündeki birçok ürünü aynı veri sağlayıcıların sarmalayıcısı olarak görüyor (5 satırın 5'i) [L1199, L1200, L1711, L1712, L1713].
+dayanak:
+  [L1199] hackernews · @JimsonYang · 2026-01 · "However a lot of tools will run a query once across different AI systems, take the results, and call it done." · https://news.ycombinator.com/item?id=46642490
+  [L1200] hackernews · @JimsonYang · 2026-01 · "What felt odd to us is that many of these still tools charge $70–$200+ per month, despite largely being wrappers around the same underlying data providers." · https://news.ycombinator.com/item?id=46642490
+  [L1711] web · @arXiv 2603.08924 · ? · "current approaches to measuring domain visibility in generative search rely on single-run point estimates of citation share and prevalence" · https://arxiv.org/html/2603.08924
+  [L1712] web · @Kovmere · ? · "A tool that only shows a score from one run per prompt is a thin wrapper." · https://kovmere.com/resources/are-geo-tools-overpriced-prompt-trackers-or-useful-visibility-tools
+  [L1713] web · @Mohamed Tahrioui · ? · "Reverse engineering Peec.ai, mapping it to SerpApi + DataForSEO, and running the economics + TAM math." · https://tahrioui.de/blog/reverse-engineering-peec-ai
+karşı: (yok)
+
+### C086 [S5]
+- Prompt hacmi verisinin bir kısmı, bir tarayıcı eklentisinin veri satışına veya küçük eklenti panellerine dayanıyor olabilir (2 satırın 2'si) [L1201, L1745].
+dayanak:
+  [L1201] hackernews · @JimsonYang · 2026-01 · "The only thing that came close was when a security focused browser extension started selling data to aeo companies- that's how some companies get "prompt volume data"." · https://news.ycombinator.com/item?id=46642490
+  [L1745] web · @Alev Digital · ? · "Some tools rely on data collected through small browser extension user panels." · https://alevdigital.com/blog/ai-search-volume-tools/
+karşı: (yok)
+
+### C087 [S5]
+- Atıf oranı aletler arasında standart değildir, sayı yalnız aynı aletin içinde yön gösterir (2 satırın 2'si) [L1575, L1758].
+dayanak:
+  [L1575] medium · @Smita D. Talukdar · 2026-08-01 · "Citation rate isn't standardised the way search-ranking metrics are, so treat any single tool's number as directional within its own methodology rather than comparable across tools." · https://medium.com/@smitadtalukdar/how-to-read-an-aeo-geo-report-what-the-numbers-actually-mean-1589fb82d134?source=search_post---------2-------------------------------------
+  [L1758] web · @Cite Solutions · ? · "Ask which event the headline number counts. If the answer takes more than one sentence, that number cannot be compared to anyone else's." · https://cite.solutions/blog/llm-visibility-tools-disagree
+karşı: (yok)
+
+### C088 [S5]
+- Aynı dönemde ChatGPT'de Reddit payını PromptWatch %3,83, Ahrefs %16,7 ölçtü (1 satır, tek kaynak) [L1633].
+dayanak:
+  [L1633] web · @? · ? · "3. Reddit's ChatGPT Citations Fell 86%. Two Vendors Disagree by 4x on the Baseline. August 25, 2026· 8 min read · FRED PromptWatch measured Reddit at 3.83% of ChatGPT Search citations, then 0.52% four days later. Ahrefs measured the same platform over the same period at 16.7%. The same collapse hap…" · https://agentfred.ai/blog/reddit-chatgpt-citations-fell-86-percent/
+karşı: (yok)
+
+### C089 [S5]
+- GEO skoru satın alma gerekçesi olamaz, çünkü kalibrasyon çalışması ve 81 sitelik başka bir test skorun atıfı veya bahsi öngörmediğini buldu (2 satırın 2'si) [L1333, L1746].
+dayanak:
+  [L1333] web · @Juan Camilo Auriti · 2026-10-27 · "The result: an odds ratio of 0.9625 with a p-value of 0.7172." · https://dev.to/juanauriti/my-calibration-study-found-the-geo-score-doesnt-predict-ai-citations-heres-the-data-56ep
+  [L1746] web · @CrunchJunkie · 2026-09 · "So the score does not tell you who gets named." · https://crunchjunkie.io/blog/geo-score-vs-ai-visibility-study
+karşı: (yok)
+
+### C090 [S5]
+- Ajans raporu çoğu zaman biçimlenmiş alet çıktısından ibaretse aletin kendisi yeterlidir; aylık 1.000 dolarlık uygulama teklifleri de görülüyor ↔ sonucu okuyup değişikliği uygulayacak insan yine gerekiyor (4 satırın 3'ü) [L1491, L1502, L1420] ↔ [L1594].
+dayanak:
+  (yok)
+karşı:
+  [L1491] reddit · @bayouski · 2026-08 · "if they're mostly handing you screenshots and a visibility report, i'd just use the tool." · https://reddit.com/r/ecommerce/comments/1vz1hk0/do_we_even_still_need_to_hire_an_agency_for_this/
+  [L1502] reddit · @MOSTLY-HARMLESS-NOW · 2026-08 · "That's most of what a $3k audit hands back, just formatted nicer." · https://reddit.com/r/ecommerce/comments/1vz1hk0/do_we_even_still_need_to_hire_an_agency_for_this/
+  [L1420] reddit · @ilovetrouble66 · 2026-07 · "Someone just tried to sell me a $1000 month geo Aeo app." · https://reddit.com/r/SEO/comments/1v3yzn7/aeo_geo_is_bullshit_buzzword_intended_to_trick/
+  [L1594] web · @Dmitry Filippov (GET-GEO.AI) · 2026-09-22 · "Understanding that result and acting on it still requires a person to read the answers, examine the pages and implement changes." · https://get-geo.ai/en/guides/geo-agency-vs-tool-vs-in-house
+
+### C091 [S5]
+- Eğitimlerde satıcı ilişkisine bakılmalıdır, çünkü geniş bir GEO kursu sponsorlu olduğunu açıkça söylüyor ve aynı kanalın sponsorları arasında alet satıcıları var (2 satırın 2'si) [L1330, L1761].
+dayanak:
+  [L1330] youtube · @Exposure Ninja · ? · "This course is sponsored by Peak AI." · https://www.youtube.com/watch?v=y3el5Cwpyk8
+  [L1761] web · @DiscoverSponsors · 2026-10 · "The most active sponsors in the last year are Semrush, Peec AI and Ahrefs." · https://discoversponsors.com/creators/exposure-ninja-21952
+karşı: (yok)
+
+### C092 [S0]
+- ChatGPT atıflarının Google ile bağı çözülmedi: AirOps verisi yaklaşık %50'yi 1. sıradan gösteriyor, bu tek kaynak ↔ Ahrefs ve arXiv verileri %12 ve %9,4 veriyor (3 satır) [L1256] ↔ [L1381, L1159].
+dayanak:
+  (yok)
+karşı:
+  [L1256] x · @alexgroberman · 2026-05-24 · "Almost 50% of ChatGPT citations came from pages ranking #1 on Google." · https://x.com/i/status/2058573688698810686
+  [L1381] web · @Louise Linehan · 2026-05-31 · "In a dataset of 15,000 prompts, we found that—on average—only 12% of links cited by ChatGPT, Gemini, and Copilot appear in Google's top 10 results for the same prompt." · https://ahrefs.com/blog/ai-search-overlap/
+  [L1159] x · @georg_singer · 2026-11-02 · "With GPT-5.3 Instant, 9.4% of the cited URLs showed up there at exact URL level." · https://x.com/i/status/2117318586934890803
+
+### C093 [S0]
+- Google yüzeylerinde sıralamanın ağırlığı çözülmedi: Ahrefs bu yüzeylerin sıralamayı izlediğini söylüyor, başka bir satır atıfların %76'sını ilk 10'da gösteriyor ↔ başka veri AI Mode atıflarının %88'ini ilk 10 dışında gösteriyor (3 satır) [L1463, L1181] ↔ [L1147].
+dayanak:
+  (yok)
+karşı:
+  [L1463] web · @Louise Linehan (Ahrefs) · 2026-05-31 · "In other words, AI Overviews follow the SERPs—AI assistants don't." · https://ahrefs.com/blog/ai-search-overlap/
+  [L1181] youtube · @Nico AI Ranking · ? · "You see, 76% of all AI overview citations come from the top 10 pages of that search result." · https://www.youtube.com/watch?v=nOk-kX8FndI
+  [L1147] x · @kokasexton · 2026-11-02 · "88% of Google AI Mode citations come from outside the organic top 10." · https://x.com/i/status/2117361861783965828
+
+### C094 [S0]
+- SEO'nun yapay zekâ görünürlüğünü getirip getirmediği çözülmedi: bir uygulayıcı atıfın Google otoritesinden sonra geldiğini söylüyor, bu tek kaynak ↔ başkaları Google'da iyi sırada olup ChatGPT'de görünmeyen veya tersini yaşayan siteler bildiriyor (3 satır) [L1410] ↔ [L1412, L1229].
+dayanak:
+  (yok)
+karşı:
+  [L1410] reddit · @dcdragos · 2026-07 · "AI citations showed up after the Google authority did, not from a separate track of work." · https://reddit.com/r/SEO/comments/1v3yzn7/aeo_geo_is_bullshit_buzzword_intended_to_trick/
+  [L1412] reddit · @BestPoint8381 · 2026-07 · "We audited about 17,000 French SMB sites this year and the recurring pattern is sites ranking page 1 on Google that never show up in ChatGPT or Perplexity answers." · https://reddit.com/r/SEO/comments/1v3yzn7/aeo_geo_is_bullshit_buzzword_intended_to_trick/
+  [L1229] linkedin · @Jake Ward · 2026-05-13 · "Clients of mine have shown up in ChatGPT for competitive terms before they ever ranked on page one of Google." · https://www.linkedin.com/posts/jakezward_how-aeo-geo-and-ai-search-actually-works-activity-7460297044604387328-Emn_
+
+### C095 [S0]
+- Otoritenin etkisi çözülmedi: satıcı aktarımları 3–4 kat fark ve yüksek bağlantılı sitelerde daha çok atıf veriyor ↔ başka satırlar zayıf korelasyon ve sayfa başına atıf artışı olmadığını söylüyor (4 satır) [L1226, L1747] ↔ [L1262, L1562].
+dayanak:
+  (yok)
+karşı:
+  [L1226] x · @alexgroberman · 2026-02-02 · "High-authority sites were cited 3 to 4 times more often than low-trust domains." · https://x.com/i/status/2018368169262608427
+  [L1747] web · @Search Engine Journal · ? · "Sites with up to 2,500 referring domains averaged 1.6 to 1.8 citations. Those with over 350,000 referring domains averaged 8.4 citations." · https://www.searchenginejournal.com/new-data-top-factors-influencing-chatgpt-citations/561954/
+  [L1262] linkedin · @Cyrus Shepard · ? · "- Domain authority is only weakly correlated with AI citations" · https://www.linkedin.com/posts/cyrusshepard_do-google-ai-citations-actually-matter-to-activity-7460020867461468160-p5T5
+  [L1562] web · @arXiv 2610.15033 · ? · "authoritative websites have more cited pages, not more citations per page." · https://arxiv.org/html/2610.15033v1
+
+### C096 [S0]
+- ChatGPT'nin arama kaynağı çözülmedi: iki satır Bing ve kendi tarayıcısını söylüyor ↔ 2025 tarihli test Google snippet bağımlılığını gösteriyor (3 satır) [L1172, L1748] ↔ [L1327].
+dayanak:
+  (yok)
+karşı:
+  [L1172] x · @codyschneider · 2026-10-19 · "chatgpt = mostly bing + openai's own crawler" · https://x.com/i/status/2112272612088840439
+  [L1748] web · @MaxAEO · ? · "OpenAI names Bing among third-party provider privacy references for ChatGPT Search." · https://maxaeo.ai/blog/does-chatgpt-use-bing/
+  [L1327] x · @Aleyda Solis · 2025-07-24 · "I've run a simple but straight-forward to follow test that confirms the reliance of ChatGPT on Google SERPs snippets for its answers." · https://t.co/cvZGMTgaOv
+
+## Your verdict on each claim — one of three
+- `ok` — the rows under it say what the line says, and every number in the line is one those rows bear (a count of
+  rows the line gives is borne when that many rows under it say so).
+- `corrected` — the rows say less than the line, or something other, or a `karşı` row under it is not named in the
+  line. Then write the line yourself, as it should stand in the answer:
+  - Turkish, in the writer's own grammar: the claim, then the ids it stands on in square brackets, `… [L0042, L0107]`;
+    the counter-evidence after `↔`, `… [L0042] ↔ … [L0051]`, once in the line;
+  - only ids printed under THIS claim, in its `dayanak` or its `karşı` — the same ids or a subset, at least one, and never an id whose row is marked `(yazara verilmeyen satır)`;
+  - no quote of a source's words, no address, no `http`, no domain;
+  - the WHOLE line, a drop-in replacement: a list item keeps its mark (`- `); a table row stays a table row,
+    `| … | … |`, with the same number of cells.
+- `removed` — no row cited under it supports the line. The verdict (`· hüküm`) is never removed: when its rows do not
+  bear it, correct it.
+
+Give every one of the 12 claims one entry: its `reason` one sentence in Turkish, its `line` only when the verdict is
+`corrected`. Output ONLY valid JSON — no code fence, nothing before or after it:
+{"verdicts":[{"id":"C007","verdict":"ok","reason":"..."},{"id":"C008","verdict":"corrected","reason":"...","line":"..."},{"id":"C009","verdict":"removed","reason":"..."}]}

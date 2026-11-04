@@ -1,0 +1,5 @@
+ok: false
+error:
+  code: COMMAND_EXEC
+  message: Caption URL returned empty response
+  exitCode: 1

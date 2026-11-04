@@ -1,0 +1,394 @@
+[
+  {
+    "url": "https://dev.to/t/luxury",
+    "read": true,
+    "door": "scrapling",
+    "cached_snapshot": false,
+    "liveness": "alive",
+    "doors_tried": 3,
+    "attempts": [
+      {
+        "door": "media-transcript",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a media url"
+      },
+      {
+        "door": "pdf-text",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a pdf url"
+      },
+      {
+        "door": "scrapling",
+        "ok": true,
+        "ms": 1009,
+        "bytes": 4897,
+        "wall": false,
+        "error": null
+      }
+    ],
+    "bytes": 4897,
+    "file": "06-dev.to.md"
+  },
+  {
+    "url": "https://dribbble.com/musemindagency",
+    "read": true,
+    "door": "scrapling",
+    "cached_snapshot": false,
+    "liveness": "alive",
+    "doors_tried": 3,
+    "attempts": [
+      {
+        "door": "media-transcript",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a media url"
+      },
+      {
+        "door": "pdf-text",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a pdf url"
+      },
+      {
+        "door": "scrapling",
+        "ok": true,
+        "ms": 1051,
+        "bytes": 32212,
+        "wall": false,
+        "error": null
+      }
+    ],
+    "bytes": 32212,
+    "file": "03-dribbble.com.md"
+  },
+  {
+    "url": "https://lobste.rs/s/qpamp4/marionette_deterministic_simulation",
+    "read": true,
+    "door": "scrapling",
+    "cached_snapshot": false,
+    "liveness": "alive",
+    "doors_tried": 3,
+    "attempts": [
+      {
+        "door": "media-transcript",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a media url"
+      },
+      {
+        "door": "pdf-text",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a pdf url"
+      },
+      {
+        "door": "scrapling",
+        "ok": true,
+        "ms": 1033,
+        "bytes": 2009,
+        "wall": false,
+        "error": null
+      }
+    ],
+    "bytes": 2009,
+    "file": "02-lobste.rs.md"
+  },
+  {
+    "url": "https://nytimes.onelink.me/Xpht/zbx4nci9",
+    "read": true,
+    "door": "playwright",
+    "cached_snapshot": false,
+    "liveness": "alive",
+    "doors_tried": 10,
+    "attempts": [
+      {
+        "door": "media-transcript",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a media url"
+      },
+      {
+        "door": "pdf-text",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a pdf url"
+      },
+      {
+        "door": "scrapling",
+        "ok": false,
+        "ms": 972,
+        "bytes": 266,
+        "wall": false,
+        "error": null
+      },
+      {
+        "door": "scrapling-stealth",
+        "ok": false,
+        "ms": 1610,
+        "bytes": 266,
+        "wall": false,
+        "error": null
+      },
+      {
+        "door": "opencli-reader",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "no platform adapter for this url"
+      },
+      {
+        "door": "browser-signed-in",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "no signed-in browser site for this url"
+      },
+      {
+        "door": "tavily-extract",
+        "ok": false,
+        "ms": 432,
+        "bytes": 365,
+        "wall": true,
+        "error": "rc=1 "
+      },
+      {
+        "door": "firecrawl-scrape",
+        "ok": false,
+        "ms": 2114,
+        "bytes": 0,
+        "wall": false,
+        "error": "isError: Tool 'firecrawl_scrape' execution failed: We apologize for the inconvenience but we do not support this site. If you are part of an enterprise and wan"
+      },
+      {
+        "door": "exa-fetch",
+        "ok": false,
+        "ms": 258,
+        "bytes": 0,
+        "wall": false,
+        "error": "isError: MCP error -32602: Input validation error: Invalid arguments for tool web_fetch_exa: Required at urls"
+      },
+      {
+        "door": "playwright",
+        "ok": true,
+        "ms": 3622,
+        "bytes": 1177,
+        "wall": false,
+        "error": null
+      }
+    ],
+    "bytes": 1177,
+    "file": "07-onelink.me.md"
+  },
+  {
+    "url": "https://t.co/lsyKzgVJo9",
+    "read": true,
+    "door": "scrapling-stealth",
+    "cached_snapshot": false,
+    "liveness": "alive",
+    "doors_tried": 4,
+    "attempts": [
+      {
+        "door": "media-transcript",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a media url"
+      },
+      {
+        "door": "pdf-text",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a pdf url"
+      },
+      {
+        "door": "scrapling",
+        "ok": false,
+        "ms": 913,
+        "bytes": 66,
+        "wall": false,
+        "error": null
+      },
+      {
+        "door": "scrapling-stealth",
+        "ok": true,
+        "ms": 18827,
+        "bytes": 3995,
+        "wall": false,
+        "error": null
+      }
+    ],
+    "bytes": 3995,
+    "file": "01-t.co.md"
+  },
+  {
+    "url": "https://www.china-in-space.com/p/china-details-precursors-to-crewed",
+    "read": true,
+    "door": "scrapling",
+    "cached_snapshot": false,
+    "liveness": "alive",
+    "doors_tried": 3,
+    "attempts": [
+      {
+        "door": "media-transcript",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a media url"
+      },
+      {
+        "door": "pdf-text",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a pdf url"
+      },
+      {
+        "door": "scrapling",
+        "ok": true,
+        "ms": 631,
+        "bytes": 13322,
+        "wall": false,
+        "error": null
+      }
+    ],
+    "bytes": 13322,
+    "file": "08-china-in-space.com.md"
+  },
+  {
+    "url": "https://www.rednote.com/search_result/6a8525a200000000210229f1?xsec_token=ABBZIHpFy4egVpZwTg9t0UnPhC8LzTf_sQBJj6gsQf1Nc=&xsec_source=",
+    "read": true,
+    "door": "scrapling",
+    "cached_snapshot": false,
+    "liveness": "alive",
+    "doors_tried": 3,
+    "attempts": [
+      {
+        "door": "media-transcript",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a media url"
+      },
+      {
+        "door": "pdf-text",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a pdf url"
+      },
+      {
+        "door": "scrapling",
+        "ok": true,
+        "ms": 5897,
+        "bytes": 533,
+        "wall": false,
+        "error": null
+      }
+    ],
+    "bytes": 533,
+    "file": "05-rednote.com.md"
+  },
+  {
+    "url": "https://zhuanlan.zhihu.com/p/34393349",
+    "read": true,
+    "door": "firecrawl-scrape",
+    "cached_snapshot": false,
+    "liveness": "alive",
+    "doors_tried": 8,
+    "attempts": [
+      {
+        "door": "media-transcript",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a media url"
+      },
+      {
+        "door": "pdf-text",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "not a pdf url"
+      },
+      {
+        "door": "scrapling",
+        "ok": false,
+        "ms": 994,
+        "bytes": 35,
+        "wall": false,
+        "error": null
+      },
+      {
+        "door": "scrapling-stealth",
+        "ok": false,
+        "ms": 1979,
+        "bytes": 0,
+        "wall": false,
+        "error": null
+      },
+      {
+        "door": "opencli-reader",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "no platform adapter for this url"
+      },
+      {
+        "door": "browser-signed-in",
+        "ok": false,
+        "ms": 0,
+        "bytes": 0,
+        "wall": false,
+        "error": "no signed-in browser site for this url"
+      },
+      {
+        "door": "tavily-extract",
+        "ok": false,
+        "ms": 422,
+        "bytes": 365,
+        "wall": true,
+        "error": "rc=1 "
+      },
+      {
+        "door": "firecrawl-scrape",
+        "ok": true,
+        "ms": 4819,
+        "bytes": 28139,
+        "wall": false,
+        "error": null
+      }
+    ],
+    "bytes": 28139,
+    "file": "04-zhihu.com.md"
+  }
+]

@@ -1,0 +1,140 @@
+You are the AUDITOR of a research run. A writer you never saw wrote an answer from the rows of the run's ledger —
+each row has an id (L0001 …) — and every claim line of that answer ends with the ids of the rows it stands on. You
+have no tools and need none: under each claim below stand the rows it cites, each exactly as the writer was handed
+it. Judge each claim ONLY against the rows printed under it — not from memory, not from another claim's rows, and
+not from what you believe is true.
+
+## The question the answer was written for
+DERT (CEO'nun kendi cumlesi — ARANMAZ, cevabin bunu karsilamasi gerekir):
+Web sitelerinde SEO, AEO ve GEO için gerçekten işe yarayan nedir? Neyin kanıtı var, ne satış lafı? ChatGPT, Gemini, Perplexity, Google yapay zekâ cevaplarında bir marka nasıl çıkar, nasıl ölçülür, hangi aletler gerçek?
+
+SORGULAR (zemin bunlarla acildi):
+  - AEO GEO what actually works
+  - AI search citations real results
+
+ALT SORULAR (S-kimlik · başlık · soru):
+  - S1 · Kanıtı olan SEO/AEO/GEO uygulamaları · Web sitelerinde SEO, AEO ve GEO için hangi uygulamaların görünürlüğü artırdığı kontrollü deney, büyük veri analizi veya vaka verisiyle kanıtlanmıştır?
+  - S2 · Kanıtsız iddialar ve satış lafları · SEO, AEO ve GEO alanında yaygın olarak satılan hangi iddia ve taktiklerin kanıtı yoktur veya verilerle çürütülmüştür?
+  - S3 · Platformlarda markanın çıkma yolları · ChatGPT, Gemini, Perplexity ve Google yapay zekâ cevapları bir markayı hangi kaynak ve mekanizmalarla seçip gösterir, bu platformlar arasında ne fark vardır?
+  - S4 · Yapay zekâ görünürlüğünün ölçülmesi · Bir markanın yapay zekâ cevaplarındaki görünürlüğü ve bundan gelen trafik ile iş sonucu hangi yöntem ve metriklerle güvenilir biçimde ölçülür?
+  - S5 · Gerçek işe yarayan ölçüm aletleri · Piyasadaki AEO/GEO aletlerinden hangileri gerçek veri ve doğrulanabilir sonuç sunar, hangileri güvenilir değildir?
+
+## The 12 claims
+Each claim is its heading `### <id> [<section>]`, then its whole line as it stands in the answer, then `dayanak:` —
+the rows it cites as support — and `karşı:` — its counter rows: the ones the line names after `↔`, and the ones a
+counter-evidence hunter linked to it. A row is `[id] platform · @author · date · "passage" · address`; a row that says
+`gövde yok` carries nothing to judge by. A heading that ends `· hüküm` is the answer's first line: its verdict.
+
+### C073 [S5]
+| Google Search Console | AI Overviews ve AI Mode bağlantı gösterimleri [L1572, L1710] | Tıklama ve iş sonucu ayrımı yok [L1576, L1708] ↔ bir kaynak ayrım hiç yok diyor [L1448] | Birinci taraf veri, ilk durak [L1710] | 5 satırın 4'ü |
+dayanak:
+  [L1572] chinese · @艾默霏数智科技 · ? · "这份报表给的东西很明确:**AI 概览和 AI 模式里,指向你网站的链接被展示了多少次。**" · https://zhuanlan.zhihu.com/p/2101330401440671463
+  [L1710] web · @Google · ? · "The generative AI performance report includes impressions for the following generative AI capabilities on Google Search:" · https://support.google.com/webmasters/answer/16984139?hl=en
+  [L1576] chinese · @艾默霏数智科技 · ? · "Google 的 AI 回答只给你曝光,第三方助手只给你访问,中间那截永远是空的。" · https://zhuanlan.zhihu.com/p/2101330401440671463
+  [L1708] web · @Search Engine Journal · 2026-11-02 · "However, the page doesn't list clicks, CTR, or queries." · https://www.searchenginejournal.com/google-ai-click-reporting-uk-deadline/595663/
+karşı:
+  [L1448] x · @Erica Santiago (HubSpot) · 2026-10-14 · "Google Search Console does not categorize AI Overview impressions or clicks as a distinct traffic source." · https://t.co/pndpDH3UMU
+
+### C074 [S5]
+| Bing Webmaster Tools | Ücretsiz atıf payı, önizlemede [L1444, L1445] | Atıf tıklama veya gelir değildir [L1518] | Birinci taraf veri ve ücretsiz [L1524] | 4 satır; karşı satır arandı, bulunmadı |
+dayanak:
+  [L1444] tiktok · @harrysandersseo · ? · "It's called Citation Share, the exact percentage of AI answers that cite you instead of your competitor." · https://www.tiktok.com/@harrysandersseo/video/7673404909294800145
+  [L1445] tiktok · @harrysandersseo · ? · "It's free inside Bing Webmaster Tools, in preview now, and almost nobody is using it." · https://www.tiktok.com/@harrysandersseo/video/7673404909294800145
+  [L1518] substack · @David Scott · 2026-11-03 · "But Microsoft explicitly distinguishes citations from clicks, rankings, and business outcomes." · https://answerengineplaybook.substack.com/p/search-rankings-vs-ai-recommendations-ea0
+  [L1524] reddit · @yuridrabik · 2026-03 · "Bing Webmaster has recently released the AI monitoring feature and its free obviously." · https://reddit.com/r/SEO_LLM/comments/1rmy5mi/
+karşı: (yok)
+
+### C075 [S5]
+| GA4 | Yapay zekâ yönlendirme kanalı [L1493] | Eksik sayıyor ve ChatGPT trafiğini kanallara bölüyor [L1521, L1468, L1751] ↔ Google özel kanal grubu kurmayı anlatıyor [L1602] | Alt sınır olarak kullan [L1468] | 5 satırın 4'ü |
+dayanak:
+  [L1493] reddit · @derp-n-serp · 2026-08 · "Just link GA4 - its automatically sorting AI into a default traffic source channel." · https://reddit.com/r/ecommerce/comments/1vz1hk0/do_we_even_still_need_to_hire_an_agency_for_this/
+  [L1521] reddit · @startages · 2026-07 · "Don't rely on GA4 though, it undercounts by a lot, like over 95% missed from my own website numbers." · https://reddit.com/r/AISearchLab/comments/1v0dms2/
+  [L1468] hackernews · @vincko · 2026-03 · "This tends to be a lower bound, since it's not always set correctly." · https://news.ycombinator.com/item?id=47457472
+  [L1751] web · @Search Engine Journal · 2026-06 · "GA4's native AI Assistant channel splits ChatGPT traffic across three channels at once, silently undercounting every session." · https://www.searchenginejournal.com/ga4s-ai-assistant-channel-undercounts-your-ai-traffic-how-to-build-on
+karşı:
+  [L1602] web · @Google Analytics Help · ? · "To measure traffic originating from AI Assistants within a dedicated channel group:" · https://support.google.com/analytics/answer/13051316?hl=en
+
+### C076 [S5]
+| Sunucu veya bot günlüğü | ChatGPT kullanıcı ve arama botu ayrımı [L1311] | Tarama atıf değildir [L1522] | Destek sinyali [L1522] | 2 satırın 2'si |
+dayanak:
+  [L1311] web · @Ali Almoosawi · 2026-10 · "Mostly by user agent. OAI-SearchBot crawls for ChatGPT search, while ChatGPT-User only shows up when a person asks ChatGPT about a specific page." · https://www.producthunt.com/products/ranktune
+  [L1522] reddit · @Capable-Kiwi-3368 · 2026-07 · "At the same time, crawling doesn't mean citation, so maybe bot data is just a supporting signal(?)" · https://reddit.com/r/AISearchLab/comments/1v0dms2/
+karşı: (yok)
+
+### C077 [S5]
+| Peec AI | 50 prompt için aylık 95 dolar [L1495] | Bağımsız doğrulama satırı yok; firmanın kendi anlatımı var [L1498] | — | 2 satır |
+dayanak:
+  [L1495] x · @LucasWurms · ? · "Tracking 50 prompts in ChatGPT, Gemini and Google AI Mode costs: Peec AI: $95/mo Finseo: €84/mo Profound: on request This week I'm open-sourcing a tracker that does the same and you can self-host for €0. https://t.co/Hy6KCmZgLZ" · https://x.com/i/status/2116575514395832430
+  [L1498] tiktok · @Malte Landwehr (Peec AI) · ? · "Your analytics might say 0% of leads come from AI. Ask your customers, and it's more like 23%." · https://www.tiktok.com/@malte.landwehr/video/7658201410474970390
+karşı: (yok)
+
+### C078 [S5]
+| Profound | Fiyat talep üzerine, 7 günlük deneme sonrası satış görüşmesi [L1495, L1496] ↔ başlangıç planı aylık 99 dolardı [L1600] | Bağımsız doğrulama satırı yok [L1523] | — | 4 satırın 3'ü |
+dayanak:
+  [L1495] x · @LucasWurms · ? · "Tracking 50 prompts in ChatGPT, Gemini and Google AI Mode costs: Peec AI: $95/mo Finseo: €84/mo Profound: on request This week I'm open-sourcing a tracker that does the same and you can self-host for €0. https://t.co/Hy6KCmZgLZ" · https://x.com/i/status/2116575514395832430
+  [L1496] x · @kollavo · ? · "I priced out tracking ~100 prompts in AI search. Semrush AI Visibility Toolkit: $219/mo for 125 prompts ($99 base + two $60 packs). Profound: free 7-day trial, then a sales call. Same job, very different buying. Who each one fits: https://t.co/j75Im0Qsoh https://t.co/4XGxEC8huV" · https://x.com/i/status/2116142261625131410
+karşı:
+  [L1600] web · @Ryan Doser · 2026-09-01 · "Starter was $99 a month." · https://ryandoser.com/profound-review/
+  [L1523] reddit · @Euphoric-Mark-4750 · 2026-03 · "I don't see any secret sauce that the likes of semrush, peec ai and the others use that justifies the silly money their charge." · https://reddit.com/r/SEO_LLM/comments/1rmy5mi/
+
+### C079 [S5]
+| Semrush AI Visibility Toolkit | 125 prompt için aylık 219 dolar [L1546] | Fiyatını haklı çıkaran gizli yöntem görmeyen kullanıcı var [L1523] | — | 2 satır |
+dayanak:
+  [L1546] x · @kollavo · 2026-10-30 · "Semrush AI Visibility Toolkit: $219/mo for 125 prompts ($99 base + two $60 packs)." · https://x.com/i/status/2116142261625131410
+  [L1523] reddit · @Euphoric-Mark-4750 · 2026-03 · "I don't see any secret sauce that the likes of semrush, peec ai and the others use that justifies the silly money their charge." · https://reddit.com/r/SEO_LLM/comments/1rmy5mi/
+karşı: (yok)
+
+### C080 [S5]
+| Wellows | Bir motorda tek prompt yanıtını birim sayıyor, ad ve alan adını ayrı kontrol ediyor [L1331, L1332] | Tanıtımı ücretli ortaklık içinde yapılmış [L0976] | — | 3 satır; karşı satır arandı, bulunmadı |
+dayanak:
+  [L1331] x · @Wellows fiyat sayfası · 2026-11 · "In Wellows, an AI answer is one of your prompts, asked on one AI engine, once." · https://t.co/zrcjsJiHMU
+  [L1332] x · @Wellows fiyat sayfası · 2026-11 · "Two checks, not one: where an answer names you outright, and where your domain sits inside the pages it cites without ever saying your name." · https://t.co/zrcjsJiHMU
+  [L0976] x · @alexgroberman · 2026-02-27 · "Most agencies can track SEO rankings. It's not that hard or expensive in 2026. But when clients increasingly ask "Are we showing up in ChatGPT?" they have nothing legit to show them. No data. No system. No weekly actions. No proof of progress. That is changing fast. I partnered with Wellows for thi…" · https://x.com/i/status/2027424912525455786
+karşı: (yok)
+
+### C081 [S5]
+| Kendi barındırılan açık kaynak tracker | 0 euro maliyet vaat ediyor [L1545] | Duyuru aşamasında, doğrulama satırı yok [L1545] | — | 1 satır, tek kaynak |
+dayanak:
+  [L1545] x · @LucasWurms · 2026-10-31 · "This week I'm open-sourcing a tracker that does the same and you can self-host for €0." · https://x.com/i/status/2116575514395832430
+karşı: (yok)
+
+### C082 [S5]
+- Okunan satırlarda bir aletin doğruluğunu bağımsız sınayan test yok; platformlar gerçek sıralama verisi vermiyor ve aletler gerçek gösterimi ölçemiyor (2 satırın 2'si) [L1549, L1544].
+dayanak:
+  [L1549] reddit · @KONPARE · 2026-03 · "The LLMs themselves don't expose real ranking data." · https://reddit.com/r/SEO_LLM/comments/1rmy5mi/
+  [L1544] x · @martech_zone · 2026-10-31 · "AI visibility tracking tools can't measure actual impressions, but they can tell you if your brand is mentioned in AI assistant answers." · https://x.com/i/status/2116645057721749901
+karşı: (yok)
+
+### C083 [S5]
+- Google hiçbir üçüncü taraf aletin iç sıralama veya yapay zekâ sistemlerine erişemediğini söylüyor (2 satırın 2'si) [L1422, L1744].
+dayanak:
+  [L1422] x · @Google Search Central · 2026-05-15 · "metrics. No third-party tool has access to our internal ranking or AI systems. Use these tools" · https://t.co/EK9AqC9PZ4
+  [L1744] web · @Search Engine Journal · 2026-06 · "Google's new messaging to CMOs reiterates that GEO is still SEO and states that third-party tools have no access to its internal metrics." · https://www.searchenginejournal.com/google-says-seo-tools-lack-access-to-its-internal-metrics/580176/
+karşı: (yok)
+
+### C084 [S5]
+- Satın almadan önce aletin ChatGPT'yi doğrudan sorgulayıp sorgulamadığı ve prompt başına kaç koşu yaptığı sorulmalıdır, çünkü Google sırasından çıkarım yapan rapor çoğunlukla Google'ı ölçer (4 satırın 4'ü) [L1161, L0941, L1723, L1381].
+dayanak:
+  [L1161] x · @georg_singer · 2026-11-02 · "Before you rewrite a page because a report says ChatGPT ignores you, ask the vendor two things: does it query ChatGPT directly, and how many runs per prompt?" · https://x.com/i/status/2117318586934890803
+  [L0941] x · @georg_singer · 2026-11-02 · "My bet: if your "AI visibility" tool infers ChatGPT citations from Google rankings, it is mostly measuring Google. A paper on arXiv compared the URLs ChatGPT cites with Google's top five result pages. With GPT-5.3 Instant, 9.4% of the cited URLs showed up there at exact URL level. It also ran each…" · https://x.com/i/status/2117318586934890803
+  [L1723] web · @Kovmere · ? · "Ask how many runs per prompt" · https://kovmere.com/resources/are-geo-tools-overpriced-prompt-trackers-or-useful-visibility-tools
+  [L1381] web · @Louise Linehan · 2026-05-31 · "In a dataset of 15,000 prompts, we found that—on average—only 12% of links cited by ChatGPT, Gemini, and Copilot appear in Google's top 10 results for the same prompt." · https://ahrefs.com/blog/ai-search-overlap/
+karşı: (yok)
+
+## Your verdict on each claim — one of three
+- `ok` — the rows under it say what the line says, and every number in the line is one those rows bear (a count of
+  rows the line gives is borne when that many rows under it say so).
+- `corrected` — the rows say less than the line, or something other, or a `karşı` row under it is not named in the
+  line. Then write the line yourself, as it should stand in the answer:
+  - Turkish, in the writer's own grammar: the claim, then the ids it stands on in square brackets, `… [L0042, L0107]`;
+    the counter-evidence after `↔`, `… [L0042] ↔ … [L0051]`, once in the line;
+  - only ids printed under THIS claim, in its `dayanak` or its `karşı` — the same ids or a subset, at least one, and never an id whose row is marked `(yazara verilmeyen satır)`;
+  - no quote of a source's words, no address, no `http`, no domain;
+  - the WHOLE line, a drop-in replacement: a list item keeps its mark (`- `); a table row stays a table row,
+    `| … | … |`, with the same number of cells.
+- `removed` — no row cited under it supports the line. The verdict (`· hüküm`) is never removed: when its rows do not
+  bear it, correct it.
+
+Give every one of the 12 claims one entry: its `reason` one sentence in Turkish, its `line` only when the verdict is
+`corrected`. Output ONLY valid JSON — no code fence, nothing before or after it:
+{"verdicts":[{"id":"C007","verdict":"ok","reason":"..."},{"id":"C008","verdict":"corrected","reason":"...","line":"..."},{"id":"C009","verdict":"removed","reason":"..."}]}

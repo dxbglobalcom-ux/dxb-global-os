@@ -1,0 +1,142 @@
+You are the AUDITOR of a research run. A writer you never saw wrote an answer from the rows of the run's ledger —
+each row has an id (L0001 …) — and every claim line of that answer ends with the ids of the rows it stands on. You
+have no tools and need none: under each claim below stand the rows it cites, each exactly as the writer was handed
+it. Judge each claim ONLY against the rows printed under it — not from memory, not from another claim's rows, and
+not from what you believe is true.
+
+## The question the answer was written for
+DERT (CEO'nun kendi cumlesi — ARANMAZ, cevabin bunu karsilamasi gerekir):
+Web sitelerinde SEO, AEO ve GEO için gerçekten işe yarayan nedir? Neyin kanıtı var, ne satış lafı? ChatGPT, Gemini, Perplexity, Google yapay zekâ cevaplarında bir marka nasıl çıkar, nasıl ölçülür, hangi aletler gerçek?
+
+SORGULAR (zemin bunlarla acildi):
+  - AEO GEO what actually works
+  - AI search citations real results
+
+ALT SORULAR (S-kimlik · başlık · soru):
+  - S1 · Kanıtı olan SEO/AEO/GEO uygulamaları · Web sitelerinde SEO, AEO ve GEO için hangi uygulamaların görünürlüğü artırdığı kontrollü deney, büyük veri analizi veya vaka verisiyle kanıtlanmıştır?
+  - S2 · Kanıtsız iddialar ve satış lafları · SEO, AEO ve GEO alanında yaygın olarak satılan hangi iddia ve taktiklerin kanıtı yoktur veya verilerle çürütülmüştür?
+  - S3 · Platformlarda markanın çıkma yolları · ChatGPT, Gemini, Perplexity ve Google yapay zekâ cevapları bir markayı hangi kaynak ve mekanizmalarla seçip gösterir, bu platformlar arasında ne fark vardır?
+  - S4 · Yapay zekâ görünürlüğünün ölçülmesi · Bir markanın yapay zekâ cevaplarındaki görünürlüğü ve bundan gelen trafik ile iş sonucu hangi yöntem ve metriklerle güvenilir biçimde ölçülür?
+  - S5 · Gerçek işe yarayan ölçüm aletleri · Piyasadaki AEO/GEO aletlerinden hangileri gerçek veri ve doğrulanabilir sonuç sunar, hangileri güvenilir değildir?
+
+## The 12 claims
+Each claim is its heading `### <id> [<section>]`, then its whole line as it stands in the answer, then `dayanak:` —
+the rows it cites as support — and `karşı:` — its counter rows: the ones the line names after `↔`, and the ones a
+counter-evidence hunter linked to it. A row is `[id] platform · @author · date · "passage" · address`; a row that says
+`gövde yok` carries nothing to judge by. A heading that ends `· hüküm` is the answer's first line: its verdict.
+
+### C049 [S3]
+- Marka adı ve sayfa atfı ayrı mekanizmalardır: sayfa ancak getirildikten sonra atıflanır, marka bellekten söylenebilir; köklü markada modelin mevcut inancı, niş markada aramanın bulduğu kanıt belirleyicidir ↔ bir ölçümde arama 48 prompt'ta ilk tercihi değiştirdi (4 satırın 3'ü) [L1512, L1511, L1704] ↔ [L1631].
+dayanak:
+  (yok)
+karşı:
+  [L1512] web · @arXiv 2610.15033 · 2026-10 · "Pages are cited only after they are retrieved, whereas brands can be named from memory." · https://arxiv.org/html/2610.15033v1
+  [L1511] web · @arXiv 2610.15033 · 2026-10 · "For an established brand, visibility is largely set by what the model already believes; for a niche brand, a consistent position exists only when the engine's search finds evidence about it." · https://arxiv.org/html/2610.15033v1
+  [L1704] web · @Search Engine Land · ? · "Memory strongly decided which companies were considered." · https://searchengineland.com/ai-models-favor-familiar-brands-search-study-484054
+  [L1631] web · @Daniel Shashko · 2026-10-28 · "Search flipped the top pick in 48 prompts." · https://organikpi.com/blog/geo-ai-search/chatgpt-memory-vs-search-brand-recommendations/
+
+### C050 [S3]
+- Ford'un ChatGPT'de ABD'de bahiste 18., atıfta 1.055. olması bu ayrımı gösteriyor (3 satırın 3'ü) [L1553, L1718, L1719].
+dayanak:
+  [L1553] linkedin · @AI For Search · 2026-09-20 · "Ford is 18th for mentions on ChatGPT in the US. For citations it's 1,055th." · https://www.linkedin.com/posts/aiforsearch_what-moves-citation-and-what-kills-it-%F0%9D%97%95%F0%9D%97%B2%F0%9D%97%B0%F0%9D%97%BC%F0%9D%97%BA%F0%9D%97%B2-activity-7507287433072295936-bKFF
+  [L1718] web · @Toolify · ? · "On the list of sites ChatGPT actually cites as sources, ford.com sat at 1,055th." · https://www.toolify.ai/ai-news/chatgpt-knows-ford-it-just-doesnt-quote-ford-3916143
+  [L1719] linkedin · @Alina Petrova · 2026-10-15 · "Ford ranks #18 among the brands ChatGPT mentions in the US." · https://www.linkedin.com/posts/alina-petrova-growth_ford-ranks-18-among-the-brands-chatgpt-mentions-activity-7516411659305918467-b7F4
+karşı: (yok)
+
+### C051 [S3]
+- Getirilmek atıf değildir: ChatGPT keşfettiği sayfaların %85'ini kullanmazken AI Overviews ve AI Mode getirdiklerinin %85–92'sini atıflıyor; karşı satır arandı, bulunmadı (2 satırın 2'si) [L1214, L1532].
+dayanak:
+  [L1214] x · @alexgroberman · 2026-10-31 · "The biggest finding of this study? 85% of pages ChatGPT discovers during its research process never make it into the final answer." · https://x.com/i/status/2116537348871913956
+  [L1532] web · @TJ Robertson (TJ Digital) · 2026-10-25 · "AI Overviews and AI Mode cite 85% to 92% of the pages they pull up." · https://tjrobertson.com/ai-citation-study/
+karşı: (yok)
+
+### C052 [S3]
+- Motorlar büyük ölçüde farklı kaynak kullanıyor, bu yüzden tek platform sonucu diğerine taşınmaz ↔ BrightEdge marka düzeyinde %36–55 örtüşme buluyor (10 satırın 9'u) [L1529, L1428] ↔ [L1630].
+dayanak:
+  (yok)
+karşı:
+  [L1529] web · @TJ Robertson (TJ Digital) · 2026-10-25 · "AI Mode and AI Overviews shared 12% of their cited pages, and ChatGPT shared about 5% with either one." · https://tjrobertson.com/ai-citation-study/
+  [L1428] tiktok · @darrenshawseo · ? · "The AI models almost NEVER cite the same sources." · https://www.tiktok.com/@darrenshawseo/video/7683183665886678280
+  [L1630] web · @BrightEdge · 2026-05-07 · "Pairwise overlap in top-named brands across the dataset falls in a tight 36% to 55% band." · https://www.brightedge.com/resources/weekly-ai-search-insights/where-ai-engines-agree-on-brands
+
+### C053 [S3]
+- Yerel aramalarda ChatGPT'nin Google yüzeyleriyle örtüşmesi yaklaşık %19–20'dir (2 satırın 2'si, aynı çalışma) [L1235, L1707].
+dayanak:
+  [L1235] x · @alexgroberman · 2026-10-22 · "ChatGPT overlapped with either Google AI surface only around 19-20%." · https://x.com/i/status/2113289836610392567
+  [L1707] web · @BrightLocal · 2026-09-16 · "It had a crossover of just 20% with AIO and 19% with AI Mode." · https://www.brightlocal.com/research/local-ai-visibility-study/
+karşı: (yok)
+
+### C054 [S3]
+- Üçüncü taraf kaynağı motora göre değişiyor: Reddit AI Overviews cevaplarının %16'sında, AI Mode'un %7'sinde, ChatGPT'nin %1'inde görülüyor; başka bir endeks AI Overviews için %15,9 veriyor (2 satırın 2'si) [L1530, L1742].
+dayanak:
+  [L1530] web · @TJ Robertson (TJ Digital) · 2026-10-25 · "Reddit appeared in 16% of AI Overview answers, 7% of AI Mode answers and 1% of ChatGPT answers." · https://tjrobertson.com/ai-citation-study/
+  [L1742] web · @RankSpot · ? · "The check that the method is sound is Reddit: this index puts it in 15.9% of Google AI Overviews answers, against the roughly 21% widely reported elsewhere." · https://www.rankspot.ai/most-cited-sources
+karşı: (yok)
+
+### C055 [S3]
+- YouTube Google yapay zekâ yüzeylerinde güçlü bir kaynaktır, Moz'da en çok atıflanan alan adı ise Wikipedia'dır ↔ 30 milyonluk başka analizde Reddit birinci çıktı (3 satırın 2'si) [L1137, L1352] ↔ [L1629].
+dayanak:
+  (yok)
+karşı:
+  [L1137] youtube · @Louise (Ahrefs) · ? · "we see that YouTube is the most cited domain in AI mode and AI overviews." · https://www.youtube.com/watch?v=RwKKLnyXCig
+  [L1352] x · @Koka Sexton (Chief Content Marketer) · 2026-10-15 · "Moz found YouTube is the second most-cited external source in AI Mode, ahead of Reddit, Facebook, and LinkedIn, with Wikipedia the most-cited domain overall." · https://t.co/LOaQVPXpjY
+  [L1629] web · @Danny Goodwin · 2026-03-31 · "Reddit was the most-cited source across ChatGPT, Google AI Mode, Gemini, Perplexity, and AI Overviews." · https://searchengineland.com/ai-search-engines-cite-reddit-youtube-and-linkedin-most-study-473138
+
+### C056 [S3]
+- Yerel işletmede kendi site atıfların %42'sini, Google Business Profile yaklaşık %29'unu aldı ↔ başka bir veride ChatGPT'nin yerel kaynaklarının %48,7'si dizinlerdir (4 satırın 3'ü) [L1233, L1237, L1705] ↔ [L1305].
+dayanak:
+  (yok)
+karşı:
+  [L1233] x · @alexgroberman · 2026-10-22 · "When BrightLocal looked at actual citation volume, individual business websites accounted for 42% of the nearly 2 million citations - still a massive share." · https://x.com/i/status/2113289836610392567
+  [L1237] x · @alexgroberman · 2026-10-22 · "Google Business Profile accounted for roughly 29% of citations in BrightLocal's source analysis." · https://x.com/i/status/2113289836610392567
+  [L1705] web · @BrightLocal · 2026-09-16 · "The number of individual citations that came from business sites was 42% of the 1,967,762 total citations" · https://www.brightlocal.com/research/local-ai-visibility-study/
+  [L1305] x · @Aaron Haynes (Loganix) · 2026-03-16 · "ChatGPT uses directory listings for 48.7% of its local sources." · https://t.co/cNR8v4Eydk
+
+### C057 [S3]
+- Sayfa tipi önemlidir: ürün sayfaları en çok atıflanan tür, listeler ve karşılaştırmalar da ChatGPT'de öne çıkıyor (2 satırın 2'si) [L1531, L1244].
+dayanak:
+  [L1531] web · @TJ Robertson (TJ Digital) · 2026-10-25 · "Product pages get cited more than any other kind of page." · https://tjrobertson.com/ai-citation-study/
+  [L1244] youtube · @Ahrefs · ? · "of all pages cited by ChatGPT are lists, best X, top X, comparisons and reviews." · https://www.youtube.com/watch?v=58MR03s0ev8
+karşı: (yok)
+
+### C058 [S3]
+- ChatGPT Mayıs–Temmuz arasında cevap başına kaynağı yaklaşık 9'dan 4'e indirdi ve Reddit ile LinkedIn gibi kullanıcı içeriklerini atıflayan cevapların payı %59'dan %19'a düştü (2 satır, aynı gönderi, tek kaynak) [L1205, L1206].
+dayanak:
+  [L1205] linkedin · @Abhilash Kasliwal · 2026-08-05 · "ChatGPT reduced the number of sources it cites per answer, from ~9 to ~4 (~50% drop!!!) between May and July." · https://www.linkedin.com/posts/abhilashkasliwal_something-very-intreresting-is-happening-activity-7490656013440684032-zjyK
+  [L1206] linkedin · @Abhilash Kasliwal · 2026-08-05 · "- UGC sites like Reddit and LinkedIn, share of answers citing these sites fell from 59% to 19%" · https://www.linkedin.com/posts/abhilashkasliwal_something-very-intreresting-is-happening-activity-7490656013440684032-zjyK
+karşı: (yok)
+
+### C059 [S4]
+- Birincil metrik tek cevap değil, sabit prompt setinde çok koşudan çıkan görünürlük yüzdesidir (11 satırın 11'i) [L1440, L1344].
+dayanak:
+  [L1440] web · @Rand Fishkin · 2026-01 · "I've been swayed from my initial position and now believe **visibility % across dozens to hundreds of prompts run multiple times is a reasonable metric**." · https://sparktoro.com/blog/new-research-ais-are-highly-inconsistent-when-recommending-brands-or-products-marketers-should-take-care-when-tracking-ai-visibility/
+  [L1344] youtube · @Exposure Ninja · ? · "We have to run many prompts, many platforms across many different days, and measure the percentages." · https://www.youtube.com/watch?v=y3el5Cwpyk8
+karşı: (yok)
+
+### C060 [S4]
+- Pratik alt sınır olarak 20–50 sabit sorgu ve 3–4 ayrı oturum öneriliyor, 3 koşu en az sayıdır ↔ SparkToro gerçek öneri kümesi için en az 60–100 tekrar istiyor (4 satırın 3'ü) [L1450, L1449, L1497] ↔ [L1593].
+dayanak:
+  (yok)
+karşı:
+  [L1450] x · @Erica Santiago (HubSpot) · 2026-10-14 · "Select a fixed sample of 20 to 50 priority informational queries that trigger AI Overviews with reasonable frequency." · https://t.co/pndpDH3UMU
+  [L1449] x · @Erica Santiago (HubSpot) · 2026-10-14 · "**Run each query multiple times before concluding.** Check the same keyword across at least three to four separate sessions before treating its AI Overview status as consistent." · https://t.co/pndpDH3UMU
+  [L1497] tiktok · @jordanhongtai · ? · "Answers shuffle between runs, so one audit is a coin flip and 3 runs is the minimum." · https://www.tiktok.com/@jordanhongtai/video/7681077062328683777
+  [L1593] web · @Rand Fishkin (SparkToro) · 2026-01 · "My takeaway on trustworthiness is that if you really want to know an AI's set of recommendations, you need to ask over and over again; usually at least 60-100X" · https://sparktoro.com/blog/new-research-ais-are-highly-inconsistent-when-recommending-brands-or-products-marketers-should-take-care-when-tracking-ai-visibility/
+
+## Your verdict on each claim — one of three
+- `ok` — the rows under it say what the line says, and every number in the line is one those rows bear (a count of
+  rows the line gives is borne when that many rows under it say so).
+- `corrected` — the rows say less than the line, or something other, or a `karşı` row under it is not named in the
+  line. Then write the line yourself, as it should stand in the answer:
+  - Turkish, in the writer's own grammar: the claim, then the ids it stands on in square brackets, `… [L0042, L0107]`;
+    the counter-evidence after `↔`, `… [L0042] ↔ … [L0051]`, once in the line;
+  - only ids printed under THIS claim, in its `dayanak` or its `karşı` — the same ids or a subset, at least one, and never an id whose row is marked `(yazara verilmeyen satır)`;
+  - no quote of a source's words, no address, no `http`, no domain;
+  - the WHOLE line, a drop-in replacement: a list item keeps its mark (`- `); a table row stays a table row,
+    `| … | … |`, with the same number of cells.
+- `removed` — no row cited under it supports the line. The verdict (`· hüküm`) is never removed: when its rows do not
+  bear it, correct it.
+
+Give every one of the 12 claims one entry: its `reason` one sentence in Turkish, its `line` only when the verdict is
+`corrected`. Output ONLY valid JSON — no code fence, nothing before or after it:
+{"verdicts":[{"id":"C007","verdict":"ok","reason":"..."},{"id":"C008","verdict":"corrected","reason":"...","line":"..."},{"id":"C009","verdict":"removed","reason":"..."}]}

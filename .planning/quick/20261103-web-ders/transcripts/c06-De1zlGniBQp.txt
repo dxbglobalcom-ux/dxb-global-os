@@ -1,0 +1,12 @@
+language: en
+[00:00] Someone just released a free open source alternative to 11 labs and it runs completely on your own computer is called voice studio.
+[00:10] Okay, I found the repo. Let's just copy the install prompt and we paste it into cloud code. It's installing it for us. Okay, we're in.
+[00:17] This is cool. It looks like it just ran a check on my computer to see if it's good enough to run this software.
+[00:22] And it looks like we've passed. So that's good news. Okay, and we can pick the quality of the output we want.
+[00:26] Obviously, I'm going to go for max. So there's no excuse and we are in. There's a lot of features here.
+[00:31] We have voice cloning design, dubbing, transcribing. Okay, but the one I'm most interested in is voice cloning.
+[00:38] I'm going to try to clone my voice by uploading this 15 seconds clip of me talking. Let's name the profile Sunday.
+[00:44] Okay, apparently it's cloned my voice locally for free, but let's see how good it is.
+[00:48] Let's get it to say if this works, then it's a fact. It's generating the audio. Okay, it's done. Let's hit the output.
+[00:55] If this works, then it's a fact. That's pretty good. And I guess there's only one more thing to say.
+[01:01] This is 100% fact.

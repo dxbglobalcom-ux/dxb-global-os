@@ -1,0 +1,511 @@
+Title: 2020 WordPress Maintenance Survey Results Part 1: Services and Fees - ManageWP
+URL: https://managewp.com/2020-wordpress-maintenance-survey-results-services-fees/
+Published: 2020-06-08T15:00:56.000Z
+Author: Will Morris
+Highlights:
+## Offering website maintenance to clients
+
+We surveyed ManageWP users to find out more about the WordPress maintenance services they offer to clients. The total number of respondents was 2,279. 1,879 (82.4 percent) of them are self-described web developers, designers, or other types of professionals:
+
+Just over half of respondents (50.77 percent) describe themselves as freelancers, while more than a quarter of them (28.08 percent) are agency owners:
+
+Unlike our 2019 WordPress Maintenance Survey, more participants are located in Europe (47.93 percent) than North America (37.26 percent):
+
+85 percent of respondents offer WordPress maintenance services. This is a clear indication of the popularity of this service:
+
+While a large number of our users provide maintenance services, the number of pricing tiers they offer varies. One and two-tier services have similar rates at 26 percent and 23 percent, respectively. Three-tier pricing systems are the more common, with 30.46 percent of respondents following this model:
+
+...
+
+### Monthly fees
+
+Our respondents charge, on average, $67 per month per website for single-tier maintenance services:
+
+This is the average rate from 457 respondents who completed this section. Some participants charge more than this while others charge less.
+
+...
+
+While many respondents offer single-tier services, most (73.37 percent) offer multiple tiers. We asked each participant what services their highest and lowest tiers include. We also asked about the monthly fees they charge their clients for each.
+
+### Services
+
+Of the multi-tier maintenance offerings, 41.51 percent follow a three-tier pricing structure. Two-tier services are the next most common model (32.14 percent) while four-tier services are the least common (26.34 percent).
+
+The most popular services offered in respondents’ lowest tiers are similar to those offered for single-tier services:
+
+The most common lowest tier service is plugin, theme, and WordPress core updates (82.62 percent). This is closely followed by backups, which are offered by 78.37 percent of respondents.
+
+Naturally, the highest tiers respondents provide also tend to offer these basic services:
+
+...
+
+### Monthly fees
+
+When looking at the monthly fee charged per website for respondents’ lowest maintenance service tiers, the results are very similar to the single-tier services. On average, participants charge $69 per month per website for their lowest tier. There appears to be little deviation from this average:
+
+However, the monthly fee for the highest tier offering varies quite a bit. The average monthly fee is $336 per website:
+
+The lowest amount charged for the highest tier was $20 per month per site while the highest was $1,500. However, this highest figure could be viewed as an outlier as the median monthly fee is $160 per website.
+
+...
+
+Maintenance services can also be a profitable addition to your business. Almost 40 percent of respondents have 6–20 clients. Many of these clients have multiple websites to maintain. The average monthly fee for single-tier services is $67 per website, meaning you could easily bring in around $1,340 per month from maintenance work alone.
+
+---
+
+Title: 2023 Web Care Survey Results: What we learned. - MainWP WordPress Management
+URL: https://mainwp.com/2023-web-care-survey-results-what-we-learned/
+Published: 2024-01-29T00:00:00.000Z
+Author: Todd Jones
+Highlights:
+The 2023 version of the Web Care Survey just seemed to come up short in my estimation. For one, we didn’t get the kind of participation we had in the previous years.
+
+...
+
+I’m not sure. I will say this: organic reach on social media isn’t what it was when we started, and that may be an issue.
+
+That being said, we had about 64 responses. In doing so, we were able to see a few changes in the industry from one year to the next.
+
+Here are some of our observations:
+
+- Monthly, Yearly, and Quarterly are the dominant payment durations.
+- Slight increase in consultants charging yearly in 2023.
+- Optional, New question on pricing for eCommerce sites reveals higher values.
+- Membership sites: Highest price point observed was $600.
+- Three tiers remain most popular, with two and four tiers maintaining 2022 percentages.
+- Custom offerings are prevalent, especially for larger sites requiring more resources.
+- A small percentage (6%) manage 250-500 websites, none managing more than 500, according to the survey.
+- Similar to 2022, SEO services are the most offered, followed by content creation, email marketing, and PPC/SEM & Paid Ads.
+- It appears more consultants are entering the hosting space, possibly due to platforms like CloudFlare and Runcloud.
+- In 2023, more consultants are blogging consistently.
+- Email newsletters are still not widely adopted, but more consultants are using them.
+- Most web care consultants target small to medium-sized businesses, followed by B2B enterprises.
+
+### Duration of payments.
+
+As last year, Monthly, Yearly and Quarterly are the largest answers. It appears that there is a slight increase for consultants charging yearly in 2023. Perhaps economic conditions have caused this change. I like to think it is easier to manage yearly payments than opting for another duration.
+
+### Website Care Plans.
+
+A smaller percentage of consultants indicated they charge in the $100-200 per month range in the 2023 results. The percentages might be off because we had fewer respondents or less people have opted for that higher range. However, the difference in the question this year is I wanted to exclude eCommerce and Membership sites. Those sites usually require more resources and have a higher value. eCommerce Sites
+
+For eCommerce websites, you see a sign of a higher value. This question was optional, so I didn’t have defined answers. As you will notice, there indicates a different price, with several being higher. A few showed they charged the same amount as the other sites. Six of the 38 responses listed less than $100.
+
+For membership sites, results were like the eCommerce sites. The highest price point I noticed was $600. A few were less than $100 and one respondent showed they charged a $20/month addon fee.
+
+---
+
+Title: WordPress care plans: pricing, scope and break-even math
+URL: https://bluprent.io/wordpress-care-plans
+Published: N/A
+Author: N/A
+Highlights:
+## What studios charge
+
+ Published care plans run roughly $69 to $359 a month (Topsyde's pricing guide). In MainWP's web care survey, 57% of providers charged $25 to $100 and 33% charged $100 to $200. Two small studios whose public pricing pages we checked on 2026-10-06 show the spread: one sells $99 / $199 / $349 with uptime in every tier and monthly reports on the top two, the other runs $120 to $600 with hours-based upper tiers. 
+
+Three tiers is the most common packaging in that survey. Price per site, not per hour, so the plan scales with the number of sites you keep alive and not with your calendar.
+
+---
+
+Title: WordPress Care Plans Pricing: What Agencies Actually Charge in 2026 - White Label WP Agency
+URL: https://whitelabelwp.agency/wordpress-care-plan-pricing-benchmarks/
+Published: 2026-08-25T10:00:00.000Z
+Author: Darshan Dagli
+Highlights:
+In 2026, WordPress care plan pricing for agencies clusters into four standard tiers: Basic ($49-$99/month per client site), Standard ($149-$249/month), Premium ($299-$499/month), and Enterprise ($499-$1,500/month). The right tier mix depends on client size and complexity. Agencies that price tier-by-tier (rather than custom-quoted) close 30-50% faster and achieve 60-75% gross margin. Underpricing care plans is the single most common margin leak in WordPress agencies.
+
+...
+
+### Basic ($49-$99/month)
+
+The entry tier. Designed for small-business client sites with limited content updates and no commerce. What’s typically included:
+
+- WordPress core + plugin + theme updates (weekly)
+- Daily backups with 14-30 day retention
+- Uptime monitoring with email alerts
+- Basic security scanning
+- 1 hour/month of small-edit dev work (text changes, image swaps)
+- Monthly status email (light — usually one paragraph)
+
+Typical client profile: Single-page or 5-10 page brochure sites, local service businesses, very small B2C. Annual contract value $588-$1,188.
+
+Margin profile: White-label delivery cost $25-$45/month → 50-55% gross margin. The Basic tier is the lowest-margin care plan; many agencies skip it entirely.
+
+### Standard ($149-$249/month)
+
+The most common care plan tier across the industry. Designed for active small-to-mid client sites with regular content updates. What’s typically included:
+
+- Everything in Basic
+- Weekly visual QA scan (theme/plugin update conflict check)
+- Daily backups with 30-60 day retention
+- Advanced security scanning + brute-force protection
+- 2-3 hours/month of dev work
+- Monthly performance check (Lighthouse, Core Web Vitals)
+- Monthly branded care report
+- Priority response SLA (24 hours business)
+
+Typical client profile: Marketing sites for SMBs and mid-market, blog-driven content sites, small WooCommerce stores. Annual contract value $1,788-$2,988.
+
+Margin profile: White-label delivery cost $45-$80/month → 60-70% gross margin. This is the agency’s care plan sweet spot.
+
+### Premium ($299-$499/month)
+
+For active mid-market client sites with WooCommerce or high content velocity. Adds:
+
+- Everything in Standard
+- Daily backups with 90-day retention
+- Real-time uptime monitoring (1-minute checks) with SMS alerts
+- Monthly malware scan + cleanup if needed
+- 4-6 hours/month of dev work
+- Monthly performance optimization (image compression, caching tuning)
+- Quarterly strategic review call
+- WooCommerce-specific monitoring (cart abandonment, payment gateway, checkout health)
+
+Typical client profile: Active WooCommerce stores, content-heavy marketing sites, B2B lead-gen sites with sales-team integration. Annual contract value $3,588-$5,988.
+
+...
+
+### Enterprise ($499-$1,500/month)
+
+For high-traffic, high-revenue, or high-complexity client sites. Includes:
+
+- Everything in Premium
+- Custom SLA (typical: 99.9% uptime, 1-hour critical response)
+- Dedicated technical contact
+- Daily backups with 1-year retention
+- Monthly security audit
+- 8-15 hours/month of dev work
+- Monthly performance optimization + custom A/B tests
+- Quarterly executive business review
+- 24/7 incident response (additional fee or included depending on agreement)
+
+Typical client profile: Enterprise B2B, regulated industries, high-traffic media or e-commerce, multi-site portfolios. Annual contract value $5,988-$18,000.
+
+...
+
+### What’s the average WordPress care plan price in 2026?
+
+The 2026 industry average for a mid-tier WordPress care plan (Standard) is $179/month per client site, ranging from $49/month at the Basic floor to $1,500/month at the Enterprise ceiling. Across 500+ agency partnerships we’ve worked with, the most common tier mix is 20-30% Basic, 50-60% Standard, 15-20% Premium, and 5-10% Enterprise. Agencies under $1M revenue typically anchor around $149-$249/month per client site.
+
+---
+
+Title: Website Care Plan Prices 2026: 72 US Providers Compared | Chykalophia
+URL: https://www.chykalophia.com/insights/website-care-plan-prices-2026
+Published: 2026-10-14T21:41:32.000Z
+Author: Peter Krzyzek
+Highlights:
+We read the published pricing of 72 US website care providers and logged all 187 plan tiers they list. The median entry plan costs $99 a month, the median top tier $450, and plans at $1,000 a month and up are rare. Most cheap plans are software updates plus automated monitoring. Only about 1 in 6 providers say they test updates on a staging copy before they go live, and more than half sell month to month. Here's the full index, what it means for a B2B company whose website brings in leads, and the questions to ask any provider before you sign.
+
+...
+
+On October 14, 2026, we went through the published pricing pages of 72 US providers that sell website care or maintenance plans. They fall into three rough groups: small studios, WordPress care specialists and productized services, and mid-size agencies. Between them they list 187 priced tiers. For each tier we recorded the monthly price as published, the stated term, what the provider says about support hours, whether updates are tested on a staging copy, and whether the work is described in hours.
+
+...
+
+## What care plans cost in 2026
+
+We sorted each provider's tiers into entry, mid and top, then took the median of each group. The median is the price in the middle: half the plans cost less, half cost more.
+
+Median monthly price of a website care plan, in US dollars
+
+Entry tier 99 /mo
+
+Mid tier 224 /mo
+
+Top tier 450 /mo
+
+Median published monthly price by tier. The middle half of entry plans fell between about $68 and $198, mid tiers between $142 and $315, and top tiers between $299 and $797. The median across all 187 tiers was $199. Chykalophia care plan price index, October 2026 (72 US providers, 187 tiers)
+
+...
+
+More than half of the providers we looked at say their plans are month to month. Only about 1 in 9 state a minimum term at all.
+
+1 in 9 providers state a minimum term on their care plans
+
+...
+
+### How much does a website care plan cost per month?
+
+In our October 2026 index of 72 US providers, the median entry plan was $99 a month, the median mid tier $224 and the median top tier $450. Across all 187 tiers the median was $199. Plans at about $1,000 a month and up made up roughly 1 in 12 tiers.
+
+---
+
+Title: White-Label WordPress Care Plans for Agencies — DevHush
+URL: https://devhush.com/services/maintenance-care-plans/
+Published: 2026-05-04T00:00:00.000Z
+Author: N/A
+Highlights:
+# Care plans you resell under your brand
+
+ We maintain your clients’ WordPress and Webflow sites behind your name: tested updates, daily backups, security and uptime monitoring, and a monthly report carrying your logo. You charge your clients what you like. Most agencies in our network charge $200 to $350 per site. 
+
+$97 per site per month · No setup fees, no minimums · Cancel or pause anytime
+
+...
+
+### $150/month per client
+
+### $247 
+
+### $97 
+
+#### 10 clients 
+
+#### $1,500 
+
+#### 50 clients 
+
+#### $7,500 
+
+#### 100 clients 
+
+#### $15,000
+
+...
+
+-
+
+...
+
+- Plugin updates (tested before deployment)
+- Theme updates (tested before deployment)
+- Daily automated backups (off-site, encrypted)
+- Uptime monitoring (60-second checks, instant alerts)
+- Security monitoring + malware scans
+- Brute-force login protection
+- Database optimization (monthly)
+- Image optimization (monthly)
+- Performance check (Core Web Vitals reported monthly)
+- Broken link scan + fix
+- Emergency response (under 2 hours during business hours)
+
+...
+
+## $97
+
+ / site / month, WordPress or Webflow 
+
+- No setup fees.
+- No minimums (start with one site, scale to hundreds).
+- Volume discount: 20+ sites = $77/site/month.
+
+What you charge your clients is up to you. Most agencies in our network charge between $200–$350 per site per month.
+
+## $97
+
+ / site / month, WordPress or Webflow 
+
+- No setup fees.
+- No minimums (start with one site, scale to hundreds).
+- Volume discount: 20+ sites = $77/site/month.
+
+---
+
+Title: WordPress Maintenance Pricing | Plans from $99/Month
+URL: https://wpmaintenanceagency.com/pricing/
+Published: 2026-05-11T00:00:00.000Z
+Author: N/A
+Highlights:
+Three maintenance plans for ongoing care.
+
+...
+
+### Essential
+
+ $99 /month 
+
+- Weekly plugin and core updates
+- Daily offsite backups (30-day retention)
+- Uptime monitoring, 5-minute checks
+- Monthly security scan
+- Plain-English monthly report
+- Email support, 24-hour reply
+
+### Professional
+
+ $199 /month 
+
+- Everything in Essential
+- Pre-update snapshots with instant rollback
+- Visual regression checks before and after
+- Security hardening review
+- 1 hour dev time included monthly
+- Priority Slack and email
+
+### Agency
+
+ $349 /month 
+
+- Everything in Professional
+- 3 hours dev time included monthly
+- White-label reporting under your brand
+- Dedicated Slack channel
+- Multi-site volume discounts
+- Quarterly strategy and roadmap call
+
+## What is not included in the monthly maintenance plans?
+
+We separate proactive maintenance (subscription) from reactive or project-based work so you never pay a monthly fee for services you might not use. These are priced separately:
+
+### Malware removal and hacked-site recovery.
+
+Emergency response priced per incident. Typical range: $200 to $600 depending on severity. No plan commitment required to engage us.
+
+### Core Web Vitals and speed optimization.
+
+Fixed-scope project with before-and-after measurements. Typical range: $500 to $2,000 depending on site complexity. Can be added as an add-on to any plan.
+
+### Migrations, redesigns, and custom development.
+
+Scoped and quoted individually. Same team, same account. Dev time included in Professional and Agency plans can be applied toward smaller tasks.
+
+---
+
+Title: WordPress Maintenance Plans: Real Prices | BaaDigi
+URL: https://www.baadigi.com/guides/website-maintenance/wordpress-maintenance-plans
+Published: 2026-10-01T14:19:43.000Z
+Author: Ryan Goering
+Highlights:
+WordPress maintenance plans with published prices start at $39 a month for one site: WPCare Basic and GoWP Pro at $39, WP Buffs at $89, and Fixmysite and WebCare Studios at $99 (Fixmysite’s yearly billing is $89) [1] [2] [3] [4] [5]. Higher tiers from those companies run up to $799 a month, and premium firms charge more: SiteCare’s Diamond plan is $2,190 a month and Valet’s featured plan is $2,000 [6] [7]. None of the eight states a setup fee on the pages we read. The money buys software updates, backups, monitoring, security cleanup and, on some tiers, an allowance of edits. WordPress needs this upkeep because most known flaws arrive through add-ons: of 11,334 new WordPress-ecosystem vulnerabilities Patchstack counted in 2025, 91% were in plugins and only six in WordPress itself [8]. BaaDigi’s AI Website Management, an alternative that is not WordPress, is $97 a month plus a $300 setup, month to month [9]. The warning: check what an “edit” means before you pay; allowances range from none to unlimited [3], and several plans cap each task at about 30 minutes [1] [2] [10].
+
+...
+
+| Company | Entry plan and price | Top plan and price | One-time setup fee | Billing period | Edits included |
+| --- | --- | --- | --- | --- | --- |
+| WP Buffs | Maintain, $89 a month [3] | Custom, $359 a month [3] | Not stated [3] | Monthly; a yearly plan gets “2 months free,” and the FAQ says yearly means paying for about 10 months up front [11]. Refunds: the terms say payments are not refundable, the FAQ describes a partial refund on yearly plans; the two conflict [12] [11] | Maintain: not stated. Protect ($179) and up: unlimited website edits [3] |
+| GoWP | Free, $0 per site a month; Pro, $39 per site a month [2] | Business, $99 per site a month [2] | None stated [2] | Month to month, per site; “The list price is the price” [2] | Free: 5 AI edits a month. Pro: 15 AI edits. Business: 50 AI edits plus 5 human edits of about 30 minutes each [2] |
+| SiteCare | Gold, $435 a month or $4,680 a year [6] | Diamond, $2,190 a month or $23,880 a year [6] | Not stated [6] | Monthly, or annual at the yearly prices shown in the plan columns [6] | Gold: 5 content edits and 5 quick fixes. Diamond: 10 content edits, endless quick fixes and a 10-hour block of expert time [6] |
+| WP SitePlan | Essentials, $59 a month per site, shown beside a struck-through $79; the page does not make clear which is the regular price or when the $59 ends [10] | Enterprise, $229 a month per site, shown beside a struck-through $279 [10] | Not stated [10] | Per month; contract terms not stated on the pricing page [10] | Essentials: none listed. Professional ($119): edits to existing pages. Enterprise: help desk tasks of about 30 minutes each, no limit on how many [10] |
+| Fixmysite | Maintenance Plan, $99 a month, or $89 a month on yearly billing (the page headline “from $89/month” is the yearly price) [4] | Performance + Hosting, $499 a month ($459 yearly); Performance without hosting is $239 ($209 yearly) [4] | Not stated [4] | Month to month, or yearly billing, which lowers each plan by $10 to $40 a month (yearly prices are in the page’s own code behind its billing toggle) [4] | Small 30-minute repairs on every plan; Security ($159) and up add small tasks [4] |
+| WebCare Studios | Care, $99 a month, billed monthly [5] | Scale, $799 a month, billed monthly [5] | Not stated [5] | Monthly; an annual option says “2 months free,” annual prices not captured [5] | Care: hourly billed. Care Plus ($199): 30 minutes a month, rolls forward. Commerce: 2 hours a month. Scale: 6 hours a month [5] |
+| WPCare | Basic, $39 a month [1] | Enterprise, $159 a month [1] | Not stated [1] | Month to month [1] | Basic: none. Premium ($89): about 30 minutes of small edits. Enterprise: about 60 minutes [1] |
+| Valet | Featured plan: Professional, $2,000 a month (the only plan price we found) [7] | Other tiers not found [7] | Not stated [7] | Shown as a monthly price; Valet’s maintenance page asks for six months to learn your site and 30 days’ notice to end a plan [7] [13] | 5 support hours a month [7] |
+| BaaDigi AI Website Management (our own offer; not WordPress: your existing site is first rebuilt on Next.js, up to 15 standard pages [9]) | $97 a month [9] | Next step up: Predictable Work Website, $147 a month [9] | $300 [9] | Month to month [9] | No done-for-you changes; you make content changes with Claude Code or Codex, on your own paid Claude or ChatGPT subscription (the chat apps alone are not what makes the edits) [9] |
+| BaaDigi Predictable Work Website (our own offer) | $147 a month [9] | Next step up: Foundation Engine, $297 a month plus $700 setup, changes done for you [14] | $500 [9] | Month to month [15] | One update request a month, up to 30 minutes, no rollover, plus the edit-it-yourself setup and a dashboard [9] |
+
+...
+
+How much does WordPress maintenance cost per month?
+
+Published WordPress maintenance plans start at $39 a month for one site. Among the eight providers read on October 28, 2026, WPCare and GoWP Pro start at $39, WP Buffs at $89, and Fixmysite and WebCare Studios at $99 (Fixmysite’s yearly billing is $89). Top tiers run up to $799, and premium firms such as SiteCare ($2,190 for Diamond) and Valet ($2,000) charge more. None of the eight states a setup fee on the pages we read.
+
+---
+
+Title: WordPress Care Plans & Pricing | Maintenance, Security & Support – WP Craft Engineer
+URL: https://wpcraftengineer.com/pricing/
+Published: 2026-03-20T00:00:00.000Z
+Author: N/A
+Highlights:
+## Care Plans Built for Every Stage
+
+All plans include a 3-month minimum commitment. Cancel anytime after.
+
+### Starter Care
+
+Blogs, freelancers & simple sites
+
+ $79 /month 
+
+- Monthly updates
+- Daily backups (14-day retention)
+- Uptime monitoring (5-min)
+- Weekly security scan
+- 1 hour support/month
+- Monthly report
+
+### Business Care
+
+Growing businesses & content sites
+
+ $149 /month 
+
+- Bi-weekly updates
+- Daily backups (30-day retention)
+- Uptime monitoring (2-min)
+- Daily security + WAF
+- Malware removal included
+- 3 hours support/month
+- 24-hour SLA
+- Core Web Vitals report
+
+### WooCommerce Pro
+
+Active WooCommerce stores
+
+ $299 /month 
+
+- Weekly updates
+- Real-time backups (90-day)
+- Uptime monitoring (1-min)
+- Full WooCommerce care
+- Checkout flow testing
+- 5 hours support/month
+- 8-hour SLA
+- Quarterly performance audit
+
+### Agency Elite
+
+Multi-site & white-label agencies
+
+ $599 /month 
+
+- Up to 3 websites
+- Real-time backups (365-day)
+- 24/7 emergency support
+- Dedicated account manager
+- White-label reporting
+- 10 hours support/month
+- 2-hour SLA
+- Quarterly strategy consultation
+
+## Care Plans Built for Every Stage
+
+| Feature | Starter $79 | Business $149 | WooCommerce $299 | Agency $599 |
+| --- | --- | --- | --- | --- |
+| Updates Frequency | Monthly | Bi-Weekly | Weekly | Weekly |
+| Backup Retention | 14 Days | 30 Days | 90 Days | 365 Days |
+| Uptime Monitoring | 5-min | 2-min | 1-min | 1-min |
+| Security Scanning | Weekly | Daily + WAF | Daily + WAF | Daily + WAF |
+| Malware Removal | Add-on | Included | Included | Included |
+| Support Hours/mo | 1 hour | 3 hours | 5 hours | 10 hours |
+| Support SLA | 48 hours | 24 hours | 8 hours | 2 hours |
+| WooCommerce Care | | | | |
+| White-Label Reports | | | | |
+| Strategy Calls | | | 30 min/mo | 60 min/mo |
+
+---
+
+Title: How much should you charge for WordPress maintenance plans?
+URL: https://modulards.com/wordpress-maintenance-plans/
+Published: N/A
+Author: N/A
+Highlights:
+## What does website maintenance cost? Real pricing benchmarks
+
+To work out how much to charge for WordPress maintenance plans, start with published care plans. Their prices are public, so you can check every figure yourself. Right now, entry plans from established providers run roughly $55 to $110 a month, with mid and premium tiers climbing from there.
+
+| Provider | Entry (per month) | Mid | Premium |
+| --- | --- | --- | --- |
+| WP Tech Support | $55 | $75–$ 99 | $175 |
+| Inspirable | ~$60 | ~$90 | ~$180 |
+| WP SitePlan | $79 | $149 | $279 |
+| WP Buffs | $89 | $179–$ 239 | $359 |
+| StateWP | $110 | $349 | $700 |
+| Average | ~$79 | ~$177 | ~$339 |
+
+​ Standard monthly rates at the time of writing; several providers offer promotional or annual-billing rates below these. WP Tech Support’s $55 monthly rate requires a three-month minimum term.
+
+Higher tiers typically add unlimited edits, staging environments, search engine optimization (SEO) monitoring, and blocks of development hours.
+
+What individual professionals charge tracks these numbers closely.
+
+In one r/Wordpress thread with around 80 replies, rates clustered between $30 and $300. For a properly maintained site, the usual range was $150 to $250.
+
+Simple brochure sites sat at the bottom. One freelancer described a typical setup: “$50 USD (excluding tax) per month for hosting and basic maintenance of simple business-brochure style websites… daily remote backups, weekly core/plugin/theme updates, uptime monitoring and malware removal.” eCommerce and busy sites ran well above that. A few tiered plans in the thread reached $650 to $1,500 for the largest builds.
+
+Two patterns are worth borrowing. First, a useful rule of thumb from the same thread: “If you do website maintenance properly you should be spending roughly two hours per month per site. Charge enough to be profitable on that.” Second, European rates ran noticeably lower than US ones, so adjust for your own market rather than copying US prices wholesale.
+
+...
+
+Survey data backs up the shift toward packaged pricing. A 2025 Web Designer Academy survey of 208 web designers found package pricing dominates as their primary model for services generally, at 82 percent, with hourly and retainer models accounting for a smaller share.

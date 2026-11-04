@@ -1,0 +1,290 @@
+Title: Medium
+URL: https://medium.com/active-theory/the-story-of-technology-built-at-active-theory-5d17ae0e3fb4
+Published: 2019-02-08T05:44:25.000Z
+Author: Active Theory
+Highlights:
+At Active Theory, we’ve talked internally about an approach to learning new skills that we call “top down.” In practice, this means that our first priority is always to accomplish the client-facing task. We use existing tools to make things and over time, we contextually begin to understand how those tools work. We identify the strengths and weaknesses of tools, and when appropriate, take our learnings and build new tools streamlined for our workflow. All the technology presented here is the product of this “top down” approach.
+
+- Aura — A project encompassing our most recent accomplishments in running WebGL in native environments on iOS, Android, Desktop, Desktop VR (Vive/Oculus), Mobile VR (Daydream/Oculus Go), and Magic Leap.
+- Hydra 3D Engine — a 3D engine built in-house that is optimized for maximum graphics throughput with reduced CPU usage.
+- Hydra GUI — an interface that empowers designers to create entire 3D scenes without writing a single line of code, while also allowing developers to manipulate nodes directly in JavaScript.
+
+...
+
+Lots of trial and error over the last few years has resulted in the Aura project, which currently allows us to run WebGL code in native environments on eight platforms. The following is a case-study in how and why that technology developed.
+
+...
+
+On a separate development track, we worked on what might be the most impactful change to our workflow ever. While we, and many other developers, have been using GUI editors like dat.gui for a while, they are limited to the developer writing all of the code and just exposing parameters to a UI that are connected in a very manual way.
+
+The need arose for us to take this concept all the way and flip the paradigm around. In our industry, so many projects are designed by a design team and then handed off to a development team to be built. We wanted to leverage our amazing team of artists to allow them to help our development resources not only with capacity, but also to allow the designers to have a hand in making the projects themselves and empower them to directly control the visual quality.
+
+Our new GUI system is a robust solution that can be thought of like Photoshop smart objects. Each project is comprised of a branching tree of scenes, each with its own graph hierarchy and a node within that graph could be another scene entirely. Artists can create new nodes directly and manipulate them by setting a geometry, shader, and positioning them within the scenes allowing the ability to create entire 3D scenes without a single line of code. Developers can then access each node in JavaScript, adding advanced functionality, animation, or shaders, and passing the work back to an artist to modify the newly exposed parameters in the GUI. The data is versioned and synchronized with Firebase, allowing multiple team members to work on the project in real time without conflicts.
+
+---
+
+Title: Million Piece Mission | Honoree | 2021 The Webby Awards
+URL: https://winners.webbyawards.com/2021/creators/creator-excellence/puzzle-trivia-word-games/172554/million-piece-mission
+Published: N/A
+Author: N/A
+Highlights:
+#### Recognitions
+
+2021
+
+Honoree
+
+ Games Puzzle, Trivia & Word Games 2021 
+
+#### Credits
+
+Title
+
+Million Piece Mission
+
+View the work
+
+Entrant
+
+Active Theory
+
+Website
+
+Team
+
+ Andy Thelander Creative Director Active Theory 
+
+ Thieb Delaporte-Richard Interactive Designer Active Theory 
+
+ Michael Sungaila Technical Artist Active Theory 
+
+ Grant Yi Front End Developer Active Theory 
+
+ Giuseppe Rodriguez Back End Developer Active Theory 
+
+ Hanee Kim UX/UI Designer Active Theory 
+
+ Dion Pieters Front End Developer Active Theory 
+
+ Thomas Van Glabeke WebGL Developer Active Theory 
+
+ Vicente Lucendo WebGL Developer Active Theory 
+
+ George Huber Tech Lead Active Theory 
+
+ Kiran Seth Senior Producer Active Theory
+
+---
+
+Title: “We have a tech-driven creative culture” | Top Interactive Agencies
+URL: https://www.topinteractiveagencies.com/digital/agency/leaders/active-theory-michael-antony-modena-we-have-a-tech-driven-creative-culture/
+Published: 2020-12-01T18:36:23.000Z
+Author: Michael
+Highlights:
+Michael Anthony Modena moved to Los Angeles when he was just 20 years old to experience life in the big city. He got to work for several agencies and met Nick Mountford and Andy Thelander, respectively Managing Director and Creative Director of Active Theory.
+
+In 2012, after dreaming about it for some time, the three of them decided to join forces and start Active Theory, a digital production studio.
+
+In an interview with TIA, Modena described his early professional path that led him to start Active Theory with Mountford and Thelander.
+
+...
+
+#### Back in 2012, you founded Active Theory with Nick Mountford and Andy Thelander, tell us about the day the idea was born.
+
+It was right at the end of Flash and the beginning of “HTML5”. I was posting my tech experiments on Twitter which led to some opportunities, and it was always my goal to move to LA and start a studio. I was working at a studio with Andy and Nick at the time; Andy and I had been chatting about what new web-tech projects we would want to do and then I ran into Nick at a grocery store. We began chatting and it all sort of came together. From there, we all decided to make it a reality together.
+
+#### Could you explain to us briefly what’s your role as Interactive Director?
+
+I develop a lot of the new technology we deploy, from the 3D engine to our multiplayer network. I also incubate the process to allow others to contribute to the tech pipeline. Additionally I work with Andy’s lead on creative ideas, pitches, and direction across production.
+
+#### How would you describe the creative culture of Active Theory?
+
+Its tech driven. Our team is always exploring new techniques with Houdini or C4D, and often they’ll come up with something cool that we will then try and find the right brief to pitch it on. We don’t spend ages designing, we try and get into the build as quickly as possible so everyone is seeing the real thing early and often.
+
+...
+
+#### Do you handle all development work in-house?
+
+All of the development work is in house, with our own tools and framework that have been developed over more than 8 years. We’re currently changing our development process a bit as we’ve grown a lot in this past year. I will have to let you know once we find out if it works 🙂
+
+...
+
+We have a performance checklist we work against for every project ensuring that it loads fast and renders smoothly across all devices. On Huluween, we load only the first scene required for the intro, and while the user is starting the experience we load the rest of the scenes as it plays.
+
+---
+
+Title: "We are pushing the boundaries of what’s possible in a browser" | Top Interactive Agencies
+URL: https://www.topinteractiveagencies.com/digital/agency/profiles/luigi-de-rosa-we-are-pushing-the-boundaries-of-whats-possible-in-a-browser/
+Published: 2022-07-28T15:43:26.000Z
+Author: Luigi
+Highlights:
+Active Theory is a creative digital production studio based in California. It specializes in building digital experiences that people love. The agency has a background on UX and technical solutions that utilize the latest in web technologies. Over the years, it has built award winning websites and apps that work across multiple devices.
+
+Luigi De Rosa is the Lead Interactive Developer at Active Theory, working from Italy. In an interview with TIA, he described his role and day-to-day activities at the agency and explained the elements that make Active Theory stand out. He also went through his development process and gave some recent examples of his work.
+
+...
+
+My typical day consists of roughly: 30% calls/huddles with the team or client, 50% deep-focus coding (mainly javascript + webgl + shaders), usually with high volume music and 20% code-review / documentation / writing tasks / reading stuff.
+
+A few of the tasks I’m in charge of are:
+
+-Design and develop interactions with designers -Estimating and leading sprint planning on projects -Setting up project architecture and make sure we’re using the best technical solutions and approach -Helping other developers with technical problems -Evolving our technology stack -Ensuring the project goes smoothly and that what we’re shipping met our quality standards and client expectations.
+
+...
+
+#### Do you handle all development work in-house?
+
+We invest a lot of time and resources in building our own tech stack. We are pushing the boundaries of what’s possible in a browser and in most cases that requires very specific technical approaches that require tailor handed solutions. Over the years and thanks to the contributions of many talented people working in the company we have some powerful tools and pipelines that allows the team to be very efficient, to iterate fast and ship fast.
+
+...
+
+Working remotely comes with its own challenges. But for me the positive aspects exceed by far the downsides. More time for yourself, more self-managing your own time and more productivity. Of course, that means that it is harder to create a company culture, but we try to organize face-to-face meetups and other activities. Our “Amsterdam” team at Active Theory is spread across Europe (Holland, Italy, Spain, France, UK, Germany and Finland).
+
+---
+
+Title: Listening Together. Every second, 30,000 users from all… | by Active Theory | Active Theory Case Studies | Medium
+URL: https://medium.com/active-theory/listening-together-2e676f5e7201
+Published: 2020-05-28T15:54:31.000Z
+Author: Active Theory
+Highlights:
+Every second, 30,000 users from all around the world hit play on a Spotify song at the same time. We worked with Spotify to create a data visualization that tells this story. From South Africa to Australia, Mexico to Singapore, this is Listening Together.
+
+Conceptually stemming from Serendipity, a 2014 Spotify piece by Media Artist Kyle McDonald, Listening Together visually connects users who press play on the same song, at the same time. Drawing data from a real-time API, we tried to make the experience visually captivating and interactive, encouraging users to engage with the data and explore the world.
+
+...
+
+A previous Spotify project, Serendipity by Kyle McDonald, lay the conceptual foundation for Listening Together.
+
+...
+
+Early experimentations began with 3D renders in Cinema4D. This allowed us to find a compelling creative direction that could be recreated in WebGL for the actual experience.
+
+...
+
+Given our intention was to create a dynamic and realistic-feeling world, we created the globe with a ‘day and night’ feel that loosely maps to the timezone that the user is viewing the experience from.
+
+From an executional standpoint, ‘noisy light’ was a key component to pull this off visually. To do this, we used a directional light to extract different ‘gradients’ produced by the light (essentially areas that are neither fully dark nor fully bright). Once we had these areas extracted, we mapped a noise texture in the direction of the gradient, using the gradient as both a blend value and noise distribution (the darker, the more spread out).
+
+...
+
+Combining the above layers and techniques along with the addition of nightlights, clouds and waves — we had our final render.
+
+Using our internal pipeline, this was exported with many different settings to allow designers to tweak values and swap textures for final visual polish.
+
+...
+
+## Using Real-Time Data
+
+Central to this story was using actual data that would evolve over time as users listening habits change globally. Working with Spotify, we pulled data from an API that returns near real-time data about songs being played at the same time.
+
+While there’s about 30,000 songs a second to choose from, we wanted to highlight data points that would tell a visual story (as selecting two points from the same city wouldn’t look very compelling).
+
+Given the API gave latitude and longitude data, we were able to avoid visual overlap and make camera adjustments as the data story plays out. For instance, the lower the latitude, the steeper the camera angle.
+
+---
+
+Title: Flashlights up: How Active Theory builds living digital festivals with Mux’s video infrastructure | Mux
+URL: https://www.mux.com/case-studies/active-theory
+Published: 2022-05-12T01:40:03.000Z
+Author: N/A
+Highlights:
+When the world couldn’t come together, every work call, panel, and conference went virtual. While this model may work for corporate communication, it doesn’t quite *hit the same* for electronic dance music. So when musician Porter Robinson decided to bring his festival, Secret Sky, online, he knew he needed to create a different kind of virtual venue for his audience.
+
+Robinson teamed up with creative technology company Active Theory to build a digital world that his fans could access through their web browsers. Through their own individual avatars, fans could explore, chat, and experience the live-streamed festival together. To create those powerful connections between the streaming and the digital world, Active Theory’s Co-Founder and Interactive Director Michael Anthony chose to team up with Mux — and ultimately was able to offer a dynamic live experience, from a distance.
+
+“We used Mux to deliver the live-stream content to everyone — the hundreds of thousands, if not millions, of people tuning in to the virtual auditorium,” Michael said. “The thing we really like about Mux is that it gives us the raw HLS stream that we can pipe in and actually access the video element. We can process it in a way that you can't with an iFrame, so we can sample the colors out of the stream and light up the entire world with the colors from the performance.”
+
+Thanks to dev-friendly tools, Active Theory could easily build a way for anyone to create a stream. Michael added, “We've integrated Mux with our CMS. So when the production team wants to take over, they can go into the CMS and create a live stream.”
+
+...
+
+Secret Sky 2020 was a raging success, and Active Theory’s Co-Founder and Creative Director Andy Thelander wanted to turn it up a notch in 2021. “How can we extend out that virtual world even more?” Andy asked. “How do we bridge the virtual experience into physical experiences, so that it's not just isolated to being an online thing?”
+
+Using their Dreamwave platform, the Active Theory team sought to answer those questions and enhance the communal experience. Mux’s flexible architecture was core to allowing online viewers to join the party with attendees at the physical festival in Oakland, California. “[On] platforms like Twitch and YouTube, you can't embed directly into WebGL experience. Mux gives us the opportunity to basically use the Second Sky stream and pipe it directly into the virtual auditorium so that it shows up in 3D,” Andy said. “[It’s] very important to make the entire experience.”
+
+In addition, Active Theory created an on-premise experience at the physical festival in Oakland. Attendees could look through a 3D LED portal into cyberspace, allowing them to connect, speak, and even dance with their digital counterparts around the world.
+
+...
+
+“We researched a few different options and Mux was the best as far as cost,” Michael says. “And we realized, oh, it's actually really developer friendly. Like we can actually build on top of this. Once we found Mux, we just started integrating it. So now everything, all the video in the platform, is powered by Mux.”
+
+---
+
+Title: Prometheus. Prometheus Fuels came to us with their… | by Active Theory | Active Theory Case Studies | Medium
+URL: https://medium.com/active-theory/prometheus-2d3c05b88ec0
+Published: 2021-11-03T08:35:34.000Z
+Author: Active Theory
+Highlights:
+Prometheus Fuels came to us with their vision of a zero net carbon world — one in which we’ve eliminated our fossil fuel dependency and where the public is as excited about new technologies as they were back in the golden age of science fiction. Given this retrofuture direction, we decided to create a scrolling narrative of the company’s mission to both educate and immerse people in this exciting new world of possibilities.
+
+## Visual Direction
+
+From the outset, the branding developed by the Prometheus team represented a time of untethered creativity, aspirational dreams of the future, and predictions of ambitious technology. This theme of retro-futurism was present in the previous iteration of the Prometheus website, and to help us with our execution, the Prometheus team brought us up to speed with the theme, narrative and copy they had developed.
+
+...
+
+## A Story with Chapters
+
+Once the visuals had some direction, we needed to establish a way of telling the stories. We began this by working with the Prometheus team to split the narrative into two chapters: “The Birth of a New Era” and “A World of Possibilities.” Presenting the story as chapters not only plays nicely from an artistic standpoint, but also gave us production flexibility to continue to add chapters over time as the Prometheus story evolves (stay tuned for more).
+
+In terms of content selection, while we wanted to lean into the untethered creativity and adventure of science fiction, we also needed to take a couple steps back to first explain how Prometheus’s technology enables a promising and more sustainable future.
+
+To tie the two chapters together, we decided to center Prometheus’s restored Mustang fastback — or the “Promethean Stang” — as the protagonist of our story. Since it would be used to stage the company’s initial ZNC fuel demos and road trips along the iconic Route 66, featuring the car on the site seemed a natural fit.
+
+...
+
+To match the branding of Prometheus, the art direction needed to have a retro-futuristic feel. We used the collage style of Frank Moth as a jumping off point but, since we knew we wanted to leverage 3D camera moves for certain storytelling moments, we ended up steering away from a completely 2D experience. Instead, we settled on a mix of both illustrative and photographic elements applied to 3D meshes. This worked quite well, and was completely in line with the collage-style nature of our references. To achieve this look on the web, we borrowed several techniques from the world of motion graphics.
+
+...
+
+To do this, we needed a system that would give our
+
+...
+
+Though barely noticeable, this provides a huge performance increase and keeps the experience smooth across all devices.
+
+---
+
+Title: Thorne: The Frontier Within. Storytelling with biometrics across… | by Active Theory | Active Theory Case Studies | Medium
+URL: https://medium.com/active-theory/thorne-the-frontier-within-7c97f8a49719
+Published: 2019-07-15T01:32:45.000Z
+Author: Active Theory
+Highlights:
+The Frontier Within is an immersive installation and web experience that captures the participant’s circulatory, respiratory and nervous system data, and transforms it into a living, breathing, interactive portrait of the body.
+
+...
+
+For us, The Frontier Within project presented an opportunity to work towards a long term passion point; using web technology to create an experience that bridges the gap between digital and physical. Our mantra of “ taking the web outside the browser” in this case meant bringing it to an 18-foot monolith 4K projection in an art gallery in Chelsea, Manhattan.
+
+### The Plan
+
+At SXSW 2019 we connected with Droga5 and learned about their vision to create an art exhibition commissioned by Thorne Research that explore the invisible processes within every human being.
+
+Press enter or click to view image in full size
+
+While the creative itself was intensely intimate, a strategic priority was ensuring it was widely distributed and could reach as many users as possible. This led to the solution of separating the campaign into three intertwined components: a film, a physical installation, and a web experience. These three channels were interconnected in terms of creative direction and story, and importantly, this setup allowed us to implemented a software solution across the physical installation and web experience that shared the same codebase.
+
+A single codebase powered both the live installation and web experience.
+
+With this approach in mind, we quickly teamed up with Marshmallow Laser Feast who led creative across film and physical, and Plan8, who designed sound across all channels. Working together, a three chapter story that explored the lungs, heart and nervous system was developed. The story builds up to a big reveal moment at the end where the user would experience their ‘inner selfie’ This would then be made available to them to take away and share on social media.
+
+...
+
+Given MLF’s previous particle work and stunning film spot, the bar for visual quality was extremely high. We had to develop a series new tools and techniques in order to reach expectations. We started off with a foundation of existing tools:
+
+- Hydra framework + 3D engine
+- Aura for the installation renderer (Windows app)
+- GUI toolkit for live editing
+- Our GPU particle engine
+
+...
+
+For the physical build, we worked with MLF and Plan8 to integrate a number of sensors into the experience. Each guest was fitted with a Subpac that contained a heart rate sensor that clipped on ear, headphones, and a breath sensor on the front strap.
+
+...
+
+The underlying key component to the entire experience was that it needed to be accessible on the web. Throughout the entire creative and development process we kept the web in mind and shared the code between any overlapping components.
+
+...
+
+Once the experience has finished, a series of servers on Google Compute Engine were setup to render personalized selfie videos utilizing cloud-based GPU’s. We achieved this by configuring GPU enabled servers and running custom native application that was able to render WebGL on the cloud and a queuing system was setup to manage the workload.
