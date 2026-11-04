@@ -27,14 +27,16 @@ not here. What is accepted is read from `scripts/governance/ceo-approvals.json`,
 
 ## Where we left off
 
-2026-11-04 — The deep web study is delivered and waits for his eye (B84). On the night of 3 Nov he questioned the
+2026-11-04 — The deep web study is delivered, and he answered its nine decisions (B84). On the night of 3 Nov he questioned the
 office again (who works on a site, one master or the team) and ordered the whole web trade studied properly: SEO,
 AEO/GEO, e-commerce, ads and measurement, infrastructure, studios, tools, and the 31 unreviewed links of his two
 WhatsApp groups. One MD on his desktop, `~/Desktop/DxB Global Web-Studio/9 - Web işi derin çalışma 2026-11-04.md`:
 sections 1–8 are what the lead tells him, section 7 his nine decisions, the appendices the seven tracks, the link
-table and the community sweep. His workbook has the tab "Kasım 3-4 web linkleri". Nothing in it is decided or recorded:
-B84's agreed plan stands as written until he answers. The job folder `.planning/quick/20261103-web-ders/` stays
-uncommitted until his decision 9; a correction goes into its `top.md` and `assemble.py` rebuilds the file.
+table and the community sweep. His workbook has the tab "Kasım 3-4 web linkleri". His yes to the recommendations
+<!-- CEO-OK: b84-web-study-nine-decisions-2026-11-04 --> rewrote B84's row file: three core seats, hands called by the job
+and the machine; rounds inside the build and one closing round; the teardown by REA and the measuring script together,
+search and commercial side included, famous sites as the default, `operator` where the background cannot enter. A
+correction to file 9 goes into `.planning/quick/20261103-web-ders/top.md` and `assemble.py` rebuilds it.
 2026-11-03 evening — Site E, on his word: one Opus alone at max built the Mavi Kuşak site from the brief only
 (17:45 → 18:31, 46 minutes; nothing of A–D opened; only the 28 Ekim folder's library images, none generated). On
 his mid-run word the missing details were completed as if the client gave them (Kılıçaslan Caddesi No: 112,
@@ -48,7 +50,7 @@ max, 46 dakika (3 Kasım)` beside A–D; phone link and details in `.planning/qu
 eleven decisions on his word <!-- CEO-OK: b84-web-studio-plan-agreed-2026-11-03 --> — the 29 Oct proposal plus the talk;
 every job from a decided build brief (MERIDIAN and the outletcity teardown are examples in the shared cupboard, not the
 standard); the client's reference is the bar, and the design may be identical (copying = images, names, content);
-the home page by three independent hands; one closing look with Sol, one round; seven short seats; one shared cupboard
+the home page by three independent hands; one shared cupboard
 for every office; client finding at Y9/Y11's rank; the Agent SDK runtime; film from the Media Studio. The four-run
 measurement and the Mavi Kuşak re-run are dropped; nothing is built until B84's rank. Measured in the talk: site D was
 built entirely at high; his eye judged site E (max) worse than D, cause not measured; outletcity's logo wall is one
@@ -62,9 +64,8 @@ Earlier days: `.planning/STATE-ARCHIVE.md` § "Moved out of STATE.md on 2026-11-
 0. Revenue — the lines are on the board (B83 and the notes on its related rows); each is built at its row's rank
    in the board's reorder and bench-tested with it, sold when the key is turned. Rapor 3's suggested order for Nate
    Herk's systems (company brain first, built on the holding's own V2 memory) goes into that reorder.
-1. DxB Web Studio (B84): his nine decisions on the deep study come first (decision 1 would rewrite B84's decisions 4, 5
-   and 6); nothing of them is written before he answers. The plan is agreed and in the row file; the studio is set up at B84's rank
-   in the board's reorder, in the order written there (cupboard index and example briefs → seven seats → hands and the WordPress kit →
+1. DxB Web Studio (B84): the plan is agreed and in the row file; the studio is set up at B84's rank
+   in the board's reorder, in the order written there (cupboard index and example briefs → the seats and hands → the WordPress kit →
    the machine with B64 → the dashboard area with B43 → selling with B83/Y9/Y11).
 2. After the holding is built out, C41: every persona rewritten facing the outside world and knowing the holding's
    studio, skills and tools; the job-type masters' personas are one leg of it.
@@ -93,13 +94,6 @@ Earlier days: `.planning/STATE-ARCHIVE.md` § "Moved out of STATE.md on 2026-11-
 
 ## Waiting on his approval
 
-- DxB Web Studio, the deep study's nine decisions (file 9 § 7, the recommendation yes on each; nothing is written
-  until he says so): 1 the team — three core seats, called hands, the machine, B84's decisions 4, 5, 6 rewritten;
-  2 one closing round, rounds inside the build free; 3 the eye measurement on the pages we already have, no new site;
-  4 "document first" and the release gates as the master's standard; 5 knowledge into the shared cupboard now, tools
-  at B84's rank; 6 the records named in § 6 corrected; 7 the revenue roads into the revenue list; 8 deleting the
-  duplicate "ayrıca bunada bak.md" in his folder (file 3 + file 4's uncorrected draft); 9 the study kept in the
-  repository. In the same section, at their turn: the money items and the Islamic boundary questions.
 - Revenue, Rapor 2 (`~/Desktop/Gelir Kaynakları/2 - Gelir üretim hatları ve kararlarınız 2026-11-01.pdf`, § 8):
   K8 (after he listens to the voices). The rest answered 2 Nov (K2, K9, K10 for now, K11, İ1–İ3, İ6 as
   recommended; İ4 a package; İ5 and İ7 his own rulings — REVENUE-OPPORTUNITIES §D). Also asked: whether his 1 Nov licence word becomes a standing rule beyond the memory
