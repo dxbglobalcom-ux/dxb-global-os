@@ -1,6 +1,6 @@
 # Web işi derin çalışma: ne öğrendik, ofisi nasıl kuracağız
 
-DxB Web Studio (B84) · 4 Kasım 2026 · Bu dosyada hiçbir karar kayda geçmiş değildir; B84, defter ve tahta değişmedi. Önce sizin okuyacağınız kısım geliyor; yedi konunun raporu, link incelemesi ve topluluk taraması sonda ek olarak tam metin duruyor.
+DxB Web Studio (B84) · 4 Kasım 2026 · Buradaki kararlar 4 Kasım'da kayda geçti (B84). Önce sizin okuyacağınız kısım geliyor; yedi konunun raporu, link incelemesi ve topluluk taraması sonda ek olarak tam metin duruyor.
 
 ## 1. Önce üç düzeltme
 
@@ -52,7 +52,7 @@ Müşteriyle konuşan, takvimi ve onayı tutan yapımcı rolü yeni koltuk gerek
 
 **Bir işin yolu**
 
-1. Müşteri anlatır, referans verir. Direktör referansı söker, sınıfı ve fikri koyar, üç yön yazar.
+1. Müşteri anlatır, referans verir. Makine referansı söker, alanın uzmanı okur, direktör sınıfı ve fikri koyar, üç yön yazar.
 2. Üç usta üç yönde ana sayfa yapar; hızlı görsellerle, tam film çekilmeden.
 3. Seçim: 1.000 $ üstünde siz, altında direktör. Temel seçilir, ötekilerin iyi yanları eklenir. Bu, birleşik zeytindeki yöntemdir.
 4. Görsel yapımcı seçilen yöne gerçek filmi ve fotoğrafı üretir. Üç numune için üç film çekilmez.
@@ -99,7 +99,7 @@ Bir de kendi işimiz: Lusion ve OFF+BRAND büyük müşteriyi kendi deney işler
 
 ## 6. Kayıtlarımızda düzeltilecek yerler
 
-Bunların hiçbiri düzeltilmedi; sözünüzü bekliyor.
+Bunlar 4 Kasım'da düzeltildi.
 
 - **W096 claude-ads:** "deterministik puan" ve "canlı değişiklik" bugün kapalı, araç diskte yok.
 - **W072/W073:** döngü ayakta. "Ayda N sayfa", haftalık yapay zekâ kararı, Reddit kalemi ve "agentic website" adı değişmeli. "90 günde iade" artık sayfalarında yok.
@@ -112,7 +112,7 @@ Bunların hiçbiri düzeltilmedi; sözünüzü bekliyor.
 
 ## 7. Sizden kararlar
 
-Her biri tek kelimeyle cevaplanır.
+Dokuzuna da 4 Kasım'da evet dediniz; önerilenler kayda geçti.
 
 | # | Karar | Önerim |
 |---|---|---|
@@ -126,7 +126,7 @@ Her biri tek kelimeyle cevaplanır.
 | 8 | Kopya dosya "ayrıca bunada bak.md" silinsin mi? | Evet |
 | 9 | Bu çalışmanın raporları ve kanıt dosyaları depoya kaydedilsin mi? Şu an yalnız iş klasöründe ve commit'siz duruyor. | Evet |
 
-**Para, sıra gelince:** DataForSEO ~50 $ yükleme · Screaming Frog yılda 199 £ ya da 245 € (kaynaklar ayrışıyor) · hareket hakemi için Gemini anahtarı · ödül başvurusu.
+**Para, sıra gelince:** DataForSEO ~50 $ yükleme · Screaming Frog yılda 199 £ ya da 245 € (kaynaklar ayrışıyor) · ödül başvurusu. Hareket hakemi için Gemini anahtarı gerekmedi; ücretsiz yollar 10 numaralı dosyada.
 
 **İslami sınır, hüküm sizde:** ödeme sayfasında faizli taksit ve "şimdi al sonra öde" · şarap, rom, kripto müşterileri · reklamın kumar ve haram içerik yanına düşmesi (PMax'te kontrol sınırlı) · satın alınan yorum ve firma gibi görünen yerel site.
 

@@ -221,7 +221,7 @@ Yıldızlar: `gh api`, 3 Kas 2026. Fiyatlar ve eş adları bu turda doğrulanama
 | Ne zaman | İş | Kim |
 |---|---|---|
 | Kuruluşta | performans bütçesi, iki ekran kontrolü, görsel kütüphanesi, film ve 3B kapısı | usta |
-| Her işte bir kez | söküm, brif, hangi sınıf (film / kod / ikisi), konsept, previs | usta |
+| Her işte bir kez | söküm, brif, hangi sınıf (film / kod / ikisi), konsept, previs | direktör |
 | Her işte | imza anı | usta ve creative developer |
 | Her işte | malzeme | görsel yapımcı, Media Studio |
 | Otomatik | Playwright, Lighthouse, ağırlık sınırı, erişilebilirlik taraması | makine |
