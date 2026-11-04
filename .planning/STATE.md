@@ -48,7 +48,7 @@ Earlier days: `.planning/STATE-ARCHIVE.md` § "Moved out of STATE.md on 2026-11-
 
 ## Next
 
-0a. outletcity answered 406 after our crawler test: re-check before any new crawl. Claude sign-in ends 8-11 Nov.
+0a. outletcity answered 406 after our crawler test: re-check before any new crawl.
 0. Revenue — the lines are on the board (B83 and the notes on its related rows); each is built at its row's rank
    in the board's reorder and bench-tested with it, sold when the key is turned. Rapor 3's suggested order for Nate
    Herk's systems (company brain first, built on the holding's own V2 memory) goes into that reorder.
