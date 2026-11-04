@@ -29,7 +29,7 @@ not here. What is accepted is read from `scripts/governance/ceo-approvals.json`,
 
 2026-11-04 afternoon — B84's study is finished, for his eye: corrections in (records, nine personas, revenue roads,
 cupboard); file 10: free crawler tested on outletcity, LibreCrawl first, SiteOne second, the rest of the free road;
-file 11: the eye repeated 19 of his 22 pairs, untaught 11-12; it ranks, it gives no absolute verdict.
+file 11: the eye repeated 19 of his 22 pairs, untaught 11-12; it ranks, it gives no absolute verdict. Motion: Gemini API.
 2026-11-04 — The deep web study is delivered and he answered its nine decisions <!-- CEO-OK: b84-web-study-nine-decisions-2026-11-04 -->:
 B84's row file is rewritten (three core seats, called hands, the machine). File 9 is in his folder; a correction goes into
 `.planning/quick/20261103-web-ders/top.md` and `assemble.py` rebuilds it.
