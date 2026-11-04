@@ -126,7 +126,7 @@ Dokuzuna da 4 Kasım'da evet dediniz; önerilenler kayda geçti.
 | 8 | Kopya dosya "ayrıca bunada bak.md" silinsin mi? | Evet |
 | 9 | Bu çalışmanın raporları ve kanıt dosyaları depoya kaydedilsin mi? Şu an yalnız iş klasöründe ve commit'siz duruyor. | Evet |
 
-**Para, sıra gelince:** DataForSEO ~50 $ yükleme · Screaming Frog yılda 199 £ ya da 245 € (kaynaklar ayrışıyor) · ödül başvurusu. Hareket hakemi için Gemini anahtarı gerekmedi; ücretsiz yollar 10 numaralı dosyada.
+**Para, sıra gelince:** DataForSEO ~50 $ yükleme · Screaming Frog yılda 199 £ ya da 245 € (kaynaklar ayrışıyor) · ödül başvurusu. Hareket hakemi için ücretsiz Gemini anahtarı makinede var; ücretsiz yollar 10 numaralı dosyada.
 
 **İslami sınır, hüküm sizde:** ödeme sayfasında faizli taksit ve "şimdi al sonra öde" · şarap, rom, kripto müşterileri · reklamın kumar ve haram içerik yanına düşmesi (PMax'te kontrol sınırlı) · satın alınan yorum ve firma gibi görünen yerel site.
 
