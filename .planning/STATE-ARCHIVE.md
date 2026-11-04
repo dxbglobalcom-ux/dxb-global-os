@@ -2706,3 +2706,47 @@ same brief with the holding's tools, Ultra Code's best-of-several applied to the
 `~/Desktop/DxB Global Web-Studio/` (1 his words + the handover, 2 the report, 3 the reply, 4 Mert Durmazer's
 AgencyOS re-weighed: client finding is the web office's missing front door; proposed Y9 + Y11 with it). His
 short-code effort word (medium for a few lines of narrow glue, never code at low) is in the effort hook.
+
+## Moved out of STATE.md on 2026-11-04 (web study session) — the dated paragraphs of 29 Oct to 3 Nov as they stood
+
+2026-11-03 — On his word, the 6 of the 12 flagged personas were corrected for the showy rule (3 clearly against:
+design-ui-designer, engineering-frontend-developer, project-shepherd; 3 partly: head-of-design, testing-evidence-collector,
+document-generator): only the plainness lines rewritten, accessibility kept; the 6 not against untouched. Synced as v4
+(opus-5), gate passed, bound; design-whimsy-injector's 31 Oct edit, never synced, went with them. verify 7/7 MATCH, persona
+tests 33/33. Ledger `six-flagged-personas-corrected-for-the-showy-rule-2026-11-03`; RAPOR.md, rapor.html and his file 5
+(md + PDF) updated.
+2026-11-02 evening — On his word, one Opus alone built the Mavi Kuşak site from the brief only (no team, no Sol,
+nothing else read; 20:40 → 20:59; studio library images, contact details invented): three pages, checked at 1440 and
+390 px. All Mavi Kuşak sites (A, A-first, B, C and this one, D) are now together in `~/Desktop/Örnek landing pageler/28 Ekim - Mavi
+Kuşak Çini/`; his phone link and the details in `.planning/quick/20261102-mavi-kusak-tek-opus/NOTE.md`.
+2026-11-02 — Revenue, closing Rapor 2 and one more video, on his word. His Rapor 2 rulings are written where the work
+sits (ledger `rapor2-decisions-his-yes-and-rulings-2026-11-02`; REVENUE-OPPORTUNITIES §D "Rapor 2 §8 hükümleri"; B83,
+B05, B28, C41, REVENUE_ENGINE_SPEC §7septies 5): K2, K9, K11, İ1–İ3, İ6 as recommended; K10 halal for now (the five
+26 Jul rows stay `pending` in the company database until each comes before him); İ4 a package (fixed fee + defined
+per-appointment fee); İ5 no AI label anywhere for now, the legal side researched when the work starts; İ7 drawn
+characters free, nothing indecent; K8 waits on his ear. The Koerner Office (Chris Koerner) is a source channel on B83,
+a team to mine it when its turn comes. Nate Herk's "4 Claude Systems" (BQJRLZ2q_Ns) watched by Sonnet, analysed at
+xhigh on his word, then rewritten after his rebuke (the methods are real; analyse them as systems to build — memory
+`revenue-videos-are-real-systems-to-build-2026-11-02`): Rapor 3 in `~/Desktop/Gelir Kaynakları/` — company brain and
+field voice note → document in H9, the intake chain in H7, Creator OS in H6, one shared sales pipe with the web
+office's client finding; three counted halal for now. Then the web office's five questions were put to him again.
+2026-11-01 — Revenue, on his word (dxb-team2; the watch-links important review): twelve videos (Avenox second
+pass, Mark Tilbury ×5, Chris Koerner ×3, Doruk Yalçınsoy, Yüzsüz Ninja, the open-source tools video) read in full by
+two blind readers each (Opus + Fable), the decisive screens fetched, merged by the lead at max
+(`.planning/research/watch-links/2026-11-01-gelir/MERGE.md`). Rapor 2, "Gelir Üretim Hatları", is in
+`~/Desktop/Gelir Kaynakları/`: the driving-force sentences; the revenue engine measured (revenue ledger 0, workflows 0,
+six engines `candidate`, five opportunities waiting for his halal verdict since 26 Jul); nine revenue production lines
+in two families — asset (local lead sites, niche directories, digital products, own channels) and service (web office,
+studio agency, pay-on-result front office, localisation and dubbing, digital-team setup) — each with its Ferrari
+version and first test; Report 1's fixes; his decisions K1–K12, İ1–İ7, P1. His Excel has the tab "Kasım 1
+incelemeleri". Voicebox is unused, not weak (0 profiles); Hamza speaks Piper on the CPU. His word that every tool is
+treated as licensed (never raised again) is in memory. The July €50 objective is void on his word and
+left D2, MASTER_PLAN, REVENUE_ENGINE_SPEC G6 and the board; no fixed figure replaces it. His voice order: Voice
+Studio and Voicebox both installed in the system and tested, used by situation, one covering for the other —
+written into B12 (B43 links it) and VOICE_INTERACTION_SPEC §3.2. The same evening, on his word: every revenue path
+of the twelve videos is in the revenue list (REVENUE-OPPORTUNITIES §D, #17–#26, each with its source trace); a line
+is built with the row that builds its base, tested on the bench, and opens for sale when the key is turned — the
+nine related rows carry the note, and the five lines no row owns plus the revenue engine are the new row B83
+(REVENUE_ENGINE_SPEC §7septies). The channel talk stays later.
+2026-10-29 — His Mavi Kuşak trial is judged (arm A far ahead, 330 $; arm C a disappointment, 37 $); the web office
+plan talk is open — analysis, five questions and the proposal in `~/Desktop/DxB Global Web-Studio/`.

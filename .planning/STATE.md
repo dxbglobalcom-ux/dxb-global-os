@@ -2,7 +2,7 @@
 gsd_state_version: 1.0
 milestone: v2.0
 status: executing
-last_updated: "2026-11-01"
+last_updated: "2026-11-04"
 session_author: opus-5
 ---
 
@@ -27,6 +27,14 @@ not here. What is accepted is read from `scripts/governance/ceo-approvals.json`,
 
 ## Where we left off
 
+2026-11-04 — The deep web study is delivered and waits for his eye (B84). On the night of 3 Nov he questioned the
+office again (who works on a site, one master or the team) and ordered the whole web trade studied properly: SEO,
+AEO/GEO, e-commerce, ads and measurement, infrastructure, studios, tools, and the 31 unreviewed links of his two
+WhatsApp groups. One MD on his desktop, `~/Desktop/DxB Global Web-Studio/9 - Web işi derin çalışma 2026-11-04.md`:
+sections 1–8 are what the lead tells him, section 7 his nine decisions, the appendices the seven tracks, the link
+table and the community sweep. His workbook has the tab "Kasım 3-4 web linkleri". Nothing in it is decided or recorded:
+B84's agreed plan stands as written until he answers. The job folder `.planning/quick/20261103-web-ders/` stays
+uncommitted until his decision 9; a correction goes into its `top.md` and `assemble.py` rebuilds the file.
 2026-11-03 evening — Site E, on his word: one Opus alone at max built the Mavi Kuşak site from the brief only
 (17:45 → 18:31, 46 minutes; nothing of A–D opened; only the 28 Ekim folder's library images, none generated). On
 his mid-run word the missing details were completed as if the client gave them (Kılıçaslan Caddesi No: 112,
@@ -47,56 +55,16 @@ built entirely at high; his eye judged site E (max) worse than D, cause not meas
 video — a still night photo pushing in ~7 % and back, two logo sets fading. Fable's sealed plan merged; Sol did not run
 (he agreed the decisions himself and ordered the job finished). File 6 is a taste note, not a rule
 <!-- CEO-OK: ceo-liked-features-are-taste-not-rules-2026-11-03 -->; file 7's §4 and table carry errors the row file corrects.
-2026-11-03 — On his word, the 6 of the 12 flagged personas were corrected for the showy rule (3 clearly against:
-design-ui-designer, engineering-frontend-developer, project-shepherd; 3 partly: head-of-design, testing-evidence-collector,
-document-generator): only the plainness lines rewritten, accessibility kept; the 6 not against untouched. Synced as v4
-(opus-5), gate passed, bound; design-whimsy-injector's 31 Oct edit, never synced, went with them. verify 7/7 MATCH, persona
-tests 33/33. Ledger `six-flagged-personas-corrected-for-the-showy-rule-2026-11-03`; RAPOR.md, rapor.html and his file 5
-(md + PDF) updated.
-2026-11-02 evening — On his word, one Opus alone built the Mavi Kuşak site from the brief only (no team, no Sol,
-nothing else read; 20:40 → 20:59; studio library images, contact details invented): three pages, checked at 1440 and
-390 px. All Mavi Kuşak sites (A, A-first, B, C and this one, D) are now together in `~/Desktop/Örnek landing pageler/28 Ekim - Mavi
-Kuşak Çini/`; his phone link and the details in `.planning/quick/20261102-mavi-kusak-tek-opus/NOTE.md`.
-2026-11-02 — Revenue, closing Rapor 2 and one more video, on his word. His Rapor 2 rulings are written where the work
-sits (ledger `rapor2-decisions-his-yes-and-rulings-2026-11-02`; REVENUE-OPPORTUNITIES §D "Rapor 2 §8 hükümleri"; B83,
-B05, B28, C41, REVENUE_ENGINE_SPEC §7septies 5): K2, K9, K11, İ1–İ3, İ6 as recommended; K10 halal for now (the five
-26 Jul rows stay `pending` in the company database until each comes before him); İ4 a package (fixed fee + defined
-per-appointment fee); İ5 no AI label anywhere for now, the legal side researched when the work starts; İ7 drawn
-characters free, nothing indecent; K8 waits on his ear. The Koerner Office (Chris Koerner) is a source channel on B83,
-a team to mine it when its turn comes. Nate Herk's "4 Claude Systems" (BQJRLZ2q_Ns) watched by Sonnet, analysed at
-xhigh on his word, then rewritten after his rebuke (the methods are real; analyse them as systems to build — memory
-`revenue-videos-are-real-systems-to-build-2026-11-02`): Rapor 3 in `~/Desktop/Gelir Kaynakları/` — company brain and
-field voice note → document in H9, the intake chain in H7, Creator OS in H6, one shared sales pipe with the web
-office's client finding; three counted halal for now. Then the web office's five questions were put to him again.
-2026-11-01 — Revenue, on his word (dxb-team2; the watch-links important review): twelve videos (Avenox second
-pass, Mark Tilbury ×5, Chris Koerner ×3, Doruk Yalçınsoy, Yüzsüz Ninja, the open-source tools video) read in full by
-two blind readers each (Opus + Fable), the decisive screens fetched, merged by the lead at max
-(`.planning/research/watch-links/2026-11-01-gelir/MERGE.md`). Rapor 2, "Gelir Üretim Hatları", is in
-`~/Desktop/Gelir Kaynakları/`: the driving-force sentences; the revenue engine measured (revenue ledger 0, workflows 0,
-six engines `candidate`, five opportunities waiting for his halal verdict since 26 Jul); nine revenue production lines
-in two families — asset (local lead sites, niche directories, digital products, own channels) and service (web office,
-studio agency, pay-on-result front office, localisation and dubbing, digital-team setup) — each with its Ferrari
-version and first test; Report 1's fixes; his decisions K1–K12, İ1–İ7, P1. His Excel has the tab "Kasım 1
-incelemeleri". Voicebox is unused, not weak (0 profiles); Hamza speaks Piper on the CPU. His word that every tool is
-treated as licensed (never raised again) is in memory. The July €50 objective is void on his word and
-left D2, MASTER_PLAN, REVENUE_ENGINE_SPEC G6 and the board; no fixed figure replaces it. His voice order: Voice
-Studio and Voicebox both installed in the system and tested, used by situation, one covering for the other —
-written into B12 (B43 links it) and VOICE_INTERACTION_SPEC §3.2. The same evening, on his word: every revenue path
-of the twelve videos is in the revenue list (REVENUE-OPPORTUNITIES §D, #17–#26, each with its source trace); a line
-is built with the row that builds its base, tested on the bench, and opens for sale when the key is turned — the
-nine related rows carry the note, and the five lines no row owns plus the revenue engine are the new row B83
-(REVENUE_ENGINE_SPEC §7septies). The channel talk stays later.
-2026-10-29 — His Mavi Kuşak trial is judged (arm A far ahead, 330 $; arm C a disappointment, 37 $); the web office
-plan talk is open — analysis, five questions and the proposal in `~/Desktop/DxB Global Web-Studio/`.
-Earlier days: `.planning/STATE-ARCHIVE.md` § "Moved out of STATE.md on 2026-11-01".
+Earlier days: `.planning/STATE-ARCHIVE.md` § "Moved out of STATE.md on 2026-11-04" and the sections before it.
 
 ## Next
 
 0. Revenue — the lines are on the board (B83 and the notes on its related rows); each is built at its row's rank
    in the board's reorder and bench-tested with it, sold when the key is turned. Rapor 3's suggested order for Nate
    Herk's systems (company brain first, built on the holding's own V2 memory) goes into that reorder.
-1. DxB Web Studio (B84): the plan is agreed and in the row file; the studio is set up at B84's rank in the board's
-   reorder, in the order written there (cupboard index and example briefs → seven seats → hands and the WordPress kit →
+1. DxB Web Studio (B84): his nine decisions on the deep study come first (decision 1 would rewrite B84's decisions 4, 5
+   and 6); nothing of them is written before he answers. The plan is agreed and in the row file; the studio is set up at B84's rank
+   in the board's reorder, in the order written there (cupboard index and example briefs → seven seats → hands and the WordPress kit →
    the machine with B64 → the dashboard area with B43 → selling with B83/Y9/Y11).
 2. After the holding is built out, C41: every persona rewritten facing the outside world and knowing the holding's
    studio, skills and tools; the job-type masters' personas are one leg of it.
@@ -125,7 +93,13 @@ Earlier days: `.planning/STATE-ARCHIVE.md` § "Moved out of STATE.md on 2026-11-
 
 ## Waiting on his approval
 
-- DxB Web Studio: deleting the duplicate "ayrıca bunada bak.md" in his folder (file 3 + file 4's uncorrected draft).
+- DxB Web Studio, the deep study's nine decisions (file 9 § 7, the recommendation yes on each; nothing is written
+  until he says so): 1 the team — three core seats, called hands, the machine, B84's decisions 4, 5, 6 rewritten;
+  2 one closing round, rounds inside the build free; 3 the eye measurement on the pages we already have, no new site;
+  4 "document first" and the release gates as the master's standard; 5 knowledge into the shared cupboard now, tools
+  at B84's rank; 6 the records named in § 6 corrected; 7 the revenue roads into the revenue list; 8 deleting the
+  duplicate "ayrıca bunada bak.md" in his folder (file 3 + file 4's uncorrected draft); 9 the study kept in the
+  repository. In the same section, at their turn: the money items and the Islamic boundary questions.
 - Revenue, Rapor 2 (`~/Desktop/Gelir Kaynakları/2 - Gelir üretim hatları ve kararlarınız 2026-11-01.pdf`, § 8):
   K8 (after he listens to the voices). The rest answered 2 Nov (K2, K9, K10 for now, K11, İ1–İ3, İ6 as
   recommended; İ4 a package; İ5 and İ7 his own rulings — REVENUE-OPPORTUNITIES §D). Also asked: whether his 1 Nov licence word becomes a standing rule beyond the memory
