@@ -1,0 +1,29 @@
+name: dxbcrawl
+services:
+  seonaut-db:
+    image: mysql:8.4
+    container_name: dxbcrawl-seonaut-db
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=seonaut
+      - MYSQL_USER=seonaut
+      - MYSQL_PASSWORD=seonaut
+    volumes:
+      - seonaut-db:/var/lib/mysql
+  seonaut-app:
+    build: ./src
+    image: dxbcrawl-seonaut:local
+    container_name: dxbcrawl-seonaut-app
+    ports:
+      - "127.0.0.1:19000:9000"
+    depends_on:
+      - seonaut-db
+    command: sh -c "/bin/wait && /app/seonaut"
+    environment:
+      - WAIT_HOSTS=seonaut-db:3306
+      - WAIT_TIMEOUT=120
+      - WAIT_SLEEP_INTERVAL=3
+      - WAIT_HOST_CONNECT_TIMEOUT=30
+      - SEONAUT_DATABASE_SERVER=seonaut-db
+volumes:
+  seonaut-db:

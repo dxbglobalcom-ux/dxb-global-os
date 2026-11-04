@@ -1,0 +1,16 @@
+name: dxbcrawl
+services:
+  librecrawl:
+    build: ./src
+    image: dxbcrawl-librecrawl:local
+    container_name: dxbcrawl-librecrawl
+    ports:
+      - "127.0.0.1:15000:5000"
+    volumes:
+      - ./data:/app/data
+      - ./patch/crawler.py:/app/src/crawler.py:ro
+    environment:
+      - PYTHONUNBUFFERED=1
+      - LOCAL_MODE=true
+    command: python main.py --local
+    shm_size: '2gb'

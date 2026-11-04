@@ -1,0 +1,164 @@
+[
+  {
+    "slug": "p01",
+    "name": "01-dun-tek-oturum-yayinlanan",
+    "root": "/home/dxb/Desktop/Örnek landing pageler",
+    "entry": "01-dun-tek-oturum-yayinlanan.html"
+  },
+  {
+    "slug": "p02",
+    "name": "02-dun-arm1-high-tek-atis",
+    "root": "/home/dxb/Desktop/Örnek landing pageler",
+    "entry": "02-dun-arm1-high-tek-atis.html"
+  },
+  {
+    "slug": "p03",
+    "name": "03-dun-arm2-medium-goz-duzeltme",
+    "root": "/home/dxb/Desktop/Örnek landing pageler",
+    "entry": "03-dun-arm2-medium-goz-duzeltme.html"
+  },
+  {
+    "slug": "p04",
+    "name": "04-dun-arm3-high-goz-duzeltme",
+    "root": "/home/dxb/Desktop/Örnek landing pageler",
+    "entry": "04-dun-arm3-high-goz-duzeltme.html"
+  },
+  {
+    "slug": "p05",
+    "name": "05-dun-arm4-dokuz-ajan",
+    "root": "/home/dxb/Desktop/Örnek landing pageler",
+    "entry": "05-dun-arm4-dokuz-ajan.html"
+  },
+  {
+    "slug": "p06",
+    "name": "06-dun-arm5-1000-dolar-yolu",
+    "root": "/home/dxb/Desktop/Örnek landing pageler",
+    "entry": "06-dun-arm5-1000-dolar-yolu.html"
+  },
+  {
+    "slug": "p07",
+    "name": "07-bugun-A",
+    "root": "/home/dxb/Desktop/Örnek landing pageler/07-bugun-A",
+    "entry": "index.html"
+  },
+  {
+    "slug": "p08",
+    "name": "08-bugun-B",
+    "root": "/home/dxb/Desktop/Örnek landing pageler/08-bugun-B",
+    "entry": "index.html"
+  },
+  {
+    "slug": "p09",
+    "name": "09-bugun-kol3-kagit-kesik",
+    "root": "/home/dxb/Desktop/Örnek landing pageler/09-bugun-kol3-kagit-kesik",
+    "entry": "index.html"
+  },
+  {
+    "slug": "p10",
+    "name": "10-a-porselen",
+    "root": "/home/dxb/Desktop/Örnek landing pageler/10-bugun-kol4-taslaklar",
+    "entry": "a-porselen.html"
+  },
+  {
+    "slug": "p11",
+    "name": "10-a-porselen-full",
+    "root": "/home/dxb/Desktop/Örnek landing pageler/10-bugun-kol4-taslaklar",
+    "entry": "a-porselen-full.html"
+  },
+  {
+    "slug": "p12",
+    "name": "10-b-moda-cad-12",
+    "root": "/home/dxb/Desktop/Örnek landing pageler/10-bugun-kol4-taslaklar",
+    "entry": "b-moda-cad-12.html"
+  },
+  {
+    "slug": "p13",
+    "name": "10-c-moda-kiyisi",
+    "root": "/home/dxb/Desktop/Örnek landing pageler/10-bugun-kol4-taslaklar",
+    "entry": "c-moda-kiyisi.html"
+  },
+  {
+    "slug": "p14",
+    "name": "urla-1000-dolar-akisi",
+    "root": "/home/dxb/Desktop/Örnek landing pageler/24 Ekim - Urla Zeytin",
+    "entry": "1000-dolar-akisi.html"
+  },
+  {
+    "slug": "p15",
+    "name": "urla-25-ekim-birlesik-telefon",
+    "root": "/home/dxb/Desktop/Örnek landing pageler/24 Ekim - Urla Zeytin",
+    "entry": "25-ekim-birlesik-telefon.html"
+  },
+  {
+    "slug": "p16",
+    "name": "urla-25-ekim-birlesik-yeldegirmeni",
+    "root": "/home/dxb/Desktop/Örnek landing pageler/24 Ekim - Urla Zeytin",
+    "entry": "25-ekim-birlesik-yeldegirmeni.html"
+  },
+  {
+    "slug": "p17",
+    "name": "urla-25-ekim-tek-usta-high-tekrar",
+    "root": "/home/dxb/Desktop/Örnek landing pageler/24 Ekim - Urla Zeytin",
+    "entry": "25-ekim-tek-usta-high-tekrar.html"
+  },
+  {
+    "slug": "p18",
+    "name": "urla-25-ekim-usta-ve-iki-yardimci",
+    "root": "/home/dxb/Desktop/Örnek landing pageler/24 Ekim - Urla Zeytin",
+    "entry": "25-ekim-usta-ve-iki-yardimci.html"
+  },
+  {
+    "slug": "p19",
+    "name": "urla-tek-usta-high",
+    "root": "/home/dxb/Desktop/Örnek landing pageler/24 Ekim - Urla Zeytin",
+    "entry": "tek-usta-high.html"
+  },
+  {
+    "slug": "p20",
+    "name": "urla-tek-usta-max",
+    "root": "/home/dxb/Desktop/Örnek landing pageler/24 Ekim - Urla Zeytin",
+    "entry": "tek-usta-max.html"
+  },
+  {
+    "slug": "p21",
+    "name": "urla-25-ekim-birlesik-klasor",
+    "root": "/home/dxb/Desktop/Örnek landing pageler/24 Ekim - Urla Zeytin/25-ekim-birlesik-klasor",
+    "entry": "index.html"
+  },
+  {
+    "slug": "p22",
+    "name": "mavi-A - usta ve dört uzman (29 Ekim sabah)",
+    "root": "/home/dxb/Desktop/Örnek landing pageler/28 Ekim - Mavi Kuşak Çini/A - usta ve dört uzman (29 Ekim sabah)",
+    "entry": "index.html"
+  },
+  {
+    "slug": "p23",
+    "name": "mavi-A ilk - uzmanlar yarıda kesildi, usta tamamladı (28 Ekim)",
+    "root": "/home/dxb/Desktop/Örnek landing pageler/28 Ekim - Mavi Kuşak Çini/A ilk - uzmanlar yarıda kesildi, usta tamamladı (28 Ekim)",
+    "entry": "index.html"
+  },
+  {
+    "slug": "p24",
+    "name": "mavi-B - tek oturum, Ferrari çıtası yok (28 Ekim)",
+    "root": "/home/dxb/Desktop/Örnek landing pageler/28 Ekim - Mavi Kuşak Çini/B - tek oturum, Ferrari çıtası yok (28 Ekim)",
+    "entry": "index.html"
+  },
+  {
+    "slug": "p25",
+    "name": "mavi-C - tek usta, uzmansız (29 Ekim)",
+    "root": "/home/dxb/Desktop/Örnek landing pageler/28 Ekim - Mavi Kuşak Çini/C - tek usta, uzmansız (29 Ekim)",
+    "entry": "index.html"
+  },
+  {
+    "slug": "p26",
+    "name": "mavi-D - Opus tek başına, 20 dakika (2 Kasım)",
+    "root": "/home/dxb/Desktop/Örnek landing pageler/28 Ekim - Mavi Kuşak Çini/D - Opus tek başına, 20 dakika (2 Kasım)",
+    "entry": "index.html"
+  },
+  {
+    "slug": "p27",
+    "name": "mavi-E - Opus tek başına, max, 46 dakika (3 Kasım)",
+    "root": "/home/dxb/Desktop/Örnek landing pageler/28 Ekim - Mavi Kuşak Çini/E - Opus tek başına, max, 46 dakika (3 Kasım)",
+    "entry": "index.html"
+  }
+]

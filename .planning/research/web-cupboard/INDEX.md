@@ -8,6 +8,8 @@ Base path: `.planning/quick/20261103-web-ders/tracks/`.
 |---|---|
 | Evidence tables (what is measured, what is a vendor's word) | section 2 of each track: `1-seo.md` `2-aeo-geo.md` `3-eticaret.md` `4-reklam-olcum.md` `5-altyapi.md` `6-studyolar.md` `7-aletler.md` |
 | Release gates | section 6 "Ofisin işi" of `1-seo.md`, `2-aeo-geo.md`, `3-eticaret.md`, `5-altyapi.md` |
+| Free crawler, tested on a real site (LibreCrawl first, SiteOne second; rate patch) | `.planning/quick/20261104-web-bedava-aletler/crawl-test/RUN.md` |
+| Eye rig: page capture, walled blind judge, scoring | `.planning/quick/20261104-goz-olcumu/` |
 | Migration process | `1-seo.md` § 3.12 |
 | Measurement template, gates before ads | `4-reklam-olcum.md` § 3.1, § 3.2 |
 | Team and process tables | `6-studyolar.md` § 3.2, § 3.4 |

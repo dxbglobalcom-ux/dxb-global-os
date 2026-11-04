@@ -27,9 +27,9 @@ not here. What is accepted is read from `scripts/governance/ceo-approvals.json`,
 
 ## Where we left off
 
-2026-11-04 afternoon — B84's corrections are in: records, nine personas (v4, live), revenue roads, cupboard. Free tools
-measured in his file 10: real Google rank through his Chrome, links and popularity free, no key needed for the motion
-judge. The fleet stopped at the usage limit: its answer and the Screaming Frog part are missing.
+2026-11-04 afternoon — B84's study is finished, for his eye: corrections in (records, nine personas, revenue roads,
+cupboard); file 10: free crawler tested on outletcity, LibreCrawl first, SiteOne second, the rest of the free road;
+file 11: the eye repeated 19 of his 22 pairs, untaught 11-12; it ranks, it gives no absolute verdict.
 2026-11-04 — The deep web study is delivered and he answered its nine decisions <!-- CEO-OK: b84-web-study-nine-decisions-2026-11-04 -->:
 B84's row file is rewritten (three core seats, called hands, the machine). File 9 is in his folder; a correction goes into
 `.planning/quick/20261103-web-ders/top.md` and `assemble.py` rebuilds it.
@@ -48,7 +48,7 @@ Earlier days: `.planning/STATE-ARCHIVE.md` § "Moved out of STATE.md on 2026-11-
 
 ## Next
 
-0a. Web study leftovers (B84): the fleet's writer for Screaming Frog, file 9's header, the eye measurement, `agy` check.
+0a. outletcity answered 406 after our crawler test: re-check before any new crawl. Claude sign-in ends 8-11 Nov.
 0. Revenue — the lines are on the board (B83 and the notes on its related rows); each is built at its row's rank
    in the board's reorder and bench-tested with it, sold when the key is turned. Rapor 3's suggested order for Nate
    Herk's systems (company brain first, built on the holding's own V2 memory) goes into that reorder.
