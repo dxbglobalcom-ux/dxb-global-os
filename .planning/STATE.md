@@ -35,6 +35,10 @@ employee (B41); valuable work's three answers (B64); format research + weekly wi
 embedded links before fetching and keep.sh scrubs tokens (65d3ecb6): live 35 → 25 min, 1,286 → 740 pages, 48 → 57 claims; one run is
 still over the door's 15 min and its finds vary run to run. Dropped on his word: e2e-login, five claude-mem rows, Revid, the repo scan and
 privacy, the file-size lock, Ultra Code as a decision. Sol's profile keeps the ChatGPT app's node_repl off (9d6fbb84).
+2026-11-07 night (same session) — the hyper-realistic UGC recipe is written in B43 from two reels of an AI-UGC creator: five steps,
+the factory pipeline (free tools, settings, what is missing), paid fallback with the expert's good/bad notes (Seedance 2.5, Wan 3.0,
+Gemini Omni 1.1 Flash) and Seedream 5 Pro. His rulings: a real use may be voiced by an AI character (the old testimonial line deleted);
+voice = H3's own first, a Voice Studio clone only if better, both tried at the first setup, which opens with one trial UGC. Nothing built.
 2026-11-07 evening — video-use (browser-use, MIT) joined the holding on his word: not the default, used whenever needed. The tool is at `~/.local/share/dxb/skills/video-use` (43cfc566); its page `tools/video-use/skill/SKILL.md` is linked as the global skill `video-use` and carries every feature, the W104 path, and what is owed before the first real job (the local-ear converter, Turkish casing). The record is B43's leg of 2026-11-07. Measured by two blind readers and a referee at max: OpenMontage cuts silence only, while video-use cuts fillers and retakes on word boundaries; Remotion 4.0.484 runs inside OpenMontage and is free up to 3 employees. His Gmail (dxbglobalcom) was tidied the same day: six labels, 11 filters, old mail out of sight; the 34 old mails under Para wait his word.
 2026-11-04 afternoon — B84's study is finished, for his eye: corrections in (records, nine personas, revenue roads,
 cupboard); file 10: free crawler tested on outletcity, LibreCrawl first, SiteOne second, the rest of the free road;
