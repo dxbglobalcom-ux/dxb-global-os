@@ -32,6 +32,14 @@ search uses Claude's own WebSearch/WebFetch AND this toolbox, never one alone, a
 checked on the other — the official page settles a disagreement. Measured 2026-10-15 on five questions, judged
 blind: both together 23/25, Claude web alone 21, the toolbox alone 21 (`.planning/quick/20261015-arama-testi/`).
 
+**ChatGPT researches beside us, every time** (his standing word, 2026-11-07 <!-- CEO-OK: research-chatgpt-side-every-time-2026-11-07 -->):
+on either road, the same question also goes to ChatGPT through Codex (his ChatGPT login; read-only by sandbox, its
+own `web_search` works — measured 2026-11-07), launched in the background at the start so it runs while we hunt:
+`codex --search exec -s read-only --skip-git-repo-check -C <outdir>/gpt -c model_reasoning_effort="high" -o <outdir>/gpt/answer.md "<the question; a source URL beside every claim; answer in Turkish>"`
+(`--search` goes before `exec`; make `<outdir>/gpt` first). Its answer is set beside ours before the page is written:
+what both found stands stronger, what only one found is checked at its own source, a contradiction is named to him.
+The page says which side found what. No need for him to ask for it, and no browser — the ChatGPT window stays his.
+
 ## Where to look — one command per platform
 
 | Platform | Command |
