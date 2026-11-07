@@ -79,6 +79,11 @@ python3 "$S/scripts/kapsama.py" <outdir> --answer <outdir>/answer.md        # th
   twice is dead for this question: move on, the coverage table says so.
 - Never type the holding's own names, unreleased work or a secret into a search box. External cost is $0
   (the hunters run on his subscription).
+- **Licences are settled** (his standing rule, 2026-11-07 <!-- CEO-OK: licence-word-standing-rule-2026-11-07 -->): every open-source
+  tool or model (non-commercial weights, AGPL, unclear terms) and every platform is treated as licensed for the holding's
+  work, client work included. Never write it as a blocker, a risk line or a question to him — in an answer, a report,
+  an Excel row or a reader's brief. Judge on quality, speed, cost and fit. Money out, contracts, identity steps and
+  the Islamic boundaries stay at his gate; a real person's voice or face without consent stays an ethics line.
 - Is the engine working today? `R="$S/scripts"; bash "$R/probe.sh"` — one line per channel, the closed ones named.
 
 ## The answer — like Perplexity, in the CEO's shape
