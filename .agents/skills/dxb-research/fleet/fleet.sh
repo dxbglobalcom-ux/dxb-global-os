@@ -619,8 +619,23 @@ NOBODY_FLAG=--no-body
 python3 "$EVI" list --help 2>/dev/null | grep -q -- '--no-body' || NOBODY_FLAG=--unread
 FPLATS="$(sed -n 's/^platform=\([^ ]*\).*/\1/p' "$OUT/from-ground.txt")"
 nobody_rows() { local p; for p in $FPLATS; do python3 "$EVI" list "$OUT" --platform "$p" $NOBODY_FLAG; done; }
+# ── THE GROUND'S OWN BODIES ARE SORTED FIRST; A LINK FOUND ONLY INSIDE AN OFF-TOPIC POST IS NOT FETCHED ──
+# Measured on the deep run of 2026-11-07 18:06: fetch-all spent 963 s on 1,286 addresses, 484 of them t.co links
+# taken out of tweets (9 relevant) and 120 links taken out of read pages (2 relevant). The tweets and pages that
+# carried them were already in the ledger with their bodies. So the triage below (the same triage.py, the same
+# model) judges those bodies BEFORE the fetch, and `evidence.py gate-embedded` marks irrelevant every body-less
+# address seen only inside parents that were all judged irrelevant or duplicate — its reason names the parent,
+# so the coverage table still counts it. A link inside a relevant or unjudged parent is fetched as before.
+gate_ids="$OUT/gate-embedded.ids"; : > "$gate_ids"
+if [ -f "$SKILL/scripts/triage.py" ]; then
+  # its per-platform lines go to a file: whatever it leaves pending is sent again by the triage after the fetch,
+  # which prints and names it (below) — so a stuck batch is reported once, by the pass that decides the run
+  echo "   on-eleme: zeminin getirdigi govdeler indirmeden once ayiklaniyor ($OUT/triage-pre.out)"
+  triage_pass .pre $FPLATS > "$OUT/triage-pre.out"
+  python3 "$EVI" gate-embedded "$OUT" --ids "$gate_ids" 2>&1 | sed 's/^/   /'
+fi
 nobody_rows > "$OUT/fetch-all.before" 2> "$OUT/fetch-all.err"
-open_rows "$OUT/fetch-all.before" > "$OUT/fetch-all.todo"
+open_rows "$OUT/fetch-all.before" | awk -F'\t' -v g="$gate_ids" 'BEGIN { while ((getline l < g) > 0) skip[l] = 1 } !($1 in skip)' > "$OUT/fetch-all.todo"
 n_todo=$(grep -c . "$OUT/fetch-all.todo")
 n_try=$(( n_todo < FETCH_LIMIT ? n_todo : FETCH_LIMIT ))
 f0=$(date +%s)

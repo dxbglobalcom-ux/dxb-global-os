@@ -27,6 +27,14 @@ not here. What is accepted is read from `scripts/governance/ceo-approvals.json`,
 
 ## Where we left off
 
+2026-11-07 afternoon (session d5674644) — his open list cleared and the engine's doors repaired. Dictation keeps listening after Enter and
+Backspace (`~/tools/vscode-dikte-kilidi`). Decided and written where the work sits: K8 at H4/H8's setup (B83); the licence word and
+"ChatGPT researches beside us" (his ChatGPT in Chrome, never Codex) in `dxb-research`; the light lane in `dxb-team2`; REA to every
+employee (B41); valuable work's three answers (B64); format research + weekly winner (B28, revenue #22, the answer kept with ChatGPT's).
+`dxb-verify` rewritten acceptance-first (b0d58315); the audit-twin and perfection-gate directives follow his later words. The fleet gates
+embedded links before fetching and keep.sh scrubs tokens (65d3ecb6): live 35 → 25 min, 1,286 → 740 pages, 48 → 57 claims; one run is
+still over the door's 15 min and its finds vary run to run. Dropped on his word: e2e-login, five claude-mem rows, Revid, the repo scan and
+privacy, the file-size lock, Ultra Code as a decision. Sol's profile keeps the ChatGPT app's node_repl off (9d6fbb84).
 2026-11-07 evening — video-use (browser-use, MIT) joined the holding on his word: not the default, used whenever needed. The tool is at `~/.local/share/dxb/skills/video-use` (43cfc566); its page `tools/video-use/skill/SKILL.md` is linked as the global skill `video-use` and carries every feature, the W104 path, and what is owed before the first real job (the local-ear converter, Turkish casing). The record is B43's leg of 2026-11-07. Measured by two blind readers and a referee at max: OpenMontage cuts silence only, while video-use cuts fillers and retakes on word boundaries; Remotion 4.0.484 runs inside OpenMontage and is free up to 3 employees. His Gmail (dxbglobalcom) was tidied the same day: six labels, 11 filters, old mail out of sight; the 34 old mails under Para wait his word.
 2026-11-04 afternoon — B84's study is finished, for his eye: corrections in (records, nine personas, revenue roads,
 cupboard); file 10: free crawler tested on outletcity, LibreCrawl first, SiteOne second, the rest of the free road;
@@ -83,21 +91,11 @@ Earlier days: `.planning/STATE-ARCHIVE.md` § "Moved out of STATE.md on 2026-11-
 ## Waiting on his approval
 
 - Revenue, Rapor 2 (`~/Desktop/Gelir Kaynakları/2 - Gelir üretim hatları ve kararlarınız 2026-11-01.pdf`, § 8):
-  K8 (after he listens to the voices). The rest answered 2 Nov (K2, K9, K10 for now, K11, İ1–İ3, İ6 as
-  recommended; İ4 a package; İ5 and İ7 his own rulings — REVENUE-OPPORTUNITIES §D). Also asked: whether his 1 Nov licence word becomes a standing rule beyond the memory
-  note.
+  K8 leaves this list — asked at H4/H8's setup after he listens on the bench (B83, his word 2026-11-07). The rest answered 2 Nov (K2, K9, K10 for now, K11, İ1–İ3, İ6 as
+  recommended; İ4 a package; İ5 and İ7 his own rulings — REVENUE-OPPORTUNITIES §D).
 - DxB Web Studio, standing answers (2026-11-02): the 213 personas scanned (13 core, 69 ring, file 5); Y9 and Y11 later,
   markers in ORDER.md. The studio's ScrollCraft output is a library on his word (`ComfyUI/output/scrollcraft/KUTUPHANE.tsv`);
   approved and used output goes into it; looking there before generating waits until it is rich.
-- Still open from 22 Oct: a light lane for small, low-risk jobs.
-- Whether Ultra Code joins the holding (the real one was never run — arm B was an imitation); deleting the obsolete
-  `scripts/test/e2e-login.mjs`.
-- From "Ekim 15-21 linkleri", each a start on his word: the claude-security scan of the repository (he said later,
-  with making it private), the file-size lock in the pre-commit hook, Revid's paid plan (39 $/month, money out),
-  REA opened to the holding's own employees (part of B41) — at the end of the order.
-- claude-mem: five more observations still carry the label (38114, 9153, 38124, 8060, 38123) — delete or keep.
-- Valuable work, three open questions for his word, one at a time: a "neither plan is workable" outcome; the 30 %
-  warning line's base for a job with no deal; a plan's own cost estimate.
 - Platform-hub plan, two open decisions — after B22's synthesis: the studio tab's drawing (B32's method); the `media` event channel.
 - The ordered board and its 10 new rows, after the walk.
 - At their ranks: the Supabase skills install (#3), DataForSEO (#47), Apify beyond the free plan (#48), Google OAuth
