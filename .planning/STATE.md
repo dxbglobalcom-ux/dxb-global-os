@@ -66,7 +66,7 @@ Earlier days: `.planning/STATE-ARCHIVE.md` § "Moved out of STATE.md on 2026-11-
 
 FIRST, on his word (2026-11-07, late): talk with him about the reel https://www.instagram.com/reel/Detxk1CyFJK/ — he opens a
 new session for it; watch it first (dxb-watch-links, one Opus reader); with it the X post https://x.com/borjafat/status/2112536384191742222
-(sent the same night, no word yet on what he wants from it — ask). Then: the studio skill "visual codewords" — the 64 one-word
+(the link the reel's creator gave — read them together as one subject). Then: the studio skill "visual codewords" — the 64 one-word
 image triggers (`.planning/quick/20261107-ugc/visual-codeword-library.txt`) plus the reel's 5 product shortcuts (`u4-slash.md`), each
 backed by a full prompt in our realism language (`tools/studio-prompts/realism/`), run with the Codex image tool; placed in
 `tools/studio-prompts/`, tied to B43. His yes to propose it was given; nothing written yet.
