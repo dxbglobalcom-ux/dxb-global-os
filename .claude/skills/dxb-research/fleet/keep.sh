@@ -85,5 +85,14 @@ fi
 
 # The hunters' transcripts (<role>.jsonl, 3.4 MB on the 2026-09-17 run) and the raw ground are NOT
 # kept — they are the noise, not the answer.
+
+# NO SESSION TOKEN LEAVES THE RUN (2026-11-07). The kept folder goes into a PUBLIC repository; the
+# viral-format answer of that day carried rednote addresses with `xsec_token=…` (150 in evidence.jsonl,
+# 37 in final.html) and gitleaks stopped the commit. Every text file kept above is passed through
+# scrub-urls.py: token, signature, session, key, secret, credential and password parameters leave every
+# address; the rest of each address stays. A scrub that fails stops the keep — the folder is not offered.
+if ! python3 "$(dirname "$(readlink -f "$0")")/../scripts/scrub-urls.py" "$DEST"; then
+  echo "keep: adres temizligi basarisiz — $DEST commit edilmemeli" >&2; exit 1
+fi
 echo "cevap saklandi: $DEST  ($(du -sh "$DEST" | cut -f1), $reports rapor ·${kept:- sozlesme dosyasi yok})"
 [ -z "$bodies_note" ] || echo "   $bodies_note"

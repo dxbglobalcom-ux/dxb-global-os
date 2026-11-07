@@ -791,11 +791,16 @@ def new_row(run: Path, rid: str, url: str, canon: str, channel: str, hunter: str
     return row
 
 
+def gated(row: dict) -> bool:
+    """Eliminated by gate-embedded from where it was found, never from its own body (2026-11-07)."""
+    return row.get("gate") == "embedded" and row.get("triage") == "irrelevant" and row.get("triage_by") == "machine"
+
+
 def set_body(row: dict, body: str) -> None:
     """A row that now stands on a body: evidence, alive, its size and fingerprint, a passage if it had none.
     Its states follow the body (K1): a closed door that opened is `pending` again, for the triage to
-    judge the body it never saw; a body that CHANGED is `unread` again — the bytes a hunter was
-    printed belonged to the old one."""
+    judge the body it never saw, and so is a link gate-embedded eliminated for its parent's sake; a body
+    that CHANGED is `unread` again — the bytes a hunter was printed belonged to the old one."""
     data = body.encode("utf-8", "replace")
     sha = hashlib.sha256(data).hexdigest()
     changed = row.get("body_sha256") not in (None, sha)
@@ -804,17 +809,20 @@ def set_body(row: dict, body: str) -> None:
         row["passage"] = passage_of(body)
         row["passage_sha256"] = rlib.sha256(row["passage"])
     ensure_states(row)
-    if row["triage"] == "inaccessible":
+    if row["triage"] == "inaccessible" or gated(row):
         row.update(triage="pending", triage_reason=None, duplicate_of=None, triage_by=None)
+    row.pop("gate", None)
     if changed:
         row.update(read_status="unread", read_by=None, read_at=None, read_bytes=0, read_completeness=0.0)
 
 
 # =================================================================== from the ground
-def _hit(url, title=None, author=None, date=None, body=None, key=None, primary=False) -> dict:
+def _hit(url, title=None, author=None, date=None, body=None, key=None, primary=False, parent=None) -> dict:
+    """`parent`: the address of the post or page this link was found INSIDE (a t.co in a tweet, a link on a
+    read page) — gate-embedded fetches such a link only when its parent was not judged off-topic."""
     return {"url": url, "title": clean(title), "author": clean(author, 120), "date": iso_date(date),
             "body": body if isinstance(body, str) and body.strip() else None, "key": key,
-            "primary": primary}
+            "primary": primary, "parent": parent if isinstance(parent, str) and parent.startswith("http") else None}
 
 
 def _json_values(text: str) -> list | None:
@@ -846,7 +854,7 @@ def _from_json(obj, hits: list) -> None:
             if isinstance(v, (dict, list)):
                 _from_json(v, hits)
             elif isinstance(v, str) and TEXT_KEY.match(str(k)):
-                hits.extend(_hit(u) for u in urls_in(v))
+                hits.extend(_hit(u, parent=link) for u in urls_in(v) if u != link)
     elif isinstance(obj, list):
         for v in obj:
             _from_json(v, hits)
@@ -865,10 +873,11 @@ def _from_page_dump(d: dict, fmt: str) -> list:
                 links.append((t, urljoin(base, u)))
             elif u.startswith("http"):
                 links.append((t, u))
+    par = base if fmt in BODY_PAGE_CHANNELS else None   # a search page carries no body: its links are results
     for t, u in links:
         if u.rstrip("/") != base.rstrip("/"):
-            hits.append(_hit(u, t))
-    hits.extend(_hit(u) for u in urls_in(content) if u.rstrip("/") != base.rstrip("/"))
+            hits.append(_hit(u, t, parent=par))
+    hits.extend(_hit(u, parent=par) for u in urls_in(content) if u.rstrip("/") != base.rstrip("/"))
     return hits
 
 
@@ -893,7 +902,7 @@ def _from_items(items: list, fmt: str) -> list:
         for s in strings_in(it):
             for u in urls_in(s):
                 if u != primary:
-                    hits.append(_hit(u, title if u == url else None))
+                    hits.append(_hit(u, title if u == url else None, parent=None if u == url else primary))
     return hits
 
 
@@ -962,10 +971,16 @@ def cmd_from_ground(run: Path) -> int:
             return
         canon = platforms.canonical_url(h["url"])
         info = found.get(canon)
+        par = platforms.canonical_url(h["parent"]) if h.get("parent") else None
         if info is None:
             found[canon] = dict(h, channel=channel, ground=ground, mtime=mtime,
-                                closed=None if h["body"] else closed)
+                                closed=None if h["body"] else closed,
+                                parents={par} if par else set(), standalone=par is None)
             return
+        if par:
+            info["parents"].add(par)
+        else:
+            info["standalone"] = True
         if h["body"] and not info["body"]:
             # the item that carries the body names itself: its title, author and date win over a
             # search engine's headline for the same address ("Reddit", measured on the baseline)
@@ -1016,7 +1031,7 @@ def cmd_from_ground(run: Path) -> int:
                 merge(_hit(e["url"], body=body, key="page", primary=True), "fetch:" + str(e.get("door") or "page"),
                       g.name, f.stat().st_mtime)
                 for u in urls_in(body):
-                    merge(_hit(u), "page-link", g.name, f.stat().st_mtime)
+                    merge(_hit(u, parent=e["url"]), "page-link", g.name, f.stat().st_mtime)
             else:
                 tried = " -> ".join(str(a.get("door", "?")) for a in e.get("attempts") or [])
                 lv = e.get("liveness") if e.get("liveness") in ("blocked", "dead") else "dead"
@@ -1044,6 +1059,8 @@ def cmd_from_ground(run: Path) -> int:
                           retrieved_at=stamp, tool="fetch.py" if info["channel"].startswith("fetch:") else "sweep",
                           query_id=info["ground"], title=info["title"], author=info["author"],
                           pub_date=info["date"])
+            if not info["standalone"] and info["parents"] and not info["body"] and not info["title"]:
+                row["found_in"] = sorted(info["parents"])   # seen ONLY inside other posts/pages, never as a result
             n += 1
             if info["body"]:
                 write_body(run, canon, info["body"])
@@ -1076,6 +1093,65 @@ def cmd_from_ground(run: Path) -> int:
     return 0
 
 
+# =================================================================== gate-embedded (2026-11-07)
+# WHY. The deep run of 2026-11-07 18:06 fetched 1,286 addresses in 963 s before anything judged them;
+# 1,022 of the run's 1,400 were then judged off-topic. 484 of the fetched were t.co links taken from
+# tweets (9 relevant) and 120 were links taken from read pages (2 relevant): a link found INSIDE a post
+# is worth fetching when the post is on-topic, and the post's body is already in the ledger. So the
+# fleet triages the bodies the ground brought first, and this gate marks irrelevant — before any fetch —
+# every body-less address that was seen ONLY inside other posts/pages (`found_in`, written by
+# from-ground) when EVERY one of those parents was judged irrelevant. A duplicate parent stands for the
+# post it repeats (`duplicate_of`, followed to the end). A parent that is relevant, still pending, or not
+# in the ledger — or a duplicate chain that loops or names no original — keeps the link: it is fetched
+# as before. The verdict is the machine's, with the parent's id in the reason, so the coverage table
+# still counts the address; `list` leaves it out of the hunters' work, and a body that lands on it
+# later sends it back to pending (set_body).
+def parent_verdict(par: dict | None, ids: dict[str, dict]) -> str:
+    """A parent's triage, a duplicate read through to its original: `missing` when the chain names no
+    row of the ledger, `loop` when it comes back to itself."""
+    seen: set[int] = set()
+    while par is not None and triage_of(par) == "duplicate":
+        if id(par) in seen:
+            return "loop"
+        seen.add(id(par))
+        par = ids.get(str(par.get("duplicate_of") or ""))
+    return triage_of(par) if par is not None else "missing"
+
+
+def cmd_gate_embedded(run: Path, ids_out: str | None) -> int:
+    gated: list[str] = []
+    kept_rel = kept_wait = 0
+    with locked(run):
+        rows = read_rows(run)
+        index = by_canon(rows)
+        ids = address_index(rows)
+        for canon, rs in index.items():
+            addr = address_row(rs)
+            if not addr or not addr.get("found_in") or triage_of(addr) != "pending" or has_body(run, canon):
+                continue
+            if addr.get("liveness") in ("blocked", "dead"):
+                continue
+            states, pids = [], []
+            for pc in addr["found_in"]:
+                par = address_row(index.get(pc) or [])
+                states.append(parent_verdict(par, ids))
+                pids.append(par.get("id") if par else "?")
+            if states and all(s == "irrelevant" for s in states):
+                ensure_states(addr).update(triage="irrelevant", triage_by="machine", duplicate_of=None, gate="embedded",
+                                           triage_reason="elendi (bulunduğu yer ilgisiz: " + ", ".join(pids[:3]) + ")")
+                gated.append(addr["id"])
+            elif "relevant" in states:
+                kept_rel += 1
+            else:
+                kept_wait += 1
+        if gated:
+            rewrite_rows(run, rows)
+    if ids_out:
+        Path(ids_out).write_text("".join(i + "\n" for i in gated), encoding="utf-8")
+    print(f"gate-embedded: elendi {len(gated)} · indirilecek {kept_rel} (bulunduğu yer ilgili) · {kept_wait} (bulunduğu yer henüz hükümsüz)")
+    return 0
+
+
 # =================================================================== list / show
 def cmd_list(run: Path, platform: str, unread: bool, no_body: bool, kind: str) -> int:
     for canon, rs in by_canon(read_rows(run)).items():
@@ -1086,6 +1162,8 @@ def cmd_list(run: Path, platform: str, unread: bool, no_body: bool, kind: str) -
         if kind != "all" and k != kind:
             continue
         if no_body and has_body(run, canon):       # no body yet: what --unread meant before K1
+            continue
+        if gated(addr):                            # eliminated for where it was found: no hunter's work
             continue
         if unread and (triage_of(addr) != "relevant" or read_of(addr) != "unread"):
             continue                               # K1: relevant, and never printed to a hunter
@@ -2054,6 +2132,9 @@ def main(argv: list[str] | None = None) -> int:
     rp.add_argument("run")
     p = sub.add_parser("platform-of")
     p.add_argument("url")
+    ge = sub.add_parser("gate-embedded")
+    ge.add_argument("run")
+    ge.add_argument("--ids", help="write the ids it eliminated here, one a line")
     args = ap.parse_args(argv)
 
     if args.cmd == "platform-of":
@@ -2065,6 +2146,8 @@ def main(argv: list[str] | None = None) -> int:
         return 2
     if args.cmd == "from-ground":
         return cmd_from_ground(run)
+    if args.cmd == "gate-embedded":
+        return cmd_gate_embedded(run, args.ids)
     if args.cmd == "writer-rows":
         return cmd_writer_rows(run, args.format)
     if args.cmd == "repassage":
