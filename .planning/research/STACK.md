@@ -43,7 +43,7 @@
 | zh (drizzle-orm or kysely) | current | Typed SQL layer shared by MCPs, workers, dashboard | Pick one in P2; drizzle has the larger ecosystem momentum |
 | openWakeWord / voicebox hotkey | current | Wake-word / push-to-talk on the laptop client | JARVIS input capture, local only |
 | yt-dlp | current (locked) | Video-learning module | P4 per plan |
-| video-use (browser-use, MIT) | `43cfc566` at `~/.local/share/dxb/skills/video-use`; the holding's page `tools/video-use/skill` is linked as the global skill | Cutting filmed speech on word boundaries (fillers, false starts, retakes) | Media Studio on request only, never the default (B43 leg 2026-11-07); transcription from the holding's ear, ElevenLabs the paid twin. Until 2026-11-07 this row read "yt-dlp + video-use", but only yt-dlp was ever installed |
+| video-use (browser-use, MIT) | `43cfc566` at `~/.local/share/dxb/skills/video-use`; the holding's page `tools/video-use/skill` is linked as the global skill | Cutting filmed speech on word boundaries (fillers, false starts, retakes) | Media Studio: not the default, used whenever needed (B43 leg 2026-11-07); transcription from the holding's ear, ElevenLabs the paid twin. Until 2026-11-07 this row read "yt-dlp + video-use", but only yt-dlp was ever installed |
 | FastMCP (Python) | 3.4.2 | Alternative MCP framework | Only for wrapping Python-native tools (e.g., an open-notebook MCP face) |
 
 ### Development Tools

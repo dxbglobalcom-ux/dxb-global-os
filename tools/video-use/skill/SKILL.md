@@ -1,15 +1,15 @@
 ---
 name: video-use
 description: >
-  ON REQUEST ONLY, never the Media Studio's default (OpenMontage is). video-use edits FILMED footage by
-  conversation into final.mp4: it reads the video as a word-timed transcript (speakers, laughter and
-  applause marked) plus filmstrip and waveform images; cuts fillers ("ııı", "şey", "umm"), false starts,
-  retakes and dead air on word boundaries; picks the best take; grades colour per segment; puts 30 ms
-  fades at every cut and sets loudness to -14 LUFS; burns subtitles; adds animations (HyperFrames,
-  Remotion, Manim, PIL), split screen, picture-in-picture, lower thirds, speed ramps and freeze frames;
-  checks its own render at every cut; remembers the project. Use it when a cut came out badly and another
-  tool is asked for, for a talking head, interview, tutorial or raw takes, or in the W104 animated YouTube
-  path. It does not make Shorts, reframe to 9:16, or generate footage or voices.
+  Not the default (the Media Studio's default lane is OpenMontage), but used whenever a job needs it.
+  video-use edits FILMED footage by conversation into final.mp4: it reads the video as a word-timed
+  transcript (speakers, laughter and applause marked) plus filmstrip and waveform images; cuts fillers
+  ("ııı", "şey", "umm"), false starts, retakes and dead air on word boundaries; picks the best take;
+  grades colour per segment; puts 30 ms fades at every cut and sets loudness to -14 LUFS; burns
+  subtitles; adds animations (HyperFrames, Remotion, Manim, PIL), split screen, picture-in-picture,
+  lower thirds, speed ramps and freeze frames; checks its own render at every cut; remembers the project.
+  Needed for: cutting a talking head, interview, tutorial or raw takes; a cut that came out badly; the
+  W104 animated YouTube path. It does not make Shorts, reframe to 9:16, or generate footage or voices.
 ---
 
 # video-use — how the holding uses it
@@ -20,11 +20,12 @@ its 12 hard rules. This page is only the holding's part: when it is used, what i
 before the first real job, and how it joins the rest of the studio. The record of the decision is
 `.planning/board-rows/B43.md`, § "Leg of 2026-11-07" (the CEO's words, 2026-11-07).
 
-## When — on request, never the default
+## When — not the default, used whenever needed
 
-OpenMontage is the Media Studio's default lane. video-use is used in three cases:
-- a studio cut did not come out well, and the CEO or the job's master asks whether the holding has another tool;
-- the job is cutting filmed speech: a talking head, an interview, a tutorial, or raw takes;
+OpenMontage is the Media Studio's default lane. video-use is not the default, but it is used whenever a job needs
+what it does; nobody has to ask for it:
+- cutting filmed speech: a talking head, an interview, a tutorial, raw takes;
+- a studio cut that did not come out well: try it with video-use;
 - the W104 animated YouTube path below.
 
 ## Everything it does
