@@ -1,0 +1,1866 @@
+64 CODEWORDS / ONE-WORD IMAGE TRIGGERS
+
+
+
+
+THE VISUAL
+CODEWORD LIBRARY
+A sleek reference for image generation, editing, diagrams, styles, and visual explanations.
+
+
+
+
+    01                                         02                                         03
+    UPLOAD                                     TYPE ONLY                                  GET THE RESULT
+
+    a photo, sketch, screenshot, or scene      one codeword such as /cutaway              a new view, style, diagram, or edit
+
+
+
+
+/cutaway                 Your prompt can be one word.
+
+
+The first nine entries are the unique short-codeword examples from your shared chat. The rest are suggested additions.
+
+
+
+
+VISUAL CODEWORD LIBRARY                                                                                                         01
+All codewords                                                                                           01 - 22 / 64
+
+Type only the codeword after uploading an image.
+
+
+
+  /360view                  Turns one uploaded subject into a clean multi-angle presentation.
+
+
+  /anatomy                  Explains a subject by separating it into visible parts with labels.
+
+
+  /cutaway                  Slices through the outside so the inside becomes visible.
+
+
+  /layers                   Separates an object into stacked surface-to-core layers.
+
+
+  /xray                     Makes the outside translucent so the internal structure reads through it.
+
+
+  /explodedview             Pulls components apart while keeping their assembly relationship clear.
+
+
+  /microscopic              Zooms into the material, texture, or surface at extreme scale.
+
+
+  /blueprint                Converts the subject into a technical drawing with grid and callouts.
+
+
+  /handwritten              Turns the subject into a casual study sheet with notes and arrows.
+
+
+  /crosssection             Shows a clean slice through the subject from one chosen direction.
+
+
+  /isometric                Presents the subject in a dimensional three-quarter technical view.
+
+
+  /orthographic             Creates front, side, and top views with matching scale.
+
+
+  /transparent              Fades the outer shell so the internal form remains visible.
+
+
+  /skeleton                 Reduces the subject to its frame, supports, bones, or main geometry.
+
+
+  /wireframe                Rebuilds the form as a clean mesh of lines and vertices.
+
+
+  /mechanism                Explains motion or cause-and-effect with a simple visual sequence.
+
+
+  /assembly                 Turns the subject into an ordered build or setup sequence.
+
+
+  /dimensioned              Adds practical measurement lines and proportion cues.
+
+
+  /scale                    Shows the subject beside familiar size references.
+
+
+  /materials                Maps the subject's surfaces into a compact material and texture board.
+
+
+  /productshot              Reframes the subject as polished catalog or ecommerce photography.
+
+
+  /portrait                 Treats the subject as the focus of a composed portrait image.
+
+
+
+
+VISUAL CODEWORD LIBRARY / CODEWORD LIST                                                                          02
+All codewords                                                                                                 23 - 44 / 64
+
+Type only the codeword after uploading an image.
+
+
+
+  /topdown                  Changes the viewpoint to a flat-lay or overhead composition.
+
+
+  /macro                    Moves close to show fine texture, edges, pores, grain, or tiny details.
+
+
+  /aerial                   Reimagines the scene from above like a drone or map camera.
+
+
+  /cinematic                Gives the image film-like composition, contrast, and atmosphere.
+
+
+  /streetphoto              Places the subject in a candid, lived-in documentary moment.
+
+
+  /night                    Rebuilds the lighting as evening or night while preserving the subject.
+
+
+  /goldenhour               Adds warm low-angle light like sunrise or sunset.
+
+
+  /rain                     Adds believable rain, wet surfaces, and a cool atmospheric mood.
+
+
+  /snow                     Adds winter atmosphere, snow cover, and soft cold light.
+
+
+  /longexposure             Turns motion or light into smooth trails and streaks.
+
+
+  /watercolor               Repaints the subject as a loose watercolor illustration.
+
+
+  /ink                      Redraws the subject with confident black ink lines and hatching.
+
+
+  /pencil                   Converts the subject into graphite lines, shading, and construction marks.
+
+
+  /comic                    Turns the subject into a bold comic-style panel with action and graphic shapes.
+
+
+  /storybook                Places the subject in a warm illustrated storybook scene.
+
+
+  /pixelart                 Reduces the subject into a readable low-resolution sprite or scene.
+
+
+  /lowpoly                  Rebuilds the subject from clean faceted polygon surfaces.
+
+
+  /clay                     Makes the subject look like a soft studio clay model.
+
+
+  /papercraft               Reconstructs the subject as folded paper, card, or cut shapes.
+
+
+  /collage                  Builds a mixed-media collage from paper, photos, blocks, and marks.
+
+
+  /risograph                Applies limited ink colors, grain, and offset print texture.
+
+
+  /neon                     Pushes the subject into a dark electric neon visual language.
+
+
+
+
+VISUAL CODEWORD LIBRARY / CODEWORD LIST                                                                                03
+All codewords                                                                                                     45 - 64 / 64
+
+Type only the codeword after uploading an image.
+
+
+
+  /stainedglass             Reinterprets the subject as colored glass panels joined by dark leading.
+
+
+  /retro                    Gives the subject a nostalgic mid-century print or poster treatment.
+
+
+  /infographic              Organizes the subject into a fast-scanning visual explanation.
+
+
+  /flowchart                Turns a process or decision into connected boxes and arrows.
+
+
+  /mindmap                  Expands the subject into a central idea with connected branches.
+
+
+  /mockup                   Places the subject into a practical app, poster, or interface mockup.
+
+
+  /poster                   Turns the subject into a bold poster composition with hierarchy and negative space.
+
+
+  /icon                     Simplifies the subject into a strong, recognizable symbol.
+
+
+  /sticker                  Creates a playful sticker-like version or a small sticker set.
+
+
+  /colorpalette             Extracts a useful palette and pairs it with the source subject.
+
+
+  /moodboard                Builds a compact visual direction board around the source image.
+
+
+  /map                      Abstracts a place or layout into a simple visual map.
+
+
+  /isolate                  Removes the background and leaves a crisp subject cutout.
+
+
+  /backgroundswap           Keeps the subject and replaces the surrounding environment.
+
+
+  /remove                   Removes one unwanted object and repairs the surrounding scene.
+
+
+  /add                      Adds one useful object while matching scale, light, and perspective.
+
+
+  /recolor                  Changes the subject's color while preserving shape and texture.
+
+
+  /restore                  Repairs damage, noise, fading, or age while keeping the subject recognizable.
+
+
+  /translate                Replaces visible text with another language while preserving layout.
+
+
+  /clean                    Simplifies clutter, aligns details, and makes the image easier to read.
+
+
+
+
+VISUAL CODEWORD LIBRARY / CODEWORD LIST                                                                                    04
+How to use the codewords
+One simple workflow for every entry.
+
+
+
+
+01          UPLOAD
+            Add a photo, screenshot, sketch, product image, or scene.
+
+
+
+
+02          TYPE ONLY
+            Send the codeword by itself, for example /cutaway or /watercolor.
+
+
+
+
+03          REVIEW
+            The codeword tells the image model what transformation to apply.
+
+
+
+
+About the first nine examples
+The public share exposes the generated outputs, but not the private source uploads. The before side therefore represents
+the upload step, while the after side uses the exact shared output.
+
+
+
+
+     /cutaway                  one word is the prompt
+
+     Upload an image, type only the codeword, and review the result.
+
+
+
+
+VISUAL CODEWORD LIBRARY / HOW TO USE                                                                                       05
+Index
+Your examples first. Suggested additions follow by category.
+
+
+
+
+REFERENCE SET                                                  ART AND STYLE
+
+
+/360view          360-degree showcase                    7     /watercolor       Watercolor        21
+
+/anatomy          Anatomy labels                         8     /ink              Ink sketch        22
+
+/cutaway          Cutaway view                           9     /pencil           Pencil sketch     22
+
+/layers           Layer stack                           10     /comic            Comic panel       22
+
+/xray             X-ray view                            11     /storybook        Storybook         22
+
+/explodedview     Exploded view                         12     /pixelart         Pixel art         23
+
+/microscopic      Microscopic view                      13     /lowpoly          Low-poly 3D       23
+
+/blueprint        Blueprint                             14     /clay             Clay render       23
+
+/handwritten      Handwritten notes                     15     /papercraft       Papercraft        23
+
+                                                               /collage          Collage           24
+
+STRUCTURE AND ENGINEERING                                      /risograph        Risograph print   24
+
+                                                               /neon             Neon glow         24
+/crosssection     Cross-section                         16     /stainedglass     Stained glass     24
+/isometric        Isometric render                      16     /retro            Retro print       25
+/orthographic     Orthographic sheet                    16
+
+/transparent      Transparent shell                     16
+                                                               DESIGN AND EXPLAIN
+/skeleton         Structural skeleton                   17
+
+/wireframe        Wireframe                             17     /infographic      Infographic       25
+
+/mechanism        How it works                          17     /flowchart        Flowchart         25
+
+/assembly         Assembly steps                        17     /mindmap          Mind map          25
+
+/dimensioned      Dimensioned drawing                   18     /mockup           UI mockup         26
+
+/scale            Scale comparison                      18     /poster           Poster            26
+
+/materials        Material breakdown                    18     /icon             Icon              26
+
+                                                               /sticker          Sticker sheet     26
+
+CAMERA AND LIGHTING                                            /colorpalette     Color palette     27
+
+                                                               /moodboard        Moodboard         27
+/productshot      Product shot                          18     /map              Map view          27
+/portrait         Portrait                              19
+
+/topdown          Top-down view                         19
+                                                               EDITING SHORTCUTS
+/macro            Macro photo                           19
+
+/aerial           Aerial view                           19     /isolate          Clean cutout      27
+
+/cinematic        Cinematic frame                       20     /backgroundswap   Background swap   28
+
+/streetphoto      Street photo                          20     /remove           Object removal    28
+
+/night            Night scene                           20     /add              Object add        28
+
+/goldenhour       Golden hour                           20     /recolor          Recolor           28
+
+/rain             Rainy mood                            21     /restore          Restore           29
+
+/snow             Snowy mood                            21     /translate        Translate text    29
+
+/longexposure     Long exposure                         21     /clean            Clean up          29
+
+
+
+
+VISUAL CODEWORD LIBRARY / INDEX                                                                    06
+YOUR EXAMPLE 01 / 09                                                                                                   REFERENCE SET
+
+
+
+
+/360view 360-degree showcase
+Turns one uploaded subject into a clean multi-angle presentation.
+
+
+
+
+BEFORE                                                           AFTER
+
+
+
+
+                       IMAGE UPLOAD
+
+
+
+                        then type only
+
+
+
+
+                       /360view
+
+
+
+
+BEFORE                                                           AFTER
+One uploaded product image.                                      Front, side, rear, and top views in one visual set.
+
+
+
+
+PROMPT         /360view                  Upload an image and type only this codeword.
+
+
+
+
+VISUAL CODEWORD LIBRARY / YOUR EXAMPLES                                                                                           07
+YOUR EXAMPLE 02 / 09                                                                                                     REFERENCE SET
+
+
+
+
+/anatomy Anatomy labels
+Explains a subject by separating it into visible parts with labels.
+
+
+
+
+BEFORE                                                                AFTER
+
+
+
+
+                       IMAGE UPLOAD
+
+
+
+                         then type only
+
+
+
+
+                       /anatomy
+
+
+
+
+BEFORE                                                                AFTER
+One uploaded subject image.                                           A clear educational parts diagram with callouts.
+
+
+
+
+PROMPT          /anatomy                  Upload an image and type only this codeword.
+
+
+
+
+VISUAL CODEWORD LIBRARY / YOUR EXAMPLES                                                                                             08
+YOUR EXAMPLE 03 / 09                                                                                                  REFERENCE SET
+
+
+
+
+/cutaway Cutaway view
+Slices through the outside so the inside becomes visible.
+
+
+
+
+BEFORE                                                            AFTER
+
+
+
+
+                       IMAGE UPLOAD
+
+
+
+                         then type only
+
+
+
+
+                        /cutaway
+
+
+
+
+BEFORE                                                            AFTER
+One uploaded object or vehicle image.                             A realistic cutaway revealing internal structure.
+
+
+
+
+PROMPT          /cutaway                  Upload an image and type only this codeword.
+
+
+
+
+VISUAL CODEWORD LIBRARY / YOUR EXAMPLES                                                                                          09
+YOUR EXAMPLE 04 / 09                                                                                                  REFERENCE SET
+
+
+
+
+/layers Layer stack
+Separates an object into stacked surface-to-core layers.
+
+
+
+
+BEFORE                                                            AFTER
+
+
+
+
+                       IMAGE UPLOAD
+
+
+
+                         then type only
+
+
+
+
+                         /layers
+
+
+
+
+BEFORE                                                            AFTER
+One uploaded object or building image.                            A readable vertical stack of the object's layers.
+
+
+
+
+PROMPT          /layers                   Upload an image and type only this codeword.
+
+
+
+
+VISUAL CODEWORD LIBRARY / YOUR EXAMPLES                                                                                          10
+YOUR EXAMPLE 05 / 09                                                                                       REFERENCE SET
+
+
+
+
+/xray X-ray view
+Makes the outside translucent so the internal structure reads through it.
+
+
+
+
+BEFORE                                                           AFTER
+
+
+
+
+                       IMAGE UPLOAD
+
+
+
+                        then type only
+
+
+
+
+                          /xray
+
+
+
+
+BEFORE                                                           AFTER
+One uploaded subject image.                                      A cool, semi-transparent internal view.
+
+
+
+
+PROMPT         /xray                     Upload an image and type only this codeword.
+
+
+
+
+VISUAL CODEWORD LIBRARY / YOUR EXAMPLES                                                                               11
+YOUR EXAMPLE 06 / 09                                                                                    REFERENCE SET
+
+
+
+
+/explodedview Exploded view
+Pulls components apart while keeping their assembly relationship clear.
+
+
+
+
+BEFORE                                                        AFTER
+
+
+
+
+                       IMAGE UPLOAD
+
+
+
+                         then type only
+
+
+
+
+                   /explodedview
+
+
+
+
+BEFORE                                                        AFTER
+One uploaded device or object image.                          Floating parts arranged in build order.
+
+
+
+
+PROMPT          /explodedview Upload an image and type only this codeword.
+
+
+
+
+VISUAL CODEWORD LIBRARY / YOUR EXAMPLES                                                                            12
+YOUR EXAMPLE 07 / 09                                                                                          REFERENCE SET
+
+
+
+
+/microscopic Microscopic view
+Zooms into the material, texture, or surface at extreme scale.
+
+
+
+
+BEFORE                                                            AFTER
+
+
+
+
+                       IMAGE UPLOAD
+
+
+
+                         then type only
+
+
+
+
+                    /microscopic
+
+
+
+
+BEFORE                                                            AFTER
+One uploaded material or object image.                            A macro or microscope-like surface study.
+
+
+
+
+PROMPT          /microscopic              Upload an image and type only this codeword.
+
+
+
+
+VISUAL CODEWORD LIBRARY / YOUR EXAMPLES                                                                                  13
+YOUR EXAMPLE 08 / 09                                                                                             REFERENCE SET
+
+
+
+
+/blueprint Blueprint
+Converts the subject into a technical drawing with grid and callouts.
+
+
+
+
+BEFORE                                                           AFTER
+
+
+
+
+                       IMAGE UPLOAD
+
+
+
+                        then type only
+
+
+
+
+                     /blueprint
+
+
+
+
+BEFORE                                                           AFTER
+One uploaded object image.                                       A blue technical sheet with linework and dimensions.
+
+
+
+
+PROMPT         /blueprint                Upload an image and type only this codeword.
+
+
+
+
+VISUAL CODEWORD LIBRARY / YOUR EXAMPLES                                                                                     14
+YOUR EXAMPLE 09 / 09                                                                                              REFERENCE SET
+
+
+
+
+/handwritten Handwritten notes
+Turns the subject into a casual study sheet with notes and arrows.
+
+
+
+
+BEFORE                                                           AFTER
+
+
+
+
+                       IMAGE UPLOAD
+
+
+
+                        then type only
+
+
+
+
+                   /handwritten
+
+
+
+
+BEFORE                                                           AFTER
+One uploaded subject or page image.                              A handwritten visual summary with annotations.
+
+
+
+
+PROMPT         /handwritten              Upload an image and type only this codeword.
+
+
+
+
+VISUAL CODEWORD LIBRARY / YOUR EXAMPLES                                                                                      15
+Suggested codewords                                                                           TEXT ONLY / NO GENERATED VISUALS
+
+
+
+
+  /crosssection                        Cross-section                                                           STRUCTURE AND ENGINEERING
+
+
+  Shows a clean slice through the subject from one chosen direction.
+
+
+
+
+  BEFORE                                                                AFTER
+  A normal exterior view.                                               A labeled slice that reveals the interior profile.
+
+
+
+
+  PROMPT          /crosssection
+
+
+
+
+  /isometric                      Isometric render                                                             STRUCTURE AND ENGINEERING
+
+
+  Presents the subject in a dimensional three-quarter technical view.
+
+
+
+
+  BEFORE                                                                AFTER
+  A flat or front-facing image.                                         A clean isometric drawing with visible depth.
+
+
+
+
+  PROMPT          /isometric
+
+
+
+
+  /orthographic                        Orthographic sheet                                                      STRUCTURE AND ENGINEERING
+
+
+  Creates front, side, and top views with matching scale.
+
+
+
+
+  BEFORE                                                                AFTER
+  One angle of the subject.                                             A multi-view engineering sheet.
+
+
+
+
+  PROMPT          /orthographic
+
+
+
+
+  /transparent                       Transparent shell                                                         STRUCTURE AND ENGINEERING
+
+
+  Fades the outer shell so the internal form remains visible.
+
+
+
+
+  BEFORE                                                                AFTER
+  A solid, opaque subject.                                              A ghosted or translucent body with inner details.
+
+
+
+
+  PROMPT          /transparent
+
+
+
+VISUAL CODEWORD LIBRARY / SUGGESTED CODEWORDS                                                                                              16
+Suggested codewords                                                                        TEXT ONLY / NO GENERATED VISUALS
+
+
+
+
+  /skeleton                     Structural skeleton                                                         STRUCTURE AND ENGINEERING
+
+
+  Reduces the subject to its frame, supports, bones, or main geometry.
+
+
+
+
+  BEFORE                                                               AFTER
+  A fully rendered subject.                                            A simplified structural framework.
+
+
+
+
+  PROMPT         /skeleton
+
+
+
+
+  /wireframe                     Wireframe                                                                  STRUCTURE AND ENGINEERING
+
+
+  Rebuilds the form as a clean mesh of lines and vertices.
+
+
+
+
+  BEFORE                                                               AFTER
+  A filled or photographic subject.                                    A minimal 3D wireframe model.
+
+
+
+
+  PROMPT         /wireframe
+
+
+
+
+  /mechanism                     How it works                                                               STRUCTURE AND ENGINEERING
+
+
+  Explains motion or cause-and-effect with a simple visual sequence.
+
+
+
+
+  BEFORE                                                               AFTER
+  A static object or machine.                                          A step-by-step mechanism diagram.
+
+
+
+
+  PROMPT         /mechanism
+
+
+
+
+  /assembly                     Assembly steps                                                              STRUCTURE AND ENGINEERING
+
+
+  Turns the subject into an ordered build or setup sequence.
+
+
+
+
+  BEFORE                                                               AFTER
+  A completed object.                                                  Numbered stages from loose parts to finished form.
+
+
+
+
+  PROMPT         /assembly
+
+
+
+VISUAL CODEWORD LIBRARY / SUGGESTED CODEWORDS                                                                                           17
+Suggested codewords                                                                     TEXT ONLY / NO GENERATED VISUALS
+
+
+
+
+  /dimensioned                          Dimensioned drawing                                             STRUCTURE AND ENGINEERING
+
+
+  Adds practical measurement lines and proportion cues.
+
+
+
+
+  BEFORE                                                            AFTER
+  A regular product image.                                          A technical drawing with dimension arrows.
+
+
+
+
+  PROMPT         /dimensioned
+
+
+
+
+  /scale             Scale comparison                                                                   STRUCTURE AND ENGINEERING
+
+
+  Shows the subject beside familiar size references.
+
+
+
+
+  BEFORE                                                            AFTER
+  A single subject with no scale cue.                               A clear comparison against a hand, coin, person, or ruler.
+
+
+
+
+  PROMPT         /scale
+
+
+
+
+  /materials                     Material breakdown                                                     STRUCTURE AND ENGINEERING
+
+
+  Maps the subject's surfaces into a compact material and texture board.
+
+
+
+
+  BEFORE                                                            AFTER
+  A finished object image.                                          Swatches and close-ups of wood, metal, glass, fabric, or stone.
+
+
+
+
+  PROMPT         /materials
+
+
+
+
+  /productshot                          Product shot                                                             CAMERA AND LIGHTING
+
+
+  Reframes the subject as polished catalog or ecommerce photography.
+
+
+
+
+  BEFORE                                                            AFTER
+  A casual or cluttered photo.                                      A clean studio shot with controlled light and space.
+
+
+
+
+  PROMPT         /productshot
+
+
+
+VISUAL CODEWORD LIBRARY / SUGGESTED CODEWORDS                                                                                          18
+Suggested codewords                                                                          TEXT ONLY / NO GENERATED VISUALS
+
+
+
+
+  /portrait                  Portrait                                                                                 CAMERA AND LIGHTING
+
+
+  Treats the subject as the focus of a composed portrait image.
+
+
+
+
+  BEFORE                                                                AFTER
+  A casual subject image.                                               A centered portrait with deliberate framing and light.
+
+
+
+
+  PROMPT        /portrait
+
+
+
+
+  /topdown                  Top-down view                                                                             CAMERA AND LIGHTING
+
+
+  Changes the viewpoint to a flat-lay or overhead composition.
+
+
+
+
+  BEFORE                                                                AFTER
+  An eye-level view.                                                    A clean overhead arrangement with visible layout.
+
+
+
+
+  PROMPT        /topdown
+
+
+
+
+  /macro               Macro photo                                                                                    CAMERA AND LIGHTING
+
+
+  Moves close to show fine texture, edges, pores, grain, or tiny details.
+
+
+
+
+  BEFORE                                                                AFTER
+  A normal-distance photo.                                              A shallow-depth macro close-up.
+
+
+
+
+  PROMPT        /macro
+
+
+
+
+  /aerial               Aerial view                                                                                   CAMERA AND LIGHTING
+
+
+  Reimagines the scene from above like a drone or map camera.
+
+
+
+
+  BEFORE                                                                AFTER
+  A ground-level image.                                                 A high-angle view with strong spatial context.
+
+
+
+
+  PROMPT        /aerial
+
+
+
+VISUAL CODEWORD LIBRARY / SUGGESTED CODEWORDS                                                                                               19
+Suggested codewords                                                                         TEXT ONLY / NO GENERATED VISUALS
+
+
+
+
+  /cinematic                     Cinematic frame                                                                    CAMERA AND LIGHTING
+
+
+  Gives the image film-like composition, contrast, and atmosphere.
+
+
+
+
+  BEFORE                                                               AFTER
+  A normal snapshot.                                                   A dramatic widescreen-looking scene.
+
+
+
+
+  PROMPT         /cinematic
+
+
+
+
+  /streetphoto                      Street photo                                                                    CAMERA AND LIGHTING
+
+
+  Places the subject in a candid, lived-in documentary moment.
+
+
+
+
+  BEFORE                                                               AFTER
+  A posed or isolated subject.                                         A natural street-style frame with context.
+
+
+
+
+  PROMPT         /streetphoto
+
+
+
+
+  /night              Night scene                                                                                   CAMERA AND LIGHTING
+
+
+  Rebuilds the lighting as evening or night while preserving the subject.
+
+
+
+
+  BEFORE                                                               AFTER
+  A daylight image.                                                    A darker scene with practical lights and contrast.
+
+
+
+
+  PROMPT         /night
+
+
+
+
+  /goldenhour                     Golden hour                                                                       CAMERA AND LIGHTING
+
+
+  Adds warm low-angle light like sunrise or sunset.
+
+
+
+
+  BEFORE                                                               AFTER
+  Neutral daylight.                                                    Long warm shadows and golden highlights.
+
+
+
+
+  PROMPT         /goldenhour
+
+
+
+VISUAL CODEWORD LIBRARY / SUGGESTED CODEWORDS                                                                                             20
+Suggested codewords                                                                       TEXT ONLY / NO GENERATED VISUALS
+
+
+
+
+  /rain           Rainy mood                                                                                     CAMERA AND LIGHTING
+
+
+  Adds believable rain, wet surfaces, and a cool atmospheric mood.
+
+
+
+
+  BEFORE                                                             AFTER
+  A dry scene.                                                       A rain-soaked version with reflections.
+
+
+
+
+  PROMPT         /rain
+
+
+
+
+  /snow           Snowy mood                                                                                     CAMERA AND LIGHTING
+
+
+  Adds winter atmosphere, snow cover, and soft cold light.
+
+
+
+
+  BEFORE                                                             AFTER
+  A warm-season scene.                                               A quiet snowy version with softened contrast.
+
+
+
+
+  PROMPT         /snow
+
+
+
+
+  /longexposure                     Long exposure                                                                CAMERA AND LIGHTING
+
+
+  Turns motion or light into smooth trails and streaks.
+
+
+
+
+  BEFORE                                                             AFTER
+  A frozen instant.                                                  Flowing light trails or blurred motion.
+
+
+
+
+  PROMPT         /longexposure
+
+
+
+
+  /watercolor                  Watercolor                                                                              ART AND STYLE
+
+
+  Repaints the subject as a loose watercolor illustration.
+
+
+
+
+  BEFORE                                                             AFTER
+  A photo or rendered image.                                         Paper texture, pigment blooms, and soft brush edges.
+
+
+
+
+  PROMPT         /watercolor
+
+
+
+VISUAL CODEWORD LIBRARY / SUGGESTED CODEWORDS                                                                                          21
+Suggested codewords                                                                        TEXT ONLY / NO GENERATED VISUALS
+
+
+
+
+  /ink         Ink sketch                                                                                                  ART AND STYLE
+
+
+  Redraws the subject with confident black ink lines and hatching.
+
+
+
+
+  BEFORE                                                              AFTER
+  A polished image.                                                   A high-contrast ink drawing.
+
+
+
+
+  PROMPT           /ink
+
+
+
+
+  /pencil                 Pencil sketch                                                                                    ART AND STYLE
+
+
+  Converts the subject into graphite lines, shading, and construction marks.
+
+
+
+
+  BEFORE                                                              AFTER
+  A photo or render.                                                  A tactile pencil study on paper.
+
+
+
+
+  PROMPT           /pencil
+
+
+
+
+  /comic               Comic panel                                                                                         ART AND STYLE
+
+
+  Turns the subject into a bold comic-style panel with action and graphic shapes.
+
+
+
+
+  BEFORE                                                              AFTER
+  A normal image.                                                     A panel with inked outlines, color blocks, and energy.
+
+
+
+
+  PROMPT           /comic
+
+
+
+
+  /storybook                   Storybook                                                                                   ART AND STYLE
+
+
+  Places the subject in a warm illustrated storybook scene.
+
+
+
+
+  BEFORE                                                              AFTER
+  A plain image.                                                      A gentle narrative illustration with soft shapes.
+
+
+
+
+  PROMPT           /storybook
+
+
+
+VISUAL CODEWORD LIBRARY / SUGGESTED CODEWORDS                                                                                              22
+Suggested codewords                                                                          TEXT ONLY / NO GENERATED VISUALS
+
+
+
+
+  /pixelart                   Pixel art                                                                                ART AND STYLE
+
+
+  Reduces the subject into a readable low-resolution sprite or scene.
+
+
+
+
+  BEFORE                                                                AFTER
+  A detailed image.                                                     Crisp blocky pixels and limited colors.
+
+
+
+
+  PROMPT        /pixelart
+
+
+
+
+  /lowpoly               Low-poly 3D                                                                                   ART AND STYLE
+
+
+  Rebuilds the subject from clean faceted polygon surfaces.
+
+
+
+
+  BEFORE                                                                AFTER
+  A photo or smooth render.                                             A geometric low-poly model.
+
+
+
+
+  PROMPT        /lowpoly
+
+
+
+
+  /clay           Clay render                                                                                          ART AND STYLE
+
+
+  Makes the subject look like a soft studio clay model.
+
+
+
+
+  BEFORE                                                                AFTER
+  A finished image.                                                     A tactile clay-like form with soft shadows.
+
+
+
+
+  PROMPT        /clay
+
+
+
+
+  /papercraft                    Papercraft                                                                            ART AND STYLE
+
+
+  Reconstructs the subject as folded paper, card, or cut shapes.
+
+
+
+
+  BEFORE                                                                AFTER
+  A normal image.                                                       Layered paper edges and handmade dimensionality.
+
+
+
+
+  PROMPT        /papercraft
+
+
+
+VISUAL CODEWORD LIBRARY / SUGGESTED CODEWORDS                                                                                          23
+Suggested codewords                                                                         TEXT ONLY / NO GENERATED VISUALS
+
+
+
+
+  /collage                 Collage                                                                                       ART AND STYLE
+
+
+  Builds a mixed-media collage from paper, photos, blocks, and marks.
+
+
+
+
+  BEFORE                                                              AFTER
+  A single image.                                                     A deliberately assembled editorial collage.
+
+
+
+
+  PROMPT         /collage
+
+
+
+
+  /risograph                  Risograph print                                                                            ART AND STYLE
+
+
+  Applies limited ink colors, grain, and offset print texture.
+
+
+
+
+  BEFORE                                                              AFTER
+  A clean digital image.                                              A tactile two- or three-ink poster print.
+
+
+
+
+  PROMPT         /risograph
+
+
+
+
+  /neon             Neon glow                                                                                            ART AND STYLE
+
+
+  Pushes the subject into a dark electric neon visual language.
+
+
+
+
+  BEFORE                                                              AFTER
+  A normal-light image.                                               Bright cyan, magenta, or amber glow on a dark field.
+
+
+
+
+  PROMPT         /neon
+
+
+
+
+  /stainedglass                      Stained glass                                                                       ART AND STYLE
+
+
+  Reinterprets the subject as colored glass panels joined by dark leading.
+
+
+
+
+  BEFORE                                                              AFTER
+  A normal image.                                                     A jewel-toned window-like composition.
+
+
+
+
+  PROMPT         /stainedglass
+
+
+
+VISUAL CODEWORD LIBRARY / SUGGESTED CODEWORDS                                                                                            24
+Suggested codewords                                                                          TEXT ONLY / NO GENERATED VISUALS
+
+
+
+
+  /retro               Retro print                                                                                              ART AND STYLE
+
+
+  Gives the subject a nostalgic mid-century print or poster treatment.
+
+
+
+
+  BEFORE                                                                 AFTER
+  A modern image.                                                        Faded ink, simple shapes, and vintage color blocks.
+
+
+
+
+  PROMPT         /retro
+
+
+
+
+  /infographic                    Infographic                                                                            DESIGN AND EXPLAIN
+
+
+  Organizes the subject into a fast-scanning visual explanation.
+
+
+
+
+  BEFORE                                                                 AFTER
+  A complex subject image.                                               A hierarchy of icons, labels, arrows, and key facts.
+
+
+
+
+  PROMPT         /infographic
+
+
+
+
+  /flowchart                  Flowchart                                                                                  DESIGN AND EXPLAIN
+
+
+  Turns a process or decision into connected boxes and arrows.
+
+
+
+
+  BEFORE                                                                 AFTER
+  A paragraph or messy process.                                          A readable step-by-step flow.
+
+
+
+
+  PROMPT         /flowchart
+
+
+
+
+  /mindmap                Mind map                                                                                       DESIGN AND EXPLAIN
+
+
+  Expands the subject into a central idea with connected branches.
+
+
+
+
+  BEFORE                                                                 AFTER
+  One topic or note.                                                     A radial map of related ideas.
+
+
+
+
+  PROMPT         /mindmap
+
+
+
+VISUAL CODEWORD LIBRARY / SUGGESTED CODEWORDS                                                                                                   25
+Suggested codewords                                                                            TEXT ONLY / NO GENERATED VISUALS
+
+
+
+
+  /mockup                UI mockup                                                                                      DESIGN AND EXPLAIN
+
+
+  Places the subject into a practical app, poster, or interface mockup.
+
+
+
+
+  BEFORE                                                                  AFTER
+  A raw image or idea.                                                    A realistic screen or presentation layout.
+
+
+
+
+  PROMPT        /mockup
+
+
+
+
+  /poster                Poster                                                                                         DESIGN AND EXPLAIN
+
+
+  Turns the subject into a bold poster composition with hierarchy and negative space.
+
+
+
+
+  BEFORE                                                                  AFTER
+  A normal image.                                                         A designed poster with a clear focal point.
+
+
+
+
+  PROMPT        /poster
+
+
+
+
+  /icon          Icon                                                                                                   DESIGN AND EXPLAIN
+
+
+  Simplifies the subject into a strong, recognizable symbol.
+
+
+
+
+  BEFORE                                                                  AFTER
+  A detailed image.                                                       A clean icon with a strong silhouette.
+
+
+
+
+  PROMPT        /icon
+
+
+
+
+  /sticker                Sticker sheet                                                                                 DESIGN AND EXPLAIN
+
+
+  Creates a playful sticker-like version or a small sticker set.
+
+
+
+
+  BEFORE                                                                  AFTER
+  A normal subject image.                                                 Bold outlines, simple shapes, and sticker edges.
+
+
+
+
+  PROMPT        /sticker
+
+
+
+VISUAL CODEWORD LIBRARY / SUGGESTED CODEWORDS                                                                                                26
+Suggested codewords                                                                      TEXT ONLY / NO GENERATED VISUALS
+
+
+
+
+  /colorpalette                     Color palette                                                                   DESIGN AND EXPLAIN
+
+
+  Extracts a useful palette and pairs it with the source subject.
+
+
+
+
+  BEFORE                                                             AFTER
+  An image with unknown colors.                                      A visual board of swatches and color roles.
+
+
+
+
+  PROMPT        /colorpalette
+
+
+
+
+  /moodboard                   Moodboard                                                                            DESIGN AND EXPLAIN
+
+
+  Builds a compact visual direction board around the source image.
+
+
+
+
+  BEFORE                                                             AFTER
+  One reference image.                                               A curated board of textures, colors, and related cues.
+
+
+
+
+  PROMPT        /moodboard
+
+
+
+
+  /map         Map view                                                                                             DESIGN AND EXPLAIN
+
+
+  Abstracts a place or layout into a simple visual map.
+
+
+
+
+  BEFORE                                                             AFTER
+  A scene or location image.                                         Paths, zones, pins, and landmarks in a readable plan.
+
+
+
+
+  PROMPT        /map
+
+
+
+
+  /isolate               Clean cutout                                                                               EDITING SHORTCUTS
+
+
+  Removes the background and leaves a crisp subject cutout.
+
+
+
+
+  BEFORE                                                             AFTER
+  A subject on a busy background.                                    A clean isolated subject on white or transparent space.
+
+
+
+
+  PROMPT        /isolate
+
+
+
+VISUAL CODEWORD LIBRARY / SUGGESTED CODEWORDS                                                                                            27
+Suggested codewords                                                                          TEXT ONLY / NO GENERATED VISUALS
+
+
+
+
+  /backgroundswap                             Background swap                                                        EDITING SHORTCUTS
+
+
+  Keeps the subject and replaces the surrounding environment.
+
+
+
+
+  BEFORE                                                                 AFTER
+  A subject in the original setting.                                     The same subject in a new believable background.
+
+
+
+
+  PROMPT          /backgroundswap
+
+
+
+
+  /remove                Object removal                                                                              EDITING SHORTCUTS
+
+
+  Removes one unwanted object and repairs the surrounding scene.
+
+
+
+
+  BEFORE                                                                 AFTER
+  A photo with clutter or an unwanted item.                              A natural-looking clean scene.
+
+
+
+
+  PROMPT          /remove
+
+
+
+
+  /add          Object add                                                                                           EDITING SHORTCUTS
+
+
+  Adds one useful object while matching scale, light, and perspective.
+
+
+
+
+  BEFORE                                                                 AFTER
+  A scene missing one element.                                           The same scene with the new element integrated.
+
+
+
+
+  PROMPT          /add
+
+
+
+
+  /recolor                  Recolor                                                                                  EDITING SHORTCUTS
+
+
+  Changes the subject's color while preserving shape and texture.
+
+
+
+
+  BEFORE                                                                 AFTER
+  The original colorway.                                                 A new controlled colorway.
+
+
+
+
+  PROMPT          /recolor
+
+
+
+VISUAL CODEWORD LIBRARY / SUGGESTED CODEWORDS                                                                                            28
+Suggested codewords                                                                        TEXT ONLY / NO GENERATED VISUALS
+
+
+
+
+  /restore                 Restore                                                                                      EDITING SHORTCUTS
+
+
+  Repairs damage, noise, fading, or age while keeping the subject recognizable.
+
+
+
+
+  BEFORE                                                               AFTER
+  A worn, faded, or damaged image.                                     A cleaner restored version.
+
+
+
+
+  PROMPT        /restore
+
+
+
+
+  /translate                  Translate text                                                                            EDITING SHORTCUTS
+
+
+  Replaces visible text with another language while preserving layout.
+
+
+
+
+  BEFORE                                                               AFTER
+  An image containing text.                                            The same design with translated text in place.
+
+
+
+
+  PROMPT        /translate
+
+
+
+
+  /clean            Clean up                                                                                            EDITING SHORTCUTS
+
+
+  Simplifies clutter, aligns details, and makes the image easier to read.
+
+
+
+
+  BEFORE                                                               AFTER
+  A messy or busy image.                                               A cleaner, more legible version.
+
+
+
+
+  PROMPT        /clean
+
+
+
+
+VISUAL CODEWORD LIBRARY / SUGGESTED CODEWORDS                                                                                               29
+
