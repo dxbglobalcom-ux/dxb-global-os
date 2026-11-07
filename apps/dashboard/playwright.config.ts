@@ -1,15 +1,13 @@
 // L5 E2E runner (TEST_STRATEGY §3 L5, §24: `pnpm --filter dashboard exec
 // playwright test`). Test files live in tests/e2e/ at the repo root (§5-6).
 //
-// AUTH MODEL (measured constraint, 2026-07-18): the CEO account has no MFA
-// factor enrolled, so an automated form login would trigger the ENROLL step
-// and MUTATE the CEO's auth state — forbidden. And session-cookie extraction
-// from existing browser profiles is classifier-blocked (credential material
-// never enters transcripts — lh-auth rule). Therefore:
+// AUTH MODEL: the engineers hold the dashboard login through their own
+// account on the construction engine (CEO 2026-10-21, ledger
+// engineer-account-holds-the-keys-2026-10-21) — never the CEO's. Therefore:
 //   - public.spec.ts runs ALWAYS (no session needed);
 //   - authed.spec.ts runs only when DXB_E2E_STATE points at a storageState
-//     JSON the CEO minted HIMSELF via `node scripts/test/e2e-login.mjs`
-//     (headed window, he logs in, state saved chmod 600 OUTSIDE the repo).
+//     JSON minted without a human by `node scripts/test/e2e-state-mint.mjs`
+//     (chmod 600, OUTSIDE the repo; see that file and board row B03-bis).
 import { defineConfig } from "@playwright/test";
 
 export default defineConfig({

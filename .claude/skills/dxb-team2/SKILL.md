@@ -18,6 +18,10 @@ and `dxb-close-row`.
 THE CEO'S JOB, in one sentence he would sign
    │
    ├── small — a fix, a deletion, a text he already worded: no plan, straight to ARRANGE
+   ├── light — a small, low-risk job (narrow glue, a setting, a record, a deletion he ordered): one Opus 5.5
+   │   session at medium does it end to end, tests it at once, no Sol pass; reading or measuring that would
+   │   swell its context goes to a helper (his word, 2026-11-07 <!-- CEO-OK: light-lane-small-jobs-opus-medium-2026-11-07 -->).
+   │   Money, the approval gate, security, moving data, parallel or many-place changes keep the full flow.
    │
 PLAN      the talk turns to plan, design or architecture → `plan`: effort warning MAX (§2); his "plan
           konuşacağız" opens this door at once, the job is asked inside it
@@ -166,7 +170,7 @@ four, not the default.
 
 ## 4. Sol — one blind pass
 
-Every job that changes code, a rule or a door gets one Sol pass, after BUILD; a change to the records
+Every job that changes code, a rule or a door gets one Sol pass, after BUILD — the light lane (§1) excepted; a change to the records
 alone (STATE, the board) is checked by the rulers on commit instead.
 
 - **Launch:** `scripts/governance/refuter.sh [--effort medium|high|xhigh] "<brief>"` — `high` by
