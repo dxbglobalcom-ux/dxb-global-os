@@ -33,12 +33,14 @@ checked on the other — the official page settles a disagreement. Measured 2026
 blind: both together 23/25, Claude web alone 21, the toolbox alone 21 (`.planning/quick/20261015-arama-testi/`).
 
 **ChatGPT researches beside us, every time** (his standing word, 2026-11-07 <!-- CEO-OK: research-chatgpt-side-every-time-2026-11-07 -->):
-on either road, the same question also goes to ChatGPT through Codex (his ChatGPT login; read-only by sandbox, its
-own `web_search` works — measured 2026-11-07), launched in the background at the start so it runs while we hunt:
-`codex --search exec -s read-only --skip-git-repo-check -C <outdir>/gpt -c model_reasoning_effort="high" -o <outdir>/gpt/answer.md "<the question; a source URL beside every claim; answer in Turkish>"`
-(`--search` goes before `exec`; make `<outdir>/gpt` first). Its answer is set beside ours before the page is written:
-what both found stands stronger, what only one found is checked at its own source, a contradiction is named to him.
-The page says which side found what. No need for him to ask for it, and no browser — the ChatGPT window stays his.
+on either road, the session itself asks ChatGPT — his own ChatGPT at chatgpt.com, in his Chrome, through the
+`mcp__claude-in-chrome__*` tools: a new tab of its own, a new chat, the question beginning "Search the web for this."
+and asking for a source URL beside every claim, sent at the start so it searches while we hunt; its answer is read
+with `get_page_text` once it stops writing, and the tab is closed. **Never Codex** for research (his word: *"Kodeksle
+alakası olmaması lazım"*). Its answer is set beside ours before the page is written: what both found stands
+stronger, what only one found is checked at its own source, a contradiction is named to him. The page says which
+side found what. He never has to ask for it. Chrome closed or the extension not connected → say so in the answer,
+never skip it silently. Nothing of the holding's own names or unreleased work goes into the question.
 
 ## Where to look — one command per platform
 
