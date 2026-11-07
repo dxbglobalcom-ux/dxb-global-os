@@ -18,6 +18,10 @@ and `dxb-close-row`.
 THE CEO'S JOB, in one sentence he would sign
    │
    ├── small — a fix, a deletion, a text he already worded: no plan, straight to ARRANGE
+   ├── light — a small, low-risk job (narrow glue, a setting, a record, a deletion he ordered): one Opus 5.5
+   │   session at medium does it end to end, tests it at once, no Sol pass; reading or measuring that would
+   │   swell its context goes to a helper (his word, 2026-11-07 <!-- CEO-OK: light-lane-small-jobs-opus-medium-2026-11-07 -->).
+   │   Money, the approval gate, security, moving data, parallel or many-place changes keep the full flow.
    │
 PLAN      the talk turns to plan, design or architecture → `plan`: effort warning MAX (§2); his "plan
           konuşacağız" opens this door at once, the job is asked inside it
@@ -166,7 +170,7 @@ four, not the default.
 
 ## 4. Sol — one blind pass
 
-Every job that changes code, a rule or a door gets one Sol pass, after BUILD; a change to the records
+Every job that changes code, a rule or a door gets one Sol pass, after BUILD — the light lane (§1) excepted; a change to the records
 alone (STATE, the board) is checked by the rulers on commit instead.
 
 - **Launch:** `scripts/governance/refuter.sh [--effort medium|high|xhigh] "<brief>"` — `high` by
@@ -187,7 +191,9 @@ alone (STATE, the board) is checked by the rulers on commit instead.
   **A** blocks · **B** is fixed in this pass · **C** is older than this work and stays in the job's
   report — never the board; a row opens only on his word.
 - **Fix:** a fork or a `helper-writer` fixes each A and B; the lead verifies the finding's own case.
-  There is no second Sol round <!-- CEO-OK: sol-single-pass-fixes-by-helper-2026-10-03 -->.
+  There is no second Sol round <!-- CEO-OK: sol-single-pass-fixes-by-helper-2026-10-03 -->. A ruler the
+  audit shows wrong is corrected by the builder in its own `records(ruler): …` commit, never inside the
+  build commit it measures <!-- CEO-OK: audit-law-checker-only-checks-2026-09-15 -->.
 - **Dispute:** the lead runs the evidence Sol gave — it fails → real, fixed; it holds → the finding drops
   and the report says why. A question no test can settle is the lead's, with its reason in the report.
 - **Sol unavailable** (quota, error, timeout): on an ordinary job the `refuter` subagent (Opus 5.5 ·
