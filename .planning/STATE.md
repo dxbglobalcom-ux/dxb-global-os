@@ -64,6 +64,12 @@ Earlier days: `.planning/STATE-ARCHIVE.md` § "Moved out of STATE.md on 2026-11-
 
 ## Next
 
+FIRST, on his word (2026-11-07, late): talk with him about the reel https://www.instagram.com/reel/Detxk1CyFJK/ — he opens a
+new session for it; watch it first (dxb-watch-links, one Opus reader). Then: the studio skill "visual codewords" — the 64 one-word
+image triggers (`.planning/quick/20261107-ugc/visual-codeword-library.txt`) plus the reel's 5 product shortcuts (`u4-slash.md`), each
+backed by a full prompt in our realism language (`tools/studio-prompts/realism/`), run with the Codex image tool; placed in
+`tools/studio-prompts/`, tied to B43. His yes to propose it was given; nothing written yet.
+
 0. Revenue — the lines are on the board (B83 and the notes on its related rows); each is built at its row's rank
    in the board's reorder and bench-tested with it, sold when the key is turned. Rapor 3's suggested order for Nate
    Herk's systems (company brain first, built on the holding's own V2 memory) goes into that reorder.
