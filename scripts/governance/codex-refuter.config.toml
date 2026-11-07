@@ -73,6 +73,13 @@ command = "/home/dxb/scrapling-env/bin/scrapling"
 args = ["mcp"]
 enabled = false
 
+# node_repl is defined by the ChatGPT desktop app in the base ~/.codex/config.toml (appeared 2026-11-07,
+# its computer-use REPL); it carries its own command so the profile stays valid wherever that entry is absent.
+[mcp_servers.node_repl]
+command = "/usr/lib/chatgpt/resources/cua_node/bin/node_repl"
+args = []
+enabled = false
+
 # THE ONE TOOL: a read-only query into the construction engine as `sol_reader`.
 # Approved because it is the only MCP tool this profile leaves on; without the
 # approval Codex refuses the call ("approval policy is never"). refuter.sh turns
