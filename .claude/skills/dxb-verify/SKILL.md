@@ -60,10 +60,12 @@ pasted into the evidence, and the blast radius measured.
 
 ## Traps this project has already paid for
 
-- **Shipping runtime code is not shipping until the resident services are restarted** in the same
-  turn (`systemctl --user restart dxb-scheduler`; `dxb-jarvis` is stopped and disabled and is not
-  started <!-- CEO-OK: dxb-verify-battery-and-restart-lines-2026-10-03 -->), and that restart is part
-  of the evidence. A stale resident silently answered the CEO with pre-session code once.
+- **Shipping runtime code is not shipping until a RUNNING resident service is restarted** in the
+  same turn, and that restart is part of the evidence. A stale resident silently answered the CEO
+  with pre-session code once. A stopped service stays stopped: `dxb-scheduler` and the company engine
+  wait for the key turn <!-- CEO-OK: company-engine-stopped-until-the-key-turn-2026-10-14 -->, and
+  `dxb-jarvis` is stopped and disabled <!-- CEO-OK: dxb-verify-battery-and-restart-lines-2026-10-03 -->
+  — check `systemctl --user is-active <unit>` first, never start one to restart it.
 - **Live-database tests must be state-independent.** A case that books "today" passes until the
   feature actually runs in production, then fails forever. Book a day the company will never live
   through, or fixture your own row.
