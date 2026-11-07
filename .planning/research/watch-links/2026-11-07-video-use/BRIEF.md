@@ -1,0 +1,25 @@
+# Brief — video-use vs OpenMontage (+HyperFrames, +Remotion): is it double, and which is better?
+
+You are one of two readers working blind to each other. Write ONLY your own file `{OUT}` in this folder, never open the other reader's file. Do not write anywhere else except a private scratch subfolder `{SCRATCH}` (create it) for clones. Never write inside /home/dxb/tools/OpenMontage, the repository /home/dxb/DxB Global OS, or ~/.claude. Install nothing system-wide, use no paid API, no keys. Never print secrets.
+
+## The CEO's question (his words, translated)
+"Don't OpenMontage and the HyperFrames inside it already do what video-use does? Look at it thoroughly — Ferrari level. Let's not do double; or if we do, let's put them side by side and see which produces better. E.g. you said video-use makes Shorts from long videos — doesn't OpenMontage/HyperFrames already do that? And is Remotion in our system?"
+
+## The objects
+1. **video-use** — https://github.com/browser-use/video-use (MIT, ~30.7k stars). Clone it into {SCRATCH}. Read README, SKILL.md, install.md, helpers/*.py (transcribe, pack_transcripts, timeline_view, render, grade), skills/manim-video. It edits FILMED footage by conversation: word-level transcript (ElevenLabs Scribe), filler/silence cuts on word boundaries, grade, 30 ms fades, burned subtitles, overlay animations (HyperFrames/Remotion/Manim/PIL), self-eval at every cut, project.md memory.
+2. **OpenMontage** — installed on this machine at /home/dxb/tools/OpenMontage (calesthio/OpenMontage, AGPL-3.0). It contains `remotion-composer/` and vendors HyperFrames as a render runtime. Read its README, pipelines, tools registry, skills, and especially anything that does: transcription, filler/silence removal, talking-head editing, long→short clipping (highlight selection, vertical reframe), subtitles, color grade, self-review. Name the exact files/pipelines.
+3. **HyperFrames** — heygen-com/hyperframes (HTML→deterministic MP4). Cache at /home/dxb/.cache/hyperframes. What it is and is not (a renderer vs an editor).
+4. **Remotion** — present at /home/dxb/tools/OpenMontage/remotion-composer and /home/dxb/tools/ECC/skills/remotion-video-creation. What it is, licence (company licence cost), and how it is used here.
+
+## Our own records to read first (do not trust blindly; measure)
+- /home/dxb/DxB Global OS/.planning/research/study-cards/video-editing-toolchain.md, openmontage-opencut.md, heygen-hyperframes.md, yt-dlp-video-use.md
+- Excel finding already made: W104 "Ultimate Editors" (talking-head → animated YouTube via Claude skills; plan was to write 3 skills ourselves on OpenMontage's timeline), OpenShorts (mutonby/openshorts, long→vertical clips), W005 AI-Youtube-Shorts-Generator, EK16 (effects in HyperFrames; Remotion rejected for paid company licence).
+
+## What to deliver in {OUT} (English, evidence = file path + line or command output)
+1. **Capability matrix**, one row per capability, columns video-use / OpenMontage / HyperFrames / Remotion, each cell: does it / partly / no — with the file that proves it. Capabilities at least: word-level transcription (which engine, local or paid), filler-word and silence cut on filmed footage, multi-take selection, talking-head editing, long→short highlight clipping + vertical reframe, burned subtitles, color grade, audio fades/loudness, motion-graphics overlays, generating footage from nothing (AI video/images/TTS), self-evaluation of the render, session memory, agent-native (Claude Code skill), cost/keys, licence.
+2. **Is it double?** Plain verdict: where they overlap, where each is alone. Specifically answer: does OpenMontage already cut filler words/silence from a filmed talking head? Does it already make Shorts from a long video? (Correct any claim that video-use does long→short if it does not.)
+3. **Remotion in our system**: where it is, whether it is actually used by OpenMontage's pipelines, licence implication for the holding.
+4. **Bake-off design**: how to test "which produces better" on THIS machine (RTX 5060 Ti 16 GB, ffmpeg, faster-whisper present, no ElevenLabs key): the same raw clip through both, what each needs (can video-use's transcribe step be swapped to local faster-whisper / whisperX with word timestamps and kept fillers? cite the code), what is judged, by whom (the CEO's eye decides). If you can run a FREE, LOCAL, small piece safely in {SCRATCH} (e.g. video-use's timeline_view or pack step on a tiny clip, or an OpenMontage dry-run that writes only to {SCRATCH}), do it and quote the output; otherwise say what you did not run and why.
+5. **Recommendation for the holding** (Ferrari standard, no double work): keep one, keep both for different jobs, or graft one's piece into the other; where it sits (board rows B43 Media Studio, B28 ad agency, B83 revenue/channels H4, B84 web studio). Nothing gets installed without the CEO's word — say what needs his yes.
+
+Be concrete and short in prose; the matrix carries the weight. Do not guess: if you could not verify something, write "not verified" and why.

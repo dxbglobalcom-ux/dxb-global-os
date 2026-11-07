@@ -21,6 +21,9 @@ OpenMontage — the deep re-measurement of the same day found it **vendored INSI
 second render runtime**. There is one chain, not two competing ones.
 **Secondary (programmatic/deterministic, now inside the primary): [[heygen-hyperframes]]** — HTML→deterministic MP4, Apache-2.0, built for agents; best for templated/branded shorts, data-driven videos, product demos.
 **Rejected for v1:** SaaS AI editors (Descript/CapCut/VEED/Runway — paid, no agent-first API fit, D1 fail as defaults); Remotion-class React renderers (company-license cost >3 devs; HyperFrames covers the same niche free); MoneyPrinterTurbo stays a niche auto-shorts generator (existing stub row), not the editing lane.
+**Correction 2026-11-07 (measured):**
+- **Remotion:** the rejection above does not match the machine. Remotion 4.0.484 is installed inside OpenMontage (`remotion-composer/`) and its pipelines use it: documentary-montage requires it, and word-by-word captions are Remotion-only. Its licence (upstream `LICENSE.md`) is free for a for-profit with up to 3 employees, commercial use included; a Company License applies only beyond that.
+- **Cutting filmed speech:** OpenMontage cuts silence only. Word-boundary cutting of filmed speech is video-use's, on the shelf on request (B43 leg 2026-11-07). The measurement is in `.planning/research/watch-links/2026-11-07-video-use/MERGE.md`.
 
 ## The whole chain, merged 2026-08-19 — where the two passes meet
 

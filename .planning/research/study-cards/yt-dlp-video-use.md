@@ -1,5 +1,7 @@
 # Study Card: yt-dlp + video-use
 
+> **Correction 2026-11-07:** only yt-dlp was installed under this card; `browser-use/video-use` never was. On the CEO's word of 2026-11-07, video-use went onto the shelf (`~/.local/share/dxb/skills/video-use`, `43cfc566`) as the Media Studio's on-request cutter for filmed speech, never the default. Its record is `.planning/board-rows/B43.md` § "Leg of 2026-11-07", and the measurement is `.planning/research/watch-links/2026-11-07-video-use/`.
+
 > FILLED 2026-07-09 (07-01 Task 1). Verdict recorded BEFORE install per INTEG-01.
 > Local install this plan (07-01 Task 2); VPS use at 07-07 via the same pinned version.
 
