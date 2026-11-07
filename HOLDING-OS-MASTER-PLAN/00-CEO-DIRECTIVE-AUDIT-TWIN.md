@@ -96,10 +96,14 @@ The CEO's word, 2026-09-28 <!-- CEO-OK: audit-twin-every-job-2026-09-28 -->:
 author also writes the tests and the done-list, so his blind spot and his tests'
 blind spot are the same one; the pilot below proved it (a fake-metric page, an
 automatic RET, passed six months of machine gates and fell to the twin's first
-run). **The author never approves his own work.** Every construction job
-(`.claude/skills/dxb-team2`) passes one independent auditor, its depth set by the
-job's score card: light → Sol `medium`, normal → Sol `high`, critical → Sol
-`xhigh`. It still fires, as before, on:
+run). **The author never approves his own work.** Every construction job that
+changes code, a rule or a door passes one independent auditor; its depth is the
+lead's choice and its one owner is `.claude/skills/dxb-team2` §4 (`high` by
+default, `xhigh` for money, a database, security, approval, governance or the
+agents, `medium` for a text-only change). The light lane — a small, low-risk job
+done end to end by one Opus 5.5 session at medium — skips it (his word,
+2026-11-07 <!-- CEO-OK: light-lane-small-jobs-opus-medium-2026-11-07 -->). It
+still fires, as before, on:
 
 1. **The CEO acceptance session** (`ACCEPTANCE_CRITERIA.md`, roadmap W5.1) —
    cross-model, because a Claude auditing a Claude shares its blind spots.

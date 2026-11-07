@@ -9,8 +9,10 @@
 
 ## The Law
 
-**No deliverable ships until its author has explicitly answered three
-questions about it — and acted on the answers:**
+**No deliverable of the holding ships until its author has asked three
+questions of it — and acted on the answers.** The bar is the deliverable itself,
+not a written ritual: the answers are not filed (his word, 2026-09-24, below).
+Small work — a fix, a record, a one-line change — is outside this gate.
 
 1. **Is this PERFECT?** — Not "does it compile", not "does the test pass".
    Would a world-class specialist in this exact craft sign it with their
@@ -28,9 +30,6 @@ questions about it — and acted on the answers:**
 
 ## Enforcement
 
-- The three answers are part of the evidence contract: a closure report
-  (SUMMARY, roadmap ✓, STATE update) that cannot show the pass happened
-  is incomplete — same standing as a missing Design Verification Pass.
 - "It satisfies the spec row" is NOT a defense. The spec is the floor.
   This directive makes quality the ceiling-check on top of every floor.
 - Applies to the holding's deliverables — a piece he will use, such as the
