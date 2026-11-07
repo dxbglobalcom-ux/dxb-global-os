@@ -8,6 +8,8 @@ Referee's own checks: `render.py:507` read; `verify/sub_frame.jpg` looked at; Ex
 grepped for EK16; Remotion `LICENSE.md` fetched from upstream main; `dxb_speaches_local` state and
 `/v1/models` HTTP 200.
 
+> **Correction 2026-11-07, after the merge:** the brief told both readers that the links sheet's W104 plan ("write 3 skills ourselves") was this same cutting job, and both repeated it. W104's own row says otherwise. Its three skills are 'editor brain' (2–6 animations a minute planned from the script), 'designer' (prompts from the brand reference folder) and 'animator' (motion rules per scene type): they add animation to a talking head. video-use does not replace them. Every other finding stands.
+
 ## Agreed by both readers (no split)
 
 - **OpenMontage does not cut filler words.** It cuts silence only (`tools/video/silence_cutter.py`,
