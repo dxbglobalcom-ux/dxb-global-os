@@ -27,6 +27,7 @@ not here. What is accepted is read from `scripts/governance/ceo-approvals.json`,
 
 ## Where we left off
 
+2026-11-07 evening — video-use (browser-use, MIT) joined the holding on his word: on request only, never the default. The tool is at `~/.local/share/dxb/skills/video-use` (43cfc566); its page `tools/video-use/skill/SKILL.md` is linked as the global skill `video-use` and carries every feature, the W104 path, and what is owed before the first real job (the local-ear converter, Turkish casing). The record is B43's leg of 2026-11-07. Measured by two blind readers and a referee at max: OpenMontage cuts silence only, while video-use cuts fillers and retakes on word boundaries; Remotion 4.0.484 runs inside OpenMontage and is free up to 3 employees. His Gmail (dxbglobalcom) was tidied the same day: six labels, 11 filters, old mail out of sight; the 34 old mails under Para wait his word.
 2026-11-04 afternoon — B84's study is finished, for his eye: corrections in (records, nine personas, revenue roads,
 cupboard); file 10: free crawler tested on outletcity, LibreCrawl first, SiteOne second, the rest of the free road;
 file 11: the eye repeated 19 of his 22 pairs, untaught 11-12; it ranks, it gives no absolute verdict. Motion: Gemini API.
