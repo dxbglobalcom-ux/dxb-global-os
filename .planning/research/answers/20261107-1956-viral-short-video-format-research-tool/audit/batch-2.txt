@@ -1,0 +1,154 @@
+You are the AUDITOR of a research run. A writer you never saw wrote an answer from the rows of the run's ledger —
+each row has an id (L0001 …) — and every claim line of that answer ends with the ids of the rows it stands on. You
+have no tools and need none: under each claim below stand the rows it cites, each exactly as the writer was handed
+it. Judge each claim ONLY against the rows printed under it — not from memory, not from another claim's rows, and
+not from what you believe is true.
+
+## The question the answer was written for
+SORGULAR (zemin bunlarla acildi):
+  - viral short video format research tool
+  - ad library winning creatives open source
+
+ALT SORULAR (S-kimlik · başlık · soru):
+  - S1 · Viral kısa video format araçları · Viral kısa video formatlarını araştırmak için hangi araçlar mevcut ve ne sunuyorlar?
+  - S2 · Reklam kütüphanesi kazanan kreatifler · Reklam kütüphanelerinden kazanan kreatifleri bulmaya yarayan araçlar ve yöntemler nelerdir?
+  - S3 · Açık kaynak alternatifler · Bu iki iş için hangi açık kaynak araçlar veya kodlar kullanılabilir?
+
+## The 12 claims
+Each claim is its heading `### <id> [<section>]`, then its whole line as it stands in the answer, then `dayanak:` —
+the rows it cites as support — and `karşı:` — its counter rows: the ones the line names after `↔`, and the ones a
+counter-evidence hunter linked to it. A row is `[id] platform · @author · date · "passage" · address`; a row that says
+`gövde yok` carries nothing to judge by. A heading that ends `· hüküm` is the answer's first line: its verdict.
+
+### C013 [SHAPE]
+- Kopya tespiti organik kısa videoya da uzanırsa "yapıyı koru, ürünü değiştir" yöntemi zayıflar. Satırlar bunu yalnızca reklam için söylüyor. [L1431, L1410]
+dayanak:
+  [L1431] web · @Dien Ho · 2025-11-26 · "Meta has confirmed that videos sharing similar opening sequences are treated as nearly identical, even when the remaining content differs significantly." · https://ppcblogpro.com/how-andromeda-detects-and-punishes-ad-duplication/
+  [L1410] x · @heyfredds · 2026-11-07 · "you pick an ad that already works, keep its structure, and swap in your own product." · https://x.com/i/status/2119060479733621122
+karşı: (yok)
+
+### C014 [SHAPE]
+- Bir aracı kullanıp bırakan bağımsız bir tanıklık hükmü zayıflatırdı. Bu yönde tek satır var ve o kullanıcı da sonra geri dönmüş. Bu tek kaynak. [L1442]
+dayanak:
+  [L1442] web · @sandcastles.ai testimonial · ? · "I was very skeptical at first and even canceled my subscription with the v1 of the software, but then they updated" · https://sandcastles.ai/
+karşı: (yok)
+
+### C015 [S1]
+- **Outlier araçları:** En çok tarif edilen yöntem, bir kanalın kendi ortalamasını katlayan videoyu bulup yapısını taklit etmek (9 satır / 6 adres; en güçlüleri L1432 ve L0664). Bu iş için ViewStats anılıyor; Sandcastles da aynı mantıkla çalışıyor. Karşı satır arandı, bulunmadı. [L1432, L0664, L1423, L1434, L0046, L0643, L1409, L0146, L1443]
+dayanak:
+  [L1432] x · @Jakeschincariol · ? · "| `/yt-viral` | What is working in your niche, ranked by multiple over each channel's own median. |" · https://t.co/T7xBSVHQvc
+  [L0664] youtube · @Viewstats · ? · "Here's everything you need to know about outliers and how to use them to get more views on every video you upload. Take this channel for example who has recently started posting, but their second video has already gotten over half a million views. Or check out this video that has over 10 million vi…" · https://www.youtube.com/watch?v=AeZf01wNNks
+  [L1423] youtube · @Viewstats · ? · "But now, it's easier than ever with outlier tools like view stats." · https://www.youtube.com/watch?v=AeZf01wNNks
+  [L1434] x · @Jakeschincariol · ? · "| `/ig-viral` | Goes and finds what is working in your niche, ranks it by multiple over each account's own median, names the formula, writes the swipe file. |" · https://t.co/Cw6R7GpR5n
+  [L0046] web · @? · ? · "Sandcastles | Create viral short-form videos in seconds Trusted by 100k+ users The easiest way to research top channels, find viral outliers, and remix them into your own winning videos ### **Discover successful channels** in your niche Learn from their success and replicate those tactics in your n…" · https://sandcastles.ai/
+  [L0643] x · @heyliccia · 2026-11-02 · "THIS IS F**KING INSANE. One faceless YouTube channel pulled 19.3M views and made $107K. Another got 7M views and earned $16K. And the interesting part? The strategy starts BEFORE you upload your first video. He breaks down how to: → Find channels with consistent views over the last 3 months. → Iden…" · https://x.com/i/status/2117331069485662667
+  [L1409] x · @heyliccia · 2026-11-02 · "→ Identify repeatable content formats like "Why it sucks to be born as a..."" · https://x.com/i/status/2117331069485662667
+  [L0146] linkedin · @Nate Curtiss · 2025-11-20 · "How to find viral YouTube formats using competitor research | Nate Curtiss posted on the topic | LinkedIn LinkedIn and 3rd parties use essential and non-essential cookies to provide, secure, analyze and improve our Services, and to show you relevant ads (including **professional and job ads**) on a…" · https://www.linkedin.com/posts/natecurtiss_how-to-find-viral-formats-for-youtube-videos-activity-7397088031502966785-Ysl7
+  [L1443] linkedin · @Nate Curtiss · 2025-11-20 · "1. Originality is overrated. Remixing wins." · https://www.linkedin.com/posts/natecurtiss_how-to-find-viral-formats-for-youtube-videos-activity-7397088031502966785-Ysl7
+karşı: (yok)
+
+### C016 [S1]
+- Outlier mantığı birbirinden bağımsız birden çok kaynakta aynı şekilde tarif ediliyor (5 satır, 3 bağımsız kaynak). Karşı satır arandı, bulunmadı. [L0664, L1423, L1432, L1434, L0046]
+dayanak:
+  [L0664] youtube · @Viewstats · ? · "Here's everything you need to know about outliers and how to use them to get more views on every video you upload. Take this channel for example who has recently started posting, but their second video has already gotten over half a million views. Or check out this video that has over 10 million vi…" · https://www.youtube.com/watch?v=AeZf01wNNks
+  [L1423] youtube · @Viewstats · ? · "But now, it's easier than ever with outlier tools like view stats." · https://www.youtube.com/watch?v=AeZf01wNNks
+  [L1432] x · @Jakeschincariol · ? · "| `/yt-viral` | What is working in your niche, ranked by multiple over each channel's own median. |" · https://t.co/T7xBSVHQvc
+  [L1434] x · @Jakeschincariol · ? · "| `/ig-viral` | Goes and finds what is working in your niche, ranks it by multiple over each account's own median, names the formula, writes the swipe file. |" · https://t.co/Cw6R7GpR5n
+  [L0046] web · @? · ? · "Sandcastles | Create viral short-form videos in seconds Trusted by 100k+ users The easiest way to research top channels, find viral outliers, and remix them into your own winning videos ### **Discover successful channels** in your niche Learn from their success and replicate those tactics in your n…" · https://sandcastles.ai/
+karşı: (yok)
+
+### C017 [S1]
+- **Format klonlama skill'leri:** Viral bir videoyu sahne sahne çözüp kendi fikrinizi aynı yapıya yazan araçlar var: Scenario'nun Claude skill'i, rea-video ve Hypit (8 satır, 6 bağımsız kaynak; en güçlüleri L1424 ve L1438). [L1424, L1404, L0326, L0327, L1438, L1110, L1406, L1326]
+dayanak:
+  [L1424] x · @Scenario · 2026-11-05 · "It maps the reference's hook, climbing number, turn and ending, then writes your idea into that structure shot by shot." · https://t.co/IBeDJ4EgZh
+  [L1404] x · @Scenario_gg · 2026-11-05 · "We just released a Claude skill that steals any viral video's format." · https://x.com/i/status/2118387681197457494
+  [L0326] x · @Scenario_gg · 2026-11-05 · "R.I.P. Higgsfield Content Factory. We just released a Claude skill that steals any viral video's format. Download the skill: https://t.co/IBeDJ4EgZh > drop in a reel that blew up and say what yours is about > the skill maps it beat by beat and writes your idea in > Scenario makes the images, clips,…" · https://x.com/i/status/2118387681197457494
+  [L0327] x · @? · ? · "Content Engine · Remake a proven format | Made with Scenario Make viral short videos Pick a format, add your idea and sign up with the prompt already copied. Claude writes the video, Scenario MCP makes the pictures, clips and sound, and the edit is cut in code. Make a video about... * Best fitClaud…" · https://t.co/IBeDJ4EgZh
+  [L1438] x · @JuneYaooo · 2026-11-07 · "Reverse-engineer any video, shot by shot: tells whether each shot was filmed, AI-generated or coded, how the captions, cuts and audio were made, and how to remake it." · https://t.co/1gQ6ULrYz3
+  [L1110] x · @ArchiveExplorer · 2026-11-06 · "Video editors f*cked again... someone took REA's "reverse engineer anything" idea and pointed it at video. It's called rea-video, and it lets your AI coding agent: - break any video down shot by shot. - tell if each shot was filmed, AI-generated or built in code. - pull every caption with timings,…" · https://x.com/i/status/2118702416862261481
+  [L1406] x · @ArchiveExplorer · 2026-11-06 · "It's called rea-video, and it lets your AI coding agent:" · https://x.com/i/status/2118702416862261481
+  [L1326] chinese · @w2296942 · ? · "Title: Hypit 实测:给编程助手一套"视频语言",一条爆款克隆上百变体 ## 核心能力 / 架构:反直觉的"agent 原生"设计 ## 上手步骤:本机实测两条路都通 ## 适用场景与边界:谁该用,谁别碰 别碰的人也清楚:追求电影级特效画质的(它是流水线,不是特效合成器);不想配任何 API Key 的(生成模型按量付费,官方举例约 1–2 美元 / 百变体批次,但代码渲染类视觉零模型成本);只做一次性视频的(它的价值在批量,单条意义不大)。 ## 来源与延伸 * 仓库与官方文档:GitHub · `hypit-ai/hypit`(README 含 Install / Use /…" · https://zhuanlan.zhihu.com/p/2088025403684345692
+karşı: (yok)
+
+### C018 [S1]
+- **Çok platformlu araştırma skill'leri:** ScrapeCreators'ın skill'leri TikTok, Instagram, YouTube, Reddit, X ve LinkedIn genelinde outlier gönderi, yorum madenciliği ve rakip analizi yapıyor. X'te üç ayrı repo listesinde öneriliyor (7 satır, 5 bağımsız kaynak). [L1426, L1034, L1117, L1408, L1115, L1417, L1032]
+dayanak:
+  [L1426] x · @ScrapeCreators · 2026-11-06 · "AI agent skills for social media research. Outlier posts, comment mining, competitor teardowns, ad libraries & trends across TikTok, Instagram, YouTube, Reddit, X, LinkedIn & more." · https://t.co/fVegGGOp6N
+  [L1034] x · @? · ? · "AI agent skills for social media research. Outlier posts, comment mining, competitor teardowns, ad libraries & trends across TikTok, Instagram, YouTube, Reddit, X, LinkedIn & more. Powered by Scrap... Official ScrapeCreators plugin for Grok Build: hosted MCP and public social media research. Offici…" · https://t.co/fVegGGOp6N
+  [L1117] x · @? · ? · "AI agent skills for social media research. Outlier posts, comment mining, competitor teardowns, ad libraries & trends across TikTok, Instagram, YouTube, Reddit, X, LinkedIn & more. Powered by ScrapeCreators. Works with Claude Code, Cursor, Codex, Gemini CLI. Open more actions menu | Name | | Name |…" · https://t.co/T78t4UQSwI
+  [L1408] x · @WasimShips · 2026-11-04 · "Find viral posts, study competitors, mine comments and extract hooks with coding agents." · https://x.com/i/status/2117935285753315511
+  [L1115] x · @WasimShips · 2026-11-04 · "A one-person content studio can now run like a full creative team. These 10 open-source GitHub repos cover almost the entire workflow 👇 1. OpenCreator https://t.co/bcV4ZqV0U6 Create scripts, images, audio, translations and edited videos from one Codex-powered workspace. 2. Social Media Research Ski…" · https://x.com/i/status/2117935285753315511
+  [L1417] x · @abir35627 · 2026-11-06 · "Use Claude Code or Codex to research viral posts, analyze competitors, mine comments, and extract hooks from video transcripts." · https://x.com/i/status/2118648224202551573
+  [L1032] x · @abir35627 · 2026-11-06 · "GITHUB IS ACTUALLY INSANE RIGHT NOW. You can build an entire AI content factory without hiring a team. Here are 10 open-source repos worth checking out: 1. OpenCreator Give Codex a creator workspace for writing scripts, generating images, creating voiceovers, translating videos, and editing content…" · https://x.com/i/status/2118648224202551573
+karşı: (yok)
+
+### C019 [S1]
+- **MCP ile trend arama:** Revid'in MCP'si son 30 günde viral olan videoları arıyor. Bu tek kaynak. [L1425, L1292]
+dayanak:
+  [L1425] x · @Voxyz_ai · 2026-10-19 · "Then use search_viral_videos to find what went viral in the last 30 days for new-single teasers and for songs made from text messages, on TikTok, Reels and Shorts." · https://x.com/i/status/2112200544596963812
+  [L1292] x · @Voxyz_ai · 2026-10-19 · "This setup connects Claude Code to Revid's MCP and runs short video for one client: every week it finds formats taking off, makes two short videos, schedules them, and on Monday reads the numbers to pick the next round. Copy the pieces below in order. The example client, Sudo, is a fictional orange…" · https://x.com/i/status/2112200544596963812
+karşı: (yok)
+
+### C020 [S1]
+- **Kendi aracını kurmak:** Rakiplerin viral videolarını kazıyan aracı kişi Claude Code ile kendisi kuruyor; en iyi Shorts videoları ve transkriptleri yt-dlp ile çekiliyor (4 satır / 2 adres). [L1439, L0670, L1415, L0400]
+dayanak:
+  [L1439] youtube · @Oleg Melnikov · ? · "It's scraping viral videos from my competition." · https://www.youtube.com/watch?v=JhtbnZUU_8E
+  [L0670] youtube · @Oleg Melnikov · ? · "Hey guys, in this video I'll show you how you can use Cloud Code in order to create a viral Instagram Reels that will generate you sales afterwards. Here is the tool that I built in less than 30 minutes using Cloud Code and here's what it does. It's scraping viral videos from my competition. As you…" · https://www.youtube.com/watch?v=JhtbnZUU_8E
+  [L1415] x · @Damir_Akaza · 2026-11-03 · "→ yt-dlp: pulls top Shorts + transcripts so Opus learns what holds viewers" · https://x.com/i/status/2117711532444336414
+  [L0400] x · @Damir_Akaza · 2026-11-03 · "The fastest-growing Shorts on YouTube are made by one guy and 12 free repos. Clay planets. Tiny Rome. Domino spirals. "You vs a blue whale." You've scrolled past hundreds of them this month. There's no studio and no animator behind them, just Opus 5.5 running the whole process. 1 person → 4 channel…" · https://x.com/i/status/2117711532444336414
+karşı: (yok)
+
+### C021 [S1]
+- **Elle yöntem:** İki elle yol da anılıyor: yalnızca nişi takip eden bir araştırma hesabı açıp akışı güncel hook'lara çevirmek ve yüksek izlenmeli videoları elle analiz etmek (4 satır / 2 adres). [L1416, L0594, L1411, L0109]
+dayanak:
+  [L1416] x · @brainextends · 2026-11-01 · "-> in a few days your fyp is a live feed of the hooks and sounds working RIGHT now" · https://x.com/i/status/2116860169019949198
+  [L0594] x · @brainextends · 2026-11-01 · "if i started from absolute zero and had to scale an app to $10k MRR as a beginner id do this (COPY ME) tiktok slideshows 3 days of 4-6 hours work and you have 2+ months of content 1. make a research account first -> follow nothing except your niche -> like save and watch only what you want more of…" · https://x.com/i/status/2116860169019949198
+  [L1411] reddit · @Positive-Bison5023 · ? · "I analyzed 306 short-form videos with 1M+ views — this 1 format keeps going viral" · https://www.reddit.com/r/Entrepreneur/comments/1gr6kcd/i_analyzed_306_shortform_videos_with_1m_views/
+  [L0109] reddit · @Positive-Bison5023 · ? · "I analyzed 306 short-form videos with 1M+ views — this 1 format keeps going viral The beauty of it? Any content creator in any niche can make this type of reel in less than 5 minutes. Plus, you're about to get an AI prompt to write the entire script for you in 3 seconds. The video I based it on is…" · https://www.reddit.com/r/Entrepreneur/comments/1gr6kcd/i_analyzed_306_shortform_videos_with_1m_views/
+karşı: (yok)
+
+### C022 [S1]
+- İzlenme sayısının yapının işe yaradığını kanıtladığı savunuluyor. Bu tek kaynak. [L1427, L0673]
+dayanak:
+  [L1427] youtube · @Youri van Hofwegen · ? · "the more views it got, the more proof I have that the structure actually works." · https://www.youtube.com/watch?v=XX3JzfYo1Rk
+  [L0673] youtube · @Youri van Hofwegen · ? · "I've spent more than 3 years working with AI generators, and I can tell you there is actually a proven way to create viral YouTube shorts in less than 15 minutes. There are only five steps inside, but once you learn them, you can just repeat the same process over and over again and watch your chann…" · https://www.youtube.com/watch?v=XX3JzfYo1Rk
+karşı: (yok)
+
+### C023 [S2]
+- **Temel kaynak Meta Ad Library:** Ücretsiz ve herkese açık; büyük markaların aktif reklamlarını gösteriyor (3 satır / 3 adres). Ancak araştırma işlevleri eksik. [L1309, L1312, L1402] ↔ [L1448]
+dayanak:
+  [L1309] youtube · @Blake Bauer Business · ? · "The best place to find winning Facebook and Instagram ads is on the Facebook ad library. This is a tool that literally allows you to see every single ad that's running by top 8 9 figure brands, the biggest brands in the world, as well as you can search for individual product names to find all the c…" · https://www.youtube.com/watch?v=GY_rQioxhes
+  [L1312] youtube · @Marketing Mike · ? · "Hey, Marketing Mike here, and today I'm going to show you how to use the Facebook Ads Library to spy on other advertisers. So, we go to Facebook ad library, type that into Google, we can come to this URL. And this is publicly available from Meta themselves, right? Owners of Instagram, Facebook, uh…" · https://www.youtube.com/watch?v=QQETCYQj6xo
+  [L1402] reddit · @mrchef4 · ? · "Hey thanks! I just use Facebook Ads library but I might use a tool to get ads in the future, or even build one myself." · https://www.reddit.com/r/startup/comments/1ojofvd/i_built_a_free_library_with_75_highperforming/
+karşı:
+  [L1448] web · @adstellar.ai · ? · "There is no way to save ads, organize them into boards, connect them to performance signals, or take any action on what you find." · https://www.adstellar.ai/blog/meta-ads-creative-library-tool
+
+### C024 [S2]
+- **Kazanan ölçütü yayın süresi:** Seçim ölçütü belirten 5 satırın 4'ü süreye bakıyor; eşik birkaç haftadan 6 aya ve 1 yıla kadar değişiyor. Açık kaynak tracker da kazananı süreyle buluyor. Buna karşılık bir satır son 30 günde başlayan reklamları öneriyor. [L1399, L1413, L1420, L0633, L0816] ↔ [L1419, L1265]
+dayanak:
+  [L1399] reddit · @vox_nihili_ist · 2025-04-16 · "As for performance, I look at how long the ads have been running. Ads that stay live for 6+ months usually mean they're top-performers." · https://www.reddit.com/r/SaaS/comments/1k0ni6s/my_free_library_of_7000_highperforming_ads_now/
+  [L1413] youtube · @Marketing Mike · ? · "if the ad's been running for a year, it's likely profitable and it's likely uh successful." · https://www.youtube.com/watch?v=QQETCYQj6xo
+  [L1420] x · @ViralOps_ · 2026-11-04 · "look for ads that have been running for weeks, not just ones that launched yesterday." · https://x.com/i/status/2118003744252293190
+  [L0633] x · @ViralOps_ · 2026-11-04 · "AI is going to destroy a LOT of old business models. but one business isn't going anywhere: ECOMMERCE. people will NEVER stop buying products. and right now, AI has made starting an ecom business easier than EVER. if i had to build a $50K/month ecom brand from ZERO in just 60 days, here's the exact…" · https://x.com/i/status/2118003744252293190
+  [L0816] github · @? · ? · "Open-source, self-hosted Meta Ad Library tracker: monitor competitors' Facebook & Instagram ads, archive creatives (images, videos) before they disappear, and find winning ads by how long they run. No Meta API key. Docker + Python. Open more actions menu | Name | | Name | Last commit message | Last…" · https://github.com/kalilfagundes/meta-ads-competitor-tracker
+karşı:
+  [L1419] x · @maxxmalist · 2026-10-31 · "open trend tracking tool and look for your niche, then filter for ads that launched in the last 30 days, truly recommend gethookd for this (not sponsored, it's a really good tool)" · https://x.com/i/status/2116597651676262808
+  [L1265] x · @maxxmalist · 2026-10-31 · "i've spent an unhealthy amount of time creating ecom ads with ai, here's everything i learned: the fastest way to $100k days in ecom is to copy what's working in the market this playbook is everything you need to know about writing winning ads with AI: 1. an ad research tool to find competitor crea…" · https://x.com/i/status/2116597651676262808
+
+## Your verdict on each claim — one of three
+- `ok` — the rows under it say what the line says, and every number in the line is one those rows bear (a count of
+  rows the line gives is borne when that many rows under it say so).
+- `corrected` — the rows say less than the line, or something other, or a `karşı` row under it is not named in the
+  line. Then write the line yourself, as it should stand in the answer:
+  - Turkish, in the writer's own grammar: the claim, then the ids it stands on in square brackets, `… [L0042, L0107]`;
+    the counter-evidence after `↔`, `… [L0042] ↔ … [L0051]`, once in the line;
+  - only ids printed under THIS claim, in its `dayanak` or its `karşı` — the same ids or a subset, at least one, and never an id whose row is marked `(yazara verilmeyen satır)`;
+  - no quote of a source's words, no address, no `http`, no domain;
+  - the WHOLE line, a drop-in replacement: a list item keeps its mark (`- `); a table row stays a table row,
+    `| … | … |`, with the same number of cells.
+- `removed` — no row cited under it supports the line. The verdict (`· hüküm`) is never removed: when its rows do not
+  bear it, correct it.
+
+Give every one of the 12 claims one entry: its `reason` one sentence in Turkish, its `line` only when the verdict is
+`corrected`. Output ONLY valid JSON — no code fence, nothing before or after it:
+{"verdicts":[{"id":"C007","verdict":"ok","reason":"..."},{"id":"C008","verdict":"corrected","reason":"...","line":"..."},{"id":"C009","verdict":"removed","reason":"..."}]}

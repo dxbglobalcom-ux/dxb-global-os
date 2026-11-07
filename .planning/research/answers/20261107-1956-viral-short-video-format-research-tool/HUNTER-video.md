@@ -1,0 +1,6 @@
+HÜKÜM: Videolarda iki yöntem öne çıkıyor. Viral format araştırmasında "outlier" mantığı kullanılıyor: ViewStats gibi bir araçla bir kanalın kendi ortalamasını katlayan videolar bulunuyor ve onların yapısı taklit ediliyor. Kazanan kreatifler için ücretsiz Meta Ad Library'de en uzun süredir yayında olan reklamlara bakılıyor; Foreplay ve MagicBrief gibi ücretli eklentiler bu reklamları indirip takip ediyor. Rakip videolarını kazıyıp analiz eden araç ise kişi Claude Code ile kendisi kuruyor. Ancak videolarda hazır bir açık kaynak araç gösterilmiyor.
+PLATFORM youtube: S1 için ViewStats outlier aracı, en çok izlenen shortların yapısını kopyalama ve Claude Code ile kurulmuş rakip Reels kazıyıcısı/analizcisi var. S2 için Ad Library'de uzun süredir yayında olan reklamın kârlı sayılması, Foreplay ile reklam indirme ve kanıtlanmış kazananları Claude'a girdi olarak verme var. Kalan videolar araştırma aracı içermiyor, yalnızca kurgu anlatıyor; liste dışında kalan kapalı kapılar zemin tarafından kaydedilmişti. — satırlar: L0664, L1423, L0673, L1427, L1309, L1430, L1312, L1413, L1310, L1414, L0670, L1439
+PLATFORM tiktok: ilgili satır yok
+PLATFORM instagram: ilgili satır yok
+KULLANDIĞIM SATIRLAR: L0664, L1423, L0673, L1427, L1309, L1430, L1312, L1413, L1310, L1414, L0670, L1439
+okunacak adres kalmadı

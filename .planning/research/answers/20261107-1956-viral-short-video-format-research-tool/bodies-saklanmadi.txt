@@ -1,0 +1,1 @@
+bodies/ saklanmadi: 31.2 MB (5 MB ustu), kosu klasorunde kaldi: /home/dxb/DxB Global OS/var/research/runs/20261107-1806-20261107-viral-format-2/bodies

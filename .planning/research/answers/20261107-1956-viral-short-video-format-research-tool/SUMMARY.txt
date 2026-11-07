@@ -1,0 +1,69 @@
+AVCI            SURE   PARA  KAYNAK  FETCH   ADD  ACILAN KAPILAR
+x           112/600s   0.83     204      0     7  defter x youtube
+video        87/600s   0.42      11      0     6  defter
+forums       41/600s   0.32      36      0     3  defter quora reddit
+counter     182/600s   0.91     140      1    16  defter
+TOPLAM                 2.48     340
+   (SURE = saniye / zaman asimi · KAYNAK = hatasiz arac cagrisinin actigi adres · FETCH, ADD = evidence.py komutu)
+
+DEFTER — evidence.jsonl, makine sayimi (BULUNDU = ayri adres · GOVDELI = govdesi okunmus ayri adres)
+PLATFORM         BULUNDU  GOVDELI
+x                    614      608
+threads                0        0
+bluesky                1        1
+youtube               34       23
+tiktok                 2        2
+instagram              1        1
+reddit                 6        6
+hackernews             0        0
+stackoverflow          0        0
+quora                 93       92
+linkedin              21       21
+facebook              22       22
+substack              33       33
+medium                19       19
+github                38       38
+chinese              115      114
+web                  400      393
+TOPLAM              1399     1373
+   satir: 1449 · satir sahibi: ground 1398 · x 22 · counter 16 · forums 7 · video 6
+
+AVCILARIN KENDI SATIRLARI — avcinin BEYANI, sayim degil (sayim: yukaridaki DEFTER)
+   [x] PLATFORM x: Kasım 2026 gönderileri tek yönde ve neredeyse tamamı "bookmark this" tarzı tanıtım. Öne çıkan sesler: @ArchiveExplorer rea-video'yu, @maxxmalist Meta Ad Library'den rakip reklam çeken marketing-skills'i ve Ge
+   [x] PLATFORM threads: ilgili satır yok; zemin bu platformda hiç adres bulmadı.
+   [x] PLATFORM bluesky: ilgili satır yok; bulunan tek adres triage'da ilgisiz sayıldı.
+   [x] KULLANDIGIM SATIRLAR: 22 kimlik — defterde 22 · DEFTERDE YOK 0
+   [x] okunacak adres kalmadi (avcinin kendi satiri)
+   [video] PLATFORM youtube: S1 için ViewStats outlier aracı, en çok izlenen shortların yapısını kopyalama ve Claude Code ile kurulmuş rakip Reels kazıyıcısı/analizcisi var. S2 için Ad Library'de uzun süredir yayında olan reklamın 
+   [video] PLATFORM tiktok: ilgili satır yok
+   [video] PLATFORM instagram: ilgili satır yok
+   [video] KULLANDIGIM SATIRLAR: 12 kimlik — defterde 12 · DEFTERDE YOK 0
+   [video] okunacak adres kalmadi (avcinin kendi satiri)
+   [forums] PLATFORM reddit: Konuşmayı reklam kütüphanesi kurucularının kendi tanıtım başlıkları yönetiyor; bir kullanıcı "yüksek performans" iddiasının kanıtını sordu. Açık kaynak bir araç anılmadı. Kısa video formatı tarafında yal
+   [forums] PLATFORM hackernews: İlgili satır yok.
+   [forums] PLATFORM stackoverflow: İlgili satır yok.
+   [forums] PLATFORM quora: Okunan iki gövde de affiliate ürün tanıtımıydı (TrendCash AI, Vid Monopoly) ve kanıt içermiyordu, ikisi de verdict none aldı. Listedeki geri kalan Quora satırları sınıflandırma modelince ilgisiz sayılmışt
+   [forums] KULLANDIGIM SATIRLAR: 7 kimlik — defterde 7 · DEFTERDE YOK 0
+   [forums] okunacak adres kalmadi (avcinin kendi satiri)
+   [counter] PLATFORM linkedin: Karşı görüş zayıf, neredeyse tamamı tanıtım; tek uyarı, Library'deki yaygın hook'un en kârlı hook demek olmadığı — satırlar: L1446
+   [counter] PLATFORM facebook: ilgili satır yok, gönderiler tanıtım içerikli
+   [counter] PLATFORM substack: En güçlü karşı görüş burada: Andromeda, kazanan reklamın varyasyonlarını tek reklam sayıp kısıyor; yazar, harcamadan önce neyin işe yarayacağını kimsenin tahmin edemeyeceğini söylüyor — satırlar: L1421
+   [counter] PLATFORM medium: ilgili satır yok, listeler ve tanıtım yazıları
+   [counter] PLATFORM github: Açık kaynak araçların kendi belgeleri kısıtları kabul ediyor. Meta uç noktaları değişince toplama bozuluyor ve veri merkezi IP'leri engelleniyor. Genfeed ücretli reklamı yalnızca X'te çekebiliyor. Bir ar
+   [counter] PLATFORM chinese: Zayıf; tek uyarı, Hypit'in lisansının çoklu kiracı kullanımı ve yeniden satışı kısıtlaması ve çıktı kalitesinin seçilen modele bağlı olması — satırlar: L1436
+   [counter] PLATFORM web: Somut sınırlamalar var: Library araştırma için değil şeffaflık için kurulmuş, filtreleri zayıf ve performans sinyali yok. API yalnızca metaveriyi döndürdüğünden AI analizi videoyu görmüyor. Python ile kazım
+   [counter] KULLANDIGIM SATIRLAR: 15 kimlik — defterde 15 · DEFTERDE YOK 0
+   [counter] okunacak adres kalmadi (avcinin kendi satiri)
+
+AVCILARIN KENDI HUKUMLERI — yan yana, celiski gizlenemesin diye:
+   [x] X'te en çok önerilen açık kaynak araçlar viral formatı çözümleyip yeniden üreten agent skill'leri ve GitHub repolarıdır: rea-video, ScrapeCreators social-media-research-skills, Jakeschincariol yt-vira
+   [video] Videolarda iki yöntem öne çıkıyor. Viral format araştırmasında "outlier" mantığı kullanılıyor: ViewStats gibi bir araçla bir kanalın kendi ortalamasını katlayan videolar bulunuyor ve onların yapısı ta
+   [forums] Forumlarda viral kısa video formatlarını araştırmak için kullanıcıların gerçekten konuştuğu bir araç ya da açık kaynak bir çözüm çıkmadı. Kazanan reklam kreatifleri için konuşulanlar ise Meta Ad Libra
+   [counter] Karşı görüş, araçların varlığına değil, verdikleri sinyalin geçerliliğine yöneliyor. Meta'nın Andromeda sistemi kazanan reklamın kopyalarını cezalandırıyor. Ad Library'de performans ve dağıtım verisi 
+   (Hangisinin dogru oldugu makinenin isi degildir; hepsini bir arada gormek odur.)
+
+INSAN (sayildi): 91 ayri kisi · 192 yorum · 6 baslik — crowd.sh'in makine sayimi.
+
+GENIS ZEMIN (filo acti, avcilardan once): 2 dil/sorgu · 91 kanal dosyasi, 70 tanesi dolu · GOOGLE (2 kapi) 58474 bayt · DUCKDUCKGO 19661 bayt · okunan sayfa govdesi 15
+
+raporlar: /home/dxb/DxB Global OS/var/research/runs/20261107-1806-20261107-viral-format-2/HUNTER-*.md

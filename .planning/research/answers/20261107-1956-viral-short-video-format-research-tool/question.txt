@@ -1,0 +1,8 @@
+SORGULAR (zemin bunlarla acildi):
+  - viral short video format research tool
+  - ad library winning creatives open source
+
+ALT SORULAR (S-kimlik · başlık · soru):
+  - S1 · Viral kısa video format araçları · Viral kısa video formatlarını araştırmak için hangi araçlar mevcut ve ne sunuyorlar?
+  - S2 · Reklam kütüphanesi kazanan kreatifler · Reklam kütüphanelerinden kazanan kreatifleri bulmaya yarayan araçlar ve yöntemler nelerdir?
+  - S3 · Açık kaynak alternatifler · Bu iki iş için hangi açık kaynak araçlar veya kodlar kullanılabilir?

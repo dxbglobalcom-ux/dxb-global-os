@@ -1,0 +1,43 @@
+{
+  "source": "model",
+  "cost_usd": 0.0485,
+  "shape": "karar",
+  "shape_name": "Karar",
+  "shape_reason": "Sorgular bizim işimiz için viral kısa video formatı araştırması ve kazanan reklam kreatiflerini bulmada hangi araçların kullanılacağını seçmeye yönelik.",
+  "shape_source": "model",
+  "items": [
+    {
+      "id": "S1",
+      "title": "Viral kısa video format araçları",
+      "question": "Viral kısa video formatlarını araştırmak için hangi araçlar mevcut ve ne sunuyorlar?",
+      "signals": [
+        "viral video finder",
+        "trending formats",
+        "short-form analytics",
+        "TikTok trends"
+      ]
+    },
+    {
+      "id": "S2",
+      "title": "Reklam kütüphanesi kazanan kreatifler",
+      "question": "Reklam kütüphanelerinden kazanan kreatifleri bulmaya yarayan araçlar ve yöntemler nelerdir?",
+      "signals": [
+        "ad library",
+        "winning ads",
+        "ad spy tool",
+        "Meta Ad Library"
+      ]
+    },
+    {
+      "id": "S3",
+      "title": "Açık kaynak alternatifler",
+      "question": "Bu iki iş için hangi açık kaynak araçlar veya kodlar kullanılabilir?",
+      "signals": [
+        "open source",
+        "GitHub",
+        "self-hosted",
+        "scraper"
+      ]
+    }
+  ]
+}
