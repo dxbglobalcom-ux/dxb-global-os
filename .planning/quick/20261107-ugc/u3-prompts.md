@@ -35,4 +35,4 @@
 - **Seedream 5 Pro (ücretli):** aynı istem gönderilir. Negatif alanı olup olmadığı ⚠ ölçülmedi.
 - **FLUX.2-klein (yerel):** kısa ve somut bir istem verilir. Uzun negatif listesi yerine, cilt ve ışıkla ilgili 2-3 cümle ön tarife yazılır.
 
-**Hüküm:** Bu belge bir istem kütüphanesi değil, gerçekçilik için tek bir kontrol listesi. Bizde ayrı bir dosya olarak tutulmaz; UGC tarifinin görsel adımına bir "gerçekçilik bloğu" olarak eklenir.
+**Hüküm (onun sözüyle, 2026-11-07):** 15 istemin tamamı ve UGC sürümleri stüdyonun istem dolabına kondu: `tools/studio-prompts/realism/`.
