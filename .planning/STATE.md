@@ -77,8 +77,8 @@ FIRST: his word on the playbook study (2026-11-08 evening). The reel and Borja F
 folder per recurring job: steps, toolbox, pass/fail checks, corrections written back) were watched, read in full (the four prompts
 too) and checked by three expert readers, ChatGPT and a measurement of our own workforce; the verdict page is
 https://claude.ai/artifact/L7Cjm2B47ooxi86nbsKkiq (not saved to the repository — he has not said "kaydet"). The engineer's
-recommendation, not decided: a playbook per job type in the shared cupboard (B64 v2, A27-A29), checks drawn from his verdicts and run
-by a separate clean-context checker before his eye (A9), short personas (C41), tools loaded on demand and a workbench (B41), lessons
+recommendation, not decided: a playbook per job type in the shared cupboard (B64 v2, A27-A29), "done" checks drawn from each job's own brief (his verdicts stay
+that job's feedback, never rules — his word) and run by a separate clean-context checker before his eye (A9), short personas (C41), tools loaded on demand and a workbench (B41), lessons
 gated into rules by approval; the construction's dxb-team2 stays as it is.
 Set aside until the holding and its institutions are built (his word 2026-11-08 evening; not raised with him before): the `/kisayol`
 recipes (restored on his later word, "only the worst go"; the raw store's disk data is gone, its scripts rebuild it) and the new session
