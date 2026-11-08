@@ -2697,7 +2697,7 @@ Earlier days (the olive runs, the walk, the studio):
 
 2026-10-29 — His trial (B64 item 6, the Mavi Kuşak 3-page site, `/home/dxb/deneme-1/`, commits 3b70a92, 24e3170) is
 over and judged by his eye: arm A (master + four specialists, max, 28 Oct 22:28 → 29 Oct 06:59, 330 $, 8.4 h model
-time); arm C (one master alone, A's brief byte for byte, 29 Oct 13:38-15:57, 37 $); his word 2026-11-08: none clearly ahead — "hepsinde iyi bir tarafları var … Hiçbiri açık ara iyi değil";
+time); arm C (one master alone, A's brief byte for byte, 29 Oct 13:38-15:57, 37 $); his word 2026-11-08: none clearly ahead — "hepsinde iyi bir tarafları var … Hiçbiri açık ara iyi değil"; the one-session site D (2 Nov, inside the construction) a notch better ("bir tık daha iyiydi"); the second A's curtain-like page reveal liked — a taste note, never a rule;
  B (one session, no Ferrari bar) finished 28 Oct 20:55, ~28 $. No arm tested the
 holding's own setup: A's master and specialists were written for this çini job, not A26-A27's general master and
 cupboard specialists. On his word the web office plan talk opened: the deep analysis, his answers' questions and a
@@ -2748,7 +2748,7 @@ of the twelve videos is in the revenue list (REVENUE-OPPORTUNITIES §D, #17–#2
 is built with the row that builds its base, tested on the bench, and opens for sale when the key is turned — the
 nine related rows carry the note, and the five lines no row owns plus the revenue engine are the new row B83
 (REVENUE_ENGINE_SPEC §7septies). The channel talk stays later.
-2026-10-29 — His Mavi Kuşak trial is judged (arm A 330 $, arm C 37 $; his word 2026-11-08: none clearly ahead — "hepsinde iyi bir tarafları var … Hiçbiri açık ara iyi değil"); the web office
+2026-10-29 — His Mavi Kuşak trial is judged (arm A 330 $, arm C 37 $; his word 2026-11-08: none clearly ahead — "hepsinde iyi bir tarafları var … Hiçbiri açık ara iyi değil"; the one-session site D (2 Nov, inside the construction) a notch better ("bir tık daha iyiydi"); the second A's curtain-like page reveal liked — a taste note, never a rule); the web office
 plan talk is open — analysis, five questions and the proposal in `~/Desktop/DxB Global Web-Studio/`.
 
 ## Moved out of STATE.md on 2026-11-04 afternoon — Site E as it stood
@@ -2762,3 +2762,40 @@ scroll (body → slip → pounced dots → paint → milky glaze → kiln → gl
 close look and "Bu parçayı sor" carrying the piece into the form, and the form (consent gate, draft kept, request
 number kept after reload). Checked at 1440 and 390 px and once live in his Chrome. Folder `E - Opus tek başına,
 max, 46 dakika (3 Kasım)` beside A–D; phone link and details in `.planning/quick/20261103-mavi-kusak-max/NOTE.md`.
+
+## Moved out of STATE.md on 2026-11-08
+
+2026-11-07 afternoon (session d5674644) — his open list cleared and the engine's doors repaired. Dictation keeps listening after Enter and
+Backspace (`~/tools/vscode-dikte-kilidi`). Decided and written where the work sits: K8 at H4/H8's setup (B83); the licence word and
+"ChatGPT researches beside us" (his ChatGPT in Chrome, never Codex) in `dxb-research`; the light lane in `dxb-team2`; REA to every
+employee (B41); valuable work's three answers (B64); format research + weekly winner (B28, revenue #22, the answer kept with ChatGPT's).
+`dxb-verify` rewritten acceptance-first (b0d58315); the audit-twin and perfection-gate directives follow his later words. The fleet gates
+embedded links before fetching and keep.sh scrubs tokens (65d3ecb6): live 35 → 25 min, 1,286 → 740 pages, 48 → 57 claims; one run is
+still over the door's 15 min and its finds vary run to run. Dropped on his word: e2e-login, five claude-mem rows, Revid, the repo scan and
+privacy, the file-size lock, Ultra Code as a decision. Sol's profile keeps the ChatGPT app's node_repl off (9d6fbb84).
+2026-11-07 night (same session) — the hyper-realistic UGC recipe is written in B43 from two reels of an AI-UGC creator: five steps,
+the factory pipeline (free tools, settings, what is missing), paid fallback with the expert's good/bad notes (Seedance 2.5, Wan 3.0,
+Gemini Omni 1.1 Flash) and Seedream 5 Pro. His rulings: a real use may be voiced by an AI character (the old testimonial line deleted);
+voice = H3's own first, a Voice Studio clone only if better, both tried at the first setup, which opens with one trial UGC. Nothing built.
+Later the same night: every client video gets the more natural of the two voices; the UGC image step defaults to the Codex image tool
+(best on 2026-11-05), Seedream 5 Pro paid, FLUX.2-klein local; B11: Hermes at its newest release at setup (v0.23.0 that day), every
+tool checked current at setup, no extra bureaucracy until the holding earns.
+2026-11-07 evening — video-use (browser-use, MIT) joined the holding on his word: not the default, used whenever needed. The tool is at `~/.local/share/dxb/skills/video-use` (43cfc566); its page `tools/video-use/skill/SKILL.md` is linked as the global skill `video-use` and carries every feature, the W104 path, and what is owed before the first real job (the local-ear converter, Turkish casing). The record is B43's leg of 2026-11-07. Measured by two blind readers and a referee at max: OpenMontage cuts silence only, while video-use cuts fillers and retakes on word boundaries; Remotion 4.0.484 runs inside OpenMontage and is free up to 3 employees. His Gmail (dxbglobalcom) was tidied the same day: six labels, 11 filters, old mail out of sight; the 34 old mails under Para wait his word.
+2026-11-04 afternoon — B84's study is finished (files 10–11 evaluated with him at B84's setup, his word 2026-11-08): corrections in (records, nine personas, revenue roads,
+cupboard); file 10: free crawler tested on outletcity, LibreCrawl first, SiteOne second, the rest of the free road;
+file 11: the eye repeated 19 of his 22 pairs, untaught 11-12; it ranks, it gives no absolute verdict. Motion: Gemini API.
+2026-11-04 — The deep web study is delivered and he answered its nine decisions <!-- CEO-OK: b84-web-study-nine-decisions-2026-11-04 -->:
+B84's row file is rewritten (three core seats, called hands, the machine). File 9 is in his folder; a correction goes into
+`.planning/quick/20261103-web-ders/top.md` and `assemble.py` rebuilds it.
+2026-11-03 night — The DxB Web Studio plan is agreed in the talk and written into B84's row file ("The plan"):
+eleven decisions on his word <!-- CEO-OK: b84-web-studio-plan-agreed-2026-11-03 --> — the 29 Oct proposal plus the talk;
+every job from a decided build brief (MERIDIAN and the outletcity teardown are examples in the shared cupboard, not the
+standard); the client's reference is the bar, and the design may be identical (copying = images, names, content);
+the home page by three independent hands; one shared cupboard
+for every office; client finding at Y9/Y11's rank; the Agent SDK runtime; film from the Media Studio. The four-run
+measurement and the Mavi Kuşak re-run are dropped; nothing is built until B84's rank. Measured in the talk: site D was
+built entirely at high; his eye judged site E (max) worse than D, cause not measured; outletcity's logo wall is one
+video — a still night photo pushing in ~7 % and back, two logo sets fading. Fable's sealed plan merged; Sol did not run
+(he agreed the decisions himself and ordered the job finished). File 6 is a taste note, not a rule
+<!-- CEO-OK: ceo-liked-features-are-taste-not-rules-2026-11-03 -->; file 7's §4 and table carry errors the row file corrects.
+Earlier days: `.planning/STATE-ARCHIVE.md` § "Moved out of STATE.md on 2026-11-04" and the sections before it.
