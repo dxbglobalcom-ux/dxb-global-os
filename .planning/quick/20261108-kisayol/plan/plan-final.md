@@ -7,7 +7,7 @@ plugin root `packages/gateway/plugins/<name>/` with `.claude-plugin/plugin.json`
 seats get only Read (that folder) + Skill (`runtime-profile.ts:25,58,144`); the dxb-mcp media lane's
 `shoot` takes `steps`, `refs`, `ref_audio` and defaults to 4 steps (`media.ts:76-95`, `media-lane.ts:188`);
 no surface in `apps/` records a verdict on a clip today. Music: client-work music is open pending his
-ruling (`music-client-work-open-2026-11-08`); shortcuts carry no audio instruction at all.
+ruling, given when the first client comes (`solo-test-parked-and-music-at-first-client-2026-11-08`); shortcuts carry no audio instruction at all.
 
 ## 1. Decisions
 

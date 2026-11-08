@@ -32,7 +32,7 @@ prompts collected as raw material (a bounded local store), 202 recipes on 27 she
 `~/.claude/skills/kisayol`), the client's market as a free slot (his word: Africa for Africa, China for China), `render` through the Codex
 image tool headless. His eye rejected all 12 first samples ("ben AI AI'yim diye bağırıyor"): text-only recipes from AI-made product photos,
 no real reference. On his word one session, alone and without helpers, redoes the bus-stop ad and the moving 3D corner billboard from real
-references (`.planning/quick/20261108-tek-oturum/`) <!-- CEO-OK: kisayol-client-market-and-solo-test-2026-11-08 -->. The core now says the holding is global; music in client work is an open question.
+references <!-- CEO-OK: kisayol-client-market-and-solo-test-2026-11-08 --> (renders `~/tools/ComfyUI/output/tek_*`). His eye that evening: not bad, but product and setting unrelated (a luxury shoe on an old building); set aside until the holding and its institutions are built, and music in client work is decided when the first client comes — neither asked again <!-- CEO-OK: solo-test-parked-and-music-at-first-client-2026-11-08 -->. The core now says the holding is global.
 
 2026-11-08 (sessions e6b08cd7 and a6280165) — B84's tools set up to be installed at its rank, and the approval gate. His eye on every client delivery of every job, revisions too, until he lifts it per job type (APPROVAL_ENGINE A9, B15); on a site job the home-page choice is his too; the AI eye (decision 13) removed. B84's SEO tools are written as a set-up block in the row file, step 3 of the order at its rank: Screaming Frog (free up to 500 addresses, paid above), DataForSEO, Google Ads API and Bing volume, OpenSEO as the office's panel with its recipe measured from its code; 4 Nov's free road stays beside them. A blind trial of only strong candidates before any client job; no default before it, the winner becomes the default, the master chooses free or paid per job with the reason recorded. Every candidate weighed in file 12 of his studio folder (pruned to the strong ones on his word). B42 carries his word: every installed tool checked for a new version every two weeks, tried in its own box before any update. Nothing installed.
 
@@ -75,10 +75,10 @@ Earlier days: `.planning/STATE-ARCHIVE.md` § "Moved out of STATE.md on 2026-11-
 
 FIRST, on his word (2026-11-07, late): talk with him about the reel https://www.instagram.com/reel/Detxk1CyFJK/ — he opens a
 new session for it; watch it first (dxb-watch-links, one Opus reader); and the link https://x.com/borjafat/status/2112536384191742222 .
-Then: the single session's bus-stop ad and moving 3D billboard go to his eye. The `/kisayol` recipes were emptied and then restored on his
-later word ("only the worst go; maybe the agents and the level failed, not the material"); the raw store's disk data is gone (its
-scripts rebuild it). A new session finds the ads the advertising world admires, works out how each is made, keeps only the recipes
-worth keeping, adds wow-level ones from real references and real product photos, each through his eye.
+Set aside until the holding and its institutions are built (his word 2026-11-08 evening; not raised with him before): the `/kisayol`
+recipes (restored on his later word, "only the worst go"; the raw store's disk data is gone, its scripts rebuild it) and the new session
+that finds the ads the advertising world admires, keeps only the recipes worth keeping and adds wow-level ones from real references and
+real product photos — the setting must belong to the product.
 
 0. Revenue — the lines are on the board (B83 and the notes on its related rows); each is built at its row's rank
    in the board's reorder and bench-tested with it, sold when the key is turned. Rapor 3's suggested order for Nate
@@ -112,8 +112,6 @@ worth keeping, adds wow-level ones from real references and real product photos,
    <!-- CEO-OK: b64-after-the-deal-and-plan-merge-rule-2026-10-27 -->.
 
 ## Waiting on his approval
-
-- Music in the studio's client work: researched, then his ruling (`music-client-work-open-2026-11-08`); his own work keeps it out.
 
 - Revenue, Rapor 2 (`~/Desktop/Gelir Kaynakları/2 - Gelir üretim hatları ve kararlarınız 2026-11-01.pdf`, § 8):
   K8 leaves this list — asked at H4/H8's setup after he listens on the bench (B83, his word 2026-11-07). The rest answered 2 Nov (K2, K9, K10 for now, K11, İ1–İ3, İ6 as

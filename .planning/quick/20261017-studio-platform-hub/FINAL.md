@@ -16,7 +16,7 @@
 - **Çıktı — kanallar:** ilk kanal, kanalı şimdi açmak, SIGNAL'in ilk adımı, kanal tablosu ve sponsor takvimi bu planın yapımından çıktı. Kanallar ayrı ve daha detaylı bir çalışma olur; girdisi R3–R7 araştırmaları ve 17 Ekim taslağının kanal bölümü (`PLAN-max.md`). *"Bu kanallarla ilgili daha detaylı bir çalışma yapacağız."*
 - **Eklendi — Higgsfield:** API'si müşteri işlerinde kullanılır; sınırsız aboneliğe otomasyon bağlanmaz. Bağlanacak hesaplar: fal, Runware, WaveSpeed, kie.ai, MiniMax, Higgsfield; Replicate GitHub tıkıyla. Google, BytePlus, Kling ve Alibaba'yı tarayıcı izler; bir iş gerektirirse bağlanır. *"Holding'e tüm hesapları bağlayın."*
 - **FLUX.1-Krea-dev:** işlerimizde rahatça kullanılır — sizin sözünüz <!-- CEO-OK: flux-krea-dev-usable-in-our-work-2026-10-18 -->.
-- **İslami sınırlar:** faizli finans, alkol, flört ve açıkça günah olan her şey kesinlikle yok <!-- CEO-OK: islamic-exclusions-sponsors-and-work-2026-10-18 -->. Müzik: holdingin kendi işlerinde yok; müşteri işlerinde araştırılır, hükmü sizindir <!-- CEO-OK: music-client-work-open-2026-11-08 -->. Çocuk animasyonunda canlı tasviri hükme bağlanmadı; kanal çalışmasıyla size gelir.
+- **İslami sınırlar:** faizli finans, alkol, flört ve açıkça günah olan her şey kesinlikle yok <!-- CEO-OK: islamic-exclusions-sponsors-and-work-2026-10-18 -->. Müzik: holdingin kendi işlerinde yok; müşteri işlerinde ilk müşteri gelince karar verilir, öncesinde sorulmaz <!-- CEO-OK: solo-test-parked-and-music-at-first-client-2026-11-08 -->. Çocuk animasyonunda canlı tasviri hükme bağlanmadı; kanal çalışmasıyla size gelir.
 
 *Değerli iş planı (B64 karar 10), `max` yazarı, 2026-10-17; 18 Ekim'de onaylandı, düzeltmeleri Bölüm 0'da. Hiçbir şey kurulmadı, hiçbir hesap açılmadı.*
 
