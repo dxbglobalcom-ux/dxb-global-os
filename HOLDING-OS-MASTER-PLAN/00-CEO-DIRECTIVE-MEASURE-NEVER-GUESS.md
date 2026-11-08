@@ -45,6 +45,11 @@ by not trying rather than by not caring.
 
 Binds every author and every session until the project ends.
 
+## The board before "broken" (2026-11-08) <!-- CEO-OK: board-before-broken-2026-11-08 -->
+
+Before a session calls anything in the holding broken or missing, or proposes new work, it checks the board:
+if a row already fixes it, it names that row; if none does, it brings a proposed fix.
+
 ---
 
 **Where its parts are operationally applied:** the always-on core (`.claude/CLAUDE.md` §2) carries

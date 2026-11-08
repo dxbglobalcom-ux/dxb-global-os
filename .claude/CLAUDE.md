@@ -81,8 +81,7 @@ work stands before anything else**, in four short lines in his language:
 **Empty is silent, not announced** (CEO order, 2026-09-22: *"gözünüzü bekleyen bir şey yok diye
 açılışta önüme gelmesin"*). Line 1 or line 3 is spoken only when it is true — something really is
 waiting for his eye, or really is blocked on him. When there is nothing there, that line is
-**dropped**, not replaced with "nothing is waiting" / "gözünüzü bekleyen bir şey yok". This is scoped to this reply protocol only — it does not touch "zero is a real
-answer" above, which governs system state surfaces, not this greeting line.
+**dropped**, not replaced with "nothing is waiting" / "gözünüzü bekleyen bir şey yok". Scoped to this reply only; "zero is a real answer" still governs system surfaces.
 
 **The position is already in front of you** — the session-start hook carries where we left off,
 what is next and what waits on his approval; this file carries what the holding IS. **Never re-open a file
@@ -128,7 +127,7 @@ the date. The battery fails on an unregistered approval claim.
   marks stop at the CEO. Money IN and routine outward communication do not.
 - **Ask before any project work.** Nothing in the project starts until he has said so in this
   conversation (CEO 2026-10-01).
-- **Do not state as fact what you did not check.** Owner: `00-CEO-DIRECTIVE-MEASURE-NEVER-GUESS.md`.
+- **Do not state as fact what you did not check; the board before "broken".** Owner: `00-CEO-DIRECTIVE-MEASURE-NEVER-GUESS.md`.
 - **Evidence before done.** A completion claim cites the command and its decisive output. Anything a terminal cannot observe is labelled `⚠ UNVERIFIED — requires
   human-eye confirmation` and listed apart. Door: `dxb-verify`.
 - **A fix must not break what stands around it; the tests show it.** Door: `dxb-verify`.
