@@ -6,9 +6,12 @@
 //   build    base[+modifier…] --slot k=v → one assembled prompt; refuses what may not stack
 //   ara      the raw store's bounded search (quarry/search.py), ≤ 20 rows
 //   verdict  appends his verdict to verdicts.tsv; never rewrites a row
+//   render   build + the Codex image tool, headless, on the ChatGPT subscription (measured 2026-11-08:
+//            80 s, the reference product kept) → one native PNG; stills only (video: the media lane)
 // The cupboard itself is packages/gateway/plugins/kisayol/skills/kisayol (read by sessions through
 // ~/.claude/skills/kisayol and by the studio's seats through their plugin grant). No packages used.
-import { readFileSync, writeFileSync, readdirSync, existsSync, mkdirSync, rmSync, appendFileSync, statSync } from "node:fs";
+import { readFileSync, writeFileSync, readdirSync, existsSync, mkdirSync, rmSync, appendFileSync, statSync, mkdtempSync, copyFileSync } from "node:fs";
+import { homedir } from "node:os";
 import { createHash } from "node:crypto";
 import { spawnSync } from "node:child_process";
 import { dirname, join, resolve } from "node:path";
@@ -320,6 +323,36 @@ export function appendVerdict(file, f) {
   return row;
 }
 
+// ---------- render ----------
+const CODEX = join(homedir(), ".local/bin/codex");
+/** The codex exec argv for one still: the built prompt, the product photo as reference when given,
+ *  and the instruction to save the generated image as <name>.png inside workdir. */
+export function codexArgs(prompt, { ref, workdir, name }) {
+  const ask = `Use your image generation tool to make exactly this image${ref ? " from the attached product photo" : ""}. ` +
+    `Then save a copy of the generated image as ${name}.png in the current directory. Do nothing else.\n\n${prompt}`;
+  const args = ["exec", "--skip-git-repo-check", "-C", workdir, "-s", "workspace-write"];
+  // -i takes several paths: "--" ends the list, or it swallows the prompt (measured 2026-11-08)
+  if (ref) args.push("-i", ref);
+  args.push("--", ask);
+  return args;
+}
+export function renderStill(dir, spec, slotArgs, { ref, out, timeoutMs = 300_000 }) {
+  if (!out) throw new Error("render needs --out <file.png>");
+  if (ref && !existsSync(ref)) throw new Error(`no reference photo at ${ref}`);
+  const prompt = buildRecipe(dir, spec, slotArgs);
+  const root = "/tmp/claude-1000/kisayol-render";
+  mkdirSync(root, { recursive: true });
+  const workdir = mkdtempSync(join(root, "r-"));
+  const name = "kisayol-out";
+  const r = spawnSync(CODEX, codexArgs(prompt, { ref: ref && resolve(ref), workdir, name }),
+    { encoding: "utf8", timeout: timeoutMs, stdio: ["ignore", "pipe", "pipe"] });
+  const made = join(workdir, `${name}.png`);
+  if (!existsSync(made)) throw new Error(`codex made no image (exit ${r.status}${r.error ? ", " + r.error.message : ""}); its work dir: ${workdir}`);
+  mkdirSync(dirname(resolve(out)), { recursive: true });
+  copyFileSync(made, resolve(out));
+  return resolve(out);
+}
+
 // ---------- CLI ----------
 function flags(argv) {
   const pos = [], fl = {}, slot = {};
@@ -361,6 +394,11 @@ function main(argv) {
       const r = spawnSync("python3", args, { encoding: "utf8" });
       process.stdout.write(r.stdout || ""); process.stderr.write(r.stderr || "");
       return r.status ?? 1;
+    }
+    case "render": {
+      if (!pos[0]) { console.error("usage: render <base>[+mod…] [--slot k=v …] [--ref photo] --out file.png"); return 2; }
+      console.log(renderStill(dir, pos[0], slot, { ref: fl.ref, out: fl.out }));
+      return 0;
     }
     case "verdict": {
       console.log(appendVerdict(fl.file ? resolve(fl.file) : VERDICTS, fl));

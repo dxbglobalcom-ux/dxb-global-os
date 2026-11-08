@@ -14,6 +14,7 @@ import {
   indexDir,
   buildRecipe,
   appendVerdict,
+  codexArgs,
 } from "../../tools/studio-prompts/kisayol/kisayol.mjs";
 
 const REPO = join(__dirname, "..", "..");
@@ -211,5 +212,23 @@ describe("B43 /kisayol — his verdict is appended, never rewritten", () => {
     expect(lines).toHaveLength(3);
     expect(lines[1].split("\t")).toHaveLength(8);
     expect(() => appendVerdict(file, { job: "j1", recipe: "x", variant: "4", verdict: "yes", form: "f", sample: "s", words: "" })).toThrow();
+  });
+});
+
+describe("B43 /kisayol — render hands one still to the Codex image tool", () => {
+  it("attaches the product photo, asks for one saved PNG in the work dir, carries the whole prompt", () => {
+    const a = codexArgs("THE PROMPT", { ref: "/x/p.png", workdir: "/tmp/w", name: "out" });
+    expect(a.slice(0, 2)).toEqual(["exec", "--skip-git-repo-check"]);
+    expect(a[a.indexOf("-C") + 1]).toBe("/tmp/w");
+    expect(a[a.indexOf("-i") + 1]).toBe("/x/p.png");
+    const ask = a[a.length - 1];
+    expect(ask).toMatch(/image generation tool/);
+    expect(ask).toMatch(/out\.png/);
+    expect(ask).toMatch(/THE PROMPT$/);
+    // -i takes several paths; without "--" it swallows the prompt and codex waits on stdin
+    expect(a[a.length - 2]).toBe("--");
+  });
+  it("sends no image when the recipe needs none", () => {
+    expect(codexArgs("P", { workdir: "/tmp/w", name: "o" })).not.toContain("-i");
   });
 });
