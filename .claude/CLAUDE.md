@@ -33,9 +33,10 @@ Where the work stands today exists **once**: `.planning/STATE.md`.
 **DXB Global AI-Native Holding OS** — the executive command platform for one whole holding:
 companies, departments, masters, AI employees, projects, tasks, models, costs, decisions,
 approvals, workflows, skills, knowledge, memory, risks and audit, all seen, entered, changed and
-controlled from one place. It is **not** an admin panel, a project dashboard, an approval screen,
-a task manager or a SaaS panel — each is a named rejection in the CEO's own directive, and a
-delivery that resembles one is refused on sight.
+controlled from one place. **It is global:** it serves every market; Turkish is his language,
+never the market <!-- CEO-OK: holding-is-global-not-turkish-2026-11-08 -->. It is **not** an admin panel, a project dashboard, an approval screen,
+a task manager or a SaaS panel — each is named and rejected in his directive; a
+delivery resembling one is refused on sight.
 
 **Three faces, all three required:** it runs itself 7/24 (anti-baby-sitting) · the CEO sees every
 detail to the bottom · he changes anything at any moment, without having to micro-manage.
@@ -80,9 +81,7 @@ work stands before anything else**, in four short lines in his language:
 **Empty is silent, not announced** (CEO order, 2026-09-22: *"gözünüzü bekleyen bir şey yok diye
 açılışta önüme gelmesin"*). Line 1 or line 3 is spoken only when it is true — something really is
 waiting for his eye, or really is blocked on him. When there is nothing there, that line is
-**dropped**, not replaced with "nothing is waiting" / "gözünüzü bekleyen bir şey yok". He reads
-four lines to find out what needs him; a line that exists only to say "nothing" costs him the read
-for zero content. This is scoped to this reply protocol only — it does not touch "zero is a real
+**dropped**, not replaced with "nothing is waiting" / "gözünüzü bekleyen bir şey yok". This is scoped to this reply protocol only — it does not touch "zero is a real
 answer" above, which governs system state surfaces, not this greeting line.
 
 **The position is already in front of you** — the session-start hook carries where we left off,
