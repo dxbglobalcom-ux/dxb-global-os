@@ -27,7 +27,14 @@ not here. What is accepted is read from `scripts/governance/ceo-approvals.json`,
 
 ## Where we left off
 
-2026-11-08 (session e6b08cd7, handed over on his word) — B84 and the approval gate. His eye on every client delivery of every job, revisions too, from the first paid job until he lifts it per job type; his verdicts kept, the dashboard shows each type's run without a correction (APPROVAL_ENGINE A9, B15; 10cd6017); on a site job the home-page choice is his too (7b851bcd). The AI eye (B84 decision 13) removed. B84's tools: Screaming Frog free and paid installed beside LibreCrawl, a blind trial in its own box before any client job (9665f0be); DataForSEO is set up for client work (f5448556); search volume from Google Ads API and Bing beside it (aceb2032); his ChatGPT research read twice (4f0d50d7); OpenSEO researched — the panel on top of DataForSEO, into the blind box (2c9179e3). The web office's state measured: records and disk agree, nothing built until B84's rank. Files 10 and 11 are evaluated with him at B84's setup, step by step (his word). He was angered that the OpenSEO result was promised and not brought with the ChatGPT one.
+2026-11-08 (session e08d8982) — `/kisayol`, the Media Studio's recipe cupboard (B43), built on his word in its simple form <!-- CEO-OK: kisayol-cupboard-simple-his-yes-2026-11-08 -->: 236,286 open
+prompts collected as raw material (a bounded local store), 202 recipes on 27 shelves in `packages/gateway/plugins/kisayol` (sessions via
+`~/.claude/skills/kisayol`), the client's market as a free slot (his word: Africa for Africa, China for China), `render` through the Codex
+image tool headless. His eye rejected all 12 first samples ("ben AI AI'yim diye bağırıyor"): text-only recipes from AI-made product photos,
+no real reference. On his word one session, alone and without helpers, redoes the bus-stop ad and the moving 3D corner billboard from real
+references (`.planning/quick/20261108-tek-oturum/`) <!-- CEO-OK: kisayol-client-market-and-solo-test-2026-11-08 -->. The core now says the holding is global; music in client work is an open question.
+
+2026-11-08 (sessions e6b08cd7 and a6280165) — B84's tools set up to be installed at its rank, and the approval gate. His eye on every client delivery of every job, revisions too, until he lifts it per job type (APPROVAL_ENGINE A9, B15); on a site job the home-page choice is his too; the AI eye (decision 13) removed. B84's SEO tools are written as a set-up block in the row file, step 3 of the order at its rank: Screaming Frog (free up to 500 addresses, paid above), DataForSEO, Google Ads API and Bing volume, OpenSEO as the office's panel with its recipe measured from its code; 4 Nov's free road stays beside them. A blind trial of only strong candidates before any client job; no default before it, the winner becomes the default, the master chooses free or paid per job with the reason recorded. Every candidate weighed in file 12 of his studio folder (pruned to the strong ones on his word). B42 carries his word: every installed tool checked for a new version every two weeks, tried in its own box before any update. Nothing installed.
 
 2026-11-07 afternoon (session d5674644) — his open list cleared and the engine's doors repaired. Dictation keeps listening after Enter and
 Backspace (`~/tools/vscode-dikte-kilidi`). Decided and written where the work sits: K8 at H4/H8's setup (B83); the licence word and
@@ -67,11 +74,9 @@ Earlier days: `.planning/STATE-ARCHIVE.md` § "Moved out of STATE.md on 2026-11-
 ## Next
 
 FIRST, on his word (2026-11-07, late): talk with him about the reel https://www.instagram.com/reel/Detxk1CyFJK/ — he opens a
-new session for it; watch it first (dxb-watch-links, one Opus reader); with it the creator's own resource link https://x.com/borjafat/status/2112536384191742222
-(not a post to judge — it opens to his material; read it in his Chrome, then read both as one subject). Then: the studio skill "visual codewords" — the 64 one-word
-image triggers (`.planning/quick/20261107-ugc/visual-codeword-library.txt`) plus the reel's 5 product shortcuts (`u4-slash.md`), each
-backed by a full prompt in our realism language (`tools/studio-prompts/realism/`), run with the Codex image tool; placed in
-`tools/studio-prompts/`, tied to B43. His yes to propose it was given; nothing written yet.
+new session for it; watch it first (dxb-watch-links, one Opus reader); and the link https://x.com/borjafat/status/2112536384191742222 .
+Then: the single session's bus-stop ad and moving 3D billboard go to his eye; what his eye says decides how the `/kisayol` recipes are
+rebuilt (a real reference behind each, real product photos) before any recipe is used on a job.
 
 0. Revenue — the lines are on the board (B83 and the notes on its related rows); each is built at its row's rank
    in the board's reorder and bench-tested with it, sold when the key is turned. Rapor 3's suggested order for Nate
@@ -105,6 +110,8 @@ backed by a full prompt in our realism language (`tools/studio-prompts/realism/`
    <!-- CEO-OK: b64-after-the-deal-and-plan-merge-rule-2026-10-27 -->.
 
 ## Waiting on his approval
+
+- Music in the studio's client work: researched, then his ruling (`music-client-work-open-2026-11-08`); his own work keeps it out.
 
 - Revenue, Rapor 2 (`~/Desktop/Gelir Kaynakları/2 - Gelir üretim hatları ve kararlarınız 2026-11-01.pdf`, § 8):
   K8 leaves this list — asked at H4/H8's setup after he listens on the bench (B83, his word 2026-11-07). The rest answered 2 Nov (K2, K9, K10 for now, K11, İ1–İ3, İ6 as
