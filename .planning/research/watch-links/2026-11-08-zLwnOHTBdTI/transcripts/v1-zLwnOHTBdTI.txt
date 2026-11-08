@@ -1,0 +1,216 @@
+language: tr
+[00:00] 6 ay önce Cloud sub agentlardan bahsetti ve şu anda artık X'te gündem olan durumlar şu işte 100 tane sub agent açtım dünyanın yarısını kurtarıyorum
+[00:06] ya da bir tane sub agent açtım yetiyor fazlasını neden kullanıyorsunuz gibi sorularla dolu
+[00:11] açıkçası bana da çoğu zaman soruyorlar sub agent işte kullanıyor musun ya da ne kadar kullanmak lazım hangi durumlarda kullanmak lazım vesaire vesaire
+[00:17] bugün video bunun üzerine olacak ben daha aşağı yukarı çıktığından beri kullanıyorum ve performanslı olduğunu düşündüğüm senaryolar var
+[00:23] tabi çok kötü olduğunu düşündüğüm senaryolar da var kendi tecrübelerimi aktarmaya çalışacağım umuyorum yararlı olur diyerekten videoya geçelim
+[00:28] şimdi sub agent temel olarak şu çok basitçe anlatmam gerekirse bir tane anay agentınız var
+[00:33] ana çalışma çerçeveniz mesela şu an açtım chat bir tane agent yazıyorsun işte youtube video fikri arıyorum
+[00:38] bana bununla ilgili bir fikir getirir gibi yazdığında arka planda gidiyor araştırma yapıyor vesaire getiriyor tamam
+[00:43] bunun elinin altında birkaç tane eleman verdiğin zaman onlar da sub agent oluyor bunu şöyle örnekleyebiliriz
+[00:48] varsayıyorum senin bir tane asistanın var ki zaten Cloud'a da öyle diyebiliriz
+[00:52] asistanın yanına da 3 tane stajer arkadaş verdiğin gibi düşünebiliriz mesela asistanı diyorsun ki bana şunu şunu raporla mail dedi raporla
+[00:57] ya da birkaç tane daha farklı iş veriyorsun asistan tek tek gidip onları yapmaya çalışıyor uğraşıyor hatta bazen kafası karışıyor
+[01:03] kafası karışıyor ne demek bağlamış işiyor demek mesela asistanı diyorsun ki mailleri incele bu bir iş ya da diyorsun ki raporları hazırla
+[01:10] ya da diyorsun ki bir tane sunum hazırla ya da işte sunum sonu notlarını oluştur asistan bunların hepsini tek seferde yapabilir
+[01:15] sıra sıra gidebilir ancak şunu diyebilirsin asistanı 4 tane staj artttıktıktan sonra birine raporlamıştı birine sunumu
+[01:20] birine diğer işi verdikten sonra parçalara bölebilirsin böylece asistanın daha zor olmuş olur konteksi daha az çişmiş olur
+[01:26] aslında sab ejinti kullanmanın mantığı tam olarak bu ana yürüttüğün ejintin kafasını konteksini çok karıştırmamak ve orada ana görevi
+[01:33] yaparken 3 alt görevleri sab ejintle vermek 1. aslında en önemli olan nokta bu yani ana ejintinize çok doğru bir şekilde kullanmanıza yarıyor
+[01:41] diğer önemli özellikle şu mesela 1000 tane dosyaya verdim bu asistana yine aynı asistan gibi düşün 1000 tane dosyayı verip şunu diyorsun
+[01:48] ya bu dosyalar arasından işte ahmetin dosyasını bulur musun tamam ejintin aynı şekilde bunları bulabilir ancak 1000 dosyayı dolaşmak yine çok fazla yoracakları
+[01:56] burada da 4 tane staj arkadaşlar diyosun ki 250-250 bölgüm hepinize ahmetin dosyası hanginizde ise bulun getirin dolayısıyla burada da paralel çalışmayı sağlıyorsun
+[02:04] aslında sab ejintin mantığı bu birincisi işlerinizi çok daha hızlı yaptırıyor ikincisi ana ejintinizi daha az yoruyor ve tabi ki bunun da bir maliyet oluyor
+[02:12] videoya geçelim örneklerle ne kadar maliyet olduğu ne kadar işe yaradı ve sonuçlarına kadar da geçtirdi tek tek görelim
+[02:17] öncelikle şunu biraz önlem kararlaştıralım siz ana ejintle çalışırken alt bir ajan açtığınız zaman o ajanın beyni sıfırlanmış gibi düşünebilirsiniz
+[02:25] yani ana ajanınızın bildiği hiç bir şey bilmiyor mesela ana ajanla atıyorum video oluşturuyorum ya da video eritmiyorum
+[02:31] ana ajanı dediğimiz zaman bir tane sab ejint aç videom için kapak fotoğrafı bulsun bu sab ejint yani alt ejint hiç bir şey bilmiyor
+[02:38] sadece ana ejintin aktardığı şeyleri biliyor ana ejint o an ne diyebilir mesela kapak fotoğrafı işte 916 olacak dikey olacak gibi şeyler söyleyebilir
+[02:45] ve bu bağlamda iş yapacak yani sadece bunları bilecek o yüzden beyin olarak ana ejintten biraz daha farklı sadece onun verdiği küçük bilgilerden ibaret
+[02:53] diğer taraftan baktığımız zaman alt ejint içinde aynısı geçerli mesela tabne ile oluştururken varsıyorum x-field'a gitti geldi başka bir aracı kullandı işte araştırma yaptı
+[03:02] bunların hepsinden sonra sadece bir sonuç çıkarıyor işte tabne ile oluşturdum dosyası bu bunu benim ana ejintime veriyor ana ejint arka planda o alt ejint ne yaptı onu bütünüyle hafızasına yazmıyor
+[03:12] sadece kontrol ediyor bitirde mi bitirmedi mi şu an ne yapıyor dolayısıyla ana ejintimin hafızası kendine özgü kalıyor ve alt ejintin hafızası da kendine özgü kalıyor
+[03:20] mesela bir tane örnek yapalım atıyorum senin 3 tane de kot tabanında dosyanda hata var biri giriş yapma ile ilgili biri kayıt olma ile ilgili biri de ana sayfayı açma ile ilgili
+[03:28] şimdi sen tek bir ajan'a şunu diyebilirsin git bu 3 sayfadaki hataları da tek tek çözleyebilirsin ya da 3 tane ayrı ajan açıp logindeki hatayı çöz kayıt oldaki hatayı çöz ve ana sayfadaki hatayı çöze diyebilirsin
+[03:40] böyle bir senaryo eyle alacak olursak ana ejintimiz ilk durum için yani 3'ünü de kendi çözlüyor zaman aşağı yukarı 85 kt okunarıyor ve sırasıra yapıyor
+[03:48] video logini çözüyor kayıt oğlu çözüyor ana sayfayı çözüyor ve diyor ki hadi bana eyvallah ama bunu 60 saniye bir süreyle çözüyor
+[03:54] tamam bir de şu var bu arkadaş artık 3'üne de hakim yani kontekstine zihnine bu 3'ünü de aldı burada tek ejintli mantığa gittiğimiz zaman sıkıntı şu
+[04:02] tek tek gittiği için bu arkadaş zamandan kaybediyor mesela 30 saniyede 3 ejintle yapacağı işi bir dakikada yapmak zorunda kalıyor
+[04:08] çünkü 3 ejint tabi ölünseydi her biri aynı anda sayfalara bakıp düzeltebilirdi ve daha hızlı yapabilirdi
+[04:12] bu ajan mesela bir dakika zaman harcamış ve 85-90 k kendi konteksinden yemiş yani zihninden yemiş diğer kısmı geçtiğim zaman 3 tane alt ajan çalıştırdığımda
+[04:21] mesela login için 40 saniyede bitirmiş bir dakikadan daha kısa ve 70 kt okunarıyormuş tabi bu tokun ana ajanın hafızasını et yetmiyor
+[04:28] bu kendi hafızası diğer kayıt sayfası ile çalışan alt ajan ise 30 saniyede bitirmiş yine bu da 70 kt okunun civarını harcamış
+[04:34] ve diğer alt ajanla yani ana sayfa ile çalışan arkadaş da 45 saniye de bitirmiş en geç bu bitirdiği için 45 saniye süreyle 3 üde bitmiş oldu
+[04:42] hem süreden tasarruf etmiş olduğunu aslında hem de her ne kadar toplam harcadığın tokun fazla olsa da 310.000 tokun olsa da ana ajanın hafızasını şişirmemiş olduk
+[04:51] özetle aslında alt ejintlerle çalıştığın zaman işi daha hızlı yaptın sadece bu senaryo için ve tabi ki ana ejintin hafızasını daha az şişirdin
+[04:59] ama senden giden tokun daha fazla senden giden tokun neden daha fazla basitçe 3 ayırdığın zaman hepsine baştan olayları anlatmak zorunda kalıyorsun
+[05:07] ve bu olayları anladıktan sonra işe koyuluyorlar
+[05:09] sonrasında çıktıkları çıkardıktan sonra ana ejinta verirken de yine bir birleştirme işlemleri oluyor ana ejint tarafında yine orada bir tokun harcanıyor
+[05:16] yani maliyet olarak seni biraz zarara sokuyor
+[05:18] kendim için bir örnek verecek olursan mesela video edit işlemlerini yaptırıyorum
+[05:22] ne yapıyor videonun ses dosyasını çıkarıp önce yazıya dönüştürüyor
+[05:25] sonra videonun parçalarını tek tek kesiyor
+[05:27] sonra yazılara göre gidip editleri yapıyor
+[05:30] harika herhangi bir sorun yok
+[05:31] ama bazen o kadar sıkışık oluyorum ki şunu yapmak zorunda kalıyorum
+[05:34] 3 tane sap ejint aç videoyu böl
+[05:36] böldükten sonra 3 tane sap ejint aynı zamanda editlemeye başlasın
+[05:40] bir de şu var mesela ana ejintin nasıl editleyeceğini biliyor
+[05:43] bu arkadaşlar nasıl editleyeceğini biliyor diyecek olursanız
+[05:45] o arkadaşlara benim edit dosyamı veriyorum
+[05:47] yani markdown dosyamı veriyorum formatımı veriyorum
+[05:49] o şekilde ancak editlemeye çalışıyor
+[05:51] ama benim 1 saat sürecek editim 20 dakikada 25 dakikada tamamlamış oluyor
+[05:55] tabii işin kötü yanı şu tokun inanılmaz fazla uçuyor
+[05:58] bu iki örnek de aslında şunları anlattığımı düşünüyorum
+[06:01] harcanının hafızısını şişirmeme konusunda
+[06:03] ve işleri hızlı yapma konusunda gerçekten sap ejintler baya bir işe yarıyor
+[06:06] bir de önemli diğer nokta var o da şu
+[06:08] ana modeli, iyi bir model seçip
+[06:10] ameli işleri dediğimiz işleri küçük modellere vermek
+[06:13] atıyorum video editle ilgili bir şey yapacaksın
+[06:15] ancak kapak fotoğrafı lazım
+[06:17] mesela video editimi ben opus 5.5'de yapıyorum
+[06:19] ama kapak fotoğrafında
+[06:21] işte nasıl bir renk teması olacak ya da nasıl bir şey olması lazım
+[06:23] bunu araştırmak istiyorum
+[06:24] diyorum ki haiku ile ilgili bir tane sap ejintaç
+[06:26] haiku gitsin internetten web search yapsın
+[06:28] kapak fotoğraflarına baksın mesela
+[06:30] bununla ilgili nasıl bir kapak fotoğraf yapabilir
+[06:32] millet neler yapmış ya da youtube hangi algoritmayı seviyorsa
+[06:34] ona göre bana bir standart getirsin diye biliyorum
+[06:36] bunlar zaten bende kayıtlı o ayrı bir durum ama
+[06:39] örnek olması açısından söylüyorum
+[06:40] yani araştırma için kullanacağın
+[06:42] ya da test etmek için kullanacağın
+[06:44] bazen log dosyalarını incelemek için yapacağın işlemleri vesaire
+[06:47] basit işlemleri
+[06:49] alt küçük ajanlara verebilirsin
+[06:50] burada zaten alt ajanın maliyeti de düşük olduğu için
+[06:52] benim en çok önerdiğim olay aslında bu
+[06:54] diğer en çok kullandığım ve kesinlikle tavsiye ettiğim olayda şu
+[06:57] mesela bir uygulama geliştiriyorsun
+[06:58] uygulamayı iyi seviye getirdiğini düşünüyorsun
+[07:00] ama hala eksiklikler var ya da eislop olduğunu düşünüyorsun
+[07:03] abi ejinta yazıyorsun mesela eislop bir görüntü var
+[07:05] daha düzgün bir hale getirdiyorsun
+[07:07] yine bir şeyler değiştiriyor ama değişmiyor yani
+[07:09] çünkü asıl neden şu
+[07:10] kendi yazdığı kodun doğru olduğunu inanıyor
+[07:12] zaten kodu o yazdığı için eleştirme konusunu
+[07:14] sıkıntılar yaratabiliyor
+[07:15] o yüzden bence şunu yapabilirsiniz
+[07:17] birkaç tane sap ejint açtırıp
+[07:19] hatta bazen kodeksa vesaire yaptırıyorum
+[07:21] ben şunu diyorum
+[07:22] şu koddaki açıkları ya da eislop olan durumları düzeltiyorum
+[07:25] o zaman mesela opus tavsiye olarak
+[07:27] iki tavsiye verdiyse kodeks 10 tavsiye veriyor
+[07:29] çünkü kodu o yazmamış ya
+[07:30] rahat rahat sallayabiliyor
+[07:31] daha net ayrıntıları görebilebiliyor
+[07:33] bir de arkasındaki mühendislik biraz farklı
+[07:35] o yüzden sap ejint açıp
+[07:36] kodu o yazmamış ya
+[07:37] rahat rahat sallayabiliyor
+[07:38] daha net ayrıntıları görebilebiliyor
+[07:40] bir de arkasındaki mühendislik biraz farklı
+[07:42] o yüzden sap ejint açıp
+[07:44] diğer en çok kullandığım senaryolardan
+[07:46] bir de soru sorma olayı
+[07:47] mesela ejint ile kodlama yapıyorum
+[07:49] login sayfasını bitiriyorum
+[07:50] ya da anasayfayı bitireceğim
+[07:51] her şey güzel yolunda gidiyor
+[07:52] ama proje ile ilgili merak ettiğin bir şey oluyor
+[07:54] atıyorum bu login ekranındaki
+[07:55] şu kapak fotoğrafı nereden geldi gibi
+[07:57] şimdi login ekranını tasarlatırken
+[07:59] bunun kontekstini şişirmemen lazım
+[08:01] aç bir tane küçük sap ejint mesela
+[08:02] de ki bu kapak fotoğrafı nereden geldi
+[08:04] ya da işte şu kod parçası niye var
+[08:06] ya da bu kod parçası neden biz kullanmadık
+[08:07] gibi şeyler sorabilirsin
+[08:08] bunun için de kesinlikle bayağı işe yarıyor
+[08:10] özellikle sap ejint kullanmanın en imantı bu
+[08:12] benim kod tabanımda diğer en çok kullandığım
+[08:14] özelliklerden bir de birbirinden bağımsız sikirleri
+[08:16] ya da work flow'ları sap ejintlarla çalıştırabiliyorum
+[08:18] mesela bir tane sikilim var
+[08:20] benim dökümanları sürekli güncel tutuyor
+[08:22] bir tane sikilim de var projenin testlerini yazıyor
+[08:24] şimdi ben mesela tek ejint ile bunu neden bekleyeyim ki
+[08:26] hani dökümanı yazacak
+[08:28] artı ondan sonra testleri yapacak
+[08:30] diyorum ki iki tane sap ejint aç
+[08:31] hatta bunları görevlilerine de göre veriyorum
+[08:32] hani test biraz daha zor
+[08:34] testleri yazması ve önemli kısım
+[08:36] döküman oluşturması kolay zaten
+[08:37] hani değişiklere bakıp dökümanı güncelilecek
+[08:39] dolayısıyla birini haikuyla
+[08:40] diğerini de son netle yaptırıp
+[08:42] anında geçiyorum zamandan tasarruf ve token'dan da tasarruf
+[08:44] sürekli ops 5.5 ile
+[08:46] pochette yazdığım en iyi ejint ile ilerlemiyorum
+[08:48] bir de antropikin kendi dökümanlarında da var
+[08:50] büyük dosyalarla işlem yapıyorsan bunu
+[08:52] ana ejintinde yapmamalı lazım
+[08:54] mesela projen patladı veritabanını inceliyorsun
+[08:56] veritabandaki kayıtları attın işte hangi kayıtta
+[08:58] sıkıntı var vesaire bunu sap ejintle yapabilirsin
+[09:00] eğer ana ejint güzel bir bağlantı veriyorsa
+[09:02] sap ejinti yani niye aradığını güzel bir şekilde
+[09:04] izah ediyorsa ki onu belirtebilirsin
+[09:06] o zaman işte büyük dosyaları sap ejintlere
+[09:08] bölmen çok faydalı yani log dosyasını
+[09:10] inceliceksin veritabanın dosyasını inceliceksin
+[09:12] belki işte bir sürü yorum satırı ya da
+[09:14] kost satırı inceliceksin dokumantasyon inceliceksin
+[09:16] o zaman o büyük satırları da sap ejintlere yaptırman
+[09:18] kontekstiş şişirmez ana ejintin
+[09:20] mallarlaşmaz böyle daha iyi şekilde ilerleyebilirsin
+[09:22] aksine bir de bir şey söyleyeyim
+[09:24] küçük bir dosyada değişiklik yapacaksan da
+[09:26] o zaman alt ejint hiç açma çünkü zaten
+[09:28] ana ejintin alt ejinti bir sürü bilgi taşıyacağı için
+[09:30] yani vermek zorunda olduğu için
+[09:32] ve alt ejinti bunları yapmak için tekrardan
+[09:34] bir daha dosyaları inceliceği için
+[09:36] bir daha değişiklik yapacaksın mesela 2 satır 3 satır
+[09:38] kontekstine bakıyorsun 60-70k kontekst almış
+[09:40] kod tabanından vesaire beslenmiş
+[09:42] hala birki çok gereksiz
+[09:44] zaten ana ejintin bunu biliyordu 2 satır kod değiştireceksin diye
+[09:46] sap ejint açmanında hiçbir mantığı yok
+[09:48] genel olarak özetleyecek olursak
+[09:50] sap ejint kesinlikle daha maletli
+[09:52] yani şu açıdan daha az token harcar dediğimiz
+[09:54] hiçbir senaryo yok
+[09:56] ama daha fazla token harcamasına rağmen
+[09:58] çoğu durumda çok hızlı bir şekilde iş çözebiliyor
+[10:00] ve ana ejintinin kafasının karışmasını önleyebiliyor.
+[10:02] Tabi bir de 6 ejintler şunu da sağlıyor.
+[10:04] Ana ejintte OPUS 5.5 kullanırken
+[10:06] 6 ejintlerde, ameliyse dediğimiz işlerde
+[10:08] IQ gibi kötü modelleri kullanabiliyorsun.
+[10:10] Bu açılardan bayağı yararlı.
+[10:12] Gelelim diğer konuya.
+[10:13] Cloud içerisindeki sap ejintleri sadece kullanmak istemiyorum.
+[10:16] Codex üyelim var, antigravity üyelim var,
+[10:17] bir sürü üyelim var diye bir şikayetiniz varsa
+[10:20] o zaman orkestrator dediğimiz yapıları kullanmanız lazım.
+[10:22] Bu orkestrator'ın da olayı şu.
+[10:24] Mesela bir tane OPUS 5.5 açıyorsun.
+[10:26] Cloud üzerinden.
+[10:27] Onun elinin altına cloud verebiliyorsun,
+[10:28] antigravity verebiliyorsun ya da Gemini Sialar verebiliyorsun.
+[10:31] Hatta bununla ilgili ben de bir tane repo açmıştım.
+[10:33] Onları da kullanabilirsiniz.
+[10:34] Ancak şu anki ekonomik durumlarda zaten birkaç tane almak bayağı bir zorduruyor.
+[10:38] Yine de ODP gibi orkestratorları da kullanabilirsiniz.
+[10:41] Sonraki videoda da onlardan birini inceleyeceğim.
+[10:43] Videoya beğendiyseniz kanala abone olmayı ve videolara katmayı unutmayın.
+[10:46] Herkese iyi günler derim, hoşça kalın.

@@ -1,0 +1,43 @@
+Claude Code alt ajan (subagent) ne zaman kullanılır, ne zaman kullanılmaz? Bu videoda Claude Code subagent'ları kendi tecrübelerimle anlatıyorum: alt ajan nedir, ana ajanın bağlamını (context) nasıl korur, neden daha hızlıdır ve neden daha çok token harcar.
+
+Gerçek bir testte 3 sayfadaki hatayı önce tek ajana, sonra 3 alt ajana çözdürdüm. Tek ajan 59,7 saniyede 81.022 token harcadı. 3 alt ajan işi 45 saniyede bitirdi ama toplam 229.722 token harcadı. Ana ajanın hafızası ise hiç şişmedi.
+
+Videoda neler var:
+- Claude Code'da alt ajan nedir? Asistan ve stajyer örneği
+- Bin dosyada paralel arama: işi alt ajanlara bölmek
+- Alt ajanın beyni neden sıfırdan başlar, ana ajan ne aktarır?
+- Tek ajan ve 3 alt ajan karşılaştırması: süre ve token
+- Video edit iş akışımda alt ajanlarla 1 saatlik işi 25 dakikaya indirmek
+- Ana model Opus 5.5, amele işleri Haiku: model seçimiyle token tasarrufu
+- Codex ile kod incelemesi: AI slop ve güvenlik açıklarını başka gözle bulmak
+- Soru sormak, skill ve workflow'ları paralel çalıştırmak için alt ajan
+- Büyük log, veritabanı ve dokümantasyon dosyalarında alt ajan
+- Küçük değişiklikte neden alt ajan açmamalısın?
+- Orkestratör: Claude, Codex, Gemini ve Antigravity'yi birlikte yönetmek
+
+Bölümler:
+00:00 Claude Code alt ajan (subagent) neden gündemde?
+00:29 Claude Code'da alt ajan nedir?
+00:47 Alt ajan nasıl çalışır? Asistan ve stajyer örneği
+01:16 Alt ajan ana ajanın bağlamını nasıl korur?
+01:41 Alt ajanla bin dosyada paralel arama
+02:18 Alt ajan neden ana ajanın bildiklerini bilmez?
+03:21 Tek ajan mı, 3 alt ajan mı? Claude Code testi
+04:19 Alt ajan test sonucu: süre ve token karşılaştırması
+04:52 Alt ajan neden daha çok token harcar?
+05:19 Video editte Claude Code alt ajan kullanımı
+06:09 Opus 5.5 ana ajan, Haiku alt ajan: model seçimi
+06:55 Codex alt ajanla kod incelemesi ve AI slop
+07:44 Soru sormak için Claude Code alt ajan
+08:13 Claude Code skill ve workflow'ları paralel çalıştırma
+08:48 Büyük log ve veritabanı dosyalarında alt ajan
+09:23 Claude Code'da alt ajan ne zaman açılmaz?
+09:48 Alt ajanların artıları ve eksileri
+10:12 Orkestratör: Claude, Codex, Gemini ve Antigravity
+10:31 CrewCtl: açık kaynak multi-agent orkestratörüm
+
+CrewCtl: https://github.com/omergocmen/CrewCtl
+
+Claude Code alt ajan, Claude Code subagent, token tasarrufu, context yönetimi, Opus ve Haiku model seçimi, Codex kod inceleme, multi-agent orkestrasyon ve vibe coding üzerine yeni videolar için kanala abone ol.
+
+#claudecode #yapayzeka #subagent #claude #ai #claudesubagent #claudeai
