@@ -1,0 +1,42 @@
+language: en
+[00:00] Honestly, I'd stop building AI agents right now.
+[00:02] And the engineers at Anthropic are on my side,
+[00:05] because they quit building them months ago
+[00:07] once they found a far better way to get real work done with AI.
+[00:10] And to be fair, it's a lot easier.
+[00:13] So tell me if this rings a bell.
+[00:15] You got hooked on AI, dove right in,
+[00:17] and now you've got 15 projects sitting half done
+[00:20] and only a few of them run properly some of the time.
+[00:23] And here's the deal, you're not to blame.
+[00:25] Everyone said to make a new agent for each task,
+[00:27] then connect them all up.
+[00:29] But that's the very reason your AI agent still seems dumb,
+[00:32] because the sharpest people in AI are doing the exact reverse,
+[00:35] running just one agent with a playbook for each and every job.
+[00:39] And to set this up, you only need one idea,
+[00:41] and it's called AI delegation.
+[00:44] Step one, have Claude or ChatGPT quiz you on your work
+[00:47] until they can take it over.
+[00:48] Then grab a prompt like this one
+[00:50] to shape all of it into a playbook.
+[00:52] After that, you build a toolbox,
+[00:54] the spot where every file, signed off script,
+[00:56] template, or doc your agent creates
+[00:58] gets stored and tied back to the playbook as a rule.
+[01:01] That way, it never makes the same thing over again.
+[01:04] Here's a prompt you can use to build it.
+[01:06] Third comes the proof, and hardly anyone bothers with it,
+[01:09] but it's a list of what done really looks like.
+[01:11] Built into the playbook so your agent has to review its own work
+[01:14] before it hands you anything.
+[01:15] Grab a prompt like this to get it going.
+[01:18] Now, when your agent messes up,
+[01:19] you don't patch it in the chat or tweak some massive brain,
+[01:22] you fix the playbook the task actually rungs on.
+[01:24] That's the entire cycle.
+[01:26] So save this and share it with that friend
+[01:28] who keeps saying AI is useless.
+[01:30] And if you comment playbook,
+[01:32] I'll send you the full guide and every prompt
+[01:34] so you can build this on your own.

@@ -1,0 +1,7 @@
+# Heavy raw sources stay on disk, out of git (re-fetchable from the URLs in the evidence rows)
+experts/r*/pdf/
+experts/r*/bodies/
+experts/r1/yt/
+links/frames/
+agent-transcripts/
+*.lock

@@ -1,0 +1,56 @@
+https://vercel.com/blog/we-removed-80-percent-of-our-agents-tools	Andrew Qu (Vercel)	2025-12-22	We benchmarked the old architecture against the new file system approach across 5 representative queries.
+https://vercel.com/blog/we-removed-80-percent-of-our-agents-tools	Andrew Qu (Vercel)	2025-12-22	We deleted most of it and stripped the agent down to a single tool: execute arbitrary bash commands.
+https://vercel.com/blog/we-removed-80-percent-of-our-agents-tools	Andrew Qu (Vercel)	2025-12-22	This only worked because our semantic layer was already good documentation.
+https://vercel.com/blog/we-removed-80-percent-of-our-agents-tools	Andrew Qu (Vercel)	2025-12-22	With Opus 4.5, that constraint became a liability.
+https://cognition.ai/blog/dont-build-multi-agents	Walden Yan (Cognition)	2025-06-12	Share context, and share full agent traces, not just individual messages
+https://cognition.ai/blog/dont-build-multi-agents	Walden Yan (Cognition)	2025-06-12	Actions carry implicit decisions, and conflicting decisions carry bad results
+https://cognition.ai/blog/dont-build-multi-agents	Walden Yan (Cognition)	2025-06-12	The simplest way to follow the principles is to just use a single-threaded linear agent
+https://cognition.com/blog/multi-agents-working	Walden Yan (Cognition)	2026-04-22	multi-agent systems work best today when writes stay single-threaded and the additional agents contribute intelligence rather than actions.
+https://cognition.com/blog/multi-agents-working	Walden Yan (Cognition)	2026-04-22	Devin Review catches an average of 2 bugs per PR, of which roughly 58% are severe
+https://cognition.com/blog/multi-agents-working	Walden Yan (Cognition)	2026-04-22	we found this technique to work best when the coding and review agents do not share any context beforehand.
+https://cognition.com/blog/multi-agents-working	Walden Yan (Cognition)	2026-04-22	We think the unstructured-swarm approach, arbitrary networks of agents negotiating with each other, is mostly a distraction.
+https://cognition.com/blog/multi-agents-working	Walden Yan (Cognition)	2026-04-22	they all share a property most real software doesn’t: a simple, verifiable success criterion.
+https://cdn.openai.com/business-guides-and-resources/a-practical-guide-to-building-agents.pdf	OpenAI	2025-04	Our general recommendation is to maximize a single agent’s capabilities first.
+https://cdn.openai.com/business-guides-and-resources/a-practical-guide-to-building-agents.pdf	OpenAI	2025-04	When your agents fail to follow complicated instructions
+https://cdn.openai.com/business-guides-and-resources/a-practical-guide-to-building-agents.pdf	OpenAI	2025-04	Some implementations successfully manage
+https://cdn.openai.com/business-guides-and-resources/a-practical-guide-to-building-agents.pdf	OpenAI	2025-04	When creating routines, use existing operating procedures,
+https://developers.openai.com/blog/eval-skills	Dominik Kundel, Gabriel Chua (OpenAI)	2026-01-22	Before writing the skill itself, write down what “success” means in terms you can actually measure.
+https://developers.openai.com/blog/eval-skills	Dominik Kundel, Gabriel Chua (OpenAI)	2026-01-22	is a candidate for a future eval, so you can lock in the intended behavior before evaluating at scale.
+https://developers.openai.com/blog/eval-skills	Dominik Kundel, Gabriel Chua (OpenAI)	2026-01-22	For a single skill, a small set of 10–20 prompts is enough to surface regressions and confirm improvements early.
+https://developers.openai.com/blog/eval-skills	Dominik Kundel, Gabriel Chua (OpenAI)	2026-01-22	You want fast, targeted signals that surface specific regressions early, rather than a single pass/fail verdict at the end.
+https://simonwillison.net/2025/dec/12/openai-skills/	Simon Willison	2025-12-12	It turns out OpenAI are doing exactly that, with skills support quietly showing up in both their Codex CLI tool and now also in ChatGPT itself.
+https://simonwillison.net/2025/Dec/19/agent-skills/	Simon Willison	2025-12-19	OpenAI [have added Skills to the Codex documentation]
+https://simonwillison.net/2025/Oct/16/claude-skills/	Simon Willison	2025-10-16	The core simplicity of the skills design is why I’m so excited about it.
+https://simonwillison.net/2025/Oct/16/claude-skills/	Simon Willison	2025-10-16	It’s best described as a **general agent**.
+https://arxiv.org/abs/2512.08296	Kim et al. (Google Research, Google DeepMind, MIT)	2025-12 (v3 2026-04-08)	Relative performance change compared to single-agent baseline ranges from +80.8% on decomposable
+https://arxiv.org/abs/2512.08296	Kim et al. (Google Research, Google DeepMind, MIT)	2025-12 (v3 2026-04-08)	architectures without centralized verification tend to propagate errors more than those with centralized coordination.
+https://arxiv.org/abs/2512.08296	Kim et al. (Google Research, Google DeepMind, MIT)	2025-12 (v3 2026-04-08)	(1) a coordination yields diminishing returns once single-agent baselines exceed
+https://arxiv.org/abs/2503.13657	Cemri, Pan, Yang et al. (UC Berkeley)	2025-03 (v3 2025-10-26)	This process identifies 14 unique modes, clustered into 3 categories: (i) system design
+https://arxiv.org/abs/2503.13657	Cemri, Pan, Yang et al. (UC Berkeley)	2025-03 (v3 2025-10-26)	Despite enthusiasm for Multi-Agent LLM Systems (MAS), their performance
+https://www.langchain.com/blog/benchmarking-multi-agent-architectures	Will Fu-Hinthorn (LangChain)	2025-06-10	We see that the single agent baseline falls off sharply when there are two or more distractor domains.
+https://www.langchain.com/blog/benchmarking-multi-agent-architectures	Will Fu-Hinthorn (LangChain)	2025-06-10	We used `gpt-4o` as the model for all these experiments.
+https://www.langchain.com/blog/choosing-the-right-multi-agent-architecture	Sydney Runkle (LangChain)	2026-01-14	So, perhaps controversially, we consider skills to be a quasi-multi-agent architecture.
+https://www.langchain.com/blog/choosing-the-right-multi-agent-architecture	Sydney Runkle (LangChain)	2026-01-14	Start with a single agent and good prompt engineering. Add tools before adding agents. Graduate to multi-agent patterns only when you hit clear limits.
+https://www.langchain.com/blog/choosing-the-right-multi-agent-architecture	Sydney Runkle (LangChain)	2026-01-14	In this scenario, Subagents processes 67% fewer tokens overall compared to Skills due to context isolation.
+https://blog.langchain.com/how-and-when-to-build-multi-agent-systems/	Harrison Chase (LangChain)	2025-06-16	Multi-agent systems that primarily “read” are easier than those that “write”
+https://blog.langchain.com/deep-agents/	Harrison Chase (LangChain)	2025-07-30	a planning tool, sub agents, access to
+https://manus.im/blog/Context-Engineering-for-AI-Agents-Lessons-from-Building-Manus	Yichao 'Peak' Ji (Manus)	2025-07-18	we've rebuilt our agent framework four times
+https://manus.im/blog/Context-Engineering-for-AI-Agents-Lessons-from-Building-Manus	Yichao 'Peak' Ji (Manus)	2025-07-18	one of the most effective ways to improve agent behavior is deceptively simple: leave the wrong turns in the context.
+https://manus.im/blog/Context-Engineering-for-AI-Agents-Lessons-from-Building-Manus	Yichao 'Peak' Ji (Manus)	2025-07-18	The more uniform your context, the more brittle your agent becomes.
+https://manus.im/blog/Context-Engineering-for-AI-Agents-Lessons-from-Building-Manus	Yichao 'Peak' Ji (Manus)	2025-07-18	That's why we treat the file system as the ultimate context in Manus
+https://vercel.com/blog/agents-md-outperforms-skills-in-our-agent-evals	Jude Gao (Vercel)	2026-01-27	In 56% of eval cases, the skill was never invoked.
+https://vercel.com/blog/agents-md-outperforms-skills-in-our-agent-evals	Jude Gao (Vercel)	2026-01-27	A compressed 8KB docs index embedded directly in `AGENTS.md` achieved a 100% pass rate, while skills maxed out at 79% even with explicit instructions telling the agent to use them.
+https://vercel.com/blog/agents-md-outperforms-skills-in-our-agent-evals	Jude Gao (Vercel)	2026-01-27	Skills work better for vertical, action-specific workflows that users explicitly trigger
+https://github.com/karpathy/autoresearch	Andrej Karpathy	2026-03	The `program.md` file is essentially a super lightweight "skill".
+https://github.com/karpathy/autoresearch	Andrej Karpathy	2026-03	**This file is edited and iterated on by the human**.
+https://x.com/karpathy/status/1937902205765607626	Andrej Karpathy	2025-06-25	context engineering is the delicate art and science of filling the context window with just the right information for the next step.
+https://hamel.dev/blog/posts/evals-faq/	Hamel Husain, Shreya Shankar	2025-2026 (living FAQ)	Binary evaluations force clearer thinking and more consistent labeling.
+https://hamel.dev/blog/posts/evals-faq/	Hamel Husain, Shreya Shankar	2025-2026 (living FAQ)	we’ve spent 60-80% of our development time on error analysis and evaluation
+https://hamel.dev/blog/posts/evals-faq/	Hamel Husain, Shreya Shankar	2025-2026 (living FAQ)	Outsourcing [error analysis](#q-why-is-error-analysis-so-important-in-llm-evals-and-how-is-it-performed) is usually a big mistake
+https://hamel.dev/blog/posts/evals-faq/	Hamel Husain, Shreya Shankar	2025-2026 (living FAQ)	validate it](../../../blog/posts/evals-faq/how-do-i-know-if-i-can-trust-my-automated-eval.html) against human labels before trusting its decisions.
+https://hamel.dev/blog/posts/evals-faq/	Hamel Husain, Shreya Shankar	2025-2026 (living FAQ)	If [everything keeps passing](../../../blog/posts/evals-faq/how-much-of-my-development-budget-should-i-allocate-to-evals.html), this is a sign that the eval is less useful
+https://hamelhusain.substack.com/p/do-automated-evals-work	Antaripa Saha, Hamel Husain	2026-09-02	The best recovered 87 percent of failures flagged by humans.
+https://hamelhusain.substack.com/p/do-automated-evals-work	Antaripa Saha, Hamel Husain	2026-09-02	Fully automated approaches always failed to catch interactions that “looked correct” but fell short of providing a great user experience.
+https://hamelhusain.substack.com/p/do-automated-evals-work	Antaripa Saha, Hamel Husain	2026-09-02	No system we tested did the one thing that would have helped most: interview us.
+https://arxiv.org/abs/2404.12272	Shreya Shankar et al.	2024-04-18	users need criteria to grade outputs, but grading outputs helps users define criteria.
+https://hamel.dev/blog/posts/llm-judge/	Hamel Husain	2024-10-29	Step 1: Find *The* Principal Domain Expert
