@@ -1,0 +1,17 @@
+language: en
+[00:00] This is the most underrated repo on github right now. It turns anything you build with AI into a
+[00:04] map you can click straight from cloud code. Everyone is building with AI. Almost nobody
+[00:09] can see how their own system is wired. This fixes that. It's called Archify. Over 90,000 stars free
+[00:15] open source and it works inside cloud code codex or cursor. Point it at your project and say draw
+[00:20] how this works and you get the map. Click any part and see what it connects to. Want to highlight
+[00:24] an approval step or add more detail? Just ask and it updates the map. Here's my own podcast pipeline
+[00:29] as an example. 12 steps from the client's email to the published episode. You can see where cloud
+[00:34] code prepares the content. Codex generates the thumbnails and my team and I step in. As you
+[00:39] can see here, if I click on intake, it shows me what happens before the edit even exists. I can
+[00:43] follow the whole process and see who's responsible for each step. This is what makes my agentic
+[00:47] systems so useful. I can spot the gaps and see what needs improving instead of blindly trusting the AI
+[00:53] to do its job, which avoids AI slop. So every complex system I build now gets a map as standard
+[00:58] hygiene. So I actually understand what's happening inside it. And honestly, for my ADHD brain,
+[01:03] seeing everything laid out like this is a beautiful thing. I don't have to keep the whole system in
+[01:07] my head. Comment map and I'll send you the install, the one prompt I use and the six things I learned
+[01:12] the hard way.
