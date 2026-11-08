@@ -268,16 +268,22 @@ export function buildRecipe(dir, spec, slotArgs = {}) {
   const slots = base.fm.slots || {};
   const chosen = {};
   const allowed = (s) => String(slots[s]).split("|").map((x) => x.trim());
+  // "*" = a free slot, filled from the brief (his word 2026-11-08: the client's market decides —
+  // its people, setting and occasion); a free slot with no other option is required.
+  const fits = (s, v) => (allowed(s).includes("*") ? String(v).trim() !== "" : allowed(s).includes(v));
   for (const [k, v] of Object.entries(slotArgs)) {
     if (!(k in slots)) throw new Error(`slot "${k}" is not declared by ${baseName}`);
-    if (!allowed(k).includes(v)) throw new Error(`slot ${k}: "${v}" not in ${allowed(k).join("|")}`);
+    if (!fits(k, v)) throw new Error(`slot ${k}: "${v}" not in ${allowed(k).join("|")}`);
     chosen[k] = v;
   }
   const parts = [];
+  const roles = new Set();
   for (const m of mods) {
     const mod = all.get(m);
     if (!mod) throw new Error(`no recipe "${m}"`);
     if (mod.fm.role === "base") throw new Error(`"${m}" is a base; one base per recipe`);
+    if (roles.has(mod.fm.role)) throw new Error(`${m}: one ${mod.fm.role} per recipe — two would contradict each other`);
+    roles.add(mod.fm.role);
     const c1 = (base.fm.conflicts || []).includes(m) || (mod.fm.conflicts || []).includes(baseName);
     if (c1) throw new Error(`${baseName} and ${m} conflict; they never stack`);
     const ok = (base.fm.composes_with || []).includes(m) || (mod.fm.composes_with || []).includes(baseName);
@@ -285,13 +291,18 @@ export function buildRecipe(dir, spec, slotArgs = {}) {
     for (const other of mods) if (other !== m && (mod.fm.conflicts || []).includes(other)) throw new Error(`${m} and ${other} conflict`);
     for (const [k, v] of Object.entries(mod.fm.fills || {})) {
       if (!(k in slots)) throw new Error(`${m} fills "${k}", which ${baseName} does not declare`);
-      if (!allowed(k).includes(v)) throw new Error(`${m} fills ${k}="${v}", not allowed by ${baseName} (${allowed(k).join("|")})`);
+      if (!fits(k, v)) throw new Error(`${m} fills ${k}="${v}", not allowed by ${baseName} (${allowed(k).join("|")})`);
       if (chosen[k] && chosen[k] !== v) throw new Error(`${m} wants ${k}="${v}" but ${k}="${chosen[k]}" is already set`);
       chosen[k] = v;
     }
     parts.push(mod.prompt);
   }
-  for (const s of Object.keys(slots)) if (!chosen[s]) chosen[s] = allowed(s)[0];
+  for (const s of Object.keys(slots)) {
+    if (chosen[s]) continue;
+    const dflt = allowed(s).find((o) => o !== "*");
+    if (dflt === undefined) throw new Error(`slot ${s} must be filled from the brief (--slot ${s}=…)`);
+    chosen[s] = dflt;
+  }
   const filled = base.prompt.replace(/\{([a-z_]+)\}/g, (_, s) => chosen[s]);
   return [CONSTRAINTS, filled, ...parts].join("\n\n");
 }

@@ -16,7 +16,10 @@ Call: `/kisayol <name> <photo>` (one recipe) or `/kisayol "<job in a sentence>"`
 From the brief write: **medium** (image | video) · **platform and ratio** (e.g. Meta feed 4:5, story
 9:16, billboard) · **product class** (cosmetics, food, fashion, electronics, home…) · **goal** (launch,
 sale, awareness) · **cast** (none, house, or a woman presenter the client asked for — recorded in the job)
-· **inputs at hand** (product photo, cast photo, a real scene reference).
+· **inputs at hand** (product photo, cast photo, a real scene reference) · **market** — the client's
+country or region (Nigeria, Russia, China, Saudi Arabia…) and, if the brief names one, its **occasion**.
+The holding is global: the client's market decides the setting, the people's look, the props and the
+occasion. A recipe never bakes a country in; its `market` / `occasion` slots take the brief's words.
 
 ## 2. Find the recipes
 
@@ -33,8 +36,8 @@ sale, awareness) · **cast** (none, house, or a woman presenter the client asked
 - Variant 1 and 2: the two best-ranked runnable recipes with **different bases** — two real ideas,
   not two copies.
 - Variant 3: may carry one `candidate`, so the cupboard learns.
-- Each variant = one **base** + up to three modifiers (light, lens, grade, composition; for video one
-  camera move, one effect). A modifier must appear in the base's `composes_with` (or name the base in
+- Each variant = one **base** + up to three modifiers, at most one of each kind (light, lens, grade,
+  composition…; for video one camera move, one effect). A modifier must appear in the base's `composes_with` (or name the base in
   its own), and never in either one's `conflicts`.
 - Fewer than three runnable recipes → the gap path (§6).
 
@@ -53,7 +56,8 @@ Order, always:
    - no audio or music instruction: sound belongs to the voice chain, and music in client work waits
      for the CEO's ruling.
 2. **The base's prompt**, its `{slots}` filled only with the values its `slots` field lists (first value
-   is the default). Never invent a slot.
+   is the default). A `*` option is free: fill it from the brief (a `*`-only slot, like `market`, must be
+   filled). Never invent a slot.
 3. **Each modifier's prompt.** A modifier's `fills` sets a slot; it must be a value the base allows, and
    two modifiers never set the same slot differently.
 4. **The engine form:** follow the file's notes for the engine you use.

@@ -178,6 +178,27 @@ describe("B43 /kisayol — build composes only what may stack", () => {
     expect(() => buildRecipe(dir, "basex", { weather: "rain" })).toThrow(/weather/);
     expect(() => buildRecipe(dir, "basex", { time: "noon" })).toThrow(/noon/);
   });
+
+  // His word 2026-11-08: the client's market decides — Africa, Russia, China, Arabia — so the market
+  // and the occasion are free slots filled from the brief, never baked into a recipe.
+  const mkt = recipe(
+    { name: "mktx", slots: '{market: "*", occasion: "*|everyday"}', composes_with: "[neony, neonz]" },
+    "A family table in {market}, set for {occasion}. Adult men and elderly women only, faces not readable. " + CLEAN,
+  );
+  const neon2 = recipe({ name: "neony", role: "light" }, "A second neon light, cool cyan, no text.");
+  const neon3 = recipe({ name: "neonz", role: "light" }, "A third light, warm amber, no text.");
+  const dir2 = sandbox({ mktx: mkt, neonx: neon, neony: neon2, neonz: neon3 });
+  it("fills a free slot from the brief and refuses to guess a required one", () => {
+    expect(buildRecipe(dir2, "mktx", { market: "Saudi Arabia", occasion: "Ramadan iftar" })).toMatch(/in Saudi Arabia, set for Ramadan iftar/);
+    expect(buildRecipe(dir2, "mktx", { market: "Nigeria" })).toMatch(/set for everyday/);
+    expect(() => buildRecipe(dir2, "mktx", {})).toThrow(/market/);
+  });
+  it("lints a free slot clean", () => {
+    expect(errorsFor("mktx", mkt.replace("composes_with: [neony, neonz]", "composes_with: []"))).toEqual([]);
+  });
+  it("stacks at most one modifier of each kind", () => {
+    expect(() => buildRecipe(dir2, "mktx+neony+neonz", { market: "China" })).toThrow(/one light/);
+  });
 });
 
 describe("B43 /kisayol — his verdict is appended, never rewritten", () => {
