@@ -10,8 +10,8 @@ role: background
 medium: image
 inputs: [none]
 slots: {}
-fills: {setting: "tidy bathroom shelf"}
-composes_with: [lifestyleshot]
+fills: {surface: "white marble"}
+composes_with: [bathshelf, feedportrait, flatlay, kitchencounter, lifestyleshot, shadowplay, textureswatch]
 conflicts: []
 cast: none
 forms: {codex-image: untested, media-still: untested, seedream: unavailable, klein-ref: unavailable}
@@ -23,8 +23,8 @@ version: 1
 
 ## Prompt
 
-Surface: the shelf is polished white marble with soft grey veining that runs in one natural direction and varies in width, slight translucency at the cut edge and a few fine water spots. The polish carries a soft, blurred reflection of the product and a clear highlight from the window; the veining is irregular and never repeats.
+Surface: polished white marble with soft grey veining that runs in one natural direction and varies in width, slight translucency at the cut edge and a few fine water spots. The polish carries a soft, blurred reflection of the product and a clear highlight from the key light; the veining is irregular and never repeats.
 
 ## Notes
 
-- Sets lifestyleshot's setting to the tidy bathroom shelf.
+- Sets the base's surface to white marble: counters, shelves, ledges and flat lays.

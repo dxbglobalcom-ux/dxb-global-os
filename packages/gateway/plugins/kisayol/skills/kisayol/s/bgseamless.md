@@ -11,7 +11,7 @@ medium: image
 inputs: [none]
 slots: {}
 fills: {background: "seamless warm grey paper"}
-composes_with: [showcase]
+composes_with: [displayset, featureframe, ghostmannequin, showcase, storystatic]
 conflicts: []
 cast: none
 forms: {codex-image: untested, media-still: untested, seedream: unavailable, klein-ref: unavailable}
@@ -27,4 +27,4 @@ Background: a seamless paper sweep curving from floor to wall with no visible ho
 
 ## Notes
 
-- Sets showcase's background to seamless warm grey paper. Another colour needs that value added to the base.
+- Sets the base's background to seamless warm grey paper: plain studio bases.

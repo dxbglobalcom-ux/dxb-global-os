@@ -10,8 +10,8 @@ role: material
 medium: image
 inputs: [none]
 slots: {}
-fills: {background: "honed travertine plinth"}
-composes_with: [showcase]
+fills: {background: "a honed travertine plinth"}
+composes_with: [displayset, featureframe, showcase, storystatic]
 conflicts: []
 cast: none
 forms: {codex-image: untested, media-still: untested, seedream: unavailable, klein-ref: unavailable}
@@ -27,4 +27,4 @@ Material: the plinth is natural honed travertine in warm ivory, with its open po
 
 ## Notes
 
-- Sets showcase's background to the honed travertine plinth.
+- Sets the base's background to a honed travertine plinth: plain studio bases.

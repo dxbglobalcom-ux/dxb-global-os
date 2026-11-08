@@ -10,7 +10,7 @@ role: base
 medium: image
 inputs: [product-photo]
 slots: {focus: "the main material surface|an edge, seam or stitch line|the cap, clasp or closure", aspect: "1:1|4:5|16:9"}
-composes_with: []
+composes_with: [gradeclean, gradecool, gradefilm]
 conflicts: []
 cast: none
 forms: {codex-image: ok, media-still: unavailable, h3-from-still: untested}

@@ -10,7 +10,7 @@ role: effect
 medium: video
 inputs: [none]
 slots: {}
-composes_with: [hookopener, reelsmoment, preroll15, bumper6]
+composes_with: [bumper6, dropsettle, hookopener, ingredientfall, preroll15, reelsmoment, splashslowmo, usedemo]
 conflicts: []
 cast: none
 forms: {h3: ok, h3-from-still: ok, codex-image: unavailable, seedance: unavailable}

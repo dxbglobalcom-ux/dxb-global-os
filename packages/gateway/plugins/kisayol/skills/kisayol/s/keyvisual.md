@@ -10,7 +10,7 @@ role: base
 medium: image
 inputs: [product-photo]
 slots: {world: "a sculpted sand-dune landscape at first light|monumental pale stone architecture with deep shadows|a calm sea horizon under a high, clean sky|a quiet forest floor in shafts of light", space: "the upper third|the left third|the right third", aspect: "16:9|4:5|9:16|2:3"}
-composes_with: []
+composes_with: [gradeclean, gradecool, gradefilm, heroangle]
 conflicts: []
 cast: none
 forms: {codex-image: ok, media-still: unavailable, h3-from-still: untested}

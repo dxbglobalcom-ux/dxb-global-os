@@ -10,7 +10,7 @@ role: base
 medium: image
 inputs: [product-photo]
 slots: {store: "minimal white boutique with oak floors|warm boutique with plaster walls and brass rails|industrial boutique with polished concrete", aspect: "4:5|1:1|9:16"}
-composes_with: []
+composes_with: [gradeclean, gradecool, gradefilm]
 conflicts: []
 cast: none
 forms: {codex-image: ok, media-still: unavailable, h3-from-still: untested}

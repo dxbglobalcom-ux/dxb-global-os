@@ -10,7 +10,7 @@ role: base
 medium: image
 inputs: [none]
 slots: {bag: "an uncoated kraft paper bag with twisted paper handles|a matte laminated card bag with rope handles|a heavy cotton canvas tote", colour: "natural kraft brown|deep forest green|off-white|charcoal black", setting: "a light terrazzo floor against a plaster wall|a wooden bench in soft daylight", aspect: "4:5|1:1|16:9"}
-composes_with: []
+composes_with: [gradeclean, gradecool, gradefilm, windowlight]
 conflicts: []
 cast: none
 forms: {codex-image: ok, media-still: untested, h3-from-still: unavailable}

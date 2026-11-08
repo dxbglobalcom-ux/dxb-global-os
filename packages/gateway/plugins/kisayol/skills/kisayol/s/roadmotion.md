@@ -9,8 +9,8 @@ shelf: automotive
 role: base
 medium: image
 inputs: [product-photo]
-slots: {road: "a winding coastal road|a mountain pass with stone walls|an empty desert highway|a tree-lined country road", time: "golden hour|soft overcast day|blue hour with headlights on", aspect: "16:9|4:5|9:16"}
-composes_with: []
+slots: {road: "a winding coastal road|a mountain pass with stone walls|an empty desert highway|a tree-lined country road", time: "golden hour|midday under soft overcast|blue hour", aspect: "16:9|4:5|9:16", market: "*"}
+composes_with: [bluehour, goldenhour, gradeclean, gradecool, gradefilm]
 conflicts: []
 cast: none
 forms: {codex-image: ok, media-still: unavailable, h3-from-still: untested}
@@ -22,7 +22,7 @@ version: 1
 
 ## Prompt
 
-Use the attached photo as the only source for the vehicle: keep its exact body shape, proportions, paint colour and finish, wheels, lights, trim and its own badges as photographed; do not redraw, restyle or modify it. Show it driving along {road} at {time}, framed for {aspect}, as a rolling shot taken from a camera car alongside: the car itself sharp, the road surface and the scenery streaked in long horizontal motion blur, the wheels and brake discs blurred by their own rotation, a little road dust or spray lifting behind the rear tyres. The car sits on the road with real weight: a slight body roll in a bend, tyres compressed at the contact patch, its shadow travelling with it. Reflections of the passing scenery stream across the paint and windows; through the glass the cabin is dark and unreadable. The number plate is blank, with no letters or numbers. Full-frame camera, 35 mm lens at 1/30 s shutter, camera at door-handle height, a few metres away. No people visible. Natural, restrained grade, fine grain; no frozen wheels, no warped bodywork, no fake HDR. Add no text, letters or logos anywhere beyond the car's own badges as photographed.
+Use the attached photo as the only source for the vehicle: keep its exact body shape, proportions, paint colour and finish, wheels, lights, trim and its own badges as photographed; do not redraw, restyle or modify it. Show it driving along {road} in {market} at {time}, on the side of the road traffic keeps to there, framed for {aspect}, as a rolling shot taken from a camera car alongside: the car itself sharp, the road surface and the scenery streaked in long horizontal motion blur, the wheels and brake discs blurred by their own rotation, a little road dust or spray lifting behind the rear tyres; at blue hour its headlamps are on. The car sits on the road with real weight: a slight body roll in a bend, tyres compressed at the contact patch, its shadow travelling with it. Reflections of the passing scenery stream across the paint and windows; through the glass the cabin is dark and unreadable. The number plate is blank, with no letters or numbers. Full-frame camera, 35 mm lens at 1/30 s shutter, camera at door-handle height, a few metres away. No people. Natural, restrained grade, fine grain; no frozen wheels, no warped bodywork, no fake HDR. Add no text, letters or logos anywhere beyond the car's own badges as photographed.
 
 ## Notes
 

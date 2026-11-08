@@ -10,7 +10,7 @@ role: grade
 medium: image
 inputs: [none]
 slots: {}
-composes_with: [showcase, lifestyleshot, 3dbillboard]
+composes_with: [360view, 3dbillboard, airportad, aplusmodule, apparelmockup, archdetail, autumnwarm, backtoschool, bagmockup, bathshelf, bedroomcalm, bedside, beforeafter, botanicalmacro, bottlemockup, boutiquerack, boxmockup, buildingwrap, bundleset, busstop, cafetable, campaignposter, cardashboard, cardetail, carlandscape, carouselpano, carstudio, carwetnight, castmodel, condensation, craftsman, cutaway, desksetup, devicehand, devicehero, devicescreen, displayset, drinkpour, elderhand, emailheader, explodedview, fabricdetail, featureframe, feedportrait, feedsquare, festivetable, flatlay, folddisplay, garmentflatlay, ghostmannequin, giftunbox, glassdrop, glassreflect, herocentered, herodiagonal, herodish, herogiant, herolowangle, heroshot, ingredientspread, inhand, interiorwide, jewelreflect, keyvisual, kitchencounter, kitchenhero, labelcloseup, levitation, lifestyleshot, liquidsplash, livingroom, macrotexture, malllightbox, metaads, mirrorritual, outdoornature, podium, pouchmockup, roadmotion, rooftopbb, salevisual, shadowplay, showcase, signagemockup, silkdrape, springbloom, steamrise, stonemacro, stoneplinth, storewindow, storystatic, streetscreen, subwayposter, summerlight, tableoverhead, techmacro, testimonial, textureswatch, travelkit, truckside, tubemockup, twilightexterior, velvettray, virtualstaging, waterripple, whitepackshot, wintercozy, yearendgift, ytthumb]
 conflicts: [gradefilm, gradecool, gradehighkey, gradelowkey]
 cast: none
 forms: {codex-image: untested, media-still: untested, seedream: unavailable, klein-ref: unavailable}
@@ -26,4 +26,4 @@ Grade: clean commercial colour: neutral whites, the product's colours matched to
 
 ## Notes
 
-- Fits every seed; it only narrows their restrained grade.
+- Fits every product image except the phone-look UGC stills, which keep the phone's own colour.

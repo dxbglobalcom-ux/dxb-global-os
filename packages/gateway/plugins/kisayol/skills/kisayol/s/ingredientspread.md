@@ -10,7 +10,7 @@ role: base
 medium: image
 inputs: [product-photo]
 slots: {surface: "flour-dusted oak board|cool grey concrete|unbleached linen", view: "straight overhead|three-quarter from above", aspect: "4:5|1:1|9:16"}
-composes_with: []
+composes_with: [gradeclean, gradefilm, topdown]
 conflicts: []
 cast: none
 forms: {codex-image: ok, media-still: unavailable, h3-from-still: untested}

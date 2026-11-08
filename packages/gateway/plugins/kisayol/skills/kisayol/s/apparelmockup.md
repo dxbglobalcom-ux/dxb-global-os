@@ -10,7 +10,7 @@ role: base
 medium: image
 inputs: [product-photo]
 slots: {display: "on a wooden hanger against a limewashed plaster wall|on an invisible ghost-mannequin form against light grey|folded neatly on a linen-covered table|worn by an adult man from our own cast, framed from shoulder to waist, face out of frame", aspect: "4:5|1:1|9:16"}
-composes_with: []
+composes_with: [gradeclean, gradecool, gradefilm, windowlight]
 conflicts: []
 cast: house
 forms: {codex-image: ok, media-still: unavailable, h3-from-still: untested}

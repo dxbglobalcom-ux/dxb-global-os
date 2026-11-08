@@ -10,7 +10,8 @@ role: light
 medium: image
 inputs: [none]
 slots: {}
-composes_with: []
+fills: {time: midday}
+composes_with: [outdoornature, rooftopbb]
 conflicts: []
 cast: none
 forms: {codex-image: untested, media-still: untested, seedream: unavailable, klein-ref: unavailable}
@@ -26,4 +27,4 @@ Light: hard midday sun almost overhead and slightly behind camera-right, a cloud
 
 ## Notes
 
-- None of the seeds showcase, lifestyleshot and 3dbillboard is set at midday; it waits for an outdoor daylight base.
+- Sets the base's time to midday: outdoor daylight scenes.

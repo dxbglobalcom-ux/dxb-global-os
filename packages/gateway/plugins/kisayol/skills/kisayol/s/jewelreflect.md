@@ -10,7 +10,7 @@ role: base
 medium: image
 inputs: [product-photo]
 slots: {surface: "gloss black acrylic|dark smoked mirror|still black water", aspect: "1:1|4:5|16:9"}
-composes_with: []
+composes_with: [centered, gradeclean, gradecool, gradefilm, gradelowkey, negspace, rimlight]
 conflicts: []
 cast: none
 forms: {codex-image: ok, media-still: unavailable, h3-from-still: untested}

@@ -9,8 +9,8 @@ shelf: people-ugc-still
 role: base
 medium: image
 inputs: [product-photo, cast-photo]
-slots: {meal: "a weekend breakfast|a weekday dinner|an afternoon tea", aspect: "4:5|16:9|1:1"}
-composes_with: []
+slots: {meal: "a weekend breakfast|a weekday dinner|an afternoon tea", aspect: "4:5|16:9|1:1", market: "*"}
+composes_with: [phonemain]
 conflicts: []
 cast: house
 forms: {codex-image: ok, media-still: unavailable, h3-from-still: untested}
@@ -22,7 +22,7 @@ version: 1
 
 ## Prompt
 
-The product is the attached product photo, with exactly its shape, colours, materials and its own label; do not change anything on it. The main person is the one in the attached cast photo, from our own cast, with exactly that face, hair and build. A real phone photo taken by one of the family across the table during {meal} at home: the cast member, an elderly woman or an adult man, reaches for or passes the product at the centre of the moment; around the table two or three more family members, all adult men or elderly women, caught mid-conversation and mid-gesture, their faces turned away, cropped by the frame or out of focus, never readable. The table is really in use: plates with food half eaten, bread torn by hand, a jug of water, a teapot, napkins crumpled, crumbs on the cloth; only halal food and drink. The product sits where it really belongs on such a table, label toward the lens. Light: the ceiling lamp warm over the table mixing with the last daylight from a window, the phone's auto white balance between them. The phone's look: main camera, framed for {aspect}, mild wide-angle, deep focus, framing a little tilted, fine noise in the dim corners, a little motion blur on a moving hand. Real skin, real fabric, real wear on the table. Do not stage it like an advertisement, do not make everyone smile at the camera, do not add studio light or a warm filter, and add no text, letters or logos anywhere.
+The product is the attached product photo, with exactly its shape, colours, materials and its own label; do not change anything on it. The main person is the one in the attached cast photo, from our own cast, with exactly that face, hair and build. A real phone photo taken by one of the family across the table during {meal} at home in {market}: the cast member, an elderly woman or an adult man, reaches for or passes the product at the centre of the moment; around the table two or three more family members, all adult men or elderly women, caught mid-conversation and mid-gesture, their faces turned away, cropped by the frame or out of focus, never readable. The table is really in use: the everyday food and tableware of {market}, plates half eaten, a shared dish, a jug of water, napkins crumpled, crumbs on the cloth; only halal food and drink. The product sits where it really belongs on such a table, label toward the lens. Light: the ceiling lamp warm over the table mixing with the last daylight from a window, the phone's auto white balance between them. The phone's look: main camera, framed for {aspect}, mild wide-angle, deep focus, framing a little tilted, fine noise in the dim corners, a little motion blur on a moving hand. Real skin, real fabric, real wear on the table. Do not stage it like an advertisement, do not make everyone smile at the camera, do not add studio light or a warm filter, and add no text, letters or logos anywhere.
 
 ## Notes
 

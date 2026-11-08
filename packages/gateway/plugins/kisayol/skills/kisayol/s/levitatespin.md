@@ -10,7 +10,7 @@ role: base
 medium: video
 inputs: [product-photo]
 slots: {backdrop: "pale sage seamless paper|soft sky-blue gradient|warm sand seamless paper|deep graphite seamless paper", arc: "a slow 30-degree sway left and back|a full slow turn when the job supplies photos of every side", aspect: "9:16 at 640x1152|4:5|1:1"}
-composes_with: []
+composes_with: [dollyin, sliderglide]
 conflicts: []
 cast: none
 forms: {h3-from-still: ok, h3: unavailable, seedance: unavailable, kling: unavailable}
@@ -22,7 +22,7 @@ version: 1
 
 ## Prompt
 
-Start from the attached approved still as the first frame: the product floating about a hand's width above a matte surface in front of a {backdrop}. The product stays exactly as in the still for the whole clip: shape, proportions, colours, materials and its own label as photographed; it moves only as one rigid object. A six-second single continuous shot, framed for {aspect}, that loops cleanly: the last frame matches the first. The product turns on its vertical axis through {arc} while bobbing a few millimetres up and down, unhurried and weightless but never jittery. The float reads as physical: a soft oval shadow on the surface directly below, growing a touch sharper as the product dips and softer as it rises, and a faint bounce of the backdrop colour on its underside. Light stays fixed: a large overhead softbox angled from camera-left as the key, a white card below and in front opening the underside, a thin rim light behind, so highlights glide across the surface as it turns. No strings, rods, hands or supports. Camera: full-frame cinema camera, 85 mm lens at f/8, at the product's height, locked off. Real materials with fine texture and true specular highlights. Restrained grade, accurate colour, fine grain. No sparkle, no motion trails, no glow, no flicker, no cuts. No people. Add no text, letters or logos anywhere.
+Start from the attached approved still as the first frame: the product floating about a hand's width above a matte surface in front of a {backdrop}. The product stays exactly as in the still for the whole clip: shape, proportions, colours, materials and its own label as photographed; it moves only as one rigid object. A six-second single continuous shot, framed for {aspect}, that loops cleanly: the last frame matches the first. The product turns on its vertical axis through {arc} while bobbing a few millimetres up and down, unhurried and weightless but never jittery. The float reads as physical: a soft oval shadow on the surface directly below, growing a touch sharper as the product dips and softer as it rises, and a faint bounce of the backdrop colour on its underside. Light stays fixed: a large overhead softbox angled from camera-left as the key, a white card below and in front opening the underside, a thin rim light behind, so highlights glide across the surface as it turns. No strings, rods, hands or supports. Camera: full-frame cinema camera, 85 mm lens at f/8, at the product's height, locked off unless a camera move is named. Real materials with fine texture and true specular highlights. Restrained grade, accurate colour, fine grain. No sparkle, no motion trails, no glow, no flicker, no cuts. No people. Add no text, letters or logos anywhere.
 
 ## Notes
 

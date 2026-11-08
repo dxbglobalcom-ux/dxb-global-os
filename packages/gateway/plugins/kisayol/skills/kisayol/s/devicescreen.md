@@ -10,7 +10,7 @@ role: base
 medium: image
 inputs: [none]
 slots: {device: "a slim unbranded laptop, lid open at 110 degrees|an unbranded smartphone lying at a slight angle|an unbranded tablet on a low stand", setting: "a tidy oak desk by a window|a warm stone café table|a clean light grey studio sweep", screen: "flat uniform mid-grey|flat pure chroma green", aspect: "16:9|4:5|1:1"}
-composes_with: []
+composes_with: [gradeclean, gradecool, gradefilm, windowlight]
 conflicts: []
 cast: none
 forms: {codex-image: ok, media-still: untested, h3-from-still: unavailable}

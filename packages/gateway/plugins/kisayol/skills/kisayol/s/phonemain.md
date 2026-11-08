@@ -10,7 +10,7 @@ role: lens
 medium: image
 inputs: [none]
 slots: {}
-composes_with: []
+composes_with: [familytable, grandmakitchen, ugcmirror, workplace]
 conflicts: []
 cast: none
 forms: {codex-image: untested, media-still: untested, seedream: unavailable, klein-ref: unavailable}
@@ -26,4 +26,4 @@ Lens: a modern smartphone's main rear camera from about one metre: the mild wide
 
 ## Notes
 
-- Contradicts the cinema lenses fixed in the seeds showcase, lifestyleshot and 3dbillboard; waits for a UGC base.
+- Fits phone-look stills taken on the main rear camera; the front-camera selfie keeps its own look.

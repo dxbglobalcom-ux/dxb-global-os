@@ -10,7 +10,7 @@ role: base
 medium: image
 inputs: [product-photo]
 slots: {stone: "rough basalt|raw quartz cluster|weathered sandstone|split slate", backdrop: "warm sand-coloured seamless|cool stone-grey seamless", aspect: "4:5|1:1|9:16"}
-composes_with: []
+composes_with: [gradeclean, gradecool, gradefilm, macro100, negspace]
 conflicts: []
 cast: none
 forms: {codex-image: ok, media-still: unavailable, h3-from-still: untested}

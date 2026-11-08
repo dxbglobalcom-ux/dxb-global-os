@@ -2,7 +2,6 @@
 
 | name | role | medium | inputs | status | when |
 |---|---|---|---|---|---|
-| `cinemaloop` | base | video | product-photo | candidate | Tek bir öğesi kımıldayan sonsuz döngü; web sitesi başlığı, e-posta, d… |
 | `dustmotes` | base | video | product-photo | candidate | Sakin, sıcak, premium bir an; mobilya, ev, kozmetik, kitap, el işi |
 | `fabricbreeze` | base | video | product-photo | candidate | Ürün fotoğrafındaki kumaşı canlandırmak; giyim, ev tekstili, perde, y… |
 | `lightshift` | base | video | product-photo | candidate | Durgun ürün fotoğrafına zamanın geçtiğini hissettirmek; ev, mobilya, … |

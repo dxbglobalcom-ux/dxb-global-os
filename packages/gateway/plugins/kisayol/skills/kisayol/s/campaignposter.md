@@ -10,7 +10,7 @@ role: base
 medium: image
 inputs: [product-photo]
 slots: {field: "a saturated colour drawn from the product's own palette|a deep complementary colour to the product|a warm off-white paper tone", shape: "a single large circle behind the product|a clean diagonal split of two tones|one soft-edged arch", aspect: "2:3|3:4|9:16|4:5"}
-composes_with: []
+composes_with: [gradeclean, gradecool, gradefilm, macro100, rimlight, softbox]
 conflicts: []
 cast: none
 forms: {codex-image: ok, media-still: unavailable, h3-from-still: unavailable}

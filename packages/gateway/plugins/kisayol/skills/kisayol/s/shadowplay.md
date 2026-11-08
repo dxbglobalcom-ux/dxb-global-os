@@ -9,8 +9,8 @@ shelf: cosmetics
 role: base
 medium: image
 inputs: [product-photo]
-slots: {shadow: "palm frond shadow|olive branch shadow|window lattice shadow", surface: "lime-washed plaster|warm travertine|sun-bleached terracotta", aspect: "4:5|1:1|9:16"}
-composes_with: []
+slots: {shadow: "palm frond shadow|olive branch shadow|window lattice shadow", surface: "lime-washed plaster|warm travertine|sun-bleached terracotta|honed grey concrete|pale terrazzo|white marble", aspect: "4:5|1:1|9:16"}
+composes_with: [bgconcrete, bgmarble, bgterrazzo, gradeclean, gradecool, gradefilm, negspace]
 conflicts: []
 cast: none
 forms: {codex-image: ok, media-still: unavailable, h3-from-still: untested}

@@ -10,8 +10,8 @@ role: material
 medium: image
 inputs: [none]
 slots: {}
-fills: {background: "honed travertine plinth"}
-composes_with: [showcase]
+fills: {background: "a honed travertine plinth"}
+composes_with: [displayset, featureframe, showcase, storystatic]
 conflicts: []
 cast: none
 forms: {codex-image: untested, media-still: untested, seedream: unavailable, klein-ref: unavailable}
@@ -27,4 +27,4 @@ Material: the top of the plinth is wet, a thin, uneven film of water with scatte
 
 ## Notes
 
-- Sets showcase's background to the honed travertine plinth; stacks with matstone.
+- Sets the base's background to a honed travertine plinth; the wet film lies on that stone. One material per variant, so it replaces matstone.

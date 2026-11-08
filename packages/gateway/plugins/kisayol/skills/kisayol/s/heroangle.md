@@ -10,7 +10,7 @@ role: composition
 medium: image
 inputs: [none]
 slots: {}
-composes_with: [3dbillboard]
+composes_with: [3dbillboard, keyvisual, outdoornature, rooftopbb]
 conflicts: []
 cast: none
 forms: {codex-image: untested, media-still: untested, seedream: unavailable, klein-ref: unavailable}
@@ -26,4 +26,4 @@ Composition: low hero angle: the camera lowered to about knee height, the upward
 
 ## Notes
 
-- Agrees with 3dbillboard's street-level camera and slight upward tilt; showcase and lifestyleshot fix eye level.
+- Fits outdoor bases whose camera already sits low; studio and indoor bases fix eye level.

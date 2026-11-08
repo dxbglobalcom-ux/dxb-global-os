@@ -10,7 +10,7 @@ role: base
 medium: image
 inputs: [product-photo]
 slots: {angle: "front three-quarter|rear three-quarter|pure side profile", floor: "dark polished concrete|matte black seamless floor|light grey cyclorama", aspect: "16:9|4:5|1:1"}
-composes_with: []
+composes_with: [centered, gradeclean, gradecool, gradefilm, gradelowkey]
 conflicts: []
 cast: none
 forms: {codex-image: ok, media-still: unavailable, h3-from-still: untested}

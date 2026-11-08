@@ -10,7 +10,7 @@ role: composition
 medium: image
 inputs: [none]
 slots: {}
-composes_with: [showcase, 3dbillboard]
+composes_with: [3dbillboard, bundleset, carstudio, devicehero, displayset, featureframe, ghostmannequin, glassreflect, herocentered, jewelreflect, levitation, liquidsplash, showcase, storystatic, whitepackshot]
 conflicts: [thirds]
 cast: none
 forms: {codex-image: untested, media-still: untested, seedream: unavailable, klein-ref: unavailable}
@@ -26,4 +26,4 @@ Composition: centred and symmetrical: the subject on the vertical centre line, t
 
 ## Notes
 
-- In 3dbillboard the tower's corner sits on the centre line, seen head-on across the junction.
+- Fits studio bases with the product alone at the centre; in 3dbillboard the tower's corner sits on the centre line.

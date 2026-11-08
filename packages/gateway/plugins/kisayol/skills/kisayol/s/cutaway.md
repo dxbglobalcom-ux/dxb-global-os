@@ -10,7 +10,7 @@ role: base
 medium: image
 inputs: [product-photo]
 slots: {cut: "a clean quarter section removed from the front corner|a straight vertical half-section", backdrop: "warm light grey seamless|deep slate seamless", aspect: "4:5|1:1|16:9"}
-composes_with: []
+composes_with: [gradeclean, gradecool, macro100, softbox]
 conflicts: []
 cast: none
 forms: {codex-image: ok, media-still: unavailable, h3-from-still: unavailable}

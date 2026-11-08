@@ -10,7 +10,7 @@ role: base
 medium: image
 inputs: [product-photo]
 slots: {detail: "the weave and a seam|a button and its buttonhole|the collar and its inner finish|the cuff and lining", aspect: "4:5|1:1"}
-composes_with: []
+composes_with: [gradeclean, gradecool, gradefilm]
 conflicts: []
 cast: none
 forms: {codex-image: ok, media-still: unavailable, h3-from-still: untested}

@@ -10,7 +10,7 @@ role: base
 medium: image
 inputs: [product-photo]
 slots: {box: "a folding carton with a tuck-end lid|a rigid two-piece box with the lid set beside it|a mailer box with the flap half open", setting: "a light oak table|a warm grey seamless sweep|a concrete studio floor", aspect: "4:5|1:1|16:9"}
-composes_with: []
+composes_with: [gradeclean, gradecool, gradefilm, softbox]
 conflicts: []
 cast: none
 forms: {codex-image: ok, media-still: unavailable, h3-from-still: untested}

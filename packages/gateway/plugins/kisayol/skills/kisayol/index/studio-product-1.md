@@ -13,4 +13,4 @@
 | `macrotexture` | base | image | product-photo | candidate | Malzeme kalitesini ve işçiliği yakından göstermek; kumaş, deri, krem,… |
 | `podium` | base | image | product-photo | candidate | Ürünü mimari bir sette, geometrik kaide üzerinde sergilemek; kozmetik… |
 | `showcase` | base | image | product-photo | candidate | Telefonla çekilmiş ürün fotoğrafını profesyonel stüdyo çekimine çevir… |
-| `whitepackshot` | base | image | product-photo | candidate | Pazaryeri ana görseli saf beyaz fon istediğinde; Amazon, Trendyol, He… |
+| `whitepackshot` | base | image | product-photo | candidate | Pazaryeri ana görseli saf beyaz fon istediğinde; ilanın ilk görseli |

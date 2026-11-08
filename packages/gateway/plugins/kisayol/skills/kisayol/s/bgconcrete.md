@@ -10,8 +10,8 @@ role: background
 medium: image
 inputs: [none]
 slots: {}
-fills: {setting: "sunlit kitchen counter"}
-composes_with: [lifestyleshot]
+fills: {surface: "honed grey concrete"}
+composes_with: [bathshelf, desksetup, feedportrait, flatlay, kitchencounter, lifestyleshot, shadowplay, textureswatch]
 conflicts: [bgterrazzo]
 cast: none
 forms: {codex-image: untested, media-still: untested, seedream: unavailable, klein-ref: unavailable}
@@ -23,8 +23,8 @@ version: 1
 
 ## Prompt
 
-Surface: the counter is sealed cast concrete in warm mid-grey with small air pockets, faint trowel marks, subtle tonal clouding and a slightly chipped front edge. A satin finish takes a soft, broken highlight from the window; the product's contact shadow sits crisp on it.
+Surface: sealed cast concrete in warm mid-grey with small air pockets, faint trowel marks, subtle tonal clouding and a slightly chipped front edge. A satin finish takes a soft, broken highlight from the key light; the product's contact shadow sits crisp on it.
 
 ## Notes
 
-- Sets lifestyleshot's setting to the sunlit kitchen counter.
+- Sets the base's surface to honed grey concrete: counters, shelves, desks, ledges and flat lays.

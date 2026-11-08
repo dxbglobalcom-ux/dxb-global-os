@@ -10,7 +10,7 @@ role: base
 medium: image
 inputs: [product-photo]
 slots: {landscape: "a wide salt flat|a green hill meadow|a pale desert plain|an empty city plaza at dawn", aspect: "16:9|4:5|9:16"}
-composes_with: []
+composes_with: [gradeclean, gradecool, gradefilm]
 conflicts: []
 cast: house
 forms: {codex-image: ok, media-still: unavailable, h3-from-still: untested}

@@ -10,7 +10,7 @@ role: base
 medium: image
 inputs: [product-photo]
 slots: {outside: "a sunlit coastal road|a quiet city street at dusk|a forest road in soft daylight", aspect: "16:9|4:5|1:1"}
-composes_with: []
+composes_with: [gradeclean, gradecool, gradefilm]
 conflicts: []
 cast: none
 forms: {codex-image: ok, media-still: unavailable, h3-from-still: untested}

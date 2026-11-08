@@ -10,7 +10,7 @@ role: grade
 medium: image
 inputs: [none]
 slots: {}
-composes_with: [showcase, lifestyleshot, 3dbillboard]
+composes_with: [3dbillboard, airportad, aplusmodule, apparelmockup, archdetail, backtoschool, bagmockup, bathshelf, beforeafter, botanicalmacro, bottlemockup, boutiquerack, boxmockup, buildingwrap, bundleset, busstop, cafetable, campaignposter, cardashboard, cardetail, carlandscape, carouselpano, carstudio, carwetnight, castmodel, condensation, craftsman, cutaway, desksetup, devicehand, devicehero, devicescreen, displayset, drinkpour, emailheader, explodedview, fabricdetail, featureframe, feedportrait, feedsquare, flatlay, folddisplay, garmentflatlay, ghostmannequin, giftunbox, glassdrop, glassreflect, herocentered, herodiagonal, herogiant, herolowangle, heroshot, inhand, jewelreflect, keyvisual, kitchencounter, labelcloseup, levitation, lifestyleshot, liquidsplash, livingroom, macrotexture, malllightbox, metaads, mirrorritual, outdoornature, podium, pouchmockup, roadmotion, rooftopbb, salevisual, shadowplay, showcase, signagemockup, silkdrape, springbloom, stonemacro, stoneplinth, storewindow, storystatic, streetscreen, subwayposter, summerlight, techmacro, testimonial, textureswatch, travelkit, truckside, tubemockup, velvettray, waterripple, ytthumb]
 conflicts: [gradeclean, gradefilm, gradehighkey, gradelowkey]
 cast: none
 forms: {codex-image: untested, media-still: untested, seedream: unavailable, klein-ref: unavailable}
@@ -26,4 +26,4 @@ Grade: cool editorial: slightly cool, desaturated surroundings with clean blue-g
 
 ## Notes
 
-- Fits every seed; pick one grade per variant.
+- Fits product, tech, fashion and city images; food, warm seasonal scenes and property listings keep their own grade.

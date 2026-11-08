@@ -9,8 +9,8 @@ shelf: studio-product
 role: base
 medium: image
 inputs: [product-photo]
-slots: {surface: "ivory linen|pale oak boards|honed travertine|warm grey paper", props: "two or three quiet objects that belong with the product|nothing but the product and its shadow", light: "soft overcast window light|low morning sun", aspect: "1:1|4:5|9:16"}
-composes_with: []
+slots: {surface: "ivory linen|pale oak boards|honed travertine|warm grey paper|white marble|honed grey concrete|pale terrazzo|oiled oak", props: "two or three quiet objects that belong with the product|nothing but the product and its shadow", light: "soft overcast window light|low morning sun", aspect: "1:1|4:5|9:16"}
+composes_with: [bgconcrete, bglinen, bgmarble, bgterrazzo, bgwood, gradeclean, gradecool, gradefilm, topdown]
 conflicts: []
 cast: none
 forms: {codex-image: ok, media-still: unavailable, h3-from-still: untested}

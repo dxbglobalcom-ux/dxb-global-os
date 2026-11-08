@@ -10,7 +10,7 @@ role: base
 medium: image
 inputs: [product-photo]
 slots: {backdrop: "pale sage seamless paper|soft sky-blue gradient|warm sand seamless paper|deep graphite seamless paper", tilt: "a gentle 12-degree forward tilt|perfectly upright", aspect: "4:5|1:1|9:16"}
-composes_with: []
+composes_with: [centered, gradeclean, gradecool, gradefilm, rimlight, softbox]
 conflicts: []
 cast: none
 forms: {codex-image: ok, media-still: unavailable, h3-from-still: untested}

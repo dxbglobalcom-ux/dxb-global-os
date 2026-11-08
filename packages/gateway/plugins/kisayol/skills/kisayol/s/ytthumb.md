@@ -10,7 +10,7 @@ role: base
 medium: image
 inputs: [product-photo]
 slots: {background: "a deep saturated colour complementary to the product|a dark graded studio wall|a bright clean colour from the product's own palette"}
-composes_with: []
+composes_with: [gradeclean, gradecool, gradefilm, rimlight]
 conflicts: []
 cast: house
 forms: {codex-image: ok, media-still: unavailable, h3-from-still: unavailable}

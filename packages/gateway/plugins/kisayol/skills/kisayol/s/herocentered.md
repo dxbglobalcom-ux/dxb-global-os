@@ -10,7 +10,7 @@ role: base
 medium: image
 inputs: [product-photo]
 slots: {frame: "a symmetrical stone archway behind it|two matching low plinths flanking it|a perfectly centred circular recess in a plaster wall", palette: "warm sand and ivory|cool grey and slate|deep green and brass", aspect: "4:5|2:3|9:16|1:1"}
-composes_with: []
+composes_with: [centered, gradeclean, gradecool, gradefilm, rimlight]
 conflicts: []
 cast: none
 forms: {codex-image: ok, media-still: unavailable, h3-from-still: untested}

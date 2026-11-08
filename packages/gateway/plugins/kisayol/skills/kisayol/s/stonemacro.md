@@ -10,7 +10,7 @@ role: base
 medium: image
 inputs: [product-photo]
 slots: {background: "deep black velvet falloff|soft graphite gradient|warm ivory gradient", aspect: "1:1|4:5|9:16"}
-composes_with: []
+composes_with: [gradeclean, gradecool, gradefilm, gradelowkey]
 conflicts: []
 cast: none
 forms: {codex-image: ok, media-still: unavailable, h3-from-still: untested}

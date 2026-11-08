@@ -9,8 +9,8 @@ shelf: platform-ads
 role: base
 medium: image
 inputs: [product-photo]
-slots: {surface: "honed travertine|weathered oak|dark slate", background: "warm stone|deep shadowed green|soft charcoal"}
-composes_with: []
+slots: {surface: "honed travertine|weathered oak|dark slate|white marble|honed grey concrete|pale terrazzo|oiled oak", background: "warm stone|deep shadowed green|soft charcoal"}
+composes_with: [bgconcrete, bgmarble, bgterrazzo, bgwood, gradeclean, gradecool, gradefilm]
 conflicts: []
 cast: none
 forms: {codex-image: ok, media-still: unavailable, h3-from-still: untested}

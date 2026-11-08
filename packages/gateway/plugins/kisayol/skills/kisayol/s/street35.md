@@ -10,7 +10,7 @@ role: lens
 medium: image
 inputs: [none]
 slots: {}
-composes_with: [3dbillboard]
+composes_with: [3dbillboard, busstop, subwayposter, truckside]
 conflicts: []
 cast: none
 forms: {codex-image: untested, media-still: untested, seedream: unavailable, klein-ref: unavailable}
@@ -22,8 +22,8 @@ version: 1
 
 ## Prompt
 
-Lens: 35 mm on a full-frame camera held at about 1.6 m, from across the junction: honest street perspective with the surrounding street giving context, verticals kept close to straight under the slight upward tilt. Focus at f/8 deep enough that the screen and facade are sharp and the near kerb only slightly soft; a faint natural vignette, subtle optical imperfections, believable motion blur on anything moving. No fisheye bend, no fake lens flares, no digitally sharpened edges.
+Lens: 35 mm on a full-frame camera held at about 1.6 m, from across the street: honest street perspective with the surrounding street giving context, verticals kept close to straight under the slight upward tilt. Focus at f/8, deep enough that the advertising surface and the facade around it are sharp and the near kerb only slightly soft; a faint natural vignette, subtle optical imperfections, believable motion blur on anything moving. No fisheye bend, no fake lens flares, no digitally sharpened edges.
 
 ## Notes
 
-- Agrees with the 35 mm, street-level, slight-upward-tilt camera fixed in 3dbillboard.
+- Fits street-level outdoor advertising bases already shot on a 35 mm lens.

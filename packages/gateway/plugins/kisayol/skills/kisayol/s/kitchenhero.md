@@ -10,7 +10,7 @@ role: base
 medium: image
 inputs: [product-photo]
 slots: {time: "bright morning daylight|soft midday daylight|early evening with the under-cabinet lights on", aspect: "3:2|4:5|16:9"}
-composes_with: []
+composes_with: [gradeclean]
 conflicts: []
 cast: none
 forms: {codex-image: ok, media-still: unavailable, h3-from-still: untested}

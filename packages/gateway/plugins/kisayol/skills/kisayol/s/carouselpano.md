@@ -10,7 +10,7 @@ role: base
 medium: image
 inputs: [product-photo]
 slots: {frames: "3|4|5", setting: "a long honed stone counter against a plaster wall|a pale oak shelf running along a sunlit wall|a continuous seamless sweep in the product's own colour"}
-composes_with: []
+composes_with: [gradeclean, gradecool, gradefilm, windowlight]
 conflicts: []
 cast: none
 forms: {codex-image: ok, media-still: unavailable, h3-from-still: unavailable}

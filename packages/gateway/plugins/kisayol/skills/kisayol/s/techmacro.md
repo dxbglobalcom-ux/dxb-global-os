@@ -10,7 +10,7 @@ role: base
 medium: image
 inputs: [product-photo]
 slots: {detail: "an edge chamfer and a button|the speaker grille|a port and its surround|a hinge or dial", aspect: "1:1|4:5|16:9"}
-composes_with: []
+composes_with: [gradeclean, gradecool, gradelowkey]
 conflicts: []
 cast: none
 forms: {codex-image: ok, media-still: unavailable, h3-from-still: untested}

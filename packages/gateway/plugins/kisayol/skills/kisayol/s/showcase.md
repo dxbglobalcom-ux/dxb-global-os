@@ -9,8 +9,8 @@ shelf: studio-product
 role: base
 medium: image
 inputs: [product-photo]
-slots: {background: "seamless warm grey paper|soft grey-to-white gradient|honed travertine plinth", aspect: "1:1|4:5|9:16"}
-composes_with: []
+slots: {background: "seamless warm grey paper|soft grey-to-white gradient|a honed travertine plinth", aspect: "1:1|4:5|9:16"}
+composes_with: [bggradient, bgseamless, centered, gradeclean, gradecool, gradefilm, gradehighkey, macro100, matfrosted, matmetal, matstone, matwet, negspace, rimlight, softbox, thirds]
 conflicts: []
 cast: none
 forms: {codex-image: ok, seedream: unavailable, klein-ref: unavailable, krea-still: unavailable}

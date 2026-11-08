@@ -3,14 +3,14 @@ name: whitepackshot
 aliases: [beyazfon, pazaryeriana]
 title_tr: Beyaz fon pazaryeri çekimi
 title_en: White-background marketplace packshot
-when_tr: Pazaryeri ana görseli saf beyaz fon istediğinde; Amazon, Trendyol, Hepsiburada ilk görseli
+when_tr: Pazaryeri ana görseli saf beyaz fon istediğinde; ilanın ilk görseli
 when_en: A marketplace main image that must sit on pure white; the first image of a listing
 shelf: studio-product
 role: base
 medium: image
 inputs: [product-photo]
 slots: {angle: "straight-on front view|slight three-quarter view from the left", shadow: "a faint soft contact shadow directly beneath it|no shadow at all", aspect: "1:1|4:5"}
-composes_with: []
+composes_with: [centered, gradeclean]
 conflicts: []
 cast: none
 forms: {codex-image: ok, media-still: unavailable, h3-from-still: unavailable}

@@ -10,7 +10,7 @@ role: light
 medium: image
 inputs: [none]
 slots: {}
-composes_with: [showcase, lifestyleshot]
+composes_with: [bottlemockup, bundleset, campaignposter, condensation, devicehero, displayset, drinkpour, featureframe, glassdrop, glassreflect, herocentered, heroshot, jewelreflect, levitation, lifestyleshot, liquidsplash, metaads, showcase, steamrise, storystatic, ytthumb]
 conflicts: [windowlight]
 cast: none
 forms: {codex-image: untested, media-still: untested, seedream: unavailable, klein-ref: unavailable}
@@ -26,4 +26,4 @@ Light: strengthen the back light. The source behind the product and slightly off
 
 ## Notes
 
-- In lifestyleshot it places the window behind the product; do not stack it with windowlight, which puts the window camera-left.
+- In a room it places the window behind the product; do not stack it with windowlight, which puts the window camera-left.

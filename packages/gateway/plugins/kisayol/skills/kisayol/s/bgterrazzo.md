@@ -10,8 +10,8 @@ role: background
 medium: image
 inputs: [none]
 slots: {}
-fills: {setting: "sunlit kitchen counter"}
-composes_with: [lifestyleshot]
+fills: {surface: "pale terrazzo"}
+composes_with: [bathshelf, feedportrait, flatlay, kitchencounter, lifestyleshot, shadowplay, textureswatch]
 conflicts: [bgconcrete]
 cast: none
 forms: {codex-image: untested, media-still: untested, seedream: unavailable, klein-ref: unavailable}
@@ -23,8 +23,8 @@ version: 1
 
 ## Prompt
 
-Surface: the counter is honed terrazzo, a pale cement ground with irregular chips of marble in warm white, grey and terracotta, from a few millimetres to a centimetre across and slightly uneven in density. A matte honed finish with a soft sheen where the light grazes it, a faint ring mark and fine wear near the front edge. The product's shadow and a faint reflection sit on the stone.
+Surface: honed terrazzo, a pale cement ground with irregular chips of marble in warm white, grey and terracotta, from a few millimetres to a centimetre across and slightly uneven in density. A matte honed finish with a soft sheen where the light grazes it, a faint ring mark and fine wear near the front edge. The product's shadow and a faint reflection sit on the stone.
 
 ## Notes
 
-- Sets lifestyleshot's setting to the sunlit kitchen counter.
+- Sets the base's surface to pale terrazzo: counters, shelves, ledges and flat lays.

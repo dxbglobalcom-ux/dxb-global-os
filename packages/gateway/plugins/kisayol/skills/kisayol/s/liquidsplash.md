@@ -10,7 +10,7 @@ role: base
 medium: image
 inputs: [product-photo]
 slots: {liquid: "crystal-clear water|creamy white milk|golden honey|pale green herbal infusion", backdrop: "deep teal gradient|clean white seamless|warm amber gradient", aspect: "4:5|1:1|9:16"}
-composes_with: []
+composes_with: [centered, gradeclean, gradecool, gradefilm, macro100, rimlight]
 conflicts: []
 cast: none
 forms: {codex-image: ok, media-still: unavailable, h3-from-still: untested}

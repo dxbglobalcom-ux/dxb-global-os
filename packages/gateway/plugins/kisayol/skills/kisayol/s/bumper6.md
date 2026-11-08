@@ -10,7 +10,7 @@ role: base
 medium: video
 inputs: [product-photo]
 slots: {feature: "the product shown in one clear gesture of use by an adult man's hand from our own cast|a slow close pass along its most telling material detail|the product turning to show its best side", background: "a seamless warm grey paper sweep|a soft grey-to-white gradient|a honed travertine plinth", aspect: "16:9|9:16|1:1"}
-composes_with: []
+composes_with: [lightleak, speedramp]
 conflicts: []
 cast: house
 forms: {h3: ok, h3-from-still: ok, codex-image: unavailable, seedance: unavailable}

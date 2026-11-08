@@ -9,8 +9,8 @@ shelf: automotive
 role: base
 medium: image
 inputs: [product-photo]
-slots: {landscape: "red desert dunes|a high mountain plateau|a salt flat|a rocky coastline", time: "sunrise|golden hour|soft overcast day", aspect: "16:9|4:5|9:16"}
-composes_with: []
+slots: {landscape: "red desert dunes|a high mountain plateau|a salt flat|a rocky coastline", time: "sunrise|golden hour|midday under soft overcast", aspect: "16:9|4:5|9:16"}
+composes_with: [goldenhour, gradeclean, gradecool, gradefilm, thirds]
 conflicts: []
 cast: none
 forms: {codex-image: ok, media-still: unavailable, h3-from-still: untested}

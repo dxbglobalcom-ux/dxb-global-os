@@ -10,7 +10,7 @@ role: base
 medium: image
 inputs: [product-photo]
 slots: {aspect: "3:1|2:1", background: "a warm mid-tone plaster wall|a soft mid-grey linen backdrop|a muted colour taken from the product"}
-composes_with: []
+composes_with: [gradeclean, gradecool, gradefilm, windowlight]
 conflicts: []
 cast: none
 forms: {codex-image: ok, media-still: unavailable, h3-from-still: unavailable}

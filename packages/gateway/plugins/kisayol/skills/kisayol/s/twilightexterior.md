@@ -10,7 +10,7 @@ role: base
 medium: image
 inputs: [product-photo]
 slots: {sky: "clear deep-blue twilight|twilight with thin high clouds lit pink", aspect: "3:2|16:9|4:5"}
-composes_with: []
+composes_with: [gradeclean]
 conflicts: []
 cast: none
 forms: {codex-image: ok, media-still: unavailable, h3-from-still: untested}

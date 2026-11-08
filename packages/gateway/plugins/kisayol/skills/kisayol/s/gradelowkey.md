@@ -10,8 +10,7 @@ role: grade
 medium: image
 inputs: [none]
 slots: {}
-fills: {time: night}
-composes_with: [3dbillboard]
+composes_with: [3dbillboard, bedside, cardetail, carstudio, carwetnight, devicehero, glassreflect, heroshot, jewelreflect, steamrise, stonemacro, streetscreen, techmacro, velvettray]
 conflicts: [gradeclean, gradefilm, gradecool, gradehighkey]
 cast: none
 forms: {codex-image: untested, media-still: untested, seedream: unavailable, klein-ref: unavailable}
@@ -27,5 +26,4 @@ Grade: low-key and moody: predominantly dark tones with deep shadows that still 
 
 ## Notes
 
-- Sets 3dbillboard's time to night.
-- showcase's backgrounds are all light; it waits for a dark studio base there.
+- Fits dark studio, night and evening bases; the product stays the brightest element.

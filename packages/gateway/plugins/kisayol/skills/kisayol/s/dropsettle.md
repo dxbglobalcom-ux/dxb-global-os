@@ -10,7 +10,7 @@ role: base
 medium: video
 inputs: [product-photo]
 slots: {surface: "a shallow pool of still water on dark stone|fine pale sand|a matte concrete slab|a bed of soft moss", aspect: "9:16 at 640x1152|4:5|1:1|16:9"}
-composes_with: []
+composes_with: [bullettime, dollyin, speedramp]
 conflicts: []
 cast: none
 forms: {h3-from-still: ok, h3: unavailable, seedance: unavailable, kling: unavailable}
@@ -22,7 +22,7 @@ version: 1
 
 ## Prompt
 
-Start from the attached approved still as the first frame: the product held in mid-air a short distance above {surface}, upright. The product stays exactly as in the still for the whole clip: shape, proportions, colours, materials and its own label as photographed; it moves only as one rigid object. A four-second single continuous shot in slow motion, as if filmed at 240 frames per second, framed for {aspect}. The product drops straight down, lands flat on its base with real weight, and the surface answers: water throws a low ring of droplets and rings spreading outward, sand puffs into a small fine cloud, concrete lifts a little dust, moss gives softly. A tiny rebound, a settle, then perfect stillness for the last second as the disturbance fades. No tilting, no toppling. Light: a hard key high camera-right that makes droplets and dust catch the light, a soft fill camera-left keeping the product's front readable. Camera: full-frame high-speed camera, 50 mm lens at f/5.6, low, just above the surface, locked off. Real materials with imperfection; physically plausible splash and dust, gravity-true arcs. Restrained grade, fine grain. No glow, no sparkle, no flicker, no cuts. No people. Add no text, letters or logos anywhere.
+Start from the attached approved still as the first frame: the product held in mid-air a short distance above {surface}, upright. The product stays exactly as in the still for the whole clip: shape, proportions, colours, materials and its own label as photographed; it moves only as one rigid object. A four-second single continuous shot in slow motion, as if filmed at 240 frames per second, framed for {aspect}. The product drops straight down, lands flat on its base with real weight, and the surface answers: water throws a low ring of droplets and rings spreading outward, sand puffs into a small fine cloud, concrete lifts a little dust, moss gives softly. A tiny rebound, a settle, then perfect stillness for the last second as the disturbance fades. No tilting, no toppling. Light: a hard key high camera-right that makes droplets and dust catch the light, a soft fill camera-left keeping the product's front readable. Camera: full-frame high-speed camera, 50 mm lens at f/5.6, low, just above the surface, locked off unless a camera move is named. Real materials with imperfection; physically plausible splash and dust, gravity-true arcs. Restrained grade, fine grain. No glow, no sparkle, no flicker, no cuts. No people. Add no text, letters or logos anywhere.
 
 ## Notes
 

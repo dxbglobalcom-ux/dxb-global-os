@@ -10,7 +10,7 @@ role: base
 medium: image
 inputs: [product-photo]
 slots: {finish: "blind embossing on textured cotton paper|hot-foil detail catching the light|spot gloss varnish on a matte label", aspect: "1:1|4:5|16:9"}
-composes_with: []
+composes_with: [gradeclean, gradecool, gradefilm]
 conflicts: []
 cast: none
 forms: {codex-image: ok, media-still: unavailable, h3-from-still: untested}

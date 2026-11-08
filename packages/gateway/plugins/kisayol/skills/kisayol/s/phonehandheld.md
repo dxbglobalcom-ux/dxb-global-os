@@ -10,8 +10,8 @@ role: camera
 medium: video
 inputs: [none]
 slots: {}
-composes_with: []
-conflicts: []
+composes_with: [reelsmoment, ugcdaylife, ugcproblem, unboxvideo, usedemo]
+conflicts: [lightleak]
 cast: house
 forms: {h3: ok, h3-from-still: ok, seedance: unavailable, kling: unavailable}
 status: candidate

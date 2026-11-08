@@ -10,7 +10,7 @@ role: composition
 medium: image
 inputs: [none]
 slots: {}
-composes_with: [showcase, lifestyleshot, 3dbillboard]
+composes_with: [3dbillboard, autumnwarm, bathshelf, cafetable, carlandscape, desksetup, heroshot, kitchencounter, lifestyleshot, livingroom, outdoornature, showcase, springbloom, summerlight, travelkit, wintercozy]
 conflicts: [centered]
 cast: none
 forms: {codex-image: untested, media-still: untested, seedream: unavailable, klein-ref: unavailable}

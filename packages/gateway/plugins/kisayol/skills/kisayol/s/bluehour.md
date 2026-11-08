@@ -10,8 +10,8 @@ role: light
 medium: image
 inputs: [none]
 slots: {}
-fills: {time: dusk}
-composes_with: [3dbillboard]
+fills: {time: "blue hour"}
+composes_with: [3dbillboard, buildingwrap, busstop, roadmotion, rooftopbb, storewindow, streetscreen]
 conflicts: []
 cast: none
 forms: {codex-image: untested, media-still: untested, seedream: unavailable, klein-ref: unavailable}
@@ -23,8 +23,8 @@ version: 1
 
 ## Prompt
 
-Light: blue hour, some twenty minutes after sunset: the sky an even deep blue with a last pale band at the horizon, no direct sun. Interior lights in the surrounding windows and the first street lamps are on and warm, so cool ambient and warm practicals mix. Soft, low-contrast shadows; the lit screen is the brightest element and its light falls off naturally across the facade. Fine low-light texture in the shadows; no glow halos, no evenly brightened darkness.
+Light: blue hour, some twenty minutes after sunset: the sky an even deep blue with a last pale band at the horizon, no direct sun. Lit windows, street lamps and any lit screen in the scene are on and warm, so cool ambient and warm practicals mix; the brightest practical falls off naturally across the surfaces around it. Soft, low-contrast shadows; fine low-light texture in the shadows; no glow halos, no evenly brightened darkness.
 
 ## Notes
 
-- Sets 3dbillboard's time to dusk.
+- Sets the base's time to blue hour: city streets, facades and roads.

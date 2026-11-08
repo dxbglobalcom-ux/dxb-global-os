@@ -10,7 +10,7 @@ role: base
 medium: image
 inputs: [product-photo]
 slots: {module: "970 x 600 (about 1.6:1)|970 x 300 (about 3.2:1)", setting: "a calm lived-in surface by a window|a soft studio set in the product's own colours|a natural material close-up of where it is used"}
-composes_with: []
+composes_with: [gradeclean, gradecool, gradefilm, softbox]
 conflicts: []
 cast: house
 forms: {codex-image: ok, media-still: unavailable, h3-from-still: unavailable}

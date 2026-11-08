@@ -10,7 +10,7 @@ role: lens
 medium: image
 inputs: [none]
 slots: {}
-composes_with: []
+composes_with: [autumnwarm, castmodel, inhand, springbloom, velvettray, yearendgift]
 conflicts: []
 cast: none
 forms: {codex-image: untested, media-still: untested, seedream: unavailable, klein-ref: unavailable}
@@ -26,4 +26,4 @@ Lens: 85 mm at f/2, camera at subject height about two to three metres back: gen
 
 ## Notes
 
-- Each of the seeds showcase, lifestyleshot and 3dbillboard fixes its own lens, so this waits for a base whose lens is open.
+- Fits bases already shot near 85 mm at a wide aperture: a hand, a wearer, a seasonal still life.

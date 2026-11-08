@@ -10,7 +10,7 @@ role: background
 medium: image
 inputs: [none]
 slots: {}
-composes_with: [lifestyleshot]
+composes_with: [flatlay, kitchencounter, lifestyleshot, springbloom]
 conflicts: []
 cast: none
 forms: {codex-image: untested, media-still: untested, seedream: unavailable, klein-ref: unavailable}
@@ -26,4 +26,4 @@ Surface: the product rests on a piece of natural undyed linen with an uneven slu
 
 ## Notes
 
-- Works on any lifestyleshot setting; it extends the base's folded linen cloth.
+- Lays a linen cloth on the base's own surface; it sets no slot.

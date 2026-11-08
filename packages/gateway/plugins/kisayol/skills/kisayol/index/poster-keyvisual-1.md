@@ -8,4 +8,4 @@
 | `herogiant` | base | image | product-photo | candidate | Durduran, akılda kalan kampanya görseli; ürün manzarada bir yapı kada… |
 | `herolowangle` | base | image | product-photo | candidate | Ürünü güçlü, büyük ve iddialı göstermek; lansman afişi, dikey reklam,… |
 | `keyvisual` | base | image | product-photo | candidate | Bir kampanyanın bütün mecralara uyarlanacak tek ana görseli; lansman,… |
-| `salevisual` | base | image | product-photo | candidate | İndirim, sezon sonu ya da özel gün kampanyası; fiyat ve teklif sonrad… |
+| `salevisual` | base | image | product-photo | candidate | İndirim, sezon sonu, büyük indirim günleri ya da özel gün kampanyası;… |

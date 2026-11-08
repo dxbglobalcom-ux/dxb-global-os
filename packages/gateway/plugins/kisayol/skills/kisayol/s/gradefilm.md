@@ -10,7 +10,7 @@ role: grade
 medium: image
 inputs: [none]
 slots: {}
-composes_with: [showcase, lifestyleshot, 3dbillboard]
+composes_with: [3dbillboard, airportad, aplusmodule, apparelmockup, archdetail, autumnwarm, backtoschool, bagmockup, bathshelf, bedside, beforeafter, botanicalmacro, bottlemockup, boutiquerack, boxmockup, buildingwrap, bundleset, busstop, cafetable, campaignposter, cardashboard, cardetail, carlandscape, carouselpano, carstudio, carwetnight, castmodel, condensation, craftsman, desksetup, devicehand, devicescreen, displayset, drinkpour, elderhand, emailheader, fabricdetail, featureframe, feedportrait, feedsquare, festivetable, flatlay, folddisplay, garmentflatlay, giftunbox, glassdrop, glassreflect, herocentered, herodiagonal, herodish, herogiant, herolowangle, heroshot, ingredientspread, inhand, jewelreflect, keyvisual, kitchencounter, labelcloseup, levitation, lifestyleshot, liquidsplash, livingroom, macrotexture, malllightbox, metaads, mirrorritual, outdoornature, podium, pouchmockup, roadmotion, rooftopbb, salevisual, shadowplay, showcase, signagemockup, silkdrape, springbloom, steamrise, stonemacro, stoneplinth, storewindow, storystatic, streetscreen, subwayposter, summerlight, tableoverhead, testimonial, textureswatch, travelkit, truckside, tubemockup, velvettray, waterripple, wintercozy, yearendgift, ytthumb]
 conflicts: [gradeclean, gradecool, gradehighkey, gradelowkey]
 cast: none
 forms: {codex-image: untested, media-still: untested, seedream: unavailable, klein-ref: unavailable}
@@ -26,4 +26,4 @@ Grade: warm film, the look of a fine-grain colour negative: soft, gently rolled-
 
 ## Notes
 
-- Fits every seed; pick one grade per variant.
+- Fits lifestyle, people, seasonal and campaign images; marketplace, technical and property images keep accurate colour.

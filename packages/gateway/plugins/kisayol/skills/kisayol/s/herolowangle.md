@@ -10,7 +10,7 @@ role: base
 medium: image
 inputs: [product-photo]
 slots: {sky: "a clean deep-blue afternoon sky|a soft dusk sky fading from apricot to blue|a high overcast silver sky", ground: "a weathered concrete slab|a flat dark basalt rock|a rippled sand surface", aspect: "9:16|4:5|2:3"}
-composes_with: []
+composes_with: [gradeclean, gradecool, gradefilm]
 conflicts: []
 cast: none
 forms: {codex-image: ok, media-still: unavailable, h3-from-still: untested}

@@ -10,7 +10,7 @@ role: composition
 medium: image
 inputs: [none]
 slots: {}
-composes_with: [showcase, lifestyleshot]
+composes_with: [devicehero, glassreflect, heroshot, jewelreflect, lifestyleshot, shadowplay, showcase, stoneplinth]
 conflicts: []
 cast: none
 forms: {codex-image: untested, media-still: untested, seedream: unavailable, klein-ref: unavailable}

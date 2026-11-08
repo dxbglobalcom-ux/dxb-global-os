@@ -10,7 +10,7 @@ role: base
 medium: image
 inputs: [product-photo]
 slots: {surface: "unbleached linen sheet|pale oak floorboards|warm off-white paper", season: "spring|summer|autumn|winter", aspect: "4:5|1:1|9:16"}
-composes_with: []
+composes_with: [gradeclean, gradecool, gradefilm, topdown]
 conflicts: []
 cast: none
 forms: {codex-image: ok, media-still: unavailable, h3-from-still: untested}

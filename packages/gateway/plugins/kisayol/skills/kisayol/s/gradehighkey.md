@@ -11,7 +11,7 @@ medium: image
 inputs: [none]
 slots: {}
 fills: {background: "soft grey-to-white gradient"}
-composes_with: [showcase]
+composes_with: [displayset, featureframe, showcase, storystatic]
 conflicts: [gradeclean, gradefilm, gradecool, gradelowkey]
 cast: none
 forms: {codex-image: untested, media-still: untested, seedream: unavailable, klein-ref: unavailable}
@@ -27,5 +27,5 @@ Grade: high-key: bright, airy exposure with the background rising to near-white,
 
 ## Notes
 
-- Sets showcase's background to the soft grey-to-white gradient.
-- Not a marketplace pure-white image; that is a separate base.
+- Sets the base's background to the soft grey-to-white gradient: plain studio bases.
+- Not a marketplace pure-white image; that is whitepackshot.

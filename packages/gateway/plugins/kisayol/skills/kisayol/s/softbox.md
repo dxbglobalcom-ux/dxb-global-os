@@ -10,7 +10,7 @@ role: light
 medium: image
 inputs: [none]
 slots: {}
-composes_with: [showcase]
+composes_with: [aplusmodule, boxmockup, bundleset, campaignposter, cutaway, displayset, explodedview, featureframe, levitation, pouchmockup, showcase, storystatic]
 conflicts: []
 cast: none
 forms: {codex-image: untested, media-still: untested, seedream: unavailable, klein-ref: unavailable}
@@ -26,5 +26,5 @@ Light: one large softbox, about 120 cm across, high camera-left at 45 degrees as
 
 ## Notes
 
-- Matches the key, fill and rim already fixed in showcase; it sharpens their description, it does not move them.
-- lifestyleshot (window light) and 3dbillboard (city light) do not take it.
+- Fits studio bases whose key already sits high camera-left; it sharpens their description, it does not move the light.
+- Bases lit by a window or the sun do not take it.

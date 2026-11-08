@@ -9,8 +9,8 @@ shelf: food-drink
 role: base
 medium: image
 inputs: [product-photo]
-slots: {surface: "weathered oak table|honed dark slate|pale limestone counter", time: "late-morning window light|soft overcast daylight|warm late-afternoon light", aspect: "4:5|1:1|9:16"}
-composes_with: []
+slots: {surface: "weathered oak table|honed dark slate|pale limestone counter", time: "late-morning window light|soft overcast daylight|warm late-afternoon light", aspect: "4:5|1:1|9:16", market: "*"}
+composes_with: [gradeclean, gradefilm]
 conflicts: []
 cast: none
 forms: {codex-image: ok, media-still: unavailable, h3-from-still: untested}
@@ -22,7 +22,7 @@ version: 1
 
 ## Prompt
 
-Use the attached photo as the only source for the dish: keep the exact food, portion size, ingredient count, garnish, plate or bowl and their colours as photographed; do not add, remove or restyle any ingredient. Re-photograph it as a restaurant hero shot on a {surface} in {time}, framed for {aspect}. Camera at a 30-degree angle above the table, full-frame body, 85 mm lens at f/4, the front edge of the dish razor sharp and the back falling gently soft. Motivated light from one window behind and to the left of the dish, so sauces and oils catch a true specular glint and the side facing the camera falls into soft, readable shadow; a white card on the right lifts it slightly. Real food texture: crisp edges, a few crumbs, a drop of sauce on the rim, herbs with tiny bruises, nothing glossed with fake shine. One or two quiet props at the frame edge, a folded linen napkin and a plain ceramic water glass, out of focus. No people. No alcohol and no pork anywhere in the scene. Natural colour, restrained grade, fine film grain; no oversaturation, no plastic-looking food, no fake HDR. Add no text, letters or logos anywhere.
+Use the attached photo as the only source for the dish: keep the exact food, portion size, ingredient count, garnish, plate or bowl and their colours as photographed; do not add, remove or restyle any ingredient. Re-photograph it as a restaurant hero shot on a {surface} in {time}, framed for {aspect}. Camera at a 30-degree angle above the table, full-frame body, 85 mm lens at f/4, the front edge of the dish razor sharp and the back falling gently soft. Motivated light from one window behind and to the left of the dish, so sauces and oils catch a true specular glint and the side facing the camera falls into soft, readable shadow; a white card on the right lifts it slightly. Real food texture: crisp edges, a few crumbs, a drop of sauce on the rim, herbs with tiny bruises, nothing glossed with fake shine. One or two quiet props at the frame edge, set as a restaurant in {market} would set them, a folded napkin and a plain water glass, out of focus. No people. No alcohol and no pork anywhere in the scene. Natural colour, restrained grade, fine film grain; no oversaturation, no plastic-looking food, no fake HDR. Add no text, letters or logos anywhere.
 
 ## Notes
 

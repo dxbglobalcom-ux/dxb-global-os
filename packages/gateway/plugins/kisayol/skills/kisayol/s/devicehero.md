@@ -1,8 +1,8 @@
 ---
 name: devicehero
 aliases: [cihazkahraman, kablosuz]
-title_tr: Kablosuz kahraman çekim
-title_en: Cable-free hero
+title_tr: Cihaz kahraman çekimi, kablosuz ve sade
+title_en: Device hero, cable-free
 when_tr: Telefon, tablet, saat, hoparlör, şarj cihazı lansmanı; tek cihaz, dramatik ışıkta, kablosuz ve sade
 when_en: Phone, tablet, watch, speaker or charger launch; one device in dramatic light, cable-free and pure
 shelf: electronics
@@ -10,7 +10,7 @@ role: base
 medium: image
 inputs: [product-photo]
 slots: {background: "deep graphite gradient|soft cool-white gradient|dark brushed-aluminium surface", angle: "front three-quarter|low side profile|straight front", aspect: "4:5|16:9|1:1|9:16"}
-composes_with: []
+composes_with: [centered, gradeclean, gradecool, gradelowkey, negspace, rimlight]
 conflicts: []
 cast: none
 forms: {codex-image: ok, media-still: unavailable, h3-from-still: untested}

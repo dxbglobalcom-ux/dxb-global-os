@@ -10,7 +10,7 @@ role: base
 medium: image
 inputs: [product-photo]
 slots: {time: "low morning sun|soft overcast daylight|late golden afternoon", aspect: "4:5|3:2|1:1"}
-composes_with: []
+composes_with: [gradeclean, gradecool, gradefilm]
 conflicts: []
 cast: none
 forms: {codex-image: ok, media-still: unavailable, h3-from-still: untested}

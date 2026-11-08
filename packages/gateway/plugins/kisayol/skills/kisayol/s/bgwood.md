@@ -10,8 +10,8 @@ role: background
 medium: image
 inputs: [none]
 slots: {}
-fills: {setting: "wooden desk by a window"}
-composes_with: [lifestyleshot]
+fills: {surface: "oiled oak"}
+composes_with: [desksetup, feedportrait, flatlay, kitchencounter, lifestyleshot]
 conflicts: []
 cast: none
 forms: {codex-image: untested, media-still: untested, seedream: unavailable, klein-ref: unavailable}
@@ -23,8 +23,8 @@ version: 1
 
 ## Prompt
 
-Surface: the desk is solid oak with a matte oiled finish: straight and cathedral grain, a few darker knots, softened edges, faint ink marks and one shallow scratch from years of use. The window light rakes across it and lifts the grain; the product's shadow falls on the wood with a soft edge.
+Surface: solid oak with a matte oiled finish: straight and cathedral grain, a few darker knots, softened edges, faint ink marks and one shallow scratch from years of use. The key light rakes across it and lifts the grain; the product's shadow falls on the wood with a soft edge.
 
 ## Notes
 
-- Sets lifestyleshot's setting to the wooden desk by a window.
+- Sets the base's surface to oiled oak: counters, desks and flat lays.

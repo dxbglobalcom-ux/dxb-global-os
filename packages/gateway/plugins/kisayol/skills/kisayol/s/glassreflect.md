@@ -10,7 +10,7 @@ role: base
 medium: image
 inputs: [product-photo]
 slots: {surface: "black gloss acrylic|clear glass over a soft gradient|a thin film of still water on dark slate", backdrop: "pure black|deep navy gradient|soft pearl-grey gradient", aspect: "4:5|1:1|16:9"}
-composes_with: []
+composes_with: [centered, gradeclean, gradecool, gradefilm, gradelowkey, macro100, negspace, rimlight]
 conflicts: []
 cast: none
 forms: {codex-image: ok, media-still: unavailable, h3-from-still: untested}

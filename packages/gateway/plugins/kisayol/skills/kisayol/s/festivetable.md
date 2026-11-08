@@ -9,8 +9,8 @@ shelf: seasonal
 role: base
 medium: image
 inputs: [product-photo]
-slots: {occasion: "a family celebration dinner|a year-end family dinner|a festive weekend lunch", time: "evening candle and lamp light|bright midday", aspect: "4:5|16:9|1:1"}
-composes_with: []
+slots: {occasion: "*|a family celebration dinner", time: "evening lamp light|bright midday", aspect: "4:5|16:9|1:1", market: "*"}
+composes_with: [candlewarm, gradeclean, gradefilm]
 conflicts: []
 cast: house
 forms: {codex-image: ok, media-still: unavailable, h3-from-still: untested}
@@ -22,7 +22,7 @@ version: 1
 
 ## Prompt
 
-Use the attached product photo as the only source for the product: keep its exact shape, proportions, colours, materials and its own label as photographed; do not redraw or restyle it. A long family table laid for {occasion}, in {time}: a linen cloth with a fold line, mismatched heirloom plates, a roast dish and bowls of rice, salads and bread, carafes of water and fruit juice, candles in brass holders, a jar of flowers. The meal has just begun: a serving spoon in a bowl, bread already torn, a napkin dropped beside a chair. The product stands in the foreground where it really belongs on such a table, label to the lens. The family are adult men and elderly women from our own cast, seated along the table, cropped at the shoulders or softly out of focus, faces not readable, hands mid-gesture passing dishes. Only halal food and drink. Light: warm candle and lamp light at the table centre with the last cool daylight from a window behind (or bright window daylight at midday), true flicker-free highlights on glass and brass. Full-frame camera, 35 mm lens at f/2.8, seated eye height at the end of the table, framed for {aspect}; the product sharp, the table receding in soft focus. Real materials: linen slubs, worn silver, wax drips, crumbs. Restrained warm grade, fine grain; no glow, no staged smiles to camera, no religious symbols. Add no text, letters or logos anywhere.
+Use the attached product photo as the only source for the product: keep its exact shape, proportions, colours, materials and its own label as photographed; do not redraw or restyle it. A long family table in a home in {market}, laid for {occasion}, in {time}: a cloth with a fold line, mismatched heirloom plates, the dishes {market} serves for such a meal, carafes of water and fruit juice, candles in brass holders, a jar of flowers. The meal has just begun: a serving spoon in a bowl, bread already torn, a napkin dropped beside a chair. The product stands in the foreground where it really belongs on such a table, label to the lens. The family are adult men and elderly women from our own cast, seated along the table, cropped at the shoulders or softly out of focus, faces not readable, hands mid-gesture passing dishes. Only halal food and drink. Light: warm candle and lamp light at the table centre with the last cool daylight from a window behind (or bright window daylight at midday), true flicker-free highlights on glass and brass. Full-frame camera, 35 mm lens at f/2.8, seated eye height at the end of the table, framed for {aspect}; the product sharp, the table receding in soft focus. Real materials: linen slubs, worn silver, wax drips, crumbs. Restrained warm grade, fine grain; no glow, no staged smiles to camera, no religious symbols. Add no text, letters or logos anywhere.
 
 ## Notes
 

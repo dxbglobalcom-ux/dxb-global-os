@@ -10,7 +10,7 @@ role: material
 medium: image
 inputs: [none]
 slots: {}
-composes_with: [showcase]
+composes_with: [displayset, featureframe, heroshot, showcase, storystatic]
 conflicts: [matfrosted]
 cast: none
 forms: {codex-image: untested, media-still: untested, seedream: unavailable, klein-ref: unavailable}
@@ -26,4 +26,4 @@ Material: the product stands on a low disc riser of brushed stainless steel; its
 
 ## Notes
 
-- The riser stands on whichever showcase background is chosen.
+- The riser stands on whichever plain studio background the base sets.

@@ -10,7 +10,7 @@ role: base
 medium: video
 inputs: [product-photo]
 slots: {hook: "the product drops into frame from above and lands with one small settle|the product is pushed into frame from the edge by an adult man's hand from our own cast|the camera rushes from a wide frame to a tight close-up of the product and stops", surface: "a matte stone slab|a seamless warm grey paper sweep|a dark oiled wood plank", aspect: "9:16|4:5|1:1"}
-composes_with: []
+composes_with: [crashzoom, freezezoom, speedramp]
 conflicts: []
 cast: house
 forms: {h3: ok, h3-from-still: ok, codex-image: unavailable, seedance: unavailable}

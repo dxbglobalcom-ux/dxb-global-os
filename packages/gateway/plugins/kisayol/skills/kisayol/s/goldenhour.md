@@ -10,8 +10,8 @@ role: light
 medium: image
 inputs: [none]
 slots: {}
-fills: {time: golden-hour}
-composes_with: [3dbillboard]
+fills: {time: "golden hour"}
+composes_with: [3dbillboard, autumnwarm, carlandscape, lifestyleshot, outdoornature, roadmotion, rooftopbb, truckside]
 conflicts: []
 cast: none
 forms: {codex-image: untested, media-still: untested, seedream: unavailable, klein-ref: unavailable}
@@ -23,9 +23,8 @@ version: 1
 
 ## Prompt
 
-Light: golden hour, the sun low on one side about ten degrees above the horizon, raking warm light along the facades and throwing long shadows across the pavement in one consistent direction. Warm highlights on the sunlit planes, cool open-sky fill in the shade, a soft warm haze only in the far distance. Glass catches the low sun as a bright streak on one side; nothing glows without a source. Restrained warmth: whites stay creamy, never orange.
+Light: golden hour, the sun low on one side about ten degrees above the horizon, raking warm light across the scene and throwing long shadows in one consistent direction. Warm highlights on the sunlit planes, cool open-sky fill in the shade, a soft warm haze only in the far distance. Gloss and glass catch the low sun as a bright streak on one side; nothing glows without a source. Restrained warmth: whites stay creamy, never orange.
 
 ## Notes
 
-- Sets 3dbillboard's time to golden-hour.
-- lifestyleshot's late-afternoon window light is close but its slot values differ; a later version may add it.
+- Sets the base's time to golden hour: outdoor scenes and window-lit rooms.

@@ -10,7 +10,7 @@ role: effect
 medium: video
 inputs: [none]
 slots: {}
-composes_with: [hookopener, preroll15, ugcreaction]
+composes_with: [hookopener, preroll15, splashslowmo, ugcproblem, ugcreaction, usedemo]
 conflicts: []
 cast: none
 forms: {h3: ok, h3-from-still: ok, codex-image: unavailable, seedance: unavailable}

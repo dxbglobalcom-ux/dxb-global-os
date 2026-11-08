@@ -10,7 +10,7 @@ role: base
 medium: image
 inputs: [product-photo]
 slots: {vessel: "a clear glass bottle|an amber glass bottle|a frosted glass jar with a matte lid|an opaque white plastic bottle", setting: "a pale stone counter|a warm grey seamless sweep|a linen-covered table by a window", aspect: "4:5|1:1|9:16"}
-composes_with: []
+composes_with: [gradeclean, gradecool, gradefilm, macro100, rimlight]
 conflicts: []
 cast: none
 forms: {codex-image: ok, media-still: unavailable, h3-from-still: untested}

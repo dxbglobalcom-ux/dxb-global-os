@@ -10,7 +10,7 @@ role: camera
 medium: video
 inputs: [none]
 slots: {}
-composes_with: []
+composes_with: [ingredientfall, reelsmoment]
 conflicts: []
 cast: none
 forms: {h3: ok, seedance: unavailable, kling: unavailable}

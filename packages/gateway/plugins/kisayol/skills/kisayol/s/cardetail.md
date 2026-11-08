@@ -10,7 +10,7 @@ role: base
 medium: image
 inputs: [product-photo]
 slots: {detail: "a headlamp's inner optics|a wheel and brake caliper|the paint and a body crease|the leather stitching of a seat|a door handle", aspect: "1:1|4:5|16:9"}
-composes_with: []
+composes_with: [gradeclean, gradecool, gradefilm, gradelowkey]
 conflicts: []
 cast: none
 forms: {codex-image: ok, media-still: unavailable, h3-from-still: untested}

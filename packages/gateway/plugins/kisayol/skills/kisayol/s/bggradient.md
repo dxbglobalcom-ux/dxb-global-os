@@ -11,7 +11,7 @@ medium: image
 inputs: [none]
 slots: {}
 fills: {background: "soft grey-to-white gradient"}
-composes_with: [showcase]
+composes_with: [displayset, featureframe, showcase, storystatic]
 conflicts: []
 cast: none
 forms: {codex-image: untested, media-still: untested, seedream: unavailable, klein-ref: unavailable}
@@ -27,4 +27,4 @@ Background: a smooth tonal gradient behind the product, mid grey low and behind 
 
 ## Notes
 
-- Sets showcase's background to the soft grey-to-white gradient.
+- Sets the base's background to the soft grey-to-white gradient: plain studio bases.

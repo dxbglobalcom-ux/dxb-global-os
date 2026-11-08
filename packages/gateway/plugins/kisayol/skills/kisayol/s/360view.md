@@ -10,7 +10,7 @@ role: base
 medium: image
 inputs: [product-photo]
 slots: {views: "eight views every 45 degrees in a 4 by 2 grid|five views: front, front three-quarter, side, rear three-quarter, rear, in one row", background: "pure white seamless|light neutral grey seamless", aspect: "16:9|3:2"}
-composes_with: []
+composes_with: [gradeclean]
 conflicts: []
 cast: none
 forms: {codex-image: ok, media-still: unavailable, h3-from-still: untested}

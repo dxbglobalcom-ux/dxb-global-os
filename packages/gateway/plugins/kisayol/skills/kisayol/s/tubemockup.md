@@ -10,7 +10,7 @@ role: base
 medium: image
 inputs: [product-photo]
 slots: {pose: "a pair of tubes, one standing on its cap and one lying in front|a single tube lying on its side with a small swirl of the contents beside the nozzle", setting: "a pale stone basin edge|a soft blush-beige seamless sweep|a white tiled shelf with a folded towel", aspect: "4:5|1:1|9:16"}
-composes_with: []
+composes_with: [gradeclean, gradecool, gradefilm, macro100]
 conflicts: []
 cast: none
 forms: {codex-image: ok, media-still: unavailable, h3-from-still: untested}

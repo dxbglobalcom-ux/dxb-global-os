@@ -26,4 +26,4 @@ Lens: a tilt-shift lens tilted to lay a thin, slanted plane of focus across the 
 
 ## Notes
 
-- Needs a high vantage; the seeds showcase, lifestyleshot and 3dbillboard are all shot at eye or street level.
+- Needs a high vantage over a city or a set; no base in the cupboard is shot from one yet.

@@ -26,4 +26,4 @@ Lens: 24 mm on a full-frame camera at about 1.2 m, levelled so every vertical st
 
 ## Notes
 
-- Each of the seeds showcase, lifestyleshot and 3dbillboard fixes its own lens; waits for a room base.
+- Needs a product-in-a-room base shot wide; the room bases here fix their own 35 mm or rectilinear lens.

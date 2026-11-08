@@ -10,7 +10,7 @@ role: base
 medium: image
 inputs: [product-photo]
 slots: {finish: "matte film|soft-touch kraft paper|metallised gloss film", setting: "a warm wooden board with a scoop of the contents beside it|a clean sand-coloured seamless sweep", aspect: "4:5|1:1|9:16"}
-composes_with: []
+composes_with: [gradeclean, gradecool, gradefilm, softbox]
 conflicts: []
 cast: none
 forms: {codex-image: ok, media-still: unavailable, h3-from-still: untested}

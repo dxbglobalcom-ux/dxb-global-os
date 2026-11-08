@@ -10,7 +10,7 @@ role: base
 medium: image
 inputs: [product-photo]
 slots: {background: "a complementary two-tone wall and floor|a single saturated colour from the product's own palette|warm terracotta and sand"}
-composes_with: []
+composes_with: [gradeclean, gradecool, gradefilm]
 conflicts: []
 cast: none
 forms: {codex-image: ok, media-still: unavailable, h3-from-still: untested}

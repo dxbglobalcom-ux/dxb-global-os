@@ -9,8 +9,8 @@ shelf: platform-ads
 role: base
 medium: image
 inputs: [product-photo]
-slots: {background: "soft grey-to-white gradient|warm sand seamless|a muted colour from the product", aspect: "1:1|4:5"}
-composes_with: []
+slots: {background: "soft grey-to-white gradient|warm sand seamless|a muted colour from the product|seamless warm grey paper|a honed travertine plinth", aspect: "1:1|4:5"}
+composes_with: [bggradient, bgseamless, centered, gradeclean, gradecool, gradefilm, gradehighkey, macro100, matfrosted, matmetal, matstone, matwet, rimlight, softbox]
 conflicts: []
 cast: none
 forms: {codex-image: ok, media-still: unavailable, h3-from-still: unavailable}

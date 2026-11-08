@@ -10,7 +10,7 @@ role: light
 medium: image
 inputs: [none]
 slots: {}
-composes_with: [lifestyleshot]
+composes_with: [apparelmockup, backtoschool, bagmockup, bathshelf, beforeafter, cafetable, carouselpano, desksetup, devicescreen, elderhand, emailheader, folddisplay, giftunbox, inhand, lifestyleshot, mirrorritual, testimonial]
 conflicts: [rimlight]
 cast: none
 forms: {codex-image: untested, media-still: untested, seedream: unavailable, klein-ref: unavailable}
@@ -26,4 +26,4 @@ Light: a single window camera-left is the only source, its daylight diffused by 
 
 ## Notes
 
-- Gives lifestyleshot's window light a named direction; its time slot stays the base's choice.
+- Gives an indoor daylight base a named window direction; its time slot stays the base's choice.

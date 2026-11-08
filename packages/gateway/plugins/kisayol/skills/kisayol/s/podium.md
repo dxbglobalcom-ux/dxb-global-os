@@ -10,7 +10,7 @@ role: base
 medium: image
 inputs: [product-photo]
 slots: {plinth: "a honed travertine cylinder|stepped matte plaster blocks|a polished dark granite slab", palette: "warm sand and terracotta|cool stone grey|soft sage and cream", aspect: "4:5|1:1|9:16|16:9"}
-composes_with: []
+composes_with: [gradeclean, gradecool, gradefilm]
 conflicts: []
 cast: none
 forms: {codex-image: ok, media-still: unavailable, h3-from-still: untested}

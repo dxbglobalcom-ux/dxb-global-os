@@ -10,8 +10,8 @@ role: effect
 medium: video
 inputs: [none]
 slots: {}
-composes_with: [preroll15, bumper6, ugcdaylife]
-conflicts: []
+composes_with: [bumper6, preroll15, reelsmoment, ugcdaylife, unboxvideo]
+conflicts: [phonehandheld]
 cast: none
 forms: {h3: ok, h3-from-still: ok, codex-image: unavailable, seedance: unavailable}
 status: candidate

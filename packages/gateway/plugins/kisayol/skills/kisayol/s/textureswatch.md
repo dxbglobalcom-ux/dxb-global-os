@@ -9,8 +9,8 @@ shelf: cosmetics
 role: base
 medium: image
 inputs: [product-photo]
-slots: {surface: "pale honed travertine|frosted glass sheet|warm sandstone tile", aspect: "4:5|1:1|9:16"}
-composes_with: []
+slots: {surface: "pale honed travertine|frosted glass|warm sandstone|white marble|honed grey concrete|pale terrazzo", aspect: "4:5|1:1|9:16"}
+composes_with: [bgconcrete, bgmarble, bgterrazzo, gradeclean, gradecool, gradefilm, macro100]
 conflicts: []
 cast: none
 forms: {codex-image: ok, media-still: unavailable, h3-from-still: untested}
@@ -22,7 +22,7 @@ version: 1
 
 ## Prompt
 
-Use the attached product photo as the only source for the product: keep its exact shape, proportions, colours, materials and its own label as photographed; do not redraw or restyle it. Stand it on a {surface}, framed for {aspect}. In the foreground lies one confident swatch of the product's own formula in exactly its true colour: a single spatula sweep that starts thick, with a soft peak and the ridged trail of the tool, and thins to a translucent feathered edge where the surface shows through. The swatch carries real physics: tiny air bubbles, a satin sheen on the thick part, a faint matte drag at the thin end. Light: a large soft source low from the left raking across the swatch so every ridge casts a fine shadow, a white card on the right, a small rim on the pack. Full-frame camera, 100 mm macro lens at f/8, camera low at 20 degrees above the surface, the swatch sharp, the pack just behind in gentle focus. No people. Clean, true-to-formula colour, restrained grade, fine grain; no glossy plastic smear, no perfectly uniform texture, no glowing edges. Add no text, letters or logos anywhere.
+Use the attached product photo as the only source for the product: keep its exact shape, proportions, colours, materials and its own label as photographed; do not redraw or restyle it. Stand it on {surface}, framed for {aspect}. In the foreground lies one confident swatch of the product's own formula in exactly its true colour: a single spatula sweep that starts thick, with a soft peak and the ridged trail of the tool, and thins to a translucent feathered edge where the surface shows through. The swatch carries real physics: tiny air bubbles, a satin sheen on the thick part, a faint matte drag at the thin end. Light: a large soft source low from the left raking across the swatch so every ridge casts a fine shadow, a white card on the right, a small rim on the pack. Full-frame camera, 100 mm macro lens at f/8, camera low at 20 degrees above the surface, the swatch sharp, the pack just behind in gentle focus. No people. Clean, true-to-formula colour, restrained grade, fine grain; no glossy plastic smear, no perfectly uniform texture, no glowing edges. Add no text, letters or logos anywhere.
 
 ## Notes
 

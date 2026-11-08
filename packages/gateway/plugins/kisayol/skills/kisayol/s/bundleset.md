@@ -10,7 +10,7 @@ role: base
 medium: image
 inputs: [product-photo]
 slots: {surface: "a honed stone plinth in two steps|a pale oak tray on a linen-covered table|a seamless sweep in the set's dominant colour", aspect: "1:1|4:5"}
-composes_with: []
+composes_with: [centered, gradeclean, gradecool, gradefilm, rimlight, softbox]
 conflicts: []
 cast: none
 forms: {codex-image: ok, media-still: unavailable, h3-from-still: unavailable}

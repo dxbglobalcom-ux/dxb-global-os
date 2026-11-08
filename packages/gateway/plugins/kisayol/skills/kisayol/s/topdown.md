@@ -10,7 +10,7 @@ role: composition
 medium: image
 inputs: [none]
 slots: {}
-composes_with: []
+composes_with: [backtoschool, flatlay, garmentflatlay, ingredientspread, tableoverhead]
 conflicts: []
 cast: none
 forms: {codex-image: untested, media-still: untested, seedream: unavailable, klein-ref: unavailable}
@@ -26,4 +26,4 @@ Composition: top-down: the camera directly overhead, sensor parallel to the surf
 
 ## Notes
 
-- the seeds showcase, lifestyleshot and 3dbillboard are fixed at eye or street level; this waits for an overhead base.
+- Fits overhead bases: flat lays, set tables, ingredient spreads; in ingredientspread and backtoschool keep the straight-overhead view.

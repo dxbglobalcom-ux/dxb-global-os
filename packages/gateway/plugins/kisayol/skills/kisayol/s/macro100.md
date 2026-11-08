@@ -10,7 +10,7 @@ role: lens
 medium: image
 inputs: [none]
 slots: {}
-composes_with: [showcase]
+composes_with: [bottlemockup, campaignposter, cutaway, displayset, explodedview, featureframe, glassreflect, liquidsplash, showcase, stoneplinth, textureswatch, tubemockup]
 conflicts: []
 cast: none
 forms: {codex-image: untested, media-still: untested, seedream: unavailable, klein-ref: unavailable}
@@ -26,4 +26,4 @@ Lens: 100 mm macro at f/8 from a working distance that keeps the whole product i
 
 ## Notes
 
-- Agrees with the 100 mm macro at f/8 fixed in showcase. The other seeds fix a different lens (50 mm, 35 mm).
+- Fits studio bases already shot on a 100 mm lens with the whole product in frame; extreme-macro bases fix their own magnification.

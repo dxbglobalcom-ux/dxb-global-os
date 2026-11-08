@@ -9,8 +9,8 @@ shelf: food-drink
 role: base
 medium: image
 inputs: [product-photo]
-slots: {table: "long rustic walnut table|round white marble table|old painted blue wooden table", aspect: "4:5|1:1|16:9"}
-composes_with: []
+slots: {table: "long rustic walnut table|round white marble table|old painted blue wooden table", aspect: "4:5|1:1|16:9", market: "*"}
+composes_with: [gradeclean, gradefilm, topdown]
 conflicts: []
 cast: house
 forms: {codex-image: ok, media-still: unavailable, h3-from-still: untested}
@@ -22,7 +22,7 @@ version: 1
 
 ## Prompt
 
-Use the attached photo as the only source for the product or dish: keep its exact shape, portion, colours, materials and its own label as photographed; do not redraw or restyle it. Photograph a {table} straight from above, framed for {aspect}, set for a shared meal that has just begun: the product as the clear centre, around it bread torn by hand, a bowl of salad, small dishes of olives and yoghurt, plain ceramic plates, water in clear glasses and a jug of a non-alcoholic drink. Two or three hands reach in from the frame edges, serving and passing a plate: the hands of adult men and elderly women from our own cast, relaxed, real skin with knuckle creases and veins, sleeves of everyday clothing; no faces in frame. Light: soft daylight from one side of the table, gentle shadows falling the same way under every plate. Camera on a rig directly overhead, 35 mm lens at f/8, everything sharp. Lived-in details: crumbs, a used napkin, a spoon resting in a bowl. No alcohol and no pork anywhere. Warm natural grade, fine grain; no plastic food, no symmetry. Add no text, letters or logos anywhere.
+Use the attached photo as the only source for the product or dish: keep its exact shape, portion, colours, materials and its own label as photographed; do not redraw or restyle it. Photograph a {table} straight from above, framed for {aspect}, set for a shared meal in a home in {market} that has just begun: the product as the clear centre, around it the everyday dishes of {market} in plain ceramic bowls and plates, water in clear glasses and a jug of a non-alcoholic drink. Two or three hands reach in from the frame edges, serving and passing a plate: the hands of adult men and elderly women from our own cast, relaxed, real skin with knuckle creases and veins, sleeves of everyday clothing; no faces in frame. Light: soft daylight from one side of the table, gentle shadows falling the same way under every plate. Camera on a rig directly overhead, 35 mm lens at f/8, everything sharp. Lived-in details: crumbs, a used napkin, a spoon resting in a bowl. No alcohol and no pork anywhere. Warm natural grade, fine grain; no plastic food, no symmetry. Add no text, letters or logos anywhere.
 
 ## Notes
 

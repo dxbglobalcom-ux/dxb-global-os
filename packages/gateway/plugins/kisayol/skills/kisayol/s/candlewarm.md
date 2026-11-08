@@ -10,7 +10,8 @@ role: light
 medium: image
 inputs: [none]
 slots: {}
-composes_with: []
+fills: {time: "evening lamp light"}
+composes_with: [desksetup, festivetable, livingroom]
 conflicts: []
 cast: none
 forms: {codex-image: untested, media-still: untested, seedream: unavailable, klein-ref: unavailable}
@@ -26,4 +27,4 @@ Light: a warm evening interior lit only by practicals: a cluster of pillar candl
 
 ## Notes
 
-- None of the seeds showcase, lifestyleshot and 3dbillboard is an evening interior (lifestyleshot is daytime window light); it waits for an evening base.
+- Sets the base's time to evening lamp light: evening rooms and tables.

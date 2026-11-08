@@ -9,8 +9,8 @@ shelf: fashion
 role: base
 medium: image
 inputs: [product-photo]
-slots: {background: "pure white seamless|light warm-grey seamless", view: "front|back|three-quarter front", aspect: "4:5|1:1|2:3"}
-composes_with: []
+slots: {background: "pure white seamless|seamless warm grey paper", view: "front|back|three-quarter front", aspect: "4:5|1:1|2:3"}
+composes_with: [bgseamless, centered, gradeclean, gradecool]
 conflicts: []
 cast: none
 forms: {codex-image: ok, media-still: unavailable, h3-from-still: unavailable}

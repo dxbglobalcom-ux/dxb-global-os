@@ -5,7 +5,6 @@
 | `aplusmodule` | base | image | product-photo | candidate | Pazaryeri ürün sayfasının alt bölümündeki geniş görsel modül; ürün bi… |
 | `bundleset` | base | image | product-photo | candidate | Set ya da paket kampanyası; birden çok ürün tek düzenli, dengeli komp… |
 | `carouselpano` | base | image | product-photo | candidate | Kaydırdıkça devam eden karusel reklam; tek panorama 3-5 kareye bölünür |
-| `compareframe` | base | image | product-photo | candidate | Farkı gösteren reklam: ürünümüz yanında sıradan, markasız bir muadil;… |
 | `displayset` | base | image | product-photo | candidate | Google görüntülü reklam ağı gibi duyarlı reklamlar; tek kare 1.91:1, … |
 | `emailheader` | base | image | product-photo | candidate | Bülten ya da kampanya e-postasının en üstündeki geniş görsel; açık ve… |
 | `featureframe` | base | image | product-photo | candidate | Ürünün 3 öne çıkan özelliğini gösteren reklam ya da pazaryeri ikinci … |
