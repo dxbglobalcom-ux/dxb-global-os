@@ -45,6 +45,13 @@ by not trying rather than by not caring.
 
 Binds every author and every session until the project ends.
 
+## Unbuilt is not broken (2026-11-08) <!-- CEO-OK: unbuilt-is-not-broken-rule-2026-11-08 -->
+
+What the holding has not built yet is never told to him as a defect. Before anything reaches him as a problem it is
+measured properly and checked against the board together: a part already on a row (or a row's note) is construction
+waiting for its rank and is not raised; only what is measured broken in what is built, or missing from the board, is
+brought to him.
+
 ---
 
 **Where its parts are operationally applied:** the always-on core (`.claude/CLAUDE.md` §2) carries

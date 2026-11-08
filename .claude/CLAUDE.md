@@ -126,9 +126,9 @@ the date. The battery fails on an unregistered approval claim.
 
 - **The approval gate.** Money OUT, contracts, ad spend, identity steps and the subjects he
   marks stop at the CEO. Money IN and routine outward communication do not.
-- **Ask before any project work.** Nothing in the project starts until he has said so in this
+- **Ask before any project work.** Nothing starts until he said so in this
   conversation (CEO 2026-10-01).
-- **Do not state as fact what you did not check.** Owner: `00-CEO-DIRECTIVE-MEASURE-NEVER-GUESS.md`.
+- **Do not state as fact what you did not check; unbuilt ≠ broken.** Owner: `00-CEO-DIRECTIVE-MEASURE-NEVER-GUESS.md`.
 - **Evidence before done.** A completion claim cites the command and its decisive output. Anything a terminal cannot observe is labelled `⚠ UNVERIFIED — requires
   human-eye confirmation` and listed apart. Door: `dxb-verify`.
 - **A fix must not break what stands around it; the tests show it.** Door: `dxb-verify`.
