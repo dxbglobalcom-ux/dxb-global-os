@@ -75,9 +75,10 @@ Earlier days: `.planning/STATE-ARCHIVE.md` § "Moved out of STATE.md on 2026-11-
 
 FIRST, on his word (2026-11-07, late): talk with him about the reel https://www.instagram.com/reel/Detxk1CyFJK/ — he opens a
 new session for it; watch it first (dxb-watch-links, one Opus reader); and the link https://x.com/borjafat/status/2112536384191742222 .
-Then: the single session's bus-stop ad and moving 3D billboard go to his eye. The `/kisayol` cupboard was emptied on his word (the
-236k prompts and 202 recipes were junk); a new session finds the ads the advertising world admires, works out how each is made, and
-fills the cupboard only with wow-level recipes from real references and real product photos, each through his eye.
+Then: the single session's bus-stop ad and moving 3D billboard go to his eye. The `/kisayol` recipes were emptied and then restored on his
+later word ("only the worst go; maybe the agents and the level failed, not the material"); the raw store's disk data is gone (its
+scripts rebuild it). A new session finds the ads the advertising world admires, works out how each is made, keeps only the recipes
+worth keeping, adds wow-level ones from real references and real product photos, each through his eye.
 
 0. Revenue — the lines are on the board (B83 and the notes on its related rows); each is built at its row's rank
    in the board's reorder and bench-tested with it, sold when the key is turned. Rapor 3's suggested order for Nate

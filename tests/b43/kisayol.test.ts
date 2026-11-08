@@ -68,7 +68,7 @@ describe("B43 /kisayol — the seeds pass the ruler", () => {
   it("lints the shipped cupboard clean", () => {
     const r = lintDir(SKILL, { approvalsPath: APPROVALS });
     expect(r.errors).toEqual([]);
-    expect(r.count).toBeGreaterThanOrEqual(0); // emptied 2026-11-08 on his word; only wow-level recipes return
+    expect(r.count).toBeGreaterThanOrEqual(3);
   });
 });
 
@@ -148,7 +148,7 @@ describe("B43 /kisayol — the index a seat reads stays bounded", () => {
         seen.set(n, (seen.get(n) ?? 0) + 1);
       }
     }
-    const names = readdirSync(join(dir, "s")).filter((f) => f.endsWith(".md")).map((f) => f.replace(/\.md$/, ""));
+    const names = readdirSync(join(dir, "s")).map((f) => f.replace(/\.md$/, ""));
     for (const n of names) expect(seen.get(n)).toBe(1);
     expect(existsSync(join(dir, "RELEASE.txt"))).toBe(true);
   });
