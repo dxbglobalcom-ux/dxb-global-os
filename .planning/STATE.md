@@ -27,6 +27,8 @@ not here. What is accepted is read from `scripts/governance/ceo-approvals.json`,
 
 ## Where we left off
 
+2026-11-08 (session e6b08cd7, handed over on his word) — B84 and the approval gate. His eye on every client delivery of every job, revisions too, from the first paid job until he lifts it per job type; his verdicts kept, the dashboard shows each type's run without a correction (APPROVAL_ENGINE A9, B15; 10cd6017); on a site job the home-page choice is his too (7b851bcd). The AI eye (B84 decision 13) removed. B84's tools: Screaming Frog free and paid installed beside LibreCrawl, a blind trial in its own box before any client job (9665f0be); DataForSEO is set up for client work (f5448556); search volume from Google Ads API and Bing beside it (aceb2032); his ChatGPT research read twice (4f0d50d7); OpenSEO researched — the panel on top of DataForSEO, into the blind box (2c9179e3). The web office's state measured: records and disk agree, nothing built until B84's rank. Files 10 and 11 are evaluated with him at B84's setup, step by step (his word). He was angered that the OpenSEO result was promised and not brought with the ChatGPT one.
+
 2026-11-07 afternoon (session d5674644) — his open list cleared and the engine's doors repaired. Dictation keeps listening after Enter and
 Backspace (`~/tools/vscode-dikte-kilidi`). Decided and written where the work sits: K8 at H4/H8's setup (B83); the licence word and
 "ChatGPT researches beside us" (his ChatGPT in Chrome, never Codex) in `dxb-research`; the light lane in `dxb-team2`; REA to every
@@ -43,7 +45,7 @@ Later the same night: every client video gets the more natural of the two voices
 (best on 2026-11-05), Seedream 5 Pro paid, FLUX.2-klein local; B11: Hermes at its newest release at setup (v0.23.0 that day), every
 tool checked current at setup, no extra bureaucracy until the holding earns.
 2026-11-07 evening — video-use (browser-use, MIT) joined the holding on his word: not the default, used whenever needed. The tool is at `~/.local/share/dxb/skills/video-use` (43cfc566); its page `tools/video-use/skill/SKILL.md` is linked as the global skill `video-use` and carries every feature, the W104 path, and what is owed before the first real job (the local-ear converter, Turkish casing). The record is B43's leg of 2026-11-07. Measured by two blind readers and a referee at max: OpenMontage cuts silence only, while video-use cuts fillers and retakes on word boundaries; Remotion 4.0.484 runs inside OpenMontage and is free up to 3 employees. His Gmail (dxbglobalcom) was tidied the same day: six labels, 11 filters, old mail out of sight; the 34 old mails under Para wait his word.
-2026-11-04 afternoon — B84's study is finished, for his eye: corrections in (records, nine personas, revenue roads,
+2026-11-04 afternoon — B84's study is finished (files 10–11 evaluated with him at B84's setup, his word 2026-11-08): corrections in (records, nine personas, revenue roads,
 cupboard); file 10: free crawler tested on outletcity, LibreCrawl first, SiteOne second, the rest of the free road;
 file 11: the eye repeated 19 of his 22 pairs, untaught 11-12; it ranks, it gives no absolute verdict. Motion: Gemini API.
 2026-11-04 — The deep web study is delivered and he answered its nine decisions <!-- CEO-OK: b84-web-study-nine-decisions-2026-11-04 -->:
@@ -104,6 +106,7 @@ backed by a full prompt in our realism language (`tools/studio-prompts/realism/`
 
 ## Waiting on his approval
 
+- B84 blind box, two lanes proposed 2026-11-08 and not yet answered: the Common Crawl domain graph against DataForSEO backlinks; CrawlObserver as a crawler candidate.
 - Revenue, Rapor 2 (`~/Desktop/Gelir Kaynakları/2 - Gelir üretim hatları ve kararlarınız 2026-11-01.pdf`, § 8):
   K8 leaves this list — asked at H4/H8's setup after he listens on the bench (B83, his word 2026-11-07). The rest answered 2 Nov (K2, K9, K10 for now, K11, İ1–İ3, İ6 as
   recommended; İ4 a package; İ5 and İ7 his own rulings — REVENUE-OPPORTUNITIES §D).
