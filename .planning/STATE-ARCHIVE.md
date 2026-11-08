@@ -2697,8 +2697,8 @@ Earlier days (the olive runs, the walk, the studio):
 
 2026-10-29 — His trial (B64 item 6, the Mavi Kuşak 3-page site, `/home/dxb/deneme-1/`, commits 3b70a92, 24e3170) is
 over and judged by his eye: arm A (master + four specialists, max, 28 Oct 22:28 → 29 Oct 06:59, 330 $, 8.4 h model
-time) far ahead; arm C (one master alone, A's brief byte for byte, 29 Oct 13:38-15:57, 37 $) a disappointment to him;
-the first, cut-short A also beat C; B (one session, no Ferrari bar) finished 28 Oct 20:55, ~28 $. No arm tested the
+time); arm C (one master alone, A's brief byte for byte, 29 Oct 13:38-15:57, 37 $); his word 2026-11-08: none clearly ahead — "hepsinde iyi bir tarafları var … Hiçbiri açık ara iyi değil";
+ B (one session, no Ferrari bar) finished 28 Oct 20:55, ~28 $. No arm tested the
 holding's own setup: A's master and specialists were written for this çini job, not A26-A27's general master and
 cupboard specialists. On his word the web office plan talk opened: the deep analysis, his answers' questions and a
 proposal (name "DxB Global Web-Studio", a general site master and a short dedicated core team, the next trial on the
@@ -2748,7 +2748,7 @@ of the twelve videos is in the revenue list (REVENUE-OPPORTUNITIES §D, #17–#2
 is built with the row that builds its base, tested on the bench, and opens for sale when the key is turned — the
 nine related rows carry the note, and the five lines no row owns plus the revenue engine are the new row B83
 (REVENUE_ENGINE_SPEC §7septies). The channel talk stays later.
-2026-10-29 — His Mavi Kuşak trial is judged (arm A far ahead, 330 $; arm C a disappointment, 37 $); the web office
+2026-10-29 — His Mavi Kuşak trial is judged (arm A 330 $, arm C 37 $; his word 2026-11-08: none clearly ahead — "hepsinde iyi bir tarafları var … Hiçbiri açık ara iyi değil"); the web office
 plan talk is open — analysis, five questions and the proposal in `~/Desktop/DxB Global Web-Studio/`.
 
 ## Moved out of STATE.md on 2026-11-04 afternoon — Site E as it stood
