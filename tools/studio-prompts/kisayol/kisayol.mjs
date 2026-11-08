@@ -24,12 +24,15 @@ const MAX_FILE = 4096, MAX_INDEX = 4096, MAX_PAGE = 6144, PAGE_ROWS = 40;
 const REQUIRED = ["name", "aliases", "title_tr", "title_en", "when_tr", "when_en", "shelf", "role", "medium",
   "inputs", "slots", "composes_with", "conflicts", "cast", "forms", "status", "samples", "provenance", "version"];
 const ENUMS = {
-  role: ["base", "light", "lens", "grade", "composition", "camera", "effect"],
+  role: ["base", "light", "lens", "grade", "composition", "camera", "effect", "background", "material"],
   medium: ["image", "video", "both"],
   cast: ["none", "house", "client-request"],
   status: ["candidate", "sampled", "accepted", "dormant"],
 };
 const INPUTS = ["product-photo", "cast-photo", "scene-ref", "none"];
+// The engines built today (B43, 2026-11-08): only these may be ok/untested; any other is unavailable
+// until it is built and wired (the platform hub). Video forms run at 8 steps.
+const BUILT_ENGINES = ["codex-image", "media-still", "h3", "h3-from-still"];
 const FORM_VALUES = ["ok", "untested", "unavailable"];
 const STATUS_RANK = { accepted: 0, sampled: 1, candidate: 2, dormant: 3 };
 
@@ -126,6 +129,7 @@ export function lintRecipe(file, text, ctx) {
     for (const [f, v] of Object.entries(fm.forms)) {
       if (!/^[a-z0-9-]+$/.test(f)) e(`form "${f}" is not a plain engine name`);
       if (!FORM_VALUES.includes(v)) e(`form ${f}: "${v}" not in ${FORM_VALUES.join("|")}`);
+      else if (v !== "unavailable" && !BUILT_ENGINES.includes(f)) e(`form ${f}: not built today — only ${BUILT_ENGINES.join(", ")} may be ${v}; mark it unavailable`);
     }
   }
   if (!/^\d+$/.test(String(fm.version ?? ""))) e("version must be an integer");

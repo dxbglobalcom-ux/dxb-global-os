@@ -105,6 +105,15 @@ describe("B43 /kisayol — the ruler catches each banned case", () => {
     expect(errorsFor("fixture", recipe({}, CLEAN + " At {time}."))).not.toEqual([]);
     expect(errorsFor("fixture", recipe({}, CLEAN + " " + "Fine grain detail. ".repeat(260)))).not.toEqual([]);
   });
+  it("marks only built engines usable; every other engine is unavailable", () => {
+    expect(errorsFor("fixture", recipe({ forms: "{seedream: ok}" }, CLEAN))).not.toEqual([]);
+    expect(errorsFor("fixture", recipe({ forms: "{klein-ref: untested}" }, CLEAN))).not.toEqual([]);
+    expect(errorsFor("fixture", recipe({ forms: "{codex-image: ok, media-still: untested, seedream: unavailable}" }, CLEAN))).toEqual([]);
+  });
+  it("knows the background and material modifiers", () => {
+    expect(errorsFor("fixture", recipe({ role: "background" }, CLEAN))).toEqual([]);
+    expect(errorsFor("fixture", recipe({ role: "material" }, CLEAN))).toEqual([]);
+  });
   it("calls a recipe accepted only with a registered approval id", () => {
     expect(errorsFor("fixture", recipe({ status: "accepted" }, CLEAN))).not.toEqual([]);
     expect(errorsFor("fixture", recipe({ status: "accepted", accepted_by: "no-such-approval-id" }, CLEAN))).not.toEqual([]);
