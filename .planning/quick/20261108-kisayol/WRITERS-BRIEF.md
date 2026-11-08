@@ -39,6 +39,8 @@ the raw ids you drew on (from `ara`'s first column), or `house-authored`.
   any person, including background people, is an adult man or an elderly woman, faces not readable
   unless the recipe is a cast portrait; no real person, celebrity or brand name; no alcohol, gambling,
   interest finance, flirting or indecency; NO audio or music instruction of any kind.
+- The holding is GLOBAL: no country-, city- or religion-specific setting, props, occasions or people
+  baked into a recipe; a client's local occasion or market is a slot filled per job.
 - Craft: observable detail, motivated light with a named direction, a named lens and camera height,
   real materials with imperfection, restrained grade, fine grain; no "8k, masterpiece, ultra HD" filler.
 

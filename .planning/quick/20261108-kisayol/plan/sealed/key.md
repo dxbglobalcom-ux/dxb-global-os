@@ -1,0 +1,2 @@
+A = opus
+B = fable
