@@ -108,3 +108,4 @@ __pycache__/
 
 # Codex CLI project config — this machine's local tool wiring (env paths, MCP binaries), never shared
 .codex/config.toml
+node_modules

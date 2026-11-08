@@ -11,8 +11,10 @@
  * COMMANDS
  *   still  <prompt> <out.png> [--ar 16:9] [--ref a.png] [--quality high]
  *          FLUX.1-Krea-dev, about 2 MP (16:9 -> 1920x1088). --quality high = 28
- *          steps, anything else 20. --ref exits 3: there is no local reference-edit
- *          model, and img2img is not a substitute for one.
+ *          steps, anything else 20. --ref exits 3: this command has no reference path,
+ *          and img2img is not a substitute for one. Krea-dev takes no reference; the
+ *          local FLUX.2-klein-4B does (ReferenceLatent graph, measured 2026-11-05) but
+ *          is not wired in here.
  *
  *   shot   <prompt> <head.png> <out.mp4> [--tail b.png] [--dur 5]
  *          MiniMax H3 FL2VA (first AND last frame to video). --tail pins the last
@@ -400,7 +402,7 @@ async function still(rest) {
   if (!prompt || !out) throw new Error('usage: studio.mjs still "<prompt>" <out.png> [--ar 16:9] [--ref a.png] [--quality high]');
   refuseUrls(...flags(rest, "--ref"));
   if (flags(rest, "--ref").length) {
-    throw new StudioCannot("reference-guided still (no local edit model) — use ChatGPT image, or the client's own photo");
+    throw new StudioCannot("reference-guided still (not wired into this command; Krea-dev takes no reference, local FLUX.2-klein-4B does) — use ChatGPT image, or the client's own photo");
   }
   const { width, height } = sizeForAspect(flag(rest, "--ar", "16:9"));
   const steps = flag(rest, "--quality", "high") === "high" ? 28 : 20;

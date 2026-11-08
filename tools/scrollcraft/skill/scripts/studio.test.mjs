@@ -291,11 +291,11 @@ test("still: posts a FLUX.1-Krea-dev graph carrying the prompt, polls, downloads
   assert.match(r.stderr, /running|queued/);
 });
 
-test("still --ref: no local edit model -> exit 3 STUDIO_CANNOT, nothing posted", async () => {
+test("still --ref: no reference path in this command -> exit 3 STUDIO_CANNOT, nothing posted", async () => {
   reset();
   const r = await studio(["still", "x", path.join(work, "r.png"), "--ref", HEAD]);
   assert.equal(r.code, 3);
-  assert.match(r.stderr, /STUDIO_CANNOT: reference-guided still \(no local edit model\) — use ChatGPT image, or the client's own photo/);
+  assert.match(r.stderr, /STUDIO_CANNOT: reference-guided still \(not wired into this command; Krea-dev takes no reference, local FLUX\.2-klein-4B does\) — use ChatGPT image, or the client's own photo/);
   assert.equal(S.posted.length, 0);
 });
 
