@@ -106,7 +106,6 @@ backed by a full prompt in our realism language (`tools/studio-prompts/realism/`
 
 ## Waiting on his approval
 
-- B84 blind box, two lanes proposed 2026-11-08 and not yet answered: the Common Crawl domain graph against DataForSEO backlinks; CrawlObserver as a crawler candidate.
 - Revenue, Rapor 2 (`~/Desktop/Gelir Kaynakları/2 - Gelir üretim hatları ve kararlarınız 2026-11-01.pdf`, § 8):
   K8 leaves this list — asked at H4/H8's setup after he listens on the bench (B83, his word 2026-11-07). The rest answered 2 Nov (K2, K9, K10 for now, K11, İ1–İ3, İ6 as
   recommended; İ4 a package; İ5 and İ7 his own rulings — REVENUE-OPPORTUNITIES §D).
