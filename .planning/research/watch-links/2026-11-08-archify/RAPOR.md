@@ -102,7 +102,7 @@ node ~/.claude/skills/archify/bin/archify.mjs finalize workflow \
 
 ## Gözlemlenemeyenler
 
-- ⚠ UNVERIFIED: Archify bu makinede hiç çalıştırılmadı (görev gereği). `doctor` ve `finalize`'ın burada, bwrap altında başsız Chrome ile geçtiği ölçülmedi.
+- ~~⚠ UNVERIFIED: Archify bu makinede hiç çalıştırılmadı.~~ **Ölçüldü 2026-11-09, kurulumdan sonra:** `doctor` → "Archify is ready."; örnek workflow ve inşaatın haritası `finalize` ile dört kapıdan geçti (validate, deliver, check, browser-check; başsız Chrome gerçekten koştu, i18n uyarısı 0). Harita: `insaat-haritasi.html`; taslağı `insaat-haritasi.candidate.json` (Türkçe katalog `meta.translations` olarak `.claude/skills/dxb-team2/archify-tr.json`'dan eklenir). Katalog 486 anahtar, yer tutucu uyuşmazlığı 0; çevirisi Opus'un, insan gözünden geçmedi.
 - ⚠ UNVERIFIED: Bir haritanın kaç token tuttuğu ölçülmedi. Referans dosyaları büyük: authoring-contract 645 satır, delivery-contract 665 satır.
 - ⚠ UNVERIFIED: Reel sahibinin TELESMA ve ATLAS rakamları yalnız onun ekranından okundu.
 - ⚠ UNVERIFIED: Yıldız sayısının gerçekliği (7 ayda 94 bin) ayrıca denetlenmedi.

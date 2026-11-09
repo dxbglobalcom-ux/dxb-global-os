@@ -1,0 +1,440 @@
+{
+ "schema_version": 1,
+ "diagram_type": "architecture",
+ "meta": {
+  "title": "İnşaatın haritası: bir iş sizden kayda nasıl gider",
+  "output": "insaat-haritasi.html",
+  "quality_profile": "showcase",
+  "locale": "tr",
+  "repository": {
+   "url": "https://github.com/dxbglobalcom-ux/dxb-global-os.git",
+   "provider": "github",
+   "link_mode": "local-only",
+   "revision": "0d790861098e0d47a800f6689f2aa3b2c2224771"
+  },
+  "legend": {
+   "entries": {
+    "external": {
+     "label": "Siz"
+    },
+    "backend": {
+     "label": "Çalışan"
+    },
+    "frontend": {
+     "label": "Kapı"
+    },
+    "cloud": {
+     "label": "Dış model"
+    },
+    "security": {
+     "label": "Mühür ve denetim"
+    },
+    "database": {
+     "label": "Motor ve kayıt"
+    }
+   }
+  }
+ },
+ "components": [
+  {
+   "id": "ceo",
+   "type": "external",
+   "icon": "person",
+   "label": "Muhittin Bey",
+   "sublabel": "CEO · niyet ve onay",
+   "pos": [
+    40,
+    260
+   ],
+   "size": [
+    150,
+    64
+   ]
+  },
+  {
+   "id": "hooks",
+   "type": "security",
+   "label": "Oturum kancaları",
+   "sublabel": "açılışta · her mesajda",
+   "tag": "konum · efor · tembellik",
+   "pos": [
+    300,
+    90
+   ],
+   "size": [
+    150,
+    64
+   ],
+   "sources": [
+    {
+     "path": ".claude/settings.json",
+     "line": 33,
+     "end_line": 54,
+     "label": "SessionStart · UserPromptSubmit"
+    }
+   ]
+  },
+  {
+   "id": "lead",
+   "type": "backend",
+   "label": "Baş mühendis",
+   "sublabel": "oturum · Opus 5.5 high",
+   "tag": "seçer · doğrular · commit",
+   "pos": [
+    300,
+    260
+   ],
+   "size": [
+    150,
+    64
+   ],
+   "sources": [
+    {
+     "path": ".claude/skills/dxb-team2/SKILL.md",
+     "line": 128,
+     "end_line": 128,
+     "label": "Lead koltuğu"
+    }
+   ]
+  },
+  {
+   "id": "gates",
+   "type": "security",
+   "label": "Araç kapıları",
+   "sublabel": "maliyet · bağlam · cd",
+   "tag": "4 dk · %50 devir · %60 dur",
+   "pos": [
+    300,
+    430
+   ],
+   "size": [
+    150,
+    64
+   ]
+  },
+  {
+   "id": "fable",
+   "type": "cloud",
+   "label": "İkinci plan yazarı",
+   "sublabel": "Fable 5.1 max · mühürlü",
+   "pos": [
+    560,
+    90
+   ],
+   "size": [
+    150,
+    64
+   ],
+   "sources": [
+    {
+     "path": "scripts/governance/second-plan.sh",
+     "line": 2,
+     "end_line": 13,
+     "label": "bwrap içinde, yalnız brif"
+    }
+   ]
+  },
+  {
+   "id": "team2",
+   "type": "backend",
+   "label": "dxb-team2 kapısı",
+   "sublabel": "plan → yapım → Sol",
+   "tag": "varsayılan inşaat kapısı",
+   "pos": [
+    560,
+    260
+   ],
+   "size": [
+    150,
+    64
+   ],
+   "sources": [
+    {
+     "path": ".claude/skills/dxb-team2/SKILL.md",
+     "line": 18,
+     "end_line": 44,
+     "label": "akış"
+    }
+   ]
+  },
+  {
+   "id": "doors",
+   "type": "frontend",
+   "label": "Doğrulama kapıları",
+   "sublabel": "dxb-verify · close-row",
+   "pos": [
+    560,
+    430
+   ],
+   "size": [
+    150,
+    64
+   ]
+  },
+  {
+   "id": "sol",
+   "type": "security",
+   "label": "Sol denetçisi",
+   "sublabel": "GPT-6.1 · refuter.sh",
+   "tag": "kör · yalnız okur",
+   "pos": [
+    820,
+    90
+   ],
+   "size": [
+    150,
+    64
+   ],
+   "sources": [
+    {
+     "path": "scripts/governance/refuter.sh",
+     "line": 2,
+     "end_line": 6,
+     "label": "yazamayan denetçi"
+    }
+   ]
+  },
+  {
+   "id": "hands",
+   "type": "backend",
+   "label": "Eller",
+   "sublabel": "fork · helper-writer",
+   "tag": "builder: iki kez düşen",
+   "pos": [
+    820,
+    260
+   ],
+   "size": [
+    150,
+    64
+   ],
+   "sources": [
+    {
+     "path": ".claude/skills/dxb-team2/SKILL.md",
+     "line": 129,
+     "end_line": 133,
+     "label": "koltuklar"
+    }
+   ]
+  },
+  {
+   "id": "engine",
+   "type": "database",
+   "label": "İnşaat motoru",
+   "sublabel": "DxB_Build :54422",
+   "tag": "şirketin verisi yok",
+   "pos": [
+    820,
+    430
+   ],
+   "size": [
+    150,
+    64
+   ],
+   "sources": [
+    {
+     "path": "tests/construction-engine.ts",
+     "line": 10,
+     "end_line": 15,
+     "label": "ayrı motor"
+    }
+   ]
+  },
+  {
+   "id": "commitgate",
+   "type": "security",
+   "label": "Commit kapısı",
+   "sublabel": "gitleaks · cetveller",
+   "tag": "kırmızıysa commit yok",
+   "pos": [
+    1080,
+    260
+   ],
+   "size": [
+    150,
+    64
+   ],
+   "sources": [
+    {
+     "path": "scripts/hooks/pre-commit",
+     "line": 73,
+     "end_line": 101,
+     "label": "cetveller + gizli tarama"
+    }
+   ]
+  },
+  {
+   "id": "records",
+   "type": "database",
+   "label": "Kayıtlar",
+   "sublabel": "tahta · STATE · onaylar",
+   "tag": "tek kopya",
+   "pos": [
+    1080,
+    430
+   ],
+   "size": [
+    150,
+    64
+   ],
+   "sources": [
+    {
+     "path": "scripts/governance/ceo-approvals.json",
+     "line": 1,
+     "label": "onay defteri"
+    },
+    {
+     "path": ".planning/STATE.md",
+     "line": 1,
+     "label": "STATE"
+    }
+   ]
+  }
+ ],
+ "boundaries": [
+  {
+   "kind": "security-group",
+   "label": "bwrap mührü",
+   "wraps": [
+    "fable"
+   ]
+  },
+  {
+   "kind": "security-group",
+   "label": "ağsız kum havuzu",
+   "wraps": [
+    "sol"
+   ]
+  }
+ ],
+ "connections": [
+  {
+   "id": "intent",
+   "from": "ceo",
+   "to": "lead",
+   "label": "niyet · evet",
+   "variant": "emphasis"
+  },
+  {
+   "id": "report",
+   "from": "lead",
+   "to": "ceo",
+   "label": "konum · rapor"
+  },
+  {
+   "id": "inject",
+   "from": "hooks",
+   "to": "lead",
+   "label": "konum · uyarı"
+  },
+  {
+   "id": "toolcall",
+   "from": "lead",
+   "to": "gates",
+   "label": "her araç çağrısı"
+  },
+  {
+   "id": "open-job",
+   "from": "lead",
+   "to": "team2",
+   "label": "işi açar",
+   "variant": "emphasis"
+  },
+  {
+   "id": "brief",
+   "from": "team2",
+   "to": "fable",
+   "label": "mühürlü brif",
+   "variant": "dashed"
+  },
+  {
+   "id": "second-plan",
+   "from": "fable",
+   "to": "team2",
+   "label": "kör ikinci plan"
+  },
+  {
+   "id": "verify",
+   "from": "team2",
+   "to": "doors",
+   "label": "bitti demeden"
+  },
+  {
+   "id": "spec",
+   "from": "team2",
+   "to": "hands",
+   "label": "parça tarifi",
+   "variant": "emphasis"
+  },
+  {
+   "id": "battery",
+   "from": "hands",
+   "to": "engine",
+   "label": "testler · batarya"
+  },
+  {
+   "id": "audit-in",
+   "from": "hands",
+   "to": "sol",
+   "label": "commit'ler + çıktı",
+   "variant": "security"
+  },
+  {
+   "id": "findings",
+   "from": "sol",
+   "to": "hands",
+   "label": "A/B bulgu",
+   "variant": "security"
+  },
+  {
+   "id": "commit",
+   "from": "hands",
+   "to": "commitgate",
+   "label": "commit",
+   "variant": "emphasis"
+  },
+  {
+   "id": "write",
+   "from": "commitgate",
+   "to": "records",
+   "label": "cetvel yeşilse"
+  }
+ ],
+ "cards": [
+  {
+   "dot": "emerald",
+   "title": "Akış",
+   "items": [
+    "Niyet sizden gelir; planın tek yolculuğu size, evetiniz kapıyı açar",
+    "Plan, tasarım ve mimari max eforda; yapım high'da",
+    "Lider ellerini seçer: kendisi, fork, ekip ya da karma"
+   ]
+  },
+  {
+   "dot": "rose",
+   "title": "Mühürler",
+   "items": [
+    "İkinci yazar yalnız brifi ve HEAD'i görür",
+    "Sol yazamaz; motoru sql_read ile kendisi okur",
+    "Commit kapısı kırmızıysa iş kayda geçmez"
+   ]
+  },
+  {
+   "dot": "violet",
+   "title": "Öteki kapılar",
+   "items": [
+    "dxb-start · dxb-surface · dxb-research",
+    "dxb-rival-intel · dxb-watch-links · dxb-persona",
+    "dxb-hamza-context · dxb-calisma1 · dxb-operator"
+   ]
+  },
+  {
+   "dot": "amber",
+   "title": "Kanun B",
+   "items": [
+    "Bitti onaylandı demek değildir",
+    "Kabul yalnız sizin gözünüzle, onay defterine sözünüzle yazılır"
+   ]
+  }
+ ]
+}

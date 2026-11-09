@@ -82,9 +82,11 @@ real product photos — the setting must belong to the product.
 
 ## Waiting on his approval
 
-- Archify (`tt-a1i/archify`, Apache-2.0) for the construction sessions — studied 2026-11-08, a strong candidate; the install block
-  is in `.planning/research/watch-links/2026-11-08-archify/RAPOR.md` (pinned v3.2.0 under `~/.claude/skills/archify`, its CLAUDE.md
-  offer removed, update check off, Turkish UI catalogue); asked "Kurayım mı?" and not yet answered.
+- Archify for the construction sessions — installed 2026-11-09 after his "Gerekenleri yapın": v3.2.0 under `~/.claude/skills/archify`
+  (its rules-file offer removed, update check off), `doctor` and a full `finalize` with headless Chrome pass here; the Turkish UI
+  catalogue is `.claude/skills/dxb-team2/archify-tr.json`. The first proof — the construction's own map,
+  `.planning/research/watch-links/2026-11-08-archify/insaat-haritasi.html` — waits for his eye. On his yes: one line in dxb-team2
+  §1 PLAN and §6 TELL (a board-row plan or architecture change comes with a map) and C30's note.
 
 - Revenue, Rapor 2 (`~/Desktop/Gelir Kaynakları/2 - Gelir üretim hatları ve kararlarınız 2026-11-01.pdf`, § 8):
   K8 leaves this list — asked at H4/H8's setup after he listens on the bench (B83, his word 2026-11-07). The rest answered 2 Nov (K2, K9, K10 for now, K11, İ1–İ3, İ6 as
