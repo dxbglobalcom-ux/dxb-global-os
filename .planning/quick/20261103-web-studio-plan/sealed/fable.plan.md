@@ -32,7 +32,7 @@ Tek plan: 29 Ekim önerisinin üstüne 2 Kasım cevaplarınız ve 3 Kasım ekler
 6. **Kontrol.** Kod: Lighthouse, axe, Playwright; her imza hareketinin iki ekranda görüntüsü. Sol tarayıcıda dener, Fable okur, dört müşteri gözü yürür; sahip bir turda düzeltir. 1.000 $ ve üstü işin ilk teslimi, küçük işte yeni hizmet tipinin ilki, sizin gözünüze gelir.
 7. **Numune, yayın, ders.** Müşteriye önce yapılmış ana sayfa gider; onayıyla öbür sayfalar, büyük sitede sayfa grupları hâlinde. Yayın; bakım ve SEO paketi teklifi. Usta dolaba bir satır ders yazar. Kayıt: süre, kota, maliyet ve hükmünüz.
 
-**Bürokrasi ölçüsü.** İşte yürütme brifinden başka belge yoktur. Ustanın planı iş masasına yazdığı beş-on satırdır. Brif bir sayfayı geçmez; hazırlık bir saati geçerse usta yazmayı bırakır ve yapıma geçer. Zeytin sayfasının 19 saati böyle önlenir.
+**Bürokrasi ölçüsü.** İşte yürütme brifinden başka belge yoktur. Ustanın planı iş masasına yazdığı beş-on satırdır. Brif bir sayfayı geçmez; hazırlık bir saati geçerse usta yazmayı bırakır ve yapıma geçer.
 
 **Yürütme brifi şablonu.** MERIDIAN'ın biçimi alınır, zevki alınmaz. Saat yalnız örnekti; parfüm de çini de aynı kalıba girer. On üç başlık, bir sayfa:
 

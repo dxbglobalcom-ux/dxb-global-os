@@ -53,7 +53,7 @@ WordPress ve WooCommerce için WordPress'in kendi resmî ajan araç seti var. Ta
 |---|---|---|---|
 | 21 Eki | Diş kliniği, tek sayfa | tek oturum ile 1.000 $ yolu (plan yazısı, ayrı eller, hata arayan kontroller) | tek oturum güzel; 1.000 $ yolu için sözünüz: "en boktan ürün" |
 | 22 Eki | Aynı klinik | holdingin personalarından ekip | kötü; ekip 146 dakika, tek oturum 17 dakika |
-| 24-25 Eki | Urla zeytin, tek sayfa | yaklaşık 15 ajanlık akış ile tek usta (high ve max) | Sol'un kör puanı: high 7,5 · max 7,2 · akış 6,7. Akış 30 kat pahalı; planı 19 saat sürdü |
+| 24-25 Eki | Urla zeytin, tek sayfa | yaklaşık 15 ajanlık akış ile tek usta (high ve max) | Sol'un kör puanı: high 7,5 · max 7,2 · akış 6,7. Akış 30 kat pahalı |
 | 28-29 Eki | Mavi Kuşak, üç sayfa ve fotoğraf | A, A ilk, B, C (kutuda) | A açık ara birinci, C hayal kırıklığı |
 | 2 Kas | Mavi Kuşak | D: tek Opus, inşaatın içinde, 20 dakika | bir tık daha güzel; kayan şeritte hata |
 

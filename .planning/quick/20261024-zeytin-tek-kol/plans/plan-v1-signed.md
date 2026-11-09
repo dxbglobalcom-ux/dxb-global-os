@@ -818,7 +818,6 @@ External. The independent auditor reads and tries `delivery/index.html`. I do no
 | 13 | R2 audit fix | alone | 12 | none | 1.5 h |
 | 14 | R3 owner final trial and re-delivery | owner | 13 | re-delivery (with a fresh P9 if the design changed) | 1 h |
 
-- **Time to first delivery:** about 19 hours of wall time, plus about 2.5 hours for each gate loop.
 - **Revision round:** about 3 hours, plus about 1.25 hours if P9 has to run again.
 
 ---
