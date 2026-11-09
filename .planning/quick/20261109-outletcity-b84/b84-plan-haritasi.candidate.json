@@ -1,0 +1,463 @@
+{
+ "schema_version": 2,
+ "diagram_type": "workflow",
+ "meta": {
+  "title": "Web Stüdyosu planı (B84), Outlet City sınamasından sonra: bir site işi baştan sona",
+  "output": "b84-plan-haritasi.html",
+  "quality_profile": "showcase",
+  "locale": "tr",
+  "repository": {
+   "url": "https://github.com/dxbglobalcom-ux/dxb-global-os.git",
+   "provider": "github",
+   "link_mode": "local-only",
+   "revision": "ebcccdc26209283003e0df09322a3fd1fe774943"
+  },
+  "legend": {
+   "entries": {
+    "external": {
+     "label": "Müşteri"
+    },
+    "security": {
+     "label": "Sizin onayınız ve denetim"
+    },
+    "backend": {
+     "label": "Çalışan"
+    },
+    "database": {
+     "label": "Ortak dolap"
+    },
+    "cloud": {
+     "label": "Makine"
+    },
+    "messagebus": {
+     "label": "Stüdyo"
+    }
+   }
+  }
+ },
+ "lanes": [
+  {
+   "id": "client",
+   "label": "Müşteri"
+  },
+  {
+   "id": "ceo",
+   "label": "Siz"
+  },
+  {
+   "id": "director",
+   "label": "Yaratıcı direktör"
+  },
+  {
+   "id": "masters",
+   "label": "Ustalar ve uzmanlar"
+  },
+  {
+   "id": "machine",
+   "label": "Makine"
+  },
+  {
+   "id": "cupboard",
+   "label": "Dolap ve stüdyo"
+  }
+ ],
+ "phases": [
+  {
+   "id": "p-intake",
+   "label": "Anlama",
+   "fromCol": 0,
+   "toCol": 1
+  },
+  {
+   "id": "p-direction",
+   "label": "Yön",
+   "fromCol": 2,
+   "toCol": 3,
+   "variant": "emphasis"
+  },
+  {
+   "id": "p-build",
+   "label": "Yapım",
+   "fromCol": 4,
+   "toCol": 4
+  },
+  {
+   "id": "p-close",
+   "label": "Kapanış ve teslim",
+   "fromCol": 5,
+   "toCol": 5,
+   "variant": "security"
+  }
+ ],
+ "mainPath": [
+  "c_brief",
+  "x_tear",
+  "d_class",
+  "m_three",
+  "ceo_pick",
+  "m_finish",
+  "x_gates",
+  "ceo_eye",
+  "c_deliver"
+ ],
+ "nodes": [
+  {
+   "id": "c_brief",
+   "lane": "client",
+   "col": 0,
+   "type": "external",
+   "label": "Müşteri anlatır",
+   "sublabel": "kendi sözüyle, prompt yok",
+   "sources": [
+    {
+     "path": ".planning/board-rows/B84.md",
+     "line": 92,
+     "end_line": 92,
+     "label": "adım 1"
+    }
+   ]
+  },
+  {
+   "id": "c_look",
+   "lane": "client",
+   "col": 2,
+   "type": "external",
+   "label": "Müşteri bakar",
+   "sublabel": "üç yön ve brif",
+   "tag": "düzeltildi: 'bir kez' kalktı",
+   "sources": [
+    {
+     "path": ".planning/board-rows/B84.md",
+     "line": 94,
+     "end_line": 94,
+     "label": "adım 3"
+    }
+   ]
+  },
+  {
+   "id": "c_deliver",
+   "lane": "client",
+   "col": 5,
+   "type": "external",
+   "label": "Teslim ve yayın",
+   "sublabel": "eski site varsa taşıma süreciyle",
+   "tag": "düzeltildi: taşıma eklendi",
+   "sources": [
+    {
+     "path": ".planning/board-rows/B84.md",
+     "line": 99,
+     "end_line": 99,
+     "label": "adım 8"
+    }
+   ]
+  },
+  {
+   "id": "ceo_pick",
+   "lane": "ceo",
+   "col": 3,
+   "type": "security",
+   "label": "Siz seçersiniz",
+   "sublabel": "üç ana sayfa yan yana",
+   "tag": "her site işinde",
+   "sources": [
+    {
+     "path": ".planning/board-rows/B84.md",
+     "line": 51,
+     "end_line": 51,
+     "label": "karar 4"
+    }
+   ]
+  },
+  {
+   "id": "ceo_eye",
+   "lane": "ceo",
+   "col": 5,
+   "type": "security",
+   "label": "Sizin gözünüz",
+   "sublabel": "bitmiş site, müşteriden önce",
+   "sources": [
+    {
+     "path": ".planning/board-rows/B84.md",
+     "line": 52,
+     "end_line": 52,
+     "label": "karar 5"
+    }
+   ]
+  },
+  {
+   "id": "d_class",
+   "lane": "director",
+   "col": 2,
+   "type": "backend",
+   "label": "Sınıf, fikir, üç yön",
+   "sublabel": "ve inşa brifi",
+   "sources": [
+    {
+     "path": ".planning/board-rows/B84.md",
+     "line": 49,
+     "end_line": 49,
+     "label": "karar 2"
+    }
+   ]
+  },
+  {
+   "id": "d_rounds",
+   "lane": "director",
+   "col": 4,
+   "type": "backend",
+   "label": "Direktörün turları",
+   "sublabel": "canlı sayfa, telefon + masaüstü",
+   "sources": [
+    {
+     "path": ".planning/board-rows/B84.md",
+     "line": 52,
+     "end_line": 52,
+     "label": "karar 5"
+    }
+   ]
+  },
+  {
+   "id": "s_search",
+   "lane": "masters",
+   "col": 2,
+   "type": "backend",
+   "label": "Arama uzmanı",
+   "sublabel": "sorgu, sayfa ve dil haritası",
+   "tag": "düzeltildi: brifte, her işte",
+   "sources": [
+    {
+     "path": ".planning/board-rows/B84.md",
+     "line": 53,
+     "end_line": 53,
+     "label": "karar 6"
+    }
+   ]
+  },
+  {
+   "id": "m_three",
+   "lane": "masters",
+   "col": 3,
+   "type": "backend",
+   "label": "Üç usta, üç ana sayfa",
+   "sublabel": "ayrı ayrı, yön başına bir",
+   "tag": "düzeltildi: 'hızlı görsel' kalktı",
+   "sources": [
+    {
+     "path": ".planning/board-rows/B84.md",
+     "line": 95,
+     "end_line": 95,
+     "label": "adım 4"
+    }
+   ]
+  },
+  {
+   "id": "m_finish",
+   "lane": "masters",
+   "col": 4,
+   "type": "backend",
+   "label": "Kazanan usta bitirir",
+   "sublabel": "metin · hareket · platform eli",
+   "sources": [
+    {
+     "path": ".planning/board-rows/B84.md",
+     "line": 97,
+     "end_line": 97,
+     "label": "adım 6"
+    }
+   ]
+  },
+  {
+   "id": "x_tear",
+   "lane": "machine",
+   "col": 1,
+   "type": "cloud",
+   "label": "Referans sökümü",
+   "sublabel": "canlı siteden, her işte",
+   "tag": "düzeltildi: bayat söküm yok",
+   "sources": [
+    {
+     "path": ".planning/board-rows/B84.md",
+     "line": 50,
+     "end_line": 50,
+     "label": "karar 3"
+    }
+   ]
+  },
+  {
+   "id": "x_gates",
+   "lane": "machine",
+   "col": 5,
+   "type": "cloud",
+   "label": "Tek kapanış turu",
+   "sublabel": "kapılar · Sol · Fable · 4 kullanıcı",
+   "tag": "düzeltildi: A28 ile aynı",
+   "sources": [
+    {
+     "path": ".planning/board-rows/B84.md",
+     "line": 98,
+     "end_line": 98,
+     "label": "adım 7"
+    }
+   ]
+  },
+  {
+   "id": "s_cup",
+   "lane": "cupboard",
+   "col": 1,
+   "type": "database",
+   "label": "Ortak dolap",
+   "sublabel": "sökümler, örnek brifler",
+   "sources": [
+    {
+     "path": ".planning/board-rows/B84.md",
+     "line": 54,
+     "end_line": 54,
+     "label": "karar 7"
+    }
+   ]
+  },
+  {
+   "id": "s_media",
+   "lane": "cupboard",
+   "col": 3,
+   "type": "messagebus",
+   "label": "Görseller ve film",
+   "sublabel": "müşterinin · kütüphane · stüdyo",
+   "tag": "düzeltildi: film de, sıra yok",
+   "sources": [
+    {
+     "path": ".planning/board-rows/B84.md",
+     "line": 96,
+     "end_line": 96,
+     "label": "adım 5"
+    }
+   ]
+  }
+ ],
+ "edges": [
+  {
+   "id": "e-ref",
+   "from": "c_brief",
+   "to": "x_tear",
+   "label": "referans",
+   "variant": "emphasis"
+  },
+  {
+   "id": "e-keep",
+   "from": "x_tear",
+   "to": "s_cup",
+   "label": "dolaba yazılır",
+   "variant": "dashed",
+   "role": "branch"
+  },
+  {
+   "id": "e-read",
+   "from": "x_tear",
+   "to": "d_class",
+   "label": "okuma",
+   "variant": "emphasis"
+  },
+  {
+   "id": "e-map",
+   "from": "s_search",
+   "to": "d_class",
+   "label": "arama haritası",
+   "variant": "emphasis"
+  },
+  {
+   "id": "e-show",
+   "from": "d_class",
+   "to": "c_look",
+   "label": "üç yön",
+   "role": "branch"
+  },
+  {
+   "id": "e-dirs",
+   "from": "d_class",
+   "to": "m_three",
+   "label": "yön başına bir usta",
+   "variant": "emphasis"
+  },
+  {
+   "id": "e-sample",
+   "from": "s_media",
+   "to": "m_three",
+   "label": "numune görseli",
+   "variant": "dashed"
+  },
+  {
+   "id": "e-samples",
+   "from": "m_three",
+   "to": "ceo_pick",
+   "label": "üç örnek",
+   "variant": "emphasis"
+  },
+  {
+   "id": "e-chosen",
+   "from": "ceo_pick",
+   "to": "m_finish",
+   "label": "seçilen + iyi yanlar",
+   "variant": "emphasis"
+  },
+  {
+   "id": "e-rounds",
+   "from": "d_rounds",
+   "to": "m_finish",
+   "label": "düzelt",
+   "role": "branch"
+  },
+  {
+   "id": "e-gates",
+   "from": "m_finish",
+   "to": "x_gates",
+   "label": "bitti",
+   "variant": "emphasis"
+  },
+  {
+   "id": "e-eye",
+   "from": "x_gates",
+   "to": "ceo_eye",
+   "label": "yeşilse",
+   "variant": "security"
+  },
+  {
+   "id": "e-deliver",
+   "from": "ceo_eye",
+   "to": "c_deliver",
+   "label": "evetinizle",
+   "variant": "emphasis"
+  }
+ ],
+ "cards": [
+  {
+   "dot": "amber",
+   "title": "Durum",
+   "items": [
+    "Outlet City'ye karşı sınandı, 9 Kasım 2026",
+    "Düzeltmeler sizin evetinizle plana yazıldı (commit ebcccdc2)",
+    "Hiçbiri kurulu değil; stüdyo B84'ün sırası gelince kurulur"
+   ]
+  },
+  {
+   "dot": "rose",
+   "title": "Silinenler",
+   "items": [
+    "Hızlı görsel, tam film yok",
+    "Ücretli işte, kısa ve genel koltuk, bir kez bakar",
+    "Bir kez sökülen kalır, iki genişlik, platform listesi",
+    "Yapım hiçbir şey sormaz, telefonda asla kırpma",
+    "Para gelince, her işten önce kör deneme"
+   ]
+  },
+  {
+   "dot": "emerald",
+   "title": "Geri gelenler",
+   "items": [
+    "Arama haritası brifte (4 Kasım tablosu)",
+    "Yenilemede taşıma süreci",
+    "Film için müşterinin kendi çekimi",
+    "Google Business Profile"
+   ]
+  }
+ ]
+}
