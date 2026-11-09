@@ -29,7 +29,8 @@ box="$(box_make fable-audit)" || die "the box could not be made"
 trap 'rm -rf "$box"' EXIT
 settings="{\"disableAllHooks\":true,\"permissions\":{\"deny\":[\"Read(//tmp/**)\",\"Read(/$job/sealed/**)\",\"Read(//home/dxb/.claude/**)\",\"Read(//home/dxb/.claude-mem/**)\"]}}"
 view=()
-[ ! -d "$job/blind" ] || view=(--ro-bind "$job/blind" "$job/blind")
+# the box's reading tools only reach the working directory and an added one: blind/ is added, read-only
+[ ! -d "$job/blind" ] || { view=(--ro-bind "$job/blind" "$job/blind"); export DXB_BOX_ADD_DIR="$job/blind"; }
 
 set +e
 box_run "$box" "$MODEL" "$effort" "$settings" "${view[@]}" <"$brief" >"$out" 2>"$job/fable-audit.err"

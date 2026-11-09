@@ -46,5 +46,5 @@ box_run() {
   [ -z "${DXB_WALLED_BOX_TEST_BIND:-}" ] || wall+=(--bind "$DXB_WALLED_BOX_TEST_BIND" "$DXB_WALLED_BOX_TEST_BIND"
     --setenv STUB_EXIT "${STUB_EXIT:-0}")
   bwrap "${wall[@]}" -- "$bin" -p --model "$model" --effort "$effort" --no-session-persistence --tools "Read,Grep,Glob" \
-    --strict-mcp-config --mcp-config '{"mcpServers":{}}' --settings "$settings"
+    --strict-mcp-config --mcp-config '{"mcpServers":{}}' --settings "$settings" ${DXB_BOX_ADD_DIR:+--add-dir "$DXB_BOX_ADD_DIR"}
 }
