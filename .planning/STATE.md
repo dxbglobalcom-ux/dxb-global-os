@@ -27,6 +27,8 @@ not here. What is accepted is read from `scripts/governance/ceo-approvals.json`,
 
 ## Where we left off
 
+2026-11-09 (session 655ab89d) — Archify installed for the construction (`~/.claude/skills/archify`, Turkish catalogue beside dxb-team2); on his yes every plan that goes to him comes with an Archify map (dxb-team2 §1). B84's brief cap (one page, one hour) deleted — it was the second writer's, never his. B84 tested against his reference outletcity.com by five readers: every limit that was never his word deleted with nothing in its place, search returned to every brief, migration and Google Business Profile restored, Lighthouse never a stop, campaign film and photo production in the monthly packages (`ebcccdc2`; study and map `.planning/quick/20261109-outletcity-b84/`).
+
 2026-11-08 night (session 32ff50c5) — the playbook study kept whole in `.planning/quick/20261108-playbook-calismasi/` (his "hepsini kurtar"). B64's playbook note corrected — no four-way trial (he dropped such a measurement on 3 Nov), a lesson is signed by the job type's master, no new gate — and his yes added: a playbook's examples show the bar, never a look to reuse; nothing that narrows the workers' imagination enters a playbook <!-- CEO-OK: playbook-examples-show-the-bar-2026-11-08 -->. A law in the core §2: before calling anything in the holding broken or missing, or proposing new work, the board is checked — the row named, or a fix proposed <!-- CEO-OK: board-before-broken-2026-11-08 -->. The Mavi Kuşak trial's "A far ahead" was a session's summary, not his word: none clearly ahead, D a notch better (archive corrected). B84's style drawer gains the Outlet City card <!-- CEO-OK: style-card-outlet-city-2026-11-08 -->. The subagent video (zLwnOHTBdTI) watched: every idea already owned; CrewCtl not installed.
 
 2026-11-08 (session e08d8982) — `/kisayol`, the Media Studio's recipe cupboard (B43), built on his word in its simple form <!-- CEO-OK: kisayol-cupboard-simple-his-yes-2026-11-08 -->: 236,286 open
@@ -82,11 +84,7 @@ real product photos — the setting must belong to the product.
 
 ## Waiting on his approval
 
-- Archify for the construction sessions — installed 2026-11-09 after his "Gerekenleri yapın": v3.2.0 under `~/.claude/skills/archify`
-  (its rules-file offer removed, update check off), `doctor` and a full `finalize` with headless Chrome pass here; the Turkish UI
-  catalogue is `.claude/skills/dxb-team2/archify-tr.json`. The first proof — the construction's own map,
-  `.planning/research/watch-links/2026-11-08-archify/insaat-haritasi.html` — waits for his eye. On his yes: one line in dxb-team2
-  §1 PLAN and §6 TELL (a board-row plan or architecture change comes with a map) and C30's note.
+- Fable in the client closing round (A28): his 9 Nov word "o Fable'ı dikkat et … Söylediği şeyleri teyit edin, ondan sonra faydalı mı değil mi diye. İyice ölçün" — asked whether it is written into B84's closing round and A28 for good or holds for this session only.
 
 - Revenue, Rapor 2 (`~/Desktop/Gelir Kaynakları/2 - Gelir üretim hatları ve kararlarınız 2026-11-01.pdf`, § 8):
   K8 leaves this list — asked at H4/H8's setup after he listens on the bench (B83, his word 2026-11-07). The rest answered 2 Nov (K2, K9, K10 for now, K11, İ1–İ3, İ6 as
