@@ -213,6 +213,21 @@ export function firstShotLine(): string {
 }
 
 /**
+ * What the holding is — CEO order, 2026-11-09, for the construction and the holding alike.
+ *
+* His words <!-- CEO-OK: holding-reminder-every-turn-and-brief-2026-11-09 -->: "her turda satıra ve plan briefinin başına yaz. Yani o şekilde çalışsın artık. Hem inşaat hem
+ * de … holding. Unutmasınlar." A worker that does not keep the holding's scale in view turns a passing
+ * word into a limit that strangles the big jobs (the 3 Nov one-page / one-hour brief cap). The same text
+ * is the construction's per-turn line in .claude/hooks/no-laziness.sh; tests/b21 pins the two together.
+ */
+export function holdingLine(): string {
+  return (
+    "This holding produces high technology, aims at large revenue and will found large companies; its goals are very large." +
+    " Its business lines' clients are small, medium and large, reaching up to the biggest clients in the world."
+  );
+}
+
+/**
  * The standing layer, assembled in one place.
  *
  * Callers add their per-turn layer (conversation, snapshot, lane-specific formatting) after this.
@@ -230,6 +245,7 @@ export function standingPrompt(input: {
 }): string[] {
   return [
     identityLine(input.agent),
+    holdingLine(),
     personaBlock(input.personaBody),
     memoryBlock(input.memoryLines, input.memoryUnreachable),
     languageLine(input.lang, input.lane),

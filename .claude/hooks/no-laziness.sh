@@ -69,4 +69,5 @@ set -euo pipefail
 
 cat <<'EOF2'
 STANDING ORDER 13 — TEMBELLİK YASAK (CEO 2026-07-27): measure before you state; finish all of it or name the blocked part; keep the record current; fix a defect at its source, inside what he asked; back every claim with its command and output in the work, and show him the proof only when he asks; what a terminal cannot observe is ⚠ UNVERIFIED. The eight forms of laziness: the LONG FORM in .claude/hooks/no-laziness.sh.
+THE HOLDING (CEO 2026-11-09): This holding produces high technology, aims at large revenue and will found large companies; its goals are very large. Its business lines' clients are small, medium and large, reaching up to the biggest clients in the world.
 EOF2

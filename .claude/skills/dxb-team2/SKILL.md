@@ -64,7 +64,9 @@ before it goes to him; not a small job. The lead writes it. On an important or c
 Opus 5.5 writes the same plan from the same brief, so the two complete each other; neither sees the
 other's, by tool, not by promise <!-- CEO-OK: plan-writers-sealed-independent-2026-10-19 -->. Nobody gives
 the second writer a role or a slant — the same brief, its own judgement.
-1. The lead writes the brief once — his words verbatim, the scope, the facts measured. On a two-writer job
+1. The lead writes the brief once. It opens with the holding reminder — the per-turn line's THE HOLDING text,
+   one source with the employees' `holdingLine()` (`packages/voice/src/prompt-core.ts`) <!-- CEO-OK: holding-reminder-every-turn-and-brief-2026-11-09 --> — and, when the
+   job belongs to a business line, that line's mission and vision; then his words verbatim, the scope, the facts measured. On a two-writer job
    it starts the second writer: `scripts/governance/second-plan.sh start <job> <brief> [high|max]` runs
    Opus 5.5 walled off in bwrap — the brief and a copy of HEAD only, no shell; the lead's scratchpad, the
    live tree, the transcripts and its memory do not exist inside — and a watcher on its output starts with it.
@@ -195,7 +197,8 @@ alone (STATE, the board) is checked by the rulers on commit instead.
   the same A/B/C. An audit can outlast the Bash tool's 10 minutes: launch each detached (a small
   script under `setsid nohup`, its output to the job folder, `EXIT=` on its last line) and wait for
   that line.
-- **The brief — blind, not in the dark:** his words verbatim; the plan's decisions as facts ("this door
+- **The brief — blind, not in the dark:** it opens like the plan's brief (the holding reminder, the line's
+  mission and vision); his words verbatim; the plan's decisions as facts ("this door
   is closed on purpose"); the range; where the raw test and battery output lies. Never the lead's reasoning, a
   summary, "tests are green", or another auditor's verdict. Its first question: *does this do what he
   asked?*

@@ -29,6 +29,7 @@ import {
   honestyLine,
   approvalGateLine,
   firstShotLine,
+  holdingLine,
 } from "@dxb/voice";
 
 const REPO_ROOT = join(import.meta.dirname, "..", "..");
@@ -146,6 +147,19 @@ describe("B21 — one standing context, both lanes", () => {
     for (const lane of ["voice", "chat", "task"] as const) {
       expect(standingPrompt({ ...base, lane })).toContain(line);
     }
+  });
+
+  // CEO 2026-11-09: what the holding is stands before every worker — the construction's sessions on
+  // every turn (the per-turn hook) and the holding's employees at the start of every job, in one text.
+  it("carries the holding reminder on every lane, word for word as the construction's per-turn line", async () => {
+    const line = holdingLine();
+    expect(line).toContain("large revenue");
+    expect(line).toContain("small, medium and large");
+    for (const lane of ["voice", "chat", "task"] as const) {
+      expect(standingPrompt({ ...base, lane })).toContain(line);
+    }
+    const hook = await readFile(join(REPO_ROOT, ".claude", "hooks", "no-laziness.sh"), "utf8");
+    expect(hook).toContain(line);
   });
 
   it("makes both lanes say an outward act stops at the CEO", () => {
