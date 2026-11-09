@@ -53,7 +53,9 @@ His plan words open the door; the hook reminds the lead, it cannot open it
 <!-- CEO-OK: plan-words-open-dxb-team2-2026-10-09 -->.
 
 **The plan**, when there is one, names the scope, what it touches, the ordered steps, how it is verified,
-and the risks — in his language, short; not who writes, which the lead chooses after his yes (§3)
+and the risks — in his language, short, and comes with an Archify map (`~/.claude/skills/archify`, the Turkish
+catalogue `archify-tr.json` beside this door as `meta.translations`) opened in his Chrome
+<!-- CEO-OK: every-plan-comes-with-an-archify-map-2026-11-09 -->; not who writes, which the lead chooses after his yes (§3)
 <!-- CEO-OK: plan-names-no-arrangement-2026-10-08 -->. No file changes before his yes.
 
 **Two writers, one blind audit** <!-- CEO-OK: plan-two-writers-sol-audit-2026-10-19 --> — every plan, design or architecture of a board row,
