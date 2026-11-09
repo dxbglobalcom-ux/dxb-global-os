@@ -1,0 +1,17 @@
+Visual sourcing research, 2026-11-09. Pages fetched today:
+unsplash.com/license; unsplash.com/plus; unsplash.com/plus/license; unsplash.com/documentation
+pexels.com/license; pexels.com/api/documentation
+pixabay.com/service/license-summary; pixabay.com/api/docs
+stocksy.com/pricing (stealth fetch) + search screenshot "luxury fashion editorial" (888 results, editorial look)
+stock.adobe.com/license-terms; stock.adobe.com/plans; developer.adobe.com/stock/docs/getting-started
+help.elements.envato.com License Terms (rev. 2026-10-06)
+storyblocks.com/license; storyblocks.com/api
+coverr.co/license; coverr.co/developers
+filmsupply.com/pricing
+artlist.io/pricing (AI tab only; stock tab and /license not readable)
+polyhaven.com/license; github Poly-Haven/Public-API ToS; api.polyhaven.com live probe (no key)
+ambientcg.com/license; ambientcg.com/api/v2 live probe (no key, 2041 materials)
+fab.com/eula summary; 80.lv 2026-11-06 Megascans free
+offset.com -> folded into Shutterstock
+deathtothestockphoto.com
+Blocked: gettyimages (403/bot wall), shutterstock/license (403), pond5 license (403), mixkit license text, artlist license.
