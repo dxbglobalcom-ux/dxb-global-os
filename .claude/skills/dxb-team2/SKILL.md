@@ -280,6 +280,9 @@ alone (STATE, the board) is checked by the rulers on commit instead.
   reach the terminal; `operator type` inverts case here, so a command line is pasted, never typed) the
   line
   `systemd-run --user --scope --quiet --collect -p MemoryMax=16G -p MemorySwapMax=4G -- /home/dxb/.local/bin/claude --model <same> "$(cat <note>)"`
-  (`claude` is not on that terminal's PATH) → `operator shot`, read it → `operator key Return`.
+  (`claude` is not on that terminal's PATH) → `operator shot`, read it → `operator key Return`. With his
+  dictation on (status bar "Dikte açık"), the Return does not reach the terminal: `operator key ctrl+space`
+  (dictation off) → `operator key Return` → `operator key ctrl+space` (on again), each checked on a shot
+  <!-- CEO-OK: handover-dictation-off-enter-on-2026-11-09 -->.
   Proof it is alive: `ListAgents` shows it and it answers. If the job is in its plan phase, the
   successor's first reply carries the max warning (§2).
