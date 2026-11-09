@@ -62,8 +62,7 @@ catalogue `archify-tr.json` beside this door as `meta.translations`) opened in h
 **The plan's writers and its audit** <!-- CEO-OK: fable-audits-opus-second-writer-effort-by-weight-2026-11-09 --> — every plan, design or architecture of a board row,
 before it goes to him; not a small job. The lead writes it. On an important or complex job a second
 Opus 5.5 writes the same plan from the same brief, so the two complete each other; neither sees the
-other's, by tool, not by promise <!-- CEO-OK: plan-writers-sealed-independent-2026-10-19 -->. Nobody gives
-the second writer a role or a slant — the same brief, its own judgement.
+other's, by tool, not by promise <!-- CEO-OK: plan-writers-sealed-independent-2026-10-19 -->.
 1. The lead writes the brief once. It opens with the holding reminder — the per-turn line's THE HOLDING text,
    one source with the employees' `holdingLine()` (`packages/voice/src/prompt-core.ts`) <!-- CEO-OK: holding-reminder-every-turn-and-brief-2026-11-09 --> — and, when the
    job belongs to a business line, that line's mission and vision; then his words verbatim, the scope, the facts measured. On a two-writer job
@@ -147,7 +146,7 @@ switches with /effort; the lead warns him — on every reply, until he has.**
 | **Helper** | `helper` (Opus 5.5 · `medium`, read-only) | reads code or documents, measures, researches | writes |
 | **Reader** | a one-shot `scout` or `Explore` | a wide search whose text would swell the lead's context | writes; is resumed (its cache dies at 5 min) |
 | **Escalation writer** | `builder` (Opus 5.5 · `max`), one-shot | only a piece that failed twice at `high` | is opened for a routine fix |
-| **Second writer** | Opus 5.5, at the plan's level, its own process through `scripts/governance/second-plan.sh` <!-- CEO-OK: fable-audits-opus-second-writer-effort-by-weight-2026-11-09 --> | on an important or complex job, writes the same plan from the same brief, unseen (§1) | sees the lead's draft; audits; writes code; is given a role or a slant |
+| **Second writer** | Opus 5.5, at the plan's level, its own process through `scripts/governance/second-plan.sh` <!-- CEO-OK: fable-audits-opus-second-writer-effort-by-weight-2026-11-09 --> | on an important or complex job, writes the same plan from the same brief, unseen (§1) | sees the lead's draft; audits; writes code |
 | **Auditor** | GPT-6.1 Sol <!-- CEO-OK: auditor-sol-6-1-2026-10-01 -->, through `scripts/governance/refuter.sh` | one blind pass over the job's commits (§4); on a plan job, also the blind plan audit (§1) | writes; audits the same thing twice; sees the lead's reasoning or verdict |
 | **Second auditor** | Fable 5.1 — `high`, `max` on an important or complex job — through `scripts/governance/fable-audit.sh` <!-- CEO-OK: fable-audits-opus-second-writer-effort-by-weight-2026-11-09 --> | audits whatever Sol audits, from the same brief, at the same time, blind (§1, §4) | writes a plan or code; audits twice; sees Sol's findings or the lead's verdict |
 
