@@ -572,8 +572,8 @@ RUNTIME tree. The design he answered decision by decision: `.planning/quick/2026
    <!-- CEO-OK: b64-after-the-deal-and-plan-merge-rule-2026-10-27 -->. This replaces the 2026-10-13 shape (one author twice, at
    `xhigh` and `max`, Fable picking): one model written twice is one mind tried twice, and in both trials the
    shared errors were found by a checker's list, not by the comparison (`.planning/quick/20261019-degerli-is-danisma/`).
-   Whether the second writer earns its seat is measured on the construction's own plan jobs first (dxb-team2) and
-   told to him after three or four. The flow is [[AGENT_ORCHESTRATION_SPEC]]'s; the cost warning line, 30 % of the deal — it tells
+   In the construction's own plan jobs (dxb-team2) the second writer was removed on his word 2026-11-09 <!-- CEO-OK: fable-out-of-dxb-team2-2026-11-09 -->,
+   after its B84 brief cap went into a plan unchecked; the holding's own second writer here is not touched by that word. The flow is [[AGENT_ORCHESTRATION_SPEC]]'s; the cost warning line, 30 % of the deal — it tells
    him and never stops the job — is [[COST_CONTROL_SPEC]]'s.
 8. **Jev (decision 7).** Mail and routine sorting go to Jev first (`typesafe-ai/jev`, through his Vercel AI
    Gateway); what Jev is unsure of goes to Sonnet 5.5 `medium`; Haiku is not used for it. Jev rides the `litellm`

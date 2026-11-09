@@ -7,7 +7,7 @@ description: Use when the CEO hands the construction a job, or says a plan will 
 
 The construction's default door <!-- CEO-OK: dxb-team2-default-door-2026-09-28 -->, and since
 2026-10-06 a lean one: no score card, no done-list, no paperwork per job — the work, a blind check, the
-fixes, the tests <!-- CEO-OK: dxb-team2-lean-2026-10-06 -->; Fable's one seat is a plan's second writer (§1). Every holding build runs
+fixes, the tests <!-- CEO-OK: dxb-team2-lean-2026-10-06 -->; Fable has no seat in it (§3). Every holding build runs
 through it, so the standard is the Ferrari's: fast because nothing in it is ceremony, right because
 nothing reaches him unchecked. The laws it obeys are in `.claude/CLAUDE.md`; it opens `dxb-verify`
 and `dxb-close-row`.
@@ -25,8 +25,7 @@ THE CEO'S JOB, in one sentence he would sign
    │
 PLAN      the talk turns to plan, design or architecture → `plan`: effort warning MAX (§2); his "plan
           konuşacağız" opens this door at once, the job is asked inside it
-          two writers, sealed — the lead at max, Fable 5.1 at max apart → Sol's blind plan audit → the
-          lead adds, fixes, signs (below)
+          the lead writes the plan at max → Sol's blind plan audit → the lead fixes, signs (below)
           the plan goes to him once, in his language, closing with the HIGH warning (§2) → his yes
    │
 ARRANGE   the lead chooses the hands (§3) and says it in one line
@@ -58,27 +57,17 @@ catalogue `archify-tr.json` beside this door as `meta.translations`) opened in h
 <!-- CEO-OK: every-plan-comes-with-an-archify-map-2026-11-09 -->; not who writes, which the lead chooses after his yes (§3)
 <!-- CEO-OK: plan-names-no-arrangement-2026-10-08 -->. No file changes before his yes.
 
-**Two writers, one blind audit** <!-- CEO-OK: plan-two-writers-sol-audit-2026-10-19 --> — every plan, design or architecture of a board row,
-before it goes to him; not a small job. Neither writer sees the other's plan, by tool, not by promise
-<!-- CEO-OK: plan-writers-sealed-independent-2026-10-19 -->:
-1. The lead writes the brief once — his words verbatim, the scope, the facts measured — and starts the
-   second writer: `scripts/governance/second-plan.sh start <job> <brief>` runs Fable 5.1 at `max` walled off
-   in bwrap — the brief and a copy of HEAD only, no shell; the lead's scratchpad, the live tree, the
-   transcripts and its memory do not exist inside — and a watcher on Fable's output starts with it.
-2. The lead writes its own plan at `max` in its scratchpad and seals it (`second-plan.sh seal`) before it
-   opens Fable's (`reveal`); anything that read Fable's output before `reveal` voids the job, and
-   `SEALS.log` records every step with its time and hash.
-3. `second-plan.sh blind` puts the brief, "A" and "B" — a random order, no model or effort named — in
-   `<job>/blind/`; `second-plan.sh audit <job> <sol-brief> [effort]` runs Sol (`refuter.sh`) with the key,
-   the originals and the transcripts denied. Sol first writes, from the brief alone, the conditions and
-   risks the job carries; then, for each plan, what it lacks that the other has, its errors, and what the
-   brief needs that neither meets. It may read the sources a claim rests on and writes nothing into the plan.
-4. The lead's plan is the base: it adds what Fable's brought, fixes the errors, checks each unmeasured claim
-   at its source, and signs (`second-plan.sh sign`). Sol down → the plan waits for Sol; neither writer audits.
-5. **The measure:** the job folder keeps `sealed/` and Sol's audit; one line per job goes into
-   `.planning/quick/20261019-degerli-is-danisma/MEASURE.md` — what Fable's plan added that Sol's audit had not
-   found, Sol's findings, the minutes, the quota. After three or four plan jobs the lead tells him the table,
-   and his word decides whether the second writer stays.
+**One writer, one blind audit** <!-- CEO-OK: plan-two-writers-sol-audit-2026-10-19 --> <!-- CEO-OK: fable-out-of-dxb-team2-2026-11-09 --> —
+every plan, design or architecture of a board row, before it goes to him; not a small job:
+1. The lead writes the brief once — his words verbatim, the scope, the facts measured — and its plan at
+   `max`, both into the job folder (`.planning/quick/<date>-<slug>/brief.md`, `plan.md`).
+2. Sol audits the plan blind: `scripts/governance/refuter.sh` with the lead's scratchpad, `~/.claude` and
+   `~/.claude-mem` denied (`--deny-read`), handed the two files' paths and nothing of the lead's reasoning.
+   Sol first writes, from the brief alone, the conditions and risks the job carries; then the plan's errors
+   and what the brief needs that the plan does not meet. It may read the sources a claim rests on and writes
+   nothing into the plan.
+3. The lead fixes the errors, checks each unmeasured claim at its source, and signs. Sol down → the plan
+   waits for Sol; the lead never audits its own plan.
 
 **A side study or a side task inside the talk** <!-- CEO-OK: side-study-offered-to-the-team-2026-10-14 -->:
 when the plan rests on something still to be learned — a tool he sent, a measurement, the holding's own
@@ -133,12 +122,12 @@ at `max` <!-- CEO-OK: plan-two-writers-sol-audit-2026-10-19 -->. **He switches w
 | **Helper** | `helper` (Opus 5.5 · `medium`, read-only) | reads code or documents, measures, researches | writes |
 | **Reader** | a one-shot `scout` or `Explore` | a wide search whose text would swell the lead's context | writes; is resumed (its cache dies at 5 min) |
 | **Escalation writer** | `builder` (Opus 5.5 · `max`), one-shot | only a piece that failed twice at `high` | is opened for a routine fix |
-| **Second writer** | Fable 5.1 · `max`, its own process through `scripts/governance/second-plan.sh` <!-- CEO-OK: plan-two-writers-sol-audit-2026-10-19 --> | writes the same plan from the same brief, unseen (§1) | sees the lead's draft; audits; writes code |
 | **Auditor** | GPT-6.1 Sol <!-- CEO-OK: auditor-sol-6-1-2026-10-01 -->, through `scripts/governance/refuter.sh` | one blind pass over the job's commits (§4); on a plan job, also the blind plan audit (§1) | writes; audits the same thing twice; sees the lead's reasoning or verdict |
 
-Fable 5.1 is not consulted in a dxb-team2 job — neither the `advisor` tool (its own "before the work
-and before done" advice does not apply here) nor the Fable-based `design-eye`; its one seat is the plan's
-second writer, which writes and never advises.
+Fable 5.1 has no seat in a dxb-team2 job: not the `advisor` tool (its own "before the work and before
+done" advice does not apply here), not the Fable-based `design-eye`, and since 2026-11-09 not the plan's
+second writer — removed on his word after its one-page, one-hour brief cap entered the B84 plan unchecked
+<!-- CEO-OK: fable-out-of-dxb-team2-2026-11-09 -->.
 
 **The arrangement — four, all equal**
 <!-- CEO-OK: orchestration-three-arrangements-lead-chooses-2026-10-03 --> <!-- CEO-OK: four-equal-arrangements-lead-chooses-2026-10-08 -->:
