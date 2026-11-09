@@ -1,7 +1,7 @@
-// THE SECOND PLAN — in a dxb-team2 plan job the lead and Fable write the same plan independently, and Sol
-// audits both blind as "A" and "B" (CEO 2026-10-19). "They did not look at each other" is proven by the
-// tool and its record (Sol's A1-A3 and B3, fixed 2026-10-19): Fable runs walled off in bwrap with HEAD and
-// the brief only; a watcher on its output's inode makes any read before `reveal` void the job; every step
+// THE SECOND PLAN — in a dxb-team2 plan job the lead and a second Opus 5.5 write the same plan independently
+// (CEO 2026-11-09; Fable until then), and Sol audits both blind as "A" and "B" (CEO 2026-10-19). "They did
+// not look at each other" is proven by the tool and its record (Sol's A1-A3 and B3, fixed 2026-10-19): the
+// second writer runs walled off in bwrap with HEAD and the brief only; a watcher on its output's inode makes any read before `reveal` void the job; every step
 // re-verifies the hashes it was sealed with; Sol's view holds the brief, A and B, while the key and the
 // originals stay in a folder the audit may not read. Stubs stand in for the claude binary and refuter.sh —
 // no real model is ever called. bwrap itself runs for real.
@@ -12,7 +12,7 @@ import { dirname, join, resolve } from "node:path";
 import { afterAll, describe, expect, it } from "vitest";
 
 const TOOL = resolve(__dirname, "../../scripts/governance/second-plan.sh");
-const FABLE_PLAN = "# Second plan\nTake maximum care with the seam.";
+const SECOND_PLAN = "# Second plan\nTake maximum care with the seam.";
 const tmp: string[] = [];
 afterAll(() => {
   for (const d of tmp) {
@@ -45,7 +45,7 @@ function setup() {
     `  [ -e "$HOME/work/.git" ] && echo git=present || echo git=absent`,
     `  echo "leak=\${SECOND_PLAN_LEAK:-unset}"; echo "pwd=$PWD"; } > '${dir}/seen'`,
     `while [ ! -f '${dir}/go' ]; do sleep 0.05; done`,
-    `printf '%s\\n' '${FABLE_PLAN.split("\n").join("' '")}'`,
+    `printf '%s\\n' '${SECOND_PLAN.split("\n").join("' '")}'`,
     'exit "${STUB_EXIT:-0}"',
   ].join("\n"));
   chmodSync(stub, 0o755);
@@ -61,7 +61,7 @@ function setup() {
     spawnSync("bash", [TOOL, ...args], {
       encoding: "utf8",
       env: {
-        ...process.env, DXB_CLAUDE_BIN: stub, DXB_REFUTER_BIN: refuter, DXB_SECOND_PLAN_TEST_BIND: dir,
+        ...process.env, DXB_CLAUDE_BIN: stub, DXB_REFUTER_BIN: refuter, DXB_WALLED_BOX_TEST_BIND: dir,
         SECOND_PLAN_LEAK: "the lead's environment", ...env,
       },
     });
@@ -69,10 +69,10 @@ function setup() {
   const sealed = (name: string) => join(job, "sealed", name);
   const read = (name: string) => readFileSync(sealed(name), "utf8");
   const log = () => read("SEALS.log").trim().split("\n");
-  // waits on fable.exit only — reading fable.raw before reveal is exactly what the watcher reports
+  // waits on second.exit only — reading second.raw before reveal is exactly what the watcher reports
   const ended = async () => {
     for (let i = 0; i < 200; i++) {
-      if (existsSync(sealed("fable.exit"))) return;
+      if (existsSync(sealed("second.exit"))) return;
       await new Promise((r) => setTimeout(r, 50));
     }
     throw new Error("the stub never ended");
@@ -89,7 +89,7 @@ function setup() {
 }
 
 describe("second-plan.sh", () => {
-  it("start walls Fable off: brief on stdin, HEAD only, no live tree, no scratchpad, no inherited env", async () => {
+  it("start walls the second writer off: brief on stdin, HEAD only, no live tree, no scratchpad, no inherited env", async () => {
     const t = setup();
     const r = t.run(["start", t.job, t.brief]);
     expect(r.status, r.stderr).toBe(0);
@@ -100,7 +100,7 @@ describe("second-plan.sh", () => {
     const after = (flag: string) => args[args.indexOf(flag) + 1];
     expect(args).toContain("-p");
     expect(args).toContain("--no-session-persistence");
-    expect(after("--model")).toBe("fable");
+    expect(after("--model")).toBe("claude-opus-5-5");
     expect(after("--effort")).toBe("max");
     expect(after("--tools")).toBe("Read,Grep,Glob");
     const settings = JSON.parse(after("--settings"));
@@ -118,10 +118,10 @@ describe("second-plan.sh", () => {
     expect(seen).toMatch(/pwd=.*\/work\n/);
     expect(t.log()[0]).toMatch(/ brief sha256=[0-9a-f]{64}$/);
     expect(t.log()[1]).toMatch(/ box HEAD=[0-9a-f]{40}$/);
-    expect(t.log()[2]).toMatch(/ fable started$/);
-    expect(t.log()[3]).toMatch(/ fable ended exit=0 sha256=[0-9a-f]{64}$/);
+    expect(t.log()[2]).toMatch(/ second started model=claude-opus-5-5 effort=max$/);
+    expect(t.log()[3]).toMatch(/ second ended exit=0 sha256=[0-9a-f]{64}$/);
     expect(existsSync(readFileSync(t.sealed("box.path"), "utf8").trim())).toBe(false); // the box is removed
-    expect(t.read("raw.path")).toMatch(/^\/run\/user\/\d+\/dxb-second-plan\.\w+\/fable\.raw\n$/); // out of every scanner's way
+    expect(t.read("raw.path")).toMatch(/^\/run\/user\/\d+\/dxb-second-plan\.\w+\/second\.raw\n$/); // out of every scanner's way
   });
 
   it("refuses to start twice", async () => {
@@ -132,13 +132,46 @@ describe("second-plan.sh", () => {
     await t.ended();
   });
 
-  it("reveal refuses before the lead's seal, before Fable ends, and after a non-zero exit", async () => {
+  it("start takes the second writer's effort as its last argument: high or max, nothing else", async () => {
+    const t = setup();
+    expect(t.run(["start", t.job, t.brief, "xhigh"]).status).not.toBe(0);
+    expect(existsSync(t.sealed(""))).toBe(false); // refused before anything was made
+    const r = t.run(["start", t.job, t.brief, "high"]);
+    expect(r.status, r.stderr).toBe(0);
+    t.release();
+    await t.ended();
+    const args = readFileSync(join(t.dir, "args"), "utf8").trim().split("\n");
+    expect(args[args.indexOf("--effort") + 1]).toBe("high");
+    expect(t.log()[2]).toMatch(/ second started model=claude-opus-5-5 effort=high$/);
+  });
+
+  it("reveal, status and blind still read a job Fable wrote before 2026-11-09 (fable.* in the sealed folder)", async () => {
+    const t = setup();
+    t.run(["start", t.job, t.brief]);
+    t.release();
+    await t.ended();
+    // the same job as its folder looked before the rename: fable.exit, and the log's fable lines
+    spawnSync("mv", [t.sealed("second.exit"), t.sealed("fable.exit")]);
+    writeFileSync(t.sealed("SEALS.log"), t.read("SEALS.log")
+      .replace(/ second started model=\S+ effort=\S+\n/, " fable started\n").replace(" second ended ", " fable ended "));
+    expect(t.run(["status", t.job]).stdout).toContain("fable: ended, exit 0");
+    t.run(["seal", t.job, t.lead]);
+    const r = t.run(["reveal", t.job]);
+    expect(r.status, r.stderr).toBe(0);
+    expect(r.stdout.trim()).toBe(t.sealed("fable.plan.md"));
+    expect(t.read("fable.plan.md")).toBe(`${SECOND_PLAN}\n`);
+    const b = t.run(["blind", t.job, "--reviewed"]);
+    expect(b.status, b.stderr).toBe(0);
+    expect(t.read("key.md")).toMatch(/= fable\n/);
+  });
+
+  it("reveal refuses before the lead's seal, before the second writer ends, and after a non-zero exit", async () => {
     const t = setup();
     t.run(["start", t.job, t.brief]);
     t.release();
     await t.ended();
     expect(t.run(["reveal", t.job]).status).not.toBe(0);
-    expect(existsSync(t.sealed("fable.plan.md"))).toBe(false);
+    expect(existsSync(t.sealed("second.plan.md"))).toBe(false);
 
     const u = setup();
     u.run(["start", u.job, u.brief]);
@@ -158,7 +191,7 @@ describe("second-plan.sh", () => {
     expect(r.stderr).toContain("exit 3");
   });
 
-  it("reveal refuses when Fable's output was read before it — through any path — and logs it", async () => {
+  it("reveal refuses when the second writer's output was read before it — through any path — and logs it", async () => {
     const t = setup();
     t.run(["start", t.job, t.brief]);
     t.release();
@@ -169,7 +202,7 @@ describe("second-plan.sh", () => {
     expect(r.status).not.toBe(0);
     expect(r.stderr).toContain("read before reveal");
     expect(t.read("SEALS.log")).toMatch(/ READ BEFORE REVEAL: [1-9]\d* event\(s\)/);
-    expect(existsSync(t.sealed("fable.plan.md"))).toBe(false);
+    expect(existsSync(t.sealed("second.plan.md"))).toBe(false);
   });
 
   it("reveal refuses when the watcher is gone", async () => {
@@ -198,12 +231,12 @@ describe("second-plan.sh", () => {
 
     const u = setup();
     await u.toRevealed();
-    writeFileSync(u.sealed("fable.plan.md"), "# edited\n");
+    writeFileSync(u.sealed("second.plan.md"), "# edited\n");
     expect(u.run(["blind", u.job]).status).not.toBe(0);
     expect(existsSync(join(u.job, "blind"))).toBe(false);
   });
 
-  it("seal refuses twice, and refuses once Fable's plan is revealed", async () => {
+  it("seal refuses twice, and refuses once the second writer's plan is revealed", async () => {
     const t = setup();
     t.run(["start", t.job, t.brief]);
     expect(t.run(["seal", t.job, t.lead]).status).toBe(0);
@@ -212,13 +245,13 @@ describe("second-plan.sh", () => {
     await t.ended();
     const rv = t.run(["reveal", t.job]);
     expect(rv.status, rv.stderr).toBe(0);
-    expect(rv.stdout.trim()).toBe(t.sealed("fable.plan.md"));
-    expect(t.read("fable.plan.md")).toBe(`${FABLE_PLAN}\n`);
+    expect(rv.stdout.trim()).toBe(t.sealed("second.plan.md"));
+    expect(t.read("second.plan.md")).toBe(`${SECOND_PLAN}\n`);
     const u = setup();
     u.run(["start", u.job, u.brief]);
     u.release();
     await u.ended();
-    writeFileSync(u.sealed("fable.plan.md"), "revealed\n");
+    writeFileSync(u.sealed("second.plan.md"), "revealed\n");
     expect(u.run(["seal", u.job, u.lead]).status).not.toBe(0);
     expect(existsSync(u.sealed("opus.plan.md"))).toBe(false);
   });
@@ -237,15 +270,15 @@ describe("second-plan.sh", () => {
     expect(r.stdout.trim()).toBe(view);
     expect(readdirSync(view).sort()).toEqual(["A.md", "B.md", "brief.md"]);
     const key = t.read("key.md");
-    const aIs = /A\s*=\s*(opus|fable)/.exec(key)![1];
-    const bIs = /B\s*=\s*(opus|fable)/.exec(key)![1];
-    expect([aIs, bIs].sort()).toEqual(["fable", "opus"]);
+    const aIs = /A\s*=\s*(opus|second)/.exec(key)![1];
+    const bIs = /B\s*=\s*(opus|second)/.exec(key)![1];
+    expect([aIs, bIs].sort()).toEqual(["opus", "second"]);
     expect(readFileSync(join(view, "A.md"), "utf8")).toBe(t.read(`${aIs}.plan.md`));
     expect(readFileSync(join(view, "B.md"), "utf8")).toBe(t.read(`${bIs}.plan.md`));
     expect(t.log().map((l) => l.split(" ").slice(1, 3).join(" "))).toEqual([
-      expect.stringMatching(/^brief sha256=/), expect.stringMatching(/^box HEAD=/), "fable started",
-      expect.stringMatching(/^opus sealed$/), expect.stringMatching(/^fable ended$/), "watch clean",
-      "fable revealed", expect.stringMatching(/^blind A=/),
+      expect.stringMatching(/^brief sha256=/), expect.stringMatching(/^box HEAD=/), "second started",
+      expect.stringMatching(/^opus sealed$/), expect.stringMatching(/^second ended$/), "watch clean",
+      "second revealed", expect.stringMatching(/^blind A=/),
     ]);
   });
 

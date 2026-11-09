@@ -1,26 +1,21 @@
 #!/usr/bin/env bash
-# In a dxb-team2 plan job two writers write the same plan independently — the lead (the session itself)
-# and Fable at max effort in a SEPARATE process — and Sol audits both blind as "A" and "B" (CEO 2026-10-19).
-# "They did not look at each other" is proven by tool and record, not by promise (Sol's A1-A3 and B3 on
-# 5af736bf, fixed 2026-10-19):
-#  - FABLE SEES THE BRIEF AND HEAD, NOTHING ELSE. It runs inside bwrap: /tmp (the lead's scratchpad),
-#    /var/tmp, /dev/shm, the runtime dir and the whole home are empty tmpfs; inside the home only a
-#    `git archive` of HEAD (no .git, so no git status and nothing uncommitted), a minimal ~/.claude.json
-#    (account and onboarding only) and the credentials file are put back. No live tree, no transcripts,
-#    no auto-memory, no global CLAUDE.md, no claude-mem, no Desktop; a fresh /proc and a cleared
-#    environment. HEAD's own .claude/CLAUDE.md is a shared, committed input and stays. Measured
-#    2026-10-19: from inside the box a shell finds the lead's scratchpad, the Desktop and the live tree
-#    "No such file or directory". Reading tools only, hooks off, no MCP server — and the deny rules
-#    stay as a second belt.
-#  - THE LEAD CANNOT READ FABLE'S OUTPUT UNSEEN. The two share a Unix user, so no permission can stop
-#    the lead; second-plan-watch.py holds an inotify watch on the output's inode from before Fable
-#    starts, and `reveal` refuses when anything read it, or when the watcher is gone. Fable's end time,
+# In an important or complex dxb-team2 plan job two writers write the same plan independently — the lead
+# (the session itself) and a second Opus 5.5 in a SEPARATE process, at max by default or high when the
+# lead says so (CEO 2026-11-09; Fable wrote it until then) — and Sol audits both blind as "A" and "B"
+# (CEO 2026-10-19). "They did not look at each other" is proven by tool and record, not by promise (Sol's
+# A1-A3 and B3 on 5af736bf, fixed 2026-10-19):
+#  - THE SECOND WRITER SEES THE BRIEF AND HEAD, NOTHING ELSE: it runs in walled-box.sh's box.
+#  - THE LEAD CANNOT READ THE SECOND WRITER'S OUTPUT UNSEEN. The two share a Unix user, so no permission
+#    can stop the lead; second-plan-watch.py holds an inotify watch on the output's inode from before the
+#    writer starts, and `reveal` refuses when anything read it, or when the watcher is gone. Its end time,
 #    exit code and hash go into SEALS.log the moment it ends, computed from the stream, not the file.
+#  - A job started before 2026-11-09 names its second writer `fable` (fable.plan.md, "fable ended" in
+#    SEALS.log); every step reads it under that name.
 #  - SOL SEES THE BRIEF, "A" AND "B", NOTHING THAT NAMES THEM. `blind` writes those three into
 #    <job>/blind/; the key, the originals and SEALS.log stay in <job>/sealed/, and `audit` runs
 #    refuter.sh with sealed/, /tmp, ~/.claude, ~/.claude-mem, the Desktop and the runtime dir denied.
 #  - every later step re-verifies the hashes it was sealed with; `sign` records the signed plan's time.
-# Usage: second-plan.sh start <job> <brief-file> | seal <job> <lead-plan-file> | reveal <job>
+# Usage: second-plan.sh start <job> <brief-file> [high|max] | seal <job> <lead-plan-file> | reveal <job>
 #                       | blind <job> [--reviewed] | audit <job> <sol-brief-file> [medium|high|xhigh]
 #                       | sign <job> <final-plan-file> | status <job>      (<job> is an absolute folder path)
 set -euo pipefail
@@ -28,6 +23,9 @@ REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 CLAUDE="${DXB_CLAUDE_BIN:-/home/dxb/.local/bin/claude}"
 WATCH="$REPO/scripts/governance/second-plan-watch.py"
 REFUTER="${DXB_REFUTER_BIN:-$REPO/scripts/governance/refuter.sh}"
+MODEL=claude-opus-5-5
+# shellcheck source=walled-box.sh
+. "$REPO/scripts/governance/walled-box.sh"
 # the words that would tell Sol who wrote a plan: a model or an effort level, matched as whole words
 TELLTALE='max|xhigh|opus|fable|sonnet|sol|gpt|claude'
 
@@ -42,6 +40,9 @@ SEALED="$job/sealed"
 VIEW="$job/blind"
 LOG="$SEALED/SEALS.log"
 log() { echo "$(now) $*" >>"$LOG"; }
+# the second writer's name in file names and log lines: `fable` in a job Fable started, `second` since
+WRITER=second
+if grep -q ' fable started$' "$LOG" 2>/dev/null; then WRITER=fable; fi
 # the hash a file was sealed with: the last "<what> … sha256=<h>" line of SEALS.log
 sealed_sha() { grep -E " $1 .*sha256=" "$LOG" | tail -n 1 | sed -E 's/.*sha256=([0-9a-f]{64}).*/\1/'; }
 verify() { # verify <file> <what>
@@ -56,30 +57,22 @@ watcher_alive() {
 
 case "$cmd" in
   start)
-    brief="${3:-}"
+    brief="${3:-}"; effort="${4:-max}"
     [ -f "$brief" ] || die "no brief file: $brief"
-    command -v bwrap >/dev/null || die "bwrap is missing; without it Fable is not walled off"
+    case "$effort" in high|max) ;; *) die "the second writer's effort is high or max, not: $effort" ;; esac
     mkdir -p "$job"
     mkdir "$SEALED" 2>/dev/null || die "already started: $SEALED exists"
     cp "$brief" "$SEALED/brief.md"
     log "brief sha256=$(sha "$SEALED/brief.md")"
     settings="{\"disableAllHooks\":true,\"permissions\":{\"deny\":[\"Read(//tmp/**)\",\"Read(/$job/**)\",\"Read(//home/dxb/.claude/**)\",\"Read(//home/dxb/.claude-mem/**)\"]}}"
-    printf '%s' "$settings" >"$SEALED/fable.settings.json"
-    # the box: HEAD without .git, and an account-only config
-    box="$(mktemp -d "${XDG_CACHE_HOME:-$HOME/.cache}/dxb-second-plan.XXXXXX")"
+    printf '%s' "$settings" >"$SEALED/$WRITER.settings.json"
+    box="$(box_make second-plan)" || die "the box could not be made"
     echo "$box" >"$SEALED/box.path"
-    mkdir "$box/tree"
-    git -C "$REPO" archive HEAD | tar -x -C "$box/tree"
-    python3 -c '
-import json, sys
-d = json.load(open(sys.argv[1]))
-json.dump({k: d[k] for k in ("oauthAccount", "userID", "hasCompletedOnboarding", "machineID", "installMethod") if k in d},
-          open(sys.argv[2], "w"))' "$HOME/.claude.json" "$box/claude.json" 2>/dev/null || echo '{}' >"$box/claude.json"
     log "box HEAD=$(git -C "$REPO" rev-parse HEAD)"
     # the output waits in a private tmpfs folder no indexer or editor scans — measured 2026-10-19, the
     # first real run's fable.raw inside the repository was opened once by some program the instant it
-    # was created, which voided the job — and the watch stands on its inode before Fable writes a byte
-    raw="$(mktemp -d "${XDG_RUNTIME_DIR:-/run/user/$(id -u)}/dxb-second-plan.XXXXXX")/fable.raw"
+    # was created, which voided the job — and the watch stands on its inode before the writer writes a byte
+    raw="$(mktemp -d "${XDG_RUNTIME_DIR:-/run/user/$(id -u)}/dxb-second-plan.XXXXXX")/$WRITER.raw"
     echo "$raw" >"$SEALED/raw.path"
     : >"$raw"
     setsid nohup python3 "$WATCH" "$SEALED/WATCH.log" "$raw" </dev/null >/dev/null 2>"$SEALED/watch.err" &
@@ -88,85 +81,70 @@ json.dump({k: d[k] for k in ("oauthAccount", "userID", "hasCompletedOnboarding",
     grep -q WATCHING "$SEALED/WATCH.log" 2>/dev/null || die "the watcher did not start: $(cat "$SEALED/watch.err")"
     # detached through this script's own _run, never through a `bash -c` whose command line names "mcp":
     # measured 2026-10-19, the freeze guard (scripts/ops/freeze-guard.sh) killed that detached wrapper and
-    # Fable with it at once — a parentless process whose arguments match "mcp" is a widow to it. _run's
-    # arguments do not, and it stays alive as Fable's parent and session leader.
-    log "fable started"
-    setsid nohup bash "${BASH_SOURCE[0]}" _run "$job" </dev/null >/dev/null 2>&1 &
+    # the writer with it at once — a parentless process whose arguments match "mcp" is a widow to it. _run's
+    # arguments do not, and it stays alive as the writer's parent and session leader.
+    log "$WRITER started model=$MODEL effort=$effort"
+    setsid nohup bash "${BASH_SOURCE[0]}" _run "$job" "$effort" </dev/null >/dev/null 2>&1 &
     echo "SECOND_PLAN_STARTED $(now)"
     ;;
   _run)
     box="$(cat "$SEALED/box.path")"
-    bin="$(readlink -f "$CLAUDE")"
-    uid="$(id -u)"
-    wall=(--dev-bind / / --tmpfs /tmp --tmpfs /var/tmp --tmpfs /dev/shm --tmpfs "/run/user/$uid" --tmpfs "$HOME"
-      --ro-bind "$bin" "$bin"
-      --dir "$HOME/.claude" --bind "$HOME/.claude/.credentials.json" "$HOME/.claude/.credentials.json"
-      --bind "$box/claude.json" "$HOME/.claude.json"
-      --ro-bind "$box/tree" "$HOME/work" --chdir "$HOME/work"
-      --unshare-pid --proc /proc --die-with-parent
-      --clearenv --setenv HOME "$HOME" --setenv USER "$(id -un)" --setenv PATH /usr/local/bin:/usr/bin:/bin
-      --setenv LANG "${LANG:-C.UTF-8}")
-    # tests only: a stub's own folder, so it can be held and released
-    [ -z "${DXB_SECOND_PLAN_TEST_BIND:-}" ] || wall+=(--bind "$DXB_SECOND_PLAN_TEST_BIND" "$DXB_SECOND_PLAN_TEST_BIND"
-      --setenv STUB_EXIT "${STUB_EXIT:-0}")
     set +e
     # the hash comes from the stream itself, so taking it never opens the watched file for reading
-    h="$( { bwrap "${wall[@]}" -- "$bin" -p --model fable --effort max --no-session-persistence --tools "Read,Grep,Glob" \
-            --strict-mcp-config --mcp-config '{"mcpServers":{}}' --settings "$(cat "$SEALED/fable.settings.json")" \
-            <"$SEALED/brief.md" 2>"$SEALED/fable.err"
-          echo $? >"$SEALED/fable.exit.tmp"; } | tee "$(cat "$SEALED/raw.path")" | sha256sum | cut -d' ' -f1 )"
+    h="$( { box_run "$box" "$MODEL" "$3" "$(cat "$SEALED/$WRITER.settings.json")" <"$SEALED/brief.md" 2>"$SEALED/$WRITER.err"
+          echo $? >"$SEALED/$WRITER.exit.tmp"; } | tee "$(cat "$SEALED/raw.path")" | sha256sum | cut -d' ' -f1 )"
     set -e
-    rc="$(cat "$SEALED/fable.exit.tmp")"
-    log "fable ended exit=$rc sha256=$h"
+    rc="$(cat "$SEALED/$WRITER.exit.tmp")"
+    log "$WRITER ended exit=$rc sha256=$h"
     rm -rf "$box"
-    mv "$SEALED/fable.exit.tmp" "$SEALED/fable.exit"
+    mv "$SEALED/$WRITER.exit.tmp" "$SEALED/$WRITER.exit"
     ;;
   seal)
     plan="${3:-}"
     [ -d "$SEALED" ] || die "not started: $SEALED is missing"
     [ -f "$plan" ] || die "no lead plan file: $plan"
     [ ! -e "$SEALED/opus.plan.md" ] || die "the lead's plan is already sealed"
-    [ ! -e "$SEALED/fable.plan.md" ] || die "Fable's plan is already revealed; the lead's seal must come first"
+    [ ! -e "$SEALED/$WRITER.plan.md" ] || die "the second writer's plan is already revealed; the lead's seal must come first"
     cp "$plan" "$SEALED/opus.plan.md"
     log "opus sealed sha256=$(sha "$SEALED/opus.plan.md")"
     ;;
   reveal)
-    [ -f "$SEALED/opus.plan.md" ] || die "the lead's plan is not sealed yet; seal it before revealing Fable's"
-    [ ! -e "$SEALED/fable.plan.md" ] || die "Fable's plan is already revealed"
-    [ -f "$SEALED/fable.exit" ] || die "Fable has not ended yet"
-    [ "$(cat "$SEALED/fable.exit")" = 0 ] || die "Fable ended with exit $(cat "$SEALED/fable.exit")"
+    [ -f "$SEALED/opus.plan.md" ] || die "the lead's plan is not sealed yet; seal it before revealing the second writer's"
+    [ ! -e "$SEALED/$WRITER.plan.md" ] || die "the second writer's plan is already revealed"
+    [ -f "$SEALED/$WRITER.exit" ] || die "the second writer has not ended yet"
+    [ "$(cat "$SEALED/$WRITER.exit")" = 0 ] || die "the second writer ended with exit $(cat "$SEALED/$WRITER.exit")"
     verify "$SEALED/opus.plan.md" "opus sealed"
-    watcher_alive || { log "UNWATCHED: the watcher was gone before reveal"; die "the watcher is gone; nothing proves Fable's output stayed unread — start the job again"; }
+    watcher_alive || { log "UNWATCHED: the watcher was gone before reveal"; die "the watcher is gone; nothing proves the second writer's output stayed unread — start the job again"; }
     kill "$(cat "$SEALED/watch.pid")"
     for _ in $(seq 100); do grep -q STOPPED "$SEALED/WATCH.log" && break; sleep 0.05; done
     reads="$(grep -vE ' (WATCHING|STOPPED)' "$SEALED/WATCH.log" || true)"
     if [ -n "$reads" ]; then
       log "READ BEFORE REVEAL: $(printf '%s\n' "$reads" | grep -c .) event(s), first: $(printf '%s\n' "$reads" | head -n 1)"
-      die "Fable's output was read before reveal — this job's independence is void; start it again:
+      die "the second writer's output was read before reveal — this job's independence is void; start it again:
 $reads"
     fi
     log "watch clean until reveal"
     raw="$(cat "$SEALED/raw.path")"
-    verify "$raw" "fable ended"
-    cp "$raw" "$SEALED/fable.plan.md"
+    verify "$raw" "$WRITER ended"
+    cp "$raw" "$SEALED/$WRITER.plan.md"
     rm -rf "$(dirname "$raw")"
-    log "fable revealed sha256=$(sha "$SEALED/fable.plan.md")"
-    echo "$SEALED/fable.plan.md"
+    log "$WRITER revealed sha256=$(sha "$SEALED/$WRITER.plan.md")"
+    echo "$SEALED/$WRITER.plan.md"
     ;;
   blind)
-    [ -f "$SEALED/opus.plan.md" ] && [ -f "$SEALED/fable.plan.md" ] || die "both plans must be sealed and revealed first"
+    [ -f "$SEALED/opus.plan.md" ] && [ -f "$SEALED/$WRITER.plan.md" ] || die "both plans must be sealed and revealed first"
     [ ! -e "$SEALED/key.md" ] || die "already blinded: $SEALED/key.md exists"
     verify "$SEALED/opus.plan.md" "opus sealed"
-    verify "$SEALED/fable.plan.md" "fable revealed"
+    verify "$SEALED/$WRITER.plan.md" "$WRITER revealed"
     # a plan about the holding may name models as its subject; the lead reads every hit, and --reviewed
     # records that none of them says who wrote the plan
-    hits="$(grep -o -n -i -w -E "$TELLTALE" "$SEALED/opus.plan.md" "$SEALED/fable.plan.md" || true)"
+    hits="$(grep -o -n -i -w -E "$TELLTALE" "$SEALED/opus.plan.md" "$SEALED/$WRITER.plan.md" || true)"
     if [ -n "$hits" ] && [ "${3:-}" != "--reviewed" ]; then
       die "a plan names a model or an effort level; read each hit; when none tells who wrote the plan, rerun with --reviewed:
 $hits"
     fi
     [ -z "$hits" ] || log "blind hits reviewed by the lead: $(printf '%s\n' "$hits" | wc -l)"
-    if (( RANDOM % 2 )); then a=opus; b=fable; else a=fable; b=opus; fi
+    if (( RANDOM % 2 )); then a=opus; b=$WRITER; else a=$WRITER; b=opus; fi
     mkdir -p "$VIEW"
     cp "$SEALED/brief.md" "$VIEW/brief.md"
     cp "$SEALED/$a.plan.md" "$VIEW/A.md"
@@ -203,8 +181,8 @@ $hits"
   status)
     [ -d "$SEALED" ] || die "not started: $SEALED is missing"
     ls -l "$SEALED"
-    if [ -f "$SEALED/fable.exit" ]; then echo "fable: ended, exit $(cat "$SEALED/fable.exit")"
-    else echo "fable: still running"; fi
+    if [ -f "$SEALED/$WRITER.exit" ]; then echo "$WRITER: ended, exit $(cat "$SEALED/$WRITER.exit")"
+    else echo "$WRITER: still running"; fi
     if watcher_alive; then echo "watcher: alive"; else echo "watcher: not running"; fi
     echo "--- SEALS.log"
     cat "$LOG"

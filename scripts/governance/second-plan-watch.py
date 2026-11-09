@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 """Tamper evidence for the second plan (second-plan.sh, CEO 2026-10-19).
 
-The lead and Fable run as the same Unix user, so no file permission can keep the lead from reading
-Fable's output before its own plan is sealed. What a terminal CAN do is notice: this watcher holds an
+The lead and the second writer run as the same Unix user, so no file permission can keep the lead from reading
+the second writer's output before its own plan is sealed. What a terminal CAN do is notice: this watcher holds an
 inotify watch on each given file's inode — so a read through any path, a hard link or /proc/<pid>/fd
 alike is seen — and writes one line for every read (IN_ACCESS) and every read-only open that closes
-(IN_CLOSE_NOWRITE). Fable's own writer opens the file write-only and is never logged. `reveal` stops
+(IN_CLOSE_NOWRITE). The second writer's own process opens the file write-only and is never logged. `reveal` stops
 the watcher and refuses when any such line exists, or when the watcher is gone.
 
 Usage: second-plan-watch.py <log> <file>...   (the files must exist; the log gets WATCHING first)

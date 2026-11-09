@@ -1,25 +1,27 @@
 #!/usr/bin/env python3
-"""DXB effort warning (UserPromptSubmit / `plan` / `build` / `off`): the CEO is told which /effort to switch to.
+"""DXB effort warning (UserPromptSubmit / `plan` / `plan-max` / `build` / `off`): the CEO is told which
+/effort to switch to.
 
 The CEO's order of 2026-10-06: he opens a session at effort high and switches it himself with /effort;
-the session only warns him. Plan, design and architecture run at max (the CEO's order of 2026-10-12, which
-replaced max with xhigh, and the CEO's order of 2026-10-19, which replaced xhigh with max); the build at high.
+the session only warns him. A normal plan, design or architecture runs at high, an important or complex
+job's at max (the CEO's order of 2026-11-09; before it every plan ran at max, 2026-10-19); the build at high.
 Fable's review of 2026-10-06 made the warning start by itself and arrive in time:
 
-  * `dxb-effort-warn.py plan|build|off`, run by the lead from Bash: sets (or, for `off`, removes) the
+  * `dxb-effort-warn.py plan|plan-max|build|off`, run by the lead from Bash: sets (or, for `off`, removes) the
     mode of the session named by CLAUDE_CODE_SESSION_ID -- a file
     $XDG_RUNTIME_DIR/dxb-effort/<session_id> (/tmp/dxb-effort/ without XDG_RUNTIME_DIR) holding
-    `plan` or `build` -- and answers with the session's live level and whether THIS reply carries the
+    `plan`, `plan-max` or `build` -- and answers with the session's live level and whether THIS reply carries the
     warning. `build` is run in the reply that asks him to approve the plan, so the high warning travels
     with the question and his "yes" can arrive at high.
-  * UserPromptSubmit: while the session has a mode -- or, with none set, while his permission mode is
-    `plan` -- and its live level does not match it (plan: max, build: high), each of his messages carries
-    the warning into the session's context, and until he has switched the plan work itself waits (STOP).
-    With no mode and no plan permission mode, a message that names a plan, a design or an architecture
-    tells the lead, before it thinks about the substance, to decide whether the reply would be plan work;
-    if so, to open the dxb-team2 door, run `plan`, open with the max line and stop -- at max, only the door
-    and `plan` (the CEO, 2026-10-12: the warning comes before the thinking; the door, too, with plan
-    permission mode and no mode -- the CEO, 2026-10-09), and a session whose level is not high
+  * UserPromptSubmit: while the session has a mode and its live level does not match it (plan: high,
+    plan-max: max, build: high), each of his messages carries the warning into the session's context, and
+    until he has switched the plan work itself waits (stop()). With no mode, a message that names a plan, a
+    design or an architecture -- or his permission mode `plan` -- tells the lead, before it thinks about the
+    substance, to decide whether the reply would be plan work; if so, to open the dxb-team2 door, decide
+    whether it is a normal plan (high) or an important or complex job (max), run `plan` or `plan-max`, name
+    the level and the reason in one line, open with the line the command gives and stop until he has
+    switched (the CEO, 2026-10-12: the warning comes before the thinking; the door -- the CEO, 2026-10-09;
+    the two levels -- the CEO, 2026-11-09), and a session whose level is not high
     -- or not yet known: then the lead reads CLAUDE_EFFORT in Bash -- reminds the lead to warn him before
     writing code.
 
@@ -53,7 +55,8 @@ from datetime import datetime, timezone
 
 SESSION_ID = re.compile(r"[0-9a-f-]{8,}", re.IGNORECASE)
 LEVELS = ("low", "medium", "high", "xhigh", "max")
-WANTED = {"plan": "max", "build": "high"}
+WANTED = {"plan": "high", "plan-max": "max", "build": "high"}
+PLAN_MODES = ("plan", "plan-max")
 RUNTIME = os.environ.get("XDG_RUNTIME_DIR") or "/tmp"
 MODE_DIR = os.path.join(RUNTIME, "dxb-effort")
 CTX_DIR = os.path.join(RUNTIME, "claude-ctx")
@@ -63,15 +66,24 @@ FILE_FLAGS = os.O_RDONLY | os.O_NOFOLLOW | os.O_NONBLOCK
 TAIL_BYTES = 256 * 1024
 SMALL_BYTES = 4 * 1024  # the mode file and the status line's record are a few dozen bytes
 PLAN_LINE = "⚠ Muhittin Bey, plan konuşmasındayız — /effort max'a geçin."
+PLAN_HIGH_LINE = "⚠ Muhittin Bey, plan konuşmasındayız — /effort high'a geçin."
 HIGH_LINE = "⚠ Muhittin Bey, plan bitti — koda geçmeden /effort high'a geçin."
 CODE_LINE = "⚠ Muhittin Bey, koda geçmeden /effort high'a geçin."
-LINES = {"plan": PLAN_LINE, "build": HIGH_LINE}
+LINES = {"plan": PLAN_HIGH_LINE, "plan-max": PLAN_LINE, "build": HIGH_LINE}
 # the CEO, 2026-10-12, after a session evaluated an architecture at high and warned him only at its end: "Orada
 # planı yapmadan önce, sen kafanda düşünmeden önce bu uyarıyı yapmalısın." -- the warning comes first, and the plan,
-# design or architecture thinking waits for his switch; it is never done at high and warned about afterwards
-STOP = ("do not plan, design, propose or evaluate an architecture or a design in this reply -- that thinking "
-        "belongs at max, after he switches. Answer only plain facts he asked, in a line or two, say in one line "
-        "that you wait for his switch, and write no file")
+# design or architecture thinking waits for his switch; it is never done at the wrong level and warned about afterwards
+
+
+def stop(level):
+    return ("do not plan, design, propose or evaluate an architecture or a design in this reply -- that thinking "
+            f"belongs at {level}, after he switches. Answer only plain facts he asked, in a line or two, say in one "
+            "line that you wait for his switch, and write no file")
+
+
+# the CEO, 2026-11-09: which level a plan wants is the lead's decision, named to him with its reason
+DECIDE = ("Decide whether it is a normal plan at high, or an important or complex job at max (the CEO, 2026-11-09); "
+          f"run `{COMMAND} plan` or `{COMMAND} plan-max`, and say in one line which level you chose and why.")
 # the whole row is the command's output -- a quotation of it inside his own words is not a switch (Sol A3)
 SWITCHED = re.compile(r"<local-command-stdout>Set effort level to (low|medium|high|xhigh|max)\b[^<]*"
                       r"</local-command-stdout>")
@@ -79,26 +91,28 @@ SWITCHED = re.compile(r"<local-command-stdout>Set effort level to (low|medium|hi
 # matched at a word's start so "explain" and "planet" stay out
 PLAN_WORDS = re.compile(r"(?<!\w)(plan(?!et)\w*|tasar[ıi]m\w*|tasarla\w*|mimari\w*|design\w*|architect\w*)",
                         re.IGNORECASE)
-USAGE = "usage: dxb-effort-warn.py plan|build|off   (as a hook: no argument, the hook's JSON on stdin)\n"
+USAGE = "usage: dxb-effort-warn.py plan|plan-max|build|off   (as a hook: no argument, the hook's JSON on stdin)\n"
 
 
 def warning(mode, level):
     runs = f"runs at {level}" if level else "runs at an unknown level"
-    if mode == "plan":
+    if mode in PLAN_MODES:
+        wanted = WANTED[mode]
         return (
-            f"This session is in PLAN mode under dxb-team2 and {runs}; the CEO's order (2026-10-06) is "
-            f"plan, design and architecture at max (2026-10-19), switched by him with /effort. Begin your reply, "
-            f"before anything else, with exactly this line:\n{PLAN_LINE}\n"
-            f"Then, until he has switched, {STOP}. Once he is at max: in the reply that brings him the plan for "
-            f"his yes, run `{COMMAND} build` and close that reply with the line it gives, so his yes can "
+            f"This session is in PLAN mode ({mode}) under dxb-team2 and {runs}; the CEO's order (2026-10-06) is "
+            f"a normal plan, design or architecture at high, an important or complex job's plan at max "
+            f"(2026-11-09) -- this one at {wanted} -- switched by him with /effort. Begin your reply, "
+            f"before anything else, with exactly this line:\n{LINES[mode]}\n"
+            f"Then, until he has switched, {stop(wanted)}. Once he is at {wanted}: in the reply that brings him "
+            f"the plan for his yes, run `{COMMAND} build` and close that reply with the line it gives, so his yes can "
             f"arrive at high.")
     return (
         f"This session is in BUILD mode under dxb-team2 and {runs}; the CEO's order (2026-10-06) is "
         f"the build at high, switched by him with /effort. Begin your reply, before anything else, with "
         f"exactly this line:\n{HIGH_LINE}\n"
         f"Then go on, but write no code until he has switched. If his message asks to change the plan "
-        f"instead of approving it, run `{COMMAND} plan` and stay in the plan. When the job ends, run "
-        f"`{COMMAND} off`.")
+        f"instead of approving it, run `{COMMAND} plan` (`plan-max` for an important or complex job) and stay "
+        f"in the plan. When the job ends, run `{COMMAND} off`.")
 
 
 def open_door():
@@ -106,20 +120,18 @@ def open_door():
     # skill, so it tells the lead to open the door before the plan command
     return (f"By the CEO's order of 2026-10-09 a plan talk opens dxb-team2 at once: if the dxb-team2 door is not "
             f"already open in this session, open it now with `Skill(\"dxb-team2\")` and ask the job inside the "
-            f"door -- not in Claude Code's generic plan mode, whose click-box questions do not reach him. Then "
-            f"run `{COMMAND} plan` and do what it answers.")
+            f"door -- not in Claude Code's generic plan mode, whose click-box questions do not reach him. Then: "
+            f"{DECIDE} Do what the command answers.")
 
 
 def plan_reminder(level):
-    if level == WANTED["plan"]:
-        return (f"His message names a plan, a design or an architecture, and this session has no dxb-team2 effort "
-                f"mode. If the talk is turning to one: {open_door()} If not, ignore this.")
     runs = f"runs at {level}" if level else "runs at an unknown level"
     return (f"FIRST, before you think about the substance of his message: his message names a plan, a design or an "
-            f"architecture, this session {runs} and has no dxb-team2 effort mode. Decide now whether your reply "
-            f"would plan, design, propose, or evaluate an architecture or a design -- anything beyond plain facts "
-            f"about what exists. If it would: {open_door()} Open your reply, before anything else, with exactly this "
-            f"line:\n{PLAN_LINE}\nand then {STOP}. If it would not, ignore this.")
+            f"architecture, or his permission mode is plan; this session {runs} and has no dxb-team2 effort mode. "
+            f"Decide now whether your reply would plan, design, propose, or evaluate an architecture or a design -- "
+            f"anything beyond plain facts about what exists. If it would: {open_door()} When the command answers "
+            f"with a line, open your reply, before anything else, with exactly that line, and then "
+            f"{stop('the level you chose')}. If it would not, ignore this.")
 
 
 def unknown_reminder():
@@ -141,7 +153,7 @@ def code_reminder(level):
     return (f"This session runs at {level}, not high, and has no dxb-team2 effort mode; the CEO's order "
             f"(2026-10-06) is code at high.{short} If your reply writes {which}, open it, before "
             f"anything else, with exactly this line:\n{CODE_LINE}\nand write no code until he has switched. If "
-            f"the talk is a plan, a design or an architecture, run `{COMMAND} plan` instead. Otherwise ignore this.")
+            f"the talk is a plan, a design or an architecture: {DECIDE} Otherwise ignore this.")
 
 
 def session_name(session_id):
@@ -296,19 +308,15 @@ def on_hook(data):
     if name is None:
         return
     mode = read_mode(name)
-    door = mode is None and data.get("permission_mode") == "plan"
-    if door:
-        mode = "plan"
     level = live_level(name, data.get("transcript_path"))
     if mode is not None:
-        if level == WANTED[mode] and not door:
+        if level == WANTED[mode]:
             return
-        # plan permission mode with no mode set: the door first, even when he is already at max -- the case
-        # that started this, 2026-10-09 (the CEO: "plan konuşacağız dediğimde direkt DXP Team 2 açılmalı")
-        if door:
-            context = open_door() if level == WANTED[mode] else f"{open_door()}\n{warning(mode, level)}"
-        else:
-            context = warning(mode, level)
+        context = warning(mode, level)
+    # plan permission mode with no mode set: the door and the level decision, whatever his level -- the case
+    # that started this, 2026-10-09 (the CEO: "plan konuşacağız dediğimde direkt DXP Team 2 açılmalı")
+    elif data.get("permission_mode") == "plan":
+        context = plan_reminder(level)
     elif not isinstance(data.get("prompt"), str) or "<task-notification>" in data["prompt"]:
         return  # a subagent's report arriving is not his message (measured 2026-10-06: one tripped the net)
     elif PLAN_WORDS.search(data["prompt"]):
@@ -381,7 +389,7 @@ def cli(mode):
     if level == WANTED[mode]:
         print(f"live level {level}: already at {level} — no warning in this reply")
     else:
-        where = "open" if mode == "plan" else "end"
+        where = "open" if mode in PLAN_MODES else "end"
         print(f"live level {level or 'unknown'}: {where} this reply with exactly this line:\n{LINES[mode]}")
     return 0
 
@@ -397,7 +405,7 @@ def main():
 
 if __name__ == "__main__":
     if len(sys.argv) > 1:
-        if len(sys.argv) == 2 and sys.argv[1] in ("plan", "build", "off"):
+        if len(sys.argv) == 2 and sys.argv[1] in (*WANTED, "off"):
             sys.exit(cli(sys.argv[1]))
         sys.stderr.write(USAGE)
         sys.exit(2)

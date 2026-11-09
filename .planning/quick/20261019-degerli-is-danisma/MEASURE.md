@@ -2,8 +2,10 @@
 
 <!-- CEO-OK: plan-two-writers-sol-audit-2026-10-19 -->
 
-One line per dxb-team2 plan job (`.claude/skills/dxb-team2/SKILL.md` §1, "Two writers, one blind audit"). After
-three or four jobs the lead tells him this table; his word decides whether Fable 5.1 stays the second writer.
+One line per dxb-team2 plan job (`.claude/skills/dxb-team2/SKILL.md` §1). Since 2026-11-09 Fable 5.1 writes no plan
+and audits beside Sol; the second writer, on an important or complex job, is a second Opus 5.5
+<!-- CEO-OK: fable-audits-opus-second-writer-effort-by-weight-2026-11-09 -->. From then on a line records what Fable's
+audit found that Sol's did not, and what the second plan added. After three or four jobs the lead tells him the table.
 
 - **Fable added** — items in Fable's plan that the lead's plan lacked and that Sol's audit did not find by itself
   (Sol's "what A lacks that B has" for the lead's plan, minus what its own conditions list already named).
