@@ -84,8 +84,6 @@ real product photos — the setting must belong to the product.
 
 ## Waiting on his approval
 
-- Fable in the client closing round (A28): his 9 Nov word "o Fable'ı dikkat et … Söylediği şeyleri teyit edin, ondan sonra faydalı mı değil mi diye. İyice ölçün" — asked whether it is written into B84's closing round and A28 for good or holds for this session only.
-
 - Revenue, Rapor 2 (`~/Desktop/Gelir Kaynakları/2 - Gelir üretim hatları ve kararlarınız 2026-11-01.pdf`, § 8):
   K8 leaves this list — asked at H4/H8's setup after he listens on the bench (B83, his word 2026-11-07). The rest answered 2 Nov (K2, K9, K10 for now, K11, İ1–İ3, İ6 as
   recommended; İ4 a package; İ5 and İ7 his own rulings — REVENUE-OPPORTUNITIES §D).
