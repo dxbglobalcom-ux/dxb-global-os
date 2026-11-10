@@ -134,7 +134,7 @@ the date. The battery fails on an unregistered approval claim.
 - **Islamic boundaries are constitutional.** CEO-only. Code may refuse its own work against
   them and warns him once; his word after that warning is done once as an exception, the boundary unchanged
   <!-- CEO-OK: b64-q3-decision17-covers-everything-2026-10-14 -->; code may never widen or narrow them.
-- **Code: the session writes it; inside `dxb-team2` a fork, a `helper-writer` and the `builder`
+- **Code: the session writes it; inside `dxb-team3` a fork, a `helper-writer` and the `builder`
   seat write too, every piece verified by the lead before it is committed**
   <!-- CEO-OK: helpers-write-code-under-lead-verification-2026-10-03 -->. Other subagents audit,
   refute and sweep; they never write — and a
@@ -168,7 +168,7 @@ locales at parity. Owner: `00-CEO-DIRECTIVE-LANGUAGE.md`.
 | When you are… | Open |
 |---|---|
 | asked to learn the holding — what is where | `dxb-start` |
-| running a job | `dxb-team2` |
+| running a job | `dxb-team3` |
 | taking a board row from open to closed | `dxb-close-row` |
 | about to claim anything is finished | `dxb-verify` |
 | changing anything the CEO looks at | `dxb-surface` |

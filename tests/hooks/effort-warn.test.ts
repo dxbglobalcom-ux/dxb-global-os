@@ -158,7 +158,7 @@ describe("plan-max mode warns to switch to max until the live level is max", () 
     const text = warning(hook(dir, prompt(SID, transcript(dir, [["xhigh", 60], ["high", 5]]))));
     expect(text).toContain(PLAN_LINE);
     expect(text).toContain("PLAN mode");
-    expect(text).toContain("dxb-team2");
+    expect(text).toContain("dxb-team3");
     expect(text).toContain("runs at high");
     expect(text).toContain("write no file");
     expect(text).toContain(`python3 "${HOOK}" build`);
@@ -674,10 +674,10 @@ describe("the CLI tells the lead whether this reply opens with the warning (Fabl
 });
 
 // The CEO's order of 2026-10-09: "plan konuşacağız dediğimde direkt DXP Team 2 açılmalı." A hook cannot open a
-// skill; with no mode set, the lead is reminded to open the dxb-team2 door first, then to run `plan`.
-const DOOR = 'Skill("dxb-team2")';
+// skill; with no mode set, the lead is reminded to open the dxb-team3 door first, then to run `plan`.
+const DOOR = 'Skill("dxb-team3")';
 
-describe("a plan talk opens the dxb-team2 door at once (CEO 2026-10-09)", () => {
+describe("a plan talk opens the dxb-team3 door at once (CEO 2026-10-09)", () => {
   it("plan words, no mode: the door is opened first, then the plan command, and the escape stays", () => {
     const dir = box();
     const out = warning(hook(dir, prompt(SID, transcript(dir, [["high", 5]]), "bunun planını konuşacağız")));

@@ -91,14 +91,14 @@ deeply, the review runs this way <!-- CEO-OK: watch-links-important-review-2026-
   densely with `frames.sh` at the seconds that matter. A long talk video carries it in the speech — the whole
   transcript is read, and a frame is taken only where a repo name, code or a table is on the screen. A long
   demonstration whose screen carries the content keeps §2's step 3 (topic map, one sharp frame per screen).
-- **Two readers, blind to each other, at high:** Opus 5.5 and Fable 5.1 (`Agent`, `general-purpose`,
+- **Two readers, blind to each other, at high:** Opus 5.5 and Fable 5.2 (`Agent`, `general-purpose`,
   `model: opus` / `model: fable`, `effort: high`), one shared brief in the job folder; each writes only
   `reader-<name>.md` and never opens the other's. Each opens every named repo or tool at its real source and
   places it in the holding (board rank or row) and says whether the construction team should install it.
 - **The lead is the referee, at max:** when both are done the lead switches itself to `/effort max` through
   `operator`, as `~/.claude/skills/operator/SKILL.md` says (a fresh `operator shot` after every action; this
   session's own terminal holding the keyboard and his prompt box empty before any key), and reads the live
-  level as dxb-team2 §2 does (the newest, by timestamp, of `$XDG_RUNTIME_DIR/claude-ctx/<this session id>.json`
+  level as dxb-team3 §2 does (the newest, by timestamp, of `$XDG_RUNTIME_DIR/claude-ctx/<this session id>.json`
   field `effort` and this session's transcript). It merges only once fresh evidence for THIS session says
   `max`; while the level is unknown or different it does not merge and tells him. The merge goes into
   `MERGE.md`, naming every split and its call.

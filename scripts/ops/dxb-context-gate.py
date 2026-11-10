@@ -67,16 +67,16 @@ CTX_DIR = os.path.join(os.environ.get("XDG_RUNTIME_DIR") or "/tmp", "claude-ctx"
 
 def red_line(used_pct):
     return (
-        f"🔴 CONTEXT {used_pct}% — hand over at the first clean break (dxb-team2 §7): "
+        f"🔴 CONTEXT {used_pct}% — hand over at the first clean break (dxb-team3 §7): "
         "no battery running, tree committed, report sent; then the handover note and the successor "
-        f"session through operator (dxb-team2 §7). At {AGENT_DENY_PCT} % the Agent tool is refused.")
+        f"session through operator (dxb-team3 §7). The job continues in the successor; nothing is cut. At {AGENT_DENY_PCT} % the Agent tool is refused.")
 
 
 def deny_reason(used_pct, tool):
     return (
         f"🔴 CONTEXT {used_pct}% ≥ {AGENT_DENY_PCT} % — the {tool} tool is refused until a handover "
-        "(dxb-team2 §7): finish nothing new; commit what stands, write the handover note, "
-        "open the successor session through operator (dxb-team2 §7). The new session starts with its "
+        "(dxb-team3 §7): this session opens no new agent: finish the piece in hand, commit what stands, write the handover note, "
+        "open the successor session through operator (dxb-team3 §7). The job continues there in full. The new session starts with its "
         "own record.")
 
 

@@ -1,13 +1,13 @@
 ---
 name: dxb-team2
-description: Use when the CEO hands the construction a job, or says a plan will be talked ("plan konuşacağız", "plan moduna geçelim") — the default construction door. The lead (the session) chooses who writes — itself, a fork, medium helpers, or a fork with helpers — and verifies every piece; one blind, read-only GPT-6.1 Sol pass checks the work; its findings are fixed and tested; the CEO is warned to switch the effort — max for plan, design and architecture, high for the build. Trigger `/dxb-team2 <the job in one sentence>`.
+description: The previous construction door, kept for comparison. Opens only when named (dxb-team2); the default construction door is dxb-team3.
 ---
 
-# The team — one lead, the hands it chooses, one blind auditor
+# The team — one lead, the hands it chooses, two blind auditors
 
 The construction's default door <!-- CEO-OK: dxb-team2-default-door-2026-09-28 -->, and since
 2026-10-06 a lean one: no score card, no done-list, no paperwork per job — the work, a blind check, the
-fixes, the tests <!-- CEO-OK: dxb-team2-lean-2026-10-06 -->; Fable's one seat is a plan's second writer (§1). Every holding build runs
+fixes, the tests <!-- CEO-OK: dxb-team2-lean-2026-10-06 -->; Fable 5.1 writes no plan: it audits beside Sol (§3, §4) <!-- CEO-OK: fable-audits-opus-second-writer-effort-by-weight-2026-11-09 -->. Every holding build runs
 through it, so the standard is the Ferrari's: fast because nothing in it is ceremony, right because
 nothing reaches him unchecked. The laws it obeys are in `AGENTS.md`; it opens `dxb-verify`
 and `dxb-close-row`.
@@ -23,10 +23,11 @@ THE CEO'S JOB, in one sentence he would sign
    │   swell its context goes to a helper (his word, 2026-11-07 <!-- CEO-OK: light-lane-small-jobs-opus-medium-2026-11-07 -->).
    │   Money, the approval gate, security, moving data, parallel or many-place changes keep the full flow.
    │
-PLAN      the talk turns to plan, design or architecture → `plan`: effort warning MAX (§2); his "plan
-          konuşacağız" opens this door at once, the job is asked inside it
-          two writers, sealed — the lead at max, Fable 5.1 at max apart → Sol's blind plan audit → the
-          lead adds, fixes, signs (below)
+PLAN      the talk turns to plan, design or architecture → the lead weighs the job: normal → `plan`
+          (high), important or complex → `plan-max` (max), said to him in one line with its reason (§2);
+          his "plan konuşacağız" opens this door at once, the job is asked inside it
+          the lead writes the plan; on an important or complex job a second Opus 5.5 writes it too, sealed
+          → Sol and Fable audit it blind, side by side → the lead adds, fixes, signs (below)
           the plan goes to him once, in his language, closing with the HIGH warning (§2) → his yes
    │
 ARRANGE   the lead chooses the hands (§3) and says it in one line
@@ -35,10 +36,10 @@ BUILD     the hands write and run their own tests; the lead verifies every piece
    │
 TEST      code changed → typecheck and the battery (§5), ended before Sol starts
    │
-SOL       one blind, read-only pass over the job's commits, the battery's output in hand (§4) —
-          A blocks · B fixed now · C in the report
+AUDIT     Sol and Fable, one blind, read-only pass each, at the same time, over the job's commits, the
+          battery's output in hand (§4) — A blocks · B fixed now · C in the report
    │
-FIX       a fork or a writing helper fixes; the lead verifies; no second Sol round; the touched tests,
+FIX       a fork or a writing helper fixes; the lead verifies; no second audit round; the touched tests,
           typecheck, and the battery again when a fix changed code
    │
 COMMIT the fixes → TELL him in a few lines (§6) → STATE, when nothing is left in hand
@@ -53,30 +54,41 @@ His plan words open the door; the hook reminds the lead, it cannot open it
 <!-- CEO-OK: plan-words-open-dxb-team2-2026-10-09 -->.
 
 **The plan**, when there is one, names the scope, what it touches, the ordered steps, how it is verified,
-and the risks — in his language, short; not who writes, which the lead chooses after his yes (§3)
+and the risks — in his language, short, and comes with an Archify map (`~/.claude/skills/archify`, the Turkish
+catalogue `archify-tr.json` beside this door as `meta.translations`) opened in his Chrome
+<!-- CEO-OK: every-plan-comes-with-an-archify-map-2026-11-09 -->; not who writes, which the lead chooses after his yes (§3)
 <!-- CEO-OK: plan-names-no-arrangement-2026-10-08 -->. No file changes before his yes.
 
-**Two writers, one blind audit** <!-- CEO-OK: plan-two-writers-sol-audit-2026-10-19 --> — every plan, design or architecture of a board row,
-before it goes to him; not a small job. Neither writer sees the other's plan, by tool, not by promise
-<!-- CEO-OK: plan-writers-sealed-independent-2026-10-19 -->:
-1. The lead writes the brief once — his words verbatim, the scope, the facts measured — and starts the
-   second writer: `scripts/governance/second-plan.sh start <job> <brief>` runs Fable 5.1 at `max` walled off
-   in bwrap — the brief and a copy of HEAD only, no shell; the lead's scratchpad, the live tree, the
-   transcripts and its memory do not exist inside — and a watcher on Fable's output starts with it.
-2. The lead writes its own plan at `max` in its scratchpad and seals it (`second-plan.sh seal`) before it
-   opens Fable's (`reveal`); anything that read Fable's output before `reveal` voids the job, and
-   `SEALS.log` records every step with its time and hash.
-3. `second-plan.sh blind` puts the brief, "A" and "B" — a random order, no model or effort named — in
-   `<job>/blind/`; `second-plan.sh audit <job> <sol-brief> [effort]` runs Sol (`refuter.sh`) with the key,
-   the originals and the transcripts denied. Sol first writes, from the brief alone, the conditions and
-   risks the job carries; then, for each plan, what it lacks that the other has, its errors, and what the
-   brief needs that neither meets. It may read the sources a claim rests on and writes nothing into the plan.
-4. The lead's plan is the base: it adds what Fable's brought, fixes the errors, checks each unmeasured claim
-   at its source, and signs (`second-plan.sh sign`). Sol down → the plan waits for Sol; neither writer audits.
-5. **The measure:** the job folder keeps `sealed/` and Sol's audit; one line per job goes into
-   `.planning/quick/20261019-degerli-is-danisma/MEASURE.md` — what Fable's plan added that Sol's audit had not
-   found, Sol's findings, the minutes, the quota. After three or four plan jobs the lead tells him the table,
-   and his word decides whether the second writer stays.
+**The plan's writers and its audit** <!-- CEO-OK: fable-audits-opus-second-writer-effort-by-weight-2026-11-09 --> — every plan, design or architecture of a board row,
+before it goes to him; not a small job. The lead writes it. On an important or complex job a second
+Opus 5.5 writes the same plan from the same brief, so the two complete each other; neither sees the
+other's, by tool, not by promise <!-- CEO-OK: plan-writers-sealed-independent-2026-10-19 -->.
+1. The lead writes the brief once. It opens with the holding reminder — the per-turn line's THE HOLDING text,
+   one source with the employees' `holdingLine()` (`packages/voice/src/prompt-core.ts`) <!-- CEO-OK: holding-reminder-every-turn-and-brief-2026-11-09 --> — and, when the
+   job belongs to a business line, that line's mission and vision; then his words verbatim, the scope, the facts measured. On a two-writer job
+   it starts the second writer: `scripts/governance/second-plan.sh start <job> <brief> [high|max]` runs
+   Opus 5.5 walled off in bwrap — the brief and a copy of HEAD only, no shell; the lead's scratchpad, the
+   live tree, the transcripts and its memory do not exist inside — and a watcher on its output starts with it.
+2. The lead writes its own plan in its scratchpad and, on a two-writer job, seals it (`second-plan.sh seal`)
+   before it opens the other (`reveal`); anything that read the other's output before `reveal` voids the job,
+   and `SEALS.log` records every step with its time and hash.
+3. The audit — Sol and Fable, blind, side by side, one pass each, from the same brief. `second-plan.sh blind`
+   puts the brief and the plan(s) — "A" and "B" in a random order, no model or effort named — in
+   `<job>/blind/`; `second-plan.sh audit <job> <audit-brief> [effort]` runs Sol (`refuter.sh`) with the key,
+   the originals and the transcripts denied, and `scripts/governance/fable-audit.sh <job> <audit-brief>
+   [high|max]` runs Fable 5.1 read-only in the same walled box, at the same time. Each first writes, from the
+   brief alone, the conditions and risks the job carries; then, for each plan, its errors, what it lacks
+   (and on two plans, what one has that the other lacks), and what the brief needs that no plan meets. They
+   may read the sources a claim rests on and write nothing into the plan.
+4. The lead's plan is the base: it adds what the second plan brought, fixes what the audits found, checks
+   each unmeasured claim at its source, and signs (`second-plan.sh sign`). An auditor down → the plan waits
+   for it; a writer never audits.
+5. **What he says yes to is what is recorded.** Nothing enters the plan, the row or the ledger after his
+   yes; a later addition goes back to him first, marked as the writer's, with its reason.
+6. **The measure:** the job folder keeps `sealed/` and both audits; one line per job goes into
+   `.planning/quick/20261019-degerli-is-danisma/MEASURE.md` — what Fable's audit found that Sol's did not, and
+   on a two-writer job what the second plan added — the minutes, the quota. After three or four jobs the
+   lead tells him the table.
 
 **A side study or a side task inside the talk** <!-- CEO-OK: side-study-offered-to-the-team-2026-10-14 -->:
 when the plan rests on something still to be learned — a tool he sent, a measurement, the holding's own
@@ -88,15 +100,18 @@ another, while he waits.
 
 ## 2. Effort — the session warns, he switches
 
-The session runs at `high`: the talk, the build, the fixes, the tests. Plan, design and architecture run
-at `max` <!-- CEO-OK: plan-two-writers-sol-audit-2026-10-19 -->. **He switches with /effort; the lead warns him — on every reply, until he has.**
+The session runs at `high`: the talk, a normal plan, the build, the fixes, the tests. An important or
+complex plan, design or architecture runs at `max` <!-- CEO-OK: fable-audits-opus-second-writer-effort-by-weight-2026-11-09 -->. The lead weighs the job and says it in one
+line with its reason ("bu iş önemli, max'ta planlıyorum, çünkü …"); his word on the level overrides. **He
+switches with /effort; the lead warns him — on every reply, until he has.**
 
 - **The warning comes before the thinking** <!-- CEO-OK: plan-warning-before-the-thinking-2026-10-12 -->.
   The moment his message turns the talk to a plan, a design or an architecture — to plan, propose or
   evaluate one, not to ask a plain fact about what exists — the lead runs
-  `python3 .claude/hooks/dxb-effort-warn.py plan` before it thinks about the substance; it answers with the
-  live level and whether this reply opens with `⚠ Muhittin Bey, plan konuşmasındayız — /effort max'a geçin.`
-  (not when he is already at max). Until he has switched, that reply does no plan, design or architecture
+  `python3 .claude/hooks/dxb-effort-warn.py plan` (normal, high) or `plan-max` (important or complex, max)
+  before it thinks about the substance; it answers with the live level and whether this reply opens with
+  `⚠ Muhittin Bey, plan konuşmasındayız — /effort high'a geçin.` or `… /effort max'a geçin.` (not when he is
+  already there). Until he has switched, that reply does no plan, design or architecture
   thinking at all: the line, the plain facts he asked in a line or two, the wait, and no file. An
   architecture weighed at high and warned about at the end is the failure this exists for (2026-10-12). His
   plan permission mode starts the same warning by itself.
@@ -109,7 +124,7 @@ at `max` <!-- CEO-OK: plan-two-writers-sol-audit-2026-10-19 -->. **He switches w
 - Between those, the hook `dxb-effort-warn.py` repeats the line on each of his messages until the
   session's live level matches. With no mode set, a message of his naming a plan, a design or an
   architecture tells the lead to decide first, before the thinking, and — when the reply would be plan work —
-  to run `plan`, open with the max line and stop; and a session whose level is not high reminds the lead to
+  to run `plan` or `plan-max`, open with its line and stop; and a session whose level is not high reminds the lead to
   open any reply in which it writes code itself with `⚠ Muhittin Bey, koda geçmeden /effort high'a geçin.`
   — a small job is not written at max either. Outside a plan, code a medium `helper-writer` writes needs
   no switch. After a plan the session returns to high in every case, whoever writes: the lead's own turns
@@ -131,12 +146,13 @@ at `max` <!-- CEO-OK: plan-two-writers-sol-audit-2026-10-19 -->. **He switches w
 | **Helper** | `helper` (Opus 5.5 · `medium`, read-only) | reads code or documents, measures, researches | writes |
 | **Reader** | a one-shot `scout` or `Explore` | a wide search whose text would swell the lead's context | writes; is resumed (its cache dies at 5 min) |
 | **Escalation writer** | `builder` (Opus 5.5 · `max`), one-shot | only a piece that failed twice at `high` | is opened for a routine fix |
-| **Second writer** | Fable 5.1 · `max`, its own process through `scripts/governance/second-plan.sh` <!-- CEO-OK: plan-two-writers-sol-audit-2026-10-19 --> | writes the same plan from the same brief, unseen (§1) | sees the lead's draft; audits; writes code |
+| **Second writer** | Opus 5.5, at the plan's level, its own process through `scripts/governance/second-plan.sh` <!-- CEO-OK: fable-audits-opus-second-writer-effort-by-weight-2026-11-09 --> | on an important or complex job, writes the same plan from the same brief, unseen (§1) | sees the lead's draft; audits; writes code |
 | **Auditor** | GPT-6.1 Sol <!-- CEO-OK: auditor-sol-6-1-2026-10-01 -->, through `scripts/governance/refuter.sh` | one blind pass over the job's commits (§4); on a plan job, also the blind plan audit (§1) | writes; audits the same thing twice; sees the lead's reasoning or verdict |
+| **Second auditor** | Fable 5.1 — `high`, `max` on an important or complex job — through `scripts/governance/fable-audit.sh` <!-- CEO-OK: fable-audits-opus-second-writer-effort-by-weight-2026-11-09 --> | audits whatever Sol audits, from the same brief, at the same time, blind (§1, §4) | writes a plan or code; audits twice; sees Sol's findings or the lead's verdict |
 
 Fable 5.1 is not consulted in a dxb-team2 job — neither the `advisor` tool (its own "before the work
-and before done" advice does not apply here) nor the Fable-based `design-eye`; its one seat is the plan's
-second writer, which writes and never advises.
+and before done" advice does not apply here) nor the Fable-based `design-eye`; its one seat is the second
+auditor, which finds and never writes.
 
 **The arrangement — four, all equal**
 <!-- CEO-OK: orchestration-three-arrangements-lead-chooses-2026-10-03 --> <!-- CEO-OK: four-equal-arrangements-lead-chooses-2026-10-08 -->:
@@ -148,7 +164,7 @@ second writer, which writes and never advises.
 | **Team** | `helper-writer`s at `medium`, each its own piece, in parallel; `helper`s read and research beside them; the lead at `high` directs them |
 | **Hybrid** | the fork writes the core; `helper-writer`s the side pieces; `helper`s read |
 
-After the plan is talked through at `max` and he says yes, the lead at `high` looks at the job and chooses
+After the plan is talked through and he says yes, the lead at `high` looks at the job and chooses
 one of the four by its own judgement, and tells him in one line which and why. Writing itself is one of the
 four, not the default.
 
@@ -168,17 +184,20 @@ four, not the default.
   curve); `max` writes code only as the escalation writer — and for eye-facing code, the look of a page or a screen,
   which is written at `max` <!-- CEO-OK: eye-facing-work-xhigh-max-studio-skills-2026-10-28 -->.
 
-## 4. Sol — one blind pass
+## 4. Sol and Fable — one blind pass each
 
-Every job that changes code, a rule or a door gets one Sol pass, after BUILD — the light lane (§1) excepted; a change to the records
+Every job that changes code, a rule or a door gets one Sol pass and one Fable pass, side by side, after BUILD — the light lane (§1) excepted; a change to the records
 alone (STATE, the board) is checked by the rulers on commit instead.
 
 - **Launch:** `scripts/governance/refuter.sh [--effort medium|high|xhigh] "<brief>"` — `high` by
   default; `xhigh` for money, a database, security, approval, governance or the agents; `medium` for a
-  text-only change. An audit can outlast the Bash tool's 10 minutes: launch it detached (a small
+  text-only change. Fable at the same moment: `scripts/governance/fable-audit.sh <job> <brief-file>
+  [high|max]` — the same brief, `max` on an important or complex job; its findings take the same form and
+  the same A/B/C. An audit can outlast the Bash tool's 10 minutes: launch each detached (a small
   script under `setsid nohup`, its output to the job folder, `EXIT=` on its last line) and wait for
   that line.
-- **The brief — blind, not in the dark:** his words verbatim; the plan's decisions as facts ("this door
+- **The brief — blind, not in the dark:** it opens like the plan's brief (the holding reminder, the line's
+  mission and vision); his words verbatim; the plan's decisions as facts ("this door
   is closed on purpose"); the range; where the raw test and battery output lies. Never the lead's reasoning, a
   summary, "tests are green", or another auditor's verdict. Its first question: *does this do what he
   asked?*
@@ -278,6 +297,9 @@ alone (STATE, the board) is checked by the rulers on commit instead.
   reach the terminal; `operator type` inverts case here, so a command line is pasted, never typed) the
   line
   `systemd-run --user --scope --quiet --collect -p MemoryMax=16G -p MemorySwapMax=4G -- /home/dxb/.local/bin/claude --model <same> "$(cat <note>)"`
-  (`claude` is not on that terminal's PATH) → `operator shot`, read it → `operator key Return`.
+  (`claude` is not on that terminal's PATH) → `operator shot`, read it → `operator key Return`. With his
+  dictation on (status bar "Dikte açık"), the Return does not reach the terminal: `operator key ctrl+space`
+  (dictation off) → `operator key Return` → `operator key ctrl+space` (on again), each checked on a shot
+  <!-- CEO-OK: handover-dictation-off-enter-on-2026-11-09 -->.
   Proof it is alive: `ListAgents` shows it and it answers. If the job is in its plan phase, the
   successor's first reply carries the max warning (§2).

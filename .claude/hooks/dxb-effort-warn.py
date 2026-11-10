@@ -17,7 +17,7 @@ Fable's review of 2026-10-06 made the warning start by itself and arrive in time
     plan-max: max, build: high), each of his messages carries the warning into the session's context, and
     until he has switched the plan work itself waits (stop()). With no mode, a message that names a plan, a
     design or an architecture -- or his permission mode `plan` -- tells the lead, before it thinks about the
-    substance, to decide whether the reply would be plan work; if so, to open the dxb-team2 door, decide
+    substance, to decide whether the reply would be plan work; if so, to open the dxb-team3 door, decide
     whether it is a normal plan (high) or an important or complex job (max), run `plan` or `plan-max`, name
     the level and the reason in one line, open with the line the command gives and stop until he has
     switched (the CEO, 2026-10-12: the warning comes before the thinking; the door -- the CEO, 2026-10-09;
@@ -99,7 +99,7 @@ def warning(mode, level):
     if mode in PLAN_MODES:
         wanted = WANTED[mode]
         return (
-            f"This session is in PLAN mode ({mode}) under dxb-team2 and {runs}; the CEO's order (2026-10-06) is "
+            f"This session is in PLAN mode ({mode}) under dxb-team3 and {runs}; the CEO's order (2026-10-06) is "
             f"a normal plan, design or architecture at high, an important or complex job's plan at max "
             f"(2026-11-09) -- this one at {wanted} -- switched by him with /effort. Begin your reply, "
             f"before anything else, with exactly this line:\n{LINES[mode]}\n"
@@ -107,7 +107,7 @@ def warning(mode, level):
             f"the plan for his yes, run `{COMMAND} build` and close that reply with the line it gives, so his yes can "
             f"arrive at high.")
     return (
-        f"This session is in BUILD mode under dxb-team2 and {runs}; the CEO's order (2026-10-06) is "
+        f"This session is in BUILD mode under dxb-team3 and {runs}; the CEO's order (2026-10-06) is "
         f"the build at high, switched by him with /effort. Begin your reply, before anything else, with "
         f"exactly this line:\n{HIGH_LINE}\n"
         f"Then go on, but write no code until he has switched. If his message asks to change the plan "
@@ -118,8 +118,8 @@ def warning(mode, level):
 def open_door():
     # the CEO, 2026-10-09: "plan konuşacağız dediğimde direkt DXP Team 2 açılmalı" -- a hook cannot open a
     # skill, so it tells the lead to open the door before the plan command
-    return (f"By the CEO's order of 2026-10-09 a plan talk opens dxb-team2 at once: if the dxb-team2 door is not "
-            f"already open in this session, open it now with `Skill(\"dxb-team2\")` and ask the job inside the "
+    return (f"By the CEO's order of 2026-10-09 a plan talk opens dxb-team3 at once: if the dxb-team3 door is not "
+            f"already open in this session, open it now with `Skill(\"dxb-team3\")` and ask the job inside the "
             f"door -- not in Claude Code's generic plan mode, whose click-box questions do not reach him. Then: "
             f"{DECIDE} Do what the command answers.")
 
@@ -127,7 +127,7 @@ def open_door():
 def plan_reminder(level):
     runs = f"runs at {level}" if level else "runs at an unknown level"
     return (f"FIRST, before you think about the substance of his message: his message names a plan, a design or an "
-            f"architecture, or his permission mode is plan; this session {runs} and has no dxb-team2 effort mode. "
+            f"architecture, or his permission mode is plan; this session {runs} and has no dxb-team3 effort mode. "
             f"Decide now whether your reply would plan, design, propose, or evaluate an architecture or a design -- "
             f"anything beyond plain facts about what exists. If it would: {open_door()} When the command answers "
             f"with a line, open your reply, before anything else, with exactly that line, and then "
@@ -136,7 +136,7 @@ def plan_reminder(level):
 
 def unknown_reminder():
     return (f"The hook cannot tell this session's effort yet (no status line record, no step in the "
-            f"transcript), and it has no dxb-team2 effort mode. If your reply writes code, first run "
+            f"transcript), and it has no dxb-team3 effort mode. If your reply writes code, first run "
             f"`echo $CLAUDE_EFFORT` in Bash; if it is not high, open the reply, before anything else, with "
             f"exactly this line:\n{CODE_LINE}\nand write no code until he has switched. Otherwise ignore this.")
 
@@ -150,7 +150,7 @@ def code_reminder(level):
              "code that carries a client's look for max.")
     which = ("code that needs high" if level == "medium" else
              "any code at all (his word, 2026-10-29: no code is ever written at low, however short)")
-    return (f"This session runs at {level}, not high, and has no dxb-team2 effort mode; the CEO's order "
+    return (f"This session runs at {level}, not high, and has no dxb-team3 effort mode; the CEO's order "
             f"(2026-10-06) is code at high.{short} If your reply writes {which}, open it, before "
             f"anything else, with exactly this line:\n{CODE_LINE}\nand write no code until he has switched. If "
             f"the talk is a plan, a design or an architecture: {DECIDE} Otherwise ignore this.")

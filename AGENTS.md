@@ -37,9 +37,10 @@ Where the work stands today exists **once**: `.planning/STATE.md`.
 **DXB Global AI-Native Holding OS** — the executive command platform for one whole holding:
 companies, departments, masters, AI employees, projects, tasks, models, costs, decisions,
 approvals, workflows, skills, knowledge, memory, risks and audit, all seen, entered, changed and
-controlled from one place. It is **not** an admin panel, a project dashboard, an approval screen,
-a task manager or a SaaS panel — each is a named rejection in the CEO's own directive, and a
-delivery that resembles one is refused on sight.
+controlled from one place. **It is global:** it serves every market; Turkish is his language,
+never the market <!-- CEO-OK: holding-is-global-not-turkish-2026-11-08 -->. It is **not** an admin panel, a project dashboard, an approval screen,
+a task manager or a SaaS panel — each is named and rejected in his directive; a
+delivery resembling one is refused on sight.
 
 **Three faces, all three required:** it runs itself 7/24 (anti-baby-sitting) · the CEO sees every
 detail to the bottom · he changes anything at any moment, without having to micro-manage.
@@ -84,10 +85,7 @@ work stands before anything else**, in four short lines in his language:
 **Empty is silent, not announced** (CEO order, 2026-09-22: *"gözünüzü bekleyen bir şey yok diye
 açılışta önüme gelmesin"*). Line 1 or line 3 is spoken only when it is true — something really is
 waiting for his eye, or really is blocked on him. When there is nothing there, that line is
-**dropped**, not replaced with "nothing is waiting" / "gözünüzü bekleyen bir şey yok". He reads
-four lines to find out what needs him; a line that exists only to say "nothing" costs him the read
-for zero content. This is scoped to this reply protocol only — it does not touch "zero is a real
-answer" above, which governs system state surfaces, not this greeting line.
+**dropped**, not replaced with "nothing is waiting" / "gözünüzü bekleyen bir şey yok". Scoped to this reply only; "zero is a real answer" still governs system surfaces.
 
 **The position is already in front of you** — the session-start hook carries where we left off,
 what is next and what waits on his approval; this file carries what the holding IS. **Never re-open a file
@@ -133,14 +131,14 @@ the date. The battery fails on an unregistered approval claim.
   marks stop at the CEO. Money IN and routine outward communication do not.
 - **Ask before any project work.** Nothing in the project starts until he has said so in this
   conversation (CEO 2026-10-01).
-- **Do not state as fact what you did not check.** Owner: `00-CEO-DIRECTIVE-MEASURE-NEVER-GUESS.md`.
+- **Do not state as fact what you did not check; the board before "broken".** Owner: `00-CEO-DIRECTIVE-MEASURE-NEVER-GUESS.md`.
 - **Evidence before done.** A completion claim cites the command and its decisive output. Anything a terminal cannot observe is labelled `⚠ UNVERIFIED — requires
   human-eye confirmation` and listed apart. Door: `dxb-verify`.
 - **A fix must not break what stands around it; the tests show it.** Door: `dxb-verify`.
 - **Islamic boundaries are constitutional.** CEO-only. Code may refuse its own work against
   them and warns him once; his word after that warning is done once as an exception, the boundary unchanged
   <!-- CEO-OK: b64-q3-decision17-covers-everything-2026-10-14 -->; code may never widen or narrow them.
-- **Code: the session writes it; inside `dxb-team2` a fork, a `helper-writer` and the `builder`
+- **Code: the session writes it; inside `dxb-team3` a fork, a `helper-writer` and the `builder`
   seat write too, every piece verified by the lead before it is committed**
   <!-- CEO-OK: helpers-write-code-under-lead-verification-2026-10-03 -->. Other subagents audit,
   refute and sweep; they never write — and a
@@ -174,7 +172,7 @@ locales at parity. Owner: `00-CEO-DIRECTIVE-LANGUAGE.md`.
 | When you are… | Open |
 |---|---|
 | asked to learn the holding — what is where | `dxb-start` |
-| running a job | `dxb-team2` |
+| running a job | `dxb-team3` |
 | taking a board row from open to closed | `dxb-close-row` |
 | about to claim anything is finished | `dxb-verify` |
 | changing anything the CEO looks at | `dxb-surface` |

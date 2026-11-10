@@ -1,6 +1,6 @@
 ---
 name: dxb-start
-description: Use when the CEO asks you to learn the holding — "holdingi tanı", "dolapları ve çekmeceleri bil", "ne nerede" — or before you orient in a part of it you do not know. The smallest read that lets you act, what NOT to read, and where things are. A job itself runs through dxb-team2.
+description: Use when the CEO asks you to learn the holding — "holdingi tanı", "dolapları ve çekmeceleri bil", "ne nerede" — or before you orient in a part of it you do not know. The smallest read that lets you act, what NOT to read, and where things are. A job itself runs through dxb-team3.
 ---
 
 # Learning the holding — the smallest read
@@ -14,7 +14,7 @@ a dependency or a contradiction forces you to.**
 It is the door a session opens when he says *learn the holding, know the cupboards and drawers*
 (2026-09-04, 2026-10-03). Since 2026-10-03 it holds only that <!-- CEO-OK: dxb-start-slimmed-2026-10-03 -->;
 the rules of a job — understanding it, the plan's contents, root cause and the red test first —
-live in `dxb-team2`, which every job opens. The position (STATE's three headings) and the cupboard
+live in `dxb-team3`, which every job opens. The position (STATE's three headings) and the cupboard
 are already in the opening: never re-read them.
 
 ## The read order — stop when you can state the work

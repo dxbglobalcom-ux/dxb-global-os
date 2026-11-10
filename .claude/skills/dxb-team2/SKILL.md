@@ -1,6 +1,6 @@
 ---
 name: dxb-team2
-description: Use when the CEO hands the construction a job, or says a plan will be talked ("plan konuşacağız", "plan moduna geçelim") — the default construction door. The lead (the session) chooses who writes — itself, a fork, medium helpers, or a fork with helpers — and verifies every piece; GPT-6.1 Sol and Fable 5.1 audit the work blind, side by side, read-only; their findings are fixed and tested; the CEO is warned to switch the effort — high for a normal plan and the build, max for an important or complex plan. Trigger `/dxb-team2 <the job in one sentence>`.
+description: The previous construction door, kept for comparison. Opens only when named (dxb-team2); the default construction door is dxb-team3.
 ---
 
 # The team — one lead, the hands it chooses, two blind auditors

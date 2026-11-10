@@ -25,8 +25,8 @@ decisive output line, or the claim is not made. This is the CEO's oldest and har
 At every size, each row of the table below that the change touches is run — the hook's rows run by
 themselves, the author runs the rest by hand. The size changes only how far the tests reach:
 
-- **Small** (the light lane, `dxb-team2` §1): the touched test, §1 above, the traps in §4.
-- **Larger, or code changed:** `pnpm typecheck` then the battery — when and how: `dxb-team2` §5,
+- **Small** (the light lane, `dxb-team3` §1): the touched test, §1 above, the traps in §4.
+- **Larger, or code changed:** `pnpm typecheck` then the battery — when and how: `dxb-team3` §5,
   their one owner.
 
 The tests a change needs follow its risk: a targeted test for a local change, an integration test
@@ -34,7 +34,7 @@ at a boundary, a security check wherever authorisation, secrets or isolation mov
 
 | What changed | Its ruler | Who runs it |
 |---|---|---|
-| Code | `pnpm typecheck` · `pnpm construction:battery` (both halves, the construction engine on port 54422; green is `BATTERY_GREEN`) | the author, per job (`dxb-team2` §5) |
+| Code | `pnpm typecheck` · `pnpm construction:battery` (both halves, the construction engine on port 54422; green is `BATTERY_GREEN`) | the author, per job (`dxb-team3` §5) |
 | Records — STATE, the board, the ledger | `node --no-warnings tests/b43/records-truth.ts` · `pnpm verify:ledger` (every record agrees with what it claims, the live company database included) · parity (`dxb-close-row`) | the commit hook runs records-truth; `verify:ledger` by the author |
 | A door, the core, the opening hook | `node --no-warnings tests/hooks/opening-budget.ts` · `bash scripts/governance/sync-codex-mirror.sh` (regenerates the auditor's copy; `--check` must pass) | the hook runs the budget; the mirror by the author |
 | Research engine | `bash scripts/research-ruler.sh` · `tests/b46/` · `.agents/skills/dxb-research/scripts/accept.sh` (the live run, before claiming the engine works) | the hook runs the first two |
@@ -92,7 +92,7 @@ verified, what could not be, and what still waits for him.
 
 One hand builds, another checks; the checker only checks (the audit law, `AGENTS.md` §2).
 Who audits, when, at what depth and with which read-only tool — and the light lane that skips it —
-has one owner: `dxb-team2` §4. The extra triggers (his acceptance session, a closing leg no machine
+has one owner: `dxb-team3` §4. The extra triggers (his acceptance session, a closing leg no machine
 can check, a defect he caught → sweep its class) are in
 `HOLDING-OS-MASTER-PLAN/00-CEO-DIRECTIVE-AUDIT-TWIN.md` §4. A finding is evidence, never a verdict,
 and an auditor's CONFIRMED is never an acceptance.

@@ -936,7 +936,7 @@ COLD_RESUME = ("`SendMessage` to %s resumes a subagent idle for %d min — its p
                "(measured 2026-09-26/27: six resumes, 2.4 M)")
 COLD_RESUME_ADVICE = ("Open a FRESH `helper-writer` with the auditor's A/B list, the piece's spec and the diff "
                       "to read; a fresh writer starts at ~22 k. Only a piece that failed twice at high goes to "
-                      "`builder` (dxb-team2 §3).")
+                      "`builder` (dxb-team3 §3).")
 
 
 def refuse(where, target, reason, advice):
