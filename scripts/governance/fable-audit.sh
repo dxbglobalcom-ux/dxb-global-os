@@ -11,7 +11,8 @@
 set -euo pipefail
 REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 CLAUDE="${DXB_CLAUDE_BIN:-/home/dxb/.local/bin/claude}"
-MODEL=claude-fable-5-1
+# Fable 5.2 since 2026-11-10, on the CEO's word: Fable 5.2 takes Fable 5.1's place.
+MODEL=claude-fable-5-2
 # shellcheck source=walled-box.sh
 . "$REPO/scripts/governance/walled-box.sh"
 

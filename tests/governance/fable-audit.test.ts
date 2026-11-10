@@ -55,13 +55,13 @@ function setup() {
 }
 
 describe("fable-audit.sh", () => {
-  it("runs Fable 5.1 at high on the brief, read-only and walled off, and ends with FABLE_AUDIT_DONE", () => {
+  it("runs Fable 5.2 at high on the brief, read-only and walled off, and ends with FABLE_AUDIT_DONE", () => {
     const t = setup();
     const r = t.run([t.job, t.brief]);
     expect(r.status, r.stderr).toBe(0);
     expect(r.stdout.trim().split("\n").pop()).toBe("FABLE_AUDIT_DONE exit=0");
     expect(readFileSync(join(t.job, "fable-audit.md"), "utf8")).toBe(`${VERDICT}\n`);
-    expect(t.after("--model")).toBe("claude-fable-5-1");
+    expect(t.after("--model")).toBe("claude-fable-5-2");
     expect(t.after("--effort")).toBe("high");
     expect(t.after("--tools")).toBe("Read,Grep,Glob");
     expect(t.args()).toContain("-p");
