@@ -148,9 +148,11 @@ four, not the default.
 - The lead verifies each piece before it is committed — reads the diff, runs its tests — and commits
   only what it verified. Nobody else commits.
 - A piece that fails: a medium writer's goes to the lead or a fork at `high`; one that failed twice at
-  `high` goes to the `builder`, never earlier. Opus `xhigh` is never used for code (FrontierCode 51.4 %, the bottom of the
-  curve); `max` writes code only as the escalation writer; eye-facing code, the look of a page or a screen,
-  is written at `xhigh`, as in dxb-team3 §3 <!-- CEO-OK: eye-facing-work-xhigh-max-studio-skills-2026-10-28 -->.
+  `high` goes to the `builder`, never earlier. Opus `xhigh` is never used for code (FrontierCode 51.4 %, the bottom of
+  Opus's curve — that model's measurement, not a rule for another
+  <!-- CEO-OK: level-rules-stay-with-their-model-2026-11-10 -->); `max` writes code only as the escalation writer
+  — and for eye-facing code, the look of a page or a screen, which is written at `max`
+  <!-- CEO-OK: eye-facing-work-xhigh-max-studio-skills-2026-10-28 -->.
 
 ## 4. Sol and Fable — one blind pass each
 

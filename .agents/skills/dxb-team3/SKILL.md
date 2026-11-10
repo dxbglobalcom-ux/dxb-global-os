@@ -173,8 +173,7 @@ four, not the default.
 - The lead verifies each piece before it is committed — reads the diff, runs its tests — and commits
   only what it verified. Nobody else commits.
 - A piece that fails: a medium writer's goes to the lead or a fork at `high`; one that failed twice at
-  `high` goes to the `builder` at `xhigh`, never earlier. Eye-facing code, the look of a page or a screen, is
-  written at `xhigh` <!-- CEO-OK: eye-facing-work-xhigh-max-studio-skills-2026-10-28 --> — `max` is not used
+  `high` goes to the `builder` at `xhigh`, never earlier; `max` is not used
   <!-- CEO-OK: effort-high-xhigh-no-max-2026-11-10 -->. Code is written by Fable 5.2: the lead, its fork, the
   writing helper and the escalation writer <!-- CEO-OK: code-written-by-fable-5-2-2026-11-10 -->.
 

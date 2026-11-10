@@ -137,7 +137,9 @@ describe("each of his messages tells the lead the session's level and how to set
     const text = context(hook(dir, prompt(SID, transcript(dir, []))));
     expect(text).toMatch(/talk, a question, a fact, a reading or a record: medium/);
     expect(text).toMatch(/a plan, a design, an architecture, or code: high/);
-    expect(text).toMatch(/truly complex, important job's plan or work.*: xhigh/);
+    expect(text).toMatch(/truly complex, important job's plan or work: xhigh/);
+    // the level follows the job, never a kind of work (his word, 2026-11-10): no blanket "eye-facing code at xhigh"
+    expect(text).not.toContain("look of a page");
     expect(text).toContain("max is not used");
     expect(text).not.toContain("dxb-effort-max");
     expect(text).not.toContain("dxb-effort-low");

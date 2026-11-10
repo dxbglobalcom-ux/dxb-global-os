@@ -86,8 +86,7 @@ def sync(level):
         "merge or a setting, tried at once) may stay at medium; the measure is what an error costs, so code that "
         "deletes or moves data, touches money or the approval gate, security or permissions, runs in parallel or "
         "changes many places at once is high; no code at low;\n"
-        "- a truly complex, important job's plan or work, or code that carries the look of a page or a screen: "
-        "xhigh.\n"
+        "- a truly complex, important job's plan or work: xhigh.\n"
         f"{act} When the level you work at differs from the reply before, open the reply with a few words naming "
         "it and why (\"high: plan\"); otherwise say nothing about effort. max is not used.")
 

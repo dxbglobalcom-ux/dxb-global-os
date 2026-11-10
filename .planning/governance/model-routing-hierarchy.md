@@ -1,6 +1,6 @@
 ---
 name: model-routing-hierarchy
-description: "v19 (CEO 2026-10-06): dxb-team2 yalın — lider elleri seçer (kendisi, fork, medium yardımcılar, hibrit), her parçayı doğrular; kod/kural/kapı değişen her işte bir kör Sol geçişi (effort liderin: varsayılan high, para/veritabanı/güvenlik/yönetim xhigh, yalnız metin medium); kart, yapılacaklar listesi ve dxb-team2'de Fable yok; oturum seviyesini kendisi ayarlar (sohbet medium, plan ve kod high, gerçekten karmaşık ve önemli iş xhigh; max yok — CEO 2026-11-10); Opus xhigh kod yazmaz; v18 dxb-crew ve dxb-team1 silindi; eski sürümler git geçmişinde"
+description: "v19 (CEO 2026-10-06): dxb-team2 yalın — lider elleri seçer (kendisi, fork, medium yardımcılar, hibrit), her parçayı doğrular; kod/kural/kapı değişen her işte bir kör Sol geçişi (effort liderin: varsayılan high, para/veritabanı/güvenlik/yönetim xhigh, yalnız metin medium); kart, yapılacaklar listesi ve dxb-team2'de Fable yok; oturum seviyesini kendisi ayarlar (sohbet medium, plan ve kod high, gerçekten karmaşık ve önemli iş xhigh; max yok — CEO 2026-11-10); Opus xhigh kod yazmaz (Opus'un FrontierCode eğrisinin dibi; yalnız Opus'a ait); v18 dxb-crew ve dxb-team1 silindi; eski sürümler git geçmişinde"
 metadata:
   type: feedback
   originSessionId: 6f441f82-3704-454a-83cd-11cd3bcd26d8

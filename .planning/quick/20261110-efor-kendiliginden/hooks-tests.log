@@ -2,19 +2,20 @@
  RUN  v3.2.6 /home/dxb/DxB Global OS
 
 [global-setup] construction engine 7690665340837392423/5 (postgres) — verified on the connection that does the work.
- ✓ tests/hooks/opening-budget.test.ts (8 tests) 1718ms
-   ✓ the opening ruler bites on a copy > rings on the total, not only on the piece, when the opening as a whole is too big  304ms
+ ✓ tests/hooks/opening-budget.test.ts (8 tests) 1725ms
+   ✓ the opening ruler bites on a copy > rings on the total, not only on the piece, when the opening as a whole is too big  305ms
+   ✓ the opening ruler bites on a copy > rings when the position block fails its own ruler, and carries that ruler's reason  302ms
    ✓ the opening ruler bites on a copy > rings on a cupboard page that is no longer one page  300ms
-   ✓ the opening ruler bites on a copy > names a cupboard page that does not exist instead of hiding it  303ms
- ✓ tests/hooks/context-gate.test.ts (16 tests) 1055ms
-   ✓ the gate never breaks a session: what it cannot read is silent, not a failure > exits 0 with nothing on stderr when the reader of its answer is gone: a deny at 61 into a closed pipe  309ms
- ✓ tests/hooks/effort-warn.test.ts (57 tests) 823ms
- ✓ tests/hooks/cost-gate.test.ts (17 tests) 545ms
- ✓ tests/hooks/session-start-fits.test.ts (4 tests) 305ms
-   ✓ the hook as it stands > delivers the position whole: every rule passes  303ms
+   ✓ the repository as it stands > keeps the opening inside every budget, and reports the global skills without judging them  306ms
+ ✓ tests/hooks/context-gate.test.ts (16 tests) 1045ms
+   ✓ the gate never breaks a session: what it cannot read is silent, not a failure > exits 0 with nothing on stderr when the reader of its answer is gone: a deny at 61 into a closed pipe  308ms
+ ✓ tests/hooks/effort-warn.test.ts (57 tests) 856ms
+ ✓ tests/hooks/cost-gate.test.ts (17 tests) 567ms
+ ✓ tests/hooks/session-start-fits.test.ts (4 tests) 307ms
+   ✓ the hook as it stands > delivers the position whole: every rule passes  305ms
 
  Test Files  5 passed (5)
       Tests  102 passed (102)
-   Start at  19:07:35
-   Duration  5.17s (transform 83ms, setup 0ms, collect 70ms, tests 4.45s, environment 0ms, prepare 156ms)
+   Start at  20:04:06
+   Duration  5.22s (transform 81ms, setup 0ms, collect 73ms, tests 4.50s, environment 0ms, prepare 151ms)
 
