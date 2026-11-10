@@ -7,3 +7,10 @@ timestamp	effort	row
 2026-11-10T18:12:07.308Z	high	Skill:dxb-effort-medium
 2026-11-10T18:12:22.306Z	medium	-
 2026-11-10T18:14:19.139Z	--	task-notification
+# A second session (8a9e72d9, opened at his saved default, medium), its first two turns: talk, then a plan and door text.
+2026-11-10T20:23:52.641Z	medium	turn opens (the handover note)
+2026-11-10T20:23:53.235Z	medium	Skill dxb-effort-medium
+2026-11-10T20:24:49.053Z	medium	last step of the turn — the position, told in talk
+2026-11-10T20:26:14.496Z	medium	task-notification (the gatherer's report); the reply is a door change
+2026-11-10T20:26:14.858Z	medium	Skill dxb-effort-high
+2026-11-10T20:26:36.716Z	high	first step after the skill; every later step of the turn (33 rows to 20:29:26) at high
