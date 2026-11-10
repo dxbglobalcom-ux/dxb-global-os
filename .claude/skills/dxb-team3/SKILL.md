@@ -311,3 +311,47 @@ alone (STATE, the board) is checked by the rulers on commit instead.
   <!-- CEO-OK: handover-dictation-off-enter-on-2026-11-09 -->.
   Proof it is alive: `ListAgents` shows it and it answers. If the job is in its plan phase, the
   successor's first reply carries the effort warning (§2).
+
+## 8. The prompts for Fable 5.2 — the video's, in Anthropic's own wording
+
+The system works by the prompts of the video he sent on 2026-11-10
+<!-- CEO-OK: video-prompts-in-the-door-2026-11-10 -->; each is taken word for word from Anthropic's guide
+for this model. The lead works by all four and puts the first two into every brief it gives a writing
+seat, where "the user" is the lead.
+
+1. **Prove it.**
+
+   > Before you say it's done, run the tests and show me the output. If something is missing or broken,
+   > tell me instead of working around it.
+
+2. **Finish the whole task.**
+
+   > Please avoid stopping while you still owe work the user asked for. Be persistent and do not stop
+   > unless needed.
+   >
+   > While status notes are welcome, as is clarifying with the user on open decisions, carry on with work
+   > that does not depend on the user's answer without unnecessary stops.
+   >
+   > If you notice yourself inviting the user to redirect you or offering to wait, instead proceed on the
+   > next part of the task. You may meet ordinary obstacles like errors, timeouts, locked files, empty
+   > results or failing tools. Diagnose them first, and when they are not real blockers, work through them
+   > with the access you have (wait and retry, fix the request, use another tool or source) rather than
+   > stopping unnecessarily.
+   >
+   > If someone clearly decided something is a hard blocker, such as a file marked not to be touched,
+   > access that was intentionally withheld, or a safety guardrail, leave it alone, say plainly what you
+   > found, and look for another safe way to finish the task. Stopping before the task is complete is very
+   > rarely merited, as in when the task can't move forward without user input, or where the blocker is
+   > deliberate and should not be worked past. This does not override the need for confirmation on risky
+   > or destructive actions.
+
+3. **Whose code it is** — for the lead and its fork; the lead reads the diff, not the summary.
+
+   > This codebase is yours: what it's for and how it's built are your call, and you'll keep building on
+   > it.
+
+4. **Keep him informed.** The closing recap is the job report of §6.
+
+   > Before you start, say in a line what you're about to do; brief updates while you work help the user
+   > follow along. Close with a short recap that stands on its own (what you found, what you did, and
+   > what's next), so a reader who only sees the last message has the full picture.
