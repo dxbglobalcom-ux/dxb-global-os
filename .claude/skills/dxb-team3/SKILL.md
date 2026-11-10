@@ -1,6 +1,6 @@
 ---
 name: dxb-team3
-description: Use when the CEO hands the construction a job, or says a plan will be talked ("plan konuşacağız", "plan moduna geçelim") — the default construction door. The lead (the session) chooses who writes — itself, a fork, medium helpers, or a fork with helpers — and verifies every piece; GPT-6.1 Sol and Fable 5.2 audit the work blind, side by side, read-only; their findings are fixed and tested; the session sets its own effort — medium for talk, high for plans and work, xhigh only for a truly complex, important job, never max. Trigger `/dxb-team3 <the job in one sentence>`.
+description: Use when the CEO hands the construction a job, or says a plan will be talked ("plan konuşacağız", "plan moduna geçelim") — the default construction door. The lead (the session) chooses who writes — itself, a fork, medium helpers, or a fork with helpers — and verifies every piece; GPT-6.1 Sol audits the work blind, read-only, Fable 5.2 beside it on an important job; their findings are fixed and tested; the session sets its own effort — medium for talk, high for plans and work, xhigh only for a truly complex, important job, never max. Trigger `/dxb-team3 <the job in one sentence>`.
 ---
 
 # The team — one lead, the hands it chooses, two blind auditors
@@ -10,7 +10,7 @@ for comparison and opens only when named.
 
 The construction's default door <!-- CEO-OK: dxb-team2-default-door-2026-09-28 -->, and since
 2026-10-06 a lean one: no score card, no done-list, no paperwork per job — the work, a blind check, the
-fixes, the tests <!-- CEO-OK: dxb-team2-lean-2026-10-06 -->; a second Fable 5.2, walled off, audits beside Sol (§3, §4) <!-- CEO-OK: fable-audits-opus-second-writer-effort-by-weight-2026-11-09 -->. Every holding build runs
+fixes, the tests <!-- CEO-OK: dxb-team2-lean-2026-10-06 -->; on an important job a second Fable 5.2, walled off, audits beside Sol (§3, §4) <!-- CEO-OK: lead-chooses-freely-fable-audits-important-jobs-2026-11-10 -->. Every holding build runs
 through it, so the standard is the Ferrari's: fast because nothing in it is ceremony, right because
 nothing reaches him unchecked. The laws it obeys are in `.claude/CLAUDE.md`; it opens `dxb-verify`
 and `dxb-close-row`.
@@ -30,7 +30,7 @@ PLAN      the talk turns to plan, design or architecture → the lead sets its o
           high; a truly complex, important job → xhigh, said to him in one line with its reason (§2);
           his "plan konuşacağız" opens this door at once, the job is asked inside it
           the lead writes the plan; on an important or complex job a second Opus 5.5 writes it too, sealed
-          → Sol and Fable audit it blind, side by side → the lead adds, fixes, signs (below)
+          → Sol audits it blind — on an important job Fable too, side by side → the lead adds, fixes, signs (below)
           the plan goes to him once, in his language → his yes
    │
 ARRANGE   the lead chooses the hands (§3) and says it in one line
@@ -39,7 +39,7 @@ BUILD     the hands write and run their own tests; the lead verifies every piece
    │
 TEST      code changed → typecheck and the battery (§5), ended before Sol starts
    │
-AUDIT     Sol and Fable, one blind, read-only pass each, at the same time, over the job's commits, the
+AUDIT     Sol — and on an important job Fable beside it — one blind, read-only pass, over the job's commits, the
           battery's output in hand (§4) — A blocks · B fixed now · C in the report
    │
 FIX       a fork or a writing helper fixes; the lead verifies; no second audit round; the touched tests,
@@ -75,7 +75,7 @@ other's, by tool, not by promise <!-- CEO-OK: plan-writers-sealed-independent-20
 2. The lead writes its own plan in its scratchpad and, on a two-writer job, seals it (`second-plan.sh seal`)
    before it opens the other (`reveal`); anything that read the other's output before `reveal` voids the job,
    and `SEALS.log` records every step with its time and hash.
-3. The audit — Sol and Fable, blind, side by side, one pass each, from the same brief. `second-plan.sh blind`
+3. The audit — Sol, and on an important job Fable beside it (§4), blind, one pass each, from the same brief. `second-plan.sh blind`
    puts the brief and the plan(s) — "A" and "B" in a random order, no model or effort named — in
    `<job>/blind/`; `second-plan.sh audit <job> <audit-brief> [effort]` runs Sol (`refuter.sh`) with the key,
    the originals and the transcripts denied, and `scripts/governance/fable-audit.sh <job> <audit-brief>
@@ -135,7 +135,7 @@ important job — its plan and its work — at `xhigh`. `max` is not used
 
 | Seat | Who | Does | Never |
 |---|---|---|---|
-| **Lead** | the session, at the level the turn needs (§2) | manages: decides, chooses the hands, specifies, writes what it keeps, verifies every piece and every fix, runs the tests, commits, tells him | approves its own work; commits a piece it has not verified; asks him a technical question; does the wide reading or measuring itself |
+| **Lead** | the session, at the level the turn needs (§2) | manages: decides, chooses the hands, specifies, writes what it keeps, verifies every piece and every fix, runs the tests, commits, tells him | approves its own work; commits a piece it has not verified; asks him a technical question |
 | **Fork** | the lead's own copy (`subagent_type: "fork"`), its whole context | writes a piece that needs this conversation <!-- CEO-OK: fork-seat-no-size-2026-10-08 --> | commits |
 | **Writing helper** | `helper-writer` (Fable 5.2 · `medium`) | writes and tests a piece the lead specified; fixes a Sol finding | commits; widens the piece <!-- CEO-OK: helpers-write-code-under-lead-verification-2026-10-03 --> |
 | **Easy writer** | `easy-writer` (Opus 5.5 · `medium`) | writes and tests an easy piece of code the lead specified — narrow glue, a setting, a merge | commits; widens the piece; is given a piece §2 would write at `high` |
@@ -145,17 +145,17 @@ important job — its plan and its work — at `xhigh`. `max` is not used
 | **Escalation writer** | `builder` (Fable 5.2 · `xhigh`), one-shot | only a piece that failed twice at `high` | is opened for a routine fix |
 | **Second writer** | Opus 5.5, at the plan's level, its own process through `scripts/governance/second-plan.sh` <!-- CEO-OK: fable-audits-opus-second-writer-effort-by-weight-2026-11-09 --> | on an important or complex job, writes the same plan from the same brief, unseen (§1) | sees the lead's draft; audits; writes code |
 | **Auditor** | GPT-6.1 Sol <!-- CEO-OK: auditor-sol-6-1-2026-10-01 -->, through `scripts/governance/refuter.sh` | one blind pass over the job's commits (§4); on a plan job, also the blind plan audit (§1) | writes; audits the same thing twice; sees the lead's reasoning or verdict |
-| **Second auditor** | Fable 5.2 — `high` — through `scripts/governance/fable-audit.sh` <!-- CEO-OK: fable-audits-opus-second-writer-effort-by-weight-2026-11-09 --> | audits whatever Sol audits, from the same brief, at the same time, blind (§1, §4) | writes a plan or code; audits twice; sees Sol's findings or the lead's verdict |
+| **Second auditor** | Fable 5.2 — `high` — through `scripts/governance/fable-audit.sh` <!-- CEO-OK: fable-audits-opus-second-writer-effort-by-weight-2026-11-09 --> | on an important job, audits what Sol audits, from the same brief, at the same time, blind (§1, §4) | writes a plan or code; audits twice; sees Sol's findings or the lead's verdict |
 
 `design-eye` is not a seat of this door. The second auditor finds and never writes.
 
 **The lead is a manager, in a job and in talk alike** <!-- CEO-OK: lead-manages-hands-by-difficulty-2026-11-10 -->:
-it decides, specifies, verifies and talks to him, and keeps its own context for that. Work that would fill
-its context or eat the quota goes to the hand its difficulty needs — gathering, extracting and listing to a
-`gatherer`; reading at the source, research and measurement to a `helper`; an easy piece of code may go to
-an `easy-writer`, a harder one is Fable 5.2's. The lead verifies what comes back — a gatherer's filled
-template, a helper's findings, a writer's piece. What it reads to verify, and a single file whose place is
-known, it reads itself. The lead also brings him proposals of its own.
+it knows it is the orchestrator, and at each moment it chooses what it does itself and what it hands over —
+it may read and do as much as it judges right; what it weighs is its own context and the quota
+<!-- CEO-OK: lead-chooses-freely-fable-audits-important-jobs-2026-11-10 -->. Its hands, by the work's
+difficulty: a `gatherer` gathers, extracts and lists; a `helper` reads at the source, researches and
+measures; an `easy-writer` may write an easy piece of code, a harder one is Fable 5.2's. The lead verifies
+what comes back, and brings him proposals of its own.
 
 **The arrangement — four, all equal**
 <!-- CEO-OK: orchestration-three-arrangements-lead-chooses-2026-10-03 --> <!-- CEO-OK: four-equal-arrangements-lead-chooses-2026-10-08 -->:
@@ -189,14 +189,14 @@ four, not the default.
   <!-- CEO-OK: lead-manages-hands-by-difficulty-2026-11-10 -->; every other piece is written by Fable 5.2: the
   lead, its fork, the writing helper and the escalation writer <!-- CEO-OK: code-written-by-fable-5-2-2026-11-10 -->.
 
-## 4. Sol and Fable — one blind pass each
+## 4. The audit — Sol on every job, Fable beside it on an important one
 
-Every job that changes code, a rule or a door gets one Sol pass and one Fable pass, side by side, after BUILD — the light lane (§1) excepted; a change to the records
+Every job that changes code, a rule or a door gets one Sol pass after BUILD — the light lane (§1) excepted. A simple or middle job gets Sol alone; an important job — the lead judges which — gets one Fable pass beside it, at the same time <!-- CEO-OK: lead-chooses-freely-fable-audits-important-jobs-2026-11-10 -->; a change to the records
 alone (STATE, the board) is checked by the rulers on commit instead.
 
 - **Launch:** `scripts/governance/refuter.sh [--effort medium|high|xhigh] "<brief>"` — `high` by
   default; `xhigh` for money, a database, security, approval, governance or the agents; `medium` for a
-  text-only change. Fable at the same moment: `scripts/governance/fable-audit.sh <job> <brief-file>
+  text-only change. On an important job, Fable at the same moment: `scripts/governance/fable-audit.sh <job> <brief-file>
   high` — the same brief; its findings take the same form and
   the same A/B/C. An audit can outlast the Bash tool's 10 minutes: launch each detached (a small
   script under `setsid nohup`, its output to the job folder, `EXIT=` on its last line) and wait for
