@@ -109,7 +109,7 @@ Good interfaces make testing natural:
 
 # Part B: Self-check before hand-over — the 12 smells
 
-The writer is whoever wrote the lines in this piece: the lead, a fork, a helper-writer or the builder. The writer runs this check once, before handing the piece over, and only over the lines it wrote in this piece. It never runs it over code it did not touch: fixing the neighbourhood is scope creep, and what it sees there goes into the report as "next work" instead.
+The writer is whoever wrote the lines in this piece: the lead, a fork, a helper-writer, an easy-writer or the builder. The writer runs this check once, before handing the piece over, and only over the lines it wrote in this piece. It never runs it over code it did not touch: fixing the neighbourhood is scope creep, and what it sees there goes into the report as "next work" instead.
 
 A documented repository rule always wins over a smell. A smell is a judgement call, never a hard violation.
 

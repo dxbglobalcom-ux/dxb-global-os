@@ -20,7 +20,7 @@
 
 ## Who reads it
 
-- The construction, now: `~/.claude/agents/debugger.md` reads `diagnosing-bugs.md`; the writing seats `~/.claude/agents/helper-writer.md`, `~/.claude/agents/builder.md` and `.claude/skills/dxb-team2/SKILL.md` read `codebase-design.md`.
+- The construction, now: `~/.claude/agents/debugger.md` reads `diagnosing-bugs.md`; the writing seats `~/.claude/agents/helper-writer.md`, `~/.claude/agents/easy-writer.md`, `~/.claude/agents/builder.md` and `.claude/skills/dxb-team2/SKILL.md` read `codebase-design.md`.
 - The holding's engineering department (`personas/engineering/`) is bound to the same files when its work starts.
 
 ## Decision record

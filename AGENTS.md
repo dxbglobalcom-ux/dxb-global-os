@@ -138,12 +138,12 @@ the date. The battery fails on an unregistered approval claim.
 - **Islamic boundaries are constitutional.** CEO-only. Code may refuse its own work against
   them and warns him once; his word after that warning is done once as an exception, the boundary unchanged
   <!-- CEO-OK: b64-q3-decision17-covers-everything-2026-10-14 -->; code may never widen or narrow them.
-- **Code: the session writes it; inside `dxb-team3` a fork, a `helper-writer` and the `builder`
-  seat write too, every piece verified by the lead before it is committed**
-  <!-- CEO-OK: helpers-write-code-under-lead-verification-2026-10-03 -->. Other subagents audit,
-  refute and sweep; they never write — and a
-  CHECKER session is bound the same way: it measures, instructs and re-measures, it never writes,
-  ruler scripts included (the audit law, CEO 2026-09-15
+- **Code: the session writes it; in `dxb-team3` its writing seats too, every piece verified by the lead
+  before commit** <!-- CEO-OK: helpers-write-code-under-lead-verification-2026-10-03 -->.
+  **Every session manages; its hands read and measure**
+  <!-- CEO-OK: lead-manages-hands-by-difficulty-2026-11-10 -->. Other subagents audit, refute and sweep;
+  they never write — and a CHECKER session is bound the same way: it measures, instructs and re-measures,
+  it never writes, ruler scripts included (the audit law
   <!-- CEO-OK: audit-law-checker-only-checks-2026-09-15 -->; door: `dxb-verify`).
 - **The plan exists once.** No new spec, no new plan file. A deviation is a registered
   adaptation inside the spec that already owns the contract.

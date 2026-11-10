@@ -135,10 +135,12 @@ important job — its plan and its work — at `xhigh`. `max` is not used
 
 | Seat | Who | Does | Never |
 |---|---|---|---|
-| **Lead** | the session, at the level the turn needs (§2) | chooses the hands, writes what it keeps, verifies every piece and every fix, runs the tests, commits, tells him | approves its own work; commits a piece it has not verified; asks him a technical question |
+| **Lead** | the session, at the level the turn needs (§2) | manages: decides, chooses the hands, specifies, writes what it keeps, verifies every piece and every fix, runs the tests, commits, tells him | approves its own work; commits a piece it has not verified; asks him a technical question; does the wide reading or measuring itself |
 | **Fork** | the lead's own copy (`subagent_type: "fork"`), its whole context | writes a piece that needs this conversation <!-- CEO-OK: fork-seat-no-size-2026-10-08 --> | commits |
 | **Writing helper** | `helper-writer` (Fable 5.2 · `medium`) | writes and tests a piece the lead specified; fixes a Sol finding | commits; widens the piece <!-- CEO-OK: helpers-write-code-under-lead-verification-2026-10-03 --> |
-| **Helper** | `helper` (Opus 5.5 · `medium`, read-only) | reads code or documents, measures, researches | writes |
+| **Easy writer** | `easy-writer` (Opus 5.5 · `medium`) | writes and tests an easy piece of code the lead specified — narrow glue, a setting, a merge | commits; widens the piece; is given a piece §2 would write at `high` |
+| **Helper** | `helper` (Opus 5.5 · `medium`, read-only) | middle-to-hard work: reads code or documents at the source, measures, researches — from a freer brief | writes |
+| **Gatherer** | `gatherer` (Sonnet 5.5 · `medium`, read-only) | simple-to-middle work: gathers, extracts, lists — from a tight, templated brief | writes; judges; is given a question the template does not settle |
 | **Reader** | a one-shot `scout` or `Explore` | a wide search whose text would swell the lead's context | writes; is resumed (its cache dies at 5 min) |
 | **Escalation writer** | `builder` (Fable 5.2 · `xhigh`), one-shot | only a piece that failed twice at `high` | is opened for a routine fix |
 | **Second writer** | Opus 5.5, at the plan's level, its own process through `scripts/governance/second-plan.sh` <!-- CEO-OK: fable-audits-opus-second-writer-effort-by-weight-2026-11-09 --> | on an important or complex job, writes the same plan from the same brief, unseen (§1) | sees the lead's draft; audits; writes code |
@@ -147,6 +149,13 @@ important job — its plan and its work — at `xhigh`. `max` is not used
 
 `design-eye` is not a seat of this door. The second auditor finds and never writes.
 
+**The lead is a manager, in a job and in talk alike** <!-- CEO-OK: lead-manages-hands-by-difficulty-2026-11-10 -->:
+it decides, specifies, verifies and talks to him, and keeps its own context for that. Work goes to the hand
+its difficulty needs — gathering, extracting and listing to a `gatherer`; reading at the source, research
+and measurement to a `helper`; an easy piece of code to an `easy-writer`, a harder one to Fable 5.2. What
+comes back is the conclusion, which the lead checks at the points its decision rests on. One exception: a
+single file whose place is known, the lead reads itself. The lead also brings him proposals of its own.
+
 **The arrangement — four, all equal**
 <!-- CEO-OK: orchestration-three-arrangements-lead-chooses-2026-10-03 --> <!-- CEO-OK: four-equal-arrangements-lead-chooses-2026-10-08 -->:
 
@@ -154,8 +163,8 @@ important job — its plan and its work — at `xhigh`. `max` is not used
 |---|---|
 | **Lead** | the lead itself |
 | **Fork** | the fork, while the lead stays free to verify |
-| **Team** | `helper-writer`s at `medium`, each its own piece, in parallel; `helper`s read and research beside them; the lead directs them |
-| **Hybrid** | the fork writes the core; `helper-writer`s the side pieces; `helper`s read |
+| **Team** | `helper-writer`s at `medium`, each its own piece, in parallel — an easy piece an `easy-writer`; `helper`s and `gatherer`s read and research beside them; the lead directs them |
+| **Hybrid** | the fork writes the core; `helper-writer`s and `easy-writer`s the side pieces; `helper`s and `gatherer`s read |
 
 After the plan is talked through and he says yes, the lead looks at the job and chooses
 one of the four by its own judgement, and tells him in one line which and why. Writing itself is one of the
@@ -166,7 +175,7 @@ four, not the default.
   — inside the 4-minute rule (§7), so the lead starts no battery while writers are testing.
 - Each writer gets a spec it can work from alone: the files, the
   behaviour, the measured facts it must not re-litigate, the test it writes first, what it reports.
-- Whoever writes — lead, fork, `helper-writer`, `builder` — writes by the principles in
+- Whoever writes — lead, fork, `helper-writer`, `easy-writer`, `builder` — writes by the principles in
   `references/engineering-craft/codebase-design.md` and, before hand-over, checks only its own lines once
   against its 12 smells: fixed there, or named with a reason. No extra agent, no extra round; the lead
   never sends work back on a smell <!-- CEO-OK: ye18-pocock-skills-trimmed-for-both-2026-10-19 -->.
@@ -174,8 +183,10 @@ four, not the default.
   only what it verified. Nobody else commits.
 - A piece that fails: a medium writer's goes to the lead or a fork at `high`; one that failed twice at
   `high` goes to the `builder` at `xhigh`, never earlier; `max` is not used
-  <!-- CEO-OK: effort-high-xhigh-no-max-2026-11-10 -->. Code is written by Fable 5.2: the lead, its fork, the
-  writing helper and the escalation writer <!-- CEO-OK: code-written-by-fable-5-2-2026-11-10 -->.
+  <!-- CEO-OK: effort-high-xhigh-no-max-2026-11-10 -->. An easy piece of code — one §2 lets be written
+  at `medium` — may be written by the `easy-writer` on Opus 5.5
+  <!-- CEO-OK: lead-manages-hands-by-difficulty-2026-11-10 -->; every other piece is written by Fable 5.2: the
+  lead, its fork, the writing helper and the escalation writer <!-- CEO-OK: code-written-by-fable-5-2-2026-11-10 -->.
 
 ## 4. Sol and Fable — one blind pass each
 
