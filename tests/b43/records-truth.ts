@@ -138,6 +138,8 @@ export const C = {
     { id: "isolation-phase3-accepted-by-his-word-2026-10-19", subject: /isolation phase 3|phase 3 of the runtime isolation/i },
     // The merged olive-farm landing page (Yeldeğirmeni, 25 Oct), accepted as it stands by his eye 2026-10-26; the records spell it "the merged olive page".
     { id: "olive-merged-page-accepted-by-his-eye-2026-10-26", subject: /merged olive page/i },
+    // The effort arrangement and the manager seats (dxb-team3 §2, §3), accepted by his eye 2026-11-10 night after an evening of working with both; the records spell them "the session sets its own effort" and "works as a manager".
+    { id: "eye-accepted-effort-and-manager-seats-2026-11-10", subject: /session sets its own effort|works as a manager/i },
   ],
   /**
    * R4 — the ruler cannot be forgotten: every acceptance of his eye registered in the ledger from
