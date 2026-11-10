@@ -139,7 +139,6 @@ switches with /effort; the lead warns him — on every reply, until he has.**
   status line's record (`$XDG_RUNTIME_DIR/claude-ctx/<session>.json`, field `effort`), this session's last
   step in the transcript, and its last /effort row there (`Set effort level to …`, written by a switch
   between turns; a switch in the middle of a turn writes none) — none known → an unknown level.
-  A skill's `effort` can raise a turn but never lower one — the reason the old design-at-max skill went.
 
 ## 3. The seats and the arrangement
 
