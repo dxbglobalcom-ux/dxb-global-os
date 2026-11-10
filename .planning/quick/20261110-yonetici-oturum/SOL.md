@@ -20,3 +20,13 @@ raw in `sol.raw`; Fable 5.2 (`high`), in `fable-audit.md`. No A from either.
 
 Sol could not run `sync-codex-mirror.sh --check` (it writes a temp dir); the lead ran it after the fixes: exit 0.
 Unverified by either: a real launch of the two agent types (they load in a new session).
+
+## Second pass — cccb589c (the lead chooses freely; Fable audits important jobs only)
+
+Sol alone, `medium` (`sol2.raw`) — a simple text job, by the rule the commit itself writes.
+
+| # | Grade | Finding | What was done |
+|---|---|---|---|
+| 1 | C | Older sentences still hand work over: the light lane (§1), the side study (§1), the core's "never re-open a file" | Left: each is an earlier word of his about another matter (the Opus light session, a side task while he waits, re-reading what was already injected), none limits how much the lead reads |
+| 2 | C | §1 step 6 required "both audits" and a Fable comparison on every plan job | Fixed: the audits that ran; the comparison where Fable audited |
+| 3 | B | The ledger's `verbatim` has a sentence the brief's quotation lacks | Dropped: the ledger carries his message as he said it; the brief's quotation was the shortened one (its "…" marks the cut) |

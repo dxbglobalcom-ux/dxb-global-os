@@ -88,9 +88,9 @@ other's, by tool, not by promise <!-- CEO-OK: plan-writers-sealed-independent-20
    for it; a writer never audits.
 5. **What he says yes to is what is recorded.** Nothing enters the plan, the row or the ledger after his
    yes; a later addition goes back to him first, marked as the writer's, with its reason.
-6. **The measure:** the job folder keeps `sealed/` and both audits; one line per job goes into
-   `.planning/quick/20261019-degerli-is-danisma/MEASURE.md` — what Fable's audit found that Sol's did not, and
-   on a two-writer job what the second plan added — the minutes, the quota. After three or four jobs the
+6. **The measure:** the job folder keeps `sealed/` and the audits that ran; one line per job goes into
+   `.planning/quick/20261019-degerli-is-danisma/MEASURE.md` — where Fable audited, what it found that Sol did
+   not, and on a two-writer job what the second plan added — the minutes, the quota. After three or four jobs the
    lead tells him the table.
 
 **A side study or a side task inside the talk** <!-- CEO-OK: side-study-offered-to-the-team-2026-10-14 -->:
