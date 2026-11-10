@@ -140,7 +140,7 @@ the date. The battery fails on an unregistered approval claim.
   <!-- CEO-OK: b64-q3-decision17-covers-everything-2026-10-14 -->; code may never widen or narrow them.
 - **Code: the session writes it; in `dxb-team3` its writing seats too, every piece verified by the lead
   before commit** <!-- CEO-OK: helpers-write-code-under-lead-verification-2026-10-03 -->.
-  **Every session manages; its hands read and measure**
+  **Every session manages; its hands do the heavy work**
   <!-- CEO-OK: lead-manages-hands-by-difficulty-2026-11-10 -->. Other subagents audit, refute and sweep;
   they never write — and a CHECKER session is bound the same way: it measures, instructs and re-measures,
   it never writes, ruler scripts included (the audit law

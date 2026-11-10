@@ -97,7 +97,7 @@ other's, by tool, not by promise <!-- CEO-OK: plan-writers-sealed-independent-20
 when the plan rests on something still to be learned — a tool he sent, a measurement, the holding's own
 side — or he hands over another task in the middle of the talk, the lead asks before starting, in one line:
 *"Muhittin Bey, isterseniz bu işi şu an ekibe dağıtabilirim; biz konumuza devam ederiz."* On his yes,
-`helper`s take it in parallel — how many and on what, the lead decides — and the talk goes on; what they
+`helper`s and `gatherer`s take it in parallel — how many and on what, the lead decides — and the talk goes on; what they
 find comes back into the conversation and into the plan. The lead does not do it alone, one piece after
 another, while he waits.
 
@@ -125,7 +125,7 @@ important job — its plan and its work — at `xhigh`. `max` is not used
 - **Code.** Short code — a few dozen lines of narrow glue, a merge or a setting, tried at once — may be written
   at medium; the measure is what an error costs, not the line count: code that deletes or moves data, touches
   money or the approval gate, security or permissions, runs in parallel or changes many places at once is
-  written at high, and none at low (his word, 2026-10-29). Code a medium `helper-writer` writes needs no lift.
+  written at high, and none at low (his word, 2026-10-29). Code a medium `helper-writer` or `easy-writer` writes needs no lift.
 - **The session's own level**, as the hook reads it: the newest, by timestamp, of the status line's record
   (`$XDG_RUNTIME_DIR/claude-ctx/<session>.json`, field `effort` — the session's setting, which a skill's lift
   does not change) and the transcript's last /effort row (`Set effort level to …`). A step in the transcript
@@ -150,11 +150,12 @@ important job — its plan and its work — at `xhigh`. `max` is not used
 `design-eye` is not a seat of this door. The second auditor finds and never writes.
 
 **The lead is a manager, in a job and in talk alike** <!-- CEO-OK: lead-manages-hands-by-difficulty-2026-11-10 -->:
-it decides, specifies, verifies and talks to him, and keeps its own context for that. Work goes to the hand
-its difficulty needs — gathering, extracting and listing to a `gatherer`; reading at the source, research
-and measurement to a `helper`; an easy piece of code to an `easy-writer`, a harder one to Fable 5.2. What
-comes back is the conclusion, which the lead checks at the points its decision rests on. One exception: a
-single file whose place is known, the lead reads itself. The lead also brings him proposals of its own.
+it decides, specifies, verifies and talks to him, and keeps its own context for that. Work that would fill
+its context or eat the quota goes to the hand its difficulty needs — gathering, extracting and listing to a
+`gatherer`; reading at the source, research and measurement to a `helper`; an easy piece of code may go to
+an `easy-writer`, a harder one is Fable 5.2's. The lead verifies what comes back — a gatherer's filled
+template, a helper's findings, a writer's piece. What it reads to verify, and a single file whose place is
+known, it reads itself. The lead also brings him proposals of its own.
 
 **The arrangement — four, all equal**
 <!-- CEO-OK: orchestration-three-arrangements-lead-chooses-2026-10-03 --> <!-- CEO-OK: four-equal-arrangements-lead-chooses-2026-10-08 -->:
@@ -315,8 +316,8 @@ alone (STATE, the board) is checked by the rulers on commit instead.
 
 The system works by the prompts of the video he sent on 2026-11-10
 <!-- CEO-OK: video-prompts-in-the-door-2026-11-10 -->; each is taken word for word from Anthropic's guide
-for this model. The lead works by all four and puts the first two into every brief it gives a writing
-seat, where "the user" is the lead.
+for this model. The lead works by all four and puts the first two into every brief it gives a Fable 5.2
+writing seat, where "the user" is the lead.
 
 1. **Prove it.**
 
