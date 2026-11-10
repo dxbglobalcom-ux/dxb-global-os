@@ -23,12 +23,12 @@ THE CEO'S JOB, in one sentence he would sign
    │   swell its context goes to a helper (his word, 2026-11-07 <!-- CEO-OK: light-lane-small-jobs-opus-medium-2026-11-07 -->).
    │   Money, the approval gate, security, moving data, parallel or many-place changes keep the full flow.
    │
-PLAN      the talk turns to plan, design or architecture → the lead weighs the job: normal → `plan`
-          (high), important or complex → `plan-max` (max), said to him in one line with its reason (§2);
+PLAN      the talk turns to plan, design or architecture → the lead sets its own level first, said to him
+          in one line with its reason (§2);
           his "plan konuşacağız" opens this door at once, the job is asked inside it
           the lead writes the plan; on an important or complex job a second Opus 5.5 writes it too, sealed
           → Sol and Fable audit it blind, side by side → the lead adds, fixes, signs (below)
-          the plan goes to him once, in his language, closing with the HIGH warning (§2) → his yes
+          the plan goes to him once, in his language → his yes
    │
 ARRANGE   the lead chooses the hands (§3) and says it in one line
    │
@@ -98,48 +98,17 @@ side — or he hands over another task in the middle of the talk, the lead asks 
 find comes back into the conversation and into the plan. The lead does not do it alone, one piece after
 another, while he waits.
 
-## 2. Effort — the session warns, he switches
+## 2. Effort — the session sets its own level
 
-The session runs at `high`: the talk, a normal plan, the build, the fixes, the tests. An important or
-complex plan, design or architecture runs at `max` <!-- CEO-OK: fable-audits-opus-second-writer-effort-by-weight-2026-11-09 -->. The lead weighs the job and says it in one
-line with its reason ("bu iş önemli, max'ta planlıyorum, çünkü …"); his word on the level overrides. **He
-switches with /effort; the lead warns him — on every reply, until he has.**
-
-- **The warning comes before the thinking** <!-- CEO-OK: plan-warning-before-the-thinking-2026-10-12 -->.
-  The moment his message turns the talk to a plan, a design or an architecture — to plan, propose or
-  evaluate one, not to ask a plain fact about what exists — the lead runs
-  `python3 .claude/hooks/dxb-effort-warn.py plan` (normal, high) or `plan-max` (important or complex, max)
-  before it thinks about the substance; it answers with the live level and whether this reply opens with
-  `⚠ Muhittin Bey, plan konuşmasındayız — /effort high'a geçin.` or `… /effort max'a geçin.` (not when he is
-  already there). Until he has switched, that reply does no plan, design or architecture
-  thinking at all: the line, the plain facts he asked in a line or two, the wait, and no file. An
-  architecture weighed at high and warned about at the end is the failure this exists for (2026-10-12). His
-  plan permission mode starts the same warning by itself.
-- In the reply that brings him the plan for his yes, the lead runs
-  `python3 .claude/hooks/dxb-effort-warn.py build` and closes that reply with
-  `⚠ Muhittin Bey, plan bitti — koda geçmeden /effort high'a geçin.` — the warning travels with the
-  question, so his yes can arrive at high and the build starts at once. A yes that arrives at another
-  level gets the line again, and nothing is written until he has switched; a correction instead of a yes
-  → `plan` again. At the job's end: `python3 .claude/hooks/dxb-effort-warn.py off`.
-- Between those, the hook `dxb-effort-warn.py` repeats the line on each of his messages until the
-  session's live level matches. With no mode set, a message of his naming a plan, a design or an
-  architecture tells the lead to decide first, before the thinking, and — when the reply would be plan work —
-  to run `plan` or `plan-max`, open with its line and stop; and a session whose level is not high reminds the lead to
-  open any reply in which it writes code itself with `⚠ Muhittin Bey, koda geçmeden /effort high'a geçin.`
-  — a small job is not written at max either. Outside a plan, code a medium `helper-writer` writes needs
-  no switch. After a plan the session returns to high in every case, whoever writes: the lead's own turns
-  — specifying, verifying, testing — belong at high, not at max.
-- Measured 2026-10-06: neither a hook's input nor its environment carries the effort (`CLAUDE_EFFORT`
-  reaches the Bash tool, not a UserPromptSubmit hook). The live level is the newest, by timestamp, of the
-  status line's record (`$XDG_RUNTIME_DIR/claude-ctx/<session>.json`, field `effort`), this session's last
-  step in the transcript, and its last /effort row there (`Set effort level to …`, written by a switch
-  between turns; a switch in the middle of a turn writes none) — none known → an unknown level.
+As in `dxb-team3` §2 <!-- CEO-OK: session-sets-its-own-effort-2026-11-10 -->: the session sets each turn's level
+itself, with the skills `dxb-effort-medium`, `dxb-effort-high` and `dxb-effort-xhigh`; he does not switch it and
+is never asked to.
 
 ## 3. The seats and the arrangement
 
 | Seat | Who | Does | Never |
 |---|---|---|---|
-| **Lead** | the session, `high` | chooses the hands, writes what it keeps, verifies every piece and every fix, runs the tests, commits, tells him | approves its own work; commits a piece it has not verified; asks him a technical question |
+| **Lead** | the session, at the level the turn needs (§2) | chooses the hands, writes what it keeps, verifies every piece and every fix, runs the tests, commits, tells him | approves its own work; commits a piece it has not verified; asks him a technical question |
 | **Fork** | the lead's own copy (`subagent_type: "fork"`), its whole context | writes a piece that needs this conversation <!-- CEO-OK: fork-seat-no-size-2026-10-08 --> | commits |
 | **Writing helper** | `helper-writer` (Opus 5.5 · `medium`) | writes and tests a piece the lead specified; fixes a Sol finding | commits; widens the piece <!-- CEO-OK: helpers-write-code-under-lead-verification-2026-10-03 --> |
 | **Helper** | `helper` (Opus 5.5 · `medium`, read-only) | reads code or documents, measures, researches | writes |
@@ -300,5 +269,4 @@ alone (STATE, the board) is checked by the rulers on commit instead.
   dictation on (status bar "Dikte açık"), the Return does not reach the terminal: `operator key ctrl+space`
   (dictation off) → `operator key Return` → `operator key ctrl+space` (on again), each checked on a shot
   <!-- CEO-OK: handover-dictation-off-enter-on-2026-11-09 -->.
-  Proof it is alive: `ListAgents` shows it and it answers. If the job is in its plan phase, the
-  successor's first reply carries the max warning (§2).
+  Proof it is alive: `ListAgents` shows it and it answers.

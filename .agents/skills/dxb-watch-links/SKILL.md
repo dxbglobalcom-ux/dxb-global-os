@@ -79,7 +79,7 @@ check again that no lock file exists and his copy's hash is the one noted — if
 yes. A new file (`xlsx.py "$J" <file.xlsx>`, no tab name) only when he asks for one.
 A few links → answer in the conversation, plainly. Nothing is installed or started without his word.
 
-## 5. An important review — two blind readers and a referee at max
+## 5. An important review — two blind readers and a referee at xhigh
 
 When he marks links as important ("önemli repo ve skiller var", "bu da önemli") or asks for them to be reviewed
 deeply, the review runs this way <!-- CEO-OK: watch-links-important-review-2026-10-14 -->:
@@ -95,13 +95,9 @@ deeply, the review runs this way <!-- CEO-OK: watch-links-important-review-2026-
   `model: opus` / `model: fable`, `effort: high`), one shared brief in the job folder; each writes only
   `reader-<name>.md` and never opens the other's. Each opens every named repo or tool at its real source and
   places it in the holding (board rank or row) and says whether the construction team should install it.
-- **The lead is the referee, at max:** when both are done the lead switches itself to `/effort max` through
-  `operator`, as `~/.claude/skills/operator/SKILL.md` says (a fresh `operator shot` after every action; this
-  session's own terminal holding the keyboard and his prompt box empty before any key), and reads the live
-  level as dxb-team3 §2 does (the newest, by timestamp, of `$XDG_RUNTIME_DIR/claude-ctx/<this session id>.json`
-  field `effort` and this session's transcript). It merges only once fresh evidence for THIS session says
-  `max`; while the level is unknown or different it does not merge and tells him. The merge goes into
-  `MERGE.md`, naming every split and its call.
+- **The lead is the referee, at xhigh:** when both are done the lead opens `Skill("dxb-effort-xhigh")` as that
+  turn's first action (dxb-team3 §2 — the level is set in the background and ends with the turn) and merges in
+  that turn. The merge goes into `MERGE.md`, naming every split and its call.
 - **Cheap work goes to the cheap hand when Sonnet can do it:** a Sonnet agent (`model: sonnet`) moves the
   referee's merge into his Excel — a new dated tab in his one workbook (§4) — keeping every call of the
   referee.

@@ -1,6 +1,6 @@
 ---
 name: dxb-team3
-description: Use when the CEO hands the construction a job, or says a plan will be talked ("plan konuşacağız", "plan moduna geçelim") — the default construction door. The lead (the session) chooses who writes — itself, a fork, medium helpers, or a fork with helpers — and verifies every piece; GPT-6.1 Sol and Fable 5.2 audit the work blind, side by side, read-only; their findings are fixed and tested; the CEO is warned to switch the effort — high for normal work and normal plans, xhigh only for a truly complex, important job, never max. Trigger `/dxb-team3 <the job in one sentence>`.
+description: Use when the CEO hands the construction a job, or says a plan will be talked ("plan konuşacağız", "plan moduna geçelim") — the default construction door. The lead (the session) chooses who writes — itself, a fork, medium helpers, or a fork with helpers — and verifies every piece; GPT-6.1 Sol and Fable 5.2 audit the work blind, side by side, read-only; their findings are fixed and tested; the session sets its own effort — medium for talk, high for plans and work, xhigh only for a truly complex, important job, never max. Trigger `/dxb-team3 <the job in one sentence>`.
 ---
 
 # The team — one lead, the hands it chooses, two blind auditors
@@ -26,12 +26,12 @@ THE CEO'S JOB, in one sentence he would sign
    │   swell its context goes to a helper (his word, 2026-11-07 <!-- CEO-OK: light-lane-small-jobs-opus-medium-2026-11-07 -->).
    │   Money, the approval gate, security, moving data, parallel or many-place changes keep the full flow.
    │
-PLAN      the talk turns to plan, design or architecture → the lead weighs the job: normal → `plan`
-          (high); a truly complex, important job → xhigh, said to him in one line with its reason (§2);
+PLAN      the talk turns to plan, design or architecture → the lead sets its own level first: normal →
+          high; a truly complex, important job → xhigh, said to him in one line with its reason (§2);
           his "plan konuşacağız" opens this door at once, the job is asked inside it
           the lead writes the plan; on an important or complex job a second Opus 5.5 writes it too, sealed
           → Sol and Fable audit it blind, side by side → the lead adds, fixes, signs (below)
-          the plan goes to him once, in his language, closing with the HIGH warning (§2) → his yes
+          the plan goes to him once, in his language → his yes
    │
 ARRANGE   the lead chooses the hands (§3) and says it in one line
    │
@@ -101,50 +101,41 @@ side — or he hands over another task in the middle of the talk, the lead asks 
 find comes back into the conversation and into the plan. The lead does not do it alone, one piece after
 another, while he waits.
 
-## 2. Effort — the session warns, he switches
+## 2. Effort — the session sets its own level
 
-The session runs at `high`: the talk, normal work, a normal plan, the build, the fixes, the tests. Only a
-truly complex, important job — its plan and its work — runs at `xhigh`. `max` is not used
-<!-- CEO-OK: effort-high-xhigh-no-max-2026-11-10 -->. The lead weighs the job and says it in one
-line with its reason ("bu iş gerçekten karmaşık ve önemli, xhigh'da çalışıyorum, çünkü …"); his word on the level
-overrides. **He
-switches with /effort; the lead warns him — on every reply, until he has.**
+The session sets its own level by the course of the talk; he does not switch it and is never asked to
+<!-- CEO-OK: session-sets-its-own-effort-2026-11-10 -->. Talk — a question, a fact, a reading, a record — runs at
+`medium`; a plan, a design, an architecture, the build, the fixes and the tests at `high`; only a truly complex,
+important job — its plan and its work — at `xhigh`. `max` is not used
+<!-- CEO-OK: effort-high-xhigh-no-max-2026-11-10 -->. His word on the level overrides: "bunu high'da düşün" is done.
 
-- **The warning comes before the thinking** <!-- CEO-OK: plan-warning-before-the-thinking-2026-10-12 -->.
-  The moment his message turns the talk to a plan, a design or an architecture — to plan, propose or
-  evaluate one, not to ask a plain fact about what exists — the lead runs
-  `python3 .claude/hooks/dxb-effort-warn.py plan` before it thinks about the substance; it answers with the
-  live level and whether this reply opens with `⚠ Muhittin Bey, plan konuşmasındayız — /effort high'a geçin.`
-  (not when he is already there). For a truly complex, important job the lead asks him in one line to switch
-  to xhigh. Until he has switched, that reply does no plan, design or architecture
-  thinking at all: the line, the plain facts he asked in a line or two, the wait, and no file. An
-  architecture weighed at high and warned about at the end is the failure this exists for (2026-10-12). His
-  plan permission mode starts the same warning by itself.
-- In the reply that brings him the plan for his yes, the lead runs
-  `python3 .claude/hooks/dxb-effort-warn.py build` and closes that reply with
-  `⚠ Muhittin Bey, plan bitti — koda geçmeden /effort high'a geçin.` — the warning travels with the
-  question, so his yes can arrive at high and the build starts at once. A yes that arrives at another
-  level gets the line again, and nothing is written until he has switched; a correction instead of a yes
-  → `plan` again. At the job's end: `python3 .claude/hooks/dxb-effort-warn.py off`.
-- Between those, the hook `dxb-effort-warn.py` repeats the line on each of his messages until the
-  session's live level matches. With no mode set, a message of his naming a plan, a design or an
-  architecture tells the lead to decide first, before the thinking, and — when the reply would be plan work —
-  to run `plan`, open with its line and stop; and a session whose level is not high reminds the lead to
-  open any reply in which it writes code itself with `⚠ Muhittin Bey, koda geçmeden /effort high'a geçin.`
-  — a small job is not written at max either. Outside a plan, code a medium `helper-writer` writes needs
-  no switch. After a plan the session returns to high in every case, whoever writes: the lead's own turns
-  — specifying, verifying, testing — belong at high, not at max.
-- Measured 2026-10-06: neither a hook's input nor its environment carries the effort (`CLAUDE_EFFORT`
-  reaches the Bash tool, not a UserPromptSubmit hook). The live level is the newest, by timestamp, of the
-  status line's record (`$XDG_RUNTIME_DIR/claude-ctx/<session>.json`, field `effort`), this session's last
-  step in the transcript, and its last /effort row there (`Set effort level to …`, written by a switch
-  between turns; a switch in the middle of a turn writes none) — none known → an unknown level.
+- **How.** Three small skills carry the level in their `effort` field — `dxb-effort-medium`, `dxb-effort-high`,
+  `dxb-effort-xhigh`. Opening one sets the level of the turn it is opened in, in the background — nothing is
+  typed into his prompt box — and the level ends with the turn; the next turn starts again at the session's
+  own level, his saved default. Measured 2026-11-10 (Claude Code 2.1.322), in the transcript's own record: in a
+  session at high the steps after `effort: medium` ran at medium, the steps after `effort: xhigh` at xhigh.
+- **Before the thinking** <!-- CEO-OK: plan-warning-before-the-thinking-2026-10-12 -->. On each of his messages
+  the hook `dxb-effort-warn.py` tells the lead the session's own level and asks it to decide, before it thinks
+  about the substance, what the reply is; when the reply needs another level, opening that level's skill is the
+  lead's first action. A plan, a design or an architecture weighed at the wrong level is the failure this exists
+  for (2026-10-12).
+- **He sees it.** In the reply where the level changes from the reply before, the lead opens with a few words
+  naming it and why ("high: plan"); otherwise it says nothing about effort. For a truly complex, important job
+  the reason is one line ("bu iş gerçekten karmaşık ve önemli, xhigh'da çalışıyorum, çünkü …").
+- **Code.** Short code — a few dozen lines of narrow glue, a merge or a setting, tried at once — may be written
+  at medium; the measure is what an error costs, not the line count: code that deletes or moves data, touches
+  money or the approval gate, security or permissions, runs in parallel or changes many places at once is
+  written at high, and none at low (his word, 2026-10-29). Code a medium `helper-writer` writes needs no lift.
+- **The session's own level**, as the hook reads it: the newest, by timestamp, of the status line's record
+  (`$XDG_RUNTIME_DIR/claude-ctx/<session>.json`, field `effort` — the session's setting, which a skill's lift
+  does not change) and the transcript's last /effort row (`Set effort level to …`); with neither, the
+  transcript's last step; none known → the lead opens the skill of the level the reply needs.
 
 ## 3. The seats and the arrangement
 
 | Seat | Who | Does | Never |
 |---|---|---|---|
-| **Lead** | the session, `high` | chooses the hands, writes what it keeps, verifies every piece and every fix, runs the tests, commits, tells him | approves its own work; commits a piece it has not verified; asks him a technical question |
+| **Lead** | the session, at the level the turn needs (§2) | chooses the hands, writes what it keeps, verifies every piece and every fix, runs the tests, commits, tells him | approves its own work; commits a piece it has not verified; asks him a technical question |
 | **Fork** | the lead's own copy (`subagent_type: "fork"`), its whole context | writes a piece that needs this conversation <!-- CEO-OK: fork-seat-no-size-2026-10-08 --> | commits |
 | **Writing helper** | `helper-writer` (Fable 5.2 · `medium`) | writes and tests a piece the lead specified; fixes a Sol finding | commits; widens the piece <!-- CEO-OK: helpers-write-code-under-lead-verification-2026-10-03 --> |
 | **Helper** | `helper` (Opus 5.5 · `medium`, read-only) | reads code or documents, measures, researches | writes |
@@ -308,8 +299,7 @@ alone (STATE, the board) is checked by the rulers on commit instead.
   dictation on (status bar "Dikte açık"), the Return does not reach the terminal: `operator key ctrl+space`
   (dictation off) → `operator key Return` → `operator key ctrl+space` (on again), each checked on a shot
   <!-- CEO-OK: handover-dictation-off-enter-on-2026-11-09 -->.
-  Proof it is alive: `ListAgents` shows it and it answers. If the job is in its plan phase, the
-  successor's first reply carries the effort warning (§2).
+  Proof it is alive: `ListAgents` shows it and it answers.
 
 ## 8. The prompts for Fable 5.2 — the video's, in Anthropic's own wording
 

@@ -1,19 +1,19 @@
-// THE EFFORT WARNING — the real hook, run where it stands in the repository.
-// The CEO's order of 2026-10-06: he opens a session at effort high and switches it himself with
-// /effort. While the talk is plan, design or architecture, every reply warns him to switch until he has:
-// to high for a normal plan (`plan`), to max for an important or complex job (`plan-max`) -- the CEO's
-// order of 2026-11-09; before it every plan ran at max (2026-10-19, which replaced xhigh). Once the plan is
-// approved and the build starts, every reply warns him to switch to high until he has. The lead sets the mode from Bash (`dxb-effort-warn.py plan|plan-max|build|off`); the hook carries the
-// warning into each of his messages until the session's live level matches it. The live level is the
-// newest of the status line's record, the transcript's last assistant step and the transcript's last
-// /effort row (`Set effort level to …`). Plan permission mode counts as plan mode; with no mode, a
-// message naming a plan, a design or an architecture reminds the lead, and a session not at high reminds
-// the lead before code (Fable's review, 2026-10-06). Every case gets its own temporary directory as
-// XDG_RUNTIME_DIR (and as HOME for the CLI) and its own transcript, so nothing lands in the machine's
-// own folders.
+// THE SESSION SETS ITS OWN EFFORT — the real hook, run where it stands in the repository.
+// The CEO's order of 2026-11-10: the session sets its own level by the course of the talk; he does not
+// switch it and is never asked to. Talk runs at medium, a plan, a design, an architecture or code at high,
+// a truly complex, important job at xhigh; max is not used. The level is carried by three small skills
+// (`dxb-effort-medium`, `dxb-effort-high`, `dxb-effort-xhigh`) whose `effort` field sets the turn they are
+// opened in, in the background. On each of his messages the hook tells the lead the session's own level
+// and asks it to decide, before it thinks about the substance, what the reply needs. The session's own
+// level is the newest of the status line's record and the transcript's last /effort row (`Set effort level
+// to …`); a step in the transcript may carry a skill's lift, so it counts only when neither is known. A
+// message naming a plan, a design or an architecture — or his permission mode `plan` — also opens the
+// dxb-team3 door (the CEO, 2026-10-09). The hook keeps no state and takes no argument: the modes
+// `plan|plan-max|build|off` and their warning lines are gone. Every case gets its own temporary directory
+// as XDG_RUNTIME_DIR and its own transcript, so nothing lands in the machine's own folders.
 import { spawnSync } from "node:child_process";
 import {
-  chmodSync, existsSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, rmSync, symlinkSync, writeFileSync, accessSync, constants,
+  existsSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, rmSync, writeFileSync, accessSync, constants,
 } from "node:fs";
 import { homedir, tmpdir } from "node:os";
 import { join, resolve } from "node:path";
@@ -22,12 +22,10 @@ import { afterAll, describe, expect, it } from "vitest";
 const ROOT = resolve(__dirname, "../..");
 const HOOK = join(ROOT, ".claude", "hooks", "dxb-effort-warn.py");
 const SETTINGS = join(ROOT, ".claude", "settings.json");
+const SKILLS = join(ROOT, ".claude", "skills");
 const SID = "7c3e9a10-6f2b-4000-8000-000000000000";
 const OTHER = "7c3e9a10-6f2b-4000-8000-000000000001";
-const PLAN_LINE = "⚠ Muhittin Bey, plan konuşmasındayız — /effort max'a geçin.";
-const PLAN_HIGH_LINE = "⚠ Muhittin Bey, plan konuşmasındayız — /effort high'a geçin.";
-const HIGH_LINE = "⚠ Muhittin Bey, plan bitti — koda geçmeden /effort high'a geçin.";
-const CODE_LINE = "⚠ Muhittin Bey, koda geçmeden /effort high'a geçin.";
+const LEVEL_SKILLS = ["medium", "high", "xhigh"] as const;
 
 const tmp: string[] = [];
 afterAll(() => { for (const d of tmp) rmSync(d, { recursive: true, force: true }); });
@@ -39,8 +37,6 @@ function box(): string {
   return dir;
 }
 
-const MODES = (dir: string) => join(dir, "dxb-effort");
-const modeFile = (dir: string, sid: string) => join(MODES(dir), sid);
 const env = (dir: string, sid?: string) => {
   const e: NodeJS.ProcessEnv = { ...process.env, XDG_RUNTIME_DIR: dir, PYTHONDONTWRITEBYTECODE: "1" };
   delete e.CLAUDE_CODE_SESSION_ID;
@@ -79,7 +75,7 @@ function transcript(dir: string, steps: [string, number, (string | null)?][], pa
 function record(dir: string, sid: string, effort: string, secondsAgo: number, sessionField = sid): void {
   mkdirSync(join(dir, "claude-ctx"), { recursive: true });
   writeFileSync(join(dir, "claude-ctx", `${sid}.json`), JSON.stringify({
-    session_id: sessionField, used_pct: 10, tokens: 1000, total_tokens: 1000000, model: "Opus 5.5", cwd: "/x",
+    session_id: sessionField, used_pct: 10, tokens: 1000, total_tokens: 1000000, model: "Fable 5.2", cwd: "/x",
     ts: at(secondsAgo), effort,
   }));
 }
@@ -105,179 +101,137 @@ function hook(dir: string, input: unknown): string {
 }
 
 /** the hook's additionalContext, after checking the output's shape */
-function warning(out: string): string {
+function context(out: string): string {
   const parsed = JSON.parse(out).hookSpecificOutput;
   expect(parsed.hookEventName).toBe("UserPromptSubmit");
   return parsed.additionalContext;
 }
 
-/** runs the CLI as the lead runs it from Bash, with the session id in its env */
-function cli(dir: string, arg: string | string[], sid?: string) {
-  const r = spawnSync("python3", [HOOK, ...(Array.isArray(arg) ? arg : [arg])],
-    { encoding: "utf8", env: { ...env(dir, sid), HOME: dir }, timeout: LIMIT_MS });
-  expect(r.error, "the CLI did not finish in time").toBeUndefined();
-  return r;
+/** the level the hook says the session runs at: a level, or "unknown" */
+function told(text: string): string {
+  if (text.includes("own level is not known")) return "unknown";
+  const found = /This session runs at (low|medium|high|xhigh|max)\./.exec(text);
+  expect(found, text).not.toBeNull();
+  return found![1];
 }
 
-function setMode(dir: string, mode: string, sid = SID) {
-  const r = cli(dir, mode, sid);
-  expect(r.status, r.stderr).toBe(0);
-  return r;
-}
+const skillCall = (level: string) => `Skill("dxb-effort-${level}")`;
 
-describe("no mode: the hook says nothing", () => {
-  it("a session with no mode at high is silent", () => {
+describe("each of his messages tells the lead the session's level and how to set its own (CEO 2026-11-10)", () => {
+  it("at high, an ordinary message: the level, the three skills, the first action — and he is never asked to switch", () => {
     const dir = box();
-    expect(hook(dir, prompt(SID, transcript(dir, [["high", 5]])))).toBe("");
+    record(dir, SID, "high", 2);
+    const text = context(hook(dir, prompt(SID, transcript(dir, [["high", 5]]))));
+    expect(told(text)).toBe("high");
+    for (const level of LEVEL_SKILLS) expect(text).toContain(skillCall(level));
+    expect(text).toContain("before you think about the substance");
+    expect(text).toContain("first action");
+    expect(text).toContain("he does not switch it and is never asked to");
+    expect(text).not.toContain("geçin");
+    expect(text).not.toContain("/effort");
+    expect(text).not.toContain("until he has switched");
   });
-  it("a session with no mode and no known level tells the lead to read CLAUDE_EFFORT before code (Sol A4)", () => {
+  it("names what each level is for: talk at medium, plan and code at high, a truly complex job at xhigh, never max", () => {
     const dir = box();
-    const out = warning(hook(dir, prompt(SID, join(dir, "missing.jsonl"))));
-    expect(out).toContain("echo $CLAUDE_EFFORT");
-    expect(out).toContain(CODE_LINE);
+    record(dir, SID, "medium", 2);
+    const text = context(hook(dir, prompt(SID, transcript(dir, []))));
+    expect(text).toMatch(/talk, a question, a fact, a reading or a record: medium/);
+    expect(text).toMatch(/a plan, a design, an architecture, or code: high/);
+    expect(text).toMatch(/truly complex, important job's plan or work.*: xhigh/);
+    expect(text).toContain("max is not used");
+    expect(text).not.toContain("dxb-effort-max");
+    expect(text).not.toContain("dxb-effort-low");
   });
-  it("another session's mode does not reach this session", () => {
+  it("keeps his word on short code (2026-10-29): narrow glue may stay at medium, the cost of an error decides, none at low", () => {
     const dir = box();
-    setMode(dir, "plan", OTHER);
-    expect(hook(dir, prompt(SID, transcript(dir, [["high", 5]])))).toBe("");
+    record(dir, SID, "medium", 2);
+    const text = context(hook(dir, prompt(SID, transcript(dir, []))));
+    expect(text).toContain("narrow glue");
+    expect(text).toContain("what an error costs");
+    expect(text).toContain("no code at low");
+  });
+  it("he sees it: the level is named in a few words only in the reply where it changes", () => {
+    const dir = box();
+    record(dir, SID, "medium", 2);
+    const text = context(hook(dir, prompt(SID, transcript(dir, []))));
+    expect(text).toContain("differs from the reply before");
+    expect(text).toContain("otherwise say nothing about effort");
+  });
+  it("a level not known yet: the lead opens the skill of the level the reply needs, whichever it is", () => {
+    const dir = box();
+    const text = context(hook(dir, prompt(SID, join(dir, "missing.jsonl"))));
+    expect(told(text)).toBe("unknown");
+    expect(text).toContain("Your first action is the skill of the level the reply needs");
+    for (const level of LEVEL_SKILLS) expect(text).toContain(skillCall(level));
+  });
+  it("the hook keeps no state: it leaves nothing behind in the runtime directory", () => {
+    const dir = box();
+    hook(dir, prompt(SID, join(dir, "missing.jsonl")));
+    expect(readdirSync(dir)).toEqual([]);
   });
 });
 
-describe("plan-max mode warns to switch to max until the live level is max", () => {
-  it("the CLI answers one line and writes the mode file 0600 in a 0700 folder", () => {
+describe("the session's own level: the status line's record and the /effort row, newest first", () => {
+  it("a record at medium and a NEWER step at xhigh (a skill's lift): still medium — a step is not the session's setting", () => {
     const dir = box();
-    const r = setMode(dir, "plan-max");
-    expect(r.stdout.split("\n")[0]).toBe("effort mode: plan-max — the CEO is warned to switch to max until he does");
-    expect(readdirSync(MODES(dir))).toEqual([SID]);
-    expect(readFileSync(modeFile(dir, SID), "utf8")).toBe("plan-max");
-    expect((spawnSync("stat", ["-c", "%a", MODES(dir)], { encoding: "utf8" }).stdout).trim()).toBe("700");
+    record(dir, SID, "medium", 30);
+    expect(told(context(hook(dir, prompt(SID, transcript(dir, [["xhigh", 5]])))))).toBe("medium");
   });
-  it("last step at high: the plan line, the level named, no file until he switches, the build command", () => {
+  it("a record at high and an OLDER step at medium: high", () => {
     const dir = box();
-    setMode(dir, "plan-max");
-    const text = warning(hook(dir, prompt(SID, transcript(dir, [["xhigh", 60], ["high", 5]]))));
-    expect(text).toContain(PLAN_LINE);
-    expect(text).toContain("PLAN mode");
-    expect(text).toContain("dxb-team3");
-    expect(text).toContain("runs at high");
-    expect(text).toContain("write no file");
-    expect(text).toContain(`python3 "${HOOK}" build`);
-    expect(text).toContain("brings him the plan for his yes");
-    expect(text).not.toMatch(/when he approves/i);
+    record(dir, SID, "high", 1);
+    expect(told(context(hook(dir, prompt(SID, transcript(dir, [["medium", 30]])))))).toBe("high");
   });
-  it("last step at high but a NEWER status line record at max: silent (he has switched)", () => {
+  it("a record at high, then a NEWER /effort medium row: medium — he switched, before any render", () => {
     const dir = box();
-    setMode(dir, "plan-max");
-    record(dir, SID, "max", 1);
-    expect(hook(dir, prompt(SID, transcript(dir, [["high", 30]])))).toBe("");
+    record(dir, SID, "high", 30);
+    expect(told(context(hook(dir, prompt(SID, transcript(dir, [["high", 40], ["/effort medium", 2]])))))).toBe("medium");
   });
-  it("an OLDER record at max but a newer step at high: the plan line", () => {
+  it("an OLDER /effort max row and a newer record at high: high", () => {
     const dir = box();
-    setMode(dir, "plan-max");
-    record(dir, SID, "max", 60);
-    const text = warning(hook(dir, prompt(SID, transcript(dir, [["high", 5]]))));
-    expect(text).toContain(PLAN_LINE);
-    expect(text).toContain("runs at high");
+    record(dir, SID, "high", 1);
+    expect(told(context(hook(dir, prompt(SID, transcript(dir, [["/effort max", 30]])))))).toBe("high");
   });
-  it("last step at max and no record: silent", () => {
+  it("a /effort row and a NEWER step at another level, no record: the row — the step may be a lift", () => {
     const dir = box();
-    setMode(dir, "plan-max");
-    expect(hook(dir, prompt(SID, transcript(dir, [["high", 60], ["max", 5]])))).toBe("");
+    expect(told(context(hook(dir, prompt(SID, transcript(dir, [["/effort medium", 30], ["high", 5]])))))).toBe("medium");
   });
-  it("last step at xhigh: the plan line -- xhigh is no plan level (the CEO, 2026-10-19 and 2026-11-09)", () => {
+  it("no record and no /effort row: the transcript's last step", () => {
     const dir = box();
-    setMode(dir, "plan-max");
-    const text = warning(hook(dir, prompt(SID, transcript(dir, [["xhigh", 5]]))));
-    expect(text).toContain(PLAN_LINE);
-    expect(text).toContain("runs at xhigh");
-    expect(text).toContain("an important or complex job's plan at max");
-    expect(text).toContain("belongs at max, after he switches");
-    expect(text).toContain("Once he is at max:");
-    expect(text).not.toMatch(/belongs at xhigh|Once he is at xhigh|architecture at xhigh/);
-  });
-  it("nothing known (no record, no transcript): the plan line naming an unknown level", () => {
-    const dir = box();
-    setMode(dir, "plan-max");
-    const text = warning(hook(dir, prompt(SID, join(dir, "missing.jsonl"))));
-    expect(text).toContain(PLAN_LINE);
-    expect(text).toContain("an unknown level");
+    expect(told(context(hook(dir, prompt(SID, transcript(dir, [["high", 30], ["medium", 5]])))))).toBe("medium");
   });
   it("a record whose session_id field differs is ignored", () => {
     const dir = box();
-    setMode(dir, "plan-max");
     record(dir, SID, "max", 1, OTHER);
-    const text = warning(hook(dir, prompt(SID, transcript(dir, [["high", 30]]))));
-    expect(text).toContain(PLAN_LINE);
+    expect(told(context(hook(dir, prompt(SID, transcript(dir, [["high", 5]])))))).toBe("high");
   });
   it("only the transcript's tail is read, and its cut first line is tolerated", () => {
     const dir = box();
-    setMode(dir, "plan-max");
-    expect(hook(dir, prompt(SID, transcript(dir, [["high", 5]], 300 * 1024)))).toContain("runs at high");
+    const file = transcript(dir, [["high", 5]], 300 * 1024);
+    expect(told(context(hook(dir, prompt(SID, file))))).toBe("high");
   });
 });
 
-// The CEO, 2026-11-09: a normal plan runs at high, an important or complex job's plan at max.
-describe("plan mode (a normal plan) warns to switch to high until the live level is high (CEO 2026-11-09)", () => {
-  it("the CLI answers one line naming high", () => {
-    const r = setMode(box(), "plan");
-    expect(r.stdout.split("\n")[0]).toBe("effort mode: plan — the CEO is warned to switch to high until he does");
-  });
-  it("at max: the high plan line, the stop at high, the build command -- never the max line", () => {
+describe("only this session's rows in the transcript count (Sol A2)", () => {
+  it("own step at high and a NEWER step of another session at max: high", () => {
     const dir = box();
-    setMode(dir, "plan");
-    const text = warning(hook(dir, prompt(SID, transcript(dir, [["max", 5]]))));
-    expect(text).toContain(PLAN_HIGH_LINE);
-    expect(text).not.toContain(PLAN_LINE);
-    expect(text).toContain("PLAN mode");
-    expect(text).toContain("runs at max");
-    expect(text).toContain(STOP);
-    expect(text).toContain("belongs at high, after he switches");
-    expect(text).toContain("Once he is at high:");
-    expect(text).toContain(`python3 "${HOOK}" build`);
-  });
-  it("at high: silent", () => {
-    const dir = box();
-    setMode(dir, "plan");
-    expect(hook(dir, prompt(SID, transcript(dir, [["high", 5]])))).toBe("");
-  });
-  it("plan, then plan-max when the job proves important: the max line at high", () => {
-    const dir = box();
-    setMode(dir, "plan");
-    setMode(dir, "plan-max");
-    const text = warning(hook(dir, prompt(SID, transcript(dir, [["high", 5]]))));
-    expect(text).toContain(PLAN_LINE);
-    expect(text).not.toContain(PLAN_HIGH_LINE);
-  });
-  it("the CLI: plan at max opens this reply with the high plan line; plan at high gives none", () => {
-    const dir = box();
-    const folder = join(dir, ".claude", "projects", "-x");
-    mkdirSync(folder, { recursive: true });
-    const file = transcript(dir, [["max", 5]], 0, join(folder, `${SID}.jsonl`));
-    const r = setMode(dir, "plan");
-    expect(r.stdout).toContain(`live level max: open this reply with exactly this line:\n${PLAN_HIGH_LINE}`);
-    transcript(dir, [["high", 5]], 0, file);
-    expect(setMode(dir, "plan").stdout).toContain("already at high");
-  });
-});
-
-describe("only this session's steps in the transcript count (Sol A2)", () => {
-  it("own step at high and a NEWER step of another session at max: the plan line still appears", () => {
-    const dir = box();
-    setMode(dir, "plan-max");
-    const text = warning(hook(dir, prompt(SID, transcript(dir, [["high", 30], ["max", 5, OTHER]]))));
-    expect(text).toContain(PLAN_LINE);
-    expect(text).toContain("runs at high");
-  });
-  it("own step at max and a NEWER step of another session at high: silent", () => {
-    const dir = box();
-    setMode(dir, "plan-max");
-    expect(hook(dir, prompt(SID, transcript(dir, [["max", 30], ["high", 5, OTHER]])))).toBe("");
+    expect(told(context(hook(dir, prompt(SID, transcript(dir, [["high", 30], ["max", 5, OTHER]])))))).toBe("high");
   });
   it("a step with no sessionId does not count", () => {
     const dir = box();
-    setMode(dir, "plan-max");
-    const text = warning(hook(dir, prompt(SID, transcript(dir, [["max", 5, null]]))));
-    expect(text).toContain("an unknown level");
+    expect(told(context(hook(dir, prompt(SID, transcript(dir, [["high", 30], ["max", 5, null]])))))).toBe("high");
+  });
+  it("another session's /effort row does not count", () => {
+    const dir = box();
+    expect(told(context(hook(dir, prompt(SID, transcript(dir, [["high", 30], ["/effort max", 5, OTHER]])))))).toBe("high");
+  });
+  it("his message QUOTING the command's output is not a switch (Sol A3)", () => {
+    const dir = box();
+    const file = transcript(dir, [["high", 30]]);
+    const quoting = { type: "user", sessionId: SID, timestamp: at(2), message: { role: "user",
+      content: "şunu gördüm: <local-command-stdout>Set effort level to max (this session only)</local-command-stdout> ne demek?" } };
+    writeFileSync(file, readFileSync(file, "utf8") + JSON.stringify(quoting) + "\n");
+    expect(told(context(hook(dir, prompt(SID, file))))).toBe("high");
   });
 });
 
@@ -291,19 +245,14 @@ describe("a source that cannot be read leaves the other one in use (Sol A3)", ()
     ], { encoding: "utf8" });
     expect(r.stdout.trim()).toBe("OSError");
   });
-  it("a transcript whose read raises and a record at high in plan mode: the plan line naming high", () => {
+  it("a transcript whose read raises and a record at high: high", () => {
     const dir = box();
-    setMode(dir, "plan-max");
     record(dir, SID, "high", 1);
-    const text = warning(hook(dir, prompt(SID, RAISING)));
-    expect(text).toContain(PLAN_LINE);
-    expect(text).toContain("runs at high");
+    expect(told(context(hook(dir, prompt(SID, RAISING))))).toBe("high");
   });
-  it("a transcript whose read raises and no record: the plan line naming an unknown level", () => {
+  it("a transcript whose read raises and no record: an unknown level", () => {
     const dir = box();
-    setMode(dir, "plan-max");
-    const text = warning(hook(dir, prompt(SID, RAISING)));
-    expect(text).toContain("an unknown level");
+    expect(told(context(hook(dir, prompt(SID, RAISING))))).toBe("unknown");
   });
 });
 
@@ -332,15 +281,9 @@ describe("every read is bounded (Sol B4)", () => {
   it("a transcript that grows while it is read is read no further than TAIL_BYTES (256 KB)", () => {
     const dir = box();
     const file = transcript(dir, [["high", 5]], 300 * 1024);
-    const r = run(dir, `ew.live_level(${JSON.stringify(SID)}, ${JSON.stringify(file)})`, 512 * 1024, file);
+    const r = run(dir, `ew.own_level(${JSON.stringify(SID)}, ${JSON.stringify(file)})`, 512 * 1024, file);
     expect(r.read).toBeLessThanOrEqual(256 * 1024);
-  });
-  it("a mode file of 64 KB is read no further than 4 KB", () => {
-    const dir = box();
-    setMode(dir, "plan");
-    writeFileSync(modeFile(dir, SID), "plan" + " ".repeat(64 * 1024));
-    const r = run(dir, `ew.read_mode(${JSON.stringify(SID)})`);
-    expect(r.read).toBeLessThanOrEqual(4 * 1024);
+    expect(r.read).toBeGreaterThan(0);
   });
   it("a status line record of 64 KB is read no further than 4 KB", () => {
     const dir = box();
@@ -348,6 +291,7 @@ describe("every read is bounded (Sol B4)", () => {
     writeFileSync(join(dir, "claude-ctx", `${SID}.json`), JSON.stringify({ session_id: SID, effort: "max", ts: at(1), pad: "x".repeat(64 * 1024) }));
     const r = run(dir, `ew.record_level(${JSON.stringify(SID)})`);
     expect(r.read).toBeLessThanOrEqual(4 * 1024);
+    expect(r.read).toBeGreaterThan(0);
   });
 });
 
@@ -363,7 +307,7 @@ describeStatusLine("the status line records /effort even when the payload has no
     const e: NodeJS.ProcessEnv = { ...process.env, XDG_RUNTIME_DIR: dir };
     delete e.CLAUDE_CODE_AUTO_COMPACT_WINDOW;
     const r = spawnSync("node", [STATUS_LINE], {
-      input: JSON.stringify({ session_id: SID, model: { display_name: "Opus 5.5" }, workspace: { current_dir: "/x" }, ...payload }),
+      input: JSON.stringify({ session_id: SID, model: { display_name: "Fable 5.2" }, workspace: { current_dir: "/x" }, ...payload }),
       encoding: "utf8", env: e, timeout: LIMIT_MS,
     });
     expect(r.status, r.stderr).toBe(0);
@@ -390,112 +334,68 @@ describeStatusLine("the status line records /effort even when the payload has no
       expect(r.stdout).toContain("Claude");
     });
   }
-  it("the hook reads that record: plan mode, a meter-less max render and an older step at high is silent", () => {
+  it("the hook reads that record: a meter at high, a meter-less medium render and an older step at high say medium", () => {
     const dir = box();
-    setMode(dir, "plan-max");
     render(dir, { ...meter, effort: { level: "high" } });
-    render(dir, { effort: { level: "max" } });
-    expect(hook(dir, prompt(SID, transcript(dir, [["high", 30]])))).toBe("");
+    render(dir, { effort: { level: "medium" } });
+    expect(told(context(hook(dir, prompt(SID, transcript(dir, [["high", 30]])))))).toBe("medium");
   });
 });
 
-describe("build mode warns to switch to high until the live level is high", () => {
-  it("the CLI answers one line", () => {
-    const r = setMode(box(), "build");
-    expect(r.stdout.split("\n")[0]).toBe("effort mode: build — the CEO is warned to switch to high until he does");
-  });
-  it("at max: the high line, no code until he switches, the off command", () => {
+describe("a plan talk opens the dxb-team3 door at once (CEO 2026-10-09)", () => {
+  const door = 'Skill("dxb-team3")';
+  for (const text of ["planı konuşalım", "Bu ekranın tasarımını yapalım", "mimariyi değerlendir", "let's design the schema",
+    "which architecture fits", "tasarla bakalım"]) {
+    it(`"${text}": the level first, then the door — only if the reply would be plan work`, () => {
+      const dir = box();
+      record(dir, SID, "medium", 2);
+      const out = context(hook(dir, prompt(SID, transcript(dir, []), text)));
+      expect(out).toContain(door);
+      expect(out).toContain("anything beyond plain facts about what exists");
+      expect(out).toContain("generic plan mode");
+      expect(out.indexOf(skillCall("high"))).toBeLessThan(out.indexOf(door));
+    });
+  }
+  it("his permission mode plan, whatever his words: the door", () => {
     const dir = box();
-    setMode(dir, "plan");
-    setMode(dir, "build");
-    const text = warning(hook(dir, prompt(SID, transcript(dir, [["max", 5]]))));
-    expect(text).toContain(HIGH_LINE);
-    expect(text).toContain("BUILD mode");
-    expect(text).toContain("runs at max");
-    expect(text).toContain("write no code");
-    expect(text).toContain(`python3 "${HOOK}" off`);
-    expect(text).not.toContain(PLAN_LINE);
+    record(dir, SID, "high", 2);
+    expect(context(hook(dir, prompt(SID, transcript(dir, []), "devam", "plan")))).toContain(door);
   });
-  it("at high: silent", () => {
+  it("an ordinary message: the level, and no door sentence", () => {
     const dir = box();
-    setMode(dir, "build");
-    expect(hook(dir, prompt(SID, transcript(dir, [["high", 5]])))).toBe("");
+    record(dir, SID, "high", 2);
+    const out = context(hook(dir, prompt(SID, transcript(dir, []), "bugün hava nasıl")));
+    expect(told(out)).toBe("high");
+    expect(out).not.toContain(door);
   });
-  it("a newer record at high beats an older step at max: silent", () => {
+  it("a word that only contains the stem is not a match (planet, explain)", () => {
     const dir = box();
-    setMode(dir, "build");
-    record(dir, SID, "high", 1);
-    expect(hook(dir, prompt(SID, transcript(dir, [["max", 30]])))).toBe("");
+    record(dir, SID, "high", 2);
+    expect(context(hook(dir, prompt(SID, transcript(dir, []), "explain the planet")))).not.toContain(door);
   });
 });
 
-describe("off removes the mode", () => {
-  it("off removes this session's mode only, and the next prompt is silent", () => {
+describe("what is not his message gets nothing", () => {
+  it("a subagent's report arriving through the prompt: silent (measured 2026-10-06: one tripped the net)", () => {
     const dir = box();
-    setMode(dir, "plan");
-    setMode(dir, "plan", OTHER);
-    const r = setMode(dir, "off");
-    expect(r.stdout).toContain("effort mode: off");
-    expect(existsSync(modeFile(dir, SID))).toBe(false);
-    expect(existsSync(modeFile(dir, OTHER))).toBe(true);
-    expect(hook(dir, prompt(SID, transcript(dir, [["high", 5]])))).toBe("");
+    record(dir, SID, "medium", 2);
+    expect(hook(dir, prompt(SID, transcript(dir, []), "<task-notification>plan done</task-notification>"))).toBe("");
   });
-  it("off with no mode set is not an error", () => {
-    expect(setMode(box(), "off").status).toBe(0);
-  });
-});
-
-describe("only a trusted folder and a regular file count as a mode", () => {
-  it("a link at the mode file is no mode", () => {
+  it("another hook event: silent", () => {
     const dir = box();
-    mkdirSync(MODES(dir), { mode: 0o700 });
-    writeFileSync(join(dir, "elsewhere"), "plan");
-    symlinkSync(join(dir, "elsewhere"), modeFile(dir, SID));
-    expect(hook(dir, prompt(SID, transcript(dir, [["high", 5]])))).toBe("");
+    expect(hook(dir, { ...prompt(SID, transcript(dir, [["high", 5]])), hook_event_name: "PreToolUse" })).toBe("");
   });
-  it("a FIFO at the mode file is no mode, and does not block the hook", () => {
+  it("a prompt that is not text: silent", () => {
     const dir = box();
-    mkdirSync(MODES(dir), { mode: 0o700 });
-    expect(spawnSync("mkfifo", [modeFile(dir, SID)]).status).toBe(0);
-    expect(hook(dir, prompt(SID, transcript(dir, [["high", 5]])))).toBe("");
-  });
-  it("a mode folder that is a link is no mode", () => {
-    const dir = box();
-    const real = join(dir, "real");
-    mkdirSync(real, { mode: 0o700 });
-    writeFileSync(join(real, SID), "plan");
-    symlinkSync(real, MODES(dir));
-    expect(hook(dir, prompt(SID, transcript(dir, [["high", 5]])))).toBe("");
-  });
-  it("a group-writable mode folder is no mode", () => {
-    const dir = box();
-    setMode(dir, "plan");
-    chmodSync(MODES(dir), 0o770);
-    expect(hook(dir, prompt(SID, transcript(dir, [["high", 5]])))).toBe("");
-  });
-  it("the CLI writes through a link at the mode file by replacing it, never through it", () => {
-    const dir = box();
-    mkdirSync(MODES(dir), { mode: 0o700 });
-    const target = join(dir, "target");
-    writeFileSync(target, "untouched");
-    symlinkSync(target, modeFile(dir, SID));
-    setMode(dir, "plan");
-    expect(readFileSync(target, "utf8")).toBe("untouched");
-    expect(readFileSync(modeFile(dir, SID), "utf8")).toBe("plan");
+    expect(hook(dir, { ...prompt(SID, transcript(dir, [["high", 5]])), prompt: 7 })).toBe("");
   });
 });
 
 describe("a session id shaped like a path names nothing", () => {
-  it("the CLI refuses it with exit 2 and writes nothing", () => {
+  it("the hook is silent for it, even with a record standing where the path points", () => {
     const dir = box();
-    const r = cli(dir, "plan", "../../escape");
-    expect(r.status).toBe(2);
-    expect(r.stderr).not.toBe("");
-    expect(readdirSync(dir)).toEqual([]);
-  });
-  it("the hook is silent for it, even with a file standing where the path points", () => {
-    const dir = box();
-    writeFileSync(join(dir, "escape"), "plan");
+    mkdirSync(join(dir, "claude-ctx"), { recursive: true });
+    writeFileSync(join(dir, "escape.json"), JSON.stringify({ session_id: "../escape", effort: "max", ts: at(1) }));
     expect(hook(dir, prompt("../escape", transcript(dir, [["high", 5]])))).toBe("");
   });
 });
@@ -510,14 +410,26 @@ describe("as a hook it never fails a session", () => {
   it("a non-object JSON: exit 0, silent", () => {
     expect(hook(box(), "[1,2]")).toBe("");
   });
+  it("a record that is a FIFO does not block the hook", () => {
+    const dir = box();
+    mkdirSync(join(dir, "claude-ctx"), { recursive: true });
+    expect(spawnSync("mkfifo", [join(dir, "claude-ctx", `${SID}.json`)]).status).toBe(0);
+    expect(told(context(hook(dir, prompt(SID, transcript(dir, [["high", 5]])))))).toBe("high");
+  });
 });
 
-describe("the CLI", () => {
-  it("without CLAUDE_CODE_SESSION_ID exits 2 with a reason", () => {
-    const r = cli(box(), "plan");
-    expect(r.status).toBe(2);
-    expect(r.stderr).toContain("CLAUDE_CODE_SESSION_ID");
-  });
+describe("the modes are gone: the hook takes no argument", () => {
+  for (const args of [["plan"], ["plan-max"], ["build"], ["off"], ["anything", "else"]]) {
+    it(`${JSON.stringify(args)}: exit 2, the skills named on stderr, nothing written`, () => {
+      const dir = box();
+      const r = spawnSync("python3", [HOOK, ...args], { encoding: "utf8", env: { ...env(dir, SID), HOME: dir }, timeout: LIMIT_MS });
+      expect(r.error, "the hook did not finish in time").toBeUndefined();
+      expect(r.status).toBe(2);
+      expect(r.stdout).toBe("");
+      for (const level of LEVEL_SKILLS) expect(r.stderr).toContain(`dxb-effort-${level}`);
+      expect(readdirSync(dir)).toEqual([]);
+    });
+  }
 });
 
 describe("settings.json registers the hook", () => {
@@ -529,244 +441,27 @@ describe("settings.json registers the hook", () => {
   });
 });
 
-describe("a /effort switch is read from its transcript row (Fable A2)", () => {
-  it("plan mode, a step at high, then a NEWER /effort max row: silent — he has switched, before any reply", () => {
-    const dir = box();
-    setMode(dir, "plan-max");
-    expect(hook(dir, prompt(SID, transcript(dir, [["high", 30], ["/effort max", 5]])))).toBe("");
-  });
-  it("build mode, a step at max, then a NEWER /effort high row and an OLDER record at max: silent", () => {
-    const dir = box();
-    setMode(dir, "build");
-    record(dir, SID, "max", 20);
-    expect(hook(dir, prompt(SID, transcript(dir, [["max", 30], ["/effort high", 5]])))).toBe("");
-  });
-  it("an OLDER /effort max row and a newer step at high: the plan line naming high", () => {
-    const dir = box();
-    setMode(dir, "plan-max");
-    const text = warning(hook(dir, prompt(SID, transcript(dir, [["/effort max", 30], ["high", 5]]))));
-    expect(text).toContain(PLAN_LINE);
-    expect(text).toContain("runs at high");
-  });
-  it("his message QUOTING the command's output is not a switch (Sol A3)", () => {
-    const dir = box();
-    setMode(dir, "build");
-    const file = transcript(dir, [["max", 30]]);
-    writeFileSync(file, readFileSync(file, "utf8") + JSON.stringify({ type: "user", sessionId: SID, timestamp: at(5),
-      message: { role: "user", content: "şu örneği açıkla: <local-command-stdout>Set effort level to high (this session only)</local-command-stdout>" } }) + "\n");
-    const text = warning(hook(dir, prompt(SID, file)));
-    expect(text).toContain(HIGH_LINE);
-    expect(text).toContain("runs at max");
-  });
-  it("another session's /effort row does not count", () => {
-    const dir = box();
-    setMode(dir, "plan-max");
-    const text = warning(hook(dir, prompt(SID, transcript(dir, [["high", 30], ["/effort max", 5, OTHER]]))));
-    expect(text).toContain("runs at high");
-  });
-});
-
-describe("plan permission mode starts the plan reminder by itself (Fable A3)", () => {
-  // since 2026-11-09 the hook cannot know the level a plan wants: the lead decides it, and the command's answer
-  // carries the line
-  for (const level of ["high", "max"]) {
-    it(`no mode set, permission mode plan, at ${level}: the door, the decision, both commands, no line of the hook's own`, () => {
-      const dir = box();
-      const out = warning(hook(dir, prompt(SID, transcript(dir, [[level, 5]]), "devam", "plan")));
-      expect(out).toContain(DOOR);
-      expect(out).toContain(DECIDE);
-      expect(out).toContain(`python3 "${HOOK}" plan-max`);
-      expect(out).toContain(`runs at ${level}`);
-      expect(out).not.toContain(PLAN_LINE);
-      expect(out).not.toContain(PLAN_HIGH_LINE);
-    });
-  }
-  it("build mode set wins over permission mode plan: the high line at max", () => {
-    const dir = box();
-    setMode(dir, "build");
-    expect(warning(hook(dir, prompt(SID, transcript(dir, [["max", 5]]), "devam", "plan")))).toContain(HIGH_LINE);
-  });
-});
-
-describe("with no mode, his words naming a plan, a design or an architecture remind the lead (Fable A3)", () => {
-  for (const text of ["bunun planını yapalım", "Mimarisini konuşalım", "şu ekranın tasarımı nasıl olsun", "let's design it"]) {
-    // Until 2026-10-12 no line was ordered here and the lead decided alone; a session then evaluated an
-    // architecture at high and warned at its end. The lead still decides -- first, before the thinking -- and
-    // the line and the stop come with the reminder (the CEO, 2026-10-12; the block at the end of this file).
-    it(`"${text}": the lead decides first; plan work gets plan or plan-max, the level named, and the stop`, () => {
-      const dir = box();
-      const out = warning(hook(dir, prompt(SID, transcript(dir, [["high", 5]]), text)));
-      expect(out).toContain(`python3 "${HOOK}" plan\``);
-      expect(out).toContain(`python3 "${HOOK}" plan-max`);
-      expect(out).toContain(DECIDE);
-      expect(out).toContain(NAMED);
-      expect(out).not.toContain(PLAN_LINE);
-      expect(out).toContain(STOP);
-      expect(out).toContain("ignore this");
-    });
-  }
-  it("a subagent's report arriving through the prompt is not his message: silent, even at max", () => {
-    const dir = box();
-    const report = "<task-notification><result>the generator's design and the plan</result></task-notification>";
-    expect(hook(dir, prompt(SID, transcript(dir, [["max", 5]]), report))).toBe("");
-  });
-  it("an ordinary message is silent", () => {
-    const dir = box();
-    expect(hook(dir, prompt(SID, transcript(dir, [["high", 5]]), "şu testi düzelt"))).toBe("");
-  });
-  it("a word that only contains the stem is not a match (planet, explain)", () => {
-    const dir = box();
-    expect(hook(dir, prompt(SID, transcript(dir, [["high", 5]]), "explain the planet"))).toBe("");
-  });
-});
-
-describe("with no mode, a session not at high reminds the lead before code (Fable A4)", () => {
-  it("at max: the lead gets the code line and is told to write no code until he switches", () => {
-    const dir = box();
-    const out = warning(hook(dir, prompt(SID, transcript(dir, [["max", 5]]), "şunu düzelt")));
-    expect(out).toContain(CODE_LINE);
-    expect(out).toContain("runs at max");
-    expect(out).toContain("write no code");
-  });
-  it("at medium after a /effort medium row: the code line", () => {
-    const dir = box();
-    expect(warning(hook(dir, prompt(SID, transcript(dir, [["high", 30], ["/effort medium", 5]]))))).toContain(CODE_LINE);
-  });
-});
-
-describe("the CLI tells the lead whether this reply opens with the warning (Fable A1, A3)", () => {
-  /** the session's transcript where Claude Code keeps it, under HOME */
-  const own = (dir: string, steps: [string, number, (string | null)?][]) => {
-    const folder = join(dir, ".claude", "projects", "-x");
-    mkdirSync(folder, { recursive: true });
-    return transcript(dir, steps, 0, join(folder, `${SID}.jsonl`));
+describe("the three skills that carry the level", () => {
+  /** a skill file's frontmatter as key → value */
+  const frontmatter = (level: string) => {
+    const text = readFileSync(join(SKILLS, `dxb-effort-${level}`, "SKILL.md"), "utf8");
+    const block = /^---\n([\s\S]*?)\n---\n/.exec(text);
+    expect(block, `dxb-effort-${level} has no frontmatter`).not.toBeNull();
+    return Object.fromEntries(block![1].split("\n").map((line) => {
+      const colon = line.indexOf(":");
+      return [line.slice(0, colon).trim(), line.slice(colon + 1).trim()];
+    }));
   };
-  it("plan at high: open this reply with the plan line", () => {
-    const dir = box();
-    own(dir, [["high", 5]]);
-    const r = setMode(dir, "plan-max");
-    expect(r.stdout).toContain("live level high");
-    expect(r.stdout).toContain(PLAN_LINE);
-  });
-  it("plan already at max: no warning in this reply", () => {
-    const dir = box();
-    own(dir, [["max", 5]]);
-    const r = setMode(dir, "plan-max");
-    expect(r.stdout).toContain("already at max");
-    expect(r.stdout).not.toContain(PLAN_LINE);
-  });
-  it("build at max (the plan's question): close this reply with the high line", () => {
-    const dir = box();
-    own(dir, [["max", 5]]);
-    const r = setMode(dir, "build");
-    expect(r.stdout).toContain(HIGH_LINE);
-  });
-  it("build already at high: no warning", () => {
-    const dir = box();
-    own(dir, [["high", 5]]);
-    expect(setMode(dir, "build").stdout).toContain("already at high");
-  });
-  it("no transcript: the level is unknown and the line is given", () => {
-    const r = setMode(box(), "plan-max");
-    expect(r.stdout).toContain("live level unknown");
-    expect(r.stdout).toContain(PLAN_LINE);
-  });
-});
-
-// The CEO's order of 2026-10-09: "plan konuşacağız dediğimde direkt DXP Team 2 açılmalı." A hook cannot open a
-// skill; with no mode set, the lead is reminded to open the dxb-team3 door first, then to run `plan`.
-const DOOR = 'Skill("dxb-team3")';
-
-describe("a plan talk opens the dxb-team3 door at once (CEO 2026-10-09)", () => {
-  it("plan words, no mode: the door is opened first, then the plan command, and the escape stays", () => {
-    const dir = box();
-    const out = warning(hook(dir, prompt(SID, transcript(dir, [["high", 5]]), "bunun planını konuşacağız")));
-    expect(out).toContain(DOOR);
-    expect(out).toContain("2026-10-09");
-    expect(out).toContain("generic plan mode");
-    expect(out).toContain(`python3 "${HOOK}" plan`);
-    expect(out.indexOf(DOOR)).toBeLessThan(out.indexOf(`python3 "${HOOK}" plan`));
-    expect(out).toContain("ignore this");
-  });
-  it("permission mode plan, no mode: the door is opened first, then the plan command, and the decision", () => {
-    const dir = box();
-    const out = warning(hook(dir, prompt(SID, transcript(dir, [["high", 5]]), "devam", "plan")));
-    expect(out).toContain(DOOR);
-    expect(out).toContain("generic plan mode");
-    expect(out).toContain(`python3 "${HOOK}" plan`);
-    expect(out.indexOf(DOOR)).toBeLessThan(out.indexOf(`python3 "${HOOK}" plan`));
-    expect(out).toContain(DECIDE);
-  });
-
-  it("a session already in plan mode: no door sentence", () => {
-    const dir = box();
-    setMode(dir, "plan-max");
-    for (const permissionMode of ["default", "plan"]) {
-      const out = warning(hook(dir, prompt(SID, transcript(dir, [["high", 5]]), "planı konuşalım", permissionMode)));
-      expect(out).toContain(PLAN_LINE);
-      expect(out).not.toContain(DOOR);
-    }
-  });
-  it("a session already in build mode: no door sentence", () => {
-    const dir = box();
-    setMode(dir, "build");
-    for (const permissionMode of ["default", "plan"]) {
-      const out = warning(hook(dir, prompt(SID, transcript(dir, [["max", 5]]), "planı değiştirelim", permissionMode)));
-      expect(out).toContain(HIGH_LINE);
-      expect(out).not.toContain(DOOR);
-    }
-  });
-});
-
-describe("the CLI refuses a word it does not know (Fable B12)", () => {
-  for (const args of [["max"], ["plan", "now"], ["PLAN"]]) {
-    it(`${JSON.stringify(args)}: exit 2, the usage on stderr, no mode written`, () => {
-      const dir = box();
-      const r = cli(dir, args, SID);
-      expect(r.status).toBe(2);
-      expect(r.stderr).toContain("usage");
-      expect(existsSync(MODES(dir))).toBe(false);
+  for (const level of LEVEL_SKILLS) {
+    it(`dxb-effort-${level}: its name is its folder's and its effort field is ${level}`, () => {
+      const fields = frontmatter(level);
+      expect(fields.name).toBe(`dxb-effort-${level}`);
+      expect(fields.effort).toBe(level);
+      expect(fields.description.length).toBeGreaterThan(20);
     });
   }
-});
-
-// The CEO, 2026-10-12, after a session evaluated the architecture at high and warned him only at the end:
-// "Orada planı yapmadan önce, sen kafanda düşünmeden önce bu uyarıyı yapmalısın." The warning comes FIRST and the
-// plan, design or architecture thinking waits for his switch -- it is not done at high and then warned about.
-const STOP = "do not plan, design, propose or evaluate";
-// the CEO, 2026-11-09: the lead decides which level a plan wants, and names the level and the reason
-const DECIDE = "a normal plan at high, or an important or complex job at max";
-const NAMED = "say in one line which level you chose and why";
-
-describe("the warning comes before the thinking, and the thinking waits for its level (CEO 2026-10-12, 2026-11-09)", () => {
-  it("plan words, no mode, at high: decide first, before thinking; if it is plan work, warn and stop", () => {
-    const dir = box();
-    const out = warning(hook(dir, prompt(SID, transcript(dir, [["high", 5]]), "bu mimariyi derinlemesine değerlendir")));
-    expect(out).toMatch(/^FIRST, before you think about the substance of his message/);
-    expect(out).toContain(STOP);
-    expect(out).toContain(DECIDE);
-    expect(out).toContain(DOOR);
-    expect(out).toContain("ignore this");
-  });
-  it("plan words, no mode, level unknown: the same stop", () => {
-    const out = warning(hook(box(), prompt(SID, "/nonexistent/transcript.jsonl", "planı konuşalım")));
-    expect(out).toContain(STOP);
-    expect(out).toContain("an unknown level");
-  });
-  it("plan words, no mode, already at max: the same decision and stop -- a normal plan wants high (2026-11-09)", () => {
-    const dir = box();
-    const out = warning(hook(dir, prompt(SID, transcript(dir, [["max", 5]]), "planı konuşalım")));
-    expect(out).toContain(STOP);
-    expect(out).toContain(DECIDE);
-    expect(out).toContain(DOOR);
-  });
-  it("plan mode at high: the plan line, then the plan work stops -- it does not go on", () => {
-    const dir = box();
-    setMode(dir, "plan-max");
-    const text = warning(hook(dir, prompt(SID, transcript(dir, [["high", 5]]), "devam")));
-    expect(text).toContain(PLAN_LINE);
-    expect(text).toContain(STOP);
-    expect(text).not.toMatch(/Then go on/);
-    expect(text).toContain("write no file");
+  it("there is no skill for low or for max", () => {
+    const folders = readdirSync(SKILLS).filter((name) => name.startsWith("dxb-effort-")).sort();
+    expect(folders).toEqual(LEVEL_SKILLS.map((level) => `dxb-effort-${level}`).sort());
   });
 });

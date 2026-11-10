@@ -32,7 +32,7 @@ He keeps the two methods apart on purpose, to try both on the same kind of job a
 7. **One plan.** The lead merges the two halves. The plan is made at `max` effort.
 8. **The plan goes to him.** In his language, short, one page: what is done, what it touches, the steps, how
    it is verified, the risks. Below it: did working together make the job better, or did it cause trouble.
-9. **His yes.** A correction sends the plan back to him; on his yes he switches the effort to `high`.
+9. **His yes.** A correction sends the plan back to him; on his yes the build starts.
 10. **The hands.** The lead chooses who writes (itself, its fork or helpers — dxb-team3 §3) and says it in one line.
 11. **The code.** Each piece is tried with its own test.
 12. **The second eye.** The other chief engineer reads the change before it is committed.
