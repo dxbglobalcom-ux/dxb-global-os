@@ -1,0 +1,6 @@
+{
+  "name": "dxb-live-pane",
+  "version": "0.1.0",
+  "description": "SPIKE: a live pane of the lead's context, effort, usage windows and subagent roster, plus a one-shot handover trigger. Loaded only with --plugin-dir.",
+  "types": "./types/index.d.ts"
+}

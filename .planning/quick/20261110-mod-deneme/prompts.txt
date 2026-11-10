@@ -1,0 +1,5 @@
+What is the holding's first law of V2, in one sentence?
+Sketch, in ten lines, a design for a retry queue for outbound webhooks. Sketch only: do not write any file.
+Which file holds the open work board, in one sentence?
+And which file holds the current state of the work, in one sentence?
+Sketch, in ten lines, a design for a rate limiter in front of that webhook sender. Sketch only: do not write any file.

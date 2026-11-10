@@ -1,0 +1,1 @@
+HANDOVER TEST (placeholder from the dxb-live-pane spike): the context passed the threshold. Reply with HANDOVER-ACK, then on a second line quote verbatim the first 100 characters of this user message exactly as it reached you (including any wrapper text before it). Use no tools.

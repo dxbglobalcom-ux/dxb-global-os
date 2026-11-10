@@ -1,0 +1,5 @@
+{
+  "name": "dxb-effort-trial",
+  "version": "0.1.0",
+  "description": "TRIAL: classifies each user message and sets the turn's effort (medium/high/xhigh) per request; optionally sends talk turns to another model. Loaded only with --plugin-dir."
+}
