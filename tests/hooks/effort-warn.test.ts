@@ -6,7 +6,7 @@
 // opened in, in the background. On each of his messages the hook tells the lead the session's own level
 // and asks it to decide, before it thinks about the substance, what the reply needs. The session's own
 // level is the newest of the status line's record and the transcript's last /effort row (`Set effort level
-// to …`); a step in the transcript may carry a skill's lift, so it counts only when neither is known. A
+// to …`); a step in the transcript may carry a skill's lift, so it never tells the session's level. A
 // message naming a plan, a design or an architecture — or his permission mode `plan` — also opens the
 // dxb-team3 door (the CEO, 2026-10-09). The hook keeps no state and takes no argument: the modes
 // `plan|plan-max|build|off` and their warning lines are gone. Every case gets its own temporary directory
@@ -196,38 +196,36 @@ describe("the session's own level: the status line's record and the /effort row,
     const dir = box();
     expect(told(context(hook(dir, prompt(SID, transcript(dir, [["/effort medium", 30], ["high", 5]])))))).toBe("medium");
   });
-  it("no record and no /effort row: the transcript's last step", () => {
+  it("no record and no /effort row, the last step at xhigh: unknown — the step may be the last turn's lift (Sol A1)", () => {
     const dir = box();
-    expect(told(context(hook(dir, prompt(SID, transcript(dir, [["high", 30], ["medium", 5]])))))).toBe("medium");
+    const text = context(hook(dir, prompt(SID, transcript(dir, [["high", 30], ["xhigh", 5]]))));
+    expect(told(text)).toBe("unknown");
+    expect(text).toContain("Your first action is the skill of the level the reply needs");
   });
   it("a record whose session_id field differs is ignored", () => {
     const dir = box();
     record(dir, SID, "max", 1, OTHER);
-    expect(told(context(hook(dir, prompt(SID, transcript(dir, [["high", 5]])))))).toBe("high");
+    expect(told(context(hook(dir, prompt(SID, transcript(dir, [["/effort high", 5]])))))).toBe("high");
   });
   it("only the transcript's tail is read, and its cut first line is tolerated", () => {
     const dir = box();
-    const file = transcript(dir, [["high", 5]], 300 * 1024);
+    const file = transcript(dir, [["/effort high", 5]], 300 * 1024);
     expect(told(context(hook(dir, prompt(SID, file))))).toBe("high");
   });
 });
 
-describe("only this session's rows in the transcript count (Sol A2)", () => {
-  it("own step at high and a NEWER step of another session at max: high", () => {
+describe("only this session's /effort rows in the transcript count (Sol A2)", () => {
+  it("own row at high and a NEWER row of another session at max: high", () => {
     const dir = box();
-    expect(told(context(hook(dir, prompt(SID, transcript(dir, [["high", 30], ["max", 5, OTHER]])))))).toBe("high");
+    expect(told(context(hook(dir, prompt(SID, transcript(dir, [["/effort high", 30], ["/effort max", 5, OTHER]])))))).toBe("high");
   });
-  it("a step with no sessionId does not count", () => {
+  it("a row with no sessionId does not count", () => {
     const dir = box();
-    expect(told(context(hook(dir, prompt(SID, transcript(dir, [["high", 30], ["max", 5, null]])))))).toBe("high");
-  });
-  it("another session's /effort row does not count", () => {
-    const dir = box();
-    expect(told(context(hook(dir, prompt(SID, transcript(dir, [["high", 30], ["/effort max", 5, OTHER]])))))).toBe("high");
+    expect(told(context(hook(dir, prompt(SID, transcript(dir, [["/effort high", 30], ["/effort max", 5, null]])))))).toBe("high");
   });
   it("his message QUOTING the command's output is not a switch (Sol A3)", () => {
     const dir = box();
-    const file = transcript(dir, [["high", 30]]);
+    const file = transcript(dir, [["/effort high", 30]]);
     const quoting = { type: "user", sessionId: SID, timestamp: at(2), message: { role: "user",
       content: "şunu gördüm: <local-command-stdout>Set effort level to max (this session only)</local-command-stdout> ne demek?" } };
     writeFileSync(file, readFileSync(file, "utf8") + JSON.stringify(quoting) + "\n");
@@ -280,7 +278,7 @@ describe("every read is bounded (Sol B4)", () => {
   };
   it("a transcript that grows while it is read is read no further than TAIL_BYTES (256 KB)", () => {
     const dir = box();
-    const file = transcript(dir, [["high", 5]], 300 * 1024);
+    const file = transcript(dir, [["/effort high", 5]], 300 * 1024);
     const r = run(dir, `ew.own_level(${JSON.stringify(SID)}, ${JSON.stringify(file)})`, 512 * 1024, file);
     expect(r.read).toBeLessThanOrEqual(256 * 1024);
     expect(r.read).toBeGreaterThan(0);
@@ -379,7 +377,15 @@ describe("what is not his message gets nothing", () => {
   it("a subagent's report arriving through the prompt: silent (measured 2026-10-06: one tripped the net)", () => {
     const dir = box();
     record(dir, SID, "medium", 2);
-    expect(hook(dir, prompt(SID, transcript(dir, []), "<task-notification>plan done</task-notification>"))).toBe("");
+    expect(hook(dir, prompt(SID, transcript(dir, []), "<task-notification>\n<task-id>x</task-id>plan done</task-notification>"))).toBe("");
+    expect(hook(dir, prompt(SID, transcript(dir, []), "<task-notification>plan done</task-notification>", "plan"))).toBe("");
+  });
+  it("his own message QUOTING that tag is his message: the level and, in plan mode, the door (Sol B2)", () => {
+    const dir = box();
+    record(dir, SID, "medium", 2);
+    const out = context(hook(dir, prompt(SID, transcript(dir, []), "Bu <task-notification> etiketinin mimarisini tasarlayalım.", "plan")));
+    expect(told(out)).toBe("medium");
+    expect(out).toContain('Skill("dxb-team3")');
   });
   it("another hook event: silent", () => {
     const dir = box();
@@ -414,7 +420,7 @@ describe("as a hook it never fails a session", () => {
     const dir = box();
     mkdirSync(join(dir, "claude-ctx"), { recursive: true });
     expect(spawnSync("mkfifo", [join(dir, "claude-ctx", `${SID}.json`)]).status).toBe(0);
-    expect(told(context(hook(dir, prompt(SID, transcript(dir, [["high", 5]])))))).toBe("high");
+    expect(told(context(hook(dir, prompt(SID, transcript(dir, [["/effort high", 5]])))))).toBe("high");
   });
 });
 

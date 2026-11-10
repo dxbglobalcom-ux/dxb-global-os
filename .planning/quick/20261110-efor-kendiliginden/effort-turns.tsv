@@ -1,0 +1,9 @@
+# The same session, real turns after the hook went live (commit 742fca33, 17:53 UTC): each turn's opening row
+# (his message or a task notification), then every change of the assistant rows' `effort` and every Skill call.
+timestamp	effort	row
+2026-11-10T17:53:00.892Z	high	-
+2026-11-10T18:04:49.218Z	--	task-notification
+2026-11-10T18:12:01.627Z	--	his message
+2026-11-10T18:12:07.308Z	high	Skill:dxb-effort-medium
+2026-11-10T18:12:22.306Z	medium	-
+2026-11-10T18:14:19.139Z	--	task-notification

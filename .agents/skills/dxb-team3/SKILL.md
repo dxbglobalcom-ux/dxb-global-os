@@ -128,8 +128,8 @@ important job — its plan and its work — at `xhigh`. `max` is not used
   written at high, and none at low (his word, 2026-10-29). Code a medium `helper-writer` writes needs no lift.
 - **The session's own level**, as the hook reads it: the newest, by timestamp, of the status line's record
   (`$XDG_RUNTIME_DIR/claude-ctx/<session>.json`, field `effort` — the session's setting, which a skill's lift
-  does not change) and the transcript's last /effort row (`Set effort level to …`); with neither, the
-  transcript's last step; none known → the lead opens the skill of the level the reply needs.
+  does not change) and the transcript's last /effort row (`Set effort level to …`). A step in the transcript
+  may carry a skill's lift and never tells it. None known → the lead opens the skill of the level the reply needs.
 
 ## 3. The seats and the arrangement
 
@@ -154,10 +154,10 @@ important job — its plan and its work — at `xhigh`. `max` is not used
 |---|---|
 | **Lead** | the lead itself |
 | **Fork** | the fork, while the lead stays free to verify |
-| **Team** | `helper-writer`s at `medium`, each its own piece, in parallel; `helper`s read and research beside them; the lead at `high` directs them |
+| **Team** | `helper-writer`s at `medium`, each its own piece, in parallel; `helper`s read and research beside them; the lead directs them |
 | **Hybrid** | the fork writes the core; `helper-writer`s the side pieces; `helper`s read |
 
-After the plan is talked through and he says yes, the lead at `high` looks at the job and chooses
+After the plan is talked through and he says yes, the lead looks at the job and chooses
 one of the four by its own judgement, and tells him in one line which and why. Writing itself is one of the
 four, not the default.
 

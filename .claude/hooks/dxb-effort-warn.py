@@ -17,7 +17,8 @@ session's own level and asks it to decide, before it thinks about the substance 
 level comes before the thinking), what the reply needs; when that is another level, opening its skill is
 the lead's first action. A message that names a plan, a design or an architecture -- or his permission
 mode `plan` -- also tells the lead to open the dxb-team3 door (the CEO, 2026-10-09). A subagent's report
-arriving through the prompt is not his message and gets nothing.
+arriving through the prompt -- a prompt that opens with `<task-notification>` -- is not his message and gets
+nothing; his own message quoting that tag is his message.
 
 The session's own level. Neither the hook's stdin nor its environment carries the effort (measured
 2026-10-06). It is the newest, by timestamp, of the status line's record
@@ -25,9 +26,10 @@ $XDG_RUNTIME_DIR/claude-ctx/<session_id>.json (field `effort`, written on each r
 setting, which a skill's lift does not change -- measured 2026-11-10) and this session's last /effort row
 in the transcript (`<local-command-stdout>Set effort level to <level> ...`, written when he switches
 between turns). An assistant step in the transcript carries the level it ran at, which may be a skill's
-lift, so the last step counts only when neither of the two is known. A source that cannot be read is not
-known; none known: unknown, and the lead opens the skill of the level the reply needs. Every read is
-bounded (the transcript's tail, a few KB of the record).
+lift, so a step never tells the session's own level (Sol A1, 2026-11-10: with no record, the last turn's
+xhigh lift was read as the session's level and the next reply's skill was skipped). A source that cannot
+be read is not known; none known: unknown, and the lead opens the skill of the level the reply needs. Every
+file read is bounded (the transcript's tail, a few KB of the record).
 
 Only a session id shaped like Claude Code's (SESSION_ID) ever names a file, so no path leaves the folder;
 the record folder is trusted only as a real directory (not a link) owned by this user; the record is
@@ -186,19 +188,18 @@ def switched_level(row):
     return found.group(1) if found else None
 
 
-def transcript_levels(path, name):
-    """(switch, step) from the transcript's tail: this session's last /effort row and its last assistant step
-    carrying an effort, each as (timestamp, level) or None -- both None when it cannot be read. A row of
-    another session, or one naming no session, does not count."""
+def switch_level(path, name):
+    """(timestamp, level) of this session's last /effort row in the transcript's tail, or None -- also when it
+    cannot be read. A row of another session, or one naming no session, does not count; an assistant step
+    never counts (it may carry a skill's lift)."""
     if not isinstance(path, str) or not path:
-        return None, None
+        return None
     try:
         raw = read_regular(path, limit=TAIL_BYTES, tail=True)
     except OSError:
-        return None, None
+        return None
     if raw is None:
-        return None, None
-    switch = step = None
+        return None
     for line in reversed(raw.splitlines()):
         try:
             row = json.loads(line)
@@ -206,32 +207,21 @@ def transcript_levels(path, name):
             continue
         if not isinstance(row, dict) or row.get("sessionId") != name:
             continue
-        is_step = row.get("type") == "assistant"
-        if (step if is_step else switch) is not None:
-            continue
-        level = row.get("effort") if is_step else switched_level(row)
-        if level not in LEVELS:
-            continue
-        moment = parse_ts(row.get("timestamp"))
-        if not moment:
-            continue
-        if is_step:
-            step = (moment, level)
-        else:
-            switch = (moment, level)
-        if switch and step:
-            break
-    return switch, step
+        level = switched_level(row)
+        if level in LEVELS:
+            moment = parse_ts(row.get("timestamp"))
+            if moment:
+                return moment, level
+    return None
 
 
 def own_level(name, transcript_path):
-    """The session's own level -- its setting, not a skill's lift -- or None when nothing tells it."""
-    switch, step = transcript_levels(transcript_path, name)
-    known = [found for found in (record_level(name), switch) if found]
-    if known:
-        # the record first, so on a tie the live one wins
-        return max(known, key=lambda found: found[0])[1]
-    return step[1] if step else None
+    """The session's own level -- its setting, never a skill's lift -- or None when nothing tells it."""
+    known = [found for found in (record_level(name), switch_level(transcript_path, name)) if found]
+    if not known:
+        return None
+    # the record first, so on a tie the live one wins
+    return max(known, key=lambda found: found[0])[1]
 
 
 def on_hook(data):
@@ -241,8 +231,10 @@ def on_hook(data):
     if name is None:
         return
     prompt = data.get("prompt")
-    if not isinstance(prompt, str) or "<task-notification>" in prompt:
-        return  # a subagent's report arriving is not his message (measured 2026-10-06: one tripped the net)
+    # a subagent's report arriving is not his message (measured 2026-10-06: one tripped the net); it opens with
+    # the tag (measured 2026-11-10), so his own message quoting the tag still gets its answer (Sol B2)
+    if not isinstance(prompt, str) or prompt.lstrip().startswith("<task-notification>"):
+        return
     context = sync(own_level(name, data.get("transcript_path")))
     if data.get("permission_mode") == "plan" or PLAN_WORDS.search(prompt):
         context += "\n" + open_door()

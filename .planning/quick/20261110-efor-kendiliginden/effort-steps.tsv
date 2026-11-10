@@ -1,0 +1,18 @@
+# Raw rows of session 855bef3f's transcript, 2026-11-10 17:37:40-17:39:50 UTC: every assistant row's own `effort`
+# field and the tool it called (a Skill call with its skill name). Extracted mechanically; nothing else of the row is copied.
+# The session's setting was high throughout (the status line's record at 17:39:42 UTC said effort=high).
+timestamp	effort	tool
+2026-11-10T17:37:45.820Z	high	-
+2026-11-10T17:37:50.637Z	high	Bash
+2026-11-10T17:38:12.706Z	high	-
+2026-11-10T17:38:14.793Z	high	Bash
+2026-11-10T17:38:21.232Z	high	-
+2026-11-10T17:38:21.241Z	high	Skill:efor-deneme-medium
+2026-11-10T17:38:28.744Z	medium	Bash
+2026-11-10T17:38:33.914Z	medium	-
+2026-11-10T17:38:35.973Z	medium	Bash
+2026-11-10T17:38:39.955Z	medium	-
+2026-11-10T17:38:40.367Z	medium	Skill:efor-deneme-xhigh
+2026-11-10T17:38:48.861Z	xhigh	Bash
+2026-11-10T17:39:42.224Z	xhigh	-
+2026-11-10T17:39:44.636Z	xhigh	Bash
