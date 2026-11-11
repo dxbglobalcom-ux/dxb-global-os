@@ -7,6 +7,11 @@ and audits beside Sol; the second writer, on an important or complex job, is a s
 <!-- CEO-OK: fable-audits-opus-second-writer-effort-by-weight-2026-11-09 -->. From then on a line records what Fable's
 audit found that Sol's did not, and what the second plan added. After three or four jobs the lead tells him the table.
 
+Since 2026-11-11, in dxb-team3 (`.claude/skills/dxb-team3/SKILL.md` §1), the lead plans alone — a second planner is
+no standing step <!-- CEO-OK: dxb-team3-orchestrator-six-points-2026-11-11 -->. A line of such a job records where
+Fable audited and what it found that Sol did not (in the "Fable added" column), what Sol found, the minutes and the
+quota; the rows above stay as they were measured.
+
 - **Fable added** — items in Fable's plan that the lead's plan lacked and that Sol's audit did not find by itself
   (Sol's "what A lacks that B has" for the lead's plan, minus what its own conditions list already named).
 - **Sol found** — errors in the lead's plan, and brief conditions neither plan met.

@@ -1,6 +1,6 @@
 ---
 name: dxb-team3
-description: Use when the CEO hands the construction a job, or says a plan will be talked ("plan konuşacağız", "plan moduna geçelim") — the default construction door. The lead (the session) chooses who writes — itself, a fork, medium helpers, or a fork with helpers — and verifies every piece; GPT-6.1 Sol audits the work blind, read-only, Fable 5.2 beside it on an important job; their findings are fixed and tested; the session sets its own effort — medium for talk, high for plans and work, xhigh only for a truly complex, important job, never max. Trigger `/dxb-team3 <the job in one sentence>`.
+description: Use when the CEO hands the construction a job, or says a plan will be talked ("plan konuşacağız", "plan moduna geçelim") — the default construction door. The lead (the session) holds the whole and chooses who writes — itself, a fork, helpers, or a fork with helpers — and verifies every piece; GPT-6.1 Sol audits the work blind, read-only, Fable 5.2 beside it on an important job; their findings are fixed and tested; the session sets its own effort — medium for talk, high for managing, plans and work, xhigh for a truly complex, important job and the fine design piece, never max. Trigger `/dxb-team3 <the job in one sentence>`.
 ---
 
 # The team — one lead, the hands it chooses, two blind auditors
@@ -21,16 +21,17 @@ and `dxb-close-row`.
 THE CEO'S JOB, in one sentence he would sign
    │
    ├── small — a fix, a deletion, a text he already worded: no plan, straight to ARRANGE
-   ├── light — a small, low-risk job (narrow glue, a setting, a record, a deletion he ordered): one Opus 5.5
-   │   session at medium does it end to end, tests it at once, no Sol pass; reading or measuring that would
-   │   swell its context goes to a helper (his word, 2026-11-07 <!-- CEO-OK: light-lane-small-jobs-opus-medium-2026-11-07 -->).
+   ├── light — a small, low-risk job (narrow glue, a setting, a record, a deletion he ordered): the lead hands
+   │   it to an `easy-writer` (Opus 5.5 · medium), which does it and tests it at once; the lead verifies and
+   │   commits it; no Sol pass (his word, 2026-11-07 <!-- CEO-OK: light-lane-small-jobs-opus-medium-2026-11-07 -->;
+   │   through the lead since 2026-11-11 <!-- CEO-OK: dxb-team3-orchestrator-six-points-2026-11-11 -->).
    │   Money, the approval gate, security, moving data, parallel or many-place changes keep the full flow.
    │
 PLAN      the talk turns to plan, design or architecture → the lead sets its own level first: normal →
           high; a truly complex, important job → xhigh, said to him in one line with its reason (§2);
           his "plan konuşacağız" opens this door at once, the job is asked inside it
-          the lead writes the plan; on an important or complex job a second Opus 5.5 writes it too, sealed
-          → Sol audits it blind — on an important job Fable too, side by side → the lead adds, fixes, signs (below)
+          the lead writes the plan
+          → Sol audits it blind — on an important job Fable too, side by side → the lead fixes, signs (below)
           the plan goes to him once, in his language → his yes
    │
 ARRANGE   the lead chooses the hands (§3) and says it in one line
@@ -62,36 +63,36 @@ catalogue `archify-tr.json` beside this door as `meta.translations`) opened in h
 <!-- CEO-OK: every-plan-comes-with-an-archify-map-2026-11-09 -->; not who writes, which the lead chooses after his yes (§3)
 <!-- CEO-OK: plan-names-no-arrangement-2026-10-08 -->. No file changes before his yes.
 
-**The plan's writers and its audit** <!-- CEO-OK: fable-audits-opus-second-writer-effort-by-weight-2026-11-09 --> — every plan, design or architecture of a board row,
-before it goes to him; not a small job. The lead writes it. On an important or complex job a second
-Opus 5.5 writes the same plan from the same brief, so the two complete each other; neither sees the
-other's, by tool, not by promise <!-- CEO-OK: plan-writers-sealed-independent-2026-10-19 -->.
+**The plan's writer and its audit** — every plan, design or architecture of a board row, before it goes to
+him; not a small job. The lead writes it: the stronger side plans, and a second planner is not a standing
+step <!-- CEO-OK: dxb-team3-orchestrator-six-points-2026-11-11 --> — the blind audit below already writes,
+from the brief alone, what the job needs and what the plan lacks.
 1. The lead writes the brief once. It opens with the holding reminder — the per-turn line's THE HOLDING text,
    one source with the employees' `holdingLine()` (`packages/voice/src/prompt-core.ts`) <!-- CEO-OK: holding-reminder-every-turn-and-brief-2026-11-09 --> — and, when the
-   job belongs to a business line, that line's mission and vision; then his words verbatim, the scope, the facts measured. On a two-writer job
-   it starts the second writer: `scripts/governance/second-plan.sh start <job> <brief> high` runs
-   Opus 5.5 walled off in bwrap — the brief and a copy of HEAD only, no shell; the lead's scratchpad, the
-   live tree, the transcripts and its memory do not exist inside — and a watcher on its output starts with it.
-2. The lead writes its own plan in its scratchpad and, on a two-writer job, seals it (`second-plan.sh seal`)
-   before it opens the other (`reveal`); anything that read the other's output before `reveal` voids the job,
-   and `SEALS.log` records every step with its time and hash.
-3. The audit — Sol, and on an important job Fable beside it (§4), blind, one pass each, from the same brief. `second-plan.sh blind`
-   puts the brief and the plan(s) — "A" and "B" in a random order, no model or effort named — in
-   `<job>/blind/`; `second-plan.sh audit <job> <audit-brief> [effort]` runs Sol (`refuter.sh`) with the key,
-   the originals and the transcripts denied, and `scripts/governance/fable-audit.sh <job> <audit-brief>
-   high` runs Fable 5.2 read-only in the same walled box, at the same time. Each first writes, from the
-   brief alone, the conditions and risks the job carries; then, for each plan, its errors, what it lacks
-   (and on two plans, what one has that the other lacks), and what the brief needs that no plan meets. They
-   may read the sources a claim rests on and write nothing into the plan.
-4. The lead's plan is the base: it adds what the second plan brought, fixes what the audits found, checks
-   each unmeasured claim at its source, and signs (`second-plan.sh sign`). An auditor down → the plan waits
-   for it; a writer never audits.
+   job belongs to a business line, that line's mission and vision; then his words verbatim, the scope, the facts measured.
+2. The lead writes its plan in its scratchpad.
+3. The audit — Sol, and on an important job Fable beside it (§4), blind, one pass each, from the same brief
+   <!-- CEO-OK: fable-audits-opus-second-writer-effort-by-weight-2026-11-09 -->. The brief and the plan — no
+   model or effort named — go into `<job>/blind/`; Sol runs through `scripts/governance/refuter.sh` with the
+   lead's scratchpad, the transcripts and its memory denied (`--deny-read`), and
+   `scripts/governance/fable-audit.sh <job> <audit-brief> high` runs Fable 5.2 read-only in its walled box, at
+   the same time. Each first writes, from the brief alone, the conditions and risks the job carries; then the
+   plan's errors, what it lacks, and what the brief needs that the plan does not meet. They may read the
+   sources a claim rests on and write nothing into the plan.
+4. The lead fixes what the audits found, checks each unmeasured claim at its source, and signs. An auditor
+   down → the plan waits for it; a writer never audits.
 5. **What he says yes to is what is recorded.** Nothing enters the plan, the row or the ledger after his
    yes; a later addition goes back to him first, marked as the writer's, with its reason.
-6. **The measure:** the job folder keeps `sealed/` and the audits that ran; one line per job goes into
-   `.planning/quick/20261019-degerli-is-danisma/MEASURE.md` — where Fable audited, what it found that Sol did
-   not, and on a two-writer job what the second plan added — the minutes, the quota. After three or four jobs the
-   lead tells him the table.
+6. **The measure:** the job folder keeps the audits that ran; one line per job goes into
+   `.planning/quick/20261019-degerli-is-danisma/MEASURE.md` — where Fable audited and what it found that Sol
+   did not, the minutes, the quota. After three or four jobs the lead tells him the table.
+
+**When Fable 5.2's quota runs short**, Opus 5.5 writes the plan in the lead's place — at `high` or `max`,
+the lead choosing by the job's importance <!-- CEO-OK: dxb-team3-orchestrator-six-points-2026-11-11 -->:
+the lead opens it as a hand — the `Plan` agent with `model: opus` and `effort: high` or `max` — and gives it
+the same brief (measured 2026-11-11 in the hand's own record: Opus 5.5 at `max`). Its plan is audited like the
+lead's own. `scripts/governance/second-plan.sh`, which sealed two writers from each other
+<!-- CEO-OK: plan-writers-sealed-independent-2026-10-19 -->, stays in the repository and outside this flow.
 
 **A side study or a side task inside the talk** <!-- CEO-OK: side-study-offered-to-the-team-2026-10-14 -->:
 when the plan rests on something still to be learned — a tool he sent, a measurement, the holding's own
@@ -105,9 +106,13 @@ another, while he waits.
 
 The session sets its own level by the course of the talk; he does not switch it and is never asked to
 <!-- CEO-OK: session-sets-its-own-effort-2026-11-10 -->. Talk — a question, a fact, a reading, a record — runs at
-`medium`; a plan, a design, an architecture, the build, the fixes and the tests at `high`; only a truly complex,
-important job — its plan and its work — at `xhigh`. `max` is not used
-<!-- CEO-OK: effort-high-xhigh-no-max-2026-11-10 -->. His word on the level overrides: "bunu high'da düşün" is done.
+`medium`; managing — the lead opens a hand, writes a brief or verifies a piece that came back — at `high`, with
+`xhigh` open while it thinks through who does what <!-- CEO-OK: dxb-team3-orchestrator-six-points-2026-11-11 -->;
+a plan, a design, an architecture, the build, the fixes and the tests at `high`; a truly complex, important
+job — its plan and its work — at `xhigh`, and so the fine design piece that makes a look beautiful, in a
+client's work or ours: the piece alone, never the job around it. `max` is not used by the session
+<!-- CEO-OK: effort-high-xhigh-no-max-2026-11-10 -->; the one place it stands is the Opus 5.5 that plans when
+Fable's quota runs short (§1). His word on the level overrides: "bunu high'da düşün" is done.
 
 - **How.** Three small skills carry the level in their `effort` field — `dxb-effort-medium`, `dxb-effort-high`,
   `dxb-effort-xhigh`. Opening one sets the level of the turn it is opened in, in the background — nothing is
@@ -118,14 +123,22 @@ important job — its plan and its work — at `xhigh`. `max` is not used
   the hook `dxb-effort-warn.py` tells the lead the session's own level and asks it to decide, before it thinks
   about the substance, what the reply is; when the reply needs another level, opening that level's skill is the
   lead's first action. A plan, a design or an architecture weighed at the wrong level is the failure this exists
-  for (2026-10-12).
+  for (2026-10-12). A report opens a turn too — a hand's, or a background command's: in a session below `high`,
+  or whose level is not known, the hook says then, in one line, that in a dxb-team3 job verifying it is managing
+  (measured 2026-11-11: such a turn fell back to `medium`).
 - **He sees it.** In the reply where the level changes from the reply before, the lead opens with a few words
   naming it and why ("high: plan"); otherwise it says nothing about effort. For a truly complex, important job
   the reason is one line ("bu iş gerçekten karmaşık ve önemli, xhigh'da çalışıyorum, çünkü …").
 - **Code.** Short code — a few dozen lines of narrow glue, a merge or a setting, tried at once — may be written
   at medium; the measure is what an error costs, not the line count: code that deletes or moves data, touches
   money or the approval gate, security or permissions, runs in parallel or changes many places at once is
-  written at high, and none at low (his word, 2026-10-29). Code a medium `helper-writer` or `easy-writer` writes needs no lift.
+  written at high, and none at low (his word, 2026-10-29). A piece this section leaves at medium needs no lift
+  when a medium `helper-writer` or `easy-writer` writes it.
+  On an important job code is normally written by Fable 5.2 at `high` — the lead judges the job and the piece —
+  by the lead, its fork, or a `helper-writer` opened at `high`
+  <!-- CEO-OK: dxb-team3-orchestrator-six-points-2026-11-11 -->. The level given
+  when a hand is opened (the Agent tool's `effort`) overrides the seat's own — measured 2026-11-11 in the hands'
+  own records: `helper-writer` ran at `high` and at `xhigh`, as opened.
 - **The session's own level**, as the hook reads it: the newest, by timestamp, of the status line's record
   (`$XDG_RUNTIME_DIR/claude-ctx/<session>.json`, field `effort` — the session's setting, which a skill's lift
   does not change) and the transcript's last /effort row (`Set effort level to …`). A step in the transcript
@@ -135,15 +148,15 @@ important job — its plan and its work — at `xhigh`. `max` is not used
 
 | Seat | Who | Does | Never |
 |---|---|---|---|
-| **Lead** | the session, at the level the turn needs (§2) | manages: decides, chooses the hands, specifies, writes what it keeps, verifies every piece and every fix, runs the tests, commits, tells him | approves its own work; commits a piece it has not verified; asks him a technical question |
+| **Lead** | the session, at the level the turn needs (§2) | holds the whole — his intent, the plan, how the pieces fit — and manages: decides who does what, writes the brief, verifies every piece and every fix, puts the pieces together, runs the tests, commits, tells him; writes what it keeps — as a rule the job's spine, the part the rest hangs on | approves its own work; commits a piece it has not verified; asks him a technical question |
 | **Fork** | the lead's own copy (`subagent_type: "fork"`), its whole context | writes a piece that needs this conversation <!-- CEO-OK: fork-seat-no-size-2026-10-08 --> | commits |
-| **Writing helper** | `helper-writer` (Fable 5.2 · `medium`) | writes and tests a piece the lead specified; fixes a Sol finding | commits; widens the piece <!-- CEO-OK: helpers-write-code-under-lead-verification-2026-10-03 --> |
+| **Writing helper** | `helper-writer` (Fable 5.2 · `medium`; opened at `high` on an important job, at `xhigh` for the fine design piece — §2) | writes and tests a piece the lead specified; fixes a Sol finding | commits; widens the piece <!-- CEO-OK: helpers-write-code-under-lead-verification-2026-10-03 --> |
 | **Easy writer** | `easy-writer` (Opus 5.5 · `medium`) | writes and tests an easy piece of code the lead specified — narrow glue, a setting, a merge | commits; widens the piece; is given a piece §2 would write at `high` |
 | **Helper** | `helper` (Opus 5.5 · `medium`, read-only) | middle-to-hard work: reads code or documents at the source, measures, researches — from a freer brief | writes |
 | **Gatherer** | `gatherer` (Sonnet 5.5 · `medium`, read-only) | simple-to-middle work: gathers, extracts, lists — from a tight, templated brief | writes; judges; is given a question the template does not settle |
 | **Reader** | a one-shot `scout` or `Explore` | a wide search whose text would swell the lead's context | writes; is resumed (its cache dies at 5 min) |
 | **Escalation writer** | `builder` (Fable 5.2 · `xhigh`), one-shot | only a piece that failed twice at `high` | is opened for a routine fix |
-| **Second writer** | Opus 5.5, at the plan's level, its own process through `scripts/governance/second-plan.sh` <!-- CEO-OK: fable-audits-opus-second-writer-effort-by-weight-2026-11-09 --> | on an important or complex job, writes the same plan from the same brief, unseen (§1) | sees the lead's draft; audits; writes code |
+| **Stand-in planner** | Opus 5.5 · `high` or `max` by the job's importance — the `Plan` agent, opened with that model and level <!-- CEO-OK: dxb-team3-orchestrator-six-points-2026-11-11 --> | writes the plan when Fable 5.2's quota runs short (§1) | is a standing step; audits; writes code |
 | **Auditor** | GPT-6.1 Sol <!-- CEO-OK: auditor-sol-6-1-2026-10-01 -->, through `scripts/governance/refuter.sh` | one blind pass over the job's commits (§4); on a plan job, also the blind plan audit (§1) | writes; audits the same thing twice; sees the lead's reasoning or verdict |
 | **Second auditor** | Fable 5.2 — `high` — through `scripts/governance/fable-audit.sh` <!-- CEO-OK: fable-audits-opus-second-writer-effort-by-weight-2026-11-09 --> | on an important job, audits what Sol audits, from the same brief, at the same time, blind (§1, §4) | writes a plan or code; audits twice; sees Sol's findings or the lead's verdict |
 
@@ -151,8 +164,9 @@ important job — its plan and its work — at `xhigh`. `max` is not used
 
 **The lead is a manager, in a job and in talk alike** <!-- CEO-OK: lead-manages-hands-by-difficulty-2026-11-10 -->:
 it knows it is the orchestrator, and at each moment it chooses what it does itself and what it hands over —
-it may read and do as much as it judges right; what it weighs is its own context and the quota
-<!-- CEO-OK: lead-chooses-freely-fable-audits-important-jobs-2026-11-10 -->. Its hands, by the work's
+it may read and do as much as it judges right; what it weighs is its own context, the quota
+<!-- CEO-OK: lead-chooses-freely-fable-audits-important-jobs-2026-11-10 -->, and whether the piece can be done
+without knowing the whole <!-- CEO-OK: dxb-team3-orchestrator-six-points-2026-11-11 -->. Its hands, by the work's
 difficulty: a `gatherer` gathers, extracts and lists; a `helper` reads at the source, researches and
 measures; an `easy-writer` may write an easy piece of code, a harder one is Fable 5.2's. The lead verifies
 what comes back, and brings him proposals of its own.
@@ -164,7 +178,7 @@ what comes back, and brings him proposals of its own.
 |---|---|
 | **Lead** | the lead itself |
 | **Fork** | the fork, while the lead stays free to verify |
-| **Team** | `helper-writer`s at `medium`, each its own piece, in parallel — an easy piece an `easy-writer`; `helper`s and `gatherer`s read and research beside them; the lead directs them |
+| **Team** | `helper-writer`s at `medium` — at `high` on an important job (§2) — each its own piece, in parallel — an easy piece an `easy-writer`; `helper`s and `gatherer`s read and research beside them; the lead directs them |
 | **Hybrid** | the fork writes the core; `helper-writer`s and `easy-writer`s the side pieces; `helper`s and `gatherer`s read |
 
 After the plan is talked through and he says yes, the lead looks at the job and chooses
@@ -183,7 +197,7 @@ four, not the default.
 - The lead verifies each piece before it is committed — reads the diff, runs its tests — and commits
   only what it verified. Nobody else commits.
 - A piece that fails: a medium writer's goes to the lead or a fork at `high`; one that failed twice at
-  `high` goes to the `builder` at `xhigh`, never earlier; `max` is not used
+  `high` goes to the `builder` at `xhigh` — a failing piece never earlier; no writer runs at `max`
   <!-- CEO-OK: effort-high-xhigh-no-max-2026-11-10 -->. An easy piece of code — one §2 lets be written
   at `medium` — may be written by the `easy-writer` on Opus 5.5
   <!-- CEO-OK: lead-manages-hands-by-difficulty-2026-11-10 -->; every other piece is written by Fable 5.2: the

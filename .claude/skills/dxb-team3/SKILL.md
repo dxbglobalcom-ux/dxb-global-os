@@ -123,17 +123,20 @@ Fable's quota runs short (§1). His word on the level overrides: "bunu high'da d
   the hook `dxb-effort-warn.py` tells the lead the session's own level and asks it to decide, before it thinks
   about the substance, what the reply is; when the reply needs another level, opening that level's skill is the
   lead's first action. A plan, a design or an architecture weighed at the wrong level is the failure this exists
-  for (2026-10-12). A hand's report opens a turn too: in a session below `high` the hook says then, in one line,
-  that verifying it is managing (measured 2026-11-11: such a turn fell back to `medium`).
+  for (2026-10-12). A report opens a turn too — a hand's, or a background command's: in a session below `high`,
+  or whose level is not known, the hook says then, in one line, that in a dxb-team3 job verifying it is managing
+  (measured 2026-11-11: such a turn fell back to `medium`).
 - **He sees it.** In the reply where the level changes from the reply before, the lead opens with a few words
   naming it and why ("high: plan"); otherwise it says nothing about effort. For a truly complex, important job
   the reason is one line ("bu iş gerçekten karmaşık ve önemli, xhigh'da çalışıyorum, çünkü …").
 - **Code.** Short code — a few dozen lines of narrow glue, a merge or a setting, tried at once — may be written
   at medium; the measure is what an error costs, not the line count: code that deletes or moves data, touches
   money or the approval gate, security or permissions, runs in parallel or changes many places at once is
-  written at high, and none at low (his word, 2026-10-29). Code a medium `helper-writer` or `easy-writer` writes needs no lift.
-  On an important job — the lead judges which — code is written by Fable 5.2 at `high`: the lead, its fork, or a
-  `helper-writer` opened at `high` <!-- CEO-OK: dxb-team3-orchestrator-six-points-2026-11-11 -->. The level given
+  written at high, and none at low (his word, 2026-10-29). A piece this section leaves at medium needs no lift
+  when a medium `helper-writer` or `easy-writer` writes it.
+  On an important job code is normally written by Fable 5.2 at `high` — the lead judges the job and the piece —
+  by the lead, its fork, or a `helper-writer` opened at `high`
+  <!-- CEO-OK: dxb-team3-orchestrator-six-points-2026-11-11 -->. The level given
   when a hand is opened (the Agent tool's `effort`) overrides the seat's own — measured 2026-11-11 in the hands'
   own records: `helper-writer` ran at `high` and at `xhigh`, as opened.
 - **The session's own level**, as the hook reads it: the newest, by timestamp, of the status line's record
@@ -145,7 +148,7 @@ Fable's quota runs short (§1). His word on the level overrides: "bunu high'da d
 
 | Seat | Who | Does | Never |
 |---|---|---|---|
-| **Lead** | the session, at the level the turn needs (§2) | holds the whole — his intent, the plan, how the pieces fit — and manages: decides who does what, writes the brief, verifies every piece and every fix, puts the pieces together, runs the tests, commits, tells him; when it writes, it writes the job's spine | approves its own work; commits a piece it has not verified; asks him a technical question |
+| **Lead** | the session, at the level the turn needs (§2) | holds the whole — his intent, the plan, how the pieces fit — and manages: decides who does what, writes the brief, verifies every piece and every fix, puts the pieces together, runs the tests, commits, tells him; writes what it keeps — as a rule the job's spine, the part the rest hangs on | approves its own work; commits a piece it has not verified; asks him a technical question |
 | **Fork** | the lead's own copy (`subagent_type: "fork"`), its whole context | writes a piece that needs this conversation <!-- CEO-OK: fork-seat-no-size-2026-10-08 --> | commits |
 | **Writing helper** | `helper-writer` (Fable 5.2 · `medium`; opened at `high` on an important job, at `xhigh` for the fine design piece — §2) | writes and tests a piece the lead specified; fixes a Sol finding | commits; widens the piece <!-- CEO-OK: helpers-write-code-under-lead-verification-2026-10-03 --> |
 | **Easy writer** | `easy-writer` (Opus 5.5 · `medium`) | writes and tests an easy piece of code the lead specified — narrow glue, a setting, a merge | commits; widens the piece; is given a piece §2 would write at `high` |
@@ -175,7 +178,7 @@ what comes back, and brings him proposals of its own.
 |---|---|
 | **Lead** | the lead itself |
 | **Fork** | the fork, while the lead stays free to verify |
-| **Team** | `helper-writer`s at `medium`, each its own piece, in parallel — an easy piece an `easy-writer`; `helper`s and `gatherer`s read and research beside them; the lead directs them |
+| **Team** | `helper-writer`s at `medium` — at `high` on an important job (§2) — each its own piece, in parallel — an easy piece an `easy-writer`; `helper`s and `gatherer`s read and research beside them; the lead directs them |
 | **Hybrid** | the fork writes the core; `helper-writer`s and `easy-writer`s the side pieces; `helper`s and `gatherer`s read |
 
 After the plan is talked through and he says yes, the lead looks at the job and chooses
@@ -194,7 +197,7 @@ four, not the default.
 - The lead verifies each piece before it is committed — reads the diff, runs its tests — and commits
   only what it verified. Nobody else commits.
 - A piece that fails: a medium writer's goes to the lead or a fork at `high`; one that failed twice at
-  `high` goes to the `builder` at `xhigh` — a failing piece never earlier; `max` is not used
+  `high` goes to the `builder` at `xhigh` — a failing piece never earlier; no writer runs at `max`
   <!-- CEO-OK: effort-high-xhigh-no-max-2026-11-10 -->. An easy piece of code — one §2 lets be written
   at `medium` — may be written by the `easy-writer` on Opus 5.5
   <!-- CEO-OK: lead-manages-hands-by-difficulty-2026-11-10 -->; every other piece is written by Fable 5.2: the

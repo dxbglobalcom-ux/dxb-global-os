@@ -16,13 +16,17 @@ transcript's own record). A hook cannot open a skill, so on each of his messages
 session's own level and asks it to decide, before it thinks about the substance (the CEO, 2026-10-12: the
 level comes before the thinking), what the reply needs; when that is another level, opening its skill is
 the lead's first action. A message that names a plan, a design or an architecture -- or his permission
-mode `plan` -- also tells the lead to open the dxb-team3 door (the CEO, 2026-10-09). A subagent's report
-arriving through the prompt -- a prompt that opens with `<task-notification>` -- is not his message and gets
-none of that text; his own message quoting that tag is his message. Managing -- opening a hand, writing a
-brief, verifying a piece that came back -- runs at high, with xhigh open for thinking through the
-distribution (the CEO, 2026-11-11, for dxb-team3 only): the list he is answered from names it first, and
-when a hand's report opens a turn in a session below high the hook says, in one line, that verifying it
-is managing (measured 2026-11-11: such a turn fell back to medium and a money piece was verified there).
+mode `plan` -- also tells the lead to open the dxb-team3 door (the CEO, 2026-10-09). A report arriving
+through the prompt -- a prompt that opens with `<task-notification>`: a subagent's, or a background
+command's completion (measured 2026-11-11) -- is not his message and gets none of that text; his own
+message quoting that tag after other words is his message. In a dxb-team3 job managing -- opening a hand,
+writing a brief, verifying a piece that came back -- runs at high, with xhigh open for thinking through
+the distribution (the CEO, 2026-11-11, for that door only). The hook cannot see which door is open, so the
+scope is in the text it prints: the list he is answered from names managing first, "in a dxb-team3 job",
+and when a report opens a turn in a session below high, or whose level is not known, the hook says in one
+line that in such a job verifying it is managing (measured 2026-11-11: such a turn fell back to medium and
+a money piece was verified there). The door's other points of that day -- the fine design piece at xhigh
+among them -- live in the door alone and are not printed here.
 
 The session's own level. Neither the hook's stdin nor its environment carries the effort (measured
 2026-10-06). It is the newest, by timestamp, of the status line's record
@@ -86,26 +90,30 @@ def sync(level):
         "EFFORT -- first, before you think about the substance of his message. The session sets its own level by "
         "the course of the talk; he does not switch it and is never asked to (the CEO, 2026-11-10). "
         f"{runs} Decide what this reply is:\n"
-        "- a managing turn -- you open a hand (the Agent tool), write a brief or verify a piece that came back: high; "
-        "xhigh is open while you think through who does what (the CEO, 2026-11-11);\n"
+        "- in a dxb-team3 job, a managing turn -- you open a hand (the Agent tool), write a brief or verify a piece "
+        "that came back: high; xhigh is open while you think through who does what (the CEO, 2026-11-11, for that "
+        "door only);\n"
         "- talk, a question, a fact, a reading or a record: medium;\n"
         "- a plan, a design, an architecture, or code: high -- short code (a few dozen lines of narrow glue, a "
         "merge or a setting, tried at once) may stay at medium; the measure is what an error costs, so code that "
         "deletes or moves data, touches money or the approval gate, security or permissions, runs in parallel or "
         "changes many places at once is high; no code at low;\n"
-        "- a truly complex, important job's plan or work: xhigh; so is the fine design piece that makes a look "
-        "beautiful, in a client's work or ours -- the piece alone, never the job around it (the CEO, 2026-11-11).\n"
+        "- a truly complex, important job's plan or work: xhigh.\n"
         f"{act} When the level you work at differs from the reply before, open the reply with a few words naming "
         "it and why (\"high: plan\"); otherwise say nothing about effort. max is not used.")
 
 
 def hand_back(level):
-    """What the lead is told when a hand's report opens the turn: verifying it is managing, and managing runs at
-    high. Measured 2026-11-11: such a turn fell back to the session's medium and a money piece was verified there."""
+    """What the lead is told, in one line, when a report opens the turn: in a dxb-team3 job verifying it is
+    managing, and managing runs at high. Measured 2026-11-11: such a turn fell back to the session's medium and a
+    money piece was verified there. A background command's completion opens with the same tag as a hand's report
+    (measured the same day), so the line names both; the scope is in the line because his word keeps the point
+    inside that door."""
     runs = f"This session runs at {level}" if level else "This session's own level is not known"
-    return ("A hand's report has arrived -- not his message. Verifying a piece, writing a brief and opening a hand are "
-            f"managing, and managing runs at high (the CEO, 2026-11-11). {runs}: if this turn does any of them, your "
-            "first action is `Skill(\"dxb-effort-high\")`.")
+    return ("A report has arrived -- a hand's or a background command's, not his message. In a dxb-team3 job, "
+            "verifying a piece, writing a brief and opening a hand are managing, and managing runs at high (the CEO, "
+            f"2026-11-11, for that door only). {runs}: if this turn does any of them in such a job, your first action "
+            "is `Skill(\"dxb-effort-high\")`.")
 
 
 def open_door():
@@ -251,8 +259,9 @@ def on_hook(data):
         return
     level = own_level(name, data.get("transcript_path"))
     # a subagent's report arriving is not his message (measured 2026-10-06: one tripped the net); it opens with
-    # the tag (measured 2026-11-10), so his own message quoting the tag still gets its answer (Sol B2). It gets
-    # none of his message's text -- only, below high, the one line that the turn verifying it is managing
+    # the tag (measured 2026-11-10), so his own message quoting the tag after other words still gets its answer
+    # (Sol B2). It gets none of his message's text -- only, below high, the one line that in a dxb-team3 job the
+    # turn verifying it is managing
     if prompt.lstrip().startswith("<task-notification>"):
         if level in MANAGING_LEVELS:
             return
