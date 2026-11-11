@@ -49,13 +49,24 @@ transcript (measured 2026-10-08). Frames the same way: pause, set `video.current
 A link that still will not open (deleted, private) — the row says so and what was tried. Its content is
 never guessed.
 
-**Many links:** split them into groups and give each to an Opus · medium reader (`Agent`,
-`general-purpose`, `model: opus`, `effort: medium`) with `$K/reader.md` filled ({IDS}, {JOB}, {OUTFILE});
-each writes `$J/rows/<n>.jsonl`. A handful you read yourself, same steps, same row keys.
+**Who reads** <!-- CEO-OK: watch-links-opus-reads-fable-judges-2026-11-11 -->. The reading is a hand's
+work, never a second judge's: a reader fetches, reads and writes the content down; it does not decide.
+- **The links he gives — one or a few:** an Opus 5.5 · medium reader (`Agent`, `general-purpose`,
+  `model: opus`, `effort: medium`) with `$K/reader.md` filled ({IDS}, {JOB}, {OUTFILE}); it writes
+  `$J/rows/<n>.jsonl`. It reads the whole transcript and picks the frames itself: no moment where a name, a
+  repo, code, a number or a table stands on the screen may be missed. Nobody watches the same video twice.
+- **A channel, or any large group:** the lead splits the links between Opus 5.5 · medium readers and
+  Sonnet 5.5 · high readers (`model: sonnet`, `effort: high`), about half each, the same `reader.md` — what
+  the screen carries (reels, demonstrations, carousels) to Opus, what the speech or the text carries (talks,
+  repositories, pages) to Sonnet.
+- A small thing — one post, a short page — you may read yourself, same row keys.
 
 ## 3. Judge them yourself, and say how we would use the good ones
 
-The readers bring the content; **the judgement is yours**. Know the holding and the board before you
+The readers bring the content; **the judgement is yours alone** — the Fable 5.2 lead, at `high`: opening
+`Skill("dxb-effort-high")` is the first action of the turn you judge in (dxb-team3 §2). No second judge, no
+referee round <!-- CEO-OK: watch-links-opus-reads-fable-judges-2026-11-11 -->. A reader's scores are its first
+reading; every row is gone through and the score that stands is yours. Know the holding and the board before you
 judge (`context.md`; the board row itself when one is named). For every row: is it real, is it useful —
 for the holding, for the sessions — do we already have it, which board row it belongs to. For each one
 worth acting on, write the plan in `$J/plan.jsonl`, one line per id:
@@ -79,10 +90,10 @@ check again that no lock file exists and his copy's hash is the one noted — if
 yes. A new file (`xlsx.py "$J" <file.xlsx>`, no tab name) only when he asks for one.
 A few links → answer in the conversation, plainly. Nothing is installed or started without his word.
 
-## 5. An important review — two blind readers and a referee at xhigh
+## 5. How closely a link is watched
 
-When he marks links as important ("önemli repo ve skiller var", "bu da önemli") or asks for them to be reviewed
-deeply, the review runs this way <!-- CEO-OK: watch-links-important-review-2026-10-14 -->:
+The links he gives are important ones — he chose them. Each is read this way
+<!-- CEO-OK: watch-links-important-review-2026-10-14 -->:
 
 - **His exclusions go into the brief verbatim** ("these are not wanted") and are listed once, never evaluated.
 - **Watching follows the content, not one rule:** a short reel, a Short or a carousel carries its content on
@@ -91,14 +102,11 @@ deeply, the review runs this way <!-- CEO-OK: watch-links-important-review-2026-
   densely with `frames.sh` at the seconds that matter. A long talk video carries it in the speech — the whole
   transcript is read, and a frame is taken only where a repo name, code or a table is on the screen. A long
   demonstration whose screen carries the content keeps §2's step 3 (topic map, one sharp frame per screen).
-- **Two readers, blind to each other, at high:** Opus 5.5 and Fable 5.2 (`Agent`, `general-purpose`,
-  `model: opus` / `model: fable`, `effort: high`), one shared brief in the job folder; each writes only
-  `reader-<name>.md` and never opens the other's. Each opens every named repo or tool at its real source and
-  places it in the holding (board rank or row) and says whether the construction team should install it.
-- **The lead is the referee, at xhigh:** when both are done the lead opens `Skill("dxb-effort-xhigh")` as that
-  turn's first action (dxb-team3 §2 — the level is set in the background and ends with the turn) and merges in
-  that turn. The merge goes into `MERGE.md`, naming every split and its call.
+- **One reading, one judge:** the reader of §2 reads it once; the lead judges alone at `high` (§3) — where it
+  goes in the holding (board rank or row), how it would be applied, whether the construction team should
+  install it. The two blind readers and the referee round of 2026-10-14 are gone
+  <!-- CEO-OK: watch-links-opus-reads-fable-judges-2026-11-11 -->.
 - **Cheap work goes to the cheap hand when Sonnet can do it:** a Sonnet agent (`model: sonnet`) moves the
-  referee's merge into his Excel — a new dated tab in his one workbook (§4) — keeping every call of the
-  referee.
+  lead's judgement into his Excel — a new dated tab in his one workbook (§4) — keeping every call of the
+  lead.
 - Nothing is installed or started without his word.

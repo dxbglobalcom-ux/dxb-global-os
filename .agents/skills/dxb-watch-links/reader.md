@@ -13,6 +13,9 @@ Examine EVERY link of each item:
       `bash $K/frames.sh $J <video.mp4> <sec> <sec> …`, Read the SHEET. YouTube: run watch.sh with a
       4th argument `video` to get the picture. Speech-to-text mishears names; the frames and a search give
       the real name.
+      No moment where a name, a repo, code, a number or a table stands on the screen may be missed: go
+      through the transcript for every such moment and take its frame. What you could not read, say so in
+      "okundu" with the second — never guess it.
    c) If it is truly valuable (score 3, or a demo where what the screen does is the point): watch all of it —
       `bash $K/watchall.sh $J <video.mp4>`, Read EVERY sheet.
    In "izlendi" say which steps were done. Never write "watched" when only frames were seen.
@@ -42,4 +45,5 @@ Its two halves are scored apart: teknoloji_puan — how much it advances the mac
 gelir_puan — how much it makes the holding earn (gelir_katki says how).
 Score: 0 nothing · 1 minor · 2 real, needs building or a first test · 3 strong, act on it. Be critical both
 ways: a money road is never dropped for a fixable risk, and a hollow claim is never let through.
+You bring the content; your scores are a first reading — the lead judges every row and its score stands.
 Finish with only: lines written, and ids you could not fully examine and why.
