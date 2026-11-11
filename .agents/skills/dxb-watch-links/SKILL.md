@@ -36,7 +36,8 @@ caption is bait; the content decides. Every link is opened; nothing is skipped.
 3. **The whole video**, only when it is truly valuable or the screen is the point — without waste: from
    the transcript make a topic map (second → topic → what is on screen), then take one sharp frame of every
    distinct screen and another only when the screen really changes; zoom where the text is small. A screen
-   that stands still for two minutes is one frame. For a short reel, `bash $K/watchall.sh $J <video.mp4>`
+   that stands still for two minutes is one frame (`bash $K/watchall.sh $J <video.mp4> cuts` gives the
+   frames where the screen changes). For a short reel, `bash $K/watchall.sh $J <video.mp4>`
    (one frame a second plus every scene cut) is cheaper than choosing; read every sheet.
 
 Other links: Instagram image posts → `python3 $K/carousel.py <url> $J/carousel/<id>` and read every

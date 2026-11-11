@@ -13,14 +13,17 @@ Examine EVERY link of each item:
       `bash $K/frames.sh $J <video.mp4> <sec> <sec> …`, Read the SHEET. YouTube: run watch.sh with a
       4th argument `video` to get the picture. Speech-to-text mishears names; the frames and a search give
       the real name.
-      No moment where a name, a repo, code, a number or a table stands on the screen may be missed: take the
-      frame of every such moment the transcript points to — and such a moment can pass without a word
-      spoken, so where the screen carries what the speech does not name (a screen recording, a demo,
-      slides), step through the picture itself (`watchall.sh`, or `frames.sh` at a steady step) instead of
-      trusting the transcript to point. What you could not read, say so in
-      "okundu" with the second — never guess it.
-   c) If it is truly valuable (score 3, or a demo where what the screen does is the point): watch all of it —
-      `bash $K/watchall.sh $J <video.mp4>`, Read EVERY sheet.
+      No moment where a name, a repo, code, a number or a table stands on the screen may be missed. How
+      the frames are chosen follows the video:
+      - A LONG TALK (the content is in the speech): the frames the transcript points to — every important
+        moment, and every place where the speaker shows the screen without naming what is on it ("as you
+        see here", "this repo"). Nothing more.
+      - A LONG SCREEN DEMONSTRATION (a screen recording, an install, slides — the content is on the screen):
+        the frames the transcript points to, and besides them one frame wherever the screen changes —
+        `bash $K/watchall.sh $J <video.mp4> cuts`, Read every sheet. Never a frame per second on a long video.
+      - A SHORT REEL, a Short: all of it, a frame per second plus every cut —
+        `bash $K/watchall.sh $J <video.mp4>`, Read EVERY sheet.
+      What you could not read, say so in "okundu" with the second — never guess it.
    In "izlendi" say which steps were done. Never write "watched" when only frames were seen.
    If YouTube refuses the download ("confirm you're not a bot"), leave the item for the lead: it is read in
    the CEO's own Chrome, and readers do not drive his browser.
