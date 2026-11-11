@@ -1,20 +1,29 @@
 ---
 name: model-routing-hierarchy
-description: "v19 (CEO 2026-10-06): dxb-team2 yalın — lider elleri seçer (kendisi, fork, medium yardımcılar, hibrit), her parçayı doğrular; kod/kural/kapı değişen her işte bir kör Sol geçişi (effort liderin: varsayılan high, para/veritabanı/güvenlik/yönetim xhigh, yalnız metin medium); kart, yapılacaklar listesi ve dxb-team2'de Fable yok; oturum seviyesini kendisi ayarlar (sohbet medium, plan ve kod high, gerçekten karmaşık ve önemli iş xhigh; max yok — CEO 2026-11-10); Opus xhigh kod yazmaz (Opus'un FrontierCode eğrisinin dibi; yalnız Opus'a ait); v18 dxb-crew ve dxb-team1 silindi; eski sürümler git geçmişinde"
+description: "v20 (CEO 2026-11-10, 2026-11-11): dxb-team3 — baş mühendis Fable 5.2 bütünü elinde tutar, elleri seçer, her parçayı doğrular; yazarlar Fable 5.2, kolay parça Opus 5.5 medium; okuyucular Opus 5.5 ve Sonnet 5.5; her işte kör Sol, önemli işte yanında Fable 5.2; seviye kuralları kapıda (dxb-team3 §2); eski sürümler git geçmişinde"
 metadata:
   type: feedback
   originSessionId: 6f441f82-3704-454a-83cd-11cd3bcd26d8
-  modified: 2026-09-24T00:06:41.286Z
+  modified: 2026-11-11T14:10:00.000Z
 ---
 
-# v19 — dxb-team2 YALIN (CEO, 2026-10-06) <!-- CEO-OK: dxb-team2-lean-2026-10-06 -->
+# v20 — dxb-team3 (CEO, 2026-11-10) <!-- CEO-OK: dxb-team3-default-door-fable-5-2-2026-11-10 -->
 
-Tek inşaat kapısı `.claude/skills/dxb-team2/SKILL.md` <!-- CEO-OK: dxb-team2-default-door-2026-09-28 -->; ayrıntı orada, burada yalnız dağılım.
+Tek inşaat kapısı `.claude/skills/dxb-team3/SKILL.md`. Kimin ne yaptığı, seviye kuralları ve gerekçeleri orada (§2, §3);
+burada yalnız hangi koltukta hangi modelin oturduğu. `dxb-team2` karşılaştırma için durur, yalnız adıyla açılır.
 
-1. **Lider = açılan oturum.** Seviyesini konuşmanın gidişine göre kendisi ayarlar — sohbet `medium`, plan ve kod `high`, gerçekten karmaşık ve önemli iş `xhigh`; `max` kullanılmaz (CEO 2026-11-10; `dxb-effort-medium|high|xhigh` becerileri, dxb-team3 §2). Lider işi kimin yazacağını seçer — kendisi, fork, `helper-writer`'lar (Opus 5.5 `medium`) ya da hibrit — ve her parçayı doğrular.
-2. **Denetçi = GPT-6.1 Sol**, yalnız `scripts/governance/refuter.sh` ile, salt-okur (araçla kanıtlı), kör, iş başına bir geçiş; kod, kural ya da kapı değişen her işte. Effort liderin: varsayılan `high`, para/veritabanı/güvenlik/onay/yönetim/ajanlar `xhigh`, yalnız metin `medium`. Sol yoksa `refuter` alt-ajanı (Opus 5.5 `high`), kayda yazılır; para/veritabanı/güvenlikte Sol beklenir. <!-- CEO-OK: audit-twin-every-job-2026-09-28 -->
-3. **Fable 5.1** dxb-team2 işinde danışılmaz (`advisor` de `design-eye` de). Kart ve yapılacaklar listesi yok.
-4. **Effort:** Opus `xhigh` kod yazmaz (FrontierCode %51.4, eğrinin dibi — CEO'nun sözü); `max` (`builder`) yalnız aynı parça `high`'da iki kez düşerse.
-5. **Silinenler:** `dxb-crew`, `dxb-team1`, `arbiter`, `verifier`, `builder-medium`, `builder-lean` (2026-10-01) <!-- CEO-OK: rules-prune-batch-2-2026-10-01 -->; puan kartı ve `audit-card.mjs`, `dxb-design-max` (2026-10-06). Danışman `advisor` = Fable 5.1 (`advisorModel`), dxb-team2 dışında.
+| Koltuk | Model · tanımındaki seviye |
+|---|---|
+| Baş mühendis (açılan oturum) | Fable 5.2 — seviyesini kendisi ayarlar (dxb-team3 §2) |
+| Kopya (`fork`) | Fable 5.2 — baş mühendisin seviyesinde |
+| Yazan yardımcı (`helper-writer`) | Fable 5.2 · `medium` — açılırken verilen seviye geçerlidir (dxb-team3 §2) |
+| Kolay parçanın yazarı (`easy-writer`) | Opus 5.5 · `medium` |
+| Yükseltme yazarı (`builder`) | Fable 5.2 · `xhigh` — `high`'da iki kez düşen parça |
+| Yardımcı (`helper`), salt-okur | Opus 5.5 · `medium` |
+| Toplayıcı (`gatherer`), salt-okur | Sonnet 5.5 · `medium` |
+| Okuyucu (`scout`, `Explore`) | tek seferlik |
+| Yedek planlayıcı (`Plan`) | Opus 5.5 · `high` ya da `max` — Fable 5.2 kotası sıkıştığında (dxb-team3 §1) |
+| Denetçi | GPT-6.1 Sol <!-- CEO-OK: auditor-sol-6-1-2026-10-01 -->, yalnız `scripts/governance/refuter.sh` ile — kör, salt-okur, iş başına bir geçiş; yokken `refuter` alt-ajanı (Opus 5.5 · `high`), kayda yazılır |
+| İkinci denetçi | Fable 5.2 · `high`, `scripts/governance/fable-audit.sh` ile — önemli işte Sol'un yanında <!-- CEO-OK: lead-chooses-freely-fable-audits-important-jobs-2026-11-10 --> |
 
-Eski sürümler (v1-v16) git geçmişindedir.
+`design-eye` bu kapının koltuğu değildir. Koltuk tanımları `~/.claude/agents/` altındadır. Eski sürümler (v1-v19) git geçmişindedir.

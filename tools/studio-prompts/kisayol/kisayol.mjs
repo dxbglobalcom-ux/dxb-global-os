@@ -326,7 +326,9 @@ export function appendVerdict(file, f) {
 // ---------- render ----------
 const CODEX = join(homedir(), ".local/bin/codex");
 /** The codex exec argv for one still: the built prompt, the product photo as reference when given,
- *  and the instruction to save the generated image as <name>.png inside workdir. */
+ *  and the instruction to save the generated image as <name>.png inside workdir.
+ *  @param {string} prompt
+ *  @param {{ ref?: string, workdir: string, name: string }} options  ref is absent when the recipe needs no photo */
 export function codexArgs(prompt, { ref, workdir, name }) {
   const ask = `Use your image generation tool to make exactly this image${ref ? " from the attached product photo" : ""}. ` +
     `Then save a copy of the generated image as ${name}.png in the current directory. Do nothing else.\n\n${prompt}`;
