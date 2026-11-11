@@ -2799,3 +2799,7 @@ video — a still night photo pushing in ~7 % and back, two logo sets fading. Fa
 (he agreed the decisions himself and ordered the job finished). File 6 is a taste note, not a rule
 <!-- CEO-OK: ceo-liked-features-are-taste-not-rules-2026-11-03 -->; file 7's §4 and table carry errors the row file corrects.
 Earlier days: `.planning/STATE-ARCHIVE.md` § "Moved out of STATE.md on 2026-11-04" and the sections before it.
+
+## Moved out of STATE.md on 2026-11-11
+
+2026-11-08 (sessions e6b08cd7 and a6280165) — B84's tools set up to be installed at its rank, and the approval gate. His eye on every client delivery of every job, revisions too, until he lifts it per job type (APPROVAL_ENGINE A9, B15); on a site job the home-page choice is his too; the AI eye (decision 13) removed. B84's SEO tools are written as a set-up block in the row file, step 3 of the order at its rank: Screaming Frog (free up to 500 addresses, paid above), DataForSEO, Google Ads API and Bing volume, OpenSEO as the office's panel with its recipe measured from its code; 4 Nov's free road stays beside them. A blind trial of only strong candidates before any client job; no default before it, the winner becomes the default, the master chooses free or paid per job with the reason recorded. Every candidate weighed in file 12 of his studio folder (pruned to the strong ones on his word). B42 carries his word: every installed tool checked for a new version every two weeks, tried in its own box before any update. Nothing installed.
