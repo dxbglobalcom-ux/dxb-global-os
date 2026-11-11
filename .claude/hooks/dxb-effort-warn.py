@@ -18,7 +18,11 @@ level comes before the thinking), what the reply needs; when that is another lev
 the lead's first action. A message that names a plan, a design or an architecture -- or his permission
 mode `plan` -- also tells the lead to open the dxb-team3 door (the CEO, 2026-10-09). A subagent's report
 arriving through the prompt -- a prompt that opens with `<task-notification>` -- is not his message and gets
-nothing; his own message quoting that tag is his message.
+none of that text; his own message quoting that tag is his message. Managing -- opening a hand, writing a
+brief, verifying a piece that came back -- runs at high, with xhigh open for thinking through the
+distribution (the CEO, 2026-11-11, for dxb-team3 only): the list he is answered from names it first, and
+when a hand's report opens a turn in a session below high the hook says, in one line, that verifying it
+is managing (measured 2026-11-11: such a turn fell back to medium and a money piece was verified there).
 
 The session's own level. Neither the hook's stdin nor its environment carries the effort (measured
 2026-10-06). It is the newest, by timestamp, of the status line's record
@@ -48,6 +52,7 @@ from datetime import datetime, timezone
 
 SESSION_ID = re.compile(r"[0-9a-f-]{8,}", re.IGNORECASE)
 LEVELS = ("low", "medium", "high", "xhigh", "max")
+MANAGING_LEVELS = ("high", "xhigh", "max")  # a session already there needs no lift to verify a hand's piece
 RUNTIME = os.environ.get("XDG_RUNTIME_DIR") or "/tmp"
 CTX_DIR = os.path.join(RUNTIME, "claude-ctx")
 DIR_FLAGS = os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW
@@ -81,14 +86,26 @@ def sync(level):
         "EFFORT -- first, before you think about the substance of his message. The session sets its own level by "
         "the course of the talk; he does not switch it and is never asked to (the CEO, 2026-11-10). "
         f"{runs} Decide what this reply is:\n"
+        "- a managing turn -- you open a hand (the Agent tool), write a brief or verify a piece that came back: high; "
+        "xhigh is open while you think through who does what (the CEO, 2026-11-11);\n"
         "- talk, a question, a fact, a reading or a record: medium;\n"
         "- a plan, a design, an architecture, or code: high -- short code (a few dozen lines of narrow glue, a "
         "merge or a setting, tried at once) may stay at medium; the measure is what an error costs, so code that "
         "deletes or moves data, touches money or the approval gate, security or permissions, runs in parallel or "
         "changes many places at once is high; no code at low;\n"
-        "- a truly complex, important job's plan or work: xhigh.\n"
+        "- a truly complex, important job's plan or work: xhigh; so is the fine design piece that makes a look "
+        "beautiful, in a client's work or ours -- the piece alone, never the job around it (the CEO, 2026-11-11).\n"
         f"{act} When the level you work at differs from the reply before, open the reply with a few words naming "
         "it and why (\"high: plan\"); otherwise say nothing about effort. max is not used.")
+
+
+def hand_back(level):
+    """What the lead is told when a hand's report opens the turn: verifying it is managing, and managing runs at
+    high. Measured 2026-11-11: such a turn fell back to the session's medium and a money piece was verified there."""
+    runs = f"This session runs at {level}" if level else "This session's own level is not known"
+    return ("A hand's report has arrived -- not his message. Verifying a piece, writing a brief and opening a hand are "
+            f"managing, and managing runs at high (the CEO, 2026-11-11). {runs}: if this turn does any of them, your "
+            "first action is `Skill(\"dxb-effort-high\")`.")
 
 
 def open_door():
@@ -230,13 +247,20 @@ def on_hook(data):
     if name is None:
         return
     prompt = data.get("prompt")
-    # a subagent's report arriving is not his message (measured 2026-10-06: one tripped the net); it opens with
-    # the tag (measured 2026-11-10), so his own message quoting the tag still gets its answer (Sol B2)
-    if not isinstance(prompt, str) or prompt.lstrip().startswith("<task-notification>"):
+    if not isinstance(prompt, str):
         return
-    context = sync(own_level(name, data.get("transcript_path")))
-    if data.get("permission_mode") == "plan" or PLAN_WORDS.search(prompt):
-        context += "\n" + open_door()
+    level = own_level(name, data.get("transcript_path"))
+    # a subagent's report arriving is not his message (measured 2026-10-06: one tripped the net); it opens with
+    # the tag (measured 2026-11-10), so his own message quoting the tag still gets its answer (Sol B2). It gets
+    # none of his message's text -- only, below high, the one line that the turn verifying it is managing
+    if prompt.lstrip().startswith("<task-notification>"):
+        if level in MANAGING_LEVELS:
+            return
+        context = hand_back(level)
+    else:
+        context = sync(level)
+        if data.get("permission_mode") == "plan" or PLAN_WORDS.search(prompt):
+            context += "\n" + open_door()
     output = {"hookSpecificOutput": {"hookEventName": "UserPromptSubmit", "additionalContext": context}}
     sys.stdout.write(json.dumps(output, ensure_ascii=False) + "\n")
 

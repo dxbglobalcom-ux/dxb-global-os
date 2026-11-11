@@ -1,0 +1,4 @@
+$ tsc --build && tsc -p tsconfig.tests.json
+tests/b43/kisayol.test.ts(232,27): error TS2345: Argument of type '{ workdir: string; name: string; }' is not assignable to parameter of type '{ ref: any; workdir: any; name: any; }'.
+  Property 'ref' is missing in type '{ workdir: string; name: string; }' but required in type '{ ref: any; workdir: any; name: any; }'.
+[ELIFECYCLE] Command failed with exit code 2.

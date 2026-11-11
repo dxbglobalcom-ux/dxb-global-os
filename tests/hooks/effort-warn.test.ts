@@ -138,11 +138,23 @@ describe("each of his messages tells the lead the session's level and how to set
     expect(text).toMatch(/talk, a question, a fact, a reading or a record: medium/);
     expect(text).toMatch(/a plan, a design, an architecture, or code: high/);
     expect(text).toMatch(/truly complex, important job's plan or work: xhigh/);
-    // the level follows the job, never a kind of work (his word, 2026-11-10): no blanket "eye-facing code at xhigh"
+    // the level follows the job, never a kind of work (his word, 2026-11-10): no blanket "eye-facing code at xhigh";
+    // since 2026-11-11 the one fine design piece is named, the piece alone (the case below)
     expect(text).not.toContain("look of a page");
     expect(text).toContain("max is not used");
     expect(text).not.toContain("dxb-effort-max");
     expect(text).not.toContain("dxb-effort-low");
+  });
+  it("managing runs at high, xhigh open for the distribution; the fine design piece alone at xhigh (CEO 2026-11-11, dxb-team3 only)", () => {
+    const dir = box();
+    record(dir, SID, "medium", 2);
+    const text = context(hook(dir, prompt(SID, transcript(dir, []))));
+    expect(text).toContain("a managing turn -- you open a hand (the Agent tool), write a brief or verify a piece that came back: high");
+    expect(text).toContain("xhigh is open while you think through who does what");
+    // managing is named before talk, so a verification is never read as "a reading or a record: medium"
+    expect(text.indexOf("a managing turn")).toBeGreaterThan(-1);
+    expect(text.indexOf("a managing turn")).toBeLessThan(text.indexOf("talk, a question"));
+    expect(text).toMatch(/the fine design piece that makes a look beautiful[^\n]*the piece alone/);
   });
   it("keeps his word on short code (2026-10-29): narrow glue may stay at medium, the cost of an error decides, none at low", () => {
     const dir = box();
@@ -375,12 +387,37 @@ describe("a plan talk opens the dxb-team3 door at once (CEO 2026-10-09)", () => 
   });
 });
 
-describe("what is not his message gets nothing", () => {
-  it("a subagent's report arriving through the prompt: silent (measured 2026-10-06: one tripped the net)", () => {
+describe("what is not his message gets none of his message's text", () => {
+  const REPORT = "<task-notification>\n<task-id>x</task-id>plan done</task-notification>";
+  // measured 2026-11-11 in a trial: the turn a hand's report opens fell back to the session's medium and a
+  // money piece was verified there; managing runs at high (the CEO, 2026-11-11), so the hook says so then
+  it("a hand's report arriving below high: one line — verifying it is managing, at high — never the level talk or the door", () => {
     const dir = box();
     record(dir, SID, "medium", 2);
-    expect(hook(dir, prompt(SID, transcript(dir, []), "<task-notification>\n<task-id>x</task-id>plan done</task-notification>"))).toBe("");
-    expect(hook(dir, prompt(SID, transcript(dir, []), "<task-notification>plan done</task-notification>", "plan"))).toBe("");
+    for (const mode of ["default", "plan"]) {
+      const text = context(hook(dir, prompt(SID, transcript(dir, []), REPORT, mode)));
+      expect(text).toContain("A hand's report has arrived");
+      expect(text).toContain("This session runs at medium");
+      expect(text).toContain(skillCall("high"));
+      expect(text).not.toContain(skillCall("medium"));
+      expect(text).not.toContain(skillCall("xhigh"));
+      expect(text).not.toContain("EFFORT -- first");
+      expect(text).not.toContain('Skill("dxb-team3")');
+    }
+  });
+  it("a hand's report arriving with the level not known: the same line, saying so", () => {
+    const dir = box();
+    const text = context(hook(dir, prompt(SID, join(dir, "missing.jsonl"), REPORT)));
+    expect(text).toContain("own level is not known");
+    expect(text).toContain(skillCall("high"));
+  });
+  it("a hand's report arriving at high or xhigh: silent (measured 2026-10-06: one tripped the net)", () => {
+    for (const level of ["high", "xhigh"]) {
+      const dir = box();
+      record(dir, SID, level, 2);
+      expect(hook(dir, prompt(SID, transcript(dir, []), REPORT))).toBe("");
+      expect(hook(dir, prompt(SID, transcript(dir, []), "<task-notification>plan done</task-notification>", "plan"))).toBe("");
+    }
   });
   it("his own message QUOTING that tag is his message: the level and, in plan mode, the door (Sol B2)", () => {
     const dir = box();

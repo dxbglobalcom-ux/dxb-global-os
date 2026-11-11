@@ -11,7 +11,7 @@ metadata:
 
 Tek inşaat kapısı `.claude/skills/dxb-team2/SKILL.md` <!-- CEO-OK: dxb-team2-default-door-2026-09-28 -->; ayrıntı orada, burada yalnız dağılım.
 
-1. **Lider = açılan oturum.** Seviyesini konuşmanın gidişine göre kendisi ayarlar — sohbet `medium`, plan ve kod `high`, gerçekten karmaşık ve önemli iş `xhigh`; `max` kullanılmaz (CEO 2026-11-10; `dxb-effort-medium|high|xhigh` becerileri, dxb-team3 §2). Lider işi kimin yazacağını seçer — kendisi, fork, `helper-writer`'lar (Opus 5.5 `medium`) ya da hibrit — ve her parçayı doğrular.
+1. **Lider = açılan oturum.** Seviyesini konuşmanın gidişine göre kendisi ayarlar — sohbet `medium`, yönetim (el açmak, tarif yazmak, parça doğrulamak), plan ve kod `high`, gerçekten karmaşık ve önemli iş ile güzelleştiren ince tasarım parçası `xhigh`; oturum `max` kullanmaz (CEO 2026-11-10 ve 2026-11-11; `dxb-effort-medium|high|xhigh` becerileri, ayrıntı dxb-team3 §2). Lider işi kimin yazacağını seçer — kendisi, fork, `helper-writer`'lar (Opus 5.5 `medium`) ya da hibrit — ve her parçayı doğrular.
 2. **Denetçi = GPT-6.1 Sol**, yalnız `scripts/governance/refuter.sh` ile, salt-okur (araçla kanıtlı), kör, iş başına bir geçiş; kod, kural ya da kapı değişen her işte. Effort liderin: varsayılan `high`, para/veritabanı/güvenlik/onay/yönetim/ajanlar `xhigh`, yalnız metin `medium`. Sol yoksa `refuter` alt-ajanı (Opus 5.5 `high`), kayda yazılır; para/veritabanı/güvenlikte Sol beklenir. <!-- CEO-OK: audit-twin-every-job-2026-09-28 -->
 3. **Fable 5.1** dxb-team2 işinde danışılmaz (`advisor` de `design-eye` de). Kart ve yapılacaklar listesi yok.
 4. **Effort:** Opus `xhigh` kod yazmaz (FrontierCode %51.4, eğrinin dibi — CEO'nun sözü); `max` (`builder`) yalnız aynı parça `high`'da iki kez düşerse.
