@@ -1,6 +1,6 @@
 ---
 name: dxb-team3
-description: Use when the CEO hands the construction a job, or says a plan will be talked ("plan konuşacağız", "plan moduna geçelim") — the default construction door. The lead (the session) holds the whole and chooses who writes — itself, a fork, helpers, or a fork with helpers — and verifies every piece; GPT-6.1 Sol audits the work blind, read-only, Fable 5.2 beside it on an important job; their findings are fixed and tested; the session sets its own effort — medium for talk, high for managing, plans and work, xhigh for a truly complex, important job and the fine design piece, never max. Trigger `/dxb-team3 <the job in one sentence>`.
+description: Use when the CEO hands the construction a job, or says a plan will be talked ("plan konuşacağız", "plan moduna geçelim") — the default construction door. The lead (the session) holds the whole and chooses who writes — itself, a fork, helpers, or a fork with helpers — and verifies every piece; GPT-6.1 Sol audits the work blind, read-only, Fable 5.2 beside it on an important job; their findings are fixed and tested; the session sets its own effort — medium for talk, high for managing, plans and work, xhigh for a truly complex, important job, never max. Trigger `/dxb-team3 <the job in one sentence>`.
 ---
 
 # The team — one lead, the hands it chooses, two blind auditors
@@ -109,8 +109,7 @@ The session sets its own level by the course of the talk; he does not switch it 
 `medium`; managing — the lead opens a hand, writes a brief or verifies a piece that came back — at `high`, with
 `xhigh` open while it thinks through who does what <!-- CEO-OK: dxb-team3-orchestrator-six-points-2026-11-11 -->;
 a plan, a design, an architecture, the build, the fixes and the tests at `high`; a truly complex, important
-job — its plan and its work — at `xhigh`, and so the fine design piece that makes a look beautiful, in a
-client's work or ours: the piece alone, never the job around it. `max` is not used by the session
+job — its plan and its work — at `xhigh`. `max` is not used by the session
 <!-- CEO-OK: effort-high-xhigh-no-max-2026-11-10 -->; the one place it stands is the Opus 5.5 that plans when
 Fable's quota runs short (§1). His word on the level overrides: "bunu high'da düşün" is done.
 
@@ -150,7 +149,7 @@ Fable's quota runs short (§1). His word on the level overrides: "bunu high'da d
 |---|---|---|---|
 | **Lead** | the session, at the level the turn needs (§2) | holds the whole — his intent, the plan, how the pieces fit — and manages: decides who does what, writes the brief, verifies every piece and every fix, puts the pieces together, runs the tests, commits, tells him; writes what it keeps — as a rule the job's spine, the part the rest hangs on | approves its own work; commits a piece it has not verified; asks him a technical question |
 | **Fork** | the lead's own copy (`subagent_type: "fork"`), its whole context | writes a piece that needs this conversation <!-- CEO-OK: fork-seat-no-size-2026-10-08 --> | commits |
-| **Writing helper** | `helper-writer` (Fable 5.2 · `medium`; opened at `high` on an important job, at `xhigh` for the fine design piece — §2) | writes and tests a piece the lead specified; fixes a Sol finding | commits; widens the piece <!-- CEO-OK: helpers-write-code-under-lead-verification-2026-10-03 --> |
+| **Writing helper** | `helper-writer` (Fable 5.2 · `medium`; opened at `high` on an important job — §2) | writes and tests a piece the lead specified; fixes a Sol finding | commits; widens the piece <!-- CEO-OK: helpers-write-code-under-lead-verification-2026-10-03 --> |
 | **Easy writer** | `easy-writer` (Opus 5.5 · `medium`) | writes and tests an easy piece of code the lead specified — narrow glue, a setting, a merge | commits; widens the piece; is given a piece §2 would write at `high` |
 | **Helper** | `helper` (Opus 5.5 · `medium`, read-only) | middle-to-hard work: reads code or documents at the source, measures, researches — from a freer brief | writes |
 | **Gatherer** | `gatherer` (Sonnet 5.5 · `medium`, read-only) | simple-to-middle work: gathers, extracts, lists — from a tight, templated brief | writes; judges; is given a question the template does not settle |

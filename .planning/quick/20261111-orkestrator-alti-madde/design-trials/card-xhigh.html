@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fatura F-2026-0412 · Kuzey Mimarlık</title>
+<style>
+  :root {
+    color-scheme: light dark;
+
+    /* Colour: warm neutrals. The one accent is spent once, on the amount still owed. */
+    --page: #f2efe8;
+    --surface: #fffdf9;
+    --rule: #ddd7cb;
+    --ink: #1b1915;
+    --ink-soft: #595348;
+    --accent: #9a5800;
+
+    /* Space: one 4 px scale; every gap on the card is a step of it. */
+    --space-1: 0.25rem;
+    --space-2: 0.5rem;
+    --space-3: 0.75rem;
+    --space-4: 1rem;
+    --space-6: 1.5rem;
+    --space-8: 2rem;
+    --radius: 0.25rem;
+
+    /* Type: three sizes. The figure shrinks with a narrow screen so it never wraps or overflows. */
+    --text-label: 0.875rem;
+    --leading-label: 1.25rem;
+    --text-body: 1rem;
+    --leading-body: 1.5rem;
+    --text-figure: clamp(2.5rem, 12vw, 3.5rem);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --page: #100f0d;
+      --surface: #1b1916;
+      --rule: #34302a;
+      --ink: #f4f0e8;
+      --ink-soft: #b5ad9f;
+      --accent: #f0b254;
+    }
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  body, h1, p, dl, dd {
+    margin: 0;
+  }
+
+  body {
+    min-block-size: 100svh;
+    display: grid;
+    place-items: center;
+    padding: var(--space-4);
+    background: var(--page);
+    color: var(--ink);
+    font: var(--text-body) / var(--leading-body) system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", Arial, sans-serif;
+  }
+
+  main {
+    inline-size: min(100%, 26rem);
+  }
+
+  .invoice {
+    padding: var(--space-6);
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: var(--radius);
+  }
+
+  @media (min-width: 30rem) {
+    .invoice {
+      padding: var(--space-8);
+    }
+  }
+
+  .invoice__head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-1) var(--space-4);
+  }
+
+  .invoice__title {
+    font-size: var(--text-body);
+    font-weight: 600;
+  }
+
+  .invoice__client {
+    color: var(--ink-soft);
+  }
+
+  /* Label-sized text. */
+  .invoice__status,
+  .figures dt,
+  .figures__share {
+    font-size: var(--text-label);
+    line-height: var(--leading-label);
+  }
+
+  /* A mark or a term, then its text, on one baseline. */
+  .invoice__status,
+  .figures__due {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-2);
+  }
+
+  /* The status is words plus a shape, both in ink: nothing about it is told by colour. */
+  .invoice__status {
+    font-weight: 500;
+  }
+
+  .invoice__status-mark {
+    inline-size: 0.75em;
+    block-size: 0.75em;
+  }
+
+  .figures {
+    margin-block-start: var(--space-8);
+  }
+
+  .figures dt {
+    color: var(--ink-soft);
+  }
+
+  .figures dd {
+    font-variant-numeric: tabular-nums;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+
+  .figures__remaining dd {
+    margin-block-start: var(--space-1);
+    color: var(--accent);
+    font-size: var(--text-figure);
+    line-height: 1;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+
+  .figures__due {
+    margin-block-start: var(--space-2);
+  }
+
+  /* Paid above, total below, the bar between them: label on the left edge, figures on the right. */
+  .figures__paid,
+  .figures__total {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: baseline;
+    gap: var(--space-2) var(--space-4);
+  }
+
+  .figures__paid {
+    margin-block-start: var(--space-8);
+  }
+
+  .figures__total {
+    margin-block-start: var(--space-2);
+  }
+
+  .figures__share {
+    grid-column: 1 / -1;
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+  }
+
+  /* An outlined vessel filled with ink: the outline is the total, the fill is what was paid.
+     Read by shape, so it holds without colour and in either scheme. */
+  .figures__bar {
+    flex: 1;
+    block-size: var(--space-2);
+    appearance: none;
+    border: 1px solid var(--ink-soft);
+    border-radius: var(--radius);
+    background: transparent;
+    overflow: hidden;
+  }
+
+  .figures__bar::-webkit-progress-bar {
+    background: transparent;
+  }
+
+  /* Engines name the fill differently and drop a rule that lists a name they do not know,
+     so the fill is stated once per engine. */
+  .figures__bar::-webkit-progress-value {
+    background: var(--ink);
+  }
+
+  .figures__bar::-moz-progress-bar {
+    background: var(--ink);
+  }
+</style>
+</head>
+<body>
+<main>
+  <article class="invoice" aria-labelledby="invoice-title">
+    <header class="invoice__head">
+      <div>
+        <h1 class="invoice__title" id="invoice-title">Fatura F-2026-0412</h1>
+        <p class="invoice__client">Kuzey Mimarlık</p>
+      </div>
+      <p class="invoice__status">
+        <svg class="invoice__status-mark" viewBox="0 0 12 12" aria-hidden="true">
+          <circle cx="6" cy="6" r="5.25" fill="none" stroke="currentColor" stroke-width="1.5"/>
+          <path d="M6 .75a5.25 5.25 0 0 0 0 10.5z" fill="currentColor"/>
+        </svg>
+        Kısmi ödendi
+      </p>
+    </header>
+
+    <dl class="figures">
+      <div class="figures__remaining">
+        <dt>Kalan</dt>
+        <dd>4.980,00 €</dd>
+      </div>
+      <div class="figures__due">
+        <dt>Vade</dt>
+        <dd><time datetime="2026-11-28">28 Kasım 2026</time></dd>
+      </div>
+      <div class="figures__paid">
+        <dt id="paid-term">Ödenen</dt>
+        <dd>7.500,00 €</dd>
+        <dd class="figures__share">
+          <progress class="figures__bar" value="7500" max="12480" aria-labelledby="paid-term"></progress>
+          %60,1
+        </dd>
+      </div>
+      <div class="figures__total">
+        <dt>Toplam</dt>
+        <dd>12.480,00 €</dd>
+      </div>
+    </dl>
+  </article>
+</main>
+</body>
+</html>

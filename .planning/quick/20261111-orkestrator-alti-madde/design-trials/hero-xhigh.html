@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kıyı — Ege kıyısında aile zeytinliği</title>
+<style>
+  :root {
+    --sea: #13383f;
+    --shallows: #8fcabd;
+    --land: #ede3cc;
+    --paper: #f3ecdd;
+    --ink: #1c2b1f;
+    --tree: #55632f;
+    --oil: #d6c25c;
+    --serif: "EB Garamond", "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  }
+  * { box-sizing: border-box; margin: 0; }
+  body { background: var(--sea); color: var(--paper); font-family: var(--serif); }
+
+  .hero { position: relative; min-height: 100svh; overflow: hidden; display: flex; flex-direction: column; }
+
+  /* The chart: the sea is the page, the land comes in from the east. */
+  .chart { position: absolute; inset: 0 0 0 auto; width: 60vw; height: 100%; }
+  .chart svg { display: block; width: 100%; height: 100%; }
+  .tide path { fill: none; stroke: var(--shallows); animation: lap 8s ease-in-out infinite; }
+  .tide path:nth-child(2) { animation-delay: -1.2s; }
+  .tide path:nth-child(3) { animation-delay: -2.4s; }
+  @keyframes lap { 50% { stroke-opacity: .45; } }
+  .mark { font: italic 19px var(--serif); fill: var(--ink); }
+  .mark small { font-size: 13px; }
+
+  .brand { position: relative; padding: 40px 0 0 7vw; font-size: 34px; letter-spacing: .01em; }
+  .brand span { display: block; margin-top: 4px; font-size: 13px; letter-spacing: .22em; text-transform: uppercase; opacity: .7; }
+
+  .words { position: relative; margin: auto 0; padding: 48px 7vw 72px; max-width: 46vw; }
+  h1 { font-weight: 400; font-size: clamp(44px, 5.6vw, 88px); line-height: 1.02; letter-spacing: -.012em; }
+  h1 em { display: block; padding-left: .9em; color: var(--oil); }
+  p { margin-top: 32px; max-width: 30em; font-size: 20px; line-height: 1.55; color: rgba(243, 236, 221, .82); }
+  .reserve { display: inline-block; margin-top: 40px; padding: 15px 28px 16px; background: var(--oil); color: var(--ink);
+    font-size: 19px; text-decoration: none; border-radius: 2px; transition: background .3s; }
+  .reserve i { display: inline-block; margin-left: 10px; font-style: normal; transition: transform .3s; }
+  .reserve:hover, .reserve:focus-visible { background: var(--paper); }
+  .reserve:hover i, .reserve:focus-visible i { transform: translateX(6px); }
+
+  @media (max-width: 860px) {
+    .chart { position: relative; inset: auto; order: 2; width: 100%; height: 290px; margin-top: 18px; }
+    .brand { padding: 24px 24px 0; font-size: 28px; order: 1; }
+    .words { order: 3; margin: 0; max-width: none; padding: 30px 24px 44px; }
+    h1 { font-size: 42px; }
+    p { margin-top: 20px; font-size: 18px; }
+    .reserve { margin-top: 26px; }
+  }
+  @media (prefers-reduced-motion: reduce) { .tide path { animation: none; } }
+</style>
+</head>
+<body>
+<main class="hero">
+  <div class="chart" aria-hidden="true">
+    <svg viewBox="0 0 800 900" preserveAspectRatio="xMaxYMid slice">
+      <defs>
+        <path id="coast" d="M330-40C250 120 380 200 300 330C240 430 150 470 190 560C230 650 360 640 340 760C330 850 380 890 360 960L2400 960L2400-40Z"/>
+        <!-- one tile = one tree and its morning shadow; the grove is 40 x 30 tiles = 1,200 trees -->
+        <pattern id="tree" width="11" height="11" patternUnits="userSpaceOnUse">
+          <circle cx="4.2" cy="4.8" r="3.3" fill="#2e2c14" fill-opacity=".28"/>
+          <circle cx="6" cy="5.6" r="3.3" fill="#55632f"/>
+          <circle cx="6.9" cy="6.3" r="1.5" fill="#8c9a5e"/>
+        </pattern>
+      </defs>
+      <g class="tide">
+        <use href="#coast" stroke-width="150" stroke-opacity=".10"/>
+        <use href="#coast" stroke-width="84" stroke-opacity=".16"/>
+        <use href="#coast" stroke-width="34" stroke-opacity=".30"/>
+      </g>
+      <use href="#coast" fill="#ede3cc" stroke="#f7f1e2" stroke-width="5"/>
+      <rect x="335" y="285" width="440" height="330" fill="url(#tree)" transform="rotate(-7 555 450)"/>
+      <text class="mark" x="372" y="682">1.200 ağaç, elle toplanır</text>
+      <path d="M372 692h172" stroke="#1c2b1f" stroke-opacity=".45"/>
+      <text class="mark" x="372" y="712" font-size="14">sıkımhaneye dört saat</text>
+    </svg>
+  </div>
+
+  <header class="brand">Kıyı<span>Ege kıyısında aile zeytinliği</span></header>
+
+  <div class="words">
+    <h1>Bir yıl sabır,<em>dört saat telaş.</em></h1>
+    <p>Denize bakan 1.200 ağacımızın zeytinini elle toplarız. Daldan indikten sonra dört saat geçmeden soğuk sıkılır; gerisi ağaçların işidir.</p>
+    <a class="reserve" href="#hasat-2026">2026 hasadından ayırtın <i>→</i></a>
+  </div>
+</main>
+</body>
+</html>

@@ -25,8 +25,7 @@ the distribution (the CEO, 2026-11-11, for that door only). The hook cannot see 
 scope is in the text it prints: the list he is answered from names managing first, "in a dxb-team3 job",
 and when a report opens a turn in a session below high, or whose level is not known, the hook says in one
 line that in such a job verifying it is managing (measured 2026-11-11: such a turn fell back to medium and
-a money piece was verified there). The door's other points of that day -- the fine design piece at xhigh
-among them -- live in the door alone and are not printed here.
+a money piece was verified there). The door's other points of that day live in the door alone and are not printed here.
 
 The session's own level. Neither the hook's stdin nor its environment carries the effort (measured
 2026-10-06). It is the newest, by timestamp, of the status line's record

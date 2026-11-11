@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fatura F-2026-0412 · Kuzey Mimarlık</title>
+<style>
+  :root {
+    color-scheme: light dark;
+
+    /* Neutrals carry everything; the accent means one thing only: money already paid. */
+    --page: #f1f0ec;
+    --surface: #ffffff;
+    --ink: #15181a;
+    --ink-soft: #5a6066;
+    --rule: #dcdad4;
+    --gauge-edge: #878c91;
+    --accent: #0b6e5b;
+
+    /* Spacing: steps of 4 px. */
+    --space-1: 0.25rem;
+    --space-2: 0.5rem;
+    --space-3: 0.75rem;
+    --space-4: 1rem;
+    --space-6: 1.5rem;
+    --space-8: 2rem;
+
+    /* Type: label 13, body 15, title 17, and the one figure that leads. */
+    --type-label: 0.8125rem;
+    --type-body: 0.9375rem;
+    --type-title: 1.0625rem;
+    --type-lead: clamp(2.5rem, 13vw, 3.25rem);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --page: #0d0f10;
+      --surface: #16191b;
+      --ink: #f2f1ed;
+      --ink-soft: #a3a9ae;
+      --rule: #2b2f32;
+      --gauge-edge: #6f757a;
+      --accent: #58c6ac;
+    }
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+
+  body {
+    display: grid;
+    grid-template-columns: minmax(0, 26rem);
+    place-content: center;
+    min-height: 100vh;
+    min-height: 100svh;
+    margin: 0;
+    padding: var(--space-4);
+    background: var(--page);
+    color: var(--ink);
+    font: 400 var(--type-body) / 1.5rem system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", sans-serif;
+  }
+
+  h1, p, dl, dd { margin: 0; }
+
+  .invoice {
+    padding: var(--space-6);
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: 0.75rem;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .invoice h1 {
+    font-size: var(--type-title);
+    font-weight: 600;
+  }
+
+  .invoice-client { color: var(--ink-soft); }
+
+  /* Two columns so paid and total can sit under the two ends of the bar. */
+  .facts {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    margin-top: var(--space-8);
+  }
+
+  .facts dt {
+    color: var(--ink-soft);
+    font-size: var(--type-label);
+    line-height: 1.25rem;
+  }
+
+  .facts dd {
+    font-weight: 500;
+    white-space: nowrap;
+  }
+
+  .fact-remaining,
+  .fact-due,
+  .fact-status { grid-column: 1 / -1; }
+
+  .fact-remaining dd {
+    margin-top: var(--space-1);
+    font-size: var(--type-lead);
+    font-weight: 600;
+    line-height: 3.5rem;
+    letter-spacing: -0.025em;
+  }
+
+  .fact-due {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-2);
+    margin-top: var(--space-3);
+  }
+
+  .fact-status { margin-top: var(--space-8); }
+
+  .fact-status dd {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    row-gap: var(--space-3);
+  }
+
+  /* The half-filled disc says "partial" by shape; the accent only repeats it. */
+  .status svg {
+    width: 0.75em;
+    height: 0.75em;
+    margin-inline-end: var(--space-2);
+    color: var(--accent);
+  }
+
+  /* A hollow gauge: what is paid is filled, what remains is empty. */
+  .paid-gauge {
+    -webkit-appearance: none;
+    appearance: none;
+    display: block;
+    grid-column: 1 / -1;
+    width: 100%;
+    height: var(--space-2);
+    border: 0;
+    border-radius: 2px;
+    overflow: hidden;
+    background: var(--surface);
+    box-shadow: inset 0 0 0 1px var(--gauge-edge);
+  }
+
+  /* One rule per engine: a selector list with a foreign pseudo-element is dropped whole. */
+  .paid-gauge::-webkit-progress-bar { background: transparent; }
+  .paid-gauge::-webkit-progress-value { background: var(--accent); }
+  .paid-gauge::-moz-progress-bar { background: var(--accent); }
+
+  .fact-paid,
+  .fact-total { margin-top: var(--space-3); }
+
+  .fact-total { text-align: end; }
+
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  @media (min-width: 30rem) {
+    .invoice { padding: var(--space-8); }
+  }
+
+  /* Forced colours drop the shadow and the fill; give the gauge both back in system colours. */
+  @media (forced-colors: active) {
+    .status svg { color: CanvasText; }
+    .paid-gauge { border: 1px solid CanvasText; }
+    .paid-gauge::-webkit-progress-value { background: Highlight; }
+    .paid-gauge::-moz-progress-bar { background: Highlight; }
+  }
+</style>
+</head>
+<body>
+<main>
+  <article class="invoice" aria-labelledby="invoice-title">
+    <header>
+      <h1 id="invoice-title">Fatura F-2026-0412</h1>
+      <p class="invoice-client">Kuzey Mimarlık</p>
+    </header>
+
+    <dl class="facts">
+      <div class="fact-remaining">
+        <dt>Kalan</dt>
+        <dd>4.980,00 €</dd>
+      </div>
+      <div class="fact-due">
+        <dt>Son ödeme</dt>
+        <dd><time datetime="2026-11-28">28 Kasım 2026</time></dd>
+      </div>
+      <div class="fact-status">
+        <dt class="visually-hidden">Durum</dt>
+        <dd>
+          <span class="status"><svg viewBox="0 0 12 12" fill="currentColor" aria-hidden="true"><path d="M6 1a5 5 0 0 0 0 10z"/><circle cx="6" cy="6" r="5.25" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>Kısmi ödendi</span>
+          <span>%60,1</span>
+          <progress class="paid-gauge" value="7500" max="12480" aria-label="Ödenen oran" aria-valuetext="%60,1"></progress>
+        </dd>
+      </div>
+      <div class="fact-paid">
+        <dt>Ödenen</dt>
+        <dd>7.500,00 €</dd>
+      </div>
+      <div class="fact-total">
+        <dt>Toplam</dt>
+        <dd>12.480,00 €</dd>
+      </div>
+    </dl>
+  </article>
+</main>
+</body>
+</html>

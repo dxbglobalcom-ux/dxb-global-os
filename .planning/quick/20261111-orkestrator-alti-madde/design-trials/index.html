@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bugünkü dört tasarım</title>
+<style>
+  body { margin: 0; padding: 16px; font: 16px/1.4 system-ui, sans-serif; background: #1a1a19; color: #ece6dc; }
+  h1 { margin: 0 0 4px; font-size: 20px; }
+  p { margin: 0 0 16px; color: #b9b2a6; max-width: 90ch; }
+  .row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 28px; }
+  .row > div { min-width: 0; }
+  h2 { margin: 0 0 8px; font-size: 16px; }
+  .frame { position: relative; overflow: hidden; border-radius: 8px; background: #000; }
+  .frame iframe { position: absolute; left: 0; top: 0; border: 0; transform-origin: 0 0; }
+</style>
+</head>
+<body>
+<h1>2. deneme — açılış bölümü (serbest tarif, emek görünüşe, 10 dakika sınırı)</h1>
+<p>İki yazar aynı tarifle, birbirini görmeden.</p>
+<div class="row">
+  <div><h2>high — 7 dk 20 sn, 5 düzeltme turu</h2><div class="frame" data-w="1440" data-h="900"><iframe src="hero-high.html" title="açılış, high"></iframe></div></div>
+  <div><h2>xhigh — 9 dk 31 sn, 0 düzeltme turu</h2><div class="frame" data-w="1440" data-h="900"><iframe src="hero-xhigh.html" title="açılış, xhigh"></iframe></div></div>
+</div>
+<h1>1. deneme — fatura kartı (dar tarif, süre sınırı yok)</h1>
+<p>İki yazar aynı tarifle, birbirini görmeden.</p>
+<div class="row">
+  <div><h2>high — 9 dk 27 sn</h2><div class="frame" data-w="640" data-h="560"><iframe src="card-high.html" title="kart, high"></iframe></div></div>
+  <div><h2>xhigh — 18 dk 46 sn</h2><div class="frame" data-w="640" data-h="560"><iframe src="card-xhigh.html" title="kart, xhigh"></iframe></div></div>
+</div>
+<script>
+  function fit() {
+    document.querySelectorAll(".frame").forEach(function (f) {
+      var w = +f.dataset.w, h = +f.dataset.h, s = f.clientWidth / w, i = f.firstElementChild;
+      i.style.width = w + "px"; i.style.height = h + "px";
+      i.style.transform = "scale(" + s + ")";
+      f.style.height = Math.round(h * s) + "px";
+    });
+  }
+  addEventListener("resize", fit); fit();
+</script>
+</body>
+</html>

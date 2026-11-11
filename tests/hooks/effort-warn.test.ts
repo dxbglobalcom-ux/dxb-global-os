@@ -139,7 +139,7 @@ describe("each of his messages tells the lead the session's level and how to set
     expect(text).toMatch(/a plan, a design, an architecture, or code: high/);
     expect(text).toMatch(/truly complex, important job's plan or work: xhigh/);
     // the level follows the job, never a kind of work (his word, 2026-11-10): no blanket "eye-facing code at xhigh".
-    // The fine design piece at xhigh (2026-11-11) is the dxb-team3 door's own (§2) and is not printed here
+    // No kind of work is named at xhigh: the fine-design point of 2026-11-11 was withdrawn the same day
     expect(text).not.toContain("look of a page");
     expect(text).not.toContain("fine design piece");
     expect(text).toContain("- a truly complex, important job's plan or work: xhigh.\n");
