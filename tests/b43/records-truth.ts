@@ -140,6 +140,10 @@ export const C = {
     { id: "olive-merged-page-accepted-by-his-eye-2026-10-26", subject: /merged olive page/i },
     // The effort arrangement and the manager seats (dxb-team3 §2, §3), accepted by his eye 2026-11-10 night after an evening of working with both; the records spell them "the session sets its own effort" and "works as a manager".
     { id: "eye-accepted-effort-and-manager-seats-2026-11-10", subject: /session sets its own effort|works as a manager/i },
+    // The orchestrator's points in dxb-team3 and the link door's one-reader-one-judge arrangement, accepted by his eye
+    // 2026-11-11 evening ("Gözümden geçti onlar. … Gözüm beklenenleri okeyledim."); the records spell them
+    // "the orchestrator's points" and "the link door".
+    { id: "eye-accepted-orchestrator-points-and-link-door-2026-11-11", subject: /orchestrator's points|the link door/i },
   ],
   /**
    * R4 — the ruler cannot be forgotten: every acceptance of his eye registered in the ledger from
