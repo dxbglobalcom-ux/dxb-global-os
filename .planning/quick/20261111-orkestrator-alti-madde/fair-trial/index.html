@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Adil deneme — dört sayfa</title>
+<style>
+  body { margin: 0; padding: 16px; font: 16px/1.4 system-ui, sans-serif; background: #1a1a19; color: #ece6dc; }
+  h1 { margin: 0 0 4px; font-size: 20px; }
+  p { margin: 0 0 16px; color: #b9b2a6; max-width: 110ch; }
+  .row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 28px; }
+  .row > div { min-width: 0; }
+  h2 { margin: 0 0 8px; font-size: 16px; }
+  a { color: #e9b872; }
+  .frame { position: relative; overflow: hidden; border-radius: 8px; background: #000; }
+  .frame iframe { position: absolute; left: 0; top: 0; border: 0; transform-origin: 0 0; }
+</style>
+</head>
+<body>
+<h1>Adil deneme — Kaybolmuş Sesler Müzesi (11 Kasım 2026)</h1>
+<p>Dört yazar, kelimesi kelimesine aynı prompt, birbirinden habersiz; süre sınırı ve denetim yok. Her çerçevenin içinde sayfa kaydırılabilir; başlıktaki bağlantı sayfayı tam ekran açar. Hesabın kotası koşunun ortasında doldu: high 2 kesintisiz bitti, high 1 ile xhigh 1 yarıda durup kaldığı yerden sürdü, xhigh 2 baştan başlatıldı ve kesintisiz bitti.</p>
+<div class="row">
+  <div><h2>high 1 — <a href="high-1.html" target="_blank">tam ekran aç</a></h2><div class="frame"><iframe src="high-1.html" title="high 1"></iframe></div></div>
+  <div><h2>high 2 — <a href="high-2.html" target="_blank">tam ekran aç</a></h2><div class="frame"><iframe src="high-2.html" title="high 2"></iframe></div></div>
+</div>
+<div class="row">
+  <div><h2>xhigh 1 — <a href="xhigh-1.html" target="_blank">tam ekran aç</a></h2><div class="frame"><iframe src="xhigh-1.html" title="xhigh 1"></iframe></div></div>
+  <div><h2>xhigh 2 — <a href="xhigh-2.html" target="_blank">tam ekran aç</a></h2><div class="frame"><iframe src="xhigh-2.html" title="xhigh 2"></iframe></div></div>
+</div>
+<script>
+  function fit() {
+    document.querySelectorAll(".frame").forEach(function (f) {
+      var w = 1440, h = 900, s = f.clientWidth / w, i = f.firstElementChild;
+      i.style.width = w + "px"; i.style.height = h + "px";
+      i.style.transform = "scale(" + s + ")";
+      f.style.height = Math.round(h * s) + "px";
+    });
+  }
+  addEventListener("resize", fit); fit();
+</script>
+</body>
+</html>

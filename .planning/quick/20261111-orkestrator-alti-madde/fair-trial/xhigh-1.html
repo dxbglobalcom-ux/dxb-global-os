@@ -1,0 +1,1228 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<title>Kaybolmuş Sesler Müzesi</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23E9E3D1'/%3E%3Cpath d='M4 16h9M19 16h9' stroke='%2315130E' stroke-width='2'/%3E%3Cpath d='M16 5v22' stroke='%23E4381A' stroke-width='2.5'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&family=Sofia+Sans+Extra+Condensed:wght@1..1000&display=swap" rel="stylesheet">
+<style>
+/* ── Inks. Registered so the whole room can dim smoothly when a sound is played. ── */
+@property --paper { syntax: '<color>'; inherits: true; initial-value: #E9E3D1; }
+@property --plate { syntax: '<color>'; inherits: true; initial-value: #F1ECDE; }
+@property --ink   { syntax: '<color>'; inherits: true; initial-value: #15130E; }
+@property --mute  { syntax: '<color>'; inherits: true; initial-value: #6C6656; }
+@property --line  { syntax: '<color>'; inherits: true; initial-value: rgba(21,19,14,.2); }
+@property --ton   { syntax: '<color>'; inherits: true; initial-value: #2742B0; }
+@property --his   { syntax: '<color>'; inherits: true; initial-value: #C4861A; }
+@property --ugul  { syntax: '<color>'; inherits: true; initial-value: #2C7458; }
+@property --now   { syntax: '<color>'; inherits: true; initial-value: #E4381A; }
+
+:root {
+  --f-g: 'Sofia Sans Extra Condensed', 'Arial Narrow', sans-serif;
+  --f-s: 'Newsreader', Georgia, serif;
+  --f-m: 'IBM Plex Mono', ui-monospace, monospace;
+  --pad: clamp(28px, 3.6vw, 72px);
+  --bar: 44px;
+  transition: --paper .9s ease, --plate .9s ease, --ink .9s ease, --mute .9s ease, --line .9s ease,
+              --ton .9s ease, --his .9s ease, --ugul .9s ease, --now .9s ease;
+  scrollbar-color: var(--mute) var(--paper);
+  scrollbar-width: thin;
+}
+/* Lights down: a sound is being played, or the visitor stands in the room of silence. */
+:root.los, :root.gece {
+  --paper: #0D0C0A; --plate: #151310; --ink: #ECE5D3; --mute: #8F8876; --line: rgba(236,229,211,.2);
+  --ton: #8FA2FF; --his: #EDB84E; --ugul: #7CCBA4; --now: #FF5433;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body {
+  background: var(--paper); color: var(--ink);
+  font: 400 17.5px/1.52 var(--f-s); font-optical-sizing: auto; font-synthesis: none;
+  -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; overflow-x: hidden;
+}
+/* paper grain */
+body::after {
+  content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 90; opacity: .5; mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .2  0 0 0 0 .17  0 0 0 0 .1  0 0 0 .22 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+::selection { background: var(--now); color: var(--paper); }
+a { color: inherit; }
+p { margin: 0; }
+.mono, .etiket { font: 500 11px/1.4 var(--f-m); letter-spacing: .09em; text-transform: uppercase; }
+
+/* ── top bar ── */
+.ust {
+  position: fixed; inset: 0 0 auto 0; height: var(--bar); z-index: 40;
+  display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; padding: 0 var(--pad);
+  background: var(--paper); border-bottom: 1px solid var(--line);
+  font: 500 11px/1 var(--f-m); letter-spacing: .09em; text-transform: uppercase;
+}
+.marka { text-decoration: none; display: flex; gap: 14px; align-items: baseline; }
+.marka b { font: 800 19px/1 var(--f-g); letter-spacing: .06em; }
+.marka span { opacity: 0; }
+.ic .marka span { opacity: 1; }
+#konum { color: var(--mute); }
+#hal { justify-self: end; display: flex; align-items: center; gap: 9px; font-variant-numeric: tabular-nums; }
+#hal::before { content: ''; width: 7px; height: 7px; border-radius: 50%; border: 1px solid var(--ink); }
+#hal.cal { color: var(--now); }
+#hal.cal::before { background: var(--now); border-color: var(--now); animation: nabiz 1s ease-in-out infinite; }
+@keyframes nabiz { 50% { opacity: .25; } }
+
+/* ── entrance: the name is a score, read by one line ── */
+.giris { height: 100vh; min-height: 620px; max-height: 1280px; padding: var(--bar) var(--pad) 0; display: flex; flex-direction: column; }
+.sahne { position: relative; flex: 1; display: flex; flex-direction: column; justify-content: space-between; padding: 12px 0 16px; }
+.izgara {
+  --fs: min(17vw, calc((min(100vh, 1280px) - 214px) / 2.7));
+  display: grid; grid-template-columns: repeat(9, 1fr); grid-template-rows: repeat(3, calc(var(--fs) * .9));
+}
+.ad { display: contents; }
+.h {
+  font: 60 var(--fs)/.9 var(--f-g); text-align: center; opacity: 0; user-select: none; cursor: pointer;
+  font-kerning: none; white-space: nowrap;
+}
+.sunu {
+  grid-column: 7 / 10; grid-row: 2 / 4; display: flex; flex-direction: column; justify-content: space-between;
+  padding: calc(var(--fs) * .12) 0 calc(var(--fs) * .1) 1.4vw; opacity: 0;
+}
+.sunu .buyuk { font: 300 clamp(20px, 1.78vw, 32px)/1.2 var(--f-s); letter-spacing: -.012em; text-wrap: balance; }
+.sunu .buyuk em { font-style: italic; }
+.sunu .kucuk { font: 400 clamp(14px, 1.1vw, 18px)/1.48 var(--f-s); color: var(--mute); margin-top: .9em; max-width: 36ch; }
+.sunu ul { list-style: none; margin: 0; padding: 0; font: 500 10.5px/1 var(--f-m); letter-spacing: .08em; text-transform: uppercase; }
+.sunu li { border-top: 1px solid var(--line); display: flex; justify-content: space-between; padding: 7px 0 6px; }
+.sunu li span:first-child { color: var(--mute); }
+
+.alt-serit { opacity: 0; }
+.cetvel { display: block; width: 100%; height: 28px; overflow: visible; }
+.cetvel line { stroke: var(--ink); stroke-width: 1; }
+.cetvel text { font: 400 10px var(--f-m); fill: var(--mute); letter-spacing: .04em; }
+.plan { display: grid; grid-template-columns: repeat(9, 1fr); margin-top: 4px; }
+.plan a { display: block; text-decoration: none; padding-right: 14px; }
+.plan svg { display: block; width: 100%; height: 48px; overflow: visible; }
+.plan span { display: block; margin-top: 7px; font: 500 10px/1.2 var(--f-m); letter-spacing: .07em; text-transform: uppercase; white-space: nowrap; }
+.plan span b { font-weight: 500; color: var(--mute); margin-right: .7em; }
+.plan a:hover span { color: var(--now); }
+.plan a:hover span b { color: var(--now); }
+
+.okur { position: absolute; top: 0; bottom: 0; left: 0; width: 0; border-left: 1px solid var(--now); pointer-events: none; opacity: 0; will-change: transform; }
+.okur b { position: absolute; left: 7px; top: 2px; font: 500 10.5px/1 var(--f-m); letter-spacing: .06em; color: var(--now); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.okur::before { content: ''; position: absolute; left: -4.5px; top: 0; border: 4px solid transparent; border-top: 6px solid var(--now); }
+
+/* ── shared section furniture ── */
+.kolon { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 24px; }
+.s-ust { display: flex; justify-content: space-between; border-top: 1px solid var(--ink); padding-top: 10px; font: 500 11px/1.4 var(--f-m); letter-spacing: .09em; text-transform: uppercase; }
+.s-ust span:last-child { color: var(--mute); }
+.gor { opacity: 0; transform: translateY(16px); }
+
+/* ── entrance hall ── */
+.hol { padding: 150px var(--pad) 110px; scroll-margin-top: 0; }
+.hol .etiket { grid-column: 1 / 3; padding-top: 1.1em; color: var(--mute); }
+.soz { grid-column: 3 / 13; margin: 0; font: 300 clamp(52px, 6.9vw, 132px)/.98 var(--f-s); letter-spacing: -.028em; text-wrap: balance; }
+.soz em { font-style: italic; font-weight: 300; }
+.soz em span { opacity: var(--o); }
+.hol-metin { grid-column: 3 / 8; margin-top: 72px; }
+.hol-metin p + p { margin-top: 1.05em; }
+.hol-metin p:first-child { font-size: 22px; line-height: 1.38; }
+.anahtar { grid-column: 9 / 13; margin-top: 72px; }
+.anahtar h3 { margin: 0 0 10px; font: 500 11px/1.4 var(--f-m); letter-spacing: .09em; text-transform: uppercase; display: flex; justify-content: space-between; }
+.anahtar h3 span { color: var(--mute); }
+.an {
+  all: unset; box-sizing: border-box; display: grid; grid-template-columns: 96px 78px 1fr; column-gap: 14px; align-items: center;
+  width: 100%; padding: 8px 0; border-top: 1px solid var(--line); cursor: pointer;
+}
+.an svg { display: block; width: 96px; height: 34px; overflow: visible; }
+.an b { font: 500 11px/1.2 var(--f-m); letter-spacing: .09em; text-transform: uppercase; }
+.an i { font: italic 400 15.5px/1.25 var(--f-s); color: var(--mute); }
+.an:hover b { color: var(--now); }
+.an.simdi { cursor: default; }
+.an.simdi:hover b { color: inherit; }
+.anahtar .dip { margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--line); font: 400 10.5px/1.6 var(--f-m); letter-spacing: .04em; color: var(--mute); }
+
+/* ── a room ── */
+.salon { padding: 60px var(--pad) 24px; }
+.s-ad { margin: 14px 0 0; display: flex; align-items: baseline; flex-wrap: wrap; column-gap: .16em; font: 60 clamp(64px, min(8.4vw, 15vh), 176px)/.86 var(--f-g); }
+.s-ad .no { font-weight: 60; }
+.s-ad .isim { white-space: nowrap; }
+.s-ad .isim span { font-weight: 60; }
+.s-ad i { font: italic 300 .27em/1 var(--f-s); letter-spacing: -.01em; margin-left: .5em; white-space: nowrap; }
+.s-govde { margin-top: 20px; align-items: start; }
+.onom { grid-column: 1 / 5; font: italic 300 clamp(23px, 2.15vw, 40px)/1.14 var(--f-s); letter-spacing: -.012em; text-wrap: balance; }
+.metin { grid-column: 5 / 10; max-width: 60ch; }
+.veri { grid-column: 10 / 13; margin: 0; }
+.veri div { display: grid; grid-template-columns: 92px 1fr; column-gap: 10px; padding: 6px 0 5px; border-top: 1px solid var(--line); }
+.veri dt { font: 500 10px/1.75 var(--f-m); letter-spacing: .09em; text-transform: uppercase; color: var(--mute); }
+.veri dd { margin: 0; font-size: 15px; line-height: 1.32; }
+
+/* ── a plate: the score of one sound ── */
+.levha { margin: 20px 0 0; }
+.levha svg { display: block; width: 100%; height: auto; overflow: visible; cursor: pointer; }
+.levha svg:not([viewBox]) { height: clamp(268px, calc(100vh - 445px), 538px); }      /* holds the room's height until the plate is drawn */
+.zemin { fill: var(--plate); }
+.kilavuz { stroke: var(--line); stroke-width: 1; stroke-dasharray: 1 6; }
+.eksen { stroke: var(--ink); stroke-width: 1; fill: none; }
+.yz { font: 400 10px var(--f-m); fill: var(--mute); letter-spacing: .03em; }
+.bl { font: 500 9.5px var(--f-m); fill: var(--ink); letter-spacing: .1em; }
+.ek { opacity: 0; }
+.harf { font: 500 11px var(--f-m); fill: var(--ink); text-anchor: middle; }
+.im line { stroke: var(--ink); stroke-width: .8; }
+.im text { font: italic 400 13px var(--f-s); fill: var(--ink); paint-order: stroke; stroke: var(--plate); stroke-width: 4px; stroke-linejoin: round; }
+.tekrar rect, .tekrar circle { fill: var(--ink); }
+
+/* --k runs 100 → 0: how much of "now" a sign still carries. Red is reserved for that one meaning. */
+.ev { --ic: color-mix(in srgb, var(--now) calc(var(--k, 0) * 1%), var(--renk)); transition: fill-opacity .5s, stroke-opacity .5s; }
+.caliyor .ev:not(.gec) { fill-opacity: .26; stroke-opacity: .26; }
+path.ev.ton { --renk: var(--ton); fill: var(--ic); }
+path.ev.ugul { --renk: var(--ugul); fill: var(--ic); }
+path.ev.h { opacity: calc(.42 + .58 * var(--k, 0) / 100); }
+line.ev.his { --renk: var(--his); stroke: var(--ic); stroke-width: 1.3; opacity: calc(var(--o, 1) + (1 - var(--o, 1)) * var(--k, 0) / 100); }
+circle.ev.his { --renk: var(--his); fill: var(--ic); }
+.ev.vur { --renk: var(--ink); }
+.ev.vur circle, rect.ev.vur { fill: var(--ic); }
+.ev.vur circle:not(.govde) { transform-box: fill-box; transform-origin: center; transform: scale(calc(1 + .55 * var(--k, 0) / 100)); }
+.ev.vur .sap { stroke: var(--ic); stroke-width: .8; }
+.ev.vur .govde { fill: var(--plate); stroke: var(--ic); stroke-width: 1.1; }
+line.ev.vur { stroke: var(--ic); stroke-width: 1; }
+
+.kafa line { stroke: var(--now); stroke-width: 1; }
+.kafa path { fill: var(--now); }
+.kz { font: 500 10.5px var(--f-m); fill: var(--now); letter-spacing: .05em; paint-order: stroke; stroke: var(--plate); stroke-width: 4px; stroke-linejoin: round; }
+.levha:not(.caliyor) .kafa line { stroke-dasharray: 2 4; }
+.iz line { stroke: var(--ink); stroke-width: .8; stroke-dasharray: 1 3; }
+.iz text { font: 400 10px var(--f-m); fill: var(--ink); letter-spacing: .04em; paint-order: stroke; stroke: var(--plate); stroke-width: 4px; stroke-linejoin: round; }
+
+.levha figcaption { display: flex; align-items: center; gap: 22px; margin-top: 8px; font: 500 11px/1.4 var(--f-m); letter-spacing: .08em; text-transform: uppercase; }
+.dinle {
+  all: unset; box-sizing: border-box; cursor: pointer; display: inline-flex; align-items: center; gap: 10px;
+  height: 36px; padding: 0 18px 0 14px; border: 1px solid var(--ink); border-radius: 18px;
+  font: 500 11px/1 var(--f-m); letter-spacing: .1em; text-transform: uppercase; transition: background-color .25s, color .25s;
+}
+.dinle::before { content: ''; width: 0; height: 0; border: 5px solid transparent; border-left: 8px solid currentColor; border-right: 0; }
+.dinle:hover { background: var(--ink); color: var(--paper); }
+.dinle:focus-visible { outline: 2px solid var(--now); outline-offset: 3px; }
+.caliyor .dinle { background: var(--now); border-color: var(--now); color: var(--paper); }
+.caliyor .dinle::before { width: 9px; height: 9px; border: 0; background: currentColor; }
+.sayac { font-variant-numeric: tabular-nums; }
+.l-hal, .l-say { color: var(--mute); }
+.caliyor .l-hal { color: var(--now); }
+.l-dip { margin-left: auto; text-transform: none; letter-spacing: 0; font: italic 400 15px/1.3 var(--f-s); color: var(--mute); text-align: right; }
+
+/* ── room of silence (always dark) ── */
+.sessiz {
+  --paper: #0B0A09; --plate: #0B0A09; --ink: #ECE5D3; --mute: #8F8876; --line: rgba(236,229,211,.2); --now: #FF5433;
+  background: var(--paper); color: var(--ink); min-height: min(100vh, 1100px); padding: 92px var(--pad) 40px; margin-top: 60px;
+  display: flex; flex-direction: column; position: relative; overflow: hidden;
+}
+.sessiz .metin { margin-top: 30px; max-width: 46ch; font-size: 19px; }
+.sessiz canvas { position: absolute; left: 0; top: 50%; width: 100%; height: 260px; margin-top: -90px; pointer-events: none; }
+.sessiz .dip { margin-top: auto; display: flex; align-items: flex-end; justify-content: space-between; }
+.sessiz .sayi { font: 60 clamp(110px, 15vw, 280px)/.8 var(--f-g); font-variant-numeric: tabular-nums; letter-spacing: .01em; }
+.sessiz .sayi small { font: 500 11px/1.4 var(--f-m); letter-spacing: .09em; text-transform: uppercase; color: var(--mute); display: block; margin-bottom: 18px; }
+.sessiz .rekor { text-align: right; font: 500 11px/1.9 var(--f-m); letter-spacing: .09em; text-transform: uppercase; color: var(--mute); padding-bottom: 8px; }
+.sessiz .rekor b { color: var(--ink); font-weight: 500; font-variant-numeric: tabular-nums; }
+
+/* ── waiting room ── */
+.bekleme { padding: 110px var(--pad) 60px; }
+.bekleme .s-ad { font-size: clamp(64px, 7.4vw, 140px); }
+.b-giris { grid-column: 1 / 5; margin-top: 30px; position: sticky; top: calc(var(--bar) + 26px); align-self: start; }
+.b-giris p:first-child { font-size: 19px; line-height: 1.45; max-width: 30ch; }
+.b-giris .olcek { margin-top: 26px; padding-top: 10px; border-top: 1px solid var(--line); max-width: 38ch; font: 400 10.5px/1.7 var(--f-m); letter-spacing: .04em; color: var(--mute); }
+.liste { grid-column: 5 / 13; list-style: none; margin: 30px 0 0; padding: 0; counter-reset: b; }
+.liste li {
+  counter-increment: b; display: grid; grid-template-columns: 34px minmax(0, 1.05fr) minmax(0, 1.5fr) 118px 132px; column-gap: 18px;
+  align-items: baseline; padding: 13px 0 12px; border-top: 1px solid var(--line); transition: background-color .3s;
+}
+.liste li:last-child { border-bottom: 1px solid var(--line); }
+.liste li::before { content: counter(b, decimal-leading-zero); font: 500 10px/1 var(--f-m); letter-spacing: .08em; color: var(--mute); }
+.liste b { font: 300 clamp(22px, 2vw, 32px)/1.1 var(--f-s); letter-spacing: -.012em; }
+.liste span { font: italic 400 16px/1.3 var(--f-s); color: var(--mute); }
+.liste em { font: 500 10px/1 var(--f-m); letter-spacing: .09em; text-transform: uppercase; font-style: normal; text-align: right; }
+.olcer { display: flex; gap: 3px; align-self: center; }
+.olcer i { width: 5px; height: 15px; border: 1px solid var(--ink); }
+.olcer i.d { background: var(--ink); }
+.olcer i.s { background: var(--now); border-color: var(--now); animation: soluk var(--hz, 1.6s) steps(2, jump-none) infinite; }
+@keyframes soluk { 50% { opacity: .12; } }
+
+/* ── visit ── */
+.ziyaret { padding: 110px var(--pad) 0; }
+.z-liste { grid-column: 5 / 13; margin: 30px 0 0; display: grid; grid-template-columns: 1fr 1fr; column-gap: 24px; }
+.z-liste div { border-top: 1px solid var(--line); padding: 12px 0 30px; }
+.z-liste dt { font: 500 10px/1.4 var(--f-m); letter-spacing: .09em; text-transform: uppercase; color: var(--mute); margin-bottom: 10px; }
+.z-liste dd { margin: 0; font: 300 clamp(20px, 1.7vw, 27px)/1.26 var(--f-s); letter-spacing: -.008em; max-width: 24ch; text-wrap: balance; }
+.kapanis { margin: 120px 0 0; font: 300 clamp(64px, 11.4vw, 230px)/.92 var(--f-s); letter-spacing: -.035em; }
+.kapanis em { font-style: italic; display: block; text-align: right; }
+.kunye { margin-top: 70px; padding: 14px 0 26px; border-top: 1px solid var(--ink); display: flex; justify-content: space-between; gap: 40px; font: 400 10.5px/1.7 var(--f-m); letter-spacing: .05em; color: var(--mute); }
+.kunye p { max-width: 62ch; }
+.kunye a { text-decoration: none; color: var(--ink); text-transform: uppercase; letter-spacing: .09em; white-space: nowrap; }
+.kunye a:hover { color: var(--now); }
+
+.bilet { grid-column: 1 / 5; margin-top: 30px; align-self: start; max-width: 410px; background: var(--plate); border: 1px solid var(--ink); padding: 16px 20px 0; }
+.bilet header { display: flex; justify-content: space-between; align-items: baseline; font: 500 10px/1 var(--f-m); letter-spacing: .09em; text-transform: uppercase; }
+.bilet header b { font: 800 30px/1 var(--f-g); letter-spacing: .05em; }
+.bilet dl { margin: 14px 0 0; }
+.bilet dl div { display: grid; grid-template-columns: 112px 1fr; padding: 6px 0 5px; border-top: 1px solid var(--line); }
+.bilet dt { font: 500 10px/1.9 var(--f-m); letter-spacing: .09em; text-transform: uppercase; color: var(--mute); }
+.bilet dd { margin: 0; font-size: 16px; line-height: 1.25; font-variant-numeric: tabular-nums; }
+.koca { all: unset; box-sizing: border-box; display: block; width: calc(100% + 40px); margin: 12px -20px 0; padding: 14px 20px 13px; border-top: 1px dashed var(--ink); position: relative; cursor: pointer; }
+.koca::before, .koca::after { content: ''; position: absolute; top: -10px; width: 18px; height: 18px; border-radius: 50%; background: var(--paper); border: 1px solid var(--ink); }
+.koca::before { left: -10px; clip-path: inset(-1px -1px -1px 9px); }
+.koca::after { right: -10px; clip-path: inset(-1px 9px -1px -1px); }
+.koca svg { display: block; width: 100%; height: 64px; overflow: visible; }
+.koca span { display: flex; justify-content: space-between; margin-top: 9px; font: 500 10px/1.3 var(--f-m); letter-spacing: .09em; text-transform: uppercase; }
+.koca span i { font-style: normal; color: var(--mute); }
+.koca:hover span b { color: var(--now); }
+.koca span b { font-weight: 500; }
+.koca:focus-visible { outline: 2px solid var(--now); outline-offset: 3px; }
+.bilet + .z-liste { margin-top: 30px; }
+
+/* ── the route, at the right edge ── */
+.rota { position: fixed; right: 0; top: 50%; transform: translateY(-50%); width: var(--pad); z-index: 30; display: flex; flex-direction: column; align-items: flex-end; opacity: 0; pointer-events: none; }
+.rota.acik { opacity: 1; pointer-events: auto; }
+.rota a { position: relative; display: flex; align-items: center; justify-content: flex-end; gap: 5px; height: 21px; width: 100%; padding-right: 9px; text-decoration: none; font: 500 9px/1 var(--f-m); letter-spacing: .05em; color: var(--mute); }
+.rota a::after { content: ''; width: 7px; height: 1px; background: var(--ink); transition: width .3s, background-color .3s; }
+.rota a.ara::after { width: 3px; }
+.rota a.simdi { color: var(--now); }
+.rota a.simdi::after { width: 16px; background: var(--now); }
+.rota a:hover::after { width: 16px; }
+.rota a u { position: absolute; right: 100%; margin-right: 2px; top: 50%; transform: translateY(-50%); padding: 5px 8px; background: var(--ink); color: var(--paper); text-decoration: none; white-space: nowrap; letter-spacing: .09em; text-transform: uppercase; opacity: 0; pointer-events: none; transition: opacity .2s; }
+.rota a:hover u { opacity: 1; }
+
+@media (max-width: 900px) {
+  .sunu { grid-column: 1 / 10; grid-row: 4; padding: 20px 0 0; }
+  .izgara { grid-template-rows: repeat(3, calc(var(--fs) * .9)) auto; }
+  .onom, .metin, .veri, .b-giris, .liste, .z-liste, .hol-metin, .anahtar, .soz, .hol .etiket { grid-column: 1 / 13; }
+  .metin, .veri { margin-top: 20px; }
+}
+</style>
+</head>
+<body>
+
+<div class="ust">
+  <a class="marka" href="#giris"><b>KSM</b><span>Kaybolmuş Sesler Müzesi</span></a>
+  <span id="konum">Giriş</span>
+  <span id="hal">Sessiz okuma</span>
+</div>
+
+<header class="giris" id="giris">
+  <div class="sahne">
+    <div class="izgara">
+      <h1 class="ad" aria-label="Kaybolmuş Sesler Müzesi"></h1>
+      <div class="sunu">
+        <div>
+          <p class="buyuk">Dünyanın artık çıkarmadığı sesleri saklıyoruz: bir modemin el sıkışmasını, bir daktilonun satır sonunu, bir film makinesinin <em>tıkırtısını.</em></p>
+          <p class="kucuk">Müzede kayıt yoktur, nota vardır. Bir notaya dokunduğunuzda ses baştan çalınır; bitince yeniden kaybolur.</p>
+        </div>
+        <ul>
+          <li><span>Sürekli sergi</span><span>Dokuz salon, dokuz ses</span></li>
+          <li><span>Giriş</span><span>Serbest</span></li>
+          <li><span>Açık</span><span>Gürültü bittikten sonra</span></li>
+          <li><span>Şu an içeride</span><span>1 kişi (siz)</span></li>
+          <li><span>Tabela</span><span>Çalınır; harflere dokunun</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="alt-serit">
+      <svg class="cetvel" aria-hidden="true"></svg>
+      <nav class="plan" aria-label="Kat planı"></nav>
+    </div>
+    <div class="okur" aria-hidden="true"><b></b></div>
+  </div>
+</header>
+
+<section class="hol" id="hol">
+  <div class="kolon">
+    <p class="etiket gor">Giriş holü</p>
+    <h2 class="soz gor">Bir ses, onu çıkaran şeyle birlikte <em aria-label="ölür."><span style="--o:1">ö</span><span style="--o:.62">l</span><span style="--o:.36">ü</span><span style="--o:.2">r</span><span style="--o:.12">.</span></em></h2>
+    <div class="hol-metin gor">
+      <p>Modemler söküldü, daktilolar vitrine kondu, makine dairelerinin kapıları kilitlendi. Geriye o sesleri bir kez duymuş kulaklar kaldı; onlar da azalıyor.</p>
+      <p>Biz kayıt toplamıyoruz. Kayıt, bir sesin içi doldurulmuş hâlidir: durur, tozlanır, hep aynı yere bakar. Bunun yerine her sesin notasını tutuyoruz — neyin, ne zaman, hangi perdeden, ne kadar sürdüğünü.</p>
+      <p>Bir levhaya dokunduğunuzda tarayıcınız o notayı sıfırdan çalar. Ses, her ziyaretçi için yeniden doğar ve yeniden kaybolur. Dokunmazsanız levhalar kendi kendilerine, sessizce okunur.</p>
+    </div>
+    <aside class="anahtar gor">
+      <h3>Nota anahtarı <span>Dokunun, duyun</span></h3>
+      <div id="anahtar"></div>
+      <p class="dip">Yatay eksen zamandır, dikey eksen perde: aşağısı pes, yukarısı tiz. Kırmızı tek bir şey demektir — şimdi.</p>
+    </aside>
+  </div>
+</section>
+
+<main id="salonlar"></main>
+
+<section class="sessiz" id="sessizlik">
+  <div class="s-ust"><span>Salon 10</span><span>Levha yok · Envanter yok</span></div>
+  <h2 class="s-ad"><span class="no">10</span><span class="isim">SESSİZLİK ODASI</span><i>sergilenen: hiçbir şey</i></h2>
+  <p class="metin">Bu salonda bir çizgi durur. Odadaki tek ses sizsiniz: imleci oynatın, çizgi sizi duyar. Kıpırdamazsanız sessizlik birikir.</p>
+  <canvas aria-hidden="true"></canvas>
+  <div class="dip">
+    <div class="sayi"><small>Kesintisiz sessizlik</small><span id="sus-sayi">00:00,0</span></div>
+    <p class="rekor">Bu ziyaretteki en uzun sessizliğiniz<br><b id="sus-rekor">00:00,0</b></p>
+  </div>
+</section>
+
+<section class="bekleme" id="bekleme">
+  <div class="s-ust"><span>Bekleme salonu</span><span>On ses · henüz burada</span></div>
+  <h2 class="s-ad"><span class="isim">BEKLEME SALONU</span></h2>
+  <div class="kolon">
+    <div class="b-giris gor">
+      <p>Henüz kaybolmamış, ama valizini toplamış sesler. Duyabiliyorken duyun; sustuklarında her birine bir salon açacağız.</p>
+      <p class="olcek">Ölçek on iki çentiktir: sesin gündelik hayatta kalan payı. Yanıp sönen çentik, sesin bugün durduğu yerdir.</p>
+    </div>
+    <ol class="liste gor">
+      <li><b>Anahtar şıngırtısı</b><span>Ceplerden kartlara, kartlardan telefonlara taşınıyor.</span><div class="olcer" data-k="8"></div><em>Duyarlı</em></li>
+      <li><b>Rölantide motor</b><span>Kırmızı ışıkta bekleyen arabalar. Elektrikliler susarak bekliyor.</span><div class="olcer" data-k="7"></div><em>Duyarlı</em></li>
+      <li><b>Bozuk para</b><span>Kumbaralar, dolmuşlar, bakkal tezgâhları.</span><div class="olcer" data-k="6"></div><em>Tehlikede</em></li>
+      <li><b>Gazete sayfası</b><span>Kahvaltı sofrası, vapur, berber koltuğu.</span><div class="olcer" data-k="5"></div><em>Tehlikede</em></li>
+      <li><b>Kurmalı saat</b><span>Başucunda tik tak; yatmadan önce kurma sesi.</span><div class="olcer" data-k="4"></div><em>Tehlikede</em></li>
+      <li><b>Tebeşir</b><span>Kara tahta. Arada bir tırnak.</span><div class="olcer" data-k="3"></div><em>Kritik</em></li>
+      <li><b>Kasa çekmecesi</b><span>«Çın» diye açılanı. Yenileri yalnızca bip diyor.</span><div class="olcer" data-k="3"></div><em>Kritik</em></li>
+      <li><b>Çevir sesi</b><span>Ahizeyi kaldırınca gelen o uzun «dııııt».</span><div class="olcer" data-k="2"></div><em>Kritik</em></li>
+      <li><b>Deklanşör</b><span>Gerçeği. Telefonlar taklidini çalıyor.</span><div class="olcer" data-k="2"></div><em>Taklidi yaşıyor</em></li>
+      <li><b>Bozacı</b><span>Kış gecesi, iki sokak öteden: «Booozaaa…»</span><div class="olcer" data-k="1"></div><em>Kritik</em></li>
+    </ol>
+  </div>
+</section>
+
+<section class="ziyaret" id="ziyaret">
+  <div class="s-ust"><span>Ziyaret</span><span>Gişe · vestiyer · çıkış</span></div>
+  <h2 class="s-ad"><span class="isim">ZİYARET</span></h2>
+  <div class="kolon">
+    <aside class="bilet gor" aria-label="Giriş bileti">
+      <header><b>KSM</b><span>Giriş bileti · bir kişilik</span></header>
+      <dl>
+        <div><dt>Tarih</dt><dd id="b-tarih"></dd></div>
+        <div><dt>Giriş saati</dt><dd id="b-saat"></dd></div>
+        <div><dt>İçeride geçen</dt><dd id="b-sure">00:00</dd></div>
+        <div><dt>Ücret</dt><dd>Çıkarken bir ses</dd></div>
+      </dl>
+      <button class="koca" type="button" aria-label="Bu ziyaretin sesini çal">
+        <svg aria-hidden="true"></svg>
+        <span><b>Bu ziyaretin sesi · dokunun</b><i id="b-no"></i></span>
+      </button>
+    </aside>
+    <dl class="z-liste gor">
+      <div><dt>Adres</dt><dd>Müzenin binası yoktur. En yakın giriş, kulağınızın hemen arkasındadır.</dd></div>
+      <div><dt>Saatler</dt><dd>Her gün, gürültü bittikten sonra. En kalabalık saat: 03.00.</dd></div>
+      <div><dt>Bilet</dt><dd>Biletinizdeki nota, giriş tarihinizden ve saatinizden yazıldı. Çıkınca kaybolur.</dd></div>
+      <div><dt>Kurallar</dt><dd>Lütfen eserlere dokununuz. Flaş serbesttir; şarj olurken çıkardığı sesi biz de özledik.</dd></div>
+      <div><dt>Bağış</dt><dd>Kaybolmasından korktuğunuz bir ses varsa onu ezberleyin. Müze, ezberleyenlerle büyür.</dd></div>
+      <div><dt>Vestiyer</dt><dd>Kulaklıklarınızı girişte bırakabilirsiniz. Çıkışta geri verilir; içindekiler verilmez.</dd></div>
+    </dl>
+  </div>
+  <p class="kapanis gor">Bu müze yoktur. <em>Sesler vardı.</em></p>
+  <footer class="kunye">
+    <p>Kaybolmuş Sesler Müzesi — sürekli sergi: Dokuz Salon. Bu sayfada tek bir ses dosyası yoktur; duyduğunuz her şey, dokunduğunuz anda tarayıcınızda notasından üretilir ve bittiğinde hiçbir yerde durmaz.</p>
+    <a href="#giris">Çıkış ↑</a>
+  </footer>
+</section>
+
+<nav class="rota" aria-label="Güzergâh"></nav>
+
+<script>
+(() => {
+'use strict';
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+const kok = document.documentElement;
+const clamp = (x, a, b) => Math.max(a, Math.min(b, x));
+const TR = s => s.toLocaleUpperCase('tr');
+const r1 = v => (Math.round(v * 10) / 10).toString();
+const saat = t => { t = Math.max(0, t); const m = Math.floor(t / 60); return String(m).padStart(2, '0') + ':' + (t - m * 60).toFixed(1).padStart(4, '0').replace('.', ','); };
+const rng = a => () => { a |= 0; a = a + 0x6D2B79F5 | 0; let t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; };
+
+/* ════════ Scores. One list of events is both what is drawn and what is played. ════════
+   ton: a pitched sound · his: noise in a band · vur: an impulse */
+function yeni(T, F) {
+  const e = [];
+  return { T, F, e, sec: [], im: [],
+    ton(o) { e.push({ k: 'ton', g: .1, ...o }); return this; },
+    his(o) { e.push({ k: 'his', g: .1, q: 1, ...o }); return this; },
+    vur(o) { e.push({ k: 'vur', g: .3, f: 2000, ...o }); return this; },
+    bol(a, b, ad) { this.sec.push([a, b, ad]); return this; },
+    isaret(t, f, ad, dx = 16, dy = -18) { this.im.push([t, f, ad, dx, dy]); return this; } };
+}
+
+function modem() {
+  const n = yeni(13.4, [280, 5200]), R = rng(7);
+  n.ton({ t: .15, d: 1.0, f: 425, g: .1 }).bol(.15, 1.15, 'çevir sesi');
+  const sat = [697, 770, 852, 941], sut = [1209, 1336, 1477];
+  const tus = { 1: [0, 0], 2: [0, 1], 3: [0, 2], 4: [1, 0], 5: [1, 1], 6: [1, 2], 7: [2, 0], 8: [2, 1], 9: [2, 2], 0: [3, 1] };
+  [...'5321994'].forEach((c, i) => {
+    const [r, s] = tus[c], t = 1.32 + i * .17;
+    n.ton({ t, d: .095, f: sat[r], g: .09, a: .003, r: .006 }).ton({ t, d: .095, f: sut[s], g: .09, a: .003, r: .006 });
+  });
+  n.bol(1.32, 2.5, 'numara').vur({ t: 2.78, f: 900, g: .2 });
+  for (let i = 0; i < 3; i++) n.ton({ t: 2.98 + i * .45, d: .435, f: 2100, g: .11, a: .004, r: .004 });
+  n.bol(2.98, 4.33, 'cevap tonu').isaret(3.3, 2100, '2100 Hz: «buradayım»', 10, -22);
+  let t = 4.48;
+  for (let i = 0; i < 27; i++) {
+    n.ton({ t, d: .044, f: R() < .5 ? 1650 : 1850, g: .085, a: .002, r: .003 });
+    if (i > 7) n.ton({ t: t + .012, d: .044, f: R() < .5 ? 980 : 1180, g: .07, a: .002, r: .003 });
+    t += .047;
+  }
+  n.ton({ t: 5.86, d: .2, f: 2250, g: .09 }).ton({ t: 5.86, d: .2, f: 1375, g: .07 }).ton({ t: 6.1, d: .14, f: 2400, g: .09 });
+  n.bol(4.48, 6.26, 'tanışma');
+  [[6.4, .44], [6.9, .44], [7.4, .52]].forEach(([t, d], i) => {
+    n.ton({ t, d, f: 1480 - i * 110, f2: 880 - i * 80, g: .13, dec: true, w: 'triangle' })
+     .ton({ t, d, f: 2760 - i * 210, f2: 1900 - i * 150, g: .06, dec: true })
+     .his({ t, d: d * .7, f: 1800, q: 2.2, g: .05, dec: true });
+  });
+  n.bol(6.4, 7.95, 'hat ölçümü');
+  for (let i = 0; i < 5; i++) n.his({ t: 8.08 + i * .29, d: .25, f: 1800, q: 1.7, g: .1, a: .004, r: .012 }).ton({ t: 8.08 + i * .29, d: .25, f: 1800, g: .025 });
+  n.bol(8.08, 9.5, 'alıştırma');
+  n.his({ t: 9.62, d: 2.9, f: 1750, q: .6, g: .12, a: .015, r: .006 }).his({ t: 9.62, d: 2.9, f: 3100, q: 1.4, g: .045, a: .4, r: .006 }).ton({ t: 9.62, d: 2.9, f: 1800, g: .014 });
+  n.bol(9.62, 12.52, 'veri').vur({ t: 12.55, f: 700, g: .25 }).bol(12.62, 13.36, 'bağlandı');
+  return n;
+}
+
+function daktilo() {
+  const n = yeni(7, [70, 9000]), R = rng(23);
+  let t = .35, zil = 0;
+  [...'bir varmış bir yokmuş'].forEach((c, i) => {
+    if (c === ' ') n.vur({ t, f: 1050, g: .16, b: 105, d: .04, lab: '·' });
+    else n.vur({ t, f: 2500 + (c.charCodeAt(0) * 7 % 9) * 200, g: .28 + R() * .12, b: 150 + R() * 40, d: .026, lab: c });
+    if (i === 17) zil = t + .07;
+    t += (c === ' ' ? .21 : .125) + R() * .085 + (R() < .13 ? .13 : 0);
+  });
+  n.ton({ t: zil, d: 1.5, f: 2217, g: .11, dec: true }).ton({ t: zil, d: 1.0, f: 5870, g: .035, dec: true }).vur({ t: zil, f: 4200, g: .08, d: .01 });
+  const s = Math.max(t + .3, zil + .95);
+  for (let i = 0; i < 3; i++) n.vur({ t: s + i * .05, f: 3000, g: .12, d: .012, look: 'cizgi' });
+  n.his({ t: s + .16, d: 1.05, f: 650, f2: 2500, q: 2.4, g: .11, a: .05, r: .04 });
+  for (let u = s + .2; u < s + 1.18; u += .036) n.vur({ t: u, f: 3400, g: .05, d: .008, look: 'cizgi' });
+  n.vur({ t: s + 1.24, f: 420, g: .5, b: 85, d: .05 });
+  n.bol(.3, zil - .04, 'yazı').bol(zil, s - .06, 'zil').bol(s, s + 1.3, 'şaryo başa');
+  n.T = s + 1.75;
+  return n;
+}
+
+function film() {
+  const n = yeni(6.4, [28, 4200]);
+  n.ton({ t: .2, d: .9, f: 36, f2: 96, g: .1, w: 'triangle', c: 'ugul', a: .1, r: .01 })
+   .ton({ t: 1.1, d: 4.1, f: 96, g: .1, w: 'triangle', c: 'ugul', a: .01, r: .01, am: { rate: 24, depth: .45 } })
+   .ton({ t: 5.2, d: .95, f: 96, f2: 34, g: .1, w: 'triangle', c: 'ugul', a: .01, r: .5 })
+   .his({ t: .3, d: 5.7, f: 480, q: .9, g: .03, a: .7, r: .8 });
+  const hiz = t => t < 1.1 ? 5 + 19 * (t - .2) / .9 : t < 5.2 ? 24 : Math.max(3.5, 24 - 21 * (t - 5.2) / .9);
+  let t = .25, i = 0;
+  while (t < 6.1) { n.vur({ t, f: i % 2 ? 1500 : 2300, g: i % 2 ? .1 : .17, d: .013, look: 'delik' }); i++; t += 1 / hiz(t); }
+  n.vur({ t: 3.37, f: 800, g: .5, b: 130, d: .04 }).isaret(3.37, 800, 'ek yeri', 14, 26);
+  n.bol(.2, 1.08, 'motor kalkıyor').bol(1.1, 5.18, 'saniyede 24 kare').bol(5.2, 6.15, 'duruyor');
+  return n;
+}
+
+function kadran() {
+  const n = yeni(7, [90, 6000]);
+  let t = .3;
+  for (const r of [3, 9, 10]) {
+    const kur = .26 + r * .074, d0 = t + kur + .13, don = r * .1 + .1;
+    n.his({ t, d: kur, f: 850, f2: 1650, q: 3, g: .05, a: .03, r: .02 });
+    for (let u = t + .03; u < t + kur - .02; u += .046) n.vur({ t: u, f: 3900, g: .03, d: .008, look: 'cizgi' });
+    n.vur({ t: t + kur, f: 620, g: .28, b: 150 });
+    n.his({ t: d0, d: don, f: 2300, q: 4.5, g: .04, a: .02, r: .03 }).ton({ t: d0, d: don, f: 205, g: .03, w: 'triangle', c: 'ugul' });
+    for (let i = 0; i < r; i++) n.vur({ t: d0 + .05 + i * .1, f: 1300, g: .4, b: 250, d: .02 });
+    n.vur({ t: d0 + don + .02, f: 480, g: .3, b: 115 });
+    n.bol(t, t + kur, 'çevir').bol(d0, d0 + don, `bırak: ${r % 10} · ${r} tık`);
+    t = d0 + don + .4;
+  }
+  n.T = t + .1;
+  return n;
+}
+
+function kaset() {
+  const n = yeni(6.5, [70, 7000]);
+  n.vur({ t: .22, f: 520, g: .45, b: 115, d: .04 }).vur({ t: .25, f: 2600, g: .18 });
+  n.ton({ t: .4, d: 4.9, f: 330, f2: 1180, g: .05, w: 'triangle', a: .12, r: .02 }).ton({ t: .4, d: 4.9, f: 664, f2: 2372, g: .016, a: .12, r: .02 });
+  n.his({ t: .4, d: 4.9, f: 1500, f2: 4400, q: 1.2, g: .055, a: .3, r: .02 });
+  const hiz = t => 5 + 20 * Math.pow((t - .4) / 4.9, 1.6);
+  let t = .5;
+  while (t < 5.28) { n.vur({ t, f: 5600, g: .022, d: .006, look: 'cizgi' }); t += 1 / hiz(t); }
+  n.vur({ t: 5.33, f: 380, g: .55, b: 92, d: .05 }).vur({ t: 5.36, f: 2400, g: .25 });
+  [5.5, 5.6, 5.73, 5.9].forEach((t, i) => n.vur({ t, f: 1800 - i * 160, g: .11 - i * .022 }));
+  n.bol(.14, .36, 'tuş').bol(.4, 5.3, 'bant başa sarılıyor').bol(5.33, 6.0, 'dur').isaret(4.3, 1010, 'makara doldukça ses incelir', -150, 34);
+  return n;
+}
+
+function tv() {
+  const n = yeni(7.1, [50, 24000]), R = rng(5);
+  n.vur({ t: .25, f: 300, g: .45, b: 80, d: .04 });
+  n.ton({ t: .28, d: 1.1, f: 100, g: .15, dec: true, w: 'triangle', c: 'ugul' }).ton({ t: .28, d: .9, f: 200, g: .05, dec: true, c: 'ugul' });
+  n.ton({ t: .5, d: 4.72, f: 15625, g: .01, a: .35, r: .005 });
+  n.his({ t: 1.15, d: 4.07, f: 2800, q: .33, g: .11, a: .3, r: .004, look: 'kar' });
+  n.vur({ t: 5.22, f: 2600, g: .42, b: 140 });
+  n.ton({ t: 5.22, d: .32, f: 15625, f2: 6500, g: .01, dec: true }).ton({ t: 5.22, d: .24, f: 820, f2: 110, g: .06, dec: true });
+  [5.66, 5.93, 6.07, 6.34, 6.55, 6.72].forEach((t, i) => n.vur({ t, f: 5200 + R() * 3200, g: .09 - .011 * i, d: .01 }));
+  n.bol(.25, 1.1, 'açılış').bol(1.15, 5.2, 'kar').bol(5.22, 5.58, 'kapanış').bol(5.62, 6.8, 'cam çıtırdıyor').isaret(2.1, 15625, '15.625 Hz: satır ıslığı', 12, 20);
+  return n;
+}
+
+function disket() {
+  const n = yeni(6.2, [70, 6500]);
+  n.vur({ t: .16, f: 700, g: .38, b: 150, d: .04 });
+  n.ton({ t: .32, d: .5, f: 90, f2: 300, g: .035, w: 'triangle', c: 'ugul', a: .05, r: .005 }).ton({ t: .82, d: 4.95, f: 300, g: .035, w: 'triangle', c: 'ugul', a: .005, r: .4 });
+  n.his({ t: .32, d: 5.45, f: 4300, q: 1.5, g: .012, a: .5, r: .4 });
+  [[1.05, .07, 220], [1.3, .07, 220], [1.55, .24, 330], [2.02, .05, 247], [2.14, .05, 247], [2.26, .05, 247], [2.62, .56, 392],
+   [3.42, .07, 220], [3.64, .07, 220], [3.86, .07, 262], [4.08, .07, 262], [4.3, .3, 440], [4.9, .5, 494]].forEach(([t, d, f]) =>
+    n.ton({ t, d, f, g: .085, w: 'square', lp: 2400, h: [3, 5, 7], a: .002, r: .004 }).vur({ t, f: 1900, g: .1, d: .01, look: 'cizgi' }));
+  n.vur({ t: 5.5, f: 1500, g: .16 }).vur({ t: 5.72, f: 700, g: .28, b: 140 });
+  n.bol(.16, .8, 'disket takıldı').bol(1.05, 4.6, 'kafa iz arıyor').bol(4.9, 5.4, 'başa dönüş').bol(5.5, 5.8, 'tamam');
+  return n;
+}
+
+function kisaDalga() {
+  const n = yeni(9.5, [180, 7500]), R = rng(31);
+  n.his({ t: 0, d: 9.5, f: 1900, q: .5, g: .06, a: .3, r: .5, am: { rate: .6, depth: .6 } });
+  n.ton({ t: .3, d: .95, f: 3400, f2: 480, g: .055, a: .1, r: .05 }).ton({ t: 1.25, d: .5, f: 480, f2: 2500, g: .055, a: .02, r: .15 });
+  for (let i = 0; i < 10; i++) n.his({ t: 1.95 + i * .125 + R() * .03, d: .085, f: [640, 1100, 820, 1450, 700, 960][i % 6], q: 5, g: .15, a: .012, r: .03 });
+  n.ton({ t: 3.2, d: 1.0, f: 260, f2: 4700, g: .04, a: .1, r: .2 });
+  let t = 4.45;
+  for (const c of '-.- ... --') { if (c === ' ') { t += .2; continue; } const d = c === '-' ? .2 : .07; n.ton({ t, d, f: 1040, g: .07, a: .004, r: .004 }); t += d + .07; }
+  n.bol(4.45, t - .05, 'bip dizisi');
+  n.ton({ t: 6.6, d: .7, f: 5200, f2: 650, g: .04, a: .1, r: .1 });
+  [[7.4, .3, 440], [7.72, .3, 494], [8.04, .46, 523], [8.52, .28, 494], [8.82, .5, 440]].forEach(([t, d, f]) =>
+    n.ton({ t, d, f, g: .055, w: 'triangle', a: .03, r: .08, vib: { rate: 5.5, cents: 22 } }));
+  n.his({ t: 7.3, d: 2.1, f: 900, q: 1.2, g: .03, a: .4, r: .6 });
+  n.bol(.3, 1.75, 'ıslık').bol(1.95, 3.2, 'bir istasyon: konuşma').bol(7.4, 9.32, 'uzak bir şarkı');
+  return n;
+}
+
+function plak() {
+  const n = yeni(7.2, [40, 15000]), R = rng(77);
+  n.his({ t: 0, d: 7.2, f: 6800, q: .8, g: .03, a: .15, r: .2 }).his({ t: 0, d: 7.2, f: 95, q: 1.3, g: .08, a: .15, r: .2 });
+  const toz = [];
+  for (let i = 0; i < 15; i++) toz.push([.08 + R() * 1.66, 2400 + R() * 7000, .03 + R() * R() * .18]);
+  for (let k = 0; k < 4; k++) {
+    const o = k * 1.8;
+    n.vur({ t: o + .36, f: 1100, g: .32, b: 66, d: .03 }).vur({ t: o + .45, f: 1750, g: .12 });
+    toz.forEach(([t, f, g]) => n.vur({ t: o + t, f, g, d: .007 }));
+    n.bol(o + .02, o + 1.78, `${k + 1}. tur`);
+  }
+  n.tekrar = true;
+  return n;
+}
+
+const ESERLER = [
+  { no: '01', lev: 'I', ad: 'ÇEVİRMELİ AĞ', kisa: 'Çevirmeli ağ', alt: 'el sıkışması', nota: modem,
+    onom: 'Dııııt. Bip-bip-bip… viiii! Bırrr, ding-dong-ding… kşşşşşş.',
+    metin: 'İki makine, bir telefon hattının iki ucunda birbirini tanımaya çalışıyor: Hangi hızda konuşalım? Hat ne kadar temiz? Beni duyuyor musun? Yirmi küsur saniye süren bu pazarlık, internetin kapı gıcırtısıydı. Evden biri ahizeyi kaldırırsa her şey baştan başlardı.',
+    donem: '1990’lar – 2000’ler', alan: 'Ev telefonu hattı; en çok gece yarısından sonra', durum: 'Tükendi',
+    dip: 'Levha, yirmi küsur saniyelik aslın özetidir.' },
+  { no: '02', lev: 'II', ad: 'DAKTİLO', kisa: 'Daktilo', alt: 'satır sonu', nota: daktilo,
+    onom: 'Tak tak tak, tak-tak tak… çın! Hırrrrrt. Tak.',
+    metin: 'Her harf bir vuruştu; yazı kâğıda dövülerek geçerdi. Satırın bitmesine birkaç harf kala küçük bir zil çalar, yazan kişi kolu itip şaryoyu başa alırdı. Levhadaki cümle bir masalın ilk satırıdır; zil, tam «yok» denirken çalar.',
+    donem: '1870’ler – 1990’lar', alan: 'Yazıhaneler, yazı işleri, adliye önündeki arzuhalciler', durum: 'Meraklısında yaşıyor',
+    dip: 'Her vuruşun altında, vurulan harf yazar.' },
+  { no: '03', lev: 'III', ad: 'FİLM MAKİNESİ', kisa: 'Film makinesi', alt: 'yirmi dört kare', nota: film,
+    onom: 'Tıkır tıkır tıkır tıkır tıkır tıkır…',
+    metin: 'Saniyede yirmi dört kez bir pençe filmi çeker, bırakır; çeker, bırakır. Salonun arkasından gelen o tıkırtı, hikâyenin bir makineden geçtiğini hatırlatan tek şeydi. Levhanın ortasındaki büyük vuruş bir ek yeridir: film orada bir kez kopmuş, biri onu yapıştırmıştır.',
+    donem: '1890’lar – 2010’lar', alan: 'Makine dairesi; perdenin tam karşısındaki küçük pencere', durum: 'Kritik; birkaç sinematekte',
+    dip: 'Her küçük dikdörtgen bir kare, bir tık.' },
+  { no: '04', lev: 'IV', ad: 'KADRANLI TELEFON', kisa: 'Kadranlı telefon', alt: 'sıfırı çevirmek', nota: kadran,
+    onom: 'Hırrrt… tıkır tık. Hırrrrrrt… tıkır tıkır tıkır tıkır.',
+    metin: 'Parmak deliğe girer, kadran dayanağa kadar çevrilir ve bırakılırdı. Kadran yerine dönerken hatta rakam kadar tık gönderirdi: üç için üç, dokuz için dokuz, sıfır için on. Uzun numaralar sabır isterdi; yanlış çevrilen son rakam, baştan başlamak demekti.',
+    donem: '1920’ler – 1990’lar', alan: 'Antre; dantel örtünün üstü', durum: 'Tükendi',
+    dip: 'Levhada çevrilen numara: 3 – 9 – 0.' },
+  { no: '05', lev: 'V', ad: 'KASET', kisa: 'Kaset', alt: 'başa sarmak', nota: kaset,
+    onom: 'Tak. Vıııııııııııııı… tak!',
+    metin: 'Bir şarkıyı yeniden dinlemenin bedeli beklemekti. Bant bir makaradan ötekine akarken motorun sesi incelir, sona yaklaştıkça hızlanırdı; iyi bir kulak, şarkının başına gelindiğini sesinden anlardı. Pil bitmesin diye kalemle sarmak ayrı bir zanaattı.',
+    donem: '1963 – 2000’ler', alan: 'Teyp, walkman, araba torpidosu', durum: 'Meraklısında yaşıyor',
+    dip: 'Kalemle sarılan kasetin notası henüz yazılmadı.' },
+  { no: '06', lev: 'VI', ad: 'TÜPLÜ TELEVİZYON', kisa: 'Tüplü televizyon', alt: 'kar ve kapanış', nota: tv,
+    onom: 'Iııııı… cızzzzzzzzz… çıt. Çıt. Çıt.',
+    metin: 'Açık bir televizyon, sesi kısıkken bile duyulurdu: 15.625 hertzlik, çoğu yetişkinin fark etmediği incecik bir ıslık. Yayın bitince ekrana kar yağar, cızırtı odayı doldururdu. Düğmeye basılınca görüntü bir noktaya çekilir, cam bir süre kendi kendine çıtırdardı.',
+    donem: '1930’lar – 2010’lar', alan: 'Oturma odası; en iyi koltuğun karşısı', durum: 'Tükendi',
+    dip: 'En üstteki ince çizgiyi duyamıyorsanız üzülmeyin: o ses önce kulaklardan kayboldu.' },
+  { no: '07', lev: 'VII', ad: 'DİSKET SÜRÜCÜ', kisa: 'Disket', alt: 'okunuyor', nota: disket,
+    onom: 'Gırt. Gırt. Gıırrt… gırt-gırt-gırt… gııııırrrt. Tık.',
+    metin: '1,44 megabaytın sesi. Okuma kafası izden ize atlarken sürücü, bilgisayarın düşündüğünü duyulur kılardı. Kısa gırtlar iyi haberdi; uzun, tekrarlayan bir hırıltı ise ödevin gittiği anlamına gelirdi.',
+    donem: '1980’ler – 2000’ler', alan: 'Bej kasaların ön yüzü', durum: 'Tükendi; «kaydet» simgesinde yaşıyor',
+    dip: 'Üst üste çizgiler, tek bir gırtın katlarıdır.' },
+  { no: '08', lev: 'VIII', ad: 'KISA DALGA RADYO', kisa: 'Kısa dalga', alt: 'istasyon aramak', nota: kisaDalga,
+    onom: 'Viyuuuv… hışşş… mır mır mır… dıt-dıt-dııt… viyy…',
+    metin: 'İbre kadranda gezerken dünyanın bütün dilleri birbirine karışırdı. İki istasyonun arasında ıslıklar, hışırtılar ve kimin kime gönderdiği bilinmeyen bip dizileri dururdu. Aranan istasyon bulununca parazit çekilir; bulunamazsa parazitin kendisi dinlenirdi.',
+    donem: '1920’ler – 2000’ler', alan: 'Gece yarısı; mutfak masası', durum: 'Kritik',
+    dip: 'Bip dizisi mors alfabesiyle üç harftir. Çözeni gişeye bekliyoruz.' },
+  { no: '09', lev: 'IX', ad: 'PLAK', kisa: 'Plak', alt: 'son oluk', nota: plak,
+    onom: 'Hışşş… çıt… hışşş… çıt… hışşş…',
+    metin: 'Müzik biter; iğne en içteki kapalı oluğa düşer ve orada dönmeye başlar: her 1,8 saniyede bir küçük çıtırtı. Kimse kalkıp kolu kaldırmazsa bu ses sabaha kadar sürer. Aynı toz zerresi her turda aynı yerde çıtlar — levhaya bakın. Koleksiyonu, hiç bitmeyen bu eserle kapatıyoruz.',
+    donem: '1948 – …', alan: 'Şarkının bittiği yer ile sessizliğin başladığı yer arası', durum: 'Henüz kaybolmadı; yerini ayırdık',
+    dip: 'Dört tur gösterilir. Aslı, biri kolu kaldırana kadar sürer.' },
+];
+
+/* ════════ Drawing a score ════════ */
+const TAM = { L: 46, R: 8, T: 44, H: 316, tam: true, sap: true, slice: 7, comb: 4.2, thMin: 2.4, thK: 46, thMax: 9, dot0: 1.5, dotK: 5.6, kar: 1.5 };
+const zarf = (e, u) => {
+  if (e.dec) return Math.pow(1 - u, 1.5);
+  const t = u * e.d, a = e.a ?? .008, r = e.r ?? .03;
+  return clamp(Math.min(1, t / a, (e.d - t) / r), 0, 1);
+};
+
+function ciz(n, c, kimlik) {
+  const { W, L, T: y0, H: PH } = c, PW = W - L - c.R, lf = Math.log(n.F[1] / n.F[0]);
+  const X = t => L + t / n.T * PW;
+  const Y = f => y0 + PH - Math.log(clamp(f, n.F[0], n.F[1]) / n.F[0]) / lf * PH;
+  const kat = { his: [], ugul: [], ton: [], vur: [] }, zam = { his: [], ugul: [], ton: [], vur: [] };
+  const ekle = (k, s, a, b) => { kat[k].push(s); zam[k].push([a, Math.max(b, a + .05)]); };
+  const rnd = rng(n.e.length * 131 + 7);
+  let harfler = '';
+
+  for (const e of n.e) {
+    if (e.k === 'ton') {
+      const sinif = e.c || 'ton', k = sinif === 'ugul' ? 'ugul' : 'ton';
+      const th = clamp(c.thMin + e.g * c.thK, c.thMin, c.thMax);
+      const x0 = X(e.t), x1 = Math.max(X(e.t + e.d), x0 + .9), adet = Math.max(1, Math.round((x1 - x0) / c.slice));
+      const fu = u => e.f2 ? e.f * Math.pow(e.f2 / e.f, u) : e.f;
+      const zu = u => e.dec ? Math.pow(1 - u, 1.5) : 1;
+      [1, ...(e.h || [])].forEach((m, mi) => {
+        if (e.f * m > n.F[1]) return;
+        const oran = mi ? .62 / (1 + mi * .45) : 1;
+        for (let i = 0; i < adet; i++) {
+          const u0 = i / adet, u1 = (i + 1) / adet, xa = x0 + (x1 - x0) * u0, xb = x0 + (x1 - x0) * u1 + (i < adet - 1 ? .5 : 0);
+          const ya = Y(fu(u0) * m), yb = Y(fu(u1) * m), ha = Math.max(.5, th * oran * zu(u0)) / 2, hb = Math.max(.3, th * oran * zu(u1)) / 2;
+          ekle(k, `<path class="ev ${sinif}${mi ? ' h' : ''}" d="M${r1(xa)} ${r1(ya - ha)}L${r1(xb)} ${r1(yb - hb)}V${r1(yb + hb)}L${r1(xa)} ${r1(ya + ha)}Z"/>`, e.t + e.d * u0, e.t + e.d * u1);
+        }
+      });
+    } else if (e.k === 'his') {
+      const x0 = X(e.t), x1 = X(e.t + e.d), bw = clamp(1.5 / e.q, .45, 4.4);
+      const op = clamp(.42 + e.g * 5, .45, 1).toFixed(2);
+      if (e.look === 'kar') {
+        const adet = Math.round((x1 - x0) * c.kar * 2.2);
+        for (let i = 0; i < adet; i++) {
+          const u = rnd(), a = zarf(e, u);
+          if (rnd() > .2 + .8 * a) continue;
+          const f = e.f * Math.pow(2, (rnd() + rnd() + rnd() - 1.5) / 1.5 * bw / 2), t = e.t + e.d * u;
+          ekle('his', `<circle class="ev his" cx="${r1(x0 + (x1 - x0) * u)}" cy="${r1(Y(f))}" r="${r1(.6 + rnd() * rnd() * 1.6)}"/>`, t, t + .03);
+        }
+      } else {
+        for (let x = x0 + 1; x < x1; x += c.comb) {
+          const u = (x - x0) / (x1 - x0), t = e.t + e.d * u, fc = e.f2 ? e.f * Math.pow(e.f2 / e.f, u) : e.f;
+          let a = zarf(e, u);
+          if (e.am) a *= 1 - e.am.depth * (.5 + .5 * Math.sin(2 * Math.PI * e.am.rate * t));
+          const yari = bw / 2 * (.22 + .78 * a);
+          ekle('his', `<line class="ev his" style="--o:${op}" x1="${r1(x)}" y1="${r1(Y(fc * Math.pow(2, yari * (.8 + rnd() * .34))))}" x2="${r1(x)}" y2="${r1(Y(fc / Math.pow(2, yari * (.8 + rnd() * .34))))}"/>`, t, t + c.comb / PW * n.T);
+        }
+      }
+    } else {
+      const x = r1(X(e.t)), y = Y(e.f), r = c.dot0 + Math.sqrt(e.g) * c.dotK;
+      let s;
+      if (e.look === 'delik') s = `<rect class="ev vur" x="${r1(X(e.t) - r * .55)}" y="${r1(y - r * 1.15)}" width="${r1(r * 1.1)}" height="${r1(r * 2.3)}" rx="${r1(r * .3)}"/>`;
+      else if (e.look === 'cizgi') s = `<line class="ev vur" x1="${x}" y1="${r1(y - 3 - r * 1.6)}" x2="${x}" y2="${r1(y + 3 + r * 1.6)}"/>`;
+      else {
+        s = `<g class="ev vur">`;
+        if (c.sap) {
+          s += `<line class="sap" x1="${x}" y1="${r1(Y(e.f * 1.6))}" x2="${x}" y2="${r1(e.b ? Y(e.b) : Y(e.f / 1.6))}"/>`;
+          if (e.b) s += `<circle class="govde" cx="${x}" cy="${r1(Y(e.b))}" r="${r1(r * .72)}"/>`;
+        }
+        s += `<circle cx="${x}" cy="${r1(y)}" r="${r1(r)}"/></g>`;
+      }
+      ekle('vur', s, e.t - .012, e.t + .08);
+      if (e.lab && c.tam) harfler += `<text class="harf" x="${x}" y="${y0 + PH - 9}">${e.lab}</text>`;
+    }
+  }
+
+  let s = '';
+  const yb = y0 + PH, xr = W - c.R;
+  if (c.tam) {
+    s += `<rect class="zemin" x="${L}" y="${y0}" width="${PW}" height="${PH}"/>`;
+    for (const f of [50, 100, 200, 500, 1000, 2000, 5000, 10000]) {
+      if (f < n.F[0] * 1.15 || f > n.F[1] * .9) continue;
+      const y = Math.round(Y(f)) + .5;
+      if (y < y0 + 16) continue;
+      s += `<line class="kilavuz" x1="${L}" y1="${y}" x2="${xr}" y2="${y}"/><text class="yz" x="${L - 8}" y="${y + 3.5}" text-anchor="end">${f >= 1000 ? f / 1000 + 'k' : f}</text>`;
+    }
+    s += `<text class="yz" x="${L - 8}" y="${y0 + 5}" text-anchor="end">Hz</text>`;
+    s += `<path class="eksen" d="M${L + .5} ${y0}V${yb + .5}H${xr}"/>`;
+    for (let i = 0; i <= Math.floor(n.T * 10 + 1e-6); i++) {
+      const x = Math.round(X(i / 10)) + .5, h = i % 10 === 0 ? 11 : i % 5 === 0 ? 7 : 4;
+      s += `<line class="eksen" x1="${x}" y1="${yb}" x2="${x}" y2="${yb + h}"/>`;
+      if (i % 10 === 0) s += `<text class="yz" x="${x}" y="${yb + 25}" text-anchor="middle">${i / 10}${i === 0 ? ' sn' : ''}</text>`;
+    }
+    for (const [a, b, ad] of n.sec) {
+      const xa = r1(X(a) + 1), xb = r1(X(b) - 1), y = y0 - 13;
+      s += `<path class="eksen" d="M${xa} ${y + 5}V${y}.5H${xb}V${y + 5}"/><text class="bl" x="${xa}" y="${y - 7}">${TR(ad)}</text>`;
+    }
+  }
+  s += kimlik ? `<clipPath id="kp-${kimlik}"><rect class="perde" x="${L - 4}" y="0" width="0" height="${yb + 2}"/></clipPath><g clip-path="url(#kp-${kimlik})">` : '<g>';
+  s += kat.his.join('') + kat.ugul.join('') + kat.ton.join('') + kat.vur.join('') + '</g>';
+  if (c.tam) {
+    s += `<g class="ek">${harfler}`;
+    for (const [t, f, ad, dx, dy] of n.im) {
+      const x = X(t), y = Y(f);
+      s += `<g class="im"><line x1="${r1(x)}" y1="${r1(y + Math.sign(dy) * 5)}" x2="${r1(x + (dx < 0 ? 0 : dx - 4))}" y2="${r1(y + dy)}"/><text x="${r1(x + dx)}" y="${r1(y + dy + 4)}">${ad}</text></g>`;
+    }
+    if (n.tekrar) s += `<g class="tekrar"><rect x="${xr - 12}" y="${y0}" width="1.2" height="${PH}"/><rect x="${xr - 7}" y="${y0}" width="4" height="${PH}"/><circle cx="${xr - 19}" cy="${y0 + PH * .42}" r="2.6"/><circle cx="${xr - 19}" cy="${y0 + PH * .58}" r="2.6"/></g>`;
+    s += `</g>`;
+    s += `<g class="iz" style="opacity:0"><line x1=".5" y1="${y0}" x2=".5" y2="${yb}"/><text x="7" y="${yb - 26}"></text></g>`;
+    s += `<g class="kafa" style="opacity:0"><line x1=".5" y1="${y0 - 8}" x2=".5" y2="${yb + 12}"/><path d="M-3.5 ${y0 - 8}h8l-4 6z"/><text class="kz" x="7" y="${y0 + 14}"></text></g>`;
+  }
+  return { html: s, zaman: [...zam.his, ...zam.ugul, ...zam.ton, ...zam.vur], X, PW };
+}
+
+const IZ = .85;
+class Levha {
+  constructor(svg, nota, c, kimlik) {
+    const r = ciz(nota, c, kimlik);
+    svg.innerHTML = r.html;
+    this.svg = svg; this.nota = nota; this.c = c; this.T = nota.T; this.X = r.X; this.PW = r.PW;
+    this.ev = $$('.ev', svg).map((el, i) => ({ el, a: r.zaman[i][0], b: r.zaman[i][1], k: 0, gec: false }));
+    this.kafa = $('.kafa', svg); this.kz = $('.kz', svg); this.perde = $('.perde', svg);
+    this.son = -9; this.g0 = 0; this.acildi = 0;
+    this.iz = IZ;       // afterglow, in seconds of the score
+  }
+  /* t: where the reading line stands, in seconds of the score; below zero means nowhere */
+  oku(t) {
+    if (t === this.son) return;
+    this.son = t;
+    const iz = this.iz;
+    for (const v of this.ev) {
+      const k = t < v.a ? 0 : t < v.b ? 100 : Math.max(0, Math.round((1 - (t - v.b) / iz) * 25) * 4);
+      if (k !== v.k) { v.k = k; v.el.style.setProperty('--k', k); }
+      const gec = t >= v.a;
+      if (gec !== v.gec) { v.gec = gec; v.el.classList.toggle('gec', gec); }
+    }
+    if (!this.kafa) return;
+    if (t < 0 || t > this.T) { this.kafa.style.opacity = 0; return; }
+    this.kafa.style.opacity = 1;
+    this.kafa.setAttribute('transform', `translate(${r1(this.X(t))} 0)`);
+    const yazi = saat(t).slice(3);
+    if (this.kz.textContent !== yazi) this.kz.textContent = yazi;
+    this.kz.setAttribute('x', t > this.T * .94 ? -44 : 7);
+  }
+}
+
+/* ════════ Playing a score ════════ */
+let ctx = null, ana = null, gurultu = null, aktif = null;
+function gurultuYap(c) {
+  const b = c.createBuffer(1, c.sampleRate * 2.5, c.sampleRate), d = b.getChannelData(0), R = rng(99);
+  for (let i = 0; i < d.length; i++) d[i] = R() * 2 - 1;
+  return b;
+}
+/* gain → compressor → soft clip: impulses may be loud, but nothing reaches the speaker squared off */
+function zincir(c) {
+  const giris = c.createGain(), sinir = c.createDynamicsCompressor(), yumusat = c.createWaveShaper(), egri = new Float32Array(2049);
+  for (let i = 0; i < egri.length; i++) { const x = i / 1024 - 1, m = Math.abs(x); egri[i] = m <= .6 ? x : Math.sign(x) * (.6 + .4 * Math.tanh((m - .6) / .4)); }
+  sinir.threshold.value = -9; sinir.knee.value = 6; sinir.ratio.value = 8; sinir.attack.value = .002; sinir.release.value = .12;
+  yumusat.curve = egri;
+  giris.connect(sinir).connect(yumusat).connect(c.destination);
+  return giris;
+}
+function ses() {
+  if (!ctx) {
+    ctx = new (window.AudioContext || window.webkitAudioContext)();
+    ana = zincir(ctx);
+    gurultu = gurultuYap(ctx);
+  }
+  if (ctx.state === 'suspended') ctx.resume();
+  return ctx;
+}
+const bant = e => clamp(1 / Math.sqrt((e.f / (e.q || 1.4)) / 22050), 1, 9);   // keeps a narrow band as loud as a wide one
+function zarfKur(p, e, s, G) {
+  p.value = 0; p.setValueAtTime(0, s);
+  if (e.dec) { const a = e.a ?? .004; p.linearRampToValueAtTime(G, s + a); p.setTargetAtTime(0, s + a, e.d / 4.5); return; }
+  const a = Math.min(e.a ?? .008, e.d / 2), r = Math.min(e.r ?? .03, e.d / 2);
+  p.linearRampToValueAtTime(G, s + a); p.setValueAtTime(G, s + e.d - r); p.linearRampToValueAtTime(0, s + e.d);
+}
+function titret(c, giris, am, s, d, dugum) {
+  const g = c.createGain(), l = c.createOscillator(), lg = c.createGain();
+  g.gain.value = 1 - am.depth / 2; l.frequency.value = am.rate; lg.gain.value = am.depth / 2;
+  l.connect(lg).connect(g.gain); l.start(s); l.stop(s + d + .05); dugum.push(l); giris.connect(g);
+  return g;
+}
+function kur(c, hedef, olaylar, t0, gb) {
+  const dugum = [];
+  for (const e of olaylar) {
+    const s = t0 + e.t;
+    if (e.k === 'ton') {
+      const o = c.createOscillator(), g = c.createGain();
+      o.type = e.w || 'sine'; o.frequency.setValueAtTime(e.f, s);
+      if (e.f2) o.frequency.exponentialRampToValueAtTime(e.f2, s + e.d);
+      zarfKur(g.gain, e, s, e.g);
+      let uc = o;
+      if (e.lp) { const f = c.createBiquadFilter(); f.type = 'lowpass'; f.frequency.value = e.lp; uc.connect(f); uc = f; }
+      uc.connect(g);
+      if (e.vib) { const l = c.createOscillator(), lg = c.createGain(); l.frequency.value = e.vib.rate; lg.gain.value = e.vib.cents; l.connect(lg).connect(o.detune); l.start(s); l.stop(s + e.d + .05); dugum.push(l); }
+      (e.am ? titret(c, g, e.am, s, e.d, dugum) : g).connect(hedef);
+      o.start(s); o.stop(s + e.d + .06); dugum.push(o);
+    } else if (e.k === 'his') {
+      const b = c.createBufferSource(), f = c.createBiquadFilter(), g = c.createGain();
+      b.buffer = gb; b.loop = true; f.type = 'bandpass'; f.Q.value = e.q; f.frequency.setValueAtTime(e.f, s);
+      if (e.f2) f.frequency.exponentialRampToValueAtTime(e.f2, s + e.d);
+      zarfKur(g.gain, e, s, e.g * bant(e));
+      b.connect(f).connect(g);
+      (e.am ? titret(c, g, e.am, s, e.d, dugum) : g).connect(hedef);
+      b.start(s, (e.t * 7.3) % 2); b.stop(s + e.d + .06); dugum.push(b);
+    } else {
+      const d = e.d || .03, b = c.createBufferSource(), f = c.createBiquadFilter(), g = c.createGain();
+      b.buffer = gb; f.type = 'bandpass'; f.frequency.value = e.f; f.Q.value = e.q || 1.4;
+      g.gain.setValueAtTime(e.g * bant(e) * .8, s); g.gain.exponentialRampToValueAtTime(.0001, s + d);
+      b.connect(f).connect(g).connect(hedef); b.start(s, (e.t * 3.7) % 2, d + .03); dugum.push(b);
+      if (e.b) {
+        const o = c.createOscillator(), og = c.createGain();
+        o.frequency.setValueAtTime(e.b * 1.7, s); o.frequency.exponentialRampToValueAtTime(e.b, s + .035);
+        og.gain.setValueAtTime(e.g * .8, s); og.gain.exponentialRampToValueAtTime(.0001, s + .1);
+        o.connect(og).connect(hedef); o.start(s); o.stop(s + .13); dugum.push(o);
+      }
+    }
+  }
+  return dugum;
+}
+
+const halEl = $('#hal');
+function cal(lv, salon) {
+  sus();
+  const c = ses(), bus = c.createGain();
+  bus.connect(ana); lv.oku(-1);
+  const t0 = c.currentTime + .09;
+  aktif = { lv, salon, bus, t0, p0: performance.now() / 1000 + .09, dugum: kur(c, bus, lv.nota.e, t0, gurultu) };
+  if (salon) { kok.classList.add('los'); salon.fig.classList.add('caliyor'); salon.dugme.lastChild.textContent = 'Durdur'; salon.hal.textContent = 'Çalıyor'; halEl.classList.add('cal'); }
+}
+function sus() {
+  if (!aktif) return;
+  const a = aktif; aktif = null;
+  a.bus.gain.setTargetAtTime(0, ctx.currentTime, .02);
+  setTimeout(() => { a.dugum.forEach(d => { try { d.stop(); } catch (_) {} }); a.bus.disconnect(); }, 180);
+  a.lv.oku(-1); a.lv.g0 = performance.now() / 1000 + 1.4;
+  if (a.salon) {
+    kok.classList.remove('los'); a.salon.fig.classList.remove('caliyor'); a.salon.dugme.lastChild.textContent = 'Dinle'; a.salon.hal.textContent = 'Sessiz okunuyor';
+    a.salon.sayac.textContent = `00:00,0 / ${saat(a.lv.T)}`; halEl.classList.remove('cal'); halEl.textContent = 'Sessiz okuma';
+  }
+}
+function cinla(f) {
+  const c = ses(), s = c.currentTime + .01;
+  [[1, .15, .9], [2.76, .045, .4], [5.4, .018, .18]].forEach(([m, g, d]) => {
+    const o = c.createOscillator(), a = c.createGain();
+    o.frequency.value = f * m; a.gain.value = 0; a.gain.setValueAtTime(0, s); a.gain.linearRampToValueAtTime(g, s + .004); a.gain.setTargetAtTime(0, s + .004, d / 4);
+    o.connect(a).connect(ana); o.start(s); o.stop(s + d + .5);
+  });
+}
+addEventListener('keydown', e => { if (e.key === 'Escape') sus(); });
+
+/* ════════ Entrance ════════ */
+const sahne = $('.sahne'), adEl = $('.ad'), okur = $('.okur'), okurYazi = $('.okur b'), cetvel = $('.cetvel'), plan = $('.plan');
+const harfler = [];
+['KAYBOLMUŞ', 'SESLER', 'MÜZESİ'].forEach((satir, r) => [...satir].forEach((ch, c) => {
+  const el = document.createElement('span');
+  el.className = 'h'; el.textContent = ch; el.style.gridArea = `${r + 1} / ${c + 1}`; el.setAttribute('aria-hidden', 'true');
+  adEl.append(el);
+  const h = { el, r, c, taban: r === 0 ? 1 - .8 * Math.pow(c / 8, 1.15) : 1, vur: -99, gor: false, w: 0, o: -1 };
+  el.addEventListener('pointerenter', () => { if (h.gor) h.vur = performance.now() / 1000; });
+  el.addEventListener('click', () => { h.vur = performance.now() / 1000; cinla([220, 261.6, 293.7, 329.6, 392, 440, 523.3, 587.3, 659.3][c] * [2, 1, .75][r]); });
+  harfler.push(h);
+}));
+
+const MINI = { L: 0, R: 0, T: 2, H: 44, slice: 3, comb: 2.4, thMin: 1.1, thK: 20, thMax: 3.2, dot0: .6, dotK: 2.3, kar: .42 };
+const NOTALAR = ESERLER.map(E => E.nota());
+let miniler = [], sahneW = 1, kolW = 1;
+ESERLER.forEach(E => {
+  const a = document.createElement('a');
+  a.href = '#salon-' + E.no;
+  a.innerHTML = `<svg aria-hidden="true"></svg><span><b>${E.no}</b>${E.kisa}</span>`;
+  plan.append(a);
+});
+function olc() {
+  if (aktif) sus();
+  salonlar.forEach(levhaKur); biletKur();
+  sahneW = sahne.clientWidth; kolW = sahneW / 9;
+  let s = `<line x1="0" y1=".5" x2="${sahneW}" y2=".5"/>`;
+  for (let i = 0; i <= 90; i++) {
+    const x = Math.min(sahneW - .5, Math.round(i * kolW / 10) + .5), h = i % 10 === 0 ? 12 : i % 5 === 0 ? 7 : 4;
+    s += `<line x1="${x}" y1="0" x2="${x}" y2="${h}"/>`;
+    if (i % 10 === 0) s += `<text x="${i === 90 ? sahneW - 5 : x + 5}" y="23"${i === 90 ? ' text-anchor="end"' : ''}>${i / 10}${i === 0 ? ' sn' : ''}</text>`;
+  }
+  cetvel.innerHTML = s;
+  const s0 = sahne.getBoundingClientRect().left;
+  miniler = $$('svg', plan).map((svg, i) => {
+    const r = svg.getBoundingClientRect(), w = Math.max(40, Math.round(r.width));
+    svg.setAttribute('viewBox', `0 0 ${w} 48`);
+    const lv = new Levha(svg, NOTALAR[i], { ...MINI, W: w });
+    lv.sol = r.left - s0; lv.gen = w; lv.iz = IZ * lv.T * kolW / w;      // the line crosses a miniature in about a second
+    return lv;
+  });
+}
+let giris0 = Infinity, hOnce = -1, girisGorunur = true;
+const ILK = 1.6, TAU = .8, W0 = 60, W1 = 900;
+function girisKare(now) {
+  const t = now - giris0;
+  let h = -1;
+  if (t >= 0 && t < ILK) h = t / ILK * 9;
+  else if (t >= ILK) { const u = (t - ILK - .9) % 11.4; h = u >= 0 && u < 10.3 ? u - .3 : -1; }   // runs a column past the edge so the last glow can fade
+  for (const k of harfler) {      // first pass: each letter is struck at its own moment, even if that frame was never drawn
+    const an = (k.c + .5) / 9 * ILK;
+    if (!k.gor && t >= an) { k.gor = true; k.vur = giris0 + an; }
+  }
+  if (h >= 0) {
+    if (t >= ILK) for (const k of harfler) { const m = k.c + .5; if (hOnce < m && h >= m && h - hOnce < 1.5) k.vur = now; }
+    okur.style.opacity = h <= 9 ? 1 : 0; okur.style.transform = `translateX(${r1(Math.min(h, 9) / 9 * sahneW)}px)`;
+    const yazi = saat(clamp(h, 0, 9)).slice(3);
+    if (okurYazi.textContent !== yazi) okurYazi.textContent = yazi;
+    okurYazi.style.left = h > 8.45 ? '-44px' : '7px';
+  } else okur.style.opacity = 0;
+  hOnce = h;
+  for (const k of harfler) {
+    if (!k.gor) continue;
+    const dt = now - k.vur, z = dt < 0 ? 0 : Math.min(1, dt / .05) * Math.exp(-Math.max(0, dt - .05) / TAU);
+    const w = Math.round(W0 + (W1 - W0) * z), o = Math.round((k.taban + (1 - k.taban) * Math.pow(z, .55)) * 200) / 200;
+    if (w !== k.w) { k.w = w; k.el.style.fontWeight = w; }
+    if (o !== k.o) { k.o = o; k.el.style.opacity = o; }
+  }
+  const px = h / 9 * sahneW;
+  for (const m of miniler) m.oku(h < 0 ? -1 : (px - m.sol) / m.gen * m.T);
+}
+
+/* ════════ Entrance hall: the key ════════ */
+const ANAHTAR = [
+  ['Vuruş', 'Bir şey bir şeye çarptı.', n => n.vur({ t: .14, f: 2400, g: .4, b: 170 }).vur({ t: .44, f: 1500, g: .22 }).vur({ t: .62, f: 3200, g: .12 })],
+  ['Ton', 'Tek perdeden, düz bir ses.', n => n.ton({ t: .1, d: .7, f: 880, g: .1 })],
+  ['Kayma', 'Perdesi yükselen ya da alçalan ton.', n => n.ton({ t: .1, d: .7, f: 420, f2: 2300, g: .09, a: .02 })],
+  ['Sönüm', 'Vurulup kendi hâline bırakılan ses.', n => n.ton({ t: .1, d: .78, f: 1320, g: .15, dec: true })],
+  ['Hışırtı', 'Perdesi olmayan ses; gürültü.', n => n.his({ t: .1, d: .7, f: 1500, q: .75, g: .13, a: .03, r: .2 })],
+  ['Uğultu', 'Dönen bir şeyin pes sesi.', n => n.ton({ t: .1, d: .7, f: 130, g: .15, w: 'triangle', c: 'ugul', am: { rate: 14, depth: .6 } })],
+];
+const KUCUK = { W: 96, L: 1, R: 1, T: 3, H: 28, sap: true, slice: 4, comb: 3.1, thMin: 2, thK: 30, thMax: 6, dot0: 1.1, dotK: 4, kar: 1 };
+const anahtarEl = $('#anahtar'), anahtarlar = [];
+let anahtarGorunur = false;
+ANAHTAR.forEach(([ad, tarif, yaz]) => {
+  const n = yeni(.9, [90, 5200]); yaz(n);
+  const b = document.createElement('button');
+  b.className = 'an'; b.type = 'button';
+  b.innerHTML = `<svg viewBox="0 0 96 34" aria-hidden="true"></svg><b>${ad}</b><i>${tarif}</i>`;
+  anahtarEl.append(b);
+  const lv = new Levha($('svg', b), n, KUCUK);
+  anahtarlar.push(lv);
+  b.addEventListener('click', () => cal(lv, null));
+});
+anahtarEl.insertAdjacentHTML('beforeend', `<div class="an simdi"><svg viewBox="0 0 96 34" aria-hidden="true"><line x1="48.5" y1="2" x2="48.5" y2="32" stroke="var(--now)"/><path d="M44.5 2h8l-4 6z" fill="var(--now)"/></svg><b>Şimdi</b><i>Okuma çizgisi. Değdiği her şey kızarır.</i></div>`);
+
+/* ════════ Rooms ════════ */
+const salonlarEl = $('#salonlar'), salonlar = [];
+ESERLER.forEach((E, i) => {
+  const n = NOTALAR[i], el = document.createElement('section');
+  el.className = 'salon'; el.id = 'salon-' + E.no;
+  el.innerHTML = `
+    <div class="s-ust"><span>Salon ${E.no} / 09</span><span>Levha ${E.lev} · Envanter KSM·0${E.no}</span></div>
+    <h2 class="s-ad"><span class="no">${E.no}</span><span class="isim" aria-label="${E.ad}">${[...E.ad].map((h, j) => h === ' ' ? ' ' : `<span style="--i:${j}">${h}</span>`).join('')}</span><i>${E.alt}</i></h2>
+    <div class="kolon s-govde">
+      <p class="onom gor">${E.onom}</p>
+      <p class="metin gor">${E.metin}</p>
+      <dl class="veri gor">
+        <div><dt>Dönem</dt><dd>${E.donem}</dd></div>
+        <div><dt>Yaşam alanı</dt><dd>${E.alan}</dd></div>
+        <div><dt>Durum</dt><dd>${E.durum}</dd></div>
+      </dl>
+    </div>
+    <figure class="levha">
+      <svg role="img" aria-label="${E.kisa} sesinin notası"></svg>
+      <figcaption>
+        <button class="dinle" type="button"><span>Dinle</span></button>
+        <span class="sayac">00:00,0 / ${saat(n.T)}</span>
+        <span class="l-hal">Sessiz okunuyor</span>
+        <span class="l-say">${n.e.length} işaret</span>
+        <span class="l-dip">${E.dip}</span>
+      </figcaption>
+    </figure>`;
+  salonlarEl.append(el);
+  const svg = $('svg', el);
+  const S = { E, n, el, svg, lv: null, c: null, fig: $('.levha', el), dugme: $('.dinle', el), sayac: $('.sayac', el), hal: $('.l-hal', el), gorunur: false };
+  const dokun = () => (aktif && aktif.lv === S.lv) ? sus() : cal(S.lv, S);
+  S.dugme.addEventListener('click', dokun);
+  svg.addEventListener('click', dokun);
+  const lf = Math.log(n.F[1] / n.F[0]);
+  svg.addEventListener('pointermove', ev => {
+    const c = S.c, r = svg.getBoundingClientRect(), k = c.W / r.width, x = (ev.clientX - r.left) * k, y = (ev.clientY - r.top) * k;
+    if (x < c.L || x > c.W - c.R || y < c.T || y > c.T + c.H) { S.iz.style.opacity = 0; return; }
+    const t = (x - c.L) / S.lv.PW * n.T, f = n.F[0] * Math.exp((c.T + c.H - y) / c.H * lf), sag = x > c.W - 150;
+    S.iz.style.opacity = 1; S.iz.setAttribute('transform', `translate(${r1(x)} 0)`);
+    S.izYazi.textContent = `${t.toFixed(2).replace('.', ',')} sn · ${f >= 1000 ? (f / 1000).toFixed(1).replace('.', ',') + ' kHz' : Math.round(f) + ' Hz'}`;
+    S.izYazi.setAttribute('x', sag ? -8 : 7); S.izYazi.setAttribute('text-anchor', sag ? 'end' : 'start');
+  });
+  svg.addEventListener('pointerleave', () => { S.iz.style.opacity = 0; });
+  salonlar.push(S);
+});
+/* A plate is drawn at its real pixel size, as tall as the window allows, so a whole room fits one screen. */
+function levhaKur(S) {
+  const w = Math.round(S.fig.clientWidth), kalan = innerHeight - (S.el.offsetHeight - S.svg.getBoundingClientRect().height) - TAM.T - 34;
+  const c = { ...TAM, W: w, H: clamp(Math.floor(kalan), 190, 460) }, eski = S.lv;
+  S.svg.setAttribute('viewBox', `0 0 ${w} ${c.T + c.H + 34}`);
+  S.c = c; S.lv = new Levha(S.svg, S.n, c, S.E.no);
+  S.iz = $('.iz', S.svg); S.izYazi = $('text', S.iz);
+  if (eski) { S.lv.acildi = eski.acildi; S.lv.g0 = eski.g0; if (eski.acildi === -1) { S.lv.perde.setAttribute('width', w + 8); $('.ek', S.svg).style.opacity = 1; } }
+}
+
+/* ════════ Room of silence ════════ */
+const sessiz = $('#sessizlik'), tuval = $('canvas', sessiz), cz = tuval.getContext('2d'), susSayi = $('#sus-sayi'), susRekor = $('#sus-rekor');
+const NN = 360, yy = new Float32Array(NN), vv = new Float32Array(NN);
+let sessizGorunur = false, sonKipirti = 0, rekor = 0, tw = 0, th = 0, sonX = 0, sonY = 0, sarsinti = 0, susW = 0, susYazi = '';
+function tuvalOlc() { const d = Math.min(2, devicePixelRatio || 1); tw = tuval.clientWidth; th = tuval.clientHeight; tuval.width = tw * d; tuval.height = th * d; cz.setTransform(d, 0, 0, d, 0, 0); }
+function kipirda(x, guc) {
+  const i = clamp(Math.round(x / tw * NN), 3, NN - 4), g = clamp(guc, 0, 46);
+  for (let k = -3; k <= 3; k++) vv[i + k] += g * (1 - Math.abs(k) / 4) * (Math.random() < .5 ? -1 : 1) * .5;
+  sonKipirti = performance.now() / 1000; sarsinti = Math.min(1, sarsinti + g / 30);
+}
+sessiz.addEventListener('pointermove', e => {
+  const r = sessiz.getBoundingClientRect(), x = e.clientX - r.left, guc = Math.hypot(e.clientX - sonX, e.clientY - sonY);
+  sonX = e.clientX; sonY = e.clientY;
+  if (guc > .5) kipirda(x, guc);
+});
+addEventListener('scroll', () => { if (sessizGorunur) kipirda(tw * (.2 + Math.random() * .6), 7); }, { passive: true });
+function sessizKare(now) {
+  for (let s = 0; s < 3; s++) {
+    for (let i = 1; i < NN - 1; i++) vv[i] = (vv[i] + .23 * (yy[i - 1] + yy[i + 1] - 2 * yy[i]) - .004 * yy[i]) * .986;
+    for (let i = 1; i < NN - 1; i++) yy[i] += vv[i];
+  }
+  sarsinti *= .96;
+  let tepe = 0;
+  cz.clearRect(0, 0, tw, th);
+  cz.beginPath();
+  for (let i = 0; i < NN; i++) { const y = clamp(yy[i], -th / 2 + 2, th / 2 - 2); tepe = Math.max(tepe, Math.abs(y)); i ? cz.lineTo(i / (NN - 1) * tw, th / 2 + y) : cz.moveTo(0, th / 2 + y); }
+  const k = clamp(tepe / 9, 0, 1);
+  cz.strokeStyle = `rgb(${Math.round(236 + 19 * k)},${Math.round(229 - 145 * k)},${Math.round(211 - 160 * k)})`;
+  cz.lineWidth = 1.25; cz.stroke();
+  const sakin = now - sonKipirti - .4, sure = sakin > 0 && tepe < 1.2 ? sakin : 0;
+  if (sure > rekor) { rekor = sure; susRekor.textContent = saat(rekor); }
+  const yazi = saat(sure), w = Math.round(60 + 520 * (1 - Math.exp(-sure / 22)));
+  if (yazi !== susYazi) { susYazi = yazi; susSayi.textContent = yazi; }
+  if (w !== susW) { susW = w; susSayi.style.fontWeight = w; }
+}
+
+/* ════════ Waiting room meters ════════ */
+$$('.olcer').forEach(o => {
+  const k = +o.dataset.k;
+  o.style.setProperty('--hz', (.5 + k * .24).toFixed(2) + 's');
+  o.innerHTML = Array.from({ length: 12 }, (_, i) => `<i class="${i < k - 1 ? 'd' : i === k - 1 ? 's' : ''}"></i>`).join('');
+});
+
+/* ════════ Ticket: the visitor's own sound, written from the moment of entry ════════ */
+const girisAni = new Date(), ikili = v => String(v).padStart(2, '0');
+$('#b-tarih').textContent = new Intl.DateTimeFormat('tr-TR', { day: 'numeric', month: 'long', year: 'numeric', weekday: 'long' }).format(girisAni);
+$('#b-saat').textContent = `${ikili(girisAni.getHours())}.${ikili(girisAni.getMinutes())}.${ikili(girisAni.getSeconds())}`;
+const rakamlar = [girisAni.getDate(), girisAni.getMonth() + 1, girisAni.getHours(), girisAni.getMinutes(), girisAni.getSeconds()].map(ikili).join('');
+$('#b-no').textContent = 'No ' + rakamlar.replace(/(\d{4})(\d{3})(\d{3})/, '$1 $2 $3');
+const biletNota = yeni(rakamlar.length * .22 + .55, [180, 3600]);
+[...rakamlar].forEach((r, i) => {
+  const f = [220, 261.6, 293.7, 329.6, 392, 440, 523.3, 587.3, 659.3, 784][+r], t = .12 + i * .22;
+  biletNota.ton({ t, d: .5, f, g: .12, dec: true }).ton({ t, d: .3, f: f * 2.76, g: .03, dec: true }).vur({ t, f: f * 4, g: .05, d: .012 });
+});
+const bilet = { dugme: $('.koca'), svg: $('.koca svg'), lv: null, gorunur: false, sure: $('#b-sure'), yazi: '' };
+function biletKur() {
+  const w = Math.max(120, Math.round(bilet.svg.clientWidth));
+  bilet.svg.setAttribute('viewBox', `0 0 ${w} 64`);
+  bilet.lv = new Levha(bilet.svg, biletNota, { W: w, L: 1, R: 1, T: 4, H: 56, slice: 4, comb: 3, thMin: 2, thK: 36, thMax: 7, dot0: 1, dotK: 4.5, kar: 1 });
+}
+bilet.dugme.addEventListener('click', () => (aktif && aktif.lv === bilet.lv) ? sus() : cal(bilet.lv, null));
+
+/* ════════ Route ════════ */
+const DURAKLAR = [['giris', 'Giriş', ''], ['hol', 'Giriş holü', ''], ...ESERLER.map(E => ['salon-' + E.no, E.kisa, E.no]), ['sessizlik', 'Sessizlik odası', '10'], ['bekleme', 'Bekleme salonu', ''], ['ziyaret', 'Ziyaret', '']];
+const rota = $('.rota'), konum = $('#konum');
+DURAKLAR.forEach(([id, ad, no]) => {
+  const a = document.createElement('a');
+  a.href = '#' + id; a.className = no ? '' : 'ara'; a.innerHTML = `${no}<u>${ad}</u>`; a.setAttribute('aria-label', ad);
+  rota.append(a);
+});
+const rotaA = $$('a', rota);
+const konumGoz = new IntersectionObserver(es => es.forEach(e => {
+  if (!e.isIntersecting) return;
+  const i = DURAKLAR.findIndex(d => d[0] === e.target.id);
+  rotaA.forEach((a, j) => a.classList.toggle('simdi', j === i));
+  konum.textContent = DURAKLAR[i][2] && i < 11 ? `Salon ${DURAKLAR[i][2]} — ${DURAKLAR[i][1]}` : DURAKLAR[i][1];
+  rota.classList.toggle('acik', i > 0); kok.classList.toggle('ic', i > 0); kok.classList.toggle('gece', DURAKLAR[i][0] === 'sessizlik');
+}), { rootMargin: '-45% 0px -54% 0px' });
+DURAKLAR.forEach(d => konumGoz.observe(document.getElementById(d[0])));
+/* Walking between rooms is smooth only when the visitor asks for it; arriving by address is immediate. */
+document.addEventListener('click', e => {
+  const a = e.target.closest('a[href^="#"]'), hedef = a && document.getElementById(a.getAttribute('href').slice(1));
+  if (!hedef) return;
+  e.preventDefault();
+  hedef.scrollIntoView({ behavior: 'smooth' });
+});
+
+/* ════════ Visibility, reveal, frame loop ════════ */
+/* Motion is computed here from one clock and written as plain styles; nothing that carries meaning waits on a CSS timer. */
+const hareketler = [];
+const canlandir = (gecikme, sure, uygula) => hareketler.push({ t0: performance.now() / 1000 + gecikme, sure, uygula });
+const gorGoz = new IntersectionObserver(es => es.forEach(e => {
+  if (!e.isIntersecting) return;
+  const el = e.target;
+  gorGoz.unobserve(el);
+  if (el.classList.contains('gor')) canlandir(0, .9, p => { el.style.opacity = p; el.style.transform = p < 1 ? `translateY(${r1((1 - p) * 16)}px)` : 'none'; });
+  else $$('.isim span', el).forEach((h, j) => canlandir(.12 + j * .042, 1.1, p => { h.style.fontWeight = Math.round(60 + 720 * p); }));
+}), { rootMargin: '0px 0px -8% 0px' });
+$$('.gor, .salon').forEach(el => gorGoz.observe(el));
+const canGoz = new IntersectionObserver(es => es.forEach(e => {
+  const now = performance.now() / 1000;
+  if (e.target === $('#giris')) girisGorunur = e.isIntersecting;
+  else if (e.target === anahtarEl) anahtarGorunur = e.isIntersecting;
+  else if (e.target === bilet.dugme) bilet.gorunur = e.isIntersecting;
+  else if (e.target === sessiz) { sessizGorunur = e.isIntersecting; sonKipirti = now; }
+  else salonlar.find(s => s.fig === e.target).gorunur = e.isIntersecting;      // may arrive before the plates are drawn; the frame loop opens them
+}), { rootMargin: '0px 0px -12% 0px' });
+canGoz.observe($('#giris')); canGoz.observe(sessiz); canGoz.observe(anahtarEl); canGoz.observe(bilet.dugme); salonlar.forEach(S => canGoz.observe(S.fig));
+
+let sonKare = 0;
+function kare() {
+  const now = performance.now() / 1000;      // one clock everywhere; the frame timestamp can run on another
+  sonKare = now;
+  for (let i = hareketler.length - 1; i >= 0; i--) {
+    const h = hareketler[i], p = clamp((now - h.t0) / h.sure, 0, 1);
+    if (p > 0) h.uygula(1 - Math.pow(1 - p, 3));
+    if (p === 1) hareketler.splice(i, 1);
+  }
+  if (girisGorunur) girisKare(now);
+  if (aktif) {
+    const t = ctx.state === 'running' ? ctx.currentTime - aktif.t0 : now - aktif.p0;
+    aktif.lv.oku(Math.max(t, -.001));
+    if (aktif.salon) {
+      const z = saat(clamp(t, 0, aktif.lv.T));
+      aktif.salon.sayac.textContent = `${z} / ${saat(aktif.lv.T)}`;
+      halEl.textContent = `Çalıyor · ${aktif.salon.E.no} ${aktif.salon.E.kisa} · ${z}`;
+    }
+    if (t > aktif.lv.T + .3) sus();
+  }
+  for (const S of salonlar) {
+    if (!S.gorunur) continue;
+    const lv = S.lv;
+    if (!lv.acildi) { lv.acildi = now; lv.g0 = now + 1.7; canlandir(1.3, .9, p => { $('.ek', S.svg).style.opacity = p; }); }
+    if (lv.acildi > 0) {
+      const p = clamp((now - lv.acildi - .15) / 1.5, 0, 1);
+      lv.perde.setAttribute('width', r1((1 - Math.pow(1 - p, 3)) * (lv.c.W + 8)));
+      if (p === 1) lv.acildi = -1;
+    }
+    if (aktif && aktif.lv === lv) continue;
+    const g = (now - lv.g0) % (lv.T + 2.2);
+    lv.oku(now < lv.g0 || g > lv.T + 1 ? -1 : g);
+  }
+  if (anahtarGorunur) {      // the key reads itself, one sign after another
+    const u = now % (anahtarlar.length * 1.5), k = Math.floor(u / 1.5), t = u - k * 1.5;
+    anahtarlar.forEach((lv, i) => { if (!(aktif && aktif.lv === lv)) lv.oku(i === k ? t : -1); });
+  }
+  if (bilet.gorunur) {
+    if (!(aktif && aktif.lv === bilet.lv)) { const g = now % (bilet.lv.T + 2.2); bilet.lv.oku(g > bilet.lv.T + 1 ? -1 : g); }
+    const sn = Math.floor((Date.now() - girisAni) / 1000), yazi = `${ikili(Math.floor(sn / 60))}:${ikili(sn % 60)}`;
+    if (yazi !== bilet.yazi) { bilet.yazi = yazi; bilet.sure.textContent = yazi; }
+  }
+  if (sessizGorunur) sessizKare(now);
+}
+function dongu() { kare(); requestAnimationFrame(dongu); }
+
+let yenidenOlc = 0;
+addEventListener('resize', () => { clearTimeout(yenidenOlc); yenidenOlc = setTimeout(() => { olc(); tuvalOlc(); }, 150); });
+const yazilar = Promise.all([
+  document.fonts.load('60 40px "Sofia Sans Extra Condensed"', 'KAYBOLMUŞ SESLER MÜZESİ 0123456789'),
+  document.fonts.load('300 20px Newsreader', 'ığüşöç'),
+  document.fonts.load('italic 300 20px Newsreader', 'ığüşöç'),
+  document.fonts.load('500 11px "IBM Plex Mono"', 'ığüşöçİ'),
+]).catch(() => {});
+Promise.race([yazilar, new Promise(r => setTimeout(r, 2500))]).then(() => {
+  /* drawing the plates changes the page's height: keep whatever section is on screen where it was */
+  const capa = $$('header, section').find(el => el.getBoundingClientRect().bottom > 80), yer = capa.getBoundingClientRect().top;
+  olc(); tuvalOlc();
+  scrollBy({ top: capa.getBoundingClientRect().top - yer, behavior: 'instant' });
+  kok.classList.add('hazir');
+  giris0 = performance.now() / 1000 + .2;
+  canlandir(.45, .8, p => { $('.alt-serit').style.opacity = p; });
+  canlandir(.9, .9, p => { $('.sunu').style.opacity = p; });
+  dongu();
+  setInterval(() => { if (performance.now() / 1000 - sonKare > .1) kare(); }, 50);      // keeps time when no frames are being drawn
+});
+})();
+</script>
+</body>
+</html>

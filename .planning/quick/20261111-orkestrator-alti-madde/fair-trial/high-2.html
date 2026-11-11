@@ -1,0 +1,1242 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<title>Kaybolmuş Sesler Müzesi</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='15' fill='%2315120e'/%3E%3Cpath d='M5 16h5l2-7 3 14 3-10 2 3h7' fill='none' stroke='%23e8e3d6' stroke-width='1.6'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --wall:#e8e3d6; --paper:#f6f1e5; --ink:#15120e;
+  --ink2:rgba(21,18,14,.64); --ink3:rgba(21,18,14,.4); --hair:rgba(21,18,14,.18);
+  --vit:#0e0d0b; --bone:#ece0c4; --amber:#ffb24a; --red:#d4391c;
+  --serif:"Fraunces","Iowan Old Style",Georgia,serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+  --m:clamp(28px,4.4vw,96px);
+}
+*{box-sizing:border-box}
+html{background:var(--wall);color:var(--ink);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+body{margin:0;font-family:var(--serif);font-size:19px;line-height:1.5;font-optical-sizing:auto;overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:60;opacity:.6;mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='320' height='320'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .08  0 0 0 0 .07  0 0 0 0 .05  0 0 0 .13 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+::selection{background:var(--ink);color:var(--wall)}
+canvas{display:block;width:100%;height:100%}
+p{margin:0}
+em{font-style:italic}
+.mono{font:500 11px/1.45 var(--mono);letter-spacing:.09em;text-transform:uppercase}
+
+/* ── kenar şeritleri ───────────────────────────────────── */
+.rail{position:fixed;top:0;bottom:0;width:var(--m);z-index:40;display:flex;flex-direction:column;align-items:center;justify-content:space-between;
+  padding:24px 0 30px;color:#fff;mix-blend-mode:difference;pointer-events:none}
+.rail.l{left:0}.rail.r{right:0}
+.rail .mark{display:grid;place-items:center;width:32px;height:32px;border:1px solid currentColor;border-radius:50%;font-size:9.5px;letter-spacing:.04em}
+.rail .v{writing-mode:vertical-rl;transform:rotate(180deg);white-space:nowrap}
+.rail .dbv{display:flex;flex-direction:column;align-items:center;gap:2px;font-size:13px;letter-spacing:.04em;height:32px;justify-content:center}
+.rail .dbv small{font-size:9px;opacity:.7}
+.rail .mtr{display:flex;flex-direction:column;align-items:center;gap:16px}
+.bars{display:flex;flex-direction:column-reverse;gap:3px}
+.bars i{display:block;width:14px;height:2px;background:currentColor;opacity:.25}
+.bars i.on{opacity:1}
+
+/* ── giriş ─────────────────────────────────────────────── */
+.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:space-between;padding:26px var(--m) 34px;position:relative}
+.hero-top{display:flex;justify-content:space-between;color:var(--ink2);border-top:1px solid var(--ink);padding-top:12px}
+.name{margin:0;font-weight:100;cursor:default;user-select:none}
+.name .l{font-weight:100;display:inline-block}
+.n1{display:block;font-size:min(20.2vw,33vh);line-height:.9;letter-spacing:-.045em;white-space:nowrap;margin:0 0 0 -.045em}
+.n2{display:block;font-size:min(9.3vw,16.4vh);line-height:1;font-style:italic;letter-spacing:-.03em;text-align:right;white-space:nowrap;margin-top:.17em}
+.n2 .sp{display:inline-block;width:.24em}
+.chart{height:118px;margin:14px calc(var(--m)*-1) 0;position:relative;border-top:1px solid var(--hair);border-bottom:1px solid var(--hair)}
+.chart-read{position:absolute;right:var(--m);top:50%;transform:translateY(-50%);display:flex;align-items:baseline;gap:9px;color:var(--ink2)}
+.chart-read b{font:300 44px/1 var(--serif);color:var(--ink);font-variant-numeric:tabular-nums;letter-spacing:-.03em}
+.chart-read .lbl{position:absolute;bottom:100%;right:0;white-space:nowrap;margin-bottom:6px}
+.chart-read.loud .lbl{color:var(--red)}
+.hero-foot{display:grid;grid-template-columns:6fr 1fr 3fr 3fr;gap:0 28px;align-items:end;padding-top:26px}
+.hero-foot .lead{font-size:clamp(22px,1.95vw,34px);line-height:1.24;letter-spacing:-.012em;font-weight:360;max-width:24em}
+.hero-foot .note{grid-column:3;color:var(--ink2);max-width:25em}
+.facts{grid-column:4;list-style:none;margin:0;padding:0}
+.facts li{display:flex;justify-content:space-between;gap:16px;border-top:1px solid var(--hair);padding:7px 0 6px}
+.facts li span:first-child{color:var(--ink2)}
+
+/* ── duvar yazısı ──────────────────────────────────────── */
+.manifesto{display:grid;grid-template-columns:repeat(12,1fr);gap:0 24px;padding:21vh var(--m) 23vh}
+.manifesto .side{grid-column:1/3;color:var(--ink2);padding-top:.9em}
+.manifesto .big{grid-column:3/12;font-size:clamp(30px,3.55vw,64px);line-height:1.13;letter-spacing:-.02em;font-weight:330}
+.manifesto .big + .big{margin-top:.75em}
+.manifesto .e{font-weight:520}
+.manifesto .e1{font-weight:300;opacity:.55}.manifesto .e2{font-weight:200;opacity:.3}.manifesto .e3{font-weight:100;opacity:.15}
+.manifesto .foot{grid-column:3/8;margin-top:8vh;color:var(--ink2);border-top:1px solid var(--hair);padding-top:14px}
+
+/* ── salonlar ──────────────────────────────────────────── */
+.salon{padding:0 var(--m) 19vh;position:relative}
+.sal-rule{display:flex;justify-content:space-between;border-top:1px solid var(--ink);padding-top:12px}
+.sal-rule span:last-child{color:var(--ink2)}
+.sal-title{margin:0;font-weight:300;font-size:clamp(54px,7.7vw,150px);line-height:.9;letter-spacing:-.04em;white-space:nowrap;
+  transition:font-weight 2.6s cubic-bezier(.12,.6,.18,1)}
+.sal-title.struck{font-weight:820;transition:font-weight 90ms linear}
+.is-listening .sal-title{font-weight:760;transition:font-weight 120ms linear}
+.lead{font-size:clamp(19px,1.5vw,24px);line-height:1.42;font-weight:380;max-width:27em}
+.wide-head{display:grid;grid-template-columns:8fr 4fr;gap:0 48px;align-items:end;padding:8vh 0 6vh}
+.wide-foot{display:grid;grid-template-columns:8fr 4fr;gap:0 48px;align-items:start;padding-top:34px}
+.split{display:grid;grid-template-columns:5fr 7fr;gap:0 clamp(40px,6vw,120px);align-items:center;padding-top:9vh}
+.split.rev{grid-template-columns:7fr 5fr}
+.split .sal-title{font-size:clamp(46px,5.9vw,116px);margin-bottom:.42em}
+.split .lead{margin-bottom:34px}
+
+.card{background:var(--paper);box-shadow:0 0 0 1px rgba(21,18,14,.07),0 18px 28px -22px rgba(21,18,14,.55);padding:4px 22px;margin:0}
+.card div{display:grid;grid-template-columns:9.5em 1fr;gap:14px;padding:11px 0 10px;border-top:1px solid var(--hair);align-items:baseline}
+.card div:first-child{border-top:0}
+.card dt{color:var(--ink2)}
+.card dd{margin:0;font-size:16.5px;line-height:1.3}
+.card.row{display:grid;grid-template-columns:1fr 1.5fr 1fr 1.25fr;padding:16px 0}
+.card.row div{display:block;border-top:0;border-left:1px solid var(--hair);padding:2px 22px 4px}
+.card.row div:first-child{border-left:0}
+.card.row dt{margin-bottom:8px}
+.st{font:500 10.5px/1 var(--mono);letter-spacing:.08em;display:inline-block;padding:4px 6px 3px;border:1px solid var(--ink);margin-right:8px;vertical-align:.12em}
+.st.tu{background:var(--ink);color:var(--paper)}
+.st.kr{border-color:var(--red);color:var(--red)}
+.st.gd{border-style:dashed}
+
+.act{display:flex;align-items:center;gap:20px;margin-top:30px}
+.wide-foot .act{margin-top:0;flex-direction:column;align-items:flex-start;gap:16px}
+.act .hint{color:var(--ink2);max-width:26em}
+.listen{appearance:none;border:1px solid var(--ink);background:transparent;color:var(--ink);cursor:pointer;flex:none;
+  font:500 11.5px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;padding:17px 22px 16px 18px;border-radius:999px;
+  display:inline-flex;gap:12px;align-items:center;transition:background .25s,color .25s}
+.listen .dot{width:9px;height:9px;border-radius:50%;background:var(--red);flex:none}
+.listen .dur{opacity:.55}
+.listen:hover,.is-listening .listen{background:var(--ink);color:var(--wall)}
+.is-listening .listen .dot{animation:rec 1.1s steps(2,jump-none) infinite}
+@keyframes rec{to{opacity:.15}}
+.listen:focus-visible{outline:2px solid var(--red);outline-offset:3px}
+
+.vit{background:var(--vit);position:relative;overflow:hidden;border-radius:2px;
+  box-shadow:0 0 0 1px rgba(21,18,14,.9),0 40px 60px -42px rgba(21,18,14,.7)}
+.vit::after{content:"";position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(112deg,rgba(255,255,255,.075),rgba(255,255,255,0) 26%)}
+.vit-modem{aspect-ratio:3.55/1;min-height:300px}
+.phases{position:relative;height:44px;margin:0 20px 0 58px}
+.ph{position:absolute;top:0;padding-top:13px;color:var(--ink3);border-top:1px solid var(--ink3);white-space:nowrap;transition:color .2s,border-color .2s}
+.ph::before{content:"";position:absolute;left:0;top:0;width:1px;height:7px;background:currentColor}
+.ph.on{color:var(--ink);border-top-color:var(--ink)}
+.ph.on::after{content:"";position:absolute;left:0;right:0;top:-1px;height:3px;background:var(--red)}
+
+.tw-stage{height:380px;margin:0 calc(var(--m)*-1);position:relative}
+.vit-proj{aspect-ratio:16/10.4}
+.dial-wrap canvas{aspect-ratio:1/1.14;height:auto;max-width:620px;margin:0 auto}
+.dialed{margin:0 0 30px;border-top:1px solid var(--hair);border-bottom:1px solid var(--hair);padding:16px 0 14px;display:flex;align-items:baseline;gap:22px;flex-wrap:wrap;min-height:92px}
+.dial-num{font:300 54px/1 var(--serif);letter-spacing:.04em;font-variant-numeric:tabular-nums;white-space:pre}
+.dial-msg{color:var(--red);opacity:0;transition:opacity .35s}
+.dial-msg.on{opacity:1}
+.cas-wrap canvas{aspect-ratio:1.27/1;height:auto}
+.crt{background:#161412;padding:5.2% 5.2% 9.5%;border-radius:26px;position:relative;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.06),inset 0 2px 0 rgba(255,255,255,.07),0 50px 70px -44px rgba(21,18,14,.8)}
+.crt .scr{aspect-ratio:4/3;border-radius:7.5%/10%;overflow:hidden;position:relative;background:#050505;box-shadow:0 0 0 6px #0a0908,0 0 0 7px rgba(255,255,255,.07)}
+.crt .scr::after{content:"";position:absolute;inset:0;pointer-events:none;
+  background:
+    linear-gradient(118deg,rgba(255,255,255,.12),rgba(255,255,255,0) 30%),
+    radial-gradient(ellipse at center,rgba(0,0,0,0) 52%,rgba(0,0,0,.6) 100%),
+    repeating-linear-gradient(to bottom,rgba(0,0,0,0) 0 2px,rgba(0,0,0,.28) 2px 3px)}
+.crt .knobs{position:absolute;right:6.5%;bottom:2.6%;display:flex;gap:12px;align-items:center;color:rgba(236,224,196,.45)}
+.crt .knobs i{width:15px;height:15px;border-radius:50%;background:#262320;box-shadow:inset 0 1px 0 rgba(255,255,255,.14),0 0 0 1px #000}
+.crt .knobs i.led{width:5px;height:5px;background:var(--red);box-shadow:0 0 8px var(--red)}
+.crt .brand{position:absolute;left:6.5%;bottom:3%;color:rgba(236,224,196,.4)}
+
+/* ── sessizlik odası ───────────────────────────────────── */
+.silence{background:var(--vit);color:var(--bone);min-height:100vh;padding:0 var(--m) 6vh;display:flex;flex-direction:column;position:relative}
+.silence .sal-rule{border-color:rgba(236,224,196,.5);padding-top:12px;margin-top:0}
+.silence .sal-rule span:last-child{color:rgba(236,224,196,.6)}
+.sil-mid{flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center}
+.sil-time{font-size:min(21vw,40vh);line-height:.86;font-weight:100;letter-spacing:-.045em;font-variant-numeric:tabular-nums;white-space:nowrap}
+.sil-time small{font-size:.36em;letter-spacing:-.02em;opacity:.55;margin-left:.06em}
+.sil-line{height:120px;margin:0 calc(var(--m)*-1);width:100vw}
+.sil-msg{font-size:clamp(22px,2vw,32px);font-style:italic;font-weight:300;min-height:1.5em}
+.sil-foot{display:flex;justify-content:space-between;color:rgba(236,224,196,.6);border-top:1px solid rgba(236,224,196,.22);padding-top:14px}
+
+/* ── depo ──────────────────────────────────────────────── */
+.depo{padding:20vh var(--m) 16vh}
+.depo-head{display:grid;grid-template-columns:8fr 4fr;gap:0 48px;align-items:end;padding:8vh 0 7vh}
+.depo-head .lead{max-width:24em}
+.legend{display:flex;flex-wrap:wrap;gap:8px 26px;color:var(--ink2);padding-bottom:16px}
+.legend .st{margin-right:7px}
+.drow{display:grid;grid-template-columns:70px minmax(0,5.4fr) 112px minmax(0,4.6fr) 176px 44px;gap:0 24px;align-items:baseline;
+  border-top:1px solid var(--hair);padding:19px 0 17px;position:relative}
+.drow:last-child{border-bottom:1px solid var(--hair)}
+.drow .no,.drow .yr{color:var(--ink2)}
+.drow .nm{font-size:clamp(23px,2.1vw,34px);line-height:1.1;letter-spacing:-.022em;font-weight:330;transition:font-weight 1.8s cubic-bezier(.12,.6,.18,1)}
+.drow:hover .nm{font-weight:760;transition:font-weight 80ms linear}
+.drow .nt{font-size:16.5px;line-height:1.36;color:var(--ink2)}
+.drow svg{width:176px;height:30px;align-self:center;overflow:visible}
+.drow svg path{stroke:var(--ink);stroke-width:1.25;fill:none;transform-origin:center;transform:scaleY(.04);transition:transform .9s cubic-bezier(.2,.7,.2,1),stroke .2s}
+.drow.in svg path{transform:scaleY(1)}
+.drow:hover svg path{stroke:var(--red)}
+.drow .st{margin:0;justify-self:end}
+
+/* ── ziyaret ───────────────────────────────────────────── */
+.visit{padding:0 var(--m) 18vh}
+.visit-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0 28px;padding-top:9vh}
+.visit-grid h3{margin:0 0 18px;color:var(--ink2);font:500 11px/1.45 var(--mono);letter-spacing:.09em;text-transform:uppercase}
+.visit-grid p{font-size:clamp(20px,1.7vw,28px);line-height:1.22;letter-spacing:-.012em;font-weight:360;max-width:13em}
+.give{display:grid;grid-template-columns:5fr 7fr;gap:0 clamp(40px,6vw,120px);margin-top:16vh;align-items:end}
+.give h2{margin:0;font-weight:300;font-size:clamp(46px,5.9vw,116px);line-height:.9;letter-spacing:-.04em}
+.give .lead{margin-bottom:26px;max-width:30em}
+
+/* ── kapanış ───────────────────────────────────────────── */
+footer{padding:0 var(--m) 30px}
+.end-name{font-weight:100;font-size:11.45vw;line-height:1;letter-spacing:-.035em;white-space:nowrap;border-top:1px solid var(--ink);padding:.28em 0 .34em;margin:0 0 0 -.02em}
+.end-name em{font-weight:100}
+.colophon{display:grid;grid-template-columns:repeat(4,1fr);gap:0 28px;color:var(--ink2);border-top:1px solid var(--hair);padding-top:14px}
+.colophon span:last-child{text-align:right}
+
+.rv{opacity:0;transform:translateY(16px);transition:opacity .9s ease,transform 1.1s cubic-bezier(.2,.7,.2,1)}
+.rv.in{opacity:1;transform:none}
+</style>
+</head>
+<body>
+
+<aside class="rail l mono" aria-hidden="true"><b class="mark">KSM</b><span class="v" id="loc">Giriş</span></aside>
+<aside class="rail r mono" aria-hidden="true">
+  <span class="dbv"><span id="db">24</span><small>dB</small></span>
+  <span class="mtr"><span class="v">Salon gürültüsü</span><span class="bars" id="bars"></span></span>
+</aside>
+
+<main>
+
+<!-- ───────── Giriş ───────── -->
+<section class="hero" id="giris" data-loc="Giriş">
+  <div class="hero-top mono"><span>Daimî koleksiyon</span><span>Envanter: 1.204 ses</span><span>Kuruluş: son modem sustuğunda</span></div>
+  <h1 class="name" aria-label="Kaybolmuş Sesler Müzesi">
+    <span class="n1" data-t="Kaybolmuş" aria-hidden="true"></span>
+    <span class="n2" data-t="Sesler Müzesi" aria-hidden="true"></span>
+  </h1>
+  <div>
+    <div class="chart">
+      <canvas id="chart"></canvas>
+      <div class="chart-read" id="read"><span class="mono lbl" id="readlbl">Bu salonun gürültüsü</span><b id="db2">24</b><span class="mono">dB</span></div>
+    </div>
+    <div class="hero-foot">
+      <p class="lead">Dünyanın artık çıkarmadığı sesleri saklıyoruz. Çoğunu kimse uğurlamadı: bir gün çaldılar, ertesi gün çalmadılar.</p>
+      <p class="mono note">Yukarıdaki çizgi siz buradayken çekilen kayıttır. İmlecinizi oynatırsanız duyar; harflere dokunursanız çalar.</p>
+      <ul class="facts mono">
+        <li><span>Sergide</span><span>6 ses, 1 sessizlik</span></li>
+        <li><span>Depoda</span><span>1.198 ses</span></li>
+        <li><span>En yenisi</span><span>geçen salı</span></li>
+        <li><span>Bugün</span><span>açık</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ───────── Duvar yazısı ───────── -->
+<section class="manifesto" data-loc="Duvar yazısı">
+  <p class="mono side rv">Duvar yazısı</p>
+  <p class="big rv">Bir hayvanın soyu tükendiğinde geriye kemikleri kalır. Bir ses tükendiğinde geriye hiçbir şey kalmaz: ne iz, ne toz, ne <span class="e">yankı</span> <span class="e1">yankı</span> <span class="e2">yankı</span> <span class="e3">yankı</span></p>
+  <p class="big rv">Bu yüzden duvarlarımız boştur. Vitrinlerde yalnızca seslerin bıraktığı <em>şekiller</em> durur; dinlemek isterseniz, her birini sizin için bir kereliğine yeniden çıkarırız.</p>
+  <p class="mono foot rv">Ziyaretçiye not — Bu sayfadaki hiçbir ses kayıt değildir. Hepsi, siz dinlerken burada sıfırdan üretilir ve bitince yeniden kaybolur.</p>
+</section>
+
+<!-- ───────── Salon 1 · modem ───────── -->
+<section class="salon" id="salon-1" data-ex="modem" data-loc="Salon 1 — Çevirmeli ağ">
+  <div class="sal-rule mono"><span>No. 001</span><span>Salon 1 / 7</span></div>
+  <div class="wide-head">
+    <h2 class="sal-title">Çevirmeli ağ<br><em>el sıkışması</em></h2>
+    <p class="lead rv">İki makinenin birbirini tanımak için attığı çığlık. Yirmi sekiz saniye sürerdi ve o sırada evde kimsenin telefonu kaldırmaması gerekirdi. Kaldıran olursa her şey baştan başlardı; bağıran da olurdu.</p>
+  </div>
+  <div class="vit vit-modem"><canvas></canvas></div>
+  <div class="phases mono" id="phases"></div>
+  <div class="wide-foot">
+    <dl class="card row rv">
+      <div><dt class="mono">Yıllar</dt><dd>1991 – 2011</dd></div>
+      <div><dt class="mono">Son duyuluş</dt><dd>Bir muhasebe bürosu, Eskişehir</dd></div>
+      <div><dt class="mono">Bant</dt><dd>300 – 3.400 Hz</dd></div>
+      <div><dt class="mono">Durum</dt><dd><span class="st tu">TÜ</span>Tükendi</dd></div>
+    </dl>
+    <div class="act rv">
+      <button class="listen" type="button"><i class="dot"></i><span class="lbl">Dinle</span><span class="dur">00:12</span></button>
+      <p class="mono hint">Vitrindeki şekil sesin kendisidir: soldan sağa zaman, aşağıdan yukarı perde.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ───────── Salon 2 · daktilo ───────── -->
+<section class="salon" id="salon-2" data-ex="daktilo" data-loc="Salon 2 — Daktilo">
+  <div class="sal-rule mono"><span>No. 002</span><span>Salon 2 / 7</span></div>
+  <div class="wide-head">
+    <h2 class="sal-title">Daktilonun<br><em>şaryo dönüşü</em></h2>
+    <p class="lead rv">Önce satırın bitmek üzere olduğunu haber veren zil, sonra kolun çekilişi ve kâğıdın başa dönüşü. Yazıya mecburi bir nefes aldırırdı: aşağı yukarı her kırk vuruşta bir.</p>
+  </div>
+  <div class="tw-stage"><canvas></canvas></div>
+  <div class="wide-foot">
+    <dl class="card row rv">
+      <div><dt class="mono">Yıllar</dt><dd>1874 – 1998</dd></div>
+      <div><dt class="mono">Son duyuluş</dt><dd>Bir noter, Kadıköy</dd></div>
+      <div><dt class="mono">Zil</dt><dd>Satır sonundan altı vuruş önce</dd></div>
+      <div><dt class="mono">Durum</dt><dd><span class="st">DT</span>Doğada tükendi</dd></div>
+    </dl>
+    <div class="act rv">
+      <button class="listen" type="button"><i class="dot"></i><span class="lbl">Dinle</span><span class="dur">sürekli</span></button>
+      <p class="mono hint">Klavyenizle siz de yazabilirsiniz. Enter: şaryo dönüşü. Silme tuşu geri gider ama silmez.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ───────── Salon 3 · projektör ───────── -->
+<section class="salon" id="salon-3" data-ex="projektor" data-loc="Salon 3 — Projektör">
+  <div class="sal-rule mono"><span>No. 003</span><span>Salon 3 / 7</span></div>
+  <div class="split">
+    <div>
+      <h2 class="sal-title">Projektör<br><em>tıkırtısı</em></h2>
+      <p class="lead rv">Saniyede yirmi dört kez duran ve yeniden yürüyen şeridin sesi. Salonun en arkasından gelirdi. Film sustuğunda herkes onu duyar, kimse dönüp bakmazdı.</p>
+      <dl class="card rv">
+        <div><dt class="mono">Yıllar</dt><dd>1895 – 2014</dd></div>
+        <div><dt class="mono">Son duyuluş</dt><dd>Bir yazlık sinema, Ayvalık</dd></div>
+        <div><dt class="mono">Bip</dt><dd>1.000 Hz, tek kare; “2”de çalar</dd></div>
+        <div><dt class="mono">Durum</dt><dd><span class="st kr">KR</span>Kritik</dd></div>
+      </dl>
+      <div class="act rv"><button class="listen" type="button"><i class="dot"></i><span class="lbl">Dinle</span><span class="dur">00:10</span></button></div>
+    </div>
+    <div class="vit vit-proj"><canvas></canvas></div>
+  </div>
+</section>
+
+<!-- ───────── Salon 4 · kadran ───────── -->
+<section class="salon" id="salon-4" data-ex="kadran" data-loc="Salon 4 — Kadran">
+  <div class="sal-rule mono"><span>No. 004</span><span>Salon 4 / 7</span></div>
+  <div class="split rev">
+    <div class="dial-wrap"><canvas></canvas></div>
+    <div>
+      <h2 class="sal-title">Çevirmeli<br><em>kadran</em></h2>
+      <p class="lead rv">Dokuzu çevirmek, biri çevirmekten uzun sürerdi; sıfır en uzunuydu. Numaralar akılda değil parmakta tutulurdu. Yanlış çevirirseniz ahizeyi kapatır, baştan başlardınız.</p>
+      <div class="dialed"><span class="dial-num">··· ·· ··</span><span class="mono dial-msg">Aradığınız numara kullanılmamaktadır.</span></div>
+      <dl class="card rv">
+        <div><dt class="mono">Yıllar</dt><dd>1919 – 1996</dd></div>
+        <div><dt class="mono">Son duyuluş</dt><dd>Bir bakkal, Kars</dd></div>
+        <div><dt class="mono">Hız</dt><dd>Saniyede on darbe; sıfır on darbedir</dd></div>
+        <div><dt class="mono">Durum</dt><dd><span class="st tu">TÜ</span>Tükendi</dd></div>
+      </dl>
+      <div class="act rv"><button class="listen" type="button"><i class="dot"></i><span class="lbl">Dinle</span><span class="dur">sürekli</span></button><p class="mono hint">Bir rakama tıklayın; kadran çevirir.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ───────── Salon 5 · kaset ───────── -->
+<section class="salon" id="salon-5" data-ex="kaset" data-loc="Salon 5 — Kaset">
+  <div class="sal-rule mono"><span>No. 005</span><span>Salon 5 / 7</span></div>
+  <div class="split">
+    <div>
+      <h2 class="sal-title">Kaset<br><em>geri sarması</em></h2>
+      <p class="lead rv">Bir şarkıyı yeniden dinlemenin bedeli: kırk saniye vınlama, sonunda sert bir “tak”. Pil harcanmasın diye kalemle çevirenler de vardı. O ses çok alçaktı; elimizde yok.</p>
+      <dl class="card rv">
+        <div><dt class="mono">Yıllar</dt><dd>1963 – 2011</dd></div>
+        <div><dt class="mono">Son duyuluş</dt><dd>Bir dolmuş, Trabzon</dd></div>
+        <div><dt class="mono">Sayaç</dt><dd>000 – 999; birimi hiç belli olmadı</dd></div>
+        <div><dt class="mono">Durum</dt><dd><span class="st">TH</span>Tehlikede</dd></div>
+      </dl>
+      <div class="act rv"><button class="listen" type="button"><i class="dot"></i><span class="lbl">Dinle</span><span class="dur">00:15</span></button></div>
+    </div>
+    <div class="cas-wrap"><canvas></canvas></div>
+  </div>
+</section>
+
+<!-- ───────── Salon 6 · karlı ekran ───────── -->
+<section class="salon" id="salon-6" data-ex="ekran" data-loc="Salon 6 — Karlı ekran">
+  <div class="sal-rule mono"><span>No. 006</span><span>Salon 6 / 7</span></div>
+  <div class="split rev">
+    <div class="crt"><div class="scr"><canvas></canvas></div><span class="mono brand">KSM · 51 ekran</span><div class="knobs"><i class="led"></i><i></i><i></i></div></div>
+    <div>
+      <h2 class="sal-title">Karlı<br><em>ekran</em></h2>
+      <p class="lead rv">Yayın bittikten sonra ekranda kalan şey. Yüzde biri, evrenin doğumundan kalan ışımaydı; yine de herkes kanalı değiştirdi. Tüpün ıslığını otuz yaşın üstündekiler zaten duyamazdı: koleksiyonda iki kez kaybolmuş tek sestir.</p>
+      <dl class="card rv">
+        <div><dt class="mono">Yıllar</dt><dd>1952 – 2015</dd></div>
+        <div><dt class="mono">Son duyuluş</dt><dd>Bir otel odası, Mardin</dd></div>
+        <div><dt class="mono">Islık</dt><dd>15.625 Hz</dd></div>
+        <div><dt class="mono">Durum</dt><dd><span class="st tu">TÜ</span>Tükendi</dd></div>
+      </dl>
+      <div class="act rv"><button class="listen" type="button"><i class="dot"></i><span class="lbl">Dinle</span><span class="dur">00:12</span></button></div>
+    </div>
+  </div>
+</section>
+
+<!-- ───────── Salon 7 · sessizlik ───────── -->
+<section class="silence" id="salon-7" data-loc="Salon 7 — Sessizlik">
+  <div class="sal-rule mono"><span>No. 000 — Sessizlik odası</span><span>Salon 7 / 7</span></div>
+  <div class="sil-mid">
+    <div class="sil-time" id="siltime">00:00<small>,0</small></div>
+    <div class="sil-line"><canvas></canvas></div>
+    <p class="sil-msg" id="silmsg">İmlecinizi bırakın. Sayaç, siz sustuğunuzda başlar.</p>
+  </div>
+  <div class="sil-foot mono"><span>Burada sergilenen bir şey yok. En çok ziyaret edilen salonumuzdur.</span><span>Bugünün rekoru — 04:33 · J. C.</span></div>
+</section>
+
+<!-- ───────── Depo ───────── -->
+<section class="depo" id="depo" data-loc="Depo">
+  <div class="sal-rule mono"><span>Depo — No. 007 – 1.204</span><span>Sergilenmeyenler</span></div>
+  <div class="depo-head">
+    <h2 class="sal-title">Depo</h2>
+    <p class="lead rv">Vitrin bekleyenler, vitrini boşalanlar ve bir daha dönmeyecek olanlar. Yer darlığından yalnızca on dördü listelenmiştir; kalanlar için görevliye sorunuz. Görevli yoktur.</p>
+  </div>
+  <div class="legend mono">
+    <span><i class="st tu">TÜ</i>Tükendi</span>
+    <span><i class="st">DT</i>Doğada tükendi — yalnızca filmlerde yaşıyor</span>
+    <span><i class="st kr">KR</i>Kritik</span>
+    <span><i class="st">TH</i>Tehlikede</span>
+    <span><i class="st gd">GD</i>Geri döndü</span>
+  </div>
+  <div id="rows"></div>
+</section>
+
+<!-- ───────── Ziyaret ───────── -->
+<section class="visit" id="ziyaret" data-loc="Ziyaret">
+  <div class="sal-rule mono"><span>Ziyaret</span><span>Çıkış bu taraftan</span></div>
+  <div class="visit-grid">
+    <div class="rv"><h3>Adres</h3><p>Yok. En yakın durak, bu seslerden birini en son duyduğunuz yerdir.</p></div>
+    <div class="rv"><h3>Saatler</h3><p>Müze var olmadığı için kapanamaz. Pazartesileri de açığız.</p></div>
+    <div class="rv"><h3>Giriş</h3><p>Ücretsiz. Çıkarken ses çıkarmamanız yeterlidir.</p></div>
+    <div class="rv"><h3>Kurallar</h3><p>Flaşla fotoğraf çekebilirsiniz; flaşın sesi zaten depoda, 011 numarada.</p></div>
+  </div>
+  <div class="give">
+    <h2 class="sal-title">Bir ses<br><em>bağışlayın</em></h2>
+    <div>
+      <p class="lead rv">Evinizde sönmek üzere olan bir ses mi var? Düdüklü bir çaydanlık, gıcırdayan bir kapı, büyüklerinizden birinin telefonu açış biçimi. Kaybolmadan önce haber verin; gelir, dinleriz.</p>
+      <div class="act rv" style="margin-top:0"><button class="listen" type="button" id="give"><i class="dot"></i><span class="lbl">Bir ses bildir</span></button><p class="mono hint" id="givemsg">Bağışlanan sesler iade edilmez. Edilemez.</p></div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <p class="end-name" aria-hidden="true">Kaybolmuş <em>Sesler</em> Müzesi</p>
+  <div class="colophon mono">
+    <span>Bu müze yoktur.</span>
+    <span>Sesler kayıt değildir; dinlerken üretilir.</span>
+    <span>Yazı: Fraunces, IBM Plex Mono</span>
+    <span>© Hiçbir zaman</span>
+  </div>
+</footer>
+
+<script>
+(() => {
+'use strict';
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+const TAU = Math.PI * 2, DEG = Math.PI / 180;
+const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+const ease = t => t < .5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
+const hash = n => { const x = Math.sin(n * 127.1 + 311.7) * 43758.5453; return x - Math.floor(x); };
+const mulberry = a => () => { a |= 0; a = a + 0x6D2B79F5 | 0; let t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; };
+const INK = '#15120e', PAPER = '#f6f1e5', WALL = '#e8e3d6', VIT = '#0e0d0b', RED = '#d4391c';
+const SERIF = 'Fraunces, Georgia, serif', MONO = '"IBM Plex Mono", ui-monospace, monospace';
+const ink = a => `rgba(21,18,14,${a})`, bone = a => `rgba(236,224,196,${a})`;
+const rr = (c, x, y, w, h, r) => { c.beginPath(); c.roundRect(x, y, w, h, r); };
+
+/* ═══ Salonun gürültüsü: ziyaretçinin her hareketi bir sestir ═══ */
+const Room = {
+  level: 0, lastNoise: performance.now(),
+  bump(v) { this.level = Math.min(1, this.level + v); this.lastNoise = performance.now(); },
+  get db() { return Math.round(23 + Math.pow(this.level, .8) * 61); },
+};
+{
+  let lx = null, ly = 0, lt = 0;
+  addEventListener('pointermove', e => {
+    const now = performance.now();
+    if (lx !== null) Room.bump(Math.min(.22, Math.hypot(e.clientX - lx, e.clientY - ly) / Math.max(8, now - lt) * .03));
+    lx = e.clientX; ly = e.clientY; lt = now;
+  }, { passive: true });
+  addEventListener('scroll', () => Room.bump(.045), { passive: true });
+  addEventListener('keydown', () => Room.bump(.14));
+  addEventListener('pointerdown', () => Room.bump(.32));
+}
+
+/* ═══ Tek saat: görünen her şey buradan yürür ═══ */
+const tasks = [];
+let last = performance.now();
+function loop(now) {
+  const dt = Math.min(.05, (now - last) / 1000); last = now;
+  Room.level *= Math.exp(-dt * 2.4);
+  for (const t of tasks) t(now, dt);
+  requestAnimationFrame(loop);
+}
+
+function stage(cv) {
+  const s = { cv, c: cv.getContext('2d'), w: 1, h: 1, dpr: 1, visible: false };
+  const size = () => {
+    const r = cv.getBoundingClientRect();
+    s.dpr = Math.min(window.devicePixelRatio || 1, 2);
+    s.w = Math.max(1, Math.round(r.width)); s.h = Math.max(1, Math.round(r.height));
+    cv.width = s.w * s.dpr; cv.height = s.h * s.dpr;
+  };
+  new ResizeObserver(size).observe(cv); size();
+  new IntersectionObserver(es => { s.visible = es[0].isIntersecting; }, { rootMargin: '80px' }).observe(cv);
+  s.begin = () => { s.c.setTransform(s.dpr, 0, 0, s.dpr, 0, 0); return s.c; };
+  return s;
+}
+
+/* ═══ Ağırlık = ses yüksekliği. Vurulan harf kalınlaşır, sonra söner. ═══ */
+function strike(el, rest, peak = 900, decay = 2300) {
+  el.style.transition = 'font-weight 70ms linear';
+  el.style.fontWeight = peak;
+  clearTimeout(el._st);
+  el._st = setTimeout(() => {
+    el.style.transition = `font-weight ${decay}ms cubic-bezier(.12,.6,.18,1)`;
+    el.style.fontWeight = rest;
+  }, 95);
+}
+
+function Name() {
+  const rests = { n1: [900, 840, 760, 670, 570, 470, 370, 250, 100], n2: 150 };
+  const letters = [];
+  for (const cls of ['n1', 'n2']) {
+    const el = $('.' + cls);
+    [...el.dataset.t].forEach((ch, i) => {
+      const sp = document.createElement('span');
+      if (ch === ' ') { sp.className = 'sp'; el.append(sp); return; }
+      sp.className = 'l'; sp.textContent = ch;
+      const rest = Array.isArray(rests[cls]) ? rests[cls][i] : rests[cls];
+      sp.addEventListener('pointerenter', () => { strike(sp, rest); Room.bump(.3); });
+      el.append(sp); letters.push([sp, rest]);
+    });
+  }
+  return () => letters.forEach(([sp, rest], i) => setTimeout(() => { strike(sp, rest); Room.bump(i < 9 ? .34 : .05); }, 260 + i * 74));
+}
+
+/* ═══ Girişteki şerit: salonun gürültü kaydı ═══ */
+function Chart() {
+  const s = stage($('#chart')), hero = $('.hero');
+  const STEP = 2, SPEED = 46;
+  const read = $('#read'), lbl = $('#readlbl'), db2 = $('#db2'), db = $('#db'), bars = $('#bars');
+  for (let i = 0; i < 18; i++) bars.append(document.createElement('i'));
+  const barEls = $$('i', bars);
+  let buf = [], acc = 0, n = 0, shownDb = -1, shh = 0, tick = 0;
+  tasks.push((now, dt) => {
+    // sayaçlar her zaman günceldir; çizim yalnızca görünürken
+    tick += dt;
+    if (Room.level > .8) shh = 1.6;
+    shh = Math.max(0, shh - dt);
+    if (tick > .09) {
+      tick = 0;
+      const v = Room.db;
+      if (v !== shownDb) { shownDb = v; db.textContent = db2.textContent = v; }
+      const lit = 2 + Math.round(Math.pow(Room.level, .6) * 16);
+      barEls.forEach((b, i) => b.classList.toggle('on', i < lit));
+      const loud = shh > 0;
+      if (read.classList.contains('loud') !== loud) { read.classList.toggle('loud', loud); lbl.textContent = loud ? 'Şşşt.' : 'Bu salonun gürültüsü'; }
+    }
+    if (!s.visible) return;
+    const c = s.begin(), { w, h } = s, mid = h / 2;
+    const m = parseFloat(getComputedStyle(hero).paddingLeft);
+    const penX = w - m - 186, need = Math.ceil(penX / STEP) + 2;
+    while (buf.length < need) buf.unshift((buf.length % 2 ? 1 : -1) * .012 * Math.random());
+    acc += dt * SPEED;
+    while (acc >= STEP) {
+      acc -= STEP; n++;
+      const amp = .012 + Math.pow(Room.level, 1.1) * .92;
+      buf.push((n % 2 ? 1 : -1) * amp * (.4 + .6 * Math.random()));
+      if (buf.length > need) buf.shift();
+    }
+    c.clearRect(0, 0, w, h);
+    // saniye çentikleri kâğıtla birlikte akar
+    const ts = Date.now() / 1000;
+    c.font = `500 10px ${MONO}`; c.textBaseline = 'alphabetic'; c.textAlign = 'left';
+    for (let k = Math.floor(ts); ; k--) {
+      const x = penX - (ts - k) * SPEED; if (x < -80) break;
+      const big = k % 10 === 0;
+      c.fillStyle = ink(big ? .5 : .28); c.fillRect(Math.round(x), h - (big ? 11 : 5), 1, big ? 11 : 5);
+      if (big) { c.fillStyle = ink(.5); c.fillText(new Date(k * 1000).toLocaleTimeString('tr-TR'), x + 6, h - 6); }
+    }
+    c.strokeStyle = ink(.9); c.lineWidth = 1; c.lineJoin = 'round'; c.beginPath();
+    const x0 = penX - acc;
+    for (let i = buf.length - 1, j = 0; i >= 0; i--, j++) {
+      const x = x0 - j * STEP, y = mid + buf[i] * h * .47;
+      j ? c.lineTo(x, y) : c.moveTo(x, y);
+    }
+    c.stroke();
+    // kalem ve henüz yazılmamış kâğıt
+    c.setLineDash([1, 5]); c.strokeStyle = ink(.4); c.beginPath(); c.moveTo(penX + 8, mid); c.lineTo(w, mid); c.stroke(); c.setLineDash([]);
+    const py = mid + buf[buf.length - 1] * h * .47;
+    c.strokeStyle = ink(.55); c.beginPath(); c.moveTo(penX + .5, 0); c.lineTo(penX + .5, py - 6); c.stroke();
+    c.fillStyle = RED; c.beginPath(); c.arc(penX, py, 4, 0, TAU); c.fill();
+  });
+}
+
+/* ═══ Ses: her şey o anda üretilir ═══ */
+const Snd = {
+  ctx: null, master: null,
+  ensure() {
+    if (!this.ctx) {
+      const AC = window.AudioContext || window.webkitAudioContext;
+      this.ctx = new AC();
+      const comp = this.ctx.createDynamicsCompressor(); comp.threshold.value = -16; comp.ratio.value = 5;
+      this.master = this.ctx.createGain(); this.master.gain.value = .85;
+      this.master.connect(comp); comp.connect(this.ctx.destination);
+    }
+    if (this.ctx.state === 'suspended') this.ctx.resume();
+    return this.ctx;
+  },
+};
+const bufCache = new WeakMap();
+function sample(ac, key, dur, fn) {
+  let m = bufCache.get(ac); if (!m) bufCache.set(ac, m = new Map());
+  if (!m.has(key)) {
+    const b = ac.createBuffer(1, Math.floor(dur * ac.sampleRate), ac.sampleRate), d = b.getChannelData(0);
+    for (let i = 0; i < d.length; i++) d[i] = fn(i / ac.sampleRate, i);
+    m.set(key, b);
+  }
+  return m.get(key);
+}
+const rnd = () => Math.random() * 2 - 1;
+const white = ac => sample(ac, 'white', 2, rnd);
+const clack = ac => sample(ac, 'clack', .1, t => rnd() * Math.exp(-t * 95) * .8 + Math.sin(TAU * 185 * t) * Math.exp(-t * 46) * .8 + Math.sin(TAU * 2700 * t) * Math.exp(-t * 170) * .22);
+const thud = ac => sample(ac, 'thud', .22, t => Math.sin(TAU * (92 - t * 120) * t) * Math.exp(-t * 26) + rnd() * Math.exp(-t * 140) * .5);
+const tick = ac => sample(ac, 'tick', .05, t => rnd() * Math.exp(-t * 260) * .7 + Math.sin(TAU * 1250 * t) * Math.exp(-t * 120) * .6);
+function env(g, t, d, peak, a = .008, r = .02) {
+  a = Math.min(a, d / 3); r = Math.min(r, d / 3);
+  g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(peak, t + a);
+  g.gain.setValueAtTime(peak, t + d - r); g.gain.linearRampToValueAtTime(0, t + d);
+}
+function tone(ac, out, t, d, f, peak, o = {}) {
+  const os = ac.createOscillator(), g = ac.createGain();
+  os.type = o.type || 'sine'; os.frequency.setValueAtTime(f, t);
+  if (o.to) os.frequency.linearRampToValueAtTime(o.to, t + d);
+  env(g, t, d, peak, o.a, o.r); os.connect(g); g.connect(out); os.start(t); os.stop(t + d + .03);
+  return os;
+}
+function ping(ac, out, t, d, f, peak) {
+  const os = ac.createOscillator(), g = ac.createGain();
+  os.frequency.setValueAtTime(f, t);
+  g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(peak, t + .003); g.gain.exponentialRampToValueAtTime(.0001, t + d);
+  os.connect(g); g.connect(out); os.start(t); os.stop(t + d + .03);
+}
+function hiss(ac, out, t, d, peak, o = {}) {
+  const s = ac.createBufferSource(), f = ac.createBiquadFilter(), g = ac.createGain();
+  s.buffer = white(ac); s.loop = true;
+  f.type = o.type || 'bandpass'; f.frequency.setValueAtTime(o.f || 1000, t); f.Q.value = o.q || .7;
+  if (o.to) f.frequency.exponentialRampToValueAtTime(o.to, t + d);
+  env(g, t, d, peak, o.a, o.r); s.connect(f); f.connect(g); g.connect(out);
+  s.start(t, Math.random() * 1.5); s.stop(t + d + .03);
+}
+function shot(ac, out, b, t, peak, rate = 1) {
+  const s = ac.createBufferSource(), g = ac.createGain();
+  s.buffer = b; s.playbackRate.value = rate; g.gain.value = peak;
+  s.connect(g); g.connect(out); s.start(t);
+}
+
+/* ═══ Dinleme: aynı anda yalnızca bir vitrin ses verir ═══ */
+let current = null;
+function setListening(ex, on) {
+  if (on === ex.listening) return;
+  const lbl = $('.listen .lbl', ex.sec);
+  if (on) {
+    if (current) setListening(current, false);
+    const ac = Snd.ensure();
+    ex.bus = ac.createGain(); ex.bus.connect(Snd.master);
+    ex.listening = true; current = ex;
+    ex.sec.classList.add('is-listening'); lbl.textContent = 'Sustur';
+    if (ex.onListen) ex.onListen();
+  } else {
+    const b = ex.bus; ex.bus = null; ex.listening = false; current = null;
+    b.gain.setTargetAtTime(0, Snd.ctx.currentTime, .035);
+    setTimeout(() => b.disconnect(), 500);
+    ex.sec.classList.remove('is-listening'); lbl.textContent = 'Dinle';
+  }
+}
+function wire(ex) {
+  $('.listen', ex.sec).addEventListener('click', () => setListening(ex, !ex.listening));
+  // salondan çıkan ziyaretçinin arkasından ses gelmez
+  new IntersectionObserver(es => { if (!es[0].isIntersecting) setListening(ex, false); }).observe(ex.sec);
+  return ex;
+}
+function timeline(id, dur, draw, sound) {
+  const sec = $(id), s = stage($('canvas', sec));
+  const ex = wire({ sec, listening: false, bus: null, t0: performance.now() });
+  ex.onListen = () => { ex.t0 = performance.now(); sound(Snd.ctx, ex.bus, Snd.ctx.currentTime + .06); };
+  tasks.push(now => {
+    if (!s.visible) return;
+    let t = (now - ex.t0) / 1000;
+    if (t >= dur) { t = 0; ex.t0 = now; if (ex.listening) sound(Snd.ctx, ex.bus, Snd.ctx.currentTime + .03); }
+    draw(s, t);
+  });
+}
+
+/* ═══ No. 001 · Çevirmeli ağ: tek tablo hem şekli hem sesi verir ═══ */
+const M_DUR = 12.5;
+const MODEM = (() => {
+  const L = [{ a: 0, b: .9, k: 'tone', f: [425], g: .8 }];
+  const lo = [697, 770, 852, 941], hi = [1209, 1336, 1477];
+  [[0, 1], [3, 0], [0, 1], [2, 1], [1, 2], [3, 1], [0, 0]].forEach(([r, c], i) => L.push({ a: 1 + i * .165, b: 1.1 + i * .165, k: 'tone', f: [lo[r], hi[c]], g: .9 }));
+  L.push(
+    { a: 2.35, b: 3.0, k: 'tone', f: [425], g: .6 },
+    { a: 3.2, b: 4.7, k: 'tone', f: [2100], g: 1 },
+    { a: 4.82, b: 5.02, k: 'tone', f: [1375, 2002], g: .9 }, { a: 5.02, b: 5.14, k: 'tone', f: [400], g: .7 },
+    { a: 5.26, b: 5.46, k: 'tone', f: [1529, 2225], g: .9 }, { a: 5.46, b: 5.58, k: 'tone', f: [1900], g: .7 },
+    { a: 5.7, b: 6.6, k: 'fsk', f: [980, 1180], g: .8 }, { a: 5.82, b: 6.6, k: 'fsk', f: [1650, 1850], g: .8 },
+    { a: 6.72, b: 7.24, k: 'comb', lo: 150, hi: 3750, step: 150 }, { a: 7.36, b: 7.9, k: 'comb', lo: 150, hi: 3750, step: 150 },
+    { a: 8.02, b: 8.26, k: 'tone', f: [2400], g: .9 }, { a: 8.26, b: 8.5, k: 'tone', f: [1200], g: .9 },
+    { a: 8.6, b: 8.84, k: 'tone', f: [2400], g: .9 }, { a: 8.84, b: 9.08, k: 'tone', f: [1200], g: .9 },
+    { a: 9.2, b: 10.2, k: 'noise', lo: 500, hi: 3100, g: .62 }, { a: 9.2, b: 10.2, k: 'tone', f: [1800], g: .5 },
+    { a: 10.26, b: 10.44, k: 'tone', f: [1800], g: .9 },
+    { a: 10.52, b: 12.4, k: 'noise', lo: 220, hi: 3650, g: .95 },
+  );
+  return L;
+})();
+const PHASES = [[0, .9, 'çevir sesi'], [1, 2.15, 'numara'], [2.35, 3, 'çalıyor'], [3.2, 4.7, 'yanıt tonu'], [4.82, 6.6, 'tanışma'], [6.72, 7.9, 'hat yoklama'], [8.02, 10.44, 'pazarlık'], [10.52, 12.4, 'veri']];
+
+function modemSound(ac, out, t0) {
+  const lp = ac.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 3600; lp.connect(out);
+  for (const s of MODEM) {
+    const t = t0 + s.a, d = s.b - s.a;
+    if (s.k === 'tone') s.f.forEach(f => tone(ac, lp, t, d, f, .07 * s.g));
+    else if (s.k === 'fsk') {
+      const os = tone(ac, lp, t, d, (s.f[0] + s.f[1]) / 2, .06);
+      const lfo = ac.createOscillator(), lg = ac.createGain();
+      lfo.type = 'square'; lfo.frequency.value = 47 + s.f[0] / 90; lg.gain.value = (s.f[1] - s.f[0]) / 2;
+      lfo.connect(lg); lg.connect(os.frequency); lfo.start(t); lfo.stop(t + d + .03);
+    }
+    else if (s.k === 'comb') for (let f = s.lo; f <= s.hi; f += s.step) tone(ac, lp, t, d, f, .013);
+    else {
+      const c = Math.sqrt(s.lo * s.hi);
+      hiss(ac, lp, t, d, .2 * s.g, { f: c, q: .45 }); hiss(ac, lp, t, d, .07 * s.g, { f: 1800, q: 6 });
+    }
+  }
+}
+
+function Modem() {
+  const W = 1400, H = 320, off = document.createElement('canvas'); off.width = W; off.height = H;
+  {
+    const I = new Float32Array(W * H), r = mulberry(11);
+    const X = t => Math.round(t / M_DUR * W), Y = f => Math.round((H - 1) * (1 - f / 4000));
+    const add = (x, y, v) => { if (x >= 0 && x < W && y >= 0 && y < H) I[y * W + x] += v; };
+    const line = (x0, x1, f, g) => { const y = Y(f); for (let x = x0; x < x1; x++) { const k = g * (.72 + .28 * r()); for (let dy = -4; dy <= 4; dy++) add(x, y + dy, k * Math.exp(-dy * dy / 3.2)); } };
+    for (let i = 0; i < I.length; i++) { const v = r(); I[i] = v * v * v * v * .13; }
+    for (const s of MODEM) {
+      const x0 = X(s.a), x1 = X(s.b);
+      if (s.k !== 'noise') for (let y = 0; y < H; y++) add(x0, y, .16 * r()); // tonun başlangıç çıtırtısı
+      if (s.k === 'tone') s.f.forEach(f => line(x0, x1, f, s.g));
+      else if (s.k === 'fsk') for (let x = x0; x < x1; x++) line(x, x + 1, s.f[r() < .5 ? 0 : 1], s.g);
+      else if (s.k === 'comb') for (let f = s.lo; f <= s.hi; f += s.step) line(x0, x1, f, .5);
+      else { const y0 = Y(s.hi), y1 = Y(s.lo); for (let x = x0; x < x1; x++) for (let y = y0; y <= y1; y++) { const e = Math.min(1, (y - y0) / 16, (y1 - y) / 16), v = r(); add(x, y, s.g * e * v * v * 1.6); } }
+    }
+    const oc = off.getContext('2d'), img = oc.createImageData(W, H), d = img.data;
+    const stops = [[0, 14, 13, 11], [.22, 96, 36, 8], [.62, 244, 146, 44], [1, 255, 238, 200]];
+    for (let i = 0; i < I.length; i++) {
+      const v = Math.min(1, I[i]); let k = 1; while (stops[k][0] < v) k++;
+      const a = stops[k - 1], b = stops[k], u = (v - a[0]) / (b[0] - a[0]);
+      d[i * 4] = a[1] + (b[1] - a[1]) * u; d[i * 4 + 1] = a[2] + (b[2] - a[2]) * u; d[i * 4 + 2] = a[3] + (b[3] - a[3]) * u; d[i * 4 + 3] = 255;
+    }
+    oc.putImageData(img, 0, 0);
+  }
+  const phEls = PHASES.map(([a, b, l]) => {
+    const el = document.createElement('span'); el.className = 'ph'; el.textContent = l;
+    el.style.left = a / M_DUR * 100 + '%'; el.style.width = (b - a) / M_DUR * 100 + '%';
+    $('#phases').append(el); return el;
+  });
+  let cur = -1;
+  timeline('#salon-1', M_DUR, (s, t) => {
+    const c = s.begin(), { w, h } = s, L = 58, R = 20, T = 20, B = 20, pw = w - L - R, ph = h - T - B;
+    c.fillStyle = VIT; c.fillRect(0, 0, w, h);
+    const px = L + pw * t / M_DUR;
+    c.globalAlpha = .34; c.drawImage(off, L, T, pw, ph); c.globalAlpha = 1;
+    c.save(); c.beginPath(); c.rect(L, T, px - L, ph); c.clip(); c.drawImage(off, L, T, pw, ph); c.restore();
+    c.font = `500 10px ${MONO}`; c.textAlign = 'right'; c.textBaseline = 'middle';
+    for (let k = 0; k <= 4; k++) {
+      const y = Math.round(T + ph * (1 - k / 4)) + .5;
+      c.fillStyle = 'rgba(255,178,74,.13)'; c.fillRect(L, y, pw, 1);
+      c.fillStyle = 'rgba(255,178,74,.6)'; c.fillText(k ? k + ' kHz' : '0', L - 12, y);
+    }
+    const g = c.createLinearGradient(px - 90, 0, px, 0); g.addColorStop(0, 'rgba(255,178,74,0)'); g.addColorStop(1, 'rgba(255,178,74,.2)');
+    c.globalCompositeOperation = 'lighter'; c.fillStyle = g; c.fillRect(Math.max(L, px - 90), T, Math.min(90, px - L), ph); c.globalCompositeOperation = 'source-over';
+    c.fillStyle = 'rgba(255,240,208,.95)'; c.fillRect(Math.round(px), T - 8, 1, ph + 16);
+    const i = PHASES.findIndex(([a, b]) => t >= a && t < b);
+    if (i !== cur) { if (cur >= 0) phEls[cur].classList.remove('on'); if (i >= 0) phEls[i].classList.add('on'); cur = i; }
+  }, modemSound);
+}
+
+/* ═══ No. 002 · Daktilo: yazı noktası sabittir, kâğıt yürür ═══ */
+const keySound = (ac, out, t, soft) => shot(ac, out, clack(ac), t, soft ? .26 : .46, soft ? .7 : .92 + Math.random() * .2);
+const bellSound = (ac, out, t) => { ping(ac, out, t, 1.5, 2093, .17); ping(ac, out, t, .7, 5580, .05); ping(ac, out, t, .5, 8400, .02); };
+function returnSound(ac, out, t, d) {
+  const n = Math.round(10 + d * 34);
+  for (let i = 0; i < n; i++) shot(ac, out, tick(ac), t + d * Math.pow(i / n, .82), .34, 1.1 + i / n * .5);
+  hiss(ac, out, t, d, .07, { f: 900, to: 2600, q: 1.4, a: .05, r: .03 });
+  shot(ac, out, thud(ac), t + d, .5);
+}
+function Typewriter() {
+  const sec = $('#salon-2'), s = stage($('canvas', sec)), ex = wire({ sec, listening: false, bus: null });
+  const MAX = 44, BELL = MAX - 6;
+  const SCRIPT = [
+    'Sevgili ziyaretçi, bu satırın sonuna doğru',
+    'küçük bir zil çalardı. Sonra kol çekilir,',
+    'kâğıt başa dönerdi. Düşünmek için de tam',
+    'bir saniye kalırdı. O saniyeyi özlüyoruz.',
+    '',
+  ];
+  let lines = [[]], col = 0, carX = 0, feed = 0, ret = null, nextAt = .9, si = 0, ci = 0, clock = 0;
+  let userUntil = -1, userTyped = false, bellAt = -9, strikeAt = -9, active = false;
+  const now = () => Snd.ctx.currentTime;
+  function carriageReturn() {
+    if (ret) return;
+    ret = { from: col, t: 0, d: .22 + .4 * col / MAX };
+    if (ex.listening) returnSound(Snd.ctx, ex.bus, now(), ret.d);
+    lines.push([]); if (lines.length > 7) lines.shift();
+    feed = 1; col = 0;
+  }
+  function put(ch) {
+    if (ret) return;
+    if (col >= MAX) { carriageReturn(); return; }
+    if (ch !== ' ') lines[lines.length - 1].push({ ch, col, dx: (Math.random() - .5) * 1.6, dy: (Math.random() - .5) * 2.6, ink: .68 + Math.random() * .32 });
+    col++; strikeAt = clock;
+    if (ex.listening) keySound(Snd.ctx, ex.bus, now(), ch === ' ');
+    if (col === BELL) { bellAt = clock; if (ex.listening) bellSound(Snd.ctx, ex.bus, now() + .02); }
+  }
+  new IntersectionObserver(es => { active = es[0].intersectionRatio >= .5; }, { threshold: [0, .5, 1] }).observe($('.tw-stage', sec));
+  addEventListener('keydown', e => {
+    if (!active || e.ctrlKey || e.metaKey || e.altKey) return;
+    if (e.key === ' ' && clock > userUntil) return; // yazmaya başlamamış ziyaretçinin boşluk tuşu sayfayı kaydırmaya devam eder
+    const onButton = document.activeElement && document.activeElement.tagName === 'BUTTON';
+    if (e.key === 'Enter' && !onButton) carriageReturn();
+    else if (e.key === 'Backspace') { if (col > 0 && !ret) col--; }
+    else if (e.key.length === 1 && !(e.key === ' ' && onButton)) { if (onButton) document.activeElement.blur(); put(e.key); } // yazmaya başlayan ziyaretçinin boşluğu düğmeye gitmesin
+    else return;
+    e.preventDefault();
+    setListening(ex, true);
+    userUntil = clock + 7; userTyped = true;
+  });
+  tasks.push((_, dt) => {
+    if (!s.visible) return;
+    clock += dt;
+    if (ret) { ret.t += dt; const k = Math.min(1, ret.t / ret.d); carX = ret.from * (1 - ease(k)); if (k >= 1) ret = null; }
+    else carX += (col - carX) * Math.min(1, dt * 36);
+    feed = Math.max(0, feed - dt * 5.5);
+    if (!ret && clock > userUntil && clock >= nextAt) {
+      if (userTyped) { userTyped = false; ci = 0; if (col > 0) carriageReturn(); nextAt = clock + 1.1; }
+      else if (ci >= SCRIPT[si].length) { nextAt = clock + (SCRIPT[si] ? 1.05 : .75); carriageReturn(); si = (si + 1) % SCRIPT.length; ci = 0; }
+      else { const ch = SCRIPT[si][ci++]; put(ch); nextAt = clock + .062 + Math.random() * .07 + (ch === ' ' ? .035 : 0) + (/[.,]/.test(ch) ? .26 : 0); }
+    }
+    const c = s.begin(), { w, h } = s;
+    const fs = clamp(w * .026, 24, 40), cw = fs * .6, lh = fs * 1.62, base = h * .64, cx = w * .5, ML = cw * 4.5;
+    const edge = base + fs * .78, pl = cx - ML - (carX + .5) * cw, pw = MAX * cw + ML * 2;
+    c.clearRect(0, 0, w, h);
+    // kâğıt
+    c.save(); c.shadowColor = ink(.28); c.shadowBlur = 34; c.shadowOffsetY = 6; c.fillStyle = PAPER; c.fillRect(pl, -40, pw, edge + 40); c.restore();
+    c.fillStyle = ink(.07); c.fillRect(pl + ML - cw * .9, 0, 1, edge);
+    c.font = `500 ${fs}px ${MONO}`; c.textAlign = 'center'; c.textBaseline = 'alphabetic';
+    lines.forEach((L, i) => {
+      const y = base - (lines.length - 1 - i - feed) * lh;
+      for (const k of L) { c.fillStyle = ink(k.ink); c.fillText(k.ch, pl + ML + (k.col + .5) * cw + k.dx, y + k.dy); }
+    });
+    // gövde: merdane ve cetvel
+    const g = c.createLinearGradient(0, edge, 0, h); g.addColorStop(0, '#2c2823'); g.addColorStop(.16, '#171411'); g.addColorStop(1, '#0c0b09');
+    c.fillStyle = g; c.fillRect(0, edge, w, h - edge);
+    c.fillStyle = 'rgba(255,255,255,.1)'; c.fillRect(0, edge, w, 1);
+    c.font = `500 10px ${MONO}`; c.textBaseline = 'top';
+    for (let i = 0; i <= MAX; i++) {
+      const x = Math.round(pl + ML + i * cw); if (x < -20 || x > w + 20) continue;
+      const big = i % 10 === 0, mid5 = i % 5 === 0;
+      c.fillStyle = bone(big ? .8 : .4); c.fillRect(x, edge + 14, 1, big ? 13 : mid5 ? 9 : 5);
+      if (big) { c.fillStyle = bone(.7); c.fillText(i, x, edge + 33); }
+    }
+    c.fillStyle = bone(.16); c.fillRect(pl + ML + BELL * cw, edge + 14, 1, 20);
+    // yazı noktası
+    c.strokeStyle = ink(.34); c.lineWidth = 1;
+    c.beginPath(); c.moveTo(cx - cw * .62, base - fs * 1.02); c.lineTo(cx - cw * .62, base + fs * .34); c.moveTo(cx + cw * .62, base - fs * 1.02); c.lineTo(cx + cw * .62, base + fs * .34); c.stroke();
+    c.fillStyle = RED; c.beginPath(); c.moveTo(cx, edge + 4); c.lineTo(cx - 5, edge + 12); c.lineTo(cx + 5, edge + 12); c.closePath(); c.fill();
+    const sk = clock - strikeAt;
+    if (sk < .075) {
+      c.strokeStyle = ink(.5 * (1 - sk / .075)); c.lineWidth = 5; c.lineCap = 'round';
+      c.beginPath(); c.moveTo(cx - cw * .9, h); c.lineTo(cx - cw * .9, base - fs * .35); c.stroke(); c.lineCap = 'butt';
+    }
+    // marj zili
+    const bx = cx + Math.min(w * .34, 480), by = edge + (h - edge) * .56, bk = clock - bellAt;
+    c.fillStyle = bone(.5); c.font = `500 10px ${MONO}`; c.textAlign = 'left'; c.textBaseline = 'middle'; c.fillText('MARJ ZİLİ', bx + 26, by);
+    c.fillStyle = bk < 1.2 ? RED : bone(.5); c.beginPath(); c.arc(bx, by, 5, 0, TAU); c.fill();
+    if (bk < 1.2) {
+      c.strokeStyle = `rgba(212,57,28,${1 - bk / 1.2})`; c.lineWidth = 1.5;
+      for (let i = 0; i < 3; i++) { c.beginPath(); c.arc(bx, by, 9 + bk * 34 + i * 7, 0, TAU); c.stroke(); }
+      c.fillStyle = `rgba(236,224,196,${1 - bk / 1.2})`; c.font = `italic 300 30px ${SERIF}`; c.textAlign = 'right'; c.fillText('çın', bx - 30 - bk * 10, by - 2);
+    }
+  });
+}
+
+/* ═══ No. 003 · Projektör ═══ */
+const P_DUR = 10.6;
+const rattle = ac => sample(ac, 'rattle', 1, t => {
+  const u = (t * 24) % 1 / 24, v = Math.max(0, u - .016);
+  return rnd() * Math.exp(-u * 240) * .55 + Math.sin(TAU * 310 * u) * Math.exp(-u * 85) * .5 + (u > .016 ? rnd() * Math.exp(-v * 300) * .3 : 0);
+});
+function projSound(ac, out, t0) {
+  const s = ac.createBufferSource(), g = ac.createGain();
+  s.buffer = rattle(ac); s.loop = true; env(g, t0, P_DUR, .42, .1, .1); s.connect(g); g.connect(out); s.start(t0); s.stop(t0 + P_DUR + .05);
+  tone(ac, out, t0, P_DUR, 96, .03, { type: 'triangle', a: .2, r: .2 });
+  hiss(ac, out, t0, P_DUR, .02, { f: 4200, q: .6, a: .2, r: .2 });
+  tone(ac, out, t0 + 6, .05, 1000, .22, { a: .002, r: .004 });
+}
+function Projector() {
+  timeline('#salon-3', P_DUR, (s, t) => {
+    const c = s.begin(), { w, h } = s;
+    c.fillStyle = VIT; c.fillRect(0, 0, w, h);
+    const fr = Math.floor(t * 24), j1 = hash(fr), j2 = hash(fr + .37), j3 = hash(fr * 1.31 + 7);
+    const sh = h * .76, sw = sh * 4 / 3, sx = w - sw - h * .12, sy = (h - sh) / 2, cx = sx + sw / 2, cy = sy + sh / 2;
+    const b = .84 + .16 * j3;
+    let mode = 'tail', n = 0, frac = 0;
+    if (t < 6) { mode = 'lead'; n = 8 - Math.floor(t); frac = t % 1; }
+    else if (t < 6 + 2 / 24) { mode = 'lead'; n = 2; }
+    else if (t < 7.3) mode = 'black';
+    else if (t < 10.1) mode = 'card';
+    const lit = mode === 'lead' || mode === 'tail';
+    const lum = lit ? 1 : mode === 'card' ? .3 : .05;
+    const gl = c.createRadialGradient(cx, cy, sh * .3, cx, cy, sw * .95);
+    gl.addColorStop(0, bone(.2 * lum * b)); gl.addColorStop(1, bone(0)); c.fillStyle = gl; c.fillRect(0, 0, w, h);
+
+    c.save(); c.translate((j1 - .5) * 2.4, (j2 - .5) * 3.2); rr(c, sx, sy, sw, sh, sh * .035); c.clip();
+    if (mode === 'lead') {
+      const v = 232 * b; c.fillStyle = `rgb(${v | 0},${v * .955 | 0},${v * .85 | 0})`; c.fillRect(sx - 9, sy - 9, sw + 18, sh + 18);
+      c.fillStyle = ink(.2); c.beginPath(); c.moveTo(cx, cy); c.arc(cx, cy, sw, -TAU / 4, -TAU / 4 + frac * TAU); c.closePath(); c.fill();
+      c.strokeStyle = ink(.85); c.lineWidth = 2;
+      c.beginPath(); c.moveTo(sx, cy); c.lineTo(sx + sw, cy); c.moveTo(cx, sy); c.lineTo(cx, sy + sh); c.stroke();
+      c.beginPath(); c.arc(cx, cy, sh * .41, 0, TAU); c.stroke(); c.beginPath(); c.arc(cx, cy, sh * .35, 0, TAU); c.stroke();
+      c.fillStyle = ink(.93); c.font = `800 ${sh * .56}px ${SERIF}`; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText(n, cx, cy + sh * .03);
+    } else if (mode === 'card') {
+      c.fillStyle = '#0c0b0a'; c.fillRect(sx - 9, sy - 9, sw + 18, sh + 18);
+      c.strokeStyle = bone(.8 * b); c.lineWidth = 2; rr(c, sx + sh * .07, sy + sh * .07, sw - sh * .14, sh * .86, 4); c.stroke();
+      c.lineWidth = 1; rr(c, sx + sh * .095, sy + sh * .095, sw - sh * .19, sh * .81, 2); c.stroke();
+      c.fillStyle = bone(.94 * b); c.textAlign = 'center'; c.textBaseline = 'middle';
+      c.font = `italic 400 ${sh * .115}px ${SERIF}`; c.fillText('Bundan sonrası', cx, cy - sh * .085); c.fillText('sessizdir.', cx, cy + sh * .07);
+      c.font = `500 ${Math.max(9, sh * .03)}px ${MONO}`; c.fillText('—  K S M  —', cx, sy + sh * .8);
+    } else if (mode === 'tail') {
+      const v = hash(fr * 3.1) > .45 ? 236 : 150; c.fillStyle = `rgb(${v},${v * .955 | 0},${v * .85 | 0})`; c.fillRect(sx - 9, sy - 9, sw + 18, sh + 18);
+      c.fillStyle = ink(.8); c.beginPath(); c.arc(sx + sw * .86, sy + sh * .16, sh * .05, 0, TAU); c.fill();
+    } else { c.fillStyle = '#090807'; c.fillRect(sx - 9, sy - 9, sw + 18, sh + 18); }
+    // çizikler ve toz
+    const sc = Math.floor(t * 2.5);
+    c.fillStyle = lit ? ink(.24) : bone(.3);
+    for (let i = 0; i < 2; i++) c.fillRect(sx + hash(sc * 7.3 + i * 13.1) * sw + (j1 - .5) * 3, sy, 1, sh);
+    for (let i = 0; i < 6; i++) if (hash(fr * 5.7 + i * 3.3) > .5) { c.beginPath(); c.arc(sx + hash(fr * 2.9 + i) * sw, sy + hash(fr * 4.1 + i * 9) * sh, .6 + hash(fr + i * 5) * 2.2, 0, TAU); c.fill(); }
+    const vg = c.createRadialGradient(cx, cy, sh * .34, cx, cy, sw * .74); vg.addColorStop(0, 'rgba(0,0,0,0)'); vg.addColorStop(1, 'rgba(0,0,0,.62)');
+    c.fillStyle = vg; c.fillRect(sx - 9, sy - 9, sw + 18, sh + 18);
+    c.restore();
+
+    // şerit: kareler, delikler ve kenarda sesin optik izi
+    const fw = h * .2, fx = h * .1, fp = fw * .44, run = t * fp * 3.2, o = run % fp;
+    c.save(); c.translate(fx + fw / 2, h / 2); c.rotate(-.045); c.translate(-fw / 2, -h / 2);
+    c.fillStyle = '#2e2922'; c.fillRect(0, -30, fw, h + 60);
+    c.fillStyle = bone(.1); c.fillRect(0, -30, 1, h + 60); c.fillRect(fw - 1, -30, 1, h + 60);
+    const frameFill = lit ? `rgba(207,196,169,${.75 + .25 * j3})` : '#131110';
+    for (let y = -30 - fp + o; y < h + 30; y += fp) {
+      c.fillStyle = frameFill; c.fillRect(fw * .31, y + fp * .05, fw * .53, fp * .9);
+      if (mode === 'lead') { c.fillStyle = ink(.85); c.font = `800 ${fp * .7}px ${SERIF}`; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText(n, fw * .575, y + fp * .54); }
+      if (mode === 'card') { c.fillStyle = bone(.6); c.fillRect(fw * .42, y + fp * .36, fw * .31, 1.5); c.fillRect(fw * .46, y + fp * .58, fw * .23, 1.5); }
+      c.fillStyle = VIT;
+      for (let k = 0; k < 4; k++) { rr(c, fw * .045, y + fp * (k + .22) / 4, fw * .1, fp * .14, 1.5); c.fill(); rr(c, fw * .865, y + fp * (k + .22) / 4, fw * .1, fp * .14, 1.5); c.fill(); }
+    }
+    c.fillStyle = 'rgba(207,196,169,.85)';
+    for (let y = -30; y < h + 30; y += 2) {
+      const q = (y - run) * .19, a = .5 + .44 * Math.sin(q) * Math.sin(q * .13 + 1) * (.6 + .4 * Math.sin(q * .031));
+      c.fillRect(fw * .235 - fw * .04 * a, y, fw * .08 * a, 2);
+    }
+    c.restore();
+  }, projSound);
+}
+
+/* ═══ No. 004 · Kadran ═══ */
+const pulseSound = (ac, out, t) => shot(ac, out, tick(ac), t, .6, .8);
+const sitSound = (ac, out, t) => [950, 1400, 1800].forEach((f, i) => tone(ac, out, t + .35 + i * .36, .33, f, .09));
+function Dial() {
+  const sec = $('#salon-4'), cv = $('canvas', sec), s = stage(cv), ex = wire({ sec, listening: false, bus: null });
+  const numEl = $('.dial-num', sec), msgEl = $('.dial-msg', sec);
+  const holeA = k => (-35 - (k - 1) * 30) * DEG, needOf = k => (50 + (k - 1) * 30) * DEG, STOP = 27 * DEG;
+  const AUTO = [4, 3, 3, 1, 9, 5, 2];
+  let phi = 0, seq = null, queue = [], digits = [], clock = 0, lastUser = -99, doneAt = -1, gapAt = 1, pulseAt = -9, pulses = 0, mouse = null, geo = null, user = false;
+  const show = () => { let t = ''; for (let i = 0; i < 7; i++) t += (i === 3 || i === 5 ? ' ' : '') + (i < digits.length ? digits[i] : '·'); numEl.textContent = t; };
+  const reset = () => { digits = []; doneAt = -1; msgEl.classList.remove('on'); show(); };
+  const start = k => { seq = { k, need: needOf(k), ph: 0, t: 0, drop: false }; pulses = 0; if (ex.listening) hiss(Snd.ctx, ex.bus, Snd.ctx.currentTime, seq.need / 7.2, .035, { f: 600, to: 950, q: 1.6, a: .04, r: .04 }); };
+  const holeAt = (x, y) => {
+    if (!geo) return 0;
+    for (let k = 1; k <= 10; k++) { const a = holeA(k); if (Math.hypot(x - geo.cx - Math.cos(a) * geo.R * .7, y - geo.cy - Math.sin(a) * geo.R * .7) < geo.R * .115) return k; }
+    return 0;
+  };
+  cv.addEventListener('pointermove', e => { mouse = { x: e.offsetX, y: e.offsetY }; cv.style.cursor = holeAt(mouse.x, mouse.y) ? 'pointer' : ''; });
+  cv.addEventListener('pointerleave', () => { mouse = null; });
+  cv.addEventListener('click', e => {
+    const k = holeAt(e.offsetX, e.offsetY); if (!k) return;
+    if (!user) { user = true; queue = []; if (seq) seq.drop = true; reset(); }
+    else if (doneAt >= 0) reset();
+    queue.push(k); lastUser = clock; setListening(ex, true);
+  });
+  tasks.push((_, dt) => {
+    if (!s.visible) return;
+    clock += dt;
+    if (seq) {
+      if (seq.ph === 0) { phi = Math.min(seq.need, phi + dt * 7.2); if (phi >= seq.need) seq.ph = 1; }
+      else if (seq.ph === 1) { seq.t += dt; if (seq.t > .14) seq.ph = 2; }
+      else {
+        phi = Math.max(0, phi - dt * 300 * DEG);
+        const fired = Math.min(seq.k, Math.floor((seq.need - phi) / (30 * DEG) + .5));
+        while (pulses < fired) { pulses++; pulseAt = clock; if (ex.listening) pulseSound(Snd.ctx, ex.bus, Snd.ctx.currentTime); }
+        if (phi <= 0) {
+          if (!seq.drop) { digits.push(seq.k % 10); show(); if (digits.length >= 7) { doneAt = clock; msgEl.classList.add('on'); if (ex.listening) sitSound(Snd.ctx, ex.bus, Snd.ctx.currentTime); } }
+          seq = null; gapAt = clock + .5;
+        }
+      }
+    }
+    else if (doneAt >= 0) { if (clock - doneAt > (user ? 6.5 : 4.4)) { reset(); user = false; gapAt = clock + .9; } }
+    else if (queue.length) start(queue.shift());
+    else if (user ? clock - lastUser > 9 : !mouse) { if (user) { user = false; reset(); } if (clock >= gapAt) start(AUTO[digits.length]); } // imleç kadranın üstündeyken kadran ziyaretçiyi bekler
+
+    const c = s.begin(), { w, h } = s;
+    c.clearRect(0, 0, w, h);
+    const R = Math.min(w / 2 - 40, h * .86 / 2 - 34), cx = w / 2, cy = R + 30; geo = { cx, cy, R };
+    c.save(); c.shadowColor = ink(.32); c.shadowBlur = 30; c.shadowOffsetY = 12; c.fillStyle = PAPER; c.beginPath(); c.arc(cx, cy, R, 0, TAU); c.fill(); c.restore();
+    c.strokeStyle = INK; c.lineWidth = 1.5; c.beginPath(); c.arc(cx, cy, R, 0, TAU); c.stroke();
+    c.fillStyle = INK; c.font = `500 ${R * .135}px ${SERIF}`; c.textAlign = 'center'; c.textBaseline = 'middle';
+    for (let k = 1; k <= 10; k++) { const a = holeA(k); c.fillText(k % 10, cx + Math.cos(a) * R * .7, cy + Math.sin(a) * R * .7 + R * .012); }
+    // çark
+    c.beginPath(); c.arc(cx, cy, R * .93, 0, TAU);
+    for (let k = 1; k <= 10; k++) { const a = holeA(k) + phi, x = cx + Math.cos(a) * R * .7, y = cy + Math.sin(a) * R * .7; c.moveTo(x + R * .112, y); c.arc(x, y, R * .112, 0, TAU, true); }
+    c.fillStyle = INK; c.fill('evenodd');
+    c.strokeStyle = bone(.22); c.lineWidth = 1;
+    for (let k = 1; k <= 10; k++) { const a = holeA(k) + phi; c.beginPath(); c.arc(cx + Math.cos(a) * R * .7, cy + Math.sin(a) * R * .7, R * .112 + 3, 0, TAU); c.stroke(); }
+    const hov = !seq && mouse ? holeAt(mouse.x, mouse.y) : 0;
+    if (hov) { const a = holeA(hov); c.strokeStyle = RED; c.lineWidth = 3; c.beginPath(); c.arc(cx + Math.cos(a) * R * .7, cy + Math.sin(a) * R * .7, R * .112 + 1.5, 0, TAU); c.stroke(); }
+    // göbek etiketi
+    c.fillStyle = PAPER; c.beginPath(); c.arc(cx, cy, R * .38, 0, TAU); c.fill();
+    c.strokeStyle = ink(.3); c.lineWidth = 1; c.beginPath(); c.arc(cx, cy, R * .335, 0, TAU); c.stroke();
+    c.fillStyle = ink(.6); c.font = `500 ${Math.max(9, R * .038)}px ${MONO}`; c.fillText('K S M', cx, cy - R * .14);
+    c.fillStyle = INK; c.font = `italic 400 ${R * .105}px ${SERIF}`; c.fillText('433 19 52', cx, cy + R * .01);
+    c.fillStyle = ink(.6); c.font = `500 ${Math.max(9, R * .038)}px ${MONO}`; c.fillText('ARANMAZ', cx, cy + R * .15);
+    // parmak durdurucu
+    c.lineCap = 'round';
+    const x1 = cx + Math.cos(STOP) * R * 1.03, y1 = cy + Math.sin(STOP) * R * 1.03, x2 = cx + Math.cos(STOP) * R * .6, y2 = cy + Math.sin(STOP) * R * .6;
+    c.strokeStyle = PAPER; c.lineWidth = R * .05 + 5; c.beginPath(); c.moveTo(x1, y1); c.lineTo(x2, y2); c.stroke();
+    c.strokeStyle = RED; c.lineWidth = R * .05; c.beginPath(); c.moveTo(x1, y1); c.lineTo(x2, y2); c.stroke(); c.lineCap = 'butt';
+    // hat: darbeler kare dalga olarak
+    const y0 = h - 16, xa = cx - R, xb = cx + R, pwid = (xb - xa - 110) / 20;
+    c.fillStyle = ink(.6); c.font = `500 10px ${MONO}`; c.textAlign = 'left'; c.textBaseline = 'middle'; c.fillText('HAT', xa, y0 - 8);
+    c.textAlign = 'right'; c.fillText(pulses + ' DARBE', xb, y0 - 8);
+    c.strokeStyle = INK; c.lineWidth = 1.25; c.beginPath(); let x = xa + 44; c.moveTo(x, y0 - 16);
+    for (let i = 0; i < pulses; i++) { x += pwid; c.lineTo(x, y0 - 16); c.lineTo(x, y0); x += pwid; c.lineTo(x, y0); c.lineTo(x, y0 - 16); }
+    c.lineTo(xb - 76, y0 - 16); c.stroke();
+    if (clock - pulseAt < .07) { c.fillStyle = RED; c.fillRect(x - pwid, y0 - 1.5, pwid, 3); }
+  });
+  show();
+}
+
+/* ═══ No. 005 · Kaset ═══ */
+const C_DUR = 15;
+function casSound(ac, out, t0) {
+  const lp = ac.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 1500; lp.connect(out);
+  [[0, 6, 165, 430], [7.5, 6, 190, 390]].forEach(([a, d, f0, f1]) => {
+    shot(ac, out, clack(ac), t0 + a, .4, .8);
+    tone(ac, lp, t0 + a, d, f0, .05, { type: 'sawtooth', to: f1, a: .4, r: .03 });
+    tone(ac, lp, t0 + a, d, f0 * 2.02, .018, { type: 'square', to: f1 * 2.02, a: .4, r: .03 });
+    hiss(ac, out, t0 + a, d, .045, { f: 2400, to: 5200, q: .8, a: .3, r: .03 });
+    shot(ac, out, thud(ac), t0 + a + d, .5);
+  });
+}
+function Cassette() {
+  const prof = k => { const a = .12; return (k < a ? k * k / (2 * a) : a / 2 + k - a) / (1 - a / 2); };
+  const P = t => t < 6 ? .1 + .8 * prof(t / 6) : t < 7.5 ? .9 : t < 13.5 ? .9 - .8 * prof((t - 7.5) / 6) : .1;
+  let thL = 0, thR = 0, prev = .1;
+  timeline('#salon-5', C_DUR, (s, t) => {
+    const c = s.begin(), { w, h } = s; c.clearRect(0, 0, w, h);
+    const p = P(t); let dp = p - prev; if (Math.abs(dp) > .05) dp = 0; prev = p;
+    const r0 = 10.5, r1 = 24, rL = Math.sqrt(r0 * r0 + p * (r1 * r1 - r0 * r0)), rR = Math.sqrt(r0 * r0 + (1 - p) * (r1 * r1 - r0 * r0));
+    thL -= dp * 900 / rL; thR -= dp * 900 / rR;
+    const u = Math.min(w * .86 / 100, h * .7 / 64), ox = (w - 100 * u) / 2, oy = h * .19;
+    c.save(); c.translate(ox, oy); c.scale(u, u);
+    const lw = px => px / u;
+    c.save(); c.shadowColor = ink(.3); c.shadowBlur = 30; c.shadowOffsetY = 12; c.fillStyle = PAPER; rr(c, 0, 0, 100, 64, 3.2); c.fill(); c.restore();
+    c.strokeStyle = INK; c.lineWidth = lw(1.6); rr(c, 0, 0, 100, 64, 3.2); c.stroke();
+    // etiket
+    c.fillStyle = '#efe8d6'; rr(c, 5.5, 5, 89, 39.5, 2.2); c.fill(); c.lineWidth = lw(1); c.strokeStyle = ink(.4); c.stroke();
+    c.fillStyle = RED; c.fillRect(5.5, 5, 89, 2.2);
+    c.fillStyle = INK; c.font = `italic 400 6px ${SERIF}`; c.textAlign = 'left'; c.textBaseline = 'alphabetic'; c.fillText('Karışık — yaz 1994', 17.5, 15.1);
+    c.strokeStyle = ink(.3); c.beginPath(); c.moveTo(17, 16.6); c.lineTo(90, 16.6); c.stroke();
+    c.font = `500 2.1px ${MONO}`; c.fillStyle = ink(.6); c.textAlign = 'right'; c.fillText('KSM-90 · TİP I', 90.5, 11);
+    c.fillStyle = INK; c.beginPath(); c.arc(11.4, 12.6, 3.7, 0, TAU); c.fill();
+    c.fillStyle = PAPER; c.font = `600 4.6px ${SERIF}`; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText('A', 11.4, 12.85);
+    // pencere ve makaralar
+    c.save(); rr(c, 15, 19.6, 70, 21.4, 10.7); c.fillStyle = '#ddd5c2'; c.fill(); c.clip();
+    for (const [x, r, th] of [[29.5, rL, thL], [70.5, rR, thR]]) {
+      c.fillStyle = '#231e19'; c.beginPath(); c.arc(x, 30.3, r, 0, TAU); c.fill();
+      c.strokeStyle = bone(.14); c.lineWidth = lw(1);
+      for (let q = r - 1.2; q > 8; q -= 2.4) { c.beginPath(); c.arc(x, 30.3, q, 0, TAU); c.stroke(); }
+      c.fillStyle = PAPER; c.beginPath(); c.arc(x, 30.3, 7.4, 0, TAU); c.fill();
+      c.strokeStyle = INK; c.lineWidth = lw(1.4); c.stroke();
+      c.fillStyle = '#ddd5c2'; c.beginPath(); c.arc(x, 30.3, 4.3, 0, TAU); c.fill(); c.stroke();
+      c.fillStyle = INK;
+      for (let i = 0; i < 6; i++) { const a = th + i * TAU / 6; c.save(); c.translate(x, 30.3); c.rotate(a); c.fillRect(2.9, -.55, 1.7, 1.1); c.restore(); }
+    }
+    c.restore();
+    c.strokeStyle = INK; c.lineWidth = lw(1.4); rr(c, 15, 19.6, 70, 21.4, 10.7); c.stroke();
+    // alt bölüm
+    c.lineWidth = lw(1.3); c.beginPath(); c.moveTo(16, 48.5); c.lineTo(84, 48.5); c.lineTo(88.5, 64); c.moveTo(11.5, 64); c.lineTo(16, 48.5); c.stroke();
+    for (const x of [30, 70]) { c.beginPath(); c.arc(x, 57.4, 2, 0, TAU); c.stroke(); }
+    for (const x of [41.5, 54.5]) { rr(c, x, 55, 4, 4.4, .6); c.stroke(); }
+    c.beginPath(); c.arc(22, 59.6, 1.1, 0, TAU); c.arc(78, 59.6, 1.1, 0, TAU); c.fill();
+    for (const [x, y] of [[3.6, 3.6], [96.4, 3.6], [3.6, 60.4], [96.4, 60.4], [50, 46.3]]) {
+      c.lineWidth = lw(1); c.beginPath(); c.arc(x, y, 1.25, 0, TAU); c.stroke(); c.beginPath(); c.moveTo(x - .8, y - .8); c.lineTo(x + .8, y + .8); c.stroke();
+    }
+    c.restore();
+    // durum ve sayaç
+    const top = oy - 44, mode = t < 6 ? -1 : t < 7.5 ? 0 : t < 13.5 ? 1 : 0;
+    c.fillStyle = INK; const tx = ox + 2, ty = top + 15;
+    if (mode) for (let i = 0; i < 2; i++) { const x = tx + i * 11 + (mode < 0 ? 10 : 0); c.beginPath(); c.moveTo(x, ty - 6); c.lineTo(x + mode * 10, ty); c.lineTo(x, ty + 6); c.closePath(); c.fill(); }
+    else c.fillRect(tx, ty - 6, 12, 12);
+    c.font = `500 11px ${MONO}`; c.textAlign = 'left'; c.textBaseline = 'middle';
+    c.fillText(mode < 0 ? 'G E R İ   S A R I Y O R' : mode > 0 ? 'İ L E R İ   S A R I Y O R' : 'D U R D U', tx + 34, ty + .5);
+    const cnt = p * 412, dw = 21, dh = 30, bx = ox + 100 * u - dw * 3 - 2;
+    c.textAlign = 'right'; c.fillStyle = ink(.6); c.fillText('SAYAÇ', bx - 14, ty + .5);
+    c.save(); rr(c, bx, top, dw * 3, dh, 2); c.fillStyle = INK; c.fill(); c.clip();
+    c.font = `500 19px ${MONO}`; c.textAlign = 'center';
+    let lowerPos = 0;
+    for (let i = 0; i < 3; i++) {
+      const d = cnt / Math.pow(10, i);
+      const pos = i === 0 ? d % 10 : Math.floor(d) % 10 + (lowerPos > 9 ? lowerPos - 9 : 0);
+      lowerPos = i === 0 ? pos : (Math.floor(d) % 10) + (lowerPos > 9 ? lowerPos - 9 : 0);
+      const a = Math.floor(pos), f = pos - a, x = bx + dw * (2 - i) + dw / 2;
+      c.fillStyle = i === 0 ? '#ffb24a' : PAPER;
+      c.fillText(a % 10, x, top + dh / 2 + 1 + f * dh); c.fillText((a + 1) % 10, x, top + dh / 2 + 1 - (1 - f) * dh);
+      if (i) { c.fillStyle = bone(.2); c.fillRect(bx + dw * (3 - i), top, 1, dh); }
+    }
+    c.restore();
+  }, casSound);
+}
+
+/* ═══ No. 006 · Karlı ekran ═══ */
+const T_DUR = 12, T_OFF = 9.5;
+function tvSound(ac, out, t0) {
+  shot(ac, out, thud(ac), t0, .4); ping(ac, out, t0, .5, 58, .22);
+  hiss(ac, out, t0 + .12, T_OFF - .12, .13, { type: 'highpass', f: 700, q: .5, a: .35, r: .012 });
+  tone(ac, out, t0 + .1, T_OFF - .05, 15625, .012, { a: .4, r: .25 });
+  shot(ac, out, clack(ac), t0 + T_OFF, .5, 1.3); ping(ac, out, t0 + T_OFF, .35, 120, .18);
+  for (let i = 0; i < 5; i++) shot(ac, out, tick(ac), t0 + T_OFF + .25 + i * i * .09, .12 - i * .02, 2);
+}
+function TV() {
+  const NW = 168, NH = 126, nz = document.createElement('canvas'); nz.width = NW; nz.height = NH;
+  const nc = nz.getContext('2d'), img = nc.createImageData(NW, NH), px = new Uint32Array(img.data.buffer);
+  timeline('#salon-6', T_DUR, (s, t) => {
+    const c = s.begin(), { w, h } = s;
+    c.fillStyle = '#050505'; c.fillRect(0, 0, w, h);
+    let ky = 1, kx = 1, br = 0, dot = 0;
+    if (t < .45) { const k = t / .45; ky = .012 + .988 * k * k * (3 - 2 * k); br = 1 - k; }
+    else if (t >= T_OFF) {
+      const q = t - T_OFF;
+      if (q < .16) { ky = 1 - q / .16 * .988; br = q / .16; }
+      else if (q < .36) { ky = .012; kx = 1 - (q - .16) / .2 * .985; br = 1; }
+      else { kx = ky = 0; dot = Math.exp(-(q - .36) * 2.3); }
+    }
+    if (kx > 0) {
+      const roll = (t * 31) % NH;
+      for (let y = 0, i = 0; y < NH; y++) {
+        const band = Math.abs(y - roll) < 7 ? 1.25 : 1, g = (.62 + .2 * Math.sin(y * .13 + t * 2.1)) * band;
+        for (let x = 0; x < NW; x++, i++) { const v = Math.min(255, Math.random() * Math.random() * 460 * g) | 0; px[i] = 0xff000000 | (v << 16) | (v << 8) | (v * .93 | 0); }
+      }
+      nc.putImageData(img, 0, 0);
+      const dw = w * kx, dh = Math.max(2, h * ky);
+      c.drawImage(nz, (w - dw) / 2, (h - dh) / 2, dw, dh);
+      if (br > 0) { c.globalCompositeOperation = 'lighter'; c.fillStyle = `rgba(235,240,255,${br * .8})`; c.fillRect((w - dw) / 2, (h - dh) / 2, dw, dh); c.globalCompositeOperation = 'source-over'; }
+      if (t > .7 && t < 3.4) { c.fillStyle = 'rgba(160,255,170,.9)'; c.font = `500 ${h * .085}px ${MONO}`; c.textAlign = 'right'; c.textBaseline = 'top'; c.fillText('03', w * .9, h * .09); }
+    } else if (dot > .01) {
+      const g = c.createRadialGradient(w / 2, h / 2, 0, w / 2, h / 2, 5 + 60 * dot);
+      g.addColorStop(0, `rgba(240,245,255,${dot})`); g.addColorStop(.12, `rgba(240,245,255,${dot * .7})`); g.addColorStop(1, 'rgba(240,245,255,0)');
+      c.fillStyle = g; c.fillRect(0, 0, w, h);
+    }
+  }, tvSound);
+}
+
+/* ═══ No. 000 · Sessizlik: ziyaretçi susunca sayaç yürür ═══ */
+function Silence() {
+  const sec = $('#salon-7'), el = $('#siltime'), msg = $('#silmsg'), s = stage($('canvas', sec));
+  const txt = el.firstChild, dec = $('small', el);
+  const MSG = [[0, 'İmlecinizi bırakın. Sayaç, siz sustuğunuzda başlar.'], [3, 'Dinliyoruz.'], [12, 'Güzel. Bu salonda sergilenen şey budur.'], [30, 'Çoğu ziyaretçi buraya kadar dayanamaz.'], [60, 'Bir dakikayı geçtiniz. Rekora daha var.'], [273, 'Yeni rekor. Kimseye söylemeyeceğiz.']];
+  let inView = false, since = performance.now(), shown = '', mi = -1;
+  new IntersectionObserver(es => { const v = es[0].intersectionRatio >= .55; if (v && !inView) since = performance.now(); inView = v; }, { threshold: [0, .55, 1] }).observe(sec);
+  tasks.push(now => {
+    if (!s.visible) return;
+    const t = inView ? Math.max(0, (now - Math.max(since, Room.lastNoise)) / 1000) : 0;
+    const str = String(Math.floor(t / 60)).padStart(2, '0') + ':' + String(Math.floor(t % 60)).padStart(2, '0');
+    if (str !== shown) { shown = str; txt.nodeValue = str; }
+    dec.textContent = ',' + Math.floor(t * 10 % 10);
+    el.style.fontWeight = Math.round(100 + Math.pow(Room.level, .7) * 800);
+    let i = 0; while (i + 1 < MSG.length && t >= MSG[i + 1][0]) i++;
+    if (i !== mi) { mi = i; msg.textContent = MSG[i][1]; }
+    const c = s.begin(), { w, h } = s, mid = Math.round(h / 2) + .5, amp = Math.pow(Room.level, 1.1) * h * .46;
+    c.clearRect(0, 0, w, h); c.strokeStyle = bone(.85); c.lineWidth = 1; c.beginPath(); c.moveTo(0, mid);
+    if (amp > .4) for (let x = 0, k = 0; x <= w; x += 3, k++) c.lineTo(x, mid + (k % 2 ? 1 : -1) * amp * (.35 + .65 * Math.random()) * Math.sin(Math.PI * x / w));
+    c.lineTo(w, mid); c.stroke();
+  });
+}
+
+/* ═══ Depo ═══ */
+const DEPO = [
+  ['007', 'Jetonun düşüşü', '1935 – 1999', 'Karşı taraf açınca düşerdi. Konuşmanın başladığını haber veren ses, paranın gittiğini de haber verirdi.', 'TÜ', 'pluck'],
+  ['008', 'Nokta vuruşlu yazıcı', '1970 – 2012', 'Dokuz iğne, bir sayfa fatura, bitmeyen bir cızırtı. Bazı muhasebe bürolarında yaşadığı söyleniyor; doğrulayamadık.', 'KR', 'buzz'],
+  ['009', 'Disket sürücüsü hırıltısı', '1971 – 2010', 'Bilgisayarın düşündüğüne dair elimizdeki tek kanıttı.', 'TÜ', 'train'],
+  ['010', 'Deklanşör ve sarma kolu', '1925 – 2008', 'Telefonlar bugün bu sesi taklit ediyor. Taklitler koleksiyona alınmaz.', 'DT', 'double'],
+  ['011', 'Flaş ampulünün patlayışı', '1929 – 1975', 'Her ampul yalnızca bir kez ses çıkarırdı.', 'TÜ', 'pluck'],
+  ['012', 'Anlık mesaj titreşimi', '2005 – 2013', 'Bir arkadaşlığı bitirebilen birkaç sesten biri.', 'TÜ', 'buzz'],
+  ['013', 'Telgraf maniplesi', '1844 – 2006', 'Kısa, uzun, kısa. Son telgrafta ne yazdığı kayıtlarımızda yok.', 'TÜ', 'morse'],
+  ['014', 'Telesekreterin bip sesi', '1971 – 2009', '“Sinyal sesinden sonra mesajınızı bırakınız.” Çoğu kişi bırakmadı.', 'DT', 'steady'],
+  ['015', 'Slayt makinesinin şakırtısı', '1961 – 2004', 'Her karede bir kez. Tatil fotoğrafları bu yüzden uzun sürerdi.', 'TÜ', 'double'],
+  ['016', 'İstasyonlar arası cızırtı', '1920 –', 'Radyoda aranırken geçilen yer. Hiç kimsenin yayını.', 'TH', 'noise'],
+  ['017', 'Kara trenin soluğu', '1825 – 1990', 'Bir makinenin yorulduğunu duyabildiğimiz son örnek.', 'DT', 'swell'],
+  ['018', 'Karbon kâğıdının hışırtısı', '1806 – 2000', 'Bir şeyin iki tane olmasının sesi.', 'KR', 'noise'],
+  ['019', 'Tebeşirin gıcırtısı', '1801 –', 'Hâlâ duyuluyor; ama bütün sınıfı aynı anda susturma gücünü yitirdi.', 'TH', 'swell'],
+  ['020', 'Pikap iğnesinin plağa inişi', '1887 – 1991', '2008’de kendi isteğiyle geri döndü. Vitrinini boş tutuyoruz.', 'GD', 'pluck'],
+];
+function Depo() {
+  const cls = { 'TÜ': 'tu', 'KR': 'kr', 'GD': 'gd' }, N = 58, W = 176, H = 30;
+  const shape = (kind, k, i, r) => {
+    switch (kind) {
+      case 'pluck': return Math.exp(-k * 5.5);
+      case 'swell': return Math.pow(Math.sin(k * Math.PI), 2) * .9;
+      case 'buzz': return k > .08 && k < .9 ? .72 : .03;
+      case 'train': return i % 8 < 3 ? .82 : .05;
+      case 'double': return Math.exp(-Math.pow((k - .18) / .05, 2)) + .8 * Math.exp(-Math.pow((k - .6) / .07, 2));
+      case 'morse': return [1, 0, 1, 1, 1, 0, 1, 0, 0, 1, 1, 1, 0, 1][Math.floor(k * 13.99)] ? .7 : .03;
+      case 'steady': return k > .3 && k < .74 ? .62 : .03;
+      default: return .25 + .6 * r();
+    }
+  };
+  $('#rows').innerHTML = DEPO.map(([no, nm, yr, nt, st, kind], n) => {
+    const r = mulberry(n * 97 + 5); let d = '';
+    for (let i = 0; i < N; i++) {
+      const a = shape(kind, i / (N - 1), i, r), hgt = Math.max(.5, a * (.5 + .5 * r()) * H / 2), x = ((i + .5) * W / N).toFixed(1);
+      d += `M${x} ${(H / 2 - hgt).toFixed(1)}V${(H / 2 + hgt).toFixed(1)}`;
+    }
+    return `<div class="drow rv"><span class="mono no">No. ${no}</span><span class="nm">${nm}</span><span class="mono yr">${yr}</span><span class="nt">${nt}</span><svg viewBox="0 0 ${W} ${H}" aria-hidden="true"><path d="${d}"/></svg><span class="st ${cls[st] || ''}">${st}</span></div>`;
+  }).join('');
+}
+
+/* ═══ Sayfanın kendisi ═══ */
+function Page() {
+  const loc = $('#loc');
+  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) loc.textContent = e.target.dataset.loc; }), { rootMargin: '-48% 0px -48% 0px' });
+  $$('[data-loc]').forEach(el => io.observe(el));
+  const rv = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); rv.unobserve(e.target); } }), { threshold: .12 });
+  $$('.rv').forEach(el => rv.observe(el));
+  // her salon başlığı görüş alanına girerken bir kez çalar, sonra söner
+  const st = new IntersectionObserver(es => es.forEach(e => {
+    if (!e.isIntersecting) return;
+    st.unobserve(e.target); e.target.classList.add('struck'); setTimeout(() => e.target.classList.remove('struck'), 130);
+  }), { threshold: .6 });
+  $$('.sal-title').forEach(el => st.observe(el));
+  const give = $('#give');
+  give.addEventListener('click', () => { $('.lbl', give).textContent = 'Not ettik'; $('#givemsg').textContent = 'Sessizce. Teşekkür ederiz.'; });
+}
+
+const ring = Name();
+Chart(); Depo();
+Modem(); Projector(); Cassette(); TV();
+Typewriter(); Dial(); Silence(); Page();
+requestAnimationFrame(loop);
+let rung = false;
+const go = () => { if (!rung) { rung = true; ring(); } };
+document.fonts.ready.then(go); setTimeout(go, 1800);
+})();
+</script>
+</body>
+</html>
