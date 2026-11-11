@@ -56,9 +56,9 @@ work, never a second judge's: a reader fetches, reads and writes the content dow
   `$J/rows/<n>.jsonl`. It reads the whole transcript and picks the frames itself: no moment where a name, a
   repo, code, a number or a table stands on the screen may be missed. Nobody watches the same video twice.
 - **A channel, or any large group:** the lead splits the links between Opus 5.5 · medium readers and
-  Sonnet 5.5 · high readers (`model: sonnet`, `effort: high`), about half each, the same `reader.md` — what
-  the screen carries (reels, demonstrations, carousels) to Opus, what the speech or the text carries (talks,
-  repositories, pages) to Sonnet.
+  Sonnet 5.5 · high readers (`model: sonnet`, `effort: high`), about half each, to lower the cost, the same `reader.md`. Which half goes to
+  whom is the lead's call; as a guide, not a rule, what the screen carries (reels, demonstrations,
+  carousels) goes to Opus first and what the speech or the text carries (talks, repositories, pages) to Sonnet.
 - A small thing — one post, a short page — you may read yourself, same row keys.
 
 ## 3. Judge them yourself, and say how we would use the good ones

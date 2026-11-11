@@ -13,8 +13,11 @@ Examine EVERY link of each item:
       `bash $K/frames.sh $J <video.mp4> <sec> <sec> …`, Read the SHEET. YouTube: run watch.sh with a
       4th argument `video` to get the picture. Speech-to-text mishears names; the frames and a search give
       the real name.
-      No moment where a name, a repo, code, a number or a table stands on the screen may be missed: go
-      through the transcript for every such moment and take its frame. What you could not read, say so in
+      No moment where a name, a repo, code, a number or a table stands on the screen may be missed: take the
+      frame of every such moment the transcript points to — and such a moment can pass without a word
+      spoken, so where the screen carries what the speech does not name (a screen recording, a demo,
+      slides), step through the picture itself (`watchall.sh`, or `frames.sh` at a steady step) instead of
+      trusting the transcript to point. What you could not read, say so in
       "okundu" with the second — never guess it.
    c) If it is truly valuable (score 3, or a demo where what the screen does is the point): watch all of it —
       `bash $K/watchall.sh $J <video.mp4>`, Read EVERY sheet.
