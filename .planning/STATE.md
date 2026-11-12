@@ -53,7 +53,7 @@ Earlier days: `.planning/STATE-ARCHIVE.md` § "Moved out of STATE.md on 2026-11-
 ## Next
 
 0. His order (2026-11-09), starting 2026-11-11: sweep the holding's records — row files, doors, the studios' documents and recipes, personas, playbooks — for limits put on work by its kind (page, hour, count, "only", "never") that were never his word, and remove them; no job-based limits <!-- CEO-OK: no-job-based-limits-19-hours-story-deleted-2026-11-09 -->. The '19 hours' olive story is already deleted. Also sweep the job reports' "lessons" that turn one trial into a general rule (its chain: the 24 Oct olive report's lesson → the 29 Oct proposal and the 3 Nov discovery report → the 3 Nov lead's brief beside his word → Fable's cap). And his word of 2026-11-10: rules measured for one model or one job and carried everywhere — in the specs the Opus-era effort levels (MODEL_ROUTING_SPEC: "Opus xhigh never writes code", the 2026-10-28 eye-facing levels) are reviewed there, each kept only with the model and the reason it was measured on <!-- CEO-OK: level-rules-stay-with-their-model-2026-11-10 -->.
-0a. The holding reminder and the business line's mission and vision at the head of every plan brief — being measured: Fable rewrites the 3 Nov plan without / with the reminder / with B84's mission and vision (`.planning/quick/20261109-ilke/reminder-test/`); the account hit its 5-hour limit at 21:00, 4 of 9 runs done (cap: 1 of 3 without; 1 of 1 with the reminder) — finish after 01:10, then bring him the result. The Media Studio's mission and vision drafted from B43 and brought to him. Sol and Fable have not yet audited `73ffe3d4`.
+0a. The holding reminder and the business line's mission and vision at the head of every plan brief — being measured: Fable rewrites the 3 Nov plan without / with the reminder / with B84's mission and vision (`.planning/quick/20261109-ilke/reminder-test/`); all 9 runs ended 2026-11-09 21:16 (`done3`); the cap count is dropped on his word 2026-11-12 (*"O sınırı sayıp sonucu getirmeye gerek yok. O misyon, vizyon olayları güzel."*) — nothing is brought to him from this test. The Media Studio's mission and vision drafted from B43 and brought to him. Sol and Fable have not yet audited `73ffe3d4`.
 0b. The Fable 5.2 transition goes on in its own session (handover `.planning/quick/20261110-fable-5-2-calisma/DEVIR.md`): the company's runtime seats 5.1 → 5.2, the clean-up list he looks at, `max` left in the audit scripts (`second-plan.sh`, `fable-audit.sh` take `[high|max]`) and the routing record's v19. Already done here, not to be redone there: the effort hook (its modes are gone), dxb-calisma1's effort lines, the routing record's two effort clauses.
 0c. His word of 2026-11-10 night, still to start (2026-11-11 went to the dxb-team3 door): the sweep of 0 (wide reading — distributed to the hands); the Fable 5.2 transition of 0b waits, on his word, for later. The effort rule's measure stays; on a heavy question he names the level. `fable-audit.sh` does not record Fable's tokens; the routing record's line on `helper-writer` (Opus 5.5) is stale and belongs to 0b.
 0d. Managing at high stays for the dxb-team3 door only; the link-review door carries its own levels.
@@ -98,18 +98,10 @@ real product photos — the setting must belong to the product.
 
 ## Waiting on his approval
 
-- Revenue, Rapor 2 (`~/Desktop/Gelir Kaynakları/2 - Gelir üretim hatları ve kararlarınız 2026-11-01.pdf`, § 8):
-  K8 leaves this list — asked at H4/H8's setup after he listens on the bench (B83, his word 2026-11-07). The rest answered 2 Nov (K2, K9, K10 for now, K11, İ1–İ3, İ6 as
-  recommended; İ4 a package; İ5 and İ7 his own rulings — REVENUE-OPPORTUNITIES §D).
 - DxB Web Studio, standing answers (2026-11-02): the 213 personas scanned (13 core, 69 ring, file 5); Y9 and Y11 later,
   markers in ORDER.md. The studio's ScrollCraft output is a library on his word (`ComfyUI/output/scrollcraft/KUTUPHANE.tsv`);
   approved and used output goes into it; looking there before generating waits until it is rich.
-- Platform-hub plan, two open decisions — after B22's synthesis: the studio tab's drawing (B32's method); the `media` event channel.
-- The ordered board and its 10 new rows, after the walk.
-- At their ranks: the Supabase skills install (#3), DataForSEO (#47), Apify beyond the free plan (#48), Google OAuth
-  for the Workspace CLI (#24), store accounts for a mobile app.
-- At their rows' turn: the server and a Meta business account (32), his Islamic rulings (46-49), the site's host (47).
-- Hermes, when the holding stands — the holding's server (B09/B11). Kept for later: where client sites are published.
+- Nothing else is brought to him at opening (his word 2026-11-12): what comes at its own time is asked at its own place — the platform-hub plan's two decisions in `FINAL.md` (B43), the 10 new rows and the proposed Y12 (the first mobile app, #55 — carries the store accounts), the tools and accounts at their ranks, the server, the Meta account, his Islamic rulings and Hermes in `.planning/quick/20261014-tahta-sirasi/ORDER.md` and their row files; the walk is over his Excel's rows (YE19 next), not over the board; where client sites are published is kept for later.
 
 ## Where things live
 
