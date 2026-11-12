@@ -46,6 +46,12 @@ function alphaCheck(run, file, pixelFormat) {
   return check("alpha", "a transparent master: an alpha channel that varies", measured, varies);
 }
 
+/** The film's loudness held to the job's target. Off it, `move` is the dB the whole set of cues would have to move by to meet it: a gain moves the loudness by as much. */
+function loudnessCheck(target, measured) {
+  const held = check("loudness", target, measured, measured !== null && Math.abs(measured - target) <= LOUDNESS_TOLERANCE);
+  return held.ok || measured === null ? held : { ...held, move: +(target - measured).toFixed(1) };
+}
+
 function verifyFilm(run, job, film, plan, file) {
   const name = basename(file), master = masterOf(job, name);
   if (!master) return { file, ok: false, checks: [check("name", "a master of this job: <title>-<format>[-<n>x][-<n>fps].mp4|mov", name, false)], loudness: null, cues: [] };
@@ -59,7 +65,7 @@ function verifyFilm(run, job, film, plan, file) {
   if (master.alpha) checks.push(alphaCheck(run, file, seen.pixelFormat));
   if (plan.length && !sound) checks.push(check("sound", `${plan.length} cue(s) declared in sound/cues.json`, "silent", false));
   const measured = sound ? loudness(run, file) : null;
-  if (job.lufs !== null) checks.push(check("loudness", job.lufs, measured, measured !== null && Math.abs(measured - job.lufs) <= LOUDNESS_TOLERANCE));
+  if (job.lufs !== null) checks.push(loudnessCheck(job.lufs, measured));
   const cues = !sound ? [] : hearCues(run, job, plan, sound, frame).map((heard, i) => {
     const cue = plan[i];
     return { n: cue.n, file: cue.file, align: cue.align, event: cue.event, planned: cue.on, ...heard, ok: heard.heard && Math.abs(heard.measured - cue.on) <= frame };
@@ -70,7 +76,10 @@ function verifyFilm(run, job, film, plan, file) {
 /** What is wrong with one verified film, one line each; empty when it passed. */
 export function failures(film) {
   return [
-    ...film.checks.filter((c) => !c.ok).map((c) => `${c.name}: ${c.measured} where the job states ${c.stated}`),
+    ...film.checks.filter((c) => !c.ok).flatMap((c) => [
+      `${c.name}: ${c.measured} where the job states ${c.stated}`,
+      ...(c.move === undefined ? [] : [`the set would have to move by ${c.move > 0 ? "+" : ""}${c.move.toFixed(1)} dB to meet it — add that to "trim" in sound/cues.json, then mg sound and render again`]),
+    ]),
     ...film.cues.filter((c) => !c.ok).map((c) => c.heard
       ? `cue ${c.n} (${c.file}): its ${c.align} is at ${c.measured.toFixed(3)} s where the plan puts it on ${c.planned.toFixed(3)} s`
       : `cue ${c.n} (${c.file}): not heard at its place — render again after mg sound`),

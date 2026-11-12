@@ -5,6 +5,7 @@
 // renders it whole through HyperFrames at the guarded version, and measures the finished file.
 // Every command prints one decisive line and exits non-zero on failure. No packages used: it starts
 // npx hyperframes, ffmpeg, ffprobe, blender, nvidia-smi and the system Chrome, each through `run`.
+// One command leaves the machine: the motion reading sends the film to its reader, through `http`.
 import { spawnSync } from "node:child_process";
 import { existsSync, readFileSync } from "node:fs";
 import { basename, join, resolve } from "node:path";
@@ -12,9 +13,10 @@ import { fileURLToPath } from "node:url";
 import { parseArgs } from "node:util";
 import { drawBoard, formatLine, writeBoardPage } from "./lib/board.mjs";
 import { goodVersion, hyperframes, latestVersion, proveVersion } from "./lib/hyperframes.mjs";
-import { Refusal, TEMPLATES, formatBySize, formatsNamed, insideJob, layOutJob, openJob, readFilm, readJson, sizePage, writeJson } from "./lib/job.mjs";
+import { Refusal, TEMPLATES, filmName, formatBySize, formatsNamed, insideJob, layOutJob, masterOf, openJob, readFilm, readJson, sizePage, writeJson } from "./lib/job.mjs";
+import { ANSWER_MINUTES, READERS, readMotion, request } from "./lib/motion-read.mjs";
 import { lastLines, makeSheets, renderFilm, scaleFor, takeStills } from "./lib/picture.mjs";
-import { planCues, writeSoundBlock } from "./lib/sound.mjs";
+import { bringStarterSounds, planCues, writeSoundBlock } from "./lib/sound.mjs";
 import { failures, verifyFilms } from "./lib/verify.mjs";
 
 const BLENDER_NEEDS_MB = 4000;
@@ -64,7 +66,10 @@ const TAKES = {
     },
   },
   events: { does: "Prints the film's timing as its page states it: size, rate, length, beats and events.", options: JOB },
-  sound: { does: "Places each cue of sound/cues.json on its event and writes the clips into the page's sound block.", options: JOB },
+  sound: {
+    does: `Places each cue of sound/cues.json on its event and writes the clips into the page's sound block. A cue whose "file" names the starter set, as "sfx:pop/pop-mid-01.wav", gets the job's own copy in sound/ first; a "trim" stated beside the cues moves every level by that many dB.`,
+    options: JOB,
+  },
   render: {
     does: "Renders the whole film through HyperFrames at the good version, into out/.",
     options: {
@@ -79,6 +84,15 @@ const TAKES = {
   verify: {
     does: "Measures the file given, or every master of the job's formats in out/, against what the job states; writes out/verify.json.",
     args: "[<file>]", options: JOB,
+  },
+  "motion-read": {
+    does: `Has the film read as motion by a second reader, the Gemini API, against board/board.json: the format's master in out/, or the film given. The reading is written into out/motion-read-<film>.txt; the answer is waited for up to ${ANSWER_MINUTES} minutes. The key is GEMINI_API_KEY or GOOGLE_API_KEY, from the environment or the holding's daemon env file.`,
+    args: "[<film>]",
+    options: {
+      format: text("<name>", "the format whose film is read and whose frame the reader is asked about (a master given by its path: its own; else the job's first)"),
+      model: text("<name>", `the model that reads: ${READERS.join(", ")} (the first when not given); each has a day's quota of its own`),
+      ...JOB,
+    },
   },
   hf: {
     does: "The HyperFrames version guard. status: the good version and npm's latest. update: the latest becomes the good one once it has rendered the guard film and that film has verified.",
@@ -160,6 +174,12 @@ function parseForJob(command, argv) {
   return { ...parsed, job: openJob(parsed.values.job ?? ".") };
 }
 
+/** The single format a command that works on one film at a time was asked for: "all" is refused, in the command's own words. */
+function oneFormat(job, name, whyOne) {
+  if (name === "all") throw new Refusal(whyOne);
+  return formatsNamed(job, name)[0];
+}
+
 function wholeNumber(given, fallback, option) {
   if (given === undefined) return fallback;
   if (!/^\d+$/.test(given) || Number(given) < 1) throw new Refusal(`${option} takes a whole number, 1 or more`);
@@ -213,8 +233,7 @@ function stills(tools, argv) {
   const { job, values, positionals } = parseForJob("stills", argv);
   const times = positionals.map(Number);
   if (!times.length || times.some(Number.isNaN)) throw new Refusal("which moments? mg stills <seconds…>, such as: mg stills 0.5 2 3.25");
-  if (values.format === "all") throw new Refusal("stills are taken of one format at a time");
-  const files = takeStills(tools, job, formatsNamed(job, values.format)[0], times);
+  const files = takeStills(tools, job, oneFormat(job, values.format, "stills are taken of one format at a time"), times);
   tools.say(`mg stills: ${files.length} still(s)\n${files.join("\n")}`);
 }
 
@@ -234,10 +253,11 @@ function events({ say }, argv) {
 
 function sound({ run, say }, argv) {
   const { job } = parseForJob("sound", argv);
+  bringStarterSounds(job);
   const plan = planCues(run, job, readFilm(job.page));
   writeSoundBlock(job, plan);
   for (const c of plan)
-    say(`cue ${c.n}  ${c.file}  its ${c.align} (${c.point.toFixed(3)} s into the file) on ${c.event ?? "the second"} ${c.on.toFixed(3)} s — the clip starts at ${c.start.toFixed(3)} s${c.mediaStart ? `, its first ${c.mediaStart.toFixed(3)} s trimmed` : ""}, ${c.db} dB`);
+    say(`cue ${c.n}  ${c.file}  its ${c.align} (${c.point.toFixed(3)} s into the file) on ${c.event ?? "the second"} ${c.on.toFixed(3)} s — the clip starts at ${c.start.toFixed(3)} s${c.mediaStart ? `, its first ${c.mediaStart.toFixed(3)} s trimmed` : ""}, ${c.db} dB${c.trim ? ` (the set's trim of ${c.trim > 0 ? "+" : ""}${c.trim} dB in it)` : ""}`);
   say(`mg sound: ${plan.length} cue(s) written into page/index.html`);
 }
 
@@ -265,6 +285,20 @@ function verify({ run, say }, argv) {
   const failed = verdict.films.filter((film) => !film.ok).length;
   if (failed) throw new Refusal(`${failed} of ${verdict.films.length} film(s) are not what the job states; see out/verify.json`);
   say(`mg verify: OK — ${verdict.films.length} film(s) are what the job states; out/verify.json`);
+}
+
+async function motionRead(tools, argv) {
+  const { job, values, positionals: [given] } = parseForJob("motion-read", argv);
+  const model = values.model ?? READERS[0];
+  // The model's name becomes part of the address asked.
+  if (!/^[\w.-]+$/.test(model)) throw new Refusal(`--model takes a model's name, such as ${READERS[0]}, not "${model}"`);
+  // A master of the job given by its path is read as the format its name states, unless another is named.
+  const ownFormat = given && values.format === undefined ? masterOf(job, basename(given))?.format : undefined;
+  const format = ownFormat ?? oneFormat(job, values.format, "a film is read one format at a time");
+  const film = given ? resolve(given) : join(job.dir, "out", filmName(job, { format, scale: 1, fps: job.fps, alpha: false }));
+  if (!existsSync(film)) throw new Refusal(`${film} is not there${given ? "" : " — render the film first (mg render), or name the film to read: mg motion-read <film>"}`);
+  const read = await readMotion(tools, job, { film, format, model });
+  tools.say(`mg motion-read: ${read.report} — ${read.characters} characters, read by ${model} against board/board.json`);
 }
 
 function versionGuard({ run, say }, argv) {
@@ -303,25 +337,27 @@ function blender({ run, say }, argv) {
   say(`mg blender: ${frames.length} frame(s) written (${free} MB were free)${frames.map((frame) => `\n${frame}`).join("")}`);
 }
 
-const COMMANDS = { init, board, stills, sheet, events, sound, render, verify, hf: versionGuard, blender };
+const COMMANDS = { init, board, stills, sheet, events, sound, render, verify, "motion-read": motionRead, hf: versionGuard, blender };
 
 /**
  * Runs one mg command. Returns { code, out }: 0 and what it printed, or non-zero and why it stopped.
  * `run` starts every process (a test may record or answer the calls); `say` hears each line as it is printed.
+ * `http` sends every request that leaves the machine and `wait` passes the seconds between two of them
+ * (a test answers for the network and waits for nothing).
  * @param {string[]} argv
- * @param {{ run?: typeof run, say?: (line: string) => void }} [options]
+ * @param {{ run?: typeof run, say?: (line: string) => void, http?: typeof request, wait?: (seconds: number) => Promise<void> }} [options]
  * @returns {Promise<{ code: number, out: string }>}
  */
-export async function mg(argv, { run: starts = run, say: hears = () => {} } = {}) {
+export async function mg(argv, { run: starts = run, say: hears = () => {}, http = request, wait = (seconds) => new Promise((over) => setTimeout(over, seconds * 1000)) } = {}) {
   const [name, ...rest] = argv, lines = [];
   const say = (line) => { lines.push(line); hears(line); };
-  const tools = { run: starts, say, hf: (job, args) => hyperframes(starts, job, goodVersion(), args) };
+  const tools = { run: starts, say, http, wait, hf: (job, args) => hyperframes(starts, job, goodVersion(), args) };
   let code = 0;
   try {
     if (name === "help" || asksForHelp([name])) say(HELP);
     else if (!COMMANDS[name]) throw new Refusal(`${name ? `there is no command "${name}"` : "which command?"}\n${HELP}`);
     else if (asksForHelp(rest)) say(helpFor(name));
-    else COMMANDS[name](tools, rest);
+    else await COMMANDS[name](tools, rest);
   } catch (e) {
     if (!(e instanceof Refusal)) throw e;
     say(`mg${name in COMMANDS ? ` ${name}` : ""}: FAILED — ${e.message}`);

@@ -11,7 +11,7 @@ import http from "node:http";
 import type { AddressInfo } from "node:net";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, it } from "vitest";
+import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 import { request } from "../../tools/motion-graphics/lib/motion-read.mjs";
 import { FILM, film, initJob, mg, ownState } from "./motion-graphics-fixtures.js";
 
@@ -126,6 +126,18 @@ describe("B43 dxb-motion-graphics — the film is read as motion by a second rea
     expect(Buffer.from(hands.uploads()[0].body as Buffer).equals(older)).toBe(true);
     expect(existsSync(report("an-older-cut"))).toBe(true);
 
+    // A master of the job, given by its path, is asked about as its own format and not as the job's first.
+    const vertical = reader();
+    expect((await read(vertical, film(job, "fixture-film-9x16.mp4"))).code).toBe(0);
+    expect(question(vertical.questions()[0])[1].text).toContain("9:16");
+    // What is no film `mg` renders is not sent.
+    const notes = join(tmpdir(), "mg-notes.txt"), unsent = reader();
+    writeFileSync(notes, "not a film");
+    const refused = await read(unsent, notes);
+    expect(refused.code).not.toBe(0);
+    expect(refused.out).toMatch(/\.mp4 or \.mov/);
+    expect(unsent.asked).toEqual([]);
+
     const none = await initJob(), idle = reader();
     const r = await mg(["motion-read", "--job", none], { http: idle.http, wait: idle.wait });
     expect(r.code).not.toBe(0);
@@ -230,12 +242,21 @@ describe("B43 dxb-motion-graphics — the film is read as motion by a second rea
 
   it("the key goes into the request header and nowhere else: not what is printed, not a file, not an address", async () => {
     const hands = reader();
-    const fine = await read(hands);
-    // The API says the key back in its refusal; what `mg` prints of it does not.
-    const echoing = await read(reader({ answers: [{ status: 400, text: `{"error":{"message":"API key ${KEY} not valid for this method."}}` }] }), "--format", "9x16");
+    // Whatever the two runs put on the terminal past what `mg` says: the console, and the process's own two streams.
+    const aside: string[] = [], keep = (...said: unknown[]) => (aside.push(said.map(String).join(" ")), true);
+    const heard = [...(["log", "info", "warn", "error"] as const).map((level) => vi.spyOn(console, level)), vi.spyOn(process.stdout, "write"), vi.spyOn(process.stderr, "write")];
+    for (const spy of heard) spy.mockImplementation(keep);
+    const [fine, echoing] = await (async () => {
+      try {
+        // The API says the key back in its refusal; what `mg` prints of it does not.
+        return [await read(hands), await read(reader({ answers: [{ status: 400, text: `{"error":{"message":"API key ${KEY} not valid for this method."}}` }] }), "--format", "9x16")];
+      } finally {
+        for (const spy of heard) spy.mockRestore();
+      }
+    })();
     expect(echoing.code).not.toBe(0);
     expect(echoing.out).toMatch(/HTTP 400/);
-    for (const printed of [fine.out, echoing.out]) expect(printed).not.toContain(KEY);
+    for (const printed of [fine.out, echoing.out, ...aside]) expect(printed).not.toContain(KEY);
     for (const a of hands.asked) {
       expect(a.url).not.toContain(KEY);
       if (typeof a.body === "string") expect(a.body).not.toContain(KEY);

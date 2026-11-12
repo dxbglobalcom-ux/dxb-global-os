@@ -18,13 +18,18 @@ Picture first, locked; then effects; then voice; then levels. A picture change a
   its **start** goes on the frame the shape lands. A riser's **end** goes on the reveal.
 - `sound/cues.json`: `{ "event": "cardLands", "file": "sound/pop-soft-02.wav", "align": "start", "db": -18 }`.
   Events are the names in the page's `FILM.EVENTS` — add an event to the page for every moment that deserves a
-  sound, and the cue follows the picture if a time changes before the lock.
+  sound, and the cue follows the picture if a time changes before the lock. A `file` may name the starter set
+  directly, as `"sfx:pop/pop-mid-01.wav"`: `mg sound` gives the job its own copy in `sound/` and plans from it.
 - Levels are set in two moves. First the balance between the cues: whooshes and beds lowest, pops and ticks a
   few dB above them, one or two accents a few dB above those. Then the whole set is moved together until the
   rendered film measures at the delivery's target — a film that carries only effects is mostly silence, so each
   cue sits far higher than its figure in a full mix would (measured on the first film, 2026-11-12: cues at −26
   to −32 dB gave −41.5 LUFS; raised to between −9 and −20 dB the same film measured −31.6 LUFS). Never clipping;
   leave the peaks a couple of dB under full scale.
+- The second move is one figure, not one edit to every cue: write `sound/cues.json` as
+  `{ "trim": 0, "cues": [ … ] }` and `trim` dB is added to every cue's `db`. State the job's `lufs`, render, and
+  run `mg verify` once: off the target, it prints by how many dB the set would have to move. Add that figure to
+  `trim`, then `mg sound`, render and verify again — a clip is raised by at most +12 dB in all, `trim` included.
 - Vary: the same pop three times in a row is heard as a machine. Use neighbours from the same family.
 - Sources, in order: the job owner's own licensed files → the starter set in `sfx/` (see `sfx/INDEX.md` for each
   file's length, peak position and character, and `sfx/LICENCES.md`) → generated basics (`sfx/synth.mjs`) → a paid
@@ -52,6 +57,7 @@ the film so it stands on its picture, effects and voice.
 - The loudness target is the delivery's (the platform's or the client's). When the brief gives none, say which
   figure was used and why.
 - `mg sound` writes the clips; `mg verify` measures, on the rendered film's decoded audio, where each cue's
-  aligned point actually landed (within one frame) and the film's integrated loudness.
+  aligned point actually landed (within one frame) and the film's integrated loudness — and, when that is off the
+  job's target, the dB the set's `trim` would have to change by.
 - What stays unverified until a person listens: whether the effects suit the brand, whether anything is harsh or
   muddy, whether the voice sounds natural. List it; do not claim it.

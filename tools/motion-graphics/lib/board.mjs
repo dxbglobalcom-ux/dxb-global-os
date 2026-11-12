@@ -16,7 +16,7 @@ const DRAWS_FRAMES = "shot.still"; // what a board page reads when it draws a sh
 /** A format as a board's head states it. */
 export const formatLine = (job, format) => `${format.name} · ${format.w}×${format.h} · ${job.fps} fps`;
 
-function readBoard(job) {
+export function readBoard(job) {
   const board = readJson(join(job.dir, "board/board.json"));
   if (!Array.isArray(board.shots) || !board.shots.length) throw new Refusal('board/board.json: "shots" must list at least one shot');
   return board;

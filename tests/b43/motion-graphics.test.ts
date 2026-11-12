@@ -551,6 +551,15 @@ describe.skipIf(missing.length > 0)("B43 dxb-motion-graphics — a cue is planne
     expect(readFileSync(join(other, "page/index.html"), "utf8")).toMatch(/<audio id="mg-cue-1" src="sound\/pop-mid-01\.wav"/);
     expect((await mg(["sound", "--job", other])).code).toBe(0); // the copy is there already: the same again
 
+    // `mg verify` holds the film to the same cue, planned from the copy — and gives the job no copy itself.
+    makeFilm(film(other));
+    expect((await mg(["verify", "--job", other])).out).toMatch(/sound: silent where the job states 1 cue\(s\) declared in sound\/cues\.json/);
+    rmSync(copy);
+    const copyless = await mg(["verify", "--job", other]);
+    expect(copyless.code).not.toBe(0);
+    expect(copyless.out).toMatch(/sound\/pop-mid-01\.wav is not there.*mg sound/);
+    expect(existsSync(copy)).toBe(false);
+
     // A file of the job's own under that name is never written over.
     blip(copy);
     const own = sha(copy);

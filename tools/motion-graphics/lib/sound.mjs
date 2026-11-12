@@ -1,9 +1,9 @@
 // dxb-motion-graphics — sound on its event. A cue names an event (or a second) and which point of
 // the SOUND sits on it: its start, its peak or its end. The plan made here is what `mg sound` writes
 // into the page and what `mg verify` holds the rendered film to, by listening to the film itself.
-import { existsSync, readFileSync, writeFileSync } from "node:fs";
-import { join } from "node:path";
-import { Refusal, insideJob, readJson, replaceBlock } from "./job.mjs";
+import { cpSync, existsSync, readFileSync, statSync, writeFileSync } from "node:fs";
+import { basename, join, resolve, sep } from "node:path";
+import { Refusal, TEMPLATES, insideJob, readJson, replaceBlock } from "./job.mjs";
 
 const FINE = 48000;   // samples per second when a point is looked for in a sound file
 const COARSE = 16000; // samples per second when a film is listened to: 16 samples to the millisecond
@@ -15,6 +15,9 @@ const HEARD = 0.25;     // a cue below a quarter of its planned level at its bes
 const CLEARLY = 1.1;    // times: only a fit this much better moves a cue off the place its plan gives it
 const BOOST_LIMIT = 12; // dB: HyperFrames' data-volume goes no higher
 const toMillisecond = (seconds) => +seconds.toFixed(3); // the precision a clip is written and planned at
+const STARTER_SET = resolve(TEMPLATES, "../sfx"); // the skill's own effect sounds
+const FROM_STARTER = "sfx:"; // how a cue names a file of that set: "sfx:pop/pop-mid-01.wav"
+const refusalOfCue = (n) => (why) => new Refusal(`cue ${n}: ${why}`);
 
 /**
  * A file's sound at `rate` as stereo samples, a left and a right one to each moment; empty when it
@@ -51,38 +54,83 @@ function soundPoints(x, rate) {
   return { start: first / rate, peak: centre / rate, end: last / rate, length: moments / rate };
 }
 
-function planCue(run, job, film, cue, n) {
-  const refuse = (why) => new Refusal(`cue ${n}: ${why}`);
+/** sound/cues.json as { trim, cues }: a bare list of cues, or the object that states beside them the dB the whole set is moved by. */
+function readCues(job) {
+  const stated = readJson(join(job.dir, "sound/cues.json"));
+  const { trim = 0, cues } = Array.isArray(stated) ? { cues: stated } : stated ?? {};
+  if (!Array.isArray(cues)) throw new Refusal('sound/cues.json must be a list of cues, or { "trim": dB, "cues": [ … ] }');
+  if (!Number.isFinite(trim)) throw new Refusal('sound/cues.json: "trim" is the dB the whole set is moved by, a number');
+  return { trim, cues };
+}
+
+/**
+ * Where a cue's sound lives in the job: { file }, a path under sound/. A cue that names the starter
+ * set — "sfx:pop/pop-mid-01.wav" — is planned from the job's own copy of that file, sound/pop-mid-01.wav,
+ * and `from` is the file of the set the copy is made of.
+ */
+function soundOf(cue, refuse) {
+  if (typeof cue.file === "string" && cue.file.startsWith(FROM_STARTER)) {
+    const from = resolve(STARTER_SET, cue.file.slice(FROM_STARTER.length));
+    if (!from.startsWith(STARTER_SET + sep) || !statSync(from, { throwIfNoEntry: false })?.isFile())
+      throw refuse(`"${cue.file}" is no file of the starter set (sfx/INDEX.md lists them, as pop/pop-mid-01.wav)`);
+    return { file: `sound/${basename(from)}`, from };
+  }
+  // The page reaches a sound through page/sound, so a cue's file lives under the job's sound/.
+  if (typeof cue.file !== "string" || !cue.file.startsWith("sound/") || cue.file.includes(".."))
+    throw refuse(`"file" is a path under sound/, such as "sound/whoosh.wav", or a file of the starter set, such as "${FROM_STARTER}pop/pop-mid-01.wav"`);
+  return { file: cue.file };
+}
+
+/**
+ * Gives the job its own copy of every file of the starter set that a cue names, so the job folder
+ * stays whole on its own. `mg sound` does this before it plans; a file of the job's own that already
+ * stands under the copy's name is never written over.
+ */
+export function bringStarterSounds(job) {
+  for (const [i, cue] of readCues(job).cues.entries()) {
+    const refuse = refusalOfCue(i + 1), { file, from } = soundOf(cue, refuse);
+    if (!from) continue;
+    const copy = insideJob(job.dir, file);
+    if (!existsSync(copy)) cpSync(from, copy);
+    else if (!readFileSync(copy).equals(readFileSync(from))) throw refuse(`${file} is already there and is another sound than "${cue.file}"; rename the job's own file`);
+  }
+}
+
+function planCue(run, job, film, cue, n, trim) {
+  const refuse = refusalOfCue(n);
   const named = typeof cue.event === "string", timed = typeof cue.at === "number";
   if (named === timed) throw refuse('give either "event" (a FILM.EVENTS name) or "at" (seconds)');
   const event = named ? film.EVENTS.find((e) => e.name === cue.event) : { t: cue.at };
   if (!event) throw refuse(`no event "${cue.event}" in FILM.EVENTS (it has: ${film.EVENTS.map((e) => e.name).join(", ")})`);
   if (!(event.t >= 0 && event.t <= film.TOTAL)) throw refuse(`${event.t} s is outside the film (0 to ${film.TOTAL} s)`);
-  const align = cue.align ?? "start", db = cue.db ?? 0;
+  // The level a clip plays at is its cue's own "db" and the set's trim together, to a hundredth of a dB.
+  const align = cue.align ?? "start", db = +(Number(cue.db ?? 0) + trim).toFixed(2);
   if (!["start", "peak", "end"].includes(align)) throw refuse('"align" is "start", "peak" or "end"');
-  if (!(db <= BOOST_LIMIT)) throw refuse(`"db" may boost by at most +${BOOST_LIMIT} dB`);
-  // The page reaches a sound through page/sound, so a cue's file lives under the job's sound/.
-  if (typeof cue.file !== "string" || !cue.file.startsWith("sound/") || cue.file.includes("..")) throw refuse('"file" is a path under sound/, such as "sound/whoosh.wav"');
-  if (!existsSync(join(job.dir, cue.file))) throw refuse(`${cue.file} is not there`);
-  const points = soundPoints(decode(run, join(job.dir, cue.file), FINE), FINE);
-  if (!points) throw refuse(`${cue.file} holds no sound above −50 dBFS`);
+  if (!(db <= BOOST_LIMIT)) throw refuse(`"db"${trim ? ` with the set's "trim" (${db} dB in all)` : ""} may boost by at most +${BOOST_LIMIT} dB`);
+  const { file, from } = soundOf(cue, refuse);
+  if (!existsSync(join(job.dir, file))) throw refuse(`${file} is not there${from ? ` — mg sound gives the job its copy of "${cue.file}"` : ""}`);
+  const points = soundPoints(decode(run, join(job.dir, file), FINE), FINE);
+  if (!points) throw refuse(`${file} holds no sound above −50 dBFS`);
 
   const fileBegins = event.t - points[align];   // where the file's first sample would sit in the film
   const start = toMillisecond(Math.max(0, fileBegins));   // a sound that would begin before the film is trimmed
   const mediaStart = fileBegins < 0 ? toMillisecond(-fileBegins) : 0;
   const duration = toMillisecond(Math.min(points.length - mediaStart, film.TOTAL - start));
-  if (!(duration > 0)) throw refuse(`nothing of ${cue.file} falls inside the film`);
+  if (!(duration > 0)) throw refuse(`nothing of ${file} falls inside the film`);
   return {
-    n, file: cue.file, align, event: named ? cue.event : null, on: event.t, point: points[align],
-    start, mediaStart, duration, db, volume: 10 ** (db / 20), fadeIn: cue.fadeIn ?? 0, fadeOut: cue.fadeOut ?? 0,
+    n, file, align, event: named ? cue.event : null, on: event.t, point: points[align],
+    start, mediaStart, duration, db, trim, volume: 10 ** (db / 20), fadeIn: cue.fadeIn ?? 0, fadeOut: cue.fadeOut ?? 0,
   };
 }
 
-/** Every cue of sound/cues.json placed in the film; refuses a cue it cannot place. */
+/**
+ * Every cue of sound/cues.json placed in the film, each at its own "db" moved by the set's "trim";
+ * refuses a cue it cannot place. Nothing is written: a cue of the starter set is planned from the copy
+ * `bringStarterSounds` gave the job.
+ */
 export function planCues(run, job, film) {
-  const cues = readJson(join(job.dir, "sound/cues.json"));
-  if (!Array.isArray(cues)) throw new Refusal("sound/cues.json must be a list of cues");
-  return cues.map((cue, i) => planCue(run, job, film, cue, i + 1));
+  const { trim, cues } = readCues(job);
+  return cues.map((cue, i) => planCue(run, job, film, cue, i + 1, trim));
 }
 
 /** Writes the planned clips between the page's sound markers; nothing else in the page is touched. */

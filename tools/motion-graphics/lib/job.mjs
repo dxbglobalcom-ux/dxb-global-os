@@ -7,7 +7,7 @@ import { fileURLToPath } from "node:url";
 import vm from "node:vm";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
-const REPOSITORY = resolve(HERE, "../../..");
+export const REPOSITORY = resolve(HERE, "../../..");
 export const TEMPLATES = resolve(HERE, "../../../packages/gateway/plugins/dxb-motion-graphics/skills/dxb-motion-graphics/templates");
 
 const FOLDERS = ["assets", "refs", "board", "page", "page/fonts", "page/lib", "sound", "out"];
