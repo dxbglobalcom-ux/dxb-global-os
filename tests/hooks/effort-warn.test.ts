@@ -356,6 +356,49 @@ describeStatusLine("the status line records /effort even when the payload has no
   });
 });
 
+// The CEO, 2026-11-12: the bar also says when the session's prompt cache goes cold -- an hour after its last
+// request -- as an hour of the day, because the bar renders on activity and a countdown would stand still.
+describeStatusLine("the status line says the hour the prompt cache goes cold (CEO 2026-11-12)", () => {
+  const bar = (dir: string, transcriptPath: unknown) => {
+    const e: NodeJS.ProcessEnv = { ...process.env, XDG_RUNTIME_DIR: dir, TZ: "UTC" };
+    const r = spawnSync("node", [STATUS_LINE], {
+      input: JSON.stringify({ session_id: SID, model: { display_name: "Fable 5.2" }, workspace: { current_dir: "/x" }, transcript_path: transcriptPath }),
+      encoding: "utf8", env: e, timeout: LIMIT_MS,
+    });
+    expect(r.status, r.stderr).toBe(0);
+    return r.stdout.replace(/\x1b\[[0-9;]*m/g, "");
+  };
+  /** a transcript of rows [type, minutes ago, sidechain?], oldest first */
+  const rowsAt = (dir: string, rows: [string, number, boolean?][]) => {
+    const file = join(dir, "t.jsonl");
+    writeFileSync(file, rows.map(([type, minutesAgo, side]) => JSON.stringify({
+      type, isSidechain: side === true, timestamp: at(minutesAgo * 60), message: { content: [] } }) + "\n").join(""));
+    return file;
+  };
+  const hourIn = (minutes: number) => new Date(Date.now() + minutes * 60_000).toISOString().slice(11, 16);
+  it("ten minutes after the last request: the hour fifty minutes from now", () => {
+    const dir = box();
+    const text = bar(dir, rowsAt(dir, [["assistant", 40], ["user", 12], ["assistant", 10], ["user", 1]]));
+    // the minute may turn between the row's writing and the bar's reading
+    expect([`· önbellek ${hourIn(50)}`, `· önbellek ${hourIn(49)}`].some((t) => text.endsWith(t)), text).toBe(true);
+  });
+  it("a subagent's step in the same file does not warm this session's cache", () => {
+    const dir = box();
+    const text = bar(dir, rowsAt(dir, [["assistant", 30], ["assistant", 2, true]]));
+    expect([`· önbellek ${hourIn(30)}`, `· önbellek ${hourIn(29)}`].some((t) => text.endsWith(t)), text).toBe(true);
+  });
+  it("more than an hour after the last request: the cache is cold, and the bar says so", () => {
+    const dir = box();
+    expect(bar(dir, rowsAt(dir, [["assistant", 61]]))).toMatch(/· önbellek soğudu$/);
+  });
+  it("no transcript, one that cannot be read, or one with no request yet: nothing is said", () => {
+    const dir = box();
+    for (const path of [undefined, 7, join(dir, "missing.jsonl"), dir, rowsAt(dir, [["user", 3]])]) {
+      expect(bar(dir, path), String(path)).not.toContain("önbellek");
+    }
+  });
+});
+
 describe("a plan talk opens the dxb-team3 door at once (CEO 2026-10-09)", () => {
   const door = 'Skill("dxb-team3")';
   for (const text of ["planı konuşalım", "Bu ekranın tasarımını yapalım", "mimariyi değerlendir", "let's design the schema",

@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// DXB status line — model · context meter · directory · git branch.
+// DXB status line — model · effort · context meter · directory · git branch · when the cache goes cold.
 //
 // Replaces gsd-statusline.js, removed with the rest of GSD on the CEO's order
 // of 2026-08-01. The only part of it he used was the context meter, and that
@@ -175,6 +175,51 @@ function branch(dir) {
   } catch { return ''; }
 }
 
+// 2026-11-12 (CEO: "ön belleğin soğumasına kaç dakika kaldı … son mesajdan sonra 1 saat bitince
+// soğuyor"): the session's prompt cache lives CACHE_MINUTES after its last request, and a turn after
+// that pays for the whole context again. The bar renders on activity, not on a clock, so a countdown
+// would stand still while the session idles; the bar says the hour the cache goes cold instead, which
+// stays true until the next request moves it. The last request is the transcript's last assistant row
+// (its tail is read; a subagent's requests are in its own file and do not warm this cache). Nothing
+// readable: nothing is said.
+const CACHE_MINUTES = 60;
+const TRANSCRIPT_TAIL_BYTES = 256 * 1024;
+
+function lastRequestAt(transcriptPath) {
+  if (typeof transcriptPath !== 'string' || !transcriptPath) return null;
+  let fd;
+  try {
+    fd = fs.openSync(transcriptPath, 'r');
+    const size = fs.fstatSync(fd).size;
+    const length = Math.min(size, TRANSCRIPT_TAIL_BYTES);
+    const tail = Buffer.alloc(length);
+    fs.readSync(fd, tail, 0, length, size - length);
+    const rows = tail.toString('utf8').split('\n');
+    for (let i = rows.length - 1; i >= 0; i--) {
+      if (!rows[i].includes('"assistant"')) continue;
+      let row;
+      try { row = JSON.parse(rows[i]); } catch { continue; } // the tail's cut first line, a torn last one
+      if (row?.type !== 'assistant' || row.isSidechain === true) continue;
+      const at = Date.parse(row.timestamp);
+      if (Number.isFinite(at)) return at;
+    }
+    return null;
+  } catch { return null; } finally {
+    if (fd !== undefined) try { fs.closeSync(fd); } catch { /* nothing to close */ }
+  }
+}
+
+function cacheTag(transcriptPath, now = Date.now()) {
+  const last = lastRequestAt(transcriptPath);
+  if (last == null || last > now) return '';
+  const cold = last + CACHE_MINUTES * 60_000;
+  if (cold <= now) return ' \x1b[31m· önbellek soğudu\x1b[0m';
+  const at = new Date(cold);
+  const hhmm = String(at.getHours()).padStart(2, '0') + ':' + String(at.getMinutes()).padStart(2, '0');
+  const colour = cold - now < 10 * 60_000 ? '33' : '2'; // the last ten minutes in yellow
+  return ` \x1b[${colour}m· önbellek ${hhmm}\x1b[0m`;
+}
+
 let input = '';
 process.stdin.setEncoding('utf8');
 process.stdin.on('data', c => { input += c; });
@@ -199,5 +244,5 @@ process.stdin.on('end', () => {
   const effortColor = { low: '2', medium: '36', high: '32', xhigh: '33', max: '35;1' }[effortLevel];
   const effortTag = effortColor ? ` \x1b[${effortColor}m· ${effortLevel}\x1b[0m` : '';
 
-  process.stdout.write(`\x1b[2m${model}\x1b[0m${effortTag}${contextMeter(data.context_window)} \x1b[2m${name}\x1b[0m${branch(dir)}`);
+  process.stdout.write(`\x1b[2m${model}\x1b[0m${effortTag}${contextMeter(data.context_window)} \x1b[2m${name}\x1b[0m${branch(dir)}${cacheTag(data.transcript_path)}`);
 });
