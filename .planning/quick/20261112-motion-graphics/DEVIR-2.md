@@ -1,0 +1,56 @@
+Open the door `Skill("dxb-team3")` before anything else: you carry this job on as its lead, the orchestrator, not as a fresh session. Effort: managing at high (open `Skill("dxb-effort-high")` first on a managing turn).
+
+# Handover 2 — the motion-graphics skill (2026-11-13 00:25, from session 958efea0)
+
+## The job's place in the whole
+The CEO ordered the holding's own motion-graphics skill (B43, the Media Studio; B84 the Web Studio and the agency use it). It was built on 2026-11-12 (first handover: `DEVIR.md` beside this file — read it for the job's first half). The first film was made with it (the WhatsApp spec, 15 s, 16:9 and 9:16). The account's 5-hour window ran out twice that day; the second cut left a nine-item piece ("the friction piece": what the first film's writer met in the skill and the command) with its tests written and its code begun. This session picked it up, the CEO ordered all nine built, and they are built. What is left is the tail: the auditor's B findings, the last battery, the records.
+
+## His words of this job (verbatim, from this conversation)
+- On the nine items, after I told him half remove a real trap and half are convenience: "Yok işini kolaylaştıracak 9 madde. Gerçekten hani şeyse yapımı başlansın. Hem bu kırık mırık bu şeylerde onarılır. Film işini yani şimdilik bitirelim, sonra bakalım bu bunun üzerine yaparız yani bir deneme yaparız. Güzelce çalışın, her şeyi bitirin. Tamam mı? […] Kontekstinde olursa onu şey yaparsın zaten. Devride yaparsın. Biraz seni sizi rahat bırakayım, çalışın o zaman."
+- On the quota (now in dxb-team3 §3 and the ledger, `quota-managed-with-the-work-2026-11-12`): "Kota şeyinde de dediğim gibi gidip de hepsine medium işte opus böyle düşük şeylerle değil. Biz kaliteli iş yapmak istiyoruz." · "Yalnız biz haftanın değil, aynı zamanda günlük kataya takılıyoruz. 5 saatlik kataya, en çok buna bugün 2 kere buna takıldık."
+- On film 1, by his own eye: "Burada balon ben hiç görmüyorum zaten. Sıfır. […] hem dikeyde hem yatayda bu telefon var ya, aşağıda yani. Tam full telefon çerçevesi görünmüyor" · "bence o dönüşüm iyidi ama mükemmel değildi fakat güzeldi gibi. ben geminiyın dediği gibi bir kusur göremedim." · "belki süre daha uzun olabilir bir tık sadece ekrana gelen yazıları okuyabilmek için."
+- On the studio's whole strength: "bu video bizim bu stüdyoda Hyperframe Motion falan filan, bunlar kurulunca da daha güzel çalışmaz mı? […] şimdi her şeyi zannedersem kullanılmıyor. Değil mi? Daha kaliteli çıkmaz mı"
+- On the key reaching the report (said while the fix was already being written; I told him I would let the writer finish and take it out on his word; he did not answer that): "rapora sızması sorun değil. zaten pc içinde kalmıor mu. aynı şeyle geri dönerse boşver."
+- SESSION-ONLY, not carried: he does not want the film he rejected the day before used as a yardstick ("Reddettiğim şey kıstas almalı değilsin"), and asked that it NOT be written as a rule or a memory ("Çok kural koymak istemiyorum"). Do not compare with it; do not write it down.
+- On a Fable audit beside Sol he left it to the lead ("Gerek var mı? […] istersen"); I ran Sol alone on both jobs of this session.
+
+## Phases — status and commit
+| Phase | Status |
+|---|---|
+| The quota in the door and the hook | DONE, waits for his eye — `f333d447`, Sol's findings `c04519c5`; job folder `.planning/quick/20261112-kota-sayaci/` |
+| The status line: cache countdown; an idle session's old quota no longer overwrites a fresh one | DONE — `7f3b1b46`, `69b15486`, `32b96dee`; `statusLine.refreshInterval: 30` in `~/.claude/settings.json`; the installed `~/.claude/hooks/dxb-statusline.js` equals `scripts/ops/dxb-statusline.js` |
+| Friction piece part A (init formats, help, size trap, format names, timeout) | DONE — `713fe5f4` |
+| Part B (board per format, sheet flags, `outline.js`, `motion-blur.js`, guard in WebGL) | DONE — `c7ae49e4` |
+| Part C (`mg motion-read`, `sfx:` names, `trim`, the verify hint) | DONE — `851336e7`; typecheck 0, the whole battery green on it (`typecheck-3.out`, `battery-3.out`); one real motion reading ran |
+| Sol's blind pass over A, B, C | DONE, not clean — `SOL-FRICTION-REPORT.md` (as it came), `SOL.md` §3 (the outcomes) |
+| Sol's three blocking findings | DONE — `97923c31`; the job's five test files 132 passed, typecheck 0. The whole battery has NOT run since this commit. |
+| Sol's B findings | **OPEN — your first piece** |
+| STATE | written for this hand-over (the entry of 2026-11-12 night and Next 00) — rewrite it when the job is told |
+
+## What is left, in order
+1. **Wait for the 5-hour window.** At hand-over it stood at about 83 %, resetting at 01:50 local (2026-11-13). The hook tells you the window on every turn. Do not open a writer before it has reset (dxb-team3 §3: a window that cannot carry a piece waits). A background waiter of at most ten minutes at a time re-invokes you; nothing else is needed while waiting.
+2. **Sol's B findings — one fresh `helper-writer` at high** (a Fable 5.2 writer; the piece is small, about the size of the blocking-findings piece, which took 17 points of a window). Give it `SOL-FRICTION-REPORT.md` and `SOL.md` §3 and this list: (B1) `mg sheet --window` takes a finite positive number — `Infinity` is refused, with a test; (B2) an `sfx:` name's REAL path stays inside the starter set — `staysInside(root, path)` in `lib/job.mjs` serves as it is; tests with a link and a linked folder; the job's copy is a regular file; (B3) `templates/lib/motion-blur.js` takes its layer's canvas from what it is handed (no global `document`), says what happens where float16 is not given instead of falling back silently, `references/craft.md` states the "reads back as drawn" claim with its condition, and one host test measures the real canvas in HyperFrames' Chrome (context type and pixel difference) plus the same canvas drawn twice at one `t`; (B4) each board sandbox test prepares its own page; (C, small text) SKILL.md's command table gets `init --title`, `stills --format`, `hf update --guard`, `blender --need-mb` and the `--job` exception; CONTRACT.md's line on host tests says a missing tool fails. Left in the report, not built: a format named `all`, `init --dur Infinity`, the guard host tests' order (older than this piece) — unless the finite-number check covers `--dur` at no cost. The brief's form: copy the one I gave for the blocking findings (this session's transcript, the Agent call "Fable · high — Sol A bulguları") — the holding line, the facts measured, the working rules verbatim, the report asked. No second Sol round (door §4).
+3. **Verify it yourself** (the five files with `DXB_ENGINE_LOCK_WAIT=200`, typecheck), commit, then **the whole battery** detached (`run-battery-3.sh` beside this file is the pattern — copy it to a new name, do not edit a script that is running) and read how many of this job's tests ran. Write the outcomes into `SOL.md` §3 (OPEN → Fixed) and one line into `.planning/quick/20261019-degerli-is-danisma/MEASURE.md` (Sol alone audited the friction piece: 3 blocking, 4 must-fix).
+4. **Records:** a leg note in `.planning/board-rows/B43.md` (B43's board line is at the 1600-byte ceiling — row file only; do not name B43 in a commit's scope unless the board line changes in that commit, ruler R6). Update `/home/dxb/Desktop/Motion Graphics/Ne yapıldı — 2026-11-12.md` (it says Sol's last audit was still running). STATE's three headings when the job is told.
+5. **Tell him** (Turkish, three headings). What waits for his eye: the quota paragraphs in dxb-team3 §3 and the hook's line; the status line's countdown; the friction piece.
+6. **Then only on his word — film 1's second round, as a trial.** His four notes: the phone low and cut in both formats (the whole phone in frame); the two bubbles' lift not visible; a little longer so the on-screen texts can be read (the yellow encryption notice stays under a second); the logo-to-phone morph is good — leave it. My proposal, which he heard and did not rule on: the same film with the phone as a 3D object and a camera move (the Blender kit was never used in film 1), the whole phone in frame. I have not read film 1's own brief to see why it asked for no depth (the first lead said the brief was the cause) — read it before writing the second round's brief: `/home/dxb/Videos/dxb-motion/film-1-whatsapp/` and the first lead's transcript named in `DEVIR.md`. It is a draft-first job (Law D); his eye decides, not Gemini's reading.
+7. **Open questions to him, each asked once, unanswered — do not ask again at opening; they stand in the Desktop note:** delete the ChatGPT output folder `.planning/research/watch-links/2026-11-11-motion-graphics` (707 MB)? · the risky updates (ComfyUI, OpenMontage, Remotion, ffmpeg, Voicebox, Chrome, Playwright) now or at the studio's rank? · the boundary sweep's decision list `.planning/quick/20261112-sinir-taramasi/LISTE.md`.
+
+## Found outside the job (told to him once)
+- The GNOME keyring service (`gnome-keyring-daemon.service`) has dumped core once a day since 2026-11-09 (09 20:34, 10 19:13, 11 15:47, 12 22:05:49 — the last to the second with my launch of Sol's audit; cause not verified). After a crash the login keyring is locked and a password box comes up; he typed his password at 23:35 and it is unlocked. I offered to read the crash record after the film job; not started. A box left on screen takes the keyboard: look at `operator shot` before any key.
+- Gemini's motion reading is not a referee: the same morph was a flaw in one reading and the film's strongest moment in the next. Use it as a pointer; look at the frames; his eye decides.
+- B72 (the company's off-site backup failing every night since 2026-09-25) — told to him once by the first lead; no ruling.
+
+## Traps met
+- `cd` in a compound Bash command is blocked; use `git -C`, `pnpm -C`, absolute paths.
+- A test run while a writer is testing is refused ("another run already holds the construction engine"): prefix `DXB_ENGINE_LOCK_WAIT=200`.
+- The battery's detached launch returns at once; wait for `EXIT=` in its output with a background `until grep` loop (ten minutes at most per waiter — start another).
+- A hand idle over four minutes is not resumed: open a fresh writer and point it at what is on disk.
+- `claude-mem` could not save memories during the limit (its own cooldown); it recovers by itself — do not restart its worker.
+- `mg motion-read` really sends the film to Gemini with the free key (20 requests a day per model; `gemini-3.6-flash` answered at 23:37; `gemini-3.8-flash` and `3.7` were spent on 2026-11-12). No writer makes a real call.
+- Never print or copy an env file or a key.
+
+## Your first message to him (Turkish, short)
+The position in four lines: what waits for his eye (the quota paragraphs and hook line; the cache countdown; the friction piece built, Sol's blocking findings fixed); what is next and with whom (the B findings, by one Fable writer once the window has reset — say the hour); nothing blocked on him. Then go on without waiting for an answer.
+
+If anything here is unclear, read the part you need in this session's own conversation: `~/.claude/projects/-home-dxb-DxB-Global-OS/958efea0-5626-4cbf-b361-cf0253412cd1.jsonl`.
