@@ -43,7 +43,8 @@ vocabulary, easing, review) — before writing your own.
 time range, what holds on screen, and **on its own line how it becomes the next shot** — which shape turns into
 which, what the camera does to get there; or a cut, when the film changes subject or time on purpose. What a
 board never carries is a cross-fade standing in for a join nobody designed. For a physical product add shape-check tiles (our model beside the
-reference photo); when the film must join filmed footage, the exact end still. `mg board` renders the board.
+reference photo); when the film must join filmed footage, the exact end still. `mg board` renders the board —
+`--format all` one for each frame — and once the page is the job's own film, each shot carries that film's frame.
 It goes to the job's owner — the CEO in a construction trial, the creative director's seat in a studio job — and
 their notes change the board, never a half-built film. Nothing is animated before the board is approved.
 `references/storyboard.md`: how to write shots and transitions that can be built.
@@ -57,9 +58,12 @@ browser 3D; Blender for a physical product — `references/blender.md` and the k
 `tools/motion-graphics/blender/`. Existing illustrations are cut out and animated, not redrawn (`references/craft.md`, "Animating an existing
 illustration"). The page lays out
 from `FILM.W/H`, so each frame format is composed, not cropped. The frame's size has no other name in the page:
-a name of its own at the top would keep the first format's size while another format is drawn.
+a name of its own at the top would keep the first format's size while another format is drawn. `page/lib/` holds
+two helpers from `mg init` — `outline.js`, one shape becoming another, and `motion-blur.js`, a fast move as a
+shutter sees it; `references/craft.md` says when each serves.
 
-**5. Look at it.** `mg sheet --around-events` gives three or four stills across every transition; read every one
+**5. Look at it.** `mg sheet --around-events` gives three or four stills across every transition (`--window` for
+a longer or shorter stretch around each, `--format all` for every frame); read every one
 against the board: does each shot really become the next, is the brand's material exact, is every word readable
 for as long as it takes to read, does the frame work in each format. Fix and look again. Then `mg render` at
 review size and have the film read **as motion** by a second reader that has not seen your reasoning (the
@@ -113,9 +117,9 @@ not accepted by the builder: the step is brought to the one who decides, with th
 
 | | |
 |---|---|
-| `mg init <dir> [--w --h --format name=WxH … --fps --dur --lufs --spec --brand]` | job folder, `job.json` with every format stated, the page and board templates |
-| `mg board` | `board/board.json` → `board/board.png` |
-| `mg stills <t…>` · `mg sheet [--around-events] [--n 4]` | exact-time stills · the film on one sheet, or one sheet per event, into `out/` |
+| `mg init <dir> [--w --h --format name=WxH … --fps --dur --lufs --spec --brand]` | job folder, `job.json` with every format stated, the page and board templates, the page's helpers in `page/lib/` |
+| `mg board [--format name\|all]` | `board/board.json` → `board/board.png` (`board/board-<format>.png` for a format after the first); each shot with the film's frame at its middle once the page is the job's own and can be drawn — and the reason said when it cannot |
+| `mg stills <t…>` · `mg sheet [--around-events] [--n 4] [--window s] [--format name\|all]` | exact-time stills · the film on one sheet, or one sheet per event of the moments `--window` seconds each side of it (0.25 when not given), into `out/` |
 | `mg events` | the film's beats and events |
 | `mg sound` | `sound/cues.json` → the page's sound block (a cue's file lives under `sound/`) |
 | `mg render [--format name\|all] [--scale n \| --4k] [--alpha] [--fps n]` | the film, into `out/` (`.mov` for `--alpha`); a larger master only by a whole multiple that reaches 1080p, 1440p or 4K |

@@ -361,13 +361,20 @@ describe("B43 dxb-motion-graphics — contact sheets: every format in one call, 
   });
 
   it("refuses a window that is no length of time, and starts nothing", async () => {
-    for (const window of ["0", "wide", "-1"]) {
+    for (const window of ["0", "wide", "-1", ""]) {
       const rec = sheeting();
       const r = await mg(["sheet", "--around-events", `--window=${window}`, "--job", job], { run: rec.run });
       expect(r.code, window).not.toBe(0);
-      expect(r.out, window).toMatch(/--window/);
+      // The refusal is the window's own: a command that did not know the flag would name it too.
+      expect(r.out, window).toMatch(/--window takes the seconds/);
       expect(rec.calls, window).toEqual([]);
     }
+    // A window is the time around an event: on a sheet of the whole film it would mean nothing, and is not passed over in silence.
+    const rec = sheeting();
+    const whole = await mg(["sheet", "--window", "0.5", "--job", job], { run: rec.run });
+    expect(whole.code).not.toBe(0);
+    expect(whole.out).toMatch(/--window .*--around-events/);
+    expect(rec.calls).toEqual([]);
   });
 
   it("makes the sheets of every format in one call", async () => {

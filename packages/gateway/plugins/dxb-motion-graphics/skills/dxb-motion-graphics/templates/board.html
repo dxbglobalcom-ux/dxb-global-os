@@ -8,10 +8,14 @@
   below and photographs this page into board/board.png. The board is approved, or changed, before
   anything is animated: every shot states what it holds and, on its own line, how it becomes the next.
 
-  board.json: { "title", "format", "total",
+  board.json: { "title", "total",
                 "shots": [{ "n", "from", "to", "title", "hold", "becomes" }],
                 "shapeChecks": [{ "label", "ours", "reference" }],     optional — paths from the job folder
                 "endStill": "refs/end.png" }                           optional
+
+  `mg board` states the rest in the block, for the format it draws: "format" (the head's line),
+  "frame" { "w", "h" }, and once the film's page can be drawn each shot's "still" — the film's own
+  frame at the middle of the shot, a path from the job folder.
 -->
 <style>
   :root { --paper: #f4efe6; --card: #fffdf8; --ink: #14181d; --quiet: #6b6f76; --line: #ddd5c6; --becomes: #c8451f; }
@@ -25,6 +29,8 @@
   .grid { display: grid; gap: 16px; margin-top: 32px; }
   h2 + .grid { margin-top: 0; }
   .tile { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 22px 24px; display: flex; flex-direction: column; }
+  .shot figure { margin-bottom: 18px; }
+  .shot figure img { max-height: 440px; }   /* a tall frame in a wide tile stands inside this, not as tall as the tile is wide */
   .shot .number { font-size: 40px; font-weight: 700; line-height: 1; font-variant-numeric: tabular-nums; }
   .shot .span { margin-left: 14px; color: var(--quiet); font-variant-numeric: tabular-nums; }
   .shot h3, .check h3 { margin: 14px 0 6px; font-size: 24px; line-height: 1.2; }
@@ -61,10 +67,12 @@ function el(tag, className, text, children = []) {
   node.append(...children);
   return node;
 }
-// A picture named from the job folder; this page stands one folder below it.
-function picture(path, caption) {
+// A picture named from the job folder; this page stands one folder below it. Its frame is 16:9, or
+// the film's own when `frame` gives it — fixed either way, before the picture has loaded.
+function picture(path, caption, frame) {
   const img = el('img');
   img.src = '../' + path;
+  if (frame) img.style.aspectRatio = `${frame.w} / ${frame.h}`;
   return el('figure', '', undefined, [img, ...(caption ? [el('figcaption', '', caption)] : [])]);
 }
 const seconds = s => Number(s).toFixed(2);
@@ -78,6 +86,7 @@ const shots = document.getElementById('shots');
 columns(shots, board.shots.length);
 for (const shot of board.shots) {
   shots.append(el('article', 'tile shot', undefined, [
+    ...(shot.still ? [picture(shot.still, '', board.frame)] : []),
     el('div', '', undefined, [el('span', 'number', String(shot.n).padStart(2, '0')), el('span', 'span', `${seconds(shot.from)} – ${seconds(shot.to)} s`)]),
     el('h3', '', shot.title),
     el('p', 'hold', shot.hold),

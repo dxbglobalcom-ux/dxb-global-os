@@ -16,7 +16,26 @@ the job's own.
   after the body has stopped.
 - **Speed contrast.** A fast move lands harder after a slow one. A film at one speed has no accents.
 - **Motion blur** on fast moves is what makes them read as camera work rather than as a slideshow; without it a
-  whip transition shows its seam.
+  whip transition shows its seam. `page/lib/motion-blur.js` draws it (below).
+
+## The two helpers in `page/lib/`
+
+`mg init` puts them there; each file says at its top how it is called.
+
+- **`outline.js` — one shape becoming another.** It serves where two shapes are meant to flow into each other and
+  each is one closed outline — a logo's contour into a device, a dot into a card: the join is then a real
+  transformation and not a fade. It gives a path's outline as points, and the outline between two of them. What
+  decides the shapes in between is which point meets which: a feature sent to a stretch that has nothing like it
+  — a tail onto a straight edge — is dragged along and comes out as a lump half way (the first film, 1.4–1.6 s).
+  Send the feature to its like with `meet` — the tail's two roots and its tip onto a corner — and look at the join
+  step by step before keeping it. It does not serve where the shapes differ in kind — one outline into several, a
+  shape with a hole into one without; that join is designed another way: a wipe along an edge, a turn, a cut.
+- **`motion-blur.js` — a fast move as a shutter sees it.** It serves on the frames where a thing crosses a good
+  part of the frame from one frame to the next — a whip, a card flying in, a fast push — and adds nothing to a slow
+  drift. The moving thing is drawn several times across the time the shutter stands open and the drawings are
+  averaged; what stood still comes out as it was. Half a frame of shutter is a film camera's. Samples enough that
+  neighbours overlap, or the blur reads as a row of ghosts (sixteen for a card that travels 60 px while the
+  shutter is open). Each sample costs a full-frame layer: ask for it while the thing travels, not for the whole film.
 
 ## Composition
 

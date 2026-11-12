@@ -58,6 +58,12 @@ export function sizePage(template, { w, h, fps, dur }) {
     `data-width="${w}" data-height="${h}" data-duration="${dur}"`, "its root's size and length");
 }
 
+/** Whether a job's page is still the starter `mg init` laid out: the template at the page's own size, rate and length, nothing in it changed. */
+export function isStarterPage(job) {
+  const film = readFilm(job.page);
+  return readFileSync(job.page, "utf8") === sizePage(readFileSync(join(TEMPLATES, "page.html"), "utf8"), { w: film.W, h: film.H, fps: film.FPS, dur: film.TOTAL });
+}
+
 /** The page with its root framed for one master: the format's size, and data-alpha for a transparent one. */
 export function frameRoot(html, { w, h, alpha = false }) {
   const root = html.match(/<[a-z]+\b[^>]*\bdata-composition-id="film"[^>]*>/);
@@ -127,8 +133,8 @@ export function linkMaterial(root) {
 }
 
 /**
- * Folders, job.json, the page, an empty cue list and the links: a job that every command can open.
- * Nothing is written when the formats are refused.
+ * Folders, job.json, the page with the helpers it loads from page/lib, an empty cue list and the
+ * links: a job that every command can open. Nothing is written when the formats are refused.
  */
 export function layOutJob(dir, { title, formats, fps, lufs = null, spec = false, brand = "" }, pageHtml) {
   const root = resolve(dir);
@@ -141,6 +147,7 @@ export function layOutJob(dir, { title, formats, fps, lufs = null, spec = false,
   writeJson(insideJob(root, "job.json"), { title, formats, fps, lufs, spec, brand });
   writeFileSync(insideJob(root, "page/index.html"), pageHtml);
   cpSync(join(TEMPLATES, "play.js"), insideJob(root, "page/play.js"));
+  cpSync(join(TEMPLATES, "lib"), insideJob(root, "page/lib"), { recursive: true });
   writeFileSync(insideJob(root, "sound/cues.json"), "[]\n");
   linkMaterial(root);
   return openJob(root);

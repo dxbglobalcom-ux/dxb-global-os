@@ -39,6 +39,11 @@ window.FILM = {
   ],
 };
 </script>
+<!-- The helpers `mg init` puts into lib/; each file says at its top how it is used.
+     lib/outline.js      Outline: a shape's outline as points, so one shape can become another.
+     lib/motion-blur.js  MotionBlur: a moving thing drawn as a shutter sees it; a film with fast moves
+                         loads it the same way. -->
+<script src="lib/outline.js"></script>
 <style>
   html, body { margin: 0; overflow: hidden; }
   #stage { position: relative; overflow: hidden; transform-origin: 0 0; }
@@ -82,38 +87,9 @@ const easeOutExpo = u => (u >= 1 ? 1 : 1 - Math.pow(2, -10 * u));
 const tween = (t, a, b, from, to, ease = easeInOut) => lerp(from, to, ease(seg(t, a, b)));
 const mix = (c, d, u) => `rgb(${c.map((v, i) => Math.round(lerp(v, d[i], u))).join(',')})`;
 
-// A closed outline as points, clockwise from the top centre: a rounded rectangle (a circle when r = w/2 = h/2).
-function roundRect(w, h, r) {
-  const x = w / 2 - r, y = h / 2 - r, points = [[0, -h / 2]];
-  for (const [cx, cy, from] of [[x, -y, -90], [x, y, 0], [-x, y, 90], [-x, -y, 180]])
-    for (let i = 0; i <= 12; i++) {
-      const a = (from + i * 7.5) * Math.PI / 180;
-      points.push([cx + r * Math.cos(a), cy + r * Math.sin(a)]);
-    }
-  return points;
-}
-
-// The same outline as n points evenly spaced along it. Two outlines resampled to one n can morph.
-function resample(points, n) {
-  const loop = [...points, points[0]], along = [0];
-  for (let i = 1; i < loop.length; i++)
-    along.push(along[i - 1] + Math.hypot(loop[i][0] - loop[i - 1][0], loop[i][1] - loop[i - 1][1]));
-  const out = [];
-  for (let k = 0, i = 1; k < n; k++) {
-    const d = along[along.length - 1] * k / n;
-    while (along[i] < d) i++;
-    const u = (d - along[i - 1]) / (along[i] - along[i - 1] || 1);
-    out.push([lerp(loop[i - 1][0], loop[i][0], u), lerp(loop[i - 1][1], loop[i][1], u)]);
-  }
-  return out;
-}
-
-const morph = (A, B, u) => A.map((p, i) => [lerp(p[0], B[i][0], u), lerp(p[1], B[i][1], u)]);
-
 function fillOutline(g, points) {
   g.beginPath();
-  points.forEach(([x, y], i) => (i ? g.lineTo(x, y) : g.moveTo(x, y)));
-  g.closePath();
+  Outline.trace(g, points);
   g.fill();
 }
 
@@ -168,9 +144,12 @@ function layout() {
   placed = layoutWords(measure, LINE, FILM.W * 0.84, em * 0.3, em * 1.25);
   const widest = Math.max(...placed.map(p => p.x + p.w)) * 2;
   ruleY = FILM.H * 0.68 + placed[placed.length - 1].y + em * 0.55;
-  DOT = resample(roundRect(26 * unit, 26 * unit, 13 * unit), POINTS);
-  SQUARE = resample(roundRect(30 * unit, 30 * unit, 6 * unit), POINTS);
-  RULE = resample(roundRect(widest, 1.2 * unit, 0.6 * unit), POINTS);
+  // Each shape as POINTS points from its top centre, clockwise, as lib/outline.js makes every outline:
+  // a rounded rectangle is a circle when r = w/2 = h/2. Two outlines of one count can morph.
+  const shape = (w, h, r) => Outline.resample(Outline.roundRect(w, h, r), POINTS);
+  DOT = shape(26 * unit, 26 * unit, 13 * unit);
+  SQUARE = shape(30 * unit, 30 * unit, 6 * unit);
+  RULE = shape(widest, 1.2 * unit, 0.6 * unit);
 }
 
 function drawWord(p, x, y) {
@@ -205,7 +184,7 @@ function renderAt(t) {
   g.rotate(lerp(-Math.PI / 2, 0, toSquare));      // the dot turns as its corners come out, and lands square
   g.scale(breath, breath);
   g.fillStyle = toRule > 0 ? mix(CORAL, PAPER, toRule) : mix(AMBER, CORAL, toSquare);
-  fillOutline(g, morph(morph(DOT, SQUARE, toSquare), RULE, toRule));
+  fillOutline(g, Outline.morph(Outline.morph(DOT, SQUARE, toSquare), RULE, toRule));
   g.restore();
 
   g.fillStyle = `rgb(${PAPER})`;

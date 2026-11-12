@@ -20,7 +20,6 @@ const SOFTWARE_GL = /SwiftShader|llvmpipe/i;
 const GRAPHICS_CARD = /\b(NVIDIA|AMD|Radeon|Intel|Apple)\b/i;
 // The context names a script hands to getContext, quoted as code writes them: the sign that a page asks for WebGL.
 const ASKS_FOR_WEBGL = /['"`](webgl2?|experimental-webgl)['"`]/;
-const AROUND_EVENT = 0.25; // seconds each side of an event that its sheet covers
 
 /** The last lines a tool said, without HyperFrames' progress bars. */
 export function lastLines(text) {
@@ -53,20 +52,21 @@ export function takeStills({ hf }, job, format, times) {
   return files;
 }
 
-function momentsAround(t, count, total) {
-  const spread = Array.from({ length: count }, (_, i) => t - AROUND_EVENT + (2 * AROUND_EVENT * i) / Math.max(1, count - 1));
+function momentsAround(t, count, total, window) {
+  const spread = Array.from({ length: count }, (_, i) => t - window + (2 * window * i) / Math.max(1, count - 1));
   return [...new Set(spread.map((s) => +Math.min(total, Math.max(0, s)).toFixed(3)))];
 }
 
 /**
  * A contact sheet of the whole film (film.jpg), or one per event of the moments around it
- * (event-<name>.jpg). HyperFrames puts nine stills on a sheet; more make <name>-1.jpg, <name>-2.jpg, ….
+ * (event-<name>.jpg): `count` stills, from `window` seconds before the event to as long after it.
+ * HyperFrames puts nine stills on a sheet; more make <name>-1.jpg, <name>-2.jpg, ….
  */
-export function makeSheets({ hf }, job, format, { aroundEvents, count }) {
+export function makeSheets({ hf }, job, format, { aroundEvents, count, window }) {
   const film = readFilm(job.page);
   const dir = insideJob(job.dir, "out/sheets", format.name);
   const sheets = aroundEvents
-    ? film.EVENTS.map((e) => ({ name: `event-${e.name.replace(/[^\w.-]+/g, "-")}`, moments: ["--at", momentsAround(e.t, count, film.TOTAL).join(","), "--no-end"] }))
+    ? film.EVENTS.map((e) => ({ name: `event-${e.name.replace(/[^\w.-]+/g, "-")}`, moments: ["--at", momentsAround(e.t, count, film.TOTAL, window).join(","), "--no-end"] }))
     : [{ name: "film", moments: ["--frames", String(count)] }];
   mkdirSync(dir, { recursive: true });
   return withStage(job, format, (stage) => sheets.flatMap(({ name, moments }) => {

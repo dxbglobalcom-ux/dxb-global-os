@@ -10,7 +10,7 @@ import { existsSync, readFileSync } from "node:fs";
 import { basename, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { parseArgs } from "node:util";
-import { drawBoard, writeBoardPage } from "./lib/board.mjs";
+import { drawBoard, formatLine, writeBoardPage } from "./lib/board.mjs";
 import { goodVersion, hyperframes, latestVersion, proveVersion } from "./lib/hyperframes.mjs";
 import { Refusal, TEMPLATES, formatBySize, formatsNamed, insideJob, layOutJob, openJob, readFilm, readJson, sizePage, writeJson } from "./lib/job.mjs";
 import { lastLines, makeSheets, renderFilm, scaleFor, takeStills } from "./lib/picture.mjs";
@@ -18,6 +18,7 @@ import { planCues, writeSoundBlock } from "./lib/sound.mjs";
 import { failures, verifyFilms } from "./lib/verify.mjs";
 
 const BLENDER_NEEDS_MB = 4000;
+const AROUND_EVENT = 0.25; // seconds each side of an event that its sheet covers, when --window states no other
 // A tool still running after this long is taken for one that never ends. The longest thing mg starts
 // is a 4K render (measured 2026-11-12: the 3 s starter film at 3840×2160 took 7 s); a film that needs
 // longer states its own limit in DXB_MG_TOOL_TIMEOUT, in seconds.
@@ -28,6 +29,7 @@ const text = (value, says) => ({ type: "string", value, says });
 const flag = (says) => ({ type: "boolean", says });
 const JOB = { job: text("<dir>", "the job folder (the current folder when not given)") };
 const ONE_FORMAT = { format: text("<name>", "the format drawn (the job's first when not given)") };
+const EACH_FORMAT = { format: text("<name>|all", "the format drawn, or every format of the job (its first when not given)") };
 
 // What each command does and takes: its arguments, then its options. `parse` reads a command's options
 // from here and `mg <command> --help` prints them, so help names no option the command would refuse.
@@ -47,14 +49,18 @@ const TAKES = {
       brand: text('"…"', "whose brand the film shows"),
     },
   },
-  board: { does: "Draws the storyboard, board/board.json, as one image: board/board.png.", options: JOB },
+  board: {
+    does: "Draws the storyboard, board/board.json, as one image — board/board.png, or board/board-<format>.png for a format that is not the job's first — each shot with the film's frame at its middle once the job's page can be drawn.",
+    options: { ...EACH_FORMAT, ...JOB },
+  },
   stills: { does: "Takes stills of the film at exact seconds, into out/stills/<format>/.", args: "<seconds…>", options: { ...ONE_FORMAT, ...JOB } },
   sheet: {
-    does: "Lays the film out as a contact sheet, into out/sheets/<format>/.",
+    does: "Lays the film out as contact sheets, into out/sheets/<format>/ for each format asked for.",
     options: {
       "around-events": flag("one sheet for each event, of the moments around it, instead of one sheet of the whole film"),
       n: text("<count>", "the stills on a sheet (9 when not given, 4 around an event)"),
-      ...ONE_FORMAT, ...JOB,
+      window: text("<seconds>", `with --around-events: how long before and after its event a sheet covers (${AROUND_EVENT} when not given)`),
+      ...EACH_FORMAT, ...JOB,
     },
   },
   events: { does: "Prints the film's timing as its page states it: size, rate, length, beats and events.", options: JOB },
@@ -187,16 +193,20 @@ function init({ say }, argv) {
   const film = readFilm(job.page), [format] = job.formats, starter = readJson(join(TEMPLATES, "board.json"));
   const second = (beat) => +(beat === "end" ? film.TOTAL : film.BEATS[beat]).toFixed(2);
   writeJson(insideJob(job.dir, "board/board.json"), {
-    ...starter, title: job.title, format: `${format.name} · ${format.w}×${format.h} · ${job.fps} fps`, total: film.TOTAL,
+    ...starter, title: job.title, format: formatLine(job, format), total: film.TOTAL,
     shots: starter.shots.map((shot) => ({ ...shot, from: second(shot.from), to: second(shot.to) })),
   });
   writeBoardPage(job);
   say(`mg init: ${job.dir} — ${job.formats.map((f) => `${f.name} ${f.w}×${f.h}`).join(", ")}, ${job.fps} fps, ${film.TOTAL} s. Real material into assets/ and refs/, the storyboard into board/board.json, then: mg board`);
 }
 
-function board({ run, say }, argv) {
-  const drawn = drawBoard(run, parseForJob("board", argv).job);
-  say(`mg board: ${drawn.png} — ${drawn.shots} shot(s). Nothing is animated before it is approved.`);
+function board(tools, argv) {
+  const { job, values } = parseForJob("board", argv);
+  for (const format of formatsNamed(job, values.format)) {
+    const drawn = drawBoard(tools, job, format);
+    tools.say(`mg board: ${drawn.png} — ${drawn.shots} shot(s), ${drawn.why ? `without the film's frames: ${drawn.why}` : `${drawn.framed} with the film's frame`}`);
+  }
+  tools.say("Nothing is animated before the board is approved.");
 }
 
 function stills(tools, argv) {
@@ -210,9 +220,11 @@ function stills(tools, argv) {
 
 function sheet(tools, argv) {
   const { job, values } = parseForJob("sheet", argv);
-  const aroundEvents = values["around-events"] ?? false;
-  if (values.format === "all") throw new Refusal("sheets are made of one format at a time");
-  const files = makeSheets(tools, job, formatsNamed(job, values.format)[0], { aroundEvents, count: wholeNumber(values.n, aroundEvents ? 4 : 9, "--n") });
+  const aroundEvents = values["around-events"] ?? false, window = Number(values.window ?? AROUND_EVENT);
+  if (values.window !== undefined && !aroundEvents) throw new Refusal("--window is the time around an event: it is given with --around-events");
+  if (!(window > 0)) throw new Refusal(`--window takes the seconds a sheet covers each side of its event, more than 0, not "${values.window}"`);
+  const asked = { aroundEvents, count: wholeNumber(values.n, aroundEvents ? 4 : 9, "--n"), window };
+  const files = formatsNamed(job, values.format).flatMap((format) => makeSheets(tools, job, format, asked));
   tools.say(`mg sheet: ${files.length} sheet(s)\n${files.join("\n")}`);
 }
 

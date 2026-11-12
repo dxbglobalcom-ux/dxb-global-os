@@ -7,7 +7,8 @@
   dxb-motion-graphics — the guard film. `mg hf update` renders these five seconds with a new
   HyperFrames version and verifies the film before that version may render a real one. It holds the
   page contract at its smallest: a picture that is a pure function of time, one event for one sound,
-  and a WebGL context whose renderer is said aloud, so a silent fall to software drawing is caught.
+  and that picture drawn with WebGL alone, its renderer said aloud — so a silent fall to software
+  drawing is caught, and so is a version that seeks without the WebGL picture following.
 -->
 <script>
 const FPS = 30, TOTAL = 5;
@@ -31,30 +32,37 @@ FILM.W = Number(stage.dataset.width);
 FILM.H = Number(stage.dataset.height);
 
 const canvas = document.getElementById('picture');
-const g = canvas.getContext('2d');
 const dpr = window.devicePixelRatio || 1;
 stage.style.width = canvas.style.width = FILM.W + 'px';
 stage.style.height = canvas.style.height = FILM.H + 'px';
 canvas.width = FILM.W * dpr;
 canvas.height = FILM.H * dpr;
+const gl = canvas.getContext('webgl');
+const DARK = [11, 14, 18], PALE = [244, 239, 230], AMBER = [242, 184, 75];
+
+// One rectangle of one colour, in the frame's own pixels from its top left corner: WebGL clears it.
+function fill([red, green, blue], x, y, w, h) {
+  gl.scissor(Math.round(x * dpr), Math.round((FILM.H - y - h) * dpr), Math.round(w * dpr), Math.round(h * dpr));
+  gl.clearColor(red / 255, green / 255, blue / 255, 1);
+  gl.clear(gl.COLOR_BUFFER_BIT);
+}
 
 // A bar crosses the frame at a steady pace, so every frame differs from the one before it; at the
 // film's one event the field turns from dark to pale, which is the moment the guard's sound sits on.
 // `mg hf update` compares the film second by second: a version that shows one picture twice is refused.
+// The whole picture is WebGL's: a version that seeks and leaves a WebGL canvas as it was is one of those.
 function renderAt(t) {
+  if (!gl) return;   // nothing is drawn, and 'no WebGL' is said below
   t = Math.min(FILM.TOTAL, Math.max(0, t));
   const { W, H, BEATS } = FILM, turned = t >= BEATS.turned;
-  g.setTransform(dpr, 0, 0, dpr, 0, 0);
-  g.fillStyle = turned ? '#f4efe6' : '#0b0e12';
-  g.fillRect(0, 0, W, H);
-  g.fillStyle = turned ? '#0b0e12' : '#f2b84b';
-  g.fillRect((W - H * 0.02) * t / FILM.TOTAL, H * 0.3, H * 0.02, H * 0.4);
+  gl.enable(gl.SCISSOR_TEST);
+  fill(turned ? PALE : DARK, 0, 0, W, H);
+  fill(turned ? DARK : AMBER, (W - H * 0.02) * t / FILM.TOTAL, H * 0.3, H * 0.02, H * 0.4);
 }
 window.renderAt = renderAt;
 
 // The renderer is said as it is. Only a graphics card passes: 'no WebGL', like a software renderer, fails the render.
 window.ready = (async () => {
-  const gl = document.createElement('canvas').getContext('webgl');
   const named = gl && gl.getExtension('WEBGL_debug_renderer_info');
   document.documentElement.dataset.gl = gl ? gl.getParameter(named ? named.UNMASKED_RENDERER_WEBGL : gl.RENDERER) : 'no WebGL';
   renderAt(Number(new URLSearchParams(location.search).get('t')) || 0);

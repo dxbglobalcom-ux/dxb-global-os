@@ -101,6 +101,29 @@ describe("B43 dxb-motion-graphics — page/lib/outline.js: a path's outline as p
     expect(() => Outline.morph(A, Outline.fromPath(SQUARE, 4), 0.5)).toThrow(/Outline: .*8.*4/);
   });
 
+  it("puts a place of the shape on the point where the other outline has its like, and spaces the points evenly between such meetings", () => {
+    // Of 8 points the fifth is half way through them. It is given the square's right middle, a quarter of the
+    // way round: four points share the 100 from the top centre to there, four the 300 back to the top centre.
+    expect(rounded(Outline.fromPath(SQUARE, 8, { meet: [[0.5, 0.25]] }))).toEqual([[50, 0], [75, 0], [100, 0], [100, 25], [100, 50], [75, 100], [0, 100], [0, 25]]);
+    // Two meetings: the right middle on the third point of 8, the left middle on the seventh.
+    expect(rounded(Outline.fromPath(SQUARE, 8, { meet: [[0.25, 0.25], [0.75, 0.75]] }))).toEqual(rounded(Outline.fromPath(SQUARE, 8)));
+    expect(rounded(Outline.resample(Outline.roundRect(100, 100, 0), 4, { meet: [[0.75, 0.5]] }))).toEqual([[0, -50], [50, -33.33], [50, 33.33], [0, 50]]);
+    // A meeting stands on a point, the one nearest the place given, so a corner of the shape is a point of the
+    // outline and is not cut: 0.45 of the way through 8 points is nearest the fifth, as 0.5 is.
+    expect(rounded(Outline.fromPath(SQUARE, 8, { meet: [[0.45, 0.25]] }))).toEqual(rounded(Outline.fromPath(SQUARE, 8, { meet: [[0.5, 0.25]] })));
+    // Meetings are walked in order, each further along both outlines than the one before, none at an end, no two on one point.
+    for (const meet of [[[0.5, 0.25], [0.4, 0.6]], [[0.5, 0.6], [0.7, 0.6]], [[1, 0.5]], [[0.5, 0]], [[0.5]], [[0.45, 0.25], [0.55, 0.3]]])
+      expect(() => Outline.fromPath(SQUARE, 8, { meet }), JSON.stringify(meet)).toThrow(/Outline: .*"meet"/);
+  });
+
+  it("says where on an outline a spot is, as the share of its length that meetings and shifts are stated in", () => {
+    const outline = Outline.fromPath(SQUARE, 400); // a point to each unit of the 400 round the square
+    expect(Outline.place(outline, 100, 50)).toBe(0.25);   // the right middle
+    expect(Outline.place(outline, 130, 104)).toBe(0.375); // nearest the bottom right corner
+    expect(Outline.place(outline, 50, -9)).toBe(0);       // the top centre, where the outline starts
+    expect(Outline.place(outline, 20, 3)).toBe(0.925);    // 30 short of it
+  });
+
   it("traces an outline as one closed path for the caller to fill, stroke or clip to", () => {
     const drawn: string[] = [];
     const g = { moveTo: (x: number, y: number) => drawn.push(`M${x},${y}`), lineTo: (x: number, y: number) => drawn.push(`L${x},${y}`), closePath: () => drawn.push("Z") };
@@ -127,12 +150,14 @@ function onePixelCanvas() {
     if (!blend[g.globalCompositeOperation]) throw new Error(`the one-pixel canvas has no "${g.globalCompositeOperation}"`);
     canvas.pixel = blend[g.globalCompositeOperation](source.map((v) => v * g.globalAlpha), canvas.pixel);
   };
-  const states: [number, string, string][] = [];
+  const states: [number, string, string, unknown][] = [];
   const g: any = {
-    canvas, globalAlpha: 1, globalCompositeOperation: "source-over", fillStyle: "#000",
-    save: () => states.push([g.globalAlpha, g.globalCompositeOperation, g.fillStyle]),
-    restore: () => ([g.globalAlpha, g.globalCompositeOperation, g.fillStyle] = states.pop()!),
-    setTransform: () => {},
+    canvas, globalAlpha: 1, globalCompositeOperation: "source-over", fillStyle: "#000", stands: "as it began",
+    save: () => states.push([g.globalAlpha, g.globalCompositeOperation, g.fillStyle, g.stands]),
+    restore: () => ([g.globalAlpha, g.globalCompositeOperation, g.fillStyle, g.stands] = states.pop()!),
+    // A transform is one word here, where the context stands; the six numbers of the identity put it back as it began.
+    getTransform: () => g.stands,
+    setTransform: (...to: unknown[]) => (g.stands = to.length === 1 ? to[0] : "as it began"),
     clearRect: () => (canvas.pixel = [0, 0, 0, 0]),
     fillRect: () => {
       if (!paint[g.fillStyle]) throw new Error(`the one-pixel canvas has no paint "${g.fillStyle}"`);
@@ -184,6 +209,34 @@ describe("B43 dxb-motion-graphics — page/lib/motion-blur.js: a frame exposed o
     expect(exposed((time) => time > 1.1, { samples: 4, shutter: 0.3 }).pixel).toEqual([0.25, 0.25, 0.25, 1]);
     expect(exposed(secondHalf, { samples: 4, shutter: 0.3 }, true).pixel).toEqual([0.5, 0.5, 0.5, 0.5]);
     expect(exposed(() => false, { samples: 4, shutter: 0.3 }).pixel).toEqual([0, 0, 0, 1]); // nothing drawn, nothing changed
+  });
+
+  it("keeps the samples' average in half floats, and draws each sample on a layer of the usual kind", () => {
+    // In 8 bits every sample added rounds: a still picture came back from 16 samples about 5 levels of 255
+    // lighter (measured in Chrome 155, 2026-11-12). What a browser makes of the option is the browser's;
+    // what is held here is that the helper asks for it — once, for the layer that holds the average.
+    const asked: unknown[] = [];
+    const listening = () => {
+      const canvas = onePixelCanvas(), context = canvas.getContext("2d");
+      canvas.getContext = (_kind: string, kept?: { colorType?: string }) => (asked.push(kept?.colorType ?? "the usual"), context);
+      return canvas;
+    };
+    const blur = load("motion-blur.js", { document: { createElement: listening } }).MotionBlur;
+    const frame = onePixelCanvas();
+    blur.expose(frame.getContext("2d"), 1, () => {}, { samples: 4, shutter: 0.1 });
+    blur.expose(frame.getContext("2d"), 2, () => {}, { samples: 4, shutter: 0.1 }); // the layers are kept for the next frame
+    expect(asked.sort()).toEqual(["float16", "the usual"]);
+  });
+
+  it("the thing is drawn on a layer that stands as the frame stands, at every sample", () => {
+    const frame = onePixelCanvas(), g = frame.getContext("2d"), stood: unknown[] = [];
+    g.setTransform("pushed in");
+    MotionBlur.expose(g, 1, (layer: any) => {
+      stood.push(layer.stands);
+      layer.setTransform("moved by the thing itself"); // what one sample's drawing leaves behind is not the next one's start
+    }, { samples: 3, shutter: 0.1 });
+    expect(stood).toEqual(["pushed in", "pushed in", "pushed in"]);
+    expect(g.stands).toBe("pushed in");
   });
 
   it("the same time gives the same frame, and the frame's own drawing state is left as it was", () => {

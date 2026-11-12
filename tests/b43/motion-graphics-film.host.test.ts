@@ -296,6 +296,43 @@ describe("B43 dxb-motion-graphics — the storyboard is drawn as one image", () 
   }, 120_000);
 });
 
+describe("B43 dxb-motion-graphics — the board carries the film's own frames", () => {
+  /** A drawn board as this file sees it: its height, and how light it is from 0 (black) to 255, all of it averaged. */
+  const drawn = (png: string) => {
+    const light = sh("ffmpeg", ["-v", "error", "-i", png, "-vf", "scale=1:1:flags=area", "-pix_fmt", "gray", "-f", "rawvideo", "-"]);
+    expect(light.err).toBe("");
+    return { height: readFileSync(png).readUInt32BE(20), light: light.out[0] };
+  };
+
+  it("once the page is the job's own, each shot shows the film at its middle, in every format asked for", async () => {
+    ownState();
+    const job = await initJob({ more: ["--format", "9x16=360x640"] }), page = join(job, "page/index.html");
+    const starter = await mg(["board", "--job", job]);
+    expect(starter.out).toMatch(/without the film's frames: .*still the starter/);
+    const bare = drawn(join(job, "board/board.png")); // pale paper and dark words
+
+    // Other words on the rule: the starter is now a film of this job's own.
+    expect(readFileSync(page, "utf8")).toContain("'Every', 'shot'");
+    writeFileSync(page, readFileSync(page, "utf8").replace("'Every', 'shot'", "'Each', 'shot'"));
+    const r = await mg(["board", "--format", "all", "--job", job]);
+    expect(r.code).toBe(0);
+    expect(r.out).toMatch(/board\.png — 3 shot\(s\), 3 with the film's frame/);
+    expect(r.out).toMatch(/board-9x16\.png — 3 shot\(s\), 3 with the film's frame/);
+    for (const [format, w, h] of [["16x9", 640, 360], ["9x16", 360, 640]] as const)
+      for (const middle of ["0.225", "0.825", "2.1"]) {
+        const still = readFileSync(join(job, "out/stills", format, `at-${middle}s.png`));
+        expect([still.readUInt32BE(16), still.readUInt32BE(20)], `${format} ${middle}`).toEqual([w, h]);
+      }
+
+    // The film's field is dark: three frames of it make the board taller and, all in all, darker.
+    const wide = drawn(join(job, "board/board.png")), tall = drawn(join(job, "board/board-9x16.png"));
+    expect(wide.height).toBeGreaterThan(bare.height);
+    expect(tall.height).toBeGreaterThan(wide.height);
+    expect(wide.light).toBeLessThan(bare.light - 15);
+    expect(tall.light).toBeLessThan(bare.light - 15);
+  }, 180_000);
+});
+
 describe("B43 dxb-motion-graphics — the HyperFrames version guard", () => {
   let stateDir = "";
   const state = () => JSON.parse(readFileSync(join(stateDir, "hyperframes.json"), "utf8"));
@@ -346,7 +383,7 @@ describe("B43 dxb-motion-graphics — the HyperFrames version guard", () => {
   }, 180_000);
 
   it("a guard film drawn without WebGL is refused, and no film is kept", async () => {
-    const r = await tryGuard(guardWith("const gl = document.createElement('canvas').getContext('webgl');", "const gl = null && document.createElement('canvas').getContext('webgl');"));
+    const r = await tryGuard(guardWith("const gl = canvas.getContext('webgl');", "const gl = null && canvas.getContext('webgl');"));
     expect(r.renders).toEqual([0]);
     expect(r.code).not.toBe(0);
     expect(r.out).toMatch(/not a graphics card mg knows \(no WebGL\)/);
