@@ -41,7 +41,8 @@ vocabulary, easing, review) — before writing your own.
 
 **3. The storyboard — approved before anything moves.** Write `board/board.json`: numbered shots, each with its
 time range, what holds on screen, and **on its own line how it becomes the next shot** — which shape turns into
-which, what the camera does to get there. For a physical product add shape-check tiles (our model beside the
+which, what the camera does to get there; or a cut, when the film changes subject or time on purpose. What a
+board never carries is a cross-fade standing in for a join nobody designed. For a physical product add shape-check tiles (our model beside the
 reference photo); when the film must join filmed footage, the exact end still. `mg board` renders the board.
 It goes to the job's owner — the CEO in a construction trial, the creative director's seat in a studio job — and
 their notes change the board, never a half-built film. Nothing is animated before the board is approved.
@@ -53,7 +54,8 @@ for time `t` — no timers, no animation-frame clock, seeded randomness, so the 
 pixels. The page reaches the job's material as `assets/…`, `refs/…` and `sound/…` (links `mg init` makes inside
 `page/`); a path that climbs out of `page/` is refused by the renderer. Engines by the shot: canvas, SVG or DOM for 2D; three.js (a pinned copy in `page/lib/`, not a CDN) for
 browser 3D; Blender for a physical product — `references/blender.md` and the kit in
-`tools/motion-graphics/blender/`. Existing illustrations are cut out and animated, not redrawn. The page lays out
+`tools/motion-graphics/blender/`. Existing illustrations are cut out and animated, not redrawn (`references/craft.md`, "Animating an existing
+illustration"). The page lays out
 from `FILM.W/H`, so each frame format is composed, not cropped.
 
 **5. Look at it.** `mg sheet --around-events` gives three or four stills across every transition; read every one

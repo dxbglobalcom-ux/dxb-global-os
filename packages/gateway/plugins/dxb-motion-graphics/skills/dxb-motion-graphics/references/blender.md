@@ -19,13 +19,16 @@ frame rendering, shape checks and a flat two-tone mode. It offers helpers only: 
    and logo, left versus right. Put the tile on the storyboard. The model has never seen the real object; this
    is where a wrong case, a part passing through another, or a mirrored piece is caught — and afterwards a
    person compares with the real thing.
-3. **Light for the material.** Start with one large soft key and a near-black world; add a rim only if the
-   subject merges with the background. Look at where the highlight falls on each curved surface — move the light
-   until the highlight draws the form.
-4. **Lens.** 70–100 mm for a product; focus on the part that matters; a wide aperture for close shots. Check
-   that depth of field is not hiding the very detail the shot is about.
-5. **Movement.** The object or the camera is always turning or travelling a little; fast moves get motion blur.
-   Keys are set in seconds from the board's times, eased.
+3. **Light for the material.** The direction decides the light; whatever it is, look at where the highlight falls
+   on each curved surface and move the light until the highlight draws the form. One large soft key on a dark
+   world is a quick way to see a glossy form clearly and a common place to begin, not the look of every film —
+   a bright studio sweep, an HDRI of a real place or coloured light are equally the job's to choose.
+4. **Lens.** A longer lens (around 70–100 mm) keeps a product's proportions true, which is why product
+   photography favours it; a wide lens close in is a deliberate, dramatic choice. Focus on the part that matters,
+   and when the aperture is wide check that depth of field is not hiding the very detail the shot is about.
+5. **Movement.** As the board says. A little turn or travel in the object or the camera keeps a product shot
+   alive, and a deliberate still hold is a choice; fast moves get motion blur. Keys are set in seconds from the
+   board's times, eased.
 6. **Render small first.** A handful of frames at low samples across the whole film, as a contact sheet, against
    the board; then the full frames. Transparent film when the product is composited over the page's own
    background, type and effects — which is usual: Blender renders the object, the page does the graphics, and

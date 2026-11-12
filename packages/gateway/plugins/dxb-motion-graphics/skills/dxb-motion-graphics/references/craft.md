@@ -54,6 +54,28 @@ the job's own.
 - **Materials decide realism** more than geometry does: roughness variation, a slight bevel on every edge, real
   texture sets rather than flat colours.
 
+## Animating an existing illustration (puppet)
+
+When the brand already owns illustrations — characters, objects, scenes — the film moves those, it does not
+redraw them. The drawing stays the brand's; only its parts move.
+
+1. **Cut it into parts** that move separately (head, arm, hand, the object held), each a transparent image with
+   a little overlap under the joint so no gap opens when it turns. Background removal for a flat illustration:
+   by colour key, or HyperFrames' `remove-background`; clean the edge at full size.
+2. **Give each part a pivot** at its joint and a parent (hand → forearm → upper arm → body). Rotating around the
+   right pivot with easing is most of what reads as life: a nod, a wave, a lean.
+3. **Warp where a rigid turn looks stiff** — a bending arm, a cape, a smile. Lay a coarse triangle mesh over the
+   part, pin a few points, move the pins over time, and draw each triangle with the image mapped onto it (canvas
+   2D with an affine transform per triangle, or a WebGL textured mesh). A handful of pins is enough; too many
+   and the drawing melts.
+4. **Stepped timing** (holding each pose for two or three frames) suits flat, thick-outline illustration and
+   reads as hand-made; smooth timing suits soft, gradient styles. Match the illustration.
+5. Small secondary movement — a blink, hair or cloth settling a few frames late — is what makes a cut-out feel
+   drawn for the film.
+
+All of it is a pure function of time like the rest of the page: pin positions and joint angles come from the
+beat times.
+
 ## Colour
 
 - The brand's own colours, exact. A background glow that takes its hue from the subject ties a frame together.

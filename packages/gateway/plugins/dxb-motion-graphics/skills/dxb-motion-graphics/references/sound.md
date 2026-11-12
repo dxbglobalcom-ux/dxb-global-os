@@ -29,7 +29,8 @@ Picture first, locked; then effects; then voice; then levels. A picture change a
 ## Voice
 
 - Written **to the shots**: read the beat times, give each line a start time, and count words — about 2.2 words a
-  second is a comfortable advertising pace, slower for weight. Leave the last two seconds to the end card.
+  second is a comfortable advertising pace, slower for weight. If the end card should stand without a voice over
+  it, end the last line before it arrives.
 - A line should end before the shot that carries it changes. Write the timed script first
   (`0.2s  Got AI skills?`), have it approved with the board when the voice carries the message.
 - Spoken by the studio's own voice tool; the file's real length is measured and the script adjusted, never the

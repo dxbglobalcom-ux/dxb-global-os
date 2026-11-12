@@ -11,7 +11,7 @@ for our app" returns a strong one from a brief that says what the film is for an
 | **Who and where** | Who watches, on what (phone feed, site hero, store listing, a screen in a shop, a billboard), with or without sound. |
 | **Length and frames** | Seconds; 16:9, 9:16, 1:1 — each named, because each is composed. |
 | **Delivery** | Resolution, frame rate, loudness target, transparent master or not, the file the next step needs. From where it runs and from any footage it joins. |
-| **The promise** | The one thing the product does for the viewer, in the brand's own words. Three supporting facts at most, each true and checkable. |
+| **The promise** | The one thing the product does for the viewer, in the brand's own words. The supporting facts the length can carry, each true and checkable. |
 | **The material** | Logo files, real screens, product photographs or model, illustrations, the brand's colours and typeface, footage it must join. What is missing and who supplies it. |
 | **References** | Two or three films or frames, each with what is wanted from it — the pacing, a transition, the light. Never "like this" without saying what. |
 | **Tone** | Three adjectives the brand would sign, and one it would refuse. |
