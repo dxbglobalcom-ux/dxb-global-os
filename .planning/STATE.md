@@ -101,7 +101,8 @@ real product photos — the setting must belong to the product.
 - DxB Web Studio, standing answers (2026-11-02): the 213 personas scanned (13 core, 69 ring, file 5); Y9 and Y11 later,
   markers in ORDER.md. The studio's ScrollCraft output is a library on his word (`ComfyUI/output/scrollcraft/KUTUPHANE.tsv`);
   approved and used output goes into it; looking there before generating waits until it is rich.
-- Nothing else is brought to him at opening (his word 2026-11-12): what comes at its own time is asked at its own place — the platform-hub plan's two decisions in `FINAL.md` (B43), the 10 new rows and the proposed Y12 (the first mobile app, #55 — carries the store accounts), the tools and accounts at their ranks, the server, the Meta account, his Islamic rulings and Hermes in `.planning/quick/20261014-tahta-sirasi/ORDER.md` and their row files; the walk is over his Excel's rows (YE19 next), not over the board; where client sites are published is kept for later.
+- The board's new items are placed (2026-11-12, his word <!-- CEO-OK: board-items-placed-where-related-2026-11-12 -->): where a row already owned the subject the item went into it (Y4 → B43, Y8 → B83, Y9 and Y11 → B84, the first mobile app → B32 <!-- CEO-OK: pocket-face-first-mobile-app-2026-11-12 -->), where none did a row was opened (B71-B76); nothing is built, the board's order is still asked after the walk.
+- Nothing else is brought to him at opening (his word 2026-11-12): what comes at its own time is asked at its own place — the platform-hub plan's two decisions in `FINAL.md` (B43), the tools and accounts at their ranks, the server, the Meta account, his Islamic rulings and Hermes in `.planning/quick/20261014-tahta-sirasi/ORDER.md` and their row files; the walk is over his Excel's rows (YE19 next), not over the board; where client sites are published is kept for later.
 
 ## Where things live
 

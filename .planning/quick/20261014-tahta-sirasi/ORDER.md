@@ -30,19 +30,26 @@ in needs B32, which needs B22 (his 2026-07-28 rule, still standing for everythin
 between B64 steps 4 and 5. Revenue rows stay late by his rule: a pilot is a bench test and sits where its part is
 built (MERGE §2, call 1).
 
+## Placed on the board 2026-11-12 (his word `board-items-placed-where-related-2026-11-12`)
+
+Each new item went into the row that already owned its subject, or became a row where none did; nothing is built
+and the ranks below are unchanged until the board is reordered. New rows: B71 (Y1), B72 (Y2), B73 (Y3), B74 (Y5),
+B75 (Y7), B76 (Y6). Placed in existing rows: Y4 → B43, Y8 → B83 (H4), Y9 and Y11 → B84, the first mobile app → B32.
+B77-B80 are not reserved any more. What is still asked of him here: the order itself (answer 1 below).
+
 ## The ranks
 
 | # | Item | Layer | Stands on | Carries |
 |---|---|---|---|---|
-| 1 | NEW Y1 network door | L1 | — | F-R1-1 refuted (MERGE §7); what is open: port 4000 (model gateway, key not the default) and 22 (SSH, password login on by default) to the wall — a root edit, his hand; F-R1-4 sign-up off; a private network as the way in, never the only lock |
-| 2 | NEW Y2 backup proven | L1 | — (off-site needs his Hetzner look) | F-R1-2, F-R1-9, BACKUP_PLAN.md:45, MASTER_PLAN.md:44, ROADMAP E13.0 lines |
+| 1 | **B71** (was NEW Y1) network door | L1 | — | F-R1-1 refuted (MERGE §7); what is open: port 4000 (model gateway, key not the default) and 22 (SSH, password login on by default) to the wall — a root edit, his hand; F-R1-4 sign-up off; a private network as the way in, never the only lock |
+| 2 | **B72** (was NEW Y2) backup proven | L1 | — (off-site needs his Hetzner look) | F-R1-2, F-R1-9, BACKUP_PLAN.md:45, MASTER_PLAN.md:44, ROADMAP E13.0 lines |
 | 3 | B64 step 1 → company (4 migrations + 20261014050000) | L1/L4 | 2 | F-R1-3, F-R1-5 (public), F-R4-5, F-R5-8; B51's `decompose` removal if its refuter preflight is repaired (STATE NEXT 3); fitted, not run — the engine stays stopped until #51; his decision at this rank: YE01 Supabase Agent Skills installed when this rank starts, trimmed, with its one short test (`HIS-WORDS-2026-10-15.md`) |
-| 4 | NEW Y3 second wall | L1 | 3 | F-R1-4 (signed-in = ceo), F-R1-5 (pgboss/storage), supabase_admin anon default (SOL.md), F-R1-6 + F-R5-6, F-R1-7 (dxb_gateway in c_windows), F-R1-8, F-R1-10 |
-| 5 | NEW Y4 halal screen on the studio | L5 (foundation-grade) | — | F-R4-4; scope: prompts, asset picks (stock footage, music) and cuts, every new engine's output (MERGE §4.6) |
-| 6 | NEW Y5 records tell the truth | L1 | — | F-R3-1 (workforce gate + seed + ROADMAP:159), F-R3-2, F-R3-3, F-R3-8, F-R4-6 (14 inbox tasks, company write), F-R6-2 (vps/README), F-R6-3 (July Hermes files + watchdog test, delete list to him first), F-R6-5 (July traces, company write), MODEL_ROUTING_SPEC:304 kimi "testing", SYSTEM_ARCHITECTURE:68 voice "live", CEO_OPERATING_MANUAL:26 07:00, B36 pointer, B39 contradiction, B61 50/55 vs 60, B52 startup-budget into the battery, C41, R1's F-R1-1 record corrected, rows-D.md:417 (memory brain ↔ B64 step 8) |
+| 4 | **B73** (was NEW Y3) second wall | L1 | 3 | F-R1-4 (signed-in = ceo), F-R1-5 (pgboss/storage), supabase_admin anon default (SOL.md), F-R1-6 + F-R5-6, F-R1-7 (dxb_gateway in c_windows), F-R1-8, F-R1-10 |
+| 5 | **B43's leg** (was NEW Y4) halal screen on the studio | L5 (foundation-grade) | — | F-R4-4; scope: prompts, asset picks (stock footage, music) and cuts, every new engine's output (MERGE §4.6) |
+| 6 | **B74** (was NEW Y5) records tell the truth | L1 | — | F-R3-1 (workforce gate + seed + ROADMAP:159), F-R3-2, F-R3-3, F-R3-8, F-R4-6 (14 inbox tasks, company write), F-R6-2 (vps/README), F-R6-3 (July Hermes files + watchdog test, delete list to him first), F-R6-5 (July traces, company write), MODEL_ROUTING_SPEC:304 kimi "testing", SYSTEM_ARCHITECTURE:68 voice "live", CEO_OPERATING_MANUAL:26 07:00, B36 pointer, B39 contradiction, B61 50/55 vs 60, B52 startup-budget into the battery, C41, R1's F-R1-1 record corrected, rows-D.md:417 (memory brain ↔ B64 step 8) |
 | 7 | B29 | L1 | — | stale "services stopped" cell fixed |
 | 8 | B63 | L1 | — | his eye only |
-| 9 | NEW Y7 engine hides no failure | L2 | — | F-R2-3, F-R2-5, F-R5-4 (usage trigger, C31 — first, MERGE §4.3), F-R5-7, F-R6-4, W-C42-5 system attempt cap, W101's three guards (circuit breaker, completion contract, 90 % budget warning) |
+| 9 | **B75** (was NEW Y7) engine hides no failure | L2 | — | F-R2-3, F-R2-5, F-R5-4 (usage trigger, C31 — first, MERGE §4.3), F-R5-7, F-R6-4, W-C42-5 system attempt cap, W101's three guards (circuit breaker, completion contract, 90 % budget warning) |
 | 10 | B62 | L2 | — | |
 | 11 | B64 step 1 remainder (Hamza's three hands, connect-to-head, voice leg) | L4 | 3 | F-R4-3 + SOL C1 (voice 500, chat 4,000), C2 counting, B08's door, §2d "open a row, never promise", a timed undo test |
 | 12 | B67 | L3 | 11 | |
@@ -54,7 +61,7 @@ built (MERGE §2, call 1).
 | 18 | B68 | L2 | 17 | |
 | 19 | B22 | L7 | — | six waves re-derived, C42 (rival 39/40 closed from their transcripts 2026-10-19) |
 | 20 | B03-bis | L7 | — (his login) | |
-| 21 | B32 | L7 | 19, 20 | B02 merged (B18 closed 2026-10-17, V1 only); C27, C28, C32-C35 (C28 and C32-C35 closed 2026-10-17 as V1 rows — their words still reach B32 as V2 requirements), C61-C63, F-R3-4, F-R3-5, F-R4-7 as V2 requirements; design-pack word (§2d); the motion library (W042), drawing hands (W040, W032), the agent card with its autonomy label (W080), the blueprint with "next wake" and the sponsor pipeline (W121, X-7) |
+| 21 | B32 | L7 | 19, 20 | B02 merged (B18 closed 2026-10-17, V1 only); C27, C28, C32-C35 (C28 and C32-C35 closed 2026-10-17 as V1 rows — their words still reach B32 as V2 requirements), C61-C63, F-R3-4, F-R3-5, F-R4-7 as V2 requirements; design-pack word (§2d); the motion library (W042), drawing hands (W040, W032), the agent card with its autonomy label (W080), the blueprint with "next wake" and the sponsor pipeline (W121, X-7); the phone screens — the holding's face in his pocket, the first mobile app (his word 2026-11-12) — are drawn here and built at #22; the store accounts ride with it (B32's row file) |
 | 22 | V2 built surface by surface (§2d WHERE V2 LIVES / EVERY SURFACE), first the living home + Hamza chat | L7 | 21 | C26, C37, C52, C53, C56 (by absence), C60 (screen) |
 | 23 | B14 | L6 | 16, 22 | B64 scenario 1 |
 | 24 | B64 step 5 | L8 | 17, 22 | W-C42-4 mailbox, B05's Gmail-send third; prospects live as an earlier state of the client record (Y9's home); a timed undo of a misfiled mail; his decision at this rank: YE06 Google Workspace CLI tried here, the whole tool with full Google access — the OAuth / Cloud project is his identity step (`HIS-WORDS-2026-10-15.md`) |
@@ -79,16 +86,15 @@ built (MERGE §2, call 1).
 | 43 | B16 + C30 | L3 | 41 | |
 | 44 | B27 | L3 | — (his choice) | |
 | 45 | B43 | L7/L8 | 21, 34 | T-7, T-8, T-12, content-principles leg (peer commit 826fffb7) with W035's writing rules, through the blind test; HyperFrames and long→short lanes; the Islamic editorial check before any religious content; the studio platform-hub plan rides on this row (FINAL.md, approved with his corrections 2026-10-18; channels left it for a separate study) |
-| 46 | NEW Y8 channel line (Excel X-1) | L8 | 5, 34, 45, 26 | three pilots to his eye first (Law D, a bench test), then the weekly line; YouTube's own scheduling; the account at the key turn; X-10, X-11, X-17, X-19 |
-| 47 | NEW Y11 the holding's own site | L8 | 45 | built on the bench, our own SEO/AEO case; live at the key turn; where it is hosted is his word · linked to DxB Web Studio (B84) — not now (his word 2026-11-02); his decision at this rank: YE13 OpenSEO's app self-hosted here — loading DataForSEO (about 50 $ minimum) is money out, his word (`HIS-WORDS-2026-10-15.md`; B84's row file) |
-| 48 | NEW Y9 client-finding (Excel X-2, narrowed) | L8 | 24, 41, 47 | leads and niche playbooks inside B64's client record · linked to DxB Web Studio (B84) — not now (his word 2026-11-02); his decision at this rank: YE10 Apify used here on the free plan first — going past it is money out, his word (`HIS-WORDS-2026-10-15.md`; B31 §8) |
+| 46 | **B83's H4** (was NEW Y8) channel line (Excel X-1) | L8 | 5, 34, 45, 26 | three pilots to his eye first (Law D, a bench test), then the weekly line; YouTube's own scheduling; the account at the key turn; X-10, X-11, X-17, X-19 |
+| 47 | **B84's leg** (was NEW Y11) the holding's own site | L8 | 45 | built on the bench, our own SEO/AEO case; live at the key turn; where it is hosted is his word · linked to DxB Web Studio (B84) — not now (his word 2026-11-02); his decision at this rank: YE13 OpenSEO's app self-hosted here — loading DataForSEO (about 50 $ minimum) is money out, his word (`HIS-WORDS-2026-10-15.md`; B84's row file) |
+| 48 | **B84's leg** (was NEW Y9) client-finding (Excel X-2, narrowed) | L8 | 24, 41, 47 | leads and niche playbooks inside B64's client record · linked to DxB Web Studio (B84) — not now (his word 2026-11-02); his decision at this rank: YE10 Apify used here on the free plan first — going past it is money out, his word (`HIS-WORDS-2026-10-15.md`; B31 §8) |
 | 49 | B28 | L8 | 45, 48, 25 | W-C42-6, X-3, X-4, X-5, X-6, X-12, X-15 |
 | 50 | B17 | L8 | 26 | |
-| 51 | NEW Y6 THE KEY TURN | all | 1-50 | the whole holding runs once end to end on the construction copy; then `dxb-scheduler` is re-enabled with the morning jobs catching up on waking (F-R2-2, F-R4-2, F-R5-2, F-R6-1); everything starts together; the accounts open (X-10) |
+| 51 | **B76** (was NEW Y6) THE KEY TURN | all | 1-50 | the whole holding runs once end to end on the construction copy; then `dxb-scheduler` is re-enabled with the morning jobs catching up on waking (F-R2-2, F-R4-2, F-R5-2, F-R6-1); everything starts together; the accounts open (X-10) |
 | 52 | B05 | L5 | 25 (his order) | ordered before the key turn, it moves in before it |
 | 53 | B04 | L8 | his order | same |
 | 54 | B01 | L7 | 35 (his order) | same; a written heads' channel first is his call (W089) |
-| 55 | NEW Y12 the first mobile app (proposed 2026-11-12 on his word *"mobil uygulama kuran bir satır nasıl oluşturulur? Ona göre yap"*; opens with the other new rows on his yes) | L8 | 22, 51 | no row, revenue line or plan builds a mobile app today (measured 2026-11-12: the board, this file, REVENUE-OPPORTUNITIES); the first is the OS in his pocket — his word 2026-11-12: *"holdingin cebindeki yüzü olması çok çok önemli"* (V2's surfaces as an installable web app first, which needs no store); built when the holding stands and runs at the Ferrari level, not before (his word, same day); the later candidates: a client's app as an extension of the Web Studio (B84), an own product under H3; built with the Expo skills on the shelf (`~/.local/share/dxb/skills/expo/`, YE11), tested on the bench; the store accounts (Apple 99 $ a year, Google Play 25 $ once) are identity and money out, his click at the first publish |
 | 55 | B26 | L1 | his timing ("iş bitince") | |
 | 56 | B25 | L7 | his timing (after the holding) | |
 
@@ -109,7 +115,7 @@ dropped on his word 2026-10-14: *"türkçe özet token harcayacaksa gerek yok in
 4. The two İNCELEMELER reports — **yes**: "Dördüncü soru için de önerine evet" — read, MERGE §5-6.
 Deferred to each row's turn: Hetzner look (2), Hermes delete list (6), server (32), mic (35), Excel
 decisions and his Islamic rulings (46-49).
-Store accounts for a mobile app (YE11 Expo Skills, `HIS-WORDS-2026-10-15.md`): at #55 (Y12).
+Store accounts for a mobile app (YE11 Expo Skills, `HIS-WORDS-2026-10-15.md`): in B32's row file, with the phone screens (#21).
 
 ## On his yes (PLAN.md step 6, then step 5)
 
