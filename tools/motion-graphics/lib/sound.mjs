@@ -3,7 +3,7 @@
 // into the page and what `mg verify` holds the rendered film to, by listening to the film itself.
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
-import { Refusal, readJson, replaceBlock } from "./job.mjs";
+import { Refusal, insideJob, readJson, replaceBlock } from "./job.mjs";
 
 const FINE = 48000;   // samples per second when a point is looked for in a sound file
 const COARSE = 16000; // samples per second when a film is listened to: 16 samples to the millisecond
@@ -12,37 +12,43 @@ const SILENT = 10 ** (-60 / 20);  // a film that never rises above −60 dBFS ca
 const ENVELOPE = 0.005; // seconds: the peak is the centre of the loudest stretch of this length
 const SEARCH = 0.25;    // seconds each side of the planned place in which a cue is looked for
 const HEARD = 0.25;     // a cue below a quarter of its planned level at its best place is not there
+const CLEARLY = 1.1;    // times: only a fit this much better moves a cue off the place its plan gives it
 const BOOST_LIMIT = 12; // dB: HyperFrames' data-volume goes no higher
 const toMillisecond = (seconds) => +seconds.toFixed(3); // the precision a clip is written and planned at
 
 /**
- * Mono samples of a file's sound at `rate`; empty when it carries none. The channels are averaged
- * (-rematrix_maxval 1): left alone, ffmpeg sums a stereo pair into float samples 3 dB hot, and a mono
- * sound file and the stereo film it was mixed into would no longer be at one level (measured 2026-11-12).
+ * A file's sound at `rate` as stereo samples, a left and a right one to each moment; empty when it
+ * carries none. Each side is kept as it is and a mono file is heard on both (more channels than two
+ * are first brought to stereo): averaged into one channel, a pair in opposite phase cancels to
+ * silence. The sides are copied, never mixed (aeval): ffmpeg's own mono-to-stereo is 3 dB down, and a
+ * mono sound file and the stereo film it was mixed into would no longer be at one level (measured 2026-11-12).
  */
 function decode(run, file, rate) {
-  const r = run("ffmpeg", ["-v", "error", "-i", file, "-vn", "-ac", "1", "-rematrix_maxval", "1.0", "-ar", String(rate), "-f", "f32le", "-"], { binary: true });
+  const sides = "aformat=channel_layouts=mono|stereo,aeval=val(0)|val(nb_in_channels-1):c=stereo";
+  const r = run("ffmpeg", ["-v", "error", "-i", file, "-vn", "-af", sides, "-ar", String(rate), "-f", "f32le", "-"], { binary: true });
   if (r.code !== 0 || !r.out.length) return new Float32Array(0);
   const bytes = Buffer.from(r.out);
-  return new Float32Array(bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + (bytes.length & ~3)));
+  return new Float32Array(bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + (bytes.length & ~7)));
 }
 
-/** Where a sound starts, peaks and ends, in seconds into its file; null when nothing in it is audible. */
+/** Where a sound starts, peaks and ends, in seconds into its file; null when nothing in it is audible on either side. */
 function soundPoints(x, rate) {
+  const moments = x.length / 2; // one left and one right sample to each
+  const level = (i) => Math.max(Math.abs(x[2 * i]), Math.abs(x[2 * i + 1])), power = (i) => x[2 * i] ** 2 + x[2 * i + 1] ** 2;
   let first = -1, last = -1;
-  for (let i = 0; i < x.length; i++) {
-    if (Math.abs(x[i]) <= AUDIBLE) continue;
+  for (let i = 0; i < moments; i++) {
+    if (level(i) <= AUDIBLE) continue;
     if (first < 0) first = i;
     last = i;
   }
   if (first < 0) return null;
-  const span = Math.min(x.length, Math.round(rate * ENVELOPE));
+  const span = Math.min(moments, Math.round(rate * ENVELOPE));
   let energy = 0, loudest = -1, centre = 0;
-  for (let i = 0; i < x.length; i++) {
-    energy += x[i] * x[i] - (i >= span ? x[i - span] * x[i - span] : 0);
+  for (let i = 0; i < moments; i++) {
+    energy += power(i) - (i >= span ? power(i - span) : 0);
     if (i >= span - 1 && energy > loudest) [loudest, centre] = [energy, i - (span - 1) / 2];
   }
-  return { start: first / rate, peak: centre / rate, end: last / rate, length: x.length / rate };
+  return { start: first / rate, peak: centre / rate, end: last / rate, length: moments / rate };
 }
 
 function planCue(run, job, film, cue, n) {
@@ -86,7 +92,7 @@ export function writeSoundBlock(job, plan) {
       .filter(([, seconds]) => seconds > 0).map(([name, seconds]) => ` ${name}="${seconds}"`).join("");
     return `  <audio id="mg-cue-${c.n}" src="${c.file}" data-start="${c.start}" data-duration="${c.duration}"${optional} data-volume="${+c.volume.toFixed(4)}"></audio>\n`;
   });
-  writeFileSync(job.page, replaceBlock(readFileSync(job.page, "utf8"), "sound", `${clips.join("")}  `, "page/index.html"));
+  writeFileSync(insideJob(job.dir, "page/index.html"), replaceBlock(readFileSync(job.page, "utf8"), "sound", `${clips.join("")}  `, "page/index.html"));
 }
 
 /** A film's sound as it is listened to; null when the film is silent. */
@@ -95,32 +101,68 @@ export function filmSound(run, file) {
   return x.some((sample) => Math.abs(sample) > SILENT) ? x : null;
 }
 
-/**
- * Where a planned cue really is in a film's sound: the clip as planned is slid over the film around
- * its planned place, and the best fit says where its aligned point sits (`measured`, seconds) and how
- * much of its planned level is there (`level`, 1 = as planned). `heard` is false when it is not there.
- */
-export function hearCue(run, job, cue, sound) {
-  const from = Math.round(cue.mediaStart * COARSE);
-  const clip = decode(run, join(job.dir, cue.file), COARSE).slice(from, from + Math.round(cue.duration * COARSE));
-  const fade = (i, seconds) => (seconds > 0 ? Math.min(1, i / (seconds * COARSE)) : 1);
-  for (let i = 0; i < clip.length; i++) clip[i] *= cue.volume * fade(i, cue.fadeIn) * fade(clip.length - 1 - i, cue.fadeOut);
-
+/** A cue's clip as the plan has it in the film — trimmed, at its level, faded — and the stretch of it that places it. */
+function plannedClip(run, job, cue) {
+  const from = 2 * Math.round(cue.mediaStart * COARSE);
+  const clip = decode(run, join(job.dir, cue.file), COARSE).slice(from, from + 2 * Math.round(cue.duration * COARSE));
+  const moments = clip.length / 2, fade = (i, seconds) => (seconds > 0 ? Math.min(1, i / (seconds * COARSE)) : 1);
+  for (let i = 0; i < moments; i++) {
+    const gain = cue.volume * fade(i, cue.fadeIn) * fade(moments - 1 - i, cue.fadeOut);
+    clip[2 * i] *= gain;
+    clip[2 * i + 1] *= gain;
+  }
   // Two seconds of the clip around its aligned point are enough to place it, and keep a long sound cheap.
   const point = Math.round((cue.point - cue.mediaStart) * COARSE);
-  const sliceFrom = Math.max(0, Math.min(point - COARSE, clip.length - 2 * COARSE)), sliceTo = Math.min(clip.length, sliceFrom + 2 * COARSE);
+  const sliceFrom = Math.max(0, Math.min(point - COARSE, moments - 2 * COARSE)), sliceTo = Math.min(moments, sliceFrom + 2 * COARSE);
   let planned = 0;
-  for (let i = sliceFrom; i < sliceTo; i++) planned += clip[i] * clip[i];
+  for (let i = 2 * sliceFrom; i < 2 * sliceTo; i++) planned += clip[i] * clip[i];
+  return { clip, point, sliceFrom, sliceTo, planned };
+}
 
-  const at = Math.round(cue.start * COARSE), reach = Math.round(SEARCH * COARSE);
-  let best = -Infinity, bestAt = at;
-  for (let lag = at - reach; lag <= at + reach; lag++) {
-    let fit = 0;
-    for (let i = Math.max(sliceFrom, -lag), end = Math.min(sliceTo, sound.length - lag); i < end; i++) fit += clip[i] * sound[lag + i];
-    if (fit > best) [best, bestAt] = [fit, lag];
+/**
+ * Where each planned cue really is in a film's sound, in the plan's order. A cue's clip is slid over
+ * the film around its planned place and the best fit says where its aligned point sits (`measured`,
+ * seconds) and how much of its planned level is there (`level`, 1 = as planned); `heard` is false when
+ * it is not there.
+ *
+ * The cues are heard together, so one sound in the film answers for one cue: what a cue is found in
+ * is taken out of the film, up to the cue's planned level, before the next one listens. First every
+ * cue, the loudest clip first, takes the sound within `tolerance` seconds of its planned place — unless
+ * its clip fits clearly better elsewhere, which is a sound that has moved; a sound repeated close by
+ * so goes to the cue whose place it is in. Then the cues still unplaced are looked for wherever, in
+ * what is left.
+ */
+export function hearCues(run, job, plan, sound, tolerance) {
+  const unheard = Float32Array.from(sound), moments = unheard.length / 2;
+  const clips = plan.map((cue) => plannedClip(run, job, cue)), heard = [];
+  const loudestFirst = plan.map((_, n) => n).sort((a, b) => clips[b].planned - clips[a].planned);
+
+  // Cue n's best fit in what is still unheard: within the tolerance of its planned place, and anywhere in its search.
+  const bestFits = (n) => {
+    const { clip, sliceFrom, sliceTo } = clips[n];
+    const at = Math.round(plan[n].start * COARSE), close = Math.round(tolerance * COARSE), reach = Math.round(SEARCH * COARSE);
+    let near = { fit: -Infinity, lag: at }, anywhere = near;
+    for (let lag = at - reach; lag <= at + reach; lag++) {
+      let fit = 0;
+      for (let i = 2 * Math.max(sliceFrom, -lag), end = 2 * Math.min(sliceTo, moments - lag); i < end; i++) fit += clip[i] * unheard[2 * lag + i];
+      if (fit > anywhere.fit) anywhere = { fit, lag };
+      if (fit > near.fit && Math.abs(lag - at) <= close) near = { fit, lag };
+    }
+    return { near, anywhere };
+  };
+  const settle = (n, { fit, lag }) => {
+    const { clip, point, planned } = clips[n], level = planned > 0 ? fit / planned : 0;
+    if (level >= HEARD)
+      for (let i = 2 * Math.max(0, -lag), end = Math.min(clip.length, 2 * (moments - lag)); i < end; i++) unheard[2 * lag + i] -= Math.min(level, 1) * clip[i];
+    heard[n] = { measured: (lag + point) / COARSE, level, heard: level >= HEARD };
+  };
+
+  for (const n of loudestFirst) {
+    const { near, anywhere } = bestFits(n);
+    if (near.fit >= HEARD * clips[n].planned && anywhere.fit <= CLEARLY * near.fit) settle(n, near);
   }
-  const level = planned > 0 ? best / planned : 0;
-  return { measured: (bestAt + point) / COARSE, level, heard: level >= HEARD };
+  for (const n of loudestFirst) if (!heard[n]) settle(n, bestFits(n).anywhere);
+  return heard;
 }
 
 /** Integrated loudness in LUFS (EBU R 128), or null when the film carries no sound to measure. */

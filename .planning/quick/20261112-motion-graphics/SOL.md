@@ -72,7 +72,7 @@ Brief’i tek başına okurken çıkardığım kabul koşulları: “önce kendi
 
 ## 2. The code audit (commits e67611a9, 3bc81e6e) — not clean; A: findings 4, 5, 6 · B: 1, 2, 3, 9 and parts of 5-8
 
-Status at the hand-over: the document findings (1, 3) are fixed in the commit that carries this file; the code and test findings (2, 4, 5, 6, 9, verify.mjs's line in 3) are OPEN — the successor's first piece.
+Status 2026-11-12, evening: the document findings (1, 3) were fixed in 6c9f8825; the code and test findings (2, 4, 5, 6, 9, verify.mjs's line in 3) are fixed in the commit that carries this line — each with a test that was red before; the battery then ran all 59 of the job's tests, none skipped (`battery-2.out`: 31 inside the wall, 25 + 3 in the host half; BATTERY_GREEN). No second audit round. Left open, named by the fixer: the guard page draws on a 2D canvas, so a WebGL picture frozen under seek is not proven by it; a script loaded from another host is not read for WebGL; `masterOf` is ambiguous for a format named like `a-2x`; `mg`'s own process runner has no timeout. Findings 7 (the kit on a GPU) and 8 (licence proofs, listening) stand as Sol left them.
 
 **Kısmen karşılıyor; bu iki commit için temiz denetim veremiyorum.** Ana yöntem taşınmış, fakat ses doğrulaması eksik cue’yu geçirebiliyor, yazılım GL kontrolü açık kalabiliyor ve çıktı yolları iş klasöründen kaçabiliyor.
 

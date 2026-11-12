@@ -96,6 +96,11 @@ HOST_FILES=(
   tests/hooks/context-gate.test.ts
   tests/hooks/cost-gate.test.ts
   tests/hooks/effort-warn.test.ts
+  # B43 dxb-motion-graphics (2026-11-12): inside the wall there is no network and no home, so
+  # `npx hyperframes` and Blender were not found and 29 of the 31 cases skipped. The cases that need
+  # only ffmpeg stay inside (tests/b43/motion-graphics.test.ts); here a missing tool is a failure.
+  tests/b43/motion-graphics-film.host.test.ts     # HyperFrames through npx and npm, and Chrome: films really rendered
+  tests/b43/motion-graphics-blender.host.test.ts  # Blender, in the home's ~/.local/bin
 )
 
 # ── THE BENCH'S OWN RULER (CEO 2026-09-21: "tezgah kendini temizlesin her zaman

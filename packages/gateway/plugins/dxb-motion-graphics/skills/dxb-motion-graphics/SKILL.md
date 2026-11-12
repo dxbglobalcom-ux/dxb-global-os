@@ -73,7 +73,8 @@ ruling given for client work. `references/sound.md`.
 
 **7. Render.** `mg render --format all` (add `--4k` or `--alpha` when the delivery asks). The command uses the
 last HyperFrames version that passed its 5-second test (`mg hf update` tries a newer one), refuses a partial
-render, and fails when a WebGL page falls to software rendering.
+render, and fails when a page that asks for WebGL does not prove a graphics card drew it — the page writes its
+renderer to `<html data-gl>` (the template shows how); software, no line, or an unknown renderer all fail.
 
 **8. Verify, and say what only an eye or an ear can settle.** `mg verify` measures duration, frames, size,
 loudness and each cue's position in the rendered sound. Then report apart, as unverified: how it sounds, and for
@@ -82,6 +83,28 @@ a physical product each part against the real object — the model cannot see th
   <brand>." and is never published or run as paid media.
 - **A client's commissioned film** carries no such line, and goes to the client only through the holding's
   delivery gate — every delivery waits for his eye.
+
+## The job folder
+
+`job.json` states the film; edit it by hand after `mg init`:
+
+```json
+{ "title": "WhatsApp spec",
+  "formats": [{ "name": "16x9", "w": 1920, "h": 1080 }, { "name": "9x16", "w": 1080, "h": 1920 }],
+  "fps": 30, "lufs": -16, "spec": true, "brand": "WhatsApp" }
+```
+
+- `formats` — every frame the film ships in; the first is the one a command uses when none is named. A name is
+  letters, digits, `-` and `_` only: it becomes part of every output's file name.
+- `fps` — the delivery's rate. `lufs` — the delivery's loudness target; `null` means `mg verify` measures the
+  loudness and judges nothing — state a target once the brief gives one.
+- `spec`, `brand` — what the job is, for whoever opens the folder next: an independent spec piece or a
+  commissioned film, and whose brand. The command does not judge them; step 8 does.
+
+`assets/SOURCES.md` — one line per file put into `assets/`, `refs/` and `page/fonts/`: where it came from (the
+address), the day, and its licence or terms. A film whose material cannot be traced is not delivered. A source
+that asks for an account, a signature or a tick under its terms (a brand's press-kit portal, a font foundry) is
+not accepted by the builder: the step is brought to the one who decides, with the address and what the terms say.
 
 ## The command
 
@@ -93,7 +116,7 @@ a physical product each part against the real object — the model cannot see th
 | `mg events` | the film's beats and events |
 | `mg sound` | `sound/cues.json` → the page's sound block (a cue's file lives under `sound/`) |
 | `mg render [--format name\|all] [--scale n \| --4k] [--alpha] [--fps n]` | the film, into `out/` (`.mov` for `--alpha`); a larger master only by a whole multiple that reaches 1080p, 1440p or 4K |
-| `mg verify [file]` | the measurements, `out/verify.json` |
+| `mg verify [file]` | the measurements of every master of the job's formats in `out/`, or of the file at the path given; `out/verify.json` |
 | `mg hf status\|update` | the HyperFrames version guard |
 | `mg blender <scene.py> [-- args]` | Blender, headless, after a free-memory check on the graphics card |
 
@@ -106,4 +129,5 @@ Run it from the job folder or with `--job <dir>`; never run `npx hyperframes` fr
 - **A logo or a product drawn from memory.** Use the file; compare with the photograph.
 - **Calling it done from stills.** Render it and have it watched.
 - **Sound before the picture is locked.**
-- **Software rendering** in a WebGL film (flat, slow): the render fails on it by design — fix the cause.
+- **Software rendering** in a WebGL film (flat, slow): the render fails on it, and on a renderer it cannot name,
+  by design — fix the cause.

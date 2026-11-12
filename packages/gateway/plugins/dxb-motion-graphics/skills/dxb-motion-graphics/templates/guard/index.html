@@ -40,6 +40,7 @@ canvas.height = FILM.H * dpr;
 
 // A bar crosses the frame at a steady pace, so every frame differs from the one before it; at the
 // film's one event the field turns from dark to pale, which is the moment the guard's sound sits on.
+// `mg hf update` compares the film second by second: a version that shows one picture twice is refused.
 function renderAt(t) {
   t = Math.min(FILM.TOTAL, Math.max(0, t));
   const { W, H, BEATS } = FILM, turned = t >= BEATS.turned;
@@ -51,6 +52,7 @@ function renderAt(t) {
 }
 window.renderAt = renderAt;
 
+// The renderer is said as it is. Only a graphics card passes: 'no WebGL', like a software renderer, fails the render.
 window.ready = (async () => {
   const gl = document.createElement('canvas').getContext('webgl');
   const named = gl && gl.getExtension('WEBGL_debug_renderer_info');

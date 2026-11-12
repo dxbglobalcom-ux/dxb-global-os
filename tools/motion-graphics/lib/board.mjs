@@ -5,14 +5,14 @@ import { existsSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "no
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { pathToFileURL } from "node:url";
-import { Refusal, TEMPLATES, readJson, replaceBlock } from "./job.mjs";
+import { Refusal, TEMPLATES, insideJob, readJson, replaceBlock } from "./job.mjs";
 
 const CHROME = "/usr/bin/google-chrome";
 const WIDTH = 1600, DENSITY = 2; // the board is 1600 CSS px wide, photographed at two pixels to one
 
 /** Writes board.json into the board page (made from the template when the job has none); returns the board. */
 export function writeBoardPage(job) {
-  const board = readJson(join(job.dir, "board/board.json")), page = join(job.dir, "board/board.html");
+  const board = readJson(join(job.dir, "board/board.json")), page = insideJob(job.dir, "board/board.html");
   if (!Array.isArray(board.shots) || !board.shots.length) throw new Refusal('board/board.json: "shots" must list at least one shot');
   const html = readFileSync(existsSync(page) ? page : join(TEMPLATES, "board.html"), "utf8");
   // "<" is written as its JSON escape so no text of the board can close the script block it sits in.
@@ -24,7 +24,7 @@ export function writeBoardPage(job) {
 /** Draws the board into board/board.png and returns { png, shots }. */
 export function drawBoard(run, job) {
   const board = writeBoardPage(job);
-  const page = pathToFileURL(join(job.dir, "board/board.html")).href, png = join(job.dir, "board/board.png");
+  const page = pathToFileURL(join(job.dir, "board/board.html")).href, png = insideJob(job.dir, "board/board.png");
   const profile = mkdtempSync(join(tmpdir(), "mg-chrome-")); // its own profile: never the one a person has open
   const chrome = (args) => run(CHROME, ["--headless=new", "--no-first-run", "--disable-gpu", "--hide-scrollbars", `--user-data-dir=${profile}`, ...args, page]);
   try {

@@ -19,8 +19,12 @@ Picture first, locked; then effects; then voice; then levels. A picture change a
 - `sound/cues.json`: `{ "event": "cardLands", "file": "sound/pop-soft-02.wav", "align": "start", "db": -18 }`.
   Events are the names in the page's `FILM.EVENTS` — add an event to the page for every moment that deserves a
   sound, and the cue follows the picture if a time changes before the lock.
-- Levels to start from: whooshes and beds quiet (around −26 to −32 dB), pops and ticks a little above them, one
-  or two accents louder. Never clipping; leave the peaks a couple of dB under full scale.
+- Levels are set in two moves. First the balance between the cues: whooshes and beds lowest, pops and ticks a
+  few dB above them, one or two accents a few dB above those. Then the whole set is moved together until the
+  rendered film measures at the delivery's target — a film that carries only effects is mostly silence, so each
+  cue sits far higher than its figure in a full mix would (measured on the first film, 2026-11-12: cues at −26
+  to −32 dB gave −41.5 LUFS; raised to between −9 and −20 dB the same film measured −31.6 LUFS). Never clipping;
+  leave the peaks a couple of dB under full scale.
 - Vary: the same pop three times in a row is heard as a machine. Use neighbours from the same family.
 - Sources, in order: the job owner's own licensed files → the starter set in `sfx/` (see `sfx/INDEX.md` for each
   file's length, peak position and character, and `sfx/LICENCES.md`) → generated basics (`sfx/synth.mjs`) → a paid

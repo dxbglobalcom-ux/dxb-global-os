@@ -1,18 +1,20 @@
 // dxb-motion-graphics — the job folder: what `mg init` lays out and how every other command reads it.
 // Two files state a film: job.json (title, formats, rate, loudness target) and the timing block at
 // the top of page/index.html (window.FILM). Nothing here starts a process.
-import { cpSync, existsSync, lstatSync, mkdirSync, readFileSync, symlinkSync, writeFileSync } from "node:fs";
-import { dirname, join, resolve } from "node:path";
+import { cpSync, existsSync, lstatSync, mkdirSync, readFileSync, realpathSync, symlinkSync, writeFileSync } from "node:fs";
+import { dirname, join, resolve, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 import vm from "node:vm";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
+const REPOSITORY = resolve(HERE, "../../..");
 export const TEMPLATES = resolve(HERE, "../../../packages/gateway/plugins/dxb-motion-graphics/skills/dxb-motion-graphics/templates");
 
 const FOLDERS = ["assets", "refs", "board", "page", "page/fonts", "page/lib", "sound", "out"];
 // HyperFrames serves the page's own folder and nothing above it: a "../" path is a lint error and a
 // 404 in its browser (measured 2026-11-12). The page reaches the job's material through these links.
 const LINKED = ["assets", "refs", "sound"];
+const FORMAT_NAME = /^[A-Za-z0-9_-]+$/; // a format's name becomes part of every output's file name
 
 /** What stopped a command, in words for the person at the terminal. `mg` prints it and exits non-zero. */
 export class Refusal extends Error {}
@@ -63,6 +65,28 @@ export function frameRoot(html, { w, h, alpha = false }) {
   return html.replace(root[0], () => framed);
 }
 
+/**
+ * A path under the job's root that a command writes to. Refused when it leaves the job folder — by its
+ * own parts, or through a link standing on the way — so nothing `mg` writes lands outside the job.
+ */
+export function insideJob(root, ...parts) {
+  const path = resolve(root, ...parts);
+  let standing = path; // the deepest part of the path that is already there, a link included
+  while (!lstatSync(standing, { throwIfNoEntry: false })) standing = dirname(standing);
+  const home = realpathSync(root), real = existsSync(standing) ? realpathSync(standing) : null; // null: a link to nowhere
+  if (real !== home && !real?.startsWith(home + sep)) throw new Refusal(`${path} leads out of the job folder (${root}); mg writes nothing outside it`);
+  return path;
+}
+
+/**
+ * HyperFrames is started from the job folder, and an npx call started from this repository's root
+ * rewrote its package.json (measured 2026-11-12): the root is never a job, by whatever path it is named.
+ */
+function refuseRepositoryRoot(root) {
+  if (existsSync(root) && realpathSync(root) === realpathSync(REPOSITORY))
+    throw new Refusal(`${root} is this repository's root, not a job folder — a job lives in a folder of its own: mg init <dir>`);
+}
+
 function gcd(a, b) {
   return b ? gcd(b, a % b) : a;
 }
@@ -77,25 +101,29 @@ export function linkMaterial(root) {
 /** Folders, job.json, the page, an empty cue list and the links: a job that every command can open. */
 export function layOutJob(dir, { title, w, h, fps }, pageHtml) {
   const root = resolve(dir);
+  refuseRepositoryRoot(root);
   for (const taken of ["job.json", "page/index.html"])
     if (existsSync(join(root, taken))) throw new Refusal(`${root} already holds a job (${taken}); mg never writes over one`);
-  for (const folder of FOLDERS) mkdirSync(join(root, folder), { recursive: true });
+  mkdirSync(root, { recursive: true });
+  for (const folder of FOLDERS) mkdirSync(insideJob(root, folder), { recursive: true });
   const k = gcd(w, h);
-  writeJson(join(root, "job.json"), { title, formats: [{ name: `${w / k}x${h / k}`, w, h }], fps, lufs: null, spec: false, brand: "" });
-  writeFileSync(join(root, "page/index.html"), pageHtml);
-  cpSync(join(TEMPLATES, "play.js"), join(root, "page/play.js"));
-  writeFileSync(join(root, "sound/cues.json"), "[]\n");
+  writeJson(insideJob(root, "job.json"), { title, formats: [{ name: `${w / k}x${h / k}`, w, h }], fps, lufs: null, spec: false, brand: "" });
+  writeFileSync(insideJob(root, "page/index.html"), pageHtml);
+  cpSync(join(TEMPLATES, "play.js"), insideJob(root, "page/play.js"));
+  writeFileSync(insideJob(root, "sound/cues.json"), "[]\n");
   linkMaterial(root);
   return openJob(root);
 }
 
 export function openJob(dir) {
   const root = resolve(dir);
+  refuseRepositoryRoot(root);
   if (!existsSync(join(root, "job.json"))) throw new Refusal(`${root} is not a job folder (no job.json) — make one with: mg init <dir>`);
   const stated = readJson(join(root, "job.json"));
   const formats = stated.formats;
   if (!Array.isArray(formats) || !formats.length || formats.some((f) => !f.name || !(f.w > 0) || !(f.h > 0)))
     throw new Refusal('job.json: "formats" must list at least one { "name", "w", "h" }');
+  if (formats.some((f) => !FORMAT_NAME.test(f.name))) throw new Refusal('job.json: a format\'s "name" is letters, digits, "-" and "_" only');
   if (!(stated.fps > 0)) throw new Refusal('job.json: "fps" must be a number');
   return { dir: root, title: stated.title ?? "", formats, fps: stated.fps, lufs: stated.lufs ?? null, page: join(root, "page/index.html") };
 }

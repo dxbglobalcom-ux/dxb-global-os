@@ -12,7 +12,7 @@ import { fileURLToPath } from "node:url";
 import { parseArgs } from "node:util";
 import { drawBoard, writeBoardPage } from "./lib/board.mjs";
 import { goodVersion, hyperframes, latestVersion, proveVersion } from "./lib/hyperframes.mjs";
-import { Refusal, TEMPLATES, formatsNamed, layOutJob, openJob, readFilm, readJson, sizePage, writeJson } from "./lib/job.mjs";
+import { Refusal, TEMPLATES, formatsNamed, insideJob, layOutJob, openJob, readFilm, readJson, sizePage, writeJson } from "./lib/job.mjs";
 import { lastLines, makeSheets, renderFilm, scaleFor, takeStills } from "./lib/picture.mjs";
 import { planCues, writeSoundBlock } from "./lib/sound.mjs";
 import { failures, verifyFilms } from "./lib/verify.mjs";
@@ -77,7 +77,7 @@ function init({ say }, argv) {
   // The starter board tells the starter film; its template names each shot's ends by the page's beats.
   const film = readFilm(job.page), [format] = job.formats, starter = readJson(join(TEMPLATES, "board.json"));
   const second = (beat) => +(beat === "end" ? film.TOTAL : film.BEATS[beat]).toFixed(2);
-  writeJson(join(job.dir, "board/board.json"), {
+  writeJson(insideJob(job.dir, "board/board.json"), {
     ...starter, title: job.title, format: `${format.name} · ${format.w}×${format.h} · ${job.fps} fps`, total: film.TOTAL,
     shots: starter.shots.map((shot) => ({ ...shot, from: second(shot.from), to: second(shot.to) })),
   });
@@ -134,7 +134,7 @@ function render(tools, argv) {
 
 function verify({ run, say }, argv) {
   const { job, positionals } = parseForJob(argv);
-  const verdict = verifyFilms(run, job, positionals.map((file) => basename(file)));
+  const verdict = verifyFilms(run, job, positionals.map((file) => resolve(file)));
   for (const film of verdict.films) {
     const stated = film.loudness === null ? "no sound" : `loudness ${film.loudness.toFixed(1)} LUFS${job.lufs === null ? " (not judged: job.json states no target)" : ` against ${job.lufs}`}`;
     say(`${film.ok ? "OK    " : "FAILED"}  ${film.file} — ${stated}; ${film.cues.filter((c) => c.ok).length}/${film.cues.length} cue(s) on their events`);
