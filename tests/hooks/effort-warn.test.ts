@@ -356,11 +356,12 @@ describeStatusLine("the status line records /effort even when the payload has no
   });
 });
 
-// The CEO, 2026-11-12: the bar also says when the session's prompt cache goes cold -- an hour after its last
-// request -- as an hour of the day, because the bar renders on activity and a countdown would stand still.
-describeStatusLine("the status line says the hour the prompt cache goes cold (CEO 2026-11-12)", () => {
+// The CEO, 2026-11-12: the bar also counts down the minutes until the session's prompt cache goes cold -- an
+// hour after its last request -- so he can write before it does ("59 dk yazacak, 5 dakika geçince 54").
+// The count moves on a clock through `statusLine.refreshInterval` in his settings.
+describeStatusLine("the status line counts down the minutes until the prompt cache goes cold (CEO 2026-11-12)", () => {
   const bar = (dir: string, transcriptPath: unknown) => {
-    const e: NodeJS.ProcessEnv = { ...process.env, XDG_RUNTIME_DIR: dir, TZ: "UTC" };
+    const e: NodeJS.ProcessEnv = { ...process.env, XDG_RUNTIME_DIR: dir };
     const r = spawnSync("node", [STATUS_LINE], {
       input: JSON.stringify({ session_id: SID, model: { display_name: "Fable 5.2" }, workspace: { current_dir: "/x" }, transcript_path: transcriptPath }),
       encoding: "utf8", env: e, timeout: LIMIT_MS,
@@ -368,32 +369,33 @@ describeStatusLine("the status line says the hour the prompt cache goes cold (CE
     expect(r.status, r.stderr).toBe(0);
     return r.stdout.replace(/\x1b\[[0-9;]*m/g, "");
   };
-  /** a transcript of rows [type, minutes ago, sidechain?], oldest first */
+  /** a transcript of rows [type, seconds ago, sidechain?], oldest first */
   const rowsAt = (dir: string, rows: [string, number, boolean?][]) => {
     const file = join(dir, "t.jsonl");
-    writeFileSync(file, rows.map(([type, minutesAgo, side]) => JSON.stringify({
-      type, isSidechain: side === true, timestamp: at(minutesAgo * 60), message: { content: [] } }) + "\n").join(""));
+    writeFileSync(file, rows.map(([type, secondsAgo, side]) => JSON.stringify({
+      type, isSidechain: side === true, timestamp: at(secondsAgo), message: { content: [] } }) + "\n").join(""));
     return file;
   };
-  const hourIn = (minutes: number) => new Date(Date.now() + minutes * 60_000).toISOString().slice(11, 16);
-  it("ten minutes after the last request: the hour fifty minutes from now", () => {
+  it("just after a request: 60 minutes; five and a half minutes later: 55; the last request counts, not an older one or his own row", () => {
     const dir = box();
-    const text = bar(dir, rowsAt(dir, [["assistant", 40], ["user", 12], ["assistant", 10], ["user", 1]]));
-    // the minute may turn between the row's writing and the bar's reading
-    expect([`· önbellek ${hourIn(50)}`, `· önbellek ${hourIn(49)}`].some((t) => text.endsWith(t)), text).toBe(true);
+    expect(bar(dir, rowsAt(dir, [["assistant", 20]]))).toMatch(/· önbellek 60 dk$/);
+    expect(bar(dir, rowsAt(dir, [["assistant", 2400], ["user", 700], ["assistant", 330], ["user", 60]]))).toMatch(/· önbellek 55 dk$/);
   });
   it("a subagent's step in the same file does not warm this session's cache", () => {
     const dir = box();
-    const text = bar(dir, rowsAt(dir, [["assistant", 30], ["assistant", 2, true]]));
-    expect([`· önbellek ${hourIn(30)}`, `· önbellek ${hourIn(29)}`].some((t) => text.endsWith(t)), text).toBe(true);
+    expect(bar(dir, rowsAt(dir, [["assistant", 1830], ["assistant", 120, true]]))).toMatch(/· önbellek 30 dk$/);
+  });
+  it("the last minute still says 1, never 0", () => {
+    const dir = box();
+    expect(bar(dir, rowsAt(dir, [["assistant", 3570]]))).toMatch(/· önbellek 1 dk$/);
   });
   it("more than an hour after the last request: the cache is cold, and the bar says so", () => {
     const dir = box();
-    expect(bar(dir, rowsAt(dir, [["assistant", 61]]))).toMatch(/· önbellek soğudu$/);
+    expect(bar(dir, rowsAt(dir, [["assistant", 3630]]))).toMatch(/· önbellek soğudu$/);
   });
   it("no transcript, one that cannot be read, or one with no request yet: nothing is said", () => {
     const dir = box();
-    for (const path of [undefined, 7, join(dir, "missing.jsonl"), dir, rowsAt(dir, [["user", 3]])]) {
+    for (const path of [undefined, 7, join(dir, "missing.jsonl"), dir, rowsAt(dir, [["user", 180]])]) {
       expect(bar(dir, path), String(path)).not.toContain("önbellek");
     }
   });

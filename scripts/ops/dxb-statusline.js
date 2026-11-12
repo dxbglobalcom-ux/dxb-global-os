@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// DXB status line — model · effort · context meter · directory · git branch · when the cache goes cold.
+// DXB status line — model · effort · context meter · directory · git branch · minutes until the cache goes cold.
 //
 // Replaces gsd-statusline.js, removed with the rest of GSD on the CEO's order
 // of 2026-08-01. The only part of it he used was the context meter, and that
@@ -176,12 +176,13 @@ function branch(dir) {
 }
 
 // 2026-11-12 (CEO: "ön belleğin soğumasına kaç dakika kaldı … son mesajdan sonra 1 saat bitince
-// soğuyor"): the session's prompt cache lives CACHE_MINUTES after its last request, and a turn after
-// that pays for the whole context again. The bar renders on activity, not on a clock, so a countdown
-// would stand still while the session idles; the bar says the hour the cache goes cold instead, which
-// stays true until the next request moves it. The last request is the transcript's last assistant row
-// (its tail is read; a subagent's requests are in its own file and do not warm this cache). Nothing
-// readable: nothing is said.
+// soğuyor … 59 dk yazacak, 5 dakika geçince 54"): the session's prompt cache lives CACHE_MINUTES after
+// its last request, and a turn after that pays for the whole context again. The bar counts the
+// minutes left down, so he can write before it reaches zero. A countdown needs the bar drawn on a
+// clock as well as on activity: `statusLine.refreshInterval` in ~/.claude/settings.json re-runs this
+// command every that many seconds (Claude Code 2.1.323's own setting). The last request is the
+// transcript's last assistant row (its tail is read; a subagent's requests are in its own file and do
+// not warm this cache). Nothing readable: nothing is said.
 const CACHE_MINUTES = 60;
 const TRANSCRIPT_TAIL_BYTES = 256 * 1024;
 
@@ -214,10 +215,9 @@ function cacheTag(transcriptPath, now = Date.now()) {
   if (last == null || last > now) return '';
   const cold = last + CACHE_MINUTES * 60_000;
   if (cold <= now) return ' \x1b[31m· önbellek soğudu\x1b[0m';
-  const at = new Date(cold);
-  const hhmm = String(at.getHours()).padStart(2, '0') + ':' + String(at.getMinutes()).padStart(2, '0');
-  const colour = cold - now < 10 * 60_000 ? '33' : '2'; // the last ten minutes in yellow
-  return ` \x1b[${colour}m· önbellek ${hhmm}\x1b[0m`;
+  const minutes = Math.ceil((cold - now) / 60_000);
+  const colour = minutes <= 10 ? '33' : '2'; // the last ten minutes in yellow
+  return ` \x1b[${colour}m· önbellek ${minutes} dk\x1b[0m`;
 }
 
 let input = '';
