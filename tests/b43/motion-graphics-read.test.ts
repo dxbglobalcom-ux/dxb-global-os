@@ -1,21 +1,31 @@
 // B43 dxb-motion-graphics (CEO 2026-11-12) — `mg motion-read`: the rendered film read as motion by a
 // second reader, against the storyboard.
 //
-// This is the node-only part of `mg`'s tests (see motion-graphics.test.ts for the five files). The
+// This part of `mg`'s tests needs node, ffmpeg and ffprobe (see motion-graphics.test.ts for the five
+// files): a film is one by what ffprobe finds in it, so the films here are real ones, made by ffmpeg. The
 // reader is reached over the network and the construction sandbox has none, so the test answers for it:
 // no request ever leaves this file, and the key it carries is a made-up one. What is held to account is
-// the request `mg` builds, what it does with a 503 and a 429, the report it writes — and that the key
-// goes into a request header and nowhere else. Every expected figure is a literal.
-import { existsSync, mkdtempSync, readFileSync, readdirSync, utimesSync, writeFileSync } from "node:fs";
+// which file `mg` agrees to send, the request it builds, what it does with a 503 and a 429, the report
+// it writes — and that the key goes into a request header and nowhere else, whatever the reader says
+// back or throws. Every expected figure is a literal.
+import { existsSync, mkdtempSync, readFileSync, readdirSync, rmSync, symlinkSync, utimesSync, writeFileSync } from "node:fs";
 import http from "node:http";
 import type { AddressInfo } from "node:net";
 import { tmpdir } from "node:os";
-import { join } from "node:path";
+import { dirname, join } from "node:path";
+import { inspect } from "node:util";
 import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
+import { Refusal } from "../../tools/motion-graphics/lib/job.mjs";
 import { request } from "../../tools/motion-graphics/lib/motion-read.mjs";
-import { FILM, film, initJob, mg, ownState } from "./motion-graphics-fixtures.js";
+import { FILM, editJson, film, initJob, makeFilm, mg, missingTools, ownState, sh } from "./motion-graphics-fixtures.js";
+
+// A missing tool is said out loud and the tests that need it are skipped; they never pass in silence.
+const missing = missingTools("ffmpeg", "ffprobe");
+for (const tool of missing) console.error(`SKIPPED: ${tool} missing`);
 
 const KEY = "made-up-key-9f3c1a";
+// The key as JSON may spell it, every letter an escape: it is the key again once the JSON is read.
+const KEY_ESCAPED = [...KEY].map((letter) => `\\u${letter.charCodeAt(0).toString(16).padStart(4, "0")}`).join("");
 const API = "https://generativelanguage.googleapis.com";
 const UPLOADED = { name: "files/fixture1", uri: `${API}/v1beta/files/fixture1` };
 const PICTURE = Buffer.from("the bytes of a rendered film");
@@ -34,16 +44,17 @@ const MINUTE_SPENT = json({ error: { code: 429, status: "RESOURCE_EXHAUSTED", me
 
 /**
  * The reader answered by the test. `answers` are given to the questions in turn (the last one again
- * after that), `states` to the upload's state when it is asked for; every request is kept in `asked`
- * and every wait in `waited`, and nothing is really waited for.
+ * after that), `states` to the upload's state when it is asked for, `uploaded` is the address the
+ * upload is answered with; every request is kept in `asked` and every wait in `waited`, and nothing
+ * is really waited for.
  */
-function reader({ answers = [ANSWERED], states = ["ACTIVE"] }: { answers?: Answer[]; states?: string[] } = {}) {
+function reader({ answers = [ANSWERED], states = ["ACTIVE"], uploaded = UPLOADED }: { answers?: Answer[]; states?: string[]; uploaded?: { name?: string; uri?: string } } = {}) {
   const asked: Asked[] = [], waited: number[] = [];
   const next = <T,>(queue: T[]) => (queue.length > 1 ? queue.shift()! : queue[0]);
   const answer = async (url: string, options: Omit<Asked, "url"> = {}): Promise<Answer> => {
     asked.push({ url, ...options });
-    if (url.includes("/upload/")) return json({ file: UPLOADED });
-    if (url === `${API}/v1beta/${UPLOADED.name}`) return json({ ...UPLOADED, state: next(states) });
+    if (url.includes("/upload/")) return json({ file: uploaded });
+    if (url.startsWith(`${API}/v1beta/files/`)) return json({ ...uploaded, state: next(states) });
     if (url.includes(":generateContent")) return next(answers);
     throw new Error(`the test has no answer for ${url}`);
   };
@@ -52,13 +63,18 @@ function reader({ answers = [ANSWERED], states = ["ACTIVE"] }: { answers?: Answe
 }
 const question = (a: Asked) => JSON.parse(String(a.body)).contents[0].parts;
 
-describe("B43 dxb-motion-graphics — the film is read as motion by a second reader", () => {
-  let job = "";
+describe.skipIf(missing.length > 0)("B43 dxb-motion-graphics — the film is read as motion by a second reader", () => {
+  let job = "", filmed = Buffer.alloc(0), filmedLater = Buffer.alloc(0); // two real films' bytes, made once
+  const kept = () => readdirSync(join(job, "out")).filter((name) => name.startsWith("motion-read-")).sort();
   const report = (name = "fixture-film-16x9") => join(job, `out/motion-read-${name}.txt`);
   const read = (hands: ReturnType<typeof reader>, ...argv: string[]) => mg(["motion-read", ...argv, "--job", job], { http: hands.http, wait: hands.wait });
   const keys = { GEMINI_API_KEY: process.env.GEMINI_API_KEY, GOOGLE_API_KEY: process.env.GOOGLE_API_KEY, DXB_MG_KEY_FILE: process.env.DXB_MG_KEY_FILE };
   beforeAll(() => {
     ownState();
+    const made = mkdtempSync(join(tmpdir(), "mg-filmed-"));
+    makeFilm(join(made, "a.mp4"), { seconds: 1, w: 64, h: 36 });
+    makeFilm(join(made, "b.mp4"), { seconds: 2, w: 64, h: 36 });
+    [filmed, filmedLater] = [readFileSync(join(made, "a.mp4")), readFileSync(join(made, "b.mp4"))];
   });
   beforeEach(async () => {
     // The machine's own key and env file are out of reach of every test here: only the made-up key is found.
@@ -66,8 +82,8 @@ describe("B43 dxb-motion-graphics — the film is read as motion by a second rea
     process.env.GEMINI_API_KEY = KEY;
     process.env.DXB_MG_KEY_FILE = join(tmpdir(), "mg-no-such-env-file");
     job = await initJob({ more: ["--format", "9x16=360x640"] });
-    writeFileSync(film(job), PICTURE);
-    writeFileSync(film(job, "fixture-film-9x16.mp4"), PICTURE);
+    writeFileSync(film(job), filmed);
+    writeFileSync(film(job, "fixture-film-9x16.mp4"), filmed);
   });
   afterAll(() => {
     for (const [name, value] of Object.entries(keys)) {
@@ -87,7 +103,7 @@ describe("B43 dxb-motion-graphics — the film is read as motion by a second rea
     ]);
     const [upload, , asking] = hands.asked;
     expect(upload.headers).toMatchObject({ "x-goog-api-key": KEY, "Content-Type": "video/mp4" });
-    expect(Buffer.from(upload.body as Buffer).equals(PICTURE)).toBe(true);
+    expect(Buffer.from(upload.body as Buffer).equals(filmed)).toBe(true);
     expect(asking.headers).toMatchObject({ "x-goog-api-key": KEY, "Content-Type": "application/json" });
     expect(asking.timeoutMs).toBe(600_000);
 
@@ -118,13 +134,16 @@ describe("B43 dxb-motion-graphics — the film is read as motion by a second rea
     expect((await read(reader(), "--model", "gemini/../other")).out).toMatch(/--model/); // a model's name goes into the address
   });
 
-  it("reads the file it is given instead of the format's master, and refuses when there is no film yet", async () => {
-    const elsewhere = join(mkdtempSync(join(tmpdir(), "mg-elsewhere-")), "an-older-cut.mp4"), older = Buffer.from("another film's bytes");
-    writeFileSync(elsewhere, older);
+  it("reads the film of the job it is given instead of the format's master, and refuses when there is no film yet", async () => {
+    const older = film(job, "an-older-cut.mp4");
+    writeFileSync(older, filmedLater);
     const hands = reader();
-    expect((await read(hands, elsewhere)).code).toBe(0);
-    expect(Buffer.from(hands.uploads()[0].body as Buffer).equals(older)).toBe(true);
+    expect((await read(hands, older)).code).toBe(0);
+    expect(Buffer.from(hands.uploads()[0].body as Buffer).equals(filmedLater)).toBe(true);
     expect(existsSync(report("an-older-cut"))).toBe(true);
+    // A link that stays inside the job is a film of the job: it is the real path that is judged.
+    symlinkSync(older, join(job, "refs/the-cut.mp4"));
+    expect((await read(reader(), join(job, "refs/the-cut.mp4"))).code).toBe(0);
 
     // A master of the job, given by its path, is asked about as its own format and not as the job's first.
     const vertical = reader();
@@ -143,6 +162,37 @@ describe("B43 dxb-motion-graphics — the film is read as motion by a second rea
     expect(r.code).not.toBe(0);
     expect(r.out).toMatch(/fixture-film-16x9\.mp4 is not there.*mg render/s);
     expect(idle.asked).toEqual([]);
+  });
+
+  it("sends nothing that is not a film of the job: no file outside it, no link that leaves it, no text named .mp4", async () => {
+    const elsewhere = join(mkdtempSync(join(tmpdir(), "mg-elsewhere-")), "an-older-cut.mp4");
+    writeFileSync(elsewhere, filmed); // a real film, and not this job's
+    symlinkSync(elsewhere, film(job, "linked-cut.mp4"));
+    symlinkSync(dirname(elsewhere), join(job, "out/linked-folder"));
+    writeFileSync(film(job, "notes.mp4"), "meeting notes, whatever the name says");
+    expect(sh("ffmpeg", ["-v", "error", "-y", "-f", "lavfi", "-i", "sine=frequency=440:duration=0.5", "-c:a", "aac", film(job, "sound-only.mp4")]).err).toBe("");
+
+    const refusals: [string, RegExp][] = [
+      [elsewhere, /an-older-cut\.mp4 is not a film of this job: it lies outside the job folder/],
+      [film(job, "linked-cut.mp4"), /linked-cut\.mp4 is not a film of this job: it lies outside the job folder/],
+      [join(job, "out/linked-folder/an-older-cut.mp4"), /an-older-cut\.mp4 is not a film of this job: it lies outside the job folder/],
+      [film(job, "notes.mp4"), /ffprobe cannot read .*notes\.mp4/],
+      [film(job, "sound-only.mp4"), /sound-only\.mp4 carries no picture/],
+    ];
+    for (const [given, why] of refusals) {
+      const unsent = reader(), r = await read(unsent, given);
+      expect(r.code, given).toBe(1);
+      expect(r.out, given).toMatch(why);
+      expect(unsent.asked, given).toEqual([]);
+    }
+    // The format's own master is held to the same: a link out of the job standing in its place is not sent.
+    rmSync(film(job));
+    symlinkSync(elsewhere, film(job));
+    const unsent = reader(), r = await read(unsent);
+    expect(r.code).toBe(1);
+    expect(r.out).toMatch(/fixture-film-16x9\.mp4 is not a film of this job/);
+    expect(unsent.asked).toEqual([]);
+    expect(kept()).toEqual([]); // no reading and no upload was recorded either
   });
 
   it("asks again after a 503, twenty seconds apart, and gives up after the fifth", async () => {
@@ -190,7 +240,7 @@ describe("B43 dxb-motion-graphics — the film is read as motion by a second rea
     expect(question(again.questions()[0])[0].file_data.file_uri).toBe(UPLOADED.uri);
 
     // Another film under the same name is another upload.
-    writeFileSync(film(job), "a later render");
+    writeFileSync(film(job), filmedLater);
     utimesSync(film(job), new Date(), new Date(Date.now() + 5000));
     const later = reader();
     expect((await read(later)).code).toBe(0);
@@ -264,6 +314,72 @@ describe("B43 dxb-motion-graphics — the film is read as motion by a second rea
     const written = readdirSync(join(job, "out")).filter((name) => name.startsWith("motion-read-"));
     expect(written.sort()).toEqual(["motion-read-fixture-film-16x9.txt", "motion-read-fixture-film-16x9.txt.upload.json", "motion-read-fixture-film-9x16.txt.upload.json"]);
     for (const name of written) expect(readFileSync(join(job, "out", name), "utf8"), name).not.toContain(KEY);
+  });
+
+  // The auditor's four counter-examples (Sol, 2026-11-12): the key said back where only a failed answer's text was cleaned.
+  it("success-echo: a reading that says the key back is written without it", async () => {
+    // Said whole, spelled in JSON's own escapes, and split over two parts that the report joins.
+    const parts = [`{"text":"Your key is ${KEY}. "}`, `{"text":"Escaped: ${KEY_ESCAPED}. Split: ${KEY.slice(0, 8)}"}`, `{"text":"${KEY.slice(8)}."}`];
+    const r = await read(reader({ answers: [{ status: 200, text: `{"candidates":[{"content":{"parts":[${parts.join(",")}]}}],"usageMetadata":{"promptTokenCount":7}}` }] }));
+    expect(r.code).toBe(0);
+    expect(readFileSync(report(), "utf8")).toBe(`# Motion read — ${FILM} · gemini-3.8-flash · 10 fps · prompt tokens 7\n\nYour key is <the key>. Escaped: <the key>. Split: <the key>.\n`);
+    expect(r.out).not.toContain(KEY);
+  });
+
+  it("upload-echo: an upload answered with the key in its address, or with an address that is not the reader's own, is refused and never asked about", async () => {
+    const answeredWith = [
+      { name: `files/${KEY}`, uri: `${API}/v1beta/files/${KEY}` },
+      { name: "files/fixture1", uri: "https://elsewhere.example/v1beta/files/fixture1" },
+      { name: "files/../models/other", uri: `${API}/v1beta/files/../models/other` },
+      { name: "files/fixture1" },
+    ];
+    for (const uploaded of answeredWith) {
+      const hands = reader({ uploaded }), r = await read(hands);
+      expect(r.code, uploaded.name).toBe(1);
+      expect(r.out, uploaded.name).toMatch(/the upload was answered with no address of the reader's own/);
+      expect(r.out).not.toContain(KEY);
+      expect(hands.asked.map((a) => a.url), uploaded.name).toEqual([`${API}/upload/v1beta/files?uploadType=media`]);
+      expect(kept(), uploaded.name).toEqual([]);
+    }
+
+    // A record kept by an earlier run with such an address is not believed: the film is sent again and the record written over.
+    expect((await read(reader())).code).toBe(0);
+    const record = join(job, "out/motion-read-fixture-film-16x9.txt.upload.json");
+    for (const uploaded of answeredWith.slice(0, 2)) {
+      editJson(record, (was) => { was.file = uploaded; });
+      const again = reader(), r = await read(again);
+      expect(r.code, uploaded.uri).toBe(0);
+      expect(again.uploads(), uploaded.uri).toHaveLength(1);
+      expect(question(again.questions()[0])[0].file_data.file_uri).toBe(UPLOADED.uri);
+      for (const a of again.asked) expect(a.url + (typeof a.body === "string" ? a.body : "")).not.toContain(KEY);
+      expect(JSON.parse(readFileSync(record, "utf8")).file).toEqual(UPLOADED);
+    }
+  });
+
+  it("block-echo: a block reason that says the key back is printed without it", async () => {
+    const r = await read(reader({ answers: [json({ candidates: [], promptFeedback: { blockReason: `OTHER ${KEY}` } })] }));
+    expect(r.code).toBe(1);
+    expect(r.out).toBe("mg motion-read: FAILED — the answer carries no reading (blocked: OTHER <the key>)\n");
+    const spelled = await read(reader({ answers: [{ status: 200, text: `{"candidates":[],"promptFeedback":{"blockReason":"OTHER ${KEY_ESCAPED}"}}` }] }));
+    expect(spelled).toEqual({ code: 1, out: "mg motion-read: FAILED — the answer carries no reading (blocked: OTHER <the key>)\n" });
+    expect(existsSync(report())).toBe(false);
+  });
+
+  it("the mg call: whatever is thrown while the reader is asked leaves mg without the key", async () => {
+    // A hand that fails the way a network library may: its error says the request's headers, and carries them.
+    const failing = () => Object.assign(new Error(`socket hang up — sent x-goog-api-key: ${KEY}`), { headers: { "x-goog-api-key": KEY } });
+    const thrown = await read({ ...reader(), http: async () => { throw failing(); } }).then(() => null, (e: unknown) => e);
+    expect(thrown).toBeInstanceOf(Error);
+    expect(thrown).not.toBeInstanceOf(Refusal); // what is no refusal still stops mg as what it is
+    expect((thrown as Error).message).toBe("socket hang up — sent x-goog-api-key: <the key>");
+    expect(inspect(thrown, { depth: 9, showHidden: true })).not.toContain(KEY); // its trace, and whatever else it carries
+
+    // A refusal is printed, and what is printed is without the key; so is a thing thrown that is no error at all.
+    const refused = await read({ ...reader(), http: async () => { throw new Refusal(`no answer: the header ${KEY} was not accepted`); } });
+    expect(refused).toEqual({ code: 1, out: "mg motion-read: FAILED — no answer: the header <the key> was not accepted\n" });
+    const bare = await read({ ...reader(), http: async () => { throw `refused ${KEY}`; } }).then(() => null, (e: unknown) => e);
+    expect((bare as Error).message).toBe("refused <the key>");
+    expect(kept()).toEqual([]);
   });
 });
 

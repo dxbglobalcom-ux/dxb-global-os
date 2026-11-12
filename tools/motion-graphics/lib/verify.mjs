@@ -14,7 +14,8 @@ const UNVERIFIED = [
   "The film reads as filmed, not generated.",
 ];
 
-function probe(run, file) {
+/** A film as ffprobe reads it: its picture's size, rate, frames and pixel format, and its length. Refused when ffprobe cannot read the file, or finds no picture in it. */
+export function probe(run, file) {
   const r = run("ffprobe", ["-v", "error", "-count_frames", "-show_entries",
     "stream=codec_type,width,height,r_frame_rate,nb_read_frames,pix_fmt:format=duration", "-of", "json", file]);
   if (r.code !== 0) throw new Refusal(`ffprobe cannot read ${file}: ${r.err.trim()}`);

@@ -77,16 +77,21 @@ export function frameRoot(html, { w, h, alpha = false }) {
   return html.replace(root[0], () => framed);
 }
 
+/** Whether a path really lies in `root`, or is it: by its own parts, and by every link standing on the way. */
+export function staysInside(root, path) {
+  let standing = resolve(path); // the deepest part of the path that is already there, a link included
+  while (!lstatSync(standing, { throwIfNoEntry: false })) standing = dirname(standing);
+  const home = realpathSync(root), real = existsSync(standing) ? realpathSync(standing) : null; // null: a link to nowhere
+  return real === home || Boolean(real?.startsWith(home + sep));
+}
+
 /**
  * A path under the job's root that a command writes to. Refused when it leaves the job folder — by its
  * own parts, or through a link standing on the way — so nothing `mg` writes lands outside the job.
  */
 export function insideJob(root, ...parts) {
   const path = resolve(root, ...parts);
-  let standing = path; // the deepest part of the path that is already there, a link included
-  while (!lstatSync(standing, { throwIfNoEntry: false })) standing = dirname(standing);
-  const home = realpathSync(root), real = existsSync(standing) ? realpathSync(standing) : null; // null: a link to nowhere
-  if (real !== home && !real?.startsWith(home + sep)) throw new Refusal(`${path} leads out of the job folder (${root}); mg writes nothing outside it`);
+  if (!staysInside(root, path)) throw new Refusal(`${path} leads out of the job folder (${root}); mg writes nothing outside it`);
   return path;
 }
 

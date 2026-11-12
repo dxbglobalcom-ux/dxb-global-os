@@ -199,3 +199,22 @@ Aşağıda **A: engeller**, **B: şimdi düzelt**, **C: eski işten**. C sınıf
    **Ayakta kalanlar:** İki commit yalnızca belirtilen **115 dosyaya** dokunuyor. Kök `package.json` değişmemiş. Sır sızıntısı veya gizli upload/publish çağrısı bulmadım; npm sürüm sorgusu ve paket çalıştırma açıkça araç yolunun parçası.
 
 Çalışanların üretim yolunun sonraya bırakılmasını kusur saymadım. İlk filmin görsel ve işitsel kalitesi bu denetimde doğrulanmış değildir; CEO kabulü çıkarılamaz. Hiçbir dosya değiştirmedim.
+
+## 3. The friction piece — Sol's blind pass over 713fe5f4, c7ae49e4, 851336e7 (2026-11-12 night)
+
+GPT-6.1 Sol, high, one pass, read-only. The report as it came: `SOL-FRICTION-REPORT.md`. Fable did not audit.
+
+| # | Class | Finding | Outcome |
+|---|---|---|---|
+| A1 | A | The Gemini key could leave through a successful answer (the reading's text, the upload's name and address, a block reason) or through a thrown error. | Fixed: one boundary cleans everything `ask` returns or throws; an upload address that is not the service's own is refused. The four counter-examples are tests, red first. |
+| A2 | A | `mg motion-read <file>` sent any file with a film's extension, also from outside the job. | Fixed: the film's real path stays inside the job folder and ffprobe finds a picture in it, before the key is read or anything is sent. The old test that expected an outside file to be sent is turned around. |
+| A3 | A | The runner's time limit did not end a tool that ignores the stop signal; `DXB_MG_TOOL_TIMEOUT=Infinity` raised a raw RangeError. | Fixed: a small watch process asks the tool to stop at the limit and ends it five seconds later; a limit no timer can be set to is refused in words; the default (two hours) is proven by asking the function. |
+| B1 | B | `mg sheet --window Infinity` is accepted and sends `NaN` as a time. | OPEN |
+| B2 | B | An `sfx:` name is checked by its written path only; a link inside the starter set that leaves it is followed. | OPEN — `staysInside(root, path)` in `lib/job.mjs` serves it as it is. |
+| B3 | B | `motion-blur.js` asks the global `document` for its layer; the claim "a still picture reads back as drawn" is stated without its condition (float16), is proven only on a fake canvas, and falls back to 8 bit silently. | OPEN |
+| B4 | B | The board's sandbox tests rest on one another's page; the blur's determinism test opens a new canvas each time. | OPEN |
+| B5 | B | motion-read's privacy and outside-file tests. | Fixed with A1 and A2. |
+| C | C | SKILL.md's command table lacks `init --title`, `stills --format`, `hf update --guard`, `blender --need-mb`, and says `--job` of every command; CONTRACT.md says host tests skip on a missing tool; a format named `all` cannot be chosen alone; `init --dur Infinity` leaves a half-made job; the guard's host tests rest on the 0.9.37 state an earlier test leaves. | OPEN — the table lines are small text; the rest older than this piece, in this report. |
+
+Stood after attempted refutation: items 1, 2, 3, 4, 7b, 7c, 8a, 9a, 9b as built; nothing prescribes a look or adds music; HyperFrames runs from the job folder; the root package.json is the same blob; the skill has one copy.
+Not verified by anyone: the real service's daily-quota answer, a 503 and an answer slower than 200 s against the live service; float16 in HyperFrames' Chrome measured by a test; how the morph and the blur read in motion in a real film.

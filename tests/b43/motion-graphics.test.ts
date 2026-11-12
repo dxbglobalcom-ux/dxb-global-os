@@ -9,7 +9,7 @@
 //                                         where a test must cross HyperFrames or Chrome the test
 //                                         answers for it.
 //   motion-graphics-page.test.ts          node alone: the helpers a page loads from page/lib/.
-//   motion-graphics-read.test.ts          node alone: `mg motion-read`, the network answered by the test.
+//   motion-graphics-read.test.ts          node, ffmpeg and ffprobe: `mg motion-read`, the network answered by the test.
 //   motion-graphics-film.host.test.ts     HyperFrames, Chrome and npm: films really rendered.
 //   motion-graphics-blender.host.test.ts  Blender.
 //
@@ -22,7 +22,7 @@ import { join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
 import vm from "node:vm";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
-import { run } from "../../tools/motion-graphics/mg.mjs";
+import { run, toolSeconds } from "../../tools/motion-graphics/mg.mjs";
 import {
   FILM, FPS, MG, REPO, SKILL, TEMPLATES, antiPhase, askForWebGL, blip, cues, ebuReference, editJson, film, initJob,
   makeFilm, mg, missingTools, ownState, plainPage, recorder, sh, sha, shaped, tick, verdict,
@@ -881,8 +881,59 @@ describe("B43 dxb-motion-graphics — a tool that never ends does not hang the c
     expect(existsSync(join(job, "out/verify.json"))).toBe(false);
   });
 
-  it("left to itself, the limit is long enough for a 4K render", () => {
+  it("a tool deaf to the request to end is ended all the same, and no process is left behind", () => {
+    // node that hears SIGTERM, writes that it did, and carries on: by itself it would end after half a minute.
+    const notes = mkdtempSync(join(tmpdir(), "mg-deaf-")), heard = join(notes, "heard"), pidFile = join(notes, "pid");
+    const DEAF = ["-e", `const { writeFileSync } = require("node:fs");
+      process.on("SIGTERM", () => writeFileSync(${JSON.stringify(heard)}, "asked to end"));
+      writeFileSync(${JSON.stringify(pidFile)}, String(process.pid));
+      setTimeout(() => {}, 30000)`];
+    process.env.DXB_MG_TOOL_TIMEOUT = "1"; // long enough for node to be listening before it is asked
+    const alive = (pid: number) => {
+      try {
+        return process.kill(pid, 0);
+      } catch {
+        return false;
+      }
+    };
+    try {
+      const began = Date.now();
+      expect(() => run(process.execPath, DEAF)).toThrow(/did not end within 1 s.*DXB_MG_TOOL_TIMEOUT/s);
+      expect(Date.now() - began).toBeLessThan(15_000);
+      expect(readFileSync(heard, "utf8")).toBe("asked to end"); // it was asked first, and went on
+      expect(alive(Number(readFileSync(pidFile, "utf8")))).toBe(false);
+    } finally {
+      process.env.DXB_MG_TOOL_TIMEOUT = "0.3";
+      const pid = existsSync(pidFile) ? Number(readFileSync(pidFile, "utf8")) : 0;
+      if (pid && alive(pid)) process.kill(pid, "SIGKILL");
+    }
+  }, 20_000); // the limit, then the five seconds a tool is given between being asked and being ended
+
+  it("a limit that is no number of seconds a timer can be set to is refused in words, and no tool is started", async () => {
+    const job = await initJob(), rec = recorder();
+    writeFileSync(film(job), "a film ffprobe is never asked about");
+    try {
+      for (const stated of ["Infinity", "-Infinity", "NaN", "soon", "", "0", "-5", "1e12"]) {
+        process.env.DXB_MG_TOOL_TIMEOUT = stated;
+        expect(() => toolSeconds(), stated).toThrow(`DXB_MG_TOOL_TIMEOUT takes a number of seconds, from 0.001 to 2147483, not "${stated}"`);
+      }
+      process.env.DXB_MG_TOOL_TIMEOUT = "Infinity";
+      const r = await mg(["verify", "--job", job], { run: rec.run });
+      expect(r.code).toBe(1);
+      expect(r.out).toMatch(/^mg verify: FAILED — DXB_MG_TOOL_TIMEOUT takes a number of seconds, from 0\.001 to 2147483, not "Infinity"/m);
+      expect(rec.calls).toEqual([]);
+      for (const [stated, seconds] of [["0.3", 0.3], ["90", 90], ["2147483", 2147483]] as const) {
+        process.env.DXB_MG_TOOL_TIMEOUT = stated;
+        expect(toolSeconds()).toBe(seconds);
+      }
+    } finally {
+      process.env.DXB_MG_TOOL_TIMEOUT = "0.3";
+    }
+  });
+
+  it("left to itself, the limit is two hours: long enough for a 4K render", () => {
     delete process.env.DXB_MG_TOOL_TIMEOUT;
+    expect(toolSeconds()).toBe(7200);
     const quick = run(process.execPath, ["-e", "setTimeout(() => console.log('done'), 1000)"]); // more than three times 0.3 s
     expect(quick).toMatchObject({ code: 0, out: "done\n" });
     // Two hours, stated where a person looks for it, beside the name that changes it.

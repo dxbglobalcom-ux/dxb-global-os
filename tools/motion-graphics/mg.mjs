@@ -25,6 +25,12 @@ const AROUND_EVENT = 0.25; // seconds each side of an event that its sheet cover
 // is a 4K render (measured 2026-11-12: the 3 s starter film at 3840×2160 took 7 s); a film that needs
 // longer states its own limit in DXB_MG_TOOL_TIMEOUT, in seconds.
 const TOOL_HOURS = 2;
+// At the limit a tool is asked to end, and one deaf to that is ended this many seconds later. `run`
+// starts each tool through the watch that does both (lib/watch.mjs), and gives the watch a few seconds
+// more to say how it went: a tool's own children can hold its streams open after it.
+const TOOL_GRACE = 5, WATCH_ANSWERS = 5;
+const WATCH = fileURLToPath(new URL("./lib/watch.mjs", import.meta.url));
+const LONGEST_TIMER = 2 ** 31 - 1; // ms: a timer set further ahead fires at once
 
 // An option as parseArgs reads it, with what help prints of it: the value written after it, what it does.
 const text = (value, says) => ({ type: "string", value, says });
@@ -86,7 +92,7 @@ const TAKES = {
     args: "[<file>]", options: JOB,
   },
   "motion-read": {
-    does: `Has the film read as motion by a second reader, the Gemini API, against board/board.json: the format's master in out/, or the film given. The reading is written into out/motion-read-<film>.txt; the answer is waited for up to ${ANSWER_MINUTES} minutes. The key is GEMINI_API_KEY or GOOGLE_API_KEY, from the environment or the holding's daemon env file.`,
+    does: `Has the film read as motion by a second reader, the Gemini API, against board/board.json: the format's master in out/, or the film of the job given — a file that lies outside the job folder, or carries no picture, is not sent. The reading is written into out/motion-read-<film>.txt; the answer is waited for up to ${ANSWER_MINUTES} minutes. The key is GEMINI_API_KEY or GOOGLE_API_KEY, from the environment or the holding's daemon env file.`,
     args: "[<film>]",
     options: {
       format: text("<name>", "the format whose film is read and whose frame the reader is asked about (a master given by its path: its own; else the job's first)"),
@@ -136,27 +142,36 @@ function asksForHelp(argv) {
   return own.includes("--help") || own.includes("-h");
 }
 
-function toolSeconds() {
+/** The seconds a tool is given to end: two hours, or what DXB_MG_TOOL_TIMEOUT states — refused when no timer can be set to it. */
+export function toolSeconds() {
   const stated = process.env.DXB_MG_TOOL_TIMEOUT;
   if (stated === undefined) return TOOL_HOURS * 3600;
-  if (!(Number(stated) > 0)) throw new Refusal(`DXB_MG_TOOL_TIMEOUT takes a number of seconds, not "${stated}"`);
+  const ms = Math.round(Number(stated) * 1000);
+  if (!(ms >= 1 && ms <= LONGEST_TIMER)) throw new Refusal(`DXB_MG_TOOL_TIMEOUT takes a number of seconds, from 0.001 to ${Math.floor(LONGEST_TIMER / 1000)}, not "${stated}"`);
   return Number(stated);
 }
 
 /**
  * Starts one process and waits for it. `out` is text, or bytes when `binary` is asked for.
- * A process that has not ended at the time limit is stopped, and that is a Refusal.
+ * A process that has not ended at the time limit is asked to end, is ended after TOOL_GRACE seconds
+ * when it has not, and either way that is a Refusal.
  * @param {string} cmd
  * @param {string[]} args
  * @param {{ cwd?: string, env?: Record<string, string>, binary?: boolean }} [options]
  * @returns {{ code: number, out: string | Buffer, err: string }}
  */
 export function run(cmd, args, { cwd, env, binary = false } = {}) {
-  const limit = toolSeconds();
-  const r = spawnSync(cmd, args, { cwd, env: { ...process.env, ...env }, encoding: "buffer", maxBuffer: 1 << 30, timeout: limit * 1000 });
-  if (r.error?.code === "ETIMEDOUT") throw new Refusal(`${cmd} did not end within ${limit} s and was stopped. A tool that needs longer is given it with DXB_MG_TOOL_TIMEOUT=<seconds>`);
-  if (r.error) return { code: -1, out: binary ? Buffer.alloc(0) : "", err: r.error.message };
-  return { code: r.status ?? -1, out: binary ? r.stdout : r.stdout.toString(), err: r.stderr.toString() };
+  const limit = toolSeconds(), ms = (seconds) => Math.ceil(seconds * 1000);
+  // The tool is started by its watch, which stops it; the watch itself is ended when it has not said how the tool went.
+  const r = spawnSync(process.execPath, [WATCH, String(ms(limit)), String(ms(TOOL_GRACE)), cmd, ...args], {
+    cwd, env: { ...process.env, ...env }, encoding: "buffer", maxBuffer: 1 << 30, stdio: ["pipe", "pipe", "pipe", "pipe"],
+    timeout: ms(limit + TOOL_GRACE + WATCH_ANSWERS), killSignal: "SIGKILL",
+  });
+  const went = r.output?.[3]?.length ? JSON.parse(r.output[3].toString()) : {};
+  if (went.late || r.error?.code === "ETIMEDOUT") throw new Refusal(`${cmd} did not end within ${limit} s and was stopped. A tool that needs longer is given it with DXB_MG_TOOL_TIMEOUT=<seconds>`);
+  const notStarted = r.error?.message ?? went.error;
+  if (notStarted) return { code: -1, out: binary ? Buffer.alloc(0) : "", err: notStarted };
+  return { code: went.code ?? -1, out: binary ? r.stdout : r.stdout.toString(), err: r.stderr.toString() };
 }
 
 /** The options and arguments given to a command, read as TAKES states them; an option the command does not have is refused. */

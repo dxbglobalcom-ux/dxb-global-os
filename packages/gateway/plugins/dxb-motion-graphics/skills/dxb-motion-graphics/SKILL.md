@@ -68,8 +68,9 @@ against the board: does each shot really become the next, is the brand's materia
 for as long as it takes to read, does the frame work in each format. Fix and look again. Then `mg render` at
 review size and have the film read **as motion** by a second reader that has not seen your reasoning (the
 holding's motion reading: the Gemini API at 10 fps) against the board: `mg motion-read` sends the format's
-master in `out/` — `--format` for another frame, or the film's path for another file — and writes the reading
-into `out/motion-read-<film>.txt`. The answer can take minutes. When a model's quota for the day is spent the
+master in `out/` — `--format` for another frame, or the path of another film of the job — and writes the reading
+into `out/motion-read-<film>.txt`. A file that lies outside the job folder, or carries no picture, is refused
+and not sent. The answer can take minutes. When a model's quota for the day is spent the
 command says so, and `--model` names another. A still is not playback; a film nobody watched is not finished.
 
 **6. Lock the picture, then sound.** Any change to the picture after this breaks the sound. Effects go where
@@ -126,14 +127,14 @@ not accepted by the builder: the step is brought to the one who decides, with th
 | `mg sound` | `sound/cues.json` → the page's sound block (a cue's file lives under `sound/`, or names the starter set as `sfx:pop/pop-mid-01.wav` and is copied there; a `trim` stated beside the cues moves every level by that many dB) |
 | `mg render [--format name\|all] [--scale n \| --4k] [--alpha] [--fps n]` | the film, into `out/` (`.mov` for `--alpha`); a larger master only by a whole multiple that reaches 1080p, 1440p or 4K |
 | `mg verify [file]` | the measurements of every master of the job's formats in `out/`, or of the file at the path given; off the loudness target, by how many dB the set would have to move; `out/verify.json` |
-| `mg motion-read [film] [--format name] [--model name]` | the format's master in `out/`, or the film given, read as motion by a second reader against `board/board.json`; `out/motion-read-<film>.txt` |
+| `mg motion-read [film] [--format name] [--model name]` | the format's master in `out/`, or the film of the job given, read as motion by a second reader against `board/board.json`; `out/motion-read-<film>.txt` |
 | `mg hf status\|update` | the HyperFrames version guard |
 | `mg blender <scene.py> [-- args]` | Blender, headless, after a free-memory check on the graphics card |
 
 Run it from the job folder or with `--job <dir>`; never run `npx hyperframes` from the repository root.
 `mg --help` lists the commands; `mg <command> --help` says what that command does and what each of its flags does.
-A tool the command starts is stopped after two hours and the command fails saying so; a render that needs longer
-is given it with `DXB_MG_TOOL_TIMEOUT=<seconds>`.
+A tool the command starts is asked to end after two hours, is ended five seconds later if it has not, and the
+command fails saying so; a render that needs longer is given it with `DXB_MG_TOOL_TIMEOUT=<seconds>`.
 
 ## What goes wrong
 
