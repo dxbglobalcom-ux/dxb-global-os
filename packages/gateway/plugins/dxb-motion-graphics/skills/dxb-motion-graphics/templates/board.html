@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>storyboard</title>
+<!--
+  dxb-motion-graphics — the storyboard board. `mg board` writes board/board.json into the block
+  below and photographs this page into board/board.png. The board is approved, or changed, before
+  anything is animated: every shot states what it holds and, on its own line, how it becomes the next.
+
+  board.json: { "title", "format", "total",
+                "shots": [{ "n", "from", "to", "title", "hold", "becomes" }],
+                "shapeChecks": [{ "label", "ours", "reference" }],     optional — paths from the job folder
+                "endStill": "refs/end.png" }                           optional
+-->
+<style>
+  :root { --paper: #f4efe6; --card: #fffdf8; --ink: #14181d; --quiet: #6b6f76; --line: #ddd5c6; --becomes: #c8451f; }
+  * { box-sizing: border-box; }
+  html { background: var(--paper); }
+  body { margin: 0; width: 1600px; padding: 56px; color: var(--ink); font: 20px/1.4 "Inter", "Helvetica Neue", Arial, sans-serif; }
+  header { display: flex; align-items: baseline; justify-content: space-between; gap: 32px; padding-bottom: 20px; border-bottom: 2px solid var(--ink); }
+  h1 { margin: 0; font-size: 44px; line-height: 1.1; letter-spacing: -0.01em; }
+  header p { margin: 0; color: var(--quiet); white-space: nowrap; }
+  h2 { margin: 48px 0 16px; font-size: 16px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--quiet); }
+  .grid { display: grid; gap: 16px; margin-top: 32px; }
+  h2 + .grid { margin-top: 0; }
+  .tile { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 22px 24px; display: flex; flex-direction: column; }
+  .shot .number { font-size: 40px; font-weight: 700; line-height: 1; font-variant-numeric: tabular-nums; }
+  .shot .span { margin-left: 14px; color: var(--quiet); font-variant-numeric: tabular-nums; }
+  .shot h3, .check h3 { margin: 14px 0 6px; font-size: 24px; line-height: 1.2; }
+  .shot .hold { margin: 0 0 18px; }
+  .shot .becomes { margin: auto 0 0; padding-top: 14px; border-top: 1px solid var(--line); color: var(--becomes); font-weight: 600; }
+  .shot .becomes::before { content: "→ "; }
+  .check h3 { margin-top: 0; }
+  .pair { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  figure { margin: 0; }
+  figure img { display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: contain; background: #e9e2d4; border-radius: 6px; }
+  figcaption { margin-top: 6px; font-size: 15px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--quiet); }
+  footer { margin-top: 48px; padding-top: 20px; border-top: 2px solid var(--ink); font-size: 24px; font-weight: 600; }
+</style>
+</head>
+<body>
+<!-- mg:board:begin -->
+<script id="board" type="application/json">
+{ "title": "", "format": "", "total": 0, "shots": [] }
+</script>
+<!-- mg:board:end -->
+<header><h1 id="title"></h1><p id="format"></p></header>
+<main id="shots" class="grid"></main>
+<section id="checks" hidden><h2>Shape check — the reference beside ours</h2><div class="grid"></div></section>
+<section id="end" hidden><h2>End still</h2><div class="grid"></div></section>
+<footer>Approve this, or say what to change, before anything is animated.</footer>
+<script>
+const board = JSON.parse(document.getElementById('board').textContent);
+
+// One element with its class, its text and its children; every word of the board goes in as text.
+function el(tag, className, text, children = []) {
+  const node = document.createElement(tag);
+  if (className) node.className = className;
+  if (text !== undefined) node.textContent = text;
+  node.append(...children);
+  return node;
+}
+// A picture named from the job folder; this page stands one folder below it.
+function picture(path, caption) {
+  const img = el('img');
+  img.src = '../' + path;
+  return el('figure', '', undefined, [img, ...(caption ? [el('figcaption', '', caption)] : [])]);
+}
+const seconds = s => Number(s).toFixed(2);
+const columns = (grid, count) => { grid.style.gridTemplateColumns = `repeat(${Math.min(4, Math.max(2, count))}, 1fr)`; };
+
+document.title = board.title || 'storyboard';
+document.getElementById('title').textContent = board.title;
+document.getElementById('format').textContent = [board.format, board.total ? seconds(board.total) + ' s' : '', board.shots.length + ' shots'].filter(Boolean).join('  ·  ');
+
+const shots = document.getElementById('shots');
+columns(shots, board.shots.length);
+for (const shot of board.shots) {
+  shots.append(el('article', 'tile shot', undefined, [
+    el('div', '', undefined, [el('span', 'number', String(shot.n).padStart(2, '0')), el('span', 'span', `${seconds(shot.from)} – ${seconds(shot.to)} s`)]),
+    el('h3', '', shot.title),
+    el('p', 'hold', shot.hold),
+    ...(shot.becomes ? [el('p', 'becomes', shot.becomes)] : []),
+  ]));
+}
+
+const checks = board.shapeChecks || [];
+if (checks.length) {
+  const section = document.getElementById('checks'), grid = section.querySelector('.grid');
+  section.hidden = false;
+  columns(grid, Math.min(2, checks.length));
+  for (const check of checks)
+    grid.append(el('article', 'tile check', undefined, [el('h3', '', check.label), el('div', 'pair', undefined, [picture(check.reference, 'reference'), picture(check.ours, 'ours')])]));
+}
+
+if (board.endStill) {
+  const section = document.getElementById('end'), grid = section.querySelector('.grid');
+  section.hidden = false;
+  columns(grid, 2);
+  grid.append(el('article', 'tile', undefined, [picture(board.endStill)]));
+}
+
+// `mg board` photographs the page at exactly this height. Every picture has a fixed frame, so the
+// height does not wait for one to load.
+document.documentElement.dataset.boardHeight = Math.ceil(document.documentElement.getBoundingClientRect().height);
+</script>
+</body>
+</html>

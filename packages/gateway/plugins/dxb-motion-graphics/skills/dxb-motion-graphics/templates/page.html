@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>film</title>
+<!--
+  dxb-motion-graphics — the page of one film. The picture is a pure function of time:
+  renderAt(t) draws the whole frame for second t, and nothing else decides it — no timers, no
+  animation-frame clock, no Date.now(), no unseeded randomness. The same t gives the same pixels,
+  so `mg stills`, `mg render` (HyperFrames) and a person opening the file all see one film.
+
+  Open it yourself:  index.html?t=3.2   that still        index.html?play            the film, looping
+                     index.html?t=3.2&format=9x16         another frame format, short side kept
+
+  The job's material is reached through the links `mg init` stands inside this folder — assets/…,
+  refs/…, sound/… — never through "../": HyperFrames serves this folder and nothing above it.
+-->
+<script>
+// ── TIMING — everything timed in this film is written here, once. `mg events`, `mg sound` and
+// `mg verify` read this block on its own, so it touches no DOM.
+const W = 1920, H = 1080, FPS = 30, TOTAL = 12;
+
+// The starter writes its beats as shares of TOTAL so `mg init --dur` gives a whole film at any length.
+// A real film writes its beats in seconds.
+const BEATS = { dot: 0, square: TOTAL * 0.15, rule: TOTAL * 0.4, words: TOTAL * 0.5, rest: TOTAL * 0.85 };
+const MORPH = Math.min(1.2, TOTAL * 0.12);   // how long one shape takes to become the next
+const SLIDE = Math.min(0.5, TOTAL * 0.08);   // how long one word takes to arrive
+const LINE = ['Every', 'shot', 'becomes', 'the', 'next'];
+
+window.FILM = {
+  W, H, FPS, TOTAL, BEATS,
+  // EVENTS are the moments a sound may sit on: a morph lands, a word arrives.
+  EVENTS: [
+    { name: 'square-lands', t: BEATS.square + MORPH },
+    { name: 'rule-lands', t: BEATS.rule + MORPH },
+    ...LINE.map((word, i) => ({ name: 'word-' + (i + 1), t: BEATS.words + i * (BEATS.rest - BEATS.words) / LINE.length })),
+  ],
+};
+</script>
+<style>
+  html, body { margin: 0; overflow: hidden; }
+  #stage { position: relative; overflow: hidden; transform-origin: 0 0; }
+  #picture { position: absolute; left: 0; top: 0; }
+</style>
+</head>
+<body>
+<div id="stage" data-composition-id="film" data-width="1920" data-height="1080" data-duration="12" data-no-timeline>
+  <canvas id="picture"></canvas>
+  <!-- mg:sound:begin -->
+  <!-- mg:sound:end -->
+</div>
+<script>
+const stage = document.getElementById('stage');
+const query = new URLSearchParams(location.search);
+
+// ── THE JOB'S OWN TYPEFACE — a job supplies its own: put the file in page/fonts/ and name it here.
+// No system font is ever the look of a film; until a face is named the words are drawn as bars.
+const TYPEFACE = null;   // 'fonts/YourDisplay-Bold.woff2'
+
+// ── FRAME — the root's size is the frame. `mg render --format` writes it per format in job.json;
+// a person asks for one with ?format=9x16. Everything below is laid out from FILM.W and FILM.H.
+const asked = (query.get('format') || '').match(/^(\d+)x(\d+)$/);
+if (asked) {
+  const k = Math.min(FILM.W, FILM.H) / Math.min(asked[1], asked[2]);
+  stage.dataset.width = Math.round(asked[1] * k);
+  stage.dataset.height = Math.round(asked[2] * k);
+}
+FILM.W = Number(stage.dataset.width);
+FILM.H = Number(stage.dataset.height);
+const CLEAR = stage.hasAttribute('data-alpha');   // `mg render --alpha`: a transparent master, no background
+
+// ── HELPERS — pure functions of their arguments: no state, no clock. ─────────────────────────────
+const clamp = (x, lo = 0, hi = 1) => Math.min(hi, Math.max(lo, x));
+const lerp = (a, b, u) => a + (b - a) * u;
+const seg = (t, a, b) => clamp((t - a) / (b - a));              // 0 before a, 1 after b, straight between
+const easeIn = u => u * u * u;
+const easeOut = u => 1 - Math.pow(1 - u, 3);                    // arrives and settles, never overshoots
+const easeInOut = u => (u < 0.5 ? 4 * u * u * u : 1 - Math.pow(-2 * u + 2, 3) / 2);
+const easeOutExpo = u => (u >= 1 ? 1 : 1 - Math.pow(2, -10 * u));
+const tween = (t, a, b, from, to, ease = easeInOut) => lerp(from, to, ease(seg(t, a, b)));
+const mix = (c, d, u) => `rgb(${c.map((v, i) => Math.round(lerp(v, d[i], u))).join(',')})`;
+
+// A closed outline as points, clockwise from the top centre: a rounded rectangle (a circle when r = w/2 = h/2).
+function roundRect(w, h, r) {
+  const x = w / 2 - r, y = h / 2 - r, points = [[0, -h / 2]];
+  for (const [cx, cy, from] of [[x, -y, -90], [x, y, 0], [-x, y, 90], [-x, -y, 180]])
+    for (let i = 0; i <= 12; i++) {
+      const a = (from + i * 7.5) * Math.PI / 180;
+      points.push([cx + r * Math.cos(a), cy + r * Math.sin(a)]);
+    }
+  return points;
+}
+
+// The same outline as n points evenly spaced along it. Two outlines resampled to one n can morph.
+function resample(points, n) {
+  const loop = [...points, points[0]], along = [0];
+  for (let i = 1; i < loop.length; i++)
+    along.push(along[i - 1] + Math.hypot(loop[i][0] - loop[i - 1][0], loop[i][1] - loop[i - 1][1]));
+  const out = [];
+  for (let k = 0, i = 1; k < n; k++) {
+    const d = along[along.length - 1] * k / n;
+    while (along[i] < d) i++;
+    const u = (d - along[i - 1]) / (along[i] - along[i - 1] || 1);
+    out.push([lerp(loop[i - 1][0], loop[i][0], u), lerp(loop[i - 1][1], loop[i][1], u)]);
+  }
+  return out;
+}
+
+const morph = (A, B, u) => A.map((p, i) => [lerp(p[0], B[i][0], u), lerp(p[1], B[i][1], u)]);
+
+function fillOutline(g, points) {
+  g.beginPath();
+  points.forEach(([x, y], i) => (i ? g.lineTo(x, y) : g.moveTo(x, y)));
+  g.closePath();
+  g.fill();
+}
+
+// Words on centred lines no wider than maxW: [{ word, w, x, y }] — x from the block's centre line,
+// y the baseline counted down from the first line's.
+function layoutWords(measure, words, maxW, gap, lineH) {
+  const lines = [];
+  for (const word of words) {
+    const w = measure(word), line = lines[lines.length - 1];
+    if (line && line.width + gap + w <= maxW) {
+      line.items.push({ word, w, x: line.width + gap });
+      line.width += gap + w;
+    } else lines.push({ width: w, items: [{ word, w, x: 0 }] });
+  }
+  return lines.flatMap((line, row) => line.items.map(it => ({ ...it, x: it.x - line.width / 2, y: row * lineH })));
+}
+
+// Word by word: each word slides up from behind the lower edge of its own line and stops. No bounce,
+// no letters fading in. `starts[i]` is when word i begins to arrive; `draw(word, x, y)` paints one.
+function revealWords(g, placed, t, starts, slide, em, draw) {
+  placed.forEach((p, i) => {
+    const u = easeOut(seg(t, starts[i], starts[i] + slide));
+    if (u <= 0) return;
+    g.save();
+    g.beginPath();
+    g.rect(p.x - em, p.y - em, p.w + 2 * em, em * 1.3);
+    g.clip();
+    draw(p, p.x, p.y + (1 - u) * em * 1.3);
+    g.restore();
+  });
+}
+
+// ── THE FILM — a dot becomes a square, the square becomes the rule the words arrive on. ───────────
+const canvas = document.getElementById('picture');
+const g = canvas.getContext('2d');
+const dpr = window.devicePixelRatio || 1;          // a larger master (`mg render --scale`) raises it
+stage.style.width = canvas.style.width = FILM.W + 'px';
+stage.style.height = canvas.style.height = FILM.H + 'px';
+canvas.width = FILM.W * dpr;
+canvas.height = FILM.H * dpr;
+
+const unit = Math.min(FILM.W, FILM.H) / 100;      // every size is counted in hundredths of the short side
+const em = 8 * unit;
+const AMBER = [242, 184, 75], CORAL = [232, 100, 60], PAPER = [244, 239, 230];
+const POINTS = 160;
+const wordStarts = FILM.EVENTS.filter(e => e.name.startsWith('word-')).map(e => e.t);
+let placed, DOT, SQUARE, RULE, ruleY;
+
+function layout() {
+  g.font = `${em}px film`;
+  const measure = TYPEFACE ? word => g.measureText(word).width : word => word.length * em * 0.56;
+  placed = layoutWords(measure, LINE, FILM.W * 0.84, em * 0.3, em * 1.25);
+  const widest = Math.max(...placed.map(p => p.x + p.w)) * 2;
+  ruleY = FILM.H * 0.68 + placed[placed.length - 1].y + em * 0.55;
+  DOT = resample(roundRect(26 * unit, 26 * unit, 13 * unit), POINTS);
+  SQUARE = resample(roundRect(30 * unit, 30 * unit, 6 * unit), POINTS);
+  RULE = resample(roundRect(widest, 1.2 * unit, 0.6 * unit), POINTS);
+}
+
+function drawWord(p, x, y) {
+  if (TYPEFACE) g.fillText(p.word, x, y);
+  else { g.beginPath(); g.roundRect(x, y - em * 0.62, p.w, em * 0.62, em * 0.1); g.fill(); }
+}
+
+function renderAt(t) {
+  t = clamp(t, 0, FILM.TOTAL);
+  const { W, H, BEATS } = FILM;
+  g.setTransform(dpr, 0, 0, dpr, 0, 0);
+  g.clearRect(0, 0, W, H);
+  if (!CLEAR) {
+    const field = g.createRadialGradient(W / 2, H * 0.44, 0, W / 2, H * 0.44, Math.hypot(W, H) * 0.62);
+    field.addColorStop(0, '#1b222b');
+    field.addColorStop(1, '#0b0e12');
+    g.fillStyle = field;
+    g.fillRect(0, 0, W, H);
+  }
+
+  // A slow push towards the centre runs under the whole film: no frame stands still.
+  const push = 1 + 0.04 * t / FILM.TOTAL;
+  g.translate(W / 2, H / 2);
+  g.scale(push, push);
+  g.translate(-W / 2, -H / 2);
+
+  const toSquare = easeInOut(seg(t, BEATS.square, BEATS.square + MORPH));
+  const toRule = easeInOut(seg(t, BEATS.rule, BEATS.rule + MORPH));
+  const breath = 1 + 0.035 * Math.sin(t * 2.4) * (1 - toSquare);
+  g.save();
+  g.translate(W / 2, lerp(H * 0.42, ruleY, toRule));
+  g.rotate(lerp(-Math.PI / 2, 0, toSquare));      // the dot turns as its corners come out, and lands square
+  g.scale(breath, breath);
+  g.fillStyle = toRule > 0 ? mix(CORAL, PAPER, toRule) : mix(AMBER, CORAL, toSquare);
+  fillOutline(g, morph(morph(DOT, SQUARE, toSquare), RULE, toRule));
+  g.restore();
+
+  g.fillStyle = `rgb(${PAPER})`;
+  g.font = `${em}px film`;
+  g.textBaseline = 'alphabetic';
+  g.save();
+  g.translate(W / 2, H * 0.68);
+  revealWords(g, placed, t, wordStarts, SLIDE, em, drawWord);
+  g.restore();
+}
+window.renderAt = renderAt;
+
+// ── READY — resolved when the typeface (and, in a real film, every image and model) is loaded. ──
+window.ready = (async () => {
+  if (TYPEFACE) document.fonts.add(await new FontFace('film', `url(${TYPEFACE})`).load());
+  layout();
+  renderAt(Number(query.get('t')) || 0);
+})();
+
+// ── HYPERFRAMES — the hook as measured on 0.9.38: the root carries data-no-timeline, the build
+// waits for `ready`, and every frame arrives as one hf-seek event.
+window.__hf = window.__hf || {}; window.__hf.buildReady = window.__hf.buildReady || {}; window.__hf.buildReady.film = window.ready; window.addEventListener('hf-seek', e => renderAt(e.detail.time));
+
+// A page that draws with WebGL writes the unmasked renderer string to <html data-gl> before `ready`
+// resolves; it is said aloud here so `mg render` can refuse a software renderer. This starter has none.
+window.ready.then(() => {
+  const gl = document.documentElement.dataset.gl;
+  if (gl) console.log('mg:gl ' + gl);
+});
+
+// ── FOR A PERSON OPENING THE FILE — a render carries no query string and never reaches this. ─────
+if (location.search) {
+  stage.style.transform = `scale(${Math.min(1, innerWidth / FILM.W, innerHeight / FILM.H)})`;
+  // The loop lives in play.js, outside the film: HyperFrames' lint refuses an animation-frame call in
+  // the film's own script, and one found there moves the render to its slower screenshot capture.
+  if (query.has('play')) document.head.appendChild(Object.assign(document.createElement('script'), { src: 'play.js' }));
+}
+</script>
+</body>
+</html>

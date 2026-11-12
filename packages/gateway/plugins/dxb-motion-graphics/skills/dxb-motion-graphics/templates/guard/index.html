@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>guard</title>
+<!--
+  dxb-motion-graphics — the guard film. `mg hf update` renders these five seconds with a new
+  HyperFrames version and verifies the film before that version may render a real one. It holds the
+  page contract at its smallest: a picture that is a pure function of time, one event for one sound,
+  and a WebGL context whose renderer is said aloud, so a silent fall to software drawing is caught.
+-->
+<script>
+const W = 1920, H = 1080, FPS = 30, TOTAL = 5;
+window.FILM = { W, H, FPS, TOTAL, BEATS: { sweep: 0, turned: 2.5 }, EVENTS: [{ name: 'turn', t: 2.5 }] };
+</script>
+<style>
+  html, body { margin: 0; overflow: hidden; }
+  #stage { position: relative; overflow: hidden; }
+  #picture { position: absolute; left: 0; top: 0; }
+</style>
+</head>
+<body>
+<div id="stage" data-composition-id="film" data-width="1920" data-height="1080" data-duration="5" data-no-timeline>
+  <canvas id="picture"></canvas>
+  <!-- mg:sound:begin -->
+  <!-- mg:sound:end -->
+</div>
+<script>
+const stage = document.getElementById('stage');
+FILM.W = Number(stage.dataset.width);
+FILM.H = Number(stage.dataset.height);
+
+const canvas = document.getElementById('picture');
+const g = canvas.getContext('2d');
+const dpr = window.devicePixelRatio || 1;
+stage.style.width = canvas.style.width = FILM.W + 'px';
+stage.style.height = canvas.style.height = FILM.H + 'px';
+canvas.width = FILM.W * dpr;
+canvas.height = FILM.H * dpr;
+
+// A bar crosses the frame at a steady pace, so every frame differs from the one before it; at the
+// film's one event the field turns from dark to pale, which is the moment the guard's sound sits on.
+function renderAt(t) {
+  t = Math.min(FILM.TOTAL, Math.max(0, t));
+  const { W, H, BEATS } = FILM, turned = t >= BEATS.turned;
+  g.setTransform(dpr, 0, 0, dpr, 0, 0);
+  g.fillStyle = turned ? '#f4efe6' : '#0b0e12';
+  g.fillRect(0, 0, W, H);
+  g.fillStyle = turned ? '#0b0e12' : '#f2b84b';
+  g.fillRect((W - H * 0.02) * t / FILM.TOTAL, H * 0.3, H * 0.02, H * 0.4);
+}
+window.renderAt = renderAt;
+
+window.ready = (async () => {
+  const gl = document.createElement('canvas').getContext('webgl');
+  const named = gl && gl.getExtension('WEBGL_debug_renderer_info');
+  document.documentElement.dataset.gl = gl ? gl.getParameter(named ? named.UNMASKED_RENDERER_WEBGL : gl.RENDERER) : 'no WebGL';
+  renderAt(Number(new URLSearchParams(location.search).get('t')) || 0);
+})();
+
+// The hook as measured on 0.9.38, the same line a film's page carries.
+window.__hf = window.__hf || {}; window.__hf.buildReady = window.__hf.buildReady || {}; window.__hf.buildReady.film = window.ready; window.addEventListener('hf-seek', e => renderAt(e.detail.time));
+
+window.ready.then(() => console.log('mg:gl ' + document.documentElement.dataset.gl));
+</script>
+</body>
+</html>

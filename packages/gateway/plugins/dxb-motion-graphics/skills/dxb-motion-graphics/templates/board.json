@@ -1,0 +1,12 @@
+{
+  "title": "",
+  "format": "",
+  "total": 0,
+  "shots": [
+    { "n": 1, "from": "dot", "to": "square", "title": "The dot", "hold": "One amber dot breathes at the centre of a dark field.", "becomes": "Its corners come out as it turns: the dot becomes a square." },
+    { "n": 2, "from": "square", "to": "rule", "title": "The square", "hold": "The coral square stands upright, alone.", "becomes": "It flattens and sinks into a thin pale rule, where the line will stand." },
+    { "n": 3, "from": "rule", "to": "end", "title": "The line", "hold": "Five words rise onto the rule one by one; the frame keeps pushing in.", "becomes": "" }
+  ],
+  "shapeChecks": [],
+  "endStill": ""
+}
