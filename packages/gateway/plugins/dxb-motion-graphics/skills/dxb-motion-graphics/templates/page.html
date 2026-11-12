@@ -18,7 +18,7 @@
 <script>
 // ── TIMING — everything timed in this film is written here, once. `mg events`, `mg sound` and
 // `mg verify` read this block on its own, so it touches no DOM.
-const W = 1920, H = 1080, FPS = 30, TOTAL = 12;
+const FPS = 30, TOTAL = 12;
 
 // The starter writes its beats as shares of TOTAL so `mg init --dur` gives a whole film at any length.
 // A real film writes its beats in seconds.
@@ -28,7 +28,9 @@ const SLIDE = Math.min(0.5, TOTAL * 0.08);   // how long one word takes to arriv
 const LINE = ['Every', 'shot', 'becomes', 'the', 'next'];
 
 window.FILM = {
-  W, H, FPS, TOTAL, BEATS,
+  // The frame's size has no name but FILM.W and FILM.H. Written here it is the first format's; the
+  // FRAME step below sets it to the format being drawn, and a name of its own up here would stay behind.
+  W: 1920, H: 1080, FPS, TOTAL, BEATS,
   // EVENTS are the moments a sound may sit on: a morph lands, a word arrives.
   EVENTS: [
     { name: 'square-lands', t: BEATS.square + MORPH },

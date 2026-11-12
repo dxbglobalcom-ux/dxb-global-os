@@ -12,51 +12,145 @@ import { fileURLToPath } from "node:url";
 import { parseArgs } from "node:util";
 import { drawBoard, writeBoardPage } from "./lib/board.mjs";
 import { goodVersion, hyperframes, latestVersion, proveVersion } from "./lib/hyperframes.mjs";
-import { Refusal, TEMPLATES, formatsNamed, insideJob, layOutJob, openJob, readFilm, readJson, sizePage, writeJson } from "./lib/job.mjs";
+import { Refusal, TEMPLATES, formatBySize, formatsNamed, insideJob, layOutJob, openJob, readFilm, readJson, sizePage, writeJson } from "./lib/job.mjs";
 import { lastLines, makeSheets, renderFilm, scaleFor, takeStills } from "./lib/picture.mjs";
 import { planCues, writeSoundBlock } from "./lib/sound.mjs";
 import { failures, verifyFilms } from "./lib/verify.mjs";
 
-const USAGE = `mg init <dir> [--title "…"] [--w 1920] [--h 1080] [--fps 30] [--dur 12]
-mg board [--job <dir>]
-mg stills <seconds…> [--format <name>] [--job <dir>]
-mg sheet [--around-events] [--n <count>] [--format <name>] [--job <dir>]
-mg events [--job <dir>]
-mg sound [--job <dir>]
-mg render [--format <name>|all] [--scale <n> | --4k] [--alpha] [--fps <n>] [--job <dir>]
-mg verify [<file>] [--job <dir>]
-mg hf status | mg hf update [--guard <index.html>]
-mg blender <scene.py> [--need-mb 4000] [--job <dir>] [-- <arguments for the scene>]`;
-
 const BLENDER_NEEDS_MB = 4000;
+// A tool still running after this long is taken for one that never ends. The longest thing mg starts
+// is a 4K render (measured 2026-11-12: the 3 s starter film at 3840×2160 took 7 s); a film that needs
+// longer states its own limit in DXB_MG_TOOL_TIMEOUT, in seconds.
+const TOOL_HOURS = 2;
+
+// An option as parseArgs reads it, with what help prints of it: the value written after it, what it does.
+const text = (value, says) => ({ type: "string", value, says });
+const flag = (says) => ({ type: "boolean", says });
+const JOB = { job: text("<dir>", "the job folder (the current folder when not given)") };
+const ONE_FORMAT = { format: text("<name>", "the format drawn (the job's first when not given)") };
+
+// What each command does and takes: its arguments, then its options. `parse` reads a command's options
+// from here and `mg <command> --help` prints them, so help names no option the command would refuse.
+const TAKES = {
+  init: {
+    does: "Lays a job folder out in <dir>: job.json, the page and the storyboard from the skill's templates.",
+    args: "<dir>",
+    options: {
+      title: text('"…"', "the film's title (the folder's name when not given)"),
+      w: text("<pixels>", "the first format's width (1920 when not given)"),
+      h: text("<pixels>", "the first format's height (1080 when not given)"),
+      format: { ...text("<name>=<w>x<h>", "one more format, such as 9x16=1080x1920; given again for each further one"), multiple: true },
+      fps: text("<n>", "the film's frames a second (30 when not given)"),
+      dur: text("<seconds>", "the film's length (12 when not given)"),
+      lufs: text("<n>", "the delivery's loudness target, such as -16 (when not given, mg verify measures the loudness and judges nothing)"),
+      spec: flag("the job is an independent spec piece, not a commissioned film"),
+      brand: text('"…"', "whose brand the film shows"),
+    },
+  },
+  board: { does: "Draws the storyboard, board/board.json, as one image: board/board.png.", options: JOB },
+  stills: { does: "Takes stills of the film at exact seconds, into out/stills/<format>/.", args: "<seconds…>", options: { ...ONE_FORMAT, ...JOB } },
+  sheet: {
+    does: "Lays the film out as a contact sheet, into out/sheets/<format>/.",
+    options: {
+      "around-events": flag("one sheet for each event, of the moments around it, instead of one sheet of the whole film"),
+      n: text("<count>", "the stills on a sheet (9 when not given, 4 around an event)"),
+      ...ONE_FORMAT, ...JOB,
+    },
+  },
+  events: { does: "Prints the film's timing as its page states it: size, rate, length, beats and events.", options: JOB },
+  sound: { does: "Places each cue of sound/cues.json on its event and writes the clips into the page's sound block.", options: JOB },
+  render: {
+    does: "Renders the whole film through HyperFrames at the good version, into out/.",
+    options: {
+      format: text("<name>|all", "the format rendered, or every format of the job (its first when not given)"),
+      scale: text("<n>", "a larger master, by a whole multiple of the format's size that reaches 1080p, 1440p or 4K"),
+      "4k": flag("a 4K master, by the whole multiple that reaches it; not given together with --scale"),
+      alpha: flag("a transparent master, written as .mov"),
+      fps: text("<n>", "another frame rate than job.json's; the film's name carries it"),
+      ...JOB,
+    },
+  },
+  verify: {
+    does: "Measures the file given, or every master of the job's formats in out/, against what the job states; writes out/verify.json.",
+    args: "[<file>]", options: JOB,
+  },
+  hf: {
+    does: "The HyperFrames version guard. status: the good version and npm's latest. update: the latest becomes the good one once it has rendered the guard film and that film has verified.",
+    args: "[status|update]", options: { guard: text("<index.html>", "update: another guard page than the skill's own") },
+  },
+  blender: {
+    does: "Runs a scene in Blender, headless and from factory settings, once the graphics card has the free memory the scene needs.",
+    args: "<scene.py>",
+    options: {
+      "need-mb": text("<MB>", `the free memory the scene needs on the graphics card (${BLENDER_NEEDS_MB} when not given)`),
+      job: text("<dir>", "the folder the scene is read from and Blender is started in (the current folder when not given)"),
+    },
+    after: "[-- <arguments for the scene>]",
+  },
+};
+
+const written = (name, { value }) => `--${name}${value ? ` ${value}` : ""}`;
+
+/** One command as a person types it, on one line. */
+function usage(command) {
+  const { args, options, after } = TAKES[command];
+  return ["mg", command, args, ...Object.entries(options).map(([name, option]) => `[${written(name, option)}]`), after].filter(Boolean).join(" ");
+}
+
+/** `mg --help`, and what a call that names no command is told: every command, and where the rest is said. */
+const HELP = `${Object.keys(TAKES).map(usage).join("\n")}
+
+mg <command> --help says what that command does, and what each of its options does.
+A tool mg starts is given ${TOOL_HOURS} hours to end and is stopped then; DXB_MG_TOOL_TIMEOUT=<seconds> states another limit.`;
+
+/** `mg <command> --help`: the command's usage line, what it does, then one line for each of its options. */
+function helpFor(command) {
+  const options = Object.entries(TAKES[command].options).map(([name, option]) => [written(name, option), option.says]);
+  const width = Math.max(...options.map(([name]) => name.length));
+  return [usage(command), `  ${TAKES[command].does}`, ...options.map(([name, says]) => `  ${name.padEnd(width)}  ${says}`)].join("\n");
+}
+
+/** Whether help is asked for among the arguments given to mg or to a command — what follows "--" belongs to whatever the command starts. */
+function asksForHelp(argv) {
+  const own = argv.includes("--") ? argv.slice(0, argv.indexOf("--")) : argv;
+  return own.includes("--help") || own.includes("-h");
+}
+
+function toolSeconds() {
+  const stated = process.env.DXB_MG_TOOL_TIMEOUT;
+  if (stated === undefined) return TOOL_HOURS * 3600;
+  if (!(Number(stated) > 0)) throw new Refusal(`DXB_MG_TOOL_TIMEOUT takes a number of seconds, not "${stated}"`);
+  return Number(stated);
+}
 
 /**
  * Starts one process and waits for it. `out` is text, or bytes when `binary` is asked for.
+ * A process that has not ended at the time limit is stopped, and that is a Refusal.
  * @param {string} cmd
  * @param {string[]} args
  * @param {{ cwd?: string, env?: Record<string, string>, binary?: boolean }} [options]
  * @returns {{ code: number, out: string | Buffer, err: string }}
  */
 export function run(cmd, args, { cwd, env, binary = false } = {}) {
-  const r = spawnSync(cmd, args, { cwd, env: { ...process.env, ...env }, encoding: "buffer", maxBuffer: 1 << 30 });
+  const limit = toolSeconds();
+  const r = spawnSync(cmd, args, { cwd, env: { ...process.env, ...env }, encoding: "buffer", maxBuffer: 1 << 30, timeout: limit * 1000 });
+  if (r.error?.code === "ETIMEDOUT") throw new Refusal(`${cmd} did not end within ${limit} s and was stopped. A tool that needs longer is given it with DXB_MG_TOOL_TIMEOUT=<seconds>`);
   if (r.error) return { code: -1, out: binary ? Buffer.alloc(0) : "", err: r.error.message };
   return { code: r.status ?? -1, out: binary ? r.stdout : r.stdout.toString(), err: r.stderr.toString() };
 }
 
-const text = { type: "string" }, flag = { type: "boolean" };
-
-/** A command's own options and arguments; an option it does not have is refused. Every command takes --job. */
-function parse(argv, options = {}) {
+/** The options and arguments given to a command, read as TAKES states them; an option the command does not have is refused. */
+function parse(command, argv) {
   try {
-    return parseArgs({ args: argv, options: { job: text, ...options }, allowPositionals: true, strict: true });
+    return parseArgs({ args: argv, options: TAKES[command].options, allowPositionals: true, strict: true });
   } catch (e) {
     throw new Refusal(e.message);
   }
 }
 
 /** The same, for a command that works on a job: the folder --job names, or the current one. */
-function parseForJob(argv, options) {
-  const parsed = parse(argv, options);
+function parseForJob(command, argv) {
+  const parsed = parse(command, argv);
   return { ...parsed, job: openJob(parsed.values.job ?? ".") };
 }
 
@@ -66,13 +160,28 @@ function wholeNumber(given, fallback, option) {
   return Number(given);
 }
 
+/** One more format as `mg init --format` states it: <name>=<width>x<height>. */
+function formatStated(stated) {
+  const [, name, w, h] = stated.match(/^([^=]+)=(\d+)x(\d+)$/) ?? [];
+  if (!name) throw new Refusal(`--format takes <name>=<width>x<height>, such as 9x16=1080x1920, not "${stated}"`);
+  return { name, w: Number(w), h: Number(h) };
+}
+
 function init({ say }, argv) {
-  const { values, positionals: [dir] } = parse(argv, { title: text, w: text, h: text, fps: text, dur: text });
+  // A loudness target is below zero, and parseArgs reads "--lufs -16" as two options: the figure is joined to its flag first.
+  const lufsAt = argv.indexOf("--lufs"), joined = lufsAt < 0 || lufsAt + 1 === argv.length ? argv : argv.toSpliced(lufsAt, 2, `--lufs=${argv[lufsAt + 1]}`);
+  const { values, positionals: [dir] } = parse("init", joined);
   if (!dir) throw new Refusal("which folder? mg init <dir>");
   const dur = Number(values.dur ?? 12);
   if (!(dur > 0)) throw new Refusal("--dur takes the film's length in seconds");
-  const size = { title: values.title ?? basename(resolve(dir)), w: wholeNumber(values.w, 1920, "--w"), h: wholeNumber(values.h, 1080, "--h"), fps: wholeNumber(values.fps, 30, "--fps") };
-  const job = layOutJob(dir, size, sizePage(readFileSync(join(TEMPLATES, "page.html"), "utf8"), { ...size, dur }));
+  if (values.lufs !== undefined && !/^-?\d+(\.\d+)?$/.test(values.lufs)) throw new Refusal(`--lufs takes the loudness target as a number, such as -16, not "${values.lufs}"`);
+  const first = formatBySize(wholeNumber(values.w, 1920, "--w"), wholeNumber(values.h, 1080, "--h")), fps = wholeNumber(values.fps, 30, "--fps");
+  // What is not given stays undefined here: layOutJob states it — no target, no spec piece, no brand.
+  const stated = {
+    title: values.title ?? basename(resolve(dir)), formats: [first, ...(values.format ?? []).map(formatStated)], fps,
+    lufs: values.lufs && Number(values.lufs), spec: values.spec, brand: values.brand,
+  };
+  const job = layOutJob(dir, stated, sizePage(readFileSync(join(TEMPLATES, "page.html"), "utf8"), { ...first, fps, dur }));
 
   // The starter board tells the starter film; its template names each shot's ends by the page's beats.
   const film = readFilm(job.page), [format] = job.formats, starter = readJson(join(TEMPLATES, "board.json"));
@@ -82,16 +191,16 @@ function init({ say }, argv) {
     shots: starter.shots.map((shot) => ({ ...shot, from: second(shot.from), to: second(shot.to) })),
   });
   writeBoardPage(job);
-  say(`mg init: ${job.dir} — ${format.name}, ${format.w}×${format.h}, ${job.fps} fps, ${film.TOTAL} s. Real material into assets/ and refs/, the storyboard into board/board.json, then: mg board`);
+  say(`mg init: ${job.dir} — ${job.formats.map((f) => `${f.name} ${f.w}×${f.h}`).join(", ")}, ${job.fps} fps, ${film.TOTAL} s. Real material into assets/ and refs/, the storyboard into board/board.json, then: mg board`);
 }
 
 function board({ run, say }, argv) {
-  const drawn = drawBoard(run, parseForJob(argv).job);
+  const drawn = drawBoard(run, parseForJob("board", argv).job);
   say(`mg board: ${drawn.png} — ${drawn.shots} shot(s). Nothing is animated before it is approved.`);
 }
 
 function stills(tools, argv) {
-  const { job, values, positionals } = parseForJob(argv, { format: text });
+  const { job, values, positionals } = parseForJob("stills", argv);
   const times = positionals.map(Number);
   if (!times.length || times.some(Number.isNaN)) throw new Refusal("which moments? mg stills <seconds…>, such as: mg stills 0.5 2 3.25");
   if (values.format === "all") throw new Refusal("stills are taken of one format at a time");
@@ -100,7 +209,7 @@ function stills(tools, argv) {
 }
 
 function sheet(tools, argv) {
-  const { job, values } = parseForJob(argv, { format: text, "around-events": flag, n: text });
+  const { job, values } = parseForJob("sheet", argv);
   const aroundEvents = values["around-events"] ?? false;
   if (values.format === "all") throw new Refusal("sheets are made of one format at a time");
   const files = makeSheets(tools, job, formatsNamed(job, values.format)[0], { aroundEvents, count: wholeNumber(values.n, aroundEvents ? 4 : 9, "--n") });
@@ -108,11 +217,11 @@ function sheet(tools, argv) {
 }
 
 function events({ say }, argv) {
-  say(JSON.stringify(readFilm(parseForJob(argv).job.page), null, 2));
+  say(JSON.stringify(readFilm(parseForJob("events", argv).job.page), null, 2));
 }
 
 function sound({ run, say }, argv) {
-  const { job } = parseForJob(argv);
+  const { job } = parseForJob("sound", argv);
   const plan = planCues(run, job, readFilm(job.page));
   writeSoundBlock(job, plan);
   for (const c of plan)
@@ -123,7 +232,7 @@ function sound({ run, say }, argv) {
 function render(tools, argv) {
   const partial = argv.find((arg) => /^--(start|end)(=|$)/.test(arg));
   if (partial) throw new Refusal(`${partial.split("=")[0]} is refused: a partial render makes HyperFrames fall back to software WebGL without saying so (measured 2026-11-12). A film is rendered whole.`);
-  const { job, values } = parseForJob(argv, { format: text, scale: text, "4k": flag, alpha: flag, fps: text });
+  const { job, values } = parseForJob("render", argv);
   if (values.scale && values["4k"]) throw new Refusal("--scale and --4k name the same thing; give one");
   for (const format of formatsNamed(job, values.format)) {
     const master = { format, scale: scaleFor(format, { scale: wholeNumber(values.scale, 1, "--scale"), fourK: values["4k"] ?? false }), fps: wholeNumber(values.fps, job.fps, "--fps"), alpha: values.alpha ?? false };
@@ -133,7 +242,7 @@ function render(tools, argv) {
 }
 
 function verify({ run, say }, argv) {
-  const { job, positionals } = parseForJob(argv);
+  const { job, positionals } = parseForJob("verify", argv);
   const verdict = verifyFilms(run, job, positionals.map((file) => resolve(file)));
   for (const film of verdict.films) {
     const stated = film.loudness === null ? "no sound" : `loudness ${film.loudness.toFixed(1)} LUFS${job.lufs === null ? " (not judged: job.json states no target)" : ` against ${job.lufs}`}`;
@@ -147,7 +256,7 @@ function verify({ run, say }, argv) {
 }
 
 function versionGuard({ run, say }, argv) {
-  const { values, positionals: [action = "status"] } = parse(argv, { guard: text });
+  const { values, positionals: [action = "status"] } = parse("hf", argv);
   const good = goodVersion(), latest = latestVersion(run);
   if (action === "status") return say(`mg hf: good ${good} · latest ${latest ?? "unknown (npm did not answer)"}${latest && latest !== good ? " — try it: mg hf update" : ""}`);
   if (action !== "update") throw new Refusal("mg hf status | mg hf update [--guard <index.html>]");
@@ -164,7 +273,7 @@ function versionGuard({ run, say }, argv) {
 
 function blender({ run, say }, argv) {
   const cut = argv.indexOf("--"), sceneArgs = cut < 0 ? [] : argv.slice(cut + 1);
-  const { values, positionals: [scene] } = parse(cut < 0 ? argv : argv.slice(0, cut), { "need-mb": text });
+  const { values, positionals: [scene] } = parse("blender", cut < 0 ? argv : argv.slice(0, cut));
   const cwd = resolve(values.job ?? "."), need = wholeNumber(values["need-mb"], BLENDER_NEEDS_MB, "--need-mb");
   if (!scene || !existsSync(resolve(cwd, scene))) throw new Refusal(`which scene? mg blender <scene.py>${scene ? ` — ${scene} is not there` : ""}`);
 
@@ -197,8 +306,10 @@ export async function mg(argv, { run: starts = run, say: hears = () => {} } = {}
   const tools = { run: starts, say, hf: (job, args) => hyperframes(starts, job, goodVersion(), args) };
   let code = 0;
   try {
-    if (!COMMANDS[name]) throw new Refusal(`${name ? `there is no command "${name}"` : "which command?"}\n${USAGE}`);
-    COMMANDS[name](tools, rest);
+    if (name === "help" || asksForHelp([name])) say(HELP);
+    else if (!COMMANDS[name]) throw new Refusal(`${name ? `there is no command "${name}"` : "which command?"}\n${HELP}`);
+    else if (asksForHelp(rest)) say(helpFor(name));
+    else COMMANDS[name](tools, rest);
   } catch (e) {
     if (!(e instanceof Refusal)) throw e;
     say(`mg${name in COMMANDS ? ` ${name}` : ""}: FAILED — ${e.message}`);

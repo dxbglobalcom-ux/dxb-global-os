@@ -55,11 +55,15 @@ job.json  { "title", "formats": [{"name":"16x9","w":1920,"h":1080}], "fps": 30, 
 sample above −50 dBFS, peak = maximum of the short-time envelope, end = last sample above −50 dBFS) and sets the
 clip's start so that point lands on the event.
 
-## `mg` commands (all take `--job <dir>`, default the current directory; all print one decisive line and exit non-zero on failure)
+## `mg` commands (all but `init` and `hf` take `--job <dir>`, default the current directory; all print one decisive line and exit non-zero on failure)
+
+`mg --help` lists them; `mg <command> --help` prints that command's usage, what it does and one line for each of
+its flags, outside any job folder. A tool a command starts is stopped after two hours
+(`DXB_MG_TOOL_TIMEOUT=<seconds>` states another limit) and the command fails saying so.
 
 | Command | Does |
 |---|---|
-| `mg init <dir> [--title … --w 1920 --h 1080 --fps 30 --dur 12]` | folders, `job.json`, `page/index.html` and `board/board.json` + `board.html` from the templates |
+| `mg init <dir> [--title … --w 1920 --h 1080 --format name=WxH … --fps 30 --dur 12 --lufs n --spec --brand …]` | folders, `job.json`, `page/index.html` and `board/board.json` + `board.html` from the templates; `--w/--h` are the first format (named by its ratio), each `--format` one more; two format names one film's file name could mean (`a` beside `a-2x`) are refused here and whenever a job is opened |
 | `mg board` | `board/board.json` → `board/board.png` (numbered shots: time range, title, the hold, and on its own line how it becomes the next; optional "shape check" tiles with a reference image beside ours; optional end still) |
 | `mg stills <t…>` | exact-time PNGs into `out/stills/` (HyperFrames `snapshot --at`) |
 | `mg sheet [--around-events] [--n 4]` | a contact sheet of the film, or 3–4 stills around every transition/event, into `out/sheets/` |

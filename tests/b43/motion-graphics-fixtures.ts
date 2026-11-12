@@ -70,9 +70,10 @@ export function ownState(): string {
   return (process.env.DXB_MG_STATE = mkdtempSync(join(tmpdir(), "mg-state-")));
 }
 
-export async function initJob({ w = 640, h = 360, dur = 3 } = {}): Promise<string> {
+/** A job of the starter film; `more` are further `mg init` arguments, such as a second format. */
+export async function initJob({ w = 640, h = 360, dur = 3, more = [] as string[] } = {}): Promise<string> {
   const job = join(mkdtempSync(join(tmpdir(), "mg-")), "job");
-  const r = await mg(["init", job, "--title", "Fixture film", "--w", String(w), "--h", String(h), "--fps", String(FPS), "--dur", String(dur)]);
+  const r = await mg(["init", job, "--title", "Fixture film", "--w", String(w), "--h", String(h), "--fps", String(FPS), "--dur", String(dur), ...more]);
   expect(r.out).toMatch(/mg init/);
   expect(r.code).toBe(0);
   return job;
@@ -84,7 +85,26 @@ export function editJson(file: string, change: (v: any) => void): void {
   writeFileSync(file, JSON.stringify(v, null, 2) + "\n");
 }
 
-export const cues = (job: string, list: unknown[]) => writeFileSync(join(job, "sound/cues.json"), JSON.stringify(list, null, 2));
+/** sound/cues.json: a bare list of cues, or the object that states the whole set's trim beside them. */
+export const cues = (job: string, stated: unknown[] | { trim: unknown; cues: unknown[] }) => writeFileSync(join(job, "sound/cues.json"), JSON.stringify(stated, null, 2));
+
+/**
+ * A film's page at its smallest, written the way pages were before the template stopped naming the
+ * frame's size at the top: one event, on 1.000 s of a 3 s film. It draws nothing — the tests that use
+ * it answer for HyperFrames themselves.
+ */
+export function plainPage(job: string): void {
+  writeFileSync(join(job, "page/index.html"), `<!doctype html>
+<script>
+const W = 640, H = 360, FPS = ${FPS}, TOTAL = 3;
+window.FILM = { W, H, FPS, TOTAL, BEATS: { start: 0 }, EVENTS: [{ name: 'lands', t: 1 }] };
+</script>
+<div id="stage" data-composition-id="film" data-width="640" data-height="360" data-duration="3" data-no-timeline>
+  <!-- mg:sound:begin -->
+  <!-- mg:sound:end -->
+</div>
+`);
+}
 export const film = (job: string, name = FILM) => join(job, "out", name);
 export const verdict = (job: string) => JSON.parse(readFileSync(join(job, "out", "verify.json"), "utf8"));
 

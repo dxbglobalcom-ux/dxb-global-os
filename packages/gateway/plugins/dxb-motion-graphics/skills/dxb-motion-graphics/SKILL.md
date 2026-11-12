@@ -56,7 +56,8 @@ pixels. The page reaches the job's material as `assets/…`, `refs/…` and `sou
 browser 3D; Blender for a physical product — `references/blender.md` and the kit in
 `tools/motion-graphics/blender/`. Existing illustrations are cut out and animated, not redrawn (`references/craft.md`, "Animating an existing
 illustration"). The page lays out
-from `FILM.W/H`, so each frame format is composed, not cropped.
+from `FILM.W/H`, so each frame format is composed, not cropped. The frame's size has no other name in the page:
+a name of its own at the top would keep the first format's size while another format is drawn.
 
 **5. Look at it.** `mg sheet --around-events` gives three or four stills across every transition; read every one
 against the board: does each shot really become the next, is the brand's material exact, is every word readable
@@ -86,7 +87,8 @@ a physical product each part against the real object — the model cannot see th
 
 ## The job folder
 
-`job.json` states the film; edit it by hand after `mg init`:
+`job.json` states the film. `mg init` writes it from its flags — `--format <name>=<w>x<h>` for each frame after
+the first, `--lufs`, `--spec`, `--brand` — and it stays a file edited by hand:
 
 ```json
 { "title": "WhatsApp spec",
@@ -95,7 +97,8 @@ a physical product each part against the real object — the model cannot see th
 ```
 
 - `formats` — every frame the film ships in; the first is the one a command uses when none is named. A name is
-  letters, digits, `-` and `_` only: it becomes part of every output's file name.
+  letters, digits, `-` and `_` only: it becomes part of every output's file name, before `-<n>x` for a larger
+  master and `-<n>fps` for another rate — so two names one file name could mean, `a` beside `a-2x`, are refused.
 - `fps` — the delivery's rate. `lufs` — the delivery's loudness target; `null` means `mg verify` measures the
   loudness and judges nothing — state a target once the brief gives one.
 - `spec`, `brand` — what the job is, for whoever opens the folder next: an independent spec piece or a
@@ -110,7 +113,7 @@ not accepted by the builder: the step is brought to the one who decides, with th
 
 | | |
 |---|---|
-| `mg init <dir>` | job folder, `job.json`, the page and board templates |
+| `mg init <dir> [--w --h --format name=WxH … --fps --dur --lufs --spec --brand]` | job folder, `job.json` with every format stated, the page and board templates |
 | `mg board` | `board/board.json` → `board/board.png` |
 | `mg stills <t…>` · `mg sheet [--around-events] [--n 4]` | exact-time stills · the film on one sheet, or one sheet per event, into `out/` |
 | `mg events` | the film's beats and events |
@@ -121,6 +124,9 @@ not accepted by the builder: the step is brought to the one who decides, with th
 | `mg blender <scene.py> [-- args]` | Blender, headless, after a free-memory check on the graphics card |
 
 Run it from the job folder or with `--job <dir>`; never run `npx hyperframes` from the repository root.
+`mg --help` lists the commands; `mg <command> --help` says what that command does and what each of its flags does.
+A tool the command starts is stopped after two hours and the command fails saying so; a render that needs longer
+is given it with `DXB_MG_TOOL_TIMEOUT=<seconds>`.
 
 ## What goes wrong
 

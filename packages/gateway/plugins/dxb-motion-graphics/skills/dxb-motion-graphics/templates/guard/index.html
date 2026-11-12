@@ -10,8 +10,8 @@
   and a WebGL context whose renderer is said aloud, so a silent fall to software drawing is caught.
 -->
 <script>
-const W = 1920, H = 1080, FPS = 30, TOTAL = 5;
-window.FILM = { W, H, FPS, TOTAL, BEATS: { sweep: 0, turned: 2.5 }, EVENTS: [{ name: 'turn', t: 2.5 }] };
+const FPS = 30, TOTAL = 5;
+window.FILM = { W: 1920, H: 1080, FPS, TOTAL, BEATS: { sweep: 0, turned: 2.5 }, EVENTS: [{ name: 'turn', t: 2.5 }] };
 </script>
 <style>
   html, body { margin: 0; overflow: hidden; }

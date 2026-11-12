@@ -15,6 +15,8 @@ const FOLDERS = ["assets", "refs", "board", "page", "page/fonts", "page/lib", "s
 // 404 in its browser (measured 2026-11-12). The page reaches the job's material through these links.
 const LINKED = ["assets", "refs", "sound"];
 const FORMAT_NAME = /^[A-Za-z0-9_-]+$/; // a format's name becomes part of every output's file name
+// What a film's file name carries after its format's name: -<n>x for a larger master, -<n>fps for another rate.
+const MASTER_MARKS = "(?:-(\\d+)x)?(?:-(\\d+)fps)?";
 
 /** What stopped a command, in words for the person at the terminal. `mg` prints it and exits non-zero. */
 export class Refusal extends Error {}
@@ -44,10 +46,14 @@ function swapOnce(text, pattern, to, what) {
   return text.replace(pattern, () => to);
 }
 
-/** The page template at a job's own size, rate and length. */
+/**
+ * The page template at a job's own size, rate and length. The size is written into FILM alone: the
+ * template gives it no name of its own, because such a name keeps the first format's size while
+ * another format is drawn.
+ */
 export function sizePage(template, { w, h, fps, dur }) {
-  const timed = swapOnce(template, /const W = \d+, H = \d+, FPS = \d+, TOTAL = [\d.]+;/,
-    `const W = ${w}, H = ${h}, FPS = ${fps}, TOTAL = ${dur};`, "its timing constants");
+  const framed = swapOnce(template, /W: \d+, H: \d+,/, `W: ${w}, H: ${h},`, "its frame's size");
+  const timed = swapOnce(framed, /const FPS = \d+, TOTAL = [\d.]+;/, `const FPS = ${fps}, TOTAL = ${dur};`, "its timing constants");
   return swapOnce(timed, /data-width="\d+" data-height="\d+" data-duration="[\d.]+"/,
     `data-width="${w}" data-height="${h}" data-duration="${dur}"`, "its root's size and length");
 }
@@ -91,6 +97,28 @@ function gcd(a, b) {
   return b ? gcd(b, a % b) : a;
 }
 
+/** The format a frame is given when nobody names it: its ratio, as 16x9 or 9x16. */
+export function formatBySize(w, h) {
+  const k = gcd(w, h);
+  return { name: `${w / k}x${h / k}`, w, h };
+}
+
+/**
+ * Refuses formats no command could work with: none at all, a name that cannot stand in a file name,
+ * or two names that one film's file name would mean — "a-2x" beside "a", since <title>-a-2x.mp4 is
+ * "a" at twice its size and "a-2x" at its own. The same name twice is the plainest such pair.
+ */
+function checkFormats(formats) {
+  if (!Array.isArray(formats) || !formats.length || formats.some((f) => !f.name || !(f.w > 0) || !(f.h > 0)))
+    throw new Refusal('job.json: "formats" must list at least one { "name", "w", "h" }');
+  if (formats.some((f) => !FORMAT_NAME.test(f.name))) throw new Refusal('job.json: a format\'s "name" is letters, digits, "-" and "_" only');
+  const marksAlone = new RegExp(`^${MASTER_MARKS}$`);
+  for (const [i, shorter] of formats.entries())
+    for (const [j, longer] of formats.entries())
+      if (i !== j && longer.name.startsWith(shorter.name) && marksAlone.test(longer.name.slice(shorter.name.length)))
+        throw new Refusal(`job.json: the formats "${shorter.name}" and "${longer.name}" cannot stand together — a film named <title>-${longer.name} would be either (a master's name is <format>[-<n>x][-<n>fps]). Rename one`);
+}
+
 export function linkMaterial(root) {
   for (const folder of LINKED) {
     const link = join(root, "page", folder);
@@ -98,16 +126,19 @@ export function linkMaterial(root) {
   }
 }
 
-/** Folders, job.json, the page, an empty cue list and the links: a job that every command can open. */
-export function layOutJob(dir, { title, w, h, fps }, pageHtml) {
+/**
+ * Folders, job.json, the page, an empty cue list and the links: a job that every command can open.
+ * Nothing is written when the formats are refused.
+ */
+export function layOutJob(dir, { title, formats, fps, lufs = null, spec = false, brand = "" }, pageHtml) {
   const root = resolve(dir);
   refuseRepositoryRoot(root);
+  checkFormats(formats);
   for (const taken of ["job.json", "page/index.html"])
     if (existsSync(join(root, taken))) throw new Refusal(`${root} already holds a job (${taken}); mg never writes over one`);
   mkdirSync(root, { recursive: true });
   for (const folder of FOLDERS) mkdirSync(insideJob(root, folder), { recursive: true });
-  const k = gcd(w, h);
-  writeJson(insideJob(root, "job.json"), { title, formats: [{ name: `${w / k}x${h / k}`, w, h }], fps, lufs: null, spec: false, brand: "" });
+  writeJson(insideJob(root, "job.json"), { title, formats, fps, lufs, spec, brand });
   writeFileSync(insideJob(root, "page/index.html"), pageHtml);
   cpSync(join(TEMPLATES, "play.js"), insideJob(root, "page/play.js"));
   writeFileSync(insideJob(root, "sound/cues.json"), "[]\n");
@@ -120,12 +151,9 @@ export function openJob(dir) {
   refuseRepositoryRoot(root);
   if (!existsSync(join(root, "job.json"))) throw new Refusal(`${root} is not a job folder (no job.json) — make one with: mg init <dir>`);
   const stated = readJson(join(root, "job.json"));
-  const formats = stated.formats;
-  if (!Array.isArray(formats) || !formats.length || formats.some((f) => !f.name || !(f.w > 0) || !(f.h > 0)))
-    throw new Refusal('job.json: "formats" must list at least one { "name", "w", "h" }');
-  if (formats.some((f) => !FORMAT_NAME.test(f.name))) throw new Refusal('job.json: a format\'s "name" is letters, digits, "-" and "_" only');
+  checkFormats(stated.formats);
   if (!(stated.fps > 0)) throw new Refusal('job.json: "fps" must be a number');
-  return { dir: root, title: stated.title ?? "", formats, fps: stated.fps, lufs: stated.lufs ?? null, page: join(root, "page/index.html") };
+  return { dir: root, title: stated.title ?? "", formats: stated.formats, fps: stated.fps, lufs: stated.lufs ?? null, page: join(root, "page/index.html") };
 }
 
 /** The formats a command was asked for: the job's first when none is named, every one for "all". */
@@ -169,7 +197,7 @@ export function masterOf(job, fileName) {
   for (const format of job.formats) {
     const stem = `${slug(job.title)}-${format.name}`;
     if (!fileName.startsWith(stem)) continue;
-    const rest = fileName.slice(stem.length).match(/^(?:-(\d+)x)?(?:-(\d+)fps)?\.(mp4|mov)$/);
+    const rest = fileName.slice(stem.length).match(new RegExp(`^${MASTER_MARKS}\\.(mp4|mov)$`));
     if (rest) return { format, scale: Number(rest[1] ?? 1), fps: Number(rest[2] ?? job.fps), alpha: rest[3] === "mov" };
   }
   return null;

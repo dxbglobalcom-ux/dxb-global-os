@@ -2,11 +2,14 @@
 //
 // `mg` is the one command of the motion-graphics skill: it lays a job folder out, takes exact-time
 // stills, renders through HyperFrames at the guarded version, puts each sound's start, peak or end on
-// its event, and verifies the finished file. Its tests stand in three files, by the tools each needs:
+// its event, and verifies the finished file. Its tests stand in five files, by the tools each needs:
 //
 //   motion-graphics.test.ts               (this one) node, ffmpeg and ffprobe — all the construction
 //                                         sandbox has. Every film here is made by ffmpeg alone, and
-//                                         where a test must cross HyperFrames the test answers for it.
+//                                         where a test must cross HyperFrames or Chrome the test
+//                                         answers for it.
+//   motion-graphics-page.test.ts          node alone: the helpers a page loads from page/lib/.
+//   motion-graphics-read.test.ts          node alone: `mg motion-read`, the network answered by the test.
 //   motion-graphics-film.host.test.ts     HyperFrames, Chrome and npm: films really rendered.
 //   motion-graphics-blender.host.test.ts  Blender.
 //
@@ -16,10 +19,13 @@ import { cpSync, existsSync, lstatSync, mkdirSync, mkdtempSync, readFileSync, re
 import { spawnSync } from "node:child_process";
 import { tmpdir } from "node:os";
 import { join, relative } from "node:path";
+import { fileURLToPath } from "node:url";
+import vm from "node:vm";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
+import { run } from "../../tools/motion-graphics/mg.mjs";
 import {
   FILM, FPS, MG, REPO, SKILL, TEMPLATES, antiPhase, askForWebGL, blip, cues, ebuReference, editJson, film, initJob,
-  makeFilm, mg, missingTools, ownState, recorder, sh, sha, shaped, tick, verdict,
+  makeFilm, mg, missingTools, ownState, plainPage, recorder, sh, sha, shaped, tick, verdict,
 } from "./motion-graphics-fixtures.js";
 
 const repoPackageJson = sha(join(REPO, "package.json"));
@@ -133,6 +139,249 @@ describe("B43 dxb-motion-graphics — the job folder", () => {
     }
     expect(cli(["init", join(copy, "jobs/one")]).code).toBe(0);
     expect(cli(["events", "--job", join(link, "jobs/one")]).code).toBe(0);
+  });
+
+  it("init states every format, the loudness target and what the job is", async () => {
+    const whole = join(mkdtempSync(join(tmpdir(), "mg-")), "job");
+    const r = await mg(["init", whole, "--title", "Fixture film", "--w", "640", "--h", "360", "--fps", "30", "--dur", "3",
+      "--format", "9x16=360x640", "--format", "square=360x360", "--lufs", "-16", "--spec", "--brand", "WhatsApp"]);
+    expect(r.code).toBe(0);
+    expect(JSON.parse(readFileSync(join(whole, "job.json"), "utf8"))).toEqual({
+      title: "Fixture film",
+      formats: [{ name: "16x9", w: 640, h: 360 }, { name: "9x16", w: 360, h: 640 }, { name: "square", w: 360, h: 360 }],
+      fps: 30, lufs: -16, spec: true, brand: "WhatsApp",
+    });
+    for (const stated of ["16x9", "640×360", "9x16", "360×640", "square", "360×360"]) expect(r.out).toContain(stated);
+    // The page stands framed for the first format; the others are framed at each call that names them.
+    expect(readFileSync(join(whole, "page/index.html"), "utf8")).toMatch(/data-width="640" data-height="360"/);
+    expect((await mg(["events", "--job", whole])).code).toBe(0);
+  });
+
+  it("init refuses a format or a loudness it cannot read, and lays nothing out", async () => {
+    const refused: [string[], RegExp][] = [
+      [["--format", "9x16"], /--format/],                          // no size
+      [["--format", "9x16=360"], /--format/],                      // half a size
+      [["--format", "tall/one=360x640"], /letters, digits/],       // a name that is not a file name's part
+      [["--format", "16x9=360x640"], /cannot stand together/],     // the first format's own name
+      [["--format", "16x9-2x=1280x720"], /cannot stand together/], // a film of it would read as the first at 2×
+      [["--lufs", "loud"], /--lufs/],
+    ];
+    for (const [more, why] of refused) {
+      const dir = join(mkdtempSync(join(tmpdir(), "mg-")), "job");
+      const r = await mg(["init", dir, "--w", "640", "--h", "360", ...more]);
+      expect(r.code, more.join(" ")).not.toBe(0);
+      expect(r.out, more.join(" ")).toMatch(why);
+      expect(existsSync(dir), more.join(" ")).toBe(false);
+    }
+  });
+
+  it("init puts the page's helpers into page/lib, as the skill ships them", () => {
+    for (const helper of ["outline.js", "motion-blur.js"]) expect(sha(join(job, "page/lib", helper)), helper).toBe(sha(join(TEMPLATES, "lib", helper)));
+    expect(readFileSync(join(job, "page/index.html"), "utf8")).toContain('<script src="lib/outline.js"></script>');
+  });
+
+  it("the page names the frame's size in FILM alone: nothing at its top holds the first format's size under a name of its own", () => {
+    // W and H at the top of the page stayed the first format's size while another format was drawn, and
+    // the first film's writer laid a vertical frame out from them (2026-11-12).
+    for (const page of [join(job, "page/index.html"), join(TEMPLATES, "guard/index.html")]) {
+      const html = readFileSync(page, "utf8"), context = vm.createContext({ window: {} });
+      vm.runInContext(html.match(/<script>([\s\S]*?)<\/script>/)![1], context);
+      expect(vm.runInContext("[typeof W, typeof H, typeof WIDTH, typeof HEIGHT].join()", context), page).toBe("undefined,undefined,undefined,undefined");
+      expect(html, page).not.toMatch(/(?:const|let|var)\s+(?:W|H)\s*=|,\s*(?:W|H)\s*=\s*\d/);
+    }
+    const context = vm.createContext({ window: {} });
+    vm.runInContext(readFileSync(join(job, "page/index.html"), "utf8").match(/<script>([\s\S]*?)<\/script>/)![1], context);
+    expect(vm.runInContext("[window.FILM.W, window.FILM.H, window.FILM.FPS, window.FILM.TOTAL].join()", context)).toBe("640,360,30,3");
+  });
+
+  it("still reads a page written the older way, with W and H as names of its own", async () => {
+    const older = await initJob();
+    plainPage(older);
+    const r = await mg(["events", "--job", older]);
+    expect(r.code).toBe(0);
+    expect(JSON.parse(r.out)).toEqual({ W: 640, H: 360, FPS: 30, TOTAL: 3, BEATS: { start: 0 }, EVENTS: [{ name: "lands", t: 1 }] });
+  });
+
+  it("refuses two formats that one film's file name could mean", async () => {
+    // "fixture-film-a-2x.mp4" is format "a" at twice its size, and is format "a-2x" at its own.
+    const other = await initJob();
+    const named = (...names: string[]) => editJson(join(other, "job.json"), (j) => (j.formats = names.map((name) => ({ name, w: 640, h: 360 }))));
+    for (const pair of [["a", "a-2x"], ["a-24fps", "a"], ["a", "b", "a-2x-24fps"], ["a", "a"]]) {
+      named(...pair);
+      const r = await mg(["events", "--job", other]);
+      expect(r.code, pair.join(" ")).not.toBe(0);
+      expect(r.out, pair.join(" ")).toMatch(/cannot stand together/);
+    }
+    for (const pair of [["a", "a-b"], ["a", "ax"], ["a", "a-2xl"]]) {
+      named(...pair);
+      expect((await mg(["events", "--job", other])).code, pair.join(" ")).toBe(0);
+    }
+  });
+});
+
+describe("B43 dxb-motion-graphics — the board shows the film, in each format", () => {
+  const CHROME = "/usr/bin/google-chrome";
+  /**
+   * Chrome and HyperFrames answered by the test. The board's "photograph" is the board the page carried
+   * at that moment; a still is written where HyperFrames was asked to put it — or, with `stills` off,
+   * HyperFrames fails as it does on a page it cannot draw.
+   */
+  const drawing = ({ stills = true } = {}) => {
+    const boards: Record<string, any> = {}, framed: string[] = [];
+    const rec = recorder((cmd, args) => {
+      if (cmd === CHROME) {
+        const png = args.find((arg) => arg.startsWith("--screenshot="))?.slice("--screenshot=".length);
+        if (!png) return { code: 0, out: '<html data-board-height="900">', err: "" };
+        const page = readFileSync(fileURLToPath(args[args.length - 1]), "utf8");
+        boards[png] = JSON.parse(page.match(/<script id="board" type="application\/json">([\s\S]*?)<\/script>/)![1]);
+        writeFileSync(png, "the board");
+        return { code: 0, out: "", err: "" };
+      }
+      if (cmd !== "npx" || !args.includes("snapshot")) return undefined;
+      if (!stills) return { code: 1, out: "", err: "the page threw before it was ready" };
+      const stage = readFileSync(join(args[args.indexOf("snapshot") + 1], "index.html"), "utf8");
+      framed.push(stage.match(/data-width="(\d+)" data-height="(\d+)"/)!.slice(1).join("x"));
+      for (const t of args[args.indexOf("--at") + 1].split(",")) writeFileSync(join(args[args.indexOf("-o") + 1], `at-${t}s.png`), "a still");
+      return { code: 0, out: "", err: "" };
+    });
+    const asked = () => rec.calls.filter((c) => c.cmd === "npx").map((c) => c.args[c.args.indexOf("--at") + 1]);
+    return { run: rec.run, boards, framed, asked };
+  };
+  // The starter board of a 3 s film: its shots run 0–0.45 s, 0.45–1.2 s and 1.2–3 s, so their middles are these.
+  const MIDDLES = "0.225,0.825,2.1";
+  let job = "";
+  beforeAll(async () => {
+    ownState();
+    job = await initJob({ more: ["--format", "9x16=360x640"] });
+  });
+
+  it("draws the storyboard alone while the page is still the starter, and says so", async () => {
+    const chrome = drawing();
+    const r = await mg(["board", "--job", job], { run: chrome.run });
+    expect(r.code).toBe(0);
+    expect(chrome.asked()).toEqual([]); // the starter's dot is not this job's film: nothing is rendered
+    expect(r.out).toMatch(/without the film's frames: .*still the starter/);
+    expect(Object.keys(chrome.boards)).toEqual([join(job, "board/board.png")]);
+    expect(chrome.boards[join(job, "board/board.png")].shots.map((shot: any) => shot.still)).toEqual([undefined, undefined, undefined]);
+  });
+
+  it("once the page is the job's own, puts the film's frame at the middle of each shot on the board", async () => {
+    plainPage(job);
+    const chrome = drawing();
+    const r = await mg(["board", "--job", job], { run: chrome.run });
+    expect(r.code).toBe(0);
+    expect(chrome.asked()).toEqual([MIDDLES]);
+    expect(chrome.framed).toEqual(["640x360"]);
+    const board = chrome.boards[join(job, "board/board.png")];
+    expect(board.shots.map((shot: any) => shot.still)).toEqual(["out/stills/16x9/at-0.225s.png", "out/stills/16x9/at-0.825s.png", "out/stills/16x9/at-2.1s.png"]);
+    expect(board.format).toBe("16x9 · 640×360 · 30 fps");
+    expect(r.out).toMatch(/3 shot\(s\), 3 with the film's frame/);
+    for (const still of board.shots.map((shot: any) => shot.still)) expect(existsSync(join(job, still)), still).toBe(true);
+  });
+
+  it("draws one board for each format asked for, each from that format's own frames", async () => {
+    const chrome = drawing();
+    const r = await mg(["board", "--format", "all", "--job", job], { run: chrome.run });
+    expect(r.code).toBe(0);
+    expect(chrome.asked()).toEqual([MIDDLES, MIDDLES]);
+    expect(chrome.framed).toEqual(["640x360", "360x640"]);
+    expect(Object.keys(chrome.boards)).toEqual([join(job, "board/board.png"), join(job, "board/board-9x16.png")]);
+    const tall = chrome.boards[join(job, "board/board-9x16.png")];
+    expect(tall.format).toBe("9x16 · 360×640 · 30 fps");
+    expect(tall.shots[0].still).toBe("out/stills/9x16/at-0.225s.png");
+
+    const one = drawing();
+    expect((await mg(["board", "--format", "9x16", "--job", job], { run: one.run })).code).toBe(0);
+    expect(Object.keys(one.boards)).toEqual([join(job, "board/board-9x16.png")]);
+    const none = drawing();
+    expect((await mg(["board", "--format", "4x5", "--job", job], { run: none.run })).code).not.toBe(0);
+    expect(Object.keys(none.boards)).toEqual([]);
+  });
+
+  it("a shot whose time lies outside the film is drawn without a frame", async () => {
+    const other = await initJob();
+    plainPage(other);
+    editJson(join(other, "board/board.json"), (b) => Object.assign(b.shots[2], { from: 7, to: 9 }));
+    const chrome = drawing();
+    expect((await mg(["board", "--job", other], { run: chrome.run })).code).toBe(0);
+    expect(chrome.asked()).toEqual(["0.225,0.825"]);
+    expect(chrome.boards[join(other, "board/board.png")].shots.map((shot: any) => Boolean(shot.still))).toEqual([true, true, false]);
+  });
+
+  it("when the page cannot be drawn yet, draws the board without frames and says why", async () => {
+    const chrome = drawing({ stills: false });
+    const r = await mg(["board", "--job", job], { run: chrome.run });
+    expect(r.code).toBe(0);
+    expect(r.out).toMatch(/without the film's frames: HyperFrames wrote no still/);
+    expect(r.out).toMatch(/the page threw before it was ready/);
+    expect(chrome.boards[join(job, "board/board.png")].shots.map((shot: any) => shot.still)).toEqual([undefined, undefined, undefined]);
+  });
+
+  it("a board page from before the frames were drawn is said to be one, and no frame is rendered for it", async () => {
+    const other = await initJob();
+    plainPage(other);
+    const page = join(other, "board/board.html"), newer = readFileSync(page, "utf8");
+    expect(newer).toContain("shot.still");
+    writeFileSync(page, newer.replaceAll("shot.still", "undefined"));
+    const chrome = drawing();
+    const r = await mg(["board", "--job", other], { run: chrome.run });
+    expect(r.code).toBe(0);
+    expect(chrome.asked()).toEqual([]);
+    expect(r.out).toMatch(/without the film's frames: board\/board\.html .*remove it/);
+  });
+});
+
+describe("B43 dxb-motion-graphics — contact sheets: every format in one call, the window around an event stated", () => {
+  /** HyperFrames answered by the test: one contact sheet where it was asked to put it. */
+  const sheeting = () => {
+    const rec = recorder((cmd, args) => {
+      if (cmd !== "npx" || !args.includes("snapshot")) return undefined;
+      writeFileSync(join(args[args.indexOf("-o") + 1], "contact-sheet.jpg"), "a sheet");
+      return { code: 0, out: "", err: "" };
+    });
+    return { ...rec, moments: () => rec.calls.filter((c) => c.cmd === "npx").map((c) => c.args[c.args.indexOf("--at") + 1]) };
+  };
+  let job = "";
+  beforeAll(async () => {
+    ownState();
+    job = await initJob({ more: ["--format", "9x16=360x640"] });
+    plainPage(job); // one event, on 1.000 s
+  });
+
+  it("covers a quarter of a second each side of an event, or the window it is given", async () => {
+    const usual = sheeting();
+    expect((await mg(["sheet", "--around-events", "--n", "3", "--job", job], { run: usual.run })).code).toBe(0);
+    expect(usual.moments()).toEqual(["0.75,1,1.25"]);
+    const wide = sheeting();
+    expect((await mg(["sheet", "--around-events", "--n", "3", "--window", "0.5", "--job", job], { run: wide.run })).code).toBe(0);
+    expect(wide.moments()).toEqual(["0.5,1,1.5"]);
+    const five = sheeting();
+    expect((await mg(["sheet", "--around-events", "--n", "5", "--window", "0.1", "--job", job], { run: five.run })).code).toBe(0);
+    expect(five.moments()).toEqual(["0.9,0.95,1,1.05,1.1"]);
+  });
+
+  it("refuses a window that is no length of time, and starts nothing", async () => {
+    for (const window of ["0", "wide", "-1"]) {
+      const rec = sheeting();
+      const r = await mg(["sheet", "--around-events", `--window=${window}`, "--job", job], { run: rec.run });
+      expect(r.code, window).not.toBe(0);
+      expect(r.out, window).toMatch(/--window/);
+      expect(rec.calls, window).toEqual([]);
+    }
+  });
+
+  it("makes the sheets of every format in one call", async () => {
+    const rec = sheeting();
+    const r = await mg(["sheet", "--around-events", "--format", "all", "--job", job], { run: rec.run });
+    expect(r.code).toBe(0);
+    const sheets = ["16x9", "9x16"].map((format) => join(job, "out/sheets", format, "event-lands.jpg"));
+    for (const sheet of sheets) {
+      expect(existsSync(sheet), sheet).toBe(true);
+      expect(r.out).toContain(sheet);
+    }
+    const whole = await mg(["sheet", "--format", "all", "--job", job], { run: sheeting().run });
+    expect(whole.code).toBe(0);
+    for (const format of ["16x9", "9x16"]) expect(existsSync(join(job, "out/sheets", format, "film.jpg")), format).toBe(true);
   });
 });
 
@@ -283,6 +532,57 @@ describe.skipIf(missing.length > 0)("B43 dxb-motion-graphics — a cue is planne
     expect((await mg(["sound", "--job", job])).code).not.toBe(0);
   });
 
+  it("a cue may name a file of the starter set, and the job gets its own copy of it", async () => {
+    const other = await initJob();
+    const starter = join(SKILL, "sfx/pop/pop-mid-01.wav"), copy = join(other, "sound/pop-mid-01.wav");
+    cues(other, [{ at: 1, file: "sfx:pop/pop-mid-01.wav", align: "start" }]);
+    const r = await mg(["sound", "--job", other]);
+    expect(r.code).toBe(0);
+    expect(sha(copy)).toBe(sha(starter));
+    expect(lstatSync(copy).isFile()).toBe(true); // a copy the job owns, not a link out of it
+    expect(planned(r.out)).toMatchObject([{ n: 1, file: "sound/pop-mid-01.wav", align: "start" }]);
+    expect(readFileSync(join(other, "page/index.html"), "utf8")).toMatch(/<audio id="mg-cue-1" src="sound\/pop-mid-01\.wav"/);
+    expect((await mg(["sound", "--job", other])).code).toBe(0); // the copy is there already: the same again
+
+    // A file of the job's own under that name is never written over.
+    blip(copy);
+    const own = sha(copy);
+    const clash = await mg(["sound", "--job", other]);
+    expect(clash.code).not.toBe(0);
+    expect(clash.out).toMatch(/sound\/pop-mid-01\.wav is already there and is another sound/);
+    expect(sha(copy)).toBe(own);
+
+    // Only a file of the set: nothing above it, nothing that is not there.
+    for (const file of ["sfx:../templates/page.html", "sfx:pop/no-such-pop.wav", "sfx:"]) {
+      cues(other, [{ at: 1, file, align: "start" }]);
+      const refused = await mg(["sound", "--job", other]);
+      expect(refused.code, file).not.toBe(0);
+      expect(refused.out, file).toMatch(/starter set/);
+    }
+    expect(readdirSync(join(other, "sound")).sort()).toEqual(["cues.json", "pop-mid-01.wav"]);
+  });
+
+  it("one trim moves the whole set: it is added to every cue's level", async () => {
+    const volumes = () => [...readFileSync(join(job, "page/index.html"), "utf8").matchAll(/data-volume="([\d.]+)"/g)].map((clip) => Number(clip[1]));
+    const set = [{ at: 1, file: "sound/blip.wav", align: "peak", db: -12 }, { at: 2, file: "sound/blip.wav", align: "peak", db: -20 }];
+    cues(job, set);
+    expect((await mg(["sound", "--job", job])).code).toBe(0);
+    expect(volumes()).toEqual([0.2512, 0.1]); // −12 dB and −20 dB as amplitudes
+
+    cues(job, { trim: 6, cues: set });
+    const trimmed = await mg(["sound", "--job", job]);
+    expect(trimmed.code).toBe(0);
+    expect(volumes()).toEqual([0.5012, 0.1995]); // −6 dB and −14 dB
+    expect(trimmed.out).toMatch(/trim(med)? .*\+6 dB/);
+
+    cues(job, { trim: 13, cues: [{ at: 1, file: "sound/blip.wav", align: "peak", db: 0 }] }); // +13 dB in all: past what a clip can be raised by
+    expect((await mg(["sound", "--job", job])).out).toMatch(/at most \+12 dB/);
+    cues(job, { trim: "loud", cues: set });
+    const unread = await mg(["sound", "--job", job]);
+    expect(unread.code).not.toBe(0);
+    expect(unread.out).toMatch(/"trim"/);
+  });
+
   it("the starter set's index states, for every file, the peak `mg sound` puts on an event", async () => {
     const rows = [...readFileSync(INDEX, "utf8").matchAll(/^\| `([^`]+\.wav)` \| [\d.]+ \| (\d+) \|/gm)].map((row) => ({ file: row[1], peakMs: Number(row[2]) }));
     expect(rows).toHaveLength(89);
@@ -372,6 +672,33 @@ describe.skipIf(missing.length > 0)("B43 dxb-motion-graphics — verify holds a 
     expect(off.code).not.toBe(0);
     expect(off.out).toMatch(/loudness: -2[23](\.\d+)? where the job states -17/);
     editJson(join(job, "job.json"), (j) => (j.lufs = null));
+  }, 60_000);
+
+  it("a film off its loudness target is told by how many dB its whole set would have to move", async () => {
+    // The reference signal reads −23.0 LUFS (EBU Tech 3341): 6 dB under a target of −17, 6 dB over one of −29.
+    cues(job, []);
+    makeFilm(film(job), { sounds: [{ file: sound("reference.wav"), atMs: 0, stereo: true }] });
+    try {
+      editJson(join(job, "job.json"), (j) => (j.lufs = -17));
+      const quiet = await verify();
+      expect(quiet.code).not.toBe(0);
+      expect(quiet.out).toMatch(/the set would have to move by \+(5\.[7-9]|6\.[0-3]) dB/);
+      expect(quiet.out).toMatch(/"trim"/);
+      editJson(join(job, "job.json"), (j) => (j.lufs = -29));
+      expect((await verify()).out).toMatch(/the set would have to move by -(5\.[7-9]|6\.[0-3]) dB/);
+      editJson(join(job, "job.json"), (j) => (j.lufs = -23));
+      const on = await verify();
+      expect(on.code).toBe(0);
+      expect(on.out).not.toMatch(/would have to move/);
+
+      // A silent film has no loudness to move from: it fails without a figure.
+      makeFilm(film(job));
+      const silent = await verify();
+      expect(silent.code).not.toBe(0);
+      expect(silent.out).not.toMatch(/would have to move/);
+    } finally {
+      editJson(join(job, "job.json"), (j) => (j.lufs = null)); // the tests after this one share the job: a failure here must not be theirs too
+    }
   }, 60_000);
 
   it("one heard sound satisfies one cue: a second cue declared 20 ms after a single tick is not heard", async () => {
@@ -512,6 +839,109 @@ describe("B43 dxb-motion-graphics — Blender is not started without room on the
   });
 });
 
+describe("B43 dxb-motion-graphics — a tool that never ends does not hang the command", () => {
+  const NEVER = ["-e", "setTimeout(() => {}, 600000)"]; // node, doing nothing for ten minutes
+  beforeAll(() => {
+    ownState();
+    process.env.DXB_MG_TOOL_TIMEOUT = "0.3";
+  });
+  afterAll(() => {
+    delete process.env.DXB_MG_TOOL_TIMEOUT;
+  });
+
+  it("the tool is stopped at the time limit, and the limit is named", () => {
+    const began = Date.now();
+    expect(() => run(process.execPath, NEVER)).toThrow(/did not end within 0\.3 s.*DXB_MG_TOOL_TIMEOUT/s);
+    expect(Date.now() - began).toBeLessThan(20_000);
+  });
+
+  it("the command that started it fails in words, with nothing left half-made", async () => {
+    const job = await initJob();
+    writeFileSync(film(job), "a film ffprobe is never asked about");
+    const stuck = (cmd: string, args: string[], options?: Parameters<typeof run>[2]) => (cmd === "ffprobe" ? run(process.execPath, NEVER, options) : run(cmd, args, options));
+    const r = await mg(["verify", "--job", job], { run: stuck });
+    expect(r.code).toBe(1);
+    expect(r.out).toMatch(/^mg verify: FAILED — .*did not end within 0\.3 s/m);
+    expect(existsSync(join(job, "out/verify.json"))).toBe(false);
+  });
+
+  it("left to itself, the limit is long enough for a 4K render", () => {
+    delete process.env.DXB_MG_TOOL_TIMEOUT;
+    const quick = run(process.execPath, ["-e", "setTimeout(() => console.log('done'), 1000)"]); // more than three times 0.3 s
+    expect(quick).toMatchObject({ code: 0, out: "done\n" });
+    // Two hours, stated where a person looks for it, beside the name that changes it.
+    expect(sh("node", [MG, "--help"]).out.toString()).toMatch(/2 hours.*DXB_MG_TOOL_TIMEOUT/s);
+    process.env.DXB_MG_TOOL_TIMEOUT = "0.3";
+  });
+});
+
+describe("B43 dxb-motion-graphics — the command says what it takes", () => {
+  // Every flag of every command, as a person would type it.
+  const FLAGS: Record<string, string[]> = {
+    init: ["<dir>", "--title", "--w", "--h", "--format", "--fps", "--dur", "--lufs", "--spec", "--brand"],
+    board: ["--format", "--job"],
+    stills: ["<seconds…>", "--format", "--job"],
+    sheet: ["--around-events", "--n", "--window", "--format", "--job"],
+    events: ["--job"],
+    sound: ["--job"],
+    render: ["--format", "--scale", "--4k", "--alpha", "--fps", "--job"],
+    verify: ["--job"],
+    "motion-read": ["--format", "--model", "--job"],
+    hf: ["status", "update", "--guard"],
+    blender: ["<scene.py>", "--need-mb", "--job"],
+  };
+  const nowhere = mkdtempSync(join(tmpdir(), "mg-no-job-")); // a folder that holds no job
+
+  it("mg --help says how to ask about one command, and succeeds", () => {
+    for (const asked of ["--help", "-h", "help"]) {
+      const r = sh("node", [MG, asked], nowhere);
+      expect(r.code, asked).toBe(0);
+      expect(r.out.toString(), asked).toMatch(/mg <command> --help/);
+      expect(r.out.toString(), asked).not.toMatch(/FAILED/);
+    }
+  });
+
+  it("mg --help names every command", () => {
+    for (const asked of ["--help", "-h", "help"]) {
+      const said = sh("node", [MG, asked], nowhere).out.toString();
+      for (const command of Object.keys(FLAGS)) expect(said, asked).toContain(`mg ${command}`);
+    }
+  });
+
+  // One case for each command, so a command that is not there yet does not hide the others.
+  it.each(Object.entries(FLAGS))("mg %s --help prints that command's own flags, each with what it does, outside any job folder", (command, flags) => {
+    const r = sh("node", [MG, command, "--help"], nowhere);
+    const said = r.out.toString();
+    expect(r.code).toBe(0);
+    expect(said).not.toMatch(/FAILED/);
+    expect(said.split("\n")[0]).toMatch(new RegExp(`^mg ${command}\\b`));
+    for (const flag of flags) expect(said, flag).toContain(flag);
+    // One line for each flag below the usage line, and no flag of another command among them.
+    const explained = [...said.matchAll(/^\s+(--[\w-]+)\b.+\S/gm)].map((line) => line[1]).sort();
+    expect(explained).toEqual(flags.filter((flag) => flag.startsWith("--")).sort());
+    expect(readdirSync(nowhere)).toEqual([]);
+  });
+
+  it("a flag a command does not have is still refused, and help is not taken from a scene's own arguments", async () => {
+    expect((await mg(["events", "--window", "1"])).out).toMatch(/Unknown option '--window'/);
+    const scene = join(mkdtempSync(join(tmpdir(), "mg-blender-")), "scene.py");
+    writeFileSync(scene, "import bpy\n");
+    const rec = recorder((cmd) => (cmd === "nvidia-smi" ? { code: 0, out: "1\n", err: "" } : undefined));
+    const r = await mg(["blender", scene, "--", "--help"], { run: rec.run });
+    expect(rec.calls.map((c) => c.cmd)).toEqual(["nvidia-smi"]); // the command ran: --help after "--" is the scene's
+    expect(r.code).not.toBe(0);
+  });
+});
+
+describe("B43 dxb-motion-graphics — the guard film is a WebGL picture", () => {
+  it("draws with WebGL alone, so a WebGL picture that stands still is what the guard refuses", () => {
+    const guard = readFileSync(join(TEMPLATES, "guard/index.html"), "utf8");
+    expect(guard).not.toMatch(/getContext\(\s*['"]2d['"]/);
+    expect(guard).toMatch(/getContext\(\s*['"]webgl2?['"]/);
+    expect(guard).toMatch(/gl\.(clear|drawArrays|drawElements)\(/);
+  });
+});
+
 describe("B43 dxb-motion-graphics — the repository is left as it was", () => {
   afterAll(() => {
     delete process.env.DXB_MG_STATE;
@@ -520,7 +950,7 @@ describe("B43 dxb-motion-graphics — the repository is left as it was", () => {
     for (const argv of [[], ["publish"]]) {
       const r = await mg(argv);
       expect(r.code).not.toBe(0);
-      for (const c of ["init", "board", "stills", "sheet", "events", "sound", "render", "verify", "hf", "blender"]) expect(r.out).toContain(`mg ${c}`);
+      for (const c of ["init", "board", "stills", "sheet", "events", "sound", "render", "verify", "motion-read", "hf", "blender"]) expect(r.out).toContain(`mg ${c}`);
     }
   });
 

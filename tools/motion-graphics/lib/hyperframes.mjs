@@ -5,7 +5,7 @@
 import { existsSync, mkdirSync, readFileSync, rmSync } from "node:fs";
 import { homedir } from "node:os";
 import { join } from "node:path";
-import { Refusal, layOutJob, readFilm, writeJson } from "./job.mjs";
+import { Refusal, formatBySize, layOutJob, readFilm, writeJson } from "./job.mjs";
 import { renderFilm } from "./picture.mjs";
 import { planCues, writeSoundBlock } from "./sound.mjs";
 import { failures, verifyFilms } from "./verify.mjs";
@@ -62,7 +62,7 @@ function standingSecond(run, file, { W, H }) {
 export function proveVersion(run, version, guardPage) {
   const film = readFilm(guardPage), dir = join(stateDir(), "guard");
   rmSync(dir, { recursive: true, force: true });
-  const job = layOutJob(dir, { title: "guard", w: film.W, h: film.H, fps: film.FPS }, readFileSync(guardPage, "utf8"));
+  const job = layOutJob(dir, { title: "guard", formats: [formatBySize(film.W, film.H)], fps: film.FPS }, readFileSync(guardPage, "utf8"));
   const tick = run("ffmpeg", ["-v", "error", "-y", "-f", "lavfi", "-i", TICK, "-c:a", "pcm_s16le", join(dir, "sound/tick.wav")]);
   if (tick.code !== 0) throw new Refusal(`ffmpeg could not make the guard's sound: ${tick.err.trim()}`);
   writeJson(join(dir, "sound/cues.json"), [{ event: film.EVENTS[0].name, file: "sound/tick.wav", align: "peak", db: -6 }]);
