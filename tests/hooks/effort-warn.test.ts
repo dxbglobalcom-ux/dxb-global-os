@@ -401,6 +401,45 @@ describeStatusLine("the status line counts down the minutes until the prompt cac
   });
 });
 
+// Measured 2026-11-13: with the bar redrawn on a clock, idle sessions wrote their hours-old quota over the
+// fresh one in the machine's one record -- 80 % became "not known" and back, every 30 seconds.
+describeStatusLine("an older session's quota never replaces a fresher reading of the same window (2026-11-13)", () => {
+  const epoch = (secondsFromNow: number) => Math.round(Date.now() / 1000) + secondsFromNow;
+  const draw = (dir: string, rate: unknown) => {
+    const r = spawnSync("node", [STATUS_LINE], {
+      input: JSON.stringify({ session_id: SID, model: { display_name: "Fable 5.2" }, workspace: { current_dir: "/x" }, rate_limits: rate }),
+      encoding: "utf8", env: { ...process.env, XDG_RUNTIME_DIR: dir }, timeout: LIMIT_MS,
+    });
+    expect(r.status, r.stderr).toBe(0);
+    return JSON.parse(readFileSync(join(dir, "claude-ctx", "rate-limits.json"), "utf8"));
+  };
+  const five = epoch(5000), week = epoch(100000);
+  it("a lower percentage of the same window, or no window at all, leaves the fuller reading standing", () => {
+    const dir = box();
+    draw(dir, { five_hour: { used_percentage: 80, resets_at: five }, seven_day: { used_percentage: 44, resets_at: week } });
+    const stale = draw(dir, { five_hour: null, seven_day: { used_percentage: 34, resets_at: week } });
+    expect(stale.five_hour).toEqual({ used_percentage: 80, resets_at: five });
+    expect(stale.seven_day).toEqual({ used_percentage: 44, resets_at: week });
+    const lower = draw(dir, { five_hour: { used_percentage: 51, resets_at: five }, seven_day: { used_percentage: 44, resets_at: week } });
+    expect(lower.five_hour.used_percentage).toBe(80);
+  });
+  it("a fuller reading of the same window, and a later window, are taken", () => {
+    const dir = box();
+    draw(dir, { five_hour: { used_percentage: 80, resets_at: five }, seven_day: { used_percentage: 44, resets_at: week } });
+    expect(draw(dir, { five_hour: { used_percentage: 86, resets_at: five }, seven_day: { used_percentage: 45, resets_at: week } }).five_hour.used_percentage).toBe(86);
+    const next = draw(dir, { five_hour: { used_percentage: 3, resets_at: five + 18000 }, seven_day: { used_percentage: 45, resets_at: week } });
+    expect(next.five_hour).toEqual({ used_percentage: 3, resets_at: five + 18000 });
+  });
+  it("a window of the record that has already closed is replaced by whatever comes, an earlier one never replaces an open one", () => {
+    const dir = box();
+    draw(dir, { five_hour: { used_percentage: 100, resets_at: epoch(1) }, seven_day: { used_percentage: 44, resets_at: week } });
+    spawnSync("sleep", ["2"]);
+    expect(draw(dir, { five_hour: null, seven_day: { used_percentage: 44, resets_at: week } }).five_hour).toBeNull();
+    draw(dir, { five_hour: { used_percentage: 9, resets_at: five }, seven_day: { used_percentage: 44, resets_at: week } });
+    expect(draw(dir, { five_hour: { used_percentage: 99, resets_at: five - 18000 }, seven_day: null }).five_hour).toEqual({ used_percentage: 9, resets_at: five });
+  });
+});
+
 describe("a plan talk opens the dxb-team3 door at once (CEO 2026-10-09)", () => {
   const door = 'Skill("dxb-team3")';
   for (const text of ["planı konuşalım", "Bu ekranın tasarımını yapalım", "mimariyi değerlendir", "let's design the schema",

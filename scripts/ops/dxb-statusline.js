@@ -117,10 +117,25 @@ function persistRateLimits(data) {
       : null);
     const dir = path.join(process.env.XDG_RUNTIME_DIR || '/tmp', 'claude-ctx');
     fs.mkdirSync(dir, { recursive: true });
+    // Every session writes this one file, and each carries the quota of its OWN last request: an idle
+    // session redrawn on a clock (statusLine.refreshInterval) would put an hours-old reading over a
+    // fresh one (measured 2026-11-13: 80 % became "not known" and back, every 30 s). Within one window
+    // the percentage only rises, so per window the fuller reading of the same window is kept, a later
+    // window replaces an earlier one, and a missing or earlier one never replaces a window still open.
+    let prev = null;
+    try { prev = JSON.parse(fs.readFileSync(path.join(dir, 'rate-limits.json'), 'utf8')); } catch { /* none yet */ }
+    const nowS = Date.now() / 1000;
+    const newest = (old, cur) => {
+      const open = w => w && typeof w.resets_at === 'number' && w.resets_at > nowS && typeof w.used_percentage === 'number';
+      if (!open(old)) return cur;
+      if (!cur || typeof cur.resets_at !== 'number' || cur.resets_at < old.resets_at) return old;
+      if (cur.resets_at > old.resets_at) return cur;
+      return (cur.used_percentage ?? -1) >= old.used_percentage ? cur : old;
+    };
     const rec = {
       session_id: typeof data.session_id === 'string' ? data.session_id : null,
-      seven_day: win(rl.seven_day),
-      five_hour: win(rl.five_hour),
+      seven_day: newest(prev?.seven_day, win(rl.seven_day)),
+      five_hour: newest(prev?.five_hour, win(rl.five_hour)),
       written_at: new Date().toISOString(),
     };
     // Sessions share this file, so each writes through its own tmp name.
