@@ -184,8 +184,9 @@ in 44 minutes), and the writer opened next, at 86 %, was cut after 22 minutes.
 **The same hand or a fresh one.** A next piece that follows from the one a hand just finished goes to that
 hand while it is still small — its brief is ready before the hand returns, because a hand idle over 4 minutes
 is not resumed (§7). A hand that has grown large is not continued; a fresh one is opened: every step rereads
-the hand's whole context (calculated 2026-11-12 from the hands' own records, at list-price weights: carrying
-on a writer of about 400k tokens would have cost about 1.5 times the fresh one that was opened).
+the hand's whole context. How large is too large the lead judges; the one figure there is is a calculation, not
+a trial (2026-11-12, from the two writers' own records at list-price weights — how the Max quota weighs a cache
+read is not measured: carrying on a writer of about 400k tokens came to about 1.5 times the fresh one opened).
 
 **The arrangement — four, all equal**
 <!-- CEO-OK: orchestration-three-arrangements-lead-chooses-2026-10-03 --> <!-- CEO-OK: four-equal-arrangements-lead-chooses-2026-10-08 -->:

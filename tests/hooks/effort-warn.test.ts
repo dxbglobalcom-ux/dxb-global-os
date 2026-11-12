@@ -468,6 +468,12 @@ describe("the quota is said on every turn, from the status line's record (CEO 20
     }));
   }
   const quotaLine = (text: string) => text.split("\n").filter((l) => l.startsWith("QUOTA -- "));
+  /** the record written as raw text: JSON.stringify cannot write NaN, Infinity or an integer of 400 digits */
+  function rawQuota(dir: string, five: string, week: string, writtenSecondsAgo = 120): void {
+    mkdirSync(join(dir, "claude-ctx"), { recursive: true });
+    writeFileSync(join(dir, "claude-ctx", "rate-limits.json"),
+      `{"session_id":"${OTHER}","seven_day":${week},"five_hour":${five},"written_at":"${at(writtenSecondsAgo)}"}`);
+  }
 
   it("his message: the 5-hour window's percentage and its reset, the week, the record's age, the door's section", () => {
     const dir = box();
@@ -503,7 +509,7 @@ describe("the quota is said on every turn, from the status line's record (CEO 20
     for (const level of ["high", "xhigh", "max"]) {
       const dir = box();
       record(dir, SID, level, 2);
-      quota(dir, { used_percentage: 59, resets_at: epoch(3 * 3600) }, { used_percentage: 29, resets_at: epoch(40 * 3600) });
+      quota(dir, { used_percentage: 59, resets_at: epoch(3 * 3600 + 30) }, { used_percentage: 29, resets_at: epoch(40 * 3600) });
       const text = context(hook(dir, prompt(SID, transcript(dir, []), REPORT)));
       expect(text.startsWith("QUOTA -- ")).toBe(true);
       expect(text).not.toContain("\n");
@@ -515,7 +521,7 @@ describe("the quota is said on every turn, from the status line's record (CEO 20
   it("a report arriving below high: its one line, then the quota line", () => {
     const dir = box();
     record(dir, SID, "medium", 2);
-    quota(dir, { used_percentage: 59, resets_at: epoch(3 * 3600) }, null);
+    quota(dir, { used_percentage: 59, resets_at: epoch(3 * 3600 + 30) }, null);
     const lines = context(hook(dir, prompt(SID, transcript(dir, []), REPORT))).split("\n");
     expect(lines).toHaveLength(2);
     expect(lines[0]).toContain("A report has arrived");
@@ -555,6 +561,65 @@ describe("the quota is said on every turn, from the status line's record (CEO 20
       const text = context(hook(dir, prompt(SID, transcript(dir, []))));
       expect(text, JSON.stringify([five, week, ago])).not.toContain("QUOTA");
       expect(hook(dir, prompt(SID, transcript(dir, []), REPORT))).toBe("");
+    }
+  });
+  // Sol's pass, 2026-11-12: a number the record cannot mean must not be said, and must never cost him the level
+  it("a percentage that is no percentage -- NaN, Infinity, an integer of 400 digits, above 100 -- is not known; the other window and his message's text stand", () => {
+    const week = `{"used_percentage":22,"resets_at":${epoch(40 * 3600)}}`;
+    for (const used of ["NaN", "Infinity", "-Infinity", "1" + "0".repeat(400), "101", "1e308"]) {
+      for (const reset of [String(epoch(3600)), "1" + "0".repeat(400)]) {
+        const dir = box();
+        record(dir, SID, "medium", 2);
+        rawQuota(dir, `{"used_percentage":${used},"resets_at":${reset}}`, week);
+        const text = context(hook(dir, prompt(SID, transcript(dir, []))));
+        expect(told(text), used).toBe("medium");
+        const [line] = quotaLine(text);
+        expect(line, `${used} ${reset.length}`).toContain("5-hour window is not known");
+        expect(line).toContain("the week is 22% used");
+      }
+    }
+  });
+  it("a reset time of 400 digits beside a good percentage: the percentage is told without a reset", () => {
+    const dir = box();
+    record(dir, SID, "high", 2);
+    rawQuota(dir, `{"used_percentage":40,"resets_at":${"1" + "0".repeat(400)}}`, "null");
+    const [line] = quotaLine(context(hook(dir, prompt(SID, transcript(dir, [])))));
+    expect(line).toContain("5-hour window is 40% used;");
+  });
+  it("both windows past their reset: the line says so for each -- it does not vanish", () => {
+    const dir = box();
+    record(dir, SID, "high", 2);
+    quota(dir, { used_percentage: 100, resets_at: epoch(-300) }, { used_percentage: 90, resets_at: epoch(-60) }, 1800);
+    const [line] = quotaLine(context(hook(dir, prompt(SID, transcript(dir, [])))));
+    expect(line).toContain("5-hour window has reset since the record was written");
+    expect(line).toContain("the week has reset since the record was written");
+    expect(line).not.toMatch(/\d+% used/);
+  });
+  it("a reset time older than the record itself is not a reset since the record: that window is not known", () => {
+    const dir = box();
+    record(dir, SID, "high", 2);
+    quota(dir, { used_percentage: 64, resets_at: epoch(-3600) }, { used_percentage: 22, resets_at: -5 }, 120);
+    const text = context(hook(dir, prompt(SID, transcript(dir, []))));
+    expect(text).not.toContain("QUOTA");
+    const second = box();
+    record(second, SID, "high", 2);
+    quota(second, { used_percentage: 64, resets_at: epoch(-3600) }, { used_percentage: 22, resets_at: epoch(40 * 3600) }, 120);
+    const [line] = quotaLine(context(hook(second, prompt(SID, transcript(second, [])))));
+    expect(line).toContain("5-hour window is not known");
+    expect(line).not.toContain("has reset");
+    expect(line).not.toContain("64%");
+  });
+  it("his message's text is what it was, whole: the quota line is appended and nothing else changes", () => {
+    for (const [words, mode] of [["devam", "default"], ["Bu işin mimarisini planlayalım.", "plan"]] as const) {
+      const bare = box();
+      record(bare, SID, "medium", 2);
+      const before = context(hook(bare, prompt(SID, transcript(bare, []), words, mode)));
+      const dir = box();
+      record(dir, SID, "medium", 2);
+      quota(dir, { used_percentage: 10, resets_at: epoch(3600 + 30) }, null);
+      const after = context(hook(dir, prompt(SID, transcript(dir, []), words, mode)));
+      const [line] = quotaLine(after);
+      expect(after).toBe(`${before}\n${line}`);
     }
   });
   it("a percentage with no reset time is told without one", () => {

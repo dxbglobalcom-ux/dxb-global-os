@@ -44,8 +44,12 @@ $XDG_RUNTIME_DIR/claude-ctx/rate-limits.json, with the record's age (the CEO, 20
 opened into a window standing at 86 % and the window ran out 22 minutes later; the number was in that file
 and nothing read it). A report gets the line even in a session at high: a hand coming back is the moment
 the lead decides the next one. It is a number and a pointer to the door (dxb-team3 section 3), never a
-gate: what the lead does with it is the door's. A window past its reset is said to have reset, not quoted;
-a record older than QUOTA_MAX_AGE_S, from the future, unreadable or carrying no window gives no line.
+gate: what the lead does with it is the door's. A window whose reset time passed after the record was
+written is said to have reset, not quoted; a percentage that is no percentage (not a finite number from 0 to
+100), or a reset time older than the record itself, makes that window not known; a record older than
+QUOTA_MAX_AGE_S, from the future, unreadable or with both windows not known gives no line. Whatever goes
+wrong while the quota is read costs the quota line alone, never the text about the level (Sol's pass,
+2026-11-12: an integer of 400 digits in the record silenced the whole answer).
 
 Only a session id shaped like Claude Code's (SESSION_ID) ever names a file, so no path leaves the folder;
 the record folder is trusted only as a real directory (not a link) owned by this user; the record is
@@ -75,6 +79,7 @@ TAIL_BYTES = 256 * 1024
 SMALL_BYTES = 4 * 1024  # the status line's record is a few dozen bytes
 QUOTA_FILE = "rate-limits.json"  # one for the whole machine: the quota is the account's, not a session's
 QUOTA_MAX_AGE_S = 6 * 3600  # an older record is not trusted -- the same age ~/.local/bin/dxb-quota stops at
+LONGEST_WINDOW_S = 8 * 86400  # the longest window is the week; a reset further away than this is no reset time
 FIVE_HOUR = "the account's 5-hour window"
 WEEK = "the week"
 SKILLS = ('`Skill("dxb-effort-medium")`, `Skill("dxb-effort-high")` or `Skill("dxb-effort-xhigh")`')
@@ -271,22 +276,30 @@ def quota_record():
 
 def number(value):
     """A finite number that is not a bool, or None."""
-    if isinstance(value, bool) or not isinstance(value, (int, float)) or not math.isfinite(value):
+    if isinstance(value, bool) or not isinstance(value, (int, float)):
         return None
-    return value
+    try:
+        finite = math.isfinite(value)
+    except OverflowError:  # an integer too large for a float
+        return None
+    return value if finite else None
 
 
-def window(raw, now):
-    """One window of the record: (used percent, seconds to its reset or None), "reset" when its reset time has
-    passed -- the percentage is then the last window's -- or None when the record does not carry it."""
+def window(raw, now, written):
+    """One window of the record: (used percent, seconds to its reset or None); "reset" when its reset time
+    passed after the record was written -- the percentage is then the last window's; None when the record does
+    not carry it, or carries what cannot be one: a percentage outside 0..100, a reset time older than the record
+    itself. A reset further away than any window is long is dropped and the percentage kept."""
     if not isinstance(raw, dict):
         return None
     used = number(raw.get("used_percentage"))
-    if used is None or used < 0:
+    if used is None or not 0 <= used <= 100:
         return None
     resets = number(raw.get("resets_at"))
-    if resets is None:
+    if resets is None or resets - now > LONGEST_WINDOW_S:
         return used, None
+    if resets <= written:
+        return None
     if resets <= now:
         return "reset"
     return used, resets - now
@@ -317,9 +330,9 @@ def quota_line(now=None):
     age = now - written.timestamp()
     if age < 0 or age > QUOTA_MAX_AGE_S:
         return None
-    five = window(record.get("five_hour"), now)
-    week = window(record.get("seven_day"), now)
-    if not isinstance(five, tuple) and not isinstance(week, tuple):
+    five = window(record.get("five_hour"), now, written.timestamp())
+    week = window(record.get("seven_day"), now, written.timestamp())
+    if five is None and week is None:
         return None
     return (f"QUOTA -- {window_text(FIVE_HOUR, five)}; {window_text(WEEK, week)} "
             f"(the status line's record, {int(age // 60)} min old). In a dxb-team3 job weigh it before you open "
@@ -358,7 +371,10 @@ def on_hook(data):
         lines.append(sync(level))
         if data.get("permission_mode") == "plan" or PLAN_WORDS.search(prompt):
             lines.append(open_door())
-    quota = quota_line()
+    try:
+        quota = quota_line()
+    except Exception:  # the quota line is a convenience: its failure never costs the text about the level
+        quota = None
     if quota:
         lines.append(quota)
     if not lines:

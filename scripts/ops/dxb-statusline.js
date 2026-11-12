@@ -102,10 +102,11 @@ function persist(data) {
 }
 
 // 2026-09-24 (CEO: "rate limit daralmışsa haftalıkta o zaman medium'da yazar kodu"):
-// the quota reaches no hook, only this bar, so it is also written to
+// Claude Code hands the quota to no hook, only to this bar, so it is also written to
 //   $XDG_RUNTIME_DIR/claude-ctx/rate-limits.json
-// where ~/.local/bin/dxb-quota reads it (the code gate that read it first was thrown
-// away 2026-09-28). One file for the whole machine: the quota belongs to the account,
+// where ~/.local/bin/dxb-quota reads it, and since 2026-11-12 the effort hook
+// (.claude/hooks/dxb-effort-warn.py), which says it to the lead on every turn (the code
+// gate that read it first was thrown away 2026-09-28). One file for the whole machine: the quota belongs to the account,
 // not to a session. Best effort, like persist().
 function persistRateLimits(data) {
   try {
