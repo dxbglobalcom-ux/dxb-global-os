@@ -38,6 +38,15 @@ xhigh lift was read as the session's level and the next reply's skill was skippe
 be read is not known; none known: unknown, and the lead opens the skill of the level the reply needs. Every
 file read is bounded (the transcript's tail, a few KB of the record).
 
+The quota. On every turn -- his message or a report -- the hook also says, in one line, how full the
+account's 5-hour window and its week are, as the status line last wrote them to
+$XDG_RUNTIME_DIR/claude-ctx/rate-limits.json, with the record's age (the CEO, 2026-11-12: a long writer was
+opened into a window standing at 86 % and the window ran out 22 minutes later; the number was in that file
+and nothing read it). A report gets the line even in a session at high: a hand coming back is the moment
+the lead decides the next one. It is a number and a pointer to the door (dxb-team3 section 3), never a
+gate: what the lead does with it is the door's. A window past its reset is said to have reset, not quoted;
+a record older than QUOTA_MAX_AGE_S, from the future, unreadable or carrying no window gives no line.
+
 Only a session id shaped like Claude Code's (SESSION_ID) ever names a file, so no path leaves the folder;
 the record folder is trusted only as a real directory (not a link) owned by this user; the record is
 reached through its folder's descriptor without following a link, and only a regular file counts (a
@@ -47,10 +56,12 @@ or stderr. It takes no argument: with one it exits 2 and names the skills on std
 """
 
 import json
+import math
 import os
 import re
 import stat
 import sys
+import time
 from datetime import datetime, timezone
 
 SESSION_ID = re.compile(r"[0-9a-f-]{8,}", re.IGNORECASE)
@@ -62,6 +73,10 @@ DIR_FLAGS = os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW
 FILE_FLAGS = os.O_RDONLY | os.O_NOFOLLOW | os.O_NONBLOCK
 TAIL_BYTES = 256 * 1024
 SMALL_BYTES = 4 * 1024  # the status line's record is a few dozen bytes
+QUOTA_FILE = "rate-limits.json"  # one for the whole machine: the quota is the account's, not a session's
+QUOTA_MAX_AGE_S = 6 * 3600  # an older record is not trusted -- the same age ~/.local/bin/dxb-quota stops at
+FIVE_HOUR = "the account's 5-hour window"
+WEEK = "the week"
 SKILLS = ('`Skill("dxb-effort-medium")`, `Skill("dxb-effort-high")` or `Skill("dxb-effort-xhigh")`')
 # the whole row is the command's output -- a quotation of it inside his own words is not a switch (Sol A3)
 SWITCHED = re.compile(r"<local-command-stdout>Set effort level to (low|medium|high|xhigh|max)\b[^<]*"
@@ -238,6 +253,79 @@ def switch_level(path, name):
     return None
 
 
+def quota_record():
+    """The account's quota record as the status line last wrote it, or None -- also when it cannot be read."""
+    try:
+        dir_fd = open_dir(CTX_DIR)
+        if dir_fd is None:
+            return None
+        try:
+            raw = read_regular(QUOTA_FILE, dir_fd=dir_fd)
+        finally:
+            os.close(dir_fd)
+        record = json.loads(raw) if raw is not None else None
+    except (OSError, ValueError):
+        return None
+    return record if isinstance(record, dict) else None
+
+
+def number(value):
+    """A finite number that is not a bool, or None."""
+    if isinstance(value, bool) or not isinstance(value, (int, float)) or not math.isfinite(value):
+        return None
+    return value
+
+
+def window(raw, now):
+    """One window of the record: (used percent, seconds to its reset or None), "reset" when its reset time has
+    passed -- the percentage is then the last window's -- or None when the record does not carry it."""
+    if not isinstance(raw, dict):
+        return None
+    used = number(raw.get("used_percentage"))
+    if used is None or used < 0:
+        return None
+    resets = number(raw.get("resets_at"))
+    if resets is None:
+        return used, None
+    if resets <= now:
+        return "reset"
+    return used, resets - now
+
+
+def window_text(label, found):
+    if found is None:
+        return f"{label} is not known"
+    if found == "reset":
+        return f"{label} has reset since the record was written"
+    used, left = found
+    text = f"{label} is {used:g}% used"
+    if left is not None:
+        minutes = int(left // 60)
+        text += f" and resets in {minutes // 60}h{minutes % 60:02d}m"
+    return text
+
+
+def quota_line(now=None):
+    """The one line that says how full the account's windows are, or None when nothing trustworthy says it."""
+    record = quota_record()
+    if record is None:
+        return None
+    now = time.time() if now is None else now
+    written = parse_ts(record.get("written_at"))
+    if written is None:
+        return None
+    age = now - written.timestamp()
+    if age < 0 or age > QUOTA_MAX_AGE_S:
+        return None
+    five = window(record.get("five_hour"), now)
+    week = window(record.get("seven_day"), now)
+    if not isinstance(five, tuple) and not isinstance(week, tuple):
+        return None
+    return (f"QUOTA -- {window_text(FIVE_HOUR, five)}; {window_text(WEEK, week)} "
+            f"(the status line's record, {int(age // 60)} min old). In a dxb-team3 job weigh it before you open "
+            "a writing hand and when one returns (section 3).")
+
+
 def own_level(name, transcript_path):
     """The session's own level -- its setting, never a skill's lift -- or None when nothing tells it."""
     known = [found for found in (record_level(name), switch_level(transcript_path, name)) if found]
@@ -261,14 +349,21 @@ def on_hook(data):
     # the tag (measured 2026-11-10), so his own message quoting the tag after other words still gets its answer
     # (Sol B2). It gets none of his message's text -- only, below high, the one line that in a dxb-team3 job the
     # turn verifying it is managing
+    # the quota is said on every turn, a report's too: a hand coming back is when the next one is decided
+    lines = []
     if prompt.lstrip().startswith("<task-notification>"):
-        if level in MANAGING_LEVELS:
-            return
-        context = hand_back(level)
+        if level not in MANAGING_LEVELS:
+            lines.append(hand_back(level))
     else:
-        context = sync(level)
+        lines.append(sync(level))
         if data.get("permission_mode") == "plan" or PLAN_WORDS.search(prompt):
-            context += "\n" + open_door()
+            lines.append(open_door())
+    quota = quota_line()
+    if quota:
+        lines.append(quota)
+    if not lines:
+        return
+    context = "\n".join(lines)
     output = {"hookSpecificOutput": {"hookEventName": "UserPromptSubmit", "additionalContext": context}}
     sys.stdout.write(json.dumps(output, ensure_ascii=False) + "\n")
 

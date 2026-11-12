@@ -170,6 +170,23 @@ difficulty: a `gatherer` gathers, extracts and lists; a `helper` reads at the so
 measures; an `easy-writer` may write an easy piece of code, a harder one is Fable 5.2's. The lead verifies
 what comes back, and brings him proposals of its own.
 
+**The quota is managed with the work** <!-- CEO-OK: quota-managed-with-the-work-2026-11-12 -->. On every
+turn — his message or a hand's report — the hook `dxb-effort-warn.py` tells the lead how full the account's
+5-hour window and its week are, from the status line's record (`~/.local/bin/dxb-quota` prints the same, with
+the pace). The lead reads it before it opens a writing hand and when one returns. A window that cannot carry a
+piece does not get it: the lead divides the work when it divides — a part is finished, verified and committed,
+the rest follows — and waits for the reset when it does not (a film, a tightly bound piece), telling him in one
+line. The quota never lowers the model or the level: an important piece stays Fable 5.2's at `high`, and a
+lighter hand takes a piece only because the piece is light (§2). Measured 2026-11-12, Max 5×, Fable 5.2: one
+long `helper-writer` at `high`, with the lead's own turns beside it, took 27 points of a window (59 % → 86 %
+in 44 minutes), and the writer opened next, at 86 %, was cut after 22 minutes.
+
+**The same hand or a fresh one.** A next piece that follows from the one a hand just finished goes to that
+hand while it is still small — its brief is ready before the hand returns, because a hand idle over 4 minutes
+is not resumed (§7). A hand that has grown large is not continued; a fresh one is opened: every step rereads
+the hand's whole context (calculated 2026-11-12 from the hands' own records, at list-price weights: carrying
+on a writer of about 400k tokens would have cost about 1.5 times the fresh one that was opened).
+
 **The arrangement — four, all equal**
 <!-- CEO-OK: orchestration-three-arrangements-lead-chooses-2026-10-03 --> <!-- CEO-OK: four-equal-arrangements-lead-chooses-2026-10-08 -->:
 

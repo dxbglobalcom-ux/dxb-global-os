@@ -452,6 +452,147 @@ describe("what is not his message gets none of his message's text", () => {
   });
 });
 
+// The CEO, 2026-11-12: a long writer was opened into a 5-hour window standing at 86 % and the window ran out
+// 22 minutes later -- the status line had the number, no hook or door read it. The hook now says it on every
+// turn, his message or a report: the account's 5-hour window and the week, as the status line last wrote
+// them, with the record's age. It is a number and a pointer to the door, never a gate.
+describe("the quota is said on every turn, from the status line's record (CEO 2026-11-12)", () => {
+  const REPORT = "<task-notification>\n<task-id>x</task-id>plan done</task-notification>";
+  const epoch = (secondsFromNow: number) => Math.round(Date.now() / 1000) + secondsFromNow;
+  type Win = { used_percentage: unknown; resets_at: unknown } | null;
+  /** the account's quota record in the shape persistRateLimits() writes */
+  function quota(dir: string, five: Win, week: Win, writtenSecondsAgo = 120): void {
+    mkdirSync(join(dir, "claude-ctx"), { recursive: true });
+    writeFileSync(join(dir, "claude-ctx", "rate-limits.json"), JSON.stringify({
+      session_id: OTHER, seven_day: week, five_hour: five, written_at: at(writtenSecondsAgo),
+    }));
+  }
+  const quotaLine = (text: string) => text.split("\n").filter((l) => l.startsWith("QUOTA -- "));
+
+  it("his message: the 5-hour window's percentage and its reset, the week, the record's age, the door's section", () => {
+    const dir = box();
+    record(dir, SID, "medium", 2);
+    quota(dir, { used_percentage: 86, resets_at: epoch(41 * 60 + 30) }, { used_percentage: 32, resets_at: epoch(35 * 3600 + 90) });
+    const text = context(hook(dir, prompt(SID, transcript(dir, []))));
+    expect(told(text)).toBe("medium");
+    const lines = quotaLine(text);
+    expect(lines).toHaveLength(1);
+    expect(lines[0]).toContain("5-hour window is 86% used and resets in 0h41m");
+    expect(lines[0]).toContain("the week is 32% used and resets in 35h01m");
+    expect(lines[0]).toContain("2 min old");
+    expect(lines[0]).toContain("dxb-team3");
+    expect(lines[0]).toContain("section 3");
+    expect(text.trimEnd().endsWith(lines[0])).toBe(true);
+  });
+  it("it is a number, not a gate: the line lowers no model and no level and stops nothing", () => {
+    const dir = box();
+    record(dir, SID, "high", 2);
+    quota(dir, { used_percentage: 100, resets_at: epoch(600) }, { used_percentage: 99, resets_at: epoch(600) });
+    const [line] = quotaLine(context(hook(dir, prompt(SID, transcript(dir, [])))));
+    expect(line).toContain("5-hour window is 100% used");
+    for (const word of ["medium", "Opus", "LEAN", "must not", "never open", "stop"]) expect(line).not.toContain(word);
+  });
+  it("no record: no quota line, and his message's text is what it was", () => {
+    const dir = box();
+    record(dir, SID, "high", 2);
+    const text = context(hook(dir, prompt(SID, transcript(dir, []))));
+    expect(quotaLine(text)).toHaveLength(0);
+    expect(text).not.toContain("QUOTA");
+  });
+  it("a report arriving at high: the quota line alone -- the moment the lead decides the next hand", () => {
+    for (const level of ["high", "xhigh", "max"]) {
+      const dir = box();
+      record(dir, SID, level, 2);
+      quota(dir, { used_percentage: 59, resets_at: epoch(3 * 3600) }, { used_percentage: 29, resets_at: epoch(40 * 3600) });
+      const text = context(hook(dir, prompt(SID, transcript(dir, []), REPORT)));
+      expect(text.startsWith("QUOTA -- ")).toBe(true);
+      expect(text).not.toContain("\n");
+      expect(text).toContain("5-hour window is 59% used and resets in 3h00m");
+      expect(text).not.toContain("A report has arrived");
+      expect(text).not.toContain("EFFORT -- first");
+    }
+  });
+  it("a report arriving below high: its one line, then the quota line", () => {
+    const dir = box();
+    record(dir, SID, "medium", 2);
+    quota(dir, { used_percentage: 59, resets_at: epoch(3 * 3600) }, null);
+    const lines = context(hook(dir, prompt(SID, transcript(dir, []), REPORT))).split("\n");
+    expect(lines).toHaveLength(2);
+    expect(lines[0]).toContain("A report has arrived");
+    expect(lines[1]).toContain("5-hour window is 59% used");
+    expect(lines[1]).toContain("the week is not known");
+  });
+  it("a window past its reset is not quoted: it has reset since the record was written", () => {
+    const dir = box();
+    record(dir, SID, "high", 2);
+    quota(dir, { used_percentage: 100, resets_at: epoch(-300) }, { used_percentage: 21, resets_at: epoch(40 * 3600) }, 1800);
+    const [line] = quotaLine(context(hook(dir, prompt(SID, transcript(dir, [])))));
+    expect(line).toContain("5-hour window has reset since the record was written");
+    expect(line).not.toContain("100%");
+    expect(line).toContain("the week is 21% used");
+    expect(line).toContain("30 min old");
+  });
+  it("a window the record does not carry is said so, the other one still told", () => {
+    const dir = box();
+    record(dir, SID, "high", 2);
+    quota(dir, null, { used_percentage: 22, resets_at: epoch(40 * 3600) });
+    const [line] = quotaLine(context(hook(dir, prompt(SID, transcript(dir, [])))));
+    expect(line).toContain("5-hour window is not known");
+    expect(line).toContain("the week is 22% used");
+  });
+  it("a record too old to trust (over 6 hours), from the future, or with no window at all: no line", () => {
+    const cases: [Win, Win, number][] = [
+      [{ used_percentage: 50, resets_at: epoch(3600) }, { used_percentage: 20, resets_at: epoch(90000) }, 6 * 3600 + 60],
+      [{ used_percentage: 50, resets_at: epoch(3600) }, { used_percentage: 20, resets_at: epoch(90000) }, -600],
+      [null, null, 60],
+      [{ used_percentage: "86", resets_at: epoch(3600) }, { used_percentage: true, resets_at: epoch(3600) }, 60],
+      [{ used_percentage: -1, resets_at: epoch(3600) }, { used_percentage: 1e400, resets_at: epoch(3600) }, 60],
+    ];
+    for (const [five, week, ago] of cases) {
+      const dir = box();
+      record(dir, SID, "high", 2);
+      quota(dir, five, week, ago);
+      const text = context(hook(dir, prompt(SID, transcript(dir, []))));
+      expect(text, JSON.stringify([five, week, ago])).not.toContain("QUOTA");
+      expect(hook(dir, prompt(SID, transcript(dir, []), REPORT))).toBe("");
+    }
+  });
+  it("a percentage with no reset time is told without one", () => {
+    const dir = box();
+    record(dir, SID, "high", 2);
+    quota(dir, { used_percentage: 7.5, resets_at: null }, null);
+    const [line] = quotaLine(context(hook(dir, prompt(SID, transcript(dir, [])))));
+    expect(line).toContain("5-hour window is 7.5% used;");
+  });
+  it("a record that is garbage, a list, a link or a FIFO: no line, nothing blocks, his message's text stands", () => {
+    const writers: ((file: string, dir: string) => void)[] = [
+      (file) => writeFileSync(file, "{not json"),
+      (file) => writeFileSync(file, "[1,2]"),
+      (file, dir) => {
+        writeFileSync(join(dir, "elsewhere.json"), JSON.stringify({
+          five_hour: { used_percentage: 50, resets_at: epoch(3600) }, seven_day: null, written_at: at(5) }));
+        expect(spawnSync("ln", ["-s", join(dir, "elsewhere.json"), file]).status).toBe(0);
+      },
+      (file) => { expect(spawnSync("mkfifo", [file]).status).toBe(0); },
+    ];
+    for (const write of writers) {
+      const dir = box();
+      record(dir, SID, "high", 2);
+      write(join(dir, "claude-ctx", "rate-limits.json"), dir);
+      const text = context(hook(dir, prompt(SID, transcript(dir, []))));
+      expect(told(text)).toBe("high");
+      expect(text).not.toContain("QUOTA");
+    }
+  });
+  it("the hook still writes nothing: the runtime directory holds what the case put there", () => {
+    const dir = box();
+    record(dir, SID, "high", 2);
+    quota(dir, { used_percentage: 10, resets_at: epoch(3600) }, null);
+    hook(dir, prompt(SID, transcript(dir, [])));
+    expect(readdirSync(join(dir, "claude-ctx")).sort()).toEqual(["rate-limits.json", `${SID}.json`].sort());
+  });
+});
+
 describe("a session id shaped like a path names nothing", () => {
   it("the hook is silent for it, even with a record standing where the path points", () => {
     const dir = box();
