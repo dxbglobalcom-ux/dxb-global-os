@@ -7,25 +7,41 @@ in the background, this command ends -- and so wakes the session -- either when 
 is over or, before that, when the cache is about to go cold; the turn that wake causes is
 the warm-keeping itself. The session then runs the line this command printed, and waits on.
 
+  dxb-warm-wait --watch            no end: work is running (hands, tests, a render); only keep warm
   dxb-warm-wait --until-reset      wait for the 5-hour window to reset (dxb-quota's record)
   dxb-warm-wait --until 01:50      wait until that local time (tomorrow, when it has passed)
   dxb-warm-wait --until @1794500000   the same, as epoch seconds (what a re-arm line carries)
   dxb-warm-wait --for 90           wait that many minutes
+  dxb-warm-wait --status           at once: is a clock armed, and is the session marked away
+  dxb-warm-wait --away on|off      mark the session as left to work alone (dxb-away-gate.py reads it)
 
-It prints one line and exits 0:
+The cache goes cold 55 minutes after the session's LAST TURN, not after the arming: the turn
+is read from the session's transcript ($CLAUDE_CODE_SESSION_ID's, or --transcript PATH), and a
+clock that comes to its ping and finds a newer turn moves the ping forward and sleeps on. So
+one clock is enough for a whole job, and a session has one: it is written down in
+$XDG_RUNTIME_DIR/claude-ctx/warm-wait-<session>.pid while it runs.
+
+A wait prints one line and exits 0:
   WAIT_OVER ...                  the wait is over: go on with the work
   WARM_PING ... | re-arm: <cmd>  the cache was about to go cold: run <cmd> in the background again
-It stays asleep through a ping it must not make -- the 5-hour window has no room for a turn,
-or so many pings would be needed that a cold start is cheaper -- and says so on WAIT_OVER.
+  SUPERSEDED by --until-reset    a --watch, when --until-reset was armed over it: nothing to do
+It stays asleep through a ping it must not make -- the 5-hour window has no room for a turn
+(a --watch then sleeps to the window's reset), or so many pings would be needed that a cold
+start is cheaper -- and says so on WAIT_OVER.
 Exit 2: bad usage, or --until-reset with no 5-hour record to read.
+Exit 3: ALREADY_ARMED ... -- the session's clock is running; only --until-reset may be armed
+over a --watch. --status first: ARMED <mode> pid <n>, next ping <HH:MM> or NOT_ARMED, then
+AWAY on|off.
 
 The weights are list prices (a cached read 0.1 of the input price, a one-hour cache write
 2.0); how the Max quota weighs a cached read is not measured. Every wake appends one line
-to $XDG_RUNTIME_DIR/claude-ctx/warm-wait.log with the quota then, so what a ping costs can
-be read from two neighbouring lines.
+to $XDG_RUNTIME_DIR/claude-ctx/warm-wait.log with the mode and the quota then, so what a ping
+costs can be read from two neighbouring lines.
 """
 
+import contextlib
 import datetime
+import glob
 import json
 import math
 import os
@@ -33,20 +49,41 @@ import subprocess
 import sys
 import time
 
-USAGE = "usage: dxb-warm-wait (--until-reset | --until HH:MM | --until @EPOCH | --for MINUTES)"
+USAGE = ("usage: dxb-warm-wait (--watch | --until-reset | --until HH:MM | --until @EPOCH | --for MINUTES) [--transcript PATH]\n"
+         "       dxb-warm-wait --status [--transcript PATH] | --away (on | off)")
+
+
+def test_knob(name, real):
+    """A number the tests and a hand run shorten: DXB_WARM_WAIT_TEST_PING_AFTER_S, DXB_WARM_WAIT_TEST_STEP_S."""
+    return float(os.environ.get(f"DXB_WARM_WAIT_TEST_{name}", real))
+
 
 PING_AFTER_MIN = 55     # his number (CEO, 2026-11-13): one turn at the 55th minute of an hour's cache
+PING_AFTER_S = test_knob("PING_AFTER_S", PING_AFTER_MIN * 60)
 CACHE_READ = 0.1        # what a ping costs, as a share of the context at the input price
 CACHE_WRITE_1H = 2.0    # what a cold start costs, the same way
 FULL_WINDOW_PCT = 98    # from here the 5-hour window has no room for a ping: the turn could be cut
 RESET_MARGIN_MIN = 2    # waited past the reset, so the status line has the new window
-STEP_S = 20             # the wall clock is asked this often, so a suspended machine wakes on time
+STEP_S = test_knob("STEP_S", 20)  # the wall clock is asked this often, so a suspended machine wakes on time
+NO_END = math.inf       # --watch: the wait has no end of its own
+TRANSCRIPT_TAIL_BYTES = 256 * 1024  # as much of the transcript as dxb-statusline.js reads
+COMMAND_NAME = b"dxb-warm-wait"     # what a running clock's command line carries
 
 QUOTA = os.path.expanduser("~/.local/bin/dxb-quota")
-LOG = os.path.join(os.environ.get("XDG_RUNTIME_DIR") or "/tmp", "claude-ctx", "warm-wait.log")
+PROJECTS = os.path.expanduser("~/.claude/projects")
+RUNTIME = os.path.join(os.environ.get("XDG_RUNTIME_DIR") or "/tmp", "claude-ctx")
+LOG = os.path.join(RUNTIME, "warm-wait.log")
 
 
-def pings_needed(wait_s, ping_after_s=PING_AFTER_MIN * 60):
+class Superseded(Exception):
+    """Another clock has taken this session over; it carries that clock's mode."""
+
+
+def wall_clock():
+    return time.time()
+
+
+def pings_needed(wait_s, ping_after_s=PING_AFTER_S):
     """How many warm-keeping turns a wait of this length takes."""
     return max(0, math.ceil(wait_s / ping_after_s) - 1)
 
@@ -56,18 +93,23 @@ def worth_keeping_warm(pings):
     return pings * CACHE_READ < CACHE_WRITE_1H
 
 
-def next_wake(now, target, ping_after_s=PING_AFTER_MIN * 60):
+def next_wake(now, target, ping_after_s=PING_AFTER_S):
     """(when to wake, whether that wake ends the wait)."""
     ping = now + ping_after_s
     return (target, True) if target <= ping else (ping, False)
 
 
+def reset_moment(now, reset_in_h):
+    """When the 5-hour window has reset and the status line has the new one; None with no record."""
+    return None if reset_in_h is None else now + reset_in_h * 3600 + RESET_MARGIN_MIN * 60
+
+
 def parse_target(argv, now, reset_in_h):
     """The epoch second the wait ends at, from the command line; None when it cannot be told."""
+    if argv == ["--watch"]:
+        return NO_END
     if argv == ["--until-reset"]:
-        if reset_in_h is None:
-            return None
-        return now + reset_in_h * 3600 + RESET_MARGIN_MIN * 60
+        return reset_moment(now, reset_in_h)
     if len(argv) != 2:
         return None
     flag, value = argv
@@ -103,62 +145,255 @@ def used(quota, window):
     return value if isinstance(value, (int, float)) else None
 
 
-def log(event, quota):
+def hours_to_reset(quota):
+    return (quota.get("5h") or {}).get("reset_in_h")
+
+
+def log(event, mode, quota):
     try:
-        os.makedirs(os.path.dirname(LOG), exist_ok=True)
+        os.makedirs(RUNTIME, exist_ok=True)
         with open(LOG, "a") as handle:
             handle.write(json.dumps({"ts": datetime.datetime.now().isoformat(timespec="seconds"), "event": event,
-                                     "5h": used(quota, "5h"), "7d": used(quota, "7d")}) + "\n")
+                                     "mode": mode, "5h": used(quota, "5h"), "7d": used(quota, "7d")}) + "\n")
     except OSError:
         pass  # the log is a measurement, never a reason to miss the wake
-
-
-def sleep_until(when):
-    while time.time() < when:
-        time.sleep(min(STEP_S, max(0.0, when - time.time())))
 
 
 def clock(epoch):
     return datetime.datetime.fromtimestamp(epoch).strftime("%H:%M")
 
 
-def main(argv):
-    now = time.time()
-    quota = read_quota()
-    target = parse_target(argv, now, (quota.get("5h") or {}).get("reset_in_h"))
-    if target is None:
-        print(USAGE if argv != ["--until-reset"] else "dxb-warm-wait: no 5-hour record to read the reset from; give --until HH:MM",
-              file=sys.stderr)
-        return 2
-    log("armed", quota)
+def session_id():
+    """This session, from the Bash tool's environment; None when it is not known or is no plain id."""
+    session = os.environ.get("CLAUDE_CODE_SESSION_ID", "")
+    return session if session.replace("-", "").isalnum() else None
 
+
+def session_transcript(session):
+    """The session's own transcript, whichever project folder holds it; None when there is none."""
+    found = glob.glob(os.path.join(glob.escape(PROJECTS), "*", f"{session}.jsonl")) if session else []
+    return max(found, key=os.path.getmtime) if found else None
+
+
+def last_turn_at(transcript):
+    """The epoch second of the session's last cache-warming turn; None when it cannot be read.
+
+    This must agree with lastRequestAt in dxb-statusline.js, which the bar's "önbellek N dk" counts
+    from: the last `assistant` row in the transcript's tail that is not a subagent's (isSidechain)
+    and carries a time that can be read. test-warm-wait.py asks both about the same transcripts.
+    """
+    try:
+        with open(transcript, "rb") as handle:
+            size = handle.seek(0, os.SEEK_END)
+            handle.seek(max(0, size - TRANSCRIPT_TAIL_BYTES))
+            rows = handle.read().decode("utf-8", "replace").split("\n")
+    except (OSError, TypeError):
+        return None
+    for line in reversed(rows):
+        if '"assistant"' not in line:
+            continue
+        try:
+            row = json.loads(line)
+            if row["type"] == "assistant" and row.get("isSidechain") is not True:
+                return datetime.datetime.fromisoformat(row["timestamp"].replace("Z", "+00:00")).timestamp()
+        except (ValueError, LookupError, TypeError, AttributeError):
+            continue  # the tail's cut first line, a torn last one, a row with no time on it
+    return None
+
+
+def warm_since(transcript, armed_at):
+    """When the session's cache was last warmed: its last turn, and never before the arming.
+
+    The arming is itself made by a turn of the session, so a transcript that cannot be read, lags
+    or is dated after now falls back to it -- and a stale one cannot make every re-arm ping at once.
+    """
+    last = last_turn_at(transcript)
+    return armed_at if last is None or last > wall_clock() else max(armed_at, last)
+
+
+# One clock per session. The clock writes itself down in clock_file() -- {"pid", "mode", "armed_at",
+# "until"} -- and a file whose pid is no running dxb-warm-wait counts as no clock. The away marker
+# is away_file(). dxb-away-gate.py reads both files by the same names and the same rule; the two
+# must agree, and test-away-gate.py makes the files with this command and asks the gate.
+
+def clock_file(session):
+    return os.path.join(RUNTIME, f"warm-wait-{session}.pid")
+
+
+def away_file(session):
+    return os.path.join(RUNTIME, f"away-{session}")
+
+
+def is_clock(pid):
+    """Whether that pid is a running dxb-warm-wait (a pid that was given to another command is not)."""
+    try:
+        with open(f"/proc/{int(pid)}/cmdline", "rb") as handle:
+            return COMMAND_NAME in handle.read()
+    except (OSError, ValueError, TypeError):
+        return False
+
+
+def live_clock(session):
+    """What the session's running clock wrote down, or None; a dead clock's file is removed."""
+    if not session:
+        return None
+    try:
+        with open(clock_file(session)) as handle:
+            record = json.load(handle)
+        if is_clock(record["pid"]):
+            return record
+    except FileNotFoundError:
+        return None
+    except (OSError, ValueError, LookupError, TypeError):
+        pass  # not a record: not a clock
+    with contextlib.suppress(OSError):
+        os.remove(clock_file(session))
+    return None
+
+
+def register(session, mode, armed_at, target):
+    """Write this clock down as the session's one clock, over whatever the file held."""
+    if not session:
+        return
+    record = {"pid": os.getpid(), "mode": mode, "armed_at": armed_at, "until": None if target == NO_END else target}
+    try:
+        os.makedirs(RUNTIME, exist_ok=True)
+        draft = f"{clock_file(session)}.{os.getpid()}"
+        with open(draft, "w") as handle:
+            json.dump(record, handle)
+        os.replace(draft, clock_file(session))  # whole or not at all: a half-written file would read as no clock
+    except OSError:
+        pass  # a clock nobody can see still wakes the session, and the gate then asks for a second
+
+
+def unregister(session):
+    owner = live_clock(session)
+    if owner and owner["pid"] == os.getpid():  # never the file of the clock that took over
+        with contextlib.suppress(OSError):
+            os.remove(clock_file(session))
+
+
+def describe(record, transcript):
+    """`<mode> pid <n>, next ping <HH:MM>` of a running clock, as --status and ALREADY_ARMED say it."""
+    warm = warm_since(transcript, record["armed_at"])
+    until = record.get("until")
+    wake, over = next_wake(warm, NO_END if until is None else until)
+    ends_first = f" (the wait ends first, {clock(wake)})" if over else ""
+    return f"{record['mode']} pid {record['pid']}, next ping {clock(warm + PING_AFTER_S)}{ends_first}"
+
+
+def sleep_until(when, session=None):
+    """Sleep to that wall-clock moment, in steps; Superseded when another clock has taken the session."""
+    while wall_clock() < when:
+        time.sleep(min(STEP_S, max(0.0, when - wall_clock())))
+        owner = live_clock(session)
+        if owner and owner["pid"] != os.getpid():
+            raise Superseded(owner["mode"])
+
+
+def sleep_to_wake(mode, target, armed_at, session, transcript):
+    """Sleep to the wait's end, or to the moment the cache is about to go cold; the line that says which."""
     stayed_cold = ""
-    pings = pings_needed(target - now)
+    pings = 0 if target == NO_END else pings_needed(target - armed_at)  # a --watch weighs each ping on its own
     if not worth_keeping_warm(pings):
         stayed_cold = f" | cold: {pings} pings would cost more than the cold start they save"
         wake, over = target, True
+        sleep_until(wake, session)
     else:
-        wake, over = next_wake(now, target)
+        warm = armed_at
+        while True:
+            wake, over = next_wake(warm, target)
+            sleep_until(wake, session)
+            newer = warm_since(transcript, armed_at)
+            if over or newer <= warm:
+                break
+            warm = newer  # a turn came meanwhile and warmed the cache by itself: the ping moves with it
 
-    sleep_until(wake)
     quota = read_quota()
-    if not over:
-        five = used(quota, "5h")
-        if five is not None and five >= FULL_WINDOW_PCT:
+    five = used(quota, "5h")
+    if not over and five is not None and five >= FULL_WINDOW_PCT:
+        cold_until = target if target != NO_END else reset_moment(wall_clock(), hours_to_reset(quota))
+        if cold_until is not None:
             stayed_cold = f" | cold: at {clock(wake)} the 5-hour window stood at {five}% and had no room for a ping"
-            sleep_until(target)
+            sleep_until(cold_until, session)
             quota, over = read_quota(), True
 
     line = subprocess.run([QUOTA], capture_output=True, text=True).stdout.strip() if os.path.exists(QUOTA) else ""
     if over:
-        log("over", quota)
-        print(f"WAIT_OVER {clock(time.time())}{stayed_cold} | {line}")
-    else:
-        log("ping", quota)
-        left = round((target - time.time()) / 60)
-        print(f"WARM_PING {clock(time.time())} — {left} min to go, until {clock(target)} | {line} | "
-              f"re-arm: scripts/ops/dxb-warm-wait --until @{int(target)}")
+        log("over", mode, quota)
+        return f"WAIT_OVER {clock(wall_clock())}{stayed_cold} | {line}"
+    log("ping", mode, quota)
+    if target == NO_END:
+        return f"WARM_PING {clock(wall_clock())} — work is running, no end set | {line} | re-arm: scripts/ops/dxb-warm-wait --watch"
+    left = round((target - wall_clock()) / 60)
+    return (f"WARM_PING {clock(wall_clock())} — {left} min to go, until {clock(target)} | {line} | "
+            f"re-arm: scripts/ops/dxb-warm-wait --until @{int(target)}")
+
+
+def wait(argv, session, transcript):
+    """Arm the session's clock and print the one line it ends on. The exit code."""
+    armed_at = wall_clock()
+    quota = read_quota()
+    target = parse_target(argv, armed_at, hours_to_reset(quota))
+    if target is None:
+        print(USAGE if argv != ["--until-reset"] else "dxb-warm-wait: no 5-hour record to read the reset from; give --until HH:MM",
+              file=sys.stderr)
+        return 2
+    mode = argv[0]
+    running = live_clock(session)
+    if running and (mode, running["mode"]) != ("--until-reset", "--watch"):
+        print(f"ALREADY_ARMED {describe(running, transcript)}")
+        return 3
+    register(session, mode, armed_at, target)
+    log("armed", mode, quota)
+    try:
+        print(sleep_to_wake(mode, target, armed_at, session, transcript))
+    except Superseded as taken_over:
+        print(f"SUPERSEDED by {taken_over}")
+    finally:
+        unregister(session)
     return 0
+
+
+def status(session, transcript):
+    """--status: the session's clock and its away marker, at once."""
+    armed = live_clock(session)
+    print(f"ARMED {describe(armed, transcript)}" if armed else "NOT_ARMED")
+    print("AWAY on" if session and os.path.exists(away_file(session)) else "AWAY off")
+    return 0
+
+
+def set_away(session, switch):
+    """--away on|off: write or remove the marker that says the session was left to work alone."""
+    if switch not in (["on"], ["off"]):
+        print(USAGE, file=sys.stderr)
+        return 2
+    if not session:
+        print("dxb-warm-wait: no session to mark; CLAUDE_CODE_SESSION_ID is not set", file=sys.stderr)
+        return 2
+    if switch == ["on"]:
+        os.makedirs(RUNTIME, exist_ok=True)
+        with open(away_file(session), "w") as handle:
+            handle.write(datetime.datetime.now().isoformat(timespec="seconds") + "\n")
+    else:
+        with contextlib.suppress(FileNotFoundError):
+            os.remove(away_file(session))
+    print(f"AWAY {switch[0]}")
+    return 0
+
+
+def main(argv):
+    transcript = None
+    if "--transcript" in argv[:-1]:
+        at = argv.index("--transcript")
+        transcript, argv = argv[at + 1], argv[:at] + argv[at + 2:]
+    session = session_id()
+    transcript = transcript or session_transcript(session)
+    if argv == ["--status"]:
+        return status(session, transcript)
+    if argv[:1] == ["--away"]:
+        return set_away(session, argv[1:])
+    return wait(argv, session, transcript)
 
 
 if __name__ == "__main__":
