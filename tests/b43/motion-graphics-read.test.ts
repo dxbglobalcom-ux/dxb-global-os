@@ -254,6 +254,36 @@ describe.skipIf(missing.length > 0)("B43 dxb-motion-graphics — the film is rea
     expect(r.out).not.toMatch(/gave no answer/); // what is printed stays the one decisive line
   });
 
+  // Sol found it (2026-11-13): each try was given its own 240 s, so 503s and then a silence held one model for 21 minutes.
+  it("gives a model its four minutes once: its 503s, the waits between them and its silence all count in them", async () => {
+    vi.useFakeTimers({ toFake: ["Date"] }); // the clock alone: every second below passes by the test's word
+    try {
+      const hands = reader(), pass = (ms: number) => vi.setSystemTime(Date.now() + ms);
+      let busy = 4, firstAsked = 0, nextAsked = 0;
+      const answer = async (url: string, options: Omit<Asked, "url"> = {}): Promise<Answer> => {
+        if (url.includes("/models/gemini-3.8-flash:")) {
+          firstAsked ||= Date.now();
+          // Each 503 comes 50 s after its question; after four of them the model falls silent until the request's limit.
+          if (busy-- > 0 && options.timeoutMs! > 50_000) {
+            pass(50_000);
+            return BUSY;
+          }
+          pass(options.timeoutMs!);
+          throw new NoAnswer(`no answer within ${options.timeoutMs! / 1000} s from generativelanguage.googleapis.com`);
+        }
+        if (url.includes("/models/gemini-3.7-flash:")) nextAsked ||= Date.now();
+        return hands.http(url, options);
+      };
+      const r = await mg(["motion-read", "--job", job], { http: answer, wait: async (seconds: number) => void pass(seconds * 1000), aside: hands.aside });
+      expect(r.code, r.out).toBe(0);
+      expect(nextAsked - firstAsked).toBeLessThanOrEqual(240_000);
+      expect(readFileSync(report(), "utf8")).toMatch(/^# Motion read — fixture-film-16x9\.mp4 · gemini-3\.7-flash/);
+      expect(hands.asides).toEqual(["mg motion-read: gemini-3.8-flash gave no answer within 240 s — gemini-3.7-flash is asked"]);
+    } finally {
+      vi.useRealTimers();
+    }
+  });
+
   it("--model names the model asked first, and the others follow in the list's order", async () => {
     const hands = reader({ silent: ["gemini-3.6-flash", "gemini-3.8-flash"] });
     const r = await read(hands, "--model", "gemini-3.6-flash");

@@ -133,7 +133,7 @@ function inFrameStatement(job, formats) {
  * within the margin of an edge, as runs with the sides they come near, and how near it came to each edge.
  */
 function inFrameIn(tools, job, format, { margin, darker, lighter, subject }) {
-  const film = masterIn(job, format), { w, h } = probe(tools.run, film);
+  const film = masterIn(job, format), { w, h, fps } = probe(tools.run, film); // the file's own rate, as never-still reads it
   // bbox boxes the pixels above its level, so a darker subject is boxed in the negative; every frame is
   // marked first, so one that holds no subject is still listed.
   const box = darker !== undefined ? `negate,bbox=min_val=${255 - darker}` : `bbox=min_val=${lighter}`;
@@ -146,7 +146,7 @@ function inFrameIn(tools, job, format, { margin, darker, lighter, subject }) {
     const sides = Object.keys(edges).filter((side) => edges[side] < margin);
     if (sides.length) near.set(n, sides);
   }
-  const touching = runsOf(shown.filter(({ n }) => near.has(n)), job.fps, (n) => ({ sides: near.get(n) }));
+  const touching = runsOf(shown.filter(({ n }) => near.has(n)), fps, (n) => ({ sides: near.get(n) }));
   return { format: format.name, film, frames: frames.length, shown: shown.length, margin, subject, nearest: shown.length ? nearest : null, touching };
 }
 
@@ -176,20 +176,20 @@ function stretchesStated(job, film) {
  * so is a count of frames other than the stretch's: a measure of nothing is no pass.
  */
 function neverStillIn(tools, job, format, stretches) {
-  const film = masterIn(job, format), { w, h, frames: held } = probe(tools.run, film);
+  const film = masterIn(job, format), { w, h, fps, frames: held } = probe(tools.run, film); // the file's own rate: a master may be at another than the job's
   return {
     format: format.name, film,
     stretches: stretches.map(({ from, to }) => {
-      const first = Math.ceil(from * job.fps - 1e-6), last = Math.min(Math.floor(to * job.fps + 1e-6), held - 1);
+      const first = Math.ceil(from * fps - 1e-6), last = Math.min(Math.floor(to * fps + 1e-6), held - 1);
       if (last <= first) throw new Refusal(`${film} holds no two frames of ${from}–${to} s (it has ${held}): render it again`);
       // Each frame against the one before, as a picture of the pixels that changed (white) and did not (black); its mean is their share.
       const changed = `trim=start_frame=${first}:end_frame=${last + 1},format=gray,tblend=all_mode=difference,lut=c0='gt(val\\,${CHANGED})*255',format=yuvj444p,signalstats,metadata=mode=print:key=lavfi.signalstats.YAVG:file=-`;
       const read = tools.run("ffmpeg", ["-v", "error", "-i", film, "-an", "-vf", changed, "-f", "null", "-"]);
       if (read.code !== 0) throw new Refusal(`ffmpeg could not read ${film}: ${read.err.trim()}`);
-      const frames = framesPrinted(read.out).map(({ t, keys }) => ({ n: Math.round(t * job.fps), pixels: Math.round((keys["lavfi.signalstats.YAVG"] / 255) * w * h) }));
+      const frames = framesPrinted(read.out).map(({ t, keys }) => ({ n: Math.round(t * fps), pixels: Math.round((keys["lavfi.signalstats.YAVG"] / 255) * w * h) }));
       if (frames.length !== last - first) throw new Refusal(`ffmpeg measured ${frames.length} frame(s) of ${film} in ${from}–${to} s where it holds ${last - first}`);
       const still = frames.filter((frame) => frame.pixels < MOVING);
-      return { from, to, frames: frames.length, fewest: Math.min(...frames.map((frame) => frame.pixels)), still: runsOf(still, job.fps) };
+      return { from, to, frames: frames.length, fewest: Math.min(...frames.map((frame) => frame.pixels)), still: runsOf(still, fps) };
     }),
   };
 }

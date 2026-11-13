@@ -94,7 +94,8 @@ function withoutKey(key, value) {
  * of the JSON after: a key written in JSON's escapes is the key again once parsed. What it throws is
  * thrown as a new error of the same kind — a silence stays a NoAnswer — the key out of its message and
  * its trace, carrying nothing else of the old one: a network library's error may hold the request's headers.
- * A request is waited for SEND_MINUTES unless `options.timeoutMs` states another limit.
+ * A request is waited for SEND_MINUTES unless `options.timeoutMs` states another limit — one limit for all
+ * its tries and the waits between them: a 503 that leaves no time for the wait and another try is a NoAnswer.
  * `clean(value)` does the same to what the caller joins of an answer or reads back from a file: two
  * texts set side by side can spell what neither carries.
  * A 503 is asked again; any other refusal stops the command in the API's own words — and a spent day's
@@ -110,9 +111,11 @@ function readerOf({ http, wait }, key, model) {
     return error;
   };
   const answered = async (url, { headers, timeoutMs = SEND_MINUTES * 60_000, ...options } = {}) => {
-    for (let tries = 1; ; tries++) {
-      const answer = clean(await http(url, { ...options, headers: { "x-goog-api-key": key, ...headers }, timeoutMs }));
+    const deadline = Date.now() + timeoutMs;
+    for (let tries = 1, left = timeoutMs; ; tries++, left = deadline - Date.now()) {
+      const answer = clean(await http(url, { ...options, headers: { "x-goog-api-key": key, ...headers }, timeoutMs: left }));
       if (answer.status === 503 && tries < BUSY.tries) {
+        if (deadline - Date.now() <= BUSY.apart * 1000) throw new NoAnswer(`no answer but HTTP 503 within ${timeoutMs / 1000} s from ${new URL(url).host}`);
         await wait(BUSY.apart);
         continue;
       }
@@ -179,7 +182,7 @@ ${shots.join("\n")}
 
 /**
  * The answer of the first of `models` that gives one to `question`, the request's own options: { model, answer }.
- * Each is waited for ANSWER_SECONDS; one that gives no answer in that time is said aside and left for
+ * Each is waited for ANSWER_SECONDS, its 503s and the waits after them included; one that gives no answer in that time is said aside and left for
  * the next. Any other refusal stops the asking — it says what to do about that model — and when a
  * model was left before it, or none is left, the Refusal carries one line for each model asked.
  */

@@ -2,7 +2,7 @@
 // Two files state a film: job.json (title, formats, rate, loudness target) and the timing block at
 // the top of page/index.html (window.FILM). Nothing here starts a process.
 import { copyFileSync, cpSync, existsSync, lstatSync, mkdirSync, readFileSync, readdirSync, realpathSync, statSync, symlinkSync, writeFileSync } from "node:fs";
-import { dirname, join, resolve, sep } from "node:path";
+import { dirname, join, relative, resolve, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 import vm from "node:vm";
 
@@ -18,13 +18,18 @@ const FORMAT_NAME = /^[A-Za-z0-9_-]+$/; // a format's name becomes part of every
 // What a round of a film (`mg init --from`) takes from the job before it: the job's statement, its
 // page, its board's data, its material and its sound.
 const CARRIED = ["job.json", "assets", "refs", "board", "page", "sound"];
-// Inside two of them, what was made of the rest stays behind: the board `mg board` drew of each format
-// and the board page it drew them from (the template lays out one that can carry the film's frames),
-// and HyperFrames' own state in the page.
-const madeIn = (job) => ({
-  board: new Set(["board.html", ...job.formats.map((format, i) => (i ? `board-${format.name}.png` : "board.png"))]),
-  page: new Set([".hyperframes"]),
-});
+// Inside two of them, what was made of the rest stays behind: the board `mg board` drew of each format —
+// of one the job no longer lists too — and the board page it drew them from (the template lays out one
+// that can carry the film's frames), and HyperFrames' own state and the writer's work folder in the page.
+const MADE_IN = {
+  board: (name) => name === "board.html" || /^board(-[A-Za-z0-9_-]+)?\.png$/.test(name),
+  page: (name) => name === ".hyperframes" || name === "work",
+};
+/** Whether a place in a job, "board/board.png", is what a round leaves behind: outside what it carries, or made inside it. */
+const madeAt = (place) => {
+  const [name, child] = place.split(sep);
+  return !CARRIED.includes(name) || Boolean(MADE_IN[name]?.(child));
+};
 // A library the page loads, as its text names it: "lib/three.min.js", './lib/outline.js'.
 const LOADS_FROM_LIB = /["'`](?:\.\/)?lib\/([^"'`?#\s]+)/g;
 // What a film's file name carries after its format's name: -<n>x for a larger master, -<n>fps for another rate.
@@ -126,13 +131,16 @@ export function formatBySize(w, h) {
   return { name: `${w / k}x${h / k}`, w, h };
 }
 
+// A size or a rate: above 0, and a number — JSON's 1e999 is Infinity once read, and would reach the renderer as one.
+const isPositive = (n) => Number.isFinite(n) && n > 0;
+
 /**
  * Refuses formats no command could work with: none at all, a name that cannot stand in a file name,
  * or two names that one film's file name would mean — "a-2x" beside "a", since <title>-a-2x.mp4 is
  * "a" at twice its size and "a-2x" at its own. The same name twice is the plainest such pair.
  */
 function checkFormats(formats) {
-  if (!Array.isArray(formats) || !formats.length || formats.some((f) => !f.name || !(f.w > 0) || !(f.h > 0)))
+  if (!Array.isArray(formats) || !formats.length || formats.some((f) => !f.name || !isPositive(f.w) || !isPositive(f.h)))
     throw new Refusal('job.json: "formats" must list at least one { "name", "w", "h" }');
   if (formats.some((f) => !FORMAT_NAME.test(f.name))) throw new Refusal('job.json: a format\'s "name" is letters, digits, "-" and "_" only');
   const marksAlone = new RegExp(`^${MASTER_MARKS}$`);
@@ -176,7 +184,7 @@ export function openJob(dir) {
   if (!existsSync(join(root, "job.json"))) throw new Refusal(`${root} is not a job folder (no job.json) — make one with: mg init <dir>`);
   const stated = readJson(join(root, "job.json"));
   checkFormats(stated.formats);
-  if (!(stated.fps > 0)) throw new Refusal('job.json: "fps" must be a number');
+  if (!isPositive(stated.fps)) throw new Refusal('job.json: "fps" must be a number');
   return { dir: root, title: stated.title ?? "", formats: stated.formats, fps: stated.fps, lufs: stated.lufs ?? null, checks: stated.checks ?? {}, page: join(root, "page/index.html") };
 }
 
@@ -200,17 +208,24 @@ function filesOf(home, path, place, leave = () => false, through = []) {
  * place in the new job, the real file it is read from], and what stays behind, as places in the job.
  */
 function roundOf(source) {
-  const carried = [], left = [], made = madeIn(source);
+  const carried = [], left = [], home = realpathSync(source.dir);
   const placed = (path, place) => (lstatSync(path).isDirectory() ? `${place}/` : place);
   for (const name of readdirSync(source.dir).sort()) {
     const path = join(source.dir, name);
-    if (!CARRIED.includes(name)) left.push(placed(path, name));
-    else carried.push(...filesOf(source.dir, path, name, (child, at) => {
+    if (!CARRIED.includes(name)) {
+      left.push(placed(path, name));
+      continue;
+    }
+    const files = filesOf(source.dir, path, name, (child, at) => {
       if (name === "page" && LINKED.includes(child) && lstatSync(at).isSymbolicLink()) return true; // the new job is given links of its own
-      if (!made[name]?.has(child)) return false;
+      if (!madeAt(join(name, child))) return false;
       left.push(placed(at, `${name}/${child}`));
       return true;
-    }));
+    });
+    // A file is judged by where it really lies too: a link in assets/ into out/ leads to a render all the same.
+    for (const [place, real] of files)
+      if (madeAt(relative(home, real))) left.push(place);
+      else carried.push([place, real]);
   }
   return { carried, left };
 }

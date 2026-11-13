@@ -313,6 +313,24 @@ describe("B43 dxb-motion-graphics — a round of a film starts from the job befo
     expect(JSON.parse(events.out).TOTAL).toBe(3);
   });
 
+  // Sol found all three carried (2026-11-13): an output reached through a link, a format's board drawn before the format left the job, a work folder in the page.
+  it("leaves behind what was made wherever it is reached from: through a link into out/, a board of a format the job no longer has, the page's work folder", async () => {
+    const source = await roundOne();
+    writeFileSync(join(source, "out/old.mp4"), "an old render");
+    symlinkSync("../out", join(source, "assets/old-output"), "dir");
+    writeFileSync(join(source, "board/board-removed-format.png"), "the board of a format since taken out");
+    mkdirSync(join(source, "page/work"));
+    writeFileSync(join(source, "page/work/notes.txt"), "a working note");
+    const dir = nextTo();
+    const r = await mg(["init", dir, "--from", source]);
+    expect(r.code, r.out).toBe(0);
+    for (const left of ["assets/old-output/old.mp4", "board/board-removed-format.png", "page/work/notes.txt"]) {
+      expect(existsSync(join(dir, left)), left).toBe(false);
+      expect(r.out, left).toContain(left.replace("/notes.txt", "/"));
+    }
+    expect(sha(join(dir, "assets/logo.svg"))).toBe(sha(join(source, "assets/logo.svg"))); // the material itself still goes
+  });
+
   it("never changes the job it starts from, and reads it by its real path when it is named through a link", async () => {
     const source = await roundOne(), before = standing(source);
     const named = join(mkdtempSync(join(tmpdir(), "mg-link-")), "round-one");
@@ -763,6 +781,18 @@ describe.skipIf(missing.length > 0)("B43 dxb-motion-graphics — the page's prom
     }
     expect(existsSync(join(job, "out/check-same-second.json"))).toBe(false);
   });
+
+  // Sol found it (2026-11-13): a width of 1e999 in job.json passed as above 0 and reached the stage as data-width="Infinity".
+  it("refuses a size or a rate no number can be, before anything starts", async () => {
+    for (const [stated, infinite, why] of [['"w": 640', '"w": 1e999', /"formats"/], ['"h": 640', '"h": 1e999', /"formats"/], ['"fps": 30', '"fps": 1e999', /"fps"/]] as const) {
+      const job = await threeMoments(), file = join(job, "job.json"), drawn = page();
+      writeFileSync(file, readFileSync(file, "utf8").replace(stated, infinite));
+      const r = await mg(["check", "same-second", "--format", "all", "--job", job], { run: drawn.run });
+      expect(r.code, infinite).not.toBe(0);
+      expect(r.out, infinite).toMatch(why);
+      expect(drawn.calls, infinite).toEqual([]);
+    }
+  });
 });
 
 /** A job's checks as job.json states them; `raw` is written as it is, so a figure JSON cannot carry (1e999) can be stated. */
@@ -774,9 +804,9 @@ const checked = (job: string, what: string) => JSON.parse(readFileSync(join(job,
 
 describe.skipIf(missing.length > 0)("B43 dxb-motion-graphics — the measures a film needs: the whole subject in frame, and never still", () => {
   // The second film's writer wrote these checks for its own film (2026-11-13); the command's are general.
-  /** A 3 s film made by ffmpeg alone and losslessly: a plain ground, and a square of `side` pixels whose place is ffmpeg's expressions of t. */
-  const squareFilm = (file: string, { x, y = "150", side = 60, ground = "f0f0f0", ink = "101010" }: { x: string; y?: string; side?: number; ground?: string; ink?: string }) => {
-    const graph = `color=c=0x${ground}:s=640x360:r=${FPS}:d=3[ground];color=c=0x${ink}:s=${side}x${side}:r=${FPS}:d=3[square];[ground][square]overlay=x='${x}':y='${y}'`;
+  /** A 3 s film made by ffmpeg alone and losslessly: a plain ground, and a square of `side` pixels whose place is ffmpeg's expressions of t; at the job's rate unless `fps` states another. */
+  const squareFilm = (file: string, { x, y = "150", side = 60, ground = "f0f0f0", ink = "101010", fps = FPS }: { x: string; y?: string; side?: number; ground?: string; ink?: string; fps?: number }) => {
+    const graph = `color=c=0x${ground}:s=640x360:r=${fps}:d=3[ground];color=c=0x${ink}:s=${side}x${side}:r=${fps}:d=3[square];[ground][square]overlay=x='${x}':y='${y}'`;
     expect(sh("ffmpeg", ["-v", "error", "-y", "-f", "lavfi", "-i", graph, "-c:v", "libx264", "-crf", "0", "-pix_fmt", "yuv420p", file]).err).toBe("");
   };
   // Measured on these films with ffmpeg's own bbox and overlay (2026-11-13): the square that leaves x = 300 at 1 s
@@ -875,6 +905,17 @@ describe.skipIf(missing.length > 0)("B43 dxb-motion-graphics — the measures a 
     expect(stops.code).toBe(1);
     expect(stops.out).toMatch(/^FAILED +16x9 — 1–2 s: 15 of 30 frame\(s\) stood still: 1\.533–2 s \(frames 46–60\)/m);
     expect(checked(job, "never-still").formats[0].stretches.map((s: any) => s.still)).toEqual([[], [{ from: 1.533, to: 2, frames: [46, 60] }]]);
+  });
+
+  // Sol found it (2026-11-13): a 60 fps file in a 30 fps job was measured over 0.5–1 s for a stretch of 1–2 s, and its stop passed.
+  it("never still: measures a file at its own rate, not the job's", async () => {
+    const job = await initJob();
+    plainPage(job);
+    squareFilm(film(job), { x: "min(t,1.2)*300", y: "80", side: 200, fps: 60 }); // the square stops at 1.2 s: frame 72 of 60 a second
+    stateChecks(job, { "never-still": [{ from: 1, to: 2 }] });
+    const r = await mg(["check", "never-still", "--job", job]);
+    expect(r.code, r.out).toBe(1);
+    expect(r.out).toMatch(/^FAILED +16x9 — 1–2 s: 48 of 60 frame\(s\) stood still: 1\.217–2 s \(frames 73–120\)/m);
   });
 
   it("measures a stretch to the film's last frame, and refuses one the master does not hold rather than pass it", async () => {
