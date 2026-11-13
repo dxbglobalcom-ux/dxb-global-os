@@ -46,7 +46,9 @@ work is running (`--watch`) there is no count to make: each ping is weighed on i
    background and end the turn in one short line; nothing else. The turn was the warm-keeping.
 5. **The window cannot carry the next piece.** First ask whether the piece divides (dxb-team3 §3): the part
    that fits the room left is started now, and only what does not divide waits — on 2026-11-13 seven
-   independent items were held as one piece and two and a half hours were waited for nothing. Then, for
+   independent items were held as one piece and two and a half hours were waited for nothing. Dividing never
+   costs quality (his word, 2026-11-13): a piece is cut only where its parts stand alone; a film or a tightly
+   bound piece is not cut to fit the window, and no part goes to a lower model or level for it. Then, for
    what waits: finish, verify and commit the piece in hand; write the next
    piece's brief to disk; arm `scripts/ops/dxb-warm-wait --until-reset` in the background (the 5-hour
    window's reset, two minutes past it). It is the one clock that may be armed over a running `--watch`,
