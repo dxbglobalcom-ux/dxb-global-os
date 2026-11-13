@@ -1044,6 +1044,58 @@ describe("B43 dxb-motion-graphics — the command says what it takes", () => {
     expect(rec.calls.map((c) => c.cmd)).toEqual(["nvidia-smi"]); // the command ran: --help after "--" is the scene's
     expect(r.code).not.toBe(0);
   });
+
+  /**
+   * The flags a command table gives each command: the table's rows are the lines that open with "| `mg ",
+   * and a row's first cell names one command or more, each in its own code span.
+   */
+  const tabled = (file: string) => {
+    const flags: Record<string, string[]> = {};
+    for (const row of readFileSync(file, "utf8").split("\n").filter((line) => line.startsWith("| `mg "))) {
+      // The first cell ends at the first bar that stands outside a code span and is not escaped.
+      const spans = row.slice(2).split("`"), cellEnds = spans.findIndex((part, i) => i % 2 === 0 && /(?<!\\)\|/.test(part));
+      for (const span of spans.slice(0, cellEnds).filter((_, i) => i % 2 === 1)) {
+        const command = span.split(" ")[1];
+        flags[command] = [...new Set([...(flags[command] ?? []), ...(span.match(/--[\w-]+/g) ?? [])])].sort();
+      }
+    }
+    return flags;
+  };
+
+  it.each(["SKILL.md", "CONTRACT.md"])("%s's command table gives each command the flags its help prints, and no other", (name) => {
+    const table = tabled(name === "SKILL.md" ? join(SKILL, name) : join(REPO, ".planning/quick/20261112-motion-graphics", name));
+    // --job is said once, in the words around the table.
+    const helped = Object.fromEntries(Object.keys(FLAGS).map((command) => [command, FLAGS[command].filter((flag) => flag.startsWith("--") && flag !== "--job").sort()]));
+    expect(table).toEqual(helped);
+  });
+
+  it("the skill's path names no size of render that mg render does not have", () => {
+    // Step 5 sent its reader to "`mg render` at review size", and the command has no such size (the second film's writer, 2026-11-13).
+    const skill = readFileSync(join(SKILL, "SKILL.md"), "utf8");
+    expect(sh("node", [MG, "render", "--help"], nowhere).out.toString()).not.toMatch(/review/);
+    expect(skill).not.toMatch(/review size/);
+    expect(skill).toMatch(/Then `mg render`[^.]*\bat its own size\b/);
+  });
+});
+
+describe("B43 dxb-motion-graphics — the skill points at craft that is written", () => {
+  const skill = readFileSync(join(SKILL, "SKILL.md"), "utf8").replace(/\s+/g, " "); // a sentence runs over the file's lines
+  /** A reference's section: what stands under the heading that begins with `title`, up to the next heading of its rank. */
+  const section = (file: string, title: string) => readFileSync(join(SKILL, file), "utf8").split(/^## /m).find((part) => part.startsWith(title));
+
+  it("every section of a reference the skill names stands in that reference, under that heading", () => {
+    const named = [...skill.matchAll(/`(references\/[\w-]+\.md)`,\s+"([^"]+)"/g)].map((pointer) => [pointer[1], pointer[2]]);
+    expect(named).toContainEqual(["references/craft.md", "Animating an existing illustration"]);
+    for (const [file, title] of named) expect(section(file, title), `${file}: ${title}`).toBeDefined();
+  });
+
+  it("engines by the shot: an object in space that must join a flat drawing has its engine, its price and its limit written", () => {
+    // The second film's writer chose three.js over Blender for such an object, and found nothing in the skill to choose by (2026-11-13).
+    const engines = skill.match(/Engines by the shot:.*?Existing illustrations/)![0];
+    expect(engines).toContain('`references/craft.md`, "An object in space that joins a flat drawing"');
+    const craft = section("references/craft.md", "An object in space that joins a flat drawing")!.replace(/\s+/g, " ");
+    for (const said of [/three\.js in the page/, /same pixels/, /screen/, /The price/, /not path-traced/, /Blender is still the answer/, /`blender\.md`/]) expect(craft).toMatch(said);
+  });
 });
 
 describe("B43 dxb-motion-graphics — the guard film is a WebGL picture", () => {

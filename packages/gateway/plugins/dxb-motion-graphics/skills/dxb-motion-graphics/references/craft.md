@@ -77,6 +77,25 @@ the job's own.
 - **Materials decide realism** more than geometry does: roughness variation, a slight bevel on every edge, real
   texture sets rather than flat colours.
 
+## An object in space that joins a flat drawing
+
+A shot that lifts a flat drawing off its plane — a phone leaving the wall it was drawn on — and lays it back
+later has a join at each end like any other: the first frame in space is the last flat frame. Which engine
+draws the object is decided by that join, before the look. What the second film proved (2026-11-13):
+
+- **three.js in the page** serves when the join must be the same pixels at both ends and the object carries
+  something live — a screen whose content keeps changing through the shot. The scene stands on the flat
+  picture's own plane: a frame pixel is one unit, and a camera square on, at the distance from which that plane
+  fills the frame, sees the flat picture itself. The object's face is cut from the outline the flat drawing ends
+  on, and its screen is a canvas the page's own 2D code draws, so a transition on the screen is one piece of
+  code in both worlds. Leaving and lying back are then a camera and an object moving away from home and home again.
+- **The price** is the material. Metal and glass are a reflection map and a sheen, a shadow is a shape a
+  shader draws: simple, not path-traced. It reads as clean 3D motion graphics, not as a photograph.
+- **Blender is still the answer** when the object must look photographed (`blender.md`): real reflections,
+  soft shadows, a lens. Its frames are an image sequence lit by their own light: they do not land on a flat
+  drawing pixel for pixel, so that join is designed as something else — a match on shape, a wipe, a cut on a
+  move — and a live screen would have to be rendered into the sequence frame by frame.
+
 ## Animating an existing illustration (puppet)
 
 When the brand already owns illustrations — characters, objects, scenes — the film moves those, it does not

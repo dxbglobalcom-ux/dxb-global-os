@@ -14,7 +14,7 @@ import { parseArgs } from "node:util";
 import { drawBoard, formatLine, writeBoardPage } from "./lib/board.mjs";
 import { goodVersion, hyperframes, latestVersion, proveVersion } from "./lib/hyperframes.mjs";
 import { Refusal, TEMPLATES, filmName, formatBySize, formatsNamed, insideJob, layOutJob, masterOf, openJob, readFilm, readJson, sizePage, writeJson } from "./lib/job.mjs";
-import { ANSWER_MINUTES, READERS, readMotion, request } from "./lib/motion-read.mjs";
+import { ANSWER_SECONDS, READERS, readMotion, request } from "./lib/motion-read.mjs";
 import { lastLines, makeSheets, renderFilm, scaleFor, takeStills } from "./lib/picture.mjs";
 import { bringStarterSounds, planCues, writeSoundBlock } from "./lib/sound.mjs";
 import { failures, verifyFilms } from "./lib/verify.mjs";
@@ -92,11 +92,11 @@ const TAKES = {
     args: "[<file>]", options: JOB,
   },
   "motion-read": {
-    does: `Has the film read as motion by a second reader, the Gemini API, against board/board.json: the format's master in out/, or the film of the job given — a file that lies outside the job folder, or carries no picture, is not sent. The reading is written into out/motion-read-<film>.txt; the answer is waited for up to ${ANSWER_MINUTES} minutes. The key is GEMINI_API_KEY or GOOGLE_API_KEY, from the environment or the holding's daemon env file.`,
+    does: `Has the film read as motion by a second reader, the Gemini API, against board/board.json: the format's master in out/, or the film of the job given — a file that lies outside the job folder, or carries no picture, is not sent. The reading is written into out/motion-read-<film>.txt, its first line naming the model that read. A model is waited for ${ANSWER_SECONDS} seconds; one that gives no answer in that time is left for the next by itself, and stderr says which. The key is GEMINI_API_KEY or GOOGLE_API_KEY, from the environment or the holding's daemon env file.`,
     args: "[<film>]",
     options: {
       format: text("<name>", "the format whose film is read and whose frame the reader is asked about (a master given by its path: its own; else the job's first)"),
-      model: text("<name>", `the model that reads: ${READERS.join(", ")} (the first when not given); each has a day's quota of its own`),
+      model: text("<name>", `the model asked first: ${READERS.join(", ")} (the first when not given; the others follow in this order when it gives no answer); each has a day's quota of its own`),
       ...JOB,
     },
   },
@@ -310,13 +310,14 @@ async function motionRead(tools, argv) {
   const model = values.model ?? READERS[0];
   // The model's name becomes part of the address asked.
   if (!/^[\w.-]+$/.test(model)) throw new Refusal(`--model takes a model's name, such as ${READERS[0]}, not "${model}"`);
+  const models = [model, ...READERS.filter((other) => other !== model)]; // the one named first, then the rest in the list's order
   // A master of the job given by its path is read as the format its name states, unless another is named.
   const ownFormat = given && values.format === undefined ? masterOf(job, basename(given))?.format : undefined;
   const format = ownFormat ?? oneFormat(job, values.format, "a film is read one format at a time");
   const film = given ? resolve(given) : join(job.dir, "out", filmName(job, { format, scale: 1, fps: job.fps, alpha: false }));
   if (!existsSync(film)) throw new Refusal(`${film} is not there${given ? "" : " — render the film first (mg render), or name the film to read: mg motion-read <film>"}`);
-  const read = await readMotion(tools, job, { film, format, model });
-  tools.say(`mg motion-read: ${read.report} — ${read.characters} characters, read by ${model} against board/board.json`);
+  const read = await readMotion(tools, job, { film, format, models });
+  tools.say(`mg motion-read: ${read.report} — ${read.characters} characters, read by ${read.model} against board/board.json`);
 }
 
 function versionGuard({ run, say }, argv) {
@@ -361,15 +362,16 @@ const COMMANDS = { init, board, stills, sheet, events, sound, render, verify, "m
  * Runs one mg command. Returns { code, out }: 0 and what it printed, or non-zero and why it stopped.
  * `run` starts every process (a test may record or answer the calls); `say` hears each line as it is printed.
  * `http` sends every request that leaves the machine and `wait` passes the seconds between two of them
- * (a test answers for the network and waits for nothing).
+ * (a test answers for the network and waits for nothing). `aside` hears what a command says beside its
+ * own lines while it works — the terminal's stderr — and none of it is in `out`.
  * @param {string[]} argv
- * @param {{ run?: typeof run, say?: (line: string) => void, http?: typeof request, wait?: (seconds: number) => Promise<void> }} [options]
+ * @param {{ run?: typeof run, say?: (line: string) => void, aside?: (line: string) => void, http?: typeof request, wait?: (seconds: number) => Promise<void> }} [options]
  * @returns {Promise<{ code: number, out: string }>}
  */
-export async function mg(argv, { run: starts = run, say: hears = () => {}, http = request, wait = (seconds) => new Promise((over) => setTimeout(over, seconds * 1000)) } = {}) {
+export async function mg(argv, { run: starts = run, say: hears = () => {}, aside = () => {}, http = request, wait = (seconds) => new Promise((over) => setTimeout(over, seconds * 1000)) } = {}) {
   const [name, ...rest] = argv, lines = [];
   const say = (line) => { lines.push(line); hears(line); };
-  const tools = { run: starts, say, http, wait, hf: (job, args) => hyperframes(starts, job, goodVersion(), args) };
+  const tools = { run: starts, say, aside, http, wait, hf: (job, args) => hyperframes(starts, job, goodVersion(), args) };
   let code = 0;
   try {
     if (name === "help" || asksForHelp([name])) say(HELP);
@@ -385,6 +387,6 @@ export async function mg(argv, { run: starts = run, say: hears = () => {}, http 
 }
 
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
-  const { code } = await mg(process.argv.slice(2), { say: (line) => console.log(line) });
+  const { code } = await mg(process.argv.slice(2), { say: (line) => console.log(line), aside: (line) => console.error(line) });
   process.exit(code);
 }

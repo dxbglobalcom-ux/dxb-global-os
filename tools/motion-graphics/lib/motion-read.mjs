@@ -1,7 +1,8 @@
 // dxb-motion-graphics — the motion reading. A rendered film is watched as motion by a second reader
 // that has not seen its builder's reasoning — the Gemini API, shown ten frames a second — and held to
 // the storyboard. The film is uploaded once, the question names the frame the film was composed for
-// and the board's shots, and the reading is written into out/. Only a film of the job is sent: a file
+// and the board's shots, and the reading is written into out/. A model that gives no answer in its
+// time is left for the next in the list, and the reading names the one that answered. Only a film of the job is sent: a file
 // that really lies in the job folder, and in which ffprobe finds a picture. The key goes into a request
 // header and nowhere else: it is never printed and never written, and whatever the reader says back, or
 // is thrown while it is asked, crosses one boundary (`readerOf`) that takes the key out of it.
@@ -20,7 +21,11 @@ const API = "https://generativelanguage.googleapis.com";
 export const READERS = ["gemini-3.8-flash", "gemini-3.7-flash", "gemini-3.6-flash", "gemini-3.5-flash"];
 const REQUESTS_A_DAY = 20;
 const READ_FPS = 10; // frames a second the reader is shown: the rate the holding's motion reading was measured at
-export const ANSWER_MINUTES = 10; // a request is waited for this long: the reading of a 15 s film took more than 200 s (measured 2026-11-12)
+const SEND_MINUTES = 10; // the film's upload, and each question about its state, is waited for this long
+// One model is waited for this long, then the next is asked. An answer has taken more than 200 s (a 15 s
+// film, 2026-11-12); the day after two models gave none in 600 s each for a 31.7 s film while a third
+// answered in under 60 s. UNVERIFIED: how much longer than 200 s the slowest answer that did come took.
+export const ANSWER_SECONDS = 240;
 const BUSY = { tries: 5, apart: 20 };  // HTTP 503: the same request again, seconds apart
 const READY = { tries: 40, apart: 2 }; // an upload is asked for its state until it is ACTIVE
 const FILM_TYPES = { ".mp4": "video/mp4", ".mov": "video/quicktime" };
@@ -29,11 +34,14 @@ const NO_KEY = "<the key>"; // what stands where the key was said
 // A 429 that names the day. UNVERIFIED against a live answer: none was kept from the day the quota was met.
 const NAMES_THE_DAY = /per[ _-]?day|daily/i;
 
+/** No answer within the time a request was given: the silence `readMotion` leaves a model for, where any other refusal stops it. */
+export class NoAnswer extends Refusal {}
+
 /**
  * One HTTP request, waited for as long as it is told to. It is written on node:http(s) and not on
  * fetch: fetch gives an answer's headers 300 s (undici's headersTimeout, read in its source, not
- * timed here) and a reading is given longer. A refusal by the server is an answer; no answer within
- * the limit, or no server reached, is a Refusal.
+ * timed here) and an upload is given longer. A refusal by the server is an answer; no server reached
+ * is a Refusal, and no answer within the limit is the Refusal named NoAnswer.
  * @param {string} url
  * @param {{ method?: string, headers?: Record<string, string>, body?: string | Buffer, timeoutMs: number }} options
  * @returns {Promise<{ status: number, text: string }>}
@@ -48,7 +56,7 @@ export function request(url, { method = "GET", headers = {}, body, timeoutMs }) 
       answer.on("end", () => answered({ status: answer.statusCode ?? 0, text: Buffer.concat(text).toString() }));
       answer.on("error", stopped); // the limit, or a broken line, met while the answer was still arriving
     });
-    const limit = setTimeout(() => sent.destroy(new Refusal(`no answer within ${timeoutMs / 1000} s from ${host}`)), timeoutMs);
+    const limit = setTimeout(() => sent.destroy(new NoAnswer(`no answer within ${timeoutMs / 1000} s from ${host}`)), timeoutMs);
     sent.on("close", () => clearTimeout(limit));
     sent.on("error", stopped);
     sent.end(body);
@@ -84,8 +92,9 @@ function withoutKey(key, value) {
  * `ask(url, options)` sends the request with the key in its header and returns the answer's JSON. What
  * it returns has the key taken out — out of the answer's text before it is read, and out of every string
  * of the JSON after: a key written in JSON's escapes is the key again once parsed. What it throws is
- * thrown as a new error of the same kind, the key out of its message and its trace, carrying nothing
- * else of the old one: a network library's error may hold the request's headers.
+ * thrown as a new error of the same kind — a silence stays a NoAnswer — the key out of its message and
+ * its trace, carrying nothing else of the old one: a network library's error may hold the request's headers.
+ * A request is waited for SEND_MINUTES unless `options.timeoutMs` states another limit.
  * `clean(value)` does the same to what the caller joins of an answer or reads back from a file: two
  * texts set side by side can spell what neither carries.
  * A 503 is asked again; any other refusal stops the command in the API's own words — and a spent day's
@@ -95,13 +104,14 @@ function readerOf({ http, wait }, key, model) {
   const clean = (value) => withoutKey(key, value);
   const said = (text) => text.slice(0, 300);
   const sayable = (thrown) => {
-    const error = new (thrown instanceof Refusal ? Refusal : Error)(clean(String(thrown?.message ?? thrown)));
+    const Kind = [NoAnswer, Refusal].find((kind) => thrown instanceof kind) ?? Error;
+    const error = new Kind(clean(String(thrown?.message ?? thrown)));
     if (typeof thrown?.stack === "string") error.stack = clean(thrown.stack);
     return error;
   };
-  const answered = async (url, { headers, ...options } = {}) => {
+  const answered = async (url, { headers, timeoutMs = SEND_MINUTES * 60_000, ...options } = {}) => {
     for (let tries = 1; ; tries++) {
-      const answer = clean(await http(url, { ...options, headers: { "x-goog-api-key": key, ...headers }, timeoutMs: ANSWER_MINUTES * 60_000 }));
+      const answer = clean(await http(url, { ...options, headers: { "x-goog-api-key": key, ...headers }, timeoutMs }));
       if (answer.status === 503 && tries < BUSY.tries) {
         await wait(BUSY.apart);
         continue;
@@ -168,32 +178,54 @@ ${shots.join("\n")}
 }
 
 /**
- * Has one film read against the job's storyboard, as the film of `format`, by `model`, and writes the
- * reading into out/motion-read-<the film's name>.txt; returns { report, characters }. The film is one
- * of the job — refused, and nothing sent, when it really lies outside the job folder or ffprobe finds
- * no picture in it. `hands` reach the reader — `http` as `request` above, `wait(seconds)` — so a test
- * answers for the network; `run` starts ffprobe.
- * @param {{ http: typeof request, wait: (seconds: number) => Promise<void>, run: (cmd: string, args: string[]) => { code: number, out: string | Buffer, err: string } }} hands
- * @param {{ dir: string }} job
- * @param {{ film: string, format: { w: number, h: number }, model: string }} asked
- * @returns {Promise<{ report: string, characters: number }>}
+ * The answer of the first of `models` that gives one to `question`, the request's own options: { model, answer }.
+ * Each is waited for ANSWER_SECONDS; one that gives no answer in that time is said aside and left for
+ * the next. Any other refusal stops the asking — it says what to do about that model — and when a
+ * model was left before it, or none is left, the Refusal carries one line for each model asked.
  */
-export async function readMotion(hands, job, { film, format, model }) {
+async function firstAnswer({ aside, ...hands }, key, models, question) {
+  const asked = [], perModel = () => new Refusal(`no model read the film:\n${asked.map((line) => `  ${line}`).join("\n")}`);
+  for (const [i, model] of models.entries()) {
+    try {
+      return { model, answer: await readerOf(hands, key, model).ask(`${API}/v1beta/models/${model}:generateContent`, { ...question, timeoutMs: ANSWER_SECONDS * 1000 }) };
+    } catch (thrown) {
+      if (!(thrown instanceof Refusal) || (!(thrown instanceof NoAnswer) && !asked.length)) throw thrown;
+      asked.push(`${model}: ${thrown.message}`);
+      if (!(thrown instanceof NoAnswer)) throw perModel();
+      aside(`mg motion-read: ${model} gave no answer within ${ANSWER_SECONDS} s — ${models[i + 1] ? `${models[i + 1]} is asked` : "no model is left to ask"}`);
+    }
+  }
+  throw perModel();
+}
+
+/**
+ * Has one film read against the job's storyboard, as the film of `format`, by the first of `models`
+ * that answers, and writes the reading into out/motion-read-<the film's name>.txt, its first line
+ * naming that model; returns { report, characters, model }. The film is one of the job — refused, and
+ * nothing sent, when it really lies outside the job folder or ffprobe finds no picture in it. `hands`
+ * reach the reader — `http` as `request` above, `wait(seconds)`, `aside(line)` for what is said beside
+ * the command's own lines — so a test answers for the network; `run` starts ffprobe.
+ * @param {{ http: typeof request, wait: (seconds: number) => Promise<void>, aside: (line: string) => void, run: (cmd: string, args: string[]) => { code: number, out: string | Buffer, err: string } }} hands
+ * @param {{ dir: string }} job
+ * @param {{ film: string, format: { w: number, h: number }, models: string[] }} asked
+ * @returns {Promise<{ report: string, characters: number, model: string }>}
+ */
+export async function readMotion(hands, job, { film, format, models }) {
   const type = FILM_TYPES[extname(film)];
   if (!type) throw new Refusal(`${film} is not a film mg renders: .mp4 or .mov`);
   if (!staysInside(job.dir, film)) throw new Refusal(`${film} is not a film of this job: it lies outside the job folder (${job.dir}), by its own path or through a link, and nothing from outside it is sent`);
   probe(hands.run, film); // refused unless ffprobe finds a picture in it: a film is one by what it carries, not by its name
-  const board = readBoard(job), reader = readerOf(hands, geminiKey(), model);
+  const board = readBoard(job), key = geminiKey(), reader = readerOf(hands, key, models[0]);
   mkdirSync(insideJob(job.dir, "out"), { recursive: true });
   const name = `motion-read-${basename(film, extname(film))}.txt`, report = insideJob(job.dir, "out", name);
 
   const upload = await uploadOf(reader, film, insideJob(job.dir, "out", `${name}.upload.json`));
   await waitUntilActive(reader.ask, hands.wait, upload);
   const parts = [{ file_data: { file_uri: upload.uri, mime_type: type }, video_metadata: { fps: READ_FPS } }, { text: question(format, board) }];
-  const answer = await reader.ask(`${API}/v1beta/models/${model}:generateContent`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ contents: [{ parts }] }) });
+  const { model, answer } = await firstAnswer(hands, key, models, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ contents: [{ parts }] }) });
   const reading = reader.clean((answer.candidates?.[0]?.content?.parts ?? []).map((part) => part.text ?? "").join(""));
   const blocked = answer.promptFeedback?.blockReason;
   if (!reading.trim()) throw new Refusal(`the answer carries no reading${blocked ? ` (blocked: ${blocked})` : ""}`);
   writeFileSync(report, `# Motion read — ${basename(film)} · ${model} · ${READ_FPS} fps · prompt tokens ${answer.usageMetadata?.promptTokenCount ?? "not stated"}\n\n${reading}\n`);
-  return { report, characters: reading.length };
+  return { report, characters: reading.length, model };
 }

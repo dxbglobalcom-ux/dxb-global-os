@@ -16,7 +16,7 @@ import { dirname, join } from "node:path";
 import { inspect } from "node:util";
 import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 import { Refusal } from "../../tools/motion-graphics/lib/job.mjs";
-import { request } from "../../tools/motion-graphics/lib/motion-read.mjs";
+import { NoAnswer, request } from "../../tools/motion-graphics/lib/motion-read.mjs";
 import { FILM, editJson, film, initJob, makeFilm, mg, missingTools, ownState, sh } from "./motion-graphics-fixtures.js";
 
 // A missing tool is said out loud and the tests that need it are skipped; they never pass in silence.
@@ -45,21 +45,26 @@ const MINUTE_SPENT = json({ error: { code: 429, status: "RESOURCE_EXHAUSTED", me
 /**
  * The reader answered by the test. `answers` are given to the questions in turn (the last one again
  * after that), `states` to the upload's state when it is asked for, `uploaded` is the address the
- * upload is answered with; every request is kept in `asked` and every wait in `waited`, and nothing
- * is really waited for.
+ * upload is answered with; a model named in `silent` gives no answer to a question, as the request
+ * itself ends at its limit; every request is kept in `asked`, every wait in `waited` and every line
+ * said aside in `asides`, and nothing is really waited for.
  */
-function reader({ answers = [ANSWERED], states = ["ACTIVE"], uploaded = UPLOADED }: { answers?: Answer[]; states?: string[]; uploaded?: { name?: string; uri?: string } } = {}) {
-  const asked: Asked[] = [], waited: number[] = [];
+function reader({ answers = [ANSWERED], states = ["ACTIVE"], uploaded = UPLOADED, silent = [] }: { answers?: Answer[]; states?: string[]; uploaded?: { name?: string; uri?: string }; silent?: string[] } = {}) {
+  const asked: Asked[] = [], waited: number[] = [], asides: string[] = [];
   const next = <T,>(queue: T[]) => (queue.length > 1 ? queue.shift()! : queue[0]);
   const answer = async (url: string, options: Omit<Asked, "url"> = {}): Promise<Answer> => {
     asked.push({ url, ...options });
     if (url.includes("/upload/")) return json({ file: uploaded });
     if (url.startsWith(`${API}/v1beta/files/`)) return json({ ...uploaded, state: next(states) });
+    if (silent.some((model) => url.includes(`/models/${model}:generateContent`))) throw new NoAnswer(`no answer within ${options.timeoutMs! / 1000} s from generativelanguage.googleapis.com`);
     if (url.includes(":generateContent")) return next(answers);
     throw new Error(`the test has no answer for ${url}`);
   };
   const of = (part: string) => asked.filter((a) => a.url.includes(part));
-  return { asked, waited, http: answer, wait: async (seconds: number) => void waited.push(seconds), uploads: () => of("/upload/"), questions: () => of(":generateContent") };
+  return {
+    asked, waited, asides, http: answer, wait: async (seconds: number) => void waited.push(seconds), aside: (line: string) => void asides.push(line),
+    uploads: () => of("/upload/"), questions: () => of(":generateContent"),
+  };
 }
 const question = (a: Asked) => JSON.parse(String(a.body)).contents[0].parts;
 
@@ -67,7 +72,8 @@ describe.skipIf(missing.length > 0)("B43 dxb-motion-graphics — the film is rea
   let job = "", filmed = Buffer.alloc(0), filmedLater = Buffer.alloc(0); // two real films' bytes, made once
   const kept = () => readdirSync(join(job, "out")).filter((name) => name.startsWith("motion-read-")).sort();
   const report = (name = "fixture-film-16x9") => join(job, `out/motion-read-${name}.txt`);
-  const read = (hands: ReturnType<typeof reader>, ...argv: string[]) => mg(["motion-read", ...argv, "--job", job], { http: hands.http, wait: hands.wait });
+  const read = (hands: ReturnType<typeof reader>, ...argv: string[]) => mg(["motion-read", ...argv, "--job", job], { http: hands.http, wait: hands.wait, aside: hands.aside });
+  const modelsAsked = (hands: ReturnType<typeof reader>) => hands.questions().map((a) => a.url.match(/models\/(.+):generateContent$/)![1]);
   const keys = { GEMINI_API_KEY: process.env.GEMINI_API_KEY, GOOGLE_API_KEY: process.env.GOOGLE_API_KEY, DXB_MG_KEY_FILE: process.env.DXB_MG_KEY_FILE };
   beforeAll(() => {
     ownState();
@@ -92,7 +98,7 @@ describe.skipIf(missing.length > 0)("B43 dxb-motion-graphics — the film is rea
     }
   });
 
-  it("uploads the format's film and asks for a reading at 10 fps against the board, waiting ten minutes for the answer", async () => {
+  it("uploads the format's film and asks for a reading at 10 fps against the board, waiting ten minutes for the upload and four for the model's answer", async () => {
     const hands = reader();
     const r = await read(hands);
     expect(r.code).toBe(0);
@@ -105,7 +111,8 @@ describe.skipIf(missing.length > 0)("B43 dxb-motion-graphics — the film is rea
     expect(upload.headers).toMatchObject({ "x-goog-api-key": KEY, "Content-Type": "video/mp4" });
     expect(Buffer.from(upload.body as Buffer).equals(filmed)).toBe(true);
     expect(asking.headers).toMatchObject({ "x-goog-api-key": KEY, "Content-Type": "application/json" });
-    expect(asking.timeoutMs).toBe(600_000);
+    expect(upload.timeoutMs).toBe(600_000);
+    expect(asking.timeoutMs).toBe(240_000);
 
     const [picture, words] = question(asking);
     expect(picture).toEqual({ file_data: { file_uri: UPLOADED.uri, mime_type: "video/mp4" }, video_metadata: { fps: 10 } });
@@ -227,6 +234,72 @@ describe.skipIf(missing.length > 0)("B43 dxb-motion-graphics — the film is rea
     expect(minute.code).not.toBe(0);
     expect(minute.out).toMatch(/HTTP 429/);
     expect(minute.out).not.toMatch(/the day's quota/);
+  });
+
+  // The second film's writer met it (2026-11-13): the first two models gave no answer in ten minutes each, the third answered in under one.
+  it("a model that gives no answer in its four minutes is left for the next in the list by itself; stderr says which, and the report names the one that answered", async () => {
+    const hands = reader({ silent: ["gemini-3.8-flash", "gemini-3.7-flash"] });
+    const r = await read(hands);
+    expect(r.code).toBe(0);
+    expect(modelsAsked(hands)).toEqual(["gemini-3.8-flash", "gemini-3.7-flash", "gemini-3.6-flash"]);
+    expect(hands.questions().map((a) => a.timeoutMs)).toEqual([240_000, 240_000, 240_000]);
+    expect(hands.uploads()).toHaveLength(1); // the film is sent once, whoever reads it
+    expect(hands.waited).toEqual([]);        // and the next model is asked at once
+    expect(hands.asides).toEqual([
+      "mg motion-read: gemini-3.8-flash gave no answer within 240 s — gemini-3.7-flash is asked",
+      "mg motion-read: gemini-3.7-flash gave no answer within 240 s — gemini-3.6-flash is asked",
+    ]);
+    expect(readFileSync(report(), "utf8")).toBe(`# Motion read — ${FILM} · gemini-3.6-flash · 10 fps · prompt tokens 11475\n\n${READING}\n`);
+    expect(r.out).toMatch(/read by gemini-3\.6-flash against board\/board\.json/);
+    expect(r.out).not.toMatch(/gave no answer/); // what is printed stays the one decisive line
+  });
+
+  it("--model names the model asked first, and the others follow in the list's order", async () => {
+    const hands = reader({ silent: ["gemini-3.6-flash", "gemini-3.8-flash"] });
+    const r = await read(hands, "--model", "gemini-3.6-flash");
+    expect(r.code).toBe(0);
+    expect(modelsAsked(hands)).toEqual(["gemini-3.6-flash", "gemini-3.8-flash", "gemini-3.7-flash"]);
+    expect(readFileSync(report(), "utf8")).toMatch(/^# Motion read — fixture-film-16x9\.mp4 · gemini-3\.7-flash · /);
+  });
+
+  it("when no model answers the command fails, with one line for each model, and no reading is written", async () => {
+    const hands = reader({ silent: ["gemini-3.8-flash", "gemini-3.7-flash", "gemini-3.6-flash", "gemini-3.5-flash"] });
+    const r = await read(hands);
+    expect(r).toEqual({ code: 1, out: [
+      "mg motion-read: FAILED — no model read the film:",
+      "  gemini-3.8-flash: no answer within 240 s from generativelanguage.googleapis.com",
+      "  gemini-3.7-flash: no answer within 240 s from generativelanguage.googleapis.com",
+      "  gemini-3.6-flash: no answer within 240 s from generativelanguage.googleapis.com",
+      "  gemini-3.5-flash: no answer within 240 s from generativelanguage.googleapis.com",
+      "",
+    ].join("\n") });
+    expect(hands.asides.at(-1)).toBe("mg motion-read: gemini-3.5-flash gave no answer within 240 s — no model is left to ask");
+    expect(kept()).toEqual(["motion-read-fixture-film-16x9.txt.upload.json"]); // the upload is kept for the next try; there is no reading
+  });
+
+  it("only silence moves on: a model that refuses after a silent one stops the command, and each model has its line", async () => {
+    const hands = reader({ silent: ["gemini-3.8-flash"], answers: [DAY_SPENT] });
+    const r = await read(hands);
+    expect(r.code).toBe(1);
+    expect(modelsAsked(hands)).toEqual(["gemini-3.8-flash", "gemini-3.7-flash"]);
+    const [head, first, second, ...rest] = r.out.split("\n");
+    expect(head).toBe("mg motion-read: FAILED — no model read the film:");
+    expect(first).toBe("  gemini-3.8-flash: no answer within 240 s from generativelanguage.googleapis.com");
+    expect(second).toMatch(/^  gemini-3\.7-flash: the day's quota of gemini-3\.7-flash is spent/);
+    expect(rest).toEqual([""]);
+    expect(existsSync(report())).toBe(false);
+  });
+
+  it("a silence that says the key back is told aside, and printed, without it", async () => {
+    const silence = reader(), hands = { ...silence, http: async (url: string, options: Omit<Asked, "url"> = {}) => {
+      if (url.includes(":generateContent")) throw new NoAnswer(`no answer within 240 s — the header ${KEY} went unanswered`);
+      return silence.http(url, options);
+    } };
+    const r = await read(hands);
+    expect(r.code).toBe(1);
+    expect(r.out.split("\n")[1]).toBe("  gemini-3.8-flash: no answer within 240 s — the header <the key> went unanswered");
+    for (const said of [r.out, ...hands.asides]) expect(said).not.toContain(KEY);
+    expect(hands.asides).toHaveLength(4);
   });
 
   it("keeps the upload beside the report, so the film is sent once however often the question is asked", async () => {
@@ -410,7 +483,13 @@ describe("B43 dxb-motion-graphics — the request itself waits as long as it is 
     expect((await request(`${address}/busy`, { timeoutMs: 5000 })).status).toBe(503); // a refusal is an answer, not an error
   });
 
-  it("gives up on an answer that is later than its limit, in words", async () => {
-    await expect(request(`${address}/files`, { timeoutMs: 100 })).rejects.toThrow(/no answer within 0\.1 s/);
+  it("gives up on an answer that is later than its limit, in words — as the silence a model is left for", async () => {
+    const late = await request(`${address}/files`, { timeoutMs: 100 }).then(() => null, (e: unknown) => e);
+    expect(late).toBeInstanceOf(NoAnswer);
+    expect((late as Error).message).toMatch(/no answer within 0\.1 s/);
+    // A server that is not there is no silence: it is refused as before, and no model would be left for it.
+    const unreached = await request("http://127.0.0.1:9/files", { timeoutMs: 5000 }).then(() => null, (e: unknown) => e);
+    expect(unreached).toBeInstanceOf(Refusal);
+    expect(unreached).not.toBeInstanceOf(NoAnswer);
   });
 });

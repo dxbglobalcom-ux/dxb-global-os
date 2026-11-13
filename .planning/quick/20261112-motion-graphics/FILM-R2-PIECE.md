@@ -48,3 +48,12 @@ SKILL.md's command table, `mg --help` and CONTRACT.md carry every new command an
 
 ## Report
 The start and end clock. Per item (1–7): what you built (file:line), its test, the red line before and the green after. The final output of this job's test files and of the typecheck. One real run of each new check on a COPY of the round-two film's job made in your scratch (never on the original), with its output. `git -C … status --short` for your files. Every decision where this brief left a choice. Anything wrong, unbuildable or left open — plainly.
+
+## State when the first writer was cut (2026-11-13 15:15 — Fable's own weekly limit, until 09:00 on 2026-11-14)
+The first writer worked 13 minutes, in the order 3, 5, 1, 6, 7, 2, 4. Verified by the lead and committed with this
+note: **items 3, 5 and 1 are finished** — 3: the sentence corrected (the renderer has no smaller size), with a test;
+5: "An object in space that joins a flat drawing" in `references/craft.md`, SKILL.md's engines line pointing to it,
+with a test; 1: `mg motion-read` leaves a silent model for the next by itself (four minutes each), `--model` names the
+first, every model's line on failure, the key never printed — with tests. Both touched test files pass (97 tests),
+typecheck 0 (`cut-writer-tests.out`, `cut-writer-typecheck.out`). **Items 6, 7, 2 and 4 are not started** — the next
+writer begins at 6, in the order 6, 7, 2, 4, from this commit.

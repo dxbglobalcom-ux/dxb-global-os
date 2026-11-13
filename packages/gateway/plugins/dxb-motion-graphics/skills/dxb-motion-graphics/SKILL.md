@@ -55,7 +55,9 @@ for time `t` — no timers, no animation-frame clock, seeded randomness, so the 
 pixels. The page reaches the job's material as `assets/…`, `refs/…` and `sound/…` (links `mg init` makes inside
 `page/`); a path that climbs out of `page/` is refused by the renderer. Engines by the shot: canvas, SVG or DOM for 2D; three.js (a pinned copy in `page/lib/`, not a CDN) for
 browser 3D; Blender for a physical product — `references/blender.md` and the kit in
-`tools/motion-graphics/blender/`. Existing illustrations are cut out and animated, not redrawn (`references/craft.md`, "Animating an existing
+`tools/motion-graphics/blender/`; an object in space that must leave a flat drawing and lie back into it exactly
+is three.js in the page, at a price (`references/craft.md`, "An object in space that joins a flat drawing").
+Existing illustrations are cut out and animated, not redrawn (`references/craft.md`, "Animating an existing
 illustration"). The page lays out
 from `FILM.W/H`, so each frame format is composed, not cropped. The frame's size has no other name in the page:
 a name of its own at the top would keep the first format's size while another format is drawn. `page/lib/` holds
@@ -65,13 +67,16 @@ shutter sees it; `references/craft.md` says when each serves.
 **5. Look at it.** `mg sheet --around-events` gives three or four stills across every transition (`--window` for
 a longer or shorter stretch around each, `--format all` for every frame); read every one
 against the board: does each shot really become the next, is the brand's material exact, is every word readable
-for as long as it takes to read, does the frame work in each format. Fix and look again. Then `mg render` at
-review size and have the film read **as motion** by a second reader that has not seen your reasoning (the
-holding's motion reading: the Gemini API at 10 fps) against the board: `mg motion-read` sends the format's
+for as long as it takes to read, does the frame work in each format. Fix and look again. Then `mg render` — the
+whole film at its own size: the renderer has no smaller one, and its draft saves about a second in twelve
+(measured 2026-11-13, a 31.7 s film at 1920×1080) — and have the film read **as motion** by a second reader
+that has not seen your reasoning (the holding's motion reading: the Gemini API at 10 fps) against the board: `mg motion-read` sends the format's
 master in `out/` — `--format` for another frame, or the path of another film of the job — and writes the reading
 into `out/motion-read-<film>.txt`. A file that lies outside the job folder, or carries no picture, is refused
-and not sent. The answer can take minutes. When a model's quota for the day is spent the
-command says so, and `--model` names another. A still is not playback; a film nobody watched is not finished.
+and not sent. The answer can take minutes. A model that gives none in four is left for the next in the list by
+itself — two models once stayed silent for ten minutes each while a third answered in one — and the reading's
+first line names the model that read. When a model's quota for the day is spent the command says so, and
+`--model` names another. A still is not playback; a film nobody watched is not finished.
 
 **6. Lock the picture, then sound.** Any change to the picture after this breaks the sound. Effects go where
 something moves or changes, each cue naming which point of the sound — start, peak or end — sits on which event
@@ -127,7 +132,7 @@ not accepted by the builder: the step is brought to the one who decides, with th
 | `mg sound` | `sound/cues.json` → the page's sound block (a cue's file lives under `sound/`, or names the starter set as `sfx:pop/pop-mid-01.wav` and is copied there; a `trim` stated beside the cues moves every level by that many dB) |
 | `mg render [--format name\|all] [--scale n \| --4k] [--alpha] [--fps n]` | the film, into `out/` (`.mov` for `--alpha`); a larger master only by a whole multiple that reaches 1080p, 1440p or 4K |
 | `mg verify [file]` | the measurements of every master of the job's formats in `out/`, or of the file at the path given; off the loudness target, by how many dB the set would have to move; `out/verify.json` |
-| `mg motion-read [film] [--format name] [--model name]` | the format's master in `out/`, or the film of the job given, read as motion by a second reader against `board/board.json`; `out/motion-read-<film>.txt` |
+| `mg motion-read [film] [--format name] [--model name]` | the format's master in `out/`, or the film of the job given, read as motion by a second reader against `board/board.json`; `--model` is the model asked first, and one silent for four minutes is left for the next; `out/motion-read-<film>.txt` |
 | `mg hf status\|update [--guard index.html]` | the HyperFrames version guard; `update --guard` tries the newer version on another guard page than the skill's own |
 | `mg blender <scene.py> [--need-mb n] [-- args]` | Blender, headless, after a check that the graphics card has `--need-mb` MB free (4000 when not given) |
 
