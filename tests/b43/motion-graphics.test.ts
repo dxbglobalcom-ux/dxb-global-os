@@ -157,8 +157,10 @@ describe("B43 dxb-motion-graphics — the job folder", () => {
     expect((await mg(["events", "--job", whole])).code).toBe(0);
   });
 
-  it("init refuses a format or a loudness it cannot read, and lays nothing out", async () => {
+  it("init refuses a format, a length or a loudness it cannot read, and lays nothing out", async () => {
     const refused: [string[], RegExp][] = [
+      [["--dur", "Infinity"], /--dur takes the film's length in seconds/], // a film without an end has no beats to lay out
+      [["--dur", "0"], /--dur takes the film's length in seconds/],
       [["--format", "9x16"], /--format/],                          // no size
       [["--format", "9x16=360"], /--format/],                      // half a size
       [["--format", "tall/one=360x640"], /letters, digits/],       // a name that is not a file name's part
@@ -249,13 +251,18 @@ describe("B43 dxb-motion-graphics — the board shows the film, in each format",
   };
   // The starter board of a 3 s film: its shots run 0–0.45 s, 0.45–1.2 s and 1.2–3 s, so their middles are these.
   const MIDDLES = "0.225,0.825,2.1";
-  let job = "";
-  beforeAll(async () => {
+  /** A job in two formats whose page is a film of its own. Each test lays one out: none stands on the page another left. */
+  const jobOfItsOwnFilm = async () => {
+    const job = await initJob({ more: ["--format", "9x16=360x640"] });
+    plainPage(job);
+    return job;
+  };
+  beforeAll(() => {
     ownState();
-    job = await initJob({ more: ["--format", "9x16=360x640"] });
   });
 
   it("draws the storyboard alone while the page is still the starter, and says so", async () => {
+    const job = await initJob();
     const chrome = drawing();
     const r = await mg(["board", "--job", job], { run: chrome.run });
     expect(r.code).toBe(0);
@@ -266,7 +273,7 @@ describe("B43 dxb-motion-graphics — the board shows the film, in each format",
   });
 
   it("once the page is the job's own, puts the film's frame at the middle of each shot on the board", async () => {
-    plainPage(job);
+    const job = await jobOfItsOwnFilm();
     const chrome = drawing();
     const r = await mg(["board", "--job", job], { run: chrome.run });
     expect(r.code).toBe(0);
@@ -280,6 +287,7 @@ describe("B43 dxb-motion-graphics — the board shows the film, in each format",
   });
 
   it("draws one board for each format asked for, each from that format's own frames", async () => {
+    const job = await jobOfItsOwnFilm();
     const chrome = drawing();
     const r = await mg(["board", "--format", "all", "--job", job], { run: chrome.run });
     expect(r.code).toBe(0);
@@ -309,6 +317,7 @@ describe("B43 dxb-motion-graphics — the board shows the film, in each format",
   });
 
   it("when the page cannot be drawn yet, draws the board without frames and says why", async () => {
+    const job = await jobOfItsOwnFilm();
     const chrome = drawing({ stills: false });
     const r = await mg(["board", "--job", job], { run: chrome.run });
     expect(r.code).toBe(0);
@@ -361,7 +370,8 @@ describe("B43 dxb-motion-graphics — contact sheets: every format in one call, 
   });
 
   it("refuses a window that is no length of time, and starts nothing", async () => {
-    for (const window of ["0", "wide", "-1", ""]) {
+    // "Infinity" is a number and above 0, and no length of time: every moment around the event would be NaN.
+    for (const window of ["0", "wide", "-1", "", "Infinity", "1e999"]) {
       const rec = sheeting();
       const r = await mg(["sheet", "--around-events", `--window=${window}`, "--job", job], { run: rec.run });
       expect(r.code, window).not.toBe(0);
@@ -576,6 +586,42 @@ describe.skipIf(missing.length > 0)("B43 dxb-motion-graphics — a cue is planne
       expect(refused.out, file).toMatch(/starter set/);
     }
     expect(readdirSync(join(other, "sound")).sort()).toEqual(["cues.json", "pop-mid-01.wav"]);
+  });
+
+  it("a file of the starter set reached through a link out of the set is refused and nothing is copied; a link that stays in the set gives the job a file", () => {
+    // The starter set is the skill's own folder, so the rule is tried on a copy of the tool, whose set this test fills.
+    const copy = mkdtempSync(join(tmpdir(), "mg-repository-")), set = join(copy, relative(REPO, SKILL), "sfx");
+    cpSync(join(REPO, "tools/motion-graphics"), join(copy, "tools/motion-graphics"), { recursive: true });
+    cpSync(TEMPLATES, join(copy, relative(REPO, TEMPLATES)), { recursive: true });
+    const cli = (args: string[]) => {
+      const r = sh("node", [join(copy, "tools/motion-graphics/mg.mjs"), ...args]);
+      return { code: r.code, out: r.out.toString() };
+    };
+    const outside = mkdtempSync(join(tmpdir(), "mg-outside-"));
+    mkdirSync(join(set, "pop"), { recursive: true });
+    blip(join(set, "pop/own.wav"));
+    blip(join(outside, "not-of-the-set.wav"));
+    symlinkSync(join(outside, "not-of-the-set.wav"), join(set, "pop/linked-file.wav")); // a file of the set that is a link out of it
+    symlinkSync(outside, join(set, "linked-folder"), "dir");                             // a folder of the set that is one
+    symlinkSync("own.wav", join(set, "pop/other-name.wav"));                             // a link that stays in the set
+
+    const other = join(mkdtempSync(join(tmpdir(), "mg-")), "job");
+    expect(cli(["init", other, "--w", "640", "--h", "360", "--dur", "3"]).code).toBe(0);
+    for (const file of ["sfx:pop/linked-file.wav", "sfx:linked-folder/not-of-the-set.wav"]) {
+      cues(other, [{ at: 1, file, align: "start" }]);
+      const refused = cli(["sound", "--job", other]);
+      expect(refused.code, file).not.toBe(0);
+      expect(refused.out, file).toMatch(/leads out of the starter set through a link/);
+      expect(readdirSync(join(other, "sound")), file).toEqual(["cues.json"]);
+    }
+
+    cues(other, [{ at: 1, file: "sfx:pop/other-name.wav", align: "start" }]);
+    const kept = cli(["sound", "--job", other]);
+    expect(kept.out).toMatch(/mg sound: 1 cue\(s\)/);
+    expect(kept.code).toBe(0);
+    const own = join(other, "sound/other-name.wav");
+    expect(lstatSync(own).isFile()).toBe(true); // the sound itself, not the link the set names it by
+    expect(sha(own)).toBe(sha(join(set, "pop/own.wav")));
   });
 
   it("one trim moves the whole set: it is added to every cue's level", async () => {

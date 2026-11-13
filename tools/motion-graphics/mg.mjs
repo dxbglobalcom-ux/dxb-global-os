@@ -201,6 +201,9 @@ function wholeNumber(given, fallback, option) {
   return Number(given);
 }
 
+/** Whether a number is a length of time: above 0 and with an end. "Infinity" reads as a number above 0 and is none. */
+const isLengthOfTime = (seconds) => Number.isFinite(seconds) && seconds > 0;
+
 /** One more format as `mg init --format` states it: <name>=<width>x<height>. */
 function formatStated(stated) {
   const [, name, w, h] = stated.match(/^([^=]+)=(\d+)x(\d+)$/) ?? [];
@@ -214,7 +217,7 @@ function init({ say }, argv) {
   const { values, positionals: [dir] } = parse("init", joined);
   if (!dir) throw new Refusal("which folder? mg init <dir>");
   const dur = Number(values.dur ?? 12);
-  if (!(dur > 0)) throw new Refusal("--dur takes the film's length in seconds");
+  if (!isLengthOfTime(dur)) throw new Refusal("--dur takes the film's length in seconds");
   if (values.lufs !== undefined && !/^-?\d+(\.\d+)?$/.test(values.lufs)) throw new Refusal(`--lufs takes the loudness target as a number, such as -16, not "${values.lufs}"`);
   const first = formatBySize(wholeNumber(values.w, 1920, "--w"), wholeNumber(values.h, 1080, "--h")), fps = wholeNumber(values.fps, 30, "--fps");
   // What is not given stays undefined here: layOutJob states it — no target, no spec piece, no brand.
@@ -256,7 +259,7 @@ function sheet(tools, argv) {
   const { job, values } = parseForJob("sheet", argv);
   const aroundEvents = values["around-events"] ?? false, window = Number(values.window ?? AROUND_EVENT);
   if (values.window !== undefined && !aroundEvents) throw new Refusal("--window is the time around an event: it is given with --around-events");
-  if (!(window > 0)) throw new Refusal(`--window takes the seconds a sheet covers each side of its event, more than 0, not "${values.window}"`);
+  if (!isLengthOfTime(window)) throw new Refusal(`--window takes the seconds a sheet covers each side of its event, more than 0, not "${values.window}"`);
   const asked = { aroundEvents, count: wholeNumber(values.n, aroundEvents ? 4 : 9, "--n"), window };
   const files = formatsNamed(job, values.format).flatMap((format) => makeSheets(tools, job, format, asked));
   tools.say(`mg sheet: ${files.length} sheet(s)\n${files.join("\n")}`);

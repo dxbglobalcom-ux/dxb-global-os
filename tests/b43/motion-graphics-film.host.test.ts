@@ -15,7 +15,7 @@ import { join } from "node:path";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { run } from "../../tools/motion-graphics/mg.mjs";
 import {
-  FILM, FIRST_GOOD, ONE_FRAME, REPO, TEMPLATES, askForWebGL, blip, cues, editJson, film, firstSoundAt, initJob, lastSoundAt,
+  FILM, FIRST_GOOD, FPS, ONE_FRAME, REPO, TEMPLATES, askForWebGL, blip, cues, editJson, film, firstSoundAt, initJob, lastSoundAt,
   loudestAt, mg, missingTools, ownState, probe, recorder, samples, sh, sha, shaped, verdict,
 } from "./motion-graphics-fixtures.js";
 
@@ -331,6 +331,182 @@ describe("B43 dxb-motion-graphics — the board carries the film's own frames", 
     expect(wide.light).toBeLessThan(bare.light - 15);
     expect(tall.light).toBeLessThan(bare.light - 15);
   }, 180_000);
+});
+
+/**
+ * A film's page that draws no film: once loaded it measures page/lib/motion-blur.js on the canvases the
+ * browser really gives, and says what it found in one line, `mg:blur <json>`. HyperFrames carries a
+ * page's console into a render's output (into a still's it does not, measured 2026-11-13).
+ */
+const BLUR_MEASURED_PAGE = `<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<script>
+const FPS = ${FPS}, TOTAL = 1;
+window.FILM = { W: 640, H: 360, FPS, TOTAL, BEATS: { start: 0 }, EVENTS: [{ name: 'measured', t: 0.5 }] };
+</script>
+<script src="lib/motion-blur.js"></script>
+</head>
+<body>
+<div id="stage" data-composition-id="film" data-width="640" data-height="360" data-duration="1" data-no-timeline>
+  <!-- mg:sound:begin -->
+  <!-- mg:sound:end -->
+</div>
+<script>
+const SIDE = 256, HALF_FLOATS = { colorType: 'float16' };
+const canvasOf = side => Object.assign(document.createElement('canvas'), { width: side, height: side });
+const frame = () => canvasOf(SIDE).getContext('2d');
+const bytes = g => g.getImageData(0, 0, SIDE, SIDE).data;
+
+// How far apart two pictures are: the largest difference in any channel of any pixel, in levels of
+// 255, and how many of their bytes differ at all.
+function apart(a, b) {
+  let worst = 0, differing = 0;
+  for (let i = 0; i < a.length; i++) {
+    const d = Math.abs(a[i] - b[i]);
+    if (d) differing++;
+    if (d > worst) worst = d;
+  }
+  return { worst, differing };
+}
+
+// A still picture that rounding shows on: every level of grey, every level of clearness, a gradient,
+// a half-clear sheet over all three, a round edge. It stands on a film's dark field.
+const field = g => { g.fillStyle = '#1b222b'; g.fillRect(0, 0, SIDE, SIDE); };
+function still(g) {
+  for (let x = 0; x < 256; x++) { g.fillStyle = 'rgb(' + x + ', ' + x + ', ' + x + ')'; g.fillRect(x, 0, 1, 48); }
+  for (let x = 0; x < 256; x++) { g.fillStyle = 'rgba(242, 184, 75, ' + x / 255 + ')'; g.fillRect(x, 64, 1, 48); }
+  const ramp = g.createLinearGradient(0, 0, SIDE, 0);
+  ramp.addColorStop(0, 'rgb(232, 100, 60)');
+  ramp.addColorStop(1, 'rgb(244, 239, 230)');
+  g.fillStyle = ramp;
+  g.fillRect(0, 128, SIDE, 48);
+  g.fillStyle = 'rgba(232, 100, 60, 0.5)';
+  g.fillRect(20, 30, 200, 120);
+  g.fillStyle = 'rgb(242, 184, 75)';
+  g.beginPath();
+  g.arc(128, 208, 40, 0, 2 * Math.PI);
+  g.fill();
+}
+
+// Precision as it behaves, not as it is named. A white pixel has three quarters taken out of it six
+// times and is then doubled eleven times; what is left of its solidness is read, of 255. Where the
+// thin pixel was kept that is about half; 8 bits round it away to nothing on the way down.
+function thinnedAndDoubled(kept) {
+  const g = canvasOf(1).getContext('2d', kept);
+  g.fillStyle = '#fff';
+  g.fillRect(0, 0, 1, 1);
+  g.globalAlpha = 0.75;
+  g.globalCompositeOperation = 'destination-out';
+  for (let i = 0; i < 6; i++) g.fillRect(0, 0, 1, 1);
+  g.globalAlpha = 1;
+  g.globalCompositeOperation = 'lighter';
+  for (let i = 0; i < 11; i++) g.drawImage(g.canvas, 0, 0);
+  const read = canvasOf(1).getContext('2d');
+  read.drawImage(g.canvas, 0, 0);
+  return read.getImageData(0, 0, 1, 1).data[3];
+}
+
+// A frame whose document makes canvases that give the usual 8 bits whatever they are asked for, as a
+// browser without half floats does: the helper's layers are then real canvases of 8 bits.
+const eightBitDocument = { createElement: () => {
+  const canvas = document.createElement('canvas'), usual = canvas.getContext.bind(canvas);
+  canvas.getContext = kind => usual(kind);
+  return canvas;
+} };
+function eightBitFrame() {
+  const g = frame();
+  Object.defineProperty(g.canvas, 'ownerDocument', { value: eightBitDocument });
+  return g;
+}
+
+// The still picture drawn once on the field, against the same picture exposed on \`g\` over a shutter
+// through which nothing moves; with what the helper said its average was kept in.
+function readBack(g, samples) {
+  const once = frame();
+  field(once);
+  still(once);
+  field(g);
+  const said = MotionBlur.expose(g, 0.5, layer => still(layer), { samples, shutter: 0.5 / FILM.FPS });
+  return { colorType: said.colorType, ...apart(bytes(once), bytes(g)) };
+}
+
+function measure() {
+  const asked = canvasOf(1).getContext('2d', HALF_FLOATS);
+  // One canvas drawn at one time, at another, and at the first again: a square that travels.
+  const g = frame(), travels = (layer, time) => { layer.fillStyle = '#fff'; layer.fillRect(time * 200, 40, 60, 60); };
+  const drawnAt = t => {
+    g.clearRect(0, 0, SIDE, SIDE);
+    field(g);
+    MotionBlur.expose(g, t, travels, { samples: 16, shutter: 0.2 });
+    return bytes(g);
+  };
+  const first = drawnAt(0.5), between = drawnAt(0.2), again = drawnAt(0.5);
+  return {
+    browser: navigator.userAgent.match(/[A-Za-z]*Chrome\\/[\\d.]+/)[0],
+    context: asked.constructor.name,
+    given: asked.getContextAttributes().colorType,
+    usual: canvasOf(1).getContext('2d').getContextAttributes().colorType,
+    thinned: { halfFloats: thinnedAndDoubled(HALF_FLOATS), eightBits: thinnedAndDoubled(undefined) },
+    still: Object.fromEntries([1, 16, 64].map(samples => [samples, { halfFloats: readBack(frame(), samples), eightBits: readBack(eightBitFrame(), samples) }])),
+    twice: apart(first, again),
+    between: apart(first, between),
+  };
+}
+
+window.renderAt = () => {};
+window.ready = (async () => console.log('mg:blur ' + JSON.stringify(measure())))();
+window.__hf = window.__hf || {}; window.__hf.buildReady = window.__hf.buildReady || {}; window.__hf.buildReady.film = window.ready; window.addEventListener('hf-seek', e => renderAt(e.detail.time));
+</script>
+</body>
+</html>
+`;
+
+describe("B43 dxb-motion-graphics — page/lib/motion-blur.js on the canvas HyperFrames' own Chrome gives", () => {
+  let measured: any;
+  beforeAll(async () => {
+    ownState();
+    const job = await initJob({ dur: 1 }), said: string[] = [];
+    writeFileSync(join(job, "page/index.html"), BLUR_MEASURED_PAGE);
+    const heard = recorder((cmd, args, options) => {
+      const result = run(cmd, args, options);
+      said.push(String(result.out) + result.err);
+      return result;
+    });
+    const r = await mg(["render", "--job", job], { run: heard.run });
+    expect(r.out).toMatch(/^mg render: /);
+    const line = said.join("\n").match(/mg:blur (\{.*\})/);
+    expect(line, "the page's one line in the render's output").toBeTruthy();
+    measured = JSON.parse(line![1]);
+  }, 120_000);
+
+  it("asked for half floats, the browser gives a 2D canvas that names them and keeps what 8 bits round away", () => {
+    expect(measured.browser).toMatch(/^HeadlessChrome\/\d+\./);
+    expect(measured).toMatchObject({ context: "CanvasRenderingContext2D", given: "float16", usual: "unorm8" });
+    // On paper: 0.75 is the alpha 191 of 255, so each thinning keeps 64/255; (64/255)^6 × 2^11 × 255 = 130.5.
+    expect(Math.abs(measured.thinned.halfFloats - 130)).toBeLessThanOrEqual(2);
+    expect(measured.thinned.eightBits).toBe(0);
+  });
+
+  it("a still picture reads back within a level of 255 of itself drawn once at 16 samples, within 2 at 64; in 8 bits it is further off, and the helper says which it had", () => {
+    const worst = (kind: string) => [1, 16, 64].map((samples) => measured.still[samples][kind].worst);
+    const said = (kind: string) => [...new Set([1, 16, 64].map((samples) => measured.still[samples][kind].colorType))];
+    // Levels of 255, as HeadlessChrome 152.0.7977.30 gave them on 2026-11-13. The helper's own header and
+    // references/craft.md state these figures: when they change here, they change there.
+    expect(worst("halfFloats")).toEqual([1, 1, 2]);
+    expect(worst("eightBits")).toEqual([1, 2, 5]);
+    expect(said("halfFloats")).toEqual(["float16"]);
+    expect(said("eightBits")).toEqual(["unorm8"]);
+    // Up to 16 samples the average costs nothing at all: the bytes that differ are the ones a single sample differs in.
+    expect(measured.still[16].halfFloats.differing).toBe(measured.still[1].halfFloats.differing);
+    expect(measured.still[16].eightBits.differing).toBeGreaterThan(measured.still[16].halfFloats.differing);
+  });
+
+  it("the same canvas drawn again at the same time holds the same pixels, another time drawn between", () => {
+    expect(measured.twice).toEqual({ worst: 0, differing: 0 });
+    expect(measured.between.differing).toBeGreaterThan(0); // the measure tells two pictures apart
+  });
 });
 
 describe("B43 dxb-motion-graphics — the HyperFrames version guard", () => {

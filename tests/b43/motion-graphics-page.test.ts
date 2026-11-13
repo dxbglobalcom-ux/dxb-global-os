@@ -11,10 +11,10 @@ import vm from "node:vm";
 import { describe, expect, it } from "vitest";
 import { TEMPLATES } from "./motion-graphics-fixtures.js";
 
-/** A helper as a page gets it: the script run with a `window` (and what else it is given) to hang itself on. */
-function load(name: string, globals: Record<string, unknown> = {}): any {
+/** A helper as a page gets it: the script run with a `window` to hang itself on, and nothing else — no document. */
+function load(name: string): any {
   const window: Record<string, any> = {};
-  vm.runInNewContext(readFileSync(join(TEMPLATES, "lib", name), "utf8"), { window, ...globals });
+  vm.runInNewContext(readFileSync(join(TEMPLATES, "lib", name), "utf8"), { window });
   return window;
 }
 /** Numbers of the helper's own realm as plain ones, rounded to a hundredth (and −0 as 0). */
@@ -135,9 +135,12 @@ describe("B43 dxb-motion-graphics — page/lib/outline.js: a path's outline as p
 /**
  * A canvas of one pixel, composited as the canvas specification says (colours premultiplied by alpha):
  * what a helper would get from a browser, reduced to the arithmetic. It knows the operations a helper
- * may use and refuses any other.
+ * may use and refuses any other. Like a page's canvas it names the document that makes more of its
+ * kind, and nothing else here does. With `halfFloats` off it is a browser that does not know the
+ * option: asked for half floats it gives the usual 8 bits and names no colour type. `asked` hears what
+ * each canvas made by that document was asked to keep its colours in.
  */
-function onePixelCanvas() {
+function onePixelCanvas({ halfFloats = true, asked = [] as string[] } = {}) {
   const blend: Record<string, (s: number[], d: number[]) => number[]> = {
     "source-over": (s, d) => s.map((v, i) => v + d[i] * (1 - s[3])),
     "destination-out": (s, d) => d.map((v) => v * (1 - s[3])),
@@ -164,24 +167,38 @@ function onePixelCanvas() {
       lay(paint[g.fillStyle]);
     },
     drawImage: (from: any) => lay(from.pixel),
+    getContextAttributes: () => (halfFloats ? { colorType: canvas.colorType } : {}),
   };
-  canvas.getContext = () => g;
+  canvas.getContext = (_kind: string, kept?: { colorType?: string }) => {
+    canvas.colorType = kept?.colorType ?? "unorm8";
+    return g;
+  };
+  canvas.ownerDocument = {
+    createElement: () => {
+      const made = onePixelCanvas({ halfFloats }), context = made.getContext;
+      made.getContext = (kind: string, kept?: { colorType?: string }) => (asked.push(kept?.colorType ?? "the usual"), context(kind, kept));
+      return made;
+    },
+  };
   return canvas;
 }
 
 describe("B43 dxb-motion-graphics — page/lib/motion-blur.js: a frame exposed over the time its shutter is open", () => {
-  const { MotionBlur } = load("motion-blur.js", { document: { createElement: onePixelCanvas } });
+  // No document stands behind the helper but the one a frame's canvas names.
+  const { MotionBlur } = load("motion-blur.js");
   const level = (pixel: number[]) => pixel.map((v) => Math.round(v * 1000) / 1000);
-  /** A frame of opaque black, exposed at second 1 to a white thing that is there only while `shown(time)`. */
+  /** A white thing that is there only while `shown(time)`, and the times it was drawn at. */
+  const thing = (shown: (time: number) => boolean, times: number[] = []) => (layer: any, time: number) => {
+    times.push(time);
+    if (!shown(time)) return;
+    layer.fillStyle = "#fff";
+    layer.fillRect();
+  };
+  /** A frame of opaque black, exposed at second 1 to such a thing. */
   const exposed = (shown: (time: number) => boolean, options: { samples: number; shutter: number }, clear = false) => {
     const frame = onePixelCanvas(), g = frame.getContext("2d"), times: number[] = [];
     if (!clear) g.fillRect();
-    MotionBlur.expose(g, 1, (layer: any, time: number) => {
-      times.push(time);
-      if (!shown(time)) return;
-      layer.fillStyle = "#fff";
-      layer.fillRect();
-    }, options);
+    MotionBlur.expose(g, 1, thing(shown, times), options);
     return { pixel: level(frame.pixel), times: times.map((time) => Math.round(time * 1000) / 1000), g };
   };
 
@@ -211,21 +228,25 @@ describe("B43 dxb-motion-graphics — page/lib/motion-blur.js: a frame exposed o
     expect(exposed(() => false, { samples: 4, shutter: 0.3 }).pixel).toEqual([0, 0, 0, 1]); // nothing drawn, nothing changed
   });
 
-  it("keeps the samples' average in half floats, and draws each sample on a layer of the usual kind", () => {
-    // In 8 bits every sample added rounds: a still picture came back from 16 samples about 5 levels of 255
-    // lighter (measured in Chrome 155, 2026-11-12). What a browser makes of the option is the browser's;
-    // what is held here is that the helper asks for it — once, for the layer that holds the average.
-    const asked: unknown[] = [];
-    const listening = () => {
-      const canvas = onePixelCanvas(), context = canvas.getContext("2d");
-      canvas.getContext = (_kind: string, kept?: { colorType?: string }) => (asked.push(kept?.colorType ?? "the usual"), context);
-      return canvas;
-    };
-    const blur = load("motion-blur.js", { document: { createElement: listening } }).MotionBlur;
-    const frame = onePixelCanvas();
-    blur.expose(frame.getContext("2d"), 1, () => {}, { samples: 4, shutter: 0.1 });
-    blur.expose(frame.getContext("2d"), 2, () => {}, { samples: 4, shutter: 0.1 }); // the layers are kept for the next frame
+  it("makes its work layers in the page of the canvas it is handed, and asks for half floats once, for the average", () => {
+    // What a real browser gives for the option, and what a still picture then reads back as, is measured
+    // in HyperFrames' own Chrome by motion-graphics-film.host.test.ts. What is held here is the asking.
+    const asked: string[] = [];
+    const g = onePixelCanvas({ asked }).getContext("2d");
+    MotionBlur.expose(g, 1, () => {}, { samples: 4, shutter: 0.1 });
+    MotionBlur.expose(g, 2, () => {}, { samples: 4, shutter: 0.1 }); // the layers are kept for the next frame
     expect(asked.sort()).toEqual(["float16", "the usual"]);
+
+    // A canvas that names no document has no page to make a layer in: said in words, not as a missing `document`.
+    const pageless = onePixelCanvas();
+    delete pageless.ownerDocument;
+    expect(() => MotionBlur.expose(pageless.getContext("2d"), 1, () => {}, { samples: 4, shutter: 0.1 })).toThrow(/MotionBlur: .*ownerDocument/);
+  });
+
+  it("says what the average was really kept in: half floats, or 8 bits from a browser that does not give them", () => {
+    const keptIn = (frame: any) => MotionBlur.expose(frame.getContext("2d"), 1, thing(() => true), { samples: 4, shutter: 0.1 }).colorType;
+    expect(keptIn(onePixelCanvas())).toBe("float16");
+    expect(keptIn(onePixelCanvas({ halfFloats: false }))).toBe("unorm8");
   });
 
   it("the thing is drawn on a layer that stands as the frame stands, at every sample", () => {
@@ -239,10 +260,20 @@ describe("B43 dxb-motion-graphics — page/lib/motion-blur.js: a frame exposed o
     expect(g.stands).toBe("pushed in");
   });
 
-  it("the same time gives the same frame, and the frame's own drawing state is left as it was", () => {
-    const first = exposed((time) => time > 1, { samples: 8, shutter: 0.2 }), again = exposed((time) => time > 1, { samples: 8, shutter: 0.2 });
-    expect(again.pixel).toEqual(first.pixel);
-    expect(again.times).toEqual(first.times);
-    expect([first.g.globalAlpha, first.g.globalCompositeOperation]).toEqual([1, "source-over"]);
+  it("the same time gives the same frame on the same canvas, whatever was drawn on it between, and the frame's own drawing state is left as it was", () => {
+    // One canvas, so one pair of work layers: what the frame between leaves in them must not reach the next.
+    const frame = onePixelCanvas(), g = frame.getContext("2d"), secondHalf = (time: number) => time > 1;
+    const drawnAt = (t: number, shown: (time: number) => boolean) => {
+      const times: number[] = [];
+      g.clearRect();
+      g.fillRect(); // the frame's own black, before the thing
+      MotionBlur.expose(g, t, thing(shown, times), { samples: 8, shutter: 0.2 });
+      return { pixel: level(frame.pixel), times };
+    };
+    const first = drawnAt(1, secondHalf), between = drawnAt(1.5, () => true), again = drawnAt(1, secondHalf);
+    expect(first.pixel).toEqual([0.5, 0.5, 0.5, 1]);
+    expect(between.pixel).toEqual([1, 1, 1, 1]); // another frame: the thing in front of the whole shutter
+    expect(again).toEqual(first);
+    expect([g.globalAlpha, g.globalCompositeOperation]).toEqual([1, "source-over"]);
   });
 });

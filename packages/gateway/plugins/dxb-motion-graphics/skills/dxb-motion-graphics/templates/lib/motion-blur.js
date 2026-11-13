@@ -9,8 +9,8 @@
 // `draw(layer, time)` draws the thing as it stands at second `time`, on `layer` in place of `g`: a
 // context that is clear, stands as `g` stands (its transform) and carries none of its styles or its
 // clip. It is called once for each sample; the samples' average is then laid over what `g` already
-// holds. What stood still through the shutter comes out exactly as solid as drawn once; what moved
-// is spread along its way.
+// holds. What stood still through the shutter comes out as solid as drawn once; what moved is spread
+// along its way. The layers are canvases of the document `g`'s own canvas names (its ownerDocument).
 //
 //   shutter   seconds the shutter stands open, centred on t. Half a frame (0.5 / FILM.FPS) is a film
 //             camera's; a whole frame is the longest that still reads as one move.
@@ -18,17 +18,25 @@
 //             way it travels during the shutter, in pixels, over the samples, stays under the size
 //             of its smallest part — fewer and the blur reads as a row of ghosts.
 //
+// `expose` returns { colorType }: what the average was really kept in, as the browser names it.
+//   'float16'  half floats, which HyperFrames' Chrome gives. A still picture comes back within 1 level
+//              of 255 of itself drawn once at up to 16 samples, and within 2 at 64.
+//   'unorm8'   8 bits, from a browser that does not give half floats. The same steps run and each
+//              one rounds: the same picture comes back up to 2 levels off at 16 samples, 5 at 64.
+// Both were measured on real canvases in HyperFrames' Chrome 152 on 2026-11-13, and
+// tests/b43/motion-graphics-film.host.test.ts measures them again at every run. Nothing is refused on
+// 8 bits — the blur is still drawn; a film in which that shift would show reads the answer.
+//
 // The picture is still a pure function of t: the sample times depend on nothing else, and the work
 // layers kept from call to call are wiped before each use. Blur costs a full-frame layer for each
 // sample: it is asked for while the thing travels fast, not for the whole film.
 (() => {
   const refuse = why => { throw new Error('MotionBlur: ' + why); };
   const layers = new WeakMap();   // for each frame's canvas, its two work layers: one sample, and the samples' average
-  // The average is kept in half floats. In a canvas of 8 bits every sample added rounds, and a still
-  // picture came back from 16 samples about 5 levels of 255 lighter than drawn once; in half floats
-  // it comes back within 1 (measured 2026-11-12 in Chrome 155 and in HyperFrames' Chrome 152). A
-  // browser that does not know the option gives 8 bits, and the same steps run on those.
-  const HALF_FLOATS = { colorType: 'float16' };
+  // The average is asked for in half floats: in a canvas of 8 bits every sample added rounds (the
+  // figures stand at the top of this file). A browser that does not know the option gives 8 bits and
+  // the same steps run on those; `expose` returns which of the two it was.
+  const HALF_FLOATS = { colorType: 'float16' }, EIGHT_BITS = 'unorm8';
 
   // The seconds the samples are taken at: spread evenly from the shutter's opening to its closing.
   function times(t, { samples, shutter } = {}) {
@@ -37,8 +45,11 @@
     return Array.from({ length: samples }, (_, i) => (samples > 1 ? t + (i / (samples - 1) - 0.5) * shutter : t));
   }
 
+  // The layers are made by the document the frame's canvas names as its own: the helper names none.
   function workLayers(canvas) {
-    if (!layers.has(canvas)) layers.set(canvas, [undefined, HALF_FLOATS].map(kept => document.createElement('canvas').getContext('2d', kept)));
+    const page = canvas.ownerDocument;
+    if (!page) refuse('the work layers are made by the document of the canvas the frame is drawn on, and this canvas names none (ownerDocument)');
+    if (!layers.has(canvas)) layers.set(canvas, [undefined, HALF_FLOATS].map(kept => page.createElement('canvas').getContext('2d', kept)));
     for (const layer of layers.get(canvas))
       if (layer.canvas.width !== canvas.width || layer.canvas.height !== canvas.height) Object.assign(layer.canvas, { width: canvas.width, height: canvas.height });
     return layers.get(canvas);
@@ -69,6 +80,8 @@
     g.globalCompositeOperation = 'source-over';
     g.drawImage(average.canvas, 0, 0);
     g.restore();
+    // What the average was really kept in, as the browser names it; one that names nothing gave 8 bits.
+    return { colorType: (average.getContextAttributes && average.getContextAttributes().colorType) || EIGHT_BITS };
   }
 
   window.MotionBlur = { times, expose };

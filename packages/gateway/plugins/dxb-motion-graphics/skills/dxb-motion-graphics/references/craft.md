@@ -33,8 +33,12 @@ the job's own.
 - **`motion-blur.js` — a fast move as a shutter sees it.** It serves on the frames where a thing crosses a good
   part of the frame from one frame to the next — a whip, a card flying in, a fast push — and adds nothing to a slow
   drift. The moving thing is drawn several times across the time the shutter stands open and the drawings are
-  averaged; what stood still comes out as it was. Half a frame of shutter is a film camera's. Samples enough that
-  neighbours overlap, or the blur reads as a row of ghosts (sixteen for a card that travels 60 px while the
+  averaged. What stood still comes out as it was drawn while the average is kept in half floats (`float16`): within
+  1 level of 255 at up to 16 samples, within 2 at 64. HyperFrames' Chrome gives half floats (Chrome 152, measured
+  on its real canvas by the host test, 2026-11-13). A browser that gives only 8 bits rounds at every sample — the
+  same picture comes back up to 2 levels off at 16 samples, 5 at 64 — and the blur is still drawn; `expose` returns
+  which it had (`{ colorType }`: `float16` or `unorm8`). Half a frame of shutter is a film camera's. Samples enough
+  that neighbours overlap, or the blur reads as a row of ghosts (sixteen for a card that travels 60 px while the
   shutter is open). Each sample costs a full-frame layer: ask for it while the thing travels, not for the whole film.
 
 ## Composition

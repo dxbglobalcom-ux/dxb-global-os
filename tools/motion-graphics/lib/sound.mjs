@@ -1,9 +1,9 @@
 // dxb-motion-graphics — sound on its event. A cue names an event (or a second) and which point of
 // the SOUND sits on it: its start, its peak or its end. The plan made here is what `mg sound` writes
 // into the page and what `mg verify` holds the rendered film to, by listening to the film itself.
-import { cpSync, existsSync, readFileSync, statSync, writeFileSync } from "node:fs";
+import { copyFileSync, existsSync, readFileSync, statSync, writeFileSync } from "node:fs";
 import { basename, join, resolve, sep } from "node:path";
-import { Refusal, TEMPLATES, insideJob, readJson, replaceBlock } from "./job.mjs";
+import { Refusal, TEMPLATES, insideJob, readJson, replaceBlock, staysInside } from "./job.mjs";
 
 const FINE = 48000;   // samples per second when a point is looked for in a sound file
 const COARSE = 16000; // samples per second when a film is listened to: 16 samples to the millisecond
@@ -73,6 +73,8 @@ function soundOf(cue, refuse) {
     const from = resolve(STARTER_SET, cue.file.slice(FROM_STARTER.length));
     if (!from.startsWith(STARTER_SET + sep) || !statSync(from, { throwIfNoEntry: false })?.isFile())
       throw refuse(`"${cue.file}" is no file of the starter set (sfx/INDEX.md lists them, as pop/pop-mid-01.wav)`);
+    // A name inside the set may be a link, or stand in a linked folder, whose sound lies elsewhere.
+    if (!staysInside(STARTER_SET, from)) throw refuse(`"${cue.file}" leads out of the starter set through a link; a job is given only what lies in the set itself`);
     return { file: `sound/${basename(from)}`, from };
   }
   // The page reaches a sound through page/sound, so a cue's file lives under the job's sound/.
@@ -84,14 +86,15 @@ function soundOf(cue, refuse) {
 /**
  * Gives the job its own copy of every file of the starter set that a cue names, so the job folder
  * stays whole on its own. `mg sound` does this before it plans; a file of the job's own that already
- * stands under the copy's name is never written over.
+ * stands under the copy's name is never written over. The copy is the sound itself, a file: where the
+ * set names a sound through a link, the link is not what the job gets.
  */
 export function bringStarterSounds(job) {
   for (const [i, cue] of readCues(job).cues.entries()) {
     const refuse = refusalOfCue(i + 1), { file, from } = soundOf(cue, refuse);
     if (!from) continue;
     const copy = insideJob(job.dir, file);
-    if (!existsSync(copy)) cpSync(from, copy);
+    if (!existsSync(copy)) copyFileSync(from, copy);
     else if (!readFileSync(copy).equals(readFileSync(from))) throw refuse(`${file} is already there and is another sound than "${cue.file}"; rename the job's own file`);
   }
 }

@@ -120,18 +120,20 @@ not accepted by the builder: the step is brought to the one who decides, with th
 
 | | |
 |---|---|
-| `mg init <dir> [--w --h --format name=WxH … --fps --dur --lufs --spec --brand]` | job folder, `job.json` with every format stated, the page and board templates, the page's helpers in `page/lib/` |
+| `mg init <dir> [--title … --w --h --format name=WxH … --fps --dur --lufs --spec --brand]` | job folder, `job.json` with every format stated, the page and board templates, the page's helpers in `page/lib/` |
 | `mg board [--format name\|all]` | `board/board.json` → `board/board.png` (`board/board-<format>.png` for a format after the first); each shot with the film's frame at its middle once the page is the job's own and can be drawn — and the reason said when it cannot |
-| `mg stills <t…>` · `mg sheet [--around-events] [--n 4] [--window s] [--format name\|all]` | exact-time stills · the film on one sheet, or one sheet per event of the moments `--window` seconds each side of it (0.25 when not given), into `out/` |
+| `mg stills <t…> [--format name]` · `mg sheet [--around-events] [--n 4] [--window s] [--format name\|all]` | exact-time stills of one format · the film on one sheet, or one sheet per event of the moments `--window` seconds each side of it (0.25 when not given), into `out/` |
 | `mg events` | the film's beats and events |
 | `mg sound` | `sound/cues.json` → the page's sound block (a cue's file lives under `sound/`, or names the starter set as `sfx:pop/pop-mid-01.wav` and is copied there; a `trim` stated beside the cues moves every level by that many dB) |
 | `mg render [--format name\|all] [--scale n \| --4k] [--alpha] [--fps n]` | the film, into `out/` (`.mov` for `--alpha`); a larger master only by a whole multiple that reaches 1080p, 1440p or 4K |
 | `mg verify [file]` | the measurements of every master of the job's formats in `out/`, or of the file at the path given; off the loudness target, by how many dB the set would have to move; `out/verify.json` |
 | `mg motion-read [film] [--format name] [--model name]` | the format's master in `out/`, or the film of the job given, read as motion by a second reader against `board/board.json`; `out/motion-read-<film>.txt` |
-| `mg hf status\|update` | the HyperFrames version guard |
-| `mg blender <scene.py> [-- args]` | Blender, headless, after a free-memory check on the graphics card |
+| `mg hf status\|update [--guard index.html]` | the HyperFrames version guard; `update --guard` tries the newer version on another guard page than the skill's own |
+| `mg blender <scene.py> [--need-mb n] [-- args]` | Blender, headless, after a check that the graphics card has `--need-mb` MB free (4000 when not given) |
 
-Run it from the job folder or with `--job <dir>`; never run `npx hyperframes` from the repository root.
+Run a command from the job folder or with `--job <dir>` — all but two: `mg init` is given the folder it lays
+out, and `mg hf` works on no job. `mg blender` takes `--job` as the folder its scene is read from and Blender is
+started in, which need not be a job. Never run `npx hyperframes` from the repository root.
 `mg --help` lists the commands; `mg <command> --help` says what that command does and what each of its flags does.
 A tool the command starts is asked to end after two hours, is ended five seconds later if it has not, and the
 command fails saying so; a render that needs longer is given it with `DXB_MG_TOOL_TIMEOUT=<seconds>`.
