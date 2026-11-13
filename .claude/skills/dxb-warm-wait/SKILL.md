@@ -59,7 +59,7 @@ work is running (`--watch`) there is no count to make: each ping is weighed on i
    full the clock does the same with the week: it wakes nobody, sleeps to the week's reset however far
    that is, and the session comes back cold on `WAIT_OVER`. The clock weighs the session model's own week the
    same way (Fable 5.2 has one, read by `scripts/ops/dxb-usage`): it never wakes a session into a full week
-   of its own model.
+   of its own model <!-- CEO-OK: model-week-read-from-usage-address-2026-11-13 -->.
    **The hands.** A hand's cache lasts five minutes: keeping one warm for an hour would take fifteen pings,
    more than opening it cold. No hand is kept warm; a running hand finishes and its piece is verified and
    committed before the wait, and after it a fresh hand is opened (dxb-team3 §3, §7).

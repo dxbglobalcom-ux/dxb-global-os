@@ -19,3 +19,17 @@ Its verdict: the commit did not yet carry the claim "a session cannot be left wi
 Tests after the fixes: `tests-after-fixes.out` (both files pass). Not provable by a test, and said to him:
 the wake by a background command's end and the Stop gate on a live session are proven only by use — this
 session ran under the arrangement from 10:54 on 2026-11-13.
+
+## A model's own week — Sol's blind pass over `4834a2d4` (2026-11-13 evening)
+
+GPT-6.1 Sol at xhigh, read-only, the sign-in key's file denied to it; the raw report `sol-week.raw` (kept off git). Fable did not audit (its own week was spent). 2 A, 2 B — all four fixed by one Opus 5.5 high writer, each with a test red before and green after, verified by the lead.
+
+| # | Finding | Outcome |
+|---|---|---|
+| A1 | The clock judged the fresh record with the time from before the refresh; the child's newer `read_at` made it invalid, and the clock woke a session into Fable's full week. | Fixed: the record is judged at the moment after the refresh. |
+| A2 | `urlopen` followed a redirect and carried the `Authorization` header to another host. | Fixed: this one-address reader refuses every redirect (an unknown, no second request). |
+| B1 | A refresh that timed out or failed to start returned before the standing record was read. | Fixed: only the refresh's failure is caught; the record that stands is judged as usual. |
+| B2 | A direct `--refresh` asked below 80 %. | Fixed: `refresh()` keeps the bound itself (`near()`); with no share known it still asks every ten minutes. |
+
+Stood after attempted refutation: the hook never waits on the network; the 80 % line, the 30-minute age, the model match; 599/600 s and 78/80 bounds.
+Tests after the fixes: test-usage.py and test-warm-wait.py pass, effort-warn.test.ts 90; a real `--refresh` and read: `fable 100% · resets 09:00`.

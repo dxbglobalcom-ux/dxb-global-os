@@ -219,3 +219,21 @@ GPT-6.1 Sol, high, one pass, read-only. The report as it came: `SOL-FRICTION-REP
 Stood after attempted refutation: items 1, 2, 3, 4, 7b, 7c, 8a, 9a, 9b as built; nothing prescribes a look or adds music; HyperFrames runs from the job folder; the root package.json is the same blob; the skill has one copy.
 The B findings were fixed by one Fable 5.2 high writer on 2026-11-13 and verified by the lead (this job's five test files: 137 passed; typecheck 0); no second audit round.
 Not verified by anyone: the real service's daily-quota answer, a 503 and an answer slower than 200 s against the live service; how the morph and the blur read in motion in a real film; a job copy that an older `mg sound` made as a link is not detected.
+
+## 4. The second film's piece — Sol's blind pass over 6666072e, 02f9197f (2026-11-13 evening)
+
+GPT-6.1 Sol, high, one pass, read-only; the raw report `sol-r2piece.raw` (kept off git). Fable did not audit (its own week was spent). Six findings Sol classed A, one older (C). The lead weighed each against the CEO's bar for this skill (the ledger, `motion-graphics-bar-is-what-the-eye-sees-2026-11-13`: obvious errors matter, no fiddly hardening).
+
+| # | Finding | Outcome |
+|---|---|---|
+| A3 | `mg init --from` carried a link into `out/`, a removed format's board image and `page/work/` into the new round. | Fixed: each file is judged by where it really lies too; any `board(-<name>).png` and `page/work` stay behind. Test with Sol's three cases. |
+| A4 | A silent model was held up to ~21 min, not 240 s: each try after a 503 got its own 240 s. | Fixed: one deadline per request, shared by its tries and waits. Test: four 503s then silence leave the first model at 240 s. |
+| A5 | `never-still` turned seconds into frames at the job's fps, not the file's: a 60 fps master in a 30 fps job passed a freeze. | Fixed, and the same defect in `in-frame`'s reported times (found by the writer, fixed by the lead): both read the master's own fps. Test: a 60 fps film frozen after 1.2 s fails a 1–2 s check. |
+| A6 | `1e999` in job.json passed as a size or rate and reached the renderer as Infinity. | Fixed: w, h and fps must be finite. Test: each refused before any tool starts. |
+| A1 | Hard links, and a parent folder swapped between the check and the copy, let a round read or write outside the job. | Not fixed, by the lead: it needs someone racing the tool on this one machine, on his own files; the realpath bound for ordinary links stands. |
+| A2 | A FIFO in place of `job.json`, the board or the page could hang `mg init --from`. | Not fixed, by the lead: no one makes a FIFO in a film's job folder; the tool's own type check already refuses one among the carried files. |
+| C1 | `motion-read` could send a film swapped by a link while ffprobe runs. | Older than this piece; not fixed, same reason as A1. |
+
+Stood after attempted refutation: the key stays hidden on the new timeout paths; item 2's two independent renders; `in-frame`, `reading` and `join` measure what they state; items 3 and 5's guidance; item 7 and the help tables; no test calls the real Gemini.
+Fixed by one Opus 5.5 high writer (Fable's week spent), verified by the lead: the two motion-graphics test files 132 passed, typecheck 0 — commit `4871ed5a`. The battery runs once the model-week piece beside it is in.
+Left open (the writer's notes, small): `readFilm` accepts `TOTAL: 1e999` from the page; the fps refusal still says "must be a number"; the help text's "240 seconds" does not say the 503s are inside it.
