@@ -5,6 +5,7 @@ key: a fake home holds a dummy key, and a fake answer stands in the place of the
 import atexit
 import contextlib
 import fcntl
+import http.client
 import importlib.machinery
 import importlib.util
 import io
@@ -15,6 +16,7 @@ import stat
 import sys
 import tempfile
 import time
+import unittest.mock
 import urllib.error
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -166,6 +168,56 @@ def a_reading_keeps_the_model_weeks_and_nothing_else():
     check("the request's limit", usage.TIMEOUT_S, 10)
 
 
+class Wire(http.client.HTTPSConnection):
+    """The fake network beneath the real send(), in the place of http.client's HTTPS connection (whose class
+    settings urllib reads): each connection is kept as (host, its headers), and none is opened; the address answers
+    with a redirect to another host, any other host with {}."""
+    seen = []
+
+    def __init__(self, host, timeout=None, **_):
+        self.host, self.sock = host, None
+
+    def set_debuglevel(self, level):
+        pass
+
+    def request(self, method, url, body=None, headers=None, **_):
+        Wire.seen.append((self.host, dict(headers or {})))
+
+    def getresponse(self):
+        raw = (b"HTTP/1.1 302 Found\r\nLocation: https://other-origin.invalid/usage\r\nContent-Length: 0\r\n\r\n"
+               if self.host == "api.anthropic.com" else b"HTTP/1.1 200 OK\r\nContent-Length: 2\r\n\r\n{}")
+        response = http.client.HTTPResponse(Wire.Socket(raw))
+        response.begin()
+        return response
+
+    def close(self):
+        pass
+
+    class Socket:
+        def __init__(self, raw):
+            self.raw = raw
+
+        def makefile(self, mode):
+            return io.BytesIO(self.raw)
+
+
+@section
+def a_redirect_is_refused_and_the_key_stays_home():
+    # Sol's A2: the default urlopen() followed a 302 and carried the Authorization header to the other host.
+    fresh_world()
+    week(59)
+    real = http.client.HTTPSConnection
+    http.client.HTTPSConnection, Wire.seen = Wire, []
+    try:
+        with unittest.mock.patch.dict(os.environ, {name: "" for name in ("https_proxy", "HTTPS_PROXY", "all_proxy", "ALL_PROXY")}):
+            code, out, err = run("--refresh", address=usage.send)  # the real send(), on the fake wire
+    finally:
+        http.client.HTTPSConnection = real
+    check("a 302 to another host: no second request", [host for host, _ in Wire.seen], ["api.anthropic.com"])
+    check("... and the reading is unknown", (code, out, os.path.exists(RECORD)), (0, "not read: HTTP 302\n", False))
+    check("... and the key is in no output and no file", KEY in out + err + on_disk(), False)
+
+
 @section
 def a_value_that_cannot_be_read_leaves_that_model_out():
     unusable = {
@@ -303,6 +355,17 @@ def no_request_while_the_bound_stays_below_80():
     run("--refresh", address=Address(answer(percent=30)))
     asked = [moment for moment in range(int(NOW), int(NOW + 6 * 3600), 60) if usage.due(moment)]
     check("six hours with the bound at 30: not one request", asked, [])
+
+    # Sol's B2: a --refresh run by hand kept only the ten minutes, and asked below 80
+    address = Address(answer(percent=30))
+    code, out, _ = run("--refresh", at=NOW + 11 * MIN, address=address)
+    check("read at 30 %, the week unchanged: --refresh sends no request", (code, out.startswith("not read: "), len(address.requests)), (0, True, 0))
+    fresh_world()
+    week(20)
+    run("--refresh", address=Address(answer(percent=30, share=None)))
+    address = Address(answer(percent=30, share=None))
+    run("--refresh", at=NOW + 10 * MIN, address=address)
+    check("read at 30 % with no share known: --refresh asks again at ten minutes", len(address.requests), 1)
 
 
 @section

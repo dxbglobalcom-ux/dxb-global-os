@@ -8,7 +8,7 @@ account's sign-in key (the CEO, 2026-11-13: "Tek yöntem, tek yolu oysa. Tamamd�
 
   dxb-usage             one line per model: `fable 100% · resets 09:00 · read 2 min ago`, or `unknown: <reason>`
   dxb-usage --json      the record
-  dxb-usage --refresh   ask now, when the last request was ten minutes ago or more; one line: `read` or `not read: <reason>`
+  dxb-usage --refresh   ask now, when the rule below allows; one line: `read` or `not read: <reason>`
 
 The key is read from ~/.claude/.credentials.json (claudeAiOauth.accessToken) at the moment of the request and
 goes into that one request's header alone: it is never printed, logged, kept or put on a command line, and never
@@ -24,8 +24,9 @@ known.
 When to ask (the CEO, 2026-11-13: only near 80 %, then every ten minutes; never below) is known without asking:
 a model's own week can rise at most 100 / share times what the all-models week rises, and the status line has the
 all-models week on every turn. due() says it -- the hook and the clock ask it before they start a --refresh.
---refresh itself only keeps the ten minutes: one request at most in ten minutes on the whole machine, failed ones
-counted, by the stamp usage-scoped.asked (the epoch second of the last request). Exit 0; 2 for bad usage.
+--refresh keeps the same rule itself: no request while near() says no, and one at most in ten minutes on the whole
+machine, failed ones counted, by the stamp usage-scoped.asked (the epoch second of the last request). Exit 0; 2 for
+bad usage.
 """
 
 import datetime
@@ -60,9 +61,15 @@ def wall_clock():
 
 
 def send(request):
-    """The one network call; the tests put a fake answer in its place."""
+    """The one network call; the tests put a fake answer in its place. A redirect is refused, never followed: it
+    would carry the sign-in key's header to wherever it points (an HTTPError of its 3xx, so an unknown)."""
     import urllib.request  # here, not above: the hook loads this file on every turn and never asks
-    return urllib.request.urlopen(request, timeout=TIMEOUT_S)
+
+    class RefuseRedirects(urllib.request.HTTPRedirectHandler):
+        def redirect_request(self, *_):
+            return None
+
+    return urllib.request.build_opener(RefuseRedirects).open(request, timeout=TIMEOUT_S)
 
 
 def percent(value):
@@ -160,10 +167,12 @@ def bound(reading, week_then, week, now):
 
 
 def due(now):
-    """Whether the rule asks for a request now: the last one ten minutes ago or more, and some model's week may
-    stand at NEAR_PCT or more -- or that cannot be told."""
-    if asked_lately(last_asked(), now):
-        return False
+    """Whether the rule asks for a request now: the last one ten minutes ago or more, and near()."""
+    return not asked_lately(last_asked(), now) and near(now)
+
+
+def near(now):
+    """Whether some model's week may stand at NEAR_PCT or more now -- or that cannot be told."""
     record = read_json(RECORD) or {}
     models = record.get("models")
     if not isinstance(models, dict) or not models:
@@ -230,7 +239,7 @@ def write_record(record):
 
 
 def refresh(now):
-    """--refresh: ask once when the ten minutes allow; None when the record was written, else why it was not.
+    """--refresh: ask once when the rule allows; None when the record was written, else why it was not.
 
     The reasons are fixed words: an error's own text may carry the request's header, so it is never said."""
     import urllib.error
@@ -238,6 +247,8 @@ def refresh(now):
     token = access_token()
     if token is None:
         return "no sign-in key to read"
+    if not near(now):
+        return f"no model's own week can stand at {NEAR_PCT}% yet"
     if not take_turn(now):
         return "asked less than ten minutes ago, or being asked now"
     request = urllib.request.Request(URL, headers={"Authorization": f"Bearer {token}", "anthropic-beta": "oauth-2025-04-20",

@@ -486,6 +486,47 @@ def the_session_models_own_week_is_weighed_too():
     check("nor does Fable's full week stop an Opus session", (text.startswith("WARM_PING "), slept), (True, [PING]))
 
 
+def refreshed_by(fetch):
+    """A run as the Fable session with the refresh due -- no request yet -- where `fetch` stands in the place of
+    `dxb-usage --refresh`; every other command runs as it is."""
+    real = subprocess.run
+    subprocess.run = lambda argv, **kwargs: fetch() if argv[:1] == [ww.OWN_WEEKS] else real(argv, **kwargs)
+    runs_on("Fable 5.2")
+    try:
+        return run_as_session(["--watch"], ROOMY)
+    finally:
+        subprocess.run = real
+        os.remove(os.path.join(RUNTIME, "usage-scoped.json"))
+
+
+@section
+def a_refresh_is_judged_after_it_and_its_failure_keeps_the_record():
+    # Sol's A1: the record the refresh wrote was judged at the moment before it, so its own read_at was "in the
+    # future" and the full week was not known -- the clock woke a session into Fable's full week.
+    def a_second_passes_and_fable_reads_100():
+        then = ww.wall_clock
+        ww.wall_clock = lambda: then() + 1
+        own_weeks({"fable": fable(100)}, read_at=ww.wall_clock())
+
+    for name in ("usage-scoped.json", "usage-scoped.asked"):  # no reading and no request yet: the refresh is due
+        os.remove(os.path.join(RUNTIME, name))
+    code, text, slept = refreshed_by(a_second_passes_and_fable_reads_100)
+    check("a refresh that reads Fable at 100 % a second on: asleep to that reset",
+          (text.startswith("WAIT_OVER "), "Fable's own week stood at 100%" in text, slept), (True, True, [PING, NOW + 3 * 3600 + 2 * MIN]))
+
+    # Sol's B1: a refresh that ran out of time, or could not start, threw away the fresh record that stood
+    for name, failure in (("ran out of time", subprocess.TimeoutExpired(ww.OWN_WEEKS, ww.FETCH_TIMEOUT_S)),
+                          ("could not start", PermissionError(13, "Permission denied"))):
+        def fails():
+            raise failure
+
+        own_weeks({"fable": fable(100)})
+        os.remove(os.path.join(RUNTIME, "usage-scoped.asked"))
+        code, text, slept = refreshed_by(fails)
+        check(f"a refresh that {name}, the record standing at 100 %: asleep to that reset",
+              (text.startswith("WAIT_OVER "), slept), (True, [PING, NOW + 3 * 3600 + 2 * MIN]))
+
+
 @section
 def an_own_week_not_known_changes_nothing():
     unknown = {

@@ -244,8 +244,11 @@ def own_week_in_the_way(session, now):
         usage = importlib.util.module_from_spec(importlib.util.spec_from_loader("dxb_usage", loader))
         loader.exec_module(usage)
         if usage.due(now):
-            subprocess.run([OWN_WEEKS, "--refresh"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, timeout=FETCH_TIMEOUT_S)
-        reading = usage.readings(now).get(model)
+            try:
+                subprocess.run([OWN_WEEKS, "--refresh"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, timeout=FETCH_TIMEOUT_S)
+            except (OSError, subprocess.SubprocessError):
+                pass  # a refresh that runs out of time or cannot start leaves the record that stands, judged below
+        reading = usage.readings(wall_clock()).get(model)  # the moment after the refresh: its record was read after `now`
     except Exception:  # noqa: BLE001 -- an own week that cannot be had is not known, and the clock goes on as before
         return []
     if reading is None or reading["used"] < FULL_WINDOW_PCT:
