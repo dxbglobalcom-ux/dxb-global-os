@@ -44,7 +44,10 @@ work is running (`--watch`) there is no count to make: each ping is weighed on i
    was armed, and the night's work stood for seven hours.
 4. **`WARM_PING … | re-arm: <command>`** — the cache was about to go cold. Run the re-arm command in the
    background and end the turn in one short line; nothing else. The turn was the warm-keeping.
-5. **The window cannot carry the next piece.** Finish, verify and commit the piece in hand; write the next
+5. **The window cannot carry the next piece.** First ask whether the piece divides (dxb-team3 §3): the part
+   that fits the room left is started now, and only what does not divide waits — on 2026-11-13 seven
+   independent items were held as one piece and two and a half hours were waited for nothing. Then, for
+   what waits: finish, verify and commit the piece in hand; write the next
    piece's brief to disk; arm `scripts/ops/dxb-warm-wait --until-reset` in the background (the 5-hour
    window's reset, two minutes past it). It is the one clock that may be armed over a running `--watch`,
    which then ends with `SUPERSEDED by --until-reset`: end that turn in one short line. On `WAIT_OVER …` read
