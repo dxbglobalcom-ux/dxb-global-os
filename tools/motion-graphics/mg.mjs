@@ -2,7 +2,8 @@
 // mg — the one command of dxb-motion-graphics (B43, CEO 2026-11-12). A film is a job folder: real
 // material, a storyboard approved before anything moves, one page whose picture is a pure function
 // of time, sound laid on its events last. mg lays the folder out, shows the film at exact times,
-// renders it whole through HyperFrames at the guarded version, and measures the finished file.
+// renders it whole through HyperFrames at the guarded version, and measures the finished file — and
+// what its page promises and its brief asks of the picture (`mg check`).
 // Every command prints one decisive line and exits non-zero on failure. No packages used: it starts
 // npx hyperframes, ffmpeg, ffprobe, blender, nvidia-smi and the system Chrome, each through `run`.
 // One command leaves the machine: the motion reading sends the film to its reader, through `http`.
@@ -11,11 +12,12 @@ import { existsSync, readFileSync } from "node:fs";
 import { basename, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { parseArgs } from "node:util";
-import { drawBoard, formatLine, writeBoardPage } from "./lib/board.mjs";
+import { drawBoard, formatLine, readBoard, writeBoardPage } from "./lib/board.mjs";
+import { CHECKS, checkJob } from "./lib/check.mjs";
 import { goodVersion, hyperframes, latestVersion, proveVersion } from "./lib/hyperframes.mjs";
-import { Refusal, TEMPLATES, filmName, formatBySize, formatsNamed, insideJob, layOutJob, masterOf, openJob, readFilm, readJson, sizePage, writeJson } from "./lib/job.mjs";
+import { Refusal, TEMPLATES, filmName, formatBySize, formatsNamed, insideJob, layOutJob, layOutRound, masterOf, openJob, readFilm, readJson, sizePage, writeJson } from "./lib/job.mjs";
 import { ANSWER_SECONDS, READERS, readMotion, request } from "./lib/motion-read.mjs";
-import { lastLines, makeSheets, renderFilm, scaleFor, takeStills } from "./lib/picture.mjs";
+import { eventSheet, lastLines, makeSheets, renderFilm, scaleFor, takeStills } from "./lib/picture.mjs";
 import { bringStarterSounds, planCues, writeSoundBlock } from "./lib/sound.mjs";
 import { failures, verifyFilms } from "./lib/verify.mjs";
 
@@ -43,7 +45,7 @@ const EACH_FORMAT = { format: text("<name>|all", "the format drawn, or every for
 // from here and `mg <command> --help` prints them, so help names no option the command would refuse.
 const TAKES = {
   init: {
-    does: "Lays a job folder out in <dir>: job.json, the page and the storyboard from the skill's templates.",
+    does: "Lays a job folder out in <dir>: job.json, the page and the storyboard from the skill's templates — or, with --from, the next round of a film from the job before it.",
     args: "<dir>",
     options: {
       title: text('"…"', "the film's title (the folder's name when not given)"),
@@ -55,6 +57,7 @@ const TAKES = {
       lufs: text("<n>", "the delivery's loudness target, such as -16 (when not given, mg verify measures the loudness and judges nothing)"),
       spec: flag("the job is an independent spec piece, not a commissioned film"),
       brand: text('"…"', "whose brand the film shows"),
+      from: text("<job>", "the job a round starts from, given alone: its job.json, its page with the libraries it loads, its board's data, assets/, refs/ and sound/ are carried, and none of its renders, drawn boards or other files; it is only read, and a file that a link leads out of it refuses the round"),
     },
   },
   board: {
@@ -66,6 +69,7 @@ const TAKES = {
     does: "Lays the film out as contact sheets, into out/sheets/<format>/ for each format asked for.",
     options: {
       "around-events": flag("one sheet for each event, of the moments around it, instead of one sheet of the whole film"),
+      "at-events": flag("one sheet of every event instead, out/sheets/<format>/events.jpg: a still at each, in the order of time and named by it, all as large as one 1920×1080 screen shows them whole"),
       n: text("<count>", "the stills on a sheet (9 when not given, 4 around an event)"),
       window: text("<seconds>", `with --around-events: how long before and after its event a sheet covers (${AROUND_EVENT} when not given)`),
       ...EACH_FORMAT, ...JOB,
@@ -99,6 +103,11 @@ const TAKES = {
       model: text("<name>", `the model asked first: ${READERS.join(", ")} (the first when not given; the others follow in this order when it gives no answer); each has a day's quota of its own`),
       ...JOB,
     },
+  },
+  check: {
+    does: `Measures what the page and the film must keep, writes the result into out/check-<what>.json beside verify.json, and fails naming what did not hold. <what>:\n${Object.entries(CHECKS).map(([what, { says }]) => `    ${what} — ${says}`).join("\n")}`,
+    args: "<what> [<seconds…>]",
+    options: { ...EACH_FORMAT, ...JOB },
   },
   hf: {
     does: "The HyperFrames version guard. status: the good version and npm's latest. update: the latest becomes the good one once it has rendered the guard film and that film has verified.",
@@ -216,6 +225,7 @@ function init({ say }, argv) {
   const lufsAt = argv.indexOf("--lufs"), joined = lufsAt < 0 || lufsAt + 1 === argv.length ? argv : argv.toSpliced(lufsAt, 2, `--lufs=${argv[lufsAt + 1]}`);
   const { values, positionals: [dir] } = parse("init", joined);
   if (!dir) throw new Refusal("which folder? mg init <dir>");
+  if (values.from !== undefined) return initRound({ say }, dir, values);
   const dur = Number(values.dur ?? 12);
   if (!isLengthOfTime(dur)) throw new Refusal("--dur takes the film's length in seconds");
   if (values.lufs !== undefined && !/^-?\d+(\.\d+)?$/.test(values.lufs)) throw new Refusal(`--lufs takes the loudness target as a number, such as -16, not "${values.lufs}"`);
@@ -238,6 +248,18 @@ function init({ say }, argv) {
   say(`mg init: ${job.dir} — ${job.formats.map((f) => `${f.name} ${f.w}×${f.h}`).join(", ")}, ${job.fps} fps, ${film.TOTAL} s. Real material into assets/ and refs/, the storyboard into board/board.json, then: mg board`);
 }
 
+/** `mg init <dir> --from <job>`: the next round of a film, laid out from the job before it, which states everything. */
+function initRound({ say }, dir, { from, ...others }) {
+  const [more] = Object.keys(others);
+  if (more) throw new Refusal(`--${more} states a new job, and --from takes everything from ${from}: change job.json by hand once the round is laid out`);
+  const source = openJob(from);
+  readBoard(source); // what cannot be laid out is refused before anything is
+  const film = readFilm(source.page);
+  const { job, left } = layOutRound(dir, source);
+  writeBoardPage(job);
+  say(`mg init: ${job.dir} — a round from ${source.dir}: ${job.formats.map((f) => `${f.name} ${f.w}×${f.h}`).join(", ")}, ${job.fps} fps, ${film.TOTAL} s. Left behind: ${left.join(", ") || "nothing"}. Then: mg board`);
+}
+
 function board(tools, argv) {
   const { job, values } = parseForJob("board", argv);
   for (const format of formatsNamed(job, values.format)) {
@@ -257,6 +279,12 @@ function stills(tools, argv) {
 
 function sheet(tools, argv) {
   const { job, values } = parseForJob("sheet", argv);
+  if (values["at-events"]) {
+    const other = ["around-events", "n", "window"].find((name) => values[name] !== undefined);
+    if (other) throw new Refusal(`--at-events lays a still of each event on one sheet: --${other} belongs to the other sheets`);
+    const files = formatsNamed(job, values.format).map((format) => eventSheet(tools, job, format));
+    return tools.say(`mg sheet: ${files.length} sheet(s), a still at each event\n${files.join("\n")}`);
+  }
   const aroundEvents = values["around-events"] ?? false, window = Number(values.window ?? AROUND_EVENT);
   if (values.window !== undefined && !aroundEvents) throw new Refusal("--window is the time around an event: it is given with --around-events");
   if (!isLengthOfTime(window)) throw new Refusal(`--window takes the seconds a sheet covers each side of its event, more than 0, not "${values.window}"`);
@@ -320,6 +348,14 @@ async function motionRead(tools, argv) {
   tools.say(`mg motion-read: ${read.report} — ${read.characters} characters, read by ${read.model} against board/board.json`);
 }
 
+function check(tools, argv) {
+  const { job, values, positionals: [what, ...seconds] } = parseForJob("check", argv);
+  const checked = checkJob(tools, job, what, { format: values.format, seconds });
+  for (const line of checked.lines) tools.say(line);
+  if (!checked.ok) throw new Refusal(`${what} did not hold; see out/check-${what}.json`);
+  tools.say(`mg check: OK — ${what} held; out/check-${what}.json`);
+}
+
 function versionGuard({ run, say }, argv) {
   const { values, positionals: [action = "status"] } = parse("hf", argv);
   const good = goodVersion(), latest = latestVersion(run);
@@ -356,7 +392,7 @@ function blender({ run, say }, argv) {
   say(`mg blender: ${frames.length} frame(s) written (${free} MB were free)${frames.map((frame) => `\n${frame}`).join("")}`);
 }
 
-const COMMANDS = { init, board, stills, sheet, events, sound, render, verify, "motion-read": motionRead, hf: versionGuard, blender };
+const COMMANDS = { init, board, stills, sheet, events, sound, render, verify, "motion-read": motionRead, check, hf: versionGuard, blender };
 
 /**
  * Runs one mg command. Returns { code, out }: 0 and what it printed, or non-zero and why it stopped.

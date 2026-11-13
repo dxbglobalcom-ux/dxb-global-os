@@ -15,10 +15,10 @@
 //
 // Every expected figure is a literal — the place a fixture's sound was put, a size, a reference
 // level — or is measured by the fixtures' own ffmpeg call, never by `mg`'s own code.
-import { cpSync, existsSync, lstatSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, realpathSync, rmSync, symlinkSync, writeFileSync } from "node:fs";
+import { cpSync, existsSync, lstatSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, readlinkSync, realpathSync, rmSync, symlinkSync, writeFileSync } from "node:fs";
 import { spawnSync } from "node:child_process";
 import { tmpdir } from "node:os";
-import { join, relative } from "node:path";
+import { dirname, join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
 import vm from "node:vm";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
@@ -221,6 +221,185 @@ describe("B43 dxb-motion-graphics — the job folder", () => {
   });
 });
 
+describe("B43 dxb-motion-graphics — a round of a film starts from the job before it", () => {
+  // The second film's writer copied the first round's folder by hand and found its old board page,
+  // which cannot carry the film's frames, and an empty page/lib (2026-11-13).
+  /** Every entry under a folder as it stands: a link by where it points, a file by its bytes and its time; nothing is opened that is not a file. */
+  const standing = (dir: string) => {
+    const seen: Record<string, string> = {};
+    const walk = (path: string) => {
+      for (const name of readdirSync(path).sort()) {
+        const at = join(path, name), found = lstatSync(at);
+        seen[relative(dir, at)] = found.isSymbolicLink() ? `link to ${readlinkSync(at)}` : found.isDirectory() ? "folder" : found.isFile() ? `${sha(at)} ${found.mtimeMs}` : "neither a file nor a folder";
+        if (found.isDirectory()) walk(at);
+      }
+    };
+    walk(dir);
+    return seen;
+  };
+  /**
+   * A job as a round leaves it: material with its sources, a page that loads a library and a script of
+   * its own, a board that names a picture of its own, sound — and what was made of them: renders, stills,
+   * a verdict, the drawn boards, a board page from before the boards carried frames, the writer's own
+   * tools and notes, HyperFrames' state in the page, a stage left by a stopped command.
+   */
+  const roundOne = async () => {
+    const job = await initJob({ more: ["--format", "9x16=360x640"] }), page = join(job, "page/index.html");
+    const files: Record<string, string> = {
+      "assets/logo.svg": "<svg/>", "assets/SOURCES.md": "- assets/logo.svg — https://example.com/press/logo.svg, 2026-11-13, the brand's press kit\n",
+      "assets/screens/chat.png": "a real screen", "refs/frame.png": "a reference frame", "page/fonts/Face.ttf": "a typeface",
+      "page/lib/three.min.js": "// a pinned three.js", "page/shapes.js": "window.SHAPES = [];", "sound/tick.wav": "a sound",
+      "board/ours.png": "our frame beside the reference",
+      "out/fixture-film-16x9.mp4": "a render", "out/stills/16x9/at-1s.png": "a still", "out/verify.json": "{}",
+      "board/board.png": "the drawn board", "board/board-9x16.png": "the drawn tall board", "board/board.html": "a board page from before the frames",
+      "tools/check.py": "print('a check of its own')", "work/notes.txt": "a note", "page/.hyperframes/state.json": "{}", ".mg-stage-left/index.html": "a stage",
+    };
+    for (const [file, text] of Object.entries(files)) {
+      mkdirSync(join(job, file, ".."), { recursive: true });
+      writeFileSync(join(job, file), text);
+    }
+    writeFileSync(page, readFileSync(page, "utf8").replace('<script src="lib/outline.js"></script>', '<script src="lib/outline.js"></script>\n<script src="lib/three.min.js"></script>\n<script src="shapes.js"></script>'));
+    cues(job, [{ at: 1, file: "sound/tick.wav", align: "peak" }]);
+    editJson(join(job, "board/board.json"), (b) => (b.shapeChecks = [{ label: "ours beside theirs", ours: "board/ours.png", reference: "refs/frame.png" }]));
+    editJson(join(job, "job.json"), (j) => Object.assign(j, { lufs: -16, spec: true, brand: "Fixture", notes: "a line the writer kept here by hand" }));
+    return job;
+  };
+  /** Where a round is laid out: a folder of its own beside nothing. */
+  const nextTo = () => join(mkdtempSync(join(tmpdir(), "mg-round-")), "round-two");
+  /** `mg init <dir> --from <job>` that must be refused: nothing is laid out and the job it names stays as it was. */
+  const refused = async (source: string, why: RegExp, more: string[] = []) => {
+    const before = standing(source), dir = nextTo();
+    const r = await mg(["init", dir, "--from", source, ...more]);
+    expect(r.code, r.out).not.toBe(0);
+    expect(r.out).toMatch(why);
+    expect(existsSync(dir), "laid out").toBe(false);
+    expect(standing(source)).toEqual(before);
+  };
+
+  it("carries the job's statement, its page with its libraries, its board's data, its material and its sound — and none of what was made of them", async () => {
+    const source = await roundOne(), dir = nextTo();
+    const r = await mg(["init", dir, "--from", source]);
+    expect(r.out).toMatch(/^mg init: .*round-two — a round from .*job/m);
+    expect(r.code).toBe(0);
+
+    const same = ["job.json", "page/index.html", "page/play.js", "page/shapes.js", "page/fonts/Face.ttf", "page/lib/three.min.js",
+      "assets/logo.svg", "assets/SOURCES.md", "assets/screens/chat.png", "refs/frame.png", "sound/tick.wav", "sound/cues.json", "board/board.json", "board/ours.png"];
+    for (const file of same) {
+      expect(lstatSync(join(dir, file)).isFile(), file).toBe(true);
+      expect(sha(join(dir, file)), file).toBe(sha(join(source, file)));
+    }
+    expect(JSON.parse(readFileSync(join(dir, "job.json"), "utf8")).notes).toBe("a line the writer kept here by hand");
+    // The page's libraries are there: its own, and the skill's helpers.
+    for (const helper of ["outline.js", "motion-blur.js"]) expect(sha(join(dir, "page/lib", helper)), helper).toBe(sha(join(TEMPLATES, "lib", helper)));
+    expect(readdirSync(join(dir, "page/lib")).sort()).toEqual(["motion-blur.js", "outline.js", "three.min.js"]);
+    for (const folder of ["assets", "refs", "sound"]) {
+      expect(lstatSync(join(dir, "page", folder)).isSymbolicLink(), folder).toBe(true);
+      expect(realpathSync(join(dir, "page", folder)), folder).toBe(realpathSync(join(dir, folder)));
+    }
+
+    // Left behind: the renders and every other output, the drawn boards, the old board page, the writer's own files, HyperFrames' state.
+    expect(readdirSync(dir).sort()).toEqual(["assets", "board", "job.json", "out", "page", "refs", "sound"]);
+    expect(readdirSync(join(dir, "out"))).toEqual([]);
+    expect(readdirSync(join(dir, "board")).sort()).toEqual(["board.html", "board.json", "ours.png"]);
+    expect(existsSync(join(dir, "page/.hyperframes"))).toBe(false);
+    // The board page is the skill's own, laid out anew: one that draws each shot's frame.
+    expect(readFileSync(join(dir, "board/board.html"), "utf8")).toContain("shot.still");
+    for (const left of ["out/", "board/board.png", "board/board-9x16.png", "board/board.html", "tools/", "work/", "page/.hyperframes/", ".mg-stage-left/"])
+      expect(r.out, left).toContain(left);
+
+    // A job every command opens.
+    const events = await mg(["events", "--job", dir]);
+    expect(events.code).toBe(0);
+    expect(JSON.parse(events.out).TOTAL).toBe(3);
+  });
+
+  it("never changes the job it starts from, and reads it by its real path when it is named through a link", async () => {
+    const source = await roundOne(), before = standing(source);
+    const named = join(mkdtempSync(join(tmpdir(), "mg-link-")), "round-one");
+    symlinkSync(source, named, "dir");
+    const dir = nextTo();
+    expect((await mg(["init", dir, "--from", named])).code).toBe(0);
+    expect(standing(source)).toEqual(before);
+    expect(sha(join(dir, "page/index.html"))).toBe(sha(join(source, "page/index.html")));
+  });
+
+  it("refuses a file or a folder that a link leads out of the job, or to nothing, and lays nothing out", async () => {
+    const outside = mkdtempSync(join(tmpdir(), "mg-outside-"));
+    writeFileSync(join(outside, "secret.txt"), "not the job's");
+    mkdirSync(join(outside, "elsewhere"));
+    writeFileSync(join(outside, "elsewhere/plate.png"), "not the job's either");
+    const leads: [string, (job: string) => void][] = [
+      ["a file of the material", (job) => symlinkSync(join(outside, "secret.txt"), join(job, "assets/logo-linked.svg"))],
+      ["a folder of the material", (job) => symlinkSync(join(outside, "elsewhere"), join(job, "assets/plates"), "dir")],
+      ["a carried folder itself", (job) => { rmSync(join(job, "refs"), { recursive: true }); symlinkSync(join(outside, "elsewhere"), join(job, "refs"), "dir"); }],
+      ["a library of the page", (job) => { rmSync(join(job, "page/lib/three.min.js")); symlinkSync(join(outside, "secret.txt"), join(job, "page/lib/three.min.js")); }],
+      ["the job's statement", (job) => { cpSync(join(job, "job.json"), join(outside, "job.json")); rmSync(join(job, "job.json")); symlinkSync(join(outside, "job.json"), join(job, "job.json")); }],
+      ["a link to nothing", (job) => symlinkSync(join(outside, "gone.wav"), join(job, "sound/gone.wav"))],
+    ];
+    for (const [what, lead] of leads) {
+      const source = await roundOne();
+      lead(source);
+      await refused(source, /leads out of .*job/);
+    }
+  });
+
+  it("gives the round the file itself where a link stays inside the job", async () => {
+    const source = await roundOne();
+    symlinkSync("logo.svg", join(source, "assets/logo-alias.svg"));
+    symlinkSync(join(source, "assets/screens"), join(source, "refs/screens"), "dir");
+    const dir = nextTo();
+    expect((await mg(["init", dir, "--from", source])).code).toBe(0);
+    for (const [file, from] of [["assets/logo-alias.svg", "assets/logo.svg"], ["refs/screens/chat.png", "assets/screens/chat.png"]]) {
+      expect(lstatSync(join(dir, file)).isFile(), file).toBe(true);
+      expect(lstatSync(join(dir, file, "..")).isSymbolicLink(), file).toBe(false);
+      expect(sha(join(dir, file)), file).toBe(sha(join(source, from)));
+    }
+  });
+
+  it("refuses what is neither a file nor a folder, and a link back into a folder it stands in — without waiting on either", async () => {
+    const piped = await roundOne();
+    expect(spawnSync("mkfifo", [join(piped, "sound/pipe.wav")]).status).toBe(0); // reading it would wait for ever
+    await refused(piped, /neither a file nor a folder/);
+    const looped = await roundOne();
+    symlinkSync("..", join(looped, "assets/screens/up"), "dir");
+    await refused(looped, /leads back into a folder it stands in/);
+  });
+
+  it("refuses a round laid out inside the job it starts from, or around it", async () => {
+    const source = await roundOne(), before = standing(source);
+    for (const dir of [join(source, "round-two"), join(source, "assets/round-two")]) {
+      const r = await mg(["init", dir, "--from", source]);
+      expect(r.code, dir).not.toBe(0);
+      expect(r.out, dir).toMatch(/one inside the other/);
+    }
+    expect(standing(source)).toEqual(before);
+    const around = dirname(source);
+    const r = await mg(["init", around, "--from", source]);
+    expect(r.code).not.toBe(0);
+    expect(r.out).toMatch(/one inside the other/);
+    expect(readdirSync(around)).toEqual(["job"]);
+  });
+
+  it("refuses a page that loads a library neither the job nor the skill holds", async () => {
+    const source = await roundOne();
+    rmSync(join(source, "page/lib/three.min.js"));
+    await refused(source, /loads lib\/three\.min\.js/);
+  });
+
+  it("takes everything from the job it starts from: a flag that states a new job is refused, and so is a folder that is no job", async () => {
+    const source = await roundOne();
+    for (const more of [["--w", "640"], ["--format", "1x1=360x360"], ["--title", "Round two"], ["--lufs", "-14"], ["--spec"]])
+      await refused(source, new RegExp(`${more[0]} .*--from`), more);
+    const dir = nextTo();
+    for (const from of [mkdtempSync(join(tmpdir(), "mg-no-job-")), REPO]) {
+      const r = await mg(["init", dir, "--from", from]);
+      expect(r.code, from).not.toBe(0);
+      expect(r.out, from).toMatch(/not a job folder|repository's root/);
+    }
+    expect(existsSync(dir)).toBe(false);
+  });
+});
+
 describe("B43 dxb-motion-graphics — the board shows the film, in each format", () => {
   const CHROME = "/usr/bin/google-chrome";
   /**
@@ -399,6 +578,508 @@ describe("B43 dxb-motion-graphics — contact sheets: every format in one call, 
     const whole = await mg(["sheet", "--format", "all", "--job", job], { run: sheeting().run });
     expect(whole.code).toBe(0);
     for (const format of ["16x9", "9x16"]) expect(existsSync(join(job, "out/sheets", format, "film.jpg")), format).toBe(true);
+  });
+});
+
+describe.skipIf(missing.length > 0)("B43 dxb-motion-graphics — every transition on one sheet that one screen shows whole", () => {
+  // The second film's writer had fifteen large sheets per format and tiled its own to look at every transition (2026-11-13).
+  const SCREEN = { w: 1920, h: 1080 };
+  // Each moment's still is one plain colour, none of them as light as the white words that name a still on the sheet.
+  const COLOURS: Record<string, number[]> = { "0.5": [200, 0, 0], "1": [0, 120, 0], "2.5": [0, 0, 200] };
+  /** HyperFrames answered by the test: a still of each moment asked, in that moment's colour, at the size the stage is framed at. */
+  const colouredStills = () => {
+    const rec = recorder((cmd, args) => {
+      if (cmd !== "npx" || !args.includes("snapshot")) return undefined;
+      const stage = readFileSync(join(args[args.indexOf("snapshot") + 1], "index.html"), "utf8");
+      const [w, h] = stage.match(/data-width="(\d+)" data-height="(\d+)"/)!.slice(1);
+      for (const t of args[args.indexOf("--at") + 1].split(",")) {
+        const colour = COLOURS[t].map((level) => level.toString(16).padStart(2, "0")).join("");
+        expect(sh("ffmpeg", ["-v", "error", "-y", "-f", "lavfi", "-i", `color=c=0x${colour}:s=${w}x${h}`, "-frames:v", "1", join(args[args.indexOf("-o") + 1], `at-${t}s.png`)]).code).toBe(0);
+      }
+      return { code: 0, out: "", err: "" };
+    });
+    return { ...rec, asked: () => rec.calls.filter((c) => c.cmd === "npx").map((c) => c.args[c.args.indexOf("--at") + 1]) };
+  };
+  /** A job in two formats whose page states four events out of the order of time, two of them on one second. */
+  const fourEvents = async () => {
+    const job = await initJob({ more: ["--format", "9x16=360x640"] }), page = join(job, "page/index.html");
+    plainPage(job);
+    writeFileSync(page, readFileSync(page, "utf8").replace("EVENTS: [{ name: 'lands', t: 1 }]",
+      "EVENTS: [{ name: 'closes', t: 2.5 }, { name: 'opens', t: 0.5 }, { name: 'lands', t: 1 }, { name: 'rings', t: 1 }]"));
+    return job;
+  };
+  /** A sheet as this file reads it: its size, the colour at a point, and how many of a stretch's pixels are white. */
+  const picture = (file: string) => {
+    const [w, h] = sh("ffprobe", ["-v", "error", "-show_entries", "stream=width,height", "-of", "csv=p=0", file]).out.toString().trim().split(",").map(Number);
+    const rgb = sh("ffmpeg", ["-v", "error", "-i", file, "-f", "rawvideo", "-pix_fmt", "rgb24", "-"]).out;
+    const at = (x: number, y: number) => [...rgb.subarray(3 * (y * w + x), 3 * (y * w + x) + 3)];
+    const white = (x0: number, y0: number, x1: number, y1: number) => {
+      let count = 0;
+      for (let y = y0; y < y1; y++) for (let x = x0; x < x1; x++) if (at(x, y).every((level) => level > 200)) count++;
+      return count;
+    };
+    return { w, h, at, white };
+  };
+
+  it("lays one still of each event on one sheet, in the order of time, as large as one screen shows whole — each format its own", async () => {
+    const job = await fourEvents(), stills = colouredStills();
+    const r = await mg(["sheet", "--at-events", "--format", "all", "--job", job], { run: stills.run });
+    expect(r.code, r.out).toBe(0);
+    expect(stills.asked()).toEqual(["0.5,1,2.5", "0.5,1,2.5"]); // each moment once, though two events share it
+    const inOrder = ["0.5", "1", "1", "2.5"]; // opens, lands, rings, closes
+    // Four frames of 16:9 fill a screen two by two; four of 9:16 stand side by side.
+    for (const [format, columns, rows] of [["16x9", 2, 2], ["9x16", 4, 1]] as const) {
+      const sheet = join(job, "out/sheets", format, "events.jpg");
+      expect(r.out).toContain(sheet);
+      const seen = picture(sheet);
+      expect(seen.w, format).toBeLessThanOrEqual(SCREEN.w);
+      expect(seen.h, format).toBeLessThanOrEqual(SCREEN.h);
+      expect(Math.max(seen.w / SCREEN.w, seen.h / SCREEN.h), format).toBeGreaterThan(0.9);
+      const cell = { w: seen.w / columns, h: seen.h / rows };
+      inOrder.forEach((t, i) => {
+        const left = Math.floor((i % columns) * cell.w), top = Math.floor(Math.floor(i / columns) * cell.h);
+        const middle = seen.at(Math.floor(left + cell.w / 2), Math.floor(top + cell.h / 2));
+        middle.forEach((level, c) => expect(Math.abs(level - COLOURS[t][c]), `${format} still ${i + 1}: ${middle}`).toBeLessThanOrEqual(40));
+        expect(seen.white(left, top, Math.floor(left + cell.w), Math.floor(top + cell.h)), `${format} still ${i + 1} is named`).toBeGreaterThan(20);
+      });
+    }
+  });
+
+  it("refuses the flags of the other sheets beside it, and a page without events, and starts nothing", async () => {
+    const job = await fourEvents();
+    for (const more of [["--n", "4"], ["--window", "0.5"], ["--around-events"]]) {
+      const stills = colouredStills();
+      const r = await mg(["sheet", "--at-events", ...more, "--job", job], { run: stills.run });
+      expect(r.code, more[0]).not.toBe(0);
+      expect(r.out, more[0]).toMatch(new RegExp(`--at-events.*${more[0]}`));
+      expect(stills.calls, more[0]).toEqual([]);
+    }
+    const page = join(job, "page/index.html");
+    writeFileSync(page, readFileSync(page, "utf8").replace(/EVENTS: \[.*\]/, "EVENTS: []"));
+    const stills = colouredStills();
+    const r = await mg(["sheet", "--at-events", "--job", job], { run: stills.run });
+    expect(r.code).not.toBe(0);
+    expect(r.out).toMatch(/no events/);
+    expect(stills.calls).toEqual([]);
+  });
+});
+
+describe.skipIf(missing.length > 0)("B43 dxb-motion-graphics — the page's promise is measured: the same second gives the same pixels", () => {
+  // The second film's writer found two renders of one page apart in 409 of 951 frames, and wrote a check of its own (2026-11-13).
+  /**
+   * HyperFrames answered by the test, as a page would draw: each moment a plain grey of its own — and a moment
+   * that `keeps` names, drawn after a later moment in the same browser, comes out with a white corner, as a page
+   * that keeps something from one frame to the next does.
+   */
+  const page = ({ keeps = [] as string[] } = {}) => {
+    const rec = recorder((cmd, args) => {
+      if (cmd !== "npx" || !args.includes("snapshot")) return undefined;
+      const stage = readFileSync(join(args[args.indexOf("snapshot") + 1], "index.html"), "utf8");
+      const [w, h] = stage.match(/data-width="(\d+)" data-height="(\d+)"/)!.slice(1);
+      const times = args[args.indexOf("--at") + 1].split(",");
+      times.forEach((t, i) => {
+        const grey = Math.round(Number(t) * 50).toString(16).padStart(2, "0"), kept = keeps.includes(t) && times.slice(0, i).some((before) => Number(before) > Number(t));
+        const corner = kept ? ["-vf", "drawbox=x=0:y=0:w=6:h=6:color=white:t=fill"] : [];
+        expect(sh("ffmpeg", ["-v", "error", "-y", "-f", "lavfi", "-i", `color=c=0x${grey.repeat(3)}:s=${w}x${h}`, ...corner, "-frames:v", "1", join(args[args.indexOf("-o") + 1], `at-${t}s.png`)]).code).toBe(0);
+      });
+      return { code: 0, out: "", err: "" };
+    });
+    return { ...rec, draws: () => rec.calls.filter((c) => c.cmd === "npx").map((c) => c.args[c.args.indexOf("--at") + 1].split(",")) };
+  };
+  /** The moments drawn before `t` in one draw. */
+  const pastOf = (draw: string[], t: string) => draw.slice(0, draw.indexOf(t));
+  /** A job in two formats whose page states events on 0.5, 1 (twice) and 2.5 s of a 3 s film. */
+  const threeMoments = async () => {
+    const job = await initJob({ more: ["--format", "9x16=360x640"] }), file = join(job, "page/index.html");
+    plainPage(job);
+    writeFileSync(file, readFileSync(file, "utf8").replace("EVENTS: [{ name: 'lands', t: 1 }]",
+      "EVENTS: [{ name: 'closes', t: 2.5 }, { name: 'opens', t: 0.5 }, { name: 'lands', t: 1 }, { name: 'rings', t: 1 }]"));
+    return job;
+  };
+  const record = (job: string) => JSON.parse(readFileSync(join(job, "out/check-same-second.json"), "utf8"));
+
+  it("draws each event's moment twice, in two browsers, the second time after other moments — and passes a page that keeps nothing", async () => {
+    const job = await threeMoments(), drawn = page();
+    const r = await mg(["check", "same-second", "--job", job], { run: drawn.run });
+    expect(r.out).toMatch(/^mg check: OK — same-second .*out\/check-same-second\.json/m);
+    expect(r.code).toBe(0);
+    const [first, second] = drawn.draws();
+    expect(drawn.draws()).toHaveLength(2);
+    for (const t of ["0.5", "1", "2.5"]) {
+      expect(first, t).toContain(t);
+      expect(second, t).toContain(t);
+      expect(pastOf(second, t), t).not.toEqual(pastOf(first, t)); // drawn after other moments than the first time
+      expect(pastOf(first, t).length + pastOf(second, t).length, t).toBeGreaterThan(0);
+    }
+    expect(record(job)).toMatchObject({ ok: true, formats: [{ format: "16x9", moments: [{ t: 0.5, pixels: 0 }, { t: 1, pixels: 0 }, { t: 2.5, pixels: 0 }] }] });
+  });
+
+  it("fails on a page that keeps something from one moment to the next, naming the moment and its pixels", async () => {
+    const job = await threeMoments(), drawn = page({ keeps: ["1"] });
+    const r = await mg(["check", "same-second", "--format", "all", "--job", job], { run: drawn.run });
+    expect(r.code).toBe(1);
+    expect(r.out).toMatch(/^FAILED +16x9 .*\b1 s \(36 pixels/m);
+    expect(r.out).toMatch(/^FAILED +9x16 .*\b1 s \(36 pixels/m);
+    expect(r.out).not.toMatch(/\b(0\.5|2\.5) s \(/);
+    expect(r.out).toMatch(/^mg check: FAILED — same-second .*out\/check-same-second\.json/m);
+    const kept = record(job);
+    expect(kept.ok).toBe(false);
+    expect(kept.formats.map((f: any) => f.format)).toEqual(["16x9", "9x16"]);
+    for (const format of kept.formats) expect(format.moments.map((m: any) => [m.t, m.pixels > 0])).toEqual([[0.5, false], [1, true], [2.5, false]]);
+  });
+
+  it("a moment given alone is drawn the second time after another", async () => {
+    const job = await threeMoments(), drawn = page();
+    expect((await mg(["check", "same-second", "1", "--job", job], { run: drawn.run })).code).toBe(0);
+    const [first, second] = drawn.draws();
+    expect(first).toEqual(["1"]);
+    expect(pastOf(second, "1").length).toBeGreaterThan(0);
+  });
+
+  it("refuses a moment that is no second of the film, and a check it does not have, and starts nothing", async () => {
+    const job = await threeMoments();
+    for (const given of ["-1", "3.5", "NaN", "Infinity", "soon", ""]) {
+      const drawn = page();
+      const r = await mg(["check", "same-second", "--job", job, "--", given], { run: drawn.run });
+      expect(r.code, given).not.toBe(0);
+      expect(r.out, given).toMatch(/is no second of the film/);
+      expect(drawn.calls, given).toEqual([]);
+    }
+    // A name every object answers to is no check either.
+    for (const what of [[], ["sideways"], ["constructor"], ["__proto__"], ["toString"]]) {
+      const drawn = page();
+      const r = await mg(["check", ...what, "--job", job], { run: drawn.run });
+      expect(r.code, what.join()).not.toBe(0);
+      expect(r.out, what.join()).toMatch(/which check\? mg check same-second/);
+      expect(drawn.calls).toEqual([]);
+    }
+    // Seconds belong to same-second alone, and a measure that is the same in every format is asked about none.
+    for (const [argv, why] of [[["in-frame", "1.5"], /in-frame takes no seconds/], [["reading", "--format", "16x9"], /reading is the same in every format/]] as const) {
+      const drawn = page();
+      const r = await mg(["check", ...argv, "--job", job], { run: drawn.run });
+      expect(r.code, argv.join(" ")).not.toBe(0);
+      expect(r.out, argv.join(" ")).toMatch(why);
+      expect(drawn.calls).toEqual([]);
+    }
+    expect(existsSync(join(job, "out/check-same-second.json"))).toBe(false);
+  });
+});
+
+/** A job's checks as job.json states them; `raw` is written as it is, so a figure JSON cannot carry (1e999) can be stated. */
+const stateChecks = (job: string, checks: unknown, raw?: string) => {
+  const file = join(job, "job.json"), stated = JSON.parse(readFileSync(file, "utf8"));
+  writeFileSync(file, JSON.stringify({ ...stated, checks: raw === undefined ? checks : "RAW" }).replace('"RAW"', raw ?? ""));
+};
+const checked = (job: string, what: string) => JSON.parse(readFileSync(join(job, "out", `check-${what}.json`), "utf8"));
+
+describe.skipIf(missing.length > 0)("B43 dxb-motion-graphics — the measures a film needs: the whole subject in frame, and never still", () => {
+  // The second film's writer wrote these checks for its own film (2026-11-13); the command's are general.
+  /** A 3 s film made by ffmpeg alone and losslessly: a plain ground, and a square of `side` pixels whose place is ffmpeg's expressions of t. */
+  const squareFilm = (file: string, { x, y = "150", side = 60, ground = "f0f0f0", ink = "101010" }: { x: string; y?: string; side?: number; ground?: string; ink?: string }) => {
+    const graph = `color=c=0x${ground}:s=640x360:r=${FPS}:d=3[ground];color=c=0x${ink}:s=${side}x${side}:r=${FPS}:d=3[square];[ground][square]overlay=x='${x}':y='${y}'`;
+    expect(sh("ffmpeg", ["-v", "error", "-y", "-f", "lavfi", "-i", graph, "-c:v", "libx264", "-crf", "0", "-pix_fmt", "yuv420p", file]).err).toBe("");
+  };
+  // Measured on these films with ffmpeg's own bbox and overlay (2026-11-13): the square that leaves x = 300 at 1 s
+  // at 200 px a second stands 8 px from the right edge at frame 71 and on it from frame 72; held there, it stays
+  // on it to the last frame, 89; let go, it has left the frame whole from frame 81.
+  const REACHES = "if(lt(t,1),300,min(300+(t-1)*200,580))", LEAVES = "if(lt(t,1),300,300+(t-1)*200)";
+
+  it("passes a film whose subject stays its margin clear of every edge, and says how near it came and what it cannot judge", async () => {
+    const job = await initJob();
+    squareFilm(film(job), { x: "300" });
+    stateChecks(job, { "in-frame": { margin: 4, darker: 70 } });
+    const r = await mg(["check", "in-frame", "--job", job]);
+    expect(r.out).toMatch(/^OK +16x9 — 90 frame\(s\), 90 showing the subject, none within 4 px of the edge; nearest: left 300, right 280, top 150, bottom 150/m);
+    expect(r.out).toMatch(/cannot judge/);
+    expect(r.code).toBe(0);
+    expect(checked(job, "in-frame")).toMatchObject({ ok: true, formats: [{ format: "16x9", frames: 90, margin: 4, nearest: { left: 300, right: 280, top: 150, bottom: 150 }, touching: [] }] });
+  });
+
+  it("fails a film whose subject reaches the edge, naming the frames and the side, by the margin the job states", async () => {
+    const job = await initJob();
+    squareFilm(film(job), { x: REACHES });
+    stateChecks(job, { "in-frame": { margin: 4, darker: 70 } });
+    const r = await mg(["check", "in-frame", "--job", job]);
+    expect(r.code).toBe(1);
+    expect(r.out).toMatch(/^FAILED +16x9 — 18 of 90 frame\(s\) within 4 px of the edge: 2\.4–2\.967 s \(frames 72–89\) right; 90 frame\(s\) show the subject/m);
+    expect(r.out).toMatch(/^mg check: FAILED — in-frame .*out\/check-in-frame\.json/m);
+    expect(checked(job, "in-frame").formats[0].touching).toEqual([{ from: 2.4, to: 2.967, frames: [72, 89], sides: ["right"] }]);
+    stateChecks(job, { "in-frame": { margin: 9, darker: 70 } }); // frame 71 stands 8 px off: inside a margin of 9
+    expect((await mg(["check", "in-frame", "--job", job])).out).toMatch(/19 of 90 frame\(s\) within 9 px of the edge: 2\.367–2\.967 s \(frames 71–89\) right/);
+  });
+
+  it("does not see a subject that has left the frame whole, and says how many frames showed it", async () => {
+    const job = await initJob();
+    squareFilm(film(job), { x: LEAVES });
+    stateChecks(job, { "in-frame": { margin: 4, darker: 70 } });
+    const r = await mg(["check", "in-frame", "--job", job]);
+    expect(r.code).toBe(1); // it crossed the edge on its way out
+    expect(r.out).toMatch(/^FAILED +16x9 — 9 of 90 frame\(s\) within 4 px of the edge: 2\.4–2\.667 s \(frames 72–80\) right; 81 frame\(s\) show the subject/m);
+    expect(r.out).toMatch(/A frame that shows nothing of the subject is not judged/);
+  });
+
+  it("tells the subject from the ground as the job states it: here lighter than a level, on a dark ground", async () => {
+    const job = await initJob();
+    squareFilm(film(job), { x: "0", ground: "101010", ink: "f0f0f0" });
+    stateChecks(job, { "in-frame": { margin: 4, lighter: 200 } });
+    const r = await mg(["check", "in-frame", "--job", job]);
+    expect(r.code).toBe(1);
+    expect(r.out).toMatch(/90 of 90 frame\(s\) within 4 px of the edge: 0–2\.967 s \(frames 0–89\) left/);
+  });
+
+  it("refuses a statement it cannot measure by, and a film not yet rendered, and reads no film", async () => {
+    const job = await initJob();
+    squareFilm(film(job), { x: "300" });
+    const refused: [unknown, string | undefined, RegExp][] = [
+      [undefined, undefined, /"checks"."in-frame"/],
+      [{ "in-frame": { margin: 4 } }, undefined, /"darker" or "lighter"/],
+      [{ "in-frame": { margin: 4, darker: 70, lighter: 200 } }, undefined, /"darker" or "lighter"/],
+      [{ "in-frame": { margin: 0, darker: 70 } }, undefined, /"margin"/],
+      [{ "in-frame": { margin: 2.5, darker: 70 } }, undefined, /"margin"/],
+      [{ "in-frame": { margin: "4", darker: 70 } }, undefined, /"margin"/],
+      [{ "in-frame": { margin: 180, darker: 70 } }, undefined, /"margin"/], // half the frame's short side: every pixel is near an edge
+      [undefined, '{ "in-frame": { "margin": 1e999, "darker": 70 } }', /"margin"/],
+      [{ "in-frame": { margin: 4, darker: 0 } }, undefined, /"darker"/],
+      [{ "in-frame": { margin: 4, darker: 256 } }, undefined, /"darker"/],
+      [{ "in-frame": { margin: 4, darker: 70.5 } }, undefined, /"darker"/],
+      [{ "in-frame": { margin: 4, lighter: 255 } }, undefined, /"lighter"/],
+      [undefined, '{ "in-frame": { "margin": 4, "lighter": -1e999 } }', /"lighter"/],
+    ];
+    for (const [checks, raw, why] of refused) {
+      stateChecks(job, checks, raw);
+      const rec = recorder();
+      const r = await mg(["check", "in-frame", "--job", job], { run: rec.run });
+      expect(r.code, raw ?? JSON.stringify(checks)).not.toBe(0);
+      expect(r.out, raw ?? JSON.stringify(checks)).toMatch(why);
+      expect(rec.calls, raw ?? JSON.stringify(checks)).toEqual([]);
+    }
+    stateChecks(job, { "in-frame": { margin: 4, darker: 70 } });
+    rmSync(film(job));
+    const rec = recorder();
+    const r = await mg(["check", "in-frame", "--job", job], { run: rec.run });
+    expect(r.out).toMatch(/fixture-film-16x9\.mp4 is not there — render it first/);
+    expect(rec.calls).toEqual([]);
+  });
+
+  it("never still: passes a stretch in which every frame moves, and fails one in which the picture stops, naming the frames", async () => {
+    const job = await initJob();
+    plainPage(job); // its one beat: start, at 0 s
+    squareFilm(film(job), { x: "min(t,1.5)*100", y: "80", side: 200 }); // the square stops at 1.5 s
+    stateChecks(job, { "never-still": [{ from: "start", to: 1.4 }] });
+    const moving = await mg(["check", "never-still", "--job", job]);
+    expect(moving.out).toMatch(/^OK +16x9 — 0–1\.4 s: 42 frame\(s\), each moved from the one before; the fewest pixels changed: 800/m);
+    expect(moving.code).toBe(0);
+
+    stateChecks(job, { "never-still": [{ from: 0.5, to: 1.4 }, { from: 1, to: 2 }] });
+    const stops = await mg(["check", "never-still", "--job", job]);
+    expect(stops.code).toBe(1);
+    expect(stops.out).toMatch(/^FAILED +16x9 — 1–2 s: 15 of 30 frame\(s\) stood still: 1\.533–2 s \(frames 46–60\)/m);
+    expect(checked(job, "never-still").formats[0].stretches.map((s: any) => s.still)).toEqual([[], [{ from: 1.533, to: 2, frames: [46, 60] }]]);
+  });
+
+  it("measures a stretch to the film's last frame, and refuses one the master does not hold rather than pass it", async () => {
+    const job = await initJob();
+    plainPage(job);
+    squareFilm(film(job), { x: "t*100", side: 200 });
+    stateChecks(job, { "never-still": [{ from: 2, to: 3 }] }); // its frames 60 to 89: the film has no frame at 3 s
+    const toTheEnd = await mg(["check", "never-still", "--job", job]);
+    expect(toTheEnd.out).toMatch(/^OK +16x9 — 2–3 s: 29 frame\(s\), each moved/m);
+    expect(toTheEnd.code).toBe(0);
+    // A master of one second, where the page states three: nothing of 2–3 s is there to measure.
+    expect(sh("ffmpeg", ["-v", "error", "-y", "-i", film(job), "-t", "1", "-c", "copy", `${film(job)}.mp4`]).code).toBe(0);
+    cpSync(`${film(job)}.mp4`, film(job));
+    const shorter = await mg(["check", "never-still", "--job", job]);
+    expect(shorter.code).not.toBe(0);
+    expect(shorter.out).toMatch(/holds no two frames of 2–3 s/);
+    expect(existsSync(join(job, "out/check-never-still.json"))).toBe(false);
+  });
+
+  it("refuses a stretch it cannot read, and reads no film", async () => {
+    const job = await initJob();
+    plainPage(job);
+    squareFilm(film(job), { x: "300" });
+    const refused: [unknown, string | undefined][] = [
+      [undefined, undefined], [{ "never-still": [] }, undefined], [{ "never-still": { from: 0, to: 1 } }, undefined],
+      [{ "never-still": [{ from: 2, to: 1 }] }, undefined], [{ "never-still": [{ from: 1, to: 1 }] }, undefined],
+      [{ "never-still": [{ from: -1, to: 1 }] }, undefined], [{ "never-still": [{ from: 0, to: 3.5 }] }, undefined],
+      [{ "never-still": [{ from: "dawn", to: 1 }] }, undefined], [{ "never-still": [{ from: 0 }] }, undefined],
+      [undefined, '{ "never-still": [{ "from": 0, "to": 1e999 }] }'],
+    ];
+    for (const [checks, raw] of refused) {
+      stateChecks(job, checks, raw);
+      const rec = recorder();
+      const r = await mg(["check", "never-still", "--job", job], { run: rec.run });
+      expect(r.code, raw ?? JSON.stringify(checks)).not.toBe(0);
+      expect(r.out, raw ?? JSON.stringify(checks)).toMatch(/"never-still"/);
+      expect(rec.calls, raw ?? JSON.stringify(checks)).toEqual([]);
+    }
+  });
+});
+
+describe("B43 dxb-motion-graphics — every text stands whole long enough to be read", () => {
+  /** A 3 s film's page that states its texts beside its timing, in FILM.TEXTS. */
+  const textsOnPage = async (texts: unknown) => {
+    const job = await initJob(), page = join(job, "page/index.html");
+    plainPage(job);
+    writeFileSync(page, readFileSync(page, "utf8").replace("EVENTS: [{ name: 'lands', t: 1 }]", `EVENTS: [{ name: 'lands', t: 1 }], TEXTS: ${JSON.stringify(texts)}`));
+    return job;
+  };
+  const FIRST = { text: "Just between you.", whole: 0.5, leaves: 2 };                         // 3 words: 1 s at three a second, 1.5 s whole
+  const SEVEN = { text: "Every one of these seven words counts", whole: 0.5, leaves: 2.5 };   // 7 words: 2.33 s, 2 s whole
+  const AFTER = { text: "the notice on its screen", words: 3, whole: 0.5, leaves: 2.4, after: "Just between you." };
+
+  it("holds every text the page states to the words it carries at the rate the job states, naming the short ones", async () => {
+    const job = await textsOnPage([FIRST, SEVEN, AFTER]);
+    stateChecks(job, { reading: { wordsPerSecond: 3 } });
+    const r = await mg(["check", "reading", "--job", job]);
+    expect(r.code).toBe(1);
+    expect(r.out).toMatch(/^ok +3 words need 1\.00 s · whole 0\.50–2\.00 s, read from 0\.50 s: 1\.50 s · Just between you\.$/m);
+    expect(r.out).toMatch(/^SHORT +7 words need 2\.33 s · whole 0\.50–2\.50 s, read from 0\.50 s: 2\.00 s · Every one of these seven words counts$/m);
+    // Read once the first is read: from 1.5 s, and 0.9 s are left of it.
+    expect(r.out).toMatch(/^SHORT +3 words need 1\.00 s · whole 0\.50–2\.40 s, read from 1\.50 s: 0\.90 s · the notice on its screen$/m);
+    expect(r.out).toMatch(/^mg check: FAILED — reading .*out\/check-reading\.json/m);
+    expect(checked(job, "reading")).toMatchObject({ ok: false, wordsPerSecond: 3, texts: [{ ok: true }, { ok: false }, { ok: false, from: 1.5 }] });
+  });
+
+  it("the rate is the job's: one text read at two words a second, and what is read after nothing else", async () => {
+    const job = await textsOnPage([FIRST, { ...AFTER, after: undefined }]);
+    stateChecks(job, { reading: { wordsPerSecond: 2 } });
+    expect((await mg(["check", "reading", "--job", job])).out).toMatch(/^ok +3 words need 1\.50 s .*Just between you\.$/m); // 1.5 s whole: just enough
+    stateChecks(job, { reading: { wordsPerSecond: 1.9 } });
+    const slower = await mg(["check", "reading", "--job", job]);
+    expect(slower.code).toBe(1);
+    expect(slower.out).toMatch(/^SHORT +3 words need 1\.58 s .*Just between you\.$/m);
+    expect(slower.out).toMatch(/^ok +3 words need 1\.58 s · whole 0\.50–2\.40 s, read from 0\.50 s: 1\.90 s · the notice on its screen$/m); // read after nothing: from when it is whole
+  });
+
+  it("the starter states its line: held long enough to be read in a film of twelve seconds, and not in one of three", async () => {
+    for (const [dur, code] of [[12, 0], [3, 1]]) {
+      const job = await initJob({ dur });
+      stateChecks(job, { reading: { wordsPerSecond: 3 } });
+      const r = await mg(["check", "reading", "--job", job]);
+      expect(r.out, String(dur)).toMatch(/ 5 words need 1\.67 s · .* · Every shot becomes the next$/m);
+      expect(r.code, String(dur)).toBe(code);
+    }
+  });
+
+  it("counts a text's words, not the marks between them", async () => {
+    const job = await textsOnPage([{ text: "WhatsApp · Message someone who matters. · Spec ad.", whole: 0, leaves: 3 }]);
+    stateChecks(job, { reading: { wordsPerSecond: 3 } });
+    const r = await mg(["check", "reading", "--job", job]);
+    expect(r.out).toMatch(/^ok +7 words need 2\.33 s/m);
+    expect(r.code).toBe(0);
+  });
+
+  it("refuses a rate or a text it cannot read", async () => {
+    const rates: [unknown, string | undefined][] = [[undefined, undefined], [{ reading: {} }, undefined], [{ reading: { wordsPerSecond: 0 } }, undefined],
+      [{ reading: { wordsPerSecond: -3 } }, undefined], [{ reading: { wordsPerSecond: "3" } }, undefined], [undefined, '{ "reading": { "wordsPerSecond": 1e999 } }']];
+    const job = await textsOnPage([FIRST]);
+    for (const [checks, raw] of rates) {
+      stateChecks(job, checks, raw);
+      const r = await mg(["check", "reading", "--job", job]);
+      expect(r.code, raw ?? JSON.stringify(checks)).not.toBe(0);
+      expect(r.out, raw ?? JSON.stringify(checks)).toMatch(/"wordsPerSecond"/);
+    }
+    const texts: [unknown, RegExp][] = [
+      [undefined, /FILM\.TEXTS/], [[], /FILM\.TEXTS/], [[{ ...FIRST, text: "" }], /"text"/], [[{ ...FIRST, text: 3 }], /"text"/],
+      [[{ ...FIRST, whole: 2, leaves: 1 }], /"whole" .*"leaves"/], [[{ ...FIRST, leaves: 3.5 }], /"leaves"/], [[{ ...FIRST, whole: -1 }], /"whole"/],
+      [[{ ...FIRST, whole: "soon" }], /"whole"/], [[{ ...FIRST, words: 0 }], /"words"/], [[{ ...FIRST, words: 2.5 }], /"words"/],
+      [[{ ...FIRST, after: "a text that is not there" }], /"after"/], [[{ ...FIRST, after: FIRST.text }], /"after"/],
+      [[{ ...AFTER, after: FIRST.text }, FIRST], /"after"/], // a text read after one that comes later
+    ];
+    for (const [stated, why] of texts) {
+      const other = await textsOnPage(stated);
+      stateChecks(other, { reading: { wordsPerSecond: 3 } });
+      if (stated === undefined) plainPage(other);
+      const r = await mg(["check", "reading", "--job", other]);
+      expect(r.code, JSON.stringify(stated)).not.toBe(0);
+      expect(r.out, JSON.stringify(stated)).toMatch(why);
+    }
+  });
+});
+
+describe.skipIf(missing.length > 0)("B43 dxb-motion-graphics — a join holds: the same instant drawn by its two layers", () => {
+  // The second film's writer held the join between its flat drawing and its phone in space to a mean difference, and
+  // proved the measure each run by moving the phone a pixel aside and requiring the comparison to fail (2026-11-13).
+  /**
+   * HyperFrames answered by the test, as a page that honours window.MG_DRAW draws: a light ground and a dark square at
+   * x = 300 — the layer "flat" so, the layer "space" `apart` pixels further right with its top edge a shade lighter, as two
+   * rasterisers never agree to the last level — and a drawing asked for a nudge moves its square as many pixels, unless `deaf`.
+   */
+  const layered = ({ apart = 0, deaf = false } = {}) => {
+    const asked: { layer: string; nudge: number }[] = [];
+    const rec = recorder((cmd, args) => {
+      if (cmd !== "npx" || !args.includes("snapshot")) return undefined;
+      const stage = readFileSync(join(args[args.indexOf("snapshot") + 1], "index.html"), "utf8");
+      const [w, h] = stage.match(/data-width="(\d+)" data-height="(\d+)"/)!.slice(1);
+      const draw = JSON.parse(stage.match(/<script>window\.MG_DRAW = (\{[^<]*\});<\/script>\s*<script>/)![1]);
+      asked.push(draw);
+      const x = 300 + (draw.layer === "space" ? apart : 0) + (deaf ? 0 : draw.nudge);
+      const edge = draw.layer === "space" ? `,drawbox=x=${x}:y=150:w=60:h=1:color=0x303030:t=fill` : "";
+      for (const t of args[args.indexOf("--at") + 1].split(","))
+        expect(sh("ffmpeg", ["-v", "error", "-y", "-f", "lavfi", "-i", `color=c=0xf0f0f0:s=${w}x${h},format=rgb24,drawbox=x=${x}:y=150:w=60:h=60:color=0x101010:t=fill${edge}`, "-frames:v", "1", join(args[args.indexOf("-o") + 1], `at-${t}s.png`)]).code).toBe(0);
+      return { code: 0, out: "", err: "" };
+    });
+    return { ...rec, asked };
+  };
+  /** A job whose page states one join, at 1 s, between its layers "flat" and "space". */
+  const oneJoin = async (joins: unknown = [{ name: "lifts", t: 1, layers: ["flat", "space"] }]) => {
+    const job = await initJob(), page = join(job, "page/index.html");
+    plainPage(job);
+    writeFileSync(page, readFileSync(page, "utf8").replace("EVENTS: [{ name: 'lands', t: 1 }]", `EVENTS: [{ name: 'lands', t: 1 }], JOINS: ${JSON.stringify(joins)}`));
+    return job;
+  };
+
+  it("draws the instant by each layer, and once more with the second layer's subject a pixel aside: the join holds and the measure sees a pixel", async () => {
+    const job = await oneJoin(), page = layered();
+    stateChecks(job, { join: { mean: 0.05 } });
+    const r = await mg(["check", "join", "--job", job], { run: page.run });
+    expect(r.out).toMatch(/^OK +16x9 — lifts at 1 s: flat and space 0\.0\d+ levels apart on average, under 0\.05; space a pixel aside 0\.1\d+ — the measure sees a pixel/m);
+    expect(r.code).toBe(0);
+    expect(page.asked).toEqual([{ layer: "flat", nudge: 0 }, { layer: "space", nudge: 0 }, { layer: "space", nudge: 1 }]);
+    expect(checked(job, "join")).toMatchObject({ ok: true, mean: 0.05, formats: [{ format: "16x9", joins: [{ name: "lifts", t: 1, holds: true, sees: true }] }] });
+    expect(r.out).toMatch(/cannot judge/);
+  });
+
+  it("fails a join whose layers lie apart, and a measure that cannot see a pixel — by the page or by the mean stated", async () => {
+    const job = await oneJoin();
+    stateChecks(job, { join: { mean: 0.05 } });
+    const apart = await mg(["check", "join", "--job", job], { run: layered({ apart: 2 }).run });
+    expect(apart.code).toBe(1);
+    expect(apart.out).toMatch(/^FAILED +16x9 — lifts at 1 s: flat and space 0\.\d+ levels apart on average, not under 0\.05/m);
+    const deaf = await mg(["check", "join", "--job", job], { run: layered({ deaf: true }).run });
+    expect(deaf.code).toBe(1);
+    expect(deaf.out).toMatch(/^FAILED +16x9 — lifts at 1 s: .*space a pixel aside 0\.0\d+ — the measure does not see a pixel/m);
+    stateChecks(job, { join: { mean: 0.5 } });
+    const loose = await mg(["check", "join", "--job", job], { run: layered().run });
+    expect(loose.code).toBe(1);
+    expect(loose.out).toMatch(/the measure does not see a pixel/);
+  });
+
+  it("refuses a mean or a join it cannot read, and draws nothing", async () => {
+    const job = await oneJoin();
+    const means: [unknown, string | undefined][] = [[undefined, undefined], [{ join: {} }, undefined], [{ join: { mean: 0 } }, undefined],
+      [{ join: { mean: -1 } }, undefined], [{ join: { mean: 255 } }, undefined], [{ join: { mean: "0.6" } }, undefined], [undefined, '{ "join": { "mean": 1e999 } }']];
+    for (const [checks, raw] of means) {
+      stateChecks(job, checks, raw);
+      const page = layered();
+      const r = await mg(["check", "join", "--job", job], { run: page.run });
+      expect(r.code, raw ?? JSON.stringify(checks)).not.toBe(0);
+      expect(r.out, raw ?? JSON.stringify(checks)).toMatch(/"mean"/);
+      expect(page.calls).toEqual([]);
+    }
+    const joins: unknown[] = [undefined, [], [{ name: "lifts", t: 4, layers: ["flat", "space"] }], [{ name: "lifts", t: "soon", layers: ["flat", "space"] }],
+      [{ name: "lifts", t: 1, layers: ["flat"] }], [{ name: "lifts", t: 1, layers: ["flat", "flat"] }], [{ t: 1, layers: ["flat", "space"] }]];
+    for (const stated of joins) {
+      const other = await oneJoin(stated);
+      if (stated === undefined) plainPage(other);
+      stateChecks(other, { join: { mean: 0.05 } });
+      const page = layered();
+      const r = await mg(["check", "join", "--job", other], { run: page.run });
+      expect(r.code, JSON.stringify(stated)).not.toBe(0);
+      expect(r.out, JSON.stringify(stated)).toMatch(/FILM\.JOINS/);
+      expect(page.calls).toEqual([]);
+    }
   });
 });
 
@@ -991,15 +1672,16 @@ describe("B43 dxb-motion-graphics — a tool that never ends does not hang the c
 describe("B43 dxb-motion-graphics — the command says what it takes", () => {
   // Every flag of every command, as a person would type it.
   const FLAGS: Record<string, string[]> = {
-    init: ["<dir>", "--title", "--w", "--h", "--format", "--fps", "--dur", "--lufs", "--spec", "--brand"],
+    init: ["<dir>", "--title", "--w", "--h", "--format", "--fps", "--dur", "--lufs", "--spec", "--brand", "--from"],
     board: ["--format", "--job"],
     stills: ["<seconds…>", "--format", "--job"],
-    sheet: ["--around-events", "--n", "--window", "--format", "--job"],
+    sheet: ["--around-events", "--at-events", "--n", "--window", "--format", "--job"],
     events: ["--job"],
     sound: ["--job"],
     render: ["--format", "--scale", "--4k", "--alpha", "--fps", "--job"],
     verify: ["--job"],
     "motion-read": ["--format", "--model", "--job"],
+    check: ["<what>", "same-second", "in-frame", "reading", "never-still", "join", "--format", "--job"],
     hf: ["status", "update", "--guard"],
     blender: ["<scene.py>", "--need-mb", "--job"],
   };

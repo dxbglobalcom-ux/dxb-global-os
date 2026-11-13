@@ -37,6 +37,13 @@ window.FILM = {
     { name: 'rule-lands', t: BEATS.rule + MORPH },
     ...LINE.map((word, i) => ({ name: 'word-' + (i + 1), t: BEATS.words + i * (BEATS.rest - BEATS.words) / LINE.length })),
   ],
+  // TEXTS are the words on screen, each with the second it stands whole from and the one it begins to
+  // leave at (`words` for a text the page does not carry, a screen's own; `after` for one read after
+  // another): `mg check reading` holds each to the time its words need.
+  TEXTS: [{ text: LINE.join(' '), whole: BEATS.words + (LINE.length - 1) * (BEATS.rest - BEATS.words) / LINE.length + SLIDE, leaves: TOTAL }],
+  // JOINS, in a film whose picture passes from one layer to another — a flat drawing and an object in
+  // space — are those instants, as { name, t, layers: ['flat', 'space'] }; the page then draws by the
+  // layer window.MG_DRAW names when it is set, its subject `nudge` pixels to the right (`mg check join`).
 };
 </script>
 <!-- The helpers `mg init` puts into lib/; each file says at its top how it is used.

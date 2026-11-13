@@ -52,7 +52,12 @@ their notes change the board, never a half-built film. Nothing is animated befor
 **4. The build.** One page, `page/index.html`, by the contract in `templates/page.html`: every beat time in one
 block at the top (`FILM.BEATS`, `FILM.EVENTS`), `window.ready`, and `window.renderAt(t)` drawing the whole picture
 for time `t` — no timers, no animation-frame clock, seeded randomness, so the same `t` always gives the same
-pixels. The page reaches the job's material as `assets/…`, `refs/…` and `sound/…` (links `mg init` makes inside
+pixels: HyperFrames draws a film in several browsers at once, and a second that depends on what was drawn before
+it comes out differently from render to render. `mg check same-second` holds the page to it (WebGL's own
+antialiasing breaks it: `references/craft.md`, "An object in space that joins a flat drawing"). The block also
+states the texts on screen (`FILM.TEXTS`) and any instant two layers both draw (`FILM.JOINS`), so they can be
+measured; the template shows how. The page reaches the job's material as `assets/…`, `refs/…` and `sound/…`
+(links `mg init` makes inside
 `page/`); a path that climbs out of `page/` is refused by the renderer. Engines by the shot: canvas, SVG or DOM for 2D; three.js (a pinned copy in `page/lib/`, not a CDN) for
 browser 3D; Blender for a physical product — `references/blender.md` and the kit in
 `tools/motion-graphics/blender/`; an object in space that must leave a flat drawing and lie back into it exactly
@@ -65,9 +70,13 @@ two helpers from `mg init` — `outline.js`, one shape becoming another, and `mo
 shutter sees it; `references/craft.md` says when each serves.
 
 **5. Look at it.** `mg sheet --around-events` gives three or four stills across every transition (`--window` for
-a longer or shorter stretch around each, `--format all` for every frame); read every one
+a longer or shorter stretch around each, `--format all` for every frame), and `mg sheet --at-events` one sheet of
+a still at each event, in order, that one screen shows whole — every transition at a glance; read every one
 against the board: does each shot really become the next, is the brand's material exact, is every word readable
-for as long as it takes to read, does the frame work in each format. Fix and look again. Then `mg render` — the
+for as long as it takes to read, does the frame work in each format. What the brief asks of the picture is
+measured on each render with `mg check` — the whole subject in frame, every text's time, a stretch never still,
+a join that holds — by the figures `job.json` states, and each check says what it cannot judge. Fix and look
+again. Then `mg render` — the
 whole film at its own size: the renderer has no smaller one, and its draft saves about a second in twelve
 (measured 2026-11-13, a 31.7 s film at 1920×1080) — and have the film read **as motion** by a second reader
 that has not seen your reasoning (the holding's motion reading: the Gemini API at 10 fps) against the board: `mg motion-read` sends the format's
@@ -77,6 +86,11 @@ and not sent. The answer can take minutes. A model that gives none in four is le
 itself — two models once stayed silent for ten minutes each while a third answered in one — and the reading's
 first line names the model that read. When a model's quota for the day is spent the command says so, and
 `--model` names another. A still is not playback; a film nobody watched is not finished.
+**The bar is what a viewer sees** (his word, 2026-11-13 <!-- CEO-OK: motion-graphics-bar-is-what-the-eye-sees-2026-11-13 -->):
+transitions that are striking and no error that catches the eye — a subject cut by the frame, a text that cannot be
+read, a jump, a shot that does not become the next. The checks and the motion reading only say where to look, and
+the eye decides: a difference only a machine finds is not chased, and a film is not made over for one (a reading
+once called the logo's growth into the phone a warped flaw; it is the transition working as designed).
 
 **6. Lock the picture, then sound.** Any change to the picture after this breaks the sound. Effects go where
 something moves or changes, each cue naming which point of the sound — start, peak or end — sits on which event
@@ -115,6 +129,12 @@ the first, `--lufs`, `--spec`, `--brand` — and it stays a file edited by hand:
   loudness and judges nothing — state a target once the brief gives one.
 - `spec`, `brand` — what the job is, for whoever opens the folder next: an independent spec piece or a
   commissioned film, and whose brand. The command does not judge them; step 8 does.
+- `checks` — the brief's measures, stated once so every round is held to the same: `"in-frame": { "margin": 4,
+  "darker": 70 }` (or `"lighter"`: how the subject is told from the ground), `"reading": { "wordsPerSecond": 3 }`,
+  `"never-still": [{ "from": 2.2, "to": "round" }]` (a second or a beat), `"join": { "mean": 0.6 }`.
+
+A film made again on notes is a new round in a folder of its own: `mg init <dir> --from <job>` starts it from the
+job before it, which stays as it was looked at, and carries what the film is made of, not what was made of it.
 
 `assets/SOURCES.md` — one line per file put into `assets/`, `refs/` and `page/fonts/`: where it came from (the
 address), the day, and its licence or terms. A film whose material cannot be traced is not delivered. A source
@@ -125,14 +145,15 @@ not accepted by the builder: the step is brought to the one who decides, with th
 
 | | |
 |---|---|
-| `mg init <dir> [--title … --w --h --format name=WxH … --fps --dur --lufs --spec --brand]` | job folder, `job.json` with every format stated, the page and board templates, the page's helpers in `page/lib/` |
+| `mg init <dir> [--title … --w --h --format name=WxH … --fps --dur --lufs --spec --brand]` · `mg init <dir> --from <job>` | job folder, `job.json` with every format stated, the page and board templates, the page's helpers in `page/lib/` · the next round from the job before it: its `job.json`, its page with the libraries it loads, its board's data, `assets/`, `refs/` and `sound/` — none of its renders, drawn boards or other files; a file that a link leads out of that job is refused |
 | `mg board [--format name\|all]` | `board/board.json` → `board/board.png` (`board/board-<format>.png` for a format after the first); each shot with the film's frame at its middle once the page is the job's own and can be drawn — and the reason said when it cannot |
-| `mg stills <t…> [--format name]` · `mg sheet [--around-events] [--n 4] [--window s] [--format name\|all]` | exact-time stills of one format · the film on one sheet, or one sheet per event of the moments `--window` seconds each side of it (0.25 when not given), into `out/` |
+| `mg stills <t…> [--format name]` · `mg sheet [--around-events] [--n 4] [--window s] [--format name\|all]` · `mg sheet --at-events [--format name\|all]` | exact-time stills of one format · the film on one sheet, or one sheet per event of the moments `--window` seconds each side of it (0.25 when not given), into `out/` · one sheet of a still at each event, in order and named, as large as one 1920×1080 screen shows them all: `out/sheets/<format>/events.jpg` |
 | `mg events` | the film's beats and events |
 | `mg sound` | `sound/cues.json` → the page's sound block (a cue's file lives under `sound/`, or names the starter set as `sfx:pop/pop-mid-01.wav` and is copied there; a `trim` stated beside the cues moves every level by that many dB) |
 | `mg render [--format name\|all] [--scale n \| --4k] [--alpha] [--fps n]` | the film, into `out/` (`.mov` for `--alpha`); a larger master only by a whole multiple that reaches 1080p, 1440p or 4K |
 | `mg verify [file]` | the measurements of every master of the job's formats in `out/`, or of the file at the path given; off the loudness target, by how many dB the set would have to move; `out/verify.json` |
 | `mg motion-read [film] [--format name] [--model name]` | the format's master in `out/`, or the film of the job given, read as motion by a second reader against `board/board.json`; `--model` is the model asked first, and one silent for four minutes is left for the next; `out/motion-read-<film>.txt` |
+| `mg check same-second [<seconds…>] [--format name\|all]` · `mg check in-frame\|never-still\|join [--format name\|all]` · `mg check reading` | the page's promise and the brief's measures, each into `out/check-<what>.json`, failing by name and saying what it cannot judge: **same-second** — each moment (the page's events, or the seconds given) drawn twice in two browsers, the second time after other moments, every pixel the same · **in-frame** — no frame of the master holds the subject within the stated margin of an edge · **reading** — every text of `FILM.TEXTS` whole as long as its words need at the stated rate · **never-still** — no frame of a stated stretch of the master stands still · **join** — each instant of `FILM.JOINS` drawn by its two layers within the stated mean, and the measure seeing the second a pixel aside |
 | `mg hf status\|update [--guard index.html]` | the HyperFrames version guard; `update --guard` tries the newer version on another guard page than the skill's own |
 | `mg blender <scene.py> [--need-mb n] [-- args]` | Blender, headless, after a check that the graphics card has `--need-mb` MB free (4000 when not given) |
 

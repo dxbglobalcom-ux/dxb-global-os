@@ -1,0 +1,1123 @@
+$ bash scripts/construction/battery.sh
+=== 1/2 · THE CONSTRUCTION RUNTIME — the sandboxed suite ===
+
+ RUN  v3.2.6 /home/dxb/DxB Global OS
+
+[global-setup] construction engine 7690665340837392423/5 (postgres) — verified on the connection that does the work.
+ ✓ tests/b43/motion-graphics.test.ts (106 tests) 32818ms
+   ✓ B43 dxb-motion-graphics — every transition on one sheet that one screen shows whole > lays one still of each event on one sheet, in the order of time, as large as one screen shows whole — each format its own  1349ms
+   ✓ B43 dxb-motion-graphics — the page's promise is measured: the same second gives the same pixels > draws each event's moment twice, in two browsers, the second time after other moments — and passes a page that keeps nothing  518ms
+   ✓ B43 dxb-motion-graphics — the page's promise is measured: the same second gives the same pixels > fails on a page that keeps something from one moment to the next, naming the moment and its pixels  1027ms
+   ✓ B43 dxb-motion-graphics — the measures a film needs: the whole subject in frame, and never still > fails a film whose subject reaches the edge, naming the frames and the side, by the margin the job states  335ms
+   ✓ B43 dxb-motion-graphics — the measures a film needs: the whole subject in frame, and never still > never still: passes a stretch in which every frame moves, and fails one in which the picture stops, naming the frames  470ms
+   ✓ B43 dxb-motion-graphics — a join holds: the same instant drawn by its two layers > draws the instant by each layer, and once more with the second layer's subject a pixel aside: the join holds and the measure sees a pixel  333ms
+   ✓ B43 dxb-motion-graphics — a join holds: the same instant drawn by its two layers > fails a join whose layers lie apart, and a measure that cannot see a pixel — by the page or by the mean stated  793ms
+   ✓ B43 dxb-motion-graphics — what a render is asked for, and which film is kept > keeps a film that asks for WebGL only when the render names a graphics card  546ms
+   ✓ B43 dxb-motion-graphics — a cue is planned by the point of the sound it names > a cue may name a file of the starter set, and the job gets its own copy of it  360ms
+   ✓ B43 dxb-motion-graphics — a cue is planned by the point of the sound it names > the starter set's index states, for every file, the peak `mg sound` puts on an event  4170ms
+   ✓ B43 dxb-motion-graphics — verify holds a finished film to the job > passes a film whose cue sits on its event by its start, its peak or its end, and says where a late one is  4064ms
+   ✓ B43 dxb-motion-graphics — verify holds a finished film to the job > holds the film to job.json's loudness within 1 LU  576ms
+   ✓ B43 dxb-motion-graphics — verify holds a finished film to the job > a film off its loudness target is told by how many dB its whole set would have to move  762ms
+   ✓ B43 dxb-motion-graphics — verify holds a finished film to the job > one heard sound satisfies one cue: a second cue declared 20 ms after a single tick is not heard  1212ms
+   ✓ B43 dxb-motion-graphics — verify holds a finished film to the job > a sound repeated close by is heard once for each cue, each at its own place  1530ms
+   ✓ B43 dxb-motion-graphics — verify holds a finished film to the job > hears a stereo sound whose sides are in opposite phase  434ms
+   ✓ B43 dxb-motion-graphics — verify holds a finished film to the job > judges the file at the path it is given, not a film of the same name in out/  660ms
+   ✓ B43 dxb-motion-graphics — verify holds a finished film to the job > asked about no file, judges the masters of the job's formats and no other film in out/  500ms
+   ✓ B43 dxb-motion-graphics — verify holds a finished film to the job > a transparent master must carry an alpha channel that is not opaque throughout  1299ms
+   ✓ B43 dxb-motion-graphics — a tool that never ends does not hang the command > the tool is stopped at the time limit, and the limit is named  325ms
+   ✓ B43 dxb-motion-graphics — a tool that never ends does not hang the command > the command that started it fails in words, with nothing left half-made  325ms
+   ✓ B43 dxb-motion-graphics — a tool that never ends does not hang the command > a tool deaf to the request to end is ended all the same, and no process is left behind  6030ms
+   ✓ B43 dxb-motion-graphics — a tool that never ends does not hang the command > left to itself, the limit is two hours: long enough for a 4K render  1080ms
+(node:15715) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+stdout | tests/b43/media-hands.test.ts > 2. the media lane > a failing engine lands in failed with its error; a busy machine leaves the job queued
+[media-lane] b43t-c2dfdc-lane: job cd3f5049 (still) waits: card busy: test
+
+ ✓ tests/b43/media-hands.test.ts (12 tests) 10799ms
+   ✓ 1. the media tool group > cancel flips a queued job; wait times out honestly and renews the task lease  5128ms
+   ✓ 2. the media lane > cancel_requested reaches a running engine  420ms
+   ✓ 4. the lease heartbeat > a run longer than its lease is not reaped while the worker is alive  4529ms
+(node:16080) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+stderr | tests/r31/voice-line.test.ts > R3.1 — service e2e (real DB + Speaches, deterministic answer) > full call reaches ended with timings, lineage and cost 0
+[memory] recall failed on the voice lane — DXB_LITELLM_KEY_OS is not set — every API model call needs the department's LiteLLM virtual key (COST-02); raw provider keys never reach agents.
+
+stderr | tests/r31/voice-line.test.ts > R3.1 — service e2e (real DB + Speaches, deterministic answer) > worker path: intake parks 'routing', drainVoiceCalls answers + writes the handoff WAV
+[memory] recall failed on the voice lane — DXB_LITELLM_KEY_OS is not set — every API model call needs the department's LiteLLM virtual key (COST-02); raw provider keys never reach agents.
+
+stderr | tests/r31/voice-line.test.ts > R3.1 — service e2e (real DB + Speaches, deterministic answer) > director without a voice identity gets the fallback voice, degraded=true
+[memory] recall failed on the voice lane — DXB_LITELLM_KEY_OS is not set — every API model call needs the department's LiteLLM virtual key (COST-02); raw provider keys never reach agents.
+
+ ✓ tests/r31/voice-line.test.ts (11 tests) 8854ms
+   ✓ R3.1 — real Speaches roundtrip > Piper TR synth → whisper transcript preserves the question intent  2885ms
+   ✓ R3.1 — service e2e (real DB + Speaches, deterministic answer) > full call reaches ended with timings, lineage and cost 0  2983ms
+   ✓ R3.1 — service e2e (real DB + Speaches, deterministic answer) > director without a voice identity gets the fallback voice, degraded=true  2892ms
+(node:16158) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+stdout | tests/b43/media-lanes.test.ts > W8 · the media lane's seams > a child killed with SIGKILL — the hardest death — still gives its job back
+[media-lane] recovered orphan b2ac63df (probe, held by lane-pid-16294) → queued
+
+stdout | tests/b43/media-lanes.test.ts > W8 · the media lane's seams > start-up recovery gives back a job a dead process was holding
+[media-lane] recovered orphan a8830ed6 (probe, held by a-lane-that-died) → queued
+[media-lane] recovered orphan 9a5d174d (probe, held by a-lane-that-died) → cancelled
+
+ ✓ tests/b43/media-lanes.test.ts (10 tests) 7539ms
+   ✓ B43 · media lanes — the studio's hands are lanes too > a processor job is claimed while the card lane is inside a long shoot  601ms
+   ✓ B43 · media lanes — the studio's hands are lanes too > two card jobs never overlap — the card is one  450ms
+   ✓ B43 · media lanes — the studio's hands are lanes too > a lane that just finished looks again at once; an idle lane rests one tick  371ms
+   ✓ B43 · media lanes on the engine — kinds are claimed by the right lane, at the same time > a GPU-kinds lane and a CPU-kinds lane run their jobs at once; the book shows the overlap  934ms
+   ✓ W8 · the media lane's seams > a REAL child process killed mid-run ends 'cancelled', never 'failed'  5025ms
+ ✓ tests/b46/drawer-repairs.test.ts (9 tests) 7603ms
+   ✓ profile-sync.sh — a scratch root never touches the real unit, a stop never leaves his settings > a copy stopped by SIGTERM in the middle leaves no half copy and none of his settings in Default  3009ms
+   ✓ fetch.py — a door that is stopped takes its whole tree with it > a door that outlives its timeout is ended with every process under it  1100ms
+   ✓ fetch.py — a door that is stopped takes its whole tree with it > `timeout N fetch.py` — the callers' stop — still ends the door that is running  3113ms
+ ✓ tests/construction/engine-lock-wait.test.ts (19 tests) 5174ms
+   ✓ run.sh — the door > DXB_ENGINE_LOCK_WAIT=1: waits ~1 s, says so once, then refuses as today  1008ms
+   ✓ run.sh — the door > DXB_ENGINE_LOCK_WAIT=10: queues behind a 1 s holder and then goes through  1007ms
+   ✓ battery.sh — refuses before it does any work > DXB_ENGINE_LOCK_WAIT=1: waits ~1 s, says so once, then refuses as today  1009ms
+   ✓ global-teardown.ts — takeTheEngine, in this process with a private TMPDIR > DXB_ENGINE_LOCK_WAIT=1: waits ~1 s, says so once, then refuses  1008ms
+   ✓ global-teardown.ts — takeTheEngine, in this process with a private TMPDIR > DXB_ENGINE_LOCK_WAIT=10: queues behind a 1 s holder, takes the lock, and gives it back  1063ms
+(node:16576) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/e8/ops-live.test.ts (6 tests) 4103ms
+   ✓ E8.3 collector — 1 s debounce onto dxb:ops:live (§18/§21/§24) > 10 rapid INSERTs → ≤2 publishes, one envelope carrying payload.batch  1838ms
+   ✓ E8.3 collector — 1 s debounce onto dxb:ops:live (§18/§21/§24) > a single event publishes verbatim — the §24 probe contract  919ms
+   ✓ E8.3 collector — 1 s debounce onto dxb:ops:live (§18/§21/§24) > real claim path: dispatch → runWorkerOnce → run.started/run.succeeded reach the channel  959ms
+ ✓ tests/b36/no-company-fallbacks.test.ts (4 tests) 3872ms
+   ✓ B36 Block 4 — nothing falls back to the company's database > (1) the sweep really walked this repository  1953ms
+   ✓ B36 Block 4 — nothing falls back to the company's database > (2) no tracked file binds the company's address to DXB_DATABASE_URL  1912ms
+ ✓ tests/phase3/crash.test.ts (1 test) 3088ms
+   ✓ crash durability (QUEUE-02, kill -9) > reaps the dead owner's lease and hands the SAME task to a new worker  3070ms
+(node:16817) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:16906) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:16918) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/phase7/locked-tool-review.test.ts (15 tests) 2463ms
+   ✓ a locked tool resolved by the system itself (his yes of 2026-10-04) > (h2) a schema with an own `__proto__` key is written whole and the written file verifies (Sol F12, fixed 2026-10-06)  319ms
+   ✓ a locked tool resolved by the system itself (his yes of 2026-10-04) > (h) manifest-add: shows without --yes, vouches with it, and the next check lifts the lock  547ms
+ ✓ tests/b43/motion-graphics-read.test.ts (22 tests) 2962ms
+   ✓ B43 dxb-motion-graphics — the film is read as motion by a second reader > upload-echo: an upload answered with the key in its address, or with an address that is not the reader's own, is refused and never asked about  337ms
+   ✓ B43 dxb-motion-graphics — the request itself waits as long as it is told to > sends the method, the headers and the body, and returns the status and the text  807ms
+ ✓ tests/b36/fallback-count.test.ts (1 test) 2105ms
+   ✓ B36 — the board's fallback figure is the counter's figure > matches, file for file and bucket for bucket  2104ms
+(node:17529) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+stdout | tests/phase6/known-facts.test.ts > known-fact battery — 20 facts end-to-end across the composition > BATTERY >= 18/20: commit through the door, recall through the full pipeline, verify bodies
+Q01 fact      -> pgvector HIT
+Q02 fact      -> pgvector HIT
+Q03 fact      -> pgvector HIT
+Q04 fact      -> pgvector HIT
+Q05 fact      -> pgvector HIT
+Q06 relation  -> graphify HIT
+Q07 relation  -> graphify HIT
+Q08 relation  -> graphify HIT
+Q09 relation  -> graphify HIT
+Q10 relation  -> graphify HIT
+Q11 artifact  -> obsidian HIT
+Q12 artifact  -> obsidian HIT
+Q13 artifact  -> obsidian HIT
+Q14 artifact  -> obsidian HIT
+Q15 artifact  -> obsidian HIT
+Q16 procedure -> notebook HIT
+Q17 procedure -> notebook HIT
+Q18 procedure -> notebook HIT
+Q19 procedure -> notebook HIT
+Q20 procedure -> notebook HIT
+BATTERY=20/20
+
+ ✓ tests/phase6/known-facts.test.ts (4 tests) 1812ms
+   ✓ known-fact battery — 20 facts end-to-end across the composition > BATTERY >= 18/20: commit through the door, recall through the full pipeline, verify bodies  1464ms
+ ✓ tests/b46/gate-embedded.test.ts (5 tests) 1736ms
+   ✓ gate-embedded — a link is fetched only when a post that carried it is not off-topic > eliminates a link whose every parent is off-topic, keeps one beside an on-topic or unjudged parent  386ms
+   ✓ gate-embedded — a link is fetched only when a post that carried it is not off-topic > a gated link leaves the hunters' list and stays in the ledger with its reason  625ms
+   ✓ gate-embedded — a link is fetched only when a post that carried it is not off-topic > a body that lands on a machine-gated row sends it back to pending; a direct verdict stays  402ms
+ ✓ tests/b43/task-lanes.test.ts (7 tests) 1578ms
+   ✓ B43 · task lanes — one long job never holds the other hands > lane 2 takes the next task while lane 1 is inside a long run  602ms
+   ✓ B43 · task lanes — one long job never holds the other hands > an idle lane rests one tick; a working lane looks again at once  321ms
+ ✓ tests/governance/codex-mirror-check.test.ts (6 tests) 1579ms
+   ✓ sync-codex-mirror.sh rewrites only the hook paths it mirrors > a .sh hook and the bare hooks folder move to .codex/hooks/; a .py hook and a home path stay  315ms
+   ✓ sync-codex-mirror.sh leaves home paths alone and moves every hook it copies (B3) > a home path stays exactly as written under every substitution  313ms
+   ✓ sync-codex-mirror.sh leaves home paths alone and moves every hook it copies (B3) > a hook named with '+' or a space moves and is mirrored; a ghost hook and a .bak stay  355ms
+ ✓ tests/hooks/opening-budget.test.ts (8 tests) 1389ms
+(node:19945) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/phase7/pin-quarantine.test.ts (18 tests) 1122ms
+(node:20022) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/e9/library.test.ts (13 tests) 957ms
+   ✓ grant→profile chain (G3, §21 E2E) > full record→profile→resolution chain incl. revoke refusal  374ms
+   ✓ grant→profile chain (G3, §21 E2E) > compileLibraryProfiles: staging swap, hash-skip, stale overlay cleanup, system event  365ms
+ ✓ tests/governance/refuter-gate.test.ts (12 tests) 932ms
+ ✓ tests/b43/kisayol.test.ts (23 tests) 697ms
+(node:20945) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/b38/ops-live-is-hosted.test.ts (4 tests) 586ms
+   ✓ B38 — the ops:live collector has a host > stops cleanly, and stays stopped  407ms
+(node:21024) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+stderr | tests/b39/dispatch-brakes.test.ts > B39 · H1 — the subscription path spends where a brake can see it > crossing the hourly ceiling HOLDS the execution leg — and only that leg
+[worker-loop] execution leg held: 4800 tokens in the last hour, ceiling 1000
+
+stdout | tests/b39/dispatch-brakes.test.ts > B39 · H1 — the subscription path spends where a brake can see it > crossing the hourly ceiling HOLDS the execution leg — and only that leg
+[qa] task 2c74204d-515b-414f-a729-2ee13651301c PASS (confidence 0.95) — the judge took 1 ms in 1 call
+
+ ✓ tests/b39/dispatch-brakes.test.ts (15 tests) 368ms
+(node:21101) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/e9/workflow-runner.test.ts (24 tests) 385ms
+(node:21178) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/e10/spawn-binding.test.ts (6 tests) 399ms
+(node:21254) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+stderr | tests/e8/obs-wrapper.test.ts > E8.1 spill — flush failure never blocks, evidence survives > 3 failed attempts spill to disk; restoreSpill replays them
+[obs] flush failed 3x for run e5064c6b-d371-4900-a70b-b40ff92e7d55 — spilling 1 rows: Error: sink down
+    at RunScope.failingInsert [as insert] [90m(/home/dxb/DxB Global OS/[39mtests/e8/obs-wrapper.test.ts:156:13[90m)[39m
+    at [90m/home/dxb/DxB Global OS/[39mpackages/observability/src/run-scope.ts:166:22
+[90m    at processTicksAndRejections (node:internal/process/task_queues:103:5)[39m
+    at RunScope.drain [90m(/home/dxb/DxB Global OS/[39mpackages/observability/src/run-scope.ts:215:5[90m)[39m
+    at close [90m(/home/dxb/DxB Global OS/[39mpackages/observability/src/run-scope.ts:292:5[90m)[39m
+    at runScope [90m(/home/dxb/DxB Global OS/[39mpackages/observability/src/run-scope.ts:322:5[90m)[39m
+    at [90m/home/dxb/DxB Global OS/[39mtests/e8/obs-wrapper.test.ts:159:23
+    at [90mfile:///home/dxb/DxB%20Global%20OS/[39mnode_modules/[4m.pnpm[24m/@vitest+runner@3.2.6/node_modules/[4m@vitest/runner[24m/dist/chunk-hooks.js:752:20
+
+stderr | tests/e8/obs-wrapper.test.ts > E8.1 spill — flush failure never blocks, evidence survives > a corrupt spill file is kept, not deleted (no evidence loss)
+[obs] spill restore failed for obs-spill-corrupt.jsonl (kept for retry): SyntaxError: Expected property name or '}' in JSON at position 1 (line 1 column 2)
+    at JSON.parse (<anonymous>)
+    at [90m/home/dxb/DxB Global OS/[39mpackages/observability/src/spill.ts:49:29
+    at Array.map (<anonymous>)
+    at restoreSpill [90m(/home/dxb/DxB Global OS/[39mpackages/observability/src/spill.ts:49:10[90m)[39m
+    at [90m/home/dxb/DxB Global OS/[39mtests/e8/obs-wrapper.test.ts:194:28
+    at [90mfile:///home/dxb/DxB%20Global%20OS/[39mnode_modules/[4m.pnpm[24m/@vitest+runner@3.2.6/node_modules/[4m@vitest/runner[24m/dist/chunk-hooks.js:155:11
+    at [90mfile:///home/dxb/DxB%20Global%20OS/[39mnode_modules/[4m.pnpm[24m/@vitest+runner@3.2.6/node_modules/[4m@vitest/runner[24m/dist/chunk-hooks.js:752:26
+    at [90mfile:///home/dxb/DxB%20Global%20OS/[39mnode_modules/[4m.pnpm[24m/@vitest+runner@3.2.6/node_modules/[4m@vitest/runner[24m/dist/chunk-hooks.js:1897:20
+    at new Promise (<anonymous>)
+    at runWithTimeout [90m(file:///home/dxb/DxB%20Global%20OS/[39mnode_modules/[4m.pnpm[24m/@vitest+runner@3.2.6/node_modules/[4m@vitest/runner[24m/dist/chunk-hooks.js:1863:10[90m)[39m
+
+stderr | tests/e8/obs-wrapper.test.ts > E8.1 worker-shim integration — real claim path > runWorkerOnce wraps the executor: agent_runs + tool_calls land, task reaches review
+[obs] spill restore failed for obs-spill-corrupt.jsonl (kept for retry): SyntaxError: Expected property name or '}' in JSON at position 1 (line 1 column 2)
+    at JSON.parse (<anonymous>)
+    at [90m/home/dxb/DxB Global OS/[39mpackages/observability/src/spill.ts:49:29
+    at Array.map (<anonymous>)
+    at restoreSpill [90m(/home/dxb/DxB Global OS/[39mpackages/observability/src/spill.ts:49:10[90m)[39m
+    at runScope [90m(/home/dxb/DxB Global OS/[39mpackages/observability/src/run-scope.ts:263:11[90m)[39m
+    at runWorkerOnce [90m(/home/dxb/DxB Global OS/[39mpackages/orchestrator/src/worker-shim.ts:900:34[90m)[39m
+[90m    at processTicksAndRejections (node:internal/process/task_queues:103:5)[39m
+    at [90m/home/dxb/DxB Global OS/[39mtests/e8/obs-wrapper.test.ts:217:20
+    at [90mfile:///home/dxb/DxB%20Global%20OS/[39mnode_modules/[4m.pnpm[24m/@vitest+runner@3.2.6/node_modules/[4m@vitest/runner[24m/dist/chunk-hooks.js:752:20
+
+stderr | tests/e8/obs-wrapper.test.ts > E8.1 worker-shim integration — real claim path > a throwing executor fails BOTH the task and the run record
+[obs] spill restore failed for obs-spill-corrupt.jsonl (kept for retry): SyntaxError: Expected property name or '}' in JSON at position 1 (line 1 column 2)
+    at JSON.parse (<anonymous>)
+    at [90m/home/dxb/DxB Global OS/[39mpackages/observability/src/spill.ts:49:29
+    at Array.map (<anonymous>)
+    at restoreSpill [90m(/home/dxb/DxB Global OS/[39mpackages/observability/src/spill.ts:49:10[90m)[39m
+    at runScope [90m(/home/dxb/DxB Global OS/[39mpackages/observability/src/run-scope.ts:263:11[90m)[39m
+    at runWorkerOnce [90m(/home/dxb/DxB Global OS/[39mpackages/orchestrator/src/worker-shim.ts:900:34[90m)[39m
+[90m    at processTicksAndRejections (node:internal/process/task_queues:103:5)[39m
+    at [90m/home/dxb/DxB Global OS/[39mtests/e8/obs-wrapper.test.ts:275:20
+    at [90mfile:///home/dxb/DxB%20Global%20OS/[39mnode_modules/[4m.pnpm[24m/@vitest+runner@3.2.6/node_modules/[4m@vitest/runner[24m/dist/chunk-hooks.js:752:20
+
+ ✓ tests/e8/obs-wrapper.test.ts (9 tests) 442ms
+   ✓ E8.1 tool_calls buffer — N calls → N rows > size-flushes at 20 before the run closes  305ms
+(node:21330) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+stdout | tests/phase5/ladder.test.ts > master-plan step 6 — 2× fail → third claim at higher tier (events as evidence) > worker fails twice; the THIRD claim serves the task with the bumped model_tier
+ladder event chain: [
+ {
+  "event": "created",
+  "from_status": "inbox",
+  "to_status": "queued",
+  "actor": "orchestrator:dispatch",
+  "payload": {
+   "deps": [],
+   "envelope_index": 0
+  }
+ },
+ {
+  "event": "claimed",
+  "from_status": "queued",
+  "to_status": "claimed",
+  "actor": "worker-lad-1",
+  "payload": {
+   "lease_seconds": 900
+  }
+ },
+ {
+  "event": "transition",
+  "from_status": "claimed",
+  "to_status": "running",
+  "actor": "worker-lad-1",
+  "payload": {}
+ },
+ {
+  "event": "transition",
+  "from_status": "running",
+  "to_status": "failed",
+  "actor": "worker-lad-1",
+  "payload": {
+   "error": "synthetic ladder failure: first attempt"
+  }
+ },
+ {
+  "event": "transition",
+  "from_status": "failed",
+  "to_status": "queued",
+  "actor": "orchestrator:escalate",
+  "payload": {
+   "ladder": "retry-same-tier",
+   "fail_count": 1,
+   "model_tier": "L4"
+  }
+ },
+ {
+  "event": "claimed",
+  "from_status": "queued",
+  "to_status": "claimed",
+  "actor": "worker-lad-1",
+  "payload": {
+   "lease_seconds": 900
+  }
+ },
+ {
+  "event": "transition",
+  "from_status": "claimed",
+  "to_status": "running",
+  "actor": "worker-lad-1",
+  "payload": {}
+ },
+ {
+  "event": "transition",
+  "from_status": "running",
+  "to_status": "failed",
+  "actor": "worker-lad-1",
+  "payload": {
+   "error": "synthetic ladder failure: second attempt"
+  }
+ },
+ {
+  "event": "transition",
+  "from_status": "failed",
+  "to_status": "queued",
+  "actor": "orchestrator:escalate",
+  "payload": {
+   "ladder": "specialist",
+   "fail_count": 2,
+   "model_tier": "L3"
+  }
+ },
+ {
+  "event": "claimed",
+  "from_status": "queued",
+  "to_status": "claimed",
+  "actor": "worker-lad-2",
+  "payload": {
+   "lease_seconds": 900
+  }
+ },
+ {
+  "event": "transition",
+  "from_status": "claimed",
+  "to_status": "running",
+  "actor": "worker-lad-2",
+  "payload": {}
+ },
+ {
+  "event": "transition",
+  "from_status": "running",
+  "to_status": "review",
+  "actor": "worker-lad-2",
+  "payload": {
+   "confidence": 0.9
+  }
+ }
+]
+
+ ✓ tests/phase5/ladder.test.ts (6 tests) 320ms
+(node:21407) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/b51/class-route.test.ts (5 tests) 456ms
+stderr | tests/e10/hook.test.ts > pre-gate — 17-standard mechanisms (§2/§6) > §17 FAIL-CLOSED: DB unreachable → REJECT hook_unavailable (spawn held, no throw)
+[hook] FAIL-CLOSED — policies unreachable: Error: connect ECONNREFUSED 127.0.0.1:1
+    at [90m/home/dxb/DxB Global OS/[39mnode_modules/[4m.pnpm[24m/pg-pool@3.14.0_pg@8.22.0/node_modules/[4mpg-pool[24m/index.js:45:11
+[90m    at processTicksAndRejections (node:internal/process/task_queues:103:5)[39m
+    at PostgresDriver.acquireConnection [90m(file:///home/dxb/DxB%20Global%20OS/[39mnode_modules/[4m.pnpm[24m/kysely@0.29.3/node_modules/[4mkysely[24m/dist/dialect/postgres/postgres-driver.js:21:24[90m)[39m
+    at RuntimeDriver.acquireConnection [90m(file:///home/dxb/DxB%20Global%20OS/[39mnode_modules/[4m.pnpm[24m/kysely@0.29.3/node_modules/[4mkysely[24m/dist/driver/runtime-driver.js:54:28[90m)[39m
+    at DefaultConnectionProvider.provideConnection [90m(file:///home/dxb/DxB%20Global%20OS/[39mnode_modules/[4m.pnpm[24m/kysely@0.29.3/node_modules/[4mkysely[24m/dist/driver/default-connection-provider.js:8:28[90m)[39m
+    at DefaultQueryExecutor.executeQuery [90m(file:///home/dxb/DxB%20Global%20OS/[39mnode_modules/[4m.pnpm[24m/kysely@0.29.3/node_modules/[4mkysely[24m/dist/query-executor/query-executor-base.js:38:28[90m)[39m
+    at SelectQueryBuilderImpl.execute [90m(file:///home/dxb/DxB%20Global%20OS/[39mnode_modules/[4m.pnpm[24m/kysely@0.29.3/node_modules/[4mkysely[24m/dist/query-builder/select-query-builder.js:318:24[90m)[39m
+    at loadPolicies [90m(/home/dxb/DxB Global OS/[39mpackages/hook/src/policies.ts:80:15[90m)[39m
+    at preTask [90m(/home/dxb/DxB Global OS/[39mpackages/hook/src/pre-task.ts:183:12[90m)[39m
+    at [90m/home/dxb/DxB Global OS/[39mtests/e10/hook.test.ts:419:23 {
+  errno: [33m-111[39m,
+  code: [32m'ECONNREFUSED'[39m,
+  syscall: [32m'connect'[39m,
+  address: [32m'127.0.0.1'[39m,
+  port: [33m1[39m
+}
+
+stderr | tests/e10/hook.test.ts > pre-gate — 17-standard mechanisms (§2/§6) > §17 FAIL-CLOSED: DB unreachable → REJECT hook_unavailable (spawn held, no throw)
+[hook] fail-closed alert also failed: Error: connect ECONNREFUSED 127.0.0.1:1
+    at [90m/home/dxb/DxB Global OS/[39mnode_modules/[4m.pnpm[24m/pg-pool@3.14.0_pg@8.22.0/node_modules/[4mpg-pool[24m/index.js:45:11
+[90m    at processTicksAndRejections (node:internal/process/task_queues:103:5)[39m
+    at PostgresDriver.acquireConnection [90m(file:///home/dxb/DxB%20Global%20OS/[39mnode_modules/[4m.pnpm[24m/kysely@0.29.3/node_modules/[4mkysely[24m/dist/dialect/postgres/postgres-driver.js:21:24[90m)[39m
+    at RuntimeDriver.acquireConnection [90m(file:///home/dxb/DxB%20Global%20OS/[39mnode_modules/[4m.pnpm[24m/kysely@0.29.3/node_modules/[4mkysely[24m/dist/driver/runtime-driver.js:54:28[90m)[39m
+    at DefaultConnectionProvider.provideConnection [90m(file:///home/dxb/DxB%20Global%20OS/[39mnode_modules/[4m.pnpm[24m/kysely@0.29.3/node_modules/[4mkysely[24m/dist/driver/default-connection-provider.js:8:28[90m)[39m
+    at DefaultQueryExecutor.executeQuery [90m(file:///home/dxb/DxB%20Global%20OS/[39mnode_modules/[4m.pnpm[24m/kysely@0.29.3/node_modules/[4mkysely[24m/dist/query-executor/query-executor-base.js:38:28[90m)[39m
+    at criticalAlert [90m(/home/dxb/DxB Global OS/[39mpackages/hook/src/pre-task.ts:20:5[90m)[39m
+    at preTask [90m(/home/dxb/DxB Global OS/[39mpackages/hook/src/pre-task.ts:186:5[90m)[39m
+    at [90m/home/dxb/DxB Global OS/[39mtests/e10/hook.test.ts:419:23
+    at [90mfile:///home/dxb/DxB%20Global%20OS/[39mnode_modules/[4m.pnpm[24m/@vitest+runner@3.2.6/node_modules/[4m@vitest/runner[24m/dist/chunk-hooks.js:752:20 {
+  errno: [33m-111[39m,
+  code: [32m'ECONNREFUSED'[39m,
+  syscall: [32m'connect'[39m,
+  address: [32m'127.0.0.1'[39m,
+  port: [33m1[39m
+}
+
+ ✓ tests/e10/hook.test.ts (35 tests) 326ms
+(node:21559) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/b43/assigned-seats.test.ts (6 tests) 362ms
+ ✓ tests/board/note-done.test.ts (16 tests) 383ms
+ ✓ tests/b46/maps-places.test.ts (8 tests) 369ms
+ ✓ tests/b36/gateway-door-is-not-stolen.test.ts (6 tests) 348ms
+(node:22031) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/b43/dispatch-book.test.ts (20 tests) 276ms
+ ✓ tests/b43/records-truth.test.ts (23 tests) 315ms
+   ✓ the records as they stand > pass every rule of the ruler  308ms
+(node:22186) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+stdout | tests/phase5/routing-data.test.ts > KERN-02 — routing is data (routing_rules), never code > KERN-02 proof: UPDATE one row → same intent resolves a different model, zero code changes
+KERN-02 UPDATE proof: before=probe-high after=probe-rerouted (row dfa8b17a-2bf0-426b-8684-4bf44c513525)
+
+ ✓ tests/phase5/routing-data.test.ts (10 tests | 5 skipped) 279ms
+(node:22261) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/phase6/adapters-roundtrip.test.ts (7 tests) 254ms
+(node:22337) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+stdout | tests/phase6/context-rot.test.ts > context-rot — 50-step control vs managed (master step 9) > CONTROL: budget disabled → the same 50 steps provably exceed the hard band
+control final context estimate: 37018 tokens (hard 16000)
+
+stdout | tests/phase6/context-rot.test.ts > context-rot — 50-step control vs managed (master step 9) > MANAGED: band held per step, compressions evented, evicted facts recall back, log written
+managed: 4 compressions at steps [17, 28, 38, 48]
+
+stdout | tests/phase6/context-rot.test.ts > context-rot — 50-step control vs managed (master step 9) > MANAGED: band held per step, compressions evented, evicted facts recall back, log written
+evicted planted facts: 10, 25, 40 — offload rows: 3
+
+ ✓ tests/phase6/context-rot.test.ts (4 tests | 1 skipped) 255ms
+ ✓ tests/b46/keep-scrubs-tokens.test.ts (6 tests) 242ms
+ ✓ tests/hooks/session-start-fits.test.ts (4 tests) 243ms
+(node:22726) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/phase4/velocity.test.ts (6 tests) 205ms
+(node:22807) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+stderr | tests/c9/chat-legs.test.ts > the drain routes a real message to the right leg > a status question arrives on the brief leg WITH a snapshot
+[memory] recall failed on the chat lane — DXB_LITELLM_KEY_OS is not set — every API model call needs the department's LiteLLM virtual key (COST-02); raw provider keys never reach agents.
+
+stderr | tests/c9/chat-legs.test.ts > the drain routes a real message to the right leg > a money question arrives on the strategy leg WITHOUT a snapshot
+[memory] recall failed on the chat lane — DXB_LITELLM_KEY_OS is not set — every API model call needs the department's LiteLLM virtual key (COST-02); raw provider keys never reach agents.
+
+stderr | tests/c9/chat-legs.test.ts > B64 — the drain carries his levels > a greeting goes to the normal leg with no override and no notice
+[memory] recall failed on the chat lane — DXB_LITELLM_KEY_OS is not set — every API model call needs the department's LiteLLM virtual key (COST-02); raw provider keys never reach agents.
+
+stderr | tests/c9/chat-legs.test.ts > B64 — the drain carries his levels > plan talk goes to strategy and opens with the notice once, not on the next plan turn
+[memory] recall failed on the chat lane — DXB_LITELLM_KEY_OS is not set — every API model call needs the department's LiteLLM virtual key (COST-02); raw provider keys never reach agents.
+
+stderr | tests/c9/chat-legs.test.ts > B64 — the drain carries his levels > plan talk goes to strategy and opens with the notice once, not on the next plan turn
+[memory] recall failed on the chat lane — DXB_LITELLM_KEY_OS is not set — every API model call needs the department's LiteLLM virtual key (COST-02); raw provider keys never reach agents.
+
+stderr | tests/c9/chat-legs.test.ts > B64 — the drain carries his levels > plan talk goes to strategy and opens with the notice once, not on the next plan turn
+[memory] recall failed on the chat lane — DXB_LITELLM_KEY_OS is not set — every API model call needs the department's LiteLLM virtual key (COST-02); raw provider keys never reach agents.
+
+stderr | tests/c9/chat-legs.test.ts > B64 — the drain carries his levels > "Max'a geç" is confirmed in one line, holds max on the next turns, and drops on "normale dön"
+[memory] recall failed on the chat lane — DXB_LITELLM_KEY_OS is not set — every API model call needs the department's LiteLLM virtual key (COST-02); raw provider keys never reach agents.
+
+stderr | tests/c9/chat-legs.test.ts > B64 — the drain carries his levels > "Max'a geç" is confirmed in one line, holds max on the next turns, and drops on "normale dön"
+[memory] recall failed on the chat lane — DXB_LITELLM_KEY_OS is not set — every API model call needs the department's LiteLLM virtual key (COST-02); raw provider keys never reach agents.
+
+stderr | tests/c9/chat-legs.test.ts > B64 — the drain carries his levels > "Max'a geç" is confirmed in one line, holds max on the next turns, and drops on "normale dön"
+[memory] recall failed on the chat lane — DXB_LITELLM_KEY_OS is not set — every API model call needs the department's LiteLLM virtual key (COST-02); raw provider keys never reach agents.
+
+stderr | tests/c9/chat-legs.test.ts > B64 — the drain carries his levels > another level word replaces the held one
+[memory] recall failed on the chat lane — DXB_LITELLM_KEY_OS is not set — every API model call needs the department's LiteLLM virtual key (COST-02); raw provider keys never reach agents.
+
+stderr | tests/c9/chat-legs.test.ts > B64 — the drain carries his levels > the held level drops after 30 minutes without a message from him
+[memory] recall failed on the chat lane — DXB_LITELLM_KEY_OS is not set — every API model call needs the department's LiteLLM virtual key (COST-02); raw provider keys never reach agents.
+
+stderr | tests/c9/chat-legs.test.ts > B64 — the drain carries his levels > within 30 minutes the hold stays
+[memory] recall failed on the chat lane — DXB_LITELLM_KEY_OS is not set — every API model call needs the department's LiteLLM virtual key (COST-02); raw provider keys never reach agents.
+
+stderr | tests/c9/chat-legs.test.ts > B64 — the drain carries his levels > a mail text carrying "beyni değiştir" changes nothing
+[memory] recall failed on the chat lane — DXB_LITELLM_KEY_OS is not set — every API model call needs the department's LiteLLM virtual key (COST-02); raw provider keys never reach agents.
+
+stderr | tests/c9/chat-legs.test.ts > B64 — his level word at the start of a longer message > "Max'a geç, şu planı düşün" switches, then answers the rest at max in the same turn, opening with the confirmation
+[memory] recall failed on the chat lane — DXB_LITELLM_KEY_OS is not set — every API model call needs the department's LiteLLM virtual key (COST-02); raw provider keys never reach agents.
+
+stderr | tests/c9/chat-legs.test.ts > B64 — his level word at the start of a longer message > "geçen hafta max'a geçmiştik" changes nothing
+[memory] recall failed on the chat lane — DXB_LITELLM_KEY_OS is not set — every API model call needs the department's LiteLLM virtual key (COST-02); raw provider keys never reach agents.
+
+stderr | tests/c9/chat-legs.test.ts > B64 — every change of his level is on the record > set and cleared by "normale dön": his sentence, the old and the new level, actor ceo via hamza
+[memory] recall failed on the chat lane — DXB_LITELLM_KEY_OS is not set — every API model call needs the department's LiteLLM virtual key (COST-02); raw provider keys never reach agents.
+
+stderr | tests/c9/chat-legs.test.ts > B64 — every change of his level is on the record > expiry after 30 minutes is recorded when it is detected — as the hold ending, not as his act
+[memory] recall failed on the chat lane — DXB_LITELLM_KEY_OS is not set — every API model call needs the department's LiteLLM virtual key (COST-02); raw provider keys never reach agents.
+
+stderr | tests/c9/chat-legs.test.ts > B64 — Sol's findings on the levels > A2: the drain leaves the level and its history unchanged for a quoted sentence
+[memory] recall failed on the chat lane — DXB_LITELLM_KEY_OS is not set — every API model call needs the department's LiteLLM virtual key (COST-02); raw provider keys never reach agents.
+
+stderr | tests/c9/chat-legs.test.ts > B64 — Sol's findings on the levels > B2: a daemon command renews the hold (max at 0, kapan at 20, selam at 31 keeps max)
+[memory] recall failed on the chat lane — DXB_LITELLM_KEY_OS is not set — every API model call needs the department's LiteLLM virtual key (COST-02); raw provider keys never reach agents.
+
+stderr | tests/c9/chat-legs.test.ts > B64 — Sol's findings on the levels > B2: the hold ends at exactly 30 quiet minutes
+[memory] recall failed on the chat lane — DXB_LITELLM_KEY_OS is not set — every API model call needs the department's LiteLLM virtual key (COST-02); raw provider keys never reach agents.
+
+stderr | tests/c9/chat-legs.test.ts > B64 — Sol's findings on the levels > B3: back at the row's xhigh after his level expired, the notice is said again
+[memory] recall failed on the chat lane — DXB_LITELLM_KEY_OS is not set — every API model call needs the department's LiteLLM virtual key (COST-02); raw provider keys never reach agents.
+
+stderr | tests/c9/chat-legs.test.ts > B64 — Sol's findings on the levels > B3: back at the row's xhigh after his level expired, the notice is said again
+[memory] recall failed on the chat lane — DXB_LITELLM_KEY_OS is not set — every API model call needs the department's LiteLLM virtual key (COST-02); raw provider keys never reach agents.
+
+stderr | tests/c9/chat-legs.test.ts > B64 — Sol's findings on the levels > B3: back at the row's xhigh after his level expired, the notice is said again
+[memory] recall failed on the chat lane — DXB_LITELLM_KEY_OS is not set — every API model call needs the department's LiteLLM virtual key (COST-02); raw provider keys never reach agents.
+
+stderr | tests/c9/chat-legs.test.ts > B64 — Sol's findings on the levels > B4: a level change is confirmed even when the answer fails, in both languages
+[memory] recall failed on the chat lane — DXB_LITELLM_KEY_OS is not set — every API model call needs the department's LiteLLM virtual key (COST-02); raw provider keys never reach agents.
+
+stderr | tests/c9/chat-legs.test.ts > B64 — Sol's findings on the levels > B4: a level change is confirmed even when the answer fails, in both languages
+[memory] recall failed on the chat lane — DXB_LITELLM_KEY_OS is not set — every API model call needs the department's LiteLLM virtual key (COST-02); raw provider keys never reach agents.
+
+stderr | tests/c9/chat-legs.test.ts > B64 — Sol's findings on the levels > B6: an English strategy turn gets the notice in English
+[memory] recall failed on the chat lane — DXB_LITELLM_KEY_OS is not set — every API model call needs the department's LiteLLM virtual key (COST-02); raw provider keys never reach agents.
+
+ ✓ tests/c9/chat-legs.test.ts (39 tests) 236ms
+(node:22882) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/c9/model-catalog-one-place.test.ts (10 tests) 149ms
+ ✓ tests/e9/project-command.test.ts (17 tests) 208ms
+(node:23033) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/b51/gate-switch.test.ts (8 tests) 220ms
+ ✓ tests/b36/seed-is-fiction.test.ts (11 tests) 261ms
+ ✓ tests/b36/wall-question.test.ts (3 tests) 213ms
+stdout | tests/governance/company-isolation.test.ts > company isolation — the critical gate's Codex runs from the company's own home > the real runner hands a stand-in codex the company home, never the construction's ~/.codex
+[isolation] lane=gate model=stand-in session=? home=/tmp/company-codex-TYXsR0/company-codex notes=0 mcp=0 ok=true tokens=?
+
+stdout | tests/governance/company-isolation.test.ts > company isolation — the critical gate's Codex runs from the company's own home > the real runner under a refused home never launches codex — ok:false, the reason named
+[isolation] lane=gate model=stand-in session=? home=refused notes=? mcp=? ok=false tokens=?
+
+stdout | tests/governance/company-isolation.test.ts > company isolation — the critical gate's Codex runs from the company's own home > always passes the seat's reasoning effort to the CLI — the company home sets none
+[isolation] lane=gate model=stand-in session=0199a2b3-stand-in home=/tmp/company-codex-jpL9Sf/company-codex notes=0 mcp=0 ok=true tokens=12345
+
+(node:23293) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/governance/company-isolation.test.ts (112 tests | 1 skipped) 213ms
+(node:23374) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/phase4/approval-flow.test.ts (8 tests) 168ms
+(node:23450) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+stderr | tests/e8/log-decision.test.ts > E8.2 logDecision — the 8-field row > never throws on a failed write; marks the task degraded_logging
+[obs] logDecision FAILED (workflow_branch by orchestrator:test): insert or update on table "decision_log" violates foreign key constraint "decision_log_approval_id_fkey"
+
+stdout | tests/e8/log-decision.test.ts > E8.2 §10 call sites — decisions land where the code decides > qa pass on an approval-class task writes approval_conversion
+[qa] task 88cd9ff9-44c3-4d4f-b2db-5d762cb1e9bf PASS (confidence 0.9) — the judge took 0 ms in 1 call
+
+stdout | tests/e8/log-decision.test.ts > E8.2 §10 call sites — decisions land where the code decides > qa fail writes a workflow_branch decision with the verdict confidence
+[qa] task 7b3bedfe-a3b1-4f62-afe4-9d5e139d26cd FAIL (confidence 0.3) — the judge took 0 ms in 1 call
+
+ ✓ tests/e8/log-decision.test.ts (6 tests) 198ms
+(node:23526) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+stdout | tests/phase5/decompose-dispatch.test.ts > worker shim — e2e claim→work→done with full event chain (master-plan step 5) > one envelope runs end-to-end; task_events chain complete and ordered
+e2e event chain: [
+ {
+  "event": "created",
+  "from_status": "inbox",
+  "to_status": "queued",
+  "actor": "orchestrator:dispatch"
+ },
+ {
+  "event": "claimed",
+  "from_status": "queued",
+  "to_status": "claimed",
+  "actor": "worker-e2e-1"
+ },
+ {
+  "event": "transition",
+  "from_status": "claimed",
+  "to_status": "running",
+  "actor": "worker-e2e-1"
+ },
+ {
+  "event": "transition",
+  "from_status": "running",
+  "to_status": "review",
+  "actor": "worker-e2e-1"
+ },
+ {
+  "event": "transition",
+  "from_status": "review",
+  "to_status": "done",
+  "actor": "test:head-review"
+ }
+]
+
+ ✓ tests/phase5/decompose-dispatch.test.ts (10 tests | 1 skipped) 203ms
+(node:23602) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/e9/approval-center.test.ts (22 tests) 208ms
+(node:23678) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/phase7/profile-denial.test.ts (4 tests) 206ms
+(node:23753) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/r23/unified-constitution.test.ts (4 tests) 217ms
+ ✓ tests/e8/alerts.test.ts (12 tests) 153ms
+ ✓ tests/b51/succession.test.ts (17 tests) 178ms
+ ✓ tests/b23/graph-is-not-stale.test.ts (5 tests) 181ms
+(node:24049) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+stdout | tests/r21/worker-loop.test.ts > R2.1 resident worker loop (audit F-01 drain semantics) > leg 2: confident review → QA pass → done (terminal, approval_class none)
+[qa] task 0d207197-18e0-4a10-9f90-a9a4d6759e19 PASS (confidence 0.95) — the judge took 1 ms in 1 call
+
+stdout | tests/r21/worker-loop.test.ts > R2.1 resident worker loop (audit F-01 drain semantics) > leg 2→3: QA fail → failed → ladder requeues in the same drain
+[qa] task 9dd4e328-ff4a-40bc-aaae-91149f3c4cbd FAIL (confidence 0.9) — the judge took 0 ms in 1 call
+
+ ✓ tests/r21/worker-loop.test.ts (6 tests) 177ms
+ ✓ tests/e8/audit-surface.test.ts (8 tests) 167ms
+ ✓ tests/b36/global-setup-identity.test.ts (3 tests) 154ms
+ ✓ tests/phase8/crm-views.test.ts (8 tests) 119ms
+ ✓ tests/b64/goal-not-intent.test.ts (4 tests) 109ms
+ ✓ tests/phase8/approval-inbox.test.ts (10 tests) 141ms
+(node:24503) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/phase4/toctou.test.ts (5 tests) 133ms
+(node:24579) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/phase3/registry.test.ts (5 tests) 132ms
+(node:24656) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/phase4/gate-canary.test.ts (5 tests) 128ms
+ ✓ tests/e125/activation-contract.test.ts (8 tests) 132ms
+(node:24807) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/c9/brain-floor.test.ts (14 tests) 121ms
+(node:24883) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/phase3/lifecycle.test.ts (5 tests) 114ms
+ ✓ tests/b64/anon-doors-closed.test.ts (20 tests) 108ms
+(node:25034) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/phase7/video-ingest.test.ts (7 tests | 1 skipped) 101ms
+(node:25110) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/r24/staging-outbox.test.ts (1 test) 96ms
+(node:25187) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/b41/design-skills.test.ts (17 tests) 101ms
+(node:25262) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/c9/proactive-briefing.test.ts (17 tests) 58ms
+(node:25337) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/phase4/double-fire.test.ts (2 tests) 92ms
+ ✓ tests/e7/routing-slots.test.ts (8 tests) 81ms
+ ✓ tests/r12/revenue-core.test.ts (8 tests) 96ms
+(node:25564) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/phase6/recall.test.ts (7 tests | 1 skipped) 83ms
+(node:25640) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/phase6/memory-drawer.test.ts (14 tests) 92ms
+ ✓ tests/b51/p6-hamza.test.ts (11 tests) 85ms
+ ✓ tests/phase6/pgvector.test.ts (5 tests) 80ms
+ ✓ tests/c42/rival-intel-ledger.test.ts (15 tests) 77ms
+(node:25936) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+stderr | tests/c9/chat-sessions.test.ts > sessions — the answer half only sees its own conversation > Hamza's context window is scoped to the thread, and his reply joins it
+[memory] recall failed on the chat lane — DXB_LITELLM_KEY_OS is not set — every API model call needs the department's LiteLLM virtual key (COST-02); raw provider keys never reach agents.
+
+ ✓ tests/c9/chat-sessions.test.ts (10 tests) 78ms
+ ✓ tests/c9/data-controls.test.ts (9 tests) 110ms
+(node:26086) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/b43/w9-road-proof.test.ts (3 tests) 67ms
+(node:26162) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/phase6/contradiction.test.ts (4 tests | 1 skipped) 71ms
+(node:26238) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/phase7/profile-denial-runtime.test.ts (2 tests) 113ms
+(node:26313) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/b39/qa-gate-receipt.test.ts (2 tests) 75ms
+ ✓ tests/governance/sol-dump-sweep.test.ts (4 tests) 72ms
+ ✓ tests/e124/crm-isolation.test.ts (5 tests) 69ms
+ ✓ tests/b43/brain-truth.test.ts (6 tests) 69ms
+ ✓ tests/b64/routing-door-closed.test.ts (7 tests) 68ms
+(node:26717) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/phase8/command-bar-intent.test.ts (4 tests) 61ms
+ ✓ tests/phase7/watchdog.test.ts (13 tests) 62ms
+(node:26880) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/r43/arsenal.test.ts (5 tests) 61ms
+ ✓ tests/e125/workforce-gate.test.ts (7 tests) 60ms
+ ✓ tests/r42/knowledge-shelf.test.ts (6 tests) 53ms
+(node:27105) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/b51/p5b-bundle3.test.ts (12 tests) 57ms
+ ✓ tests/phase9/briefing-view.test.ts (5 tests) 53ms
+(node:27256) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/phase6/poisoning.test.ts (7 tests) 49ms
+ ✓ tests/c9/work-generation.test.ts (14 tests) 50ms
+ ✓ tests/phase8/cost-view.test.ts (5 tests) 52ms
+ ✓ tests/r13/cycle-jobs.test.ts (5 tests) 49ms
+(node:27557) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/b49/pin-manifest.test.ts (15 tests) 49ms
+ ✓ tests/c9/discovery.test.ts (12 tests) 49ms
+ ✓ tests/governance/ledger-truth.test.ts (7 tests) 47ms
+ ✓ tests/c9/monthly-cap.test.ts (6 tests) 79ms
+ ✓ tests/e11/cost-view-daily.test.ts (7 tests) 46ms
+ ✓ tests/c9/dashboard-doors.test.ts (4 tests) 48ms
+ ✓ tests/phase8/broadcast-triggers.test.ts (4 tests) 41ms
+ ✓ tests/e122/widget-layout.test.ts (6 tests) 41ms
+ ✓ tests/c9/allocation-seam.test.ts (6 tests) 39ms
+ ✓ tests/governance/usage-cost.test.ts (2 tests) 42ms
+ ✓ tests/phase8/live-projection.test.ts (2 tests) 37ms
+(node:28387) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+stderr | tests/u15r2/voice-round2.test.ts > U15 D12/D13 — one conversation + session threads > a Hamza-answered call mirrors onto the board and carries session_id
+[memory] recall failed on the voice lane — DXB_LITELLM_KEY_OS is not set — every API model call needs the department's LiteLLM virtual key (COST-02); raw provider keys never reach agents.
+
+ ✓ tests/u15r2/voice-round2.test.ts (5 tests) 37ms
+(node:28462) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+stderr | tests/phase7/drift-review.test.ts > drift review — what the manifest may vouch for > a missing or malformed manifest gives no entries — every external drift then locks
+[pin-check] tool manifest unreadable (/tmp/pin-manifest-PHFe5E/absent.json): Error: ENOENT: no such file or directory, open '/tmp/pin-manifest-PHFe5E/absent.json' — no external drift can be re-approved
+[pin-check] tool manifest unreadable (/tmp/pin-manifest-PHFe5E/bad.json): SyntaxError: Expected property name or '}' in JSON at position 1 (line 1 column 2) — no external drift can be re-approved
+
+ ✓ tests/phase7/drift-review.test.ts (23 tests) 36ms
+(node:28532) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/r31/greeting-script-rescue.test.ts (2 tests) 40ms
+(node:28607) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/c9/critical-gate.test.ts (8 tests) 37ms
+(node:28683) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+stderr | tests/phase6/memory-unreachable.test.ts > both answer lanes hand the flag to the producer > chat: a failed recall reaches Hamza as memoryUnreachable
+[memory] recall failed on the chat lane — recall: memory ref broken for index x at 'artifact/x.md' — ENOENT
+
+stderr | tests/phase6/memory-unreachable.test.ts > both answer lanes hand the flag to the producer > voice: a failed recall reaches Hamza as memoryUnreachable
+[memory] recall failed on the voice lane — recall: memory ref broken for index x at 'artifact/x.md' — ENOENT
+
+ ✓ tests/phase6/memory-unreachable.test.ts (6 tests) 32ms
+(node:28758) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/r22/tool-surface.test.ts (3 tests) 31ms
+(node:28833) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/b43/road-consistency.test.ts (16 tests) 30ms
+ ✓ tests/c9/revenue-gates.test.ts (9 tests) 29ms
+ ✓ tests/e10/alert-projection-purity.test.ts (7 tests) 26ms
+ ✓ tests/c5/decide-approvals-task-sync.test.ts (3 tests) 25ms
+ ✓ tests/c9/objective-door.test.ts (4 tests) 22ms
+ ✓ tests/b36/construction-config.test.ts (4 tests) 23ms
+ ✓ tests/c9/brain-source.test.ts (3 tests) 22ms
+ ✓ tests/b36/battery-carries-no-company-key.test.ts (3 tests) 20ms
+ ✓ tests/c9/outbox-enqueue-allowlist.test.ts (3 tests) 20ms
+ ✓ tests/b51/p4-first-succession.test.ts (6 tests) 20ms
+ ✓ tests/c9/engine-owner.test.ts (3 tests) 19ms
+ ✓ tests/c9/outbox-internal-signal.test.ts (2 tests) 17ms
+ ✓ tests/b51/move3-efforts.test.ts (4 tests) 18ms
+ ✓ tests/b43/motion-graphics-page.test.ts (18 tests) 20ms
+ ✓ tests/governance/no-closure-without-his-word.test.ts (7 tests) 18ms
+(node:29944) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/c9/feed-headlines.test.ts (8 tests) 17ms
+ ✓ tests/c9/org-tree-truth.test.ts (3 tests) 17ms
+ ✓ tests/personas/activation-gate-author-list.test.ts (3 tests) 14ms
+ ✓ tests/c9/hr-equipment-dept.test.ts (1 test) 13ms
+ ✓ tests/b20/roadmap-tally-is-stable.test.ts (7 tests) 9ms
+ ✓ tests/b03bis/engineer-env.test.ts (10 tests) 8ms
+ ✓ tests/r32/jarvis-wake.test.ts (58 tests) 7ms
+stdout | tests/personas/persona-ruler.test.ts > the persona ruler — the studio's sixteen seats > prints its table, passing or failing (the evidence both sides paste)
+
+PERSONA RULER — one metre for the builder and the checker
+
+  R 1 sentence-length
+  R 2 line-terminator
+  R 3 paren-depth
+  R 4 paren-balance
+  R 5 no-duplicate-clause
+  R 6 voice-residue
+  R 7 three-roads
+  R 8 no-model-name
+  R 9 section-12-identity
+  R10 delivery-header
+  R11 canonical-law-paragraph
+  R12 concept-contract
+  R13 dossier-date
+
+seat                                    R1  R2  R3  R4  R5  R6  R7  R8  R9 R10 R11 R12 R13   verdict
+-----------------------------------------------------------------------------------------------------
+media-creative-director                  ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   PASS
+media-film-director                      ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   PASS
+media-storyboard-previz                  ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   PASS
+design-image-prompt-engineer             ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   PASS
+marketing-short-video-editing-coach      ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   PASS
+media-ai-video-engineer                  ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   PASS
+media-product-brand-consistency          ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   PASS
+media-character-identity                 ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   PASS
+media-continuity                         ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   PASS
+media-screenwriter                       ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   PASS
+media-failure-analysis                   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   PASS
+media-cinematographer                    ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   PASS
+media-advertising-director               ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   PASS
+media-delivery-qc                        ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   PASS
+media-vfx-post                           ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   PASS
+media-sound-music                        ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   ·   PASS
+
+rule                       seats failing  failures
+--------------------------------------------------
+sentence-length                        0         0
+line-terminator                        0         0
+paren-depth                            0         0
+paren-balance                          0         0
+no-duplicate-clause                    0         0
+voice-residue                          0         0
+three-roads                            0         0
+no-model-name                          0         0
+section-12-identity                    0         0
+delivery-header                        0         0
+canonical-law-paragraph                0         0
+concept-contract                       0         0
+dossier-date                           0         0
+
+
+RULER: 16/16 PASS · §12 canon 16e9ced6 · law canon 578bf86a
+
+
+ ✓ tests/personas/persona-ruler.test.ts (26 tests) 7ms
+(node:30524) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/b21/agent-context.test.ts (13 tests) 6ms
+(node:30598) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/b51/bundle2-prompts.test.ts (17 tests) 6ms
+ ✓ tests/b39/alert-language.test.ts (9 tests) 6ms
+ ✓ tests/phase8/memory-store-labels.test.ts (5 tests) 6ms
+ ✓ tests/b36/separation-gate.test.ts (14 tests) 5ms
+ ✓ tests/phase8/realtime-channel-sharing.test.ts (7 tests) 5ms
+(node:30952) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/r31/persona-delivery.test.ts (4 tests) 5ms
+ ✓ tests/b51/gate-alert-language.test.ts (14 tests) 5ms
+ ✓ tests/b36/company-is-read-only.test.ts (7 tests) 4ms
+ ✓ tests/phase3/envelope.test.ts (5 tests) 4ms
+ ✓ tests/b51/smoke-verdict.test.ts (4 tests) 2ms
+ ✓ tests/b43/sdk-schema.test.ts (1 test) 2ms
+ ✓ tests/b03bis/eye-separation.test.ts (7 tests) 2ms
+ ✓ tests/b19/actions-are-sha-pinned.test.ts (3 tests) 2ms
+ ✓ tests/b36/company-memory-is-not-a-diary.test.ts (3 tests) 2ms
+ ✓ tests/ops/search-blindness.test.ts (2 tests) 2ms
+ ✓ tests/c9/revenue-capital-surface.test.ts (6 tests) 2ms
+(node:31726) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ tests/b36/battery-writes-no-company-artefact.test.ts (3 tests) 2ms
+ ✓ tests/phase3/db-guard.test.ts (1 test) 2ms
+ ✓ tests/phase4/budget-stop.test.ts (4 tests | 3 skipped) 1ms
+ ✓ tests/smoke.test.ts (1 test) 1ms
+(node:32006) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ↓ tests/b51/gate-live.test.ts (1 test | 1 skipped)
+ ✓ tests/phase8/panel-stamp.test.tsx (6 tests) 91ms
+
+ Test Files  165 passed | 1 skipped (166)
+      Tests  1616 passed | 15 skipped (1631)
+   Start at  18:00:48
+   Duration  159.41s (transform 1.40s, setup 0ms, collect 23.05s, tests 118.69s, environment 362ms, prepare 5.18s)
+
+[global-teardown] swept 1 stale hook-conflict alert(s) (no live policy disagreement)
+[global-teardown] handed back 632 ops:live receipt(s) this run issued
+
+=== 2/2 · THE AUTHOR'S HAND — on the company's side, outside the sandbox ===
+    tests/b36/live-drills.host.test.ts
+    tests/ops/freeze-guard.test.ts
+    tests/ops/dashboard-launcher.host.test.ts
+    tests/b03bis/eye-env-files.host.test.ts
+    tests/b46/research-ruler.test.ts
+    tests/b46/judge-is-one-metre.test.ts
+    tests/b46/the-number-he-sees.test.ts
+    tests/b46/the-crowd-is-read.test.ts
+    tests/b46/no-green-on-a-failure.test.ts
+    tests/b46/one-run-one-owner.test.ts
+    tests/b46/a-hunter-cannot-write.test.ts
+    tests/b46/evidence-rows.test.ts
+    tests/b46/kapsama.test.ts
+    tests/b46/fleet-by-platform.test.ts
+    tests/b46/render-from-rows.test.ts
+    tests/b46/ledger-states.test.ts
+    tests/b46/completion-gate.test.ts
+    tests/b46/render-drawer.test.ts
+    tests/b46/claim-ledger.test.ts
+    tests/b46/x-gate.test.ts
+    tests/governance/sol-db-reach.test.ts
+    tests/governance/second-plan.test.ts
+    tests/governance/fable-audit.test.ts
+    tests/hooks/context-gate.test.ts
+    tests/hooks/cost-gate.test.ts
+    tests/hooks/effort-warn.test.ts
+    tests/b43/motion-graphics-film.host.test.ts
+    tests/b43/motion-graphics-blender.host.test.ts
+
+ RUN  v3.2.6 /home/dxb/DxB Global OS
+
+[global-setup] construction engine 7690665340837392423/5 (postgres) — verified on the connection that does the work.
+ ✓ tests/b43/motion-graphics-film.host.test.ts (32 tests) 129707ms
+   ✓ B43 dxb-motion-graphics — the tools the host half stands on > ffmpeg, ffprobe, HyperFrames and Chrome answer on this machine  428ms
+   ✓ B43 dxb-motion-graphics — the picture, through HyperFrames > the page init lays out passes HyperFrames' own lint  493ms
+   ✓ B43 dxb-motion-graphics — the picture, through HyperFrames > draws the same pixels for the same time, and other pixels half a second later  5330ms
+   ✓ B43 dxb-motion-graphics — the picture, through HyperFrames > lays the film, and the moments around every event, out as contact sheets  17402ms
+   ✓ B43 dxb-motion-graphics — the picture, through HyperFrames > renders the whole film at the size, rate and length the job states, from inside the job folder  3324ms
+   ✓ B43 dxb-motion-graphics — the picture, through HyperFrames > renders one file per format, each at its own size  6639ms
+   ✓ B43 dxb-motion-graphics — the picture, through HyperFrames > renders a larger master by whole multiples only, and a transparent one  9213ms
+   ✓ B43 dxb-motion-graphics — the picture, through HyperFrames > verify passes every master in out/, the transparent one by its alpha channel  528ms
+   ✓ B43 dxb-motion-graphics — the picture, through HyperFrames > renders at another frame rate when asked, names the film by it, and verify holds it to that rate  3334ms
+   ✓ B43 dxb-motion-graphics — a film that asks for WebGL is kept only from a graphics card > keeps the film this machine's card drew, and names the card  3622ms
+   ✓ B43 dxb-motion-graphics — a film that asks for WebGL is kept only from a graphics card > keeps nothing of a film HyperFrames really drew in software  3285ms
+   ✓ B43 dxb-motion-graphics — a film that asks for WebGL is kept only from a graphics card > keeps nothing of a film whose page asks for WebGL and names no renderer  3388ms
+   ✓ B43 dxb-motion-graphics — a sound sits on its event by the point the cue names > align peak: the burst 300 ms into the file lands on 1.5 s of the film  3828ms
+   ✓ B43 dxb-motion-graphics — a sound sits on its event by the point the cue names > a second cue declared 20 ms on, with the film not rendered again, is not heard in the one burst  892ms
+   ✓ B43 dxb-motion-graphics — a sound sits on its event by the point the cue names > align start: the same file on a named event lands its first sample there  3796ms
+   ✓ B43 dxb-motion-graphics — a sound sits on its event by the point the cue names > verify goes red when the cue moves and the film was not rendered again  494ms
+   ✓ B43 dxb-motion-graphics — a sound sits on its event by the point the cue names > align end: a sound that ends 900 ms into its file ends on 2.0 s of the film  3828ms
+   ✓ B43 dxb-motion-graphics — a sound sits on its event by the point the cue names > a sound that would begin before the film is trimmed, and its peak still lands on the event  3758ms
+   ✓ B43 dxb-motion-graphics — the storyboard is drawn as one image > draws every shot: more shots make the image taller, other words make other pixels  3204ms
+   ✓ B43 dxb-motion-graphics — the board carries the film's own frames > once the page is the job's own, each shot shows the film at its middle, in every format asked for  6092ms
+   ✓ B43 dxb-motion-graphics — the page's promise and every transition, in HyperFrames' own browsers > a join: the page is told which layer to draw before its scripts run, the two layers are laid on each other, and a pixel aside is seen — or the page that does not move is caught  10324ms
+   ✓ B43 dxb-motion-graphics — the page's promise and every transition, in HyperFrames' own browsers > the same second gives the same pixels: the starter page keeps it, a page that remembers the moment drawn before does not, and every moment is named  10980ms
+   ✓ B43 dxb-motion-graphics — the page's promise and every transition, in HyperFrames' own browsers > lays a still of each event on one sheet that a 1920×1080 screen shows whole, each still the film's own frame  2701ms
+   ✓ B43 dxb-motion-graphics — the HyperFrames version guard > status names the first good version before anything is recorded, then the recorded one  550ms
+   ✓ B43 dxb-motion-graphics — the HyperFrames version guard > a guard film of the wrong length is rendered, refused for its length, and the good version stays  4822ms
+   ✓ B43 dxb-motion-graphics — the HyperFrames version guard > a guard film whose picture stands still is refused: the page was not drawn at each frame's time  4732ms
+   ✓ B43 dxb-motion-graphics — the HyperFrames version guard > a guard film drawn without WebGL is refused, and no film is kept  4293ms
+   ✓ B43 dxb-motion-graphics — the HyperFrames version guard > a guard film that renders and verifies makes npm's latest the good version  5921ms
+ ✓ tests/b46/completion-gate.test.ts (23 tests) 51084ms
+   ✓ the completion gate — the ledger says when a hunter's platforms are finished > sends a hunter that leaves at once back to its unread rows, and keeps the last round's HÜKÜM  1364ms
+   ✓ the completion gate — the ledger says when a hunter's platforms are finished > accepts at the first round a hunter that read everything through batch and judged it  2554ms
+   ✓ the completion gate — the ledger says when a hunter's platforms are finished > sends back a hunter that read but judged nothing, and the resume line names both numbers  1397ms
+   ✓ the completion gate — the ledger says when a hunter's platforms are finished > relaunches a hunter that exits non-zero the same way, each exit a round  1730ms
+   ✓ the completion gate — the ledger says when a hunter's platforms are finished > counts a body printed only in part as owed: the hunter is sent back to it, the resume line names all three  1648ms
+   ✓ the completion gate — the ledger says when a hunter's platforms are finished > never accepts a round whose ledger status cannot be read: unmeasured, then time-up (unmeasured), exit 1  1546ms
+   ✓ the run lives on disk, under the repository > puts a bare name, or no name, under <repo>/var/research/runs  2673ms
+   ✓ the run lives on disk, under the repository > refuses a run folder under /tmp, with the reason, unless --allow-tmp  1361ms
+   ✓ what a hunter declares changes no count > prints 'okundu 130' as the hunter's claim, while the gate and the coverage table count the ledger  1397ms
+   ✓ the writer step — an Opus turns the rows into answer.md > --write-only hands a tool-less Opus at medium effort the question, the verdicts, the status and the rows  2584ms
+   ✓ every claude stands outside the repository — the run stays under var/ > starts the split, the hunter, both writer passes and the claim hunters outside the repository and brings their files back  2597ms
+   ✓ the tail — a draft, its claim ledger, two claim hunters, the answer, its ledger, the page (B56 K2) > drafts, extracts the claims, sends karsi then bosluk, writes the answer, carries the links and renders  2560ms
+   ✓ the tail — a draft, its claim ledger, two claim hunters, the answer, its ledger, the page (B56 K2) > sends back a claim hunter that linked nothing, and stops a gap round that found no new source (saturated)  2449ms
+   ✓ the tail — a draft, its claim ledger, two claim hunters, the answer, its ledger, the page (B56 K2) > never accepts a claim round whose ledger status cannot be read  2804ms
+   ✓ the tail — a draft, its claim ledger, two claim hunters, the answer, its ledger, the page (B56 K2) > writes the page, then names a claim role its gate could not measure on the run's last line and leaves with code 1  2815ms
+   ✓ the tail — a draft, its claim ledger, two claim hunters, the answer, its ledger, the page (B56 K2) > --no-claim-hunt writes both passes, both ledgers and the page with no claim round  1921ms
+   ✓ the tail — a draft, its claim ledger, two claim hunters, the answer, its ledger, the page (B56 K2) > a draft whose claim ledger was never written still ends in the answer's ledger and the page, with no links to carry  1870ms
+   ✓ the tail — a draft, its claim ledger, two claim hunters, the answer, its ledger, the page (B56 K2) > --write-only runs the same tail on a run that has its rows  2574ms
+   ✓ K2c — a claim link counts after a read; a triage that leaves rows pending runs once more > sends back a claim hunter that linked without reading, the claim kept on its list and named; a round that reads is accepted  2681ms
+   ✓ K2c — a claim link counts after a read; a triage that leaves rows pending runs once more > reads no claim with a fetch of a page none of its rows stands at: the links after it are sent back  2713ms
+   ✓ K2c — a claim link counts after a read; a triage that leaves rows pending runs once more > rounds out with links made without a read: the page is written, then !! OKUMADAN HÜKÜM and code 1  2655ms
+   ✓ K2c — a claim link counts after a read; a triage that leaves rows pending runs once more > sorts once more only a platform its triage left pending; still pending: !! ELEME EKSIK, the hunters run, code 1  2577ms
+   ✓ K2c — a claim link counts after a read; a triage that leaves rows pending runs once more > sorts a body a hunter fetched after the triage, which the triage left none of, before the tail: no !! ELEME EKSIK, code 0  2584ms
+Traceback (most recent call last):
+  File "<string>", line 6, in <module>
+    print(json.dumps({k: (v or {}).get('fallback') or [] for k, v in ch.items()}))
+                                                                     ^^^^^^^^
+AttributeError: 'str' object has no attribute 'items'
+Traceback (most recent call last):
+  File "<string>", line 3, in <module>
+    import rlib
+  File "/tmp/dxb-ruler-4mUoJd/compile/scripts/rlib.py", line 14
+    import json (((
+                ^
+SyntaxError: invalid syntax
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+    import sys; sys.path.insert(0, sys.argv[1]); import rlib; print(rlib.SITE_ERROR + '|' + rlib._WALL.pattern + '|' + getattr(rlib, 'QUOTA_ERROR', ''))
+                                                 ^^^^^^^^^^^
+  File "/tmp/dxb-ruler-4mUoJd/compile/scripts/rlib.py", line 14
+    import json (((
+                ^
+SyntaxError: invalid syntax
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+    import sys; sys.path.insert(0, sys.argv[1]); import fetch; print(len(fetch.CHAIN))
+                                                 ^^^^^^^^^^^^
+  File "/tmp/dxb-ruler-4mUoJd/compile/scripts/fetch.py", line 67, in <module>
+    import rlib  # noqa: E402
+    ^^^^^^^^^^^
+  File "/tmp/dxb-ruler-4mUoJd/compile/scripts/rlib.py", line 14
+    import json (((
+                ^
+SyntaxError: invalid syntax
+ ✓ tests/b46/research-ruler.test.ts (28 tests) 36214ms
+   ✓ the ruler bites > catches a prose number that no longer matches the map  1113ms
+   ✓ the ruler bites > catches a channel whose stand-in was taken away  1098ms
+   ✓ the ruler bites > catches a stand-in that names a channel the map does not have  1090ms
+   ✓ the ruler bites > catches a config file that a standard parser cannot read  1159ms
+   ✓ the ruler bites > catches a second copy of the judge's word list appearing in the sweep  926ms
+   ✓ the ruler bites > catches a marker being dropped from the judge's vocabulary  1096ms
+   ✓ the ruler bites > catches the sign-in guard drifting below the line that fires the channels  1100ms
+   ✓ the ruler bites > catches a script that no longer compiles  1237ms
+   ✓ the ruler bites > catches the same definition written twice  1090ms
+   ✓ the ruler bites > catches the contract naming a file that is not there  1095ms
+   ✓ the ruler bites > catches the reading chain gaining a door while the prose still says eleven  1115ms
+   ✓ the ruler bites > catches the fleet firing before its queries are judged  1090ms
+   ✓ the ruler bites > catches the sweep taking a paragraph again  3245ms
+   ✓ the ruler bites > catches a box query with no word in it — "200 %50 5.1" is not a search  1097ms
+   ✓ the ruler bites > catches the first word of a question being dropped — the name it is about  1105ms
+   ✓ the ruler bites > catches a run that no longer writes down what it sent  1094ms
+   ✓ the ruler bites > catches the sweep's gate being switched off while its text stays  3320ms
+   ✓ the ruler bites > catches the ledger line being deleted and left behind in a comment  1090ms
+   ✓ the ruler bites > catches a gate that cannot run being treated as a gate that said yes  3256ms
+   ✓ the ruler bites > catches the stand-in chain and the last resort sending text with no ledger row  1097ms
+   ✓ the ruler bites > catches the ledger keeping yesterday's rows  1104ms
+   ✓ the ruler bites > catches the last resort typing the whole question into a site's search box  1110ms
+   ✓ the ruler bites > catches the write guard being parked on a dead branch while its text stays  1111ms
+   ✓ the ruler bites > catches an executable `opencli browser` line — the Bridge that opened windows on his screen  1109ms
+   ✓ the ruler bites > catches the citation ruler's own probes failing — the round-2 hole put back  1094ms
+   ✓ the engine as it stands > passes every rule of its own ruler  1065ms
+   ✓ the engine as it stands > counts the channels from the map rather than from any sentence about it  1085ms
+ ✓ tests/b46/fleet-by-platform.test.ts (30 tests) 30997ms
+   ✓ the fleet, run — what each hunter is handed and how it is launched > names a platform no hunter of the run owns, instead of dropping it  1043ms
+   ✓ the fleet, run — what each hunter is handed and how it is launched > never launches a claim role as a hunter, even when --roles names it  888ms
+   ✓ K3 — his question is split into sub-questions before the ground opens, and every role is handed them > takes --shape as one of the four words or does not start; with --no-split his word is named unused  817ms
+   ✓ K3 — his question is split into sub-questions before the ground opens, and every role is handed them > names the sub-questions before the ground, hands them to the hunter through question.txt; --write-only reuses them  924ms
+   ✓ K3 — his question is split into sub-questions before the ground opens, and every role is handed them > falls back to one sub-question, the DERT itself, when the answer cannot be read — and the run goes on  831ms
+   ✓ K3 — his question is split into sub-questions before the ground opens, and every role is handed them > --no-split leaves question.txt as the fleet wrote it  796ms
+   ✓ K3 — his question is split into sub-questions before the ground opens, and every role is handed them > keeps no earlier split's subquestions.json in a full run that does not split: --no-split, or a split.py that fails — and names his --shape unused  4076ms
+   ✓ K3 — the writer's clock is --writer-timeout, a tail that wrote no answer is no answer, and an auditor reads every claim > names a writer its clock stopped `zaman asimi`, prints the coverage table, then !! CEVAP YOK — no CEVAP HAZIR, code 1  2348ms
+   ✓ K3 — the writer's clock is --writer-timeout, a tail that wrote no answer is no answer, and an auditor reads every claim > says its clock on the launch line — 1500 s by default, the flag's after --write-only — and the model's time and tokens  2393ms
+   ✓ K3 — the writer's clock is --writer-timeout, a tail that wrote no answer is no answer, and an auditor reads every claim > hands the writer the skeleton of the run's research type — the model's, then his --shape on --write-only  3026ms
+   ✓ K3 — the writer's clock is --writer-timeout, a tail that wrote no answer is no answer, and an auditor reads every claim > rewrites answer.md with what the auditor corrected and removed, extracts the ledger again, checks it, then the page  1902ms
+   ✓ K3 — the writer's clock is --writer-timeout, a tail that wrote no answer is no answer, and an auditor reads every claim > asks an unreadable batch once more; still unreadable, its claims stay unaudited: the page, then !! DENETLENMEYEN İDDİA, code 1  2357ms
+   ✓ K3 — the writer's clock is --writer-timeout, a tail that wrote no answer is no answer, and an auditor reads every claim > runs the auditor after --write-only — the model's stand-in, outside the repository, when no FAKE_AUDIT — and --no-audit skips it  2811ms
+   ✓ K3 — the writer's clock is --writer-timeout, a tail that wrote no answer is no answer, and an auditor reads every claim > sorts a body a hunter fetched after the triage before the writer: its line, no !! ELEME EKSIK, code 0 — a row the triage cannot sort is still named  3768ms
+   ✓ the machine's memory is read before anything starts > says what it measured on a healthy machine, first, and starts  862ms
+ ✓ tests/b36/live-drills.host.test.ts (5 tests) 29222ms
+   ✓ B36 · Block 3-bis — the live drills, on the company's side > (4) LIVE — the two audited escapes reproduce with the real role, then the server refuses them  486ms
+   ✓ B36 · Block 3-bis — the live drills, on the company's side > (4-bis) LIVE — the proof still sees the counter's FIRST turn, on a sequence in its born state  552ms
+   ✓ B36 · Block 3-bis — the live drills, on the company's side > (4-ter) LIVE — after the reseal, a NEW function in public is still born closed to anon and PUBLIC  550ms
+   ✓ B36 · Block 3-bis — the live drills, on the company's side > (5) LIVE — a forged live event reached the screen, and now it is refused  8717ms
+   ✓ B36 · Block 3-bis — the live drills, on the company's side > (6) LIVE — from the construction runtime there is no route to the holding, and the probe proves it can succeed  18915ms
+ ✓ tests/governance/second-plan.test.ts (14 tests) 21222ms
+   ✓ second-plan.sh > start walls the second writer off: brief on stdin, HEAD only, no live tree, no scratchpad, no inherited env  1014ms
+   ✓ second-plan.sh > refuses to start twice  1023ms
+   ✓ second-plan.sh > start takes the second writer's effort as its last argument: high or max, nothing else  1004ms
+   ✓ second-plan.sh > reveal, status and blind still read a job Fable wrote before 2026-11-09 (fable.* in the sealed folder)  1091ms
+   ✓ second-plan.sh > reveal refuses before the lead's seal, before the second writer ends, and after a non-zero exit  3083ms
+   ✓ second-plan.sh > reveal refuses when the second writer's output was read before it — through any path — and logs it  1033ms
+   ✓ second-plan.sh > reveal refuses when the watcher is gone  1230ms
+   ✓ second-plan.sh > reveal and blind refuse a sealed plan that changed after its seal  2095ms
+   ✓ second-plan.sh > seal refuses twice, and refuses once the second writer's plan is revealed  2054ms
+   ✓ second-plan.sh > blind gives Sol's view the brief, A and B only; the key stays sealed; the log keeps the order  1088ms
+   ✓ second-plan.sh > blind refuses, naming the hit, when a plan names a model or an effort level  4278ms
+   ✓ second-plan.sh > blind passes with --reviewed once the lead has read the hits, and logs that it did  1093ms
+   ✓ second-plan.sh > audit runs Sol with the sealed folder, the scratchpad and the transcripts denied; sign needs it  1117ms
+ ✓ tests/b46/x-gate.test.ts (25 tests) 19227ms
+   ✓ a warning page freezes X until a person clears it; a login wall marks the session dead > freezes, never self-clears, and opens only on `clear frozen`  3055ms
+   ✓ a warning page freezes X until a person clears it; a login wall marks the session dead > marks the session dead on AUTH_REQUIRED and refuses until `clear session_dead`  3057ms
+   ✓ one reader at a time, at least 3 seconds apart > waits out the spacing after the last call  2018ms
+   ✓ one reader at a time, at least 3 seconds apart > never lets two readers overlap  6066ms
+   ✓ the window path watches X's own answers, not only opencli's words (findings 2 and 3) > records a 429 on a later page even when opencli exits 0, with the requests it made  812ms
+   ✓ the window path watches X's own answers, not only opencli's words (findings 2 and 3) > freezes X when the window ends on the access page  769ms
+   ✓ the window path watches X's own answers, not only opencli's words (findings 2 and 3) > stops a command that runs away past RUNAWAY_MAX X requests, with exit 75 and one line  1232ms
+ ✓ tests/governance/sol-db-reach.test.ts (12 tests) 11560ms
+   ✓ sql_read — what it refuses > (6) caps: 10 s per statement, 200 rows, 4 KB per cell  10134ms
+   ✓ sql_read — what it refuses > (6c) the wire budget and the column list: bounded before they are held, and the tool lives on  669ms
+   ✓ sql_read — what it refuses > (6b) role drift: a function born later in `extensions` or `supabase_migrations` stops the tool  350ms
+ ✓ tests/b46/the-crowd-is-read.test.ts (5 tests) 9630ms
+   ✓ the page selector gives the crowd its turn > opens Reddit when Reddit brought addresses, even on a small budget  586ms
+   ✓ the page selector gives the crowd its turn > gives the crowd channels the larger share of a small budget  582ms
+   ✓ a cover is a cover only when new bytes came back > walks to the site itself when every stand-in failed  4954ms
+   ✓ a cover is a cover only when new bytes came back > never announces a stand-in that returned an error as the cover  2071ms
+   ✓ what the sweep prints about its own reading is measured from disk > separates pages that carry real content from pages that merely answered  1421ms
+ ✓ tests/b46/claim-ledger.test.ts (22 tests) 8548ms
+   ✓ `## Alınmayan kanıt` — the writer names every admitted address it did not cite > is no claim and no citation; unexplained-evidence counts the admitted addresses neither cited nor named there  568ms
+   ✓ `## Alınmayan kanıt` — the writer names every admitted address it did not cite > status --format json counts it for any ledger: --answer, else the ledger's own answer, else <run>/answer.md  565ms
+   ✓ the answer's sub-questions — every claim knows the `## S<n> — ` section it stands in (B56 K3) > sets `section`, counts the sub-questions in extract's last line and per sub-question in status  394ms
+   ✓ list and link — the claim rounds' two doors > link refuses a 'kanıt değil' row and an id already in support, links against, records none; owed 0 after five  1102ms
+   ✓ list and link — the claim rounds' two doors > extract --keep-links carries the five checked claims onto the same answer; the capped one keeps its status uncounted  769ms
+   ✓ list and link — the claim rounds' two doors > a claim the cap held back is sent by the next list, for both kinds; a claim already sent is never sent again  665ms
+   ✓ reads — a link counts only after a read of the claim (K2c) > counts the rows shown and the addresses fetched before each link, per claim; unread_links names the rest  1095ms
+   ✓ repassage — a passage starts at the first line that is not chrome > L1480's passage starts past the page's title, menu and heading; the quote row on its address keeps its quote  312ms
+   ✓ audit.py — an auditor that never saw the writer reads every claim against its own rows (B56 K3 stage 3) > hands each claim its whole line and only its own rows, as the writer saw them; a claim an answer lacks is asked once more  456ms
+   ✓ audit.py — an auditor that never saw the writer reads every claim against its own rows (B56 K3 stage 3) > apply: the auditor's line, a table row deleted, the verdict never removed, a foreign id refused, the ids renumbered; check  838ms
+ ✓ tests/b46/no-green-on-a-failure.test.ts (6 tests) 7864ms
+   ✓ N09 — a run where nothing was read does not end with 'the answer is ready' > leaves with a non-zero code and names the hunters that failed  7593ms
+ ✓ tests/b46/ledger-states.test.ts (15 tests) 5993ms
+   ✓ triage — a verdict that removes an address needs its reason > a hunter may only eliminate what batch printed it: unread refused, read passes, a model is no hunter  626ms
+   ✓ batch and page — READ is what the machine printed > batch prints whole bodies shortest first, never a row twice, and stops before 20,000 characters  820ms
+   ✓ batch and page — READ is what the machine printed > a body longer than --max-chars is partial with its completeness; page prints the rest and completes it  367ms
+   ✓ batch and page — READ is what the machine printed > a partial row is offered again first, from where its print stopped, and is owed until its end is printed  636ms
+   ✓ fetch — a closed door is a terminal state > an address with no body whose door stays shut is inaccessible, with the fetcher's words  401ms
+   ✓ add — a hunter's own quote is evidence by definition > the quote row is relevant, a pending address turns relevant, a removed one stays removed, reading untouched  591ms
+   ✓ verdict — a hunter owes every row it read a verdict > none needs a reason; add is evidence; verdict-bulk counts; status and batch show what is owed  827ms
+ ✓ tests/b46/evidence-rows.test.ts (22 tests) 5615ms
+   ✓ fetch — a page is read by its platform's reader, or its closed door is written down > a door that does not open on an address with no body: KAPALI KAPI, exit 3, the row says blocked  432ms
+   ✓ fetch — a page is read by its platform's reader, or its closed door is written down > a refetch that fails on a body already cached keeps the body and the row alive, the failure in notes  3006ms
+ ✓ tests/hooks/effort-warn.test.ts (84 tests) 4039ms
+   ✓ an older session's quota never replaces a fresher reading of the same window (2026-11-13) > a window of the record that has already closed is replaced by whatever comes, an earlier one never replaces an open one  2089ms
+ ✓ tests/b46/render-drawer.test.ts (24 tests) 3333ms
+   ✓ final.html — what the auditor corrected and removed (B56 K3 stage 3) > says under the verdict what it read, marks each line it corrected, lists both under the ledger; without it, byte for byte  320ms
+   ✓ final.html — the research type: its line under the verdict, its Şekil section before S1 (B56 K3 stage 2) > says the type under the verdict box and stands the Şekil section after the number line, before S1; final.md alike  304ms
+   ✓ final.html — the research type: its line under the verdict, its Şekil section before S1 (B56 K3 stage 2) > puts the type's line above the auditor's; a subquestions.json without a shape gives neither the line nor its rule  335ms
+ ✓ tests/ops/freeze-guard.test.ts (9 tests) 3258ms
+   ✓ freeze-guard — the editor is never the designated victim > closes a helper whose session is gone, and leaves a live one alone  1406ms
+   ✓ freeze-guard — the editor is never the designated victim > sweeps a widow whose session leader is gone, even when a live subreaper adopted it  1399ms
+ ✓ tests/governance/fable-audit.test.ts (4 tests) 2692ms
+   ✓ fable-audit.sh > runs Fable 5.2 at high on the brief, read-only and walled off, and ends with FABLE_AUDIT_DONE  905ms
+   ✓ fable-audit.sh > cannot write the repository: a brief asking it to create a file leaves none behind  885ms
+   ✓ fable-audit.sh > takes max for an important job, reports the model's exit, and audits once only  886ms
+ ✓ tests/b46/kapsama.test.ts (15 tests) 2063ms
+ ✓ tests/b46/judge-is-one-metre.test.ts (10 tests) 2085ms
+   ✓ the sweep's judge, on the pages this engine actually met > refuses a door's own quota notice instead of stamping it ok  802ms
+   ✓ the sweep's judge, on the pages this engine actually met > refuses a page that says access is denied  397ms
+   ✓ the sweep's judge, on the pages this engine actually met > still refuses the same site's login shell, which carries the banner and nothing else  400ms
+pin this run to THIS session:  export DXB_RESEARCH_RUN=20260917-235959
+pin this run to THIS session:  export DXB_RESEARCH_RUN=20260917-235959-2
+ ✓ tests/b46/one-run-one-owner.test.ts (3 tests) 1209ms
+   ✓ N02 — a sweep writes to the run its own session owns, or to none > does not write into another session's ledger because a shared marker points there  776ms
+ ✓ tests/b43/motion-graphics-blender.host.test.ts (3 tests) 1175ms
+   ✓ B43 dxb-motion-graphics — Blender runs a scene headless > with room, runs the scene headless from factory settings and prints the frames written  754ms
+   ✓ B43 dxb-motion-graphics — Blender runs a scene headless > a scene that raises is a failure, though Blender itself exits 0 after a script error  350ms
+ ✓ tests/hooks/context-gate.test.ts (16 tests) 1036ms
+   ✓ the gate never breaks a session: what it cannot read is silent, not a failure > exits 0 with nothing on stderr when the reader of its answer is gone: a deny at 61 into a closed pipe  309ms
+ ✓ tests/b46/render-from-rows.test.ts (18 tests) 980ms
+ ✓ tests/hooks/cost-gate.test.ts (17 tests) 541ms
+ ✓ tests/b46/the-number-he-sees.test.ts (8 tests) 351ms
+ ✓ tests/ops/dashboard-launcher.host.test.ts (5 tests) 44ms
+ ✓ tests/b03bis/eye-env-files.host.test.ts (1 test) 25ms
+ ✓ tests/b46/a-hunter-cannot-write.test.ts (7 tests) 3ms
+
+ Test Files  28 passed (28)
+      Tests  463 passed (463)
+   Start at  18:03:28
+   Duration  393.16s (transform 335ms, setup 0ms, collect 504ms, tests 389.72s, environment 2ms, prepare 828ms)
+
+
+=== THE BENCH'S OWN RULER — what this run left behind ===
+    every table is the size it was — no suite left or took a row
+
+sandboxed suite : exit 0
+host suite      : exit 0
+bench residue   : none
+BATTERY_GREEN
+EXIT=0

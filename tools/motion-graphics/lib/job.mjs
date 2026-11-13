@@ -1,7 +1,7 @@
 // dxb-motion-graphics — the job folder: what `mg init` lays out and how every other command reads it.
 // Two files state a film: job.json (title, formats, rate, loudness target) and the timing block at
 // the top of page/index.html (window.FILM). Nothing here starts a process.
-import { cpSync, existsSync, lstatSync, mkdirSync, readFileSync, realpathSync, symlinkSync, writeFileSync } from "node:fs";
+import { copyFileSync, cpSync, existsSync, lstatSync, mkdirSync, readFileSync, readdirSync, realpathSync, statSync, symlinkSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 import vm from "node:vm";
@@ -15,6 +15,18 @@ const FOLDERS = ["assets", "refs", "board", "page", "page/fonts", "page/lib", "s
 // 404 in its browser (measured 2026-11-12). The page reaches the job's material through these links.
 const LINKED = ["assets", "refs", "sound"];
 const FORMAT_NAME = /^[A-Za-z0-9_-]+$/; // a format's name becomes part of every output's file name
+// What a round of a film (`mg init --from`) takes from the job before it: the job's statement, its
+// page, its board's data, its material and its sound.
+const CARRIED = ["job.json", "assets", "refs", "board", "page", "sound"];
+// Inside two of them, what was made of the rest stays behind: the board `mg board` drew of each format
+// and the board page it drew them from (the template lays out one that can carry the film's frames),
+// and HyperFrames' own state in the page.
+const madeIn = (job) => ({
+  board: new Set(["board.html", ...job.formats.map((format, i) => (i ? `board-${format.name}.png` : "board.png"))]),
+  page: new Set([".hyperframes"]),
+});
+// A library the page loads, as its text names it: "lib/three.min.js", './lib/outline.js'.
+const LOADS_FROM_LIB = /["'`](?:\.\/)?lib\/([^"'`?#\s]+)/g;
 // What a film's file name carries after its format's name: -<n>x for a larger master, -<n>fps for another rate.
 const MASTER_MARKS = "(?:-(\\d+)x)?(?:-(\\d+)fps)?";
 
@@ -165,7 +177,66 @@ export function openJob(dir) {
   const stated = readJson(join(root, "job.json"));
   checkFormats(stated.formats);
   if (!(stated.fps > 0)) throw new Refusal('job.json: "fps" must be a number');
-  return { dir: root, title: stated.title ?? "", formats: stated.formats, fps: stated.fps, lufs: stated.lufs ?? null, page: join(root, "page/index.html") };
+  return { dir: root, title: stated.title ?? "", formats: stated.formats, fps: stated.fps, lufs: stated.lufs ?? null, checks: stated.checks ?? {}, page: join(root, "page/index.html") };
+}
+
+/**
+ * The files of the job at `home` under `path`, each as [its place in a job, the real file it is read
+ * from]: a link is taken for what it really leads to, a folder for every file in it, except the names
+ * `leave` keeps out of its own listing. Refused when a path leads out of the job or to nothing, back
+ * into a folder it stands in, or to what is neither a file nor a folder — a pipe would be waited on for ever.
+ */
+function filesOf(home, path, place, leave = () => false, through = []) {
+  if (!staysInside(home, path)) throw new Refusal(`${path} leads out of ${home}, or to nothing, through a link; a round takes nothing from outside the job it starts from`);
+  const real = realpathSync(path), found = statSync(real);
+  if (found.isFile()) return [[place, real]];
+  if (!found.isDirectory()) throw new Refusal(`${path} is neither a file nor a folder`);
+  if (through.includes(real)) throw new Refusal(`${path} leads back into a folder it stands in`);
+  return readdirSync(real).filter((name) => !leave(name, join(path, name))).flatMap((name) => filesOf(home, join(path, name), join(place, name), undefined, [...through, real]));
+}
+
+/**
+ * What a round takes from `source`, an open job: { carried, left } — every file it carries as [its
+ * place in the new job, the real file it is read from], and what stays behind, as places in the job.
+ */
+function roundOf(source) {
+  const carried = [], left = [], made = madeIn(source);
+  const placed = (path, place) => (lstatSync(path).isDirectory() ? `${place}/` : place);
+  for (const name of readdirSync(source.dir).sort()) {
+    const path = join(source.dir, name);
+    if (!CARRIED.includes(name)) left.push(placed(path, name));
+    else carried.push(...filesOf(source.dir, path, name, (child, at) => {
+      if (name === "page" && LINKED.includes(child) && lstatSync(at).isSymbolicLink()) return true; // the new job is given links of its own
+      if (!made[name]?.has(child)) return false;
+      left.push(placed(at, `${name}/${child}`));
+      return true;
+    }));
+  }
+  return { carried, left };
+}
+
+/**
+ * The next round of a film: a job laid out in `dir` from `source`, an open job, which is only read.
+ * The page is given its libraries — its own from page/lib, and the skill's helpers where it has none
+ * of that name. Refused, with nothing laid out, when the two folders lie one inside the other, when a
+ * file the round would carry is not really the job's (`filesOf`), or when the page loads a library
+ * neither holds. Returns { job, left }: the new job, opened, and what of `source` stayed behind.
+ */
+export function layOutRound(dir, source) {
+  const root = resolve(dir);
+  if (staysInside(source.dir, root) || (existsSync(root) && staysInside(root, source.dir)))
+    throw new Refusal(`${root} and ${source.dir} lie one inside the other: a round is laid out beside the job it starts from, which it never changes`);
+  const { carried, left } = roundOf(source);
+  const absent = [...readFileSync(source.page, "utf8").matchAll(LOADS_FROM_LIB)].map((found) => found[1])
+    .find((name) => !carried.some(([place]) => place === join("page/lib", name)) && !existsSync(join(TEMPLATES, "lib", name)));
+  if (absent) throw new Refusal(`${source.page} loads lib/${absent}, which neither ${join(source.dir, "page/lib")} nor the skill's helpers hold: the round's page could not draw`);
+  const job = layOutJob(root, readJson(join(source.dir, "job.json")), readFileSync(source.page, "utf8"));
+  for (const [place, real] of carried) {
+    const to = insideJob(job.dir, place);
+    mkdirSync(dirname(to), { recursive: true });
+    copyFileSync(real, to);
+  }
+  return { job, left };
 }
 
 /** The formats a command was asked for: the job's first when none is named, every one for "all". */
@@ -177,7 +248,10 @@ export function formatsNamed(job, name) {
   return [format];
 }
 
-/** window.FILM as the page's timing block states it. The block is run on its own: it touches no DOM. */
+/**
+ * window.FILM as the page's timing block states it — with the texts it shows (TEXTS) and the joins it draws
+ * by two layers (JOINS) when it states them. The block is run on its own: it touches no DOM.
+ */
 export function readFilm(pageFile) {
   if (!existsSync(pageFile)) throw new Refusal(`${pageFile} is not there`);
   const block = readFileSync(pageFile, "utf8").match(/<script>([\s\S]*?)<\/script>/);
@@ -193,8 +267,8 @@ export function readFilm(pageFile) {
   const events = Array.isArray(film.EVENTS) && film.EVENTS.every((e) => typeof e.name === "string" && typeof e.t === "number");
   if (!whole || !events || typeof film.BEATS !== "object")
     throw new Refusal(`${pageFile}: window.FILM must be { W, H, FPS, TOTAL, BEATS: { name: seconds }, EVENTS: [{ name, t }] }`);
-  // Through JSON: plain data of this realm, not objects of the block's own.
-  return JSON.parse(JSON.stringify({ W: film.W, H: film.H, FPS: film.FPS, TOTAL: film.TOTAL, BEATS: film.BEATS, EVENTS: film.EVENTS }));
+  // Through JSON: plain data of this realm, not objects of the block's own; a figure JSON cannot carry (NaN, Infinity) arrives as null.
+  return JSON.parse(JSON.stringify({ W: film.W, H: film.H, FPS: film.FPS, TOTAL: film.TOTAL, BEATS: film.BEATS, EVENTS: film.EVENTS, TEXTS: film.TEXTS, JOINS: film.JOINS }));
 }
 
 // ── A film's file name says which master it is: <title>-<format>[-<n>x][-<n>fps].mp4, or .mov for a

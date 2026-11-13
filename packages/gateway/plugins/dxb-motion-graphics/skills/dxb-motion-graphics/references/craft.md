@@ -89,8 +89,16 @@ draws the object is decided by that join, before the look. What the second film 
   fills the frame, sees the flat picture itself. The object's face is cut from the outline the flat drawing ends
   on, and its screen is a canvas the page's own 2D code draws, so a transition on the screen is one piece of
   code in both worlds. Leaving and lying back are then a camera and an object moving away from home and home again.
+  `mg check join` holds each such instant to it: the page names the instant and its two layers (`FILM.JOINS`)
+  and draws by the one it is asked for, so the two drawings can be laid on each other — and once more with the
+  object a pixel aside, which the measure must see, or the mean it was given is too loose to hold anything.
 - **The price** is the material. Metal and glass are a reflection map and a sheen, a shadow is a shape a
   shader draws: simple, not path-traced. It reads as clean 3D motion graphics, not as a photograph.
+- **The browser's own antialiasing breaks the page's promise.** With it on the WebGL context, two renders of the
+  second film differed in 409 of its 951 frames, the same second's edges up to 51 levels apart by what had been
+  drawn before it. Drawn at twice the frame's size with it off (`setPixelRatio(2 * dpr)`) and brought down onto
+  the frame by canvas 2D, the two renders were equal — measured 2026-11-13 in HyperFrames' Chrome on this
+  machine's graphics card; another browser or card was not tried. `mg check same-second` shows which a page does.
 - **Blender is still the answer** when the object must look photographed (`blender.md`): real reflections,
   soft shadows, a lens. Its frames are an image sequence lit by their own light: they do not land on a flat
   drawing pixel for pixel, so that join is designed as something else — a match on shape, a wipe, a cut on a

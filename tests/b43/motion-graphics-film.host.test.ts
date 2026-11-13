@@ -334,6 +334,113 @@ describe("B43 dxb-motion-graphics — the board carries the film's own frames", 
 });
 
 /**
+ * A film's page with one join, at 1 s, between two layers that draw one dark square on a light ground: "flat"
+ * with canvas 2D, "space" with WebGL. It draws by the layer window.MG_DRAW names, its square `nudge` pixels aside.
+ */
+const JOINED_PAGE = `<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<script>
+const FPS = ${FPS}, TOTAL = 2;
+window.FILM = { W: 640, H: 360, FPS, TOTAL, BEATS: { start: 0 }, EVENTS: [{ name: 'lifts', t: 1 }], JOINS: [{ name: 'lifts', t: 1, layers: ['flat', 'space'] }] };
+</script>
+</head>
+<body>
+<div id="stage" data-composition-id="film" data-width="640" data-height="360" data-duration="2" data-no-timeline>
+  <canvas id="picture" width="640" height="360"></canvas>
+  <!-- mg:sound:begin -->
+  <!-- mg:sound:end -->
+</div>
+<script>
+const asked = window.MG_DRAW || {};
+const g = document.getElementById('picture').getContext('2d');
+const gl = Object.assign(document.createElement('canvas'), { width: 640, height: 360 }).getContext('webgl', { antialias: false, preserveDrawingBuffer: true });
+function renderAt(t) {
+  const x = 300 + (asked.nudge || 0), layer = asked.layer || (t < 1 ? 'flat' : 'space');
+  g.fillStyle = '#f0f0f0';
+  g.fillRect(0, 0, 640, 360);
+  if (layer === 'flat') {
+    g.fillStyle = '#101010';
+    g.fillRect(x, 150, 60, 60);
+    return;
+  }
+  gl.disable(gl.SCISSOR_TEST);
+  gl.clearColor(0, 0, 0, 0);
+  gl.clear(gl.COLOR_BUFFER_BIT);
+  gl.enable(gl.SCISSOR_TEST);
+  gl.scissor(x, 360 - 150 - 60, 60, 60);
+  gl.clearColor(16 / 255, 16 / 255, 16 / 255, 1);
+  gl.clear(gl.COLOR_BUFFER_BIT);
+  g.drawImage(gl.canvas, 0, 0);
+}
+window.renderAt = renderAt;
+window.ready = Promise.resolve().then(() => renderAt(0));
+window.__hf = window.__hf || {}; window.__hf.buildReady = window.__hf.buildReady || {}; window.__hf.buildReady.film = window.ready; window.addEventListener('hf-seek', e => renderAt(e.detail.time));
+</script>
+</body>
+</html>
+`;
+
+describe("B43 dxb-motion-graphics — the page's promise and every transition, in HyperFrames' own browsers", () => {
+  beforeAll(() => {
+    ownState();
+  });
+
+  it("a join: the page is told which layer to draw before its scripts run, the two layers are laid on each other, and a pixel aside is seen — or the page that does not move is caught", async () => {
+    const job = await initJob({ dur: 2 }), page = join(job, "page/index.html");
+    writeFileSync(page, JOINED_PAGE);
+    editJson(join(job, "job.json"), (j) => (j.checks = { join: { mean: 0.05 } }));
+    const r = await mg(["check", "join", "--job", job]);
+    // Both layers draw the square on whole pixels: equal to the last level. A pixel aside, 120 of its pixels change by 224 levels.
+    expect(r.out).toMatch(/^OK +16x9 — lifts at 1 s: flat and space 0\.000 levels apart on average, under 0\.05; space a pixel aside 0\.117 — the measure sees a pixel/m);
+    expect(r.code).toBe(0);
+    writeFileSync(page, JOINED_PAGE.replace("300 + (asked.nudge || 0)", "300"));
+    const deaf = await mg(["check", "join", "--job", job]);
+    expect(deaf.out).toMatch(/space a pixel aside 0\.000 — the measure does not see a pixel/);
+    expect(deaf.code).toBe(1);
+  }, 120_000);
+
+  it("the same second gives the same pixels: the starter page keeps it, a page that remembers the moment drawn before does not, and every moment is named", async () => {
+    const job = await initJob(), page = join(job, "page/index.html");
+    const kept = await mg(["check", "same-second", "--job", job]);
+    expect(kept.out).toMatch(/^OK +16x9 — 7 moment\(s\), each the same pixels both times/m);
+    expect(kept.code).toBe(0);
+
+    // The same film with a square drawn last, placed by the moment drawn before this one: a page with a past.
+    const end = "  revealWords(g, placed, t, wordStarts, SLIDE, em, drawWord);\n  g.restore();\n}";
+    expect(readFileSync(page, "utf8")).toContain(end);
+    writeFileSync(page, readFileSync(page, "utf8").replace(end, `${end.slice(0, -1)}  if (t !== lastT) { pastT = lastT; lastT = t; }\n  g.fillStyle = '#fff';\n  g.fillRect(8 + pastT * 40, 8, 6, 6);\n}\nlet lastT = 0, pastT = 0;`));
+    const remembers = await mg(["check", "same-second", "--job", job]);
+    expect(remembers.code).toBe(1);
+    // Every one of the starter's seven events is drawn after another moment the second time than the first.
+    expect(remembers.out).toMatch(/^FAILED +16x9 — 7 of 7 moment\(s\) drew other pixels the second time: 0\.81 s \(\d+ pixels.*2\.34 s \(\d+ pixels/m);
+    expect(JSON.parse(readFileSync(join(job, "out/check-same-second.json"), "utf8")).ok).toBe(false);
+  }, 120_000);
+
+  it("lays a still of each event on one sheet that a 1920×1080 screen shows whole, each still the film's own frame", async () => {
+    const job = await initJob();
+    const r = await mg(["sheet", "--at-events", "--job", job]);
+    expect(r.code).toBe(0);
+    const sheet = join(job, "out/sheets/16x9/events.jpg"), first = join(job, "out/stills/16x9/at-0.81s.png");
+    expect(r.out).toContain(sheet);
+    const [w, h] = sh("ffprobe", ["-v", "error", "-show_entries", "stream=width,height", "-of", "csv=p=0", sheet]).out.toString().trim().split(",").map(Number);
+    expect(w).toBeLessThanOrEqual(1920);
+    expect(h).toBeLessThanOrEqual(1080);
+    expect(Math.max(w / 1920, h / 1080)).toBeGreaterThan(0.9);
+    // The starter's seven events, each a still of the film at 640×360.
+    expect(readdirSync(join(job, "out/stills/16x9")).sort()).toEqual(["0.81", "1.5", "1.56", "1.71", "1.92", "2.13", "2.34"].map((t) => `at-${t}s.png`).sort());
+    // The first still on the sheet is the first event's frame: the sheet's first cell, brought to the still's size, is near it on average.
+    const mean = (file: string, crop: string) => sh("ffmpeg", ["-v", "error", "-i", file, "-vf", `${crop}scale=64:36:flags=area,format=gray`, "-f", "rawvideo", "-"]).out;
+    const still = mean(first, ""), cell = mean(sheet, `crop=iw/3:ih/3:0:0,crop=iw:ih*0.92:0:ih*0.08,`);
+    let off = 0;
+    for (let i = 0; i < still.length; i++) off += Math.abs(still[i] - cell[i]);
+    // Measured 2026-11-13: the first event's still 0.28 levels off the first cell; the third event's 7.87, the last's 12.42.
+    expect(off / still.length).toBeLessThan(3);
+  }, 120_000);
+});
+
+/**
  * A film's page that draws no film: once loaded it measures page/lib/motion-blur.js on the canvases the
  * browser really gives, and says what it found in one line, `mg:blur <json>`. HyperFrames carries a
  * page's console into a render's output (into a still's it does not, measured 2026-11-13).
