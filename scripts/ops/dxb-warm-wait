@@ -1,0 +1,165 @@
+#!/usr/bin/env python3
+"""dxb-warm-wait -- a session's alarm clock while it waits, which keeps its prompt cache warm.
+
+A session that must wait (the 5-hour quota window, a long render) loses its prompt cache
+after an hour without a turn, and its next turn then writes the whole context again. Run
+in the background, this command ends -- and so wakes the session -- either when the wait
+is over or, before that, when the cache is about to go cold; the turn that wake causes is
+the warm-keeping itself. The session then runs the line this command printed, and waits on.
+
+  dxb-warm-wait --until-reset      wait for the 5-hour window to reset (dxb-quota's record)
+  dxb-warm-wait --until 01:50      wait until that local time (tomorrow, when it has passed)
+  dxb-warm-wait --until @1794500000   the same, as epoch seconds (what a re-arm line carries)
+  dxb-warm-wait --for 90           wait that many minutes
+
+It prints one line and exits 0:
+  WAIT_OVER ...                  the wait is over: go on with the work
+  WARM_PING ... | re-arm: <cmd>  the cache was about to go cold: run <cmd> in the background again
+It stays asleep through a ping it must not make -- the 5-hour window has no room for a turn,
+or so many pings would be needed that a cold start is cheaper -- and says so on WAIT_OVER.
+Exit 2: bad usage, or --until-reset with no 5-hour record to read.
+
+The weights are list prices (a cached read 0.1 of the input price, a one-hour cache write
+2.0); how the Max quota weighs a cached read is not measured. Every wake appends one line
+to $XDG_RUNTIME_DIR/claude-ctx/warm-wait.log with the quota then, so what a ping costs can
+be read from two neighbouring lines.
+"""
+
+import datetime
+import json
+import math
+import os
+import subprocess
+import sys
+import time
+
+USAGE = "usage: dxb-warm-wait (--until-reset | --until HH:MM | --until @EPOCH | --for MINUTES)"
+
+PING_AFTER_MIN = 55     # his number (CEO, 2026-11-13): one turn at the 55th minute of an hour's cache
+CACHE_READ = 0.1        # what a ping costs, as a share of the context at the input price
+CACHE_WRITE_1H = 2.0    # what a cold start costs, the same way
+FULL_WINDOW_PCT = 98    # from here the 5-hour window has no room for a ping: the turn could be cut
+RESET_MARGIN_MIN = 2    # waited past the reset, so the status line has the new window
+STEP_S = 20             # the wall clock is asked this often, so a suspended machine wakes on time
+
+QUOTA = os.path.expanduser("~/.local/bin/dxb-quota")
+LOG = os.path.join(os.environ.get("XDG_RUNTIME_DIR") or "/tmp", "claude-ctx", "warm-wait.log")
+
+
+def pings_needed(wait_s, ping_after_s=PING_AFTER_MIN * 60):
+    """How many warm-keeping turns a wait of this length takes."""
+    return max(0, math.ceil(wait_s / ping_after_s) - 1)
+
+
+def worth_keeping_warm(pings):
+    """Pings pay while together they cost less than the one cold start they save."""
+    return pings * CACHE_READ < CACHE_WRITE_1H
+
+
+def next_wake(now, target, ping_after_s=PING_AFTER_MIN * 60):
+    """(when to wake, whether that wake ends the wait)."""
+    ping = now + ping_after_s
+    return (target, True) if target <= ping else (ping, False)
+
+
+def parse_target(argv, now, reset_in_h):
+    """The epoch second the wait ends at, from the command line; None when it cannot be told."""
+    if argv == ["--until-reset"]:
+        if reset_in_h is None:
+            return None
+        return now + reset_in_h * 3600 + RESET_MARGIN_MIN * 60
+    if len(argv) != 2:
+        return None
+    flag, value = argv
+    try:
+        if flag == "--for":
+            minutes = float(value)
+            return now + minutes * 60 if math.isfinite(minutes) and minutes > 0 else None
+        if flag == "--until" and value.startswith("@"):
+            epoch = float(value[1:])
+            return epoch if math.isfinite(epoch) else None
+        if flag == "--until":
+            hour, minute = (int(part) for part in value.split(":"))
+            at = datetime.datetime.fromtimestamp(now).replace(hour=hour, minute=minute, second=0, microsecond=0)
+            if at.timestamp() <= now:
+                at += datetime.timedelta(days=1)
+            return at.timestamp()
+    except ValueError:
+        return None
+    return None
+
+
+def read_quota():
+    """dxb-quota's numbers, or {} when there is no record."""
+    try:
+        out = subprocess.run([QUOTA, "--json"], capture_output=True, text=True, timeout=20)
+        return json.loads(out.stdout) if out.returncode == 0 else {}
+    except (OSError, ValueError, subprocess.TimeoutExpired):
+        return {}
+
+
+def used(quota, window):
+    value = (quota.get(window) or {}).get("used")
+    return value if isinstance(value, (int, float)) else None
+
+
+def log(event, quota):
+    try:
+        os.makedirs(os.path.dirname(LOG), exist_ok=True)
+        with open(LOG, "a") as handle:
+            handle.write(json.dumps({"ts": datetime.datetime.now().isoformat(timespec="seconds"), "event": event,
+                                     "5h": used(quota, "5h"), "7d": used(quota, "7d")}) + "\n")
+    except OSError:
+        pass  # the log is a measurement, never a reason to miss the wake
+
+
+def sleep_until(when):
+    while time.time() < when:
+        time.sleep(min(STEP_S, max(0.0, when - time.time())))
+
+
+def clock(epoch):
+    return datetime.datetime.fromtimestamp(epoch).strftime("%H:%M")
+
+
+def main(argv):
+    now = time.time()
+    quota = read_quota()
+    target = parse_target(argv, now, (quota.get("5h") or {}).get("reset_in_h"))
+    if target is None:
+        print(USAGE if argv != ["--until-reset"] else "dxb-warm-wait: no 5-hour record to read the reset from; give --until HH:MM",
+              file=sys.stderr)
+        return 2
+    log("armed", quota)
+
+    stayed_cold = ""
+    pings = pings_needed(target - now)
+    if not worth_keeping_warm(pings):
+        stayed_cold = f" | cold: {pings} pings would cost more than the cold start they save"
+        wake, over = target, True
+    else:
+        wake, over = next_wake(now, target)
+
+    sleep_until(wake)
+    quota = read_quota()
+    if not over:
+        five = used(quota, "5h")
+        if five is not None and five >= FULL_WINDOW_PCT:
+            stayed_cold = f" | cold: at {clock(wake)} the 5-hour window stood at {five}% and had no room for a ping"
+            sleep_until(target)
+            quota, over = read_quota(), True
+
+    line = subprocess.run([QUOTA], capture_output=True, text=True).stdout.strip() if os.path.exists(QUOTA) else ""
+    if over:
+        log("over", quota)
+        print(f"WAIT_OVER {clock(time.time())}{stayed_cold} | {line}")
+    else:
+        log("ping", quota)
+        left = round((target - time.time()) / 60)
+        print(f"WARM_PING {clock(time.time())} — {left} min to go, until {clock(target)} | {line} | "
+              f"re-arm: scripts/ops/dxb-warm-wait --until @{int(target)}")
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main(sys.argv[1:]))
