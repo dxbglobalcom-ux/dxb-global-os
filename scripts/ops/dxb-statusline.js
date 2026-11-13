@@ -197,7 +197,9 @@ function branch(dir) {
 // clock as well as on activity: `statusLine.refreshInterval` in ~/.claude/settings.json re-runs this
 // command every that many seconds (Claude Code 2.1.323's own setting). The last request is the
 // transcript's last assistant row (its tail is read; a subagent's requests are in its own file and do
-// not warm this cache). Nothing readable: nothing is said.
+// not warm this cache) that is an answer of the API: for a request that failed Claude Code writes an
+// assistant row of its own (isApiErrorMessage, model "<synthetic>"), and that read and warmed nothing.
+// Nothing readable: nothing is said. last_turn_at in dxb-warm-wait must agree with this.
 const CACHE_MINUTES = 60;
 const TRANSCRIPT_TAIL_BYTES = 256 * 1024;
 
@@ -216,6 +218,7 @@ function lastRequestAt(transcriptPath) {
       let row;
       try { row = JSON.parse(rows[i]); } catch { continue; } // the tail's cut first line, a torn last one
       if (row?.type !== 'assistant' || row.isSidechain === true) continue;
+      if (row.isApiErrorMessage === true || row.message?.model === '<synthetic>') continue;
       const at = Date.parse(row.timestamp);
       if (Number.isFinite(at)) return at;
     }

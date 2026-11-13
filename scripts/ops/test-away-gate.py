@@ -61,24 +61,32 @@ def warm_wait(*argv):
     return subprocess.run([sys.executable, COMMAND, *argv], capture_output=True, text=True, timeout=30, env=ENV)
 
 
-def clock_file():
-    return os.path.join(RUNTIME, f"warm-wait-{SESSION}.pid")
+def clock_file(session=SESSION):
+    return os.path.join(RUNTIME, f"warm-wait-{session}.pid")
 
 
-def arm_watch():
-    """A real --watch of this session, started and written down."""
-    clock = subprocess.Popen([sys.executable, COMMAND, "--watch"], stdout=subprocess.PIPE, stderr=subprocess.PIPE, env=ENV)
+def write_record(record):
+    """Put that record into this session's clock file by hand."""
+    with open(clock_file(), "w") as handle:
+        json.dump(record, handle)
+
+
+def arm_watch(session=SESSION):
+    """A real --watch of that session, started and written down: (the process, its record)."""
+    clock = subprocess.Popen([sys.executable, COMMAND, "--watch"], stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                             env=dict(ENV, CLAUDE_CODE_SESSION_ID=session))
     clocks.append(clock)
     patience = time.time() + 10
     while time.time() < patience and clock.poll() is None:
         try:
-            with open(clock_file()) as record:
-                if json.load(record)["pid"] == clock.pid:
-                    break
+            with open(clock_file(session)) as handle:
+                record = json.load(handle)
+            if record["pid"] == clock.pid:
+                return clock, record
         except (OSError, ValueError, KeyError):
             pass
         time.sleep(0.02)
-    return clock
+    return clock, {}
 
 
 # No marker: silent, whatever else is true.
@@ -93,18 +101,32 @@ check("another session is not away", stop(session="another-session"), SILENT_PAS
 check("the loop guard: a stop the gate already blocked goes through", stop(stop_hook_active=True), SILENT_PASS)
 
 # Marker and a live clock: through. The clock dies: blocked again.
-watch = arm_watch()
+watch, written = arm_watch()
 check("marker and a live clock", stop(), SILENT_PASS)
 watch.kill()
 watch.wait()
 check("the clock has died, its file is still there", os.path.exists(clock_file()), True)
 check("marker and a dead clock: blocked", blocked(stop()), True)
-with open(clock_file(), "w") as record:
-    json.dump({"pid": os.getpid(), "mode": "--watch", "armed_at": time.time(), "until": None}, record)
+write_record(dict(written, pid=os.getpid()))
 check("marker and a live pid that is not a clock: blocked", blocked(stop()), True)
 with open(clock_file(), "w") as record:
     record.write("not a record")
 check("marker and an unreadable clock file: blocked", blocked(stop()), True)
+
+# A clock is proven by more than its name (Sol's A1 of 2026-11-13): each pid below runs a real dxb-warm-wait.
+other, theirs = arm_watch("another-session")
+write_record(theirs)
+check("marker and another session's live clock in this session's file: blocked", blocked(stop()), True)
+ours = dict(theirs, session=SESSION)
+write_record(dict(ours, started=theirs.get("started", 0) + 1))
+check("marker and a pid given out again (the same pid, another start time): blocked", blocked(stop()), True)
+write_record({name: value for name, value in ours.items() if name not in ("session", "started")})
+check("marker and a record of the old form, with no session and no start time: blocked", blocked(stop()), True)
+write_record(ours)
+check("the same record with this session and the process's own start time: through", stop(), SILENT_PASS)
+other.kill()
+other.wait()
+check("and blocked again when that process has died", blocked(stop()), True)
 
 # Broken input, with the marker still on: through, one line to stderr, nothing to the model.
 for name, raw in (("not JSON", "{not json"), ("nothing", ""), ("not an object", "[]"), ("no session", "{}"),

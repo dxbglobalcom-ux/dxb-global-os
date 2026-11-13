@@ -22,10 +22,13 @@ with {"decision": "block", "reason": ...} on stdout keeps the model going with t
 exit 0 with nothing lets it stop.
 
 The marker is $XDG_RUNTIME_DIR/claude-ctx/away-<session>, the clock's file is
-warm-wait-<session>.pid beside it, and a clock is alive when the pid in that file is a running
-dxb-warm-wait. dxb-warm-wait writes both and reads them by the same rule (its clock_file,
-away_file, is_clock); the two must agree, and test-away-gate.py makes the files with that
-command and asks this gate. Stdlib only. Installed byte-equal as ~/.claude/hooks/dxb-away-gate.py.
+warm-wait-<session>.pid beside it, and that file is this session's running clock when it was
+written for this session by a process that still runs: the pid alive and started at the moment
+written down (/proc/<pid>/stat, field 22). A name on a command line proves neither -- another
+session's clock carries it, and its end wakes that session, not this one. dxb-warm-wait writes
+both files and reads them by the same rule (its clock_file, away_file, started, is_clock); the
+two must agree, and test-away-gate.py makes the files with that command and asks this gate.
+Stdlib only. Installed byte-equal as ~/.claude/hooks/dxb-away-gate.py.
 """
 
 import json
@@ -33,20 +36,29 @@ import os
 import sys
 
 RUNTIME = os.path.join(os.environ.get("XDG_RUNTIME_DIR") or "/tmp", "claude-ctx")
-COMMAND_NAME = b"dxb-warm-wait"
 ASK = ("Away is on and no warm-wait clock is armed, so nothing would wake this session. Arm "
        "`scripts/ops/dxb-warm-wait --watch` in the background (`--until-reset` when waiting for the "
        "5-hour window); or, only when every piece of the job is finished, recorded and told, close "
        "with `scripts/ops/dxb-warm-wait --away off`.")
 
 
+def started(pid):
+    """The moment the kernel started the process under that pid (/proc/<pid>/stat, field 22: its ticks
+    since boot); None when none runs. A pid is given out again; a pid with its start is one process."""
+    try:
+        with open(f"/proc/{int(pid)}/stat", "rb") as handle:
+            state, *fields = handle.read().rpartition(b")")[2].split()  # what follows the name, which may hold spaces
+        return None if state in (b"Z", b"X") else int(fields[18])
+    except (OSError, ValueError, TypeError, IndexError):
+        return None
+
+
 def clock_lives(session):
-    """Whether the session's clock file names a running dxb-warm-wait."""
+    """Whether the session's clock file is this session's running clock."""
     try:
         with open(os.path.join(RUNTIME, f"warm-wait-{session}.pid")) as handle:
-            pid = int(json.load(handle)["pid"])
-        with open(f"/proc/{pid}/cmdline", "rb") as handle:
-            return COMMAND_NAME in handle.read()
+            record = json.load(handle)
+        return record["session"] == session and record["started"] is not None and started(record["pid"]) == record["started"]
     except (OSError, ValueError, LookupError, TypeError):
         return False
 

@@ -50,7 +50,9 @@ work is running (`--watch`) there is no count to make: each ping is weighed on i
    which then ends with `SUPERSEDED by --until-reset`: end that turn in one short line. On `WAIT_OVER …` read
    the quota on that line, arm `--watch` again and open a fresh hand on the brief. `cold: …` on that line
    says the command stayed asleep through a ping on purpose, and why: from 98 % it makes no ping, because the
-   turn itself could be cut — a `--watch` that meets 98 % sleeps to the reset by itself.
+   turn itself could be cut — a `--watch` that meets 98 % sleeps to the reset by itself. When the week is
+   full the clock does the same with the week: it wakes nobody, sleeps to the week's reset however far
+   that is, and the session comes back cold on `WAIT_OVER`.
    **The hands.** A hand's cache lasts five minutes: keeping one warm for an hour would take fifteen pings,
    more than opening it cold. No hand is kept warm; a running hand finishes and its piece is verified and
    committed before the wait, and after it a fresh hand is opened (dxb-team3 §3, §7).

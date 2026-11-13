@@ -1,0 +1,6 @@
+== test-warm-wait.py
+warm-wait: all checks passed
+exit=0
+== test-away-gate.py
+away-gate: all checks passed
+exit=0

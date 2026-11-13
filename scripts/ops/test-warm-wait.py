@@ -1,11 +1,14 @@
 #!/usr/bin/env python3
 """Tests for dxb-warm-wait: when it wakes, when a ping pays, what it refuses, how it follows the session's
-last turn, the one clock a session has, the away marker, and a few real short waits."""
+last turn, when the quota has no room for the wake, the one clock a session has and how it is proven,
+the away marker, and a few real short waits."""
 import atexit
 import datetime
+import fcntl
 import importlib.machinery
 import importlib.util
 import json
+import math
 import os
 import re
 import shutil
@@ -19,7 +22,8 @@ COMMAND = os.path.join(HERE, "dxb-warm-wait")
 STATUS_LINE = os.path.join(HERE, "dxb-statusline.js")
 
 # The tests' own world, set before the command is loaded: their own marker folder and log, a home with
-# no ~/.claude in it and a dxb-quota that reads a file of theirs, and no session unless a test names one.
+# no ~/.claude in it, their own quota record and a dxb-quota that says one line, and no session unless a
+# test names one.
 SANDBOX = tempfile.mkdtemp(prefix="warm-wait-test-")
 atexit.register(shutil.rmtree, SANDBOX, ignore_errors=True)
 os.environ.update(XDG_RUNTIME_DIR=SANDBOX, HOME=SANDBOX)
@@ -27,17 +31,33 @@ for name in [name for name in os.environ if name == "CLAUDE_CODE_SESSION_ID" or 
     del os.environ[name]
 RUNTIME = os.path.join(SANDBOX, "claude-ctx")
 os.makedirs(RUNTIME)
-QUOTA_RECORD = os.path.join(SANDBOX, "quota.json")
-QUOTA_COMMAND = os.path.join(SANDBOX, ".local", "bin", "dxb-quota")
-os.makedirs(os.path.dirname(QUOTA_COMMAND))
-with open(QUOTA_COMMAND, "w") as handle:
-    handle.write('#!/bin/sh\nif [ "$1" = "--json" ]; then cat "$HOME/quota.json"; else echo "the quota line"; fi\n')
-os.chmod(QUOTA_COMMAND, 0o755)
+QUOTA_RECORD = os.path.join(RUNTIME, "rate-limits.json")  # the status line's record, which the clock reads
+MIN = 60
+DAY = 24 * 60 * MIN
+NOW = 1_794_500_000.0
+
+
+def quota_command(home, script):
+    """Put a dxb-quota of the tests' own into that home; the clock only shows the line it says."""
+    path = os.path.join(home, ".local", "bin", "dxb-quota")
+    os.makedirs(os.path.dirname(path))
+    with open(path, "w") as handle:
+        handle.write(f"#!/bin/sh\n{script}\n")
+    os.chmod(path, 0o755)
+
+
+quota_command(SANDBOX, 'echo "the quota line"')
+
+
+def quota_record(five_hour_used, five_hour_reset, week_used=40, week_reset=NOW + 3 * DAY):
+    """A quota record as dxb-statusline.js writes it: each window's percentage and the second it resets."""
+    return {"five_hour": {"used_percentage": five_hour_used, "resets_at": five_hour_reset},
+            "seven_day": {"used_percentage": week_used, "resets_at": week_reset}}
 
 
 def set_quota(five_hour_used, reset_in_h=1.0):
     with open(QUOTA_RECORD, "w") as record:
-        json.dump({"5h": {"used": five_hour_used, "reset_in_h": reset_in_h}, "7d": {"used": 40}}, record)
+        json.dump(quota_record(five_hour_used, time.time() + reset_in_h * 3600, week_reset=time.time() + 3 * DAY), record)
 
 
 set_quota(50)
@@ -45,6 +65,7 @@ loader = importlib.machinery.SourceFileLoader("warm_wait", COMMAND)
 spec = importlib.util.spec_from_loader("warm_wait", loader)
 ww = importlib.util.module_from_spec(spec)
 loader.exec_module(ww)
+read_the_record = ww.read_quota  # the command's own reader, kept before any test puts another in its place
 
 failed = []
 
@@ -62,9 +83,6 @@ def section(test):
         failed.append(f"{test.__name__}: broke with {error!r}")
     return test
 
-
-MIN = 60
-NOW = 1_794_500_000.0
 
 # The wake: the target when it comes inside 55 minutes, the 55th minute otherwise.
 check("target inside the hour ends the wait", ww.next_wake(NOW, NOW + 40 * MIN), (NOW + 40 * MIN, True))
@@ -88,7 +106,7 @@ check("--for 90", ww.parse_target(["--for", "90"], NOW, None), NOW + 90 * MIN)
 check("--for inf is refused", ww.parse_target(["--for", "inf"], NOW, None), None)
 check("--for 0 is refused", ww.parse_target(["--for", "0"], NOW, None), None)
 check("--until @epoch", ww.parse_target(["--until", "@1794503000"], NOW, None), 1794503000.0)
-check("--until-reset adds the margin", ww.parse_target(["--until-reset"], NOW, 1.0), NOW + 3600 + ww.RESET_MARGIN_MIN * MIN)
+check("--until-reset adds the margin", ww.parse_target(["--until-reset"], NOW, NOW + 3600), NOW + 3600 + ww.RESET_MARGIN_MIN * MIN)
 check("--until-reset without a record", ww.parse_target(["--until-reset"], NOW, None), None)
 check("--until nonsense", ww.parse_target(["--until", "soon"], NOW, None), None)
 check("no arguments", ww.parse_target([], NOW, None), None)
@@ -100,9 +118,15 @@ import contextlib
 import io
 
 
-def run_with(argv, five_hour_used, while_asleep=None):
-    """(exit code, what it printed, the moments it slept to); `while_asleep` happens during the first sleep."""
-    quota = {"5h": {"used": five_hour_used, "reset_in_h": 1.0}, "7d": {"used": 40}}
+def run_with(argv, quota, while_asleep=None):
+    """(exit code, what it printed, the moments it slept to); `while_asleep` happens during the first sleep.
+
+    `quota` is the 5-hour window's percentage (it resets an hour after NOW, and the week has room), or a
+    whole record, or a function from the moment to the record as it is read then.
+    """
+    if not callable(quota):
+        record = quota if isinstance(quota, dict) else quota_record(quota, NOW + 60 * MIN)
+        quota = lambda moment: record
     at = [NOW]
     slept = []
 
@@ -113,10 +137,10 @@ def run_with(argv, five_hour_used, while_asleep=None):
         at[0] = max(at[0], when)
 
     real = (ww.wall_clock, ww.sleep_until, ww.read_quota)
-    ww.wall_clock, ww.sleep_until, ww.read_quota = (lambda: at[0]), jump, (lambda: quota)
+    ww.wall_clock, ww.sleep_until, ww.read_quota = (lambda: at[0]), jump, (lambda: quota(at[0]))
     out = io.StringIO()
     try:
-        with contextlib.redirect_stdout(out):
+        with contextlib.redirect_stdout(out), contextlib.redirect_stderr(io.StringIO()):
             code = ww.main(argv)
     finally:
         ww.wall_clock, ww.sleep_until, ww.read_quota = real
@@ -127,10 +151,16 @@ def run_with(argv, five_hour_used, while_asleep=None):
 def the_line_each_wait_ends_on():
     code, text, _ = run_with(["--for", "80"], 50)
     check("80 minutes with room: a ping", (code, text.startswith("WARM_PING "), "re-arm: scripts/ops/dxb-warm-wait --until @" in text), (0, True, True))
-    code, text, _ = run_with(["--for", "80"], 99)
-    check("80 minutes, window full: no ping, cold", (code, text.startswith("WAIT_OVER "), "had no room for a ping" in text), (0, True, True))
-    code, text, _ = run_with(["--for", "40"], 99)
-    check("40 minutes: over, nothing cold", (code, text.startswith("WAIT_OVER "), "cold" in text), (0, True, False))
+    code, text, slept = run_with(["--for", "80"], 99)
+    check("80 minutes, window full: no ping, asleep past the reset and on to the wait's end",
+          (code, text.startswith("WAIT_OVER "), "the 5-hour window stood at 99% and had no room for a turn" in text, slept),
+          (0, True, True, [NOW + 55 * MIN, NOW + 62 * MIN, NOW + 80 * MIN]))
+    code, text, slept = run_with(["--for", "40"], 50)
+    check("40 minutes: over, nothing cold", (code, text.startswith("WAIT_OVER "), "cold" in text, slept), (0, True, False, [NOW + 40 * MIN]))
+    code, text, slept = run_with(["--for", "40"], 99)
+    check("40 minutes, window full: the wait's end waits for the reset too",
+          (code, text.startswith("WAIT_OVER "), "the 5-hour window stood at 99% and had no room for a turn" in text, slept),
+          (0, True, True, [NOW + 40 * MIN, NOW + 62 * MIN]))
     code, text, _ = run_with(["--for", "2000"], 10)
     check("33 hours: cold by the count", (code, text.startswith("WAIT_OVER "), "pings would cost more" in text), (0, True, True))
     code, text, _ = run_with(["--until-reset"], 95)
@@ -145,6 +175,10 @@ def stamp(epoch):
 
 def row(kind, at, **more):
     return json.dumps({"type": kind, "timestamp": stamp(at), "isSidechain": False, **more})
+
+
+def failed_request(at):
+    return row("assistant", at, isApiErrorMessage=True, error="rate_limit", message={"model": "<synthetic>", "role": "assistant"})
 
 
 def transcript(name, rows):
@@ -187,6 +221,13 @@ def the_last_turn_is_read_as_the_status_line_reads_it():
         ("an empty transcript", [], None, None),
         ("a turn dated after now is read, and the bar says nothing of it", [row("assistant", turn), row("assistant", began + 3600)], began + 3600, None),
         ("a turn an hour and more old", [row("assistant", began - 3700)], began - 3700, "cold"),
+        # Claude Code writes an `assistant` row of its own for a request the API refused (2.1.323, read from
+        # real transcripts: isApiErrorMessage true, message.model "<synthetic>"). No answer came: nothing warmed.
+        ("a real answer, which names its model", [row("assistant", turn - 900), row("assistant", turn, message={"model": "claude-fable-5-2", "role": "assistant"})], turn, 40),
+        ("Claude Code's own row for a failed request", [row("assistant", turn), failed_request(decoy)], turn, 40),
+        ("a row marked only as an API error", [row("assistant", turn), row("assistant", decoy, isApiErrorMessage=True)], turn, 40),
+        ("a row whose model is <synthetic> and nothing more", [row("assistant", turn), row("assistant", decoy, message={"model": "<synthetic>"})], turn, 40),
+        ("nothing but failed requests", [failed_request(turn), failed_request(decoy)], None, None),
     ]
     for number, (name, rows, last_turn, tag) in enumerate(samples):
         path = transcript(f"sample-{number}", rows)
@@ -208,6 +249,13 @@ def a_turn_during_the_wait_moves_the_ping():
                                  while_asleep=lambda: add_row(busy, row("assistant", NOW + 30 * MIN)))
     check("a turn at the 30th minute: it sleeps on to the 85th, no wake between",
           (code, text.startswith("WARM_PING "), slept), (0, True, [NOW + 55 * MIN, NOW + 85 * MIN]))
+
+    # Sol's B4: the real request at minute 0, a failed one at minute 50 -- the cache goes cold at 60, not at 110.
+    failing = transcript("failing", [row("assistant", NOW - 20 * MIN)])
+    code, text, slept = run_with(["--for", "120", "--transcript", failing], 50,
+                                 while_asleep=lambda: add_row(failing, failed_request(NOW + 50 * MIN)))
+    check("a failed request at the 50th minute warmed nothing: the ping stays at the 55th",
+          (code, text.startswith("WARM_PING "), slept), (0, True, [NOW + 55 * MIN]))
 
     ending = transcript("ending", [])
     code, text, slept = run_with(["--for", "80", "--transcript", ending], 50,
@@ -235,13 +283,143 @@ def watch_has_no_end():
                                  while_asleep=lambda: add_row(working, row("assistant", NOW + 50 * MIN)))
     check("--watch follows a turn too", (text.startswith("WARM_PING "), slept), (True, [NOW + 55 * MIN, NOW + 105 * MIN]))
 
-    # the quota here says the window resets in one hour; two minutes are waited past it
+    # the quota here says the window resets an hour after NOW; two minutes are waited past it
     code, text, slept = run_with(["--watch"], 98)
     check("--watch at 98 %: no ping, asleep to the window's reset",
-          (code, text.startswith("WAIT_OVER "), "the 5-hour window stood at 98% and had no room for a ping" in text, slept),
-          (0, True, True, [NOW + 55 * MIN, NOW + (55 + 60 + 2) * MIN]))
+          (code, text.startswith("WAIT_OVER "), "the 5-hour window stood at 98% and had no room for a turn" in text, slept),
+          (0, True, True, [NOW + 55 * MIN, NOW + (60 + 2) * MIN]))
     code, text, slept = run_with(["--watch"], 97)
     check("--watch at 97 %: a ping", (text.startswith("WARM_PING "), slept), (True, [NOW + 55 * MIN]))
+
+
+# --- The wake is not spent on a turn the quota would cut (Sol's A2, A3, C9 of 2026-11-13) ---
+
+PING = NOW + 55 * MIN
+CEILING_MIN = 310  # five hours and ten minutes: a 5-hour window has reset by then, whatever the record says
+
+
+def read_every_minute(times):
+    """The moments a clock sleeps to from its ping when it reads the quota again once a minute."""
+    return [PING] + [PING + minute * MIN for minute in range(1, times + 1)]
+
+
+@section
+def no_wake_without_room_for_a_turn():
+    code, text, slept = run_with(["--watch"], quota_record(40, NOW + 60 * MIN, week_used=100, week_reset=NOW + 2 * DAY))
+    check("the week is full: no ping, asleep to the week's reset",
+          (code, text.startswith("WAIT_OVER "), "cold: at " in text and "the week stood at 100% and had no room for a turn" in text, slept),
+          (0, True, True, [PING, NOW + 2 * DAY + 2 * MIN]))
+    code, text, slept = run_with(["--watch"], quota_record(99, NOW + 60 * MIN, week_used=98, week_reset=NOW + 2 * DAY))
+    check("both windows are full: asleep to the later reset",
+          (text.startswith("WAIT_OVER "), "the 5-hour window stood at 99% and the week stood at 98% and had no room for a turn" in text, slept),
+          (True, True, [PING, NOW + 2 * DAY + 2 * MIN]))
+    code, text, slept = run_with(["--watch"], quota_record(40, NOW + 60 * MIN, week_used=97))
+    check("the week at 97 %: a ping", (text.startswith("WARM_PING "), slept), (True, [PING]))
+
+    # dxb-quota's record is of the last turn any session took, so it goes stale while every session sleeps
+    code, text, slept = run_with(["--watch"], quota_record(99, NOW + 30 * MIN))
+    check("a full window whose reset has passed is a new window: a ping", (text.startswith("WARM_PING "), slept), (True, [PING]))
+
+    # from a window's reset to the new window's first turn the status line writes the window empty
+    # (measured in the real history, 2026-11-13 06:50:01 to 10:03:05)
+    def empty_once_reset(used):
+        record = quota_record(used, NOW + 30 * MIN)
+        return lambda moment: record if moment < NOW + 30 * MIN else dict(record, five_hour=None)
+
+    code, text, slept = run_with(["--watch"], empty_once_reset(40))
+    check("the record holds no 5-hour window after the reset this clock saw coming: a ping", (text.startswith("WARM_PING "), slept), (True, [PING]))
+    code, text, slept = run_with(["--until", f"@{PING + 30 * MIN}"], empty_once_reset(99))
+    check("the same after a full window: it has reset, a ping", (text.startswith("WARM_PING "), slept), (True, [PING]))
+
+    # Sol's A2: nothing to read, or a full window with no reset -- the old clock ended WARM_PING on all of these.
+    unread = {
+        "there is no quota record": {},
+        "the 5-hour window was never read": dict(quota_record(40, NOW + 60 * MIN), five_hour=None),
+        "the week holds no percentage": quota_record(40, NOW + 60 * MIN, week_used=None),
+        "the 5-hour window is full and holds no reset": quota_record(100, None),
+        "the week is full and holds no reset": quota_record(40, NOW + 60 * MIN, week_used=100, week_reset=None),
+    }
+    for name, record in unread.items():
+        code, text, slept = run_with(["--watch"], lambda moment: record)
+        check(f"{name}: no wake; read again every minute, and woken at the ceiling",
+              (code, text.startswith("WAIT_OVER "), f"cold: the quota could not be read for {CEILING_MIN} min" in text, slept),
+              (0, True, True, read_every_minute(CEILING_MIN)))
+    code, text, slept = run_with(["--watch"], quota_record(None, NOW + 60 * MIN))
+    check("a window with no percentage, whose reset then passes: woken then, the window is new",
+          (text.startswith("WAIT_OVER "), "could not be read for 5 min" in text, slept), (True, True, read_every_minute(5)))
+    code, text, slept = run_with(["--for", "40"], {})
+    check("a wait's end without a quota to read is held the same way",
+          (text.startswith("WAIT_OVER "), f"could not be read for {CEILING_MIN} min" in text, len(slept), slept[-1]),
+          (True, True, 1 + CEILING_MIN, NOW + (40 + CEILING_MIN) * MIN))
+
+    code, text, slept = run_with(["--watch"], lambda moment: quota_record(50, NOW + 200 * MIN) if moment >= PING + 7 * MIN else {})
+    check("the quota can be read again after seven minutes, and has room: woken then",
+          (code, text.startswith("WAIT_OVER "), "cold: the quota could not be read for 7 min" in text, slept), (0, True, True, read_every_minute(7)))
+    code, text, slept = run_with(["--watch"], lambda moment: quota_record(99, NOW + 200 * MIN) if moment >= PING + 7 * MIN else {})
+    check("it can be read again and is full: asleep to that reset",
+          (text.startswith("WAIT_OVER "), "the 5-hour window stood at 99% and had no room for a turn" in text, slept),
+          (True, True, read_every_minute(7) + [NOW + 202 * MIN]))
+
+
+@section
+def a_reset_is_checked_before_it_is_slept_on():
+    # Sol's A3: a corrupt record's `Infinity` became a sleep with no end, behind a clock the gate saw alive.
+    not_a_reset = (("Infinity", math.inf), ("NaN", math.nan), ("a negative", -3600.0), ("a string", "soon"), ("true", True),
+                   ("9999 hours away", PING + 9999 * 60 * MIN))
+    for name, reset in not_a_reset:
+        code, text, slept = run_with(["--watch"], quota_record(100, reset))
+        check(f"a full window whose reset is {name}: no sleep without an end",
+              (code, text.startswith("WAIT_OVER "), f"could not be read for {CEILING_MIN} min" in text, slept),
+              (0, True, True, read_every_minute(CEILING_MIN)))
+        check(f"--until-reset on a reset that is {name}: refused", run_with(["--until-reset"], quota_record(96, reset))[0], 2)
+    code, text, slept = run_with(["--watch"], quota_record(100, PING + 5 * 60 * MIN))
+    check("a reset a whole window away is slept to", (text.startswith("WAIT_OVER "), slept), (True, [PING, PING + (5 * 60 + 2) * MIN]))
+    # a window is 5 hours or 7 days long, and two minutes are waited past its reset: no reset is further away
+    for name, record, reset in (("5-hour window", quota_record(100, PING + (5 * 60 + 3) * MIN), PING + (5 * 60 + 3) * MIN),
+                                ("week", quota_record(40, NOW + 60 * MIN, week_used=100, week_reset=PING + 7 * DAY + 3 * MIN), PING + 7 * DAY + 3 * MIN)):
+        code, text, slept = run_with(["--watch"], record)
+        check(f"a reset further away than the {name} is long: not slept on until it is that near",
+              (text.startswith("WAIT_OVER "), slept), (True, [PING, PING + 1 * MIN, reset + 2 * MIN]))
+
+    # the corrupt record as it lies on disk, read by the command's own reader
+    with open(QUOTA_RECORD, "w") as record:
+        record.write('{"five_hour": {"used_percentage": 100, "resets_at": Infinity}, "seven_day": {"used_percentage": 40, "resets_at": NaN}}')
+    code, text, slept = run_with(["--watch"], lambda moment: read_the_record())
+    check("Infinity in the record on disk: every sleep has an end",
+          (text.startswith("WAIT_OVER "), all(math.isfinite(moment) for moment in slept), slept), (True, True, read_every_minute(CEILING_MIN)))
+    with open(QUOTA_RECORD, "w") as record:
+        record.write("[]")
+    check("a record on disk that is not an object reads as no record", read_the_record(), {})
+    set_quota(50)
+
+
+@section
+def the_reset_wait_never_ends_before_the_reset():
+    # Sol's C9: of a reset 179 seconds away dxb-quota says "0.0 h", and the wait ended 59 seconds before it.
+    reset = NOW + 179
+    code, text, slept = run_with(["--until-reset"], quota_record(96, reset))
+    check("--until-reset sleeps to the record's own reset second, and two minutes on",
+          (code, text.startswith("WAIT_OVER "), slept), (0, True, [reset + 2 * MIN]))
+    code, text, slept = run_with(["--watch"], quota_record(99, PING + 179))
+    check("a --watch that meets a full window does the same", slept, [PING, PING + 179 + 2 * MIN])
+
+
+@section
+def the_wait_survives_a_wall_clock_set_back():
+    # Sol's C8: at the 10th minute the wall clock is set back 30 minutes; the wake then came at the real 85th.
+    passed = [0.0]
+
+    def nap(seconds):
+        passed[0] += seconds
+
+    real = (ww.wall_clock, ww.boot_clock, time.sleep)
+    ww.wall_clock = lambda: NOW + passed[0] - (30 * MIN if passed[0] >= 10 * MIN else 0)
+    ww.boot_clock, time.sleep = (lambda: 7000.0 + passed[0]), nap
+    try:
+        ww.sleep_until(NOW + 55 * MIN)
+    finally:
+        ww.wall_clock, ww.boot_clock, time.sleep = real
+    check("it wakes when 55 minutes have really passed", round(passed[0] / MIN), 55)
 
 
 # --- The command itself, run for real in the tests' own world ---
@@ -278,6 +456,16 @@ def registered(session=SESSION):
             return json.load(record)["pid"]
     except (OSError, ValueError, KeyError):
         return None
+
+
+def record_of(session):
+    with open(clock_file(session)) as record:
+        return json.load(record)
+
+
+def write_record(session, record):
+    with open(clock_file(session), "w") as handle:
+        json.dump(record, handle)
 
 
 def arm(*argv, session=SESSION, **knobs):
@@ -351,16 +539,16 @@ def a_real_watch_pings():
 
 @section
 def status_reads_the_next_ping_from_the_last_turn():
-    # A clock written down as armed 30 minutes ago; the process it names is a real clock of another session.
-    stand_in = arm("--watch", session="stand-in")
-    armed_at = int(time.time()) - 30 * MIN
+    # This session's own running clock, its record changed by hand to say it was armed 30 minutes ago.
     session = "status-session"
+    stand_in = arm("--watch", session=session)
+    written = record_of(session)
+    armed_at = int(time.time()) - 30 * MIN
     os.makedirs(os.path.join(SANDBOX, ".claude", "projects", "-some-project"))
     own = os.path.join(SANDBOX, ".claude", "projects", "-some-project", f"{session}.jsonl")
 
     def write_down(until):
-        with open(clock_file(session), "w") as record:
-            json.dump({"pid": stand_in.pid, "mode": "--watch" if until is None else "--for", "armed_at": armed_at, "until": until}, record)
+        write_record(session, dict(written, mode="--watch" if until is None else "--for", armed_at=armed_at, until=until))
 
     write_down(None)
     check("no transcript: 55 minutes after the arming",
@@ -409,6 +597,91 @@ def until_reset_takes_over_from_a_watch():
     check("--watch over --until-reset is refused", run("--watch").returncode, 3)
     end(reset)
     set_quota(50)
+
+
+@section
+def a_clock_is_proven_by_more_than_its_name():
+    began = time.time()
+    other = arm("--watch", session="other-session")
+    theirs = record_of("other-session")
+
+    # Sol's A1: this session's file names a pid that runs another session's clock -- whose end wakes that session.
+    write_record("mine-session", theirs)
+    check("another session's live clock in this session's file: not armed", status(session="mine-session"), "NOT_ARMED\nAWAY off\n")
+    check("and the file is cleaned", os.path.exists(clock_file("mine-session")), False)
+    write_record("mine-session", theirs)
+    check("and it does not refuse an arming", run("--for", "0.01", session="mine-session").returncode, 0)
+
+    # the same pid, and it runs a dxb-warm-wait, but one started at another moment: the pid was given out again
+    reused = dict(theirs, session="reused-session", started=theirs.get("started", 0) + 1)
+    write_record("reused-session", reused)
+    check("a reused pid: not armed", status(session="reused-session"), "NOT_ARMED\nAWAY off\n")
+    write_record("reused-session", reused)
+    check("a reused pid does not refuse an arming", run("--for", "0.01", session="reused-session").returncode, 0)
+    write_record("reused-session", dict(reused, started=theirs.get("started")))
+    check("with the process's own start time the same record is a clock",
+          status(session="reused-session").startswith(f"ARMED --watch pid {other.pid}, next ping "), True)
+
+    check("the record names its session", (theirs["pid"], theirs.get("session")), (other.pid, "other-session"))
+    with open("/proc/stat") as kernel:
+        booted = int(re.search(r"^btime (\d+)", kernel.read(), re.M).group(1))
+    check("and the moment the kernel started the process",
+          abs(booted + theirs.get("started", 0) / os.sysconf("SC_CLK_TCK") - began) < 60, True)
+    end(other)
+
+
+@section
+def the_clock_is_taken_whole_or_loudly_not_at_all():
+    # Sol's B5: the record cannot be written, and the clock slept on where the gate could not see it.
+    closed = os.path.join(SANDBOX, "closed")
+    os.makedirs(os.path.join(closed, "claude-ctx"))
+    os.chmod(os.path.join(closed, "claude-ctx"), 0o555)
+    began = time.time()
+    unseen = subprocess.run([sys.executable, COMMAND, "--for", "0.1"], capture_output=True, text=True, timeout=30,
+                            env=dict(environment("closed-session", {}), XDG_RUNTIME_DIR=closed))
+    check("a clock that cannot be written down ends at once, and says so",
+          (unseen.returncode, unseen.stdout.startswith("NOT_ARMED the clock could not be written down"), unseen.stdout.count("\n"), time.time() - began < 4),
+          (4, True, 1, True))
+    os.chmod(os.path.join(closed, "claude-ctx"), 0o755)
+
+    # Two armings at once: both are held at the folder's lock, behind which the look and the write are one step.
+    folder = os.open(RUNTIME, os.O_RDONLY)
+    fcntl.flock(folder, fcntl.LOCK_EX)
+    try:
+        pair = [subprocess.Popen([sys.executable, COMMAND, "--for", "1"], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True,
+                                 env=environment("pair-session", {})) for _ in range(2)]
+        clocks.extend(pair)
+        time.sleep(1.5)
+        check("while another holds the folder's lock no arming is written down",
+              ([clock.poll() for clock in pair], registered("pair-session")), ([None, None], None))
+        late = run("--for", "0.01", session="late-session", LOCK_PATIENCE_S=0.3)
+        check("an arming that cannot have the lock in time ends loudly too",
+              (late.returncode, late.stdout.startswith("NOT_ARMED the clock could not be written down")), (4, True))
+    finally:
+        os.close(folder)
+    patience = time.time() + 10
+    while all(clock.poll() is None for clock in pair) and time.time() < patience:
+        time.sleep(0.02)
+    won = [clock for clock in pair if clock.poll() is None]
+    lost = [clock for clock in pair if clock.poll() is not None]
+    check("the lock released: one arming takes the session and the other is refused",
+          (len(won), [(clock.returncode, clock.stdout.read().startswith("ALREADY_ARMED --for pid ")) for clock in lost]), (1, [(3, True)]))
+    check("the one written down is the one that runs", registered("pair-session"), won[0].pid if won else None)
+    for clock in pair:
+        end(clock)
+
+
+@section
+def a_quota_line_that_never_comes_does_not_hold_the_wake():
+    # Sol's C7: the line is only shown, and the call that fetches it had no time limit.
+    stuck = os.path.join(SANDBOX, "stuck-home")
+    quota_command(stuck, "exec sleep 8")
+    began = time.time()
+    woke = subprocess.run([sys.executable, COMMAND, "--for", "0.02"], capture_output=True, text=True, timeout=30,
+                          env=dict(environment("stuck-session", {"QUOTA_LINE_TIMEOUT_S": 1}), HOME=stuck))
+    check("dxb-quota hangs: the wake comes all the same, without the line",
+          (woke.returncode, woke.stdout.startswith("WAIT_OVER "), woke.stdout.rstrip().endswith("|"), time.time() - began < 6),
+          (0, True, True, True))
 
 
 @section
