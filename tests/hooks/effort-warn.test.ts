@@ -14,6 +14,7 @@
 import { spawnSync } from "node:child_process";
 import {
   existsSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, rmSync, writeFileSync, accessSync, constants,
+  openSync, writeSync, closeSync,
 } from "node:fs";
 import { homedir, tmpdir } from "node:os";
 import { join, resolve } from "node:path";
@@ -37,8 +38,10 @@ function box(): string {
   return dir;
 }
 
+// the case's directory is its home too: a reading the hook starts (scripts/ops/dxb-usage --refresh) finds no
+// sign-in key there, so no case ever reaches the network
 const env = (dir: string, sid?: string) => {
-  const e: NodeJS.ProcessEnv = { ...process.env, XDG_RUNTIME_DIR: dir, PYTHONDONTWRITEBYTECODE: "1" };
+  const e: NodeJS.ProcessEnv = { ...process.env, XDG_RUNTIME_DIR: dir, HOME: dir, PYTHONDONTWRITEBYTECODE: "1" };
   delete e.CLAUDE_CODE_SESSION_ID;
   if (sid !== undefined) e.CLAUDE_CODE_SESSION_ID = sid;
   return e;
@@ -739,6 +742,137 @@ describe("the quota is said on every turn, from the status line's record (CEO 20
     quota(dir, { used_percentage: 10, resets_at: epoch(3600) }, null);
     hook(dir, prompt(SID, transcript(dir, [])));
     expect(readdirSync(join(dir, "claude-ctx")).sort()).toEqual(["rate-limits.json", `${SID}.json`].sort());
+  });
+});
+
+// Measured 2026-11-13: at 15:15 Fable 5.2's own weekly window ran out while the 5-hour window and the week stood
+// at 11 % and 59 % -- the status line is not given that window. scripts/ops/dxb-usage reads it from the address
+// Claude Code's /usage reads and keeps it in usage-scoped.json; the quota line says a model's own week from 80 %,
+// and when a reading is due by dxb-usage's rule the hook starts one and does not wait for it.
+describe("a model's own week, from dxb-usage's record (2026-11-13)", () => {
+  const epoch = (secondsFromNow: number) => Math.round(Date.now() / 1000) + secondsFromNow;
+  type Week = { used: number; resets_at: number; share?: number };
+  /** dxb-usage's record: each model's own week, read that long ago, with the all-models week then */
+  function ownWeeks(dir: string, models: Record<string, Week>, readSecondsAgo = 120, week = 59): void {
+    mkdirSync(join(dir, "claude-ctx"), { recursive: true });
+    writeFileSync(join(dir, "claude-ctx", "usage-scoped.json"), JSON.stringify({ read_at: epoch(-readSecondsAgo), week, models }));
+  }
+  /** dxb-usage's stamp of its last request */
+  function askedAgo(dir: string, seconds: number): void {
+    writeFileSync(join(dir, "claude-ctx", "usage-scoped.asked"), String(epoch(-seconds)));
+  }
+  /** the status line's record of the two windows */
+  function windows(dir: string, week = 59): void {
+    mkdirSync(join(dir, "claude-ctx"), { recursive: true });
+    writeFileSync(join(dir, "claude-ctx", "rate-limits.json"), JSON.stringify({
+      session_id: OTHER, five_hour: { used_percentage: 11, resets_at: epoch(2 * 3600 + 30) },
+      seven_day: { used_percentage: week, resets_at: epoch(40 * 3600 + 30) }, written_at: at(120),
+    }));
+  }
+  const fable = (used: number, resetsInSeconds = 13 * 3600 + 30): Week => ({ used, resets_at: epoch(resetsInSeconds), share: 50 });
+  const quotaText = (dir: string) => context(hook(dir, prompt(SID, transcript(dir, [])))).split("\n").find((l) => l.startsWith("QUOTA -- ")) ?? "";
+
+  it("Fable's own week at 85 %: said after the two windows, with its reset", () => {
+    const dir = box();
+    record(dir, SID, "high", 2);
+    windows(dir);
+    ownWeeks(dir, { fable: fable(85) });
+    askedAgo(dir, 120);
+    const line = quotaText(dir);
+    expect(line).toContain("the week is 59% used and resets in 40h00m (the status line's record, 2 min old); "
+      + "Fable's own week is 85% used and resets in 13h00m. In a dxb-team3 job");
+  });
+  it("from 80 % it is said, below it nothing", () => {
+    for (const [used, said] of [[80, true], [100, true], [79.9, false], [40, false]] as const) {
+      const dir = box();
+      record(dir, SID, "high", 2);
+      windows(dir);
+      ownWeeks(dir, { fable: fable(used) });
+      askedAgo(dir, 120);
+      const line = quotaText(dir);
+      expect(line, String(used)).toContain("5-hour window is 11% used");
+      expect(line.includes(`Fable's own week is ${used}% used`), String(used)).toBe(said);
+      expect(line.includes("own week"), String(used)).toBe(said);
+    }
+  });
+  it("unknown or old -- no record, one 31 minutes old, a week that has reset since -- is left out; the line is what it was", () => {
+    const bare = box();
+    record(bare, SID, "high", 2);
+    windows(bare);
+    const before = quotaText(bare);
+    expect(before).toContain("5-hour window is 11% used");
+    const cases: [string, (dir: string) => void][] = [
+      ["no record", () => {}],
+      ["31 minutes old", (dir) => ownWeeks(dir, { fable: fable(100) }, 31 * 60)],
+      ["reset since", (dir) => ownWeeks(dir, { fable: fable(100, -60) })],
+      ["garbage", (dir) => writeFileSync(join(dir, "claude-ctx", "usage-scoped.json"), "{not json")],
+    ];
+    for (const [name, arrange] of cases) {
+      const dir = box();
+      record(dir, SID, "high", 2);
+      windows(dir);
+      arrange(dir);
+      askedAgo(dir, 120);
+      expect(quotaText(dir), name).toBe(before);
+    }
+  });
+  it("with no record of the two windows, a model's own week at 100 % is still said", () => {
+    const dir = box();
+    record(dir, SID, "high", 2);
+    ownWeeks(dir, { fable: fable(100) });
+    askedAgo(dir, 120);
+    expect(quotaText(dir)).toMatch(/^QUOTA -- Fable's own week is 100% used and resets in 13h00m\. In a dxb-team3 job/);
+  });
+
+  /** a credentials file that is a FIFO: a dxb-usage --refresh started by the hook blocks on it, and a writer can
+   * then open it -- so the case sees the reading was started, and that the hook did not wait for it */
+  function blockingSignIn(dir: string): string {
+    mkdirSync(join(dir, ".claude"), { recursive: true });
+    const fifo = join(dir, ".claude", ".credentials.json");
+    expect(spawnSync("mkfifo", [fifo]).status).toBe(0);
+    return fifo;
+  }
+  /** whether something holds the FIFO open for reading within that long; it is let go with an empty record */
+  function startedReading(fifo: string, withinMs: number): boolean {
+    const until = Date.now() + withinMs;
+    for (;;) {
+      try {
+        const fd = openSync(fifo, constants.O_WRONLY | constants.O_NONBLOCK);
+        writeSync(fd, "{}");
+        closeSync(fd);
+        return true;
+      } catch {
+        if (Date.now() >= until) return false;
+        spawnSync("sleep", ["0.1"]);
+      }
+    }
+  }
+  it("a reading due (85 %, the last one 15 minutes ago): the hook starts it and does not wait -- the figure it has is said", () => {
+    const dir = box();
+    record(dir, SID, "high", 2);
+    windows(dir);
+    ownWeeks(dir, { fable: fable(85) }, 15 * 60);
+    askedAgo(dir, 15 * 60);
+    const fifo = blockingSignIn(dir);
+    const began = Date.now();
+    const line = quotaText(dir);
+    expect(Date.now() - began).toBeLessThan(5000);
+    expect(line).toContain("Fable's own week is 85% used");
+    expect(startedReading(fifo, 5000)).toBe(true);
+  });
+  it("no reading while it cannot reach 80 %, and none within ten minutes of the last request", () => {
+    for (const [name, arrange] of [
+      ["70 %, the all-models week risen by 4 since: at most 78", (dir: string) => { ownWeeks(dir, { fable: fable(70) }, 15 * 60, 55); askedAgo(dir, 15 * 60); }],
+      ["85 %, asked 9 minutes ago", (dir: string) => { ownWeeks(dir, { fable: fable(85) }, 9 * 60); askedAgo(dir, 9 * 60); }],
+    ] as const) {
+      const dir = box();
+      record(dir, SID, "high", 2);
+      windows(dir);
+      arrange(dir);
+      const fifo = blockingSignIn(dir);
+      quotaText(dir);
+      expect(startedReading(fifo, 1500), name).toBe(false);
+    }
   });
 });
 

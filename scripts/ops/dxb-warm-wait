@@ -27,9 +27,10 @@ A wait prints one line and exits 0:
   WARM_PING ... | re-arm: <cmd>  the cache was about to go cold: run <cmd> in the background again
   SUPERSEDED by --until-reset    a --watch, when --until-reset was armed over it: nothing to do
 It never ends on a wake the quota would cut: before either line a turn must have room -- the
-5-hour window and the week both under 98 %. A full window is slept to its reset (the later one
-when both are full); a quota that cannot be read is read again every minute, in here, and after
-5 h 10 min the session is woken all the same. It also stays asleep through pings when so many
+5-hour window and the week both under 98 %, and the session model's own week too when dxb-usage has
+a reading of it (one not known leaves the two windows to decide, as before). A full window is slept
+to its reset (the latest one when more are full); a quota that cannot be read is read again every
+minute, in here, and after 5 h 10 min the session is woken all the same. It also stays asleep through pings when so many
 would be needed that a cold start is cheaper. Each of these is said on WAIT_OVER as `cold: ...`.
 Exit 2: bad usage, or --until-reset with no 5-hour reset ahead in the record.
 Exit 3: ALREADY_ARMED ... -- the session's clock is running; only --until-reset may be armed
@@ -48,6 +49,8 @@ import contextlib
 import datetime
 import fcntl
 import glob
+import importlib.machinery
+import importlib.util
 import json
 import math
 import os
@@ -82,6 +85,8 @@ QUOTA_LINE_TIMEOUT_S = test_knob("QUOTA_LINE_TIMEOUT_S", 20)  # dxb-quota's line
 LOCK_PATIENCE_S = test_knob("LOCK_PATIENCE_S", 10)  # an arming waits this long for the clocks' folder, never without an end
 
 QUOTA = os.path.expanduser("~/.local/bin/dxb-quota")
+OWN_WEEKS = os.path.join(os.path.dirname(os.path.abspath(__file__)), "dxb-usage")  # each model's own week: its record and its rule
+FETCH_TIMEOUT_S = 30    # dxb-usage --refresh; its request's own limit is ten seconds
 PROJECTS = os.path.expanduser("~/.claude/projects")
 RUNTIME = os.path.join(os.environ.get("XDG_RUNTIME_DIR") or "/tmp", "claude-ctx")
 QUOTA_RECORD = os.path.join(RUNTIME, "rate-limits.json")  # dxb-statusline.js writes it; dxb-quota reads the same file
@@ -215,6 +220,37 @@ def no_room(quota, now):
         elif percent >= FULL_WINDOW_PCT:
             in_the_way.append((f"the {name} stood at {percent:g}%" + ("" if reset else " with no reset to read"), reset))
     return in_the_way
+
+
+def session_model(session):
+    """The session's model as the status line last wrote it in the session's record -- "Fable 5.2" is "fable" --
+    or None when it is not known."""
+    try:
+        with open(os.path.join(RUNTIME, f"{session}.json")) as handle:
+            return json.load(handle)["model"].split()[0].lower()
+    except (OSError, ValueError, LookupError, TypeError, AttributeError, IndexError):
+        return None
+
+
+def own_week_in_the_way(session, now):
+    """The session model's own week when it leaves a turn no room, as no_room() says a window: [(what to say of it,
+    the second it resets)]; [] when it has room or is not known. A reading that is due by dxb-usage's rule is
+    fetched first, and waited for: the clock is a background process."""
+    model = session_model(session) if session else None
+    if model is None:
+        return []
+    try:
+        loader = importlib.machinery.SourceFileLoader("dxb_usage", OWN_WEEKS)
+        usage = importlib.util.module_from_spec(importlib.util.spec_from_loader("dxb_usage", loader))
+        loader.exec_module(usage)
+        if usage.due(now):
+            subprocess.run([OWN_WEEKS, "--refresh"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, timeout=FETCH_TIMEOUT_S)
+        reading = usage.readings(now).get(model)
+    except Exception:  # noqa: BLE001 -- an own week that cannot be had is not known, and the clock goes on as before
+        return []
+    if reading is None or reading["used"] < FULL_WINDOW_PCT:
+        return []
+    return [(f"{model.capitalize()}'s own week stood at {reading['used']:g}%", reading["resets_at"])]
 
 
 def quota_line():
@@ -433,16 +469,16 @@ def sleep_until_room(session, seen):
     """Sleep on, waking nobody, until a turn has room: (the quota then, the `cold:` note of that sleep or "").
 
     The session's last wake must not be spent on a turn the quota cuts: a turn that dies arms no clock,
-    and the Stop gate does not run on it. A full window is slept to its reset, the later one when both
-    are full. A window that cannot be read, or is full with no reset to sleep to, is read again every
-    QUOTA_RETRY_S, and after BLIND_CEILING_MIN of that the session is woken all the same. `seen` is the
-    quota as this clock last read it.
+    and the Stop gate does not run on it. A full window is slept to its reset, the latest one when more
+    are full; the session model's own week is weighed with the two windows. A window that cannot be read,
+    or is full with no reset to sleep to, is read again every QUOTA_RETRY_S, and after BLIND_CEILING_MIN
+    of that the session is woken all the same. `seen` is the quota as this clock last read it.
     """
     blind_since, note = None, ""
     while True:
         now = wall_clock()
         seen = keep_resets(seen, read_quota())
-        in_the_way = no_room(seen, now)
+        in_the_way = no_room(seen, now) + own_week_in_the_way(session, now)
         if not in_the_way or (blind_since is not None and now - blind_since >= BLIND_CEILING_MIN * 60):
             return seen, note
         said = " and ".join(what for what, _ in in_the_way)

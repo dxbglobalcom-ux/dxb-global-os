@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Tests for dxb-warm-wait: when it wakes, when a ping pays, what it refuses, how it follows the session's
-last turn, when the quota has no room for the wake, the one clock a session has and how it is proven,
-the away marker, and a few real short waits."""
+last turn, when the quota has no room for the wake (the session model's own week included), the one clock a
+session has and how it is proven, the away marker, and a few real short waits."""
 import atexit
 import datetime
 import fcntl
@@ -420,6 +420,94 @@ def the_wait_survives_a_wall_clock_set_back():
     finally:
         ww.wall_clock, ww.boot_clock, time.sleep = real
     check("it wakes when 55 minutes have really passed", round(passed[0] / MIN), 55)
+
+
+# --- The session model's own week (2026-11-13: Fable 5.2's own week ran out at 15:15 while the 5-hour window and
+# the week stood at 11 % and 59 %; the clock woke the dead session at 15:57) ---
+
+OWN_SESSION = "0000bbbb-test-4000-8000-ownweektest"
+READ = PING - 2 * MIN  # dxb-usage read the weeks two minutes before the ping, and asked then
+
+
+def own_weeks(models, read_at=READ):
+    """dxb-usage's record of each model's own week, and its stamp of the request it made then."""
+    with open(os.path.join(RUNTIME, "usage-scoped.json"), "w") as record:
+        json.dump({"read_at": read_at, "week": 40, "models": models}, record)
+    with open(os.path.join(RUNTIME, "usage-scoped.asked"), "w") as stamp:
+        stamp.write(repr(read_at))
+
+
+def runs_on(model):
+    """The status line's record of the session, which names its model (None: a record with no model)."""
+    with open(os.path.join(RUNTIME, f"{OWN_SESSION}.json"), "w") as record:
+        json.dump({"session_id": OWN_SESSION, "effort": "high", **({} if model is None else {"model": model})}, record)
+
+
+def run_as_session(argv, quota, session=OWN_SESSION):
+    os.environ["CLAUDE_CODE_SESSION_ID"] = session
+    try:
+        return run_with(argv, quota)
+    finally:
+        del os.environ["CLAUDE_CODE_SESSION_ID"]
+
+
+def fable(used, resets_in_h=3.0):
+    return {"used": used, "resets_at": NOW + resets_in_h * 3600, "share": 50}
+
+
+ROOMY = quota_record(40, NOW + 60 * MIN)  # the 5-hour window and the week both have room
+
+
+@section
+def the_session_models_own_week_is_weighed_too():
+    runs_on("Fable 5.2")
+    own_weeks({"fable": fable(98)})
+    code, text, slept = run_as_session(["--watch"], ROOMY)
+    check("Fable's own week at 98 %: no ping, asleep to that week's reset",
+          (code, text.startswith("WAIT_OVER "), "cold: at " in text and "Fable's own week stood at 98% and had no room for a turn" in text, slept),
+          (0, True, True, [PING, NOW + 3 * 3600 + 2 * MIN]))
+
+    own_weeks({"fable": fable(97)})
+    code, text, slept = run_as_session(["--watch"], ROOMY)
+    check("Fable's own week at 97 %: a ping", (text.startswith("WARM_PING "), slept), (True, [PING]))
+
+    own_weeks({"fable": fable(99, resets_in_h=5.0)})
+    code, text, slept = run_as_session(["--watch"], quota_record(99, NOW + 60 * MIN))
+    check("the 5-hour window full too: asleep to the later reset, both named",
+          (text.startswith("WAIT_OVER "), "the 5-hour window stood at 99% and Fable's own week stood at 99% and had no room" in text, slept),
+          (True, True, [PING, NOW + 5 * 3600 + 2 * MIN]))
+
+    own_weeks({"opus": {"used": 100, "resets_at": NOW + 3 * 3600, "share": 50}, "fable": fable(40)})
+    code, text, slept = run_as_session(["--watch"], ROOMY)
+    check("another model's full week does not stop a Fable session", (text.startswith("WARM_PING "), slept), (True, [PING]))
+    runs_on("Opus 5.5")
+    own_weeks({"fable": fable(100)})
+    code, text, slept = run_as_session(["--watch"], ROOMY)
+    check("nor does Fable's full week stop an Opus session", (text.startswith("WARM_PING "), slept), (True, [PING]))
+
+
+@section
+def an_own_week_not_known_changes_nothing():
+    unknown = {
+        "no reading of the own weeks": lambda: os.remove(os.path.join(RUNTIME, "usage-scoped.json")),
+        "a reading 31 minutes old": lambda: own_weeks({"fable": fable(100)}, read_at=PING - 31 * MIN),
+        "a reading of a week that has reset since": lambda: own_weeks({"fable": fable(100, resets_in_h=0.5)}),
+        "a session record that names no model": lambda: (own_weeks({"fable": fable(100)}), runs_on(None)),
+    }
+    for name, arrange in unknown.items():
+        runs_on("Fable 5.2")
+        own_weeks({"fable": fable(100)})
+        arrange()
+        code, text, slept = run_as_session(["--watch"], ROOMY)
+        check(f"{name}: a ping, as before", (code, text.startswith("WARM_PING "), slept), (0, True, [PING]))
+    runs_on("Fable 5.2")
+    own_weeks({"fable": fable(100)})
+    code, text, slept = run_with(["--watch"], ROOMY)
+    check("no session known: a ping, as before", (text.startswith("WARM_PING "), slept), (True, [PING]))
+    code, text, slept = run_as_session(["--watch"], quota_record(99, NOW + 60 * MIN), session="another-session")
+    check("and the two windows still decide as before", (text.startswith("WAIT_OVER "), "Fable" in text, slept), (True, False, [PING, NOW + 62 * MIN]))
+    for name in ("usage-scoped.json", "usage-scoped.asked", f"{OWN_SESSION}.json"):
+        os.remove(os.path.join(RUNTIME, name))
 
 
 # --- The command itself, run for real in the tests' own world ---

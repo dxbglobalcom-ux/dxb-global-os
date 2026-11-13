@@ -1,0 +1,298 @@
+#!/usr/bin/env python3
+"""dxb-usage -- the account's weekly window per model, which the status line is not given.
+
+Beside the 5-hour window and the all-models week there is a weekly window per model (measured 2026-11-13: Fable
+5.2's own week ran out at 15:15 while the two windows the status line has stood at 11 % and 59 %). Claude Code's
+/usage screen reads it from Anthropic's usage address; this command reads it from the same address, with the
+account's sign-in key (the CEO, 2026-11-13: "Tek yöntem, tek yolu oysa. Tamamdır. Onay veriyorum.").
+
+  dxb-usage             one line per model: `fable 100% · resets 09:00 · read 2 min ago`, or `unknown: <reason>`
+  dxb-usage --json      the record
+  dxb-usage --refresh   ask now, when the last request was ten minutes ago or more; one line: `read` or `not read: <reason>`
+
+The key is read from ~/.claude/.credentials.json (claudeAiOauth.accessToken) at the moment of the request and
+goes into that one request's header alone: it is never printed, logged, kept or put on a command line, and never
+refreshed -- a 401 or a 403 is an unknown, and Claude Code refreshes its own sign-in.
+
+The record, $XDG_RUNTIME_DIR/claude-ctx/usage-scoped.json (written whole, mode 600), keeps the per-model weekly
+windows alone: {"read_at", "week": the all-models week then, from the status line's record, "models": {<display
+name lowercased>: {"used", "resets_at": epoch seconds, "share": its allowance as a percentage of the all-models
+week}}}. A percentage that is no finite number from 0 to 100, or a reset that is missing or cannot be read,
+leaves that model out. A request that fails leaves the record as it was; a record older than 30 minutes is not
+known.
+
+When to ask (the CEO, 2026-11-13: only near 80 %, then every ten minutes; never below) is known without asking:
+a model's own week can rise at most 100 / share times what the all-models week rises, and the status line has the
+all-models week on every turn. due() says it -- the hook and the clock ask it before they start a --refresh.
+--refresh itself only keeps the ten minutes: one request at most in ten minutes on the whole machine, failed ones
+counted, by the stamp usage-scoped.asked (the epoch second of the last request). Exit 0; 2 for bad usage.
+"""
+
+import datetime
+import fcntl
+import json
+import math
+import os
+import stat
+import sys
+import time
+
+URL = "https://api.anthropic.com/api/oauth/usage"
+NEAR_PCT = 80          # his word (2026-11-13): a model's week is asked about, and said, from here
+INTERVAL_S = 10 * 60   # ... and asked about at most this often, for the whole machine
+TIMEOUT_S = 10
+MAX_AGE_S = 30 * 60    # an older reading is not known
+WEEK_S = 7 * 86400     # no reset is further away than a week: one that is, is no reset to sleep to
+ANSWER_BYTES = 1024 * 1024
+RECORD_BYTES = 64 * 1024
+
+RUNTIME = os.path.join(os.environ.get("XDG_RUNTIME_DIR") or "/tmp", "claude-ctx")
+RECORD = os.path.join(RUNTIME, "usage-scoped.json")
+ASKED = os.path.join(RUNTIME, "usage-scoped.asked")
+STATUS_RECORD = os.path.join(RUNTIME, "rate-limits.json")  # dxb-statusline.js writes it on every turn
+CREDENTIALS = os.path.expanduser("~/.claude/.credentials.json")
+
+USAGE = "usage: dxb-usage [--json | --refresh]"
+
+
+def wall_clock():
+    return time.time()
+
+
+def send(request):
+    """The one network call; the tests put a fake answer in its place."""
+    import urllib.request  # here, not above: the hook loads this file on every turn and never asks
+    return urllib.request.urlopen(request, timeout=TIMEOUT_S)
+
+
+def percent(value):
+    """A finite number from 0 to 100 that is not a bool, or None."""
+    if isinstance(value, bool) or not isinstance(value, (int, float)):
+        return None
+    try:
+        return value if math.isfinite(value) and 0 <= value <= 100 else None
+    except OverflowError:  # an integer too large for a float
+        return None
+
+
+def read_small(path):
+    """At most RECORD_BYTES of a regular file, or None. Never follows a link and never waits on a FIFO: the hook
+    reads through this."""
+    try:
+        fd = os.open(path, os.O_RDONLY | os.O_NOFOLLOW | os.O_NONBLOCK)
+    except OSError:
+        return None
+    try:
+        return os.read(fd, RECORD_BYTES) if stat.S_ISREG(os.fstat(fd).st_mode) else None
+    except OSError:
+        return None
+    finally:
+        os.close(fd)
+
+
+def read_json(path):
+    """The JSON object in that file, or None."""
+    try:
+        value = json.loads(read_small(path) or b"null")
+    except ValueError:
+        return None
+    return value if isinstance(value, dict) else None
+
+
+def week_now():
+    """The all-models week's percentage as the status line last wrote it, or None."""
+    seven_day = (read_json(STATUS_RECORD) or {}).get("seven_day")
+    return percent(seven_day.get("used_percentage")) if isinstance(seven_day, dict) else None
+
+
+def stamped(raw):
+    """The epoch second the stamp's bytes hold, or None."""
+    try:
+        return float(raw or b"")
+    except ValueError:
+        return None
+
+
+def last_asked():
+    """The epoch second of the machine's last request, or None when there was none."""
+    return stamped(read_small(ASKED))
+
+
+def asked_lately(asked, now):
+    return asked is not None and 0 <= now - asked < INTERVAL_S
+
+
+def model_weeks(answer):
+    """The answer's weekly window per model: {<display name lowercased>: {"used", "resets_at", "share"}}."""
+    limits = answer.get("limits") if isinstance(answer, dict) else None
+    if not isinstance(limits, list):
+        return {}
+    shares = {}
+    for entry in answer.get("weekly_scoped_shares") or []:
+        if isinstance(entry, dict) and isinstance(entry.get("limit_index"), int):
+            shares[entry["limit_index"]] = percent(entry.get("allowance_percent_of_weekly")) or None  # a share of 0 is none
+    weeks = {}
+    for index, entry in enumerate(limits):
+        if not isinstance(entry, dict) or entry.get("kind") != "weekly_scoped":
+            continue
+        try:
+            name = entry["scope"]["model"]["display_name"].lower()
+            resets = datetime.datetime.fromisoformat(entry["resets_at"])
+        except (LookupError, TypeError, AttributeError, ValueError):
+            continue
+        used = percent(entry.get("percent"))
+        if used is not None and resets.tzinfo is not None:
+            weeks[name] = {"used": used, "resets_at": resets.timestamp(), "share": shares.get(index)}
+    return weeks
+
+
+def bound(reading, week_then, week, now):
+    """The most that model's week can stand at now, or None when it cannot be told: no share, the all-models
+    week not known, or fallen since the reading (it has reset, and how far it rose before is lost)."""
+    share = percent(reading.get("share"))
+    if not share or week is None:
+        return None
+    if reading["resets_at"] <= now:
+        return 100 / share * week  # a new week of its own, which rose at most that much since its reset
+    if week_then is None or week < week_then:
+        return None
+    return reading["used"] + 100 / share * (week - week_then)
+
+
+def due(now):
+    """Whether the rule asks for a request now: the last one ten minutes ago or more, and some model's week may
+    stand at NEAR_PCT or more -- or that cannot be told."""
+    if asked_lately(last_asked(), now):
+        return False
+    record = read_json(RECORD) or {}
+    models = record.get("models")
+    if not isinstance(models, dict) or not models:
+        return True  # no share known
+    week = week_now()
+    try:
+        bounds = [bound(reading, record.get("week"), week, now) for reading in models.values()]
+    except (LookupError, TypeError, AttributeError):
+        return True
+    return any(highest is None or highest >= NEAR_PCT for highest in bounds)
+
+
+def readings(now):
+    """{model: {"used", "resets_at"}} of a record not older than MAX_AGE_S, of the weeks that have not reset since
+    (and reset within a week); {} when nothing is known."""
+    record = read_json(RECORD) or {}
+    read_at, models = record.get("read_at"), record.get("models")
+    if not isinstance(read_at, (int, float)) or not 0 <= now - read_at <= MAX_AGE_S or not isinstance(models, dict):
+        return {}
+    return {name: {"used": reading["used"], "resets_at": reading["resets_at"]}
+            for name, reading in models.items()
+            if isinstance(reading, dict) and percent(reading.get("used")) is not None
+            and isinstance(reading.get("resets_at"), (int, float)) and now < reading["resets_at"] <= now + WEEK_S}
+
+
+def access_token():
+    try:
+        with open(CREDENTIALS) as handle:
+            token = json.load(handle)["claudeAiOauth"]["accessToken"]
+    except (OSError, ValueError, LookupError, TypeError):
+        return None
+    return token if isinstance(token, str) and token else None
+
+
+def take_turn(now):
+    """Take the machine's one request turn: True when the last request was ten minutes ago or more and no other
+    is being taken; the stamp then says now."""
+    os.makedirs(RUNTIME, exist_ok=True)
+    try:
+        fd = os.open(ASKED, os.O_RDWR | os.O_CREAT | os.O_NOFOLLOW | os.O_NONBLOCK, 0o600)
+    except OSError:
+        return False
+    try:
+        fcntl.flock(fd, fcntl.LOCK_EX | fcntl.LOCK_NB)
+        if asked_lately(stamped(os.read(fd, 64)), now):
+            return False
+        os.ftruncate(fd, 0)
+        os.pwrite(fd, repr(now).encode(), 0)
+        return True
+    except OSError:  # BlockingIOError: another is asking now
+        return False
+    finally:
+        os.close(fd)
+
+
+def write_record(record):
+    """Whole or not at all, the owner's alone."""
+    draft = f"{RECORD}.{os.getpid()}"
+    fd = os.open(draft, os.O_WRONLY | os.O_CREAT | os.O_TRUNC | os.O_NOFOLLOW, 0o600)
+    with os.fdopen(fd, "w") as handle:
+        os.fchmod(fd, 0o600)
+        json.dump(record, handle)
+    os.replace(draft, RECORD)
+
+
+def refresh(now):
+    """--refresh: ask once when the ten minutes allow; None when the record was written, else why it was not.
+
+    The reasons are fixed words: an error's own text may carry the request's header, so it is never said."""
+    import urllib.error
+    import urllib.request
+    token = access_token()
+    if token is None:
+        return "no sign-in key to read"
+    if not take_turn(now):
+        return "asked less than ten minutes ago, or being asked now"
+    request = urllib.request.Request(URL, headers={"Authorization": f"Bearer {token}", "anthropic-beta": "oauth-2025-04-20",
+                                                   "User-Agent": "dxb-usage"})
+    try:
+        with send(request) as response:
+            answer = json.loads(response.read(ANSWER_BYTES))
+    except urllib.error.HTTPError as error:
+        return f"the address refused the sign-in (HTTP {error.code})" if error.code in (401, 403) else f"HTTP {error.code}"
+    except Exception as error:  # noqa: BLE001 -- whatever failed, the reading is unknown; only its kind is said
+        return f"the request failed ({type(error).__name__})"
+    if not isinstance(answer, dict):
+        return "the answer was not a record"
+    write_record({"read_at": now, "week": week_now(), "models": model_weeks(answer)})
+    return None
+
+
+def unknown_reason(now):
+    record = read_json(RECORD)
+    if record is None:
+        return "no reading yet"
+    read_at = record.get("read_at")
+    if isinstance(read_at, (int, float)) and now - read_at > MAX_AGE_S:
+        return f"the last reading is {int((now - read_at) // 60)} min old"
+    return "the last reading holds no model's own week that is still running"
+
+
+def lines(now):
+    known = readings(now)
+    if not known:
+        return [f"unknown: {unknown_reason(now)}"]
+    read_at = read_json(RECORD)["read_at"]
+    return [f"{name} {reading['used']:g}% · resets {minute(reading['resets_at'])} · read {int((now - read_at) // 60)} min ago"
+            for name, reading in sorted(known.items())]
+
+
+def minute(epoch):
+    """HH:MM of the nearest minute: the answer writes a reset at the hour as a breath before it (07:59:59.66)."""
+    return datetime.datetime.fromtimestamp(round(epoch / 60) * 60).strftime("%H:%M")
+
+
+def main(argv):
+    now = wall_clock()
+    if argv == []:
+        print("\n".join(lines(now)))
+    elif argv == ["--json"]:
+        print(json.dumps(read_json(RECORD)))
+    elif argv == ["--refresh"]:
+        why_not = refresh(now)
+        print("read" if why_not is None else f"not read: {why_not}")
+    else:
+        print(USAGE, file=sys.stderr)
+        return 2
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main(sys.argv[1:]))

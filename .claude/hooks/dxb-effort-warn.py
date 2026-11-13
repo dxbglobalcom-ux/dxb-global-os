@@ -49,21 +49,28 @@ written is said to have reset, not quoted; a percentage that is no percentage (n
 100), or a reset time older than the record itself, makes that window not known; a record older than
 QUOTA_MAX_AGE_S, from the future, unreadable or with both windows not known gives no line. Whatever goes
 wrong while the quota is read costs the quota line alone, never the text about the level (Sol's pass,
-2026-11-12: an integer of 400 digits in the record silenced the whole answer).
+2026-11-12: an integer of 400 digits in the record silenced the whole answer). A model's own weekly window, which
+the status line is not given (2026-11-13: Fable 5.2's ran out while the two stood at 11 % and 59 %), is said on
+the same line from 80 %, as scripts/ops/dxb-usage last read it -- a reading over 30 minutes old is not known; when
+a reading is due by that command's rule the hook starts `dxb-usage --refresh` on its own and does not wait for it,
+so the next turn has the figure.
 
 Only a session id shaped like Claude Code's (SESSION_ID) ever names a file, so no path leaves the folder;
 the record folder is trusted only as a real directory (not a link) owned by this user; the record is
 reached through its folder's descriptor without following a link, and only a regular file counts (a
 planted link or FIFO must neither redirect a read nor block the hook). The hook keeps no state and writes
-no file. Stdlib only. As a hook it never fails a session: on any failure it exits 0 with nothing on stdout
+no file; the reading it may start writes dxb-usage's own record. Stdlib only. As a hook it never fails a session: on any failure it exits 0 with nothing on stdout
 or stderr. It takes no argument: with one it exits 2 and names the skills on stderr.
 """
 
+import importlib.machinery
+import importlib.util
 import json
 import math
 import os
 import re
 import stat
+import subprocess
 import sys
 import time
 from datetime import datetime, timezone
@@ -80,6 +87,7 @@ SMALL_BYTES = 4 * 1024  # the status line's record is a few dozen bytes
 QUOTA_FILE = "rate-limits.json"  # one for the whole machine: the quota is the account's, not a session's
 QUOTA_MAX_AGE_S = 6 * 3600  # an older record is not trusted -- the same age ~/.local/bin/dxb-quota stops at
 LONGEST_WINDOW_S = 8 * 86400  # the longest window is the week; a reset further away than this is no reset time
+OWN_WEEKS = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "scripts", "ops", "dxb-usage")
 FIVE_HOUR = "the account's 5-hour window"
 WEEK = "the week"
 SKILLS = ('`Skill("dxb-effort-medium")`, `Skill("dxb-effort-high")` or `Skill("dxb-effort-xhigh")`')
@@ -313,17 +321,21 @@ def window_text(label, found):
     used, left = found
     text = f"{label} is {used:g}% used"
     if left is not None:
-        minutes = int(left // 60)
-        text += f" and resets in {minutes // 60}h{minutes % 60:02d}m"
+        text += f" and resets in {hours(left)}"
     return text
 
 
-def quota_line(now=None):
-    """The one line that says how full the account's windows are, or None when nothing trustworthy says it."""
+def hours(left):
+    minutes = int(left // 60)
+    return f"{minutes // 60}h{minutes % 60:02d}m"
+
+
+def windows_text(now):
+    """What the status line's record says of the 5-hour window and the week, with the record's age, or None when
+    nothing trustworthy says it."""
     record = quota_record()
     if record is None:
         return None
-    now = time.time() if now is None else now
     written = parse_ts(record.get("written_at"))
     if written is None:
         return None
@@ -334,9 +346,41 @@ def quota_line(now=None):
     week = window(record.get("seven_day"), now, written.timestamp())
     if five is None and week is None:
         return None
-    return (f"QUOTA -- {window_text(FIVE_HOUR, five)}; {window_text(WEEK, week)} "
-            f"(the status line's record, {int(age // 60)} min old). In a dxb-team3 job weigh it before you open "
-            "a writing hand and when one returns (section 3).")
+    return f"{window_text(FIVE_HOUR, five)}; {window_text(WEEK, week)} (the status line's record, {int(age // 60)} min old)"
+
+
+def own_weeks(now):
+    """What the line says of each model's own week -- from dxb-usage's NEAR_PCT, as it last read it -- or [].
+
+    When a reading is due by dxb-usage's rule, `dxb-usage --refresh` is started in a session of its own, its output
+    to nowhere, and never waited for."""
+    try:
+        sys.dont_write_bytecode = True  # the hook writes no file, a compiled module neither
+        loader = importlib.machinery.SourceFileLoader("dxb_usage", OWN_WEEKS)
+        usage = importlib.util.module_from_spec(importlib.util.spec_from_loader("dxb_usage", loader))
+        loader.exec_module(usage)
+        said = [f"{name.capitalize()}'s own week is {reading['used']:g}% used and resets in {hours(reading['resets_at'] - now)}"
+                for name, reading in sorted(usage.readings(now).items()) if reading["used"] >= usage.NEAR_PCT]
+    except Exception:  # no dxb-usage, or one that breaks: nothing is said of the own weeks
+        return []
+    try:
+        if usage.due(now):
+            subprocess.Popen([OWN_WEEKS, "--refresh"], stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL,
+                             stderr=subprocess.DEVNULL, start_new_session=True)
+    except Exception:  # a reading not started costs the next turn's figure, never this one's
+        pass
+    return said
+
+
+def quota_line(now=None):
+    """The one line that says how full the account's windows are -- the two the status line has, and a model's own
+    week -- or None when nothing trustworthy says any of them."""
+    now = time.time() if now is None else now
+    parts = [text for text in [windows_text(now)] if text] + own_weeks(now)
+    if not parts:
+        return None
+    return (f"QUOTA -- {'; '.join(parts)}. In a dxb-team3 job weigh it before you open a writing hand and when one "
+            "returns (section 3).")
 
 
 def own_level(name, transcript_path):

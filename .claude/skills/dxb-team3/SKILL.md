@@ -173,7 +173,9 @@ what comes back, and brings him proposals of its own.
 **The quota is managed with the work** <!-- CEO-OK: quota-managed-with-the-work-2026-11-12 -->. On every
 turn — his message or a hand's report — the hook `dxb-effort-warn.py` tells the lead how full the account's
 5-hour window and its week are, from the status line's record (`~/.local/bin/dxb-quota` prints the same, with
-the pace). The lead reads it before it opens a writing hand and when one returns. A window that cannot carry a
+the pace). From 80 % the same line says a model's own week too, which the status line is not given — Fable 5.2
+has one, measured 2026-11-13 — as `scripts/ops/dxb-usage` reads it. The lead reads it before it opens a writing
+hand and when one returns. A window that cannot carry a
 piece does not get it: the lead divides the work when it divides — a part is finished, verified and committed,
 the rest follows — and waits for the reset when it does not (a film, a tightly bound piece), telling him in one
 line. The quota never lowers the model or the level: an important piece stays Fable 5.2's at `high`, and a
