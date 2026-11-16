@@ -381,6 +381,26 @@ describe("K3 — his question is split into sub-questions before the ground open
     expect(n.stdout, n.stdout.slice(0, 2500)).toMatch(/^alt sorular: atlandi \(--no-split\)\n!! rapor tipi: --shape karar kullanilmadi — --no-split, soru bolunmedi$/m);
   }, 90_000);
 
+  it("the lead sets how many sub-questions a question holds: --sub-questions MIN-MAX; 3-6 is only the default (2026-11-16)", () => {
+    // the kept answer names four: with a ceiling of two the first two stand, and stderr says so
+    const two = join(b.root, "split-two");
+    const r = fleetWith(GOOD, two, ...ARGS, "--sub-questions", "1-2");
+    expect(r.stdout, r.stdout.slice(0, 2500)).toMatch(/^alt sorular: 2 \(kaynak: model · /m);
+    expect(JSON.parse(readFileSync(join(two, "subquestions.json"), "utf8")).items.map((i: { id: string }) => i.id)).toEqual(["S1", "S2"]);
+    // a floor above what the answer names is not met: the DERT itself, said as a fallback
+    const five = join(b.root, "split-five");
+    const f = fleetWith(GOOD, five, ...ARGS, "--sub-questions", "5-9");
+    expect(JSON.parse(readFileSync(join(five, "subquestions.json"), "utf8")).source, f.stdout.slice(0, 2500)).toBe("fallback");
+    // a word that is not MIN-MAX does not start a run
+    const bad = fleet(join(b.root, "split-bad"), ...ARGS, "--sub-questions", "many");
+    expect(bad.code, bad.stdout).toBe(3);
+    expect(bad.stdout).toContain("!! DUR: --sub-questions EN_AZ-EN_COK ister");
+    // the splitter's prompt asks for the lead's range, not a fixed one
+    const prompt = execFileSync("python3", [join(b.engine, "scripts", "split.py"), "--print-prompt", "--fewest", "2", "--most", "9"],
+      { encoding: "utf8", env: { ...process.env, PYTHONDONTWRITEBYTECODE: "1" } });
+    expect(prompt).toContain("Name the 2 to 9 sub-questions the DERT holds");
+  }, 120_000);
+
   it("names the sub-questions before the ground, hands them to the hunter through question.txt; --write-only reuses them", () => {
     const run = join(b.root, "split-good");
     const r = fleetWith(GOOD, run, ...ARGS);
@@ -605,6 +625,11 @@ describe("K3 — the writer's clock is --writer-timeout, a tail that wrote no an
       .toEqual(["-p", "--model", "claude-opus-5-5", "--effort", "low", "--tools", "", "--strict-mcp-config", "--output-format", "json", ""]);
     expect(readFileSync(join(run, "audit", "batch-1.left", "cwd.txt"), "utf8")).toMatch(/\/dxb-hunters\/audit-model\.audit\.\w+\n$/);
     expect(jsonl(join(run, "audit.jsonl")).map((a) => a.reason)).toEqual(Array(4).fill("denetçi taklidi"));
+    // low is the default, not a fixed level: the lead sets the auditor's by the question (2026-11-16)
+    const m = on({ FAKE_AUDIT: "" }, "--write-only", run, "--no-split", "--no-claim-hunt", "--audit-effort", "high");
+    expect(m.code, m.stdout.slice(-2500)).toBe(0);
+    expect(readFileSync(join(run, "audit", "batch-1.left", "auditor-launch.txt"), "utf8").split("\n").slice(0, 5))
+      .toEqual(["-p", "--model", "claude-opus-5-5", "--effort", "high"]);
     // skipped: and the audit an earlier tail left goes with it — the page reads the one beside the answer
     const n = on({}, "--write-only", run, "--no-split", "--no-claim-hunt", "--no-audit");
     expect(n.code, n.stdout.slice(-2500)).toBe(0);

@@ -75,7 +75,7 @@ def main() -> int:
         "",
         f"Run {run_id} · class {res['class']} · block {blocks}/{res['max_blocks']}.",
         f"CLOCK: {res['elapsed_s']}s spent · converge at {res['converge_at_s']}s · "
-        f"hard stop at {res['hard_stop_at_s']}s · regime {res['regime'].upper()}.",
+        f"regime {res['regime'].upper()}.",
         f"Ledger right now: {f.get('evidence_rows', 0)} evidence rows · "
         f"{f.get('clusters', 0)} independent clusters · "
         f"{f.get('queries', 0)} queries · types {f.get('source_types', [])}.",
@@ -104,9 +104,10 @@ def main() -> int:
             "What the clock NEVER waives: a citation not in the ledger, a quote whose hash does "
             "not recompute, a dead URL, a vendor-only claim.",
         ]
-    if blocks >= res["max_blocks"] - 1 or res["regime"] == "closing":
+    if blocks >= res["max_blocks"] - 1 or res["regime"] == "converge":
         lines += [
             "",
+            "The clock does not end this run — you do, when going on would add nothing. "
             "If the evidence genuinely is not there, that is a legitimate ending — write "
             f"runs/{run_id}/GAPS.md naming every channel not reached and every question left "
             "open, then answer him with what you DID measure and close the run: "

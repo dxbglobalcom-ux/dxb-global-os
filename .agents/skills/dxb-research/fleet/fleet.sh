@@ -56,6 +56,7 @@
 #            [--hunters N] [--model NAME] [--timeout S] [--roles a,b,c]
 #            [--rounds N] [--fetch-limit N] [--fetch-workers N] [--allow-tmp] [--no-write]
 #            [--claim-rounds N] [--claim-timeout S] [--claim-cap N] [--no-claim-hunt] [--crowd-cap N] [--no-split]
+#            [--sub-questions MIN-MAX] [--split-effort LEVEL] [--audit-effort LEVEL]
 #            [--writer-timeout S] [--no-audit] [--shape karsilastirma|pazar|profil|karar] [--force-memory]
 #   fleet.sh --write-only <run-dir> [--claim-rounds N] [--claim-timeout S] [--claim-cap N] [--no-claim-hunt] [--no-split]
 #            [--writer-timeout S] [--no-audit] [--shape karsilastirma|pazar|profil|karar] [--force-memory]
@@ -85,10 +86,16 @@ REPO_ROOT="$(builtin cd "$SKILL/../../.." && pwd)"
 
 OUT=""
 case "${1:-}" in --*|"") ;; *) OUT="$1"; shift ;; esac
+# THE NUMBERS BELOW ARE DEFAULTS, NOT CEILINGS (2026-11-16): a hunter's clock (600 s), its rounds (3), the claims
+# hunted (20), the crowd's threads (40), the writer's clock — each has its flag, and the lead sets it by the question:
+# a market study is not a price check.
 N=4; MODEL=claude-opus-5-5; TMO=600; ROLES=""; DERT=""
 ROUNDS=3; FETCH_LIMIT=2000; FETCH_WORKERS=6; ALLOW_TMP=0; WRITE=1; WRITE_ONLY=""
 CLAIM_ROUNDS=2; CLAIM_TMO=600; CLAIM_CAP=20; CLAIM_HUNT=1; CROWD_CAP=40; SPLIT=1; WRITER_TMO=1500; AUDIT=1; SHAPE=""; SHAPE_GIVEN=0
 FORCE_MEMORY=0
+# The lead's, by the question (2026-11-16): the splitter's and the auditor's level and how many sub-questions a
+# question holds. Empty = the script's own default (low · low · 3-6) — defaults, not fixed levels or a fixed count.
+SPLIT_EFFORT=""; AUDIT_EFFORT=""; SUBQ=""
 QUERIES=()
 while [ $# -gt 0 ]; do
   case "$1" in
@@ -114,6 +121,9 @@ while [ $# -gt 0 ]; do
     --no-audit)      AUDIT=0; shift ;;
     --shape)         SHAPE="${2-}"; SHAPE_GIVEN=1; shift $(( $# > 1 ? 2 : 1 )) ;;
     --force-memory)  FORCE_MEMORY=1; shift ;;
+    --split-effort)  SPLIT_EFFORT="${2:?--split-effort bir seviye ister}"; shift 2 ;;
+    --audit-effort)  AUDIT_EFFORT="${2:?--audit-effort bir seviye ister}"; shift 2 ;;
+    --sub-questions) SUBQ="${2:?--sub-questions EN_AZ-EN_COK ister}"; shift 2 ;;
     *) shift ;;
   esac
 done
@@ -123,6 +133,19 @@ done
 if [ "$ROUNDS" -lt 1 ] || [ "$FETCH_WORKERS" -lt 1 ] || [ "$CLAIM_ROUNDS" -lt 1 ] || [ "$CLAIM_TMO" -lt 1 ] || [ "$CLAIM_CAP" -lt 1 ] || [ "$CROWD_CAP" -lt 1 ] || [ "$WRITER_TMO" -lt 1 ]; then
   echo "!! DUR: --rounds, --fetch-workers, --claim-rounds, --claim-timeout, --claim-cap, --crowd-cap ve --writer-timeout en az 1 olur." >&2; exit 3
 fi
+if [ -n "$SUBQ" ]; then
+  case "$SUBQ" in
+    *[!0-9-]*|-*|*-|*-*-*) SUBQ_OK=0 ;;
+    *-*) SUBQ_OK=1; [ "${SUBQ%-*}" -ge 1 ] && [ "${SUBQ#*-}" -ge "${SUBQ%-*}" ] || SUBQ_OK=0 ;;
+    *) SUBQ_OK=0 ;;
+  esac
+  if [ "$SUBQ_OK" -ne 1 ]; then
+    echo "!! DUR: --sub-questions EN_AZ-EN_COK ister, ornek 3-6 ya da 2-10 (verilen: $SUBQ)" >&2; exit 3
+  fi
+fi
+for v in "$SPLIT_EFFORT" "$AUDIT_EFFORT"; do
+  case "$v" in ''|low|medium|high|xhigh) ;; *) echo "!! DUR: --split-effort ve --audit-effort low | medium | high | xhigh ister (verilen: $v)" >&2; exit 3 ;; esac
+done
 # his one word on the research type (K3 stage 2): one of the four, or the run does not start
 if [ "$SHAPE_GIVEN" -eq 1 ]; then
   case "$SHAPE" in
@@ -131,7 +154,7 @@ if [ "$SHAPE_GIVEN" -eq 1 ]; then
   esac
 fi
 if [ -z "$WRITE_ONLY" ] && [ ${#QUERIES[@]} -eq 0 ]; then
-  echo "kullanim: fleet.sh [<kosu-klasoru>|<isim>] --q \"<kisa sorgu>\" [--q ...] [--dert DOSYA] [--hunters N] [--model AD] [--timeout SN] [--roles a,b] [--rounds N] [--fetch-limit N] [--fetch-workers N] [--allow-tmp] [--no-write] [--claim-rounds N] [--claim-timeout SN] [--claim-cap N] [--no-claim-hunt] [--crowd-cap N] [--no-split] [--writer-timeout SN] [--no-audit] [--shape TIP] [--force-memory]   ·   fleet.sh --write-only <kosu-klasoru> [--claim-rounds N] [--claim-timeout SN] [--claim-cap N] [--no-claim-hunt] [--no-split] [--writer-timeout SN] [--no-audit] [--shape TIP] [--force-memory]   ·   TIP: karsilastirma | pazar | profil | karar" >&2
+  echo "kullanim: fleet.sh [<kosu-klasoru>|<isim>] --q \"<kisa sorgu>\" [--q ...] [--dert DOSYA] [--hunters N] [--model AD] [--timeout SN] [--roles a,b] [--rounds N] [--fetch-limit N] [--fetch-workers N] [--allow-tmp] [--no-write] [--claim-rounds N] [--claim-timeout SN] [--claim-cap N] [--no-claim-hunt] [--crowd-cap N] [--no-split] [--sub-questions EN_AZ-EN_COK] [--split-effort SEVIYE] [--writer-timeout SN] [--no-audit] [--audit-effort SEVIYE] [--shape TIP] [--force-memory]   ·   fleet.sh --write-only <kosu-klasoru> [--claim-rounds N] [--claim-timeout SN] [--claim-cap N] [--no-claim-hunt] [--no-split] [--writer-timeout SN] [--no-audit] [--shape TIP] [--force-memory]   ·   TIP: karsilastirma | pazar | profil | karar" >&2
   echo "!! DUR: sorgu yok, filo yok. --q ile birkaç kelimelik sorgu ver." >&2
   exit 3
 fi
@@ -350,7 +373,7 @@ PY
 # ── HIS QUESTION, SPLIT BEFORE THE GROUND OPENS (B56 K3 stage 1) ────────────────────────────────────────────
 # The K2 answer stood in sections of the writer's own choosing: nothing on the page said which part of his
 # question a section answered, and a part no row spoke to was simply not there. So scripts/split.py names the
-# 3-6 sub-questions his DERT holds — one claude-opus-5-5 call at low effort, no tools, standing outside the
+# sub-questions his DERT holds (3-6 by default; the lead's --sub-questions) — one claude-opus-5-5 call at low effort (the default; --split-effort), no tools, standing outside the
 # repository as every role does — writes <run>/subquestions.json and appends the ALT SORULAR block to
 # question.txt, which every role is handed as it stands: the hunters through $QUESTION (read after this step),
 # the writer and the claim hunters through {{QUESTION}}. The writer gives each sub-question its own section, a
@@ -374,7 +397,8 @@ split_question() {
     return 0
   fi
   # two calls of 120 s at most (an unreadable answer is asked for once more), and a margin
-  timeout 300 python3 "$SKILL/scripts/split.py" "$OUT" "$@" ${SHAPE:+--shape "$SHAPE"} > "$OUT/split.out" 2> "$OUT/split.err"
+  timeout 300 python3 "$SKILL/scripts/split.py" "$OUT" "$@" ${SHAPE:+--shape "$SHAPE"} \
+    ${SPLIT_EFFORT:+--effort "$SPLIT_EFFORT"} ${SUBQ:+--fewest "${SUBQ%-*}" --most "${SUBQ#*-}"} > "$OUT/split.out" 2> "$OUT/split.err"
   rc=$?
   if [ "$rc" -eq 0 ] && grep -q '^alt sorular: ' "$OUT/split.out"; then
     grep -m1 '^alt sorular: ' "$OUT/split.out"
@@ -1300,7 +1324,7 @@ audit_answer() {
     return 0
   fi
   mkdir -p "$OUT/audit"
-  python3 "$AUD" run "$OUT" > "$OUT/audit/run.out" 2> "$OUT/audit/run.err"
+  python3 "$AUD" run "$OUT" ${AUDIT_EFFORT:+--effort "$AUDIT_EFFORT"} > "$OUT/audit/run.out" 2> "$OUT/audit/run.err"
   rc=$?
   said="$(grep -m1 '^denetçi: [0-9]' "$OUT/audit/run.out")"
   if [ "$rc" -ne 0 ] || [ -z "$said" ]; then

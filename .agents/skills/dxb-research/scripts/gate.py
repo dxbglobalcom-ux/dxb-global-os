@@ -15,19 +15,26 @@ Three things this gate deliberately does NOT do:
   * it never asks the model to fill an evidence field (that is how citations get
     fabricated). The ledger is written by the fetcher.
   * it never blocks a session that is not researching — no open run, no gate.
-  * it never traps a run forever. Past the block budget — or past the clock — it
-    stops demanding work and starts demanding an honest exit: stopping early is
-    legal, stopping early in SILENCE is what is forbidden.
+  * it never traps a run forever. Past the block budget, or past the converge
+    point once GAPS.md is written, it stops demanding work and accepts an honest
+    exit: stopping early is legal, stopping early in SILENCE is what is forbidden.
 
-A run passes through three regimes, and the CLOCK moves it between them, never an
+A run passes through two regimes, and the CLOCK moves it between them, never an
 argument it makes about itself:
 
   expand    (< soft_seconds)  every check blocks, as written.
-  converge  (< max_seconds)   the gate stops demanding work that ADDS scope. A
-                              load-bearing claim with no contradiction search may
-                              pass by being DECLARED instead: labelled UNPROVEN and
-                              named in GAPS.md.
-  closing   (>= max_seconds)  only the honest exit is left: GAPS.md, then out.
+  converge  (>= soft_seconds) the gate says "wrap up": it stops demanding work
+                              that ADDS scope. A load-bearing claim with no
+                              contradiction search may pass by being DECLARED
+                              instead: labelled UNPROVEN and named in GAPS.md.
+                              From here the honest exit is open — a written
+                              GAPS.md ends the run when the LEAD judges it.
+
+THE CLOCK NEVER STOPS A RUN (the CEO's word, 2026-11-16). There was a third regime,
+`closing`, entered at `max_seconds` (18 minutes): the clock alone dropped every
+demand and left one exit. It is gone. The converge point is a default the lead
+sets by the question (DXB_RESEARCH_SOFT_SECONDS); how long a run is worth is the
+lead's judgement.
 
 INTEGRITY never expires. A fabricated citation, a quote whose hash does not
 recompute, a dead URL, a claim resting only on the vendor's own page, a gate
@@ -247,7 +254,7 @@ def check_report(run_id: str, st: dict,
     queries = rlib.read_jsonl(rlib.queries_path(run_id))
     contra_for = {q.get("claim_id") for q in queries if q.get("kind") == "contradiction"}
     gaps = _gaps_text(run_id)
-    may_declare = regime in ("converge", "closing")
+    may_declare = regime == "converge"
 
     # A WITHDRAWN claim is not in the answer, so it is not gated — but a claim that
     # was pulled is a hole, and a hole may never be silent. Pull it, and say in
@@ -335,11 +342,9 @@ def evaluate(run_id: str) -> dict:
 
     # THE CLOCK. Not a suggestion to the model — a term in the gate itself.
     elapsed = rlib.elapsed_seconds(run_id)
+    # It tells the run where to stop widening; it never ends the run (2026-11-16).
     soft = _float_env("DXB_RESEARCH_SOFT_SECONDS", rules.get("soft_seconds", 600))
-    hard = _float_env("DXB_RESEARCH_MAX_SECONDS", rules.get("max_seconds", 1080))
-    if hard < soft:
-        hard = soft
-    regime = "expand" if elapsed < soft else ("converge" if elapsed < hard else "closing")
+    regime = "expand" if elapsed < soft else "converge"
 
     fails, todo, facts = check_expedition(run_id, st)
     if phase == "report" or (rlib.run_dir(run_id) / "claims.json").exists():
@@ -348,16 +353,19 @@ def evaluate(run_id: str) -> dict:
         todo += t2
         facts.update(facts2)
 
-    facts.update({"elapsed_s": int(elapsed), "converge_at_s": int(soft),
-                  "hard_stop_at_s": int(hard), "regime": regime})
+    facts.update({"elapsed_s": int(elapsed), "converge_at_s": int(soft), "regime": regime})
 
     gaps_ok = False
     gp = rlib.run_dir(run_id) / "GAPS.md"
     if gp.exists() and gp.read_text().strip():
         gaps_ok = True
 
-    over_budget = blocks >= max_blocks or regime == "closing"
-    if over_budget:
+    # THE HONEST EXIT. Two ways into it, neither of them the clock alone: the block
+    # budget is spent (the gate has refused max_blocks times — it never traps a run),
+    # or the run is past its converge point AND the lead has written GAPS.md — the
+    # lead's own judgement that the run ends here.
+    honest_exit = blocks >= max_blocks or (regime == "converge" and gaps_ok)
+    if honest_exit:
         # Stop demanding work; demand honesty instead — but INTEGRITY is not work and
         # is never waived. Before 2026-09-16 this line dropped the whole failure list,
         # fabricated citations included.
@@ -383,9 +391,8 @@ def evaluate(run_id: str) -> dict:
 
     return {
         "run": run_id, "phase": phase, "class": st.get("question_class"), "mode": mode,
-        "blocks": blocks, "max_blocks": max_blocks, "over_budget": over_budget,
+        "blocks": blocks, "max_blocks": max_blocks, "honest_exit": honest_exit,
         "regime": regime, "elapsed_s": int(elapsed), "converge_at_s": int(soft),
-        "hard_stop_at_s": int(hard),
         "hard_failures": fails, "advisory": advisory, "todo": todo, "facts": facts,
         "declared": DECLARED, "pass": not fails,
     }
@@ -412,7 +419,7 @@ def main() -> int:
     elif not a.quiet:
         print(f"=== RESEARCH GATE · run {res['run']} · {res['class']} · {res['phase']} · "
               f"{res['mode'].upper()} · {res['regime'].upper()} "
-              f"{res['elapsed_s']}s/{res['hard_stop_at_s']}s ===")
+              f"{res['elapsed_s']}s · converge at {res['converge_at_s']}s ===")
         for k, v in res["facts"].items():
             print(f"  {k:22s} {v}")
         if res.get("advisory"):

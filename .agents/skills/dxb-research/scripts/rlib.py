@@ -225,10 +225,10 @@ def seconds_between(a: str, b: str) -> float | None:
 def elapsed_seconds(run_id: str) -> float:
     """How long this run has been open, in seconds.
 
-    The engine had a `max_seconds` in its budget file that NOTHING read — measured
-    2026-09-16, zero call sites. A gate with no clock cannot converge: on run
-    20260916-171413 it was still asking for more evidence 25 minutes in, and the
-    run died with no answer at all. A research run has to know the time.
+    A gate with no clock cannot converge: on run 20260916-171413 it was still asking
+    for more evidence 25 minutes in, and the run died with no answer at all. A
+    research run has to know the time — to be told where to wrap up (the converge
+    point), never to be stopped by it (2026-11-16).
     """
     t = read_state(run_id).get("opened_at")
     if not t:

@@ -1721,6 +1721,11 @@ would have fixed nothing.
 | `converge` | < `max_seconds` (1 080 s) | stops demanding work that ADDS scope |
 | `closing` | ≥ `max_seconds` | one exit left: `GAPS.md`, the measured answer, `close` |
 
+*2026-11-16, on the CEO's word: the `closing` regime and `max_seconds` are removed — the clock no longer ends a
+run. `converge` has no upper end; past it a written `GAPS.md` ends the run when the lead judges it, and the
+converge point is a default the lead sets by the question (`DXB_RESEARCH_SOFT_SECONDS`). The table above is the
+record of 2026-09-16.*
+
 Past the converge point a load-bearing claim that could not be finished has three legal endings,
 and all three are visible to the CEO: **declare it** (`"confidence": "UNPROVEN"` + its id named in
 `GAPS.md`), **withdraw it** (`"withdrawn": true`, named in `GAPS.md` — new check H19), or **demote

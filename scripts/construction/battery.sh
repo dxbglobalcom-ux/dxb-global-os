@@ -85,6 +85,8 @@ HOST_FILES=(
   tests/b46/claim-ledger.test.ts
   # B82 (2026-10-18): the X gate, driven through the real bin/opencli shim and hidden.py
   tests/b46/x-gate.test.ts
+  # 2026-11-16: the completion gate's clock advises and never stops a run (copies the engine with cp -r)
+  tests/b46/gate-has-no-hard-stop.test.ts
   # dxb-team2 job 1 (2026-09-28): the auditor's read-only hand. Its credential is
   # ~/.config/dxb/sol-reader.env, outside the repository and outside the wall.
   tests/governance/sol-db-reach.test.ts

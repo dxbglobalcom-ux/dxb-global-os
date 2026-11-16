@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""HIS QUESTION, SPLIT BEFORE THE FLEET RUNS — the 3–6 sub-questions his DERT holds, each to own a section (B56 K3).
+"""HIS QUESTION, SPLIT BEFORE THE FLEET RUNS — the sub-questions his DERT holds, each to own a section (B56 K3).
 
 WHY. The K2 answer of 2026-09-26 (kept: .planning/research/answers/20260926-2143-astra-6-vs-fable-5-1/) stood in
 nine sections of the writer's own choosing: no line of the page said which part of his question a section
@@ -11,7 +11,7 @@ table (kapsama.py); a sub-question no row speaks to stands there as a gap — `B
 never dropped.
 
     split.py <run> [--model claude-opus-5-5] [--effort low] [--timeout 120] [--reuse]
-             [--shape karsilastirma|pazar|profil|karar]
+             [--fewest 3] [--most 6] [--shape karsilastirma|pazar|profil|karar]
     split.py <run> --shape-only
     split.py --selftest
 
@@ -22,8 +22,11 @@ stdin, the binary $DXB_CLAUDE or `claude` on PATH, standing in a folder of its o
 ${XDG_RUNTIME_DIR:-/tmp}/dxb-hunters/<run>.split.XXXXXX, fleet.sh's away_dir: a `claude` started inside the
 repository loads its CLAUDE.md and its hooks —; what it leaves there comes back into <run>/split/ and the
 folder goes. The answer is read as JSON — bare, in a ``` fence, or the first brace-matched {…} holding "items"
-(triage.py's reading, K2c F1) — and 3 to 6 sub-questions are kept, numbered S1… in its order; more than 6: the
-first 6, and stderr says so. An answer that yields fewer is asked for once more; still fewer, or the call
+(triage.py's reading, K2c F1) — and FEWEST to MOST sub-questions are kept, numbered S1… in its order; more than
+MOST: the first MOST, and stderr says so. 3 to 6 and the low effort are the DEFAULTS, what a readable answer
+usually names; the lead sets both by the question — --fewest, --most, --effort (fleet.sh --sub-questions MIN-MAX,
+--split-effort) — the CEO's word of 2026-11-16: a fixed count and a fixed level are not his.
+An answer that yields fewer is asked for once more; still fewer, or the call
 failing or out of time: `source: fallback`, ONE sub-question — S1, the DERT itself — and on stderr `split:
 model cevabı okunamadı — tek alt soru (DERT)`. The run never blocks on the split: each of those ends in exit 0.
 WRITES <run>/subquestions.json — {"source": "model"|"fallback", "cost_usd": x, "items": [{"id": "S1", "title":
@@ -72,7 +75,7 @@ sys.dont_write_bytecode = True     # the skill folder is read-only inside a hunt
 MODEL = "claude-opus-5-5"
 EFFORT = "low"
 TIMEOUT = 120
-FEWEST, MOST = 3, 6                # the sub-questions a readable answer names
+FEWEST, MOST = 3, 6                # the default: the sub-questions a readable answer usually names (--fewest, --most)
 TITLE_WORDS = 6
 QUESTION_CHARS = 8000              # his DERT and the queries; the K2 run's question.txt is 673 bytes
 HEAD = "ALT SORULAR (S-kimlik · başlık · soru):"
@@ -92,7 +95,7 @@ question) and the short queries its search was opened with.
 
 {question}
 
-Name the 3 to 6 sub-questions the DERT holds: the separate things the answer must each settle. Each becomes a
+Name the {fewest} to {most} sub-questions the DERT holds: the separate things the answer must each settle. Each becomes a
 section of the answer and is counted on its own, so they must not overlap, and together they must cover all the
 DERT asks. When the DERT names its parts (per platform, for what work, the cost, who switched, the
 counter-evidence…), those are its sub-questions. Never add one it does not ask.
@@ -290,9 +293,9 @@ def shape_in(text) -> tuple[str | None, str]:
     return (key, one(obj.get("shape_reason"))) if key in SHAPES else (None, "")
 
 
-def items_of(text) -> tuple[list[dict] | None, str]:
-    """The sub-questions of an answer, S1… in its order, at most MOST — each a title of at most TITLE_WORDS words,
-    its question and its signals — and a note for stderr ('' when there is none). None: fewer than FEWEST read."""
+def items_of(text, fewest: int = FEWEST, most: int = MOST) -> tuple[list[dict] | None, str]:
+    """The sub-questions of an answer, S1… in its order, at most `most` — each a title of at most TITLE_WORDS words,
+    its question and its signals — and a note for stderr ('' when there is none). None: fewer than `fewest` read."""
     got = entries(text)
     if got is None:
         return None, "cevapta okunur JSON yok"
@@ -306,9 +309,9 @@ def items_of(text) -> tuple[list[dict] | None, str]:
         signals = e.get("signals") if isinstance(e.get("signals"), list) else []
         items.append({"id": f"S{len(items) + 1}", "title": " ".join(title.split()[:TITLE_WORDS]),
                       "question": question, "signals": [one(x) for x in signals if isinstance(x, str) and one(x)]})
-    if len(items) < FEWEST:
-        return None, f"cevapta {len(items)} alt soru okundu ({FEWEST}–{MOST} istenir)"
-    return items[:MOST], (f"cevapta {len(items)} alt soru var — ilk {MOST}'sı alındı" if len(items) > MOST else "")
+    if len(items) < fewest:
+        return None, f"cevapta {len(items)} alt soru okundu ({fewest}–{most} istenir)"
+    return items[:most], (f"cevapta {len(items)} alt soru var — ilk {most}'sı alındı" if len(items) > most else "")
 
 
 def envelope(out: str, rc: int = 0, err: str = "") -> tuple[str | None, float, str]:
@@ -413,7 +416,8 @@ def dump(doc: dict) -> str:
     return json.dumps(doc, ensure_ascii=False, indent=2) + "\n"
 
 
-def split(run: Path, model: str, effort: str, timeout: int, reuse: bool, shape: str | None = None) -> int:
+def split(run: Path, model: str, effort: str, timeout: int, reuse: bool, shape: str | None = None,
+          fewest: int = FEWEST, most: int = MOST) -> int:
     qf = run / "question.txt"
     try:
         text = qf.read_text(encoding="utf-8", errors="replace")
@@ -440,7 +444,7 @@ def split(run: Path, model: str, effort: str, timeout: int, reuse: bool, shape: 
     if reuse and (run / "subquestions.json").exists():
         print("split: subquestions.json okunamadı — soru yeniden bölünüyor", file=sys.stderr)
     base = without_block(text)
-    prompt = PROMPT.format(question=base[:QUESTION_CHARS])
+    prompt = PROMPT.format(question=base[:QUESTION_CHARS], fewest=fewest, most=most)
     items, cost, named = None, 0.0, (None, "")
     for attempt in (1, 2):
         answer, spent, why = ask(prompt, run, model, effort, timeout)
@@ -448,7 +452,7 @@ def split(run: Path, model: str, effort: str, timeout: int, reuse: bool, shape: 
         if answer is None:
             print(f"split: {why}", file=sys.stderr)
             break
-        items, note = items_of(answer)
+        items, note = items_of(answer, fewest, most)
         if items is not None:
             named = shape_in(answer)
             if note:
@@ -501,10 +505,19 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--reuse", action="store_true", help="<run>/subquestions.json when it is there (--write-only)")
     ap.add_argument("--shape", choices=tuple(SHAPES), help="his one word on the run, the research type (fleet.sh)")
     ap.add_argument("--shape-only", action="store_true", help="the text rule's line on question.txt; writes nothing")
+    ap.add_argument("--fewest", type=int, default=FEWEST, help="the fewest sub-questions an answer may name (the lead's, by the question)")
+    ap.add_argument("--most", type=int, default=MOST, help="the most that are kept (the lead's, by the question)")
+    ap.add_argument("--print-prompt", action="store_true", help="the prompt the model would be handed, for an empty question")
     ap.add_argument("--selftest", action="store_true")
     a = ap.parse_args(argv)
     if a.selftest:
         return selftest()
+    if a.fewest < 1 or a.most < a.fewest:
+        print(f"split: REFUSED --fewest en az 1, --most en az --fewest olur (verilen: {a.fewest}–{a.most})", file=sys.stderr)
+        return 2
+    if a.print_prompt:
+        print(PROMPT.format(question="", fewest=a.fewest, most=a.most))
+        return 0
     if not a.run or not Path(a.run).is_dir():
         print(f"split: REFUSED koşu klasörü yok: {a.run or '(verilmedi)'}", file=sys.stderr)
         return 2
@@ -519,7 +532,7 @@ def main(argv: list[str] | None = None) -> int:
     if a.timeout < 1:
         print("split: REFUSED --timeout en az 1 saniye", file=sys.stderr)
         return 2
-    return split(Path(a.run), a.model, a.effort, a.timeout, a.reuse, a.shape)
+    return split(Path(a.run), a.model, a.effort, a.timeout, a.reuse, a.shape, a.fewest, a.most)
 
 
 if __name__ == "__main__":

@@ -10,22 +10,27 @@
 #
 # max_usd is 0 everywhere. Crossing it needs the CEO's word, not a fallback.
 #
-# THE CLOCK. soft_seconds is where the run stops EXPANDING and starts CONVERGING:
-#   past it the gate no longer demands work that adds scope (a fresh contradiction
-#   search for a claim written after the first one). What
+# THE CLOCK. soft_seconds is where the run stops EXPANDING and starts CONVERGING —
+#   the "wrap up now" point: past it the gate no longer demands work that adds scope
+#   (a fresh contradiction search for a claim written after the first one). What
 #   it demands instead is honesty — label the untested claim UNPROVEN and name it in
-#   GAPS.md, or withdraw it. max_seconds is the hard stop: from there the only exit
-#   is a written GAPS.md. Integrity checks (a fabricated citation, a quote whose hash
-#   does not recompute, a dead URL, a vendor-only claim)
+#   GAPS.md, or withdraw it — and from there a written GAPS.md ends the run whenever
+#   the lead judges that going on adds nothing. Integrity checks (a fabricated
+#   citation, a quote whose hash does not recompute, a dead URL, a vendor-only claim)
 #   are NEVER waived by the clock — running out of time is not a licence to lie.
 #
-#   Measured 2026-09-16 on run 20260916-171413: the expedition thresholds below were
-#   all satisfied at minute 12 ("HARD checks: all pass"), and then the run died at
-#   minute 25 with no answer, because every repair created new load-bearing claims
-#   and each new claim re-armed the checks behind it. The demand grew as fast as it
-#   was met. The clock is what makes it converge.
+#   It is a DEFAULT, not a ceiling: the lead sets it by the question, per run, with
+#   DXB_RESEARCH_SOFT_SECONDS. There is no hard stop (the CEO's word, 2026-11-16):
+#   until that day `max_seconds: 1080` closed every run at minute 18 whatever the
+#   question was worth, and `max_queries: 60` stood here read by nothing.
 #
-#   DXB_RESEARCH_SOFT_SECONDS / DXB_RESEARCH_MAX_SECONDS override both, per run.
+#   Why a converge point exists at all — measured 2026-09-16 on run 20260916-171413:
+#   the expedition thresholds below were all satisfied at minute 12 ("HARD checks:
+#   all pass"), and then the run died at minute 25 with no answer, because every
+#   repair created new load-bearing claims and each new claim re-armed the checks
+#   behind it. The demand grew as fast as it was met. The converge point is what
+#   stops the demand growing; max_blocks (how many times the gate refuses an exit
+#   before it accepts an honest one) is what keeps it from trapping a run.
 
 defaults:
   min_clusters: 5
@@ -35,9 +40,7 @@ defaults:
   max_channel_share: 0.5
   saturation_k: 8
   saturation_x: 2
-  max_queries: 60
   soft_seconds: 600
-  max_seconds: 1080
   max_blocks: 6
   max_usd: 0
 
