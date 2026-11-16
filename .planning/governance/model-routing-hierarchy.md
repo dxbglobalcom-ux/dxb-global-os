@@ -18,7 +18,7 @@ burada yalnız hangi koltukta hangi modelin oturduğu. `dxb-team2` karşılaşt�
 | Kopya (`fork`) | Fable 5.2 — baş mühendisin seviyesinde |
 | Yazan yardımcı (`helper-writer`) | Fable 5.2 · `medium` — açılırken verilen seviye geçerlidir (dxb-team3 §2) |
 | Kolay parçanın yazarı (`easy-writer`) | Opus 5.5 · `medium` |
-| Yükseltme yazarı (`builder`) | Fable 5.2 · `xhigh` — `high`'da iki kez düşen parça |
+| Yükseltme yazarı (`builder`) | Fable 5.2 · `xhigh` — liderin gerçekten karmaşık ve önemli gördüğü parça baştan; ya da `high`'da iki kez düşen parça |
 | Yardımcı (`helper`), salt-okur | Opus 5.5 · `medium` |
 | Toplayıcı (`gatherer`), salt-okur | Sonnet 5.5 · `medium` |
 | Okuyucu (`scout`, `Explore`) | tek seferlik |

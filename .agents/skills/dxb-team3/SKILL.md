@@ -160,7 +160,7 @@ Fable's quota runs short (§1). His word on the level overrides: "bunu high'da d
 | **Helper** | `helper` (Opus 5.5 · `medium`, read-only) | middle-to-hard work: reads code or documents at the source, measures, researches — from a freer brief | changes a file in the repository or under `~/.claude` (a temporary file for a measurement goes into a temporary folder) |
 | **Gatherer** | `gatherer` (Sonnet 5.5 · `medium`, read-only) | simple-to-middle work: gathers, extracts, lists — from a tight, templated brief | writes; judges; is given a question the template does not settle |
 | **Reader** | a one-shot `scout` or `Explore` | a wide search whose text would swell the lead's context | writes; is resumed (its cache dies at 5 min) |
-| **Escalation writer** | `builder` (Fable 5.2 · `xhigh`), one-shot | only a piece that failed twice at `high` | is opened for a routine fix |
+| **Escalation writer** | `builder` (Fable 5.2 · `xhigh`), one-shot | a piece the lead judges truly complex and important, from the start; or one that failed twice at `high` | is opened for a routine fix |
 | **Stand-in planner** | Opus 5.5 · `high` or `max` by the job's importance — the `Plan` agent, opened with that model and level <!-- CEO-OK: dxb-team3-orchestrator-six-points-2026-11-11 --> | writes the plan when Fable 5.2's quota runs short (§1) | is a standing step; audits; writes code |
 | **Auditor** | GPT-6.1 Sol <!-- CEO-OK: auditor-sol-6-1-2026-10-01 -->, through `scripts/governance/refuter.sh` | one blind pass over the job's commits (§4); on a plan job, also the blind plan audit (§1) | writes; audits the same thing twice; sees the lead's reasoning or verdict |
 | **Second auditor** | Fable 5.2 — `high` — through `scripts/governance/fable-audit.sh` <!-- CEO-OK: fable-audits-opus-second-writer-effort-by-weight-2026-11-09 --> | on an important job, audits what Sol audits, from the same brief, at the same time, blind (§1, §4) | writes a plan or code; audits twice; sees Sol's findings or the lead's verdict |
@@ -222,7 +222,10 @@ four, not the default.
 - The lead verifies each piece before it is committed — reads the diff, runs its tests — and commits
   only what it verified. Nobody else commits.
 - A piece that fails: a medium writer's goes to the lead or a fork at `high`; one that failed twice at
-  `high` goes to the `builder` at `xhigh` — a failing piece never earlier; no writer runs at `max`
+  `high` goes to the `builder` at `xhigh`. A piece the lead sees as truly complex and important is opened at
+  `xhigh` from the start — the lead opens each writer at the level its piece wants (2026-11-16: the
+  "only after two failures" rule came from a vendor's price table for Opus 5.5, not from a measurement of ours);
+  no writer runs at `max`
   <!-- CEO-OK: effort-high-xhigh-no-max-2026-11-10 -->. An easy piece of code — one §2 lets be written
   at `medium` — may be written by the `easy-writer` on Opus 5.5
   <!-- CEO-OK: lead-manages-hands-by-difficulty-2026-11-10 -->; every other piece is written by Fable 5.2: the
@@ -233,9 +236,9 @@ four, not the default.
 Every job that changes code, a rule or a door gets one Sol pass after BUILD — the light lane (§1) excepted. A simple or middle job gets Sol alone; an important job — the lead judges which — gets one Fable pass beside it, at the same time <!-- CEO-OK: lead-chooses-freely-fable-audits-important-jobs-2026-11-10 -->; a change to the records
 alone (STATE, the board) is checked by the rulers on commit instead.
 
-- **Launch:** `scripts/governance/refuter.sh [--effort medium|high|xhigh] "<brief>"` — `high` by
-  default; `xhigh` for money, a database, security, approval, governance or the agents; `medium` for a
-  text-only change. On an important job, Fable at the same moment: `scripts/governance/fable-audit.sh <job> <brief-file>
+- **Launch:** `scripts/governance/refuter.sh [--effort medium|high|xhigh] "<brief>"` — the lead's
+  choice per audit: `high` by default; `xhigh` usually for money, a database, security, approval, governance or the
+  agents; `medium` for a text-only change. On an important job, Fable at the same moment: `scripts/governance/fable-audit.sh <job> <brief-file>
   high` — the same brief; its findings take the same form and
   the same A/B/C. An audit can run long: launch each as the background command itself (a small
   script, its output to the job folder), so that its own exit wakes the lead — never a loop that waits for
