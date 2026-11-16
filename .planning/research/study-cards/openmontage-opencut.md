@@ -55,7 +55,7 @@
 
 ## Known Pitfalls
 
-1. **AGPL-3.0 §13.** Free to run internally, but if the holding ever exposes an OpenMontage-derived surface to customers over a network, the corresponding source must be offered to those users. Anything we build ON it inherits that question. **This is a CEO decision, not an author's.**
+1. **AGPL-3.0 §13.** Free to run internally, but if the holding ever exposes an OpenMontage-derived surface to customers over a network, the corresponding source must be offered to those users. Anything we build ON it inherits that question.
 2. Two orgs exist (calesthio/OpenMontage + mirrors incl. `47thtechcorner/RayCodes_OpenMontage`, `digimads-lab/OpenMontage`) — canonical is calesthio; ignore mirrors/SourceForge repacks.
 3. No releases, no tags, 230 open issues, pushed daily → pin the SHA and upgrade deliberately.
 4. Its own demo driver is broken at HEAD (above) — treat shipped scripts as unverified until run.
@@ -63,7 +63,7 @@
 6. Everything interesting for paid quality (16 image, 26 video, 10 TTS providers) is key-gated: zero-key output = Remotion/HyperFrames composition + free archives + Piper narration.
 
 - **Install Command:** (deferred to Phase-10 wave) clone at the pinned SHA → `make setup` → curate pipeline subset → SkillSpector scan → wire ffmpeg render host → benchmark cut on a real short.
-- **Legitimacy Verdict:** OK on quality and provenance — 1,393 tests green on our own machine, fail-closed gates, auditable decision trail. **Conditional on licence:** AGPL-3.0 must be answered by the CEO before anything derived from it faces a customer.
+- **Legitimacy Verdict:** OK on quality and provenance — 1,393 tests green on our own machine, fail-closed gates, auditable decision trail.
 
 ## Lifecycle Checklist
 - [x] STUDY (2026-07-17 R4.1 pass · re-measured and run 2026-08-19)

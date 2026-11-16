@@ -2,7 +2,7 @@
 
 > Dalga 2 · Yazar: Fable 5 bizzat · Üst: [[SYSTEM_ARCHITECTURE]] · Kardeşler: [[SETTINGS_AND_CONTROL_SPEC]] (6.1 anahtarları), [[COST_CONTROL_SPEC]] (bütçe kesişimi), [[AGENT_ORCHESTRATION_SPEC]] (D3, tüketici)
 > Direktif kaynağı: §19 (Model Orchestration Panel) + madde 6.1 (model rolleri) + madde 18 (model/görev dağılımı) + **CEO direktifi 2026-07-12** (ajan beyinleri dashboard'dan değiştirilebilir — §4b). **KAYITLI KARAR DEĞİŞİMİ (CEO 2026-07-12 ~01:00):** madde-18 "Sonnet YOK" daraltması RUNTIME için KALDIRILDI — Sonnet şirket içinde beyin olarak serbest; inşaat-dönemi yazarlık yasağı (model-routing-hierarchy) AYNEN sürer.
-> Kapsam ayrımı: bu spec ÜRÜN RUNTIME rotalamasıdır (holding ajanlarının model seçimi). İnşaat-dönemi yazarlık kuralları ayrı yönetişimdir (model-routing-hierarchy **v19**; korpus/execution yazarı **oturumu süren model bizzat — kadro Opus 5.5 (`claude-opus-5-5`), A-2026-09-23** — yedek katman yok, CEO 2026-07-25).
+> Kapsam ayrımı: bu spec ÜRÜN RUNTIME rotalamasıdır (holding ajanlarının model seçimi). İnşaat-dönemi yazarlık kuralları ayrı yönetişimdir (model-routing-hierarchy **v20**, the `dxb-team3` door, CEO 2026-11-10: the lead is the session on Fable 5.2; the writers are Fable 5.2 — `helper-writer` at `medium` or `high`, `builder` at `xhigh` — with an Opus 5.5 `easy-writer` for easy pieces; neither the session nor a writer runs at `max`. Owners, not copied here: `.claude/skills/dxb-team3/SKILL.md` §3 for the seats, `.planning/governance/model-routing-hierarchy.md` for the model on each).
 
 ## 1. Amaç
 
@@ -111,7 +111,7 @@ Canlı kolon: `agents.brain text NOT NULL DEFAULT fn_default_brain()` (`20261010
 - Yüzey: `EmployeeCommandPage`/`EmployeeCard` Control Mode rozeti + palette "X'in modelini değiştir" ([[CEO_COMMAND_CENTER_SPEC]] §8) → `POST /api/control/employees {op:'set_model', employee_id, model_id, rationale}`.
 - fn: `fn_update_agent_brain(employee_id, model_id, rationale)` — doğrulama: katalogda var + `status='active'` + `banned=false` + `mechanical_only` rol-sınıf kontrolü; yazım: `agents.brain` UPDATE + `brain_source='ceo_override'` + audit_log + decision_log(`routing_change`, aktör=`ceo`, gerekçe) + `settings` Broadcast (kernel cache invalidate — §9 yolu). Yanıt `{ok, change_id}`; undo settings_change_log/audit üzerinden. Doğrudan tablo UPDATE'i (psql/PostgREST) control seam dışıdır — audit'siz yazım ihlal.
 - **Eval-önce doktrini (CAIO):** ajan/CAIO-kaynaklı beyin-değişim önerisi eval-önce + kayıtlı yürür (CAIO persona hükmü). CEO dashboard değişimi hook'un ÜSTÜNDEDİR ([[FABLE_5_HOOK_SPEC]] CEO istisnası): a change that breaks no rule applies at once; one that conflicts with a holding rule (a code-kept limit of A-2026-10-14 item 1) is warned about once — *"Bu şu kuralla çelişiyor, yine yapayım mı?"* — and on his "devam" applies at once as a one-time exception, recorded as an `override` decision line while the rule itself stays (B64 decision 17); audit düşer ve CAIO'ya değişim-sonrası eval görevi otomatik kuyruklanır (`v_model_stats` 7 gün izleme; gerileme → bilgi-alert'i + geri-alma önerisi — approval DEĞİL, operasyon bilgisi).
-- Kapsam ayrımı (üstbilgi satırının tekrarı, karışma yasak): bu blok ÜRÜN RUNTIME beyinleridir; inşaat yazarlık hiyerarşisi (model-routing-hierarchy v19: tek yazar oturumu süren model — kadro Opus 5.5, A-2026-09-23 —, yedek yok, Sonnet defedildi, Haiku getir-götür) kim persona/kod yazar sorusudur — iki ağaç ayrıdır.
+- Kapsam ayrımı (üstbilgi satırının tekrarı, karışma yasak): bu blok ÜRÜN RUNTIME beyinleridir; inşaat yazarlık hiyerarşisi (model-routing-hierarchy v20: the `dxb-team3` crew of the header line — its seats are owned by `.claude/skills/dxb-team3/SKILL.md` §3) kim persona/kod yazar sorusudur — iki ağaç ayrıdır.
 
 ### 4c. Yeni model ekleme + bağlama — dashboard'dan (CEO direktifi 2026-07-12 ~01:30, normatif)
 
@@ -350,10 +350,8 @@ CONSTRUCTION tree only (§ the construction/runtime split above); no runtime rou
 His words: *"holdingi artık bu şekilde inşaa edeceğiz"*, after reading Anthropic's official Opus 5.5
 charts (2026-09-22 release) with his own eye.
 
-1. **Seats.** Chief engineer = the session he opens, `claude-opus-5-5` · `xhigh` · writer = a
-   separate session, `claude-opus-5-5` · `max` · refuter and debugger subagents
-   `claude-opus-5-5` · `xhigh` · design second eye `design-eye`, `claude-fable-5-1` · `high`,
-   read-only, no `Agent` tool. The canonical seat table is `.claude/skills/dxb-team2/SKILL.md` §3 (dxb-crew deleted on the CEO's order, 2026-10-01). <!-- CEO-OK: rules-prune-batch-2-2026-10-01 -->
+1. **Seats.** The seats this adaptation named are gone; since 2026-11-10 the crew is `dxb-team3`'s
+   (A-2026-09-28 item 1 below names it). The canonical seat table is `.claude/skills/dxb-team2/SKILL.md` §3 (dxb-crew deleted on the CEO's order, 2026-10-01). <!-- CEO-OK: rules-prune-batch-2-2026-10-01 -->
 2. **Author.** Construction authorship belongs to the model that runs the session; A-2026-07-25's
    "Opus 5" names the author of that period and stays as history.
 3. **Pinned ids.** Model ids are pinned, never an alias; a stronger model takes a seat only when it
@@ -364,14 +362,15 @@ charts (2026-09-22 release) with his own eye.
 CONSTRUCTION tree only; no runtime routing row moves. A-2026-09-23's `dxb-crew` door was deleted on the CEO's order, 2026-10-01. <!-- CEO-OK: rules-prune-batch-2-2026-10-01 --> It
 replaces A-2026-09-25 (the three-writer door, which burned half a weekly quota on one job — the fire
 came from waste: parallel re-reads, a fresh `max` writer per fix, subagent caches that die at 5
-minutes). The canonical table is `.claude/skills/dxb-team2/SKILL.md` §3.
+minutes). Since 2026-11-10 the construction's door is `dxb-team3` (model-routing-hierarchy v20): the
+seats are owned by `.claude/skills/dxb-team3/SKILL.md` §3 and the model on each seat by
+`.planning/governance/model-routing-hierarchy.md` — neither table is copied here.
 
-1. **Seats.** Lead = the session at `high` (plan, design and architecture at `max` since 2026-10-19, the CEO switching
-   on the lead's warning) — chooses who writes (itself, a fork, `medium` helpers, or a fork with
-   helpers) and verifies every piece · auditor = GPT-6.1 Sol (2026-10-01) through
-   `scripts/governance/refuter.sh`, blind and read-only by tool, one pass on every job · Fable 5.1 is
-   not consulted in a construction job (2026-10-06) · `builder` (`claude-opus-5-5` · `max`) only after
-   a piece failed twice at `high`.
+1. **Seats.** Lead = the session, on Fable 5.2 — holds the whole, chooses who writes and verifies
+   every piece · writers = Fable 5.2 (`helper-writer` at `medium` or `high`, `builder` at `xhigh`),
+   with an Opus 5.5 `easy-writer` for easy pieces · neither the session nor a writer runs at `max` ·
+   auditor = GPT-6.1 Sol (2026-10-01) through `scripts/governance/refuter.sh`, blind and read-only
+   by tool, one pass on every job.
 2. **Effort.** Code at the lead's level; Opus `xhigh` never writes code (FrontierCode 51.4 %, the
    bottom of the curve — his word 2026-09-28); eye-facing code — the look of a page or a screen — is written at
    `max` (his word 2026-10-28) <!-- CEO-OK: eye-facing-work-xhigh-max-studio-skills-2026-10-28 -->. Auditor: `high` by default, `xhigh` for money,
@@ -437,7 +436,9 @@ place to move and nothing waits for a code change or a restart.
 7. **Move 3 — effort by the kind of work (P5a).** Critical decisions (`strategy`, `architecture`,
    `final-approval`, the `critical_decision` seat) think at `xhigh`; code (`code.standard`, `code.bulk`, the
    `coding` seat) at `high`; cheap mechanical work runs at `low` only on a model other than Sonnet or Haiku —
-   those two never run at `low` (B64 decision 2) — and sorting goes to Jev first (decision 7). The `max` the
+   those two never run at `low` (B64 decision 2) — and sorting goes to Jev first (decision 7). These levels were
+   set on 2026-10-10 from Anthropic's own published measurements of Opus 5, read 2026-09-21 (board row B51) —
+   Opus 5's figures, not the holding's own measurement, and not measured on Fable 5.2. The `max` the
    three critical classes carried had never reached a run (before P3 runs took the L1 seat's `medium`).
    Talking seats are P6's; their levels are B64 decision 3's (A-2026-10-14 item 2). <!-- OPEN: B64 -->
 
@@ -534,7 +535,8 @@ RUNTIME tree. The design he answered decision by decision: `.planning/quick/2026
 4. **The backup pair (decision 13).** Written by role — main brain, backup brain — never by model name, so a new
    model taking a role carries the rule. Any failure (quota, overload, outage) → the other brain takes the work,
    critical work included. On Fable the work keeps its own effort clamped to `high`..`xhigh` (low, medium,
-   high → high; xhigh, max → xhigh). Fable's checking seat (the critical gate) falls to Sol 6.1, never to Opus —
+   high → high; xhigh, max → xhigh) — a clamp set on 2026-10-14 for Fable 5.1; it is not measured on Fable 5.2
+   and is measured again before it is carried to it. Fable's checking seat (the critical gate) falls to Sol 6.1, never to Opus —
    no model audits what it wrote; Sol down → valuable work's plan audit waits for Sol and he is told, since both
    other brains wrote the plan (item 7). Hamza's spoken reply falls back to Opus 5.5 `low` for speed; work given
    to him runs at its own level. No 70 % threshold: at 95 % of Fable's quota a second subscription is added —
@@ -543,7 +545,9 @@ RUNTIME tree. The design he answered decision by decision: `.planning/quick/2026
    the silent SDK fall-over, the SQL fallback: B65, B66). No work ever falls to a weaker model.
 5. **Hermes's backup (decision 16).** On an Opus outage or overload Hermes's work does not go to Fable: it waits;
    whoever gave it tells him "Hermes'in beyni şu an kapalı, işiniz sırada"; it resumes when the brain is back. Quota
-   or credit full → item 4's alert; a second subscription or extra credit is money out at his gate. Why: Fable fell
+   or credit full → item 4's alert; a second subscription or extra credit is money out at his gate. Why — figures recorded
+   2026-10-14 for Fable 5.1 against Opus 5.5; the tests are Anthropic's, not the holding's, and none is measured on
+   Fable 5.2, so they are measured again before they are carried to it: Fable fell
    for an instruction hidden in a page about 28 times in 1,100 attempts, Opus once; Fable measured weaker at
    computer work (OSWorld 2.0 strict: Opus 48.7 %, Fable 42.8 % — Anthropic's test at `max`, not ours); 2.5× the
    price.

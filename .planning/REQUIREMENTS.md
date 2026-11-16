@@ -87,11 +87,11 @@ v1 = the complete holding (P0–P7 roadmap shape): full architecture, expandable
 
 ### Council (CNCL)
 
-- [ ] **CNCL-01**: In-house multi-model council (parallel cheap models + one strong judge) invoked only at critical gates; judge strength validated against producers
+- [ ] **CNCL-01**: In-house multi-model council (parallel cheap models + one strong judge); judge strength validated against producers
 
 ### 24/7 Runtime (VPS)
 
-- [ ] **VPS-01**: EU VPS runs the compose stack (Supabase or Postgres, LiteLLM, dxb-mcp, dashboard, Speaches, open-notebook) within 8GB budget
+- [ ] **VPS-01**: EU VPS runs the compose stack (Supabase or Postgres, LiteLLM, dxb-mcp, dashboard, Speaches, open-notebook)
 - [ ] **VPS-02**: Hermes resident agent (GLM 5.2 brain) runs bounded scheduled jobs with watchdog, kill switch, and morning review queue
 
 ### Departments & Personas (DEPT)

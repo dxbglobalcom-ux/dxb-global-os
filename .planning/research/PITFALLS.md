@@ -256,6 +256,8 @@ P2 (task queue + gate + cost tables in Supabase are *the* state store from the s
 
 ## Performance Traps
 
+> Dated reading, not a requirement: the limits in this table — chains of ≤3 hops, ~10 active agents, council only at critical gates, fan-out width limits — come from outside sources read on 2026-07-05, which measured the models of July 2026 or older. None is measured on Fable 5.2.
+
 | Trap | Symptoms | Prevention | When It Breaks |
 |------|----------|------------|----------------|
 | Context accumulation in loops | Cost per task grows superlinearly; late-loop outputs degrade | Step budgets, compaction, subagent isolation with digest returns | ~15–20 loop steps; guaranteed on 24/7 jobs |

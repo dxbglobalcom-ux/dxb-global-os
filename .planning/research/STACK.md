@@ -130,11 +130,6 @@ pnpm add -D typescript supabase tailwindcss
 
 ## Stack Patterns by Variant
 
-**If the VPS is 8GB (CX42/CPX31-class, ~€16–20/mo):**
-- Run: Supabase stack (trimmed: drop Storage/Imgproxy if unused), LiteLLM, Speaches (CPU), hermes, open-notebook, Caddy, Node workers.
-- Use Whisper `small` int8 and Kokoro; skip larger STT models.
-- This fits, but monitor: Supabase stack ~2–2.5GB, Speaches ~1–1.5GB under load.
-
 **If RAM pressure appears:**
 - First move Speaches to on-demand start (systemd socket activation or compose profile) — voice is bursty.
 - Second option: Supabase Cloud for the DB tier, keep everything else on the VPS.

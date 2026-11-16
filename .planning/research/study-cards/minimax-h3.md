@@ -10,8 +10,8 @@
 - **Category:** Media/content (video generation)
 - **Status:** INSTALL — **the CEO has now seen four finished films made with it (2026-09-01) and
   REJECTED all four**: *"beğenmedim kesinlikle. gerçek insan gibi durmuorlar kesinlikle yapay zeka
-  gibi duorlar."* It stays the holding's volume engine; it is NOT adopted for a shot a client's eye
-  lands on. Cause measured, see §2026-09-01.
+  gibi duorlar."* That is his verdict on those four films of 2026-09-01, not a rule on where the
+  engine is used. Cause measured, see §2026-09-01.
 - **Target Phase:** 10+ (the agency seat, B28)
 - **Owner (dept/tier):** Creative / Social Media — generation lane
 - **Trigger Type:** service (local ComfyUI at `/home/dxb/tools/ComfyUI`, driven by `/home/dxb/tools/h3/`)
@@ -210,9 +210,8 @@ action" was wrong and was disproved by measurement (`lab/exp3.sh`: all four writ
 
 **② WHY ONE HUMAN READ AS REAL AND THE OTHERS DID NOT — and it is not the engine.** The woman in the
 UGC film entered as a **real photograph** bound through REF2VA. The Badr warriors were **drawn from
-sentences** and moved through FL2VA, which has no identity engine at all. **⇒ For any human the
-client's eye lands on: a real photograph, through REF2VA. FL2VA is for products and camera-exact
-moves. A drawn human is scrap.**
+sentences** and moved through FL2VA, which has no identity engine at all. Measured on these four
+films, 2026-09-01 — one day's comparison on H3, not a rule for other jobs.
 
 **③ THE LORA/STEP PAIRING IS A LAW, NOT A SETTING.** A 4-step-distilled turbo LoRA sampled at 8
 steps is off its trained schedule and destroys fine structure — a sword vanished from a hand at

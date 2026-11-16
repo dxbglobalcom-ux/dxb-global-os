@@ -28,7 +28,6 @@
 - `latest-cpu` + implicit pull = silent drift — exact tag + digest pinned above; no `pull_policy: always`.
 - First request after cold start triggers model download/load — health check must hit a real readiness signal, and 07-07's STT call needs a generous first-call timeout.
 - 0.9.0-rc.x looks newer but is pre-release — do not "upgrade" past stable without card renewal.
-- RAM is the scarce resource: **1–1.5GB under load** (master table) — this is WHY the voice profile is on-demand; keep it out of the `core` profile.
 
 ## RAM note (Phase 7 budget input)
 - Master table expectation: **1–1.5GB under load** — **MEASURED 2026-07-09 (07-07 live STT):** peak **1.373GiB / 1.5GiB limit** during faster-whisper-small transcription on the VPS (`docker stats --no-stream` sampled every 2s); idle-loaded ~740MiB. Within expectation; mem_limit 1536m holds.
