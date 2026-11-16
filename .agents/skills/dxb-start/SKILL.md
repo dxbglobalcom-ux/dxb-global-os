@@ -8,8 +8,9 @@ description: Use when the CEO asks you to learn the holding — "holdingi tanı"
 The CEO's standing complaint is *"her gelen model bir şeyleri atlıyor mutlaka"*. Two causes were
 measured on 2026-07-30: sessions began by reading ~170 pages of scattered, partly contradictory
 text, and no document said which source outranked which. The core file fixed the second. This
-door fixes the first: **read the smallest set that lets you act correctly, then expand only where
-a dependency or a contradiction forces you to.**
+door fixes the first: **start from the set below, which lets you act correctly, and read on as far as the job needs** — the
+set is where to begin, not a limit on reading (his word, 2026-11-10); what is already in front of you is not
+measured again.
 
 It is the door a session opens when he says *learn the holding, know the cupboards and drawers*
 (2026-09-04, 2026-10-03). Since 2026-10-03 it holds only that <!-- CEO-OK: dxb-start-slimmed-2026-10-03 -->;
@@ -31,8 +32,8 @@ are already in the opening: never re-read them.
    (a deferral or deviation), or the corpus map. It is a ledger, not an orientation document.
 6. Only the code, tests, schemas and references that row needs
 
-**Do not** read the whole repository, the archive, other specs, other rows' research, or the
-rival reports unless the row names them. `.planning/STATE-ARCHIVE.md` is history:
+The whole repository, the archive, other specs, other rows' research and the rival reports are not part
+of the opening read; open them when the job needs them. `.planning/STATE-ARCHIVE.md` is history:
 open it to answer *"why was this decided"*, never to learn the current state.
 
 ## Where things are

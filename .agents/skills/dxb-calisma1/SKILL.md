@@ -30,7 +30,7 @@ He keeps the two methods apart on purpose, to try both on the same kind of job a
 5. **The halves.** Each measures and decides its own half.
 6. **Cross-check.** Each reads the other's half and names what is wrong or missing; a disagreement is talked through.
 7. **One plan.** The lead merges the two halves, at the level the plan's weight needs (dxb-team3 §2).
-8. **The plan goes to him.** In his language, short, one page: what is done, what it touches, the steps, how
+8. **The plan goes to him.** In his language, the answer and the decisions first, the engineers' list apart: what is done, what it touches, the steps, how
    it is verified, the risks. Below it: did working together make the job better, or did it cause trouble.
 9. **His yes.** A correction sends the plan back to him; on his yes the build starts.
 10. **The hands.** The lead chooses who writes (itself, its fork or helpers — dxb-team3 §3) and says it in one line.

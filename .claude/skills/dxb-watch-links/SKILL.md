@@ -87,7 +87,7 @@ and close it, and wait; (2) compare the two (`sha256sum`): if his copy differs i
 him; (3) note his copy's hash, then `<venv>/bin/python -I "$K/xlsx.py" "$J" <master> "<dates> <title>"` (the tab
 named like "Ekim 9-15 linkleri", ≤ 31 characters) and commit; (4) right before copying the master over his copy,
 check again that no lock file exists and his copy's hash is the one noted — if not, stop and ask him; then copy,
-`SendUserFile`, and two or three lines in Turkish: how many, which few are worth acting on, what waits on his
+`SendUserFile`, and a short word in Turkish: how many, which few are worth acting on, what waits on his
 yes. A new file (`xlsx.py "$J" <file.xlsx>`, no tab name) only when he asks for one.
 A few links → answer in the conversation, plainly. Nothing is installed or started without his word.
 
