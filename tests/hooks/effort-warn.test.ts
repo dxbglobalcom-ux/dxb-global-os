@@ -140,7 +140,9 @@ describe("each of his messages tells the lead the session's level and how to set
     const text = context(hook(dir, prompt(SID, transcript(dir, []))));
     expect(text).toMatch(/talk, a simple question, a fact, a reading or a record: medium/);
     // an evaluation is part of planning and design (his word, 2026-11-16): weighed at high, not as talk
-    expect(text).toMatch(/a plan, a design, an architecture, an evaluation -- weighing, comparing, judging which is better or whether something is right -- or code: high/);
+    expect(text).toMatch(/a plan, a design, an architecture, an evaluation that carries weight -- weighing, comparing, judging which is better or whether something is right -- or code: high/);
+    // an easy evaluation stays the session's own call (his word, 2026-11-16: "kolay şeyleri senin zekana bırakıyorum")
+    expect(text).toMatch(/an easy evaluation is weighed by what an error costs and may stay at medium/);
     expect(text).toMatch(/truly complex, important job's plan or work: xhigh/);
     // the level follows the job, never a kind of work (his word, 2026-11-10): no blanket "eye-facing code at xhigh".
     // No kind of work is named at xhigh: the fine-design point of 2026-11-11 was withdrawn the same day

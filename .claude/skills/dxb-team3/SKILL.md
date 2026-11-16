@@ -106,8 +106,8 @@ another, while he waits.
 
 The session sets its own level by the course of the talk; he does not switch it and is never asked to
 <!-- CEO-OK: session-sets-its-own-effort-2026-11-10 -->. Talk — a simple question, a fact, a reading, a record — runs at
-`medium`; an evaluation — weighing, comparing, judging which is better — is part of planning and runs at `high`
-(his word, 2026-11-16); managing — the lead opens a hand, writes a brief or verifies a piece that came back — at `high`, with
+`medium`; an evaluation that carries weight — weighing, comparing, judging which is better — is part of planning and
+runs at `high`, an easy one is the session's call by what an error costs (his word, 2026-11-16); managing — the lead opens a hand, writes a brief or verifies a piece that came back — at `high`, with
 `xhigh` open while it thinks through who does what <!-- CEO-OK: dxb-team3-orchestrator-six-points-2026-11-11 -->;
 a plan, a design, an architecture, the build, the fixes and the tests at `high`; a truly complex, important
 job — its plan and its work — at `xhigh`. `max` is not used by the session
@@ -152,7 +152,7 @@ Fable's quota runs short (§1). His word on the level overrides: "bunu high'da d
 | **Fork** | the lead's own copy (`subagent_type: "fork"`), its whole context | writes a piece that needs this conversation <!-- CEO-OK: fork-seat-no-size-2026-10-08 --> | commits |
 | **Writing helper** | `helper-writer` (Fable 5.2 · `medium`; opened at `high` on an important job — §2) | writes and tests a piece the lead specified; fixes a Sol finding | commits; widens the piece <!-- CEO-OK: helpers-write-code-under-lead-verification-2026-10-03 --> |
 | **Easy writer** | `easy-writer` (Opus 5.5 · `medium`) | writes and tests an easy piece of code the lead specified — narrow glue, a setting, a merge | commits; widens the piece; is given a piece §2 would write at `high` |
-| **Helper** | `helper` (Opus 5.5 · `medium`, read-only) | middle-to-hard work: reads code or documents at the source, measures, researches — from a freer brief | writes |
+| **Helper** | `helper` (Opus 5.5 · `medium`, read-only) | middle-to-hard work: reads code or documents at the source, measures, researches — from a freer brief | changes a file in the repository or under `~/.claude` (a temporary file for a measurement goes into a temporary folder) |
 | **Gatherer** | `gatherer` (Sonnet 5.5 · `medium`, read-only) | simple-to-middle work: gathers, extracts, lists — from a tight, templated brief | writes; judges; is given a question the template does not settle |
 | **Reader** | a one-shot `scout` or `Explore` | a wide search whose text would swell the lead's context | writes; is resumed (its cache dies at 5 min) |
 | **Escalation writer** | `builder` (Fable 5.2 · `xhigh`), one-shot | only a piece that failed twice at `high` | is opened for a routine fix |

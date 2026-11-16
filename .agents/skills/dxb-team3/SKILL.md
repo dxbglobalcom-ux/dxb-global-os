@@ -105,8 +105,9 @@ another, while he waits.
 ## 2. Effort — the session sets its own level
 
 The session sets its own level by the course of the talk; he does not switch it and is never asked to
-<!-- CEO-OK: session-sets-its-own-effort-2026-11-10 -->. Talk — a question, a fact, a reading, a record — runs at
-`medium`; managing — the lead opens a hand, writes a brief or verifies a piece that came back — at `high`, with
+<!-- CEO-OK: session-sets-its-own-effort-2026-11-10 -->. Talk — a simple question, a fact, a reading, a record — runs at
+`medium`; an evaluation that carries weight — weighing, comparing, judging which is better — is part of planning and
+runs at `high`, an easy one is the session's call by what an error costs (his word, 2026-11-16); managing — the lead opens a hand, writes a brief or verifies a piece that came back — at `high`, with
 `xhigh` open while it thinks through who does what <!-- CEO-OK: dxb-team3-orchestrator-six-points-2026-11-11 -->;
 a plan, a design, an architecture, the build, the fixes and the tests at `high`; a truly complex, important
 job — its plan and its work — at `xhigh`. `max` is not used by the session
@@ -151,7 +152,7 @@ Fable's quota runs short (§1). His word on the level overrides: "bunu high'da d
 | **Fork** | the lead's own copy (`subagent_type: "fork"`), its whole context | writes a piece that needs this conversation <!-- CEO-OK: fork-seat-no-size-2026-10-08 --> | commits |
 | **Writing helper** | `helper-writer` (Fable 5.2 · `medium`; opened at `high` on an important job — §2) | writes and tests a piece the lead specified; fixes a Sol finding | commits; widens the piece <!-- CEO-OK: helpers-write-code-under-lead-verification-2026-10-03 --> |
 | **Easy writer** | `easy-writer` (Opus 5.5 · `medium`) | writes and tests an easy piece of code the lead specified — narrow glue, a setting, a merge | commits; widens the piece; is given a piece §2 would write at `high` |
-| **Helper** | `helper` (Opus 5.5 · `medium`, read-only) | middle-to-hard work: reads code or documents at the source, measures, researches — from a freer brief | writes |
+| **Helper** | `helper` (Opus 5.5 · `medium`, read-only) | middle-to-hard work: reads code or documents at the source, measures, researches — from a freer brief | changes a file in the repository or under `~/.claude` (a temporary file for a measurement goes into a temporary folder) |
 | **Gatherer** | `gatherer` (Sonnet 5.5 · `medium`, read-only) | simple-to-middle work: gathers, extracts, lists — from a tight, templated brief | writes; judges; is given a question the template does not settle |
 | **Reader** | a one-shot `scout` or `Explore` | a wide search whose text would swell the lead's context | writes; is resumed (its cache dies at 5 min) |
 | **Escalation writer** | `builder` (Fable 5.2 · `xhigh`), one-shot | only a piece that failed twice at `high` | is opened for a routine fix |
@@ -173,7 +174,9 @@ what comes back, and brings him proposals of its own.
 **The quota is managed with the work** <!-- CEO-OK: quota-managed-with-the-work-2026-11-12 -->. On every
 turn — his message or a hand's report — the hook `dxb-effort-warn.py` tells the lead how full the account's
 5-hour window and its week are, from the status line's record (`~/.local/bin/dxb-quota` prints the same, with
-the pace). The lead reads it before it opens a writing hand and when one returns. A window that cannot carry a
+the pace). From 80 % the same line says a model's own week too, which the status line is not given — Fable 5.2
+has one, measured 2026-11-13 — as `scripts/ops/dxb-usage` reads it. The lead reads it before it opens a writing
+hand and when one returns. A window that cannot carry a
 piece does not get it: the lead divides the work when it divides — a part is finished, verified and committed,
 the rest follows — and waits for the reset when it does not (a film, a tightly bound piece), telling him in one
 line. The quota never lowers the model or the level: an important piece stays Fable 5.2's at `high`, and a
@@ -229,9 +232,10 @@ alone (STATE, the board) is checked by the rulers on commit instead.
   default; `xhigh` for money, a database, security, approval, governance or the agents; `medium` for a
   text-only change. On an important job, Fable at the same moment: `scripts/governance/fable-audit.sh <job> <brief-file>
   high` — the same brief; its findings take the same form and
-  the same A/B/C. An audit can outlast the Bash tool's 10 minutes: launch each detached (a small
-  script under `setsid nohup`, its output to the job folder, `EXIT=` on its last line) and wait for
-  that line.
+  the same A/B/C. An audit can run long: launch each as the background command itself (a small
+  script, its output to the job folder), so that its own exit wakes the lead — never a loop that waits for
+  a line in a file (2026-11-13: such a loop, on a marker written to the wrong file, left a session asleep
+  for a night).
 - **The brief — blind, not in the dark:** it opens like the plan's brief (the holding reminder, the line's
   mission and vision); his words verbatim; the plan's decisions as facts ("this door
   is closed on purpose"); the range; where the raw test and battery output lies. Never the lead's reasoning, a
@@ -269,7 +273,8 @@ alone (STATE, the board) is checked by the rulers on commit instead.
   code changed is restarted (`dxb-verify`). The typecheck covers `packages/` and `apps/`, then `tests/` and
   `db/seed/` (`tsconfig.tests.json`, since 2026-10-06). The battery: `pnpm construction:battery`, the whole suite in
   both halves against the construction's own engine (port 54422), 1,486 tests, about 6 minutes
-  (2026-10-04). Launch it detached from a shell whose `oom_score_adj` is 100; green is the line
+  (2026-10-04). Launch it as the background command itself, from a script that sets its own `oom_score_adj` to 100 —
+  its exit wakes the lead; green is the line
   `BATTERY_GREEN`. It answers the one question no single test can: did this break anything else.
 - **Text only** → no battery. A door, the core or a record: the commit hook's rulers read those on
   every commit. A persona's words: `bash scripts/persona-ruler.sh` (dxb-verify), which the commit

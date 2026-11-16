@@ -163,9 +163,9 @@ alone (STATE, the board) is checked by the rulers on commit instead.
   default; `xhigh` for money, a database, security, approval, governance or the agents; `medium` for a
   text-only change. Fable at the same moment: `scripts/governance/fable-audit.sh <job> <brief-file>
   [high|max]` — the same brief, `max` on an important or complex job; its findings take the same form and
-  the same A/B/C. An audit can outlast the Bash tool's 10 minutes: launch each detached (a small
-  script under `setsid nohup`, its output to the job folder, `EXIT=` on its last line) and wait for
-  that line.
+  the same A/B/C. An audit can run long: launch each as the background command itself (a small
+  script, its output to the job folder), so that its own exit wakes the lead — never a loop that waits for
+  a line in a file.
 - **The brief — blind, not in the dark:** it opens like the plan's brief (the holding reminder, the line's
   mission and vision); his words verbatim; the plan's decisions as facts ("this door
   is closed on purpose"); the range; where the raw test and battery output lies. Never the lead's reasoning, a
@@ -203,7 +203,8 @@ alone (STATE, the board) is checked by the rulers on commit instead.
   code changed is restarted (`dxb-verify`). The typecheck covers `packages/` and `apps/`, then `tests/` and
   `db/seed/` (`tsconfig.tests.json`, since 2026-10-06). The battery: `pnpm construction:battery`, the whole suite in
   both halves against the construction's own engine (port 54422), 1,486 tests, about 6 minutes
-  (2026-10-04). Launch it detached from a shell whose `oom_score_adj` is 100; green is the line
+  (2026-10-04). Launch it as the background command itself, from a script that sets its own `oom_score_adj` to 100 —
+  its exit wakes the lead; green is the line
   `BATTERY_GREEN`. It answers the one question no single test can: did this break anything else.
 - **Text only** → no battery. A door, the core or a record: the commit hook's rulers read those on
   every commit. A persona's words: `bash scripts/persona-ruler.sh` (dxb-verify), which the commit
