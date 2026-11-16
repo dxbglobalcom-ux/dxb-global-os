@@ -39,7 +39,9 @@ const askedToDraw = (html, draw) => (draw ? html.replace("<script>", () => `<scr
 /** A copy of page/ framed as `frame` ({ w, h, alpha, draw }) for one HyperFrames call, removed when `use` returns. */
 function withStage(job, frame, use) {
   linkMaterial(job.dir);
-  const stage = mkdtempSync(join(job.dir, ".mg-stage-"));
+  // The stage's name starts with no dot: HyperFrames 0.9.56 leaves out of a render, without failing it, what a link
+  // reaches from a folder so named — the job's sound, assets and refs behind page/'s links (measured 2026-11-16).
+  const stage = mkdtempSync(join(job.dir, "mg-stage-"));
   try {
     cpSync(join(job.dir, "page"), stage, { recursive: true, verbatimSymlinks: true, filter: (from) => basename(from) !== ".hyperframes" });
     writeFileSync(join(stage, "index.html"), askedToDraw(frameRoot(readFileSync(job.page, "utf8"), frame), frame.draw));

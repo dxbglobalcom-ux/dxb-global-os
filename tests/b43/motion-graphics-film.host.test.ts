@@ -629,10 +629,14 @@ describe("B43 dxb-motion-graphics — the HyperFrames version guard", () => {
   };
   /** `mg hf update` with the changed guard: what it said, and the exit code of each HyperFrames render it started. */
   const tryGuard = async (changed: string) => {
-    const rec = recorder();
+    const rec = npmNames(NEWER); // the refusals too are tried on a named version, not on what npm serves that day
     const r = await mg(["hf", "update", "--guard", changed], { run: rec.run });
     return { ...r, renders: rec.calls.filter((c) => c.cmd === "npx" && c.args.includes("render")).map((c) => c.code) };
   };
+  // A version newer than the 0.9.37 these tests record as good; its guard film rendered with its sound and verified on 2026-11-16.
+  const NEWER = "0.9.56";
+  /** The real runner, but for npm: asked for its latest version, it is answered with `version`. */
+  const npmNames = (version: string) => recorder((cmd) => (cmd === "npm" ? { code: 0, out: `${version}\n`, err: "" } : undefined));
   beforeAll(() => {
     stateDir = ownState();
   });
@@ -674,19 +678,21 @@ describe("B43 dxb-motion-graphics — the HyperFrames version guard", () => {
     expect(state().good).toBe("0.9.37");
   }, 180_000);
 
-  it("a guard film that renders and verifies makes npm's latest the good version", async () => {
-    const latest = (await mg(["hf", "status"])).out.match(/latest (\d+\.\d+\.\d+)/)![1];
-    const r = await mg(["hf", "update"]);
-    expect(r.out).toMatch(new RegExp(`good ${latest.replace(/\./g, "\\.")}`));
+  it("a newer version whose guard film renders and verifies becomes the good version, and a second update has nothing to try", async () => {
+    // What npm serves changes by the day, so the test answers for npm with NEWER; HyperFrames at that version really renders.
+    const first = npmNames(NEWER);
+    const r = await mg(["hf", "update"], { run: first.run });
+    expect(r.out).toContain(`good ${NEWER} (was 0.9.37)`);
     expect(r.code).toBe(0);
-    expect(state().good).toBe(latest);
-    expect(state().good).not.toBe("0.9.37");
+    const renders = first.calls.filter((c) => c.cmd === "npx" && c.args.includes("render"));
+    expect(renders.map((c) => [c.args[1], c.code])).toEqual([[`hyperframes@${NEWER}`, 0]]);
+    expect(state().good).toBe(NEWER);
 
-    const rec = recorder();
-    const again = await mg(["hf", "update"], { run: rec.run });
+    const second = npmNames(NEWER);
+    const again = await mg(["hf", "update"], { run: second.run });
     expect(again.code).toBe(0);
     expect(again.out).toMatch(/nothing to try/);
-    expect(rec.calls.map((c) => c.cmd)).toEqual(["npm"]);
+    expect(second.calls.map((c) => c.cmd)).toEqual(["npm"]);
   }, 240_000);
 });
 

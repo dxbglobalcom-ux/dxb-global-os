@@ -252,7 +252,7 @@ describe("B43 dxb-motion-graphics — a round of a film starts from the job befo
       "board/ours.png": "our frame beside the reference",
       "out/fixture-film-16x9.mp4": "a render", "out/stills/16x9/at-1s.png": "a still", "out/verify.json": "{}",
       "board/board.png": "the drawn board", "board/board-9x16.png": "the drawn tall board", "board/board.html": "a board page from before the frames",
-      "tools/check.py": "print('a check of its own')", "work/notes.txt": "a note", "page/.hyperframes/state.json": "{}", ".mg-stage-left/index.html": "a stage",
+      "tools/check.py": "print('a check of its own')", "work/notes.txt": "a note", "page/.hyperframes/state.json": "{}", "mg-stage-left/index.html": "a stage",
     };
     for (const [file, text] of Object.entries(files)) {
       mkdirSync(join(job, file, ".."), { recursive: true });
@@ -304,7 +304,7 @@ describe("B43 dxb-motion-graphics — a round of a film starts from the job befo
     expect(existsSync(join(dir, "page/.hyperframes"))).toBe(false);
     // The board page is the skill's own, laid out anew: one that draws each shot's frame.
     expect(readFileSync(join(dir, "board/board.html"), "utf8")).toContain("shot.still");
-    for (const left of ["out/", "board/board.png", "board/board-9x16.png", "board/board.html", "tools/", "work/", "page/.hyperframes/", ".mg-stage-left/"])
+    for (const left of ["out/", "board/board.png", "board/board-9x16.png", "board/board.html", "tools/", "work/", "page/.hyperframes/", "mg-stage-left/"])
       expect(r.out, left).toContain(left);
 
     // A job every command opens.
