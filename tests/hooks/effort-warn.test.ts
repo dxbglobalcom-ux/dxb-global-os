@@ -136,7 +136,6 @@ describe("each of his messages tells the lead the session's level and where it g
     expect(text).not.toContain(skillCall("high"));
     expect(text).not.toContain("first action");
     expect(text).not.toContain("saved level");
-    expect(text).not.toContain("before you think about the substance");
     expect(text).not.toContain("Decide what this reply is");
     // one paragraph, about half of the 1.6 KB the four-box text was
     expect(text).not.toContain("\n");
@@ -154,16 +153,38 @@ describe("each of his messages tells the lead the session's level and where it g
       expect(text).toContain(`This session's saved level is ${level}: for anything but plain talk your first action is \`${skillCall("high")}\`.`);
     }
   });
+  it("a session whose saved level is xhigh or max is not sent down to high: no first action, no dxb-effort-high (the blind audit, 2026-11-16)", () => {
+    // until then the same paragraph said a complex job runs at xhigh and told a session standing there to open high first
+    for (const level of ["xhigh", "max"]) {
+      const dir = box();
+      record(dir, SID, level, 2);
+      const text = context(hook(dir, prompt(SID, transcript(dir, []))));
+      expect(told(text)).toBe(level);
+      expect(text, level).not.toContain(skillCall("high"));
+      expect(text, level).not.toContain("first action");
+      expect(text, level).not.toContain("saved level");
+    }
+  });
+  it("the level is set before the thinking (his word of 2026-10-12): at any saved level the xhigh skill is opened first", () => {
+    for (const level of ["medium", "high", "xhigh"]) {
+      const dir = box();
+      record(dir, SID, level, 2);
+      const text = context(hook(dir, prompt(SID, transcript(dir, []))));
+      expect(text, level).toContain(`\`${skillCall("xhigh")}\` -- opened first, before you think about the substance.`);
+    }
+  });
   it("names where the level goes: plain talk may go down to medium, a truly complex job up to xhigh, everything else is high, never max", () => {
     const dir = box();
     record(dir, SID, "medium", 2);
     const text = context(hook(dir, prompt(SID, transcript(dir, []))));
     expect(text).toContain(`Plain talk -- a simple question, a fact, a reading, a record -- may run at medium: \`${skillCall("medium")}\`.`);
-    expect(text).toContain(`A truly complex, important job's plan or work runs at xhigh: \`${skillCall("xhigh")}\`.`);
+    expect(text).toContain(`A truly complex, important job's plan or work runs at xhigh: \`${skillCall("xhigh")}\` -- opened first, `
+      + "before you think about the substance.");
     // an evaluation that carries weight is part of planning and design (his word, 2026-11-16), and managing a
     // dxb-team3 job is named with its door (the CEO, 2026-11-11): neither is read as plain talk
-    expect(text).toContain("Everything else -- a plan, a design, an architecture, an evaluation that carries weight, code, "
-      + "managing a dxb-team3 job -- is high.");
+    // code names the door's own exception (dxb-team3 section 2: short narrow glue), so the two texts do not disagree
+    expect(text).toContain("Everything else -- a plan, a design, an architecture, an evaluation that carries weight, code "
+      + "(short narrow glue may be written at medium: dxb-team3 section 2), managing a dxb-team3 job -- is high.");
     // the level follows the job, never a kind of work (his word, 2026-11-10): no blanket "eye-facing code at xhigh".
     // No kind of work is named at xhigh: the fine-design point of 2026-11-11 was withdrawn the same day
     expect(text).not.toContain("look of a page");

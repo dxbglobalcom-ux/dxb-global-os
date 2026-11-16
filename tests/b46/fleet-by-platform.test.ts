@@ -401,6 +401,56 @@ describe("K3 — his question is split into sub-questions before the ground open
     expect(prompt).toContain("Name the 2 to 9 sub-questions the DERT holds");
   }, 120_000);
 
+  it("the lead sets the splitter's level and its clock: --split-effort reaches the model's launch, --split-timeout split.py and the clock around it", () => {
+    // The gate bench's `claude` stand-in keeps the auditor's launch only, so this case brings its own (split.py's
+    // $DXB_CLAUDE): it keeps the launch — its own arguments, split.py's and those of the clock around split.py, read
+    // from /proc — in the folder it stands in, which split.py brings back into <run>/split/, and gives the kept answer.
+    const standIn = join(b.root, "claude-keeps-the-split-launch.py");
+    writeFileSync(standIn, [
+      "#!/usr/bin/env python3",
+      "import json, os, sys",
+      "from pathlib import Path",
+      "def argv_of(pid):",
+      "    return Path(f'/proc/{pid}/cmdline').read_text().split('\\0')[:-1]",
+      "def parent_of(pid):",
+      "    return int(next(l for l in Path(f'/proc/{pid}/status').read_text().splitlines() if l.startswith('PPid:')).split()[1])",
+      "sys.stdin.read()",
+      "split = os.getppid()",
+      "Path('split-launch.json').write_text(json.dumps(",
+      "    {'claude': sys.argv[1:], 'split': argv_of(split), 'clock': argv_of(parent_of(split))}))",
+      "print(json.dumps({'type': 'result', 'subtype': 'success', 'is_error': False, 'total_cost_usd': 0,",
+      "                  'result': Path(os.environ['SPLIT_ANSWER']).read_text(encoding='utf-8')}))",
+      "",
+    ].join("\n"));
+    chmodSync(standIn, 0o755);
+    const env = { DXB_CLAUDE: standIn, SPLIT_ANSWER: join(SPLIT, "answer-good.json") };
+    const after = (argv: string[], flag: string) => (argv.includes(flag) ? argv[argv.indexOf(flag) + 1] : undefined);
+    const launchOf = (run: string, ...flags: string[]) => {
+      const r = fleetWith(env, run, ...ARGS, ...flags);
+      expect(r.stdout, r.stdout.slice(0, 2500)).toMatch(/^alt sorular: 4 \(kaynak: model · /m);
+      return JSON.parse(readFileSync(join(run, "split", "split-launch.json"), "utf8")) as Record<"claude" | "split" | "clock", string[]>;
+    };
+    const set = launchOf(join(b.root, "split-launch-set"), "--split-effort", "high", "--split-timeout", "200");
+    expect(after(set.claude, "--effort")).toBe("high");
+    expect(after(set.split, "--timeout")).toBe("200");
+    // two calls of 200 s (an unreadable answer is asked for once more) and a margin of 60
+    expect(set.clock.slice(0, 2)).toEqual(["timeout", "460"]);
+    // the defaults are what they were: low effort, 120 s a call, 300 s around both
+    const byDefault = launchOf(join(b.root, "split-launch-default"));
+    expect(after(byDefault.claude, "--effort")).toBe("low");
+    expect(after(byDefault.split, "--timeout")).toBe("120");
+    expect(byDefault.clock.slice(0, 2)).toEqual(["timeout", "300"]);
+    // a whole number of at least 1, or the run does not start; and the usage names it
+    for (const [v, said] of [["0", "en az 1 olur."], ["uzun", "tam sayi ister (verilen: uzun)."]]) {
+      const bad = fleet(join(b.root, `split-timeout-${v}`), ...ARGS, "--split-timeout", v);
+      expect(bad.code, bad.stdout).toBe(3);
+      expect(bad.stdout.split("\n").find((l) => l.startsWith("!! DUR:")), bad.stdout).toMatch(/--split-timeout/);
+      expect(bad.stdout).toContain(said);
+    }
+    const usage = fleet(join(b.root, "split-timeout-usage"), "--split-timeout", "200").stdout;   // no --q: the usage, then DUR
+    expect(usage.split("\n").find((l) => l.startsWith("kullanim: fleet.sh")) ?? "").toContain("[--split-timeout SN]");
+  }, 180_000);
+
   it("names the sub-questions before the ground, hands them to the hunter through question.txt; --write-only reuses them", () => {
     const run = join(b.root, "split-good");
     const r = fleetWith(GOOD, run, ...ARGS);

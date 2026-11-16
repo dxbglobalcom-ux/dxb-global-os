@@ -23,7 +23,8 @@ S="/home/dxb/DxB Global OS/.agents/skills/dxb-research"; export PATH="$S/bin:$PA
   `bash "$S/fleet/fleet.sh" <outdir> --q "<3-6 words>" [--q "<another phrasing>"] [--dert <his-words.txt>] [--writer-timeout S] [--no-split] [--shape karsilastirma|pazar|profil|karar] [--no-audit]`.
   Its numbers are defaults you set by the question — a hunter's clock `--timeout` (600 s), `--rounds` (3),
   `--claim-cap` (20), `--crowd-cap` (40), `--sub-questions MIN-MAX` (3-6), `--split-effort` and `--audit-effort`
-  (low): how long and how wide a question is worth is your judgement, and no clock ends a run.
+  (low), and each stage's own clock (`--split-timeout`, `--claim-timeout`, `--writer-timeout`): how long and how
+  wide a question is worth is your judgement; no number here is a ceiling.
   It opens the ground, turns it into evidence rows, launches the hunters, counts the crowd, and prints
   the coverage table; its writer step then drafts `answer.md` from the rows (below), two claim rounds
   follow — `karsi` hunts counter-evidence for every verdict-carrying claim, `bosluk` a second source for

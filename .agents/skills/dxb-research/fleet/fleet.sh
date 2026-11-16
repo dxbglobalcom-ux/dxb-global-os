@@ -56,7 +56,7 @@
 #            [--hunters N] [--model NAME] [--timeout S] [--roles a,b,c]
 #            [--rounds N] [--fetch-limit N] [--fetch-workers N] [--allow-tmp] [--no-write]
 #            [--claim-rounds N] [--claim-timeout S] [--claim-cap N] [--no-claim-hunt] [--crowd-cap N] [--no-split]
-#            [--sub-questions MIN-MAX] [--split-effort LEVEL] [--audit-effort LEVEL]
+#            [--sub-questions MIN-MAX] [--split-effort LEVEL] [--split-timeout S] [--audit-effort LEVEL]
 #            [--writer-timeout S] [--no-audit] [--shape karsilastirma|pazar|profil|karar] [--force-memory]
 #   fleet.sh --write-only <run-dir> [--claim-rounds N] [--claim-timeout S] [--claim-cap N] [--no-claim-hunt] [--no-split]
 #            [--writer-timeout S] [--no-audit] [--shape karsilastirma|pazar|profil|karar] [--force-memory]
@@ -96,6 +96,9 @@ FORCE_MEMORY=0
 # The lead's, by the question (2026-11-16): the splitter's and the auditor's level and how many sub-questions a
 # question holds. Empty = the script's own default (low · low · 3-6) — defaults, not fixed levels or a fixed count.
 SPLIT_EFFORT=""; AUDIT_EFFORT=""; SUBQ=""
+# The splitter's clock for one call, in seconds (split.py --timeout, whose own default this is): a call at a higher
+# --split-effort is slower, and one that runs out of time leaves ONE sub-question, the DERT itself.
+SPLIT_TMO=120
 QUERIES=()
 while [ $# -gt 0 ]; do
   case "$1" in
@@ -122,16 +125,17 @@ while [ $# -gt 0 ]; do
     --shape)         SHAPE="${2-}"; SHAPE_GIVEN=1; shift $(( $# > 1 ? 2 : 1 )) ;;
     --force-memory)  FORCE_MEMORY=1; shift ;;
     --split-effort)  SPLIT_EFFORT="${2:?--split-effort bir seviye ister}"; shift 2 ;;
+    --split-timeout) SPLIT_TMO="${2:?--split-timeout bir sayi ister}"; shift 2 ;;
     --audit-effort)  AUDIT_EFFORT="${2:?--audit-effort bir seviye ister}"; shift 2 ;;
     --sub-questions) SUBQ="${2:?--sub-questions EN_AZ-EN_COK ister}"; shift 2 ;;
     *) shift ;;
   esac
 done
-for v in "$ROUNDS" "$FETCH_LIMIT" "$FETCH_WORKERS" "$CLAIM_ROUNDS" "$CLAIM_TMO" "$CLAIM_CAP" "$CROWD_CAP" "$WRITER_TMO"; do
-  case "$v" in ''|*[!0-9]*) echo "!! DUR: --rounds, --fetch-limit, --fetch-workers, --claim-rounds, --claim-timeout, --claim-cap, --crowd-cap ve --writer-timeout tam sayi ister (verilen: $v)." >&2; exit 3 ;; esac
+for v in "$ROUNDS" "$FETCH_LIMIT" "$FETCH_WORKERS" "$CLAIM_ROUNDS" "$CLAIM_TMO" "$CLAIM_CAP" "$CROWD_CAP" "$WRITER_TMO" "$SPLIT_TMO"; do
+  case "$v" in ''|*[!0-9]*) echo "!! DUR: --rounds, --fetch-limit, --fetch-workers, --claim-rounds, --claim-timeout, --claim-cap, --crowd-cap, --writer-timeout ve --split-timeout tam sayi ister (verilen: $v)." >&2; exit 3 ;; esac
 done
-if [ "$ROUNDS" -lt 1 ] || [ "$FETCH_WORKERS" -lt 1 ] || [ "$CLAIM_ROUNDS" -lt 1 ] || [ "$CLAIM_TMO" -lt 1 ] || [ "$CLAIM_CAP" -lt 1 ] || [ "$CROWD_CAP" -lt 1 ] || [ "$WRITER_TMO" -lt 1 ]; then
-  echo "!! DUR: --rounds, --fetch-workers, --claim-rounds, --claim-timeout, --claim-cap, --crowd-cap ve --writer-timeout en az 1 olur." >&2; exit 3
+if [ "$ROUNDS" -lt 1 ] || [ "$FETCH_WORKERS" -lt 1 ] || [ "$CLAIM_ROUNDS" -lt 1 ] || [ "$CLAIM_TMO" -lt 1 ] || [ "$CLAIM_CAP" -lt 1 ] || [ "$CROWD_CAP" -lt 1 ] || [ "$WRITER_TMO" -lt 1 ] || [ "$SPLIT_TMO" -lt 1 ]; then
+  echo "!! DUR: --rounds, --fetch-workers, --claim-rounds, --claim-timeout, --claim-cap, --crowd-cap, --writer-timeout ve --split-timeout en az 1 olur." >&2; exit 3
 fi
 if [ -n "$SUBQ" ]; then
   case "$SUBQ" in
@@ -154,7 +158,7 @@ if [ "$SHAPE_GIVEN" -eq 1 ]; then
   esac
 fi
 if [ -z "$WRITE_ONLY" ] && [ ${#QUERIES[@]} -eq 0 ]; then
-  echo "kullanim: fleet.sh [<kosu-klasoru>|<isim>] --q \"<kisa sorgu>\" [--q ...] [--dert DOSYA] [--hunters N] [--model AD] [--timeout SN] [--roles a,b] [--rounds N] [--fetch-limit N] [--fetch-workers N] [--allow-tmp] [--no-write] [--claim-rounds N] [--claim-timeout SN] [--claim-cap N] [--no-claim-hunt] [--crowd-cap N] [--no-split] [--sub-questions EN_AZ-EN_COK] [--split-effort SEVIYE] [--writer-timeout SN] [--no-audit] [--audit-effort SEVIYE] [--shape TIP] [--force-memory]   ·   fleet.sh --write-only <kosu-klasoru> [--claim-rounds N] [--claim-timeout SN] [--claim-cap N] [--no-claim-hunt] [--no-split] [--writer-timeout SN] [--no-audit] [--shape TIP] [--force-memory]   ·   TIP: karsilastirma | pazar | profil | karar" >&2
+  echo "kullanim: fleet.sh [<kosu-klasoru>|<isim>] --q \"<kisa sorgu>\" [--q ...] [--dert DOSYA] [--hunters N] [--model AD] [--timeout SN] [--roles a,b] [--rounds N] [--fetch-limit N] [--fetch-workers N] [--allow-tmp] [--no-write] [--claim-rounds N] [--claim-timeout SN] [--claim-cap N] [--no-claim-hunt] [--crowd-cap N] [--no-split] [--sub-questions EN_AZ-EN_COK] [--split-effort SEVIYE] [--split-timeout SN] [--writer-timeout SN] [--no-audit] [--audit-effort SEVIYE] [--shape TIP] [--force-memory]   ·   fleet.sh --write-only <kosu-klasoru> [--claim-rounds N] [--claim-timeout SN] [--claim-cap N] [--no-claim-hunt] [--no-split] [--writer-timeout SN] [--no-audit] [--shape TIP] [--force-memory]   ·   TIP: karsilastirma | pazar | profil | karar" >&2
   echo "!! DUR: sorgu yok, filo yok. --q ile birkaç kelimelik sorgu ver." >&2
   exit 3
 fi
@@ -373,7 +377,7 @@ PY
 # ── HIS QUESTION, SPLIT BEFORE THE GROUND OPENS (B56 K3 stage 1) ────────────────────────────────────────────
 # The K2 answer stood in sections of the writer's own choosing: nothing on the page said which part of his
 # question a section answered, and a part no row spoke to was simply not there. So scripts/split.py names the
-# sub-questions his DERT holds (3-6 by default; the lead's --sub-questions) — one claude-opus-5-5 call at low effort (the default; --split-effort), no tools, standing outside the
+# sub-questions his DERT holds (3-6 by default; the lead's --sub-questions) — one claude-opus-5-5 call at low effort (the default; --split-effort) on a clock of 120 s (the default; --split-timeout), no tools, standing outside the
 # repository as every role does — writes <run>/subquestions.json and appends the ALT SORULAR block to
 # question.txt, which every role is handed as it stands: the hunters through $QUESTION (read after this step),
 # the writer and the claim hunters through {{QUESTION}}. The writer gives each sub-question its own section, a
@@ -396,8 +400,9 @@ split_question() {
     [ -n "$WRITE_ONLY" ] || rm -f "$OUT/subquestions.json"
     return 0
   fi
-  # two calls of 120 s at most (an unreadable answer is asked for once more), and a margin
-  timeout 300 python3 "$SKILL/scripts/split.py" "$OUT" "$@" ${SHAPE:+--shape "$SHAPE"} \
+  # two calls of $SPLIT_TMO s at most (an unreadable answer is asked for once more), and a margin of 60 s:
+  # 300 s around both at the default 120
+  timeout $(( 2 * SPLIT_TMO + 60 )) python3 "$SKILL/scripts/split.py" "$OUT" "$@" --timeout "$SPLIT_TMO" ${SHAPE:+--shape "$SHAPE"} \
     ${SPLIT_EFFORT:+--effort "$SPLIT_EFFORT"} ${SUBQ:+--fewest "${SUBQ%-*}" --most "${SUBQ#*-}"} > "$OUT/split.out" 2> "$OUT/split.err"
   rc=$?
   if [ "$rc" -eq 0 ] && grep -q '^alt sorular: ' "$OUT/split.out"; then

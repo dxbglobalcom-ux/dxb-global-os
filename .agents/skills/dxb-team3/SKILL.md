@@ -125,8 +125,9 @@ Fable's quota runs short (§1). His word on the level overrides: "bunu high'da d
   session at high the steps after `effort: medium` ran at medium, the steps after `effort: xhigh` at xhigh.
 - **Before the thinking** <!-- CEO-OK: plan-warning-before-the-thinking-2026-10-12 -->. On each of his messages
   the hook `dxb-effort-warn.py` tells the lead the session's own level and where the level goes down or up; in a
-  session whose own level is not `high`, or is not known, opening the skill of the level the reply needs is the
-  lead's first action, before it thinks about the substance. A plan, a design or an architecture weighed at the
+  session below `high`, or whose level is not known, opening the skill of the level the reply needs is the
+  lead's first action, before it thinks about the substance; in any session a truly complex, important job opens
+  `dxb-effort-xhigh` first, before the thinking. A plan, a design or an architecture weighed at the
   wrong level is the failure this exists for (2026-10-12). A report opens a turn too — a hand's, or a background command's: in a session below `high`,
   or whose level is not known, the hook says then, in one line, that in a dxb-team3 job verifying it is managing
   (measured 2026-11-11: such a turn fell back to `medium`).

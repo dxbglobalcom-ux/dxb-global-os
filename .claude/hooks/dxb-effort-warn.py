@@ -16,9 +16,10 @@ dxb-effort-high, dxb-effort-xhigh. Opening one sets the level of the turn it is 
 background, and the level ends with that turn (measured 2026-11-10 on Claude Code 2.1.322: in a session at
 high the steps after `effort: medium` ran at medium and the steps after `effort: xhigh` at xhigh, in the
 transcript's own record). A hook cannot open a skill, so on each of his messages it tells the lead the
-session's own level and where the level goes down or up; a session whose own level is not high, or is not
-known, is told that opening the skill is its first action (the CEO, 2026-10-12: the level comes before the
-thinking). A message that names a plan, a design or an architecture -- or his permission
+session's own level and where the level goes down or up; a session whose own level is below high, or is not
+known, is told that opening the skill is its first action, and every session that the xhigh skill is opened
+first, before it thinks about the substance (the CEO, 2026-10-12: the level comes before the thinking). A
+session at xhigh or max is never sent down to high. A message that names a plan, a design or an architecture -- or his permission
 mode `plan` -- also tells the lead to open the dxb-team3 door (the CEO, 2026-10-09). A report arriving
 through the prompt -- a prompt that opens with `<task-notification>`: a subagent's, or a background
 command's completion (measured 2026-11-11) -- is not his message and gets none of that text; his own
@@ -107,10 +108,11 @@ USAGE = ("dxb-effort-warn.py takes no argument: the modes plan|plan-max|build|of
 
 def sync(level):
     """What the lead is told on each of his messages: the session works at high, where it goes down and where up,
-    and -- in a session that is not at high -- what to open first."""
+    and -- in a session below high, or whose level is not known -- what to open first."""
     if level:
         runs = f"This session runs at {level}."
-        act = "" if level == "high" else (
+        # only a session below high is lifted: one at xhigh or max is never sent down to high
+        act = "" if level in MANAGING_LEVELS else (
             f"This session's saved level is {level}: for anything but plain talk your first action is "
             "`Skill(\"dxb-effort-high\")`. ")
     else:
@@ -122,8 +124,9 @@ def sync(level):
         f"it and is never asked to (the CEO, 2026-11-10). {runs} "
         "Plain talk -- a simple question, a fact, a reading, a record -- may run at medium: "
         "`Skill(\"dxb-effort-medium\")`. A truly complex, important job's plan or work runs at xhigh: "
-        "`Skill(\"dxb-effort-xhigh\")`. Everything else -- a plan, a design, an architecture, an evaluation that "
-        "carries weight, code, managing a dxb-team3 job -- is high. No code at low; max is not used. "
+        "`Skill(\"dxb-effort-xhigh\")` -- opened first, before you think about the substance. Everything else -- a "
+        "plan, a design, an architecture, an evaluation that carries weight, code (short narrow glue may be written "
+        "at medium: dxb-team3 section 2), managing a dxb-team3 job -- is high. No code at low; max is not used. "
         f"{act}When the level you work at differs from the reply before, open the reply with a few words naming "
         "it and why (\"high: plan\"); otherwise say nothing about effort.")
 

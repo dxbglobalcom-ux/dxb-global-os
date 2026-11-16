@@ -17,26 +17,44 @@ the work, so the hook now informs and nothing more:
     above RED_LINE_PCT carries the handover line into the session's context --
     the number and what a clean break is; the one on which it is first seen at or
     above FINISH_LINE_PCT carries the line that says to finish the piece in hand
-    and hand over. Each is said once: a session first seen past FINISH_LINE_PCT
-    gets that line only. The status line goes on showing the number.
+    and hand over. Each is said once per climb: a session first seen past
+    FINISH_LINE_PCT gets that line only, and a threshold the used context has
+    fallen back below -- after /compact or an automatic compaction -- is
+    forgotten, so the next climb says its line again. The session cannot see
+    the status line; it reads the number with `dxb-ctx --pct`.
   * No tool is denied at any percentage, and no other event is answered.
 
 What was said is kept per session beside the status line's record, in
-<session_id>.gate-said: a JSON list of the thresholds already said. A missing
-or unreadable state file, or one that holds anything else, means not said yet.
-A line whose answer could not be written is not counted as said; a state file
-that cannot be written costs the memory, never the line -- it is said again on
-the next prompt, and the failure is in the .err log.
+<session_id>.gate-said: a JSON list of the thresholds already said. It is read
+only as a regular file, never through a link and never blocking -- a link or a
+FIFO planted under its name is not a record -- and no further than STATE_BYTES.
+A missing or unreadable state file, or one that holds anything but a list of
+the thresholds themselves, means not said yet. It is written whole or not at
+all: a new file beside it, moved over its name. A line whose answer could not
+be written is not counted as said; a state file that cannot be written costs
+the memory, never the line -- it is said again on the next prompt, and the
+failure is in the .err log.
+
+Two prompts of one session decide one after the other: reading the state,
+saying the line and writing the state happen under an exclusive lock on
+<session_id>.gate-lock, so a prompt at 55 % and one at 61 % that overlap leave
+both thresholds recorded and each line said once. A prompt that finds the lock
+still held after LOCK_WAIT_S says nothing -- the one holding it says what is
+due -- and never waits longer. A lock that cannot be taken at all (its file
+cannot be opened, or is not a regular file) costs the order, never the line,
+and the failure is in the .err log. A prompt with nothing to say and nothing to
+forget takes no lock and leaves no file.
 
 The number is the one the CEO reads on the status line: dxb-statusline.js writes
 it for each session to $XDG_RUNTIME_DIR/claude-ctx/<session_id>.json
 (/tmp/claude-ctx/ without XDG_RUNTIME_DIR), field used_pct, and the hook reads
 the record named by the session_id on its stdin -- only an id shaped like the
 ones the status line writes a record for (SESSION_ID), so no path leaves
-claude-ctx. There is no staleness cutoff: context only grows inside a session,
-so an old number is a lower bound and still obliges; after /compact the status
-line rewrites the record on its next render, so the number is never older than
-one render. The record's age in whole seconds is logged, nothing more. No
+claude-ctx. There is no staleness cutoff: the status line rewrites the record
+on every render -- the one after a compaction, where the context falls,
+included -- so the number is never older than one render, and an old record is
+the last number the status line knew and still obliges. The record's age in
+whole seconds is logged, nothing more. No
 record, a record that cannot be read, a used_pct that is not a number (a bool is
 not), a session_id missing or not shaped like the status line's, empty or
 non-object stdin: the hook says nothing and logs nothing.
@@ -50,9 +68,12 @@ nothing on stdout or stderr: it never crashes or blocks a session by failing.
 """
 
 import datetime
+import errno
+import fcntl
 import json
 import os
 import re
+import stat
 import sys
 import time
 import traceback
@@ -73,6 +94,11 @@ DECISION_LOG = os.path.join(LOG_DIR, "dxb-context-gate.jsonl")
 ERROR_LOG = os.path.join(LOG_DIR, "dxb-context-gate.err")
 # The same directory rule as dxb-statusline.js, which writes the record.
 CTX_DIR = os.path.join(os.environ.get("XDG_RUNTIME_DIR") or "/tmp", "claude-ctx")
+# never through a link, never waiting on a FIFO's other end
+NO_LINK_NO_WAIT = os.O_NOFOLLOW | os.O_NONBLOCK
+STATE_BYTES = 64  # the state is a list of two numbers; a longer file is not one the gate wrote
+LOCK_WAIT_S = 0.5  # how long a prompt waits for another prompt of its session before it says nothing
+LOCK_POLL_S = 0.02
 
 
 def red_line(used_pct):
@@ -80,7 +106,7 @@ def red_line(used_pct):
         f"🔴 CONTEXT {used_pct}% — past {RED_LINE_PCT} %: hand over at the first clean break (dxb-team3 §7): "
         "no battery running, tree committed, report sent; then the handover note and the successor "
         "session through operator. The job continues in the successor; nothing is cut. "
-        "Said once; the status line keeps showing the number.")
+        "Said once; `dxb-ctx --pct` prints the number.")
 
 
 def finish_line(used_pct):
@@ -154,24 +180,79 @@ def said_path(session_id):
 
 
 def read_said(session_id):
-    """The thresholds this session was already told, or an empty set: a missing or unreadable state file, or one
-    that holds anything but a list of them, means not said yet."""
+    """The thresholds this session was already told, or an empty set: a missing or unreadable state file, one that
+    is not a regular file (a link, a FIFO), or one that holds anything but a list of the thresholds themselves,
+    means not said yet."""
     try:
-        with open(said_path(session_id), "rb") as state_file:
-            said = json.loads(state_file.read())
+        fd = os.open(said_path(session_id), os.O_RDONLY | NO_LINK_NO_WAIT)
+    except OSError:
+        return set()
+    try:
+        info = os.fstat(fd)
+        if not stat.S_ISREG(info.st_mode) or info.st_size > STATE_BYTES:
+            return set()
+        said = json.loads(os.read(fd, STATE_BYTES))
     except (OSError, ValueError):
         return set()
-    if not isinstance(said, list):
+    finally:
+        os.close(fd)
+    # the whole list or none of it: a known threshold beside anything else is not a record the gate wrote
+    if not isinstance(said, list) or any(type(pct) is not int or pct not in LINES for pct in said):
         return set()
-    return {pct for pct in LINES if pct in said}
+    return set(said)
 
 
 def write_said(session_id, said):
-    # never through a link: this is the one file the hook writes beside the records, and a link planted under
-    # its name must not aim the write at another file
-    fd = os.open(said_path(session_id), os.O_WRONLY | os.O_CREAT | os.O_TRUNC | os.O_NOFOLLOW, 0o600)
-    with os.fdopen(fd, "w", encoding="utf-8") as state_file:
-        state_file.write(json.dumps(sorted(said)))
+    # whole or not at all, and never through a link: the list is written to a new file beside the state (O_EXCL:
+    # nothing planted under that name is opened) and moved over the state's name, which replaces whatever stands
+    # there -- a link, a FIFO -- and follows nothing; a prompt reading meanwhile sees the old list or the new one
+    path = said_path(session_id)
+    tmp = f"{path}.{os.getpid()}.tmp"
+    fd = os.open(tmp, os.O_WRONLY | os.O_CREAT | os.O_EXCL | os.O_NOFOLLOW, 0o600)
+    try:
+        with os.fdopen(fd, "w", encoding="utf-8") as state_file:
+            state_file.write(json.dumps(sorted(said)))
+        os.replace(tmp, path)
+    except OSError:
+        try:
+            os.unlink(tmp)
+        except OSError:
+            pass
+        raise
+
+
+def hold_state(session_id):
+    """An exclusive lock on this session's state, as a descriptor to close when done: who holds it is alone in
+    reading the state, saying a line and writing the state. BlockingIOError when another prompt of the session
+    still holds it after LOCK_WAIT_S -- no prompt waits without an end; another OSError when the lock cannot be
+    taken at all: its file cannot be opened, or is not a regular file."""
+    path = os.path.join(CTX_DIR, f"{session_id}.gate-lock")
+    fd = os.open(path, os.O_RDWR | os.O_CREAT | NO_LINK_NO_WAIT, 0o600)
+    try:
+        if not stat.S_ISREG(os.fstat(fd).st_mode):
+            raise OSError(errno.EINVAL, "the gate's lock is not a regular file", path)
+        give_up = time.monotonic() + LOCK_WAIT_S
+        while True:
+            try:
+                fcntl.flock(fd, fcntl.LOCK_EX | fcntl.LOCK_NB)
+                return fd
+            except BlockingIOError:
+                if time.monotonic() >= give_up:
+                    raise
+                time.sleep(LOCK_POLL_S)
+    except OSError:
+        os.close(fd)
+        raise
+
+
+def decide(said, reached):
+    """(the threshold whose line is due on this prompt, or None; the thresholds remembered after it) for a session
+    told `said` whose used context now stands at or above `reached`."""
+    kept = said & reached  # a threshold the context has fallen back below is forgotten: the next climb says it again
+    if not reached or max(reached) in kept:
+        return None, kept
+    # a session first seen past the higher threshold gets that line only: everything reached counts as said
+    return max(reached), reached
 
 
 def main():
@@ -189,17 +270,29 @@ def main():
         return
     used_pct, record_age_s = found
     reached = {pct for pct in LINES if used_pct >= pct}
-    if not reached:
-        return
     said = read_said(session_id)
-    due = max(reached)  # a session first seen past the higher threshold gets that line only
-    if due in said:
-        return
-    emit("UserPromptSubmit", additionalContext=LINES[due](used_pct))
-    log_decision(data, used_pct, record_age_s, "red-line")
-    # last, and only after the answer was written: a line that did not reach the session is not counted as said,
-    # and a state file that cannot be written costs the memory, never the line
-    write_said(session_id, said | reached)
+    if decide(said, reached) == (None, said):
+        return  # nothing to say and nothing to forget: no lock is taken and no file is left
+    try:
+        lock = hold_state(session_id)
+    except BlockingIOError:
+        return  # another prompt of this session is deciding right now: it says what is due, this one adds nothing
+    except OSError:
+        log_error()  # no lock to take: the line is still said -- unordered, as before there was a lock
+        lock = None
+    try:
+        said = read_said(session_id)  # again, now that no other prompt of the session can change it
+        due, remembered = decide(said, reached)
+        if due is not None:
+            emit("UserPromptSubmit", additionalContext=LINES[due](used_pct))
+            log_decision(data, used_pct, record_age_s, "red-line")
+        # last, and only after the answer was written: a line that did not reach the session is not counted as
+        # said, and a state file that cannot be written costs the memory, never the line
+        if remembered != said:
+            write_said(session_id, remembered)
+    finally:
+        if lock is not None:
+            os.close(lock)  # which lets the lock go
 
 
 if __name__ == "__main__":

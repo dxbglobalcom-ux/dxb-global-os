@@ -104,14 +104,24 @@ def main() -> int:
             "What the clock NEVER waives: a citation not in the ledger, a quote whose hash does "
             "not recompute, a dead URL, a vendor-only claim.",
         ]
-    if blocks >= res["max_blocks"] - 1 or res["regime"] == "converge":
+    if res["honest_exit"] and res["gaps_written"]:
+        # the exit is open and still refused: what is listed is no longer research
+        lines += [
+            "",
+            "GAPS.md is written, so the gate asks for no more work that adds scope. What is "
+            "listed above is all that stands between this run and its end, and a GAPS.md waives "
+            "none of it: each line is closed by writing the truth — a label, an id named in "
+            "GAPS.md, a claim withdrawn — or is an integrity failure that nothing waives. Then "
+            "answer him with what you DID measure and close the run: scripts/research.py close",
+        ]
+    elif blocks >= res["max_blocks"] - 1 or res["regime"] == "converge":
         lines += [
             "",
             "The clock does not end this run — you do, when going on would add nothing. "
             "If the evidence genuinely is not there, that is a legitimate ending — write "
-            f"runs/{run_id}/GAPS.md naming every channel not reached and every question left "
-            "open, then answer him with what you DID measure and close the run: "
-            f"scripts/research.py close",
+            f"runs/{run_id}/GAPS.md naming every channel not reached, every question left "
+            "open and, by its id, every claim left untested or withdrawn, then answer him "
+            "with what you DID measure and close the run: scripts/research.py close",
         ]
 
     return out({"decision": "block", "reason": "\n".join(lines)})

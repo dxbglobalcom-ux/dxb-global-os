@@ -28,7 +28,9 @@ argument it makes about itself:
                               contradiction search may pass by being DECLARED
                               instead: labelled UNPROVEN and named in GAPS.md.
                               From here the honest exit is open — a written
-                              GAPS.md ends the run when the LEAD judges it.
+                              GAPS.md ends the run when the LEAD judges it:
+                              it ends the demand for more WORK, and for
+                              nothing else (HONESTY, below).
 
 THE CLOCK NEVER STOPS A RUN (the CEO's word, 2026-11-16). There was a third regime,
 `closing`, entered at `max_seconds` (18 minutes): the clock alone dropped every
@@ -40,6 +42,12 @@ INTEGRITY never expires. A fabricated citation, a quote whose hash does not
 recompute, a dead URL, a claim resting only on the vendor's own page, a gate
 rewritten mid-run — none of these are waived by any budget.
 Running out of time is not a licence to lie.
+
+HONESTY is not waived by the lead's exit either. An untested load-bearing claim,
+a claim with no label, a withdrawn claim, a page no door opened: the run meets
+each by WRITING THE TRUTH — a label, an id named in GAPS.md — so a GAPS.md that
+is silent about them does not end the run. Only the block budget lets them go:
+it is the valve that never traps a run.
 """
 from __future__ import annotations
 
@@ -65,6 +73,25 @@ INTEGRITY = ("H1 ", "H9 ", "H10 ", "H11 ", "H13 ", "H14 ", "H18 ")
 
 def is_integrity(msg: str) -> bool:
     return msg.startswith(INTEGRITY)
+
+
+# Checks the LEAD's exit — past the converge point, GAPS.md written — does not waive
+# either. They ask for no more research: a run meets each by writing the truth.
+#   H12  an untested load-bearing claim   → label it UNPROVEN and name it in GAPS.md
+#   H15  a load-bearing claim, no label   → label it
+#   H16  pages that defeated every door   → a GAPS.md (the check reads no more than
+#        that it is there, so in this exit it is always met; it stands here for the
+#        day it reads the names)
+#   H19  a withdrawn claim                → name it in GAPS.md
+# Measured 2026-11-16 by the blind audit of 866711c1: the exit kept INTEGRITY alone,
+# so at second 601 an untested claim beside a GAPS.md that named something else
+# passed — what `closing` had allowed only at minute 18. A spent block budget still
+# keeps INTEGRITY alone: that exit may ask for nothing a run could fail to give.
+HONESTY = ("H12 ", "H15 ", "H16 ", "H19 ")
+
+
+def is_honesty(msg: str) -> bool:
+    return msg.startswith(HONESTY)
 
 
 # ------------------------------------------------------------------ config
@@ -109,8 +136,8 @@ def _saturated(run_id: str, rules: dict) -> tuple[bool, str]:
     return False, f"last {k} queries still producing {len(new_in_window)} new clusters (>= {x})"
 
 
-def check_expedition(run_id: str, st: dict) -> tuple[list[str], list[str], dict]:
-    """Returns (failures, todo-commands, facts)."""
+def check_expedition(run_id: str, st: dict) -> tuple[list[str], list[tuple[str, str]], dict]:
+    """Returns (failures, todo-commands — each beside the failure it answers, facts)."""
     rules = class_rules(st.get("question_class", "factual"))
     rows = rlib.ledger(run_id)
     # a walled page is recorded but never counted — see rlib.looks_like_wall
@@ -118,12 +145,13 @@ def check_expedition(run_id: str, st: dict) -> tuple[list[str], list[str], dict]
     ind = independence.report(run_id)
     clusters = ind["clusters"]
     fails: list[str] = []
-    todo: list[str] = []
+    todo: list[tuple[str, str]] = []
 
     lock = rlib.run_dir(run_id) / "question_lock.json"
     if not lock.exists():
         fails.append("H1 question_lock.json is missing — the question was never locked")
-        todo.append("scripts/research.py open --question '<his words, verbatim>' --class <class>")
+        todo.append((fails[-1],
+                     "scripts/research.py open --question '<his words, verbatim>' --class <class>"))
 
     need_rows = int(rules.get("min_evidence_rows", 6))
     if len(ev) < need_rows:
@@ -145,14 +173,16 @@ def check_expedition(run_id: str, st: dict) -> tuple[list[str], list[str], dict]
         if have < needed:
             fails.append(f"H2 required evidence type '{group}' present {have}x, needs {needed}x")
             if "first-hand" in alts:
-                todo.append("open the human channels and record a PERSON's own words: "
-                            "reddit · twitter · hackernews · stackoverflow · youtube (and the CN "
-                            "channels when the subject has a Chinese community)")
+                todo.append((fails[-1],
+                             "open the human channels and record a PERSON's own words: "
+                             "reddit · twitter · hackernews · stackoverflow · youtube (and the CN "
+                             "channels when the subject has a Chinese community)"))
             elif "primary-doc" in alts or "code" in alts:
-                todo.append("fetch the official doc / the source code / the release notes / "
-                            "the issue tracker, and record the passage")
+                todo.append((fails[-1],
+                             "fetch the official doc / the source code / the release notes / "
+                             "the issue tracker, and record the passage"))
             else:
-                todo.append(f"record a row of type {group}")
+                todo.append((fails[-1], f"record a row of type {group}"))
 
     nfh = sum(1 for t in present if t == "first-hand")
     need_fh = int(rules.get("min_first_hand", 0))
@@ -165,16 +195,18 @@ def check_expedition(run_id: str, st: dict) -> tuple[list[str], list[str], dict]
         top = next(iter(ind["cluster_share_by_channel"]), "?")
         fails.append(f"H5 channel '{top}' supplies {share:.0%} of clusters (> {cap:.0%}) — "
                      f"one door is not research")
-        todo.append("spread across the other doors: parallel · tavily · firecrawl · youcom · "
-                    "google · WebSearch · opencli adapters")
+        todo.append((fails[-1],
+                     "spread across the other doors: parallel · tavily · firecrawl · youcom · "
+                     "google · WebSearch · opencli adapters"))
 
     if rules.get("requires_denominator"):
         dens = rlib.read_jsonl(rlib.run_dir(run_id) / "denominators.jsonl")
         if not dens:
             fails.append("H7 this is a COUNTING question and no denominator was measured — "
                          "three angry posts prove three people are angry")
-            todo.append("scripts/research.py denominator --measure 'community members' "
-                        "--value <N> --source <ledger id>")
+            todo.append((fails[-1],
+                         "scripts/research.py denominator --measure 'community members' "
+                         "--value <N> --source <ledger id>"))
 
     # H18 — THE GATE WATCHES ITSELF. A run whose enforcement files changed under it
     # is not a gated run any more, whatever the rest of the checks say.
@@ -184,8 +216,9 @@ def check_expedition(run_id: str, st: dict) -> tuple[list[str], list[str], dict]
                      + " · ".join(drift) + ". A gate that can be rewritten mid-run is "
                      "not a gate. Close this run, then change the engine, then open a "
                      "new run.")
-        todo.append("close or abandon this run before editing the engine: "
-                    "scripts/research.py close --force  (then re-open)")
+        todo.append((fails[-1],
+                     "close or abandon this run before editing the engine: "
+                     "scripts/research.py close --force  (then re-open)"))
 
     # H16 — a page that defeated EVERY door in the reading chain is a real hole. It may
     # stay unread; it may not stay unmentioned. This is the "silent hole" rule with teeth.
@@ -195,8 +228,9 @@ def check_expedition(run_id: str, st: dict) -> tuple[list[str], list[str], dict]
     if shut and not (gaps_f.exists() and gaps_f.read_text().strip()):
         fails.append(f"H16 {len(shut)} page(s) defeated every door in the reading chain and "
                      f"no GAPS.md names them — a hole may stay open, never silent")
-        todo.append(f"write runs/{run_id}/GAPS.md listing the pages that stayed shut "
-                    f"(scripts/coverage.py prints them with the doors that were tried)")
+        todo.append((fails[-1],
+                     f"write runs/{run_id}/GAPS.md listing the pages that stayed shut "
+                     f"(scripts/coverage.py prints them with the doors that were tried)"))
 
     sat, why = _saturated(run_id, rules)
     if not sat:
@@ -236,13 +270,14 @@ def _declared(c: dict, gaps: str) -> bool:
 
 
 def check_report(run_id: str, st: dict,
-                 regime: str = "expand") -> tuple[list[str], list[str], dict]:
+                 regime: str = "expand") -> tuple[list[str], list[tuple[str, str]], dict]:
     claims_p = rlib.run_dir(run_id) / "claims.json"
     fails: list[str] = []
-    todo: list[str] = []
+    todo: list[tuple[str, str]] = []
     if not claims_p.exists():
-        return ["H9 claims.json is missing — nothing to check the report against"], [
-            "write runs/<id>/claims.json: [{id, text, cites:[L...], type, confidence}]"], {}
+        fails.append("H9 claims.json is missing — nothing to check the report against")
+        return fails, [(fails[-1],
+                        "write runs/<id>/claims.json: [{id, text, cites:[L...], type, confidence}]")], {}
     try:
         claims = json.loads(claims_p.read_text())
     except Exception as e:
@@ -266,7 +301,8 @@ def check_report(run_id: str, st: dict,
         if not re.search(r"\b" + re.escape(cid) + r"\b", gaps):
             fails.append(f"H19 claim {cid} was WITHDRAWN and GAPS.md does not name it — "
                          f"a pulled claim is a hole, and a hole may stay open but never silent")
-            todo.append(f"name {cid} in runs/{run_id}/GAPS.md: what it claimed, and why it was pulled")
+            todo.append((fails[-1],
+                         f"name {cid} in runs/{run_id}/GAPS.md: what it claimed, and why it was pulled"))
 
     for c in claims:
         cid = c.get("id", "?")
@@ -287,9 +323,10 @@ def check_report(run_id: str, st: dict,
                 # That is legitimate, and it has to be DECLARED on the row rather than
                 # inferred by the gate — otherwise every dead link becomes an excuse.
                 fails.append(f"H11 claim {cid} cites {rid_}, whose URL is DEAD")
-                todo.append(f"either drop {rid_} from {cid}, or — if the page's "
-                            f"NON-existence is the finding — re-record it with "
-                            f"ledger.py add --evidence-of-absence")
+                todo.append((fails[-1],
+                             f"either drop {rid_} from {cid}, or — if the page's "
+                             f"NON-existence is the finding — re-record it with "
+                             f"ledger.py add --evidence-of-absence"))
         cited = [rows[i] for i in cites if i in rows]
         if cited and all(r.get("kind") == "discovery" for r in cited):
             fails.append(f"H13 claim {cid} rests only on search HEADLINES — no page was read")
@@ -298,16 +335,18 @@ def check_report(run_id: str, st: dict,
             # A claim ABOUT a vendor page ("this is marketing, it cannot carry the
             # verdict") legitimately rests on that page. Declared, not assumed.
             fails.append(f"H14 claim {cid} rests only on the vendor's own pages")
-            todo.append(f"either add an independent source to {cid}, or mark it "
-                        f'"about_the_source": true if the claim is ABOUT that page')
+            todo.append((fails[-1],
+                         f"either add an independent source to {cid}, or mark it "
+                         f'"about_the_source": true if the claim is ABOUT that page'))
         if c.get("load_bearing") and cid not in contra_for and not (
                 may_declare and _declared(c, gaps)):
             fails.append(f"H12 load-bearing claim {cid} had no contradiction search"
                          + ("" if not may_declare else
                             " — past the converge point you may instead label it UNPROVEN "
                             "and name it in GAPS.md"))
-            todo.append(f"search the NEGATION of {cid} and log it: scripts/research.py contradict "
-                        f"--claim {cid} --query '<the opposite>'")
+            todo.append((fails[-1],
+                         f"search the NEGATION of {cid} and log it: scripts/research.py contradict "
+                         f"--claim {cid} --query '<the opposite>'"))
         if c.get("load_bearing") and c.get("confidence") not in ("PROVEN", "LIKELY", "UNPROVEN"):
             fails.append(f"H15 load-bearing claim {cid} carries no PROVEN/LIKELY/UNPROVEN label")
 
@@ -364,20 +403,22 @@ def evaluate(run_id: str) -> dict:
     # budget is spent (the gate has refused max_blocks times — it never traps a run),
     # or the run is past its converge point AND the lead has written GAPS.md — the
     # lead's own judgement that the run ends here.
-    honest_exit = blocks >= max_blocks or (regime == "converge" and gaps_ok)
+    budget_spent = blocks >= max_blocks
+    honest_exit = budget_spent or (regime == "converge" and gaps_ok)
     if honest_exit:
         # Stop demanding work; demand honesty instead — but INTEGRITY is not work and
         # is never waived. Before 2026-09-16 this line dropped the whole failure list,
-        # fabricated citations included.
-        kept = [f for f in fails if is_integrity(f)]
+        # fabricated citations included. The lead's exit keeps HONESTY too; the spent
+        # budget does not — it is the valve.
+        kept = [f for f in fails if is_integrity(f) or (is_honesty(f) and not budget_spent)]
+        # a step of a waived check is work the gate no longer asks for: it goes with it
+        todo = [(failure, step) for failure, step in todo if failure in kept]
         if not gaps_ok:
             kept.append("BUDGET SPENT and there is no GAPS.md — stopping early is legal, "
                         "stopping early in silence is not")
-            todo = ["write runs/%s/GAPS.md naming every channel not reached, every question "
-                    "left open, and every contradiction left standing" % run_id] + todo
+            todo = [(kept[-1], "write runs/%s/GAPS.md naming every channel not reached, every question "
+                               "left open, and every contradiction left standing" % run_id)] + todo
         fails = kept
-        if not kept:
-            todo = []
 
     # RECORD vs GATED — the CEO's order of 2026-09-16. Most questions open no run at all,
     # so this gate never runs for them. When he DID say "kaydet", the run is RECORD: the
@@ -392,8 +433,8 @@ def evaluate(run_id: str) -> dict:
     return {
         "run": run_id, "phase": phase, "class": st.get("question_class"), "mode": mode,
         "blocks": blocks, "max_blocks": max_blocks, "honest_exit": honest_exit,
-        "regime": regime, "elapsed_s": int(elapsed), "converge_at_s": int(soft),
-        "hard_failures": fails, "advisory": advisory, "todo": todo, "facts": facts,
+        "regime": regime, "elapsed_s": int(elapsed), "converge_at_s": int(soft), "gaps_written": gaps_ok,
+        "hard_failures": fails, "advisory": advisory, "todo": [step for _failure, step in todo], "facts": facts,
         "declared": DECLARED, "pass": not fails,
     }
 

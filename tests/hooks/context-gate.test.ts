@@ -3,14 +3,19 @@
 // 50 % of its context a session hands over at the first clean break; on his word of 2026-09-26
 // ("tmm önerini uygula.") a hook holds them. Since 2026-11-16 the hook only informs (his word of
 // 2026-11-10: the meter shows, it does not stop): it says its line once at 50 % and once at 60 %, not on
-// every prompt, and refuses no tool -- until then it refused the Agent tool from 60 %. The hook lives
+// every prompt, and refuses no tool -- until then it refused the Agent tool from 60 %. A threshold the context
+// has fallen back below (a compaction) is forgotten, so each climb says its line once; two prompts of one
+// session decide one after the other, under the session's lock; the state is read only as a regular file,
+// never through a link and never blocking (the blind audit of 90a0f96e, 2026-11-16). The hook lives
 // outside the repository, in ~/.claude/hooks, and is spawned there with sample stdin: never a copy
 // of its logic. Every case gets its own temporary directory
 // as XDG_RUNTIME_DIR (where the status line keeps each session's context record, and the gate what it
 // has already said) and as the gate's
 // log directory, so nothing lands in the machine's own claude-ctx or ~/.claude/logs.
-import { spawnSync } from "node:child_process";
-import { accessSync, constants, existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, utimesSync, writeFileSync } from "node:fs";
+import { spawn, spawnSync } from "node:child_process";
+import {
+  accessSync, constants, existsSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, rmSync, statSync, utimesSync, writeFileSync,
+} from "node:fs";
 import { tmpdir, userInfo } from "node:os";
 import { join } from "node:path";
 import { afterAll, describe as vdescribe, expect, it } from "vitest";
@@ -54,6 +59,10 @@ function box(): string {
 const recordPath = (dir: string, sid: string) => join(dir, "claude-ctx", `${sid}.json`);
 /** where the gate keeps the thresholds it has already said to a session */
 const saidPath = (dir: string, sid: string) => join(dir, "claude-ctx", `${sid}.gate-said`);
+/** the thresholds the gate remembers having said to a session */
+const remembered = (dir: string, sid: string): unknown => JSON.parse(readFileSync(saidPath(dir, sid), "utf8"));
+/** the file two prompts of one session take turns on */
+const lockPath = (dir: string, sid: string) => join(dir, "claude-ctx", `${sid}.gate-lock`);
 
 /** a context record in the shape the status line writes; `ageS` sets its mtime that many seconds back */
 function record(dir: string, sid: string, used_pct: unknown, ageS?: number): void {
@@ -84,6 +93,10 @@ const ERR = (dir: string) => join(dir, "logs", "dxb-context-gate.err");
 const gateEnv = (dir: string) =>
   ({ ...process.env, XDG_RUNTIME_DIR: dir, DXB_CONTEXT_GATE_LOG_DIR: join(dir, "logs"), PYTHONDONTWRITEBYTECODE: "1" });
 
+/** a gate that blocks (a FIFO opened for reading, a lock waited on without an end) fails its case instead of
+ *  hanging the suite: every spawn here carries this limit */
+const LIMIT_MS = 10_000;
+
 /** runs the real gate; exit 0, a clean stderr and no traceback in the .err log are part of every
  *  answer — no case here feeds invalid JSON on stdin, the one input that is a failure, not silence */
 function gate(dir: string, input: unknown): string {
@@ -91,7 +104,9 @@ function gate(dir: string, input: unknown): string {
     input: typeof input === "string" ? input : JSON.stringify(input),
     encoding: "utf8",
     env: gateEnv(dir),
+    timeout: LIMIT_MS,
   });
+  expect(r.error, "the gate did not finish in time").toBeUndefined();
   expect(r.status, r.stderr).toBe(0);
   expect(r.stderr).toBe("");
   expect(existsSync(ERR(dir)), existsSync(ERR(dir)) ? readFileSync(ERR(dir), "utf8") : "").toBe(false);
@@ -101,7 +116,8 @@ function gate(dir: string, input: unknown): string {
 /** runs the real gate where its state file cannot be written: the failure belongs in the .err log, and exit 0
  *  and a clean stderr still hold */
 function gateWithBrokenState(dir: string, input: unknown): string {
-  const r = spawnSync("python3", [GATE], { input: JSON.stringify(input), encoding: "utf8", env: gateEnv(dir) });
+  const r = spawnSync("python3", [GATE], { input: JSON.stringify(input), encoding: "utf8", env: gateEnv(dir), timeout: LIMIT_MS });
+  expect(r.error, "the gate did not finish in time").toBeUndefined();
   expect(r.status, r.stderr).toBe(0);
   expect(r.stderr).toBe("");
   return r.stdout;
@@ -121,12 +137,29 @@ function said(out: string): string {
 const redLine = (pct: number) =>
   `🔴 CONTEXT ${pct}% — past 50 %: hand over at the first clean break (dxb-team3 §7): no battery running, tree `
   + "committed, report sent; then the handover note and the successor session through operator. The job continues "
-  + "in the successor; nothing is cut. Said once; the status line keeps showing the number.";
+  + "in the successor; nothing is cut. Said once; `dxb-ctx --pct` prints the number.";
 
 /** the line said once from 60 %, word for word */
 const finishLine = (pct: number) =>
   `🔴 CONTEXT ${pct}% — past 60 %: finish the piece in hand well and hand over at this clean break (dxb-team3 §7). `
   + "The clean break and the quality decide, not the number; you judge it. Said once.";
+
+/** takes the session's lock as a prompt of it still deciding would, and holds it until the returned function is
+ *  called; the holder ends by itself after the limit, so a failing case leaves no process behind */
+async function holdLock(dir: string, sid: string): Promise<() => Promise<void>> {
+  const code = "import fcntl, os, sys\n"
+    + "fd = os.open(sys.argv[1], os.O_RDWR | os.O_CREAT, 0o600)\n"
+    + "fcntl.flock(fd, fcntl.LOCK_EX)\n"
+    + "print('held', flush=True)\n"
+    + "sys.stdin.read()\n";
+  const holder = spawn("python3", ["-c", code, lockPath(dir, sid)], { stdio: ["pipe", "pipe", "inherit"], timeout: 3 * LIMIT_MS });
+  const gone = new Promise<void>((done) => { holder.on("close", () => done()); });
+  await new Promise<void>((held, failed) => {
+    holder.stdout.once("data", () => held());
+    holder.once("close", () => failed(new Error("the lock's holder ended before it held the lock")));
+  });
+  return async () => { holder.stdin.end(); await gone; };
+}
 
 describe("under 50 % the gate is silent; its line is said once at 50 % and once at 60 %, not on every prompt", () => {
   it("says nothing and logs nothing when the session has no record", () => {
@@ -143,6 +176,8 @@ describe("under 50 % the gate is silent; its line is said once at 50 % and once 
     expect(gate(dir, pre(SID, "Agent", SPAWN))).toBe("");
     expect(existsSync(LOG(dir))).toBe(false);
     expect(existsSync(saidPath(dir, SID))).toBe(false);
+    // a session that never reached a threshold leaves nothing beside its record, a lock neither
+    expect(readdirSync(join(dir, "claude-ctx"))).toEqual([`${SID}.json`]);
   });
   it("at 50: the line once — the next prompt, and one at 55, carry nothing — and exactly one line logged", () => {
     const dir = box();
@@ -187,6 +222,93 @@ describe("under 50 % the gate is silent; its line is said once at 50 % and once 
     record(dir, SID, 61, 2 * HOUR);
     expect(said(gate(dir, prompt(SID)))).toBe(finishLine(61));
     expect(logged(dir)[0].record_age_s).toBeGreaterThanOrEqual(7000);
+  });
+  it("what it leaves beside the record is its state and its lock: the state whole, no temporary file", () => {
+    const dir = box();
+    record(dir, SID, 50);
+    gate(dir, prompt(SID));
+    expect(readdirSync(join(dir, "claude-ctx")).sort()).toEqual([`${SID}.gate-lock`, `${SID}.gate-said`, `${SID}.json`]);
+    expect(readFileSync(saidPath(dir, SID), "utf8")).toBe("[50]");
+  });
+});
+
+// The second auditor's finding, 2026-11-16: the state was never cleared, so after /compact or an automatic
+// compaction the number fell, climbed again, and nothing was said the second time.
+describe("a threshold the context has fallen back below is forgotten: each climb says its line once", () => {
+  it("told at 72, down to 55: nothing is said and only 50 is remembered; up to 61 again: the 60 line again", () => {
+    const dir = box();
+    record(dir, SID, 72);
+    expect(said(gate(dir, prompt(SID)))).toBe(finishLine(72));
+    expect(remembered(dir, SID)).toEqual([50, 60]);
+    record(dir, SID, 55);
+    expect(gate(dir, prompt(SID))).toBe("");
+    expect(remembered(dir, SID)).toEqual([50]);
+    record(dir, SID, 61);
+    expect(said(gate(dir, prompt(SID)))).toBe(finishLine(61));
+    expect(gate(dir, prompt(SID))).toBe("");
+  });
+  it("told both, down to 45: the state is empty again; the next climb says the 50 line, then the 60 line", () => {
+    const dir = box();
+    record(dir, SID, 45);
+    writeFileSync(saidPath(dir, SID), "[50, 60]");
+    expect(gate(dir, prompt(SID))).toBe("");
+    expect(remembered(dir, SID)).toEqual([]);
+    record(dir, SID, 55);
+    expect(said(gate(dir, prompt(SID)))).toBe(redLine(55));
+    expect(gate(dir, prompt(SID))).toBe("");
+    record(dir, SID, 61);
+    expect(said(gate(dir, prompt(SID)))).toBe(finishLine(61));
+    expect(logged(dir).map((l) => l.used_pct)).toEqual([55, 61]);
+  });
+});
+
+// Sol's finding B, 2026-11-16: read, say and write were not ordered between two prompts of one session — a
+// prompt at 55 and one at 61 overlapping could leave [50], and the 60 line was said again.
+describe("two prompts of one session decide one after the other", () => {
+  it("while a prompt at 55 still holds the session's lock, one at 61 says nothing, returns in time and loses nothing; after it both thresholds are recorded", async () => {
+    const dir = box();
+    record(dir, SID, 55);
+    expect(said(gate(dir, prompt(SID)))).toBe(redLine(55));
+    const release = await holdLock(dir, SID);
+    let waitedMs = 0;
+    try {
+      record(dir, SID, 61);
+      const started = Date.now();
+      expect(gate(dir, prompt(SID))).toBe("");
+      waitedMs = Date.now() - started;
+      expect(remembered(dir, SID)).toEqual([50]);
+    } finally {
+      await release();
+    }
+    // a short, bounded wait for the lock — far from the limit that would fail the spawn
+    expect(waitedMs).toBeLessThan(3000);
+    expect(said(gate(dir, prompt(SID)))).toBe(finishLine(61));
+    expect(remembered(dir, SID)).toEqual([50, 60]);
+    expect(gate(dir, prompt(SID))).toBe("");
+    expect(logged(dir).map((l) => l.used_pct)).toEqual([55, 61]);
+  });
+  it("another session's lock does not hold this one back", async () => {
+    const dir = box();
+    record(dir, SID, 55);
+    const release = await holdLock(dir, OTHER);
+    try {
+      expect(said(gate(dir, prompt(SID)))).toBe(redLine(55));
+    } finally {
+      await release();
+    }
+  });
+  it("a lock that cannot be taken at all — a directory or a FIFO under its name — costs the order, never the line: said, remembered, the failure in the .err log", () => {
+    for (const [what, plant] of [
+      ["a directory", (file: string) => mkdirSync(file)],
+      ["a FIFO", (file: string) => expect(spawnSync("mkfifo", [file], { timeout: LIMIT_MS }).status).toBe(0)],
+    ] as const) {
+      const dir = box();
+      record(dir, SID, 55);
+      plant(lockPath(dir, SID));
+      expect(said(gateWithBrokenState(dir, prompt(SID))), what).toBe(redLine(55));
+      expect(readFileSync(ERR(dir), "utf8"), what).toContain("Error");
+      expect(gateWithBrokenState(dir, prompt(SID)), what).toBe("");
+    }
   });
 });
 
@@ -259,13 +381,17 @@ describe("the gate never breaks a session: what it cannot read is silent, not a 
       input: JSON.stringify(prompt(SID)),
       encoding: "utf8",
       env: gateEnv(dir),
+      timeout: LIMIT_MS,
     });
     expect(r.status, r.stderr).toBe(0);
     expect(r.stderr).toBe("");
     expect(existsSync(saidPath(dir, SID))).toBe(false);
   });
   it("a state file that cannot be understood means not said yet: the line is said, and then remembered", () => {
-    for (const garbage of ["{", "", '{"50": true}', '"50"', "[true, \"50\", 7, [50]]", "\u0000\u0001"]) {
+    // the whole list counts or none of it: a known threshold beside anything else is not a record (Sol's B), and
+    // neither is a list longer than the gate ever writes
+    for (const garbage of ["{", "", '{"50": true}', '"50"', "[true, \"50\", 7, [50]]", "\u0000\u0001",
+      '[50, "garbage"]', "[50, 70]", "[50.0]", `[50${" ".repeat(300)}]`]) {
       const dir = box();
       record(dir, SID, 55);
       writeFileSync(saidPath(dir, SID), garbage);
@@ -286,9 +412,26 @@ describe("the gate never breaks a session: what it cannot read is silent, not a 
     record(dir, SID, 55);
     const elsewhere = join(dir, "elsewhere.txt");
     writeFileSync(elsewhere, "not the gate's");
-    expect(spawnSync("ln", ["-s", elsewhere, saidPath(dir, SID)]).status).toBe(0);
+    expect(spawnSync("ln", ["-s", elsewhere, saidPath(dir, SID)], { timeout: LIMIT_MS }).status).toBe(0);
     expect(said(gateWithBrokenState(dir, prompt(SID)))).toBe(redLine(55));
     expect(readFileSync(elsewhere, "utf8")).toBe("not the gate's");
+  });
+  it("a link under the state file's name is not read through either: a list the gate would trust, behind a link, is not a record", () => {
+    const dir = box();
+    record(dir, SID, 55);
+    const elsewhere = join(dir, "elsewhere.json");
+    writeFileSync(elsewhere, "[50, 60]");
+    expect(spawnSync("ln", ["-s", elsewhere, saidPath(dir, SID)], { timeout: LIMIT_MS }).status).toBe(0);
+    expect(said(gate(dir, prompt(SID)))).toBe(redLine(55));
+    expect(readFileSync(elsewhere, "utf8")).toBe("[50, 60]");
+  });
+  it("a FIFO planted under the state file's name does not block the prompt: the line is said in the gate's normal time, and the state takes its place (Sol's A)", () => {
+    const dir = box();
+    record(dir, SID, 55);
+    expect(spawnSync("mkfifo", [saidPath(dir, SID)], { timeout: LIMIT_MS }).status).toBe(0);
+    expect(said(gate(dir, prompt(SID)))).toBe(redLine(55));
+    expect(statSync(saidPath(dir, SID)).isFile()).toBe(true);
+    expect(gate(dir, prompt(SID))).toBe("");
   });
 });
 
@@ -305,6 +448,7 @@ describe("the status line and the gate read the same record", () => {
       }),
       encoding: "utf8",
       env,
+      timeout: LIMIT_MS,
     });
     expect(r.status, r.stderr).toBe(0);
   }

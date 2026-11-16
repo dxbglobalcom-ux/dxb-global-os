@@ -29,7 +29,7 @@ Her çalışan dosyası iki bölümdür:
 
 ## Kurallar
 
-- **Yazarlık:** TÜM personalar Fable 5 bizzat yazar (CEO K2). İskelet siciller mekaniktir
+- **Yazarlık:** TÜM personaları tek sorumlu yazar — inşaat oturumunu yöneten başmühendis — imzalar; taslağı onun brifiyle bir Fable yazım koltuğu çıkarabilir, her satırı o okur (CEO K2; 2026-11-16). İskelet siciller mekaniktir
   (`scripts/gen-workforce-dossiers.sh`), kişilik yazmaz.
 - **Eski ajans ham maddesi SALT REFERANSTIR** (CEO emriyle repo dışına arşivlendi:
   `~/dxb-archive/agency-agents-20260711.tar.gz`). Metni hiçbir kadro dosyasına gömülemez,

@@ -15,7 +15,9 @@
 #   (a fresh contradiction search for a claim written after the first one). What
 #   it demands instead is honesty — label the untested claim UNPROVEN and name it in
 #   GAPS.md, or withdraw it — and from there a written GAPS.md ends the run whenever
-#   the lead judges that going on adds nothing. Integrity checks (a fabricated
+#   the lead judges that going on adds nothing: it ends the demand for more WORK;
+#   the honesty checks (an untested or unlabelled load-bearing claim, a withdrawn
+#   claim not named — H12, H15, H19) still stand, as gate.py's HONESTY says. Integrity checks (a fabricated
 #   citation, a quote whose hash does not recompute, a dead URL, a vendor-only claim)
 #   are NEVER waived by the clock — running out of time is not a licence to lie.
 #
