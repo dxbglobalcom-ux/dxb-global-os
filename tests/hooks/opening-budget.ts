@@ -27,8 +27,8 @@ export const C = {
   skillsDir: ".claude/skills",
   /** outside the repository — measured and reported, never budgeted here */
   globalSkillsDir: join(homedir(), ".claude", "skills"),
-  /** R1 — measured 12,058 */
-  maxCore: 13000,
+  /** R1 — measured 12,058; raised 1 % on his word 2026-11-16: a rule is not squeezed to fit the count */
+  maxCore: 13130,
   /** R2 — frontmatter name + description of every project SKILL.md; measured 4,193 over 12 skills */
   maxSkills: 5000,
   /** R4 — core + project skills + the position block the hook delivers; measured 24,128 */
