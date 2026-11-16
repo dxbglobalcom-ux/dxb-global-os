@@ -136,7 +136,7 @@ The dividing line is **not** cost and **not** code-versus-text. It is a single q
 
 | Tier | What belongs here | Model (the B64 guide, A-2026-10-14 item 1; live rows move at build) |
 |------|-------------------|-------------|
-| **L1** | strategy · decisions · money · QA and halal screening (the halal verdict is the CEO's alone <!-- CEO-OK: halal-verdicts-come-to-him-2026-10-26 -->) · research **synthesis** · site and store build · design and video direction · feature code · department planning · outbound content · the CEO conversation (chat; spoken normal talk per the exception above) · memory promotion | `claude-opus-5-5` (**Claude Opus 5.5**) — `medium` for standard work, `high` for good work a human reads, `xhigh` or `max` for deep thinking; eye-facing work — design, visual drafts and the design system at `max`, the code that carries the look at `xhigh` or `max` (A-2026-10-14 item 1) <!-- CEO-OK: eye-facing-work-xhigh-max-studio-skills-2026-10-28 --> |
+| **L1** | strategy · decisions · money · QA and halal screening (the halal verdict is the CEO's alone <!-- CEO-OK: halal-verdicts-come-to-him-2026-10-26 -->) · research **synthesis** · site and store build · design and video direction · feature code · department planning · outbound content · the CEO conversation (chat; spoken normal talk per the exception above) · memory promotion | `claude-opus-5-5` (**Claude Opus 5.5**) — `medium` for standard work, `high` for good work a human reads, `xhigh` or `max` for deep thinking |
 | **L2** | mechanical backend code with no visual or structural judgment in it (bulk plumbing) | the owner's choice by the guide: ordinary code on Opus 5.5 `medium`; `claude-sonnet-5-5` only at `medium` or above |
 | **L3** | grunt text work: gathering, drafting, summarising — raw material only | Opus 5.5 `medium` (the guide's standard work), or `claude-sonnet-5-5` at `medium` by the owner's reasoned choice |
 | **L4** | mechanical/clerical: classify, extract, transcribe, subtitle | Jev first, `claude-sonnet-5-5` at `medium` on doubt — never `low` (B64 decisions 2 and 7); the local model's reserved seat until the exam runs on the new workstation |
@@ -373,8 +373,7 @@ seats are owned by `.claude/skills/dxb-team3/SKILL.md` §3 and the model on each
    auditor = GPT-6.1 Sol (2026-10-01) through `scripts/governance/refuter.sh`, blind and read-only
    by tool, one pass on every job.
 2. **Effort.** Code at the lead's level; Opus `xhigh` never writes code (FrontierCode 51.4 %, the
-   bottom of the curve — his word 2026-09-28); eye-facing code — the look of a page or a screen — is written at
-   `max` (his word 2026-10-28) <!-- CEO-OK: eye-facing-work-xhigh-max-studio-skills-2026-10-28 -->. Auditor: `high` by default, `xhigh` for money,
+   bottom of the curve — his word 2026-09-28). Auditor: `high` by default, `xhigh` for money,
    a database, security, approval, governance or the agents, `medium` for a text-only change — the
    lead's choice per audit (2026-10-06).
 3. **Pinned ids, as A-2026-09-23 §3.**
@@ -492,7 +491,7 @@ RUNTIME tree. The design he answered decision by decision: `.planning/quick/2026
    | sorting and routine internal work (mail, labels, an internal summary) | Jev first; Sonnet 5.5 `medium` on doubt |
    | standard work (research, analysis, a draft, ordinary code) | Opus 5.5 `medium` |
    | good work (the final text a client, a viewer or he reads; code that must be good) | Opus 5.5 `high` |
-   | eye-facing work, for a client or for the holding's own screens and Hamza's: design, visual drafts and the design system | Opus 5.5 `max`; the studio's whole team and the design skills used as one whole <!-- CEO-OK: eye-facing-work-xhigh-max-studio-skills-2026-10-28 --> |
+   | design, visual drafts and the design system, for a client or for the holding's own screens and Hamza's | the level is the job type's master's choice, by the job's value (AGENT_ORCHESTRATION A30) <!-- CEO-OK: eye-level-rule-gone-best-human-voice-2026-11-16 -->; the studio's whole team and the design skills used as one whole <!-- CEO-OK: eye-facing-work-xhigh-max-studio-skills-2026-10-28 --> |
    | eye-facing work: the code that carries the look (layout, type, colour, motion — the visual layer of a page or a screen) | Opus 5.5 `xhigh` or `max`, never below; other code stays where this guide puts it |
    | a master's or standing owner's own work (plan, decision, assembly) | Opus 5.5 `high`, `xhigh` or `max`, its own choice |
    | deep thinking (strategy, architecture, writing every new plan) | Opus 5.5 `xhigh` or `max`; a plan's design part at `max` |
@@ -523,8 +522,7 @@ RUNTIME tree. The design he answered decision by decision: `.planning/quick/2026
    seat, and the default of `orchestrator.critical_decision_model`) move to Opus 5.5. The studio's creative seats
    (on Fable by his rulings of 2026-09-05 and 2026-09-15, §3) move to Opus 5.5 too, after a 10-job side-by-side on
    the studio's own work; Fable 5.1 stays their backup. The studio job type's master picks the effort per job (B64 v2): everyday
-   creative work `xhigh`, `max` for big or truly important work such as a brand or a big campaign, and a work's visual
-   design — its drafts and its design system — at `max`; creative work is eye-facing, never below `xhigh` <!-- CEO-OK: eye-facing-work-xhigh-max-studio-skills-2026-10-28 -->. <!-- CEO-OK: b64-q2-studio-creative-seats-opus-2026-10-14 -->
+   creative work `xhigh`, `max` for big or truly important work such as a brand or a big campaign. <!-- CEO-OK: b64-q2-studio-creative-seats-opus-2026-10-14 -->
 2. **Hamza's levels, model side (decision 3).** Normal chat, questions and the briefing: Opus 5.5 `medium`. Plan,
    architecture or strategy talk: `xhigh`, said aloud; "Max'a geç" or "High'a in" holds until the subject ends.
    Today `chat.strategy` carries `max` and every message but a status question reaches it — fixed. Spoken normal

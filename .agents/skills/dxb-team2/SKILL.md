@@ -150,9 +150,7 @@ four, not the default.
 - A piece that fails: a medium writer's goes to the lead or a fork at `high`; one that failed twice at
   `high` goes to the `builder`, never earlier. Opus `xhigh` is never used for code (FrontierCode 51.4 %, the bottom of
   Opus's curve — that model's measurement, not a rule for another
-  <!-- CEO-OK: level-rules-stay-with-their-model-2026-11-10 -->); `max` writes code only as the escalation writer
-  — and for eye-facing code, the look of a page or a screen, which is written at `max`
-  <!-- CEO-OK: eye-facing-work-xhigh-max-studio-skills-2026-10-28 -->.
+  <!-- CEO-OK: level-rules-stay-with-their-model-2026-11-10 -->); `max` writes code only as the escalation writer.
 
 ## 4. Sol and Fable — one blind pass each
 
