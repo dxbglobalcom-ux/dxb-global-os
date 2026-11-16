@@ -24,7 +24,7 @@ are already in the opening: never re-read them.
 2. **What this holding IS** — the core carries it in short. Open the long form
    (`MASTER_PLAN.md` §1 · `HOLDING_OS_PRODUCT_SPEC.md` §§2-4 · `00-CEO-DIRECTIVE-BEKLENTILER.md`)
    when the work touches what the product is, what it must never resemble, or the CEO's 19 control
-   areas — those three are exempt from the "do not read other specs" rule below.
+   areas.
 3. `HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md` — what is open, and only that; its own first
    lines say which row comes first
 4. The spec that owns the row you are taking — reached from the row itself, not by browsing

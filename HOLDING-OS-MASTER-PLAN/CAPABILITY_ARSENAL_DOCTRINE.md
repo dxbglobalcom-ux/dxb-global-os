@@ -14,8 +14,8 @@ A granted-but-uncatalogued server with no disposition row here is a governance d
 ## 1. Principles
 
 1. **D1 free-first law:** free tools are installed and mastered first; paid tools are NEVER
-   installed or paid for — they live on the bench (§8) and surface as CEO proposals when
-   profit funds them. **Two approved paid paths, B64 (2026-10-14), are not bench rows:** Jev through his
+   installed or paid for — they live on the bench (§8) and surface as CEO proposals, each
+   with its price — buying is his gate. **Two approved paid paths, B64 (2026-10-14), are not bench rows:** Jev through his
    Vercel AI Gateway, on his yes to decision 7 <!-- CEO-OK: b64-decision7-jev-first-sonnet-on-doubt-2026-10-13 -->,
    and the Hermes-only key on the Max plan's 100 $ monthly API credit, decision 15
    <!-- CEO-OK: b64-decision15-hermes-holding-hands-and-eyes-2026-10-14 -->. Their spend is recorded (§12).
@@ -240,7 +240,7 @@ No credential is requested from the CEO until the consuming wave actually fires
 ## 8. PAID PROPOSAL BENCH (deliverable (c2) — CEO ruling verbatim above)
 
 **Rule:** rows below are STUDIED and PRICED but NEVER installed, keyed, or paid. Each has a
-trigger; when the trigger fires AND profit funds it, it surfaces to the CEO as a proposal
+trigger; when the trigger fires it surfaces to the CEO as a proposal
 with cost projection. Free-first alternatives noted — the bench never replaces a free hand
 that suffices.
 

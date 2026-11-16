@@ -2,7 +2,7 @@
 
 > Dalga 2 · Yazar: Fable 5 bizzat · Üst: [[SYSTEM_ARCHITECTURE]] · Kardeşler: [[SETTINGS_AND_CONTROL_SPEC]] (6.1 anahtarları), [[COST_CONTROL_SPEC]] (bütçe kesişimi), [[AGENT_ORCHESTRATION_SPEC]] (D3, tüketici)
 > Direktif kaynağı: §19 (Model Orchestration Panel) + madde 6.1 (model rolleri) + madde 18 (model/görev dağılımı) + **CEO direktifi 2026-07-12** (ajan beyinleri dashboard'dan değiştirilebilir — §4b). **KAYITLI KARAR DEĞİŞİMİ (CEO 2026-07-12 ~01:00):** madde-18 "Sonnet YOK" daraltması RUNTIME için KALDIRILDI — Sonnet şirket içinde beyin olarak serbest; inşaat-dönemi yazarlık yasağı (model-routing-hierarchy) AYNEN sürer.
-> Kapsam ayrımı: bu spec ÜRÜN RUNTIME rotalamasıdır (holding ajanlarının model seçimi). İnşaat-dönemi yazarlık kuralları ayrı yönetişimdir (model-routing-hierarchy **v20**, the `dxb-team3` door, CEO 2026-11-10: the lead is the session on Fable 5.2; the writers are Fable 5.2 — `helper-writer` at `medium` or `high`, `builder` at `xhigh` — with an Opus 5.5 `easy-writer` for easy pieces; neither the session nor a writer runs at `max`. Owners, not copied here: `.claude/skills/dxb-team3/SKILL.md` §3 for the seats, `.planning/governance/model-routing-hierarchy.md` for the model on each).
+> Kapsam ayrımı: bu spec ÜRÜN RUNTIME rotalamasıdır (holding ajanlarının model seçimi). İnşaat-dönemi yazarlık kuralları ayrı yönetişimdir (model-routing-hierarchy **v20**, the `dxb-team3` door, CEO 2026-11-10: the lead is the session on Fable 5.2; the writers are Fable 5.2 — `helper-writer` at `medium` or `high`, `builder` at `xhigh` — with an Opus 5.5 `easy-writer` for easy pieces; neither the session nor a writer runs at `max` — the one place it stands is the Opus 5.5 stand-in planner when Fable 5.2's quota runs short. Owners, not copied here: `.claude/skills/dxb-team3/SKILL.md` §3 for the seats, `.planning/governance/model-routing-hierarchy.md` for the model on each).
 
 ## 1. Amaç
 
@@ -368,7 +368,8 @@ seats are owned by `.claude/skills/dxb-team3/SKILL.md` §3 and the model on each
 
 1. **Seats.** Lead = the session, on Fable 5.2 — holds the whole, chooses who writes and verifies
    every piece · writers = Fable 5.2 (`helper-writer` at `medium` or `high`, `builder` at `xhigh`),
-   with an Opus 5.5 `easy-writer` for easy pieces · neither the session nor a writer runs at `max` ·
+   with an Opus 5.5 `easy-writer` for easy pieces · neither the session nor a writer runs at `max` (the Opus 5.5 stand-in planner, when
+   Fable 5.2's quota runs short, is the one place it stands) ·
    auditor = GPT-6.1 Sol (2026-10-01) through `scripts/governance/refuter.sh`, blind and read-only
    by tool, one pass on every job.
 2. **Effort.** Code at the lead's level; Opus `xhigh` never writes code (FrontierCode 51.4 %, the
@@ -535,8 +536,8 @@ RUNTIME tree. The design he answered decision by decision: `.planning/quick/2026
 4. **The backup pair (decision 13).** Written by role — main brain, backup brain — never by model name, so a new
    model taking a role carries the rule. Any failure (quota, overload, outage) → the other brain takes the work,
    critical work included. On Fable the work keeps its own effort clamped to `high`..`xhigh` (low, medium,
-   high → high; xhigh, max → xhigh) — a clamp set on 2026-10-14 for Fable 5.1; it is not measured on Fable 5.2
-   and is measured again before it is carried to it. Fable's checking seat (the critical gate) falls to Sol 6.1, never to Opus —
+   high → high; xhigh, max → xhigh) — the clamp was set on 2026-10-14, when
+   the backup brain was Fable 5.1. Fable's checking seat (the critical gate) falls to Sol 6.1, never to Opus —
    no model audits what it wrote; Sol down → valuable work's plan audit waits for Sol and he is told, since both
    other brains wrote the plan (item 7). Hamza's spoken reply falls back to Opus 5.5 `low` for speed; work given
    to him runs at its own level. No 70 % threshold: at 95 % of Fable's quota a second subscription is added —

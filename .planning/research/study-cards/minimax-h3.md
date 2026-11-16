@@ -85,9 +85,9 @@ Same card, same canvas, same 362 frames, same 4 steps, same seed 42:
 
 **+63 % of encoded data at the same resolution and duration is detail the encoder could not throw
 away** — it is the numeric shadow of a visibly sharper picture, and frame 0 of the output is the
-supplied still, byte for byte in composition. **The lesson generalises past H3: most of what makes
-an advertisement frame right is PHOTOGRAPHY — angle, light, reflection, depth of field. Asking a
-video model for the photograph AND the motion in one breath gets both half-done.**
+supplied still, byte for byte in composition. **What this one comparison suggests (H3, 2026-08-31, one prompt and one pair — not a rule for other
+engines): most of what makes an advertisement frame right is PHOTOGRAPHY — angle, light, reflection, depth
+of field; asking a video model for the photograph AND the motion in one breath got both half-done here.**
 ⚠ The RAM and swap figures were taken while a 23 GB download ran on the same NVMe, so the clock and
 the swap peak are CONTAMINATED — the picture result is not.
 
