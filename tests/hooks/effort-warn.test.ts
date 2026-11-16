@@ -138,8 +138,9 @@ describe("each of his messages tells the lead the session's level and how to set
     const dir = box();
     record(dir, SID, "medium", 2);
     const text = context(hook(dir, prompt(SID, transcript(dir, []))));
-    expect(text).toMatch(/talk, a question, a fact, a reading or a record: medium/);
-    expect(text).toMatch(/a plan, a design, an architecture, or code: high/);
+    expect(text).toMatch(/talk, a simple question, a fact, a reading or a record: medium/);
+    // an evaluation is part of planning and design (his word, 2026-11-16): weighed at high, not as talk
+    expect(text).toMatch(/a plan, a design, an architecture, an evaluation -- weighing, comparing, judging which is better or whether something is right -- or code: high/);
     expect(text).toMatch(/truly complex, important job's plan or work: xhigh/);
     // the level follows the job, never a kind of work (his word, 2026-11-10): no blanket "eye-facing code at xhigh".
     // No kind of work is named at xhigh: the fine-design point of 2026-11-11 was withdrawn the same day
@@ -159,7 +160,7 @@ describe("each of his messages tells the lead the session's level and how to set
     expect(text).toContain("xhigh is open while you think through who does what (the CEO, 2026-11-11, for that door only)");
     // managing is named before talk, so a verification is never read as "a reading or a record: medium"
     expect(text.indexOf("a managing turn")).toBeGreaterThan(-1);
-    expect(text.indexOf("a managing turn")).toBeLessThan(text.indexOf("talk, a question"));
+    expect(text.indexOf("a managing turn")).toBeLessThan(text.indexOf("talk, a simple question"));
   });
   it("keeps his word on short code (2026-10-29): narrow glue may stay at medium, the cost of an error decides, none at low", () => {
     const dir = box();

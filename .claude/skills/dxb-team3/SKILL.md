@@ -105,8 +105,9 @@ another, while he waits.
 ## 2. Effort — the session sets its own level
 
 The session sets its own level by the course of the talk; he does not switch it and is never asked to
-<!-- CEO-OK: session-sets-its-own-effort-2026-11-10 -->. Talk — a question, a fact, a reading, a record — runs at
-`medium`; managing — the lead opens a hand, writes a brief or verifies a piece that came back — at `high`, with
+<!-- CEO-OK: session-sets-its-own-effort-2026-11-10 -->. Talk — a simple question, a fact, a reading, a record — runs at
+`medium`; an evaluation — weighing, comparing, judging which is better — is part of planning and runs at `high`
+(his word, 2026-11-16); managing — the lead opens a hand, writes a brief or verifies a piece that came back — at `high`, with
 `xhigh` open while it thinks through who does what <!-- CEO-OK: dxb-team3-orchestrator-six-points-2026-11-11 -->;
 a plan, a design, an architecture, the build, the fixes and the tests at `high`; a truly complex, important
 job — its plan and its work — at `xhigh`. `max` is not used by the session
