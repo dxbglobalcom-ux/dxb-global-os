@@ -39,7 +39,9 @@ the kind of movement, and for 3D the light and the lens. Study the references in
 feeling. For direction and motion craft open what the holding already has — the `dxb-design` skills (motion
 vocabulary, easing, review) — before writing your own.
 
-**3. The storyboard — approved before anything moves.** Write `board/board.json`: numbered shots, each with its
+**3. The storyboard — approved before anything moves.** First three different directions for the film, each a
+few lines with its boldest moment, brought to the job's owner: he picks one, mixes them or adds his own ideas
+(CEO, 2026-11-16), and the board is written from that. Write `board/board.json`: numbered shots, each with its
 time range, what holds on screen, and **on its own line how it becomes the next shot** — which shape turns into
 which, what the camera does to get there; or a cut, when the film changes subject or time on purpose. What a
 board never carries is a cross-fade standing in for a join nobody designed. For a physical product add shape-check tiles (our model beside the
