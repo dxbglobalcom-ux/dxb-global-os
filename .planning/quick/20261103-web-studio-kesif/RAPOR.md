@@ -13,7 +13,7 @@ _DXB Global Holding · DxB Web Studio · 7_
 
 Sizin kurallarınız D'nin elindeydi, kutudaki kolların elinde yoktu. Ama tek fark bu değil. Her düzen birer kez koştuğu için hangisinin ne kadar ittiği bu kayıtlardan ayrılamıyor; kesin cevabı ucuz bir ölçü verir (5. bölüm, 4. karar).
 
-Bütün denemelerin dersi aynı: işi yazıyla bölen "kâğıt hattı" her seferinde kaybetti. Kazanan hep bütünü tek elden tasarlayan güçlü bir akıl oldu.
+Bu denemelerde, her düzen birer kez koşarak, işi yazıyla bölen "kâğıt hattı" kaybetti; kazanan, bütünü tek elden tasarlayan güçlü bir akıl oldu.
 
 Önerinin aslı 2. dosyadaki 29 Ekim önerisi; o esas kalır. D'den çıkan ek şu: usta her işe holdingin zevki ve stüdyonun dolabıyla açılır, taze göz de her hareketi iki ekranda dener (4. bölüm).
 
@@ -36,7 +36,7 @@ WordPress ve WooCommerce için WordPress'in kendi resmî ajan araç seti var. Ta
 1. **Holdingin zevki elindeydi.** D inşaatın içinde açıldı. Çekirdek kuralda "dünya yarışmasında birinciliğe aday, ödül çıtası, asla amatör" ve "canlı olmalı, hareket durumdur" yazıyor. Açılış hafızasında 31 Ekim kuralınız da vardı: "siteler gösterişli, lüks, wow; sadeliğe çeken kural yok". Tarz dolabı da oradaydı. A, B ve C ise 28-29 Ekim'de, bu kural yazılmadan önce ve holdingin hiçbir kuralını görmeyen bir kutuda çalıştı.
 2. **A'nın resimleri hazırdı.** D tek bir resim üretmedi. Seçtiği 37 resmin 19'u A'nın görsel yapımcısının, 15'i B'nin, 3'ü C'nin işi. Hepsi 29 Ekim gecesi ayıklanan kütüphaneden geldi. A'da beğendiğiniz görsel kalite D'ye hazır geçti; A'nın parasının büyük kısmı da bu resimlere gitmişti.
 3. **İmza hareketi brifin kendi cümlesinden çıktı.** D'nin kendi sözüne göre "Elinize alın" hareketi brifteki "bir parçamızı elinize aldığınızdaki his" cümlesinden doğdu. Karonun arkasındaki mühür ve baş harfler de brifin "her parçanın arkasında mühür ve baş harfler bulunur" satırından geliyor. D brifi bir tasarımcı gibi okudu ve bu iki cümleyi dokunulan bir harekete çevirdi.
-4. **İşi tek elden, kısa sürede bitirdi.** Tasarımı da kodu da tek oturum yazdı; yazma işi yaklaşık yedi dakika sürdü. Sonra masaüstünde ve telefonda ekran görüntüsü alıp kendisi baktı ve dört kusuru düzeltti. Arada devir, belge ya da toplantı yoktu. "Bir saat" sınırı da hızlı ve cesur karar verdirdi.
+4. **İşi tek elden, kısa sürede bitirdi.** Tasarımı da kodu da tek oturum yazdı; yazma işi yaklaşık yedi dakika sürdü. Sonra masaüstünde ve telefonda ekran görüntüsü alıp kendisi baktı ve dört kusuru düzeltti. Arada devir, belge ya da toplantı yoktu.
 
 **D'nin gördüğü ve görmediği.** D brifi ararken devir notunun birkaç satırına denk geldi: A'nın "en iyisi", C'nin "hayal kırıklığı" olduğu satırlar. 21 Ekim diş kliniği brifindeki "ilk denemen bitmiş iştir, Ferrari seviyesinde" cümlesini de okudu. A'nın sitesine, koduna ve sizin eleştirilerinize bakmadı.
 
@@ -54,10 +54,10 @@ WordPress ve WooCommerce için WordPress'in kendi resmî ajan araç seti var. Ta
 | 21 Eki | Diş kliniği, tek sayfa | tek oturum ile 1.000 $ yolu (plan yazısı, ayrı eller, hata arayan kontroller) | tek oturum güzel; 1.000 $ yolu için sözünüz: "en boktan ürün" |
 | 22 Eki | Aynı klinik | holdingin personalarından ekip | kötü; ekip 146 dakika, tek oturum 17 dakika |
 | 24-25 Eki | Urla zeytin, tek sayfa | yaklaşık 15 ajanlık akış ile tek usta (high ve max) | Sol'un kör puanı: high 7,5 · max 7,2 · akış 6,7. Akış 30 kat pahalı |
-| 28-29 Eki | Mavi Kuşak, üç sayfa ve fotoğraf | A, A ilk, B, C (kutuda) | A açık ara birinci, C hayal kırıklığı |
+| 28-29 Eki | Mavi Kuşak, üç sayfa ve fotoğraf | A, A ilk, B, C (kutuda) | sizin 8 Kasım hükmünüz: "hiçbiri açık ara iyi değil"; C hayal kırıklığı |
 | 2 Kas | Mavi Kuşak | D: tek Opus, inşaatın içinde, 20 dakika | bir tık daha güzel; kayan şeritte hata |
 
-**Ders.** Kâğıt hattı her seferinde kaybetti: iş yazıyla planlanıp parçalara bölündüğünde, başkası kodladığında ve kontroller yalnız hata aradığında. Kazanan hep bütünü tek elden tasarlayan güçlü bir akıl oldu. Yanına iki şey eklendiğinde en iyi sonucu verdi:
+**Ders.** Bu denemelerde, her düzen birer kez koşarak, kâğıt hattı kaybetti: iş yazıyla planlanıp parçalara bölündüğünde, başkası kodladığında ve kontroller yalnız hata aradığında. Kazanan, bütünü tek elden tasarlayan güçlü bir akıl oldu. A'da yanına iki şey eklenmişti; beğendiğiniz parçalar onlardan çıktı:
 
 - elinde olmayan işi yapan bir el: A'nın görsel yapımcısı;
 - güzelliğe taze gözle bakan biri: A'nın sanat yönetmeni. Cam yansıması ve fırın anı onun bulgularından doğdu.
