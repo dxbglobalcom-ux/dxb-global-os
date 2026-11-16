@@ -137,11 +137,16 @@ describe("B21 — one standing context, both lanes", () => {
     expect(line).toContain("polite guess");
   });
 
-  // CEO 2026-10-21: the first attempt is the finished work, at Ferrari level — a check that
+  // CEO 2026-10-21: what is handed over is the finished work, at Ferrari level — a check that
   // follows is never a reason to hand over less. It reaches every employee, on every lane.
+  // CEO 2026-11-16 (the limit sweep's E5): "your first attempt is the finished work" made an
+  // employee take the safe road instead of trying three and keeping the best, against Law D
+  // (draft first). The standard binds the HAND-OVER; inside the job it tries and redoes.
   it("carries the first-shot Ferrari standard on every lane", () => {
     const line = firstShotLine();
-    expect(line).toContain("first attempt");
+    expect(line).toContain("What you hand over is the finished work");
+    expect(line).not.toContain("first attempt");
+    expect(line).toContain("redo as much as it needs");
     expect(line).toContain("Ferrari");
     expect(line).toContain("never a reason to hand over");
     for (const lane of ["voice", "chat", "task"] as const) {

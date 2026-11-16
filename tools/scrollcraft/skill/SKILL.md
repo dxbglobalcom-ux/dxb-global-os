@@ -32,13 +32,15 @@ outrank every instruction further down this file.
    for client work: a visitor-facing story page. **Never** for the holding's own command surface
    (`apps/dashboard`, `apps/jarvis`, or V2's cockpit). That surface is an instrument the CEO
    works at, not a page a visitor is told a story on.
-2. **THE HOLDING'S OWN STUDIO IS THE ONLY ENGINE.** Building from the client's own photographs and
+2. **THE HOLDING'S OWN STUDIO IS THE DEFAULT ENGINE.** Building from the client's own photographs and
    footage stays the default. Generated stills and clips come from the studio on the holding's own GPU:
    `node <skill>/scripts/studio.mjs still` (FLUX.1-Krea-dev), `node <skill>/scripts/studio.mjs shot`
    (MiniMax H3, from a first and a last frame) and `node <skill>/scripts/studio.mjs probe` (is it ready
-   now). ChatGPT image is the other source for a still. There is no paid engine behind them: what the
+   now). ChatGPT image is the other source for a still. What the
    studio exits 3 on (e.g. a reference-guided edit) is made another way — a ChatGPT image still, or the
-   client's own material.
+   client's own material. Where a job's quality floor is above what the holding's card gives, name the
+   paid engine to the CEO at once, with its price — the card does not have to fail first. Buying is
+   his: nothing is spent before his word.
 3. **NO SECRET OF THE HOLDING GOES NEAR IT.** No script in this skill reads a key, a `.env` or any
    other secret. Do not add one that does.
 4. **SHOWY, LUXURIOUS, WOW: NEVER PLAIN.** The site is showy and luxurious, and whoever opens it

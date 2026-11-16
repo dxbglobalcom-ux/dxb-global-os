@@ -83,8 +83,10 @@ other's, by tool, not by promise <!-- CEO-OK: plan-writers-sealed-independent-20
 4. The lead's plan is the base: it adds what the second plan brought, fixes what the audits found, checks
    each unmeasured claim at its source, and signs (`second-plan.sh sign`). An auditor down → the plan waits
    for it; a writer never audits.
-5. **What he says yes to is what is recorded.** Nothing enters the plan, the row or the ledger after his
-   yes; a later addition goes back to him first, marked as the writer's, with its reason.
+5. **What he says yes to is what is recorded.** A change to the scope, the money or the architecture goes
+   back to him first, marked as the writer's, with its reason; nothing is written into the row or the ledger
+   as his decision after his yes. An improvement found inside the scope during the work is the lead's: it is
+   made, and named in the report.
 6. **The measure:** the job folder keeps `sealed/` and both audits; one line per job goes into
    `.planning/quick/20261019-degerli-is-danisma/MEASURE.md` — what Fable's audit found that Sol's did not, and
    on a two-writer job what the second plan added — the minutes, the quota. After three or four jobs the
@@ -245,8 +247,8 @@ alone (STATE, the board) is checked by the rulers on commit instead.
   50 % used, hand over at the first clean break — the piece finished well, the tree committed, no
   battery running, the report sent — even when reaching it takes the session to about 60 %; never in
   the middle of a piece. The clean break and the quality decide, not the number; the lead judges it,
-  helpers included <!-- CEO-OK: handover-at-the-clean-break-2026-10-06 -->. At 60 % the gate refuses
-  the Agent tool — a safety net, past which nothing new starts.
+  helpers included <!-- CEO-OK: handover-at-the-clean-break-2026-10-06 -->. The gate says its line
+  once at 50 % and once at 60 % and refuses nothing — the meter only informs (his word, 2026-11-10).
 - **The handover** is done by the engineer, never the CEO
   <!-- CEO-OK: handover-at-50-without-asking-2026-10-01 -->. A note in the scratchpad, in the author's
   own voice, whose first line tells the successor to open this door — `Skill("dxb-team2")` — before

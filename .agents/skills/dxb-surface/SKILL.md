@@ -73,9 +73,10 @@ Board row **B03-bis**.
   — comes before implementation. This is not bureaucracy: a working visual is the most precise
   specification a builder can be given.
 
-## Opus 5.5's default looks — a prompting aid, not his ruling
+## A model's default looks — a prompting aid, not his ruling
 
-Anthropic's Opus 5.5 migration guide ("Frontend design defaults"): left without direction, the
+Anthropic's Opus 5.5 migration guide ("Frontend design defaults"; written for that model, not measured on
+Fable 5.2 — whoever writes the surface checks its own draft against the list): left without direction, the
 model falls back on a few default looks. None of them is this holding's unless his approved design
 shows it — a cream or off-white page, italic accent words in headlines, numbered "01 / 02 / 03"
 section labels, pill-shaped buttons (the design system keeps full rounding for avatars and status

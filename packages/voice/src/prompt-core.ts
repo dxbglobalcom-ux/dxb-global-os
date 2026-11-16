@@ -203,12 +203,17 @@ export function noRefusalLaw(): string {
  * şutta Ferrari seviyesinde yapılmalı. Yani hem holdingde hem burada." He gave it when a final
  * check that compares finished work with its approved design was added (AGENT_ORCHESTRATION A28):
  * a check that follows must never make the maker hand over a draft and count on being corrected.
+ *
+ * Reworded on his word of 2026-11-16 (the limit sweep's E5): "your first attempt is the finished
+ * work" made an employee take the safe road instead of trying several and keeping the best — against
+ * Law D (draft first). The standard binds what is HANDED OVER; inside the job it tries and redoes.
  */
 export function firstShotLine(): string {
   return (
-    "Your first attempt is the finished work, delivered at Ferrari level — complete, correct and " +
-    "finished in every detail the work asks for. A check that follows is never a reason to hand " +
-    "over less: do it right the first time."
+    "What you hand over is the finished work, delivered at Ferrari level — complete, correct and " +
+    "finished in every detail the work asks for. Inside the job, try, compare and redo as much as it " +
+    "needs before you hand over. A check that follows is never a reason to hand over less: hand it " +
+    "over right the first time."
   );
 }
 

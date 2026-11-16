@@ -64,8 +64,8 @@ Earlier days: `.planning/STATE-ARCHIVE.md` § "Moved out of STATE.md on 2026-11-
 0b. The Fable 5.2 transition's remainder waits on his one word: the company's runtime seats 5.1 → 5.2 (a migration and its tests, measured in `.planning/quick/20261110-fable-5-2-calisma/DEVIR.md`), `max` left in the audit scripts, the spec lines that name Fable 5.1 as a live seat.
 0c. B22's synthesis comes after the Excel walk (his word 2026-11-16). Its shape, agreed in talk: by capability, not by rival — who does it best, how it is alive, what the Ferrari takes, whether a board row owns it; no column for what the holding has today ("bizde bir şey yok"); one writer reads all 33 reports whole. ChatGPT: when he says to look at what it thinks, the session asks it in his Chrome and brings its view; its joining as Sol's stand-in in the audit is talked as its own plan.
 0d. Managing at high stays for the dxb-team3 door only; the link-review door carries its own levels.
-The playbook study is told and kept (2026-11-08; `.planning/quick/20261108-playbook-calismasi/`). His word: nothing is
-planned or built now — each part is built at its row's rank, in the board's order; the notes sit on B64, B41, C41 and B15. His
+The playbook study is told and kept (2026-11-08; `.planning/quick/20261108-playbook-calismasi/`). Build order: the board's head
+("When the build starts"); the notes sit on B64, B41, C41 and B15. His
 verdicts on a job are that job's feedback, never rules; a job's checks come from its own brief.
 Set aside until the holding and its institutions are built (his word 2026-11-08 evening; not raised with him before): the `/kisayol`
 recipes (restored on his later word, "only the worst go"; the raw store's disk data is gone, its scripts rebuild it) and the new session
@@ -87,9 +87,10 @@ real product photos — the setting must belong to the product.
 5. The studio retest, when its turn comes (the machine rebooted 2026-10-19 07:38, the card works again). In the factory
    with the Media Studio's staff: ScrollCraft's clip through H3 image-less at 8 steps, saved at a high quality (the
    blocky clip was ComfyUI's 1.17 Mbit/s save); stills from H3's best frame vs FLUX vs FLUX.2-klein-4B; a client-photo
-   ad through H3; upscale or not, judged full screen by his eye. The standard is the recipe of the films he accepted
-   — 8 steps on the road the studio's system names, no 4-step take <!-- CEO-OK: studio-standard-8-steps-his-liked-recipe-2026-10-19 -->; `studio.mjs`'s
-   defaults follow it. Then the bridge and ScrollCraft's rule 2 follow the result.
+   ad through H3; upscale or not, judged full screen by his eye. The starting recipe is that of the films he accepted
+   — 8 steps on the road the studio's system names <!-- CEO-OK: studio-standard-8-steps-his-liked-recipe-2026-10-19 -->; the steps, the
+   resolution and the delivery length are the job's (his word, 2026-11-16 <!-- CEO-OK: section-e-his-rules-fixed-2026-11-16 -->);
+   the draft comes to his eye before any enlargement (Law D); `studio.mjs`'s defaults follow the starting recipe. Then the bridge and ScrollCraft's rule 2 follow the result.
 6. The walk, one row at a time with him: YE19 next, then to the last row; then the "Ekim 9-15 linkleri",
    "Ekim 15-21 linkleri" and "Kasım 1 incelemeleri" sheets the same way.
 7. Plans he asked for, each talked first: how ChatGPT on Steroids (installed) joins the holding as an agent and as
@@ -108,7 +109,7 @@ real product photos — the setting must belong to the product.
 - DxB Web Studio, standing answers (2026-11-02): the 213 personas scanned (13 core, 69 ring, file 5); Y9 and Y11 later,
   markers in ORDER.md. The studio's ScrollCraft output is a library on his word (`ComfyUI/output/scrollcraft/KUTUPHANE.tsv`);
   approved and used output goes into it; looking there before generating waits until it is rich.
-- The board's new items are placed (2026-11-12, his word <!-- CEO-OK: board-items-placed-where-related-2026-11-12 -->): where a row already owned the subject the item went into it (Y4 → B43, Y8 → B83, Y9 and Y11 → B84, the first mobile app → B32 <!-- CEO-OK: pocket-face-first-mobile-app-2026-11-12 -->), where none did a row was opened (B71-B76); nothing is built, the board's order is still asked after the walk.
+- The board's new items are placed (2026-11-12, his word <!-- CEO-OK: board-items-placed-where-related-2026-11-12 -->): where a row already owned the subject the item went into it (Y4 → B43, Y8 → B83, Y9 and Y11 → B84, the first mobile app → B32 <!-- CEO-OK: pocket-face-first-mobile-app-2026-11-12 -->), where none did a row was opened (B71-B76); the board's order is still asked after the walk.
 - Nothing else is brought to him at opening (his word 2026-11-12): what comes at its own time is asked at its own place — the platform-hub plan's two decisions in `FINAL.md` (B43), the tools and accounts at their ranks, the server, the Meta account, his Islamic rulings and Hermes in `.planning/quick/20261014-tahta-sirasi/ORDER.md` and their row files; the walk is over his Excel's rows (YE19 next), not over the board; where client sites are published is kept for later.
 
 ## Where things live

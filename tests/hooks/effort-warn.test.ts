@@ -1,10 +1,12 @@
 // THE SESSION SETS ITS OWN EFFORT — the real hook, run where it stands in the repository.
 // The CEO's order of 2026-11-10: the session sets its own level by the course of the talk; he does not
-// switch it and is never asked to. Talk runs at medium, a plan, a design, an architecture or code at high,
-// a truly complex, important job at xhigh; max is not used. The level is carried by three small skills
+// switch it and is never asked to. Since 2026-11-16 the session works at high -- its saved default -- and
+// goes down to medium only for plain talk, up to xhigh for a truly complex, important job; max is not used.
+// The level is carried by three small skills
 // (`dxb-effort-medium`, `dxb-effort-high`, `dxb-effort-xhigh`) whose `effort` field sets the turn they are
 // opened in, in the background. On each of his messages the hook tells the lead the session's own level
-// and asks it to decide, before it thinks about the substance, what the reply needs. The session's own
+// and where the level goes down or up; a session whose own level is not high is told to open
+// dxb-effort-high first for anything but plain talk. The session's own
 // level is the newest of the status line's record and the transcript's last /effort row (`Set effort level
 // to …`); a step in the transcript may carry a skill's lift, so it never tells the session's level. A
 // message naming a plan, a design or an architecture — or his permission mode `plan` — also opens the
@@ -120,57 +122,55 @@ function told(text: string): string {
 
 const skillCall = (level: string) => `Skill("dxb-effort-${level}")`;
 
-describe("each of his messages tells the lead the session's level and how to set its own (CEO 2026-11-10)", () => {
-  it("at high, an ordinary message: the level, the three skills, the first action — and he is never asked to switch", () => {
+describe("each of his messages tells the lead the session's level and where it goes down or up (CEO 2026-11-10, 2026-11-16)", () => {
+  it("at high, an ordinary message: the short text — the level, the two skills that leave high, no first action — and he is never asked to switch", () => {
     const dir = box();
     record(dir, SID, "high", 2);
     const text = context(hook(dir, prompt(SID, transcript(dir, [["high", 5]]))));
     expect(told(text)).toBe("high");
-    for (const level of LEVEL_SKILLS) expect(text).toContain(skillCall(level));
-    expect(text).toContain("before you think about the substance");
-    expect(text).toContain("first action");
-    expect(text).toContain("he does not switch it and is never asked to");
+    expect(text.startsWith("EFFORT -- the session works at high and sets its own level by the course of the talk; "
+      + "he does not switch it and is never asked to (the CEO, 2026-11-10). This session runs at high. Plain talk")).toBe(true);
+    expect(text).toContain(skillCall("medium"));
+    expect(text).toContain(skillCall("xhigh"));
+    // a session already at high has nothing to open before it reads him
+    expect(text).not.toContain(skillCall("high"));
+    expect(text).not.toContain("first action");
+    expect(text).not.toContain("saved level");
+    expect(text).not.toContain("before you think about the substance");
+    expect(text).not.toContain("Decide what this reply is");
+    // one paragraph, about half of the 1.6 KB the four-box text was
+    expect(text).not.toContain("\n");
+    expect(Buffer.byteLength(text)).toBeLessThan(900);
     expect(text).not.toContain("geçin");
     expect(text).not.toContain("/effort");
     expect(text).not.toContain("until he has switched");
   });
-  it("names what each level is for: talk at medium, plan and code at high, a truly complex job at xhigh, never max", () => {
+  it("a session whose saved level is medium: for anything but plain talk its first action is dxb-effort-high", () => {
+    for (const level of ["low", "medium"]) {
+      const dir = box();
+      record(dir, SID, level, 2);
+      const text = context(hook(dir, prompt(SID, transcript(dir, []))));
+      expect(told(text)).toBe(level);
+      expect(text).toContain(`This session's saved level is ${level}: for anything but plain talk your first action is \`${skillCall("high")}\`.`);
+    }
+  });
+  it("names where the level goes: plain talk may go down to medium, a truly complex job up to xhigh, everything else is high, never max", () => {
     const dir = box();
     record(dir, SID, "medium", 2);
     const text = context(hook(dir, prompt(SID, transcript(dir, []))));
-    expect(text).toMatch(/talk, a simple question, a fact, a reading or a record: medium/);
-    // an evaluation is part of planning and design (his word, 2026-11-16): weighed at high, not as talk
-    expect(text).toMatch(/a plan, a design, an architecture, an evaluation that carries weight -- weighing, comparing, judging which is better or whether something is right -- or code: high/);
-    // an easy evaluation stays the session's own call (his word, 2026-11-16: "kolay şeyleri senin zekana bırakıyorum")
-    expect(text).toMatch(/an easy evaluation is weighed by what an error costs and may stay at medium/);
-    expect(text).toMatch(/truly complex, important job's plan or work: xhigh/);
+    expect(text).toContain(`Plain talk -- a simple question, a fact, a reading, a record -- may run at medium: \`${skillCall("medium")}\`.`);
+    expect(text).toContain(`A truly complex, important job's plan or work runs at xhigh: \`${skillCall("xhigh")}\`.`);
+    // an evaluation that carries weight is part of planning and design (his word, 2026-11-16), and managing a
+    // dxb-team3 job is named with its door (the CEO, 2026-11-11): neither is read as plain talk
+    expect(text).toContain("Everything else -- a plan, a design, an architecture, an evaluation that carries weight, code, "
+      + "managing a dxb-team3 job -- is high.");
     // the level follows the job, never a kind of work (his word, 2026-11-10): no blanket "eye-facing code at xhigh".
     // No kind of work is named at xhigh: the fine-design point of 2026-11-11 was withdrawn the same day
     expect(text).not.toContain("look of a page");
     expect(text).not.toContain("fine design piece");
-    expect(text).toContain("- a truly complex, important job's plan or work: xhigh.\n");
-    expect(text).toContain("max is not used");
+    expect(text).toContain("No code at low; max is not used.");
     expect(text).not.toContain("dxb-effort-max");
     expect(text).not.toContain("dxb-effort-low");
-  });
-  it("in a dxb-team3 job managing runs at high, xhigh open for the distribution — said with its scope (CEO 2026-11-11, that door only)", () => {
-    const dir = box();
-    record(dir, SID, "medium", 2);
-    const text = context(hook(dir, prompt(SID, transcript(dir, []))));
-    // the scope is in the printed text itself: his word of the same day keeps the point inside that door
-    expect(text).toContain("- in a dxb-team3 job, a managing turn -- you open a hand (the Agent tool), write a brief or verify a piece that came back: high");
-    expect(text).toContain("xhigh is open while you think through who does what (the CEO, 2026-11-11, for that door only)");
-    // managing is named before talk, so a verification is never read as "a reading or a record: medium"
-    expect(text.indexOf("a managing turn")).toBeGreaterThan(-1);
-    expect(text.indexOf("a managing turn")).toBeLessThan(text.indexOf("talk, a simple question"));
-  });
-  it("keeps his word on short code (2026-10-29): narrow glue may stay at medium, the cost of an error decides, none at low", () => {
-    const dir = box();
-    record(dir, SID, "medium", 2);
-    const text = context(hook(dir, prompt(SID, transcript(dir, []))));
-    expect(text).toContain("narrow glue");
-    expect(text).toContain("what an error costs");
-    expect(text).toContain("no code at low");
   });
   it("he sees it: the level is named in a few words only in the reply where it changes", () => {
     const dir = box();
@@ -183,8 +183,8 @@ describe("each of his messages tells the lead the session's level and how to set
     const dir = box();
     const text = context(hook(dir, prompt(SID, join(dir, "missing.jsonl"))));
     expect(told(text)).toBe("unknown");
-    expect(text).toContain("Your first action is the skill of the level the reply needs");
-    for (const level of LEVEL_SKILLS) expect(text).toContain(skillCall(level));
+    expect(text).toContain("This session's own level is not known: open the skill of the level the reply needs as your first action.");
+    expect(text).not.toContain("saved level");
   });
   it("the hook keeps no state: it leaves nothing behind in the runtime directory", () => {
     const dir = box();
@@ -222,7 +222,7 @@ describe("the session's own level: the status line's record and the /effort row,
     const dir = box();
     const text = context(hook(dir, prompt(SID, transcript(dir, [["high", 30], ["xhigh", 5]]))));
     expect(told(text)).toBe("unknown");
-    expect(text).toContain("Your first action is the skill of the level the reply needs");
+    expect(text).toContain("open the skill of the level the reply needs as your first action");
   });
   it("a record whose session_id field differs is ignored", () => {
     const dir = box();
@@ -494,8 +494,8 @@ describe("what is not his message gets none of his message's text", () => {
     expect(text).toContain(skillCall("high"));
     expect(text).not.toContain(skillCall("medium"));
     expect(text).not.toContain(skillCall("xhigh"));
-    expect(text).not.toContain("EFFORT -- first");
-    expect(text).not.toContain("Decide what this reply is");
+    expect(text).not.toContain("EFFORT -- ");
+    expect(text).not.toContain("Plain talk");
     expect(text).not.toContain('Skill("dxb-team3")');
   }
   it("a report arriving below high: one line — in a dxb-team3 job verifying it is managing, at high — never the level talk or the door", () => {
@@ -605,7 +605,7 @@ describe("the quota is said on every turn, from the status line's record (CEO 20
       expect(text).not.toContain("\n");
       expect(text).toContain("5-hour window is 59% used and resets in 3h00m");
       expect(text).not.toContain("A report has arrived");
-      expect(text).not.toContain("EFFORT -- first");
+      expect(text).not.toContain("EFFORT -- ");
     }
   });
   it("a report arriving below high: its one line, then the quota line", () => {
@@ -926,6 +926,29 @@ describe("settings.json registers the hook", () => {
     const group = settings.hooks.UserPromptSubmit[0].hooks;
     expect(group[0]).toEqual({ type: "command", command: 'python3 "$CLAUDE_PROJECT_DIR/.claude/hooks/dxb-effort-warn.py"' });
     expect(group[1].command).toContain("no-laziness.sh");
+  });
+});
+
+// The CEO, 2026-11-16 (the limit sweep's E2): the per-turn reminder keeps its five behaviours as THE STANDARD --
+// without the "TEMBELLİK YASAK" title, and with no long form kept in the file.
+describe("no-laziness.sh, the second command: the standard and the holding, one line each", () => {
+  const NO_LAZINESS = join(ROOT, ".claude", "hooks", "no-laziness.sh");
+  it("prints THE STANDARD word for word, then THE HOLDING — no accusation, no long form, no stale pointer", () => {
+    const r = spawnSync("bash", [NO_LAZINESS], { encoding: "utf8", timeout: LIMIT_MS });
+    expect(r.status, r.stderr).toBe(0);
+    const lines = r.stdout.trimEnd().split("\n");
+    expect(lines).toHaveLength(2);
+    expect(lines[0]).toBe("THE STANDARD (the CEO, 2026-07-27): measure before you state; finish all of it or name the "
+      + "blocked part; keep the record current; fix a defect at its source, inside what he asked; back every claim "
+      + "with its command and output in the work, and show him the proof only when he asks; what a terminal cannot "
+      + "observe is ⚠ UNVERIFIED.");
+    expect(lines[1].startsWith("THE HOLDING (CEO 2026-11-09): ")).toBe(true);
+    const source = readFileSync(NO_LAZINESS, "utf8");
+    for (const gone of ["TEMBELLİK", "STANDING ORDER 13", "LONG FORM", "so13_full_capacity", "dxb-ceo-report"]) {
+      expect(source, gone).not.toContain(gone);
+    }
+    // his word of 2026-10-04 keeps the reminder on every prompt
+    expect(source).toContain("<!-- CEO-OK: so13-reminder-restored-2026-10-04 -->");
   });
 });
 

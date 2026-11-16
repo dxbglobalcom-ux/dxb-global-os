@@ -35,8 +35,10 @@ search uses Claude's own WebSearch/WebFetch AND this toolbox, never one alone, a
 checked on the other — the official page settles a disagreement. Measured 2026-10-15 on five questions, judged
 blind: both together 23/25, Claude web alone 21, the toolbox alone 21 (`.planning/quick/20261015-arama-testi/`).
 
-**ChatGPT researches beside us, every time** (his standing word, 2026-11-07 <!-- CEO-OK: research-chatgpt-side-every-time-2026-11-07 -->):
-on either road, the session itself asks ChatGPT — his own ChatGPT at chatgpt.com, in his Chrome, through the
+**ChatGPT researches beside us** (his standing word, 2026-11-07 <!-- CEO-OK: research-chatgpt-side-every-time-2026-11-07 -->;
+scoped on his word of 2026-11-16 <!-- CEO-OK: section-e-his-rules-fixed-2026-11-16 -->): on the deep road every time, and on the quick road when the
+fact carries a decision — a price he will pay, a date he will act on; a plain quick fact is checked on both sides of
+our own (above) and opens no tab. The session itself asks ChatGPT — his own ChatGPT at chatgpt.com, in his Chrome, through the
 `mcp__claude-in-chrome__*` tools: a new tab of its own, a new chat, the question beginning "Search the web for this."
 and asking for a source URL beside every claim, sent at the start so it searches while we hunt; its answer is read
 with `get_page_text` once it stops writing, and the tab is closed. **Never Codex** for research (his word: *"Kodeksle

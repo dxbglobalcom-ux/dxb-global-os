@@ -2,8 +2,11 @@
 """DXB effort (UserPromptSubmit): the session sets its own level by the course of the talk.
 
 The CEO's order of 2026-11-10: he does not switch the effort and is never asked to; the session does, by
-itself, as the talk moves between a question and a plan. Talk runs at medium; a plan, a design, an
-architecture or code at high; a truly complex, important job at xhigh; max is not used. Before it, from
+itself, as the talk moves between a question and a plan. Since 2026-11-16 the session works at high -- whatever its
+saved level, which any session's /effort rewrites -- and leaves it only for plain talk (medium) or a truly complex, important job (xhigh); max is
+not used. Until then medium was the saved default and every message asked the lead to class the reply into
+one of four kinds before it read him; a turn that missed the step ran at medium (the measurement of
+2026-11-11, below). Before that, from
 2026-10-06, he switched with /effort and the session warned him on every reply; the modes that carried
 those warnings (`plan`, `plan-max`, `build`, `off`) and their lines are gone with that rule. The file keeps
 its name because the settings, the status line and the ledger point at it.
@@ -13,16 +16,16 @@ dxb-effort-high, dxb-effort-xhigh. Opening one sets the level of the turn it is 
 background, and the level ends with that turn (measured 2026-11-10 on Claude Code 2.1.322: in a session at
 high the steps after `effort: medium` ran at medium and the steps after `effort: xhigh` at xhigh, in the
 transcript's own record). A hook cannot open a skill, so on each of his messages it tells the lead the
-session's own level and asks it to decide, before it thinks about the substance (the CEO, 2026-10-12: the
-level comes before the thinking), what the reply needs; when that is another level, opening its skill is
-the lead's first action. A message that names a plan, a design or an architecture -- or his permission
+session's own level and where the level goes down or up; a session whose own level is not high, or is not
+known, is told that opening the skill is its first action (the CEO, 2026-10-12: the level comes before the
+thinking). A message that names a plan, a design or an architecture -- or his permission
 mode `plan` -- also tells the lead to open the dxb-team3 door (the CEO, 2026-10-09). A report arriving
 through the prompt -- a prompt that opens with `<task-notification>`: a subagent's, or a background
 command's completion (measured 2026-11-11) -- is not his message and gets none of that text; his own
 message quoting that tag after other words is his message. In a dxb-team3 job managing -- opening a hand,
 writing a brief, verifying a piece that came back -- runs at high, with xhigh open for thinking through
 the distribution (the CEO, 2026-11-11, for that door only). The hook cannot see which door is open, so the
-scope is in the text it prints: the list he is answered from names managing first, "in a dxb-team3 job",
+scope is in the text it prints: what is high names "managing a dxb-team3 job",
 and when a report opens a turn in a session below high, or whose level is not known, the hook says in one
 line that in such a job verifying it is managing (measured 2026-11-11: such a turn fell back to medium and
 a money piece was verified there). The door's other points of that day live in the door alone and are not printed here.
@@ -90,7 +93,6 @@ LONGEST_WINDOW_S = 8 * 86400  # the longest window is the week; a reset further 
 OWN_WEEKS = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "scripts", "ops", "dxb-usage")
 FIVE_HOUR = "the account's 5-hour window"
 WEEK = "the week"
-SKILLS = ('`Skill("dxb-effort-medium")`, `Skill("dxb-effort-high")` or `Skill("dxb-effort-xhigh")`')
 # the whole row is the command's output -- a quotation of it inside his own words is not a switch (Sol A3)
 SWITCHED = re.compile(r"<local-command-stdout>Set effort level to (low|medium|high|xhigh|max)\b[^<]*"
                       r"</local-command-stdout>")
@@ -104,32 +106,26 @@ USAGE = ("dxb-effort-warn.py takes no argument: the modes plan|plan-max|build|of
 
 
 def sync(level):
-    """What the lead is told on each of his messages: the session's level, what each level is for, the skills."""
+    """What the lead is told on each of his messages: the session works at high, where it goes down and where up,
+    and -- in a session that is not at high -- what to open first."""
     if level:
         runs = f"This session runs at {level}."
-        act = (f"If the level the reply needs is not {level}, your first action is {SKILLS} -- the one the reply "
-               f"needs: it sets this turn's level in the background and ends with the turn.")
+        act = "" if level == "high" else (
+            f"This session's saved level is {level}: for anything but plain talk your first action is "
+            "`Skill(\"dxb-effort-high\")`. ")
     else:
         runs = "This session's own level is not known yet."
-        act = (f"Your first action is the skill of the level the reply needs -- {SKILLS}: it sets this turn's "
-               f"level in the background and ends with the turn.")
+        act = ("This session's own level is not known: open the skill of the level the reply needs as your first "
+               "action. ")
     return (
-        "EFFORT -- first, before you think about the substance of his message. The session sets its own level by "
-        "the course of the talk; he does not switch it and is never asked to (the CEO, 2026-11-10). "
-        f"{runs} Decide what this reply is:\n"
-        "- in a dxb-team3 job, a managing turn -- you open a hand (the Agent tool), write a brief or verify a piece "
-        "that came back: high; xhigh is open while you think through who does what (the CEO, 2026-11-11, for that "
-        "door only);\n"
-        "- talk, a simple question, a fact, a reading or a record: medium;\n"
-        "- a plan, a design, an architecture, an evaluation that carries weight -- weighing, comparing, judging "
-        "which is better or whether something is right -- or code: high -- an easy evaluation is weighed by what "
-        "an error costs and may stay at medium; short code (a few dozen lines of narrow glue, a "
-        "merge or a setting, tried at once) may stay at medium; the measure is what an error costs, so code that "
-        "deletes or moves data, touches money or the approval gate, security or permissions, runs in parallel or "
-        "changes many places at once is high; no code at low;\n"
-        "- a truly complex, important job's plan or work: xhigh.\n"
-        f"{act} When the level you work at differs from the reply before, open the reply with a few words naming "
-        "it and why (\"high: plan\"); otherwise say nothing about effort. max is not used.")
+        "EFFORT -- the session works at high and sets its own level by the course of the talk; he does not switch "
+        f"it and is never asked to (the CEO, 2026-11-10). {runs} "
+        "Plain talk -- a simple question, a fact, a reading, a record -- may run at medium: "
+        "`Skill(\"dxb-effort-medium\")`. A truly complex, important job's plan or work runs at xhigh: "
+        "`Skill(\"dxb-effort-xhigh\")`. Everything else -- a plan, a design, an architecture, an evaluation that "
+        "carries weight, code, managing a dxb-team3 job -- is high. No code at low; max is not used. "
+        f"{act}When the level you work at differs from the reply before, open the reply with a few words naming "
+        "it and why (\"high: plan\"); otherwise say nothing about effort.")
 
 
 def hand_back(level):

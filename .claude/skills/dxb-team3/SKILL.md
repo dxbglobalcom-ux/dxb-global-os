@@ -81,8 +81,10 @@ from the brief alone, what the job needs and what the plan lacks.
    sources a claim rests on and write nothing into the plan.
 4. The lead fixes what the audits found, checks each unmeasured claim at its source, and signs. An auditor
    down → the plan waits for it; a writer never audits.
-5. **What he says yes to is what is recorded.** Nothing enters the plan, the row or the ledger after his
-   yes; a later addition goes back to him first, marked as the writer's, with its reason.
+5. **What he says yes to is what is recorded.** A change to the scope, the money or the architecture goes
+   back to him first, marked as the writer's, with its reason; nothing is written into the row or the ledger
+   as his decision after his yes. An improvement found inside the scope during the work is the lead's: it is
+   made, and named in the report.
 6. **The measure:** the job folder keeps the audits that ran; one line per job goes into
    `.planning/quick/20261019-degerli-is-danisma/MEASURE.md` — where Fable audited and what it found that Sol
    did not, the minutes, the quota. After three or four jobs the lead tells him the table.
@@ -105,7 +107,9 @@ another, while he waits.
 ## 2. Effort — the session sets its own level
 
 The session sets its own level by the course of the talk; he does not switch it and is never asked to
-<!-- CEO-OK: session-sets-its-own-effort-2026-11-10 -->. Talk — a simple question, a fact, a reading, a record — runs at
+<!-- CEO-OK: session-sets-its-own-effort-2026-11-10 -->. The session works at `high`
+(2026-11-16 <!-- CEO-OK: section-e-his-rules-fixed-2026-11-16 -->) — where its saved level is lower the hook says
+so and the session lifts itself; plain talk — a simple question, a fact, a reading, a record — may run at
 `medium`; an evaluation that carries weight — weighing, comparing, judging which is better — is part of planning and
 runs at `high`, an easy one is the session's call by what an error costs (his word, 2026-11-16); managing — the lead opens a hand, writes a brief or verifies a piece that came back — at `high`, with
 `xhigh` open while it thinks through who does what <!-- CEO-OK: dxb-team3-orchestrator-six-points-2026-11-11 -->;
@@ -117,13 +121,13 @@ Fable's quota runs short (§1). His word on the level overrides: "bunu high'da d
 - **How.** Three small skills carry the level in their `effort` field — `dxb-effort-medium`, `dxb-effort-high`,
   `dxb-effort-xhigh`. Opening one sets the level of the turn it is opened in, in the background — nothing is
   typed into his prompt box — and the level ends with the turn; the next turn starts again at the session's
-  own level, his saved default. Measured 2026-11-10 (Claude Code 2.1.322), in the transcript's own record: in a
+  own level, his saved default (any session's `/effort` rewrites that default for the model — measured 2026-11-16). Measured 2026-11-10 (Claude Code 2.1.322), in the transcript's own record: in a
   session at high the steps after `effort: medium` ran at medium, the steps after `effort: xhigh` at xhigh.
 - **Before the thinking** <!-- CEO-OK: plan-warning-before-the-thinking-2026-10-12 -->. On each of his messages
-  the hook `dxb-effort-warn.py` tells the lead the session's own level and asks it to decide, before it thinks
-  about the substance, what the reply is; when the reply needs another level, opening that level's skill is the
-  lead's first action. A plan, a design or an architecture weighed at the wrong level is the failure this exists
-  for (2026-10-12). A report opens a turn too — a hand's, or a background command's: in a session below `high`,
+  the hook `dxb-effort-warn.py` tells the lead the session's own level and where the level goes down or up; in a
+  session whose own level is not `high`, or is not known, opening the skill of the level the reply needs is the
+  lead's first action, before it thinks about the substance. A plan, a design or an architecture weighed at the
+  wrong level is the failure this exists for (2026-10-12). A report opens a turn too — a hand's, or a background command's: in a session below `high`,
   or whose level is not known, the hook says then, in one line, that in a dxb-team3 job verifying it is managing
   (measured 2026-11-11: such a turn fell back to `medium`).
 - **He sees it.** In the reply where the level changes from the reply before, the lead opens with a few words
@@ -320,9 +324,9 @@ alone (STATE, the board) is checked by the rulers on commit instead.
   50 % used, hand over at the first clean break — the piece finished well, the tree committed, no
   battery running, the report sent — even when reaching it takes the session to about 60 %; never in
   the middle of a piece. The clean break and the quality decide, not the number; the lead judges it,
-  helpers included <!-- CEO-OK: handover-at-the-clean-break-2026-10-06 -->. At 60 % the gate refuses
-  the Agent tool: this session opens no new agent, finishes the piece in hand and hands over; the job
-  continues in the successor in full.
+  helpers included <!-- CEO-OK: handover-at-the-clean-break-2026-10-06 -->. The gate says its line
+  once at 50 % and once at 60 % and refuses nothing — the meter only informs (his word, 2026-11-10);
+  the job continues in the successor in full.
 - **The handover** is done by the engineer, never the CEO
   <!-- CEO-OK: handover-at-50-without-asking-2026-10-01 -->. A note in the scratchpad, in the author's
   own voice, whose first line tells the successor to open this door — `Skill("dxb-team3")` — before

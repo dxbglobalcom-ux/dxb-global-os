@@ -10,9 +10,11 @@ unclaimed asset in this holding.
 
 ## Authorship
 
-Every persona is written **personally and inline by the session's authorized author** — whichever
-model runs the session. A subagent may not write one, even a subagent running the same
-model. The HR factory does not author a first-generation persona.
+Every persona is signed by **one responsible author — the session's lead**, whichever model runs the
+session: it briefs the persona, reads every line and owns it. A Fable 5.2 writing seat may draft a persona
+from the lead's brief (his word of 2026-11-16 <!-- CEO-OK: section-e-his-rules-fixed-2026-11-16 -->): 199 employees need not pass through
+one context, and nothing reaches the files or the database that the lead has not read and signed. The HR
+factory does not author a first-generation persona.
 
 The database enforces it: `personas_author_check` accepts `opus-5 | fable-5 | hr-factory` only,
 and `scripts/sync-personas-to-db.sh` requires `DXB_PERSONA_AUTHOR` with **no default** — a silent
