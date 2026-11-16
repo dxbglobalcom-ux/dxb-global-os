@@ -36,7 +36,7 @@ uyarlama olarak yazıldı. Planın tamamı, Sol'un denetimi ve bulguları:
    imzalar. Birleştirmede güçlü plan temel alınır; öbüründe olup bunda eksik olan eklenir, "gereksiz" denip atılmaz,
    yalnız görüntüyü ya da sistemi bozuyorsa alınmaz; ikisinde aynısı varsa daha güzeli seçilir; eklenen her şey
    tarifin, bütçenin ve teslim tarihinin içinde kalır. Değerli
-   işin bütçesi anlaşmanın en fazla %30'udur. Aynı tür iş ikinci kez iyi bitince planı kalıp olur. İş bitince usta
+   işte harcama anlaşmanın %30'una varınca uyarı verilir, iş durmaz (28 Ekim 2026 sözü). Aynı tür iş ikinci kez iyi bitince planı kalıp olur. İş bitince usta
    dersini ilgili departmanın dolabına yazar. Kanal, gelir motoru, aylık paket ve holdingde açılan şirket gibi
    sürekli işler takvimi, bütçesi ve hedefi olan kalıcı bir sahibe bağlanır.
 3. **Kontrol ve kritik kapı.** Kontrol, işi tarifteki "bitti" ölçütüne göre gerçekten açıp çalıştırarak sınar;

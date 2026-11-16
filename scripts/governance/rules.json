@@ -45,8 +45,8 @@
   },
   "onboarding_read_order": {
     "owner": ".claude/skills/dxb-start/SKILL.md",
-    "fingerprint": "the smallest set",
-    "what": "The onboarding principle — read the smallest set that lets you act correctly."
+    "fingerprint": "read on as far as the job needs",
+    "what": "The onboarding principle — start from the set that lets you act correctly and read on as far as the job needs; the set is where to begin, not a limit on reading (his word, 2026-11-10)."
   },
   "first_reply_states_position": {
     "owner": ".claude/CLAUDE.md",
