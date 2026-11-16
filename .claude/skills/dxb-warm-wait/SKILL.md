@@ -1,13 +1,14 @@
 ---
 name: dxb-warm-wait
-description: Use when the CEO says "sıcak bekle" or hands the session work and goes (bed, out) — it carries the work on, cache warm, clock armed.
+description: Use when he says "sıcak bekle" or that he is away ("uzaktayım", "masa başında değilim", "yatıyorum") — carries the work on.
 ---
 
 # Away and warm — the session carries the work to its end by itself
 
 He gave the management of this to the session (CEO, 2026-11-13: "bu süreci yönetecek olan sizsiniz. Size
-devrediyorum" <!-- CEO-OK: away-session-manages-the-run-2026-11-13 -->). It opens when he says "sıcak bekle", and when he hands the session work and goes — to bed or
-out of the house.
+devrediyorum" <!-- CEO-OK: away-session-manages-the-run-2026-11-13 -->). It opens when he says "sıcak bekle", and whenever he says he is away, in any
+words — "uzaktayım", "masa başında değilim", "yatıyorum", "uykuya gidiyorum", "dışarı çıkıyorum": saying so is
+enough, and it is not only for sleep (CEO, 2026-11-16).
 
 **What it is for** — the two things he named.
 - *The cache must not go cold while the work is carried.* A session's prompt cache lasts one hour after its
