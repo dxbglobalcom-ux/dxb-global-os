@@ -47,6 +47,7 @@ The chain: camofox walks and collects the addresses → the reading chain reads 
 - Crash telemetry to the project's endpoint is off (`CAMOFOX_CRASH_REPORT_ENABLED=false`).
 - Runs in the machine's user-local virtual display (`~/.local/opt/xvfb`) — a real window nobody sees, not headless; Glassdoor opened only this way.
 - English locale, fixed (`CAMOFOX_LOCALE=en-US`): without it a site answers in the language of the exit IP.
+- Hidden means hidden: the start script (`/home/dxb/tools/camofox-start.sh`) unsets `WAYLAND_DISPLAY` and `DISPLAY` and sets `MOZ_ENABLE_WAYLAND=0` unless `CAMOFOX_INTERACTIVE=desktop` — with the Wayland display in its environment Firefox opened on his desktop instead of the virtual one (seen by him, fixed 2026-11-17 14:22; a page opened afterwards showed no window on his screen).
 - Cookie import from a file is off (it needs an API key). The sign-in road is the visible window above.
 
 ## Its limits, measured 2026-11-17 (v1.19.0)
