@@ -1,0 +1,14 @@
+OK  M0 no mutation (must pass): failed=0
+OK  M1 Flux doctrine returns: failed=1
+OK  M2 only-voice returns: failed=1
+OK  M3 no voice-over returns: failed=1
+OK  M4 1080 ceiling returns: failed=1
+OK  M5 engine-by-engine lost: failed=1
+OK  M6 voice criterion lost: failed=1
+OK  M7 no-face rule returns: failed=1
+OK  M8 four-step standard returns: failed=1
+OK  M9 only-when-he-asks returns: failed=1
+OK  M10 never-a-TTS returns: failed=1
+OK  M11 asked-at-that-job lost: failed=1
+OK  M12 enlarging before his eye: failed=1
+MUTATION_PROOF ALL_BITE
