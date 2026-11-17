@@ -275,7 +275,7 @@ def a_turn_during_the_wait_moves_the_ping():
 def watch_has_no_end():
     code, text, slept = run_with(["--watch"], 50)
     check("--watch pings when the cache is about to go cold",
-          (code, text.startswith("WARM_PING "), text.rstrip().endswith("| re-arm: scripts/ops/dxb-warm-wait --watch"), slept),
+          (code, text.startswith("WARM_PING "), text.rstrip().endswith(f"| re-arm: scripts/ops/dxb-warm-wait --watch --idle-since @{int(NOW)}"), slept),
           (0, True, True, [NOW + 55 * MIN]))
 
     working = transcript("working", [])
@@ -290,6 +290,70 @@ def watch_has_no_end():
           (0, True, True, [NOW + 55 * MIN, NOW + (60 + 2) * MIN]))
     code, text, slept = run_with(["--watch"], 97)
     check("--watch at 97 %: a ping", (text.startswith("WARM_PING "), slept), (True, [NOW + 55 * MIN]))
+
+
+# --- Ten quiet hours end a --watch (his number, CEO 2026-11-17: "10 saat sonra kapatsın"): the quiet is counted from
+# the last turn that was not a clock's own ping, and is carried from clock to clock on the re-arm line ---
+
+IDLE_SESSION = "0000cccc-test-4000-8000-tenquiethours"
+HOUR = 60 * MIN
+
+
+def watch_quiet_since(since, transcript_path=None, while_asleep=None, quota=50):
+    argv = ["--watch"] + ([] if since is None else ["--idle-since", since if isinstance(since, str) else f"@{int(since)}"])
+    os.environ["CLAUDE_CODE_SESSION_ID"] = IDLE_SESSION
+    try:
+        return run_with(argv + (["--transcript", transcript_path] if transcript_path else []), quota, while_asleep=while_asleep)
+    finally:
+        del os.environ["CLAUDE_CODE_SESSION_ID"]
+
+
+@section
+def ten_quiet_hours_end_a_watch():
+    said = os.path.join(RUNTIME, f"idle-over-{IDLE_SESSION}")
+    rearm = lambda since: f"| re-arm: scripts/ops/dxb-warm-wait --watch --idle-since @{int(since)}"
+
+    code, text, slept = watch_quiet_since(NOW - 9 * HOUR)
+    check("nine quiet hours: a ping, and the re-arm line carries when the quiet began",
+          (code, text.startswith("WARM_PING "), text.rstrip().endswith(rearm(NOW - 9 * HOUR)), slept, os.path.exists(said)),
+          (0, True, True, [NOW + 55 * MIN], False))
+
+    code, text, slept = watch_quiet_since(NOW - 9 * HOUR - 30 * MIN)
+    check("the tenth quiet hour ends before the next ping: IDLE_OVER at that moment, with the closing command",
+          (code, text.startswith("IDLE_OVER "), "10 h with no turn but the clock's own pings" in text,
+           text.rstrip().endswith("| close: scripts/ops/dxb-warm-wait --away off --idle"), slept, os.path.exists(said)),
+          (0, True, True, True, [NOW + 30 * MIN], True))
+    with open(os.path.join(RUNTIME, "warm-wait.log")) as lines:
+        check("the log says so", json.loads(lines.readlines()[-1])["event"], "idle_over")
+    os.remove(said)
+
+    came = transcript("came", [row("assistant", NOW - 20 * MIN)])
+    code, text, slept = watch_quiet_since(NOW - 9 * HOUR - 30 * MIN, came, lambda: add_row(came, row("assistant", NOW + 20 * MIN)))
+    check("somebody's turn in the tenth hour: the quiet starts again from it, and the ping follows that turn",
+          (text.startswith("WARM_PING "), text.rstrip().endswith(rearm(NOW + 20 * MIN)), slept, os.path.exists(said)),
+          (True, True, [NOW + 30 * MIN, NOW + 55 * MIN, NOW + 75 * MIN], False))
+
+    own = transcript("own", [row("assistant", NOW - 20 * MIN)])
+    code, text, slept = watch_quiet_since(NOW - 9 * HOUR - 30 * MIN, own, lambda: add_row(own, row("assistant", NOW + 1 * MIN)))
+    check("the end of the turn that armed the clock is not somebody's turn: the quiet goes on",
+          (text.startswith("IDLE_OVER "), slept), (True, [NOW + 30 * MIN]))
+    os.remove(said)
+
+    code, text, slept = watch_quiet_since(None)
+    check("a first arming: the quiet begins at it", (text.startswith("WARM_PING "), text.rstrip().endswith(rearm(NOW))), (True, True))
+    for name, since in (("a moment still to come", NOW + HOUR), ("no number", "@soon"), ("infinity", "@inf")):
+        code, text, slept = watch_quiet_since(since)
+        check(f"--idle-since {name}: the quiet begins at this arming", (code, text.rstrip().endswith(rearm(NOW)), slept), (0, True, [NOW + 55 * MIN]))
+    code, text, slept = run_with(["--watch", "--idle-since"], 50)
+    check("--idle-since with nothing after it is bad usage", code, 2)
+
+    code, text, slept = watch_quiet_since(NOW - 9 * HOUR - 30 * MIN, quota=99)
+    check("the quiet's end waits for room for the turn too, and is still said",
+          (text.startswith("IDLE_OVER "), "had no room for a turn" in text, slept), (True, True, [NOW + 30 * MIN, NOW + 62 * MIN]))
+    os.remove(said)
+
+    code, text, slept = run_with(["--for", "120"], 50)
+    check("a wait with an end has no quiet to count", (text.startswith("WARM_PING "), "idle" in text), (True, False))
 
 
 # --- The wake is not spent on a turn the quota would cut (Sol's A2, A3, C9 of 2026-11-13) ---
@@ -657,7 +721,7 @@ def a_real_watch_pings():
     watch = arm("--watch", PING_AFTER_S=2)
     out, _ = watch.communicate(timeout=20)
     check("the watch ended by itself with a ping",
-          (watch.returncode, out.startswith("WARM_PING "), out.rstrip().endswith("| the quota line | re-arm: scripts/ops/dxb-warm-wait --watch")), (0, True, True))
+          (watch.returncode, out.startswith("WARM_PING "), bool(re.search(r"\| the quota line \| re-arm: scripts/ops/dxb-warm-wait --watch --idle-since @\d+$", out.rstrip()))), (0, True, True))
     check("the watch waited its two seconds", time.time() - began >= 2, True)
     check("the clock file is gone", os.path.exists(clock_file()), False)
     check("status, after the ping", status(), "NOT_ARMED\nAWAY off\n")
@@ -864,6 +928,23 @@ def the_away_marker():
     check("--away off when it is not on: nothing to prove", off("whatever"), (0, "AWAY off\n", False))
     run("--away", "on")
     check("a message he sent while a turn was running is his too", off("kapat artık"), (0, "AWAY off\n", False))
+    # the ten quiet hours: away comes off without his words only after this session's own clock has said IDLE_OVER
+    said = os.path.join(RUNTIME, f"idle-over-{SESSION}")
+    run("--away", "on")
+    idle = run("--away", "off", "--idle")
+    check("--away off --idle before the clock said so is refused", (idle.returncode, idle.stdout, "has not said IDLE_OVER" in idle.stderr, os.path.exists(marker)), (2, "", True, True))
+    with open(said, "w") as handle:
+        handle.write("then\n")
+    os.utime(said, (time.time() - 100, time.time() - 100))
+    idle = run("--away", "off", "--idle")
+    check("an IDLE_OVER older than this away does not end it", (idle.returncode, "set again after" in idle.stderr, os.path.exists(marker)), (2, True, True))
+    os.utime(said)
+    idle = run("--away", "off", "--idle")
+    check("--away off --idle after the clock said so", (idle.returncode, idle.stdout, os.path.exists(marker), os.path.exists(said)), (0, "AWAY off\n", False, False))
+    with open(said, "w") as handle:
+        handle.write("then\n")
+    run("--away", "on")
+    check("--away on clears an older quiet's end", os.path.exists(said), False)
     with open(marker, "w") as broken:
         broken.write("no time\n")
     check("a marker that does not say when: his words anywhere in the session", off("geldim PC"), (0, "AWAY off\n", False))

@@ -18,7 +18,8 @@ enough, and it is not only for sleep (CEO, 2026-11-16).
   piece, the session waits warm for the reset and goes on in the same session.
 - *He comes back to a warm session.* The job's end is not the end of the wait: he may answer the questions the
   session left him, or go on with it, hours later. Away ends on his word that he is back — "geldim", "PC
-  başındayım", "kapat" — and on nothing else; the session never takes the marker off by its own judgement
+  başındayım", "kapat" — or ten hours after the last turn that was not the clock's own ping (his number: "10
+  saat sonra kapatsın"); the session never takes the marker off by its own judgement
   (CEO, 2026-11-17 <!-- CEO-OK: away-ends-only-on-his-word-2026-11-17 -->). Measured 2026-11-16: a session that
   had finished and asked him three questions closed away by this door's own last step, and his answer would
   have been paid for cold.
@@ -28,10 +29,10 @@ below is how it gets measured). A warm turn reads the context at 0.1 of the inpu
 it at 2.0. So a ping costs a twentieth of the cold start it saves, whatever the context's size, and pings pay
 until twenty of them would be needed — about eighteen hours. Every wait inside a 5-hour window pays (five
 pings at most); a wait for the week's reset does not, and the command stays cold through it by itself. While
-work is running (`--watch`) there is no count to make: each ping is weighed on its own. The same holds while
-he is away with the job finished: the count is not what ends the warm-keeping, his word is (step 7) — a
-ceiling written for it on 2026-11-17 was taken out the same day, because it let the cache go cold before he
-was back.
+work is running (`--watch`) there is no count to make: each ping is weighed on its own. What ends a `--watch`
+is his word (step 7) or ten quiet hours (step 8): the clock counts from the last turn that was somebody's —
+his message, a hand's report, a command's end — and carries that moment from clock to clock on the re-arm
+line, so a session he does not come back to stops costing by itself.
 
 ## The procedure
 
@@ -52,7 +53,7 @@ was back.
    audit: its own exit wakes the lead. Never a loop that waits for a line in a file, never a polling waiter:
    on 2026-11-13 such a loop waited from 02:18 for a line the battery wrote into another file, nothing else
    was armed, and the night's work stood for seven hours.
-4. **`WARM_PING … | re-arm: <command>`** — the cache was about to go cold. Run the re-arm command in the
+4. **`WARM_PING … | re-arm: <command>`** — the cache was about to go cold. Run the re-arm command, exactly as printed (it carries when the quiet began), in the
    background and end the turn in one short line; nothing else. The turn was the warm-keeping. This holds
    after the job is finished too, for as long as away is on.
 5. **The window cannot carry the next piece.** First ask whether the piece divides (dxb-team3 §3): the part
@@ -82,6 +83,10 @@ was back.
    when they are not there; it proves the words are his, and whether they say he is back is the session's
    reading. A message of his that does not say so leaves away on, and the clock goes on behind the talk. The
    one ping that comes after away is off is not re-armed.
+8. **`IDLE_OVER … | close: <command>`** — ten hours have passed with no turn but the clock's own pings. Nothing
+   is running: run the close command (`scripts/ops/dxb-warm-wait --away off --idle`, which the command takes
+   only after the clock has said so), arm nothing, end the turn in one short line. Work is still running — a
+   render, a hand — : arm `scripts/ops/dxb-warm-wait --watch` again; the ten hours are for a quiet session.
 
 ## What it cannot do
 
