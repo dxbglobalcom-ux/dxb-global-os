@@ -107,10 +107,10 @@ another, while he waits.
 ## 2. Effort — the session sets its own level
 
 The session sets its own level by the course of the talk; he does not switch it and is never asked to
-<!-- CEO-OK: session-sets-its-own-effort-2026-11-10 -->. The session works at `high`
-(2026-11-16 <!-- CEO-OK: section-e-his-rules-fixed-2026-11-16 -->) — where its saved level is lower the hook says
-so and the session lifts itself; plain talk — a simple question, a fact, a reading, a record — may run at
-`medium`; an evaluation that carries weight — weighing, comparing, judging which is better — is part of planning and
+<!-- CEO-OK: session-sets-its-own-effort-2026-11-10 -->. The session's level is `medium`, its saved default
+(2026-11-17 <!-- CEO-OK: effort-default-medium-high-for-design-and-decisions-2026-11-17 -->): talk — a question, an
+exchange of ideas, a fact, a reading, a record — runs there, and for everything named below the hook says so and
+the session lifts itself; an important decision runs at `high`; an evaluation that carries weight — weighing, comparing, judging which is better — is part of planning and
 runs at `high`, an easy one is the session's call by what an error costs (his word, 2026-11-16); managing — the lead opens a hand, writes a brief or verifies a piece that came back — at `high`, with
 `xhigh` open while it thinks through who does what <!-- CEO-OK: dxb-team3-orchestrator-six-points-2026-11-11 -->;
 a plan, a design, an architecture, the build, the fixes and the tests at `high`; a truly complex, important
