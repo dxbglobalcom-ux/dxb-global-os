@@ -13,7 +13,8 @@ the warm-keeping itself. The session then runs the line this command printed, an
   dxb-warm-wait --until @1794500000   the same, as epoch seconds (what a re-arm line carries)
   dxb-warm-wait --for 90           wait that many minutes
   dxb-warm-wait --status           at once: is a clock armed, and is the session marked away
-  dxb-warm-wait --away on|off      mark the session as left to work alone (dxb-away-gate.py reads it)
+  dxb-warm-wait --away on          mark the session as left to work alone (dxb-away-gate.py reads it)
+  dxb-warm-wait --away off "<his words>"   he is back: his own words say so, and nothing else ends away
 
 The cache goes cold 55 minutes after the session's LAST TURN, not after the arming: the turn
 is read from the session's transcript ($CLAUDE_CODE_SESSION_ID's, or --transcript PATH), and a
@@ -32,6 +33,10 @@ a reading of it (one not known leaves the two windows to decide, as before). A f
 to its reset (the latest one when more are full); a quota that cannot be read is read again every
 minute, in here, and after 5 h 10 min the session is woken all the same. It also stays asleep through pings when so many
 would be needed that a cold start is cheaper. Each of these is said on WAIT_OVER as `cold: ...`.
+A --watch counts the pings it makes one after the other with no other turn between them -- hours in
+which nothing happened at all, written down in warm-pings-<session>.json -- and makes the nineteenth
+its last: the twentieth would bring them to the price of the cold start they save. It then sleeps on,
+waking nobody, and pings again from the session's next turn, whoever causes it.
 Exit 2: bad usage, or --until-reset with no 5-hour reset ahead in the record.
 Exit 3: ALREADY_ARMED ... -- the session's clock is running; only --until-reset may be armed
 over a --watch. --status first: ARMED <mode> pid <n>, next ping <HH:MM> or NOT_ARMED, then
@@ -59,7 +64,7 @@ import sys
 import time
 
 USAGE = ("usage: dxb-warm-wait (--watch | --until-reset | --until HH:MM | --until @EPOCH | --for MINUTES) [--transcript PATH]\n"
-         "       dxb-warm-wait --status [--transcript PATH] | --away (on | off)")
+         "       dxb-warm-wait --status [--transcript PATH] | --away on | --away off \"<his words that he is back>\"")
 
 
 def test_knob(name, real):
@@ -80,6 +85,9 @@ BLIND_CEILING_MIN = 310  # ... and after 5 h 10 min the session is woken all the
 #                          then, and with a week that cannot be read the session, awake, decides
 STEP_S = test_knob("STEP_S", 20)  # the clocks are asked this often, so a suspended machine wakes on time
 NO_END = math.inf       # --watch: the wait has no end of its own
+IN_A_ROW = 1.1          # two pings are one after the other when no more than this many ping lengths lie between them:
+#                         the ping's own turn takes seconds, any other turn moves the next ping an hour on
+COLD_LOOK_S = 5 * 60    # a --watch that has stopped pinging looks this often for the session's next turn
 TRANSCRIPT_TAIL_BYTES = 256 * 1024  # as much of the transcript as dxb-statusline.js reads
 QUOTA_LINE_TIMEOUT_S = test_knob("QUOTA_LINE_TIMEOUT_S", 20)  # dxb-quota's line is only shown: the wake waits no longer for it
 LOCK_PATIENCE_S = test_knob("LOCK_PATIENCE_S", 10)  # an arming waits this long for the clocks' folder, never without an end
@@ -330,6 +338,37 @@ def warm_since(transcript, armed_at):
     return armed_at if last is None or last > wall_clock() else max(armed_at, last)
 
 
+# The pings a session's --watch clocks have made in a row. A ping wakes the session, the session arms the
+# next clock in that same turn, and the next ping comes 55 minutes after it: two pings with nothing between
+# them lie one ping length and that turn's seconds apart. Any other turn -- his word, a hand's report, a
+# command's end -- moves the next ping on, and the row starts again.
+def streak_file(session):
+    return os.path.join(RUNTIME, f"warm-pings-{session}.json")
+
+
+def pings_in_a_row(session, now):
+    """How many pings ended with the one just before this moment, with no other turn since; 0 when not known."""
+    if not session:
+        return 0
+    try:
+        with open(streak_file(session)) as handle:
+            streak = json.load(handle)
+        count, at = streak["count"], streak["at"]
+        return count if isinstance(count, int) and is_number(at) and 0 <= now - at <= PING_AFTER_S * IN_A_ROW else 0
+    except (OSError, ValueError, LookupError, TypeError):
+        return 0
+
+
+def count_ping(session, now):
+    """Write down the ping made now, on top of the row it continues."""
+    if not session:
+        return
+    with contextlib.suppress(OSError):  # a count that cannot be kept starts again: the clock errs towards warm
+        count = pings_in_a_row(session, now) + 1
+        with open(streak_file(session), "w") as handle:
+            json.dump({"count": count, "at": now}, handle)
+
+
 # One clock per session. The clock writes itself down in clock_file() -- {"pid", "session", "started",
 # "mode", "armed_at", "until"} -- and that record is the session's clock only while is_clock() says so.
 # The away marker is away_file(). dxb-away-gate.py reads both files by the same names and the same
@@ -496,6 +535,15 @@ def sleep_until_room(session, seen):
         sleep_until(wake, session)
 
 
+def sleep_cold_until_a_turn(session, transcript, armed_at, warm):
+    """Sleep on, waking nobody, until the session has made a turn after `warm`: when that turn was."""
+    while True:
+        sleep_until(wall_clock() + COLD_LOOK_S, session)
+        newer = warm_since(transcript, armed_at)
+        if newer > warm:
+            return newer
+
+
 def sleep_to_wake(mode, target, armed_at, session, transcript, quota):
     """Sleep to the wait's end, or to the moment the cache is about to go cold; the line that says which.
 
@@ -513,9 +561,15 @@ def sleep_to_wake(mode, target, armed_at, session, transcript, quota):
             wake, over = next_wake(warm, target)
             sleep_until(wake, session)
             newer = warm_since(transcript, armed_at)
-            if over or newer <= warm:
+            if not over and newer > warm:
+                warm = newer  # a turn came meanwhile and warmed the cache by itself: the ping moves with it
+                continue
+            if over or target != NO_END or worth_keeping_warm(pings_in_a_row(session, wall_clock()) + 1):
                 break
-            warm = newer  # a turn came meanwhile and warmed the cache by itself: the ping moves with it
+            # nothing but pings for so long that one more brings them to the cold start's price: the session
+            # is left asleep and cold, and is kept warm again from its next turn
+            log("cold", mode, quota)
+            warm = sleep_cold_until_a_turn(session, transcript, armed_at, warm)
 
     while True:
         quota, no_room_note = sleep_until_room(session, quota)
@@ -532,6 +586,7 @@ def sleep_to_wake(mode, target, armed_at, session, transcript, quota):
         return f"WAIT_OVER {clock(wall_clock())}{stayed_cold} | {line}"
     log("ping", mode, quota)
     if target == NO_END:
+        count_ping(session, wall_clock())
         return f"WARM_PING {clock(wall_clock())} — work is running, no end set | {line} | re-arm: scripts/ops/dxb-warm-wait --watch"
     left = round((target - wall_clock()) / 60)
     return (f"WARM_PING {clock(wall_clock())} — {left} min to go, until {clock(target)} | {line} | "
@@ -576,8 +631,18 @@ def status(session, transcript):
 
 
 def set_away(session, switch):
-    """--away on|off: write or remove the marker that says the session was left to work alone."""
-    if switch not in (["on"], ["off"]):
+    """--away on, --away off "<his words>": write or remove the marker that says the session was left to work alone.
+
+    The marker is his: he says he is away, and only his saying that he is back, or that it be closed, takes
+    it off (CEO, 2026-11-17) -- never the session's own judgement that the work is finished. So `off` asks
+    for his words, and they go into the log beside the hour.
+    """
+    his_words = switch[1].strip() if len(switch) == 2 and switch[0] == "off" else ""
+    if switch == ["off"] or (switch[:1] == ["off"] and not his_words):
+        print("dxb-warm-wait: away ends only on his word that he is back -- a finished job does not end it, the clock "
+              "stays armed. When he has said so: --away off \"<his words>\"", file=sys.stderr)
+        return 2
+    if switch != ["on"] and not his_words:
         print(USAGE, file=sys.stderr)
         return 2
     if not session:
@@ -590,6 +655,9 @@ def set_away(session, switch):
     else:
         with contextlib.suppress(FileNotFoundError):
             os.remove(away_file(session))
+        with contextlib.suppress(OSError), open(LOG, "a") as handle:
+            handle.write(json.dumps({"ts": datetime.datetime.now().isoformat(timespec="seconds"), "event": "away_off",
+                                     "his_words": his_words}, ensure_ascii=False) + "\n")
     print(f"AWAY {switch[0]}")
     return 0
 

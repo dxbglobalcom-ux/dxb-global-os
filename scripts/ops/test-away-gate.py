@@ -136,7 +136,9 @@ for name, raw in (("not JSON", "{not json"), ("nothing", ""), ("not an object", 
     check(f"broken input, {name}", (code, out, err.startswith("dxb-away-gate: "), err.count("\n")), (0, "", True, 1))
 
 # Away off: silent again.
-check("--away off", warm_wait("--away", "off").returncode, 0)
+check("--away off without his words is refused, and the gate still holds", (warm_wait("--away", "off").returncode, blocked(stop())), (2, True))
+check("the gate says away ends on his word, the job's end not", "also when the job is finished" in json.loads(stop()[1])["reason"], True)
+check("--away off", warm_wait("--away", "off", "geldim").returncode, 0)
 check("marker removed", stop(), SILENT_PASS)
 
 if failed:

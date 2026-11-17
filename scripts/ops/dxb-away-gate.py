@@ -5,7 +5,10 @@ The night of 2026-11-13 a session he had left working went to sleep on a hand-wr
 waited for a line in the wrong file; nothing else was armed, nothing woke it, and seven hours
 were lost. His word that morning: "böyle bir hata kesinlikle kabul edilemez". A session he leaves
 is marked with `dxb-warm-wait --away on`, and from then until `--away off` this hook holds one
-thing at the end of every turn: the session's warm-wait clock is running.
+thing at the end of every turn: the session's warm-wait clock is running. Away ends on his word
+that he is back and on nothing else (CEO, 2026-11-17): on 2026-11-16 a session that had finished
+its job and asked him three questions took the marker off by itself, its cache went cold, and his
+answer would have been paid for at the cold price.
 
   * no away marker for this session       -> the stop goes through, nothing said (every turn of
                                              every session ends here, so this is the short way)
@@ -36,10 +39,10 @@ import os
 import sys
 
 RUNTIME = os.path.join(os.environ.get("XDG_RUNTIME_DIR") or "/tmp", "claude-ctx")
-ASK = ("Away is on and no warm-wait clock is armed, so nothing would wake this session. Arm "
-       "`scripts/ops/dxb-warm-wait --watch` in the background (`--until-reset` when waiting for the "
-       "5-hour window); or, only when every piece of the job is finished, recorded and told, close "
-       "with `scripts/ops/dxb-warm-wait --away off`.")
+ASK = ("Away is on and no warm-wait clock is armed, so nothing would wake this session and its cache "
+       "would be cold when he comes back. Arm `scripts/ops/dxb-warm-wait --watch` in the background "
+       "(`--until-reset` when waiting for the 5-hour window) -- also when the job is finished and told: "
+       "away ends only on his own word that he is back, `scripts/ops/dxb-warm-wait --away off \"<his words>\"`.")
 
 
 def started(pid):
