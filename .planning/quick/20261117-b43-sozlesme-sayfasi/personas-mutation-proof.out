@@ -11,4 +11,9 @@ OK  M9 only-when-he-asks returns: failed=1
 OK  M10 never-a-TTS returns: failed=1
 OK  M11 asked-at-that-job lost: failed=1
 OK  M12 enlarging before his eye: failed=1
+OK  M13 presenters-from-drawings returns (Sol A1): failed=1
+OK  M14 drawn client-facing human returns (Sol A1): failed=1
+OK  M15 external-routes-only returns (Sol A2): failed=1
+OK  M16 one chosen source is today rule (Sol B2, must pass): failed=0
+OK  M17 consent condition is today rule (Sol B2, must pass): failed=0
 MUTATION_PROOF ALL_BITE

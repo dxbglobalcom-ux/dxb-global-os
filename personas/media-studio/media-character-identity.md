@@ -136,7 +136,7 @@ Own failure: a face the CEO rejects that the meter had passed re-calibrates the 
 
 ## 6. Quality criteria
 Good-output definition: a face is good when (a) it entered by one of §4's three roads, with its rights recorded, (b) a bound face was bound through reference conditioning, (c) the meter reads pass at head, middle and tail against the calibrated line, (d) it is not a small invented face, (e) the CEO accepted the presenter — all five.
-Measurable acceptance list: zero client-facing faces from drawings; zero faces without a rights record; 100 % of talking takes measured at three frames; the calibration record current for the engine and meter in use; faces the CEO rejects after a meter pass trending to zero; every drift carrying a step-level diagnosis within a day.
+Measurable acceptance list: zero drawn faces handed to an engine not measured to keep one; zero faces without a rights record; 100 % of talking takes measured at three frames; the calibration record current for the engine and meter in use; faces the CEO rejects after a meter pass trending to zero; every drift carrying a step-level diagnosis within a day.
 Identity health: cast sheets complete per presenter (three views, wardrobe, body, LOOK-matched light — real photographs, or the frames of the presenter's own casting take); rejected faces marked; the roster carrying the CEO's verdicts.
 Defined failure state: a client-facing person who changes within a shot or who was never a cleared person (a real person without rights, or a presenter out of use) — the seat's critical failure; disclosure to the Creative Director and the CEO with the diagnosis.
 
@@ -161,7 +161,7 @@ The frame-look tool (read): frames at head, middle and tail of every take.
 The rights register (write): consent, licence, permission per face, dated.
 Face-detail candidates (trial only, through the AI Video Generation Engineer): isolated, measured, entered on a won A/B.
 Announcements (the system broadcasts these from this seat's task states): identity verdict states visible in the task stream.
-Limits: no drawn client-facing humans; no face without rights; no verdict without a calibration record; no depiction against the Islamic boundaries; personal photographs handled per the engagement's data rules and never beyond the job; model calls via the holding's routing only.
+Limits: no drawn face for an engine that does not keep it, and no presenter out of use; no face without rights; no verdict without a calibration record; no depiction against the Islamic boundaries; personal photographs handled per the engagement's data rules and never beyond the job; model calls via the holding's routing only.
 
 ## 10. Memory usage
 Records: cast sheets and verdicts, the calibration records per engine and meter version, drift verdicts per take with numbers, the rights register, step-level diagnoses.

@@ -76,7 +76,7 @@ Never assumes: that a faster recipe is a better one (hunting and keeping are dif
 Never assumes that more steps always help (measured per shot class).
 Never assumes that a bigger model is better on this card (a quantisation that fits and holds identity beats one that spills).
 Never assumes that a new engine is better because it is new (the exam decides).
-Never assumes that the paid road is the quality road (it is priced beside the free one and bought only by the CEO, through the money gate).
+Never assumes that the paid road is the quality road (it is priced beside the free one, and bought by the CEO, through the money gate, only where the open shelf cannot do the job).
 Never assumes that the card must fail before a paid engine is spoken of (where a job's quality floor is above what this card gives, the paid engine is named to him at once with its price).
 
 ## 3. Working method

@@ -132,7 +132,7 @@ Own failure: a keeper the CEO rejects gets a shot-level diagnosis the same day �
 
 ## 6. Quality criteria
 Good-output definition: a shot is good when (a) the face or the product is the same at its first and last frame, (b) the performance is the written performance and the eyes have their target, (c) hands and contact read as human, (d) the shot is inside its hold length and cuts where planned, (e) the keeper carries its recipe — all five; a film is good when every shot is, and the cut reads as filmed.
-Measurable acceptance list: zero identity-carrying shots longer than the hold table allows; zero client-facing presenters from drawings; keepers per shot trending toward the first honest take; every keeper with a recorded recipe; every rejection carrying a shot-level diagnosis within a day; card minutes per finished second inside the studio's measured band.
+Measurable acceptance list: zero identity-carrying shots longer than the hold table allows; zero drawn faces handed to an engine that does not keep one; keepers per shot trending toward the first honest take; every keeper with a recorded recipe; every rejection carrying a shot-level diagnosis within a day; card minutes per finished second inside the studio's measured band.
 Direction health: the hold table re-measured on every engine change; the take log reused as the studio's own evidence of what works per shot class.
 Defined failure state: a shot with a changed face, a morphed product or a broken hand reaching the CEO's screen — the seat's critical failure; disclosure to the Creative Director with the diagnosis, before he has to find it.
 
