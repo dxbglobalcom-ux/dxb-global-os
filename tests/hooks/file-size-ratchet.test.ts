@@ -7,7 +7,7 @@ import { execFileSync, spawnSync } from 'node:child_process';
 import { mkdtempSync, writeFileSync, mkdirSync, readFileSync, renameSync, symlinkSync, appendFileSync, copyFileSync, chmodSync, existsSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join, resolve } from 'node:path';
-import { judged, message, parseRaw, tokens, verdicts } from '../../scripts/hooks/file-size-ratchet.mjs';
+import { blocks, judged, message, note, parseRaw, tokens, verdicts } from '../../scripts/hooks/file-size-ratchet.mjs';
 
 const SCRIPT = resolve(__dirname, '../../scripts/hooks/file-size-ratchet.mjs');
 const PRE_COMMIT = resolve(__dirname, '../../scripts/hooks/pre-commit');
@@ -36,10 +36,27 @@ describe('file-size ratchet — the verdicts, in plain numbers', () => {
     expect(verdicts([{ path: 'a.ts', before: null, after: 20000 }])).toEqual([]);
     expect(verdicts([{ path: 'a.ts', before: null, after: 20001 }])).toEqual([{ path: 'a.ts', kind: 'new', before: 0, after: 20001 }]);
   });
-  it('lets a large file be edited, moved or shrunk, and stops it growing by one byte', () => {
+  it('lets a large file be edited, moved or shrunk, and names its growth without stopping it', () => {
     expect(verdicts([{ path: 'b.ts', before: 60000, after: 60000 }])).toEqual([]);
     expect(verdicts([{ path: 'b.ts', before: 60000, after: 59000 }])).toEqual([]);
-    expect(verdicts([{ path: 'b.ts', before: 60000, after: 60001 }])[0].kind).toBe('grew');
+    const grew = verdicts([{ path: 'b.ts', before: 60000, after: 60001 }]);
+    expect(grew).toEqual([{ path: 'b.ts', kind: 'grew', before: 60000, after: 60001 }]);
+    expect(grew.filter(blocks)).toEqual([]);
+    expect(note(grew)).toContain('b.ts');
+    expect(note(grew)).toContain('60000 → 60001 bayt');
+    expect(note(grew)).toContain('durdurulmadı');
+  });
+  it('stops only a new large file and a file crossing the limit', () => {
+    const all = [
+      { path: 'a.ts', kind: 'new', before: 0, after: 20001 },
+      { path: 'b.ts', kind: 'grew', before: 20001, after: 90000 },
+      { path: 'c.ts', kind: 'crossed', before: 20000, after: 20001 },
+    ];
+    expect(all.filter(blocks).map((f) => f.path)).toEqual(['a.ts', 'c.ts']);
+  });
+  it('a large file that shrank under the limit is bound again from then on', () => {
+    expect(verdicts([{ path: 'b.ts', before: 60000, after: 19000 }])).toEqual([]);
+    expect(verdicts([{ path: 'b.ts', before: 19000, after: 20001 }]).filter(blocks).length).toBe(1);
   });
   it('stops a file at the step that takes it over the limit, however small the step', () => {
     expect(verdicts([{ path: 'c.ts', before: 19999, after: 20000 }])).toEqual([]);
@@ -52,17 +69,15 @@ describe('file-size ratchet — the verdicts, in plain numbers', () => {
   it('says the bytes, which case it is, and how to split', () => {
     const text = message([
       { path: 'a.ts', kind: 'new', before: 0, after: 40001 },
-      { path: 'b.ts', kind: 'grew', before: 20001, after: 20002 },
       { path: 'c.ts', kind: 'crossed', before: 19000, after: 20500 },
     ]);
     expect(text).toContain('en az 3 parçaya');
-    expect(text).toContain('20001 → 20002 bayt');
-    expect(text).toContain('+1 bayt');
+    expect(text).toContain('19000 → 20500 bayt');
+    expect(text).not.toContain('BÜYÜDÜ');
     expect(text).toContain('sınırın 500 bayt üstünde');
     expect(text).toContain('SORUMLULUĞA göre');
     expect(text).toContain('yorum SİLİNMEZ');
     expect(text).toContain('eski yolunu da aynı commit');
-    expect(text).toContain('eski dosyanın toplam boyutu artmamalı');
     expect(text).toContain('acil bir hata düzeltmesi');
     expect(text).toContain('--no-verify kullanılmaz');
   });
@@ -120,7 +135,7 @@ describe('file-size ratchet — on real staged changes', () => {
     expect(run(dir).status).toBe(0);
   });
 
-  it('lets a large file be moved unchanged, and stops it when the move also grows it', () => {
+  it('lets a large file be moved unchanged, and lets it through with a note when the move also grows it', () => {
     const dir = repo();
     renameSync(join(dir, 'src/old big.ts'), join(dir, 'src/moved.ts'));
     git(dir, 'add', '-A');
@@ -130,8 +145,33 @@ describe('file-size ratchet — on real staged changes', () => {
     appendFileSync(join(dir, 'src/moved.ts'), '// one more line\n');
     git(dir, 'add', '-A');
     const grown = run(dir);
-    expect(grown.status).toBe(1);
-    expect(grown.stderr).toContain('BÜYÜDÜ');
+    expect(grown.status).toBe(0);
+    expect(grown.stderr).toContain('src/moved.ts');
+    expect(grown.stderr).toContain('durdurulmadı');
+  });
+
+  it('lets an already large file grow in place, and still stops a new large file staged beside it', () => {
+    const dir = repo();
+    appendFileSync(join(dir, 'src/old big.ts'), '// three more\n'.repeat(3));
+    git(dir, 'add', '-A');
+    const grown = run(dir);
+    expect(grown.status).toBe(0);
+    expect(grown.stderr).toContain('src/old big.ts');
+    expect(grown.stderr).not.toContain('COMMIT DURDURULDU');
+    writeFileSync(join(dir, 'src/new big.ts'), BIG);
+    git(dir, 'add', '-A');
+    const both = run(dir);
+    expect(both.status).toBe(1);
+    expect(both.stderr).toContain('YENİ      src/new big.ts');
+  });
+
+  it('stops a small file at the commit that takes it over the limit', () => {
+    const dir = repo();
+    writeFileSync(join(dir, 'src/small.ts'), BIG);
+    git(dir, 'add', '-A');
+    const out = run(dir);
+    expect(out.status).toBe(1);
+    expect(out.stderr).toContain('SINIRI GEÇTİ src/small.ts');
   });
 
   it('stops a copy of a large file, with copy detection on or off', () => {

@@ -2,9 +2,14 @@
 // The file-size ratchet (his yes, 2026-11-17; row w042 of the 24 Sep - 16 Nov WhatsApp tab).
 //
 // Every session reads a code file whole, so a large file costs context on every job and is
-// where edits go wrong. The ratchet turns one way only:
+// where edits go wrong. The rule binds what is made from now on and leaves the old alone
+// (his word, 2026-11-17 evening, after the replay: the first form — "a large file may not
+// grow" — would have stopped one commit in seven):
 //   - a NEW code file may not enter the repository above LIMIT_TOKENS;
-//   - a code file that is already above it may be edited, moved or shrunk, but may not GROW.
+//   - a code file under the limit may not be taken OVER it;
+//   - a code file that was already above it is left alone: it may be edited, moved, shrunk or
+//     grown. Its growth is named in one line and stops nothing. The large files are a closed
+//     list: nothing joins it, and one that shrinks under the limit is bound from then on.
 // Tokens are estimated as bytes / 4 — coarse, and the same for everyone.
 //
 // It reads the staged change as git itself records it (`git diff --cached --raw`: the old and
@@ -46,8 +51,18 @@ const REGULAR = new Set(['100644', '100755']);
 export const judged = (path) => CODE.test(path) && !OUTSIDE.some((re) => re.test(path));
 export const tokens = (bytes) => Math.ceil(bytes / BYTES_PER_TOKEN);
 
+/** A finding stops the commit unless it is the growth of a file that was already large. */
+export const blocks = (finding) => finding.kind !== 'grew';
+
+/** The one line said, without stopping anything, when already large files grew. */
+export function note(grown) {
+  const list = grown.map((f) => `${f.path} (${f.before} → ${f.after} bayt, ~${tokens(f.after)} token)`).join(', ');
+  return `dosya boyutu cırcırı: durdurulmadı — zaten büyük dosya büyüdü: ${list}. `
+    + 'Yeni kod yeni dosyaya yazılırsa bu dosya her işte daha az bağlam yer.';
+}
+
 /**
- * One finding per staged file that breaks the ratchet.
+ * One finding per staged file above the limit that is new, crossed it, or grew.
  * `before` is the bytes of the file it was before this commit — for a moved file, the file it
  * was moved from — and null when there was none (a new file, a copy).
  */
@@ -67,8 +82,7 @@ export function message(found) {
     const size = `${f.after} bayt (~${tokens(f.after)} token)`;
     if (f.kind === 'new') lines.push(`  YENİ      ${f.path} — ${size}; en az ${Math.ceil(f.after / LIMIT_BYTES)} parçaya bölünür`
       + ' (bu dosyayı yalnız TAŞIDIYSAN: eski yolunu da aynı commit\'e kat, o zaman taşıma olarak okunur)');
-    else if (f.kind === 'crossed') lines.push(`  SINIRI GEÇTİ ${f.path} — ${f.before} → ${size}; sınırın ${f.after - LIMIT_BYTES} bayt üstünde`);
-    else lines.push(`  BÜYÜDÜ    ${f.path} — ${f.before} → ${size}, +${f.after - f.before} bayt; zaten büyük bir dosya büyüyemez`);
+    else lines.push(`  SINIRI GEÇTİ ${f.path} — ${f.before} → ${size}; sınırın ${f.after - LIMIT_BYTES} bayt üstünde`);
   }
   lines.push(
     'Nasıl bölünür — boyuta göre değil, SORUMLULUĞA göre:',
@@ -78,8 +92,7 @@ export function message(found) {
     '     aktaran ince giriş noktası kalır; betik, CSS ya da çalıştırılan giriş dosyasında çağıranları yeni yola çevir;',
     '     yeni parça eski dosyayı geri içe aktarmaz (döngü olmasın);',
     '  4. testleri koş.',
-    'Zaten büyük bir dosyaya ekleme yapacaksan: yeni kodu yeni dosyaya yaz ve eski dosyadan, eklediğin bağlantı',
-    'satırlarından fazlasını yeni dosyaya taşı — eski dosyanın toplam boyutu artmamalı.',
+    'Sınırı geçen dosyada en kısa yol: eklediğin yeni kodu yeni bir dosyaya yaz, eski dosya sınırın altında kalsın.',
     'Sınırdan kaçmak için dosya muaf bir klasöre taşınmaz, uzantısı değiştirilmez, --no-verify kullanılmaz.',
     'Bölmenin şimdi yanlış olduğu iki durum var — acil bir hata düzeltmesi ve eski büyük sürüme geri dönüş:',
     'o zaman DXB_SKIP_SIZE=1 ile geçilir, raporda söylenir ve dosyanın bölünmesi sonraki iş olarak yazılır.', '');
@@ -161,5 +174,8 @@ if (process.argv[1] && direct()) {
     console.error('Dosyaların boyutu ölçülemedi; sorun git tarafında. Giderilemiyorsa DXB_SKIP_SIZE=1 ile geçilir, raporda söylenir.\n');
     process.exit(1);
   }
-  if (found.length) { console.error(message(found)); process.exit(1); }
+  const stops = found.filter(blocks);
+  const grown = found.filter((f) => !blocks(f));
+  if (grown.length) console.error(note(grown));
+  if (stops.length) { console.error(message(stops)); process.exit(1); }
 }

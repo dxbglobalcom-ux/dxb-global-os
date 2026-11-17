@@ -77,3 +77,20 @@ file (median +1,429 bytes), 37 a file crossing the limit, 36 a new large file; 5
 (about 423 lines); the 101 files above it are 10.5 % of the files and hold 42.1 % of the judged bytes.
 
 Tests after both passes: `tests.out` — 20/20; typecheck clean.
+
+## The rule after his decision (2026-11-17 evening, session 256bdf75)
+
+He chose the form that binds the new and leaves the old alone (ledger
+`file-size-ratchet-binds-the-new-leaves-the-old-2026-11-17`). A new code file above 20,000 bytes and a
+smaller file taken over the limit are stopped; a file that was already above it may grow — one line
+names the growth and nothing is stopped. The large files are a closed list.
+
+Replayed with the guard as it stands over the commits from 2026-09-01 to the guard's parent
+(`git log --no-merges`, 1,140-1,141 by the minute it is run): the first form stops 165 (14.5 % — the
+15.0 % above was measured before `.planning/` went outside the rule), this form 48 (4.2 %; 37 crossings
+and 27 new large files among their findings). By area the first form's 345 findings were tests 157,
+`.claude` 108, packages 36, tools 22, scripts 21, apps 1 — the foundation and the dashboard are a small
+part of them, so the rebuild is not what removes the friction.
+
+Tests: 24 of 24 (`tests/hooks/file-size-ratchet.test.ts`), written red first (5 red); typecheck clean.
+Open with him: his "commit hiç durmasın" — the two stops that remain could be a warning instead.
