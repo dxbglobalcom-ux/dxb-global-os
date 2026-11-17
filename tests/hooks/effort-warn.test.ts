@@ -5,7 +5,7 @@
 // and normal work at medium; a plan, a design, an architecture, an evaluation that carries weight, an important
 // decision, "how do we do this" and "what do you recommend", heavy code and managing at high; a truly complex,
 // important job at xhigh; max is not used.
-// The level is carried by three small skills
+// The level is carried by four small skills
 // (`dxb-effort-low`, `dxb-effort-medium`, `dxb-effort-high`, `dxb-effort-xhigh`) whose `effort` field sets the turn they are
 // opened in, in the background. On each of his messages the hook tells the lead the session's own level
 // and where the level goes down or up; a session whose own level is not high is told to open
