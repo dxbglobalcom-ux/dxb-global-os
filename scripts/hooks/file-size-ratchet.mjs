@@ -25,11 +25,15 @@
 //
 // Known limits: a commit amended after a shrink is compared with the commit it amends; a file
 // moved and rewritten beyond git's rename similarity reads as new; a merge can take a file over
-// the limit unjudged.
+// the limit unjudged. "New" and "already large" are read from the commit's last picture, path by
+// path: an already large path whose content is replaced whole in one commit — deleted and written
+// again, or a small file moved onto it — reads as that large file edited, and may grow.
 //
 // Called by scripts/hooks/pre-commit. Exit 0 = pass, 1 = blocked (or the guard itself failed,
 // said plainly). DXB_SKIP_SIZE=1 lets one commit through; say so in the commit's report. Every
-// escape is one line in ~/.local/state/dxb/size-escapes.log, so how often it is used can be counted.
+// escape, every stop and every growth of an already large file is one line in
+// ~/.local/state/dxb/size-{escapes,stops,growth}.log, so what the rule does can be counted
+// (`node scripts/ops/dxb-size-report.mjs`). A stopped commit that is tried again is logged again.
 
 import { execFileSync } from 'node:child_process';
 import { appendFileSync, existsSync, mkdirSync, realpathSync } from 'node:fs';
@@ -54,9 +58,15 @@ export const tokens = (bytes) => Math.ceil(bytes / BYTES_PER_TOKEN);
 /** A finding stops the commit unless it is the growth of a file that was already large. */
 export const blocks = (finding) => finding.kind !== 'grew';
 
+/** A path as it is shown and logged: one with a control character in it is quoted, so it stays on its line. */
+export const shown = (path) => (/[\x00-\x1f\x7f]/.test(path) ? JSON.stringify(path) : path);
+
+/** A finding as one log item: `kind:before:after:path`. */
+export const item = (f) => `${f.kind}:${f.before}:${f.after}:${shown(f.path)}`;
+
 /** The one line said, without stopping anything, when already large files grew. */
 export function note(grown) {
-  const list = grown.map((f) => `${f.path} (${f.before} → ${f.after} bayt, ~${tokens(f.after)} token)`).join(', ');
+  const list = grown.map((f) => `${shown(f.path)} (${f.before} → ${f.after} bayt, ~${tokens(f.after)} token)`).join(', ');
   return `dosya boyutu cırcırı: durdurulmadı — zaten büyük dosya büyüdü: ${list}. `
     + 'Yeni kod yeni dosyaya yazılırsa bu dosya her işte daha az bağlam yer.';
 }
@@ -80,9 +90,9 @@ export function message(found) {
   const lines = ['', `COMMIT DURDURULDU — dosya boyutu cırcırı (sınır ${LIMIT_TOKENS} token = ${LIMIT_BYTES} bayt):`];
   for (const f of found) {
     const size = `${f.after} bayt (~${tokens(f.after)} token)`;
-    if (f.kind === 'new') lines.push(`  YENİ      ${f.path} — ${size}; en az ${Math.ceil(f.after / LIMIT_BYTES)} parçaya bölünür`
+    if (f.kind === 'new') lines.push(`  YENİ      ${shown(f.path)} — ${size}; en az ${Math.ceil(f.after / LIMIT_BYTES)} parçaya bölünür`
       + ' (bu dosyayı yalnız TAŞIDIYSAN: eski yolunu da aynı commit\'e kat, o zaman taşıma olarak okunur)');
-    else lines.push(`  SINIRI GEÇTİ ${f.path} — ${f.before} → ${size}; sınırın ${f.after - LIMIT_BYTES} bayt üstünde`);
+    else lines.push(`  SINIRI GEÇTİ ${shown(f.path)} — ${f.before} → ${size}; sınırın ${f.after - LIMIT_BYTES} bayt üstünde`);
   }
   lines.push(
     'Nasıl bölünür — boyuta göre değil, SORUMLULUĞA göre:',
@@ -138,14 +148,19 @@ export function replaying() {
   return ['MERGE_HEAD', 'REVERT_HEAD', 'CHERRY_PICK_HEAD', 'rebase-merge', 'rebase-apply'].find((n) => existsSync(join(dir, n))) ?? null;
 }
 
-/** One line per escape, outside the repository; never a reason to fail. */
-function noteEscape() {
+/** One line per event, outside the repository; never a reason to fail. */
+function log(name, detail) {
   try {
     const dir = join(homedir(), '.local', 'state', 'dxb');
     mkdirSync(dir, { recursive: true });
-    const files = git(['diff', '--cached', '--name-only']).trim().split('\n').filter(judged).join(' ');
-    appendFileSync(join(dir, 'size-escapes.log'), `${new Date().toISOString()}\t${process.cwd()}\t${files}\n`);
+    appendFileSync(join(dir, name), `${new Date().toISOString()}\t${process.cwd()}\t${detail}\n`);
   } catch { /* the log is a measure, not a gate */ }
+}
+
+function noteEscape() {
+  let files = '';
+  try { files = git(['diff', '--cached', '--name-only', '-z']).split('\0').filter(judged).map(shown).join(' '); } catch { /* still logged */ }
+  log('size-escapes.log', files);
 }
 
 // The paths are compared decoded and resolved: this repository's folder name has spaces in it, and
@@ -176,6 +191,6 @@ if (process.argv[1] && direct()) {
   }
   const stops = found.filter(blocks);
   const grown = found.filter((f) => !blocks(f));
-  if (grown.length) console.error(note(grown));
-  if (stops.length) { console.error(message(stops)); process.exit(1); }
+  if (grown.length) { console.error(note(grown)); log('size-growth.log', grown.map(item).join(' | ')); }
+  if (stops.length) { console.error(message(stops)); log('size-stops.log', stops.map(item).join(' | ')); process.exit(1); }
 }

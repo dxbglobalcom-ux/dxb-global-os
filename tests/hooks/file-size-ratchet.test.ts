@@ -11,6 +11,7 @@ import { blocks, judged, message, note, parseRaw, tokens, verdicts } from '../..
 
 const SCRIPT = resolve(__dirname, '../../scripts/hooks/file-size-ratchet.mjs');
 const PRE_COMMIT = resolve(__dirname, '../../scripts/hooks/pre-commit');
+const TEST_HOME = mkdtempSync(join(tmpdir(), 'ratchet-home-'));
 
 describe('file-size ratchet — what it judges', () => {
   it('judges code, whatever the case of its extension', () => {
@@ -89,8 +90,13 @@ describe('file-size ratchet — the verdicts, in plain numbers', () => {
 });
 
 describe('file-size ratchet — on real staged changes', () => {
+  // The guard logs what it does under HOME: every run here gets a throw-away one, never the real log.
   const run = (cwd: string, env: Record<string, string> = {}) =>
-    spawnSync('node', [SCRIPT], { cwd, encoding: 'utf8', env: { ...process.env, ...env } });
+    spawnSync('node', [SCRIPT], { cwd, encoding: 'utf8', env: { ...process.env, HOME: TEST_HOME, ...env } });
+  const logged = (home: string, name: string) => {
+    const file = join(home, '.local/state/dxb', name);
+    return existsSync(file) ? readFileSync(file, 'utf8') : '';
+  };
   const git = (cwd: string, ...args: string[]) =>
     execFileSync('git', ['-c', 'user.name=t', '-c', 'user.email=t@t', '-c', 'core.hooksPath=/dev/null', ...args], { cwd, stdio: 'pipe' });
   const BIG = '// x\n'.repeat(6000); // 30,000 bytes
@@ -165,6 +171,44 @@ describe('file-size ratchet — on real staged changes', () => {
     expect(both.stderr).toContain('YENİ      src/new big.ts');
   });
 
+  it('keeps the growth note on one line when the path has a line break in it', () => {
+    const dir = repo();
+    writeFileSync(join(dir, 'src/bad\nname.ts'), BIG);
+    git(dir, 'add', '-A'); git(dir, 'commit', '-q', '-m', 'odd name');
+    appendFileSync(join(dir, 'src/bad\nname.ts'), '// more\n');
+    git(dir, 'add', '-A');
+    const home = mkdtempSync(join(tmpdir(), 'ratchet-home-'));
+    const out = run(dir, { HOME: home });
+    expect(out.status).toBe(0);
+    expect(out.stderr.trimEnd().split('\n').length).toBe(1);
+    expect(out.stderr).toContain('"src/bad\\nname.ts"');
+    expect(logged(home, 'size-growth.log').trimEnd().split('\n').length).toBe(1);
+  });
+
+  it('logs each stop and each growth once, with its numbers, and nothing for a commit that just passes', () => {
+    const dir = repo();
+    const home = mkdtempSync(join(tmpdir(), 'ratchet-home-'));
+    writeFileSync(join(dir, 'src/small.ts'), 'export const a = 5;\n');
+    git(dir, 'add', '-A');
+    expect(run(dir, { HOME: home }).status).toBe(0);
+    expect(logged(home, 'size-stops.log') + logged(home, 'size-growth.log') + logged(home, 'size-escapes.log')).toBe('');
+    appendFileSync(join(dir, 'src/old big.ts'), '// 7 more\n');
+    git(dir, 'add', '-A');
+    expect(run(dir, { HOME: home }).status).toBe(0);
+    expect(logged(home, 'size-growth.log')).toMatch(/^\S+Z\t[^\t]+\tgrew:30000:30010:src\/old big\.ts\n$/);
+    expect(logged(home, 'size-stops.log')).toBe('');
+    writeFileSync(join(dir, 'src/new big.ts'), BIG);
+    writeFileSync(join(dir, 'src/small.ts'), BIG + '// x\n');
+    git(dir, 'add', '-A');
+    expect(run(dir, { HOME: home }).status).toBe(1);
+    const stops = logged(home, 'size-stops.log');
+    expect(stops.trimEnd().split('\n').length).toBe(1);
+    expect(stops).toContain(`\t${dir}\t`);
+    expect(stops).toContain('new:0:30000:src/new big.ts');
+    expect(stops).toContain('crossed:20:30005:src/small.ts');
+    expect(stops).not.toContain('grew:');
+  });
+
   it('stops a small file at the commit that takes it over the limit', () => {
     const dir = repo();
     writeFileSync(join(dir, 'src/small.ts'), BIG);
@@ -232,7 +276,7 @@ describe('file-size ratchet — on real staged changes', () => {
     git(dir, 'add', '-A');
     const via = join(mkdtempSync(join(tmpdir(), 'ratchet-link-')), 'hooks');
     symlinkSync(resolve(__dirname, '../../scripts/hooks'), via);
-    const out = spawnSync('node', [join(via, 'file-size-ratchet.mjs')], { cwd: dir, encoding: 'utf8' });
+    const out = spawnSync('node', [join(via, 'file-size-ratchet.mjs')], { cwd: dir, encoding: 'utf8', env: { ...process.env, HOME: TEST_HOME } });
     expect(out.status).toBe(1);
   });
 
@@ -262,7 +306,7 @@ describe('file-size ratchet — wired into the commit hook', () => {
     chmodSync(join(hooks, 'pre-commit'), 0o755);
     copyFileSync(SCRIPT, join(hooks, 'file-size-ratchet.mjs'));
     const dir = mkdtempSync(join(tmpdir(), 'ratchet-real-'));
-    const g = (...args: string[]) => spawnSync('git', ['-c', 'user.name=t', '-c', 'user.email=t@t', '-c', `core.hooksPath=${hooks}`, ...args], { cwd: dir, encoding: 'utf8' });
+    const g = (...args: string[]) => spawnSync('git', ['-c', 'user.name=t', '-c', 'user.email=t@t', '-c', `core.hooksPath=${hooks}`, ...args], { cwd: dir, encoding: 'utf8', env: { ...process.env, HOME: TEST_HOME } });
     g('init', '-q');
     expect(existsSync(join(dir, 'scripts/hooks/file-size-ratchet.mjs'))).toBe(false);
     writeFileSync(join(dir, 'small.ts'), 'export const a = 1;\n');

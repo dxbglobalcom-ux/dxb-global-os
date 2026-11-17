@@ -94,3 +94,27 @@ part of them, so the rebuild is not what removes the friction.
 
 Tests: 24 of 24 (`tests/hooks/file-size-ratchet.test.ts`), written red first (5 red); typecheck clean.
 Open with him: his "commit hiç durmasın" — the two stops that remain could be a warning instead.
+
+## Sol's pass over the softened rule (GPT-6.1, high, blind; commit 17b82330)
+
+No A. Its raw answer is `sol-2.raw` (on disk, not in git).
+
+| Finding | What it was | What was done |
+|---|---|---|
+| B1 | A path with a line break in it made the one-line growth note two lines. | A path with a control character is shown and logged quoted (`shown()`); a test grows such a file and counts one line on stderr and one in the log. |
+| C1 (older) | "New" and "already large" are read from the commit's last picture, path by path: an already large path whose content is replaced whole in one commit (deleted and rewritten, or a small file moved onto it) reads as that file edited, and under the softened rule may also grow. | Written into the script's known limits. Not closed: git's last picture carries no more. |
+
+It measured, against the previous form held in memory: no commit the earlier form let pass is stopped
+now (20 pictures); a copy, a type change, a delete-and-recreate of a small path, a move onto a small
+path and a file that shrank and grows back are all stopped; the mixed commit (one grown, one new large)
+exits 1. Its own UNVERIFIED: it did not rerun the 24 tests — they are the author's run (`tests-2.out`).
+
+## The count he asked for (2026-11-17 evening)
+
+His word: keep this form, count the stops and the escapes for two weeks, set up so that other sessions
+follow it. The guard now writes one line per stop (`size-stops.log`) and per growth of an already large
+file (`size-growth.log`) beside the escapes, under `~/.local/state/dxb/`; `node
+scripts/ops/dxb-size-report.mjs` counts them against the period's commits (default 2026-11-17 to
+2026-12-01). The new tests were seen red against the previous guard (2 of 26) and are green now
+(`tests-3.out`: 30 of 30 with the report's four); every test run uses a throw-away HOME, so the real
+logs hold real commits only. STATE's Next carries the date.
