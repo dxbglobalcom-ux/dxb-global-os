@@ -21,8 +21,11 @@ report says which doors were tried and what each one answered.
    8. exa web_fetch           keyless MCP
    9. playwright              a real browser: an isolated context of the hidden research
                               Chrome (Xvfb :99), never headless, never on his screen
-  10. jina r.jina.ai          keyless, but a CACHED snapshot — labelled as one
-  11. curl + browser UA       the floor
+  10. camofox                 the stealth browser of its own (Camoufox behind the `camofox`
+                              command, hidden, never his Chrome) — the page as its
+                              accessibility snapshot; a challenge page is given time to clear
+  11. jina r.jina.ai          keyless, but a CACHED snapshot — labelled as one
+  12. curl + browser UA       the floor
 
 Doors 1 and 2 return instantly for a url they do not match, so they cost nothing on
 an ordinary page.
@@ -69,6 +72,7 @@ import rlib  # noqa: E402
 SKILL = Path(__file__).resolve().parent.parent
 SCRAPLING = Path(os.environ.get("DXB_SCRAPLING") or shutil.which("scrapling") or "/home/dxb/scrapling-env/bin/scrapling")
 MCPX = SKILL / "scripts" / "mcpx.sh"
+CAMOFOX = Path(os.environ.get("DXB_CAMOFOX") or shutil.which("camofox") or "/home/dxb/.local/bin/camofox")
 MIN_BODY = 400          # below this it is a stub, not a page
 UA = ("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) "
       "Chrome/140.0 Safari/537.36")
@@ -327,6 +331,31 @@ def door_playwright(url: str, tmo: int) -> tuple[str, str]:
     return out, ("" if rc == 0 else f"rc={rc} {err[-120:]}")
 
 
+def door_camofox(url: str, tmo: int) -> tuple[str, str]:
+    """The stealth browser (jo-inc/camofox-browser, installed 2026-11-17): a hidden Camoufox of its own,
+    with cookies of its own (user `fetch`). Measured that day on twelve sites that turn bots away: it
+    read ten, among them Glassdoor, which every door above it had left as a "Humans only" page. The
+    page comes back as its accessibility snapshot; the link targets are dropped, the words stay."""
+    if not CAMOFOX.exists():
+        return "", "camofox not installed"
+    cam = f"CAMOFOX_USER=fetch {shlex.quote(str(CAMOFOX))}"
+    rc, out, err = _sh(f"{cam} open {shlex.quote(url)}", tmo + 20)
+    if rc != 0:
+        return "", f"rc={rc} {(err or out)[-160:]}"
+    lines = out.splitlines()
+    tab = lines[0].split()[-1] if lines and lines[0].startswith("tab ") else ""
+    body = lines[1:]
+    if tab and not _ok("\n".join(body)):
+        time.sleep(8)                          # a challenge page clears itself, a late page finishes loading
+        rc2, out2, _ = _sh(f"{cam} snap {shlex.quote(tab)}", tmo)
+        if rc2 == 0 and out2.strip():
+            body = out2.splitlines()
+    if tab:
+        _sh(f"{cam} close {shlex.quote(tab)}", 15)
+    text = "\n".join(l for l in body if not l.lstrip().startswith(("- /url:", "-- {")))
+    return text, ""
+
+
 def door_jina(url: str, tmo: int) -> tuple[str, str]:
     # ENGLISH, ALWAYS. Measured 2026-09-17: Quora answered this machine in German — its
     # German corpus is a fraction of the English one, and the CEO caught it in one line
@@ -487,6 +516,7 @@ CHAIN = [
     ("firecrawl-scrape", door_firecrawl),
     ("exa-fetch", door_exa),
     ("playwright", door_playwright),
+    ("camofox", door_camofox),
     ("jina-reader", door_jina),
     ("curl", door_curl),
 ]
@@ -508,8 +538,8 @@ BROWSER_DOORS = {"playwright", "browser-signed-in"}
 # hidden Chrome; hackernews read, v2ex topic and stackoverflow read run plain, over the site's API, and their
 # door stays open on a --no-browser run. A reader the manifest cannot vouch for — no
 # opencli package on PATH, a verb it does not list, a manifest that does not parse — counts as
-# browser-backed: a run told not to use that Chrome does not guess. (scrapling-stealth stays: camoufox is a
-# headless browser of its own, never the hidden Chrome.)
+# browser-backed: a run told not to use that Chrome does not guess. (scrapling-stealth and camofox stay:
+# each is a hidden browser of its own, never the hidden Chrome.)
 
 
 @functools.lru_cache(maxsize=1)

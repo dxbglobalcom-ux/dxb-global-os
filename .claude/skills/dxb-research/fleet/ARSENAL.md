@@ -97,7 +97,7 @@ opencli reddit read <url> --limit 100 --depth 10 --replies 50 --expand-more true
 # the fan-out: every channel of the map at once, keyless
 bash "$R/sweep.sh" "<query>" OUTDIR --tier max --pages 14
 
-# one page, twelve doors, in order, until one opens
+# one page, thirteen doors, in order, until one opens
 python3 "$R/fetch.py" <url>                  |  python3 "$R/fetch.py" --batch urls.txt --outdir D
 
 # the platforms, through the HIDDEN signed-in copy of the CEO's Chrome (READ ONLY)
@@ -125,7 +125,7 @@ python3 "$R/hidden.py" google "<short query>"   # Google's results; its consent 
 gh search issues|repos "<q>" --json ...      # what actually breaks, in the open
 yt-dlp --write-auto-sub --skip-download <url>
 pdftotext file.pdf -                          # the only door that reads a PDF
-python3 "$R/fetch.py" <url>                   # TWELVE doors, in order, until one opens —
+python3 "$R/fetch.py" <url>                   # THIRTEEN doors, in order, until one opens —
 #     subtitles, PDF text, scrapling, scrapling STEALTH, the platform's own reader, the
 #     hidden signed-in browser, tavily, firecrawl, exa, Playwright in the hidden browser, jina, curl. Use this and
 #     never a single fetcher: a page is unread only when every door has failed, and then the

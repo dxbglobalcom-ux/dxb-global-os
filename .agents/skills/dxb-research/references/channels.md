@@ -44,7 +44,7 @@ Without the Tavily header the same endpoint returns **401** — a keyless claim 
 believed. None of the five publishes its rate limit and none owes us anything; that is why
 there are five and why every one has a fallback chain in `config/registry.yaml`.
 
-## The reading chain — twelve doors, and a page is unread only when all twelve fail
+## The reading chain — thirteen doors, and a page is unread only when all thirteen fail
 
 ```bash
 python3 scripts/fetch.py <url>                        # shows every door it tried
@@ -57,6 +57,7 @@ python3 scripts/fetch.py --batch urls.txt --outdir D  # in parallel, writes FETC
 `hackernews read`, `twitter read`, `v2ex`, `youtube`, `zhihu`, `stackoverflow`) →
 **his own signed-in browser** (`opencli browser`, his Chrome session) → `tavily_extract` →
 `firecrawl_scrape` → `exa web_fetch` → headless Playwright →
+**camofox** (the stealth browser of its own, a challenge page given time to clear; added 2026-11-17) →
 `r.jina.ai` (**a cached snapshot**, labelled as one) → `curl` with a browser agent.
 
 Measured 2026-09-16: 14 of 14 pages read — scrapling 10, tavily-extract 3, stealth 1. Four

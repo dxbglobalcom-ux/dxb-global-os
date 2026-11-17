@@ -380,6 +380,13 @@ _WALL = re.compile(
     # sentence LAST, so a head-only test never reached it.
     r"you've been blocked by network security|you have been blocked by network security|"
     r"you (have been|are being) rate[- ]limited|429 too many|"
+    # THE "ARE YOU HUMAN" PAGES OF GLASSDOOR AND ZILLOW, measured 2026-11-17: Glassdoor's page
+    # (669 bytes, titled "Security | Glassdoor", in English or — from this machine's exit IP —
+    # German, "Nur für Menschen") came back from the plain door as `read=True`, and Zillow's
+    # PerimeterX page says "Press & Hold to confirm you are a human", which the older
+    # "please verify you are a human" wording does not match. The wordings are the sites' own.
+    r"security \| glassdoor|nur für menschen|press & hold to confirm you are a human|"
+    r"human challenge requires verification|"
     # INSTAGRAM'S ANONYMOUS LANDING DIALOG, measured 2026-09-21 and the reason this line
     # exists: `scrapling-stealth` opened https://www.instagram.com/p/DTa2MBcEyFv/ and was
     # handed 24 162 bytes with `wall: false` and `read: true` - the post's images, its

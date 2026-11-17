@@ -68,7 +68,8 @@ never skip it silently. Nothing of the holding's own names or unreleased work go
 | Quora | `hidden.py read <url> --text` |
 | GitHub | `gh search issues "<4 words>" --json title,url,state,createdAt` · `gh search repos "<q>"` |
 | Chinese | `opencli zhihu\|weibo\|xiaohongshu\|bilibili search "<q>" -f yaml` |
-| A page that refuses | `python3 "$S/scripts/fetch.py" <url>` — tries its twelve doors in order |
+| A page that refuses | `python3 "$S/scripts/fetch.py" <url>` — tries its thirteen doors in order |
+| A walled site you must act in — its search box, clicks, scrolling, result pages | `camofox open <url>` → the page with `[eN]` refs, then `camofox type\|click\|scroll\|links\|snap\|close <tab> …` (`camofox help`); a hidden browser of its own, not his Chrome. A sign-in: `camofox login <url>` puts the page on his screen and he signs in. What it reads and what refuses it: `.planning/research/study-cards/camofox-browser.md` |
 | Video subtitles, PDF | `yt-dlp --write-auto-sub --skip-download <url>` · `pdftotext -layout f.pdf -` |
 
 ## What you find stays — evidence rows, written by the fetcher

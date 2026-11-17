@@ -33,7 +33,7 @@
 #      digest.py -> digest.md; .t1.
 #
 # THE WALL CLOCK. The gather must end within 75 s, and fetch.py's --timeout is PER DOOR: a walled page
-# walks up to twelve doors, so one bad address could hold the batch for minutes. So the sweep and the
+# walks up to thirteen doors, so one bad address could hold the batch for minutes. So the sweep and the
 # hidden Google get FIRE_MAX seconds, and the reading chain is stopped READ_END seconds after .t0 at
 # the latest (timeout kills its whole process group; hidden.py closes its window on SIGTERM). A page
 # that landed before the stop is kept — fetch.py writes each page as it finishes, and sources.py maps

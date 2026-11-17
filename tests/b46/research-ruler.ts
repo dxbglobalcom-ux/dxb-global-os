@@ -110,8 +110,8 @@ export const RULER = {
    * still said eleven — the same drift that had let the channel count reach five different
    * numbers. A number written by hand in six places is a number that will be wrong.
    */
-  DOOR_CLAIM: /\b(\d{1,2}|eleven|twelve|on bir|oniki|on iki)[ -](?:kapil[iı]|doors?|kap[iı])\b/gi,
-  DOOR_WORDS: { eleven: 11, twelve: 12, "on bir": 11, oniki: 12, "on iki": 12 } as Record<string, number>,
+  DOOR_CLAIM: /\b(\d{1,2}|eleven|twelve|thirteen|on bir|oniki|on iki|on üç)[ -](?:kapil[iı]|doors?|kap[iı])\b/gi,
+  DOOR_WORDS: { eleven: 11, twelve: 12, thirteen: 13, "on bir": 11, oniki: 12, "on iki": 12, "on üç": 13 } as Record<string, number>,
   /** a top-level python assignment, for the duplicate-definition rule */
   PY_ASSIGN: /^([A-Z_][A-Z0-9_]*)\s*=\s*(.+)$/,
 
