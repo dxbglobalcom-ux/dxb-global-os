@@ -63,7 +63,8 @@ export function message(found) {
 }
 
 function git(args) {
-  return execFileSync('git', args, { encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 });
+  // stderr is dropped: for a new file git says "exists on disk, but not in 'HEAD'", which is expected here.
+  return execFileSync('git', args, { encoding: 'utf8', maxBuffer: 64 * 1024 * 1024, stdio: ['ignore', 'pipe', 'ignore'] });
 }
 function size(spec) {
   try { return Number(git(['cat-file', '-s', spec]).trim()); } catch { return null; }
