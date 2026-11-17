@@ -5,7 +5,7 @@
 import { describe, expect, it } from 'vitest';
 import { execFileSync, spawnSync } from 'node:child_process';
 import { mkdtempSync, writeFileSync, mkdirSync, readFileSync, renameSync, symlinkSync, appendFileSync, copyFileSync, chmodSync, existsSync, rmSync } from 'node:fs';
-import { homedir, tmpdir } from 'node:os';
+import { tmpdir } from 'node:os';
 import { join, resolve } from 'node:path';
 import { blocks, judged, message, note, parseRaw, tokens, verdicts } from '../../scripts/hooks/file-size-ratchet.mjs';
 
@@ -305,8 +305,13 @@ describe('file-size ratchet — wired into the commit hook', () => {
     writeFileSync(join(hooks, 'pre-commit'), hook.replace('exec gitleaks git --pre-commit --staged --redact --verbose', 'exit 0'));
     chmodSync(join(hooks, 'pre-commit'), 0o755);
     copyFileSync(SCRIPT, join(hooks, 'file-size-ratchet.mjs'));
+    // The hook refuses to run without the secret scanner; the scan itself is replaced above, so a
+    // stand-in on PATH is enough — the battery's sandbox has no gitleaks and no home.
+    const bin = mkdtempSync(join(tmpdir(), 'ratchet-bin-'));
+    writeFileSync(join(bin, 'gitleaks'), '#!/bin/sh\nexit 0\n');
+    chmodSync(join(bin, 'gitleaks'), 0o755);
     const dir = mkdtempSync(join(tmpdir(), 'ratchet-real-'));
-    const g = (...args: string[]) => spawnSync('git', ['-c', 'user.name=t', '-c', 'user.email=t@t', '-c', `core.hooksPath=${hooks}`, ...args], { cwd: dir, encoding: 'utf8', env: { ...process.env, HOME: TEST_HOME, PATH: `${homedir()}/.local/bin:${process.env.PATH}` } }); // the hook looks for its tools under HOME
+    const g = (...args: string[]) => spawnSync('git', ['-c', 'user.name=t', '-c', 'user.email=t@t', '-c', `core.hooksPath=${hooks}`, ...args], { cwd: dir, encoding: 'utf8', env: { ...process.env, HOME: TEST_HOME, PATH: `${bin}:${process.env.PATH}` } });
     g('init', '-q');
     expect(existsSync(join(dir, 'scripts/hooks/file-size-ratchet.mjs'))).toBe(false);
     writeFileSync(join(dir, 'small.ts'), 'export const a = 1;\n');
