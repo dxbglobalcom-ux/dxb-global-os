@@ -15,8 +15,11 @@
 //   - SELECT-only: a claim query that could write would turn an audit into a
 //     mutation, which is the one thing an audit may never be.
 //   - declared sections: the board's open/closed state must never be guessed.
-import { readFileSync, existsSync, readdirSync } from "node:fs";
-import { join } from "node:path";
+import { execFile } from "node:child_process";
+import { readFileSync, existsSync, readdirSync, mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
+import { createServer } from "node:net";
+import { tmpdir } from "node:os";
+import { dirname, join } from "node:path";
 import { describe, expect, it } from "vitest";
 
 const REPO = process.cwd();
@@ -30,6 +33,7 @@ const SCOPE = [
   ".planning/research",
   ".planning/research/study-cards",
   ".planning/research/rival-intel",
+  ".planning/board-rows",
 ];
 
 const ALL_MARKERS =
@@ -179,5 +183,111 @@ describe("U41 ledger-truth gate", () => {
     const text = readFileSync(BOARD, "utf8");
     expect(text).toMatch(/Ledger parity/);
     expect(text).toMatch(/Law 5 is enforced by machine \(U41/);
+  });
+});
+
+// THE ROW FILES ARE CORPUS (2026-11-17). Since 2026-09-28 a board row's full
+// text lives in `.planning/board-rows/<id>.md`, and the gate walked five folders
+// that did not include it: measured that day, thirteen lines the gate would have
+// convicted stood there unseen. These cases RUN the gate — the copy of its scope
+// above can agree with itself while the real gate reads nothing (B39's lesson) —
+// on a small tree built here, through the gate's two seams: the tree it reads
+// (DXB_LEDGER_TRUTH_ROOT) and the door it asks (DXB_COMPANY_READ_SOCKET, answered
+// here by a stand-in, so no case touches the company).
+const BENCH_BOARD = [
+  "<!-- BOARD-SECTION: open -->",
+  "| id | opened | what |",
+  "|---|---|---|",
+  "| B90 | 2026-11-17 | a row that is open |",
+  "| B91 | 2026-11-17 | **✓ CLOSED 2026-11-17** a row his eye closed <!-- CEO-OK: bench-b91-closed --> |",
+].join("\n");
+const BENCH_APPROVALS = {
+  "bench-b91-closed": { date: "2026-11-17", what: "row B91 closed", verbatim: "kapat" },
+  "bench-shells-deleted": { date: "2026-11-17", what: "the shells deleted", verbatim: "sil" },
+};
+const ROW_FILE = ".planning/board-rows/B90.md";
+const ARCHIVED_ROW_FILE = ".planning/board-rows/archive/B90.md";
+
+/** Run the real gate on a tree holding the bench board, an empty claim and rule book, and `files`. */
+async function gateOn(files: Record<string, string>): Promise<{ code: number; out: string }> {
+  const root = mkdtempSync(join(tmpdir(), "ledger-truth-"));
+  const socket = join(root, "company-read.sock");
+  const tree: Record<string, string> = {
+    "HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md": BENCH_BOARD,
+    "scripts/governance/claims.json": "{}",
+    "scripts/governance/rules.json": "{}",
+    "scripts/governance/ceo-approvals.json": JSON.stringify(BENCH_APPROVALS),
+    ...files,
+  };
+  for (const [rel, text] of Object.entries(tree)) {
+    mkdirSync(dirname(join(root, rel)), { recursive: true });
+    writeFileSync(join(root, rel), text);
+  }
+  // The stand-in door: every named question is answered with the same date. The
+  // bench tree registers no claim, so the gate only pings and asks for today.
+  const door = createServer((conn) => {
+    conn.on("data", () => conn.write(JSON.stringify({ ok: true, value: "2026-11-17" }) + "\n"));
+  });
+  await new Promise<void>((resolve) => door.listen(socket, resolve));
+  try {
+    return await new Promise((resolve) => {
+      execFile(
+        "node",
+        [SCRIPT],
+        { env: { ...process.env, DXB_LEDGER_TRUTH_ROOT: root, DXB_COMPANY_READ_SOCKET: socket }, timeout: 60_000 },
+        (err, stdout, stderr) => resolve({ code: err ? Number(err.code ?? 1) : 0, out: stdout + stderr }),
+      );
+    });
+  } finally {
+    door.close();
+    rmSync(root, { recursive: true, force: true });
+  }
+}
+
+/** Green ON THE BENCH TREE: a gate that ignored the seam and read the repository cannot say "2 board rows". */
+function expectCleanBench(run: { code: number; out: string }) {
+  expect(run.out).toContain("ledger truth OK");
+  expect(run.out).toContain("against 2 board rows");
+  expect(run.code).toBe(0);
+}
+
+describe("the gate reads the board's row files", () => {
+  const SHELLS_DELETED = "Half shipped: the six nameless shells were deleted on his order, 2026-09-21.";
+
+  it("a row file resting work on his order with no registered approval is reported", async () => {
+    const run = await gateOn({ [ROW_FILE]: SHELLS_DELETED });
+    expect(run.out).toContain(`${ROW_FILE}:1 — rests work on the CEO's own word or order`);
+    expect(run.code).toBe(1);
+  });
+
+  it("the same line marked with his registered words is not", async () => {
+    expectCleanBench(await gateOn({ [ROW_FILE]: `${SHELLS_DELETED} <!-- CEO-OK: bench-shells-deleted -->` }));
+  });
+
+  // The shape the four real files had: the file's HISTORY line stands above, a
+  // heading follows it, and the row's first cell still carries its OPEN marker.
+  const rowFileOf = (firstCell: string) =>
+    ["<!-- HISTORY -->", "", "## What is open (plain language)", "", firstCell].join("\n");
+
+  it("a row file whose OPEN marker names a row the board has closed is reported", async () => {
+    const run = await gateOn({ [ROW_FILE]: rowFileOf("**A HAND COULD NOT HEAR STOP.** <!-- OPEN: B91 --> Found on the bench.") });
+    expect(run.out).toContain(`${ROW_FILE}:5 — OPEN marker names board row "B91", which is CLOSED`);
+    expect(run.code).toBe(1);
+  });
+
+  it("the same file with the marker taken off, as a closed row's file is kept, is not", async () => {
+    expectCleanBench(await gateOn({ [ROW_FILE]: rowFileOf("**A HAND COULD NOT HEAR STOP.** Found on the bench.") }));
+  });
+
+  const UNKNOWN_APPROVAL = "The plan was shown to him. <!-- CEO-OK: bench-never-registered -->";
+
+  it("a marker naming an unregistered approval is reported in a row file", async () => {
+    const run = await gateOn({ [ROW_FILE]: UNKNOWN_APPROVAL });
+    expect(run.out).toContain(`${ROW_FILE}:1 — CEO-OK marker names approval "bench-never-registered"`);
+    expect(run.code).toBe(1);
+  });
+
+  it("the same file under the row folder's archive/ is history and is not read", async () => {
+    expectCleanBench(await gateOn({ [ARCHIVED_ROW_FILE]: UNKNOWN_APPROVAL }));
   });
 });

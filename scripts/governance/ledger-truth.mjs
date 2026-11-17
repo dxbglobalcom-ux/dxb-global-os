@@ -51,7 +51,13 @@ import path from "node:path";
 // space, and pathname hands back "DxB%20Global%20OS".
 import { closuresWithoutHisWord, closedRowCount } from "./closure-guard.mjs";
 
-const REPO = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..", "..");
+// THE TREE IT READS. This repository — unless DXB_LEDGER_TRUTH_ROOT names another
+// one, which is how tests/governance/ledger-truth.test.ts runs the real gate on a
+// small tree of its own (added 2026-11-17). A run pointed elsewhere says so on
+// every run, because its green says nothing about this corpus.
+const ROOT_OVERRIDE = process.env.DXB_LEDGER_TRUTH_ROOT;
+const REPO = ROOT_OVERRIDE || path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..", "..");
+if (ROOT_OVERRIDE) console.error(`[ledger-truth] reading the tree at ${ROOT_OVERRIDE}, NOT this repository`);
 const BOARD = "HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md";
 const CLAIMS = "scripts/governance/claims.json";
 const RULES = "scripts/governance/rules.json";
@@ -123,13 +129,18 @@ const MARK_CEO_OK_ALL = new RegExp(MARK_CEO_OK.source, "gi");
 // reason: `.planning/quick/**` (execution tickets — one-shot by definition, not
 // corpus), `.planning/phases/**` and `_ARCHIVE/**` (history the project keeps
 // on purpose), `references/**` (the CEO's own documents — we do not annotate
-// what he wrote). Scope narrowing is named here, never silent.
+// what he wrote), `.planning/board-rows/archive/**` (history: the text a row's
+// file held before it was rewritten). Scope narrowing is named here, never silent.
+// Every folder is read FLAT — the files directly in it, never its sub-folders —
+// which is what keeps `archive/` out while `.planning/board-rows` (a board row's
+// full text since 2026-09-28; in scope from 2026-11-17) is in.
 const SCOPE = [
   "HOLDING-OS-MASTER-PLAN",
   ".planning",
   ".planning/research",
   ".planning/research/study-cards",
   ".planning/research/rival-intel",
+  ".planning/board-rows",
 ];
 
 const MARK_STATE = /<!--\s*STATE:\s*([a-z0-9_]+)\s*=\s*(.+?)\s*@\s*(\d{4}-\d{2}-\d{2})\s*-->/i;
