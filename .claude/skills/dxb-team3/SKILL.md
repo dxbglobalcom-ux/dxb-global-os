@@ -216,6 +216,8 @@ four, not the default.
 - Parallel writers never touch the same file, and run their tests with `DXB_ENGINE_LOCK_WAIT=200`: one
   run at a time holds the construction engine, and with it a second one queues instead of being refused
   — inside the 4-minute rule (§7), so the lead starts no battery while writers are testing.
+- A step with exactly one right answer — a merge, a sort, a count, a comparison — is done by code, never
+  handed to a model or a hand; a hand is given what needs judgement <!-- CEO-OK: team3-one-answer-steps-are-code-handover-done-apart-from-said-2026-11-17 -->.
 - Each writer gets a spec it can work from alone: the files, the
   behaviour, the measured facts it must not re-litigate, the test it writes first, what it reports.
 - Whoever writes — lead, fork, `helper-writer`, `easy-writer`, `builder` — writes by the principles in
@@ -339,7 +341,9 @@ alone (STATE, the board) is checked by the rulers on commit instead.
   own voice, whose first line tells the successor to open this door — `Skill("dxb-team3")` — before
   anything else: it carries the job on as its lead, the orchestrator, not as a fresh session
   <!-- CEO-OK: successor-opens-dxb-team2-2026-10-09 -->; then the job's place in the whole, then his words of this job verbatim, every phase with
-  status and commit, the traps met, the first message the successor sends; session-only orders marked
+  status and commit — what is **done** (a command's output or a commit shows it) kept apart from what was only
+  **said** (planned, promised or told to him, and not measured), and a **do not** list: what the successor must
+  not redo or undo <!-- CEO-OK: team3-one-answer-steps-are-code-handover-done-apart-from-said-2026-11-17 --> — the traps met, the first message the successor sends; session-only orders marked
   as such; last, the path of this session's own conversation —
   `~/.claude/projects/-home-dxb-DxB-Global-OS/$CLAUDE_CODE_SESSION_ID.jsonl` — with the line *if
   anything here is unclear, read the part you need there*
