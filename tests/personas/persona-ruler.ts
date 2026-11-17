@@ -59,7 +59,7 @@ export const RULER = {
    * ruling coming back — its wording is a failure wherever it stands, a prohibition included.
    */
   VOICE_RESIDUE:
-    /is the only voice|the only voice (there is|a piece will ever have)|no voice-over|no AI voice|(no|never a) (TTS|recorded|cloned|synthesi[sz]ed)\b/i,
+    /engine'?s own (generated )?voice is the only voice|the only voice (there is|a piece will ever have)|no voice-over|no AI voice|(no|never a) (TTS|recorded|cloned|synthesi[sz]ed)\b(?![^.;]*\bconsent)/i,
   /** rule 7 — the two written roads may never be named without the engine-born road */
   ROAD_PHOTO: /real photograph/i,
   ROAD_SHEET: /written sheet/i,

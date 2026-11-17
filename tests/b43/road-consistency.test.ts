@@ -128,8 +128,10 @@ const CONTRA_ALWAYS: RegExp[] = [
   // the three doctrines the contract page replaced (2026-11-17) — each is a negation in its own wording
   /Flux (is not used|plays no part)/i, /nothing drawn is handed/i, /no drawn (still|frame|panel|face)[^.]*(is handed|rides|exists)/i,
   /for an external engine'?s take only/i, /no (new )?face is drawn outside the engine/i,
-  /is the only voice|the only voice (there is|a piece will ever have)/i, /no voice-over/i,
-  /(no|never a) (TTS|recorded|cloned|synthesi[sz]ed)\b/i,
+  /engine'?s own (generated )?voice is the only voice|the only voice (there is|a piece will ever have)/i, /no voice-over/i,
+  /(no|never a) (TTS|recorded|cloned|synthesi[sz]ed)\b(?![^.;]*\bconsent)/i,
+  // the residue the blind audit of 2026-11-17 found standing in four seats while every metre was green
+  /(presenters?|faces?|humans?) from (a )?drawings?/i, /drawn client-facing human/i, /for the external routes only/i,
   /1080p?( is)? the (CEO'?s )?ceiling|ceiling (he|the CEO) chose/i, /studio standard is 4/i, /only when he asks/i,
   /external engine[^.]*(may not|must not|never|cannot) (start|ride|begin|use)[^.]*(drawn|still|first frame)/i,
   /\b(image-to-video|i2v|text-to-video|t2v) (is|are) (forbidden|banned|closed)\b/i,

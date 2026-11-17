@@ -125,6 +125,9 @@ describe("the ruler bites", () => {
       biteOn(`${PASSING} The voice is the engine's own, a clone or a text-to-speech voice, whichever cannot be told from a person.`)["voice-residue"],
     ).toBe(0);
     expect(biteOn(`${PASSING} A narrated passage is voiced the same way, and never a second voice under a line.`)["voice-residue"]).toBe(0);
+    // the blind audit of 2026-11-17: one chosen source and the consent condition are today's rule, not the old ban
+    expect(biteOn(`${PASSING} The winning clone is the only voice on this shot.`)["voice-residue"]).toBe(0);
+    expect(biteOn(`${PASSING} No cloned voice without recorded consent is used.`)["voice-residue"]).toBe(0);
   });
 
   it("catches the two written roads named without the engine-born road", () => {
