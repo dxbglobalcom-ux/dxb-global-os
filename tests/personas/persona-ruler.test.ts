@@ -116,9 +116,15 @@ describe("the ruler bites", () => {
     expect(biteOn(`${PASSING} ${clause}. And then, again: ${clause}.`)["no-duplicate-clause"]).toBe(1);
   });
 
-  it("catches a recorded voice that is not inside a prohibition, and lets the prohibition stand", () => {
-    expect(biteOn(`${PASSING} The narration is laid over the cut.`)["voice-residue"]).toBe(1);
-    expect(biteOn(`${PASSING} A narration track is never laid over the cut.`)["voice-residue"]).toBe(0);
+  it("catches the cancelled voice ruling coming back, and lets today's voice rule stand (B43 R22)", () => {
+    expect(biteOn(`${PASSING} The engine's own generated voice is the only voice.`)["voice-residue"]).toBe(1);
+    expect(biteOn(`${PASSING} There is no TTS track and never a cloned voice.`)["voice-residue"]).toBe(1);
+    expect(biteOn(`${PASSING} No voice-over is written.`)["voice-residue"]).toBe(1);
+    // what stands today: any method, one criterion — and a narrated passage is voiced the same way
+    expect(
+      biteOn(`${PASSING} The voice is the engine's own, a clone or a text-to-speech voice, whichever cannot be told from a person.`)["voice-residue"],
+    ).toBe(0);
+    expect(biteOn(`${PASSING} A narrated passage is voiced the same way, and never a second voice under a line.`)["voice-residue"]).toBe(0);
   });
 
   it("catches the two written roads named without the engine-born road", () => {

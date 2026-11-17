@@ -4,8 +4,10 @@
     "It answers one question: after a writing pass, is the doctrine still in the seat that carried it?",
     "The seat lists were DERIVED, not invented: every pattern below was grepped against the delivered",
     "bodies at commit b1c099d0 (2026-09-15, before W6c) and the seats that carried it were written down.",
-    "A seat is never asked for a concept it never carried — the sound seat is not asked for the 1080p",
-    "ceiling and the delivery seat is not asked for the road rule.",
+    "A seat is never asked for a concept it never carried — the sound seat is not asked for the size",
+    "rule and the delivery seat is not asked for the road rule.",
+    "2026-11-17: six concepts follow the studio's contract page (B43) — the CEO's words of 2026-11-07,",
+    "2026-11-16 and 2026-11-17 replaced the doctrine they held; each new pattern was grepped in its seats.",
     "Other departments stay out of this file until their own writing pass is ordered: a persona that is",
     "not named here is NOT-MEASURED by the ruler and is submitted exactly as it was before."
   ],
@@ -49,9 +51,9 @@
           ]
         },
         {
-          "id": "no-face-drawn-outside-the-engine",
-          "why": "no new face is drawn outside the engine (CEO 2026-09-13)",
-          "pattern": "drawn outside the engine",
+          "id": "drawn-face-only-where-the-engine-keeps-it",
+          "why": "a face drawn outside the shooting engine is handed only to an engine measured to keep it (B43 R6, CEO 2026-11-17)",
+          "pattern": "measured to keep (it|one)",
           "seats": [
             "media-creative-director",
             "media-film-director",
@@ -101,9 +103,9 @@
           ]
         },
         {
-          "id": "local-engine-first-no-flux",
-          "why": "the local engine is the first choice and Flux plays no part in its take (CEO 2026-09-14)",
-          "pattern": "local engine is the first choice|Flux (is not used|plays no part)|no drawn still or panel",
+          "id": "local-engine-first",
+          "why": "the local engine is the first choice (CEO 2026-09-14); what an engine is handed is a measured fact, engine by engine (B43 R6, CEO 2026-11-17)",
+          "pattern": "local engine is the first choice|decided engine by engine",
           "seats": [
             "media-creative-director",
             "media-film-director",
@@ -175,9 +177,9 @@
           ]
         },
         {
-          "id": "engines-own-voice-only",
-          "why": "the engine's own generated voice is the only voice — no TTS, no recorded or cloned replacement (CEO 2026-09-04)",
-          "pattern": "engine's own (generated )?voice",
+          "id": "fully-human-voice",
+          "why": "the one criterion is a fully human voice that cannot be told from a person, by whichever method (B43 R22, CEO 2026-11-16, 2026-11-17)",
+          "pattern": "cannot be told from a person",
           "seats": [
             "media-creative-director",
             "marketing-short-video-editing-coach",
@@ -187,8 +189,8 @@
         },
         {
           "id": "law-d-order",
-          "why": "enlargement comes after the CEO's acceptance and only on his word (LAW D, 2026-09-03)",
-          "pattern": "after (his|the CEO's) acceptance|the CEO has accepted|LAW D|only when he asks",
+          "why": "enlargement comes after the CEO's acceptance of the native draft and is asked at that job (LAW D, 2026-09-03; B43 R36, 2026-11-17)",
+          "pattern": "after (his|the CEO's) acceptance|the CEO has accepted|LAW D|asked at that job",
           "seats": [
             "media-creative-director",
             "media-cinematographer",
@@ -197,9 +199,9 @@
           ]
         },
         {
-          "id": "four-sampling-steps",
-          "why": "the measured sampling-step count of this station's engine",
-          "pattern": "4 sampling steps|four sampling steps",
+          "id": "sampling-steps-are-the-jobs",
+          "why": "sampling steps are the job's; the 2026-09-04 figures are a measurement, not a standard (B43 R19, CEO 2026-11-16)",
+          "pattern": "sampling steps (of a keeper )?are the job's",
           "seats": [
             "media-creative-director",
             "media-film-director",
@@ -207,9 +209,9 @@
           ]
         },
         {
-          "id": "1080p-ceiling",
-          "why": "the station's delivery ceiling",
-          "pattern": "1080",
+          "id": "no-size-ceiling",
+          "why": "there is no size ceiling, for UGC or for anything else (B43 R36, CEO 2026-11-17)",
+          "pattern": "no size ceiling",
           "seats": [
             "media-creative-director",
             "media-vfx-post"

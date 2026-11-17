@@ -52,9 +52,14 @@ export const RULER = {
   ENUM_OPEN: /^\s*\(\d+\)/,
   ENUM_CHAIN_MIN_ARROWS: 2,
   ARROW: " → ",
-  /** rule 6 — a word of the recorded-voice family is allowed only inside a prohibition */
-  VOICE_RESIDUE: /voice-over|voice over|narration|scratch|AI voice|TTS/i,
-  VOICE_PROHIBITION: /no |never |not |NO |cancelled|removed|refus/,
+  /**
+   * rule 6 — the voice ruling of 2026-09-04 ("the engine's own voice is the only voice; no TTS, recorded or
+   * cloned voice") was replaced by the CEO's words of 2026-11-16 and 2026-11-17 (B43 R22): the voice is the
+   * most natural human voice, by whichever method. The residue this rule now catches is that cancelled
+   * ruling coming back — its wording is a failure wherever it stands, a prohibition included.
+   */
+  VOICE_RESIDUE:
+    /is the only voice|the only voice (there is|a piece will ever have)|no voice-over|no AI voice|(no|never a) (TTS|recorded|cloned|synthesi[sz]ed)\b/i,
   /** rule 7 — the two written roads may never be named without the engine-born road */
   ROAD_PHOTO: /real photograph/i,
   ROAD_SHEET: /written sheet/i,
@@ -370,7 +375,7 @@ export function measureFile(repoRoot: string, path: string, contract: Contract):
 
   // 6 voice-residue · 7 three-roads
   for (const s of sentences) {
-    if (RULER.VOICE_RESIDUE.test(s.text) && !RULER.VOICE_PROHIBITION.test(s.text)) {
+    if (RULER.VOICE_RESIDUE.test(s.text)) {
       failures["voice-residue"].push({ line: s.line, detail: clip(s.text) });
     }
     if (RULER.ROAD_PHOTO.test(s.text) && RULER.ROAD_SHEET.test(s.text) && !RULER.ROAD_ENGINE_BORN.test(s.text)) {

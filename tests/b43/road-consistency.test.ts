@@ -19,6 +19,14 @@
 // negates the wording ("never a pre-split…" is the rule, not a contradiction), a separate list for
 // contradictions that ARE negations, and one anchor per ruling on the seat that owns it.
 // DXB_ROAD_TEST_ROOT lets the same test run against a copied, mutated roster to prove it bites.
+//
+// 2026-11-17 — the studio's contract page (B43) replaced three doctrines this test held, on the CEO's words
+// of 2026-11-07, 2026-11-16 and 2026-11-17: "Flux plays no part in the local engine's take" is now a measured
+// fact about one engine (R6: what an engine is handed is decided engine by engine); "the engine's own voice
+// is the only voice" is now the most natural human voice by whichever method (R22, R23); the 1080 ceiling
+// and "only when he asks" are now "no size ceiling, enlarging asked at that job" (R36). Condition 4, the
+// anchors and the voice lines of CONTRA follow the page; the three old doctrines are now what must not
+// return (CONTRA_ALWAYS — their wording is a negation, so the negation skip would let it through).
 import { describe, expect, it } from "vitest";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
@@ -64,10 +72,10 @@ const CONDITIONS: Record<string, RegExp[]> = {
   "3 joins are the shooting engine's own frames": [
     /engine'?s own (last )?frame|frames of the engine that shot|shooting engine'?s own frames|taken from the engine that shot|the frame the engine itself shot/i,
   ],
-  "4 Flux plays no part in the LOCAL engine's take; a Flux still made here may go to an EXTERNAL engine's take; everything is made here": [
-    /Flux (is not used|plays no part)/i,
-    /local[- ]engine('s)? take|shot by the local engine|the local engine \(MiniMax H3/i,
-    /external engine('s)? take|shot by an external engine|RunPod, an API or an MCP/i,
+  "4 what an engine is handed is decided engine by engine — a measured fact, not a studio rule; everything is made here; the local engine first": [
+    /decided engine by engine/i,
+    /not a studio rule in either direction/i,
+    /RunPod, an API or an MCP/i,
     /made here on this computer|made here, on this computer|produced here on this computer/i,
     /text-to-video and image-to-video are both open|image-to-video is not forbidden|both roads/i,
     /local engine is the first choice|first choice, beginning to end/i,
@@ -76,9 +84,9 @@ const CONDITIONS: Record<string, RegExp[]> = {
 
 /** one anchor per ruling, on the seat that owns it (the audit of 2026-09-14 found each missing) */
 const ANCHORS: Record<string, RegExp[]> = {
-  "media-sound-music": [/engine'?s own (generated )?voice is the (only )?voice/i, /never a (TTS|replacement) (track|voice)/i],
-  "media-vfx-post": [/only (on|after) (a piece |a draft |the draft )?the CEO has accepted/i, /(only )?when he asks/i],
-  "media-creative-director": [/enlargement — only on a piece the CEO has accepted/i, /born in the engine/i],
+  "media-sound-music": [/cannot be told from a person/i, /whichever sounds best to the ear/i, /compared on the same take/i, /never (covered|patched) with a second voice/i],
+  "media-vfx-post": [/only (on|after) (a piece |a draft |the draft )?the CEO has accepted/i, /asked at that job/i, /no size ceiling/i],
+  "media-creative-director": [/asked at that job, after the CEO'?s eye has accepted its native draft/i, /born in the engine/i],
   "media-film-director": [/born in the engine/i],
   "media-character-identity": [/born in the engine/i, /written sheet/i],
 };
@@ -104,12 +112,12 @@ const CONTRA: RegExp[] = [
   // his correction of 2026-09-14: place words were wrong — only the ENGINE that shoots the take differs
   /off the station/i, /on the station'?s? own (road|route)/i, /on this station'?s own route/i, /outside the computer|bilgisayar dışında/i,
   /route table of station, rented card and API/i,
-  // the voice ruling of 2026-09-04: the engine's own voice, never a TTS or replacement voice
-  /replacement voice/i, /voice replacement/i, /(recorded|cloned|synthesi[sz]ed) voice/i, /\bTTS\b/, /mute(d)? whole and replace/i,
-  /engine'?s speech replaced entirely/i, /lines to record/i,
-  // LAW D (2026-09-03) and "upscaling only when he asks" (2026-09-04)
+  // the ghost voice (2026-09-01): one voice source, never a second one laid under or over a track
+  /mute(d)? whole and replace/i, /engine'?s speech replaced entirely/i, /lines to record/i,
+  /second voice (is |was )?(laid|mixed|added) (under|over)/i,
+  // LAW D (2026-09-03): nothing is enlarged before his eye on the native draft
   /enlarge → correct/i, /delivery-size footage/i, /every master[^.]*delivery[- ]size/i,
-  /(enlargement|upscal\w+)[^.]*before (the CEO|his eye|his acceptance|acceptance)/i,
+  /(enlarge\w*|upscal\w+)[^.]*before (the CEO|his eye|his acceptance|acceptance)/i,
   // the cast: a real person, the engine-born cast, or a written sheet (2026-09-04, 2026-09-13)
   /every human[^.]*is a real, rights-cleared person who/i, /real-photograph law/i, /without a real-photograph reference is blocked/i,
   /never a real, cleared person/i, /missing real photograph/i, /three real-photograph views each/i, /a drawn presenter/i,
@@ -117,6 +125,12 @@ const CONTRA: RegExp[] = [
 ];
 /** contradictions that ARE negations — checked on every sentence regardless of negation cues */
 const CONTRA_ALWAYS: RegExp[] = [
+  // the three doctrines the contract page replaced (2026-11-17) — each is a negation in its own wording
+  /Flux (is not used|plays no part)/i, /nothing drawn is handed/i, /no drawn (still|frame|panel|face)[^.]*(is handed|rides|exists)/i,
+  /for an external engine'?s take only/i, /no (new )?face is drawn outside the engine/i,
+  /is the only voice|the only voice (there is|a piece will ever have)/i, /no voice-over/i,
+  /(no|never a) (TTS|recorded|cloned|synthesi[sz]ed)\b/i,
+  /1080p?( is)? the (CEO'?s )?ceiling|ceiling (he|the CEO) chose/i, /studio standard is 4/i, /only when he asks/i,
   /external engine[^.]*(may not|must not|never|cannot) (start|ride|begin|use)[^.]*(drawn|still|first frame)/i,
   /\b(image-to-video|i2v|text-to-video|t2v) (is|are) (forbidden|banned|closed)\b/i,
 ];
