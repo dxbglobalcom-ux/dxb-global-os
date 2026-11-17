@@ -43,3 +43,37 @@ the `C` filter (the guard asks git for renames only, so git reports a copy as an
 either way) and measuring a symlink (its blob is the link's target path, never 20,000 bytes).
 
 Tests after the fixes: `tests.out` — 15/15; typecheck clean. No second audit round.
+
+# The second pass — a fresh Fable 5.2 at xhigh, on his word the same evening
+
+His word: "taze bir xHigh aç … Çünkü önemli bir konu." Opened as a read-only hand (`refuter` seat, Fable 5.2,
+xhigh), blind: it read this file only after its own findings were final. It ran every case in throw-away
+repositories and through a copy of the real hook, and replayed the guard over the repository's history.
+Its report is in the lead's session record; what it found and what was done:
+
+| # | Finding | Fix |
+|---|---|---|
+| A1 | "Records are outside" was not true for code-type files under `.planning/` — a job's filed evidence (bundles, report assets, scripts kept as they were): 190 tracked files judged, 9 above the limit, 7 past commits would have been stopped. | `.planning/` is outside the guard. |
+| B1 | The hook looked the script up in the checkout: in a worktree based on an older commit every commit was blocked with a stack trace, and the escape could not help. | The hook calls the script beside itself. Tested with a real commit through the real hook in a repository that has no copy of the script. |
+| B2 | Standing aside was silent, and a state file left behind (`REVERT_HEAD`, an empty `rebase-apply`) switched the guard off for every commit. | It says one line naming the state file and that a leftover one must be removed. All five states tested, and that it measures again once the state is gone. |
+| B3 | The step ran after the research engine's suite (about 75 s by the hook's own comment). | It runs first, before every ruler. |
+| B4 | The message named the escape only for a rollback; a moved file committed with only its new path read as new; "yorum silme" could be read as a noun phrase. | The message names the two cases where splitting now is wrong (an urgent fix, a rollback) and that the split is then written as the next job; tells a mover to add the old path; says SİLİNMEZ / DEĞİŞTİRİLMEZ; forbids the exempt-folder move, the extension change and `--no-verify`. |
+| B5 | Thirty-three of fifty mutations survived the tests. | Twenty tests now; `mutation-proof-2.out`: thirteen breakages of the guard and the hook, every one red. |
+| B6 | Started through a symlinked path the script did nothing. | Paths are resolved before they are compared. |
+| C | Renames under a low `diff.renameLimit` read as new; an escape left no trace. | `-l0` on the diff; every escape is one line in `~/.local/state/dxb/size-escapes.log`. |
+
+Disputed in the first pass and corrected here: `git revert` does not reach the guard at all — git runs no
+pre-commit for it; the guard stands aside only for the hand-made forms (`--no-commit`, a conflicted replay).
+
+Left as known limits, written in the script's head: an amend after a shrink is compared with the commit it
+amends; a move plus a rewrite beyond git's similarity reads as new; a merge can take a file over the limit unjudged.
+
+## The number he is told
+
+Replayed over the 1,141 commits from 2026-09-01 to the guard's parent, the rule he accepted would have stopped
+171 — 15.0 % (September 71/429, October 45/413, November 55/299). 282 findings were growth of an already large
+file (median +1,429 bytes), 37 a file crossing the limit, 36 a new large file; 57 stops were wholly in test files;
+54 wholly inside the fifteen most-hit files. The limit itself sits at the 90th percentile of code files here
+(about 423 lines); the 101 files above it are 10.5 % of the files and hold 42.1 % of the judged bytes.
+
+Tests after both passes: `tests.out` — 20/20; typecheck clean.

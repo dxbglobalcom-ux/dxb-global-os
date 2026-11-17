@@ -10,17 +10,25 @@
 // It reads the staged change as git itself records it (`git diff --cached --raw`: the old and
 // the new blob of every entry), so a size is read from a blob id and never looked up by path.
 // It needs no dependency, and judges hand-written code only: records, data, migrations, seeds,
-// fixtures, snapshots, minified files and the `.agents` mirror are outside it (a migration is
-// never split). A script without an extension is not seen.
+// fixtures, snapshots, minified files, the `.agents` mirror and everything under `.planning/`
+// (the records and each job's evidence, which is filed as it was) are outside it (a migration
+// is never split). A script without an extension is not seen.
 //
 // It stands aside while git replays commits that were judged when they were made — a merge, a
-// revert, a cherry-pick, a rebase — so it never stops one of those in the middle.
+// revert, a cherry-pick, a rebase — so it never stops one of those in the middle; it says so in
+// one line naming the state it saw, because a state file left behind would switch it off.
+//
+// Known limits: a commit amended after a shrink is compared with the commit it amends; a file
+// moved and rewritten beyond git's rename similarity reads as new; a merge can take a file over
+// the limit unjudged.
 //
 // Called by scripts/hooks/pre-commit. Exit 0 = pass, 1 = blocked (or the guard itself failed,
-// said plainly). DXB_SKIP_SIZE=1 lets one commit through; say so in the commit's report.
+// said plainly). DXB_SKIP_SIZE=1 lets one commit through; say so in the commit's report. Every
+// escape is one line in ~/.local/state/dxb/size-escapes.log, so how often it is used can be counted.
 
 import { execFileSync } from 'node:child_process';
-import { existsSync } from 'node:fs';
+import { appendFileSync, existsSync, mkdirSync, realpathSync } from 'node:fs';
+import { homedir } from 'node:os';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -30,7 +38,7 @@ export const LIMIT_BYTES = LIMIT_TOKENS * BYTES_PER_TOKEN;
 
 const CODE = /\.(ts|tsx|mts|cts|js|jsx|mjs|cjs|py|sh|bash|zsh|sql|php|rb|go|rs|vue|svelte|css|scss|sass|less)$/i;
 const OUTSIDE = [
-  /^db\/migrations\//, /^db\/seed\//, /^\.agents\//, /(^|\/)node_modules\//,
+  /^db\/migrations\//, /^db\/seed\//, /^\.agents\//, /^\.planning\//, /(^|\/)node_modules\//,
   /(^|\/)fixtures?\//, /(^|\/)__snapshots__\//, /\.min\.(js|css)$/i,
 ];
 const REGULAR = new Set(['100644', '100755']);
@@ -57,21 +65,24 @@ export function message(found) {
   const lines = ['', `COMMIT DURDURULDU — dosya boyutu cırcırı (sınır ${LIMIT_TOKENS} token = ${LIMIT_BYTES} bayt):`];
   for (const f of found) {
     const size = `${f.after} bayt (~${tokens(f.after)} token)`;
-    if (f.kind === 'new') lines.push(`  YENİ      ${f.path} — ${size}; en az ${Math.ceil(f.after / LIMIT_BYTES)} parçaya bölünür`);
+    if (f.kind === 'new') lines.push(`  YENİ      ${f.path} — ${size}; en az ${Math.ceil(f.after / LIMIT_BYTES)} parçaya bölünür`
+      + ' (bu dosyayı yalnız TAŞIDIYSAN: eski yolunu da aynı commit\'e kat, o zaman taşıma olarak okunur)');
     else if (f.kind === 'crossed') lines.push(`  SINIRI GEÇTİ ${f.path} — ${f.before} → ${size}; sınırın ${f.after - LIMIT_BYTES} bayt üstünde`);
     else lines.push(`  BÜYÜDÜ    ${f.path} — ${f.before} → ${size}, +${f.after - f.before} bayt; zaten büyük bir dosya büyüyemez`);
   }
   lines.push(
     'Nasıl bölünür — boyuta göre değil, SORUMLULUĞA göre:',
     '  1. dosyadaki işleri sorumluluğa göre grupla (utils2, utils3 değil; her parçanın bir adı ve bir işi olur);',
-    '  2. kodu birebir taşı — sığdırmak için yorum silme, davranış değiştirme;',
+    '  2. kodu birebir taşı — sığdırmak için yorum SİLİNMEZ, test SİLİNMEZ, davranış DEĞİŞTİRİLMEZ;',
     '  3. çağıranlar bozulmasın: dilin izin verdiği yerde (TS/JS modülü gibi) eski dosya parçaları yeniden dışa',
     '     aktaran ince giriş noktası kalır; betik, CSS ya da çalıştırılan giriş dosyasında çağıranları yeni yola çevir;',
     '     yeni parça eski dosyayı geri içe aktarmaz (döngü olmasın);',
     '  4. testleri koş.',
     'Zaten büyük bir dosyaya ekleme yapacaksan: yeni kodu yeni dosyaya yaz ve eski dosyadan, eklediğin bağlantı',
     'satırlarından fazlasını yeni dosyaya taşı — eski dosyanın toplam boyutu artmamalı.',
-    'Bu commit gerçekten böyle girmeliyse (ör. eski büyük sürüme geri dönüş): DXB_SKIP_SIZE=1 ile geçer; raporda söylenir.', '');
+    'Sınırdan kaçmak için dosya muaf bir klasöre taşınmaz, uzantısı değiştirilmez, --no-verify kullanılmaz.',
+    'Bölmenin şimdi yanlış olduğu iki durum var — acil bir hata düzeltmesi ve eski büyük sürüme geri dönüş:',
+    'o zaman DXB_SKIP_SIZE=1 ile geçilir, raporda söylenir ve dosyanın bölünmesi sonraki iş olarak yazılır.', '');
   return lines.join('\n');
 }
 
@@ -97,7 +108,7 @@ export function parseRaw(raw) {
 
 /** The staged entries the ratchet judges, with their sizes read from the blobs themselves. */
 export function staged() {
-  const entries = parseRaw(git(['diff', '--cached', '--raw', '-z', '-M', '--no-abbrev', '--diff-filter=ACMRT']));
+  const entries = parseRaw(git(['diff', '--cached', '--raw', '-z', '-M', '-l0', '--no-abbrev', '--diff-filter=ACMRT']));
   const size = (id) => Number(git(['cat-file', '-s', id]).trim()); // a blob that cannot be read is an error, never zero
   return entries
     .filter((e) => REGULAR.has(e.newMode) && judged(e.path)) // a symlink or a submodule is not a code file
@@ -108,21 +119,41 @@ export function staged() {
     });
 }
 
-/** True while git is replaying commits that were judged when they were made. */
+/** The state file that says git is replaying commits judged when they were made, or null. */
 export function replaying() {
   const dir = git(['rev-parse', '--absolute-git-dir']).trim();
-  return ['MERGE_HEAD', 'REVERT_HEAD', 'CHERRY_PICK_HEAD', 'rebase-merge', 'rebase-apply'].some((n) => existsSync(join(dir, n)));
+  return ['MERGE_HEAD', 'REVERT_HEAD', 'CHERRY_PICK_HEAD', 'rebase-merge', 'rebase-apply'].find((n) => existsSync(join(dir, n))) ?? null;
 }
 
-// The path is compared decoded: this repository's folder name has spaces in it.
-if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {
+/** One line per escape, outside the repository; never a reason to fail. */
+function noteEscape() {
+  try {
+    const dir = join(homedir(), '.local', 'state', 'dxb');
+    mkdirSync(dir, { recursive: true });
+    const files = git(['diff', '--cached', '--name-only']).trim().split('\n').filter(judged).join(' ');
+    appendFileSync(join(dir, 'size-escapes.log'), `${new Date().toISOString()}\t${process.cwd()}\t${files}\n`);
+  } catch { /* the log is a measure, not a gate */ }
+}
+
+// The paths are compared decoded and resolved: this repository's folder name has spaces in it, and
+// the script may be reached through a symlink.
+const direct = () => {
+  try { return realpathSync(fileURLToPath(import.meta.url)) === realpathSync(process.argv[1]); } catch { return false; }
+};
+if (process.argv[1] && direct()) {
   if (process.env.DXB_SKIP_SIZE === '1') {
     console.error('dosya boyutu cırcırı: DXB_SKIP_SIZE=1 ile atlandı — raporda söyle.');
+    noteEscape();
     process.exit(0);
   }
   let found;
   try {
-    if (replaying()) process.exit(0);
+    const state = replaying();
+    if (state) {
+      console.error(`dosya boyutu cırcırı: kenara çekildi — git bir ${state} işleminin ortasında (.git/${state}). `
+        + 'Böyle bir işlem yoksa o dosya artakalmıştır: kaldırılmadıkça bekçi ölçmez.');
+      process.exit(0);
+    }
     found = verdicts(staged());
   } catch (err) {
     const why = String(err.stderr || err.message || err).trim().split('\n')[0];

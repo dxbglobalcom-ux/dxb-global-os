@@ -4,7 +4,7 @@
 // progress, a symlink, a path with spaces.
 import { describe, expect, it } from 'vitest';
 import { execFileSync, spawnSync } from 'node:child_process';
-import { mkdtempSync, writeFileSync, mkdirSync, readFileSync, renameSync, symlinkSync, appendFileSync } from 'node:fs';
+import { mkdtempSync, writeFileSync, mkdirSync, readFileSync, renameSync, symlinkSync, appendFileSync, copyFileSync, chmodSync, existsSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join, resolve } from 'node:path';
 import { judged, message, parseRaw, tokens, verdicts } from '../../scripts/hooks/file-size-ratchet.mjs';
@@ -15,12 +15,15 @@ const PRE_COMMIT = resolve(__dirname, '../../scripts/hooks/pre-commit');
 describe('file-size ratchet — what it judges', () => {
   it('judges code, whatever the case of its extension', () => {
     for (const p of ['packages/kernel/src/a.ts', 'scripts/ops/x.py', 'a.MTS', 'styles/a.scss', 'scripts/x.sql',
-      'src/build/a.ts', 'src/a.generated.ts', 'src/a.d.ts', 'wp/plugin.php']) expect(judged(p), p).toBe(true);
+      'src/build/a.ts', 'src/a.generated.ts', 'src/a.d.ts', 'wp/plugin.php', 'apps/web/src/Page.tsx', 'scripts/ops/run.sh',
+      'scripts/x.js', 'scripts/x.mjs', 'scripts/x.cjs', 'apps/web/src/a.css', 'tests/b43/a.test.ts',
+      '.claude/skills/dxb-research/fleet/fleet.sh', 'tools/scrollcraft/skill/engine/scrollcraft.js']) expect(judged(p), p).toBe(true);
   });
   it('leaves records, data, migrations, seeds, fixtures and the mirror alone', () => {
     for (const p of ['db/migrations/20260101000000_x.sql', 'db/seed/build-seed.ts', '.planning/board-rows/B43.md',
       'scripts/governance/ceo-approvals.json', 'tests/x/fixtures/big.ts', 'apps/web/public/lib.min.js',
-      'pnpm-lock.yaml', '.agents/skills/x/run.py', 'HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md']) expect(judged(p), p).toBe(false);
+      'pnpm-lock.yaml', '.agents/skills/x/run.py', 'HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md',
+      '.planning/quick/20261022-job/evidence/pre-fix/studio.mjs', '.planning/quick/x/playwright-report/assets/a.js']) expect(judged(p), p).toBe(false);
   });
 });
 
@@ -57,7 +60,11 @@ describe('file-size ratchet — the verdicts, in plain numbers', () => {
     expect(text).toContain('+1 bayt');
     expect(text).toContain('sınırın 500 bayt üstünde');
     expect(text).toContain('SORUMLULUĞA göre');
-    expect(text).toContain('yorum silme');
+    expect(text).toContain('yorum SİLİNMEZ');
+    expect(text).toContain('eski yolunu da aynı commit');
+    expect(text).toContain('eski dosyanın toplam boyutu artmamalı');
+    expect(text).toContain('acil bir hata düzeltmesi');
+    expect(text).toContain('--no-verify kullanılmaz');
   });
   it('reads a rename as one entry whose path is the destination', () => {
     const z = '\0';
@@ -98,9 +105,19 @@ describe('file-size ratchet — on real staged changes', () => {
     const blocked = run(dir);
     expect(blocked.status).toBe(1);
     expect(blocked.stderr).toContain('src/yeni dosya.ts');
-    const skipped = run(dir, { DXB_SKIP_SIZE: '1' });
+    for (const v of ['true', '0', '']) expect(run(dir, { DXB_SKIP_SIZE: v }).status, `DXB_SKIP_SIZE=${v}`).toBe(1);
+    const home = mkdtempSync(join(tmpdir(), 'ratchet-home-'));
+    const skipped = run(dir, { DXB_SKIP_SIZE: '1', HOME: home });
     expect(skipped.status).toBe(0);
     expect(skipped.stderr).toContain('atlandı');
+    expect(readFileSync(join(home, '.local/state/dxb/size-escapes.log'), 'utf8')).toContain('src/yeni dosya.ts');
+  });
+
+  it('lets a large file be edited in place at the same size', () => {
+    const dir = repo();
+    writeFileSync(join(dir, 'src/old big.ts'), '// y\n'.repeat(6000));
+    git(dir, 'add', '-A');
+    expect(run(dir).status).toBe(0);
   });
 
   it('lets a large file be moved unchanged, and stops it when the move also grows it', () => {
@@ -108,6 +125,8 @@ describe('file-size ratchet — on real staged changes', () => {
     renameSync(join(dir, 'src/old big.ts'), join(dir, 'src/moved.ts'));
     git(dir, 'add', '-A');
     expect(run(dir).status).toBe(0);
+    git(dir, 'config', 'diff.renames', 'false');
+    expect(run(dir).status).toBe(0); // the guard asks for rename detection itself
     appendFileSync(join(dir, 'src/moved.ts'), '// one more line\n');
     git(dir, 'add', '-A');
     const grown = run(dir);
@@ -142,6 +161,41 @@ describe('file-size ratchet — on real staged changes', () => {
     expect(run(linked).status).toBe(0);
   });
 
+  it('stands aside in each replay state, says which, and measures again once the state is gone', () => {
+    for (const state of ['MERGE_HEAD', 'REVERT_HEAD', 'CHERRY_PICK_HEAD', 'rebase-merge', 'rebase-apply']) {
+      const dir = repo();
+      writeFileSync(join(dir, 'src/new big.ts'), BIG);
+      git(dir, 'add', '-A');
+      if (state.startsWith('rebase')) mkdirSync(join(dir, '.git', state)); else writeFileSync(join(dir, '.git', state), '');
+      const aside = run(dir);
+      expect(aside.status, state).toBe(0);
+      expect(aside.stderr, state).toContain(`.git/${state}`);
+      rmSync(join(dir, '.git', state), { recursive: true });
+      expect(run(dir).status, state).toBe(1);
+    }
+  });
+
+  it('does not measure a submodule entry, and stops on a staged blob it cannot read', () => {
+    const dir = repo();
+    // a submodule's commit is not an object of this repository: measuring it would fail
+    git(dir, 'update-index', '--add', '--cacheinfo', '160000,abcdefabcdefabcdefabcdefabcdefabcdefabcd,vendor/lib.js');
+    expect(run(dir).status).toBe(0);
+    git(dir, 'update-index', '--add', '--cacheinfo', '100644,1234567890123456789012345678901234567890,src/ghost.ts');
+    const out = run(dir);
+    expect(out.status).toBe(1);
+    expect(out.stderr).toContain('çalışamadı');
+  });
+
+  it('runs when it is reached through a symlinked path', () => {
+    const dir = repo();
+    writeFileSync(join(dir, 'src/new big.ts'), BIG);
+    git(dir, 'add', '-A');
+    const via = join(mkdtempSync(join(tmpdir(), 'ratchet-link-')), 'hooks');
+    symlinkSync(resolve(__dirname, '../../scripts/hooks'), via);
+    const out = spawnSync('node', [join(via, 'file-size-ratchet.mjs')], { cwd: dir, encoding: 'utf8' });
+    expect(out.status).toBe(1);
+  });
+
   it('says plainly when git cannot be read, and stops rather than pass unmeasured', () => {
     const dir = mkdtempSync(join(tmpdir(), 'ratchet-nogit-'));
     const out = run(dir, { GIT_CEILING_DIRECTORIES: tmpdir() });
@@ -151,10 +205,33 @@ describe('file-size ratchet — on real staged changes', () => {
 });
 
 describe('file-size ratchet — wired into the commit hook', () => {
-  it('pre-commit runs it, stops on its failure, and runs it before the secret scan', () => {
+  it('pre-commit calls it beside itself, before the slow rulers and the secret scan', () => {
     const hook = readFileSync(PRE_COMMIT, 'utf8');
-    const call = hook.indexOf('if ! node "$REPO_TOP/scripts/hooks/file-size-ratchet.mjs"; then\n  exit 1\nfi');
+    const call = hook.indexOf('if ! node "$(dirname "$0")/file-size-ratchet.mjs"; then\n  exit 1\nfi');
     expect(call).toBeGreaterThan(-1);
+    expect(call).toBeLessThan(hook.indexOf('RESEARCH_TOUCHED='));
     expect(call).toBeLessThan(hook.indexOf('exec gitleaks'));
+  });
+
+  it('a real commit through the real hook is stopped, also in a checkout that has no copy of the script', () => {
+    // The hook as it is, with only its last line — the secret scan — replaced; the guard beside it.
+    const hooks = mkdtempSync(join(tmpdir(), 'ratchet-hooks-'));
+    const hook = readFileSync(PRE_COMMIT, 'utf8');
+    expect(hook).toContain('exec gitleaks git --pre-commit --staged --redact --verbose');
+    writeFileSync(join(hooks, 'pre-commit'), hook.replace('exec gitleaks git --pre-commit --staged --redact --verbose', 'exit 0'));
+    chmodSync(join(hooks, 'pre-commit'), 0o755);
+    copyFileSync(SCRIPT, join(hooks, 'file-size-ratchet.mjs'));
+    const dir = mkdtempSync(join(tmpdir(), 'ratchet-real-'));
+    const g = (...args: string[]) => spawnSync('git', ['-c', 'user.name=t', '-c', 'user.email=t@t', '-c', `core.hooksPath=${hooks}`, ...args], { cwd: dir, encoding: 'utf8' });
+    g('init', '-q');
+    expect(existsSync(join(dir, 'scripts/hooks/file-size-ratchet.mjs'))).toBe(false);
+    writeFileSync(join(dir, 'small.ts'), 'export const a = 1;\n');
+    g('add', '.');
+    expect(g('commit', '-q', '-m', 'small').status).toBe(0);
+    writeFileSync(join(dir, 'big.ts'), '// x\n'.repeat(6000));
+    g('add', '.');
+    const stopped = g('commit', '-q', '-m', 'big');
+    expect(stopped.status).not.toBe(0);
+    expect(stopped.stderr).toContain('YENİ      big.ts');
   });
 });

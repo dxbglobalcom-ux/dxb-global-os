@@ -25,6 +25,19 @@ if ! command -v gitleaks >/dev/null 2>&1; then
   exit 1
 fi
 
+# (2b) THE FILE-SIZE RATCHET — his yes of 2026-11-17 (ceo-approvals.json,
+#      `file-size-ratchet-and-vscode-auto-tasks-off-2026-11-17`). A new code file may not enter
+#      above 5,000 tokens (bytes / 4); a code file already above it may be edited but may not
+#      grow. Code only — records and job evidence (.planning/), data, migrations, seeds and
+#      fixtures are outside it. It reads the staged content, costs a few milliseconds — so it
+#      runs first, before the rulers and suites that take seconds or a minute — and tells how to
+#      split by responsibility. DXB_SKIP_SIZE=1 lets one commit through; the report says so.
+#      It is called beside this hook, not in the checkout: a worktree based on an older commit
+#      shares this hook and has no copy of the script.
+if ! node "$(dirname "$0")/file-size-ratchet.mjs"; then
+  exit 1
+fi
+
 # (3) THE CLASS'S RULER RUNS BEFORE THE COMMIT — the CEO's ruling of 2026-09-15
 #     (ceo-approvals.json, `ruler-table-holding-wide-2026-09-15`): "every commit runs its
 #     class's ruler automatically — no ruler green, no commit". The research engine is a class
@@ -95,17 +108,6 @@ if [ -n "$OPENING_TOUCHED" ]; then
     echo "Duzelt, 'node --no-warnings tests/hooks/opening-budget.ts' yesil yansin, sonra tekrar commit et." >&2
     exit 1
   fi
-fi
-
-# (3d) THE FILE-SIZE RATCHET — his yes of 2026-11-17 (ceo-approvals.json,
-#      `file-size-ratchet-and-vscode-auto-tasks-off-2026-11-17`). A new code file may not enter
-#      above 5,000 tokens (bytes / 4); a code file already above it may be edited but may not
-#      grow. Code only — records, data, migrations, seeds and fixtures are outside it. It reads
-#      the staged content, costs a few milliseconds, and tells how to split by responsibility.
-#      DXB_SKIP_SIZE=1 lets one commit through; the report says so.
-REPO_TOP=$(git rev-parse --show-toplevel)
-if ! node "$REPO_TOP/scripts/hooks/file-size-ratchet.mjs"; then
-  exit 1
 fi
 
 # (4) Scan staged changes only; redact matched values in all output.

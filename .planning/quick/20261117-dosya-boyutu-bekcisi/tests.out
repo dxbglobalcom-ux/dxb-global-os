@@ -2,10 +2,11 @@
  RUN  v3.2.6 /home/dxb/DxB Global OS
 
 [global-setup] construction engine 7690665340837392423/5 (postgres) — verified on the connection that does the work.
- ✓ tests/hooks/file-size-ratchet.test.ts (15 tests) 383ms
+ ✓ tests/hooks/file-size-ratchet.test.ts (20 tests) 1054ms
+   ✓ file-size ratchet — on real staged changes > stands aside in each replay state, says which, and measures again once the state is gone  306ms
 
  Test Files  1 passed (1)
-      Tests  15 passed (15)
-   Start at  17:08:15
-   Duration  650ms (transform 51ms, setup 0ms, collect 15ms, tests 383ms, environment 0ms, prepare 31ms)
+      Tests  20 passed (20)
+   Start at  18:06:10
+   Duration  1.32s (transform 51ms, setup 0ms, collect 17ms, tests 1.05s, environment 0ms, prepare 30ms)
 
