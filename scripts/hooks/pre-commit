@@ -97,5 +97,16 @@ if [ -n "$OPENING_TOUCHED" ]; then
   fi
 fi
 
+# (3d) THE FILE-SIZE RATCHET — his yes of 2026-11-17 (ceo-approvals.json,
+#      `file-size-ratchet-and-vscode-auto-tasks-off-2026-11-17`). A new code file may not enter
+#      above 5,000 tokens (bytes / 4); a code file already above it may be edited but may not
+#      grow. Code only — records, data, migrations, seeds and fixtures are outside it. It reads
+#      the staged content, costs a few milliseconds, and tells how to split by responsibility.
+#      DXB_SKIP_SIZE=1 lets one commit through; the report says so.
+REPO_TOP=$(git rev-parse --show-toplevel)
+if ! node "$REPO_TOP/scripts/hooks/file-size-ratchet.mjs"; then
+  exit 1
+fi
+
 # (4) Scan staged changes only; redact matched values in all output.
 exec gitleaks git --pre-commit --staged --redact --verbose
