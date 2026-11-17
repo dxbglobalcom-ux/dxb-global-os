@@ -1,7 +1,8 @@
 // THE SESSION SETS ITS OWN EFFORT — the real hook, run where it stands in the repository.
 // The CEO's order of 2026-11-10: the session sets its own level by the course of the talk; he does not
-// switch it and is never asked to. Since 2026-11-16 the session works at high -- its saved default -- and
-// goes down to medium only for plain talk, up to xhigh for a truly complex, important job; max is not used.
+// switch it and is never asked to. Since 2026-11-17 the session's level is medium -- its saved default: talk
+// runs there; a plan, a design, an architecture, an evaluation that carries weight, an important decision, code
+// and managing run at high, a truly complex, important job at xhigh; max is not used.
 // The level is carried by three small skills
 // (`dxb-effort-medium`, `dxb-effort-high`, `dxb-effort-xhigh`) whose `effort` field sets the turn they are
 // opened in, in the background. On each of his messages the hook tells the lead the session's own level
@@ -122,14 +123,18 @@ function told(text: string): string {
 
 const skillCall = (level: string) => `Skill("dxb-effort-${level}")`;
 
-describe("each of his messages tells the lead the session's level and where it goes down or up (CEO 2026-11-10, 2026-11-16)", () => {
-  it("at high, an ordinary message: the short text — the level, the two skills that leave high, no first action — and he is never asked to switch", () => {
+describe("each of his messages tells the lead the session's level and where it goes down or up (CEO 2026-11-10, 2026-11-17)", () => {
+  it("a session standing at high, an ordinary message: the short text — the level, the two skills that leave high, no first action — and he is never asked to switch", () => {
     const dir = box();
     record(dir, SID, "high", 2);
     const text = context(hook(dir, prompt(SID, transcript(dir, [["high", 5]]))));
     expect(told(text)).toBe("high");
-    expect(text.startsWith("EFFORT -- the session works at high and sets its own level by the course of the talk; "
-      + "he does not switch it and is never asked to (the CEO, 2026-11-10). This session runs at high. Plain talk")).toBe(true);
+    expect(text.startsWith("EFFORT -- the session's level is medium (the CEO, 2026-11-17) and it sets its own level by the "
+      + "course of the talk; he does not switch it and is never asked to (the CEO, 2026-11-10). This session runs at high. "
+      + "Talk -- ")).toBe(true);
+    // the rule of 2026-11-16 is gone with his word of 2026-11-17, not kept beside it
+    expect(text).not.toContain("works at high");
+    expect(text).not.toContain("may run at medium");
     expect(text).toContain(skillCall("medium"));
     expect(text).toContain(skillCall("xhigh"));
     // a session already at high has nothing to open before it reads him
@@ -173,18 +178,19 @@ describe("each of his messages tells the lead the session's level and where it g
       expect(text, level).toContain(`\`${skillCall("xhigh")}\` -- opened first, before you think about the substance.`);
     }
   });
-  it("names where the level goes: plain talk may go down to medium, a truly complex job up to xhigh, everything else is high, never max", () => {
+  it("names where the level goes: talk runs at medium, a truly complex job at xhigh, everything else — an important decision included — at high, never max", () => {
     const dir = box();
     record(dir, SID, "medium", 2);
     const text = context(hook(dir, prompt(SID, transcript(dir, []))));
-    expect(text).toContain(`Plain talk -- a simple question, a fact, a reading, a record -- may run at medium: \`${skillCall("medium")}\`.`);
+    expect(text).toContain(`Talk -- a question, an exchange of ideas, a fact, a reading, a record -- runs at medium: \`${skillCall("medium")}\`.`);
     expect(text).toContain(`A truly complex, important job's plan or work runs at xhigh: \`${skillCall("xhigh")}\` -- opened first, `
       + "before you think about the substance.");
     // an evaluation that carries weight is part of planning and design (his word, 2026-11-16), and managing a
     // dxb-team3 job is named with its door (the CEO, 2026-11-11): neither is read as plain talk
     // code names the door's own exception (dxb-team3 section 2: short narrow glue), so the two texts do not disagree
-    expect(text).toContain("Everything else -- a plan, a design, an architecture, an evaluation that carries weight, code "
-      + "(short narrow glue may be written at medium: dxb-team3 section 2), managing a dxb-team3 job -- is high.");
+    expect(text).toContain("Everything else -- a plan, a design, an architecture, an evaluation that carries weight, an "
+      + "important decision, code (short narrow glue may be written at medium: dxb-team3 section 2), managing a dxb-team3 "
+      + "job -- is high.");
     // the level follows the job, never a kind of work (his word, 2026-11-10): no blanket "eye-facing code at xhigh".
     // No kind of work is named at xhigh: the fine-design point of 2026-11-11 was withdrawn the same day
     expect(text).not.toContain("look of a page");

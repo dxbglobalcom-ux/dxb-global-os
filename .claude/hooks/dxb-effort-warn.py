@@ -2,11 +2,11 @@
 """DXB effort (UserPromptSubmit): the session sets its own level by the course of the talk.
 
 The CEO's order of 2026-11-10: he does not switch the effort and is never asked to; the session does, by
-itself, as the talk moves between a question and a plan. Since 2026-11-16 the session works at high -- whatever its
-saved level, which any session's /effort rewrites -- and leaves it only for plain talk (medium) or a truly complex, important job (xhigh); max is
-not used. Until then medium was the saved default and every message asked the lead to class the reply into
-one of four kinds before it read him; a turn that missed the step ran at medium (the measurement of
-2026-11-11, below). Before that, from
+itself, as the talk moves between a question and a plan. His order of 2026-11-17: the session's level is
+medium -- its saved default -- and talk runs there; a plan, a design, an architecture, an evaluation that carries
+weight, an important decision, code and managing run at high, a truly complex, important job at xhigh; max is
+not used. A session standing below high is told on every message to lift itself first for anything but talk
+(a turn that missed the lift ran at medium: the measurement of 2026-11-11, below). Before that, from
 2026-10-06, he switched with /effort and the session warned him on every reply; the modes that carried
 those warnings (`plan`, `plan-max`, `build`, `off`) and their lines are gone with that rule. The file keeps
 its name because the settings, the status line and the ledger point at it.
@@ -107,8 +107,8 @@ USAGE = ("dxb-effort-warn.py takes no argument: the modes plan|plan-max|build|of
 
 
 def sync(level):
-    """What the lead is told on each of his messages: the session works at high, where it goes down and where up,
-    and -- in a session below high, or whose level is not known -- what to open first."""
+    """What the lead is told on each of his messages: the session's level is medium, what runs there, what runs at
+    high and at xhigh, and -- in a session below high, or whose level is not known -- what to open first."""
     if level:
         runs = f"This session runs at {level}."
         # only a session below high is lifted: one at xhigh or max is never sent down to high
@@ -120,13 +120,14 @@ def sync(level):
         act = ("This session's own level is not known: open the skill of the level the reply needs as your first "
                "action. ")
     return (
-        "EFFORT -- the session works at high and sets its own level by the course of the talk; he does not switch "
-        f"it and is never asked to (the CEO, 2026-11-10). {runs} "
-        "Plain talk -- a simple question, a fact, a reading, a record -- may run at medium: "
+        "EFFORT -- the session's level is medium (the CEO, 2026-11-17) and it sets its own level by the course of the "
+        f"talk; he does not switch it and is never asked to (the CEO, 2026-11-10). {runs} "
+        "Talk -- a question, an exchange of ideas, a fact, a reading, a record -- runs at medium: "
         "`Skill(\"dxb-effort-medium\")`. A truly complex, important job's plan or work runs at xhigh: "
         "`Skill(\"dxb-effort-xhigh\")` -- opened first, before you think about the substance. Everything else -- a "
-        "plan, a design, an architecture, an evaluation that carries weight, code (short narrow glue may be written "
-        "at medium: dxb-team3 section 2), managing a dxb-team3 job -- is high. No code at low; max is not used. "
+        "plan, a design, an architecture, an evaluation that carries weight, an important decision, code (short "
+        "narrow glue may be written at medium: dxb-team3 section 2), managing a dxb-team3 job -- is high. No code at "
+        "low; max is not used. "
         f"{act}When the level you work at differs from the reply before, open the reply with a few words naming "
         "it and why (\"high: plan\"); otherwise say nothing about effort.")
 
