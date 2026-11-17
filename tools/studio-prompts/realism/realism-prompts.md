@@ -8,7 +8,7 @@ read 2026-11-07). Everything inside the code blocks below is his text, unchanged
 The sheet is written for a **cinema-camera** look. It serves any studio job that has to look camera-captured: ads,
 product films, brand films, the stills and loops of a ScrollCraft site, and UGC. For the phone-shot creator look use the
 UGC version beside this file: `ugc-realism-prompts.md`. The studio's UGC recipe is `.planning/board-rows/B43.md`,
-§ "Hyper-realistic UGC — the factory recipe (2026-11-07)".
+R25 "The hyper-realistic UGC recipe".
 
 **How the modules combine:** start from one subject prompt (01, 03, 06, 10, 11 or 12), then add only the modules the
 shot needs: skin (01, 02), hair (07), material (08), reflections (14), grain (04), lens (05), colour (09), one camera

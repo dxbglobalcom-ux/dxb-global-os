@@ -59,11 +59,11 @@ seat and the work it produces on one surface, so the work is seen moving as it i
 
 ## 4. What DXB has today
 
-- Director/scriptwriter/storyboard seats and the reference-set keeper: `board-rows/B43.md:16`.
-- Shot router as data, long-form job/scene/shot records: "Not built, each on his word" (`B43.md:42`).
+- Director/scriptwriter/storyboard seats and the reference-set keeper: `board-rows/archive/B43-full-record-to-2026-11-17.md:25`.
+- Shot router as data, long-form job/scene/shot records: "Not built, each on his word" (`board-rows/archive/B43-full-record-to-2026-11-17.md:51`).
 - Provenance: `media_jobs` has `kind`, `params`, `wall_seconds`, `peak_vram_mib`, `output_path`, and
   no engine and no edit-count field (sources file T-8, SELECT 2026-10-14).
-- Continuity QA seat and the QC list as open legs (`B43.md:16,42`).
+- Continuity QA seat and the QC list as open legs (`board-rows/archive/B43-full-record-to-2026-11-17.md:25,51`).
 
 ## 5. The build project
 

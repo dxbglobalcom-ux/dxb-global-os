@@ -18,7 +18,7 @@ The tool itself is `~/.local/share/dxb/skills/video-use` (browser-use/video-use,
 2026-10-08). **Read its `SKILL.md` and `helpers/` before the first step**: that file is the editor's craft and
 its 12 hard rules. This page is only the holding's part: when it is used, what it can do, what is owed
 before the first real job, and how it joins the rest of the studio. The record of the decision is
-`.planning/board-rows/B43.md`, § "Leg of 2026-11-07" (the CEO's words, 2026-11-07).
+`.planning/board-rows/B43.md`, R31 and the leg "video-use — owed at its first use" (the CEO's words, 2026-11-07).
 
 ## When — not the default, used whenever needed
 

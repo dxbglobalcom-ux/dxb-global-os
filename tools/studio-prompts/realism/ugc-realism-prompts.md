@@ -4,7 +4,7 @@ The UGC (phone-shot, creator-style) version of every prompt in `realism-prompts.
 (2026-11-07) from @heyypriyank's sheet (reel DeT2uHIuZUb; credit and the verbatim originals in that file). The physics
 vocabulary for skin, light, hair, fabric and reflections stays; the cinema camera becomes a phone: front camera or the
 main camera, arm's-length selfie, auto exposure, slight sensor noise, mixed home light, imperfect framing. The recipe
-these forms serve is `.planning/board-rows/B43.md`, § "Hyper-realistic UGC — the factory recipe (2026-11-07)".
+these forms serve is `.planning/board-rows/B43.md`, R25 "The hyper-realistic UGC recipe".
 
 ## How to use the forms
 
