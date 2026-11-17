@@ -1,6 +1,6 @@
 ---
 name: dxb-team3
-description: Use when the CEO hands the construction a job, or says a plan will be talked ("plan konuşacağız", "plan moduna geçelim") — the default construction door. The lead (the session) holds the whole and chooses who writes — itself, a fork, helpers, or a fork with helpers — and verifies every piece; GPT-6.1 Sol audits the work blind, read-only, Fable 5.2 beside it on an important job; their findings are fixed and tested; the session sets its own effort — medium for talk, high for managing, plans and work, xhigh for a truly complex, important job, never max. Trigger `/dxb-team3 <the job in one sentence>`.
+description: Use when the CEO hands the construction a job, or says a plan will be talked ("plan konuşacağız", "plan moduna geçelim") — the default construction door. The lead (the session) holds the whole and chooses who writes — itself, a fork, helpers, or a fork with helpers — and verifies every piece; GPT-6.1 Sol audits the work blind, read-only, Fable 5.2 beside it on an important job; their findings are fixed and tested; the session sets its own effort, low to xhigh, never max. Trigger `/dxb-team3 <the job in one sentence>`.
 ---
 
 # The team — one lead, the hands it chooses, two blind auditors
@@ -108,17 +108,20 @@ another, while he waits.
 
 The session sets its own level by the course of the talk; he does not switch it and is never asked to
 <!-- CEO-OK: session-sets-its-own-effort-2026-11-10 -->. The session's level is `medium`, its saved default
-(2026-11-17 <!-- CEO-OK: effort-default-medium-high-for-design-and-decisions-2026-11-17 -->): talk — a question, an
-exchange of ideas, a fact, a reading, a record — runs there, and for everything named below the hook says so and
-the session lifts itself; an important decision runs at `high`; an evaluation that carries weight — weighing, comparing, judging which is better — is part of planning and
+(2026-11-17 <!-- CEO-OK: effort-default-medium-high-for-design-and-decisions-2026-11-17 -->), and talk and work
+follow one scale <!-- CEO-OK: effort-scale-low-medium-high-for-talk-and-work-2026-11-17 -->: a very simple thing — a
+one-line answer, a simple record, very simple code — may run at `low`; normal talk and normal work — a question, an
+exchange of ideas, a fact, a reading, ordinary code — run at `medium`; for everything named below the hook says so
+and the session lifts itself; an important decision, and a question of how something is done or what the session
+recommends, run at `high`; an evaluation that carries weight — weighing, comparing, judging which is better — is part of planning and
 runs at `high`, an easy one is the session's call by what an error costs (his word, 2026-11-16); managing — the lead opens a hand, writes a brief or verifies a piece that came back — at `high`, with
 `xhigh` open while it thinks through who does what <!-- CEO-OK: dxb-team3-orchestrator-six-points-2026-11-11 -->;
-a plan, a design, an architecture, the build, the fixes and the tests at `high`; a truly complex, important
+a plan, a design, an architecture at `high`, and the build, the fixes and the tests at the level the piece's weight asks (Code, below); a truly complex, important
 job — its plan and its work — at `xhigh`. `max` is not used by the session
 <!-- CEO-OK: effort-high-xhigh-no-max-2026-11-10 -->; the one place it stands is the Opus 5.5 that plans when
 Fable's quota runs short (§1). His word on the level overrides: "bunu high'da düşün" is done.
 
-- **How.** Three small skills carry the level in their `effort` field — `dxb-effort-medium`, `dxb-effort-high`,
+- **How.** Four small skills carry the level in their `effort` field — `dxb-effort-low`, `dxb-effort-medium`, `dxb-effort-high`,
   `dxb-effort-xhigh`. Opening one sets the level of the turn it is opened in, in the background — nothing is
   typed into his prompt box — and the level ends with the turn; the next turn starts again at the session's
   own level, his saved default (any session's `/effort` rewrites that default for the model — measured 2026-11-16). Measured 2026-11-10 (Claude Code 2.1.322), in the transcript's own record: in a
@@ -134,11 +137,11 @@ Fable's quota runs short (§1). His word on the level overrides: "bunu high'da d
 - **He sees it.** In the reply where the level changes from the reply before, the lead opens with a few words
   naming it and why ("high: plan"); otherwise it says nothing about effort. For a truly complex, important job
   the reason is one line ("bu iş gerçekten karmaşık ve önemli, xhigh'da çalışıyorum, çünkü …").
-- **Code.** Short code — a few dozen lines of narrow glue, a merge or a setting, tried at once — may be written
-  at medium; the measure is what an error costs, not the line count: code that deletes or moves data, touches
-  money or the approval gate, security or permissions, runs in parallel or changes many places at once is
-  written at high, and none at low (his word, 2026-10-29). A piece this section leaves at medium needs no lift
-  when a medium `helper-writer` or `easy-writer` writes it.
+- **Code.** The measure is what an error costs, not the line count (his word, 2026-10-29): very simple code — a
+  line or two that cannot hurt, tried at once — may be written at `low`, and ordinary code at `medium` (his word,
+  2026-11-17; "no code at low" is gone with it); code that deletes or moves data, touches money or the approval
+  gate, security or permissions, runs in parallel or changes many places at once is written at `high`. A piece this
+  section leaves at `medium` needs no lift when a medium `helper-writer` or `easy-writer` writes it.
   On an important job code is normally written by Fable 5.2 at `high` — the lead judges the job and the piece —
   by the lead, its fork, or a `helper-writer` opened at `high`
   <!-- CEO-OK: dxb-team3-orchestrator-six-points-2026-11-11 -->. The level given

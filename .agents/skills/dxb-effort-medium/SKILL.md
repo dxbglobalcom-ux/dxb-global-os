@@ -1,6 +1,6 @@
 ---
 name: dxb-effort-medium
-description: Sets this turn's effort to medium, in the background — for talk (dxb-team3 §2).
+description: Sets this turn's effort to medium — normal talk and normal work (dxb-team3 §2).
 effort: medium
 ---
 

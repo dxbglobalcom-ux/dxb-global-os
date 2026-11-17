@@ -3,15 +3,18 @@
 
 The CEO's order of 2026-11-10: he does not switch the effort and is never asked to; the session does, by
 itself, as the talk moves between a question and a plan. His order of 2026-11-17: the session's level is
-medium -- its saved default -- and talk runs there; a plan, a design, an architecture, an evaluation that carries
-weight, an important decision, code and managing run at high, a truly complex, important job at xhigh; max is
-not used. A session standing below high is told on every message to lift itself first for anything but talk
-(a turn that missed the lift ran at medium: the measurement of 2026-11-11, below). Before that, from
+medium -- its saved default -- and talk and work follow one scale: a very simple thing, very simple code
+included, may run at low; normal talk and normal work run at medium; a plan, a design, an architecture, an
+evaluation that carries weight, an important decision, "how do we do this" and "what do you recommend", heavy
+code and managing run at high; a truly complex, important job at xhigh; max is not used. A session standing
+below high is told on every message to lift itself first for what is named at high, and one at low to lift
+itself to medium for normal talk and work (a turn that missed the lift ran at medium: the measurement of
+2026-11-11, below). Before that, from
 2026-10-06, he switched with /effort and the session warned him on every reply; the modes that carried
 those warnings (`plan`, `plan-max`, `build`, `off`) and their lines are gone with that rule. The file keeps
 its name because the settings, the status line and the ledger point at it.
 
-How the level is set. Three small skills carry it in their `effort` field: dxb-effort-medium,
+How the level is set. Four small skills carry it in their `effort` field: dxb-effort-low, dxb-effort-medium,
 dxb-effort-high, dxb-effort-xhigh. Opening one sets the level of the turn it is opened in, in the
 background, and the level ends with that turn (measured 2026-11-10 on Claude Code 2.1.322: in a session at
 high the steps after `effort: medium` ran at medium and the steps after `effort: xhigh` at xhigh, in the
@@ -102,7 +105,7 @@ SWITCHED = re.compile(r"<local-command-stdout>Set effort level to (low|medium|hi
 PLAN_WORDS = re.compile(r"(?<!\w)(plan(?!et)\w*|tasar[ıi]m\w*|tasarla\w*|mimari\w*|design\w*|architect\w*)",
                         re.IGNORECASE)
 USAGE = ("dxb-effort-warn.py takes no argument: the modes plan|plan-max|build|off are gone (the CEO, 2026-11-10). "
-         "The session sets its own level with the skills dxb-effort-medium, dxb-effort-high and dxb-effort-xhigh "
+         "The session sets its own level with the skills dxb-effort-low, dxb-effort-medium, dxb-effort-high and dxb-effort-xhigh "
          "(dxb-team3 section 2); there is nothing to switch on or off.\n")
 
 
@@ -113,21 +116,25 @@ def sync(level):
         runs = f"This session runs at {level}."
         # only a session below high is lifted: one at xhigh or max is never sent down to high
         act = "" if level in MANAGING_LEVELS else (
-            f"This session's saved level is {level}: for anything but plain talk your first action is "
-            "`Skill(\"dxb-effort-high\")`. ")
+            f"This session's saved level is {level}: for what is named at high your first action is "
+            "`Skill(\"dxb-effort-high\")`"
+            + (", and for normal talk and normal work `Skill(\"dxb-effort-medium\")`. " if level == "low" else ". "))
     else:
         runs = "This session's own level is not known yet."
         act = ("This session's own level is not known: open the skill of the level the reply needs as your first "
                "action. ")
     return (
         "EFFORT -- the session's level is medium (the CEO, 2026-11-17) and it sets its own level by the course of the "
-        f"talk; he does not switch it and is never asked to (the CEO, 2026-11-10). {runs} "
-        "Talk -- a question, an exchange of ideas, a fact, a reading, a record -- runs at medium: "
+        f"talk and the work; he does not switch it and is never asked to (the CEO, 2026-11-10). {runs} "
+        "A very simple thing -- a one-line answer, a simple record, very simple code -- may run at low: "
+        "`Skill(\"dxb-effort-low\")`. Normal talk and normal work -- a question, an exchange of ideas, a fact, a "
+        "reading, ordinary code -- run at medium: "
         "`Skill(\"dxb-effort-medium\")`. A truly complex, important job's plan or work runs at xhigh: "
         "`Skill(\"dxb-effort-xhigh\")` -- opened first, before you think about the substance. Everything else -- a "
-        "plan, a design, an architecture, an evaluation that carries weight, an important decision, code (short "
-        "narrow glue may be written at medium: dxb-team3 section 2), managing a dxb-team3 job -- is high. No code at "
-        "low; max is not used. "
+        "plan, a design, an architecture, an evaluation that carries weight, an important decision, a question of how "
+        "something is done or what you recommend, code that touches money, the approval gate, security or permissions, "
+        "deletes or moves data, runs in parallel or changes many places, managing a dxb-team3 job -- is high. max is "
+        "not used. "
         f"{act}When the level you work at differs from the reply before, open the reply with a few words naming "
         "it and why (\"high: plan\"); otherwise say nothing about effort.")
 

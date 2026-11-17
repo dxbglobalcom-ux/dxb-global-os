@@ -1,6 +1,6 @@
 ---
 name: dxb-effort-high
-description: Sets this turn's effort to high, in the background — for a plan, a design, an architecture or code (dxb-team3 §2).
+description: Sets this turn's effort to high — for a plan, a design, an architecture or weighty code (dxb-team3 §2).
 effort: high
 ---
 

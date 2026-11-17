@@ -1,6 +1,6 @@
 ---
 name: dxb-effort-xhigh
-description: Sets this turn's effort to xhigh, in the background — for a truly complex, important job (dxb-team3 §2).
+description: Sets this turn's effort to xhigh — for a truly complex, important job (dxb-team3 §2).
 effort: xhigh
 ---
 
