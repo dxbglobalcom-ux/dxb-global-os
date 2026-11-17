@@ -25,7 +25,7 @@ brief is silent, choose as a professional would and say what you chose in `TESLI
 
 **Client:** Kestrel Goods, a leather workshop selling a snap-tab card wallet online worldwide.
 **Product:** the Kestrel card wallet in brown leather with a small embossed "K". Real photographs of it are in `urun/`
-(7 files). Every image must show this wallet — its leather, stitching, snap tab and emboss — not a similar one. The
+(5 files). Every image must show this wallet — its leather, stitching, snap tab and emboss — not a similar one. The
 small maker's text inside the wallet is not shown.
 **What they want:** five finished advertising images for the launch: (1) a hero image for the shop's home page,
 16:9; (2) a clean product image on a plain ground for the product page, 1:1; (3) a lifestyle image — the wallet in
