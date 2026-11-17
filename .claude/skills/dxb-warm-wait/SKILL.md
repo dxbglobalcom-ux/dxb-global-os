@@ -28,11 +28,10 @@ below is how it gets measured). A warm turn reads the context at 0.1 of the inpu
 it at 2.0. So a ping costs a twentieth of the cold start it saves, whatever the context's size, and pings pay
 until twenty of them would be needed — about eighteen hours. Every wait inside a 5-hour window pays (five
 pings at most); a wait for the week's reset does not, and the command stays cold through it by itself. While
-work is running (`--watch`) each ping is weighed on its own, and the clock counts only the pings it makes one
-after the other with no other turn between them — hours in which nothing happened at all. The nineteenth such
-ping is its last: the twentieth would bring them to the cold start's price. It then sleeps on, waking nobody,
-and keeps the session warm again from its next turn — his message, a hand's report, a command's end. So a
-session he does not come back to stops costing by itself after about eighteen hours, and nobody has to close it.
+work is running (`--watch`) there is no count to make: each ping is weighed on its own. The same holds while
+he is away with the job finished: the count is not what ends the warm-keeping, his word is (step 7) — a
+ceiling written for it on 2026-11-17 was taken out the same day, because it let the cache go cold before he
+was back.
 
 ## The procedure
 
@@ -78,9 +77,11 @@ session he does not come back to stops costing by itself after about eighteen ho
 6. **Everything finished, recorded and told** → the clock stays armed and away stays on: every ping is
    re-armed (step 4). The machine is suspended only if he said so for this job.
 7. **He says he is back, or that it be closed** — in his own words, in this session →
-   `scripts/ops/dxb-warm-wait --away off "<his words>"`; the command refuses to take the marker off without
-   them. A message of his that does not say so leaves away on, and the clock goes on behind the talk. The one
-   ping that comes after away is off is not re-armed.
+   `scripts/ops/dxb-warm-wait --away off "<his words>"`: a few of his own words in a row, as he wrote them. The
+   command looks for them in the messages he himself sent to this session after away was set, and refuses
+   when they are not there; it proves the words are his, and whether they say he is back is the session's
+   reading. A message of his that does not say so leaves away on, and the clock goes on behind the talk. The
+   one ping that comes after away is off is not re-armed.
 
 ## What it cannot do
 

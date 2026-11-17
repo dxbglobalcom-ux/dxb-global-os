@@ -118,9 +118,8 @@ import contextlib
 import io
 
 
-def run_with(argv, quota, while_asleep=None, during=None):
-    """(exit code, what it printed, the moments it slept to); `while_asleep` happens during the first sleep,
-    and `during` maps a sleep's number (0 the first) to what happens during it.
+def run_with(argv, quota, while_asleep=None):
+    """(exit code, what it printed, the moments it slept to); `while_asleep` happens during the first sleep.
 
     `quota` is the 5-hour window's percentage (it resets an hour after NOW, and the week has room), or a
     whole record, or a function from the moment to the record as it is read then.
@@ -134,8 +133,6 @@ def run_with(argv, quota, while_asleep=None, during=None):
     def jump(when, session=None):
         if while_asleep and not slept:
             while_asleep()
-        if during and len(slept) in during:
-            during[len(slept)]()
         slept.append(when)
         at[0] = max(at[0], when)
 
@@ -295,92 +292,9 @@ def watch_has_no_end():
     check("--watch at 97 %: a ping", (text.startswith("WARM_PING "), slept), (True, [NOW + 55 * MIN]))
 
 
-# --- Away with nothing happening: the pings a --watch makes in a row are counted, and the nineteenth is the last
-# (2026-11-17: away ends only on his word, so a session he does not come back to must not ping for days) ---
-
-PING = NOW + 55 * MIN  # the first ping of a clock armed at NOW
-ROW_SESSION = "0000cccc-test-4000-8000-pingsinarow0"
-ROW_FILE = os.path.join(RUNTIME, f"warm-pings-{ROW_SESSION}.json")
-
-
-def row_so_far(count=None, at=None, raw=None):
-    """Put the row of pings made so far into the session's file (None: no file), as the clock writes it."""
-    with contextlib.suppress(FileNotFoundError):
-        os.remove(ROW_FILE)
-    if raw is not None or count is not None:
-        with open(ROW_FILE, "w") as handle:
-            handle.write(raw if raw is not None else json.dumps({"count": count, "at": at}))
-
-
-def row_now():
-    with open(ROW_FILE) as handle:
-        return json.load(handle)
-
-
-def watch_in_a_row(transcript_path=None, during=None):
-    os.environ["CLAUDE_CODE_SESSION_ID"] = ROW_SESSION
-    try:
-        return run_with(["--watch"] + (["--transcript", transcript_path] if transcript_path else []), 50, during=during)
-    finally:
-        del os.environ["CLAUDE_CODE_SESSION_ID"]
-
-
-@section
-def pings_with_nothing_between_them_are_counted_and_the_nineteenth_is_the_last():
-    ARMED = NOW - 10  # the ping before woke the session, which armed this clock ten seconds later
-
-    row_so_far()
-    code, text, slept = watch_in_a_row()
-    check("the first ping of a row", (text.startswith("WARM_PING "), slept, row_now()), (True, [PING], {"count": 1, "at": PING}))
-
-    row_so_far(7, ARMED)
-    code, text, slept = watch_in_a_row()
-    check("a ping one ping length after the last: the row goes on", (text.startswith("WARM_PING "), row_now()), (True, {"count": 8, "at": PING}))
-
-    row_so_far(7, NOW - 40 * MIN)  # a turn came between: this ping is 95 minutes after the last
-    code, text, slept = watch_in_a_row()
-    check("another turn between two pings: the row starts again", (text.startswith("WARM_PING "), row_now()), (True, {"count": 1, "at": PING}))
-
-    row_so_far(18, ARMED)
-    code, text, slept = watch_in_a_row()
-    check("the nineteenth ping is made", (text.startswith("WARM_PING "), slept, row_now()), (True, [PING], {"count": 19, "at": PING}))
-
-    # the twentieth is not: the clock sleeps on and wakes nobody; the session's next turn (he came back, at the
-    # 200th minute) is seen at the next look, and the ping comes 55 minutes after that turn, the first of a new row
-    back = transcript("back", [row("assistant", NOW - 20 * MIN)])
-    LOOK = 5 * MIN
-    looks = [PING + n * LOOK for n in range(1, 31)]  # 60th ... 205th minute
-    row_so_far(19, ARMED)
-    code, text, slept = watch_in_a_row(back, during={len(looks): lambda: add_row(back, row("assistant", NOW + 200 * MIN))})
-    check("the twentieth is not made: asleep and cold until the session's next turn, warm again from it",
-          (code, text.startswith("WARM_PING "), slept, row_now()),
-          (0, True, [PING] + looks + [NOW + 255 * MIN], {"count": 1, "at": NOW + 255 * MIN}))
-    with open(os.path.join(RUNTIME, "warm-wait.log")) as lines:
-        events = [json.loads(line)["event"] for line in lines][-3:]
-    check("the log says it went cold, then the ping", events, ["armed", "cold", "ping"])
-
-    for name, raw in (("torn", '{"count": 19, "at"'), ("no number", json.dumps({"count": "19", "at": ARMED})),
-                      ("dated after now", json.dumps({"count": 19, "at": NOW + 600 * MIN})), ("no object", "[19]")):
-        row_so_far(raw=raw)
-        code, text, slept = watch_in_a_row()
-        check(f"a row that cannot be read ({name}) starts again: the clock errs towards warm",
-              (text.startswith("WARM_PING "), slept, row_now()), (True, [PING], {"count": 1, "at": PING}))
-
-    row_so_far(19, ARMED)
-    code, text, slept = run_with(["--watch"], 50)
-    check("a clock with no session keeps no row", (text.startswith("WARM_PING "), row_now(), os.path.exists(os.path.join(RUNTIME, "warm-pings-None.json"))),
-          (True, {"count": 19, "at": ARMED}, False))
-    os.environ["CLAUDE_CODE_SESSION_ID"] = ROW_SESSION
-    try:
-        code, text, slept = run_with(["--for", "120"], 50)
-    finally:
-        del os.environ["CLAUDE_CODE_SESSION_ID"]
-    check("a wait with an end is weighed by its own count, as before", (text.startswith("WARM_PING "), row_now()), (True, {"count": 19, "at": ARMED}))
-    row_so_far()
-
-
 # --- The wake is not spent on a turn the quota would cut (Sol's A2, A3, C9 of 2026-11-13) ---
 
+PING = NOW + 55 * MIN
 CEILING_MIN = 310  # five hours and ten minutes: a 5-hour window has reset by then, whatever the record says
 
 
@@ -909,17 +823,50 @@ def the_away_marker():
     check("the marker is one line: when it was set", (written.count("\n"), written.startswith(time.strftime("%Y-%m-%dT"))), (1, True))
     check("status, away on", status(), "NOT_ARMED\nAWAY on\n")
     check("another session is not away", status(session="another-session"), "NOT_ARMED\nAWAY off\n")
-    # away ends on his word alone (CEO, 2026-11-17): the session cannot take the marker off without his words
+    # Away ends on his word alone (CEO, 2026-11-17): the marker comes off only for words that stand in a message
+    # he himself sent to this session after away was set (Sol's B of 2026-11-17: any text had been taken).
     for name, argv in (("bare", ("off",)), ("with blank words", ("off", "  ")), ("with too many", ("off", "geldim", "ben"))):
         refused = run("--away", *argv)
         check(f"--away off {name} is refused and the marker stays", (refused.returncode, refused.stdout, os.path.exists(marker)), (2, "", True))
     check("the bare refusal says why", "only on his word" in run("--away", "off").stderr, True)
-    off = run("--away", "off", "geldim, PC başındayım")
-    check("--away off with his words", (off.returncode, off.stdout, os.path.exists(marker)), (0, "AWAY off\n", False))
+
+    def his(at, text, **more):
+        return row("user", at, origin={"kind": "human"}, message={"role": "user", "content": text}, **more)
+
+    before, after = time.time() - 3600, time.time() + 5
+    talk = transcript("away-talk", [
+        his(before, "geldim, PC başındayım"),                                                   # said before he left
+        row("assistant", after, message={"role": "assistant", "content": [{"type": "text", "text": "he said: döndüm işte"}]}),
+        row("user", after, origin={"kind": "task-notification"}, message={"role": "user", "content": "<task-notification> döndüm işte"}),
+        row("user", after, isMeta=True, message={"role": "user", "content": "a skill's text: döndüm işte"}),
+        json.dumps({"type": "user", "timestamp": stamp(after), "isSidechain": True, "origin": {"kind": "human"},
+                    "message": {"role": "user", "content": "a hand was told: döndüm işte"}}),
+    ])
+
+    def off(words, path=talk):
+        done = run("--away", "off", words, "--transcript", path)
+        return done.returncode, done.stdout, os.path.exists(marker)
+
+    check("his words from before away was set do not end it", off("geldim"), (2, "", True))
+    check("words only the session, a notification, a skill or a hand carries are not his", off("döndüm işte"), (2, "", True))
+    check("the refusal says where it looked", "in no message he sent to this session since away was set" in run("--away", "off", "x", "--transcript", talk).stderr, True)
+    add_row(talk, his(after, "Tamam, geldim. PC başındayım — devam edelim!"))
+    add_row(talk, json.dumps({"type": "attachment", "timestamp": stamp(after), "attachment": {
+        "type": "queued_command", "origin": {"kind": "human"}, "prompt": [{"type": "text", "text": "kapat artık"}, {"type": "image"}]}}))
+    for name, words in (("a word he did not say", "bitti"), ("a letter", "x"), ("a part of his word", "geldi"),
+                        ("his words in another order", "başındayım PC"), ("nothing but punctuation", "…!")):
+        check(f"--away off with {name} is refused", off(words), (2, "", True))
+    check("a transcript that cannot be read: away stays on", off("geldim", os.path.join(SANDBOX, "nowhere.jsonl")), (2, "", True))
+    check("--away off with his own words, case and punctuation aside", off("geldim, pc BAŞINDAYIM"), (0, "AWAY off\n", False))
     with open(os.path.join(RUNTIME, "warm-wait.log")) as lines:
         last = json.loads(lines.readlines()[-1])
-    check("his words go into the log", (last["event"], last["his_words"]), ("away_off", "geldim, PC başındayım"))
-    check("--away off twice", run("--away", "off", "geldim").returncode, 0)
+    check("his words go into the log", (last["event"], last["his_words"]), ("away_off", "geldim, pc BAŞINDAYIM"))
+    check("--away off when it is not on: nothing to prove", off("whatever"), (0, "AWAY off\n", False))
+    run("--away", "on")
+    check("a message he sent while a turn was running is his too", off("kapat artık"), (0, "AWAY off\n", False))
+    with open(marker, "w") as broken:
+        broken.write("no time\n")
+    check("a marker that does not say when: his words anywhere in the session", off("geldim PC"), (0, "AWAY off\n", False))
     check("status, away off", status(), "NOT_ARMED\nAWAY off\n")
     check("--away with neither word", run("--away", "maybe").returncode, 2)
     check("--away with no session to mark", (run("--away", "on", session=None).returncode, os.listdir(RUNTIME).count("away-None")), (2, 0))

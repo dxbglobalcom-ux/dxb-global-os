@@ -138,7 +138,12 @@ for name, raw in (("not JSON", "{not json"), ("nothing", ""), ("not an object", 
 # Away off: silent again.
 check("--away off without his words is refused, and the gate still holds", (warm_wait("--away", "off").returncode, blocked(stop())), (2, True))
 check("the gate says away ends on his word, the job's end not", "also when the job is finished" in json.loads(stop()[1])["reason"], True)
-check("--away off", warm_wait("--away", "off", "geldim").returncode, 0)
+BACK = os.path.join(SANDBOX, "back.jsonl")
+with open(BACK, "w") as lines:
+    lines.write(json.dumps({"type": "user", "timestamp": time.strftime("%Y-%m-%dT%H:%M:%S.000Z", time.gmtime(time.time() + 5)),
+                            "origin": {"kind": "human"}, "message": {"role": "user", "content": "geldim"}}) + "\n")
+check("--away off with words that are not his is refused", (warm_wait("--away", "off", "iş bitti", "--transcript", BACK).returncode, blocked(stop())), (2, True))
+check("--away off", warm_wait("--away", "off", "geldim", "--transcript", BACK).returncode, 0)
 check("marker removed", stop(), SILENT_PASS)
 
 if failed:

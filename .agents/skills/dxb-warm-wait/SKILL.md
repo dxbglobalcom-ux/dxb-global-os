@@ -16,13 +16,22 @@ enough, and it is not only for sleep (CEO, 2026-11-16).
   context again; one small turn before the hour is over keeps it warm.
 - *The work must not stay on the floor when the window fills.* When the 5-hour window cannot carry the next
   piece, the session waits warm for the reset and goes on in the same session.
+- *He comes back to a warm session.* The job's end is not the end of the wait: he may answer the questions the
+  session left him, or go on with it, hours later. Away ends on his word that he is back — "geldim", "PC
+  başındayım", "kapat" — and on nothing else; the session never takes the marker off by its own judgement
+  (CEO, 2026-11-17 <!-- CEO-OK: away-ends-only-on-his-word-2026-11-17 -->). Measured 2026-11-16: a session that
+  had finished and asked him three questions closed away by this door's own last step, and his answer would
+  have been paid for cold.
 
 **The arithmetic** (list-price weights; how the Max quota weighs a cached read is not measured — the log
 below is how it gets measured). A warm turn reads the context at 0.1 of the input price; a cold start writes
 it at 2.0. So a ping costs a twentieth of the cold start it saves, whatever the context's size, and pings pay
 until twenty of them would be needed — about eighteen hours. Every wait inside a 5-hour window pays (five
 pings at most); a wait for the week's reset does not, and the command stays cold through it by itself. While
-work is running (`--watch`) there is no count to make: each ping is weighed on its own.
+work is running (`--watch`) there is no count to make: each ping is weighed on its own. The same holds while
+he is away with the job finished: the count is not what ends the warm-keeping, his word is (step 7) — a
+ceiling written for it on 2026-11-17 was taken out the same day, because it let the cache go cold before he
+was back.
 
 ## The procedure
 
@@ -44,7 +53,8 @@ work is running (`--watch`) there is no count to make: each ping is weighed on i
    on 2026-11-13 such a loop waited from 02:18 for a line the battery wrote into another file, nothing else
    was armed, and the night's work stood for seven hours.
 4. **`WARM_PING … | re-arm: <command>`** — the cache was about to go cold. Run the re-arm command in the
-   background and end the turn in one short line; nothing else. The turn was the warm-keeping.
+   background and end the turn in one short line; nothing else. The turn was the warm-keeping. This holds
+   after the job is finished too, for as long as away is on.
 5. **The window cannot carry the next piece.** First ask whether the piece divides (dxb-team3 §3): the part
    that fits the room left is started now, and only what does not divide waits — on 2026-11-13 seven
    independent items were held as one piece and two and a half hours were waited for nothing. Dividing never
@@ -64,8 +74,14 @@ work is running (`--watch`) there is no count to make: each ping is weighed on i
    **The hands.** A hand's cache lasts five minutes: keeping one warm for an hour would take fifteen pings,
    more than opening it cold. No hand is kept warm; a running hand finishes and its piece is verified and
    committed before the wait, and after it a fresh hand is opened (dxb-team3 §3, §7).
-6. **Everything finished, recorded and told** → `scripts/ops/dxb-warm-wait --away off`. A ping that comes
-   after that is not re-armed. The machine is suspended only if he said so for this job.
+6. **Everything finished, recorded and told** → the clock stays armed and away stays on: every ping is
+   re-armed (step 4). The machine is suspended only if he said so for this job.
+7. **He says he is back, or that it be closed** — in his own words, in this session →
+   `scripts/ops/dxb-warm-wait --away off "<his words>"`: a few of his own words in a row, as he wrote them. The
+   command looks for them in the messages he himself sent to this session after away was set, and refuses
+   when they are not there; it proves the words are his, and whether they say he is back is the session's
+   reading. A message of his that does not say so leaves away on, and the clock goes on behind the talk. The
+   one ping that comes after away is off is not re-armed.
 
 ## What it cannot do
 
@@ -73,10 +89,10 @@ work is running (`--watch`) there is no count to make: each ping is weighed on i
   by itself on mains power (measured 2026-11-13: `sleep-inactive-ac-type 'nothing'`); a suspend he orders
   ends the warm-keeping, and the clock still wakes the session at the right hour after the machine wakes.
 - In usage overage the cache drops to five minutes; no ping is worth making then.
-- The Stop gate holds one thing: an away session has a running clock when a turn ends. It asks once and then
+- The Stop gate holds one thing: an away session has a running clock when a turn ends — a finished job included. It asks once and then
   lets the stop through, so it can never trap a session, and when it breaks it lets every stop through. It
   does not run when a turn dies on an API error or is interrupted — the clock armed in step 1 is what wakes
-  the session then. It does not know whether the work is finished; that judgement is the session's.
+  the session then. It does not know whether the work is finished; that judgement is the session's, and it ends nothing.
 - The clock reads the last turn as the status line does (`önbellek N dk`): the two are tested against the
   same transcripts, and a transcript it cannot read sends it back to the arming time.
 
