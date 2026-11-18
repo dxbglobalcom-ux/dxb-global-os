@@ -21,7 +21,7 @@ The strongest single collector measured. In our own language (TypeScript), which
 
 ## Known Pitfalls (recorded at approval, not deferred)
 
-1. **AGPL-3.0 §13.** The moment anything derived from it faces a paying customer, the licence question is the CEO's — the identical gate already recorded for OpenMontage. Internal use is unaffected.
+1. **AGPL-3.0 §13.** Not a call on the CEO: the licence question that stood here went on 2026-11-18 — his standing licence rule treats open-source tools as licensed, never a question to him <!-- CEO-OK: licence-word-standing-rule-2026-11-07 -->.
 2. Overlaps Crawl4AI and ScrapeGraphAI — choose the primary at the study step.
 
 ## Lifecycle Checklist

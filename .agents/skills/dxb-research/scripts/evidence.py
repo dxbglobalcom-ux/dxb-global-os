@@ -1284,7 +1284,7 @@ def _platform_read(url: str, platform: str) -> dict | None:
 
 
 def _chain_read(url: str) -> dict:
-    """The thirteen-door reading chain (fetch.py) — it judges walls door by door itself."""
+    """The fourteen-door reading chain (fetch.py) — it judges walls door by door itself."""
     with tempfile.TemporaryDirectory() as td:
         page = Path(td) / "page.md"
         rc, out, err = _run([sys.executable, str(HERE / "fetch.py"), url, "--out", str(page), "--json",
@@ -1307,7 +1307,7 @@ def read_page(url: str, platform: str) -> dict:
     """The body of one address, READ-ONLY — or a closed door, with every door's own words.
 
     X posts: opencli twitter thread · Reddit threads: opencli reddit read · YouTube videos: opencli
-    youtube transcript + comments · everything else: the thirteen-door chain (fetch.py). When that
+    youtube transcript + comments · everything else: the fourteen-door chain (fetch.py). When that
     first reader brings nothing, the LAST door is the hidden research Chrome's own read of his
     signed-in sites (hidden.py read --text; on Facebook with sweep.sh's measured unfold of "See more"
     — six seconds for the page to render, one click round, two to settle). A page that answers there

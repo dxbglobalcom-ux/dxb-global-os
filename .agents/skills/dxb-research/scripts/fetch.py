@@ -14,18 +14,21 @@ report says which doors were tried and what each one answered.
                               MENU is not evidence.
    2. pdf-text                curl + pdftotext -layout, for a paper or a spec
    3. scrapling get           plain HTTP with TLS impersonation — fastest
-   4. scrapling stealthy-fetch camoufox, solves the ordinary bot challenge
-   5. opencli <adapter> read  the platform's OWN reader, through a real session
-   6. tavily_extract          keyless MCP
-   7. firecrawl_scrape        keyless MCP
-   8. exa web_fetch           keyless MCP
-   9. playwright              a real browser: an isolated context of the hidden research
+   4. obscura                 a small headless browser of its own (Rust, its own V8, no
+                              Chrome, no window) that runs the page's JavaScript in seconds;
+                              refuses Cloudflare's challenge, so it gives way fast
+   5. scrapling stealthy-fetch camoufox, solves the ordinary bot challenge
+   6. opencli <adapter> read  the platform's OWN reader, through a real session
+   7. tavily_extract          keyless MCP
+   8. firecrawl_scrape        keyless MCP
+   9. exa web_fetch           keyless MCP
+  10. playwright              a real browser: an isolated context of the hidden research
                               Chrome (Xvfb :99), never headless, never on his screen
-  10. camofox                 the stealth browser of its own (Camoufox behind the `camofox`
+  11. camofox                 the stealth browser of its own (Camoufox behind the `camofox`
                               command, hidden, never his Chrome) — the page as its
                               accessibility snapshot; a challenge page is given time to clear
-  11. jina r.jina.ai          keyless, but a CACHED snapshot — labelled as one
-  12. curl + browser UA       the floor
+  12. jina r.jina.ai          keyless, but a CACHED snapshot — labelled as one
+  13. curl + browser UA       the floor
 
 Doors 1 and 2 return instantly for a url they do not match, so they cost nothing on
 an ordinary page.
@@ -72,6 +75,8 @@ import rlib  # noqa: E402
 SKILL = Path(__file__).resolve().parent.parent
 SCRAPLING = Path(os.environ.get("DXB_SCRAPLING") or shutil.which("scrapling") or "/home/dxb/scrapling-env/bin/scrapling")
 MCPX = SKILL / "scripts" / "mcpx.sh"
+OBSCURA = Path(os.environ.get("DXB_OBSCURA") or shutil.which("obscura") or "/home/dxb/.local/bin/obscura")
+OBSCURA_CAP = 25        # seconds: a page it can read comes in under ten; past this it is a wall, give way
 CAMOFOX = Path(os.environ.get("DXB_CAMOFOX") or shutil.which("camofox") or "/home/dxb/.local/bin/camofox")
 MIN_BODY = 400          # below this it is a stub, not a page
 UA = ("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) "
@@ -198,6 +203,20 @@ def door_scrapling(url: str, tmo: int) -> tuple[str, str]:
     txt = out.read_text(encoding="utf-8", errors="replace") if out.exists() else ""
     out.unlink(missing_ok=True)
     return txt, ("" if rc == 0 else f"rc={rc} {err}")
+
+
+def door_obscura(url: str, tmo: int) -> tuple[str, str]:
+    """Obscura (h4ckf0r0day/obscura, stealth build, installed 2026-11-18), placed right after the plain read on
+    his word the same day. Measured that day: it reads pages whose words only appear after their JavaScript runs,
+    30 pages in about 10 s, with no window; it walked Zillow, IKEA, LinkedIn's public pages and Reddit, and was
+    refused by every Cloudflare challenge, Google and G2 — so its time is capped and a wall it brings back is
+    judged by _ok() like any other, and the chain goes on to the stealth browsers."""
+    if not OBSCURA.exists():
+        return "", "obscura not installed"
+    cap = min(tmo, OBSCURA_CAP)
+    rc, out, err = _sh(f"{shlex.quote(str(OBSCURA))} fetch --stealth --dump markdown --timeout {cap} "
+                       f"{shlex.quote(url)}", cap + 5)
+    return out, ("" if rc == 0 else f"rc={rc} {(err or '')[-160:]}")
 
 
 def door_scrapling_stealth(url: str, tmo: int) -> tuple[str, str]:
@@ -509,6 +528,7 @@ CHAIN = [
     ("media-transcript", door_media),
     ("pdf-text", door_pdf),
     ("scrapling", door_scrapling),
+    ("obscura", door_obscura),
     ("scrapling-stealth", door_scrapling_stealth),
     ("opencli-reader", door_opencli),
     ("browser-signed-in", door_browser),
@@ -538,7 +558,7 @@ BROWSER_DOORS = {"playwright", "browser-signed-in"}
 # hidden Chrome; hackernews read, v2ex topic and stackoverflow read run plain, over the site's API, and their
 # door stays open on a --no-browser run. A reader the manifest cannot vouch for — no
 # opencli package on PATH, a verb it does not list, a manifest that does not parse — counts as
-# browser-backed: a run told not to use that Chrome does not guess. (scrapling-stealth and camofox stay:
+# browser-backed: a run told not to use that Chrome does not guess. (scrapling-stealth, obscura and camofox stay:
 # each is a hidden browser of its own, never the hidden Chrome.)
 
 

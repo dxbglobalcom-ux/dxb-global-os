@@ -565,7 +565,7 @@ PYEOF
       else echo "   $dead -> $sub  o da bos"; fi
     done
 
-    # LAST RESORT: go to the site ITSELF and read its own search page with the thirteen-door
+    # LAST RESORT: go to the site ITSELF and read its own search page with the fourteen-door
     # chain. The CEO's question, 2026-09-16: "Quora failed — why did the other tools not
     # open Quora?" They never got the chance: a site-scoped channel is a SEARCH-ENGINE query
     # ("site:quora.com …"), so when the engine refuses there is no address for the readers to
@@ -582,7 +582,7 @@ PYEOF
     # Measured 2026-09-17: three stand-ins failed with exit 7, the last one left 80 bytes of
     # diagnostics, and the walk to lobsters.rs was never attempted.
     if [ -n "$site" ] && [ -z "$covered" ]; then
-      echo "   $dead -> son care: $site adresine dogrudan gidiliyor (13 kapili zincir)"
+      echo "   $dead -> son care: $site adresine dogrudan gidiliyor (14 kapili zincir)"
       NB=""; [ "$WITH_BROWSER" = "1" ] || NB="--no-browser"
       timeout "$TMO" python3 "$SKILL/scripts/fetch.py" \
         "https://${site}/search?q=${UKQ}" --out "$OUT/$dead-direct.md" ${NB} >/dev/null 2>&1
@@ -778,8 +778,8 @@ fi
 # it answered. Measured on a Cloudflare-walled page: scrapling WALL -> stealth fail ->
 # no platform adapter -> tavily-extract OK in 407 ms.
 echo
-echo "sayfa okuma: $total adres, 13 kapili zincir (video altyazisi -> pdf metni -> scrapling ->"
-echo "             stealth -> opencli -> tavily -> firecrawl -> exa -> playwright -> jina -> curl)"
+echo "sayfa okuma: $total adres, 14 kapili zincir (video altyazisi -> pdf metni -> scrapling ->"
+echo "             obscura -> stealth -> opencli -> tavily -> firecrawl -> exa -> playwright -> camofox -> jina -> curl)"
 NB=""; [ "$WITH_BROWSER" = "1" ] || NB="--no-browser"
 python3 "$SKILL/scripts/fetch.py" --batch "$OUT/pages/urls.txt" --outdir "$OUT/pages" \
         --timeout 45 --workers 6 ${NB} || true
