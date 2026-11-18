@@ -300,9 +300,13 @@ describe("fetch.py — Obscura reads right after the plain read and gives way at
     const prose = Array.from({ length: 60 }, (_, i) => `Paragraph ${i}: how a security service protects a shop against malicious bots and scrapers.`).join("\n");
     const out = JSON.parse(py(
       "import sys, json; sys.path.insert(0, sys.argv[1]); import rlib, fetch; " +
-        "print(json.dumps([rlib.looks_like_wall(sys.argv[2]), fetch._ok(sys.argv[2]), rlib.looks_like_wall(sys.argv[3])]))",
-      CF_2026, prose));
-    expect(out).toEqual([true, false, false]);
+        "print(json.dumps([rlib.looks_like_wall(sys.argv[2]), fetch._ok(sys.argv[2]), rlib.looks_like_wall(sys.argv[3]), " +
+        "rlib.looks_like_wall(sys.argv[4]), rlib.looks_like_wall(sys.argv[5])]))",
+      CF_2026, prose,
+      // Sol's case: a long article that quotes each sentence word for word is a page, not a wall
+      `# How Cloudflare's challenge looks\n\nThe page says "Performing security verification" while it checks you.\n\n${prose}`,
+      `# Bot walls explained\n\nIts body reads: "This website uses a security service to protect against malicious bots."\n\n${prose}`));
+    expect(out).toEqual([true, false, false, false, false]);
   });
 
   it("the chain walks scrapling, then obscura, then scrapling-stealth, and --no-browser keeps obscura", () => {

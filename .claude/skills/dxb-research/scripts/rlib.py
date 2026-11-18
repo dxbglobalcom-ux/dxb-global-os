@@ -387,12 +387,6 @@ _WALL = re.compile(
     # "please verify you are a human" wording does not match. The wordings are the sites' own.
     r"security \| glassdoor|nur für menschen|press & hold to confirm you are a human|"
     r"human challenge requires verification|"
-    # CLOUDFLARE'S PRESENT CHALLENGE PAGE, measured 2026-11-18 through Obscura on scrapingcourse.com's test page:
-    # 482 bytes, "Performing security verification" over "This website uses a security service to protect
-    # against malicious bots", and none of the older wordings above — it passed as a page. Both sentences are
-    # Cloudflare's own; the second is matched whole, so a page that only writes about bot protection is not a wall.
-    r"performing security verification|"
-    r"this website uses a security service to protect against malicious bots|"
     # INSTAGRAM'S ANONYMOUS LANDING DIALOG, measured 2026-09-21 and the reason this line
     # exists: `scrapling-stealth` opened https://www.instagram.com/p/DTa2MBcEyFv/ and was
     # handed 24 162 bytes with `wall: false` and `read: true` - the post's images, its
@@ -422,6 +416,15 @@ _WALL = re.compile(
 # (3,970 bytes; the phrase at character 955, inside a sentence) is a page, and was judged a wall when the
 # phrase was matched anywhere in the head.
 _CHALLENGE = re.compile(r"(?m)^\W*prove your humanity", re.I)
+
+# CLOUDFLARE'S PRESENT CHALLENGE PAGE, measured 2026-11-18 through Obscura on scrapingcourse.com's test page: 482 bytes,
+# "Performing security verification" over "This website uses a security service to protect against malicious bots",
+# none of the _WALL wordings — it passed as a page. Like the site's own error sentence it is judged with the page's
+# length: a wall only when almost nothing else is there (Sol, 2026-11-18: an article quoting either sentence, 12,800
+# characters long, was condemned when the two sat in _WALL).
+_CF_CHALLENGE = re.compile(r"performing security verification|"
+                           r"this website uses a security service to protect against malicious bots", re.I)
+CF_CHALLENGE_MAX_WORDS = 120
 CHALLENGE_CHARS = 400
 
 # The site's own error sentence, judged separately: measured 2026-09-17, it can sit on TOP
@@ -521,6 +524,10 @@ def looks_like_wall(text: str) -> bool:
     if _SITE_ERR.search(head):
         words = re.findall(r"[A-Za-z\u00c0-\u024f]{3,}", _NAVISH.sub(" ", body))
         if len(words) < 300:
+            return True
+    if _CF_CHALLENGE.search(head):
+        words = re.findall(r"[A-Za-z\u00c0-\u024f]{3,}", _NAVISH.sub(" ", body))
+        if len(words) < CF_CHALLENGE_MAX_WORDS:
             return True
     # THE DOOR'S OWN REFUSAL. Short and carrying a quota wording = a notice, not a page.
     if _QUOTA.search(head):
