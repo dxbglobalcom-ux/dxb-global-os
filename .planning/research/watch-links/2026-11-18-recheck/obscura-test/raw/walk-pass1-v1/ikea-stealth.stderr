@@ -1,0 +1,53 @@
+[2m2026-11-18T16:41:38.226644Z[0m [31mERROR[0m [2mobscura::console[0m[2m:[0m TypeError: Cannot read properties of undefined (reading 'prototype')
+    at r (https://www.ikea.com/us/en/javascripts/main.4716cbf0ebb2fbf5b60b.js:1:182)
+    at https://www.ikea.com/us/en/javascripts/main.4716cbf0ebb2fbf5b60b.js:1:44335
+    at _eventTargetDispatch (<obscura:bootstrap>:2085:54)
+    at globalThis.dispatchEvent (<obscura:bootstrap>:173:10)
+    at <dom-content-loaded>:2:14
+[2m2026-11-18T16:41:40.263994Z[0m [31mERROR[0m [2mobscura::console[0m[2m:[0m Error: [expt-store] exptSDK.init did not return a client
+    at D (https://www.ikea.com/global/assets/dwf/lower-funnel-fragments/expt-store-DNxP-8xg.js:1:2063)
+    at drainTicks (ext:core/01_core.js:427:7)
+    at listOnTimeout (ext:core/02_timers.js:286:9)
+    at Object.processTimers (ext:core/02_timers.js:250:7)
+    at __processTimers (ext:core/01_core.js:448:21)
+    at async V (https://www.ikea.com/global/assets/dwf/lower-funnel-fragments/expt-store-DNxP-8xg.js:1:2251)
+[2m2026-11-18T16:41:40.518742Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m [Cart Agent] Duplicate request detected for operation "fetchCart". Returning existing promise instead of executing again.
+[2m2026-11-18T16:41:42.576420Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m [Cart Agent] Duplicate request detected for operation "fetchCart". Returning existing promise instead of executing again.
+[2m2026-11-18T16:41:42.576437Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m [Cart Agent] Duplicate request detected for operation "fetchCart". Returning existing promise instead of executing again.
+[2m2026-11-18T16:41:55.227892Z[0m [31mERROR[0m [2mobscura::console[0m[2m:[0m Error: [expt-store] exptSDK.init did not return a client
+    at D (https://www.ikea.com/global/assets/dwf/lower-funnel-fragments/expt-store-DNxP-8xg.js:1:2063)
+    at drainTicks (ext:core/01_core.js:427:7)
+    at listOnTimeout (ext:core/02_timers.js:286:9)
+    at Object.processTimers (ext:core/02_timers.js:250:7)
+    at __processTimers (ext:core/01_core.js:448:21)
+    at async V (https://www.ikea.com/global/assets/dwf/lower-funnel-fragments/expt-store-DNxP-8xg.js:1:2251)
+[2m2026-11-18T16:41:55.360162Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m [Cart Agent] Duplicate request detected for operation "fetchCart". Returning existing promise instead of executing again.
+[2m2026-11-18T16:41:56.186692Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m [Cart Agent] Duplicate request detected for operation "fetchCart". Returning existing promise instead of executing again.
+[2m2026-11-18T16:41:56.186728Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m [Cart Agent] Duplicate request detected for operation "fetchCart". Returning existing promise instead of executing again.
+[2m2026-11-18T16:41:56.747903Z[0m [31mERROR[0m [2mobscura::console[0m[2m:[0m Error: [expt-store] exptSDK.init did not return a client
+    at D (https://www.ikea.com/global/assets/dwf/lower-funnel-fragments/expt-store-DNxP-8xg.js:1:2063)
+    at async V (https://www.ikea.com/global/assets/dwf/lower-funnel-fragments/expt-store-DNxP-8xg.js:1:2251)
+[2m2026-11-18T16:42:08.867179Z[0m [31mERROR[0m [2mobscura::console[0m[2m:[0m Error: [expt-store] exptSDK.init did not return a client
+    at D (https://www.ikea.com/global/assets/dwf/lower-funnel-fragments/expt-store-DNxP-8xg.js:1:2063)
+    at drainTicks (ext:core/01_core.js:427:7)
+    at listOnTimeout (ext:core/02_timers.js:286:9)
+    at Object.processTimers (ext:core/02_timers.js:250:7)
+    at __processTimers (ext:core/01_core.js:448:21)
+    at async V (https://www.ikea.com/global/assets/dwf/lower-funnel-fragments/expt-store-DNxP-8xg.js:1:2251)
+[2m2026-11-18T16:42:10.045192Z[0m [31mERROR[0m [2mobscura::console[0m[2m:[0m Error: [expt-store] exptSDK.init did not return a client
+    at D (https://www.ikea.com/global/assets/dwf/lower-funnel-fragments/expt-store-DNxP-8xg.js:1:2063)
+    at async V (https://www.ikea.com/global/assets/dwf/lower-funnel-fragments/expt-store-DNxP-8xg.js:1:2251)
+[2m2026-11-18T16:42:20.747348Z[0m [31mERROR[0m [2mobscura::console[0m[2m:[0m Error: [expt-store] exptSDK.init did not return a client
+    at D (https://www.ikea.com/global/assets/dwf/lower-funnel-fragments/expt-store-DNxP-8xg.js:1:2063)
+    at drainTicks (ext:core/01_core.js:427:7)
+    at listOnTimeout (ext:core/02_timers.js:286:9)
+    at Object.processTimers (ext:core/02_timers.js:250:7)
+    at __processTimers (ext:core/01_core.js:448:21)
+    at async V (https://www.ikea.com/global/assets/dwf/lower-funnel-fragments/expt-store-DNxP-8xg.js:1:2251)
+[2m2026-11-18T16:42:36.592826Z[0m [31mERROR[0m [2mobscura::console[0m[2m:[0m Error: [expt-store] exptSDK.init did not return a client
+    at D (https://www.ikea.com/global/assets/dwf/lower-funnel-fragments/expt-store-DNxP-8xg.js:1:2063)
+    at drainTicks (ext:core/01_core.js:427:7)
+    at listOnTimeout (ext:core/02_timers.js:286:9)
+    at Object.processTimers (ext:core/02_timers.js:250:7)
+    at __processTimers (ext:core/01_core.js:448:21)
+    at async V (https://www.ikea.com/global/assets/dwf/lower-funnel-fragments/expt-store-DNxP-8xg.js:1:2251)

@@ -1,0 +1,55 @@
+tab 3d134a18-6237-4daf-8cd5-1ea10f761400
+- heading "camoufox browser - Google Search"
+- searchbox "Search" [e1]: camoufox browser
+- navigation:
+  - link "AI Mode" [e2]
+  - link "All" [e3]
+  - link "Images" [e4]
+  - link "Videos" [e5]
+  - link "News" [e6]
+  - link "Forums" [e7]
+  - link "Short videos" [e8]
+- link "Camoufox: Introduction" [e9]:
+  - /url: https://www.google.com/goto?url=CAESUgHEIkXXksWh8JlbqBSF8Z8zJdooAt0iXX6fP72JhtiP1jdfNqbnFvxV1Rf6xCavHETQS1zBgHDvI0ftq30eah376KRiIkACcObzwM_47KHWEnw&gsessionid=TfAq3Yc8FAuY0orAbxUEDLYyoS34oj03JYlxb957WBk4FZm_F-kDPQ
+  - cite: https://camoufox.com
+  - text: Camoufox is built around three principles that make it the right browser layer for AI agents operating at scale. ... Why Firefox and not Chromium? Camoufox is ...
+- link "jo-inc/camofox-browser: Stealth headless ..." [e10]:
+  - /url: https://www.google.com/goto?url=CAESZgHEIkXXtVpMLK9vKlPimvFpcZhq01jsDZGdFfxlrCsGdJpHtIVyIjOkdOSrCY29_soyYSZ2lGiF-9UJa5RnXq9GC_m4z5_BbxZodAV1P1aw34YR-Iw4TL-lZx09BLkWHuzVIM0MSA&gsessionid=TfAq3Yc8FAuY0orAbxUEDLYyoS34oj03JYlxb957WBk4FZm_F-kDPQ
+  - cite: https://github.com › jo-inc › camofox-browser
+  - text: GitHubhttps://github.com › jo-inc › camofox-browserGitHubhttps://github.com › jo-inc › camofox-browser
+- link "camofox-browser download" [e11]:
+  - /url: https://www.google.com/goto?url=CAESdQHEIkXX6gsNwls39AY6_OMF8foLStzXzIrtBJVMLEJB9ioVJc3jnVyAuHsVao_SJo200pNEsRs6rYuZL0dg8gZD5ZWBUs_G_NN86nNsUHUi46rF_-fmWlv8buR2DMGCRRrgEo8EGihMEdRhVN73ie6MVbYM5Q&gsessionid=TfAq3Yc8FAuY0orAbxUEDLYyoS34oj03JYlxb957WBk4FZm_F-kDPQ
+  - cite: https://sourceforge.net › ... › Internet › Browsers
+  - text: SourceForgehttps://sourceforge.net › ... › Internet › BrowsersSourceForgehttps://sourceforge.net › ... › Internet › Browsers
+- link "daijro/camoufox: 🦊 Anti-detect browser" [e12]:
+  - /url: https://www.google.com/goto?url=CAESXwHEIkXXIPHSkGiVvTPv4cuPnn92WkwJNtKV3UrTeRboNV4vrWbAI84Mw-Zh5myfHD83hJD3VwIpMRRHkODFsTP4uNva6DgCQ4xTp19UvynBeennOBBRjOp10y_Qmgpp&gsessionid=TfAq3Yc8FAuY0orAbxUEDLYyoS34oj03JYlxb957WBk4FZm_F-kDPQ
+  - cite: https://github.com › daijro › camoufox
+  - text: GitHubhttps://github.com › daijro › camoufoxGitHubhttps://github.com › daijro › camoufox
+- link "askjo/camoufox-browser" [e13]:
+  - /url: https://www.google.com/goto?url=CAEScgHEIkXXWMq-M6xJAm5jmRBUithg68IWgQbj2N1mikTK0auB4YHXs_PziQxA7DHUlPDQGI7L1MgMzUYn2ubUsELMzWawBbiBOmAfqaOMi0Wxv5siLSHGIt-Nidz7kLm9F3WVWUOLNC-WLM_XPnQTEXlatg&gsessionid=TfAq3Yc8FAuY0orAbxUEDLYyoS34oj03JYlxb957WBk4FZm_F-kDPQ
+  - cite: https://www.npmjs.com › package › camoufox-browser
+  - text: NPMhttps://www.npmjs.com › package › camoufox-browserNPMhttps://www.npmjs.com › package › camoufox-browser
+- link "Camoufox: Anti-Detect Browser Automation for AI Agents" [e14]:
+  - /url: https://www.google.com/goto?url=CAESZAHEIkXXuEzZaKUCDCNPPFYpM7nN4Yt0h_YXLNJXZGgZalj47sRDUQ2hyGc47spCT8QeSL6LNTXq9UtRTqCe01LcJwfv_Dk3njsCa4CbrlW9_9qglHnR9GUcZk93clxtTpJB6NU&gsessionid=TfAq3Yc8FAuY0orAbxUEDLYyoS34oj03JYlxb957WBk4FZm_F-kDPQ
+  - cite: https://mcpmarket.com › MCP Servers
+  - text: MCP Markethttps://mcpmarket.com › MCP ServersMCP Markethttps://mcpmarket.com › MCP Servers
+- link "camoufox - The Web Scraping Wiki by The ..." [e15]:
+  - /url: https://www.google.com/goto?url=CAESiAEBxCJF15NZZ91c6-Qih3pW1t4hL6b6XyDIaL71rZ914EpyRo5wBI875EMKcRgiiSy3UT4g3X8OzJlNrvkCoEEVZTqYFC6NsZk50aVjIuH8B2-bV0SAQK4qgaN55beMzptPsCLdyHeHMljXeUMUl3h9Fp0b53lIrlSPiwqDkXfPhNAekrScJL2c&gsessionid=TfAq3Yc8FAuY0orAbxUEDLYyoS34oj03JYlxb957WBk4FZm_F-kDPQ
+  - cite: https://publish.obsidian.md › twsc-public › Wiki › entities
+  - text: Obsidian Publishhttps://publish.obsidian.md › twsc-public › Wiki › entitiesObsidian Publishhttps://publish.obsidian.md › twsc-public › Wiki › entities
+- link "Camoufox in 2026: does it beat bot detection?" [e16]:
+  - /url: https://www.google.com/goto?url=CAESdAHEIkXX4GLThMFL2-PEHT8TLxIAhvYu3Vct1thjv_DnldFs5o8Qdwb_S0GB8P54acynjZpQP2_GNHko3DjkKox92Ch8JEeroX55s4Wm0oTUBNZB6d9EgvusMJlH09gtSiCT0n409sum2ErG-pv0r7ACivvV&gsessionid=TfAq3Yc8FAuY0orAbxUEDLYyoS34oj03JYlxb957WBk4FZm_F-kDPQ
+  - cite: https://www.centinelanalytica.com › Blog
+  - text: Centinel Analyticahttps://www.centinelanalytica.com › BlogCentinel Analyticahttps://www.centinelanalytica.com › Blog
+- link "camoufox-browser (PyPI) — Safety" [e17]:
+  - /url: https://www.google.com/goto?url=CAEScQHEIkXX1AN4GaApX6J55WZ-jPIZwp6nx4-bxdwRq_uQum6WbsQn9AoCjXHHlFLUXP4IhV7-U0ha8kZB30Vzse96NcDJDoitwn6zdWZgfBKpaoHh4zsBQnyCbD4w0QORo7J8Y2ChJReH95f_Wss6jAdu&gsessionid=TfAq3Yc8FAuY0orAbxUEDLYyoS34oj03JYlxb957WBk4FZm_F-kDPQ
+  - cite: https://getsafety.com › packages › camoufox-browser
+  - text: getsafety.comhttps://getsafety.com › packages › camoufox-browsergetsafety.comhttps://getsafety.com › packages › camoufox-browser
+- heading "People also ask"
+  - button "What is camoufox?" [e18]
+  - button "What is the least safe browser?" [e19]
+  - button "What are some good alternatives to Camoufox?" [e20]
+  - button "What are the differences between Cloak browser and Camoufox?" [e21]
+- navigation "pagination":
+  - link "Next" [e22]
+-- {"url": "https://www.google.com/search?q=camoufox+browser&hl=en&sei=Vdf9arz9LMCJxc8Pz5fzkQ4", "totalChars": 5037}

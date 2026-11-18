@@ -1,0 +1,1 @@
+www.yellowpages.com.txt left out: the captured page carries Cloudflare's page beacon token (gitleaks generic-api-key); the original stays in the predecessor session's scratchpad.

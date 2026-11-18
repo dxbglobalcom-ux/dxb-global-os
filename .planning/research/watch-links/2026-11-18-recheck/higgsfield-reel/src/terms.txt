@@ -1,0 +1,48 @@
+  media-transcript   --         0ms        0b  not a media url
+  pdf-text           --         0ms        0b  not a pdf url
+  scrapling          OK       644ms   108791b
+
+read=True door=scrapling liveness=alive bytes=108791
+
+Terms of Use Agreement • Higgsfield
+
+[Higgsfield](/)
+
+* [Explore](/)
+* [Image](/ai/image?model=gpt_image_2)
+* [Video](/ai/video)
+* [Audio](/audio)
+* [MCP](/mcp)
+* [API](https://open.higgsfield.ai)
+* * [Cinema Studio](/generate)
+  * [GenjutsuTop](/genjutsu-create)
+  * [Short DramaNew](/short-drama)
+  * [MiracleSoon](/miracle)
+  * [Contests](/contests/talent-contest)
+  * [ShortsNew](/shorts-studio)
+  * [Ads StudioNew](/ads-studio)
+  * [GPUNew](/gpu)
+  * [Playable](/playable)
+  * [Supercomputer](/supercomputer)
+  * [Community](/community)
+  * [Academy](/academy)
+  * [Plugins](/plugins/after-effects)
+  * [Canvas](/canvas)
+
+[Terms of Use Agreement](#terms-top)
+
+[1. Use of the Service](#terms-1)
+
+[1.1 Scope](#terms-1-1)[1.2 Licenses](#terms-1-2)[1.3 Supplemental Terms](#terms-1-3)[1.4 Updates](#terms-1-4)[1.5 Integration and Usage Limitations](#terms-1-5)[1.6 Supercomputer Agent](#terms-1-6)[1.7 Changes to Models and Features](#terms-1-7)
+
+[2. Registration](#terms-2)
+
+[2.1 Eligibility](#terms-2-1)[2.2 Registering Your Account](#terms-2-2)[2.3 Registration Data](#terms-2-3)[2.4 Your Account](#terms-2-4)[2.5 Organizations and Workspaces](#terms-2-5)
+
+[3. Responsibility for Content](#terms-3)
+
+[3.1 Types of Content](#terms-3-1)[3.2 Storage](#terms-3-2)[3.3 Connected Accounts](#terms-3-3)[3.4 Content Retention and Inactive Accounts](#terms-3-4)
+
+[4. Ownership](#terms-4)
+
+[4.1 The Service](#terms-4-1)[4.2 Your Content](#terms-4-2)[4.3 License to Your Content](#terms-4-3)[4.4 User Inputs

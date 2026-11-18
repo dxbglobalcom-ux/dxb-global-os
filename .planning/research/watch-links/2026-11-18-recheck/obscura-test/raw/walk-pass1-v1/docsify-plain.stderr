@@ -1,0 +1,10 @@
+[2m2026-11-18T16:41:32.672297Z[0m [31mERROR[0m [2mobscura::console[0m[2m:[0m TypeError: Cannot set property outerHTML of #<Element> which has only a getter
+    at u (https://cdn.jsdelivr.net/npm/docsify@5/dist/docsify.min.js:7:1149)
+    at yt.initRender (https://cdn.jsdelivr.net/npm/docsify@5/dist/docsify.min.js:7:172337)
+    at new yt (https://cdn.jsdelivr.net/npm/docsify@5/dist/docsify.min.js:7:188030)
+    at Document.<anonymous> (https://cdn.jsdelivr.net/npm/docsify@5/dist/docsify.min.js:7:188420)
+    at _domEventInvokeHandlers (<obscura:bootstrap>:2155:64)
+    at _domEventInvoke (<obscura:bootstrap>:2122:5)
+    at _domEventDispatch (<obscura:bootstrap>:2210:9)
+    at Document.dispatchEvent (<obscura:bootstrap>:6964:12)
+    at <dom-content-loaded>:1:16

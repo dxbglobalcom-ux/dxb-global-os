@@ -1,0 +1,40 @@
+- navigation:
+  - link "Indeed Home" [e1]:
+    - /url: https://www.indeed.com/
+    - img "Indeed logo"
+  - list:
+    - listitem [e2]:
+      - link "Find jobs" [e3]:
+        - /url: https://www.indeed.com/
+    - listitem [e4]:
+      - link "Company Reviews" [e5]:
+        - /url: https://www.indeed.com/companies
+    - listitem [e6]:
+      - link "Find salaries" [e7]:
+        - /url: https://www.indeed.com/career/salaries
+  - list:
+    - listitem [e8]:
+      - link "Upload your resume" [e9]:
+        - /url: https://www.indeed.com/promo/resume
+    - listitem [e10]:
+      - link "Sign in" [e11]:
+        - /url: https://secure.indeed.com/account/login?hl=en&continue=https%3A%2F%2Fwww.indeed.com
+    - listitem [e12]:
+      - link "Employers / Post Job" [e13]:
+        - /url: https://www.indeed.com/hire?hl=en&ikw=gnav-header-hire&isid=employerlink
+- main:
+  - heading "Additional Verification Required" [level=1]
+  - paragraph: Your Ray ID for this request is a5c87a4deacb5a3b
+  - main:
+    - heading [level=2]
+    - paragraph
+  - link "Return home →" [e14]:
+    - /url: https://www.indeed.com/
+  - paragraph:
+    - link "Troubleshooting Cloudflare Errors" [e15]:
+      - /url: https://www.indeed.com/help/job-seekers/articles/33465379855501-cloudflare-errors-basic-troubleshooting?hl=en
+  - paragraph:
+    - text: Need more help?
+    - link "Contact us" [e16]:
+      - /url: https://www.indeed.com/support/contact
+-- {"url": "https://www.indeed.com/cmp/Google", "totalChars": 1418}

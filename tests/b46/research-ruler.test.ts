@@ -128,7 +128,7 @@ describe("the ruler bites", () => {
   it("catches the reading chain gaining a door while the prose still says twelve", () => {
     // exactly what happened when the signed-in browser door was added: six sentences, all
     // stale, and no rule watching them. The ruler found five more the moment it existed.
-    const r = biteOn("doors", (d) => patch(join(d, "SKILL.md"), /thirteen doors/, "twelve doors"));
+    const r = biteOn("doors", (d) => patch(join(d, "SKILL.md"), /fourteen doors/, "twelve doors"));
     expect(r.failures["door-count"].length).toBeGreaterThan(0);
   }, 30_000);
 

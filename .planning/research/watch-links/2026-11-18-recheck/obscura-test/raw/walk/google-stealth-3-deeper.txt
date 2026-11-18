@@ -1,0 +1,98 @@
+https://camoufox.com/
+Introduction | Camoufox
+
+Camoufox
+Docs
+GitHub
+Issues
+Discussions
+PyPi
+Donate
+Powered by
+
+
+
+
+Introduction
+
+
+
+
+
+
+An open source anti-detect browser built for AI agents. 🦊
+
+
+
+
+
+
+
+
+
+
+Sponsors (Click to hide)
+
+
+
+SerpApi, a web search API to scrape Google and other search engines with a simple API.
+
+NodeMaven: The most efficient proxy provider for Web Scrapping and Automation with the Highest Quality IP on the market.
+Why NodeMaven?
+
+99.9% uptime ZIP Targeting IP filtering: all proxies have fraud score <97% No KYC required Unique free tools: Proxy Bandwidth Checker, Meta Tag Checker, IP Lookup and others!
+
+Special codes for Camoufox users:
+
+CAMOUFOX35 - 35% off to Mobile and Residential Proxies CAMOUFOX40 - 40% off to ISP (Static) Proxies CAMOUFOX2X - 2X traffic for Black Friday
+
+Check NodeMaven's new GitHub for more web scraping and automation solutions - https://github.com/nodemaven
+
+Need proxies for Camoufox?
+Use Node Proxy — a provider of datacenter, residential and mobile proxies offering high speed, security and near-100% uptime.
+Fully tested and supported in Camoufox.
+
+What sets them apart from other providers
+
+90+ IP score HTTP + SOCKS5 — multiprotocol support Discounts for retail customers Full B2B support Ethically sourced IP addresses Special terms for Enterprise clients
+
+Want to support Camoufox?
+Just use my promo code CAMOUFOX — it gets you a 30% discount and supports the developer at the same time.
+
+Get started at node-proxy.com →
+
+Byteful is a UK-based web data infrastructure platform that provides ethically sourced residential, mobile, static residential (ISP) and datacenter proxies alongside API-first tools for web scraping, data collection, and AI-driven automation.
+
+Processing tens of billions of requests per month for thousands of customers, Byteful powers browser-based AI agents, automation systems, and data workflows. It is a member of the Internet Watch Foundation and the Ethical Web Data Collection Initiative.
+
+Get 10% off Byteful Residential Proxies with the code: CAMOUFOX10
+
+👉 Get Started with OkkProxy
+🚀 🔥 Static ISP Proxy Deals
+• Broadcast IP — from $1.50/IP
+• Premium Native IP — from $4.50/IP
+🔥 Unlimited Residential Proxies — from $58/day
+🎁 Use PAY2 for 10% OFF all recharges!
+Also available: Rotating Residential and Mobile Proxies.
+👉 Visit OkkProxy
+
+Scrappey is a Web Scraping API that only charges successful scrapes with pay as you go - no subscriptions. Scrape complex sites. Residential proxies included, no hidden proxy fees, or expiring balances. One API for direct HTTP, full-browser rendering, JavaScript-heavy pages, screenshots, sessions, 30+ browser actions and 200+ concurrent sessions at a time - trusted by 1000+ developers and AI agents. Get 10% off with code CAMOUFOX.
+Cloro is a SERP and AI search API. Get structured results from Google, ChatGPT, Perplexity, Gemini, Copilot and Grok.
+
+Camoufox × Thordata
+Real Residential IPs and Web Data APIs for AI Agents and Automation
+
+Power your Camoufox workflows with 100M+ residential IPs across 190+ countries. Use precise geo and network targeting to run scraping, testing, and browser automation from the locations you need.
+
+🔄 Rotating and sticky sessions ⚡ Unlimited concurrent sessions for large-scale crawling 🌍 Location and network targeting for reliable regional access 🔍 Web Data APIs: Use Webpage for rendered page access, Web Scraper API for structured extraction, or SERP API for real-time search results
+
+Exclusive offer for Camoufox users
+Get free trial traffic after signup and use code CAMOUFOX for 10% off.
+
+Start your free trial with Thordata →
+
+Layer3 Intel | See your proxies the way anti-bots see them
+
+Camoufox hides your browser. Your proxy IP is the part it can't hide. Layer3 Intel is the residential proxy detection engine used to catch proxy traffic — check whether the IPs your provider sells you are clean, or already known and flagged.
+
+🔍 Live threat score for any IP 🗂️ Proxy pool membership - identify IP resellers 📡 70M+ residential, mobile & ISP proxy IP

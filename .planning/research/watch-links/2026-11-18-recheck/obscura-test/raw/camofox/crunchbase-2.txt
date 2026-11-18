@@ -1,0 +1,1 @@
+{"ok": true, "tabId": "f4ee64e0-4b8c-41b2-a316-4751c7724874", "url": "https://www.crunchbase.com/organization/anthropic", "refsAvailable": true, "httpStatus": 200, "navigationOk": true}

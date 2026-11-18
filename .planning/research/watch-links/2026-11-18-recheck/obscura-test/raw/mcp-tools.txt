@@ -1,0 +1,38 @@
+browser_navigate {"url": {"type": "string", "description": "URL to navigate to"}, "waitUntil": {"type": "string", "enum": ["load", "domcontentloaded", "networkidle0"], "description": "Navigation wait condition (default: load)"}}
+browser_snapshot {"max_chars": {"type": "number", "minimum": 0, "description": "Character budget shared by whole control descriptions and visible body text (default: 4000); URL and title are separately capped at 256 characters each"}}
+browser_click {"ref": {"type": "string", "description": "Element ref like 'e3' from a recent snapshot"}, "selector": {"type": "string", "description": "CSS selector (fallback if ref unavailable)"}}
+browser_fill {"ref": {"type": "string"}, "selector": {"type": "string"}, "value": {"type": "string", "description": "Value to set"}}
+browser_type {"ref": {"type": "string"}, "selector": {"type": "string"}, "text": {"type": "string", "description": "Text to type"}}
+browser_press_key {"key": {"type": "string", "description": "Key name (e.g. Enter, Tab, Escape)"}, "selector": {"type": "string", "description": "CSS selector (optional, defaults to document)"}}
+browser_select_option {"selector": {"type": "string", "description": "CSS selector of the <select> element"}, "value": {"type": "string", "description": "Value or text of the option to select"}}
+browser_evaluate {"expression": {"type": "string", "description": "JavaScript expression to evaluate; a promise it returns is awaited"}, "timeoutMs": {"type": "number", "description": "How long to wait for a returned promise, in milliseconds (default: 5000)"}}
+browser_wait_for_function {"function": {"type": "string", "description": "JavaScript expression that must become truthy"}, "timeout": {"type": "number", "description": "Timeout in milliseconds (default: 30000)"}, "pollIntervalMs": {"type": "number", "description": "Poll interval in milliseconds (default: 100)"}}
+browser_wait_for {"selector": {"type": "string", "description": "CSS selector to wait for"}, "timeout": {"type": "number", "description": "Timeout in seconds (default: 30)"}}
+browser_network_requests {}
+browser_console_messages {}
+browser_close {}
+browser_markdown {"max_chars": {"type": "number", "description": "Truncate to this many characters (default 4000)"}}
+browser_links {"limit": {"type": "number", "description": "Max number of links to return (default 100)"}, "internal_only": {"type": "boolean", "description": "If true, only return links on the same origin as the current page"}}
+browser_interactive_elements {"limit": {"type": "number", "description": "Max number of elements (default 100)"}}
+browser_back {}
+browser_forward {}
+browser_reload {}
+browser_get_cookies {"domain": {"type": "string", "description": "Filter to cookies on this domain (default: all)"}}
+browser_set_cookie {"name": {"type": "string"}, "value": {"type": "string"}, "domain": {"type": "string", "description": "e.g. example.com or .example.com"}, "path": {"type": "string", "description": "default '/'"}, "secure": {"type": "boolean"}, "http_only": {"type": "boolean"}}
+browser_clear_cookies {}
+browser_wait_for_text {"text": {"type": "string"}, "timeout": {"type": "number", "description": "Seconds (default 30)"}}
+browser_detect_forms {}
+browser_fill_form {"fields": {"type": "array", "items": {"type": "object", "properties": {"ref": {"type": "string"}, "selector": {"type": "string"}, "value": {"type": "string"}, "type": {"type": "string", "enum": ["text", "check", "uncheck", "select"]}}}}, "submit_ref": {"type": "string", "description": "Optional: cl
+browser_scroll {"direction": {"type": "string", "enum": ["top", "bottom", "up", "down", "left", "right"]}, "amount": {"type": "number", "description": "Pixels (default: one viewport)"}, "ref": {"type": "string", "description": "Optional element to scroll into view"}, "selector": {"type": "string"}}
+browser_get_attribute {"ref": {"type": "string"}, "selector": {"type": "string"}, "attribute": {"type": "string", "description": "Attribute name (e.g. href, value, src)"}}
+browser_count {"selector": {"type": "string"}}
+browser_extract {"schema": {"type": "object", "description": "Map of field_name to CSS selector. Suffix selector with '@attr' for attribute, suffix field name with '[]' for array."}}
+browser_tab_new {"url": {"type": "string", "description": "Optional URL to navigate the new tab to"}}
+browser_tab_list {}
+browser_tab_switch {"tab_id": {"type": "string"}}
+browser_tab_close {"tab_id": {"type": "string"}}
+browser_search {"query": {"type": "string"}, "case_sensitive": {"type": "boolean"}, "limit": {"type": "number", "description": "Max matches to return (default 10)"}, "context_chars": {"type": "number", "description": "Chars on each side of the match (default 80)"}}
+browser_storage_state {}
+browser_set_storage_state {"state": {"type": "object", "description": "{cookies: [...], origins: [{origin, localStorage: [...], sessionStorage: [...]}]}"}}
+browser_screenshot {"width": {"type": "number", "exclusiveMinimum": 0, "maximum": 32768, "description": "Optional CSS-pixel capture width"}, "height": {"type": "number", "exclusiveMinimum": 0, "maximum": 32768, "description": "Optional CSS-pixel capture height"}}
+browser_pdf {"landscape": {"type": "boolean"}, "print_background": {"type": "boolean"}, "scale": {"type": "number", "minimum": 0.1, "maximum": 2.0}, "paper_width": {"type": "number", "exclusiveMinimum": 0, "maximum": 200, "description": "Paper width in inches"}, "paper_height": {"type": "number", "exclusiveMini

@@ -1,0 +1,125 @@
+https://www.upwork.com/nx/search/jobs/?q=web%20scraping
+Search Freelance Jobs on Upwork
+
+Skip to content
+Upwork home
+Hire talent
+Get outcomes
+Find work
+Why Upwork
+Pricing
+Enterprise
+Log in
+Sign up
+Secondary
+Development & IT
+AI Services
+Design & Creative
+Sales & Marketing
+Admin & Customer Support
+More
+
+
+Search
+Advanced search
+Tabs
+Talent
+Jobs
+Category
+Select Categories
+Select Categories
+Experience level
+Experience level filter
+Entry Level (17)
+Intermediate (176)
+Expert (83)
+Job type
+Hourly (142)
+Custom USD
+Minimum hourly job rate per hour
+/hr
+Custom USD
+Maximum hourly job rate per hour
+/hr
+Fixed-Price (134)
+Less than $100 (57)
+$100 to $500 (50)
+$500 - $1K (8)
+$1K - $5K (13)
+$5K+ (6)
+Custom USD
+Minimum fixed price job rate
+Custom USD
+Maximum fixed price job rate
+Client history
+Client history filter
+No hires (85)
+1 to 9 hires (77)
+10+ hires (113)
+Client location
+Select client locations
+Select client locations
+Client time zones
+Select client time zones
+Select client time zones
+Project length
+Project length filter
+Less than one month (183)
+1 to 3 months (193)
+3 to 6 months (147)
+More than 6 months (155)
+Hours per week
+Hours per week filter
+Less than 30 hrs/week (140)
+More than 30 hrs/week (163)
+Job duration
+Contract-to-hire roles (43)
+Sort by
+Sort by: Relevance
+Posted 2 weeks ago
+Web Scraping for One Site
+Fixed price
+Intermediate
+Est. budget:
+$150.00
+
+Need a freelancer to scrape one website and extract the required data accurately. The project involves collecting specific information from the site and organizing it into a clean, usable format. Experience with similar scraping tasks is important. Please share relevant examples of past work and your approach to handling website structure and data extraction.
+
+Data Scraping
+Web Crawling
+Scrapy
+Data Mining
+Posted 2 months ago
+Web Scraping for 20+ Sites
+Hourly: $15.00 - $30.00
+Expert
+Est. time:
+Less than 1 month, 30+ hrs/week
+
+We need a freelancer to scrape data from 20+ websites and organize the results into a clean, structured format. The work includes extracting relevant information, handling site variations, and ensuring accurate data collection. You should be comfortable working with multiple sources, troubleshooting issues, and delivering reliable output. Please share examples of similar projects and your approach to managing large-scale scraping tasks.
+
+Web Crawling
+Data Scraping
+Scrapy
+Data Mining
+Posted 3 weeks ago
+Web Scraper for Freelance Projects
+Hourly
+Intermediate
+Est. time:
+1 to 3 months, Less than 30 hrs/week
+
+Seeking a freelancer with a proven working scraper to extract freelance project opportunities from non-freelancer sites. The work includes identifying relevant listings for web design, SEO, social media, software, app development, and similar fields, then collecting and organizing the data for review. Experience handling structured data extraction and maintaining reliable output is important. This is a part-time project for someone who can deliver consistent results and help build a dependable source of freelance opportunities.
+
+Data Scraping
+Web Crawling
+Python
+Data Mining
+Posted 3 weeks ago
+Scraping AI responses on travel sites
+Fixed price
+Expert
+Est. budget:
+$500.00
+
+I am working on a project comparing AI search outputs from different travel sites: booking.com, Trip.com Genie (https://us.trip.com/tripgenie/) and Priceline Penny (https://www.priceline.com/penny). I have 1,200 search prompts to feed to each of these sites. Here is a sample prompt: "I am a 20-year-old undergraduate student traveling on a limited budget, looking for a hotel in Boston. I need accommodation under $200 per night for 2026-11-24 to 2026-11-25 (1 night). Recommend up to 10 hotels." Your job will need to capture the list of recommended hotel list. It is a straightforward task but the freelancer may need to be able to automate browsers and use IP proxies as needed. The delivery needs to be in 12 hours with both code, app as well as the excel showing the query, one of the three channel names, the matching output (a list of hotels including the name of the hotel, url of the hotel

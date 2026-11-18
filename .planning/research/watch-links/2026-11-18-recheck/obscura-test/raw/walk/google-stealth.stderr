@@ -1,0 +1,16 @@
+[2m2026-11-18T16:44:48.740118Z[0m [31mERROR[0m [2mobscura::console[0m[2m:[0m ReferenceError: solveSimpleChallenge is not defined
+    at eval (eval at _resolveInlineHandler (<obscura:bootstrap>:4736:21), <anonymous>:3:56)
+    at _eventTargetDispatch (<obscura:bootstrap>:2067:37)
+    at globalThis.dispatchEvent (<obscura:bootstrap>:173:10)
+    at <load-event>:4:14
+[2m2026-11-18T16:44:49.967081Z[0m [31mERROR[0m [2mobscura::console[0m[2m:[0m Worker error: importScripts is not defined
+[2m2026-11-18T16:45:09.430462Z[0m [31mERROR[0m [2mobscura::console[0m[2m:[0m Worker error: importScripts is not defined
+[2m2026-11-18T16:45:12.260849Z[0m [31mERROR[0m [2mobscura::console[0m[2m:[0m ReferenceError: solveSimpleChallenge is not defined
+    at eval (eval at _resolveInlineHandler (<obscura:bootstrap>:4736:21), <anonymous>:3:56)
+    at _eventTargetDispatch (<obscura:bootstrap>:2067:37)
+    at globalThis.dispatchEvent (<obscura:bootstrap>:173:10)
+    at <load-event>:4:14
+[2m2026-11-18T16:45:12.891573Z[0m [31mERROR[0m [2mobscura::console[0m[2m:[0m Worker error: importScripts is not defined
+[2m2026-11-18T16:45:32.737218Z[0m [31mERROR[0m [2mobscura::console[0m[2m:[0m Worker error: importScripts is not defined
+[2m2026-11-18T16:45:36.160176Z[0m [33m WARN[0m [2mobscura_browser::page[0m[2m:[0m ES module error (https://static.cloudflareinsights.com/beacon.min.js/vce701823e78c4301a35b7e07294d87301792088814092): Module load error: Module https://static.cloudflareinsights.com/beacon.min.js/vce701823e78c4301a35b7e07294d87301792088814092 returned HTTP 0
+[2m2026-11-18T16:45:45.510186Z[0m [33m WARN[0m [2mobscura_browser::page[0m[2m:[0m ES module error (https://static.cloudflareinsights.com/beacon.min.js/vce701823e78c4301a35b7e07294d87301792088814092): Module load error: Module https://static.cloudflareinsights.com/beacon.min.js/vce701823e78c4301a35b7e07294d87301792088814092 returned HTTP 0

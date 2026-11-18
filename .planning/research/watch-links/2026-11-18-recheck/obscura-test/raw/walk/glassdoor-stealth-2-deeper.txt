@@ -1,0 +1,15 @@
+https://www.glassdoor.com/Overview/Working-at-Anthropic-EI_IE8109027.11,20.htm
+Just a moment...
+
+Humans only
+
+Glassdoor has been built on the contributions of real employees and job seekers. We use advanced security systems to keep our site safe and prevent misuse or unauthorized access.
+
+In rare cases, security protections may mistakenly block legitimate activity from real users. If you have been mistakenly blocked from accessing our site, please review our Help Center article for troubleshooting steps.
+
+Ray ID: a5c871a1ca0fd9d2
+Timestamp: 2026-11-18T16:45:08.901Z
+Your IP address: 217.230.29.164
+Cloudflare Location: DE
+Requested URL: https://www.glassdoor.com/Overview/Working-at-Anthropic-EI_IE8109027.11,20.htm?__cf_chl_rt_tk=SaCerykRIGVOTUoOjFeq.XJ7.kYbpHVIP.YuFPWgXXk-1795020308-1.0.1.1-B4HMQGtg9u_T.0ZJ9SPiFG7V8uBng9_CvENkHtcdgEU
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36

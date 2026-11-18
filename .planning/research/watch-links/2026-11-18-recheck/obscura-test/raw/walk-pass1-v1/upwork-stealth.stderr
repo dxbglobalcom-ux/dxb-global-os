@@ -1,0 +1,33 @@
+[2m2026-11-18T16:41:32.191977Z[0m [33m WARN[0m [2musvg::parser::style[0m[2m:[0m Failed to parse fill value: 'var(--color-logo, black)'. Fallback to black.
+[2m2026-11-18T16:41:32.192004Z[0m [33m WARN[0m [2musvg::parser::style[0m[2m:[0m Failed to parse fill value: 'var(--color-logo, black)'. Fallback to black.
+[2m2026-11-18T16:41:32.192014Z[0m [33m WARN[0m [2musvg::parser::style[0m[2m:[0m Failed to parse fill value: 'var(--color-logo, black)'. Fallback to black.
+[2m2026-11-18T16:41:32.444973Z[0m [33m WARN[0m [2musvg::parser::style[0m[2m:[0m Failed to parse fill value: 'var(--color-logo, black)'. Fallback to black.
+[2m2026-11-18T16:41:32.444987Z[0m [33m WARN[0m [2musvg::parser::style[0m[2m:[0m Failed to parse fill value: 'var(--color-logo, black)'. Fallback to black.
+[2m2026-11-18T16:41:32.444994Z[0m [33m WARN[0m [2musvg::parser::style[0m[2m:[0m Failed to parse fill value: 'var(--color-logo, black)'. Fallback to black.
+[2m2026-11-18T16:41:33.113158Z[0m [33m WARN[0m [2musvg::parser::style[0m[2m:[0m Failed to parse fill value: 'var(--color-logo, black)'. Fallback to black.
+[2m2026-11-18T16:41:33.113179Z[0m [33m WARN[0m [2musvg::parser::style[0m[2m:[0m Failed to parse fill value: 'var(--color-logo, black)'. Fallback to black.
+[2m2026-11-18T16:41:33.113188Z[0m [33m WARN[0m [2musvg::parser::style[0m[2m:[0m Failed to parse fill value: 'var(--color-logo, black)'. Fallback to black.
+[2m2026-11-18T16:41:33.156323Z[0m [33m WARN[0m [2musvg::parser::style[0m[2m:[0m Failed to parse fill value: 'var(--color-logo, black)'. Fallback to black.
+[2m2026-11-18T16:41:33.156348Z[0m [33m WARN[0m [2musvg::parser::style[0m[2m:[0m Failed to parse fill value: 'var(--color-logo, black)'. Fallback to black.
+[2m2026-11-18T16:41:33.156355Z[0m [33m WARN[0m [2musvg::parser::style[0m[2m:[0m Failed to parse fill value: 'var(--color-logo, black)'. Fallback to black.
+[2m2026-11-18T16:41:33.172309Z[0m [33m WARN[0m [2musvg::parser::style[0m[2m:[0m Failed to parse fill value: 'var(--color-logo, black)'. Fallback to black.
+[2m2026-11-18T16:41:33.172323Z[0m [33m WARN[0m [2musvg::parser::style[0m[2m:[0m Failed to parse fill value: 'var(--color-logo, black)'. Fallback to black.
+[2m2026-11-18T16:41:33.172330Z[0m [33m WARN[0m [2musvg::parser::style[0m[2m:[0m Failed to parse fill value: 'var(--color-logo, black)'. Fallback to black.
+[2m2026-11-18T16:41:53.825606Z[0m [33m WARN[0m [2mobscura_browser::page[0m[2m:[0m Script error (https://transcend-cdn.com/cm/76b6554e-5f7f-4e24-a8d7-d33804a56e9b/airgap.js): JS error: TypeError: Cannot read properties of undefined (reading 'set')
+    at https://transcend-cdn.com/cm/76b6554e-5f7f-4e24-a8d7-d33804a56e9b/airgap.js:5:7417
+    at https://transcend-cdn.com/cm/76b6554e-5f7f-4e24-a8d7-d33804a56e9b/airgap.js:19:3
+    at https://transcend-cdn.com/cm/76b6554e-5f7f-4e24-a8d7-d33804a56e9b/airgap.js:20:3
+[2m2026-11-18T16:41:55.771590Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m Failed to load messages for locale "en-us" FetchError: [GET] "/static/assets/UniversalSearchNuxt/_i18n/c78a77f8/en-us/messages.json": 403 
+    at async i (https://www.upwork.com/static/assets/UniversalSearchNuxt/_nuxt/entry.DUMkLBlx.js:5:15127)
+    at async h (https://www.upwork.com/static/assets/UniversalSearchNuxt/_nuxt/entry.DUMkLBlx.js:1248:18421)
+    at async Object.loadMessages (https://www.upwork.com/static/assets/UniversalSearchNuxt/_nuxt/entry.DUMkLBlx.js:1248:19491)
+    at async tA (https://www.upwork.com/static/assets/UniversalSearchNuxt/_nuxt/entry.DUMkLBlx.js:1248:22384)
+    at async setup (https://www.upwork.com/static/assets/UniversalSearchNuxt/_nuxt/entry.DUMkLBlx.js:1250:37431)
+    at async sL (https://www.upwork.com/static/assets/UniversalSearchNuxt/_nuxt/entry.DUMkLBlx.js:5:22218)
+    at async a (https://www.upwork.com/static/assets/UniversalSearchNuxt/_nuxt/entry.DUMkLBlx.js:5:22753)
+    at async https://www.upwork.com/static/assets/UniversalSearchNuxt/_nuxt/entry.DUMkLBlx.js:5:22654
+    at async Promise.all (index 1)
+    at async https://www.upwork.com/static/assets/UniversalSearchNuxt/_nuxt/entry.DUMkLBlx.js:5:22563
+[2m2026-11-18T16:41:55.782538Z[0m [31mERROR[0m [2mobscura::console[0m[2m:[0m Dynamic script fetch error: HTTP 0
+[2m2026-11-18T16:41:55.904324Z[0m [31mERROR[0m [2mobscura::console[0m[2m:[0m Dynamic script fetch error: HTTP 0
+[2m2026-11-18T16:41:57.926547Z[0m [31mERROR[0m [2mobscura::console[0m[2m:[0m Dynamic script fetch error: HTTP 0

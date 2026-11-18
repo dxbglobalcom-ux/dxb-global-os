@@ -1,0 +1,51 @@
+[2m2026-11-18T16:45:32.294162Z[0m [31mERROR[0m [2mobscura::console[0m[2m:[0m ReferenceError: interstitialChallenge is not defined
+    at ddRunChallenge (<anonymous>:178:5)
+    at Document.<anonymous> (<anonymous>:183:5)
+    at _domEventInvokeHandlers (<obscura:bootstrap>:2155:64)
+    at _domEventInvoke (<obscura:bootstrap>:2122:5)
+    at _domEventDispatch (<obscura:bootstrap>:2210:9)
+    at Document.dispatchEvent (<obscura:bootstrap>:6964:12)
+    at <anonymous>:1:66
+[2m2026-11-18T16:45:54.964043Z[0m [31mERROR[0m [2mobscura::console[0m[2m:[0m ReferenceError: interstitialChallenge is not defined
+    at ddRunChallenge (<anonymous>:178:5)
+    at Document.<anonymous> (<anonymous>:183:5)
+    at _domEventInvokeHandlers (<obscura:bootstrap>:2155:64)
+    at _domEventInvoke (<obscura:bootstrap>:2122:5)
+    at _domEventDispatch (<obscura:bootstrap>:2210:9)
+    at Document.dispatchEvent (<obscura:bootstrap>:6964:12)
+    at <anonymous>:1:66
+[2m2026-11-18T16:46:22.137848Z[0m [33m WARN[0m [2mobscura_browser::page[0m[2m:[0m Script error (https://www.googletagmanager.com/gtag/js?id=G-MFZ5NDXZ5F): JS error: RangeError: Maximum call stack size exceeded
+    at Object.A (https://cmp.osano.com/Azqe3XTG0NugLuZ/509014bb-9af4-43fc-8271-bd15f1a7fb2b/osano.js?v1:1:41823)
+    at HTMLScriptElement.f (https://cmp.osano.com/Azqe3XTG0NugLuZ/509014bb-9af4-43fc-8271-bd15f1a7fb2b/osano.js?v1:1:39244)
+    at HTMLScriptElement.value (https://cmp.osano.com/Azqe3XTG0NugLuZ/509014bb-9af4-43fc-8271-bd15f1a7fb2b/osano.js?v1:1:39738)
+    at HTMLScriptElement.get src (<obscura:bootstrap>:5351:20)
+    at HTMLScriptElement.f (https://cmp.osano.com/Azqe3XTG0NugLuZ/509014bb-9af4-43fc-8271-bd15f1a7fb2b/osano.js?v1:1:39423)
+    at HTMLScriptElement.value (https://cmp.osano.com/Azqe3XTG0NugLuZ/509014bb-9af4-43fc-8271-bd15f1a7fb2b/osano.js?v1:1:39738)
+    at HTMLScriptElement.get src (<obscura:bootstrap>:5351:20)
+    at HTMLScriptElement.f (https://cmp.osano.com/Azqe3XTG0NugLuZ/509014bb-9af4-43fc-8271-bd15f1a7fb2b/osano.js?v1:1:39423)
+    at HTMLScriptElement.value (https://cmp.osano.com/Azqe3XTG0NugLuZ/509014bb-9af4-43fc-8271-bd15f1a7fb2b/osano.js?v1:1:39738)
+    at HTMLScriptElement.get src (<obscura:bootstrap>:5351:20)
+[2m2026-11-18T16:46:22.140005Z[0m [33m WARN[0m [2mobscura_browser::page[0m[2m:[0m Inline script error: JS error: RangeError: Maximum call stack size exceeded
+    at HTMLScriptElement.set src (<obscura:bootstrap>:5356:10)
+    at HTMLScriptElement.l (https://cmp.osano.com/Azqe3XTG0NugLuZ/509014bb-9af4-43fc-8271-bd15f1a7fb2b/osano.js?v1:1:41154)
+    at HTMLScriptElement.value (https://cmp.osano.com/Azqe3XTG0NugLuZ/509014bb-9af4-43fc-8271-bd15f1a7fb2b/osano.js?v1:1:41771)
+    at HTMLScriptElement.set src (<obscura:bootstrap>:5357:10)
+    at HTMLScriptElement.l (https://cmp.osano.com/Azqe3XTG0NugLuZ/509014bb-9af4-43fc-8271-bd15f1a7fb2b/osano.js?v1:1:41154)
+    at HTMLScriptElement.value (https://cmp.osano.com/Azqe3XTG0NugLuZ/509014bb-9af4-43fc-8271-bd15f1a7fb2b/osano.js?v1:1:41771)
+    at HTMLScriptElement.set src (<obscura:bootstrap>:5357:10)
+    at HTMLScriptElement.l (https://cmp.osano.com/Azqe3XTG0NugLuZ/509014bb-9af4-43fc-8271-bd15f1a7fb2b/osano.js?v1:1:41154)
+    at HTMLScriptElement.value (https://cmp.osano.com/Azqe3XTG0NugLuZ/509014bb-9af4-43fc-8271-bd15f1a7fb2b/osano.js?v1:1:41771)
+    at HTMLScriptElement.set src (<obscura:bootstrap>:5357:10)
+[2m2026-11-18T16:46:22.433907Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m [GSI_LOGGER]: Relative login_uri was provided. Use absolute url instead. Relative login_uri may be considered invalid in the future.
+[2m2026-11-18T16:46:22.593723Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m [GSI_LOGGER]: Your client application uses one of the Google One Tap prompt UI status methods that may stop functioning when FedCM becomes mandatory. Refer to the migration guide to update your code accordingly and opt-in to FedCM to test your changes. Learn more: https://developers.google.com/identity/gsi/web/guides/fedcm-migration?s=dc#display_moment and https://developers.google.com/identity/gsi/web/guides/fedcm-migration?s=dc#skipped_moment
+[2m2026-11-18T16:46:23.250171Z[0m [31mERROR[0m [2mobscura::console[0m[2m:[0m Timer error: RangeError: Maximum call stack size exceeded
+    at HTMLScriptElement.value (https://cmp.osano.com/Azqe3XTG0NugLuZ/509014bb-9af4-43fc-8271-bd15f1a7fb2b/osano.js?v1:1:39725)
+    at HTMLScriptElement.get src (<obscura:bootstrap>:5351:20)
+    at HTMLScriptElement.f (https://cmp.osano.com/Azqe3XTG0NugLuZ/509014bb-9af4-43fc-8271-bd15f1a7fb2b/osano.js?v1:1:39423)
+    at HTMLScriptElement.value (https://cmp.osano.com/Azqe3XTG0NugLuZ/509014bb-9af4-43fc-8271-bd15f1a7fb2b/osano.js?v1:1:39738)
+    at HTMLScriptElement.get src (<obscura:bootstrap>:5351:20)
+    at HTMLScriptElement.f (https://cmp.osano.com/Azqe3XTG0NugLuZ/509014bb-9af4-43fc-8271-bd15f1a7fb2b/osano.js?v1:1:39423)
+    at HTMLScriptElement.value (https://cmp.osano.com/Azqe3XTG0NugLuZ/509014bb-9af4-43fc-8271-bd15f1a7fb2b/osano.js?v1:1:39738)
+    at HTMLScriptElement.get src (<obscura:bootstrap>:5351:20)
+    at HTMLScriptElement.f (https://cmp.osano.com/Azqe3XTG0NugLuZ/509014bb-9af4-43fc-8271-bd15f1a7fb2b/osano.js?v1:1:39423)
+    at HTMLScriptElement.value (https://cmp.osano.com/Azqe3XTG0NugLuZ/509014bb-9af4-43fc-8271-bd15f1a7fb2b/osano.js?v1:1:39738)

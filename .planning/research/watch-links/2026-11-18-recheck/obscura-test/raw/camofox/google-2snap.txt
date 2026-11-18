@@ -1,0 +1,53 @@
+- heading "camoufox browser - Google Search"
+- searchbox "Search" [e1]: camoufox browser
+- navigation:
+  - link "AI Mode" [e2]
+  - link "All" [e3]
+  - link "Images" [e4]
+  - link "Videos" [e5]
+  - link "News" [e6]
+  - link "Forums" [e7]
+  - link "Short videos" [e8]
+- link "Web Scraping with Camoufox: Complete Guide 2026" [e9]:
+  - /url: https://www.google.com/goto?url=CAESfAHEIkXXuZlbWVy0K54JoMjGXa5vi9OSUA7yKaAolDqXflmCqV0tbIC9Z3ivaoKVSZqfs5tyGCvzTkMvsZjNl23mUZH306RyxgvewwZ3QUVw3sXmjyHX4qfFtqNsvHpUPB1PVv34Zl-VF2QljExOw42YOYcxfxq6b8yUZAg&gsessionid=ZNdxU5atgRaxs2mSdlRyDP6V1kJDyuGdtLF9EgEITlhnExzoiMxCjA
+  - cite: https://brightdata.com › blog › web-data › web-scrapin...
+  - text: Bright Datahttps://brightdata.com › blog › web-data › web-scrapin...Bright Datahttps://brightdata.com › blog › web-data › web-scrapin...
+- link "Camoufox vs Browser Cache speed in Fanficfare? : r/Calibre" [e10]:
+  - /url: https://www.google.com/goto?url=CAESnQEBxCJF1-JhFwCg-3Xj0mGycoQrOUdLcuSuP6BU8dEhIvp8E2B7kobS51FfcufnGhzMdaT-zskX2Eb1B6QHyBaOgI2-O2GAUNdIHG4cbeKkD85ehgxHup8fcaiXvuC547nyVsodb8uA3JHvfRxIhVNlQcEjXbsfX6NIHlqlnu_kP4QTeNButU0Bvj-8GblG8tIWgMPzgezjqNWy9J53&gsessionid=ZNdxU5atgRaxs2mSdlRyDP6V1kJDyuGdtLF9EgEITlhnExzoiMxCjA
+  - cite: 5 comments  ·  1 day ago
+  - text: Reddit · r/Calibre5 comments · 1 day agoReddit · r/Calibre5 comments · 1 day ago
+- link "Clawbrowser vs Camoufox: CDP Chromium or Firefox" [e11]:
+  - /url: https://www.google.com/goto?url=CAEScQHEIkXXId81jAuhERiA4spgWGj_EfcBWyLf39DpmP9oTQ0AmoPGmy5w7zoV_gCUPNr-VNB5zsG3_hhVwnUyk1Ao0WadelQPjCgJWeQRoU-BB4CJ-C_MEHUJCYawNQ-1wg8Ki-9jezd0YI_Y-xlPSAZx&gsessionid=ZNdxU5atgRaxs2mSdlRyDP6V1kJDyuGdtLF9EgEITlhnExzoiMxCjA
+  - cite: https://clawbrowser.ai › Blog
+  - text: Clawbrowserhttps://clawbrowser.ai › BlogClawbrowserhttps://clawbrowser.ai › Blog
+- link "camoufox-connector" [e12]:
+  - /url: https://www.google.com/goto?url=CAESaQHEIkXX16c8ZH0I5W4KXv3k5pxdVhZcmR3G6JH4PRcZrktdBJ12Dy5rGwrz6rtxrgIPqKdrE2m6PvWK1Dm68-FWNk4ZcIh4X5ZEDSblh3KCoGK-k3fLHGfs8W-kBmtQN1yknD16x_11ug&gsessionid=ZNdxU5atgRaxs2mSdlRyDP6V1kJDyuGdtLF9EgEITlhnExzoiMxCjA
+  - cite: https://pypi.org › project › camoufox-connector
+  - text: PyPIhttps://pypi.org › project › camoufox-connectorPyPIhttps://pypi.org › project › camoufox-connector
+- link "Web Scraping with Camoufox: The Anti-Detect Browser Guide" [e13]:
+  - /url: https://www.google.com/goto?url=CAESaAHEIkXXsmEDf1d9CDdy3G8yK081GFpjfW32OLXhmbKnhYZWIAbotZwmpOmFE7n3JV9iJNGSQHnJYrzDy9NbJUDeQvdMK2yRO9ICsrlI2hUtwZHa3CUJwnPm6anwRnyFkHdBRlkJ4WyH&gsessionid=ZNdxU5atgRaxs2mSdlRyDP6V1kJDyuGdtLF9EgEITlhnExzoiMxCjA
+  - cite: 2,6K+ views  ·  3 months ago
+  - text: Your scraper works in testing, then real sites block it on sight. In this tutorial, I show how to set up Camoufox, a custom Firefox build ...
+- link "The Complete Guide to Camoufox and Anti-Detect ..." [e14]:
+  - /url: https://www.google.com/goto?url=CAESlwEBxCJF14M4zuOV1t4l0UCFbX0yJXa3gue_Si9gB_XND3VZiX3JU4br9vIr0yQp2C3NNFG9Z9Vkz9xYk3RMZA5mr_W30nYnFtkDT7__AK0vfAce2ZjIdwKk4JcallmG6LF5gYh1G8iyu2G0OOEykLSYbAoRuWaC6ZUXI4YTrkP8LXZSFq6nIbixWHSMsM40IKkl-IoOm4_g&gsessionid=ZNdxU5atgRaxs2mSdlRyDP6V1kJDyuGdtLF9EgEITlhnExzoiMxCjA
+  - cite: https://www.scrapingbee.com › Blog
+  - text: ScrapingBeehttps://www.scrapingbee.com › BlogScrapingBeehttps://www.scrapingbee.com › Blog
+- link "Camoufox alternative - Clearcote" [e15]:
+  - /url: https://www.google.com/goto?url=CAEScAHEIkXXg4UbKGx1BUbvs9PCCb7j-Gz_80NuRE3SI0R0izXwvMdtcfp8TUCLas3gWWMSdXUCUcoVnDcaJV-pEZEiN2ht5Bend4MQuDizzIUbqjJftDirulDRX4DQqevY_jksgHEIeT-6gn4V2pNfD9M&gsessionid=ZNdxU5atgRaxs2mSdlRyDP6V1kJDyuGdtLF9EgEITlhnExzoiMxCjA
+  - cite: https://www.clearcotelabs.com › Alternatives
+  - text: clearcotelabs.comhttps://www.clearcotelabs.com › Alternativesclearcotelabs.comhttps://www.clearcotelabs.com › Alternatives
+- link "Camoufox-only browser runtime for AI agents with inspect/ ..." [e16]:
+  - /url: https://www.google.com/goto?url=CAESbQHEIkXXilPa-aSiJkYDZT62b8IpSNrP3ZexCx-dZEH7iO4t9znrMLWGey6B1LWCtgfxFgaVEBotIBo1EjEFxG7hLrpFp_2xeBcS6QN1aoBX65UJ2CIRYBO5u32pEllpK6-sTcd7Xccey7ZlHYE&gsessionid=ZNdxU5atgRaxs2mSdlRyDP6V1kJDyuGdtLF9EgEITlhnExzoiMxCjA
+  - cite: https://github.com › vinismarques › camoufox-browser
+  - text: GitHubhttps://github.com › vinismarques › camoufox-browserGitHubhttps://github.com › vinismarques › camoufox-browser
+- link "For browsing, I use camoufox, it tries to hide the fact that ..." [e17]:
+  - /url: https://www.google.com/goto?url=CAESagHEIkXXYtYKuX52d57HiK6cZGoSR6u7xv9nSHQjOF4qMRq61UpnEUvtvERQcYa6ELiUSTF81oopC-gJOs4l8jFmaglNsehtNRc1MaSZFf23TyJX2kK9fMb7oPYgg4g6c7311YMs5DvQ5po&gsessionid=ZNdxU5atgRaxs2mSdlRyDP6V1kJDyuGdtLF9EgEITlhnExzoiMxCjA
+  - cite: https://news.ycombinator.com › item
+  - text: Hacker Newshttps://news.ycombinator.com › itemHacker Newshttps://news.ycombinator.com › item
+- link "Camoufox for Web Scraping: Setup, Proxies and Servers" [e18]:
+  - /url: https://www.google.com/goto?url=CAESdQHEIkXXkxguf5OSZFD5E5vCfNbcX0j-JjNMD_tZgAV0rjUd7aSPVlYEQpPrT9tNMX1DKIPqX5e8tUWAbOpwfMU3D3jRp6IJa0cwvZqOnlMSSMMUq4U7eWUqUQ2nv9pWqnZjOXQgKthF19cKcsxrBrtzFx3ECA&gsessionid=ZNdxU5atgRaxs2mSdlRyDP6V1kJDyuGdtLF9EgEITlhnExzoiMxCjA
+  - cite: https://scrapfly.io › Blog › cloud-browser
+  - text: Scrapflyhttps://scrapfly.io › Blog › cloud-browserScrapflyhttps://scrapfly.io › Blog › cloud-browser
+- navigation "pagination":
+  - link "Next" [e19]
+-- {"url": "https://www.google.com/search?q=camoufox+browser&hl=en&start=10", "totalChars": 5388}

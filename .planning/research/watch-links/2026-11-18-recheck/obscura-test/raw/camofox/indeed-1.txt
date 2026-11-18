@@ -1,0 +1,383 @@
+tab dc23f9bd-a7aa-4fde-963b-d86d897d8bb0
+- link "Skip to main content" [e1]:
+  - /url: "#gnav-header-end"
+- main:
+  - navigation "Primary":
+    - button "Skip to main content" [e2]
+    - link "Indeed Home" [e3]:
+      - /url: /?from=gnav-jobsearch--indeedmobile
+    - list:
+      - listitem [e4]:
+        - link "Home" [e5]:
+          - /url: https://www.indeed.com/
+      - listitem [e6]:
+        - link "Company reviews" [e7]:
+          - /url: https://www.indeed.com/companies
+      - listitem [e8]:
+        - link "Find salaries" [e9]:
+          - /url: https://www.indeed.com/career/salaries
+    - list:
+      - listitem [e10]:
+        - link "Sign in" [e11]:
+          - /url: https://secure.indeed.com/auth?hl=en_US&co=US&continue=https%3A%2F%2Fwww.indeed.com%2Fjobs%3Fq%3Dai%2Bengineer&tmpl=desktop&from=gnav-util-jobsearch--indeedmobile&jsContinue=https%3A%2F%2Fwww.indeed.com%2Fonboarding%3Fhl%3Den_US%26co%3DUS%26from%3Dgnav-jobsearch--indeedmobile&empContinue=https%3A%2F%2Faccount.indeed.com%2Fmyaccess
+      - listitem [e12]:
+        - link "United States (English)" [e13]:
+          - /url: https://www.indeed.com/countries
+          - text: En
+    - link "Employers / Post Job" [e14]:
+      - /url: https://www.indeed.com/hire?co=US&hl=en
+    - text: Start of main content
+  - search:
+    - text: "Keyword : all jobs"
+    - 'combobox "search: Job title, keywords, or company"': ai engineer
+    - button "Clear what input" [e15]
+    - separator: "&nbsp;"
+    - text: Edit location input box label
+    - combobox "Edit location" [e16]
+    - group:
+      - text: "Tip: Enter your city or zip code in the \"where\" box to show results in your area."
+      - button "Close" [e17]
+    - button "Search" [e18]
+    - list:
+      - button "Pay filter" [e19]: Pay
+      - button "Remote filter" [e20]: Remote
+      - button "Easily apply filter" [e21]: Easily apply
+      - button "Job type filter" [e22]: Job type
+      - button "Experience level filter" [e23]: Experience level
+      - button "Education filter" [e24]: Education
+      - button "Encouraged to apply filter" [e25]: Encouraged to apply
+      - button "Date posted filter" [e26]: Date posted
+  - link "Upload your resume" [e27]:
+    - /url: /promo/resume?from=serptop3&subfrom=resprmrtop&trk.origin=jobsearch&trk.variant=resprmrtop&trk.tk=1k7np31ktg7fi801
+  - text: "- Let employers find you"
+  - separator: "&nbsp;"
+  - heading "ai engineer jobs" [level=1]
+  - button "More information about job results" [e28]:
+    - img "More information about job results"
+  - text: "Sort by: -"
+  - 'link "Sort by: date"':
+    - /url: /jobs?q=ai%20engineer&sort=date
+    - text: date
+  - list:
+    - listitem [e29]
+    - listitem [e30]:
+      - heading "full details of Remote Machine Learning Engineer" [level=3]:
+        - button "full details of Remote Machine Learning Engineer" [e31] [pressed]: Remote Machine Learning Engineer
+      - text: Spotter Remote in Lemont, IL
+      - button "Save job Toggle" [e32]
+    - listitem [e33]:
+      - heading "full details of Voice AI Engineer – Production Systems" [level=3]:
+        - button "full details of Voice AI Engineer – Production Systems" [e34]: Voice AI Engineer – Production Systems
+      - text: Health Concierge Remote in United States
+      - button "Save job Toggle" [e35]
+    - listitem [e36]:
+      - heading "full details of AI Engineer" [level=3]:
+        - button "full details of AI Engineer" [e37]: AI Engineer
+      - text: BIRDSVUE LLC Remote in Dunstable, MA 01827
+      - button "Save job Toggle" [e38]
+    - listitem [e39]
+    - listitem [e40]:
+      - heading "full details of AI Agentic Engineer Gemini ADK MCP Remote" [level=3]:
+        - button "full details of AI Agentic Engineer Gemini ADK MCP Remote" [e41]: AI Agentic Engineer Gemini ADK MCP Remote
+      - text: Ensisinfo Inc Remote in Phoenix, AZ 85001
+      - button "Save job Toggle" [e42]
+    - listitem [e43]:
+      - heading "full details of Conversational AI Engineer" [level=3]:
+        - button "full details of Conversational AI Engineer" [e44]: Conversational AI Engineer
+      - text: AIApply Remote
+      - link "View similar jobs with this employer" [e45]:
+        - /url: /addlLoc/redirect?tk=1k7np31ktg7fi801&jk=b8df0b13d88e5d70&dest=%2Fjobs%3Fq%3Dai%2Bengineer%26nl%3D%26grpKey%3DoAEBkAPQrtc-8gcFdG5mZWyqEBkKCW5vcm10aXRsZRoMYWkgZGV2ZWxvcGVy
+      - button "Save job Toggle" [e46]
+    - listitem [e47]
+    - listitem [e48]:
+      - heading "full details of AI Engineer" [level=3]:
+        - button "full details of AI Engineer" [e49]: AI Engineer
+      - text: Ensisinfo Inc Atlanta, GA 30301 (Buckhead area)
+      - button "Save job Toggle" [e50]
+    - listitem [e51]:
+      - heading "full details of AI Research Engineer" [level=3]:
+        - button "full details of AI Research Engineer" [e52]: AI Research Engineer
+      - text: Atasc.ai Remote
+      - button "Save job Toggle" [e53]
+    - listitem [e54]:
+      - heading "full details of AI Engineer" [level=3]:
+        - button "full details of AI Engineer" [e55]: AI Engineer
+      - text: PivotX Advisors LLC Remote in United States
+      - button "Save job Toggle" [e56]
+    - listitem [e57]:
+      - heading "full details of AI Engineer - Senior" [level=3]:
+        - button "full details of AI Engineer - Senior" [e58]: AI Engineer - Senior
+      - text: Alchemy Remote
+      - button "Save job Toggle" [e59]
+    - listitem [e60]:
+      - heading "full details of AI Agent Product Engineer" [level=3]:
+        - button "full details of AI Agent Product Engineer" [e61]: AI Agent Product Engineer
+      - text: Dakota Remote
+      - button "Save job Toggle" [e62]
+    - listitem [e63]
+    - listitem [e64]:
+      - heading "full details of Prompt Engineer" [level=3]:
+        - button "full details of Prompt Engineer" [e65]: Prompt Engineer
+      - text: AIApply Remote
+      - link "View similar jobs with this employer" [e66]:
+        - /url: /addlLoc/redirect?tk=1k7np31ktg7fi801&jk=015ad15b42376a79&dest=%2Fjobs%3Fq%3Dai%2Bengineer%26nl%3D%26grpKey%3DoAEBkAPQrtc-8gcFdG5mZWyqEBwKCW5vcm10aXRsZRoPcHJvbXB0IGVuZ2luZWVy
+      - button "Save job Toggle" [e67]
+    - listitem [e68]:
+      - heading "full details of AI Engineer, AdTech" [level=3]:
+        - button "full details of AI Engineer, AdTech" [e69]: AI Engineer, AdTech
+      - text: ClearTrustMedia Remote
+      - button "Save job Toggle" [e70]
+    - listitem [e71]:
+      - heading "full details of AI Engineer" [level=3]:
+        - button "full details of AI Engineer" [e72]: AI Engineer
+      - text: LawPro.ai Remote
+      - link "View similar jobs with this employer" [e73]:
+        - /url: /addlLoc/redirect?tk=1k7np31ktg7fi801&jk=2d5c36e5c01c7fea&dest=%2Fjobs%3Fq%3Dai%2Bengineer%26nl%3D%26grpKey%3DoAEB8gcFdG5mZWy4D9GmxT2qEBkKCW5vcm10aXRsZRoMYWkgZGV2ZWxvcGVy
+      - button "Save job Toggle" [e74]
+    - listitem [e75]:
+      - heading "full details of AI Engineer" [level=3]:
+        - button "full details of AI Engineer" [e76]: AI Engineer
+      - text: NewAge Products Inc Remote in United States
+      - button "Save job Toggle" [e77]
+    - listitem [e78]:
+      - heading "full details of AI Engineer" [level=3]:
+        - button "full details of AI Engineer" [e79]: AI Engineer
+      - text: VueData Kirkland, WA 98034
+      - button "Save job Toggle" [e80]
+    - listitem [e81]
+  - navigation "pagination":
+    - list:
+      - listitem [e82]:
+        - link "1" [e83]:
+          - /url: "#"
+      - listitem [e84]:
+        - link "2" [e85]:
+          - /url: /jobs?q=ai+engineer&start=10
+      - listitem [e86]:
+        - link "3" [e87]:
+          - /url: /jobs?q=ai+engineer&start=20
+      - listitem [e88]:
+        - link "4" [e89]:
+          - /url: /jobs?q=ai+engineer&start=30
+      - listitem [e90]:
+        - link "5" [e91]:
+          - /url: /jobs?q=ai+engineer&start=40
+      - listitem [e92]:
+        - link "Next Page" [e93]:
+          - /url: /jobs?q=ai+engineer&start=10
+  - heading "People also searched:" [level=3]
+  - list:
+    - listitem [e94]:
+      - link "artificial intelligence engineer" [e95]:
+        - /url: /q-artificial-intelligence-engineer-jobs.html
+    - listitem [e96]:
+      - link "ai engineer entry" [e97]:
+        - /url: /q-ai-engineer-entry-jobs.html
+    - listitem [e98]:
+      - link "firmware engineer" [e99]:
+        - /url: /q-firmware-engineer-jobs.html
+    - listitem [e100]:
+      - link "artificial intelligence" [e101]:
+        - /url: /q-artificial-intelligence-jobs.html
+    - listitem [e102]:
+      - link "machine learning engineer" [e103]:
+        - /url: /q-machine-learning-engineer-jobs.html
+    - listitem [e104]:
+      - link "software qa engineer" [e105]:
+        - /url: /q-software-qa-engineer-jobs.html
+    - listitem [e106]:
+      - link "data scientist" [e107]:
+        - /url: /q-data-scientist-jobs.html
+    - listitem [e108]:
+      - link "software engineer" [e109]:
+        - /url: /q-software-engineer-jobs.html
+    - listitem [e110]:
+      - link "iot engineer" [e111]:
+        - /url: /q-iot-engineer-jobs.html
+    - listitem [e112]:
+      - link "aws engineer" [e113]:
+        - /url: /q-aws-engineer-jobs.html
+  - heading "Resume Resources:" [level=2]
+  - list:
+    - listitem [e114]:
+      - link "Resume Samples" [e115]:
+        - /url: https://www.indeed.com/career-advice/resume-samples?from=jobsearch_footer
+    - listitem [e116]:
+      - link "Resume Templates" [e117]:
+        - /url: https://www.indeed.com/profile/resume-templates?from=jobsearch_footer
+  - heading "Career Resources:" [level=2]
+  - list:
+    - listitem [e118]:
+      - link "Career Explorer" [e119]:
+        - /url: /career/salaries?from=jobsearch_footer
+    - listitem [e120]:
+      - link "Explore High Paying Jobs" [e121]:
+        - /url: /explorer/
+  - heading "Employer Resources:" [level=2]
+  - list:
+    - listitem [e122]:
+      - link "How to Write a Job Description" [e123]:
+        - /url: /hire/how-to-write-a-job-description?from=jobsearch_footer
+    - listitem [e124]:
+      - link "How to Hire Employees" [e125]:
+        - /url: /hire/how-to-hire?from=jobsearch_footer
+  - region "Job Post Details":
+    - button "Return to Search Result" [e126]
+    - heading "Job Post Details" [level=2]
+    - heading "Remote Machine Learning Engineer" [level=5]
+    - link "Spotter (opens in a new tab)" [e127]:
+      - /url: https://www.indeed.com/cmp/Spotter?campaignid=mobvjcmp&from=mobviewjob&tk=1k7np325cg7fi800&fromjk=292fa722a14a2e2d
+      - text: Spotter
+    - text: · 4.3 Lemont, IL • Remote
+    - link "Apply with Indeed" [e128]:
+      - /url: https://smartapply.indeed.com/beta/indeedapply/applybyapplyablejobid?indeedApplyableJobId=017bc269-ec4f-44e3-810f-df3177d973cf-Y21o&iaUid=1k7np326ig6mg801&pingbackUrl=https%3A%2F%2Fgdc.indeed.com%2Fconv%2ForgIndApp%3Fco%3DUS%26vjtk%3D1k7np325cg7fi800%26jk%3D292fa722a14a2e2d%26mvj%3D0%26asub%3Dmob-norsvp-noapply%26tk%3D1k7np31ktg7fi801%26trk.origin%3Djobsearch%26vjfrom%3Dtp-semfirstjob%26xkcb%3DSoC067M2c36DmCSRAZ0LbzkdCdPP%26astse%3D116971ba5799a796%26assa%3D4936&spn=0
+    - button "Save job" [e129]
+    - button "Share job" [e130]
+    - heading "Job details" [level=4]
+    - text: Pay information not provided Remote in Lemont, IL
+    - heading "Full job description" [level=4]
+    - paragraph: We're looking for a Machine Learning Engineer to help build and improve AI-powered products. You'll work with large datasets, train and evaluate machine learning models, and collaborate with software engineers to bring models into production.
+    - paragraph: This is a great opportunity for someone who enjoys solving practical problems with machine learning and wants to work on real-world AI applications.
+    - paragraph
+    - heading "What you'll do" [level=3]
+    - list:
+      - listitem [e131]:
+        - paragraph: Develop, train, and evaluate machine learning models.
+      - listitem [e132]:
+        - paragraph: Prepare and analyze datasets for model training.
+      - listitem [e133]:
+        - paragraph: Improve model performance through experimentation and testing.
+      - listitem [e134]:
+        - paragraph: Deploy and maintain ML models in production environments.
+      - listitem [e135]:
+        - paragraph: Collaborate with software engineers to integrate ML solutions into products.
+      - listitem [e136]:
+        - paragraph: Monitor model performance and continuously improve accuracy.
+      - listitem [e137]:
+        - paragraph: Stay up to date with new machine learning techniques and technologies.
+    - paragraph
+    - heading "What we're looking for" [level=3]
+    - list:
+      - listitem [e138]:
+        - paragraph: Basic understanding of machine learning concepts and algorithms.
+      - listitem [e139]:
+        - paragraph: Experience with Python.
+      - listitem [e140]:
+        - paragraph: Familiarity with machine learning libraries such as PyTorch, TensorFlow, or scikit-learn.
+      - listitem [e141]:
+        - paragraph: Comfortable working with data and writing clean, maintainable code.
+      - listitem [e142]:
+        - paragraph: Familiarity with Git.
+      - listitem [e143]:
+        - paragraph: Good problem-solving skills.
+      - listitem [e144]:
+        - paragraph: Strong written and verbal English communication.
+    - paragraph
+    - heading "Nice to have" [level=3]
+    - list:
+      - listitem [e145]:
+        - paragraph: Experience with large language models (LLMs).
+      - listitem [e146]:
+        - paragraph: Experience with cloud platforms such as AWS, GCP, or Azure.
+      - listitem [e147]:
+        - paragraph: Familiarity with SQL.
+      - listitem [e148]:
+        - paragraph: Experience deploying ML models.
+      - listitem [e149]:
+        - paragraph: Personal projects or open-source contributions related to AI or machine learning.
+    - paragraph
+    - heading "Requirements" [level=3]
+    - list:
+      - listitem [e150]:
+        - paragraph: 1+ year of experience in machine learning, software engineering, data science, or a related technical role or strong personal projects demonstrating ML skills.
+      - listitem [e151]:
+        - paragraph: Bachelor's degree in Computer Science, Engineering, Mathematics, or a related field is a plus, but not required.
+      - listitem [e152]:
+        - paragraph: Passion for learning and building AI solutions.
+    - paragraph
+    - heading "What we offer" [level=3]
+    - list:
+      - listitem [e153]:
+        - paragraph: Fully remote work.
+      - listitem [e154]:
+        - paragraph: Flexible working environment.
+      - listitem [e155]:
+        - paragraph: Opportunity to work on real AI products.
+      - listitem [e156]:
+        - paragraph: Challenging technical problems with room to grow.
+      - listitem [e157]:
+        - paragraph: Collaborative and fast-moving team.
+      - listitem [e158]:
+        - paragraph: Competitive compensation based on experience.
+    - button "Company and salary information" [e159]:
+      - heading "Company and salary information" [level=3]
+    - button "Similar job categories" [e160]:
+      - heading "Similar job categories" [level=3]
+    - button "Career Guide articles" [e161]:
+      - heading "Career Guide articles" [level=3]
+    - button "Similar jobs nearby" [e162]:
+      - heading "Similar jobs nearby" [level=3]
+    - button "Report job" [e163]
+    - button "Return to Search Result" [e164]
+  - contentinfo:
+    - list:
+      - listitem [e165]:
+        - link "Hiring Lab" [e166]:
+          - /url: https://www.hiringlab.org
+      - listitem [e167]:
+        - link "Career advice" [e168]:
+          - /url: https://www.indeed.com/career-advice
+      - listitem [e169]:
+        - link "Browse jobs" [e170]:
+          - /url: https://www.indeed.com/browsejobs
+      - listitem [e171]:
+        - link "Browse companies" [e172]:
+          - /url: https://www.indeed.com/companies/browse-companies
+      - listitem [e173]:
+        - link "Salaries" [e174]:
+          - /url: https://www.indeed.com/career/salaries
+      - listitem [e175]:
+        - link "Indeed Events" [e176]:
+          - /url: https://www.indeedevents.com/
+      - listitem [e177]:
+        - link "Work at Indeed" [e178]:
+          - /url: https://www.indeed.com/cmp/Indeed/about
+      - listitem [e179]:
+        - link "Countries" [e180]:
+          - /url: https://www.indeed.com/countries
+      - listitem [e181]:
+        - link "About" [e182]:
+          - /url: https://www.indeed.com/about
+      - listitem [e183]:
+        - link "Help" [e184]:
+          - /url: https://www.indeed.com/help/job-seekers?hl=en&co=us
+      - listitem [e185]:
+        - link "ESG at Indeed" [e186]:
+          - /url: https://www.indeed.com/esg?from=gnav-jobsearch--indeedmobile
+      - listitem [e187]:
+        - link "Download app" [e188]:
+          - /url: https://go.indeed.com/ATE33D
+    - list:
+      - listitem [e189]: © 2026 Indeed
+      - listitem [e190]:
+        - link "Your Privacy Choices" [e191]:
+          - /url: https://www.indeed.com/legal/ccpa-dns?hl=en
+      - listitem [e192]:
+        - link "Accessibility at Indeed" [e193]:
+          - /url: https://www.indeed.com/esg/accessibility?hl=en
+      - listitem [e194]:
+        - link "Privacy Center and Ad Choices" [e195]:
+          - /url: https://hrtechprivacy.com/brands/indeed#privacypolicy
+      - listitem [e196]:
+        - link "Terms" [e197]:
+          - /url: https://www.indeed.com/legal?hl=en
+    - list:
+      - listitem [e198]
+- text: This site is protected by reCAPTCHA and the Google
+- link "Privacy Policy" [e199]:
+  - /url: https://policies.google.com/privacy
+- text: and
+- link "Terms of Service" [e200]:
+  - /url: https://policies.google.com/terms
+- text: apply.
+-- {"url": "https://www.indeed.com/jobs?q=ai+engineer&vjk=292fa722a14a2e2d", "totalChars": 17598}

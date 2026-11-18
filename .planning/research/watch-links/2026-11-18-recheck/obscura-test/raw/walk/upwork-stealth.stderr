@@ -1,0 +1,164 @@
+[2m2026-11-18T16:41:32.191977Z[0m [33m WARN[0m [2musvg::parser::style[0m[2m:[0m Failed to parse fill value: 'var(--color-logo, black)'. Fallback to black.
+[2m2026-11-18T16:41:32.192004Z[0m [33m WARN[0m [2musvg::parser::style[0m[2m:[0m Failed to parse fill value: 'var(--color-logo, black)'. Fallback to black.
+[2m2026-11-18T16:41:32.192014Z[0m [33m WARN[0m [2musvg::parser::style[0m[2m:[0m Failed to parse fill value: 'var(--color-logo, black)'. Fallback to black.
+[2m2026-11-18T16:41:32.444973Z[0m [33m WARN[0m [2musvg::parser::style[0m[2m:[0m Failed to parse fill value: 'var(--color-logo, black)'. Fallback to black.
+[2m2026-11-18T16:41:32.444987Z[0m [33m WARN[0m [2musvg::parser::style[0m[2m:[0m Failed to parse fill value: 'var(--color-logo, black)'. Fallback to black.
+[2m2026-11-18T16:41:32.444994Z[0m [33m WARN[0m [2musvg::parser::style[0m[2m:[0m Failed to parse fill value: 'var(--color-logo, black)'. Fallback to black.
+[2m2026-11-18T16:41:33.113158Z[0m [33m WARN[0m [2musvg::parser::style[0m[2m:[0m Failed to parse fill value: 'var(--color-logo, black)'. Fallback to black.
+[2m2026-11-18T16:41:33.113179Z[0m [33m WARN[0m [2musvg::parser::style[0m[2m:[0m Failed to parse fill value: 'var(--color-logo, black)'. Fallback to black.
+[2m2026-11-18T16:41:33.113188Z[0m [33m WARN[0m [2musvg::parser::style[0m[2m:[0m Failed to parse fill value: 'var(--color-logo, black)'. Fallback to black.
+[2m2026-11-18T16:41:33.156323Z[0m [33m WARN[0m [2musvg::parser::style[0m[2m:[0m Failed to parse fill value: 'var(--color-logo, black)'. Fallback to black.
+[2m2026-11-18T16:41:33.156348Z[0m [33m WARN[0m [2musvg::parser::style[0m[2m:[0m Failed to parse fill value: 'var(--color-logo, black)'. Fallback to black.
+[2m2026-11-18T16:41:33.156355Z[0m [33m WARN[0m [2musvg::parser::style[0m[2m:[0m Failed to parse fill value: 'var(--color-logo, black)'. Fallback to black.
+[2m2026-11-18T16:41:33.172309Z[0m [33m WARN[0m [2musvg::parser::style[0m[2m:[0m Failed to parse fill value: 'var(--color-logo, black)'. Fallback to black.
+[2m2026-11-18T16:41:33.172323Z[0m [33m WARN[0m [2musvg::parser::style[0m[2m:[0m Failed to parse fill value: 'var(--color-logo, black)'. Fallback to black.
+[2m2026-11-18T16:41:33.172330Z[0m [33m WARN[0m [2musvg::parser::style[0m[2m:[0m Failed to parse fill value: 'var(--color-logo, black)'. Fallback to black.
+[2m2026-11-18T16:41:53.825606Z[0m [33m WARN[0m [2mobscura_browser::page[0m[2m:[0m Script error (https://transcend-cdn.com/cm/76b6554e-5f7f-4e24-a8d7-d33804a56e9b/airgap.js): JS error: TypeError: Cannot read properties of undefined (reading 'set')
+    at https://transcend-cdn.com/cm/76b6554e-5f7f-4e24-a8d7-d33804a56e9b/airgap.js:5:7417
+    at https://transcend-cdn.com/cm/76b6554e-5f7f-4e24-a8d7-d33804a56e9b/airgap.js:19:3
+    at https://transcend-cdn.com/cm/76b6554e-5f7f-4e24-a8d7-d33804a56e9b/airgap.js:20:3
+[2m2026-11-18T16:41:55.771590Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m Failed to load messages for locale "en-us" FetchError: [GET] "/static/assets/UniversalSearchNuxt/_i18n/c78a77f8/en-us/messages.json": 403 
+    at async i (https://www.upwork.com/static/assets/UniversalSearchNuxt/_nuxt/entry.DUMkLBlx.js:5:15127)
+    at async h (https://www.upwork.com/static/assets/UniversalSearchNuxt/_nuxt/entry.DUMkLBlx.js:1248:18421)
+    at async Object.loadMessages (https://www.upwork.com/static/assets/UniversalSearchNuxt/_nuxt/entry.DUMkLBlx.js:1248:19491)
+    at async tA (https://www.upwork.com/static/assets/UniversalSearchNuxt/_nuxt/entry.DUMkLBlx.js:1248:22384)
+    at async setup (https://www.upwork.com/static/assets/UniversalSearchNuxt/_nuxt/entry.DUMkLBlx.js:1250:37431)
+    at async sL (https://www.upwork.com/static/assets/UniversalSearchNuxt/_nuxt/entry.DUMkLBlx.js:5:22218)
+    at async a (https://www.upwork.com/static/assets/UniversalSearchNuxt/_nuxt/entry.DUMkLBlx.js:5:22753)
+    at async https://www.upwork.com/static/assets/UniversalSearchNuxt/_nuxt/entry.DUMkLBlx.js:5:22654
+    at async Promise.all (index 1)
+    at async https://www.upwork.com/static/assets/UniversalSearchNuxt/_nuxt/entry.DUMkLBlx.js:5:22563
+[2m2026-11-18T16:41:55.782538Z[0m [31mERROR[0m [2mobscura::console[0m[2m:[0m Dynamic script fetch error: HTTP 0
+[2m2026-11-18T16:41:55.904324Z[0m [31mERROR[0m [2mobscura::console[0m[2m:[0m Dynamic script fetch error: HTTP 0
+[2m2026-11-18T16:41:57.926547Z[0m [31mERROR[0m [2mobscura::console[0m[2m:[0m Dynamic script fetch error: HTTP 0
+[2m2026-11-18T16:47:14.130129Z[0m [33m WARN[0m [2musvg::parser::style[0m[2m:[0m Failed to parse fill value: 'var(--color-logo, black)'. Fallback to black.
+[2m2026-11-18T16:47:14.130146Z[0m [33m WARN[0m [2musvg::parser::style[0m[2m:[0m Failed to parse fill value: 'var(--color-logo, black)'. Fallback to black.
+[2m2026-11-18T16:47:14.130153Z[0m [33m WARN[0m [2musvg::parser::style[0m[2m:[0m Failed to parse fill value: 'var(--color-logo, black)'. Fallback to black.
+[2m2026-11-18T16:47:14.349582Z[0m [33m WARN[0m [2musvg::parser::style[0m[2m:[0m Failed to parse fill value: 'var(--color-logo, black)'. Fallback to black.
+[2m2026-11-18T16:47:14.349597Z[0m [33m WARN[0m [2musvg::parser::style[0m[2m:[0m Failed to parse fill value: 'var(--color-logo, black)'. Fallback to black.
+[2m2026-11-18T16:47:14.349603Z[0m [33m WARN[0m [2musvg::parser::style[0m[2m:[0m Failed to parse fill value: 'var(--color-logo, black)'. Fallback to black.
+[2m2026-11-18T16:47:14.879097Z[0m [33m WARN[0m [2musvg::parser::style[0m[2m:[0m Failed to parse fill value: 'var(--color-logo, black)'. Fallback to black.
+[2m2026-11-18T16:47:14.879112Z[0m [33m WARN[0m [2musvg::parser::style[0m[2m:[0m Failed to parse fill value: 'var(--color-logo, black)'. Fallback to black.
+[2m2026-11-18T16:47:14.879120Z[0m [33m WARN[0m [2musvg::parser::style[0m[2m:[0m Failed to parse fill value: 'var(--color-logo, black)'. Fallback to black.
+[2m2026-11-18T16:47:14.917932Z[0m [33m WARN[0m [2musvg::parser::style[0m[2m:[0m Failed to parse fill value: 'var(--color-logo, black)'. Fallback to black.
+[2m2026-11-18T16:47:14.917946Z[0m [33m WARN[0m [2musvg::parser::style[0m[2m:[0m Failed to parse fill value: 'var(--color-logo, black)'. Fallback to black.
+[2m2026-11-18T16:47:14.917953Z[0m [33m WARN[0m [2musvg::parser::style[0m[2m:[0m Failed to parse fill value: 'var(--color-logo, black)'. Fallback to black.
+[2m2026-11-18T16:47:14.934132Z[0m [33m WARN[0m [2musvg::parser::style[0m[2m:[0m Failed to parse fill value: 'var(--color-logo, black)'. Fallback to black.
+[2m2026-11-18T16:47:14.934146Z[0m [33m WARN[0m [2musvg::parser::style[0m[2m:[0m Failed to parse fill value: 'var(--color-logo, black)'. Fallback to black.
+[2m2026-11-18T16:47:14.934154Z[0m [33m WARN[0m [2musvg::parser::style[0m[2m:[0m Failed to parse fill value: 'var(--color-logo, black)'. Fallback to black.
+[2m2026-11-18T16:47:38.174102Z[0m [33m WARN[0m [2mobscura_browser::page[0m[2m:[0m Script error (https://transcend-cdn.com/cm/76b6554e-5f7f-4e24-a8d7-d33804a56e9b/airgap.js): JS error: TypeError: Cannot read properties of undefined (reading 'set')
+    at https://transcend-cdn.com/cm/76b6554e-5f7f-4e24-a8d7-d33804a56e9b/airgap.js:5:7417
+    at https://transcend-cdn.com/cm/76b6554e-5f7f-4e24-a8d7-d33804a56e9b/airgap.js:19:3
+    at https://transcend-cdn.com/cm/76b6554e-5f7f-4e24-a8d7-d33804a56e9b/airgap.js:20:3
+[2m2026-11-18T16:47:39.418757Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m Failed to load messages for locale "en-us" FetchError: [GET] "https://www.upwork.com/static/assets/SeoPagesNuxt/_i18n/b52bafa4/en-us/messages.json": 403 
+    at async o (https://www.upwork.com/static/assets/SeoPagesNuxt/_nuxt/virtual_nuxt_.nuxt_router.options.DBn66sET.js:1:6969)
+    at async y (https://www.upwork.com/static/assets/SeoPagesNuxt/_nuxt/entry.D0zf0cpH.js:83:16173)
+    at async Object.loadMessages (https://www.upwork.com/static/assets/SeoPagesNuxt/_nuxt/entry.D0zf0cpH.js:83:17303)
+    at async bf (https://www.upwork.com/static/assets/SeoPagesNuxt/_nuxt/entry.D0zf0cpH.js:83:20453)
+    at async setup (https://www.upwork.com/static/assets/SeoPagesNuxt/_nuxt/entry.D0zf0cpH.js:83:20783)
+    at async ye (https://www.upwork.com/static/assets/SeoPagesNuxt/_nuxt/head.CTr7CqM2.js:27:1781)
+    at async s (https://www.upwork.com/static/assets/SeoPagesNuxt/_nuxt/head.CTr7CqM2.js:27:2339)
+    at async https://www.upwork.com/static/assets/SeoPagesNuxt/_nuxt/head.CTr7CqM2.js:27:2240
+    at async Promise.all (index 0)
+    at async https://www.upwork.com/static/assets/SeoPagesNuxt/_nuxt/head.CTr7CqM2.js:27:2149
+[2m2026-11-18T16:47:39.644222Z[0m [31mERROR[0m [2mobscura::console[0m[2m:[0m Dynamic script fetch error: HTTP 0
+[2m2026-11-18T16:47:39.747705Z[0m [31mERROR[0m [2mobscura::console[0m[2m:[0m Dynamic script fetch error: HTTP 0
+[2m2026-11-18T16:47:41.104285Z[0m [31mERROR[0m [2mobscura::console[0m[2m:[0m Dynamic script fetch error: HTTP 0
+[2m2026-11-18T16:47:41.753564Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m {"message":"failed to fetch url: https://www.upwork.com/api/graphql/v1?alias=deviceTrustIngestionProd-ff, body: *** hidden ***, status: 403, requestAlias: deviceTrustIngestionProd-ff","shortMessage":"failed to fetch url: https://www.upwork.com/api/graphql/v1","responseStatus":403,"handler":"httpErrors","eventOrigin":"gql_api","tags":{"httpStatus":403,"parentTraceId":null,"requestAlias":"deviceTrustIngestionProd-ff"},"isSentryHandled":false}
+[2m2026-11-18T16:47:41.755116Z[0m [31mERROR[0m [2mobscura::console[0m[2m:[0m ff deviceTrustIngestionProd load failed, using fallback value 'false'
+failed fetch ff. Reason: response status 403. Error message: <!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js ie6 oldie" lang="en-US"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js ie7 oldie" lang="en-US"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js ie8 oldie" lang="en-US"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en-US"> <!--<![endif]-->
+<head>
+<title>Attention Required! | Cloudflare</title>
+<meta charset="UTF-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+<meta name="robots" content="noindex, nofollow" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<link rel="stylesheet" id="cf_styles-css" href="/cdn-cgi/styles/cf.errors.css" />
+<!--[if lt IE 9]><link rel="stylesheet" id='cf_styles-ie-css' href="/cdn-cgi/styles/cf.errors.ie.css" /><![endif]-->
+<style>body{margin:0;padding:0}</style>
+
+
+<!--[if gte IE 10]><!-->
+<script>
+  if (!navigator.cookieEnabled) {
+    window.addEventListener('DOMContentLoaded', function () {
+      var cookieEl = document.getElementById('cookie-alert');
+      cookieEl.style.display = 'block';
+    })
+  }
+</script>
+<!--<![endif]-->
+
+</head>
+<body>
+  <div id="cf-wrapper">
+    <div class="cf-alert cf-alert-error cf-cookie-error" id="cookie-alert" data-translate="enable_cookies">Please enable cookies.</div>
+    <div id="cf-error-details" class="cf-error-details-wrapper">
+      <div class="cf-wrapper cf-header cf-error-overview">
+        <h1 data-translate="block_headline">Sorry, you have been blocked</h1>
+        <h2 class="cf-subheadline"><span data-translate="unable_to_access">You are unable to access</span> upwork.com</h2>
+      </div><!-- /.header -->
+
+      <div class="cf-section cf-highlight">
+        <div class="cf-wrapper">
+          <div class="cf-screenshot-container cf-screenshot-full">
+            
+              <span class="cf-no-screenshot error"></span>
+            
+          </div>
+        </div>
+      </div><!-- /.captcha-container -->
+
+      <div class="cf-section cf-wrapper">
+        <div class="cf-columns two">
+          <div class="cf-column">
+            <h2 data-translate="blocked_why_headline">Why have I been blocked?</h2>
+
+            <p data-translate="blocked_why_detail">This website is using a security service to protect itself from online attacks. The action you just performed triggered the security solution. There are several actions that could trigger this block including submitting a certain word or phrase, a SQL command or malformed data.</p>
+          </div>
+
+          <div class="cf-column">
+            <h2 data-translate="blocked_resolve_headline">What can I do to resolve this?</h2>
+
+            <p data-translate="blocked_resolve_detail">You can email the site owner to let them know you were blocked. Please include what you were doing when this page came up and the Cloudflare Ray ID found at the bottom of this page.</p>
+          </div>
+        </div>
+      </div><!-- /.section -->
+
+      <div class="cf-error-footer cf-wrapper w-240 lg:w-full py-10 sm:py-4 sm:px-8 mx-auto text-center sm:text-left border-solid border-0 border-t border-gray-300">
+    <p class="text-13">
+      <span class="cf-footer-item sm:block sm:mb-1">Cloudflare Ray ID: <strong class="font-semibold">a5c8755cee6c68a5</strong></span>
+      <span class="cf-footer-separator sm:hidden">&bull;</span>
+      <span id="cf-footer-item-ip" class="cf-footer-item hidden sm:block sm:mb-1">
+        Your IP:
+        <button type="button" id="cf-footer-ip-reveal" class="cf-footer-ip-reveal-btn">Click to reveal</button>
+        <span class="hidden" id="cf-footer-ip">217.230.29.164</span>
+        <span class="cf-footer-separator sm:hidden">&bull;</span>
+      </span>
+      <span class="cf-footer-item sm:block sm:mb-1"><span>Performance &amp; security by</span> <a rel="noopener noreferrer" href="https://www.cloudflare.com/5xx-error-landing" id="brand_link" target="_blank">Cloudflare</a></span>
+      
+    </p>
+    <script>(function(){function d(){var b=a.getElementById("cf-footer-item-ip"),c=a.getElementById("cf-footer-ip-reveal");b&&"classList"in b&&(b.classList.remove("hidden"),c.addEventListener("click",function(){c.classList.add("hidden");a.getElementById("cf-footer-ip").classList.remove("hidden")}))}var a=document;document.addEventListener&&a.addEventListener("DOMContentLoaded",d)})();</script>
+  </div><!-- /.error-footer -->
+
+    </div><!-- /#cf-error-details -->
+  </div><!-- /#cf-wrapper -->
+
+  <script>
+    window._cf_translation = {};
+    
+    
+  </script>
+<script>window.__CF$cv$params={r:'a5c8755cee6c68a5',t:'MTc5NTAyMDQ2MQ==',u:'01a1ef8e83a17207ae22f3304e112437',ut:'WqCueRcWchRRM2qvhBpcW7bdKr0vdRViCDu5A.Eqt2o-1795020461-1.2.1.1-kCRF6jELSIEFcAxRrZe.F3L2X5DIVWGQwLPpehBhHFvcKRQBHC8nuCw1wBo14fKnutuRnvlR7_W6MSrDAWo.JDp8gmwESaMv9vFCZDlEWO4',i:60};(function(){if(!document.body)return;var l=window.location,o;try{o=new URL(l.origin).origin}catch(e){try{o=new URL(new URL(l.href).origin).origin}catch(e){o=''}}var u='/cdn-cgi/challenge-platform/scripts/precursor/main.js?ray=a5c8755cee6c68a5',s=document.createElement('script');s.src=o?new URL(u,o).href:u;document.head.appendChild(s);})();</script></body>
+</html>
+[2m2026-11-18T16:47:42.535299Z[0m [31mERROR[0m [2mobscura::console[0m[2m:[0m Snowplow: Status 403, will not retry.
+
+[2m2026-11-18T16:47:43.339482Z[0m [31mERROR[0m [2mobscura::console[0m[2m:[0m Worker error: Cannot read properties of undefined (reading 'utils')
+[2m2026-11-18T16:47:45.723062Z[0m [31mERROR[0m [2mobscura::console[0m[2m:[0m Snowplow: Status 403, will not retry.
+
+[2m2026-11-18T16:47:46.353897Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m [GSI_LOGGER]: Your client application uses one of the Google One Tap prompt UI status methods that may stop functioning when FedCM becomes mandatory. Refer to the migration guide to update your code accordingly and opt-in to FedCM to test your changes. Learn more: https://developers.google.com/identity/gsi/web/guides/fedcm-migration?s=dc#display_moment and https://developers.google.com/identity/gsi/web/guides/fedcm-migration?s=dc#skipped_moment

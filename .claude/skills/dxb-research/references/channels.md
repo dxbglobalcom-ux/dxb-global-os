@@ -44,7 +44,7 @@ Without the Tavily header the same endpoint returns **401** — a keyless claim 
 believed. None of the five publishes its rate limit and none owes us anything; that is why
 there are five and why every one has a fallback chain in `config/registry.yaml`.
 
-## The reading chain — thirteen doors, and a page is unread only when all thirteen fail
+## The reading chain — fourteen doors, and a page is unread only when all fourteen fail
 
 ```bash
 python3 scripts/fetch.py <url>                        # shows every door it tried
@@ -52,7 +52,7 @@ python3 scripts/fetch.py --batch urls.txt --outdir D  # in parallel, writes FETC
 ```
 
 **the video's own subtitles** (`yt-dlp --write-auto-subs`, else `agent-reach transcribe`) →
-**the PDF's text** (`pdftotext -layout`) → `scrapling` → `scrapling stealthy-fetch` →
+**the PDF's text** (`pdftotext -layout`) → `scrapling` → **obscura** (a small headless browser of its own that runs the page's JavaScript in seconds and gives way at Cloudflare; added 2026-11-18) → `scrapling stealthy-fetch` →
 **the platform's own reader** (`opencli reddit read`,
 `hackernews read`, `twitter read`, `v2ex`, `youtube`, `zhihu`, `stackoverflow`) →
 **his own signed-in browser** (`opencli browser`, his Chrome session) → `tavily_extract` →

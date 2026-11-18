@@ -1,0 +1,4 @@
+{"step": "1-inner", "how": "navigate", "secs": 18.7, "url": "https://www.scrapingcourse.com/cloudflare-challenge", "title": "Just a moment...", "chars": 270, "headings": ["www.scrapingcourse.com", "Performing security verification", "Verification successful. Waiting for www.scrapingcourse.com to respond"], "nlinks": 2, "wall": "Just a moment", "text_head": "www.scrapingcourse.com Performing securi
+{"step": "2-deeper", "error": "no matching link on the page", "t_total": 22.7}
+{"step": "3-deeper", "error": "no matching link on the page", "t_total": 26.7}
+{"step": "4-deeper", "error": "no matching link on the page", "t_total": 30.7}

@@ -1,0 +1,5 @@
+{"step": "1-inner", "how": "navigate", "secs": 3.5, "url": "https://apnews.com/hub/technology", "title": "Just a moment...", "chars": 258, "headings": ["apnews.com", "Performing security verification", "Verification successful. Waiting for apnews.com to respond"], "nlinks": 2, "wall": "Just a moment", "text_head": "apnews.com Performing security verification This website uses a security service to
+{"step": "2-deeper", "error": "no matching link on the page", "t_total": 7.5}
+{"step": "3-deeper", "error": "no matching link on the page", "t_total": 11.5}
+{"step": "4-deeper", "error": "no matching link on the page", "t_total": 15.5}
+{"step": "5-search", "how": "search by URL query", "secs": 14.7, "url": "https://apnews.com/search?q=artificial+intelligence", "title": "AP News Search | AP News", "chars": 4441, "headings": [], "nlinks": 1415, "wall": null, "text_head": "Enable accessibility Menu World U.S. Politics Sports Entertainment Business Science MORE Sign in Show Search Donate Mullin testifies Iran strikes Peltola wins in

@@ -1,0 +1,903 @@
+- link "Crunchbase" [e1]:
+  - /url: /
+  - img
+- button "Crunchbase Scout" [e2]:
+  - img
+- button "Resources" [e3]:
+  - text: Resources
+  - img
+- button "Advanced Search" [e4]:
+  - text: Advanced Search
+  - img
+- link "Start Free Trial" [e5]:
+  - /url: /buy/select-product
+- button "Talk With Sales" [e6]
+- link "Pricing" [e7]:
+  - /url: /buy/select-product
+- link "Log In" [e8]:
+  - /url: /login?redirect_to=%2Forganization%2Fanthropic
+- img "Anthropic Logo"
+- text: Anthropic Growth Score 89
+- img
+- text: CB Rank 40
+- img
+- text: Heat Score 92
+- img
+- button "Save" [e9]:
+  - img
+  - text: Save
+- button "Actions" [e10]:
+  - text: Actions
+  - img
+- text: Anthropic is an artificial intelligence company that develops large language models and AI systems for business and research use.
+- img
+- text: Founded obfuscation
+- img
+- text: Private
+- img
+- text: Debt Financing
+- img
+- link "San Francisco" [e11]:
+  - /url: /discover/organizations/field/organization/location_identifiers/san-francisco-california
+- text: ","
+- link "California" [e12]:
+  - /url: /discover/organizations/field/organization/location_identifiers/california-united-states
+- text: ","
+- link "United States" [e13]:
+  - /url: /discover/organizations/field/organization/location_identifiers/united-states
+- img
+- link "501-1000" [e14]:
+  - /url: /discover/people/field/organization/num_employees_enum/anthropic
+- img
+- link "www.anthropic.com" [e15]:
+  - /url: https://www.anthropic.com
+- link "View on Facebook" [e16]:
+  - /url: https://www.facebook.com/AnthropicAI
+  - img
+- link "View on LinkedIn" [e17]:
+  - /url: https://www.linkedin.com/company/anthropicresearch
+  - img
+- link "Agentic AI" [e18]:
+  - /url: /discover/organizations/field/organization/categories/agentic-ai-17fa
+- link "Artificial Intelligence (AI)" [e19]:
+  - /url: /discover/organizations/field/organization/categories/artificial-intelligence
+- link "Foundational AI" [e20]:
+  - /url: /discover/organizations/field/organization/categories/foundational-ai
+- link "Generative AI" [e21]:
+  - /url: /discover/organizations/field/organization/categories/generative-ai
+- link "Information Technology" [e22]:
+  - /url: /discover/organizations/field/organization/categories/information-technology-dbca
+- link "Machine Learning" [e23]:
+  - /url: /discover/organizations/field/organization/categories/machine-learning
+- link "Product Research" [e24]:
+  - /url: /discover/organizations/field/organization/categories/product-research
+- navigation:
+  - list:
+    - listitem [e25]:
+      - link "Overview" [e26]:
+        - /url: /organization/anthropic#overview
+    - listitem [e27]:
+      - link "Predictions & Insights" [e28]:
+        - /url: /organization/anthropic#predictions_and_insights
+        - img
+        - text: Predictions & Insights
+      - link "Growth Outlook" [e29]:
+        - /url: /organization/anthropic/growth_outlook
+    - listitem [e30]:
+      - link "Financials" [e31]:
+        - /url: /organization/anthropic#financials
+        - img
+        - text: Financials
+      - link "Financial Details" [e32]:
+        - /url: /organization/anthropic/financial_details
+    - listitem [e33]:
+      - link "Valuation New" [e34]:
+        - /url: /organization/anthropic#valuation
+    - listitem [e35]:
+      - link "Market Intelligence" [e36]:
+        - /url: /organization/anthropic#market_intelligence
+    - listitem [e37]:
+      - link "People" [e38]:
+        - /url: /organization/anthropic#people
+        - img
+        - text: People
+      - link "Profiles & Contacts" [e39]:
+        - /url: /organization/anthropic/profiles_and_contacts
+    - listitem [e40]:
+      - link "News" [e41]:
+        - /url: /organization/anthropic#news
+        - img
+        - text: News
+      - link "News & Analysis" [e42]:
+        - /url: /organization/anthropic/news_and_analysis
+    - listitem [e43]:
+      - link "Technology" [e44]:
+        - /url: /organization/anthropic#technology
+        - img
+        - text: Technology
+      - link "Tech Details" [e45]:
+        - /url: /organization/anthropic/tech_details
+    - listitem [e46]:
+      - link "Lists Featuring This Company" [e47]:
+        - /url: /organization/anthropic#recommended_searches
+    - listitem [e48]:
+      - link "Sub-Organizations" [e49]:
+        - /url: /organization/anthropic#sub_organizations
+    - listitem [e50]:
+      - link "Frequently Asked Questions" [e51]:
+        - /url: /organization/anthropic#faq
+- text: Overview Unlock best-in-class private company insights with Crunchbase Pro
+- list:
+  - listitem [e52]:
+    - img
+    - text: Get real-time funding and financial data
+  - listitem [e53]:
+    - img
+    - text: Export up to 2K accounts/month
+  - listitem [e54]:
+    - img
+    - text: Search 6M+ private companies
+- button "Try Pro Free" [e55]
+- text: Total Funding obfuscation obfuscation Debt Financing raised obfuscation Growth Score
+- img
+- img
+- text: "89"
+- img
+- text: "-10 pts in past quarter Heat Score"
+- img
+- img
+- text: "92"
+- img
+- text: 5 pts in past quarter
+- heading "Company Performance Metrics" [level=2]
+- radiogroup:
+  - radio "3M" [e56] [checked]
+  - img
+  - radio "1Y" [e57] [disabled]
+  - img
+  - radio "2Y" [e58] [disabled]
+  - img
+  - radio "5Y" [e59] [disabled]
+  - img
+  - radio "10Y" [e60] [disabled]
+- button "Heat Score" [e61]
+- button "Heat Trend" [e62]
+- button "Growth Score" [e63]
+- button "Growth Trend" [e64]
+- text: Score
+- button "About These Metrics" [e65]:
+  - img
+  - text: About These Metrics
+- heading "Funding Rounds" [level=2]
+- text: Debt Financing OBF in obfuscation Series H OBF in obfuscation Series H OBF in obfuscation
+- link "View all 10 rounds" [e66]:
+  - /url: /organization/anthropic#company_funding
+  - text: View all 10 rounds
+  - img
+- heading "Key People" [level=2]
+- list:
+  - listitem [e67]:
+    - img "Photo of Dario Amodei"
+    - link "Dario Amodei:" [e68]:
+      - /url: /person/dario-amodei
+    - text: "Co-Founder and CEO Past Role: OpenAI, Vice President of Research"
+  - listitem [e69]:
+    - img "Photo of Daniela Amodei"
+    - link "Daniela Amodei:" [e70]:
+      - /url: /person/daniela-amodei-d7d3
+    - text: "Co-Founder and President Past Role: OpenAI, VP, Safety and Policy"
+- heading "Details" [level=2]
+- text: Legal Name Anthropic PBC Operating Status Active Number of Exits obfuscation Company Type For-profit Founders
+- link "Benjamin Mann" [e71]:
+  - /url: /person/benjamin-mann-3572
+- text: ","
+- link "Christopher Olah" [e72]:
+  - /url: /person/christopher-olah-38fd
+- text: ","
+- link "Daniela Amodei" [e73]:
+  - /url: /person/daniela-amodei-d7d3
+- text: ","
+- link "Dario Amodei" [e74]:
+  - /url: /person/dario-amodei
+- text: ","
+- link "Jack Clark" [e75]:
+  - /url: /person/jack-clark
+- text: ","
+- link "Jared Kaplan" [e76]:
+  - /url: /person/jared-kaplan-d9da
+- text: ","
+- link "Sam McCandlish" [e77]:
+  - /url: /person/sam-mccandlish-7e07
+- text: ","
+- link "Tom Brown" [e78]:
+  - /url: /person/tom-brown-096f
+- text: About the Company
+- paragraph: Anthropic develops artificial intelligence tools and research initiatives focused on creating AI systems and models for business and research use. The company produces the Claude family of AI products, including conversational and coding assistants, integrations with productivity applications, and developer APIs that organizations can deploy for...
+- button "Read More" [e79]:
+  - img
+  - text: Read More
+- text: Contact Email support@anthropic.com Hub Tags Unicorn Diversity Spotlight
+- link "Women Founded" [e80]:
+  - /url: /discover/organizations/field/organizations/diversity_spotlights/women-founded
+- link "Women Led" [e81]:
+  - /url: /discover/organizations/field/organizations/diversity_spotlights/women-led
+- text: Predictions & Insights
+- heading "Growth Insight" [level=2]:
+  - text: Growth Insight
+  - img
+- button "Unlock insights" [e82]
+- heading "Understand the momentum. See what drives it." [level=3]
+- paragraph: Explore the financial, customer, and operational signals behind a company's current growth, with supporting factors that help you focus your research.
+- button "Start Free Trial" [e83]
+- heading "Growth Prediction" [level=2]:
+  - text: Growth Prediction
+  - img
+- button "Unlock insights" [e84]
+- heading "Spot growth potential. Prioritize your next move." [level=3]
+- paragraph: Discover companies likely to grow with AI-powered predictions built from more than 90 signals, plus context behind the forecast.
+- button "Start Free Trial" [e85]
+- heading "Products & Services" [level=2]
+- button "Unlock insights" [e86]
+- heading "Know what they sell. Find where you fit." [level=3]
+- paragraph: Explore a company's products and services to assess its market position, identify relevant prospects, and tailor your outreach.
+- button "Start Free Trial" [e87]
+- heading "Research & Development" [level=2]
+- paragraph: Anthropic is
+- text: obfuscated obfuscated obfuscated obfuscated obfuscated obfuscated obfuscated obfuscated obfuscated obfuscated obfuscated obfuscated obfuscated obfuscated obfuscated obfuscated obfuscated ...
+- paragraph
+- button "Explore Insight" [e88]:
+  - text: Explore Insight
+  - img
+- text: Understand the business. Anticipate its next move.
+- list:
+  - listitem [e89]:
+    - img
+    - text: Access current growth and the factors behind it.
+  - listitem [e90]:
+    - img
+    - text: Explore future growth potential with AI-powered predictions.
+  - listitem [e91]:
+    - img
+    - text: Understand company offerings to sharpen research and outreach.
+- button "Start Free Trial" [e92]
+- text: Financials
+- heading "Company Funding" [level=2]
+- tablist:
+  - tab "Funding Rounds" [e93] [selected]
+  - tab "Investors" [e94]
+- tabpanel "Funding Rounds":
+  - text: Total Funding Amount obfuscation Number of Funding Rounds
+  - link "20" [e95]:
+    - /url: /discover/funding_rounds/field/organizations/num_funding_rounds/anthropic
+  - text: Unlock company funding data, including rounds, dates, amounts, and investors. obfuscated
+  - button "Register for Free" [e96]:
+    - img
+    - text: Register for Free
+  - table:
+    - rowgroup:
+      - row "Announced Date Transaction Name Number of Investors Money Raised Lead Investors Funding Type":
+        - columnheader "Announced Date":
+          - img
+          - text: Announced Date
+        - columnheader "Transaction Name"
+        - columnheader "Number of Investors"
+        - columnheader "Money Raised"
+        - columnheader "Lead Investors"
+        - columnheader "Funding Type"
+    - rowgroup:
+      - row "obfuscation Debt Financing - Anthropic 1 obfuscation Broadcom Debt Financing":
+        - cell "obfuscation"
+        - cell "Debt Financing - Anthropic":
+          - link "Debt Financing - Anthropic" [e97]:
+            - /url: /funding_round/anthropic-debt-financing--4a74aab9
+            - img "Debt Financing - Anthropic Logo"
+            - text: Debt Financing - Anthropic
+        - cell "1":
+          - link "1" [e98]:
+            - /url: /discover/principal.investors/field/funding_round.has_funding_round.forward/num_investors/anthropic-debt-financing--4a74aab9
+        - cell "obfuscation"
+        - cell "Broadcom":
+          - link "Broadcom" [e99]:
+            - /url: /organization/broadcom
+        - cell "Debt Financing"
+      - row "obfuscation Debt Financing - Anthropic 1 obfuscation Broadcom Debt Financing":
+        - cell "obfuscation"
+        - cell "Debt Financing - Anthropic":
+          - link "Debt Financing - Anthropic" [e100]:
+            - /url: /funding_round/anthropic-debt-financing--4a74aab9
+            - img "Debt Financing - Anthropic Logo"
+            - text: Debt Financing - Anthropic
+        - cell "1":
+          - link "1" [e101]:
+            - /url: /discover/principal.investors/field/funding_round.has_funding_round.forward/num_investors/anthropic-debt-financing--4a74aab9
+        - cell "obfuscation"
+        - cell "Broadcom":
+          - link "Broadcom" [e102]:
+            - /url: /organization/broadcom
+        - cell "Debt Financing"
+      - row "obfuscation Debt Financing - Anthropic 1 obfuscation Broadcom Debt Financing":
+        - cell "obfuscation"
+        - cell "Debt Financing - Anthropic":
+          - link "Debt Financing - Anthropic" [e103]:
+            - /url: /funding_round/anthropic-debt-financing--4a74aab9
+            - img "Debt Financing - Anthropic Logo"
+            - text: Debt Financing - Anthropic
+        - cell "1":
+          - link "1" [e104]:
+            - /url: /discover/principal.investors/field/funding_round.has_funding_round.forward/num_investors/anthropic-debt-financing--4a74aab9
+        - cell "obfuscation"
+        - cell "Broadcom":
+          - link "Broadcom" [e105]:
+            - /url: /organization/broadcom
+        - cell "Debt Financing"
+      - row "obfuscation Debt Financing - Anthropic 1 obfuscation Broadcom Debt Financing":
+        - cell "obfuscation"
+        - cell "Debt Financing - Anthropic":
+          - link "Debt Financing - Anthropic" [e106]:
+            - /url: /funding_round/anthropic-debt-financing--4a74aab9
+            - img "Debt Financing - Anthropic Logo"
+            - text: Debt Financing - Anthropic
+        - cell "1":
+          - link "1" [e107]:
+            - /url: /discover/principal.investors/field/funding_round.has_funding_round.forward/num_investors/anthropic-debt-financing--4a74aab9
+        - cell "obfuscation"
+        - cell "Broadcom":
+          - link "Broadcom" [e108]:
+            - /url: /organization/broadcom
+        - cell "Debt Financing"
+      - row "obfuscation Debt Financing - Anthropic 1 obfuscation Broadcom Debt Financing":
+        - cell "obfuscation"
+        - cell "Debt Financing - Anthropic":
+          - link "Debt Financing - Anthropic" [e109]:
+            - /url: /funding_round/anthropic-debt-financing--4a74aab9
+            - img "Debt Financing - Anthropic Logo"
+            - text: Debt Financing - Anthropic
+        - cell "1":
+          - link "1" [e110]:
+            - /url: /discover/principal.investors/field/funding_round.has_funding_round.forward/num_investors/anthropic-debt-financing--4a74aab9
+        - cell "obfuscation"
+        - cell "Broadcom":
+          - link "Broadcom" [e111]:
+            - /url: /organization/broadcom
+        - cell "Debt Financing"
+- link "View Financial Details" [e112]:
+  - /url: /organization/anthropic/financial_details
+  - text: View Financial Details
+  - img
+- heading "Investments" [level=2]
+- tablist:
+  - tab "Investment Breakdown" [e113] [selected]
+  - tab "Diversity Investments" [e114]
+  - tab "Acquisitions" [e115]
+- tabpanel "Investment Breakdown":
+  - text: Number of Investments
+  - link "20" [e116]:
+    - /url: /discover/funding_rounds/field/organizations/num_investments/anthropic
+  - text: Number of Exits obfuscation See investment data for this company, with details on deal size, industry, stage, and more. obfuscated
+  - button "Register for Free" [e117]:
+    - img
+    - text: Register for Free
+  - table:
+    - rowgroup:
+      - row "Announced Date Organization Name Lead Investor Funding Round Money Raised":
+        - columnheader "Announced Date":
+          - img
+          - text: Announced Date
+        - columnheader "Organization Name"
+        - columnheader "Lead Investor"
+        - columnheader "Funding Round"
+        - columnheader "Money Raised"
+    - rowgroup:
+      - row "obfuscation phData — Private Equity Round - phData obfuscation":
+        - cell "obfuscation"
+        - cell "phData":
+          - link "phData" [e118]:
+            - /url: /organization/phdata
+            - img "phData Logo"
+            - text: phData
+        - cell "—"
+        - cell "Private Equity Round - phData":
+          - link "Private Equity Round - phData" [e119]:
+            - /url: /funding_round/phdata-private-equity--c5b4506e
+            - img "Private Equity Round - phData Logo"
+            - text: Private Equity Round - phData
+        - cell "obfuscation"
+      - row "obfuscation phData — Private Equity Round - phData obfuscation":
+        - cell "obfuscation"
+        - cell "phData":
+          - link "phData" [e120]:
+            - /url: /organization/phdata
+            - img "phData Logo"
+            - text: phData
+        - cell "—"
+        - cell "Private Equity Round - phData":
+          - link "Private Equity Round - phData" [e121]:
+            - /url: /funding_round/phdata-private-equity--c5b4506e
+            - img "Private Equity Round - phData Logo"
+            - text: Private Equity Round - phData
+        - cell "obfuscation"
+      - row "obfuscation phData — Private Equity Round - phData obfuscation":
+        - cell "obfuscation"
+        - cell "phData":
+          - link "phData" [e122]:
+            - /url: /organization/phdata
+            - img "phData Logo"
+            - text: phData
+        - cell "—"
+        - cell "Private Equity Round - phData":
+          - link "Private Equity Round - phData" [e123]:
+            - /url: /funding_round/phdata-private-equity--c5b4506e
+            - img "Private Equity Round - phData Logo"
+            - text: Private Equity Round - phData
+        - cell "obfuscation"
+      - row "obfuscation phData — Private Equity Round - phData obfuscation":
+        - cell "obfuscation"
+        - cell "phData":
+          - link "phData" [e124]:
+            - /url: /organization/phdata
+            - img "phData Logo"
+            - text: phData
+        - cell "—"
+        - cell "Private Equity Round - phData":
+          - link "Private Equity Round - phData" [e125]:
+            - /url: /funding_round/phdata-private-equity--c5b4506e
+            - img "Private Equity Round - phData Logo"
+            - text: Private Equity Round - phData
+        - cell "obfuscation"
+      - row "obfuscation phData — Private Equity Round - phData obfuscation":
+        - cell "obfuscation"
+        - cell "phData":
+          - link "phData" [e126]:
+            - /url: /organization/phdata
+            - img "phData Logo"
+            - text: phData
+        - cell "—"
+        - cell "Private Equity Round - phData":
+          - link "Private Equity Round - phData" [e127]:
+            - /url: /funding_round/phdata-private-equity--c5b4506e
+            - img "Private Equity Round - phData Logo"
+            - text: Private Equity Round - phData
+        - cell "obfuscation"
+- link "View Financial Details" [e128]:
+  - /url: /organization/anthropic/financial_details
+  - text: View Financial Details
+  - img
+- text: Valuation
+- heading "Valuation Intelligence" [level=2]
+- text: Current Valuation
+- button "Learn more about Current Valuation" [e129]:
+  - img
+- button "$123" [e130]
+- text: Post-Money Valuation
+- button "Learn more about Post-Money Valuation" [e131]:
+  - img
+- button "$123" [e132]
+- text: Track how this company's value is changing
+- list:
+  - listitem [e133]:
+    - img
+    - text: Crunchbase Pro includes current valuation estimates, complete with confidence ranges and the factors influencing each estimate
+- button "Try Pro Free" [e134]
+- link "How valuation estimates work" [e135]:
+  - /url: https://support.crunchbase.com/hc/en-us/articles/50305596457747-Crunchbase-Post-Money-Valuation-Data
+  - text: How valuation estimates work
+  - img
+- text: Market Intelligence Unlock best-in-class Market Intelligence with Crunchbase Pro
+- list:
+  - listitem [e136]:
+    - img
+    - text: Explore Competitors and Market Maps
+  - listitem [e137]:
+    - img
+    - text: Export up to 2K accounts/month
+  - listitem [e138]:
+    - img
+    - text: Search 6M+ private companies
+- button "Try Pro Free" [e139]
+- text: People
+- link "View Profiles & Contacts" [e140]:
+  - /url: /organization/anthropic/profiles_and_contacts
+  - text: View Profiles & Contacts
+  - img
+- text: Headcount
+- link "501-1000" [e141]:
+  - /url: /discover/people/field/organizations/num_employees_enum/anthropic
+- text: Employee Profiles
+- link "82" [e142]:
+  - /url: /discover/jobs/field/organizations/num_current_positions/anthropic
+- text: Board Members and Advisors
+- link "14" [e143]:
+  - /url: /discover/jobs/field/organizations/num_current_advisor_positions/anthropic
+- text: Contacts
+- link "393" [e144]:
+  - /url: /discover/contacts/field/organizations/num_contacts/anthropic
+- heading "Employee Profiles" [level=2]
+- list:
+  - listitem [e145]:
+    - img "Photo of Dario Amodei"
+    - link "Dario Amodei" [e146]:
+      - /url: /person/dario-amodei
+    - text: Co-Founder and CEO
+  - listitem [e147]:
+    - img "Photo of Daniela Amodei"
+    - link "Daniela Amodei" [e148]:
+      - /url: /person/daniela-amodei-d7d3
+    - text: Co-Founder and President
+  - listitem [e149]:
+    - img "Photo of Tom Brown"
+    - link "Tom Brown" [e150]:
+      - /url: /person/tom-brown-096f
+    - text: Co-Founder and Chief Compute Officer
+  - listitem [e151]:
+    - img "Photo of Jack Clark"
+    - link "Jack Clark" [e152]:
+      - /url: /person/jack-clark
+    - text: Co-Founder
+- link "View All" [e153]:
+  - /url: /organization/anthropic/profiles_and_contacts#people_employees
+  - text: View All
+  - img
+- heading "Board Members and Advisors" [level=2]
+- list:
+  - listitem [e154]:
+    - img "Photo of Dario Amodei"
+    - link "Dario Amodei" [e155]:
+      - /url: /person/dario-amodei
+    - text: Board Member
+  - listitem [e156]:
+    - img "Photo of Daniela Amodei"
+    - link "Daniela Amodei" [e157]:
+      - /url: /person/daniela-amodei-d7d3
+    - text: Board Member
+  - listitem [e158]:
+    - img "Photo of Christopher Liddell"
+    - link "Christopher Liddell" [e159]:
+      - /url: /person/chris-liddell
+    - text: Board Member Feb 13, 2026
+  - listitem [e160]:
+    - img "Photo of Vasant Narasimhan"
+    - link "Vasant Narasimhan" [e161]:
+      - /url: /person/vas-narasimhan
+    - text: Board Member Apr 14, 2026
+- link "View All" [e162]:
+  - /url: /organization/anthropic/profiles_and_contacts#people_advisors
+  - text: View All
+  - img
+- text: News
+- heading "News and Press" [level=2]
+- text: News • Nov 18, 2026 obfuscated obfuscated obfuscated obfuscated obfuscated obfuscated obfuscated obfuscated obfuscated News • Nov 18, 2026 obfuscated obfuscated obfuscated obfuscated obfuscated obfuscated obfuscated obfuscated obfuscated News • Nov 18, 2026 obfuscated obfuscated obfuscated obfuscated obfuscated obfuscated obfuscated obfuscated obfuscated News • Nov 18, 2026 obfuscated obfuscated obfuscated obfuscated obfuscated obfuscated obfuscated obfuscated obfuscated Access a complete feed of recent news and press, from product launches to leadership changes.
+- button "Register for Free" [e163]:
+  - img
+  - text: Register for Free
+- link "View All" [e164]:
+  - /url: /organization/anthropic/news_and_analysis
+  - text: View All
+  - img
+- text: Technology
+- link "View Tech Report" [e165]:
+  - /url: /organization/anthropic/tech_details
+  - text: View Tech Report
+  - img
+- heading "Monthly Web Visits" [level=2]
+- text: 19,948,575
+- img
+- text: "-9.75% in past month"
+- link "Data source:" [e166]:
+  - /url: https://www.semrush.com/trends/
+- heading "IT Spend" [level=2]
+- text: $11.6B This year,
+- link "Anthropic" [e167]:
+  - /url: /organization/anthropic
+- text: is projected to spend
+- link "$11.6B" [e168]:
+  - /url: /discover/organization.aberdeens/field/organizations/aberdeen_site_it_spend/%7B%22value%22:11609000000,%22currency%22:%22USD%22,%22value_usd%22:11609000000%7D
+- text: on IT, according to
+- link "Aberdeen" [e169]:
+  - /url: https://www.aberdeen.com/?utm_source=crunchbase&utm_campaign=abg-crunchbase-2&utm_content=webpage
+- text: .
+- link "Data source:" [e170]:
+  - /url: https://www.aberdeen.com/?utm_source=crunchbase&utm_campaign=abg-crunchbase-2&utm_content=webpage
+- heading "Interest Signals" [level=2]
+- table:
+  - rowgroup:
+    - row "Topic Surge Score":
+      - columnheader "Topic"
+      - columnheader "Surge Score"
+    - row "Health IT Consulting 99":
+      - cell "Health IT Consulting":
+        - link "Health IT Consulting" [e171]:
+          - /url: /bombora_topic/ef7b3480-a0f1-4127-b73d-67eefab68bb7
+      - cell "99"
+    - row "Truck Tolling 99":
+      - cell "Truck Tolling":
+        - link "Truck Tolling" [e172]:
+          - /url: /bombora_topic/e712fa86-a975-47a0-b3ce-0eb35080319a
+      - cell "99"
+    - row "High Speed Networks 98":
+      - cell "High Speed Networks":
+        - link "High Speed Networks" [e173]:
+          - /url: /bombora_topic/1cb8c269-22df-4035-aabd-28bf43ae65ab
+      - cell "98"
+- link "Data source:" [e174]:
+  - /url: https://bombora.com
+- heading "Active Website Tech Count" [level=2]
+- text: "45"
+- link "Anthropic" [e175]:
+  - /url: /organization/anthropic
+- text: is actively using 45 technologies for its website, according to
+- link "BuiltWith" [e176]:
+  - /url: https://builtwith.com/
+- text: . These include
+- link "nginx" [e177]:
+  - /url: /builtwith_technology/406526b5-ad50-41bc-8a08-e53842442565
+- text: ","
+- link "IPhone / Mobile Compatible" [e178]:
+  - /url: /builtwith_technology/2f6cffdd-6438-400e-9512-692a21e184d8
+- text: ", and"
+- link "Mobile Non Scaleable Content" [e179]:
+  - /url: /builtwith_technology/1dc07647-f8aa-40ce-9042-d5927c7045f2
+- text: .
+- link "Data source:" [e180]:
+  - /url: https://builtwith.com/
+- heading "Total IP" [level=2]
+- text: "28"
+- link "Anthropic" [e181]:
+  - /url: /organization/anthropic
+- text: has registered
+- link "28" [e182]:
+  - /url: /discover/ipqwery_trademarks/field/organizations/ipqwery_num_trademark_registered/anthropic
+- text: trademarks with the most popular class being '
+- link "Scientific and technological services" [e183]:
+  - /url: /discover/ipqwery_trademarks/field/organizations/ipqwery_popular_trademark_class/c42
+- text: "', according to"
+- link "IPqwery" [e184]:
+  - /url: http://ipqwery.com/
+- text: .
+- link "Data source:" [e185]:
+  - /url: http://ipqwery.com
+- text: Lists Featuring This Company
+- heading "Lists Featuring This Company" [level=2]
+- link "Information Technology Female Founded Companies (Top 10K)" [e186]:
+  - /url: /hub/information-technology-female-founded-companies
+- link "9,991" [e187]:
+  - /url: /discover/organizations/field/hubs/org_num/information-technology-female-founded-companies
+- text: Number of Organizations •
+- link "$523.5B" [e188]:
+  - /url: /discover/funding_rounds/field/hubs/org_funding_total/information-technology-female-founded-companies
+- text: Total Funding Amount •
+- link "15,907" [e189]:
+  - /url: /discover/principal.investors/field/hubs/org_num_investors/information-technology-female-founded-companies
+- text: Number of Investors
+- button "Track" [e190]
+- link "Agentic AI Companies With More Than $1M in Revenue" [e191]:
+  - /url: /hub/agentic-ai-companies-more-than-1m-in-revenue
+- link "816" [e192]:
+  - /url: /discover/organizations/field/hubs/org_num/agentic-ai-companies-more-than-1m-in-revenue
+- text: Number of Organizations •
+- link "$504.8B" [e193]:
+  - /url: /discover/funding_rounds/field/hubs/org_funding_total/agentic-ai-companies-more-than-1m-in-revenue
+- text: Total Funding Amount •
+- link "5,068" [e194]:
+  - /url: /discover/principal.investors/field/hubs/org_num_investors/agentic-ai-companies-more-than-1m-in-revenue
+- text: Number of Investors
+- button "Track" [e195]
+- link "United States Artificial Intelligence (AI) Companies (Top 10K)" [e196]:
+  - /url: /hub/united-states-artificial-intelligence-companies
+- link "9,935" [e197]:
+  - /url: /discover/organizations/field/hubs/org_num/united-states-artificial-intelligence-companies
+- text: Number of Organizations •
+- link "$1.7T" [e198]:
+  - /url: /discover/funding_rounds/field/hubs/org_funding_total/united-states-artificial-intelligence-companies
+- text: Total Funding Amount •
+- link "72,634" [e199]:
+  - /url: /discover/principal.investors/field/hubs/org_num_investors/united-states-artificial-intelligence-companies
+- text: Number of Investors
+- button "Track" [e200]
+- link "United States Product Research Companies" [e201]:
+  - /url: /hub/united-states-product-research-companies
+- link "2,613" [e202]:
+  - /url: /discover/organizations/field/hubs/org_num/united-states-product-research-companies
+- text: Number of Organizations •
+- link "$190.3B" [e203]:
+  - /url: /discover/funding_rounds/field/hubs/org_funding_total/united-states-product-research-companies
+- text: Total Funding Amount •
+- link "1,634" [e204]:
+  - /url: /discover/principal.investors/field/hubs/org_num_investors/united-states-product-research-companies
+- text: Number of Investors
+- button "Track" [e205]
+- button "View All" [e206]
+- text: Sub-Organizations
+- heading "Sub-Organizations" [level=2]
+- text: Number of Sub-Orgs
+- link "3" [e207]:
+  - /url: /discover/organizations/field/organizations/num_sub_organizations/anthropic
+- img
+- text: Which industries do these Sub-Organization operate in?
+- button "Show" [e208]
+- img "Ode with Anthropic Logo"
+- link "Ode with Anthropic" [e209]:
+  - /url: /organization/ode-with-anthropic
+- text: Joint Venture
+- img "Coefficient Bio Logo"
+- link "Coefficient Bio" [e210]:
+  - /url: /organization/coefficient-bio
+- text: Subsidiary
+- img "Bun Logo"
+- link "Bun" [e211]:
+  - /url: /organization/oven
+- text: Subsidiary Frequently Asked Questions Where is
+- link "Anthropic" [e212]:
+  - /url: /organization/anthropic
+- text: "'s headquarters?"
+- link "Anthropic" [e213]:
+  - /url: /organization/anthropic
+- text: is located in
+- link "San Francisco" [e214]:
+  - /url: /discover/organizations/field/organizations/location_identifiers/san-francisco-california
+- text: ","
+- link "California" [e215]:
+  - /url: /discover/organizations/field/organizations/location_identifiers/california-united-states
+- text: ","
+- link "United States" [e216]:
+  - /url: /discover/organizations/field/organizations/location_identifiers/united-states
+- text: . Who invested in
+- link "Anthropic" [e217]:
+  - /url: /organization/anthropic
+- text: "?"
+- link "Anthropic" [e218]:
+  - /url: /organization/anthropic
+- text: has
+- link "152" [e219]:
+  - /url: /discover/principal.investors/field/organizations/num_investors/anthropic
+- text: investors including
+- link "Broadcom" [e220]:
+  - /url: /organization/broadcom
+- text: and
+- link "Temasek" [e221]:
+  - /url: /organization/temasek
+- text: . When was the last funding round for
+- link "Anthropic" [e222]:
+  - /url: /organization/anthropic
+- text: "?"
+- link "Anthropic" [e223]:
+  - /url: /organization/anthropic
+- text: closed its last funding round on obfuscation from a
+- link "Debt Financing" [e224]:
+  - /url: /discover/funding_rounds/field/organizations/last_funding_type/anthropic
+- text: round. Who are
+- link "Anthropic" [e225]:
+  - /url: /organization/anthropic
+- text: "'s competitors? Alternatives and possible competitors to"
+- link "Anthropic" [e226]:
+  - /url: /organization/anthropic
+- text: may include
+- link "OpenAI" [e227]:
+  - /url: /organization/openai
+- text: ","
+- link "Cohere" [e228]:
+  - /url: /organization/cohere-82b8
+- text: ", and"
+- link "DeepSeek" [e229]:
+  - /url: /organization/deepseek
+- text: . How much funding has
+- link "Anthropic" [e230]:
+  - /url: /organization/anthropic
+- text: raised to date?
+- link "Anthropic" [e231]:
+  - /url: /organization/anthropic
+- text: "has raised obfuscation . Browse By:"
+- link "Organizations," [e232]:
+  - /url: /sitemap/organizations
+- link "People," [e233]:
+  - /url: /sitemap/people
+- link "Events" [e234]:
+  - /url: /sitemap/events
+- text: Stay Connected
+- list:
+  - listitem [e235]:
+    - link "Crunchbase Blog" [e236]:
+      - /url: https://about.crunchbase.com/blog
+  - listitem [e237]:
+    - link "Crunchbase News" [e238]:
+      - /url: https://news.crunchbase.com/
+  - listitem [e239]:
+    - link "Subscribe to the Crunchbase Daily" [e240]:
+      - /url: /account?editNotifications=true
+  - listitem [e241]:
+    - link "Crunchbase Twitter" [e242]:
+      - /url: https://twitter.com/crunchbase
+      - img
+    - link "Crunchbase Facebook" [e243]:
+      - /url: https://www.facebook.com/crunchbase/
+      - img
+    - link "Crunchbase LinkedIn" [e244]:
+      - /url: https://www.linkedin.com/company/crunchbase
+      - img
+    - link "Crunchbase Instagram" [e245]:
+      - /url: https://instagram.com/crunchbase
+      - img
+- text: Who We Are
+- list:
+  - listitem [e246]:
+    - link "Company" [e247]:
+      - /url: https://about.crunchbase.com/about-us
+  - listitem [e248]:
+    - link "Careers" [e249]:
+      - /url: https://about.crunchbase.com/about-us/careers
+  - listitem [e250]:
+    - link "Partners" [e251]:
+      - /url: https://about.crunchbase.com/partners
+  - listitem [e252]:
+    - link "Press" [e253]:
+      - /url: https://about.crunchbase.com/pressroom
+  - listitem [e254]:
+    - link "Contact Us" [e255]:
+      - /url: https://about.crunchbase.com/about-us/contact-us
+  - listitem [e256]:
+    - button "Talk With Sales" [e257]
+- text: What We Do
+- list:
+  - listitem [e258]:
+    - link "Crunchbase Pro" [e259]:
+      - /url: https://about.crunchbase.com/products/crunchbase-pro
+  - listitem [e260]:
+    - link "Crunchbase Business" [e261]:
+      - /url: https://about.crunchbase.com/products/crunchbase-business
+  - listitem [e262]:
+    - link "Marketplace" [e263]:
+      - /url: https://www.crunchbase.com/marketplace/
+  - listitem [e264]:
+    - link "Data Licensing" [e265]:
+      - /url: https://about.crunchbase.com/products/crunchbase-for-applications
+  - listitem [e266]:
+    - link "Customer Stories" [e267]:
+      - /url: https://about.crunchbase.com/customers
+  - listitem [e268]:
+    - link "Pricing" [e269]:
+      - /url: /buy/select-product
+- text: Helpful Links
+- list:
+  - listitem [e270]:
+    - link "Create Profile" [e271]:
+      - /url: /add-new
+  - listitem [e272]:
+    - link "Featured Lists and Searches" [e273]:
+      - /url: /featured
+  - listitem [e274]:
+    - link "Knowledge Center" [e275]:
+      - /url: https://support.crunchbase.com/
+  - listitem [e276]:
+    - link "Privacy" [e277]:
+      - /url: https://about.crunchbase.com/terms-of-service/privacy-policy/
+  - listitem [e278]:
+    - button "Do Not Sell My Info" [e279]
+- text: AI Content may contain mistakes and is not legal, financial or investment advice.
+- link "Learn more." [e280]:
+  - /url: https://about.crunchbase.com/terms-of-service/
+- link "Terms of Service" [e281]:
+  - /url: https://about.crunchbase.com/terms-of-service/
+- text: "|"
+- link "Privacy Policy" [e282]:
+  - /url: https://about.crunchbase.com/terms-of-service/privacy-policy/
+- text: "|"
+- link "Sitemap" [e283]:
+  - /url: /sitemap
+- text: "| © 2026 Crunchbase Inc. All Rights Reserved. (9ab8d22 1)"
+- button "Cookie Settings" [e284]
+- text: "|"
+- button "Do Not Sell or Share My Personal Info" [e285]
+- button "Help" [e286]:
+  - img
+- region "We Care About Your Privacy":
+  - alertdialog "We Care About Your Privacy":
+    - heading "We Care About Your Privacy" [level=2]
+    - paragraph:
+      - text: By clicking “Accept All”, you agree to our and our third-party partners’ use of cookies to enhance your user experience, analyze site performance and traffic on our website. Please visit our
+      - link "Privacy Policy" [e287]:
+        - /url: https://about.crunchbase.com/terms-of-service/privacy-policy/
+      - text: for more information about our cookies.
+    - button "Decline All" [e288]
+    - button "Accept All" [e289]
+    - button "Accept Some" [e290]
+    - button "Close" [e291]
+-- {"url": "https://www.crunchbase.com/organization/anthropic", "totalChars": 35117}

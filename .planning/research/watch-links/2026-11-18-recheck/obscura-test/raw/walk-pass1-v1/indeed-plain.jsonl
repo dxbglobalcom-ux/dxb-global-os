@@ -1,0 +1,7 @@
+{"step": "1-inner", "how": "navigate", "secs": 3.5, "url": "https://www.indeed.com/jobs?q=ai+engineer", "title": "Just a moment...", "chars": 250, "headings": ["Additional Verification Required"], "nlinks": 14, "wall": "Just a moment", "text_head": "Find jobs Company Reviews Find salaries Upload your resume Sign in Employers / Post Job Additional Verification Required Your Ray ID for this request is a5c86c56cc93dc88 Return home \u2192 Troubleshooting Cloudflare Errors Need more help? Contact us", "t_total": 3.5}
+{"step": "2-deeper", "error": "no matching link on the page", "t_total": 7.5}
+{"step": "3-deeper", "error": "no matching link on the page", "t_total": 11.5}
+{"step": "4-deeper", "error": "no matching link on the page", "t_total": 15.5}
+{"step": "5-search", "how": "search by URL query", "secs": 3.5, "url": "https://www.indeed.com/jobs?q=data+analyst&l=Austin%2C+TX", "title": "Just a moment...", "chars": 250, "headings": ["Additional Verification Required"], "nlinks": 14, "wall": "Just a moment", "text_head": "Find jobs Company Reviews Find salaries Upload your resume Sign in Employers / Post Job Additional Verification Required Your Ray ID for this request is a5c86ccfdfac2657 Return home \u2192 Troubleshooting Cloudflare Errors Need more help? Contact us", "t_total": 23.0}
+{"step": "cookies", "count": 1}
+{"step": "end", "t_total": 23.0}

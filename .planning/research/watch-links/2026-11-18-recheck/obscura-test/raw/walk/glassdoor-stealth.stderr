@@ -1,0 +1,28 @@
+[2m2026-11-18T16:44:46.455893Z[0m [31mERROR[0m [2mobscura::console[0m[2m:[0m Dynamic script fetch error: HTTP 0
+[2m2026-11-18T16:44:46.673887Z[0m [31mERROR[0m [2mobscura::console[0m[2m:[0m Dynamic script fetch error: HTTP 403
+[2m2026-11-18T16:45:08.901949Z[0m [31mERROR[0m [2mobscura::console[0m[2m:[0m Dynamic script fetch error: HTTP 0
+[2m2026-11-18T16:45:08.954473Z[0m [31mERROR[0m [2mobscura::console[0m[2m:[0m Dynamic script fetch error: HTTP 403
+[2m2026-11-18T16:45:31.342908Z[0m [31mERROR[0m [2mobscura::console[0m[2m:[0m Dynamic script fetch error: HTTP 0
+[2m2026-11-18T16:45:31.389181Z[0m [31mERROR[0m [2mobscura::console[0m[2m:[0m Dynamic script fetch error: HTTP 403
+[2m2026-11-18T16:45:54.216213Z[0m [31mERROR[0m [2mobscura::console[0m[2m:[0m Dynamic script fetch error: HTTP 0
+[2m2026-11-18T16:45:54.284719Z[0m [31mERROR[0m [2mobscura::console[0m[2m:[0m Dynamic script fetch error: HTTP 403
+[2m2026-11-18T16:46:18.517302Z[0m [31mERROR[0m [2mobscura::console[0m[2m:[0m Dynamic script fetch error: HTTP 0
+[2m2026-11-18T16:46:19.563147Z[0m [31mERROR[0m [2mobscura::console[0m[2m:[0m TypeError: Cannot read properties of undefined (reading 'sort')
+    at HTMLBodyElement.t.run (eval at execute (<obscura:bootstrap>:473:28), <anonymous>:2:29594)
+    at _domEventInvokeHandlers (<obscura:bootstrap>:2141:22)
+    at _domEventInvoke (<obscura:bootstrap>:2122:5)
+    at _domEventDispatch (<obscura:bootstrap>:2216:9)
+    at HTMLLinkElement.dispatchEvent (<obscura:bootstrap>:4725:12)
+    at _loadLinkedStylesheet (<obscura:bootstrap>:733:13)
+[2m2026-11-18T16:46:19.713916Z[0m [31mERROR[0m [2mobscura::console[0m[2m:[0m TypeError: Cannot read properties of undefined (reading 'set')
+    at eval (eval at execute (<obscura:bootstrap>:473:28), <anonymous>:1:51715)
+    at gu (eval at execute (<obscura:bootstrap>:473:28), <anonymous>:2:96817)
+    at es (eval at execute (<obscura:bootstrap>:473:28), <anonymous>:2:113132)
+    at Ju (eval at execute (<obscura:bootstrap>:473:28), <anonymous>:2:113016)
+    at es (eval at execute (<obscura:bootstrap>:473:28), <anonymous>:2:113177)
+    at Ju (eval at execute (<obscura:bootstrap>:473:28), <anonymous>:2:113016)
+    at es (eval at execute (<obscura:bootstrap>:473:28), <anonymous>:2:113112)
+    at Ju (eval at execute (<obscura:bootstrap>:473:28), <anonymous>:2:113016)
+    at es (eval at execute (<obscura:bootstrap>:473:28), <anonymous>:2:113177)
+    at Ju (eval at execute (<obscura:bootstrap>:473:28), <anonymous>:2:113016)
+[2m2026-11-18T16:46:20.254111Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m [GSI_LOGGER]: Your client application uses one of the Google One Tap prompt UI status methods that may stop functioning when FedCM becomes mandatory. Refer to the migration guide to update your code accordingly and opt-in to FedCM to test your changes. Learn more: https://developers.google.com/identity/gsi/web/guides/fedcm-migration?s=dc#display_moment and https://developers.google.com/identity/gsi/web/guides/fedcm-migration?s=dc#skipped_moment

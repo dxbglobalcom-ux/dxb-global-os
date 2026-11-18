@@ -1,0 +1,218 @@
+{
+  "total_urls": 30,
+  "concurrency": 5,
+  "total_time_ms": 15177,
+  "avg_time_ms": 505.9,
+  "results": [
+    {
+      "url": "https://en.wikipedia.org/wiki/Rust_(programming_language)",
+      "title": "Rust (programming language) - Wikipedia",
+      "eval": "Rust (programming language) - Wikipedia | 76762",
+      "time_ms": 2766,
+      "worker": 0
+    },
+    {
+      "url": "https://en.wikipedia.org/wiki/Python_(programming_language)",
+      "title": "Python (programming language) - Wikipedia",
+      "eval": "Python (programming language) - Wikipedia | 87587",
+      "time_ms": 2540,
+      "worker": 1
+    },
+    {
+      "url": "https://en.wikipedia.org/wiki/JavaScript",
+      "title": "JavaScript - Wikipedia",
+      "eval": "JavaScript - Wikipedia | 61429",
+      "time_ms": 2363,
+      "worker": 2
+    },
+    {
+      "url": "https://en.wikipedia.org/wiki/TypeScript",
+      "title": "TypeScript - Wikipedia",
+      "eval": "TypeScript - Wikipedia | 32046",
+      "time_ms": 2371,
+      "worker": 3
+    },
+    {
+      "url": "https://en.wikipedia.org/wiki/Go_(programming_language)",
+      "title": "Go (programming language) - Wikipedia",
+      "eval": "Go (programming language) - Wikipedia | 60433",
+      "time_ms": 2406,
+      "worker": 4
+    },
+    {
+      "url": "https://en.wikipedia.org/wiki/Java_(programming_language)",
+      "title": "Java (programming language) - Wikipedia",
+      "eval": "Java (programming language) - Wikipedia | 52951",
+      "time_ms": 2582,
+      "worker": 5
+    },
+    {
+      "url": "https://en.wikipedia.org/wiki/C_(programming_language)",
+      "title": "C (programming language) - Wikipedia",
+      "eval": "C (programming language) - Wikipedia | 81547",
+      "time_ms": 3176,
+      "worker": 6
+    },
+    {
+      "url": "https://en.wikipedia.org/wiki/C%2B%2B",
+      "title": "C++ - Wikipedia",
+      "eval": "C++ - Wikipedia | 45495",
+      "time_ms": 2893,
+      "worker": 7
+    },
+    {
+      "url": "https://en.wikipedia.org/wiki/Haskell",
+      "title": "Haskell - Wikipedia",
+      "eval": "Haskell - Wikipedia | 37616",
+      "time_ms": 2485,
+      "worker": 8
+    },
+    {
+      "url": "https://en.wikipedia.org/wiki/Erlang_(programming_language)",
+      "title": "Erlang (programming language) - Wikipedia",
+      "eval": "Erlang (programming language) - Wikipedia | 34906",
+      "time_ms": 2289,
+      "worker": 9
+    },
+    {
+      "url": "https://en.wikipedia.org/wiki/Elixir_(programming_language)",
+      "title": "Elixir (programming language) - Wikipedia",
+      "eval": "Elixir (programming language) - Wikipedia | 9537",
+      "time_ms": 1954,
+      "worker": 10
+    },
+    {
+      "url": "https://en.wikipedia.org/wiki/Kotlin_(programming_language)",
+      "title": "Kotlin - Wikipedia",
+      "eval": "Kotlin - Wikipedia | 28570",
+      "time_ms": 2140,
+      "worker": 11
+    },
+    {
+      "url": "https://en.wikipedia.org/wiki/Swift_(programming_language)",
+      "title": "Swift (programming language) - Wikipedia",
+      "eval": "Swift (programming language) - Wikipedia | 62219",
+      "time_ms": 2540,
+      "worker": 12
+    },
+    {
+      "url": "https://en.wikipedia.org/wiki/Ruby_(programming_language)",
+      "title": "Ruby (programming language) - Wikipedia",
+      "eval": "Ruby (programming language) - Wikipedia | 44071",
+      "time_ms": 2381,
+      "worker": 13
+    },
+    {
+      "url": "https://en.wikipedia.org/wiki/PHP",
+      "title": "PHP - Wikipedia",
+      "eval": "PHP - Wikipedia | 94124",
+      "time_ms": 3212,
+      "worker": 14
+    },
+    {
+      "url": "https://en.wikipedia.org/wiki/Perl",
+      "title": "Perl - Wikipedia",
+      "eval": "Perl - Wikipedia | 80375",
+      "time_ms": 2449,
+      "worker": 15
+    },
+    {
+      "url": "https://en.wikipedia.org/wiki/Lua_(programming_language)",
+      "title": "Lua - Wikipedia",
+      "eval": "Lua - Wikipedia | 38384",
+      "time_ms": 2548,
+      "worker": 16
+    },
+    {
+      "url": "https://en.wikipedia.org/wiki/Scala_(programming_language)",
+      "title": "Scala (programming language) - Wikipedia",
+      "eval": "Scala (programming language) - Wikipedia | 81023",
+      "time_ms": 2685,
+      "worker": 17
+    },
+    {
+      "url": "https://en.wikipedia.org/wiki/Clojure",
+      "title": "Clojure - Wikipedia",
+      "eval": "Clojure - Wikipedia | 29445",
+      "time_ms": 2417,
+      "worker": 18
+    },
+    {
+      "url": "https://en.wikipedia.org/wiki/OCaml",
+      "title": "OCaml - Wikipedia",
+      "eval": "OCaml - Wikipedia | 32513",
+      "time_ms": 2193,
+      "worker": 19
+    },
+    {
+      "url": "https://en.wikipedia.org/wiki/Fortran",
+      "title": "Fortran - Wikipedia",
+      "eval": "Fortran - Wikipedia | 91358",
+      "time_ms": 2754,
+      "worker": 20
+    },
+    {
+      "url": "https://en.wikipedia.org/wiki/COBOL",
+      "title": "COBOL - Wikipedia",
+      "eval": "COBOL - Wikipedia | 103889",
+      "time_ms": 2827,
+      "worker": 21
+    },
+    {
+      "url": "https://en.wikipedia.org/wiki/Lisp_(programming_language)",
+      "title": "Lisp (programming language) - Wikipedia",
+      "eval": "Lisp (programming language) - Wikipedia | 67180",
+      "time_ms": 2722,
+      "worker": 22
+    },
+    {
+      "url": "https://en.wikipedia.org/wiki/Prolog",
+      "title": "Prolog - Wikipedia",
+      "eval": "Prolog - Wikipedia | 60660",
+      "time_ms": 2184,
+      "worker": 23
+    },
+    {
+      "url": "https://en.wikipedia.org/wiki/Julia_(programming_language)",
+      "title": "Julia (programming language) - Wikipedia",
+      "eval": "Julia (programming language) - Wikipedia | 68331",
+      "time_ms": 2160,
+      "worker": 24
+    },
+    {
+      "url": "https://en.wikipedia.org/wiki/R_(programming_language)",
+      "title": "R (programming language) - Wikipedia",
+      "eval": "R (programming language) - Wikipedia | 29667",
+      "time_ms": 2708,
+      "worker": 25
+    },
+    {
+      "url": "https://en.wikipedia.org/wiki/Dart_(programming_language)",
+      "title": "Dart (programming language) - Wikipedia",
+      "eval": "Dart (programming language) - Wikipedia | 27764",
+      "time_ms": 2332,
+      "worker": 26
+    },
+    {
+      "url": "https://en.wikipedia.org/wiki/Zig_(programming_language)",
+      "title": "Zig (programming language) - Wikipedia",
+      "eval": "Zig (programming language) - Wikipedia | 23060",
+      "time_ms": 2200,
+      "worker": 27
+    },
+    {
+      "url": "https://en.wikipedia.org/wiki/WebAssembly",
+      "title": "WebAssembly - Wikipedia",
+      "eval": "WebAssembly - Wikipedia | 52106",
+      "time_ms": 2356,
+      "worker": 28
+    },
+    {
+      "url": "https://en.wikipedia.org/wiki/V8_(JavaScript_engine)",
+      "title": "V8 (JavaScript engine) - Wikipedia",
+      "eval": "V8 (JavaScript engine) - Wikipedia | 10452",
+      "time_ms": 1949,
+      "worker": 29
+    }
+  ]
+}

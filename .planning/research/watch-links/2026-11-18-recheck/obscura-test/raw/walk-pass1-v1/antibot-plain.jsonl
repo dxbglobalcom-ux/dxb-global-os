@@ -1,0 +1,6 @@
+{"step": "1-inner", "how": "navigate", "secs": 4.0, "url": "https://www.scrapingcourse.com/antibot-challenge", "title": "Just a moment...", "chars": 270, "headings": ["www.scrapingcourse.com", "Performing security verification", "Verification successful. Waiting for www.scrapingcourse.com to respond"], "nlinks": 2, "wall": "Just a moment", "text_head": "www.scrapingcourse.com Performing security verification This website uses a security service to protect against malicious bots. This page is displayed while the website verifies you are not a bot. Ray ID: a5c86c57281bc0cb Performance and Security by Cloudflare Privacy", "t_total": 4.0}
+{"step": "2-deeper", "error": "no matching link on the page", "t_total": 8.0}
+{"step": "3-deeper", "error": "no matching link on the page", "t_total": 12.0}
+{"step": "4-deeper", "error": "no matching link on the page", "t_total": 16.0}
+{"step": "cookies", "count": 2}
+{"step": "end", "t_total": 16.1}

@@ -1,0 +1,48 @@
+  media-transcript   --         0ms        0b  not a media url
+  pdf-text           --         0ms        0b  not a pdf url
+  scrapling          OK       968ms     1309b
+
+read=True door=scrapling liveness=alive bytes=1309
+
+Pricing plans — Higgsfield AI Video & Image Generator
+
+[Higgsfield](/)
+
+* [Explore](/)
+* [Image](/ai/image?model=gpt_image_2)
+* [Video](/ai/video)
+* [Audio](/audio)
+* [MCP](/mcp)
+* [API](https://open.higgsfield.ai)
+* * [Cinema Studio](/generate)
+  * [GenjutsuTop](/genjutsu-create)
+  * [Short DramaNew](/short-drama)
+  * [MiracleSoon](/miracle)
+  * [Contests](/contests/talent-contest)
+  * [ShortsNew](/shorts-studio)
+  * [Ads StudioNew](/ads-studio)
+  * [GPUNew](/gpu)
+  * [Playable](/playable)
+  * [Supercomputer](/supercomputer)
+  * [Community](/community)
+  * [Academy](/academy)
+  * [Plugins](/plugins/after-effects)
+  * [Canvas](/canvas)
+
+[Enterprise](https://higgsfield.ai/enterprise)[Pricing](/pricing "View Higgsfield AI pricing plans and subscription options")
+
+LoginSign up
+
+![](https://static.higgsfield.ai/public/pricing-v2/pricing-v2-card-starter-v1.webp)
+
+![](https://static.higgsfield.ai/public/pricing-v2/pricing-v2-card-starter-v1.webp)
+
+![](https://static.higgsfield.ai/public/pricing-v2/pricing-v2-card-starter-v1.webp)
+
+© 2026 Higgsfield, Inc. All rights reserved.
+
+* [Help center](/creator-hub/help-center)
+* [Cookie Notice](/cookie-notice)
+* [Terms](/terms-of-use-agreement)
+* [Privacy](/privacy-policy)
+* [Report a vulnerability](https://bugcrowd.com/engagements/higgsfield-ai-vdp-pro)

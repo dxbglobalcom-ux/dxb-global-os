@@ -1,0 +1,5 @@
+{"step": "1-inner", "how": "navigate", "secs": 3.7, "url": "https://www.linkedin.com/company/anthropic/", "title": "Just a moment...", "chars": 264, "headings": ["www.linkedin.com", "Performing security verification", "Verification successful. Waiting for www.linkedin.com to respond"], "nlinks": 2, "wall": "Just a moment", "text_head": "www.linkedin.com Performing security verification This websit
+{"step": "2-deeper", "error": "no matching link on the page", "t_total": 7.7}
+{"step": "3-deeper", "error": "no matching link on the page", "t_total": 11.7}
+{"step": "4-deeper", "error": "no matching link on the page", "t_total": 15.7}
+{"step": "5-search", "how": "search by URL query", "secs": 5.3, "url": "https://www.linkedin.com/authwall?trk=bf&trkInfo=AQFZyDc11b7i6wAAAaHviTyY83TkG2krNwBMKld-mdrKUCgatkISex7w5rjdVmMQdII__Z8kJTxfgvEayA-1CJ0sWoQqmXoCAxexxhJ2IKVNj0xfe-zyvmM11meOF-ZfzXw3J5o=&original_referer=&sessionRedirect=https%3A%2F%2Fwww.linkedin.com%2Fjobs%2Fsearch%3Fkeywords%3Dai%2520engineer%26location%3DUnited%2520States",

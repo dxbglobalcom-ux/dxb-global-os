@@ -1,0 +1,1 @@
+{"ok": true, "tabId": "dc23f9bd-a7aa-4fde-963b-d86d897d8bb0", "url": "https://www.indeed.com/cmp/Google?__cf_chl_rt_tk=84lbxl8pC6YimqZ9HRzKF0FQAdyjfw38ShtQvpYX81s-1795020663-1.0.1.1-JmUjzhd0zBEJeG87Di4ofdU32p5K9JrBjSBn4l0eL6w", "refsAvailable": true, "httpStatus": 403, "navigationOk": false}

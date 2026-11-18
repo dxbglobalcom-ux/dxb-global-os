@@ -1,0 +1,195 @@
+https://www.reddit.com/r/LocalLLaMA/comments/1xzett3/ama_announcement_tencent_hy_the_team_behind_hy4/
+AMA Announcement: Tencent Hy, the Team Behind Hy4 & Hy4 flash (Friday, Nov 20, 8–10 AM PST) : r/LocalLLaMA
+
+Skip to main content
+AMA Announcement: Tencent Hy, the Team Behind Hy4 & Hy4 flash (Friday, Nov 20, 8–10 AM PST) : r/LocalLLaMA
+Open navigation
+Go to Reddit Home
+r/LocalLLaMA
+Sign Up
+Sign up for Reddit
+Log In
+Log in to Reddit
+Expand user menu
+Open settings menu
+Go to LocalLLaMA
+r/LocalLLaMA
+•
+4h ago
+u/Aggressive-Sign-8167
+AMA Announcement: Tencent Hy, the Team Behind Hy4 & Hy4 flash (Friday, Nov 20, 8–10 AM PST)
+Resources
+
+Hi r/LocalLLaMA 👋
+
+We’re welcoming the Tencent Hy team for an AMA this Friday, November 20, from 8–10 AM PT!
+
+Fresh off launching Hy4 and Hy4 flash, their research team—including Shunyu Yao—will join us to discuss how the models were built, inference speed and cost, and real-world applications, with extra perks for great questions!
+
+⚠️ Note: The AMA itself will be hosted in a separate thread. Please don’t post questions here.
+
+
+
+Share
+RockstarGames_
+•
+Ad
+Letzte Chance: Bestelle GTAVI auf PS5 vor und erhalte außerdem das Vintage Vice City Pack.
+Pre-order Now
+rockstargames.com
+Collapse video player
+All
+Answered
+Unanswered
+Sort by:
+Best
+Open comment sort options
+Comments Section
+Aggressive-Sign-8167
+•
+3h ago
+
+Hi r/LocalLLaMA 👋
+
+We’re welcoming the Tencent Hy team for an AMA this Friday, November 20, from 8–10 AM PT!
+
+⚠️ Note: The AMA itself will be hosted in a separate thread. Please don’t post questions here.
+
+Cold_Tree190
+•
+3h ago
+Top 1% Commenter
+
+Awesome! Been using hy4-flash a lot this week. It’s become my main model to use, even before the weights were dropped. Love the model!
+
+RealPwrBank
+•
+3h ago
+
+Have you used Qwen 3.8 Flash Next as well? Trying to get a good comparison.
+
+Kahvana
+•
+3h ago
+Top 1% Commenter
+
+Looks like some people can’t read. Looking forward to the AMA!
+
+seamonn
+•
+3h ago
+Top 1% Commenter
+
+We choose not to read. Anyways, answer my question - when is Hy 5 releasing?
+/s
+
+DesperateWrongdoer18
+•
+3h ago
+
+What is the intelligence difference between Hy4 and Hy4 Flash? Have they been tested on HealthBench or medical benchmarks?
+
+mattescala
+•
+3h ago
+
+Might have missed it, but do you plan to release the weights of Hy4 (non-flash)?
+
+handson729
+•
+48m ago
+
+Wonder if they plan to keep iterating on Hy 4 Flash with similar sized models in the future.
+
+WSDSocial
+•
+46m ago
+
+Ok, Been waiting for it! One Question, What kinds of tasks would you still use the full model for, and where is flash good enough? Would be useful to hear about failure cases too, not just benchmarks.
+
+Icy-Juggernaut4630
+•
+45m ago
+
+Did not expect Tencent would be stepping in Reddit loll~ excited of it
+
+TigleLive
+•
+3h ago
+
+will u guyz give something for us low vram users? 🥲
+
+People also ask about section
+People also ask about
+Recommendations for locally hostable AI
+Best practices for hosting AI models locally
+Tips for optimizing local AI performance
+Community experiences with local AI hosting
+Common challenges in local AI deployment
+More posts you may like
+Related posts
+Has anybody tested Hy4?
+r/opencode
+•
+4d ago
+Has anybody tested Hy4?
+12
+upvotes ·
+6
+comments
+consorsbank
+•
+Ad
+Entdecke über 100 ETNs mit Krypto-Basiswert, die du so gewohnt wie andere Investments handeln kannst.
+consorsbank.de
+Learn More
+Introducing Hy4 flash
+r/LocalLLaMA
+•
+2d ago
+Introducing Hy4 flash
+357
+upvotes ·
+116
+comments
+Introducing Hy4 (open weights soon)
+r/LocalLLaMA
+•
+14d ago
+Introducing Hy4 (open weights soon)
+394
+upvotes ·
+100
+comments
+Hy4 is pretty impressive so far
+r/opencode
+•
+8d ago
+Hy4 is pretty impressive so far
+16
+upvotes ·
+4
+comments
+Hy-Nomas (Tencent's video world model) running natively in ComfyUI with just 12GB VRAM
+r/StableDiffusion
+•
+26d ago
+Hy-Nomas (Tencent's video world model) running natively in ComfyUI with just 12GB VRAM
+164
+upvotes ·
+14
+comments
+Tencent Hy3
+r/LocalLLM
+•
+4mo ago
+Tencent Hy3
+30
+upvotes ·
+16
+comments
+H3 Long-Gen with Qwen 3.8 Flash Next prompting every 18sec went in a really wild direction (2min14s)
+r/StableDiffusion
+•
+15d ago
+H3 Long-Gen with Qwen 3.8 Flash Next prompting every 18sec went in a really wild direction (2min14

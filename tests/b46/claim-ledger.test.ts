@@ -477,7 +477,9 @@ describe("the wall and the scrapling door", () => {
 
   it("a stub scrapling first on PATH is the one both of fetch.py's scrapling doors call", () => {
     const url = "https://example.org/k2-scrapling-door";
-    const r = fetchPy(url, "4");
+    // obscura stands between the two scrapling doors since 2026-11-18; pointed at nothing here, it answers
+    // "obscura not installed" at once and never reaches the network
+    const r = fetchPy(url, "5", { DXB_OBSCURA: join(b.root, "no-obscura-here") });
     expect(r.code, r.err).toBe(0);
     expect(r.meta).toMatchObject({ read: true, door: "scrapling-stealth" });
     expect(readFileSync(r.log, "utf8").trim().split("\n").map((l) => l.split(" ").slice(0, 3).join(" ")))

@@ -1,0 +1,48 @@
+  media-transcript   --         0ms        0b  not a media url
+  pdf-text           --         0ms        0b  not a pdf url
+  scrapling          OK       488ms    24789b
+
+read=True door=scrapling liveness=alive bytes=24789
+
+Higgsfield MCP | AI Image & Video Generation for Any Agent
+
+[Higgsfield](/)
+
+* [Explore](/)
+* [Image](/ai/image?model=gpt_image_2)
+* [Video](/ai/video)
+* [Audio](/audio)
+* [MCP](/mcp)
+* [API](https://open.higgsfield.ai)
+* * [Cinema Studio](/generate)
+  * [GenjutsuTop](/genjutsu-create)
+  * [Short DramaNew](/short-drama)
+  * [MiracleSoon](/miracle)
+  * [Contests](/contests/talent-contest)
+  * [ShortsNew](/shorts-studio)
+  * [Ads StudioNew](/ads-studio)
+  * [GPUNew](/gpu)
+  * [Playable](/playable)
+  * [Supercomputer](/supercomputer)
+  * [Community](/community)
+  * [Academy](/academy)
+  * [Plugins](/plugins/after-effects)
+  * [Canvas](/canvas)
+
+ChatGPT![](https://static.higgsfield.ai/mcp/v2/claude.svg)ClaudeClaude CodeTelegramCLIOther
+
+Generate Images & Videos  
+inChatGPT & Claude
+
+How to connect?
+
+![](https://assets.higgsfield.ai/landings-tanstack/landings-assets/bed5fae8-2IQ-3TnxuFp3tPMG.webp)
+
+![](https://static.higgsfield.ai/mcp/v2/claude.svg)Connect to ClaudeConnect to ChatGPT
+
+Generate Images & Videos in  Claude with  Higgsfield
+====================================================
+
+[![](https://static.higgsfield.ai/mcp/v2/claude.svg)Add Higgsfield to Claude](https://claude.ai/customize/connectors?modal=add-custom-connector&connectorName=Higgsfield&connectorUrl=https%3A%2F%2Fmcp.higgsfield.ai%2Fmcp)How to connect?
+
+![](https://static.higgsfield.ai/genjutsu/genjutsu-intro-poster.webp)GenjutsuNew![](https://static.higgsfield.ai/landing/gpt-skills/demos/short-drama-20261116/SH

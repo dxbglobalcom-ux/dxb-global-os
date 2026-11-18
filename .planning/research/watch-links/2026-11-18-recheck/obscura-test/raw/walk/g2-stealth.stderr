@@ -1,0 +1,56 @@
+[2m2026-11-18T16:41:33.065660Z[0m [31mERROR[0m [2mobscura::console[0m[2m:[0m ReferenceError: interstitialChallenge is not defined
+    at ddRunChallenge (<anonymous>:178:5)
+    at Document.<anonymous> (<anonymous>:183:5)
+    at _domEventInvokeHandlers (<obscura:bootstrap>:2155:64)
+    at _domEventInvoke (<obscura:bootstrap>:2122:5)
+    at _domEventDispatch (<obscura:bootstrap>:2210:9)
+    at Document.dispatchEvent (<obscura:bootstrap>:6964:12)
+    at <anonymous>:1:66
+[2m2026-11-18T16:41:52.229558Z[0m [31mERROR[0m [2mobscura::console[0m[2m:[0m ReferenceError: interstitialChallenge is not defined
+    at ddRunChallenge (<anonymous>:178:5)
+    at Document.<anonymous> (<anonymous>:183:5)
+    at _domEventInvokeHandlers (<obscura:bootstrap>:2155:64)
+    at _domEventInvoke (<obscura:bootstrap>:2122:5)
+    at _domEventDispatch (<obscura:bootstrap>:2210:9)
+    at Document.dispatchEvent (<obscura:bootstrap>:6964:12)
+    at <anonymous>:1:66
+[2m2026-11-18T16:47:14.770976Z[0m [31mERROR[0m [2mobscura::console[0m[2m:[0m ReferenceError: interstitialChallenge is not defined
+    at ddRunChallenge (<anonymous>:178:5)
+    at Document.<anonymous> (<anonymous>:183:5)
+    at _domEventInvokeHandlers (<obscura:bootstrap>:2155:64)
+    at _domEventInvoke (<obscura:bootstrap>:2122:5)
+    at _domEventDispatch (<obscura:bootstrap>:2210:9)
+    at Document.dispatchEvent (<obscura:bootstrap>:6964:12)
+    at <anonymous>:1:66
+[2m2026-11-18T16:47:37.259638Z[0m [31mERROR[0m [2mobscura::console[0m[2m:[0m ReferenceError: interstitialChallenge is not defined
+    at ddRunChallenge (<anonymous>:178:5)
+    at Document.<anonymous> (<anonymous>:183:5)
+    at _domEventInvokeHandlers (<obscura:bootstrap>:2155:64)
+    at _domEventInvoke (<obscura:bootstrap>:2122:5)
+    at _domEventDispatch (<obscura:bootstrap>:2210:9)
+    at Document.dispatchEvent (<obscura:bootstrap>:6964:12)
+    at <anonymous>:1:66
+[2m2026-11-18T16:47:59.844935Z[0m [31mERROR[0m [2mobscura::console[0m[2m:[0m ReferenceError: interstitialChallenge is not defined
+    at ddRunChallenge (<anonymous>:178:5)
+    at Document.<anonymous> (<anonymous>:183:5)
+    at _domEventInvokeHandlers (<obscura:bootstrap>:2155:64)
+    at _domEventInvoke (<obscura:bootstrap>:2122:5)
+    at _domEventDispatch (<obscura:bootstrap>:2210:9)
+    at Document.dispatchEvent (<obscura:bootstrap>:6964:12)
+    at <anonymous>:1:66
+[2m2026-11-18T16:48:22.505268Z[0m [31mERROR[0m [2mobscura::console[0m[2m:[0m ReferenceError: interstitialChallenge is not defined
+    at ddRunChallenge (<anonymous>:178:5)
+    at Document.<anonymous> (<anonymous>:183:5)
+    at _domEventInvokeHandlers (<obscura:bootstrap>:2155:64)
+    at _domEventInvoke (<obscura:bootstrap>:2122:5)
+    at _domEventDispatch (<obscura:bootstrap>:2210:9)
+    at Document.dispatchEvent (<obscura:bootstrap>:6964:12)
+    at <anonymous>:1:66
+[2m2026-11-18T16:48:45.160015Z[0m [31mERROR[0m [2mobscura::console[0m[2m:[0m ReferenceError: interstitialChallenge is not defined
+    at ddRunChallenge (<anonymous>:178:5)
+    at Document.<anonymous> (<anonymous>:183:5)
+    at _domEventInvokeHandlers (<obscura:bootstrap>:2155:64)
+    at _domEventInvoke (<obscura:bootstrap>:2122:5)
+    at _domEventDispatch (<obscura:bootstrap>:2210:9)
+    at Document.dispatchEvent (<obscura:bootstrap>:6964:12)
+    at <anonymous>:1:66

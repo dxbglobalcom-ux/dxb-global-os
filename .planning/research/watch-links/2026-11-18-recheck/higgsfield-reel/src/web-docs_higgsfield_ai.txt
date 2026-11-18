@@ -1,0 +1,59 @@
+  media-transcript   --         0ms        0b  not a media url
+  pdf-text           --         0ms        0b  not a pdf url
+  scrapling          OK       726ms    49245b
+
+read=True door=scrapling liveness=alive bytes=49245
+
+Higgsfield API - Higgsfield API Docs
+
+
+> Documentation Index
+> -------------------
+>
+> Fetch the complete documentation index at: </docs/llms.txt>
+>
+> Use this file to discover all available pages before exploring further.
+
+[Skip to main content](#content-area)
+
+Assistant
+
+Responses are generated using AI and may contain mistakes.
+
+[Higgsfield API Docs home page![light logo](https://mintcdn.com/private-hf/RgB2SXhCxJ6KplRT/logo/icon.png?fit=max&auto=format&n=RgB2SXhCxJ6KplRT&q=85&s=3e0d5d8cefd9c82e2b60a8956457f02d)![dark logo](https://mintcdn.com/private-hf/RgB2SXhCxJ6KplRT/logo/icon.png?fit=max&auto=format&n=RgB2SXhCxJ6KplRT&q=85&s=3e0d5d8cefd9c82e2b60a8956457f02d)](/docs)
+
+Search...
+
+⌘KAsk Assistant⌘I
+
+* [Status](https://status.higgsfield.ai)
+* [Support](https://discord.gg/BEea92KeR9)
+* [Get API key](https://console.higgsfield.ai)
+* [Get API key](https://console.higgsfield.ai)
+
+Search...
+
+Navigation
+
+Get started
+
+Higgsfield API
+
+[Documentation](/docs)[API reference](/docs/api-reference/overview)[Enterprise](/docs/enterprise/overview)
+
+### Get started
+
+* [Overview](/docs)
+* [Quickstart](/docs/quickstart)
+* [Authentication](/docs/authentication)
+* [How the API works](/docs/how-to/introduction)
+
+### Core concepts
+
+* [Requests and lifecycle](/docs/concepts/requests)
+* [Idempotent requests](/docs/concepts/idempotency)
+* [Polling](/docs/concepts/polling)
+* [Webhooks](/docs/how-to/webhooks)
+* [File uploads](/docs/concepts/file-uploads)
+* [Errors and retries](/docs/concepts/errors)
+

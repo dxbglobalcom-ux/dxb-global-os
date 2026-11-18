@@ -1,0 +1,18 @@
+[2m2026-11-18T16:41:53.845018Z[0m [33m WARN[0m [2mobscura_browser::page[0m[2m:[0m Refusing to execute script https://experiments.parsely.com/vip-experiments.js?apiKey=apnews.com after HTTP 0
+[2m2026-11-18T16:41:53.845038Z[0m [33m WARN[0m [2mobscura_browser::page[0m[2m:[0m Refusing to execute script https://ak.sail-horizon.com/spm/spm.v1.min.js after HTTP 0
+[2m2026-11-18T16:41:53.845041Z[0m [33m WARN[0m [2mobscura_browser::page[0m[2m:[0m Refusing to execute script https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js after HTTP 0
+[2m2026-11-18T16:41:53.845043Z[0m [33m WARN[0m [2mobscura_browser::page[0m[2m:[0m Refusing to execute script https://a.pub.network/apnews-com/pubfig.min.js after HTTP 0
+[2m2026-11-18T16:41:53.845046Z[0m [33m WARN[0m [2mobscura_browser::page[0m[2m:[0m Refusing to execute script https://s.ntv.io/serve/load.js after HTTP 0
+[2m2026-11-18T16:41:53.860258Z[0m [31mERROR[0m [2mobscura::console[0m[2m:[0m Dynamic script fetch error: HTTP 0
+[2m2026-11-18T16:41:53.868056Z[0m [31mERROR[0m [2mobscura::console[0m[2m:[0m [BC][DEBUG] article:section meta tag unavailable.
+[2m2026-11-18T16:41:53.868082Z[0m [31mERROR[0m [2mobscura::console[0m[2m:[0m [BC][DEBUG] keyword meta tag unavailable.
+[2m2026-11-18T16:41:53.869808Z[0m [31mERROR[0m [2mobscura::console[0m[2m:[0m Dynamic script fetch error: HTTP 0
+[2m2026-11-18T16:41:56.990852Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m Permutive was not initialized. No consent to run on the page
+[2m2026-11-18T16:41:57.166212Z[0m [31mERROR[0m [2mobscura::console[0m[2m:[0m Worker error: t.removeEventListener is not a function
+[2m2026-11-18T16:41:58.036925Z[0m [31mERROR[0m [2mobscura::console[0m[2m:[0m Dynamic script fetch error: HTTP 0
+[2m2026-11-18T16:41:59.867338Z[0m [31mERROR[0m [2mobscura::console[0m[2m:[0m Dynamic script fetch error: HTTP 0
+[2m2026-11-18T16:42:02.433800Z[0m [31mERROR[0m [2mobscura::console[0m[2m:[0m ReferenceError: Sailthru is not defined
+    at window.onload (https://apnews.com/search?q=artificial+intelligence:2:5)
+    at _eventTargetDispatch (<obscura:bootstrap>:2067:37)
+    at globalThis.dispatchEvent (<obscura:bootstrap>:173:10)
+    at <load-event>:4:14

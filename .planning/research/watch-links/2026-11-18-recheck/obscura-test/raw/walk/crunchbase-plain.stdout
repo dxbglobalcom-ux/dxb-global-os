@@ -1,0 +1,5 @@
+{"step": "1-inner", "how": "navigate", "secs": 3.8, "url": "https://www.crunchbase.com/organization/openai", "title": "Attention Required! | Cloudflare", "chars": 691, "headings": ["Sorry, you have been blocked", "You are unable to access crunchbase.com", "Why have I been blocked?", "What can I do to resolve this?"], "nlinks": 1, "wall": "Attention Required", "text_head": "Sorry, you have been blo
+{"step": "2-deeper", "error": "no matching link on the page", "t_total": 7.8}
+{"step": "3-deeper", "error": "no matching link on the page", "t_total": 11.8}
+{"step": "4-deeper", "error": "no matching link on the page", "t_total": 15.8}
+{"step": "5-search", "how": "typed 'anthropic' into input[type=search], input[placeholder*=earch], input[aria-label*=earch] + Enter: fill='Error: Element not found: input[type=search], input[placeholder*=earch], input[a' key='skipped' from https://www.crunchbase.com/organization/openai", "secs": 6.0, "url": "https://www.crunchbase.com/organization/openai", "title": "Attention Required! | Cloudflar

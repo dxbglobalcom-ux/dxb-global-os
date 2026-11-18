@@ -1,0 +1,4 @@
+browser: Chrome/155.0.8059.84 ws://127.0.0.1:9333/devtools/browser/d59870f7-345f-4100-971a-3c1e60c3c6a1
+page: Headless browser - Wikipedia | 9831 3.2 s
+typed value: Puppeteer
+after Enter: https://en.wikipedia.org/wiki/Headless_browser | Headless browser - Wikipedia | 8912

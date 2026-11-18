@@ -282,3 +282,50 @@ describe("hidden.py — a locked login keyring is named at once, not waited out"
     expect(open.err).toMatch(/^gizli arastirma Chrome'u kapali: 127\.0\.0\.1:1 cevap vermiyor/);
   }, 30_000);
 });
+
+// Obscura in the reading chain (2026-11-18, his word): placed right after the plain read, so a page whose words appear only
+// after its JavaScript runs is read in seconds before the heavier stealth browsers start. Measured that day: Obscura brings
+// back Cloudflare's present challenge page — "Performing security verification … This website uses a security service to
+// protect against malicious bots" — as 482 bytes of markdown, and the wall detector passed it as a page (`ok=True`), which
+// would have ended the chain on a wall at the new door and at every other door handed the same page.
+describe("fetch.py — Obscura reads right after the plain read and gives way at a wall", () => {
+  const CF_2026 = [
+    "![](/favicon.ico)", "# www.scrapingcourse.com", "", "## Performing security verification", "",
+    "This website uses a security service to protect against malicious bots. This page is displayed while the website verifies you are not a bot.",
+    "", "## Verification successful. Waiting for www.scrapingcourse.com to respond", "", "Ray ID: `a5c8cef74e6c7188`",
+    "Performance and Security by [Cloudflare](https://www.cloudflare.com?utm_source=challenge&utm_campaign=m)[Privacy](https://www.cloudflare.com/privacypolicy/)",
+  ].join("\n");
+
+  it("Cloudflare's present challenge page is a wall; a page that only talks about bot protection is not", () => {
+    const prose = Array.from({ length: 60 }, (_, i) => `Paragraph ${i}: how a security service protects a shop against malicious bots and scrapers.`).join("\n");
+    const out = JSON.parse(py(
+      "import sys, json; sys.path.insert(0, sys.argv[1]); import rlib, fetch; " +
+        "print(json.dumps([rlib.looks_like_wall(sys.argv[2]), fetch._ok(sys.argv[2]), rlib.looks_like_wall(sys.argv[3])]))",
+      CF_2026, prose));
+    expect(out).toEqual([true, false, false]);
+  });
+
+  it("the chain walks scrapling, then obscura, then scrapling-stealth, and --no-browser keeps obscura", () => {
+    const got = JSON.parse(py(
+      "import sys, json; sys.path.insert(0, sys.argv[1]); import fetch; n = lambda c: [d for d, _ in c]; " +
+        "print(json.dumps({'all': n(fetch.CHAIN), 'nb': n(fetch.chain_for(True, 'https://example.com/a'))}))"));
+    const i = got.all.indexOf("obscura");
+    expect(got.all.slice(i - 1, i + 2)).toEqual(["scrapling", "obscura", "scrapling-stealth"]);
+    expect(got.nb).toContain("obscura");
+  });
+
+  it("a hanging obscura is ended at its cap and the door answers a timeout, not a page", () => {
+    const stub = join(tmp, "obscura-hang");
+    writeFileSync(stub, "#!/bin/sh\nexec sleep 60\n");
+    chmodSync(stub, 0o755);
+    const t0 = Date.now();
+    const r = spawnSync("python3", ["-B", "-c",
+      "import sys, json; sys.path.insert(0, sys.argv[1]); import fetch; print(json.dumps(fetch.door_obscura('https://example.com/x', 2)))",
+      SCRIPTS], { encoding: "utf8", env: { ...process.env, DXB_OBSCURA: stub, PYTHONDONTWRITEBYTECODE: "1" } });
+    expect(r.status, r.stderr).toBe(0);
+    const [text, err] = JSON.parse(r.stdout) as [string, string];
+    expect(text).toBe("");
+    expect(err).toContain("timeout");
+    expect(Date.now() - t0).toBeLessThan(20_000);
+  }, 30_000);
+});

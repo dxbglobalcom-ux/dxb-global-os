@@ -1,0 +1,19 @@
+https://www.glassdoor.com/Search/results.htm?keyword=openai
+Just a moment...
+
+Humans only
+
+Glassdoor has been built on the contributions of real employees and job seekers. We use advanced security systems to keep our site safe and prevent misuse or unauthorized access.
+
+In rare cases, security protections may mistakenly block legitimate activity from real users. If you have been mistakenly blocked from accessing our site, please review our Help Center article for troubleshooting steps.
+
+Ray ID: a5c86cd29ded20a9
+Timestamp: 2026-11-18T16:41:51.807Z
+Your IP address: 217.230.29.164
+Cloudflare Location: DE
+Requested URL: https://www.glassdoor.com/Search/results.htm?keyword=openai&__cf_chl_rt_tk=quHWibheQ7Y8.IN5bR7ItNzeALHoW9ZvxyBeOZ0GexM-1795020111-1.0.1.1-jCJJ3gdBxu5IMWagTNGkMQCoAQvXTL0eSG1i4VsjmS4
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36
+
+
+We use first and third-party cookies on our platform (including strictly necessary; analysis and user experience improvement; and ad personalization and effectiveness cookies). To agree to these cookies for these purposes, please Accept Cookies. Learn more in our Cookie Policy. Change your choices via Select Cookies or the Cookie Consent Tool in our footer.
+Select Cookies Accept Cookies

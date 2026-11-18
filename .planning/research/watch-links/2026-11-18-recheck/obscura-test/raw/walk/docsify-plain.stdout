@@ -1,0 +1,5 @@
+{"step": "1-inner", "how": "navigate", "secs": 3.9, "url": "https://docsify.js.org/#/quickstart", "title": "docsify", "chars": 0, "headings": [], "nlinks": 0, "wall": null, "text_head": "", "t_total": 3.9}
+{"step": "2-deeper", "error": "no matching link on the page", "t_total": 7.9}
+{"step": "3-deeper", "error": "no matching link on the page", "t_total": 11.9}
+{"step": "4-deeper", "error": "no matching link on the page", "t_total": 15.9}
+{"step": "5-search", "how": "typed 'plugin' into .search input, input[type=search] + Enter: fill='Error: Element not found: .search input, input[type=search]' key='skipped' from https://docsify.js.org/#/quickstart", "secs": 6.0, "url": "https://docsify.js.org/#/quickstart", "title": "docsify", "chars": 0, "headings": [], "nlinks": 0, "wall": null, "text_head": "", "t_total": 25.9}

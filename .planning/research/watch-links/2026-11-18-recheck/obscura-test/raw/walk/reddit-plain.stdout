@@ -1,0 +1,3 @@
+{"step": "1-inner", "how": "navigate", "url": "https://www.reddit.com/r/LocalLLaMA/top/?t=week", "secs": 31.4, "error": "{'text': 'Error: Network error: navigation exceeded 30000ms deadline', 'isError': True}"}
+{"step": "2-deeper", "how": "DIRECT URL (no link to follow on the previous page)", "url": "https://www.reddit.com/r/LocalLLaMA/new/", "secs": 33.8, "error": "{'text': 'Error: Network error: navigation exceeded 30000ms deadline', 'isError': True}"}
+{"step": "3-deeper", "how": "DIRECT URL (no link to follow on the previous page)", "url": "https://www.reddit.com/r/MachineLearning/", "secs": 31.0, "error": "{'text': 'Error: Network error: navigation exceeded 30000ms deadline', 'isError': True}"}

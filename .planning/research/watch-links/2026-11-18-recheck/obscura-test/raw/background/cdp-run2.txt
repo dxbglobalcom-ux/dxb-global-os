@@ -1,0 +1,4 @@
+browser: Chrome/145.0.0.0 ws://127.0.0.1:9461/devtools/browser
+page: Headless browser - Wikipedia | 8343 4.5 s
+typed value: Puppeteer
+after Enter: https://en.wikipedia.org/wiki/Puppeteer | Puppeteer - Wikipedia | 9584

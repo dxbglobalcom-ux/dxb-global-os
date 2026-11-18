@@ -1,0 +1,6 @@
+[2m2026-11-18T16:41:35.388943Z[0m [31mERROR[0m [2mobscura::console[0m[2m:[0m ReferenceError: solveSimpleChallenge is not defined
+    at eval (eval at _resolveInlineHandler (<obscura:bootstrap>:4736:21), <anonymous>:3:56)
+    at _eventTargetDispatch (<obscura:bootstrap>:2067:37)
+    at globalThis.dispatchEvent (<obscura:bootstrap>:173:10)
+    at <load-event>:4:14
+[2m2026-11-18T16:41:36.679381Z[0m [31mERROR[0m [2mobscura::console[0m[2m:[0m Worker error: importScripts is not defined

@@ -1,0 +1,27 @@
+language: tr
+[00:00] Bu gördüğünüz şirket tarihinin en hızlı büyüyen yapay zekalı şirketlerinden bir tanesi.
+[00:03] Sadece 18 ayda 1 milyon dolar olan gelift tempolarını 1 milyar dolara çıkardılar
+[00:08] ve 40 milyondan fazla kullanıcıları var.
+[00:10] Adı Hicksfield.
+[00:11] Ve bu kadar hızlı büyümelerini sağlayan takdir edilesi, pazarlama stratejilerin arkasında çok daha basit bir şey yatıyor.
+[00:17] Paketçilik.
+[00:18] Eğer siz de Hicksfield'ya da benzeri kredi sistem kullanan bir platform kullanıcısınız, bu işi nasıl döndüğünü bir anlatayım.
+[00:24] Hicksfield'ın kendi ürettiği model sesi çok çok az.
+[00:27] Hala hazırda bir piyasada olan modelleri alıp farklı bir şekilde paketliyorlar.
+[00:31] Yani bir başka bir işle market rafındaki ürün alanı bir şık bir kutuya koyuluyor ve üstüne komisyon eklenip satılıyor.
+[00:36] Biz de o kutuya ihtiyacımız olmamasına rağmen tonlarca komisyon para söylüyoruz.
+[00:40] Peki bunu nasıl aşarız?
+[00:42] Kendimiz Hicksfield'ımızı kurarak.
+[00:43] Önce githaba gidiyoruz.
+[00:45] Burada Reverse Engineer, Enditing ya da kısaca reya adında bir araç var.
+[00:48] Yapay zekayı canına bir uygula markada nasıl çalışıyor?
+[00:51] Sorusunu cevaplatan bir tersine mühendislik aracı bu.
+[00:53] Merak etmeyin, sizin yapacağınız şey bu repoyu kılara kurdurmak.
+[00:57] Kılak Hicksfield'ın arayüzünü ve isteklerini inceleyip ekranların, düğmelerin ve model çağrılarının nasıl kurulduğunu çıkaracak.
+[01:03] Sen de bu analiz üzerine kendi uygulama arayüzünü kılada kurduracaksın.
+[01:07] Asıl mevzu ise market arahta dönüyor Hicksfield'ın yaptığı şeyi pazaryellerinden ya da model üreticilerinden ana örgünü alıp paketlemek demiştik.
+[01:14] Biz de bu pakete ortadan kaldırıyoruz ve ürünleri direkt pazaryenin kendisinden alıyoruz.
+[01:20] Bu ürünleri kullanabilmemiz için pazaryelleri bize bir anahtar veriyor.
+[01:23] Biz de bunu kurduğumuz uygulamanın içine yerleştiriyoruz.
+[01:26] Sonuçta Hicksfield gibi paketleme yapan platformlara komisyon ödemeden onların özelliklerini kendimiz bildirtmiş oluyoruz.
+[01:33] Paketin içindekini biliyorsanız kutuya para vermek zorunda değilsiniz.

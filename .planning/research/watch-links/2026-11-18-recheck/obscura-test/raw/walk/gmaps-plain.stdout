@@ -1,0 +1,5 @@
+{"step": "1-inner", "how": "navigate", "secs": 27.8, "url": "https://www.google.com/maps/search/coffee+shops+austin+tx?hl=en", "title": "Sorry...", "chars": 216, "headings": ["We're sorry..."], "nlinks": 2, "wall": null, "text_head": "Google Sorry... We're sorry... ... but your computer or network may be sending automated queries. To protect our users, we can't process your request right now. See 
+{"step": "2-deeper", "error": "no matching link on the page", "t_total": 31.8}
+{"step": "3-deeper", "error": "no matching link on the page", "t_total": 35.8}
+{"step": "4-deeper", "error": "no matching link on the page", "t_total": 39.8}
+{"step": "5-search", "how": "search by URL query", "secs": 26.2, "url": "https://www.google.com/maps/search/bakery+austin+tx?hl=en", "title": "Sorry...", "chars": 216, "headings": ["We're sorry..."], "nlinks": 2, "wall": null, "text_head": "Google Sorry... We're sorry... ... but your computer or network may be sending automated queries. To protect our users, we can't process your request right now

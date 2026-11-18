@@ -1,0 +1,48 @@
+[2m2026-11-18T16:41:53.845018Z[0m [33m WARN[0m [2mobscura_browser::page[0m[2m:[0m Refusing to execute script https://experiments.parsely.com/vip-experiments.js?apiKey=apnews.com after HTTP 0
+[2m2026-11-18T16:41:53.845038Z[0m [33m WARN[0m [2mobscura_browser::page[0m[2m:[0m Refusing to execute script https://ak.sail-horizon.com/spm/spm.v1.min.js after HTTP 0
+[2m2026-11-18T16:41:53.845041Z[0m [33m WARN[0m [2mobscura_browser::page[0m[2m:[0m Refusing to execute script https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js after HTTP 0
+[2m2026-11-18T16:41:53.845043Z[0m [33m WARN[0m [2mobscura_browser::page[0m[2m:[0m Refusing to execute script https://a.pub.network/apnews-com/pubfig.min.js after HTTP 0
+[2m2026-11-18T16:41:53.845046Z[0m [33m WARN[0m [2mobscura_browser::page[0m[2m:[0m Refusing to execute script https://s.ntv.io/serve/load.js after HTTP 0
+[2m2026-11-18T16:41:53.860258Z[0m [31mERROR[0m [2mobscura::console[0m[2m:[0m Dynamic script fetch error: HTTP 0
+[2m2026-11-18T16:41:53.868056Z[0m [31mERROR[0m [2mobscura::console[0m[2m:[0m [BC][DEBUG] article:section meta tag unavailable.
+[2m2026-11-18T16:41:53.868082Z[0m [31mERROR[0m [2mobscura::console[0m[2m:[0m [BC][DEBUG] keyword meta tag unavailable.
+[2m2026-11-18T16:41:53.869808Z[0m [31mERROR[0m [2mobscura::console[0m[2m:[0m Dynamic script fetch error: HTTP 0
+[2m2026-11-18T16:41:56.990852Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m Permutive was not initialized. No consent to run on the page
+[2m2026-11-18T16:41:57.166212Z[0m [31mERROR[0m [2mobscura::console[0m[2m:[0m Worker error: t.removeEventListener is not a function
+[2m2026-11-18T16:41:58.036925Z[0m [31mERROR[0m [2mobscura::console[0m[2m:[0m Dynamic script fetch error: HTTP 0
+[2m2026-11-18T16:41:59.867338Z[0m [31mERROR[0m [2mobscura::console[0m[2m:[0m Dynamic script fetch error: HTTP 0
+[2m2026-11-18T16:42:02.433800Z[0m [31mERROR[0m [2mobscura::console[0m[2m:[0m ReferenceError: Sailthru is not defined
+    at window.onload (https://apnews.com/search?q=artificial+intelligence:2:5)
+    at _eventTargetDispatch (<obscura:bootstrap>:2067:37)
+    at globalThis.dispatchEvent (<obscura:bootstrap>:173:10)
+    at <load-event>:4:14
+[2m2026-11-18T16:47:38.053483Z[0m [33m WARN[0m [2mobscura_browser::page[0m[2m:[0m Refusing to execute script https://experiments.parsely.com/vip-experiments.js?apiKey=apnews.com after HTTP 0
+[2m2026-11-18T16:47:38.053499Z[0m [33m WARN[0m [2mobscura_browser::page[0m[2m:[0m Refusing to execute script https://ak.sail-horizon.com/spm/spm.v1.min.js after HTTP 0
+[2m2026-11-18T16:47:38.053501Z[0m [33m WARN[0m [2mobscura_browser::page[0m[2m:[0m Refusing to execute script https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js after HTTP 0
+[2m2026-11-18T16:47:38.053503Z[0m [33m WARN[0m [2mobscura_browser::page[0m[2m:[0m Refusing to execute script https://a.pub.network/apnews-com/pubfig.min.js after HTTP 0
+[2m2026-11-18T16:47:38.053511Z[0m [33m WARN[0m [2mobscura_browser::page[0m[2m:[0m Refusing to execute script https://s.ntv.io/serve/load.js after HTTP 0
+[2m2026-11-18T16:47:38.053512Z[0m [33m WARN[0m [2mobscura_browser::page[0m[2m:[0m Refusing to execute script https://www.dianomi.com/js/contextfeedAPNews.js after HTTP 0
+[2m2026-11-18T16:47:38.066440Z[0m [31mERROR[0m [2mobscura::console[0m[2m:[0m Dynamic script fetch error: HTTP 0
+[2m2026-11-18T16:47:38.074240Z[0m [31mERROR[0m [2mobscura::console[0m[2m:[0m [BC][DEBUG] article:section meta tag unavailable.
+[2m2026-11-18T16:47:38.074272Z[0m [31mERROR[0m [2mobscura::console[0m[2m:[0m [BC][DEBUG] keyword meta tag unavailable.
+[2m2026-11-18T16:47:38.076685Z[0m [31mERROR[0m [2mobscura::console[0m[2m:[0m Dynamic script fetch error: HTTP 0
+[2m2026-11-18T16:47:41.711669Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m Permutive was not initialized. No consent to run on the page
+[2m2026-11-18T16:47:41.912847Z[0m [31mERROR[0m [2mobscura::console[0m[2m:[0m Worker error: t.removeEventListener is not a function
+[2m2026-11-18T16:47:42.711614Z[0m [31mERROR[0m [2mobscura::console[0m[2m:[0m Dynamic script fetch error: HTTP 0
+[2m2026-11-18T16:47:44.706953Z[0m [31mERROR[0m [2mobscura::console[0m[2m:[0m Dynamic script fetch error: HTTP 0
+[2m2026-11-18T16:47:47.547887Z[0m [31mERROR[0m [2mobscura::console[0m[2m:[0m Timer error: TypeError: Cannot read properties of undefined (reading 'call')
+    at HTMLScriptElement.set (eval at __prepareInsertedScript (<obscura:bootstrap>:2373:20), <anonymous>:1:9616)
+    at a (https://apcdp.apnews.com/script.js:207:264)
+    at Object.get (https://apcdp.apnews.com/script.js:211:278)
+    at https://apcdp.apnews.com/script.js:184:251
+    at <obscura:bootstrap>:1133:15
+    at _runTimerTask (<obscura:bootstrap>:1112:16)
+    at <obscura:bootstrap>:1132:7
+    at Object._onTimeout (<obscura:bootstrap>:1072:12)
+    at listOnTimeout (ext:core/02_timers.js:307:17)
+    at Object.processTimers (ext:core/02_timers.js:250:7)
+[2m2026-11-18T16:47:47.967809Z[0m [31mERROR[0m [2mobscura::console[0m[2m:[0m ReferenceError: Sailthru is not defined
+    at window.onload (https://apnews.com/hub/artificial-intelligence:2:5)
+    at _eventTargetDispatch (<obscura:bootstrap>:2067:37)
+    at globalThis.dispatchEvent (<obscura:bootstrap>:173:10)
+    at <load-event>:4:14

@@ -1,0 +1,7 @@
+{"step": "1-inner", "how": "navigate", "secs": 3.8, "url": "https://www.g2.com/products/slack/reviews", "title": "g2.com", "chars": 0, "headings": [], "nlinks": 0, "wall": null, "text_head": "", "t_total": 3.8}
+{"step": "2-deeper", "error": "no matching link on the page", "t_total": 7.8}
+{"step": "3-deeper", "error": "no matching link on the page", "t_total": 11.8}
+{"step": "4-deeper", "error": "no matching link on the page", "t_total": 15.8}
+{"step": "5-search", "how": "search by URL query", "secs": 3.7, "url": "https://www.g2.com/search?query=crm", "title": "g2.com", "chars": 0, "headings": [], "nlinks": 0, "wall": null, "text_head": "", "t_total": 23.5}
+{"step": "cookies", "count": 2}
+{"step": "end", "t_total": 23.5}

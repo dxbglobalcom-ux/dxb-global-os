@@ -1,0 +1,46 @@
+  media-transcript   --         0ms        0b  not a media url
+  pdf-text           --         0ms        0b  not a pdf url
+  scrapling          OK      1014ms    29953b
+
+read=True door=scrapling liveness=alive bytes=29953
+
+Open Higgsfield AI | Official Higgsfield API Platform
+
+![Higgsfield](/higgsfield-mark-lime.svg)Higgsfield API
+
+[Dashboard](/auth/sign-in?redirect_url=%2Fdashboard)[Explore models](/explore)[Quick start](/auth/sign-in?redirect_url=%2Fquick-start)[Documentation](https://docs.higgsfield.ai)[Pricing](/pricing)
+
+Playground
+
+[API keys](/auth/sign-in?redirect_url=%2Fapi-keys)[Cashback](/cashback)[Analytics](/auth/sign-in?redirect_url=%2Fusage)[Billing](/auth/sign-in?redirect_url=%2Fbilling)
+
+[Contact sales](/contact-sales)[Status](https://status.higgsfield.ai)
+
+[Pricing](/pricing)[Log in](/auth/sign-in?redirect_url=%2Fexplore)
+
+[![Higgsfield](/cdn-cgi/image/fit=scale-down,format=webp,onerror=redirect,width=200,quality=75/quiz-logo.png)](/)Explore models
+
+[![](https://d28lhcrx5qdowv.cloudfront.net/media/explore/media/1dd77a8b0a10cce6c374b3d973ce3725d4ffaa08a410f945bb50911a6bc411b9-thumbnail.webp)](https://d28lhcrx5qdowv.cloudfront.net/media/explore/media/2a3453d9d9c19e6d9fb25a0905ae8973ac34af35304bede92519587661e47a9e-video.mp4)
+
+Kling
+
+Kling 4.0 Flash
+===============
+
+Generate 720p videos from text prompts with Kling 4.0 Flash. Choose a duration from 3 to 20 seconds and an aspect ratio of 21:9, 16:9, 9:16, or 1:1.
+
+Explore modelfrom0.094 / s
+
+Kling
+
+Kling 4.0
+=========
+
+Create videos with Kling 4.0 from text, images, and video references. Generate up to 30-second clips in 1080p, guide keyframes, and edit existing videos.
+
+Explore modelfrom0.126 / s
+
+ByteDance
+
+Seedance 2.5
+=========

@@ -1,0 +1,17 @@
+[2m2026-11-18T16:44:48.522190Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m Element with id: cover-image not found
+[2m2026-11-18T16:44:48.525122Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m Element with id: isMergeSignInSignUpV2Enabled not found
+[2m2026-11-18T16:44:48.525216Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m Element with id: mergeSignInSignUpLixValue not found
+[2m2026-11-18T16:44:48.525790Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m No outlet was found with a data-modal attribute equal to the provided dataCustomOutlet param base-contextual-sign-in-modal
+[2m2026-11-18T16:45:12.649598Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m Element with id: dust-var-locale not found
+[2m2026-11-18T16:45:37.266206Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m Element with id: cover-image not found
+[2m2026-11-18T16:45:37.271155Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m Element with id: isMergeSignInSignUpV2Enabled not found
+[2m2026-11-18T16:45:37.271338Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m Element with id: mergeSignInSignUpLixValue not found
+[2m2026-11-18T16:45:37.271797Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m No outlet was found with a data-modal attribute equal to the provided dataCustomOutlet param base-contextual-sign-in-modal
+MCP page task failed: autonomous browser task exceeded its task budget
+[2m2026-11-18T16:45:49.453056Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m Element with id: dust-var-locale not found
+[2m2026-11-18T16:46:13.267754Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m Element with id: savedSearchList not found
+[2m2026-11-18T16:46:13.268563Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m Element with id: savedSearchUrl not found
+[2m2026-11-18T16:46:13.439631Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m Element with id: isMergeSignInSignUpV2Enabled not found
+[2m2026-11-18T16:46:13.439780Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m Element with id: mergeSignInSignUpLixValue not found
+[2m2026-11-18T16:46:13.440117Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m No outlet was found with a data-modal attribute equal to the provided dataCustomOutlet param base-contextual-sign-in-modal
+[2m2026-11-18T16:46:13.642197Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m elementToFocus not provided and the dropdown container is not focusable. Consider adding tabindex="-1" to: {"_nid":208,"_treeParent":{"_nid":206,"_treeParent":{"_nid":192,"_treeParent":{"_nid":174,"_treeConnected":true,"_treeConnectedEpoch":42,"_treeParent":{"_nid":162,"_treeParent":{"_nid":160,"_treeParent":{"_nid":155,"_classList":{},"_lname":"div","_treeParent":{"_nid":82,"_tagName":"BODY","_treeConnected":true,"_treeConnectedEpoch":36,"_classList":{},"_lname":"body","_treeParent":{"_nid":2,"_treeConnected":true,"_treeConnectedEpoch":0,"_treeParent":{"_nid":0,"_treeParent":null,"_treeParentEpoch":42,"_implementation":{}},"_treeParentEpoch":42,"_tagName":"HTML","__inlineHandlerCache":{"onopen":null,"onfocusin":null,"onshow":null}},"_treeParentEpoch":42,"__inlineHandlerCache":{"onopen":null,"onfocusin":null,"onshow":null}},"_treeParentEpoch":42},"_treeParentEpoch":42},"_treeParentEpoch":42},"_treeParentEpoch":42},"_treeParentEpoch":42},"_treeParentEpoch":42},"_treeParentEpoch":42,"_nsCache":"http://www.w3.org/1999/xhtml"}

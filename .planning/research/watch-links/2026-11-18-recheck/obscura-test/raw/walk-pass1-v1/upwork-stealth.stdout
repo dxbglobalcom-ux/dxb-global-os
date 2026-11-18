@@ -1,0 +1,5 @@
+{"step": "1-inner", "how": "navigate", "secs": 3.7, "url": "https://www.upwork.com/nx/search/jobs/?q=ai%20automation", "title": "Just a moment...", "chars": 95, "headings": [], "nlinks": 0, "wall": "Just a moment", "text_head": "Cloudflare Ray ID: a5c86c56ce6d65e1 Your IP: 217.230.29.164 \u00a9 2015 - 2026 Upwork\u00ae Global Inc.", "t_total": 3.7}
+{"step": "2-deeper", "error": "no matching link on the page", "t_total": 7.7}
+{"step": "3-deeper", "error": "no matching link on the page", "t_total": 11.7}
+{"step": "4-deeper", "error": "no matching link on the page", "t_total": 15.7}
+{"step": "5-search", "how": "search by URL query", "secs": 6.9, "url": "https://www.upwork.com/nx/search/jobs/?q=web%20scraping", "title": "Search Freelance Jobs on Upwork", "chars": 16042, "headings": ["Drive larger-scale work", "Learn about Upwork", "Web Scraping for One Site", "Web Scraping for 20+ Sites", "Web Scraper for Freelance Projects"], "nlinks": 243, "wall": null, "text_head": "Skip to

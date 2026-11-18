@@ -1,0 +1,15 @@
+https://www.glassdoor.com/member/profile/login?reason=bot-detection&postLoginUrl=https%3A%2F%2Fwww.glassdoor.com%2FReviews%2FAnthropic-Reviews-E8109027_P2.htm&rayid=a5c872bb7a85d9d2-FRA
+Just a moment...
+
+Humans only
+
+Glassdoor has been built on the contributions of real employees and job seekers. We use advanced security systems to keep our site safe and prevent misuse or unauthorized access.
+
+In rare cases, security protections may mistakenly block legitimate activity from real users. If you have been mistakenly blocked from accessing our site, please review our Help Center article for troubleshooting steps.
+
+Ray ID: a5c872bd1f71d9d2
+Timestamp: 2026-11-18T16:45:54.215Z
+Your IP address: 217.230.29.164
+Cloudflare Location: DE
+Requested URL: https://www.glassdoor.com/member/profile/login?reason=bot-detection&postLoginUrl=https%3A%2F%2Fwww.glassdoor.com%2FReviews%2FAnthropic-Reviews-E8109027_P2.htm&rayid=a5c872bb7a85d9d2-FRA&__cf_chl_rt_tk=ncxCRzIXMbJkRdrktnTYHYLnDz3wolprwD3TnP9O9mg-1795020354-1.0.1.1-FswB_356p_PnbvE06MEIKLMEcu_Jm2zneTfWLHvNA6E
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36

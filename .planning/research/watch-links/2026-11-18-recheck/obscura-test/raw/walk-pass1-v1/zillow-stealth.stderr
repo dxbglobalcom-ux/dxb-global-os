@@ -1,0 +1,186 @@
+[2m2026-11-18T16:41:34.902314Z[0m [31mERROR[0m [2mobscura::console[0m[2m:[0m Dynamic script fetch error: HTTP 0
+[2m2026-11-18T16:41:34.954065Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m Google Maps JavaScript API has been loaded directly without loading=async. This can result in suboptimal performance. For best-practice loading patterns please see https://goo.gle/js-api-loading
+[2m2026-11-18T16:41:35.086820Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m Unsatisfied version 18.3.1 from _N_E of shared singleton module react (required ^16)
+[2m2026-11-18T16:41:35.087463Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m Unsatisfied version 2.4.1 from _N_E of shared singleton module @zillow/frontier/dynamic (required ^1.61.0)
+[2m2026-11-18T16:41:35.087568Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m Unsatisfied version 18.3.1 from _N_E of shared singleton module react (required ~0.13.0 || ~0.14.0 || ^15.0.0 || ^16.0.0)
+[2m2026-11-18T16:41:35.087674Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m Unsatisfied version 2.4.1 from _N_E of shared singleton module @zillow/frontier/dynamic (required ^1.74.0)
+[2m2026-11-18T16:41:35.087860Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m Unsatisfied version 18.3.1 from _N_E of shared singleton module react (required ^17.0.2)
+[2m2026-11-18T16:41:35.087948Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m Unsatisfied version 18.3.1 from _N_E of shared singleton module react-dom (required ^16.8.6)
+[2m2026-11-18T16:41:35.088033Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m Unsatisfied version 18.3.1 from _N_E of shared singleton module react (required ^15.6.2 || ^16.0.0)
+[2m2026-11-18T16:41:35.088112Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m Unsatisfied version 18.3.1 from _N_E of shared singleton module react (required ^16.0.0)
+[2m2026-11-18T16:41:35.088134Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m Unsatisfied version 18.3.1 from _N_E of shared singleton module react (required ^16.8.6)
+[2m2026-11-18T16:41:35.088287Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m Unsatisfied version 18.3.1 from _N_E of shared singleton module react (required ^16.8.3)
+[2m2026-11-18T16:41:35.088322Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m Unsatisfied version 18.3.1 from _N_E of shared singleton module react (required ~0.14.0 || ^15.0.0 || ^16.0.0 || ^17.0.0)
+[2m2026-11-18T16:41:35.089053Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m Unsatisfied version 5.8.0 from _N_E of shared singleton module @zillow/gdp-client (required =5.6.0)
+[2m2026-11-18T16:41:35.698916Z[0m [31mERROR[0m [2mobscura::console[0m[2m:[0m Datadog Browser SDK: onReady callback threw an error: TypeError: e.addFeatureFlagEvaluation is not a function
+    at https://www.zillowstatic.com/s3/pfs/core-f27a1b15fdb73c866f9f.js:1:6854
+    at eval (eval at execute (<obscura:bootstrap>:473:28), <anonymous>:1:522)
+    at eval (eval at execute (<obscura:bootstrap>:473:28), <anonymous>:1:165693)
+    at Array.forEach (<anonymous>)
+    at eval (eval at execute (<obscura:bootstrap>:473:28), <anonymous>:1:165626)
+    at eval (eval at execute (<obscura:bootstrap>:473:28), <anonymous>:1:165699)
+    at eval (<anonymous>)
+    at execute (<obscura:bootstrap>:473:28)
+    at Object._onTimeout (<obscura:bootstrap>:1072:12)
+    at listOnTimeout (ext:core/02_timers.js:307:17)
+    at Object.processTimers (ext:core/02_timers.js:250:7)
+    at __processTimers (ext:core/01_core.js:448:21)
+[2m2026-11-18T16:41:36.074036Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m Unsatisfied version 0.3.2 from _N_E of shared singleton module @zillow/web-platform-browser-rum (required ~0.1.5)
+[2m2026-11-18T16:41:36.077271Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m Unsatisfied version 0.3.2 from _N_E of shared singleton module @zillow/web-platform-browser-rum (required ~0.1.5)
+[2m2026-11-18T16:41:36.279725Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m No resource perf records available
+[2m2026-11-18T16:41:36.590506Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m No resource perf records available
+[2m2026-11-18T16:41:36.590540Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m Event "Search Page Components Mounted" is not registered and will be ignored.
+[2m2026-11-18T16:41:36.590546Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m Event "Start Page Hydration" is not registered and will be ignored.
+[2m2026-11-18T16:41:36.590552Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m Event "USR_OPT_CONTROL_Search Page Components Mounted" is not registered and will be ignored.
+[2m2026-11-18T16:41:36.590557Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m Event "USR_OPT_CONTROL_Start Page Hydration" is not registered and will be ignored.
+[2m2026-11-18T16:41:36.659032Z[0m [31mERROR[0m [2mobscura::console[0m[2m:[0m Dynamic script fetch error: HTTP 0
+[2m2026-11-18T16:41:36.659369Z[0m [31mERROR[0m [2mobscura::console[0m[2m:[0m Dynamic script fetch error: HTTP 0
+[2m2026-11-18T16:41:36.659394Z[0m [31mERROR[0m [2mobscura::console[0m[2m:[0m Dynamic script fetch error: HTTP 0
+[2m2026-11-18T16:41:36.662971Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m Unsatisfied version 18.3.1 from _N_E of shared singleton module react-dom (required ^16.3.2)
+[2m2026-11-18T16:41:36.663014Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m Unsatisfied version 18.3.1 from _N_E of shared singleton module react (required ^16.3.2)
+[2m2026-11-18T16:41:36.663449Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m Unsatisfied version 18.3.1 from _N_E of shared singleton module react (required ^17.0.2)
+[2m2026-11-18T16:41:36.663472Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m Unsatisfied version 18.3.1 from _N_E of shared singleton module react-dom (required ^17.0.2)
+[2m2026-11-18T16:41:37.579838Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m [GSI_LOGGER]: Your client application uses one of the Google One Tap prompt UI status methods that may stop functioning when FedCM becomes mandatory. Refer to the migration guide to update your code accordingly and opt-in to FedCM to test your changes. Learn more: https://developers.google.com/identity/gsi/web/guides/fedcm-migration?s=dc#display_moment and https://developers.google.com/identity/gsi/web/guides/fedcm-migration?s=dc#skipped_moment
+[2m2026-11-18T16:41:37.592145Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m Unsatisfied version 0.3.2 from _N_E of shared singleton module @zillow/web-platform-browser-rum (required ~0.1.5)
+[2m2026-11-18T16:41:38.901766Z[0m [31mERROR[0m [2mobscura::console[0m[2m:[0m [DDRumInitMonitor] DD_RUM ready but getInitConfiguration() returned undefined
+[2m2026-11-18T16:41:41.613259Z[0m [31mERROR[0m [2mobscura::console[0m[2m:[0m Dynamic script fetch error: HTTP 0
+[2m2026-11-18T16:41:41.653491Z[0m [31mERROR[0m [2mobscura::console[0m[2m:[0m Dynamic script error (https://api.consentjs.datagrail.io/consent/7e84c9ce-057e-4c91-87ef-56e6d4914637/a84e7f07-b7d6-4b7a-af51-89d7fb6d34f4/consent.js): Cannot redefine property: cookie
+[2m2026-11-18T16:41:41.677323Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m Element with name "gmp-internal-loading-text" already defined.
+[2m2026-11-18T16:41:41.677602Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m Element with name "gmp-internal-request-error-text" already defined.
+[2m2026-11-18T16:41:41.678530Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m Element with name "gmp-internal-back-button" already defined.
+[2m2026-11-18T16:41:41.678772Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m Element with name "gmp-internal-dialog" already defined.
+[2m2026-11-18T16:41:41.678986Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m Element with name "gmp-internal-disclosure" already defined.
+[2m2026-11-18T16:41:41.679102Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m Element with name "gmp-internal-disclosure-section" already defined.
+[2m2026-11-18T16:41:41.679270Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m Element with name "gmp-internal-attribution" already defined.
+[2m2026-11-18T16:41:41.679689Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m Element with name "gmp-internal-element-support-verification" already defined.
+[2m2026-11-18T16:41:41.679800Z[0m [31mERROR[0m [2mobscura::console[0m[2m:[0m You have included the Google Maps JavaScript API multiple times on this page. This may cause unexpected errors.
+[2m2026-11-18T16:41:41.680046Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m Google Maps JavaScript API has been loaded directly without loading=async. This can result in suboptimal performance. For best-practice loading patterns please see https://goo.gle/js-api-loading
+[2m2026-11-18T16:41:41.685473Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m Element with name "gmp-pin" already defined.
+[2m2026-11-18T16:41:41.689047Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m Element with name "gmp-internal-camera-control" already defined.
+[2m2026-11-18T16:41:41.693158Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m Element with name "gmp-internal-rating" already defined.
+[2m2026-11-18T16:41:41.693415Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m Element with name "gmp-place-all-content" already defined.
+[2m2026-11-18T16:41:41.693631Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m Element with name "gmp-internal-link-button" already defined.
+[2m2026-11-18T16:41:41.693788Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m Element with name "gmp-internal-menu" already defined.
+[2m2026-11-18T16:41:41.694758Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m Element with name "gmp-internal-place-opening-hours" already defined.
+[2m2026-11-18T16:41:41.694895Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m Element with name "gmp-internal-place-review" already defined.
+[2m2026-11-18T16:41:41.695013Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m Element with name "gmp-internal-tabbed-layout" already defined.
+[2m2026-11-18T16:41:41.695159Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m Element with name "gmp-internal-lightbox" already defined.
+[2m2026-11-18T16:41:41.695314Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m Element with name "gmp-internal-collage" already defined.
+[2m2026-11-18T16:41:41.695489Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m Element with name "gmp-internal-popular-times-histogram" already defined.
+[2m2026-11-18T16:41:41.695626Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m Element with name "gmp-internal-selection-button" already defined.
+[2m2026-11-18T16:41:41.695754Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m Element with name "gmp-internal-place-popular-times" already defined.
+[2m2026-11-18T16:41:41.695877Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m Element with name "gmp-internal-place-rating-summary" already defined.
+[2m2026-11-18T16:41:41.696082Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m Element with name "gmp-place-content-config" already defined.
+[2m2026-11-18T16:41:41.696192Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m Element with name "gmp-place-standard-content" already defined.
+[2m2026-11-18T16:41:41.696311Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m Element with name "gmp-internal-place-transit-type" already defined.
+[2m2026-11-18T16:41:41.696427Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m Element with name "gmp-internal-place-transit" already defined.
+[2m2026-11-18T16:41:41.696562Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m Element with name "gmp-internal-place-basic-info" already defined.
+[2m2026-11-18T16:41:41.696675Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m Element with name "gmp-place-details-location-request" already defined.
+[2m2026-11-18T16:41:41.696850Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m Element with name "gmp-place-details-place-request" already defined.
+[2m2026-11-18T16:41:41.697053Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m Element with name "gmp-internal-circular-loader" already defined.
+[2m2026-11-18T16:41:41.697181Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m Element with name "gmp-place-details-compact" already defined.
+[2m2026-11-18T16:41:41.697356Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m Element with name "gmp-place-details" already defined.
+[2m2026-11-18T16:41:41.697921Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m Element with name "gmp-internal-use-2d-map-place-details-compact" already defined.
+[2m2026-11-18T16:41:41.698068Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m Element with name "gmp-place-media" already defined.
+[2m2026-11-18T16:41:41.698179Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m Element with name "gmp-place-address" already defined.
+[2m2026-11-18T16:41:41.698272Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m Element with name "gmp-place-rating" already defined.
+[2m2026-11-18T16:41:41.698362Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m Element with name "gmp-place-type" already defined.
+[2m2026-11-18T16:41:41.698454Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m Element with name "gmp-place-price" already defined.
+[2m2026-11-18T16:41:41.698541Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m Element with name "gmp-place-accessible-entrance-icon" already defined.
+[2m2026-11-18T16:41:41.698625Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m Element with name "gmp-place-open-now-status" already defined.
+[2m2026-11-18T16:41:41.698713Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m Element with name "gmp-place-attribution" already defined.
+[2m2026-11-18T16:41:41.698861Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m Element with name "gmp-place-website" already defined.
+[2m2026-11-18T16:41:41.698965Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m Element with name "gmp-place-phone-number" already defined.
+[2m2026-11-18T16:41:41.699055Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m Element with name "gmp-place-opening-hours" already defined.
+[2m2026-11-18T16:41:41.699149Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m Element with name "gmp-place-summary" already defined.
+[2m2026-11-18T16:41:41.699236Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m Element with name "gmp-place-type-specific-highlights" already defined.
+[2m2026-11-18T16:41:41.699325Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m Element with name "gmp-place-review-summary" already defined.
+[2m2026-11-18T16:41:41.699415Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m Element with name "gmp-place-reviews" already defined.
+[2m2026-11-18T16:41:41.699501Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m Element with name "gmp-place-plus-code" already defined.
+[2m2026-11-18T16:41:41.699586Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m Element with name "gmp-place-feature-list" already defined.
+[2m2026-11-18T16:41:41.699678Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m Element with name "gmp-internal-use-place-details-compact" already defined.
+[2m2026-11-18T16:41:41.699840Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m Element with name "gmp-internal-advanced-place-search-list-item" already defined.
+[2m2026-11-18T16:41:41.699997Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m Element with name "gmp-internal-place-carousel" already defined.
+[2m2026-11-18T16:41:41.700270Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m Element with name "gmp-internal-place-search-list-item" already defined.
+[2m2026-11-18T16:41:41.700439Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m Element with name "gmp-place-nearby-search-request" already defined.
+[2m2026-11-18T16:41:41.700636Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m Element with name "gmp-place-text-search-request" already defined.
+[2m2026-11-18T16:41:41.700759Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m Element with name "gmp-place-search" already defined.
+[2m2026-11-18T16:41:41.701460Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m Element with name "gmp-map" already defined.
+[2m2026-11-18T16:41:41.701823Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m Element with name "gmp-place-autocomplete" already defined.
+[2m2026-11-18T16:41:41.702031Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m Element with name "gmp-basic-place-autocomplete" already defined.
+[2m2026-11-18T16:41:42.767801Z[0m [31mERROR[0m [2mobscura::console[0m[2m:[0m TypeError: Failed to fetch: CORS error: Origin 'https://www.zillow.com' not in Access-Control-Allow-Origin ''
+    at _fetch (<obscura:bootstrap>:8948:11)
+    at async Promise.all (index 0)
+[2m2026-11-18T16:41:45.534255Z[0m [31mERROR[0m [2mobscura::console[0m[2m:[0m InvalidValueError: not a LatLng or LatLngLiteral: in property lat: not a number
+    at Object._.Kl (https://maps.googleapis.com/maps/api/js?key=AIzaSyC1dhrSOF7uvGpaCanRaa9sT7MIakZBGlc&libraries=places,geometry&v=3.65&callback=_onGoogleMapLoad:2487:123)
+    at Object._.gm (https://maps.googleapis.com/maps/api/js?key=AIzaSyC1dhrSOF7uvGpaCanRaa9sT7MIakZBGlc&libraries=places,geometry&v=3.65&callback=_onGoogleMapLoad:2495:332)
+    at _.bn.contains (https://maps.googleapis.com/maps/api/js?key=AIzaSyC1dhrSOF7uvGpaCanRaa9sT7MIakZBGlc&libraries=places,geometry&v=3.65&callback=_onGoogleMapLoad:2696:411)
+    at ht.mapDot (eval at execute (<obscura:bootstrap>:473:28), <anonymous>:16:337709)
+    at eval (eval at execute (<obscura:bootstrap>:473:28), <anonymous>:16:337287)
+    at Array.map (<anonymous>)
+    at ht.getDots (eval at execute (<obscura:bootstrap>:473:28), <anonymous>:16:337275)
+    at ht.render (eval at execute (<obscura:bootstrap>:473:28), <anonymous>:16:338134)
+    at um (https://www.zillow.com/s3/shopper-platform/_next/static/chunks/framework-dc1d49c026dc2558.js:1:75854)
+    at up (https://www.zillow.com/s3/shopper-platform/_next/static/chunks/framework-dc1d49c026dc2558.js:1:75652)
+    at i (https://www.zillow.com/s3/shopper-platform/_next/static/chunks/framework-dc1d49c026dc2558.js:1:120442)
+    at oO (https://www.zillow.com/s3/shopper-platform/_next/static/chunks/framework-dc1d49c026dc2558.js:1:99114)
+    at https://www.zillow.com/s3/shopper-platform/_next/static/chunks/framework-dc1d49c026dc2558.js:1:98981
+    at oF (https://www.zillow.com/s3/shopper-platform/_next/static/chunks/framework-dc1d49c026dc2558.js:1:98988)
+    at ox (https://www.zillow.com/s3/shopper-platform/_next/static/chunks/framework-dc1d49c026dc2558.js:1:95740)
+    at oC (https://www.zillow.com/s3/shopper-platform/_next/static/chunks/framework-dc1d49c026dc2558.js:1:96129)
+    at r8 (https://www.zillow.com/s3/shopper-platform/_next/static/chunks/framework-dc1d49c026dc2558.js:1:44906)
+    at https://www.zillow.com/s3/shopper-platform/_next/static/chunks/framework-dc1d49c026dc2558.js:1:111641
+    at oI (https://www.zillow.com/s3/shopper-platform/_next/static/chunks/framework-dc1d49c026dc2558.js:1:111647)
+    at oS (https://www.zillow.com/s3/shopper-platform/_next/static/chunks/framework-dc1d49c026dc2558.js:1:95017)
+    at x (https://www.zillow.com/s3/shopper-platform/_next/static/chunks/framework-dc1d49c026dc2558.js:1:137510)
+    at MessagePort.T (https://www.zillow.com/s3/shopper-platform/_next/static/chunks/framework-dc1d49c026dc2558.js:1:138040)
+    at MessagePort.wrapper (<obscura:bootstrap>:1579:50)
+    at _eventTargetDispatch (<obscura:bootstrap>:2085:54)
+    at <obscura:bootstrap>:1609:5
+    at _browserPostedTaskRunOne (<obscura:bootstrap>:1358:9)
+[2m2026-11-18T16:41:45.673039Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m Attempting to send too many items for a key, truncating zpid to 30 items
+[2m2026-11-18T16:42:06.335523Z[0m [31mERROR[0m [2mobscura::console[0m[2m:[0m Dynamic script fetch error: HTTP 0
+[2m2026-11-18T16:42:06.366726Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m Google Maps JavaScript API has been loaded directly without loading=async. This can result in suboptimal performance. For best-practice loading patterns please see https://goo.gle/js-api-loading
+[2m2026-11-18T16:42:06.518331Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m Unsatisfied version 18.3.1 from _N_E of shared singleton module react (required ^16)
+[2m2026-11-18T16:42:06.518497Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m Unsatisfied version 2.4.1 from _N_E of shared singleton module @zillow/frontier/dynamic (required ^1.61.0)
+[2m2026-11-18T16:42:06.518577Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m Unsatisfied version 18.3.1 from _N_E of shared singleton module react (required ~0.13.0 || ~0.14.0 || ^15.0.0 || ^16.0.0)
+[2m2026-11-18T16:42:06.518657Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m Unsatisfied version 2.4.1 from _N_E of shared singleton module @zillow/frontier/dynamic (required ^1.74.0)
+[2m2026-11-18T16:42:06.518743Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m Unsatisfied version 18.3.1 from _N_E of shared singleton module react (required ^17.0.2)
+[2m2026-11-18T16:42:06.518786Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m Unsatisfied version 18.3.1 from _N_E of shared singleton module react-dom (required ^16.8.6)
+[2m2026-11-18T16:42:06.518846Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m Unsatisfied version 18.3.1 from _N_E of shared singleton module react (required ^15.6.2 || ^16.0.0)
+[2m2026-11-18T16:42:06.519072Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m Unsatisfied version 18.3.1 from _N_E of shared singleton module react (required ^16.0.0)
+[2m2026-11-18T16:42:06.519106Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m Unsatisfied version 18.3.1 from _N_E of shared singleton module react (required ^16.8.6)
+[2m2026-11-18T16:42:06.519264Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m Unsatisfied version 18.3.1 from _N_E of shared singleton module react (required ^16.8.3)
+[2m2026-11-18T16:42:06.519297Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m Unsatisfied version 18.3.1 from _N_E of shared singleton module react (required ~0.14.0 || ^15.0.0 || ^16.0.0 || ^17.0.0)
+[2m2026-11-18T16:42:06.519911Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m Unsatisfied version 5.8.0 from _N_E of shared singleton module @zillow/gdp-client (required =5.6.0)
+[2m2026-11-18T16:42:06.697581Z[0m [31mERROR[0m [2mobscura::console[0m[2m:[0m Datadog Browser SDK: onReady callback threw an error: TypeError: e.addFeatureFlagEvaluation is not a function
+    at https://www.zillowstatic.com/s3/pfs/core-f27a1b15fdb73c866f9f.js:1:6854
+    at eval (eval at execute (<obscura:bootstrap>:473:28), <anonymous>:1:522)
+    at eval (eval at execute (<obscura:bootstrap>:473:28), <anonymous>:1:165693)
+    at Array.forEach (<anonymous>)
+    at eval (eval at execute (<obscura:bootstrap>:473:28), <anonymous>:1:165626)
+    at eval (eval at execute (<obscura:bootstrap>:473:28), <anonymous>:1:165699)
+    at eval (<anonymous>)
+    at execute (<obscura:bootstrap>:473:28)
+    at Object._onTimeout (<obscura:bootstrap>:1072:12)
+    at listOnTimeout (ext:core/02_timers.js:307:17)
+    at Object.processTimers (ext:core/02_timers.js:250:7)
+    at __processTimers (ext:core/01_core.js:448:21)
+[2m2026-11-18T16:42:07.085699Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m Unsatisfied version 0.3.2 from _N_E of shared singleton module @zillow/web-platform-browser-rum (required ~0.1.5)
+[2m2026-11-18T16:42:07.090914Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m Unsatisfied version 0.3.2 from _N_E of shared singleton module @zillow/web-platform-browser-rum (required ~0.1.5)
+[2m2026-11-18T16:42:07.614701Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m No resource perf records available
+[2m2026-11-18T16:42:07.807986Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m No resource perf records available
+[2m2026-11-18T16:42:07.808008Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m Event "Search Page Components Mounted" is not registered and will be ignored.
+[2m2026-11-18T16:42:07.808012Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m Event "Start Page Hydration" is not registered and will be ignored.
+[2m2026-11-18T16:42:07.808016Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m Event "USR_OPT_CONTROL_Search Page Components Mounted" is not registered and will be ignored.
+[2m2026-11-18T16:42:07.808024Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m Event "USR_OPT_CONTROL_Start Page Hydration" is not registered and will be ignored.
+[2m2026-11-18T16:42:07.892154Z[0m [31mERROR[0m [2mobscura::console[0m[2m:[0m Dynamic script fetch error: HTTP 0
+[2m2026-11-18T16:42:07.892540Z[0m [31mERROR[0m [2mobscura::console[0m[2m:[0m Dynamic script fetch error: HTTP 0
+[2m2026-11-18T16:42:07.892564Z[0m [31mERROR[0m [2mobscura::console[0m[2m:[0m Dynamic script fetch error: HTTP 0
+[2m2026-11-18T16:42:07.895848Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m Unsatisfied version 18.3.1 from _N_E of shared singleton module react-dom (required ^16.3.2)
+[2m2026-11-18T16:42:07.895888Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m Unsatisfied version 18.3.1 from _N_E of shared singleton module react (required ^16.3.2)
+[2m2026-11-18T16:42:07.896284Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m Unsatisfied version 18.3.1 from _N_E of shared singleton module react (required ^17.0.2)
+[2m2026-11-18T16:42:07.896306Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m Unsatisfied version 18.3.1 from _N_E of shared singleton module react-dom (required ^17.0.2)
+[2m2026-11-18T16:42:08.762282Z[0m [31mERROR[0m [2mobscura::console[0m[2m:[0m Dynamic script error (https://api.consentjs.datagrail.io/consent/7e84c9ce-057e-4c91-87ef-56e6d4914637/a84e7f07-b7d6-4b7a-af51-89d7fb6d34f4/consent.js): Cannot redefine property: cookie
+[2m2026-11-18T16:42:09.851001Z[0m [33m WARN[0m [2mobscura::console[0m[2m:[0m Unsatisfied version 0.3.2 from _N_E of shared singleton module @zillow/web-platform-browser-rum (required ~0.1.5)
+[2m2026-11-18T16:42:09.865795Z[0m [31mERROR[0m [2mobscura::console[0m[2m:[0m [DDRumInitMonitor] DD_RUM ready but getInitConfiguration() returned undefined

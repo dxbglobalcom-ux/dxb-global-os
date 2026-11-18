@@ -1,0 +1,5 @@
+{"step": "1-inner", "how": "navigate", "secs": 4.0, "url": "https://www.glassdoor.com/Reviews/Anthropic-Reviews-E8109027.htm", "title": "Just a moment...", "chars": 1248, "headings": ["Humans only"], "nlinks": 2, "wall": "Just a moment", "text_head": "Humans only Glassdoor has been built on the contributions of real employees and job seekers. We use advanced security systems to keep our site safe 
+{"step": "2-deeper", "error": "no matching link on the page", "t_total": 8.0}
+{"step": "3-deeper", "error": "no matching link on the page", "t_total": 12.0}
+{"step": "4-deeper", "error": "no matching link on the page", "t_total": 16.0}
+{"step": "5-search", "how": "search by URL query", "secs": 3.8, "url": "https://www.glassdoor.com/Search/results.htm?keyword=openai", "title": "Just a moment...", "chars": 1243, "headings": ["Humans only"], "nlinks": 2, "wall": "Just a moment", "text_head": "Humans only Glassdoor has been built on the contributions of real employees and job seekers. We use advanced security systems to keep our sit

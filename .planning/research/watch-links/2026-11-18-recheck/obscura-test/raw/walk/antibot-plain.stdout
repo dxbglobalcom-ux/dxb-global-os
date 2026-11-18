@@ -1,0 +1,4 @@
+{"step": "1-inner", "how": "navigate", "secs": 18.9, "url": "https://www.scrapingcourse.com/antibot-challenge", "title": "Just a moment...", "chars": 270, "headings": ["www.scrapingcourse.com", "Performing security verification", "Verification successful. Waiting for www.scrapingcourse.com to respond"], "nlinks": 2, "wall": "Just a moment", "text_head": "www.scrapingcourse.com Performing security 
+{"step": "2-deeper", "error": "no matching link on the page", "t_total": 22.9}
+{"step": "3-deeper", "error": "no matching link on the page", "t_total": 26.9}
+{"step": "4-deeper", "error": "no matching link on the page", "t_total": 30.9}

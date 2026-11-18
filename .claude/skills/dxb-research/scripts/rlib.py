@@ -387,6 +387,12 @@ _WALL = re.compile(
     # "please verify you are a human" wording does not match. The wordings are the sites' own.
     r"security \| glassdoor|nur für menschen|press & hold to confirm you are a human|"
     r"human challenge requires verification|"
+    # CLOUDFLARE'S PRESENT CHALLENGE PAGE, measured 2026-11-18 through Obscura on scrapingcourse.com's test page:
+    # 482 bytes, "Performing security verification" over "This website uses a security service to protect
+    # against malicious bots", and none of the older wordings above — it passed as a page. Both sentences are
+    # Cloudflare's own; the second is matched whole, so a page that only writes about bot protection is not a wall.
+    r"performing security verification|"
+    r"this website uses a security service to protect against malicious bots|"
     # INSTAGRAM'S ANONYMOUS LANDING DIALOG, measured 2026-09-21 and the reason this line
     # exists: `scrapling-stealth` opened https://www.instagram.com/p/DTa2MBcEyFv/ and was
     # handed 24 162 bytes with `wall: false` and `read: true` - the post's images, its

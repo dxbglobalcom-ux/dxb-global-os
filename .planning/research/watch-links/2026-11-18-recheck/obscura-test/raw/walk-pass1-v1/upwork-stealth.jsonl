@@ -1,0 +1,7 @@
+{"step": "1-inner", "how": "navigate", "secs": 3.7, "url": "https://www.upwork.com/nx/search/jobs/?q=ai%20automation", "title": "Just a moment...", "chars": 95, "headings": [], "nlinks": 0, "wall": "Just a moment", "text_head": "Cloudflare Ray ID: a5c86c56ce6d65e1 Your IP: 217.230.29.164 \u00a9 2015 - 2026 Upwork\u00ae Global Inc.", "t_total": 3.7}
+{"step": "2-deeper", "error": "no matching link on the page", "t_total": 7.7}
+{"step": "3-deeper", "error": "no matching link on the page", "t_total": 11.7}
+{"step": "4-deeper", "error": "no matching link on the page", "t_total": 15.7}
+{"step": "5-search", "how": "search by URL query", "secs": 6.9, "url": "https://www.upwork.com/nx/search/jobs/?q=web%20scraping", "title": "Search Freelance Jobs on Upwork", "chars": 16042, "headings": ["Drive larger-scale work", "Learn about Upwork", "Web Scraping for One Site", "Web Scraping for 20+ Sites", "Web Scraper for Freelance Projects"], "nlinks": 243, "wall": null, "text_head": "Skip to content Upwork home Hire talent Get outcomes Find work Why Upwork Pricing Enterprise Log in Sign up Secondary Development & IT AI Services Design & Creative Sales & Marketing Admin & Customer Support More Search Advanced search Tabs Talent Jobs Category Select Categories Select Categories Experience level Experience level filter Entry Level (17) Intermediate (176) Expert (83) Job type Ho", "t_total": 26.6}
+{"step": "cookies", "count": 16}
+{"step": "end", "t_total": 27.1}
