@@ -14,7 +14,8 @@
 - **Çıktı — "müşteri işinde ilk kare fal'daki FLUX.2 pro" kararı:** görseli de yönlendirici seçer (FLUX, ChatGPT Image, MiniMax H3 ya da başka bir yol). *"O illa bununla yapılacak diye bir şey yok yani."*
 - **Çıktı — MiniMax'tan kredi istemek:** tamamen düştü, bir daha gündeme gelmez <!-- CEO-OK: minimax-credit-request-dropped-2026-10-18 -->.
 - **Çıktı — kanallar:** ilk kanal, kanalı şimdi açmak, SIGNAL'in ilk adımı, kanal tablosu ve sponsor takvimi bu planın yapımından çıktı. Kanallar ayrı ve daha detaylı bir çalışma olur; girdisi R3–R7 araştırmaları ve 17 Ekim taslağının kanal bölümü (`PLAN-max.md`). *"Bu kanallarla ilgili daha detaylı bir çalışma yapacağız."*
-- **Eklendi — Higgsfield:** API'si müşteri işlerinde kullanılır; sınırsız aboneliğe otomasyon bağlanmaz. Bağlanacak hesaplar: fal, Runware, WaveSpeed, kie.ai, MiniMax, Higgsfield; Replicate GitHub tıkıyla. Google, BytePlus, Kling ve Alibaba'yı tarayıcı izler; bir iş gerektirirse bağlanır. *"Holding'e tüm hesapları bağlayın."*
+- **Bağlanacak hesaplar:** fal, Runware, WaveSpeed, kie.ai, MiniMax; Replicate GitHub tıkıyla. Google, BytePlus, Kling ve Alibaba'yı tarayıcı izler; bir iş gerektirirse bağlanır. *"Holding'e tüm hesapları bağlayın."*
+- **2026-11-18 — Higgsfield listeden çıktı:** sizin 18 Kasım emrinizle şirkette hiçbir iş için kullanılmaz; sağlayıcıların kendi API'leri doğrudan bağlanır, sistemi stüdyonun içinde kurulur (B43) <!-- CEO-OK: higgsfield-not-used-its-system-built-in-the-studio-teardown-at-its-turn-2026-11-18 -->.
 - **FLUX.1-Krea-dev:** işlerimizde rahatça kullanılır — sizin sözünüz <!-- CEO-OK: flux-krea-dev-usable-in-our-work-2026-10-18 -->.
 - **İslami sınırlar:** faizli finans, alkol, flört ve açıkça günah olan her şey kesinlikle yok <!-- CEO-OK: islamic-exclusions-sponsors-and-work-2026-10-18 -->. Müzik: holdingin kendi işlerinde yok; müşteri işlerinde ilk müşteri gelince karar verilir, öncesinde sorulmaz <!-- CEO-OK: solo-test-parked-and-music-at-first-client-2026-11-08 -->. Çocuk animasyonunda canlı tasviri hükme bağlanmadı; kanal çalışmasıyla size gelir.
 
@@ -24,7 +25,7 @@
 
 ### Kısa cevap
 
-- Muhittin Bey, stüdyoyu ilk dalgada altı platforma bağlıyoruz: fal, Runware, WaveSpeed, kie.ai, MiniMax, Higgsfield — holdingin hesabıyla (Google ile girilebilen her yerde Google), kullandıkça öde, abonelik yok; Replicate GitHub tıkıyla.
+- Muhittin Bey, stüdyoyu ilk dalgada beş platforma bağlıyoruz: fal, Runware, WaveSpeed, kie.ai, MiniMax — holdingin hesabıyla (Google ile girilebilen her yerde Google), kullandıkça öde, abonelik yok; Replicate GitHub tıkıyla.
 - Her işte sistem bütün yolların fiyatını aynı anda kodla hesaplar (sıfır hata, milisaniye), kalite tabanını geçenlerin en iyisini seçer ve stüdyo sekmesinde tek kart getirir: *"Bu iş en iyi burada üretilir: Runware · Seedance 2.5 · 1080p, şu kadar — onaylıyor musunuz?"* Tıkınız olmadan hiçbir şey üretilmez, hiçbir kuruş harcanmaz.
 - Kendi kartımız ilk, neredeyse bedava yol kalır: 8 adımda ayda ~16.100 kabul edilmiş saniye taşır, 10 müşteriye ~7.880 yeter (kapasite çalışması). Platformlar kartın yapamadığını (1080p ve üstü, 30 sn tek çekim, dudak senkronu, klip düzeltme) ve taşanı alır.
 - Bugünün kalitesi (R9): reklamda fal H3 Max, konuşma ve dudak senkronunda Seedance 2.5, genel metinden-videoda Wan 3.0 önde (ilk sıralar istatistikçe yakın). Kendi brieflerimizle yan yana sınavı ileride, sizin sözünüzle yaparız; son söz sizin gözünüz.
@@ -33,14 +34,14 @@
 ### Kapsam
 
 **İçeride:** platform bağlantıları (anahtar LiteLLM'in kasasında, hiçbir modele ulaşmadan) · anahtar yakalayıcı · katalog ve tarayıcı · kalite tablosu · yönlendirici ve onay kartı · stüdyo sekmesinin ilk dilimi.
-**Dışarıda:** abonelikler — Higgsfield Unlimited dahil; satıcının sözü: *"generating through MCP always uses credits at standard rates"* (R8) · para yükleme ve sınav (şimdi değil) · kanallar ve sponsorlar (ayrı çalışma) · kiralık kart (RunPod) · otomatik bakiye yükleme · fatura/KDV · yapay zekâ etiketi/C2PA ("şimdilik geçelim" kararınız duruyor).
+**Dışarıda:** abonelikler · para yükleme ve sınav (şimdi değil) · kanallar ve sponsorlar (ayrı çalışma) · kiralık kart (RunPod) · otomatik bakiye yükleme · fatura/KDV · yapay zekâ etiketi/C2PA ("şimdilik geçelim" kararınız duruyor).
 
 ### Fazlar
 
 | Faz | Ne kurulur | Sonunda ne görürsünüz | Nasıl doğrulanır | Para |
 |---|---|---|---|---|
 | 0 | Sözleriniz onay defterine, uyarlamalar sahip spec'lere (yeni spec yok) | — | her sahip spec'te uyarlama satırı; batarya yeşil | yok |
-| 1 | Anahtar yakalayıcı, LiteLLM geçişleri, 6 hesap + Replicate | "fal ✓ · anahtar kasada · bakiye" tablosu | her anahtar LiteLLM üzerinden ücretsiz bir okumada 200 döner; deneme anahtarı hiçbir çıktıda yok | yok |
+| 1 | Anahtar yakalayıcı, LiteLLM geçişleri, 5 hesap + Replicate | "fal ✓ · anahtar kasada · bakiye" tablosu | her anahtar LiteLLM üzerinden ücretsiz bir okumada 200 döner; deneme anahtarı hiçbir çıktıda yok | yok |
 | 2 | Katalog, tarayıcı, ilk tarama | platform × model × saniye fiyatı, son ve sonraki tarama | okunamayan fiyat "bilinmiyor" yazar, asla 0; konan sahte fiyat değişikliği tam o farkı çıkarır | yok |
 | 3 | Yönlendirici ve kart (harcamasız) | geçmiş 3 işimiz için örnek kart: en iyi yol, fiyat, iki alternatif, kartımızın yolu | taban altındaki ucuz yol hiç seçilmez; Jev 70 çekimde ölçülür | yok |
 | 4 | Sınav: kendi brieflerimizle yan yana — **şimdi değil**, sizin sözünüzle | her çekim türünde 3 video yan yana; hangi platformdan geldiği siz seçtikten sonra açılır | her hücre kendi koşusunu gösterir | o gün karttaki tutar, tıkınızla |
@@ -59,7 +60,7 @@ Her platformda aynı adımlar:
 3. Yakalayıcı anahtarı panodan alır, ücretsiz bir okumayla dener, LiteLLM'in kasasına yazar, panoyu temizler, yalnız "fal ✓ (parmak izi 3f9a…)" der. Sekmeyi başka sayfaya ben götürürüm.
 4. Şimdi yükleme yok. İleride bir iş bakiye isterse yükleme sayfasını tutarı hazır getiririm. **Siz: "Öde".** Bir platform anahtar vermeden önce kart ya da ödeme isterse o adımı size getiririm (⚠ UNVERIFIED, platform platform ölçülecek).
 
-Altı platform × üç tık ≈ 18 tık. Replicate'te Google yok; onun onayı GitHub'ın "Authorize" düğmesi (holdingin hesabı `dxbglobalcom-ux`; Chrome'da oturumu açık mı ⚠ UNVERIFIED). Higgsfield'ın API konsolunda Google yok; e-postayla, Chrome'un önerdiği şifreyle açılır (sizin tıkınız) ⚠. Gmail'e doğrulama bağlantısı gelirse tıklamak sizin işiniz. Ben hiçbir hesap açmam, parola ya da anahtar yazmam, ödeme yapmam.
+Beş platform × üç tık ≈ 15 tık. Replicate'te Google yok; onun onayı GitHub'ın "Authorize" düğmesi (holdingin hesabı `dxbglobalcom-ux`; Chrome'da oturumu açık mı ⚠ UNVERIFIED). Gmail'e doğrulama bağlantısı gelirse tıklamak sizin işiniz. Ben hiçbir hesap açmam, parola ya da anahtar yazmam, ödeme yapmam.
 
 ### Kanallar ve sponsorlar — ayrı çalışma
 
@@ -133,7 +134,6 @@ No new package: each platform is plain `fetch` through the proxy.
 | WaveSpeed | `/api/v3/models`, `/model/price` (key) | blog RSS, status; no changelog |
 | kie.ai | models sitemap; `creditPrice` JSON in the pricing page | discount column; updates page needs JS (UNVERIFIED) |
 | MiniMax | pricing `.md` | release notes (stale), status |
-| Higgsfield | ⚠ UNVERIFIED — measured in Phase 2 | ⚠ UNVERIFIED |
 | Replicate | `/v1/models` (key); price only in HTML | changelog RSS |
 | Google · Kling · Alibaba | deprecations/changelog `.md.txt`; public pricing `.md` | updates `.md` |
 | Leaderboards | AA page data, Design Arena `POST /api/leaderboard`, LMArena (R9's method) | — |
@@ -194,7 +194,7 @@ Measured 2026-10-17 in `dxb_litellm` (LiteLLM 1.97.0, `main-stable`): `video_gen
 
 ### K. Not built now
 
-Top-ups and the exam (his order of 2026-10-18: not now) · the channels and the sponsor ledger (separate study) · RunPod lane (L03) · subscriptions, Higgsfield Unlimited included · auto-reload · webhooks · vendor SDK packages · Google, Kling, BytePlus, Alibaba first-party accounts · L06's scene level · L10 client loop · C2PA/Article 50 marking (his deferral).
+Top-ups and the exam (his order of 2026-10-18: not now) · the channels and the sponsor ledger (separate study) · RunPod lane (L03) · subscriptions · auto-reload · webhooks · vendor SDK packages · Google, Kling, BytePlus, Alibaba first-party accounts · L06's scene level · L10 client loop · C2PA/Article 50 marking (his deferral).
 
 ### L. Conflicts named (authority order applied)
 

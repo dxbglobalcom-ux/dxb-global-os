@@ -25,24 +25,23 @@ The text he pasted was another AI's evaluation of a 7-skill "AI influencer cheat
 
 **Zaten evde olan:** kadro ve kimlik uzmanı · SIGNAL (okuma, senaryo, ölçüm, hafıza) · üç üretim kulvarı (tezgâh, RunPod, dış eller) · motor sesi · süreklilik kuralı · onay kapısı · "yasal temiz etiket" paketi.
 
-**Yeni olan dört şey:** ① kimlik kilidi ölçülerek seçilir (tezgâhın referans kareleri mi, tezgâhta Fizgig ile eğitilmiş kimlik mi, Higgsfield Soul ID mi) · ② sunucunun kamu kimliği ve profil cümlesi *"sanal karakter — DxB Studio yapımı"*; hesap açmak sizin onayınızla · ③ SIGNAL'de "Müslüman yaşam tarzı üreticileri" masası · ④ İslami editör kontrolü: makine ayetin/hadisin var ve doğru alıntılanmış olduğunu kontrol eder, hüküm sizde.
+**Yeni olan dört şey:** ① kimlik kilidi ölçülerek seçilir (tezgâhın referans kareleri mi, tezgâhta Fizgig ile eğitilmiş kimlik mi) · ② sunucunun kamu kimliği ve profil cümlesi *"sanal karakter — DxB Studio yapımı"*; hesap açmak sizin onayınızla · ③ SIGNAL'de "Müslüman yaşam tarzı üreticileri" masası · ④ İslami editör kontrolü: makine ayetin/hadisin var ve doğru alıntılanmış olduğunu kontrol eder, hüküm sizde.
 
 **Dışarıdan alınan:** önce motorumuzun **kendi** deposu — MiniMax'in resmî `h3-prompt-writing` skill'i ve karakteri tutma yolu (Ref2VA); size gönderilen metin buna hiç bakmamıştı. Sonra en çok yıldızlı resmî Higgsfield deposundan (★1.139) ve kimlik kilidi en derin topluluk deposundan (OSideMedia ★636; yıldızda onu yalnız Seedance 2.0'a çakılı beshuaxian ★863 geçiyor) yalnız motordan bağımsız **bilgi** — kimlik/hareket ayrımı, iki görsel tabanı, "RELIGHT", oyunculuk görevi, hata→çözüm tablosu — gümrükten geçip fork'lanır; hiçbir şey olduğu gibi kurulmaz. Kimlik kartı şeması küçük bir depodan (ugc-creator), yerel kimlik eğitimi Fizgig'den (H3 için LoRA, ses dahil, $0). Mark Tilbury'nin paketi 4 skill (7 değil), ikisi Higgsfield'ın kendi ekibinden; fikir alınır, temel yapılmaz. "Çok daha iyisi" yok: daha yıldızlı depolar daha sığ. Kendi yazacaklarımız: İslami editör kontrolü, sunucunun kimlik kartı, yönetmen kuralları, cetvel.
 
 **Sizin kanununuza çarpan dört yer (metinden):** "Layla, 27" — kadro kanunu (erkekler ve yaşlı teyzeler) · "Voice ID" — ses kanunu (motorun kendi sesi) · Flux ve körlemesine kurulum — yerel motor kanunu ve gümrük kapısı · metnin C2PA imzası — 2026-08-27'de *"şimdilik geçelim"* dediğiniz iş; plan yalnız profil cümlesi ve platformun kendi etiketini öneriyor.
 
-**Sizden beş karar — her birinde önerim:**
+**Sizden dört karar — her birinde önerim:**
 1. **Sunucu kim?** Önerim: kadrodan bir erkek, yeni bir casting çekimiyle gözünüze gelir. Sebep: kanunun içinde, $0, erkek Müslüman yaşam tarzı üreticisi dünyada gerçek bir kategori. Kadın sunucu ancak kanunu değiştirirseniz.
 2. **Sınır:** yapay bir karakterin namazı, Kur'an'ı anlatması sizin İslami sınırınızın içinde mi? Önerim: ilk 30 gün yalnız yaşanan pratik (rutin, alışkanlık, şükür, sadaka), ayet/hadis öğretimi yok; öğretim ancak siz "olur" derseniz ve her seferinde birebir alıntıyla. Sebep: hüküm sizin; plan "evet"i varsayamaz. Bir de hak sorusu: Diyanet meallerini paylaşmıyor, öteki Türkçe mealler "ticari dışı" diyor — Türkçe ayet meali yayınlamak hukuk sorusu, ölçüm değil (§4-D).
 3. **Dinî cümle içeren her video yayından önce gözünüzden geçsin mi?** Önerim: evet, ilk 30 gün; sonra sayıya bakıp karar verirsiniz. Sebep: ilk günlerde makinenin ne kaçırdığını ancak sizin gözünüz gösterir.
-4. **Higgsfield Plus (€47–59/ay) alınsın mı?** Önerim: şimdi değil; önce tezgâh yarısı ölçülür ($0). Sebep: kimlik ölçeri tezgâhta yetiyorsa para gereksiz; yetmezse fiyatıyla önünüze gelir.
-5. **Sıra:** Önerim: sunucu kimliği (Faz 1–2) hemen, SIGNAL'i beklemeden; içerik SIGNAL masası açılana kadar elle yöntemle. Sebep: kimlik işi SIGNAL'e bağlı değil; SIGNAL onaylanana kadar beklemek hesabı boş bırakır.
+4. **Sıra:** Önerim: sunucu kimliği (Faz 1–2) hemen, SIGNAL'i beklemeden; içerik SIGNAL masası açılana kadar elle yöntemle. Sebep: kimlik işi SIGNAL'e bağlı değil; SIGNAL onaylanana kadar beklemek hesabı boş bırakır.
 
 **Yöntem, sizin sözünüzle (2026-09-25):** *"reverse engineering ile dxb için bazı önemli skillerde üretebilirsiniz"* — evet: Higgsfield'ın skill'leri ancak Higgsfield'da çalışıyor (ölçüldü: resmî sekizin sekizi yalnız onların komut aracını çağırıyor); biz onların skill'ini değil, içindeki ustalığı alır, bizim motor (MiniMax H3) için DxB skill'i olarak yeniden yazarız. Motorun kendi resmî skill'i de var, temel o olur.
 
 **Gelir bağı:** bu hesap gelir çalışmasının bir kalemidir — markalar stüdyoyu bu hesaptan bulur (SIGNAL planı §2, madde 2), kitle oluşunca dijital ürün kalemi eklenir (§4-E: Ramazan planlayıcısı, 30 günlük alışkanlık defteri, 9–27 $). İkinci hesap, ikinci masa: aynı zincir.
 
-**Maliyet:** tezgâh $0; Higgsfield yalnız siz derseniz; yeni servis yok.
+**Maliyet:** tezgâh $0; yeni servis yok.
 
 ---
 *Buradan aşağısı mühendisin kendi listesi, size değil: ölçümler, tablolar, komutlar.*
@@ -74,7 +73,7 @@ The text he pasted was another AI's evaluation of a 7-skill "AI influencer cheat
 | Script / Story Engine | SIGNAL Faz 6 (senaryo stüdyosu); stüdyo beyni Fable 5.1 xhigh (sizin hükmünüz) | — |
 | Islamic Source Check | Anayasa: İslami sınırlar yalnız sizin (`MASTER_PLAN.md` §11); `halal_verdict` kapısı | Ayet/hadis **varlık ve doğru alıntı** kontrolü makineyle — §3 L4; hüküm sizde |
 | Creative Director | Stüdyo beyni + yönetmen/storyboard koltukları; yol: T2V ve I2V, tek çekim yeter ise tek çekim | Sunucu videoları için prompt derleme kuralları (§4'ten alınan) |
-| STILL (Nano Banana / Soul) · VIDEO (Seedance / Kling) | Üç kulvar: ① kendi tezgâhımız MiniMax H3 (her şeyi baştan sona; Kanun D taslak önce) · ② RunPod · ③ dış eller: Higgsfield MCP (Plus, €47–59/ay, alınmadı), MiniMax H3 API, fal H3 Max — `.planning/quick/20260903-media-studio-founding/EVIDENCE-external-hands-2026-09-14.md` | Dış eller kodda yok (B43 bacak 6, sırasını bekliyor) |
+| STILL (Nano Banana / Soul) · VIDEO (Seedance / Kling) | Üç kulvar: ① kendi tezgâhımız MiniMax H3 (her şeyi baştan sona; Kanun D taslak önce) · ② RunPod · ③ dış eller: MiniMax H3 API, fal H3 Max — `.planning/quick/20260903-media-studio-founding/EVIDENCE-external-hands-2026-09-14.md` | Dış eller kodda yok (B43 bacak 6, sırasını bekliyor) |
 | VOICE | Motorun kendi sesi (H3) — kanun | Dış kulvarda (Kling/Seedance) ses sorusu açık — §6 |
 | Consistency QA | Süreklilik kuralı (12 dosya), `tests/b43/road-consistency.test.ts`, kimlik ölçeri, B39 kalite hakemi | — |
 | Sharia / Brand QA | §11 + sizin gözünüz; marka kısıtı yok (2026-09-03); motor asla yazı çizmez | Dinî cümle içeren video için gözünüz — §7 |
@@ -86,7 +85,7 @@ The text he pasted was another AI's evaluation of a 7-skill "AI influencer cheat
 
 ## 3. Yeni olan dört şey (bu plan bunları kurar, başka bir şey kurmaz)
 
-- **L1 — Kimlik kilidi, ölçülerek seçilir.** Aynı sunucu, aynı 5 senaryo, üç yol: (a) tezgâh — H3'ün kendi **Ref2VA referans modu** ile casting karelerine bağlı üretim (bugünkü yolun, motorun resmî skill'iyle yazılmış hâli; $0); (b) tezgâh — **Fizgig ile H3 LoRA** (görünüş, ses dahil; $0 dış maliyet, kart saati; Apache-2.0); (c) Higgsfield Soul ID — casting karelerinden eğitilmiş kimlik modeli (`--soul-id`; ücretli plan, sizin para kapınız; kareler evden çıkar). Kimlik ölçeri üç yolun 20'şer karesini sayar; seçim sizin gözünüzün. Kimlik kartı bundan sonra **sürümlü yapılandırılmış veri** olur (ugc-creator'ın kart şeması, §4-C), persona dosyasının yanında; machina'nın kuralı kabul maddesidir: sunucu 10/10 test karesini geçene kadar **taslak**, geçmeden tek sahne üretilmez.
+- **L1 — Kimlik kilidi, ölçülerek seçilir.** Aynı sunucu, aynı 5 senaryo, iki yol: (a) tezgâh — H3'ün kendi **Ref2VA referans modu** ile casting karelerine bağlı üretim (bugünkü yolun, motorun resmî skill'iyle yazılmış hâli; $0); (b) tezgâh — **Fizgig ile H3 LoRA** (görünüş, ses dahil; $0 dış maliyet, kart saati; Apache-2.0). Kimlik ölçeri iki yolun 20'şer karesini sayar; seçim sizin gözünüzün. Kimlik kartı bundan sonra **sürümlü yapılandırılmış veri** olur (ugc-creator'ın kart şeması, §4-C), persona dosyasının yanında; machina'nın kuralı kabul maddesidir: sunucu 10/10 test karesini geçene kadar **taslak**, geçmeden tek sahne üretilmez.
 - **L2 — Sunucunun kamu kimliği.** `dxb-persona` kapısıyla yazılır: ad, yaş, şehir, dünya görüşü, konular, **asla-listesi** (fetva vermez, hüküm vermez, âlim değildir, haram ürün tanıtmaz), profil cümlesi *"sanal karakter — DxB Studio yapımı"* ve platformun yapay zekâ etiketi her gönderide. Hesap açmak kimlik adımıdır: sizin onayınızla.
 - **L3 — SIGNAL'de bir masa: "Müslüman yaşam tarzı üreticileri".** O alanın en gürültülü hesapları gece okunur, kalıplar ve senaryo oradan gelir; metindeki içerik dağılımı (%35 yaşam tarzı · %20 İslami alışkanlık · %15 eğitici · %15 eğlence · %10 özenilen · %5 ticari) **kural değil varsayım**, Faz 8'in tahmin-gerçek satırları ölçer. SIGNAL onaylanmadan bu masa açılamaz; o zamana kadar paketteki `content-engine`'in basit yöntemi (3–5 arama, kalıp çıkar, üretilebilirlik süzgeci) elle yürür.
 - **L4 — İslami editör kontrolü (sıfırdan bizim).** Senaryodaki her dinî iddia çıkarılır → ayet/hadis **var mı ve doğru mu alıntılanmış** (Kur'an ve hadis kaynak API'leri, §4-D) → alıntı doğruysa ve hüküm içermiyorsa yeşil, hüküm içeriyorsa **sizin gözünüze** (anayasa: sınır yalnız sizin). Makine izin verilebilirliğe karar vermez, veremez.
@@ -185,7 +184,7 @@ Komisyon'un gönüllü kodunda Meta ve Google imzacı listesinde; TikTok, ByteDa
 |---|---|---|---|
 | `dxb-islamic-editorial` | İddia çıkarma → ayet/hadis varlık ve alıntı doğrulama (§4-D API'leri) → hüküm içeren cümleyi CEO gözüne işaretleme; Türkçe/İngilizce/Arapça | Dünyada böyle bir skill ölçülmedi; sınır anayasal | builder (max) — para/onay yolu |
 | Sunucunun persona dosyası + kimlik kartı (JSON) | L2; alanlar: kimlik, yüz, beden, saç, giysi (modest), ses = motor, kamera, gerçekçilik çapaları, referans paketi, **sürüm** | Kadro bizim, kimlik kanunu bizim | baş mühendis (`dxb-persona`), kimlik uzmanı koltuğu |
-| `dxb-creator-director` | §4-A/B/E'den alınan motordan bağımsız prompt derleme kuralları (kimlik/hareket ayrımı, RELIGHT, ACTING TASK, hata→çözüm) H3'ün kendi prompt diline çevrilmiş; dış kulvar için Higgsfield sözlüğü | Yerel motor H3, dünyanın kuralları Higgsfield/Kling için yazılmış | builder (max) |
+| `dxb-creator-director` | §4-A/B/E'den alınan motordan bağımsız prompt derleme kuralları (kimlik/hareket ayrımı, RELIGHT, ACTING TASK, hata→çözüm) H3'ün kendi prompt diline çevrilmiş; dış kulvar için makinelerin kendi API sözlüğü (Kling, Seedance, fal H3 Max) | Yerel motor H3, dünyanın kuralları Higgsfield/Kling için yazılmış | builder (max) |
 | `scripts/studio/creator-proof.mjs` | İki cümlenin cetveli | Cetvel işten önce | builder-lean (medium) |
 | SIGNAL masası "Müslüman yaşam tarzı üreticileri" | L3 | SIGNAL bizim | SIGNAL'in kendi fazları |
 
@@ -194,9 +193,9 @@ Komisyon'un gönüllü kodunda Meta ve Google imzacı listesinde; TikTok, ByteDa
 | Aşama | Yerel / ücretsiz yol (önce) | Dış yol (kalite isteyince; sizin para kapınız) |
 |---|---|---|
 | Alan okuma, kalıp, senaryo | SIGNAL: B48 Instagram köprüsü $0 · Speaches $0 · Claude Code aboneliği (başsız oturum) · stüdyo beyni Fable 5.1 xhigh | — |
-| Kimlik (casting, referans) | Tezgâh: MiniMax H3 metinden casting çekimi; Ref2VA referans modu (resmî skill); Fizgig LoRA (ses dahil); kimlik ölçeri | Higgsfield Soul ID (ücretli plan; L1 ölçümü; kareler evden çıkar) |
-| Görsel (kart, hero kare) | MiniMax H3 (yerelde Flux yok — kanun) | Higgsfield MCP: Nano Banana 2 / Soul (dışarıda Flux serbest) |
-| Video | ① tezgâh H3, Kanun D: 640×1152 taslak önce · ② RunPod | ③ Higgsfield MCP (Kling 3 / Seedance 2.5 / Veo) · MiniMax H3 API · fal H3 Max |
+| Kimlik (casting, referans) | Tezgâh: MiniMax H3 metinden casting çekimi; Ref2VA referans modu (resmî skill); Fizgig LoRA (ses dahil); kimlik ölçeri | — |
+| Görsel (kart, hero kare) | MiniMax H3 (yerelde Flux yok — kanun) | stüdyonun yönlendiricisi, üreticilerin kendi API'leriyle (FINAL.md) — Higgsfield kullanılmaz (CEO 2026-11-18) <!-- CEO-OK: higgsfield-not-used-its-system-built-in-the-studio-teardown-at-its-turn-2026-11-18 --> |
+| Video | ① tezgâh H3, Kanun D: 640×1152 taslak önce · ② RunPod | ③ MiniMax H3 API · fal H3 Max |
 | Ses | H3'ün kendi sesi (kanun; TTS yok) | ⚠ Kling/Seedance klibinde ses kanunla çelişir — §6 |
 | Yazı/altyazı | Motor yazı çizmez; post'ta gerçek dosyadan | aynı |
 | Dinî doğrulama | §4-D API'leri (ücretsiz olanlar) + sizin gözünüz | — |
@@ -208,7 +207,7 @@ Komisyon'un gönüllü kodunda Meta ve Google imzacı listesinde; TikTok, ByteDa
 
 1. **"Layla, 27, Dubai"** — kadro kanununuz (`avatar-cast-men-and-elderly-women-only-2026-09-03`; eki `cast-law-client-may-order-female-content-2026-09-15`): holdingin kendi kadrosu **erkekler ve yaşlı teyzeler**; kadın sunuculu içerik yalnız müşteri isterse, sorumluluk onun. Bu hesap stüdyonun kendi hesabı: Layla ancak siz kanunu değiştirirseniz olur. Yaşlı kadın yarısı: Safiye kadroda kalır (sizin sözünüz 2026-09-14, `avatars-safiye-kenan-deniz-stay-2026-09-14`); motorda doğan yaşlı kadın sunucu B43 bacak (11)'de, henüz yok.
 2. **"Voice ID / voice-prompt"** — ses kanununuz (`tts-cancelled-engine-voice-only-2026-09-04`): her üretimde motorun kendi sesi, TTS yok. Dış kulvarda (Kling/Seedance) ses yok ya da motor dışı; oraya konuşan video ancak sizin sözünüzle.
-3. **Flux / `npx install` / Higgsfield CLI** — yerelde H3 her şeyi yapar, Flux yalnız dışarıda (`flux-local-engine-only-everything-made-here-2026-09-14`); hiçbir şey denetimsiz kurulmaz (gümrük kapısı B41; `.planning/research/STACK.md` önce okunur); kalite kademesi: ücretsiz önce, ücretli kalite isteyince fiyatıyla önünüze. **Ve bir gerçek:** Higgsfield'a referans olarak verilen her dosya (kadronun kareleri dahil) evden çıkar, ne tuttukları yazmıyor — Soul ID ölçümü bu bilgiyle yapılır; gizlilik konusu 2026-08-31'de kapandı (`client-confidentiality-settled-2026-08-31`), bu bir itiraz değil, yalnız olgu.
+3. **Flux / `npx install`** — yerelde H3 her şeyi yapar, Flux yalnız dışarıda (`flux-local-engine-only-everything-made-here-2026-09-14`); hiçbir şey denetimsiz kurulmaz (gümrük kapısı B41; `.planning/research/STACK.md` önce okunur); kalite kademesi: ücretsiz önce, ücretli kalite isteyince fiyatıyla önünüze.
 4. **"Human Islamic reviewer"** — bu holdingde o insan sizsiniz; bir başkasını ancak siz adlandırırsınız.
 5. **Yapay zekâ etiketi ve C2PA** — 2026-08-27 hükmünüz (*"yapay zeka ürünüdürü şimdilik geçelim"*, `remote-operation-and-disclosure-deferred-2026-08-27`): AB md. 50 ve C2PA işi açılmaz, "şimdilik". Plan yalnız profil cümlesi + platformun kendi etiketini öneriyor, çünkü TikTok 2026-09-24'ten beri etiketsiz gerçekçi yapay kişiyi kaldırabiliyor (§4-D); C2PA ancak ertelemeyi siz kaldırırsanız, SocialForge ücretli (B31), fiyatıyla önünüze gelir.
 
@@ -217,15 +216,14 @@ Komisyon'un gönüllü kodunda Meta ve Google imzacı listesinde; TikTok, ByteDa
 1. **Sunucu kim:** kadrodan bir erkek (yeni casting çekimi, gözünüze gelir) mi, yaşlı bir teyze (önce B43 bacak (11) — motorda doğan yaşlı kadın sunucu — kurulur) mi, yoksa kadın bir sunucu için kadro kanununu değiştiriyor musunuz. Önerim: erkek, kanunun içinde.
 2. **Sınır:** fotogerçekçi bir yapay karakterin namazı, Kur'an'ı, sadakayı anlatması sizin İslami sınırınızın içinde mi — bu yalnız sizin hükmünüz; plan "evet"i varsayamaz. Önerim: ilk 30 gün yalnız yaşanan pratik, öğretim sizin sözünüzle.
 3. **Dinî cümle içeren her video yayından önce gözünüzden geçer** — bu planın önerisi; siz "hayır, şu koşulla makine geçirsin" derseniz L4 ona göre yazılır. Önerim: ilk 30 gün evet.
-4. **Higgsfield Plus (€47–59/ay)** — L1'in Soul ID yarısı ve dış kulvar için; para çıkışıdır. Onsuz L1 yalnız tezgâh yarısıyla ölçülür ($0). Önerim: şimdi değil.
-5. **Sıra:** SIGNAL Faz 0–4'ten sonra mı (masa hazır olur), yoksa şimdi elle yöntemle mi başlansın. Önerim: kimlik hemen, içerik elle, SIGNAL gelince masa.
+4. **Sıra:** SIGNAL Faz 0–4'ten sonra mı (masa hazır olur), yoksa şimdi elle yöntemle mi başlansın. Önerim: kimlik hemen, içerik elle, SIGNAL gelince masa.
 
 ## 8. Fazlar (onaydan sonra; `dxb-team1` ya da `dxb-crew`; kabul maddesi işten önce yazılır; kodu builder yazar; her faz tek commit)
 
 | # | Faz | Ne | Kabul (komut → beklenen) |
 |---|---|---|---|
 | 0 | Gümrük | §4'teki fork adaylarının denetim raporu (dosya dosya: ağ çağrısı, dosya okuma, kabuk); STACK.md okundu | rapor dosyası; "install" sıfır; B41 kapısı yeşil |
-| 1 | Cetvel + kimlik ölçümü (L1) | `creator-proof.mjs` önce; aynı sunucu, 5 senaryo × 3 yol (Soul ID yolu yalnız karar 4 "evet" ise; değilse 2) × 20 kare | ölçer her yol için bir yüzde basar; gözünüz seçer (Kanun B) |
+| 1 | Cetvel + kimlik ölçümü (L1) | `creator-proof.mjs` önce; aynı sunucu, 5 senaryo × 2 yol × 20 kare | ölçer her yol için bir yüzde basar; gözünüz seçer (Kanun B) |
 | 2 | Persona + kimlik kartı (L2) | `dxb-persona` kapısı; JSON kart; asla-listesi; profil cümlesi | `pnpm persona:gate` yeşil; kart şeması testte |
 | 3 | Skill'ler (§4-F) | `dxb-islamic-editorial` + `dxb-creator-director` + fork'lar | 20 örnek cümlede: var olmayan ayet/hadis 0 geçer; hüküm cümlesi %100 işaretlenir |
 | 4 | İlk 7 video | Kanun D taslak; her biri gözünüze; hesap açma = kimlik adımı, onayınız; etiket her gönderide | 7 video · 7 açıklama satırı · dinî cümleli olanların hepsi göz kaydıyla |
@@ -233,7 +231,7 @@ Komisyon'un gönüllü kodunda Meta ve Google imzacı listesinde; TikTok, ByteDa
 
 ## 9. Maliyet
 
-Tezgâh: $0 (elektrik dışında). Kur'an/hadis API'leri: ücretsiz olanlar seçilir (§4-D). Higgsfield Plus: €47–59/ay, **alınmadı**, sizin kararınız. Claude aboneliği: var. Yeni servis, yeni kuyruk: yok.
+Tezgâh: $0 (elektrik dışında). Kur'an/hadis API'leri: ücretsiz olanlar seçilir (§4-D). Claude aboneliği: var. Yeni servis, yeni kuyruk: yok.
 
 ## 10. Bu planın yapmadıkları
 

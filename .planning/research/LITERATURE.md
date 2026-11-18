@@ -65,7 +65,7 @@
 | Kaynak | Sınıf | Çekirdek değer | DXB'deki yeri | Gelir notu |
 |---|---|---|---|---|
 | Apify | SERVİS (10, koşullu) | Hazır scraper pazarı | Research; anahtar CEO'ca rotate edildi (B4: KAPALI konu) | REVENUE #1 hız kazandırıcı; maliyet-etiketli |
-| Higgsfield | SERVİS (10) | AI görüntü/video üretim | Creative | REVENUE #2 görsel motoru; bütçe-kapılı |
+| Higgsfield | SERVİS (10) | AI görüntü/video üretim | Creative | kullanılmaz (CEO 2026-11-18); sistemi stüdyonun içinde kurulur (B43) <!-- CEO-OK: higgsfield-not-used-its-system-built-in-the-studio-teardown-at-its-turn-2026-11-18 --> |
 | Figma (plugin) | SERVİS (10) | Tasarım kaynak entegrasyonu | Design | REVENUE #8 üretim hattı |
 | Google Stitch + Gemini Omni | SERVİS (8/10) | UI üretimi + video API ($0.10/sn — maliyet-etiketli, gated) | Design bundle (B3) + Creative | Stitch dashboard hızlandırır; Omni yalnız bütçe-onaylı işlerde |
 | 9Router Fusion | DIŞLANDI-kısmen | Fusion = OpenRouter'ın paralı ürünü (doc karıştırmıştı); 9router yalnız RTK deseni REF | Council in-house kuruldu | Adoption yok |
@@ -100,6 +100,6 @@
 |---|---|---|
 | W2 | Design bundle + Aceternity/Refero/Mobbin/Godly + Stitch | Phase 8 başı (B3 giriş şartıyla birlikte) |
 | W3 | voicebox + OpenJarvis + Whisperflow-klon literatürü | Phase 9 başı |
-| W4 | Research stack (4 repo) + ScrapeGraphAI + last30days + Agent-Reach + Apify + marketing/knowledge-work plugins + MoneyPrinterTurbo + OpenMontage/opencut + Higgsfield | Phase 10 dalga-başları |
+| W4 | Research stack (4 repo) + ScrapeGraphAI + last30days + Agent-Reach + Apify + marketing/knowledge-work plugins + MoneyPrinterTurbo + OpenMontage/opencut | Phase 10 dalga-başları |
 | W5 | autoresearch derin + MiroFish + Stripe/DocuSign/Revolut/Wise API'leri | Phase 11 planlaması öncesi |
 | KAPANIŞ | Tüm girdiler stub'sız tam; REVENUE-OPPORTUNITIES final | Phase 10 planlama girişi ÖNCESİ (sert kapı) |
