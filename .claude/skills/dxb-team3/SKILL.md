@@ -1,6 +1,6 @@
 ---
 name: dxb-team3
-description: Use when the CEO hands the construction a job, or says a plan will be talked ("plan konuşacağız", "plan moduna geçelim") — the default construction door. The lead (the session) holds the whole and chooses who writes — itself, a fork, helpers, or a fork with helpers — and verifies every piece; GPT-6.2 Astra audits blind, read-only, Fable 5.2 beside it on an important job; their findings are fixed and tested; the session sets its own effort, low to xhigh, never max. Trigger `/dxb-team3 <the job in one sentence>`.
+description: Use when the CEO hands the construction a job, or says a plan will be talked ("plan konuşacağız", "plan moduna geçelim") — the default construction door. The lead (the session) holds the whole and chooses who writes — itself, a fork, helpers, or a fork with helpers — and verifies every piece; GPT-6.2 Sol or Astra audits blind, read-only, Fable 5.2 beside it on an important job; their findings are fixed and tested; the session sets its own effort, low to xhigh, never max. Trigger `/dxb-team3 <the job in one sentence>`.
 ---
 
 # The team — one lead, the hands it chooses, two blind auditors
@@ -10,7 +10,7 @@ for comparison and opens only when named.
 
 The construction's default door <!-- CEO-OK: dxb-team2-default-door-2026-09-28 -->, and since
 2026-10-06 a lean one: no score card, no done-list, no paperwork per job — the work, a blind check, the
-fixes, the tests <!-- CEO-OK: dxb-team2-lean-2026-10-06 -->; on an important job a second Fable 5.2, walled off, audits beside Astra (§3, §4) <!-- CEO-OK: lead-chooses-freely-fable-audits-important-jobs-2026-11-10 -->. Every holding build runs
+fixes, the tests <!-- CEO-OK: dxb-team2-lean-2026-10-06 -->; on an important job a second Fable 5.2, walled off, audits beside the auditor (§3, §4) <!-- CEO-OK: lead-chooses-freely-fable-audits-important-jobs-2026-11-10 -->. Every holding build runs
 through it, so the standard is the Ferrari's: fast because nothing in it is ceremony, right because
 nothing reaches him unchecked. The laws it obeys are in `.claude/CLAUDE.md`; it opens `dxb-verify`
 and `dxb-close-row`.
@@ -23,7 +23,7 @@ THE CEO'S JOB, in one sentence he would sign
    ├── small — a fix, a deletion, a text he already worded: no plan, straight to ARRANGE
    ├── light — a small, low-risk job (narrow glue, a setting, a record, a deletion he ordered): the lead hands
    │   it to an `easy-writer` (Opus 5.5 · medium), which does it and tests it at once; the lead verifies and
-   │   commits it; no Astra pass (his word, 2026-11-07 <!-- CEO-OK: light-lane-small-jobs-opus-medium-2026-11-07 -->;
+   │   commits it; no audit pass (his word, 2026-11-07 <!-- CEO-OK: light-lane-small-jobs-opus-medium-2026-11-07 -->;
    │   through the lead since 2026-11-11 <!-- CEO-OK: dxb-team3-orchestrator-six-points-2026-11-11 -->).
    │   Money, the approval gate, security, moving data, parallel or many-place changes keep the full flow.
    │
@@ -31,16 +31,16 @@ PLAN      the talk turns to plan, design or architecture → the lead sets its o
           high; a truly complex, important job → xhigh, said to him in one line with its reason (§2);
           his "plan konuşacağız" opens this door at once, the job is asked inside it
           the lead writes the plan
-          → Astra audits it blind — on an important job Fable too, side by side → the lead fixes, signs (below)
+          → the auditor audits it blind — on an important job Fable too, side by side → the lead fixes, signs (below)
           the plan goes to him once, in his language → his yes
    │
 ARRANGE   the lead chooses the hands (§3) and says it in one line
    │
 BUILD     the hands write and run their own tests; the lead verifies every piece and commits it
    │
-TEST      code changed → typecheck and the battery (§5), ended before Astra starts
+TEST      code changed → typecheck and the battery (§5), ended before the auditor starts
    │
-AUDIT     Astra — and on an important job Fable beside it — one blind, read-only pass, over the job's commits, the
+AUDIT     the auditor (Sol or Astra by weight) — and on an important job Fable beside it — one blind, read-only pass, over the job's commits, the
           battery's output in hand (§4) — A blocks · B fixed now · C in the report
    │
 FIX       a fork or a writing helper fixes; the lead verifies; no second audit round; the touched tests,
@@ -71,9 +71,9 @@ from the brief alone, what the job needs and what the plan lacks.
    one source with the employees' `holdingLine()` (`packages/voice/src/prompt-core.ts`) <!-- CEO-OK: holding-reminder-every-turn-and-brief-2026-11-09 --> — and, when the
    job belongs to a business line, that line's mission and vision; then his words verbatim, the scope, the facts measured.
 2. The lead writes its plan in its scratchpad.
-3. The audit — Astra, and on an important job Fable beside it (§4), blind, one pass each, from the same brief
+3. The audit — the auditor (Sol or Astra by weight), and on an important job Fable beside it (§4), blind, one pass each, from the same brief
    <!-- CEO-OK: fable-audits-opus-second-writer-effort-by-weight-2026-11-09 -->. The brief and the plan — no
-   model or effort named — go into `<job>/blind/`; Astra runs through `scripts/governance/refuter.sh` with the
+   model or effort named — go into `<job>/blind/`; the auditor runs through `scripts/governance/refuter.sh` with the
    lead's scratchpad, the transcripts and its memory denied (`--deny-read`), and
    `scripts/governance/fable-audit.sh <job> <audit-brief> high` runs Fable 5.2 read-only in its walled box, at
    the same time. Each first writes, from the brief alone, the conditions and risks the job carries; then the
@@ -158,7 +158,7 @@ Fable's quota runs short (§1). His word on the level overrides: "bunu high'da d
 |---|---|---|---|
 | **Lead** | the session, at the level the turn needs (§2) | holds the whole — his intent, the plan, how the pieces fit — and manages: decides who does what, writes the brief, verifies every piece and every fix, puts the pieces together, runs the tests, commits, tells him; writes what it keeps — as a rule the job's spine, the part the rest hangs on | approves its own work; commits a piece it has not verified; asks him a technical question |
 | **Fork** | the lead's own copy (`subagent_type: "fork"`), its whole context | writes a piece that needs this conversation <!-- CEO-OK: fork-seat-no-size-2026-10-08 --> | commits |
-| **Writing helper** | `helper-writer` (Fable 5.2 · `medium`; opened at `high` on an important job — §2) | writes and tests a piece the lead specified; fixes an Astra finding | commits; widens the piece <!-- CEO-OK: helpers-write-code-under-lead-verification-2026-10-03 --> |
+| **Writing helper** | `helper-writer` (Fable 5.2 · `medium`; opened at `high` on an important job — §2) | writes and tests a piece the lead specified; fixes an the auditor finding | commits; widens the piece <!-- CEO-OK: helpers-write-code-under-lead-verification-2026-10-03 --> |
 | **Easy writer** | `easy-writer` (Opus 5.5 · `medium`) | writes and tests an easy piece of code the lead specified — narrow glue, a setting, a merge | commits; widens the piece; is given a piece §2 would write at `high` |
 | **Helper** | `helper` (Opus 5.5 · `medium`, read-only) | middle-to-hard work: reads code or documents at the source, measures, researches — from a freer brief | changes a file in the repository or under `~/.claude` (a temporary file for a measurement goes into a temporary folder) |
 | **Gatherer** | `gatherer` (Sonnet 5.5 · `medium`, read-only) | simple-to-middle work: gathers, extracts, lists — from a tight, templated brief | writes; judges; is given a question the template does not settle |
@@ -166,7 +166,7 @@ Fable's quota runs short (§1). His word on the level overrides: "bunu high'da d
 | **Escalation writer** | `builder` (Fable 5.2 · `xhigh`), one-shot | a piece the lead judges truly complex and important, from the start; or one that failed twice at `high` | is opened for a routine fix |
 | **Stand-in planner** | Opus 5.5 · `high` or `max` by the job's importance — the `Plan` agent, opened with that model and level <!-- CEO-OK: dxb-team3-orchestrator-six-points-2026-11-11 --> | writes the plan when Fable 5.2's quota runs short (§1) | is a standing step; audits; writes code |
 | **Auditor** | by the job's weight <!-- CEO-OK: auditor-by-weight-sol-6-2-simple-middle-astra-6-2-important-2026-11-18 -->: GPT-6.2 Sol on a simple or middle job (`--model sol`), GPT-6.2 Astra on an important job or plan (the profile's default), through `scripts/governance/refuter.sh` | one blind pass over the job's commits (§4); on a plan job, also the blind plan audit (§1) | writes; audits the same thing twice; sees the lead's reasoning or verdict |
-| **Second auditor** | Fable 5.2 — `high` — through `scripts/governance/fable-audit.sh` <!-- CEO-OK: fable-audits-opus-second-writer-effort-by-weight-2026-11-09 --> | on an important job, audits what Astra audits, from the same brief, at the same time, blind (§1, §4) | writes a plan or code; audits twice; sees Astra's findings or the lead's verdict |
+| **Second auditor** | Fable 5.2 — `high` — through `scripts/governance/fable-audit.sh` <!-- CEO-OK: fable-audits-opus-second-writer-effort-by-weight-2026-11-09 --> | on an important job, audits what the auditor audits, from the same brief, at the same time, blind (§1, §4) | writes a plan or code; audits twice; sees the auditor's findings or the lead's verdict |
 
 `design-eye` is not a seat of this door. The second auditor finds and never writes.
 
@@ -237,9 +237,9 @@ four, not the default.
   <!-- CEO-OK: lead-manages-hands-by-difficulty-2026-11-10 -->; every other piece is written by Fable 5.2: the
   lead, its fork, the writing helper and the escalation writer <!-- CEO-OK: code-written-by-fable-5-2-2026-11-10 -->.
 
-## 4. The audit — Astra on every job, Fable beside it on an important one
+## 4. The audit — Sol or Astra by the job's weight, Fable beside it on an important one
 
-Every job that changes code, a rule or a door gets one Astra pass after BUILD — the light lane (§1) excepted. A simple or middle job gets Astra alone; an important job — the lead judges which — gets one Fable pass beside it, at the same time <!-- CEO-OK: lead-chooses-freely-fable-audits-important-jobs-2026-11-10 -->; a change to the records
+Every job that changes code, a rule or a door gets one audit pass after BUILD — the light lane (§1) excepted. The lead — the orchestrator of the session — judges each job's weight <!-- CEO-OK: auditor-by-weight-sol-6-2-simple-middle-astra-6-2-important-2026-11-18 -->: a simple or middle job gets GPT-6.2 Sol alone; an important job or plan gets GPT-6.2 Astra and one Fable pass beside it, at the same time <!-- CEO-OK: lead-chooses-freely-fable-audits-important-jobs-2026-11-10 -->; a change to the records
 alone (STATE, the board) is checked by the rulers on commit instead.
 
 - **Launch:** `scripts/governance/refuter.sh [--effort medium|high|xhigh] [--model sol] "<brief>"` — the model by the
@@ -257,8 +257,8 @@ alone (STATE, the board) is checked by the rulers on commit instead.
   is closed on purpose"); the range; where the raw test and battery output lies. Never the lead's reasoning, a
   summary, "tests are green", or another auditor's verdict. Its first question: *does this do what he
   asked?*
-- **Its hand:** Astra queries the construction engine itself through its one tool `sql_read`
-  (`scripts/governance/sol-db-mcp.mjs`, role `sol_reader`) — the lead never hands over a count Astra can
+- **Its hand:** the auditor queries the construction engine itself through its one tool `sql_read`
+  (`scripts/governance/sol-db-mcp.mjs`, role `sol_reader`) — the lead never hands over a count the auditor can
   take. Its sandbox has no network, so the lead runs the database-writing tests and hands their output
   over whole.
 - **Its findings**, per claim: Claim · Verdict (REFUTED | STANDS AFTER ATTEMPTED REFUTATION |
@@ -266,16 +266,16 @@ alone (STATE, the board) is checked by the rulers on commit instead.
   **A** blocks · **B** is fixed in this pass · **C** is older than this work and stays in the job's
   report — never the board; a row opens only on his word.
 - **Fix:** a fork or a `helper-writer` fixes each A and B; the lead verifies the finding's own case.
-  There is no second Astra round <!-- CEO-OK: sol-single-pass-fixes-by-helper-2026-10-03 -->. A ruler the
+  There is no second audit round <!-- CEO-OK: sol-single-pass-fixes-by-helper-2026-10-03 -->. A ruler the
   audit shows wrong is corrected by the builder in its own `records(ruler): …` commit, never inside the
   build commit it measures <!-- CEO-OK: audit-law-checker-only-checks-2026-09-15 -->.
-- **Dispute:** the lead runs the evidence Astra gave — it fails → real, fixed; it holds → the finding drops
+- **Dispute:** the lead runs the evidence the auditor gave — it fails → real, fixed; it holds → the finding drops
   and the report says why. A question no test can settle is the lead's, with its reason in the report.
-- **Astra unavailable** (quota, error, timeout): the same brief runs again with `--model sol`
+- **The auditor unavailable** (quota, error, timeout): the same brief runs again on the other GPT-6.2 model (`--model sol` or the default)
   (GPT-6.2 Sol), and the report names it <!-- CEO-OK: auditor-gpt-6-2-astra-first-sol-6-2-if-quota-short-2026-11-18 -->. Both unavailable: on an ordinary job the
   `refuter` subagent (Opus 5.5 · `high`) audits once, and the report says *"audited by Opus instead of
-  Astra — read-only by word, not by tool — because …"*; on money, a database or security the lead waits
-  for Astra's window and works on
+  the auditor — read-only by word, not by tool — because …"*; on money, a database or security the lead waits
+  for the auditor's window and works on
   something else. No job closes unaudited; the auditor is never swapped silently
   <!-- CEO-OK: fallback-auditor-named-and-refuter-second-round-gone-2026-10-04 -->.
 
@@ -283,8 +283,8 @@ alone (STATE, the board) is checked by the rulers on commit instead.
 
 - New behaviour is proven by a test written first — red before the code, green after. A test that can
   never go red — one that recomputes its expected value the way the code does — is a defect.
-- After each piece, its own tests. After Astra's fixes, the touched tests again.
-- **Code changed → `pnpm typecheck`, then the battery, before Astra** — Astra reads its output instead of
+- After each piece, its own tests. After the auditor's fixes, the touched tests again.
+- **Code changed → `pnpm typecheck`, then the battery, before the auditor** — the auditor reads its output instead of
   marking it unverified, and reads the engine only after the battery has stopped writing to it
   <!-- CEO-OK: dxb-team2-overall-look-fixes-2026-10-06 -->; again after the fixes when a fix changed code;
   and a resident service whose
@@ -320,8 +320,8 @@ alone (STATE, the board) is checked by the rulers on commit instead.
   be seen coming): the three headings, a few lines each — what
   finished and waits for his eye, what is next, what waits on him. No conversation, no quotes, no
   hashes or counts beyond the one that names a job.
-- **The job folder** (`.planning/quick/<date>-<slug>/`) holds Astra's report and the raw evidence — only
-  for a job that went to Astra. Astra's raw dump (`*.raw`) and its brief (`*brief*.txt`, his words verbatim)
+- **The job folder** (`.planning/quick/<date>-<slug>/`) holds the auditor's report and the raw evidence — only
+  for a job that went to the auditor. The auditor's raw dump (`*.raw`) and its brief (`*brief*.txt`, his words verbatim)
   stay on the disk and out of git (`.gitignore`), and leave the disk after 90 days
   (`scripts/governance/sol-dump-sweep.sh`, run after every commit)
   <!-- CEO-OK: sol-dumps-swept-after-90-days-2026-10-06 -->; `SOL.md`, the verdict, is committed
