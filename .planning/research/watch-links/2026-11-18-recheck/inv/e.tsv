@@ -1,0 +1,102 @@
+rid	tool	url_or_slug	found	where	evidence
+e1-01	-	-	no	-	names no tool (a Karpathy Stanford talk)
+e1-02	Claude Code	anthropics/claude-code	installed	/home/dxb/.local/bin/claude	/home/dxb/.local/bin/claude (binary on PATH)
+e1-02	dxb-cost-gate	-	installed	/home/dxb/.claude/hooks/dxb-cost-gate.py;/home/dxb/DxB Global OS/.claude/skills/dxb-team3/SKILL.md	The 4-minute rules (held by ~/.claude/hooks/dxb-cost-gate.py): a command over 4 minutes is the...
+e1-03	dxb-team2	-	shelf	/home/dxb/DxB Global OS/.claude/skills/dxb-team2/SKILL.md	skill list: 'The previous construction door, kept for comparison. Opens only when named'
+e1-03	Sol (GPT-6.1 Sol)	-	mentioned	/home/dxb/DxB Global OS/.claude/skills/dxb-team3/SKILL.md	dxb-team3: 'GPT-6.1 Sol audits the work blind, read-only'
+e1-03	Karpathy prompt template	-	no	-	a prompt template pictured in a post; nothing on disk
+e1-04	Claude Code	anthropics/claude-code	installed	/home/dxb/.local/bin/claude	/home/dxb/.local/bin/claude (binary on PATH)
+e1-04	Claude 4 models / Claude Code SDK / GitHub Actions	-	mentioned	/home/dxb/DxB Global OS/.planning/research/STACK.md	STACK.md: 'The Claude Agent SDK, the MCP SDK, Next.js, pg-boss, and supabase-js are all first-class TypeScript'
+e1-05	Opus 4.7 (model named in talk)	-	no	-	hosted model; not on disk
+e1-06	Bonsai 27B (PrismML)	prism-ml/Ternary-Bonsai-2-27B-gguf	mentioned	/home/dxb/DxB Global OS/.planning/board-rows/B34.md	Ternary Bonsai 2 of Qwen3.8-27B — a candidate. prism-ml/Ternary-Bonsai-2-27B-gguf (apache-2.0...)
+e1-06	Qwen3.6 27B	Qwen/Qwen3.6-27B	mentioned	/home/dxb/DxB Global OS/.planning/board-rows/B34.md;/home/dxb/DxB Global OS/.planning/board-rows/B51.md	B34: 'base Qwen/Qwen3.6-35B-A3B' (35B variant named; 27B base itself not on disk; ollama has qwen3.8-27b-uncensored 15 GB)
+e1-06	Qwen3.8-27B (local, ollama)	-	installed	ollama list	qwen3.8-27b-uncensored:latest  2aff18875fcb  15 GB  2 months ago
+e1-06	Gemma	google/gemma	installed	ollama list;/home/dxb/DxB Global OS/.planning/board-rows/B33.md	embeddinggemma:latest 621 MB (ollama); B33: 'Gemma 4 E4B: 3,308 MB on the card · 0.23 s to answer'
+e1-06	B33 local-model bench	-	mentioned	/home/dxb/DxB Global OS/.planning/board-rows/B33.md	B33: 'usable bench is ~15,580 MB' (GPU bench row)
+e1-07	Higgsfield (Ads Studio)	higgsfield	mentioned	/home/dxb/DxB Global OS/.planning/board-rows/B43.md	B43: 'for which the studio has no tool: Higgsfield by subscription' (paid fallback)
+e1-07	Seedance 2.5	-	mentioned	/home/dxb/DxB Global OS/.planning/board-rows/B43.md	B43: 'Video: Seedance 2.5 (Replicate ~$0.23/s), Wan 3.0 (not measured)'
+e1-07	MiniMax	MiniMax H3	mentioned	/home/dxb/DxB Global OS/.planning/research/STACK.md;/home/dxb/DxB Global OS/.planning/research/study-cards/minimax-h3.md	STACK/B43: 'MiniMax H3's own voice' decision; its voice offer 'Removed on his word' (study card minimax-h3 exists)
+e1-08	Claude Code Workflow tool	-	installed	built-in (workflow-authoring skill in session list)	B73: 'the Workflow tool (Dynamic workflows on in /config)'
+e1-08	experimental.cacheTtl (1-hour subagent cache)	-	removed	/home/dxb/DxB Global OS/.claude/skills/dxb-team3/SKILL.md	row says: 'Önbellek: yapma' (4-minute rule via dxb-cost-gate kept instead)
+e1-08	dxb-cost-gate	-	installed	/home/dxb/.claude/hooks/dxb-cost-gate.py	The 4-minute rules (held by ~/.claude/hooks/dxb-cost-gate.py)
+e2-01	HyperFrames	heygen-com/hyperframes	installed	/home/dxb/tools/OpenMontage/.agents/skills/hyperframes;/home/dxb/DxB Global OS/.planning/research/study-cards/heygen-hyperframes.md	OpenMontage has hyperframes skills + lib/hyperframes_style_bridge.py; study card: 'HTML→deterministic MP4, Apache-2.0'
+e2-01	Remotion	remotion-dev/remotion	installed	/home/dxb/tools/OpenMontage/remotion-composer	study card: 'Remotion 4.0.484 is installed inside OpenMontage (remotion-composer/)'
+e2-01	remotion-dev/skills	remotion-dev/skills	mentioned	/home/dxb/DxB Global OS/.planning/board-rows/B43.md	B43: 'The Remotion skills' techniques beside dxb-motion-graphics — a comparison (row w089): remotion-dev/skills (7,422★)'
+e2-01	product-launch-motion	product-launch-motion	no	-	no hit in STACK/board-rows/skills/study-cards/bins; row itself says 'Bu 18 skill paketinin hiçbiri kurulu değil'
+e2-01	charlie947/motion-graphics-skills	charlie947/motion-graphics-skills	no	-	no hit in STACK/board-rows/skills/study-cards/bins; row itself says 'Bu 18 skill paketinin hiçbiri kurulu değil'
+e2-01	howseen-ai/claude-motion-design	howseen-ai/claude-motion-design	no	-	no hit in STACK/board-rows/skills/study-cards/bins; row itself says 'Bu 18 skill paketinin hiçbiri kurulu değil'
+e2-01	nateherkai/hyperframes-student-kit	nateherkai/hyperframes-student-kit	no	-	no hit in STACK/board-rows/skills/study-cards/bins; row itself says 'Bu 18 skill paketinin hiçbiri kurulu değil'
+e2-01	LottieFiles/motion-design-skill	LottieFiles/motion-design-skill	no	-	no hit in STACK/board-rows/skills/study-cards/bins; row itself says 'Bu 18 skill paketinin hiçbiri kurulu değil'
+e2-01	hyperframes-motion-reel-skill	hyperframes-motion-reel-skill	no	-	no hit in STACK/board-rows/skills/study-cards/bins; row itself says 'Bu 18 skill paketinin hiçbiri kurulu değil'
+e2-01	Barty-Bart repo (unnamed in row)	Barty-Bart	no	-	no hit in STACK/board-rows/skills/study-cards/bins; row itself says 'Bu 18 skill paketinin hiçbiri kurulu değil'
+e2-01	klik-anim	klik-anim	no	-	no hit in STACK/board-rows/skills/study-cards/bins; row itself says 'Bu 18 skill paketinin hiçbiri kurulu değil'
+e2-01	lottie-web	airbnb/lottie-web	no	-	no hit in STACK/board-rows/skills/study-cards/bins; row itself says 'Bu 18 skill paketinin hiçbiri kurulu değil'
+e2-01	Motion (animation library)	motiondivision/motion	no	-	no hit in STACK/board-rows/skills/study-cards/bins; row itself says 'Bu 18 skill paketinin hiçbiri kurulu değil'
+e2-01	GSAP	greensock/gsap	mentioned	/home/dxb/DxB Global OS/.planning/research/web-cupboard/INDEX.md;/home/dxb/.local/share/dxb/skills/emil/improve-animations/SKILL.md	gsap named in web-cupboard INDEX and emil skills (library mention, not installed as package)
+e2-01	(other ~6 of the 20 repos not named in the row text)	-	no	-	row names only 14 of 20; rest unreadable in the field
+e2-02	REA (morluto/rea)	morluto/rea	installed	/home/dxb/.npm-global/bin/rea-agents;/home/dxb/.local/share/dxb/skills/reverse-engineer-anything	INSTALL_PROVENANCE: 'source=https://github.com/morluto/rea (npm rea-agents 6.7.0...) installed=2026-10-21 on the CEO's word'
+e2-02	Ghidra	NationalSecurityAgency/ghidra	installed	/home/dxb/.local/share/dxb/tools/ghidra_12.1.4_PUBLIC	INSTALL_PROVENANCE: 'ghidra=/home/dxb/.local/share/dxb/tools/ghidra_12.1.4_PUBLIC'
+e2-02	JADX	skylot/jadx	mentioned	/home/dxb/.local/share/dxb/skills/reverse-engineer-anything/references/android-applications.md	named in the REA skill's references (no jadx binary on PATH)
+e2-02	Hopper / IDA	-	no	-	no hit
+e2-02	OBS	obsproject/obs-studio	installed	/usr/bin/obs	command -v obs -> /usr/bin/obs
+e2-02	Claude Code (MCP/skill target)	-	installed	/home/dxb/.local/bin/claude	/home/dxb/.local/bin/claude
+e2-03	Umami	umami-software/umami	no	-	no hit anywhere in STACK/rows/skills/cards
+e2-03	REA	morluto/rea	installed	/home/dxb/.npm-global/bin/rea-agents	rea-agents 6.7.0 global npm (see e2-02)
+e2-03	Opus 5.5	-	no	-	hosted model; not on disk
+e2-03	ChatGPT / Perplexity	-	no	-	named only as traffic sources in the video
+e2-03	W073 (Searchmaxxed AI SEO/GEO) / W094 (AgencyOS)	-	mentioned	/home/dxb/DxB Global OS/.planning/board-rows	row: 'W073 ... ve W094 tahtadaki link kayıtlarında'
+e2-04	is-agentic	is-agentic.com / npm is-agentic	mentioned	/home/dxb/DxB Global OS/.planning/board-rows/B84.md	B84: 'Agent readiness — is-agentic (w033, "Dene"). A free scanner... npx is-agentic <domain>'
+e2-04	Vercel	vercel	mentioned	/home/dxb/DxB Global OS/.planning/research/STACK.md	STACK: 'Jev (typesafe-ai/jev) through Vercel AI Gateway — added 2026-10-14'
+e2-04	Ora	-	no	-	no hit
+e2-04	llms.txt	-	mentioned	-	row: 'llms.txt yalnız fal.ai fiyat okumada geçiyor'
+e2-05	Claude Managed Agents	-	mentioned	/home/dxb/DxB Global OS/.planning/board-rows/B42.md	B42: "Anthropic's Claude Managed Agents ships the memory and dreaming infrastructure described there"
+e2-05	Claude Agent SDK	anthropics/claude-agent-sdk	mentioned	/home/dxb/DxB Global OS/.planning/research/STACK.md	STACK: 'The Claude Agent SDK, the MCP SDK, Next.js, pg-boss, and supabase-js are all first-class TypeScript'
+e2-05	anthropics/cwc-workshops	anthropics/cwc-workshops	no	-	no hit
+e2-05	Hermes	hermes-agent	installed	/home/dxb/.local/bin/hermes;/home/dxb/.local/bin/hermes-agent	hermes + hermes-agent binaries in ~/.local/bin (row says Hermes's server was deleted)
+e2-05	Messages API	-	no	-	API, nothing on disk
+e2-06	TasteSkill (Leonxlnx/taste-skill)	Leonxlnx/taste-skill	shelf	/home/dxb/.claude/plugins/marketplaces/taste-skill;/home/dxb/.claude/plugins/cache/taste-skill	settings.json enabledPlugins: 'taste-skill@taste-skill': False (installed, disabled)
+e2-06	inspect.mjs (taste-skill)	-	mentioned	/home/dxb/DxB Global OS/.planning/board-rows/B84.md	B84: 'The page inspector — taste-skill 2.5.1 (i035, "Dene")'
+e2-06	opencli	jackwener/opencli	installed	/home/dxb/.npm-global/bin/opencli	npm ls -g: @jackwener/opencli@1.8.7
+e2-06	Vox (@Voxyz_ai) post	-	no	-	a post, not a tool
+e2-06	Playwright (browser)	microsoft/playwright-mcp	installed	/home/dxb/.npm-global/lib/node_modules/@playwright/mcp	npm ls -g: @playwright/mcp@0.0.79
+e2-07	/loop	-	installed	built-in skill 'loop' in session skill list	skill listing: 'loop: Run a prompt or slash command on a recurring interval'
+e2-07	dxb-research	-	installed	/home/dxb/DxB Global OS/.claude/skills/dxb-research	skill folder present
+e2-08	Remotion	remotion-dev/remotion	installed	/home/dxb/tools/OpenMontage/remotion-composer	Remotion 4.0.484 is installed inside OpenMontage (remotion-composer/)
+e2-08	HyperFrames	heygen-com/hyperframes	installed	/home/dxb/tools/OpenMontage/.agents/skills/hyperframes	hyperframes skill folders in OpenMontage; B43 effect vocabulary (w037) written in HyperFrames
+e2-08	dxb-motion-graphics	-	installed	/home/dxb/.claude/skills/dxb-motion-graphics	skill folder present (SKILL.md, templates, sfx)
+e2-08	@aykutucesai 20-effect set	-	mentioned	/home/dxb/DxB Global OS/.planning/board-rows/B43.md	B43: 'The effect vocabulary (w037). A reel (@aykutucesai) applies twenty effects...'
+e2-09	LangGraph	langchain-ai/langgraph	removed	/home/dxb/DxB Global OS/.planning/research/STACK.md;/home/dxb/DxB Global OS/.planning/research/study-cards/deerflow.md	STACK: 'No framework (LangGraph etc.) needed on top.' row: 'LangGraph çerçevesi STACK.md'de reddedilmiş'
+e2-09	DeepLearning.AI 'AI Agents in LangGraph' course	-	no	-	a free course; nothing on disk
+e2-09	Agent SDK / Hamza orchestrator	-	mentioned	/home/dxb/DxB Global OS/.planning/research/STACK.md	STACK: 'The Claude Agent SDK ... first-class TypeScript'
+e2-10	claude-security plugin	claude-plugins-official/claude-security	shelf	/home/dxb/.claude/plugins/marketplaces/claude-plugins-official/plugins/claude-security	B73: 'claude-security 0.12.0 in the official marketplace copy; not installed and not enabled.'
+e2-10	/security-review	-	installed	built-in skill 'security-review' in session list	skill listing: 'security-review: Complete a security review of the pending changes'
+e2-10	Workflow tool (Dynamic workflows)	-	installed	built-in	B73: 'the Workflow tool ("Dynamic workflows" on in /config)'
+e2-11	Self-Harness (arXiv 2606.09498)	arXiv:2606.09498	no	-	no hit
+e2-11	Meta-Harness / AHE	-	no	-	no hit
+e2-11	Kimi K3	-	mentioned	/home/dxb/DxB Global OS/.planning/research/STACK.md	'only DeepSeek and Kimi are priced' (Kimi named in cost table; K3 not named)
+e2-11	Grok Bot	-	no	-	no hit (only 'grok_build' in an unrelated list)
+e2-11	skill-creator	-	installed	/home/dxb/.claude/plugins/cache/claude-plugins-official;enabledPlugins	settings.json: 'skill-creator@claude-plugins-official': True
+e2-11	dxb-persona	-	installed	/home/dxb/DxB Global OS/.claude/skills/dxb-persona	skill folder present
+e2-12	Revid (MCP)	revid.ai	removed	/home/dxb/DxB Global OS/.planning/board-rows/B28.md	B28: 'Revid is not bought (his word).'
+e2-12	Calculate_credits / Meta, TikTok ad libraries	-	no	-	features of Revid; no hit
+e2-13	git pre-commit hook (scripts/hooks/pre-commit)	-	installed	/home/dxb/DxB Global OS/scripts/hooks/pre-commit	row: 'core.hooksPath=scripts/hooks, pre-commit kancası (101 satır) var ama içinde boyut/token kontrolü yok'
+e2-14	Playwright MCP	microsoft/playwright-mcp	installed	/home/dxb/.npm-global/lib/node_modules/@playwright/mcp	npm ls -g: @playwright/mcp@0.0.79
+e2-14	security-review	-	installed	built-in skill in session list	skill listing: 'security-review'
+e2-14	dxb-surface	-	installed	/home/dxb/DxB Global OS/.claude/skills/dxb-surface	skill folder present
+e2-15	OpenClaw	openclaw	mentioned	/home/dxb/DxB Global OS/HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md	board: 'What was read that day as Hermes's dreaming is OpenClaw's — measured 2026-10-14: Hermes core has no dreaming'
+e2-15	Supabase	supabase	mentioned	/home/dxb/DxB Global OS/.planning/research/STACK.md	STACK: 'Supabase/Postgres for state+CRM, Hetzner-class EU VPS...' (row also: Supabase stack on port 54422/54322)
+e2-15	Vercel	vercel	mentioned	/home/dxb/DxB Global OS/.planning/research/STACK.md	STACK: 'through Vercel AI Gateway — added 2026-10-14'
+e2-15	Hamza orchestrator	-	mentioned	/home/dxb/DxB Global OS/.claude/CLAUDE.md	CLAUDE.md: 'Hamza and the flows between its parts pulse on real liveness'
+e2-16	Open Higgsfield	wide-trace/open-higgsfield	mentioned	/home/dxb/DxB Global OS/.planning	'wide-trace/open-higgsfield 5.300★ (reelde 4,5k...)' in a link-record
+e2-16	VoiceStudio	debpalash/VoiceStudio	installed	/home/dxb/tools/VoiceStudio	dir ~/tools/VoiceStudio present (AGENTS.md, CLAUDE.md, SKILL.md)
+e2-16	OpenSEO	every-app/open-seo	installed	/home/dxb/.local/share/dxb/skills/openseo	openseo/SOURCE.md: 'Source: https://github.com/every-app/open-seo (plugins/openseo/skills...)'
+e2-16	WeKnora	Tencent/WeKnora	mentioned	/home/dxb/DxB Global OS/.planning/board-rows/B83.md;/home/dxb/DxB Global OS/.planning/board-rows/B84.md	B83: 'Tencent WeKnora (row w052, h1.md) — the document-answer widget'
+e2-16	OpenWhispr	OpenWhispr/openwhispr	mentioned	/home/dxb/DxB Global OS/.planning/board-rows/B25.md	B25: 'Handy (cjpais/Handy, MIT...) and OpenWhispr (OpenWhispr/openwhispr, MIT) — on his own sentences'
+e2-16	OpenProject	opf/openproject	mentioned	/home/dxb/DxB Global OS/.planning/board-rows/B84.md	B84: 'OpenProject as the client's project room (row w082, h3.md) — not our own task system'
+e2-16	Cal.com	calcom/cal.com	mentioned	/home/dxb/DxB Global OS/.planning/board-rows/B83.md	B83: 'calcom/cal.com now redirects to calcom/cal.diy (MIT, v6.2.0)... hosted Cal.com is the paid twin'
+e2-16	Chatwoot	chatwoot/chatwoot	mentioned	/home/dxb/DxB Global OS/.planning/board-rows/B83.md	B83: 'the parts taken ready-made (Meta's official WhatsApp MCP, Chatwoot, ...)'
+e2-16	Cap	CapSoftware/Cap	mentioned	/home/dxb/DxB Global OS/.planning	'Chatwoot 38.818★ · Cap 24.316★' in a link-record
+e2-16	REA	morluto/rea	installed	/home/dxb/.npm-global/bin/rea-agents	rea-agents 6.7.0 global npm
+e2-16	voicebox	-	installed	/home/dxb/voicebox	dir ~/voicebox present; STACK: 'voicebox on the laptop stays the local client'
+e2-16	DataForSEO	dataforseo	mentioned	/home/dxb/DxB Global OS/.planning/board-rows/B84.md	B84: 'DataForSEO (min. ~$50 deposit) is money out — his word.'
+e2-16	ElevenLabs	elevenlabs	mentioned	/home/dxb/DxB Global OS/.planning/research/STACK.md	B43/STACK: 'ElevenLabs the paid twin'

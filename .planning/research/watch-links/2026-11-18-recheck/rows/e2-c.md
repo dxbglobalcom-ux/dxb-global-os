@@ -1,0 +1,129 @@
+# Tab e2 "Ekim 15-21 linkleri" — second reading, rows e2-05, e2-09, e2-11, e2-15
+
+Fetched text kept beside this file: `$J/rows/e2c-fetch/` (X threads, the VoxYZ article, voxyz.ai pages, the arXiv
+record, the Managed Agents docs and pricing pages).
+
+## e2-05 (EK13) — Anthropic's Gagan Bhat talk on Claude Managed Agents, plus Anthropic's workshop repo `anthropics/cwc-workshops`
+- Opened: `$J/old/e2-05.json`. `$J/src/e2-05.txt` names only `~/.cache/link-watch/EK13-2110817965658571181.mp4` (52 MB), with an empty `.err` and `.lock`. **There is no transcript or frame sheet on disk**, and per the order the video was not touched. The talk's content therefore comes from the old reading only. I read the X thread with `opencli twitter thread … -f yaml` through the research door. I read `gh api repos/anthropics/cwc-workshops` (metadata, README, recursive tree), the `rightmodel` README and its `eval-audit-and-sweep/SKILL.md`, and `building-blocks/04_advisor.py`. Through `fetch.py` I read the Managed Agents overview and the pricing page on platform.claude.com. I did not read the quoted "Opus 5.5 harness guide" (beamnxw); it is a marketing chain.
+- His note: none.
+- What is in it:
+  - The post (shikamarutsai, 2026-10-15, 479 likes) carries the hook "Anthropic hired this engineer at $250K–$750K", and the salary is the only invented part. Its five steps all match subjects in the old reader's own summary of the talk: (1) the SDK, (2) brain and hands kept apart, (3) server-side sessions that resume from the log, (4) retrying dead sandboxes, (5) "dreaming". The old note's "the 5 steps are not in the video" contradicts its own summary.
+  - Claude Managed Agents, from the official docs read today:
+    - Beta. It needs the `managed-agents-2026-04-01` header and a Claude Console API key.
+    - It has scheduled deployments (cron), multiagent orchestration, session threads, workflow runs, steer and interrupt, and memory.
+    - Self-hosted sandboxes and a self-hosted service are offered, so the data does not have to sit in Anthropic's cloud. The old reading said "veriler Anthropic bulutunda kalır".
+    - Dreaming and MCP tunnels are in a narrower research preview that needs an access form.
+    - It is not eligible for Zero Data Retention.
+    - Price: tokens at model rates (Opus 5.5 $4 in / $20 out per Mtok) plus **$0.08 per session-hour** of `running` time. The docs' worked example puts a 1-hour Opus 5.5 session at $0.58.
+  - `anthropics/cwc-workshops`: Apache-2.0, 2,316★, pushed 2026-11-04, marked "not maintained". It has ten folders. The ones that carry something for us:
+    - `rightmodel/.claude/skills/eval-audit-and-sweep`: a Claude Code skill in two phases. First it audits an eval suite: task design, harness, metrics hygiene, LLM-judge biases. Then it sweeps the eval over a model × thinking × effort grid and reports quality per dollar and per second. It ships guidance only, no scripts.
+    - `eval-driven-agent-development`: six variants of an agent scored on a 10-task suite. The grader has two layers: programmatic metrics in `src/graders/code/*.ts` (slide count, small fonts, clutter) and LLM judges on the rendered output in `src/graders/judge/*.ts`.
+    - `agents-that-remember`: a memory store, then the Dreaming Service consolidating past transcripts.
+    - `how-we-claude-code/phase-3-verify`: components emit a machine-readable DOM contract so an agent or CI can verify them at runtime.
+    - `building-blocks/04_advisor.py`: the advisor tool (`advisor_20260301`). A cheap executor (Haiku or Sonnet 5.5) consults Opus 5.5 mid-turn, server-side, capped by `max_uses`.
+    - `agent-decomposition`, `production-ready-agent`, `research-desk`, `agent-battle`: demos built on Managed Agents. Nothing in them is ours to take beyond the patterns above.
+- What we have:
+  - The Agent SDK 0.3.296 as the runtime (`.planning/research/STACK.md:21`).
+  - LangGraph and other frameworks are rejected, and raw provider keys are forbidden except the Hermes key (`STACK.md:120`, `:127`).
+  - Hermes 0.20.5 is installed (`~/.local/bin/hermes`, `~/.local/bin/hermes-agent`), but its VPS was deleted (B09, B11). B11 says it is to be installed at its newest release, v0.23.0.
+  - B42 already holds "the Claude Managed Agents study-card request" and names its memory and dreaming API.
+  - C39 names dreaming as the company doctor's mechanism; nothing is built.
+  - B51 cites the "frontier advisor over a working model, +3.5 points" measurement, but no move builds it.
+  - B51 trials of the same kind: Haiku 5.5 beside Sonnet 5.5 on 20 classify and 20 summarize cases (P7), and Sol at high beside xhigh (leg 2026-11-17).
+  - The project `skill-creator` optimises skill descriptions only.
+  - No study card for Managed Agents (`ls .planning/research/study-cards`).
+- What it has that we do not:
+  - A hosted, schedulable, resumable agent session that needs no VPS, at a measured price, with a self-hosted option.
+  - A ready eval-audit checklist and a model × effort sweep method.
+  - A code-plus-judge two-layer grader pattern.
+  - An advisor-tool example.
+  - A runtime DOM-contract verification pattern.
+- Board:
+  - **Managed Agents** · B11 (Hermes' first unattended overnight run; B09 waits on money for the server) · now: Hermes on a rebuilt VPS (`vps/provision/` + `vps/compose.yaml`, about 10.10 EUR/month before deletion) · `second` · how it is used: the same overnight job runs as a scheduled Managed Agents deployment beside Hermes when B11 is built · first trial: one real overnight job both ways, comparing success, cost (session-hours plus tokens against VPS euros) and whether it resumes after a kill · stops at the CEO: a Console API account and key (identity), API billing (money out), and the STACK ruling of no second runtime and no raw key, which is an architecture decision.
+  - **eval-audit-and-sweep (rightmodel)** · B51 move 7 ("cheapest model that still passes its own test") and move 3 (effort) · now: the hand-built P7 Haiku/Sonnet trial and the Sol high/xhigh trial, with no audit checklist · `method` · how it is used: the audit runs on our own eval sets first, then the sweep · first trial: `references/audit.md` run against the B64 decision-7 intake set (70 cases) and the P7 sets, then a model × effort sweep on the intake set through our own runtime · stops at the CEO: nothing.
+  - **Two-layer grader (eval-driven-agent-development)** · B64 (the check "verifies the work against the brief with real tests"; `qa.ts` reads the text and does not try the work) · now: the QA judge only · `method` · how it is used: code metrics on the produced file first, a judge on the rendered result second · first trial: one deliverable type (a studio still or a web page) graded both ways against the QA judge's verdict on the same five jobs · stops at the CEO: nothing.
+  - **Advisor tool** · B51 · now: nothing; the row cites the measurement only · `new` · how it is used: a cheap worker seat that may consult Opus 5.5 once · first trial: `04_advisor.py`'s shape on ten past classify tasks against Sonnet alone · stops at the CEO: an API key and API spend, because the subscription runtime cannot call a Messages-API beta tool.
+  - **Runtime DOM contract (how-we-claude-code)** · B84 (web studio's check) · now: the customer's-eye walkers (A28) and B03-bis's browser eye check · `method` · how it is used: each component exposes a machine-readable contract an agent reads at runtime · first trial: one 3-page trial site with the contract, checking whether the walker finds a seeded defect faster · stops at the CEO: nothing.
+  - **Dreaming** · C39 and B42 (already the study-card request) · `identical` on the board as a request; the workshop is only material for that card.
+- The old verdict and reason: **partly holds.** Managed Agents belongs to B09/B11, as written. But the old reading was wrong that the data must stay in Anthropic's cloud, left the price unmeasured, called the five steps invented, and missed that the repo's rightmodel skill, grader pattern and advisor example belong to B51 and B64.
+- Reader's first reading: **İkinci** (Managed Agents beside Hermes in B11). The workshop parts are Yöntem.
+
+## e2-09 (EK17) — A re-upload of DeepLearning.AI's free 2024 course "AI Agents in LangGraph", sold on X as "Andrew Ng's Graph Engineering course"
+- Opened: `$J/old/e2-09.json`. `$J/src/e2-09.txt` names only `EK17-…mp4` (419 MB); **no transcript is on disk**. The 1,651-line transcript the old reader made is not in any job folder I could find (searched `.planning` and `/tmp/claude-1000` by id). I read the X thread with opencli. I grepped `packages/kernel/src/workflow/runner.ts`, `steps/approval.ts`, `packages/orchestrator/src/decompose.ts`, the board and `.planning/board-rows` for LangGraph and time-travel terms, and read the B64 row file and the C60 board line.
+- His note: none.
+- What is in it:
+  - The post (Dhruvkumar16797, 2026-10-18, 897 likes) lists chapters ("loop engineering", "graph engineering", "agents that rewrite themselves", "full graph system"). Per the old reading the course has no such chapters.
+  - The course itself, per the old reading: an agent in plain Python, then as a graph (nodes, edges, conditional edges, shared state). Then a state checkpoint after every step, streaming, a stop for human approval before a tool, rewinding to an earlier state and continuing from there ("time travel"), and a search tool. It closes on architectures: multi-agent with shared state, supervisor, plan → execute → replan, and LATS.
+- What we have:
+  - LangGraph is rejected as the orchestration core (`STACK.md:120`).
+  - **A state checkpoint per step with crash resume is built**: `workflow_runs.steps_snapshot` and `current_step` (`packages/kernel/src/workflow/runner.ts:1-8`, `:117`, `:316`).
+  - **Parking at an approval and resuming is built** (`runner.ts:460-489`, `packages/kernel/src/workflow/steps/approval.ts`).
+  - The supervisor is B64 v2's job master (AGENT_ORCHESTRATION A29).
+  - No rewind or fork from an earlier step: grep for `rewind|time.?travel|fork_from|from_step|restart_from|replay` found nothing relevant in `packages/kernel/src/workflow` or `packages/orchestrator/src`.
+  - No replan step in `decompose.ts`.
+  - B64 measured 0 workflows, 0 steps and 0 runs, so what is built is unused.
+  - The old record (`.planning/quick/20261021-ekim-linkleri/RECORD.md:25`) says "Concepts kept as a Hamza checklist under B64". **That checklist is not in `.planning/board-rows/B64.md` or on the board** (grep for LangGraph and time travel: no hit outside IMPLEMENTATION_ROADMAP and the deerflow study card).
+- What it has that we do not: rewinding a job to an earlier step and continuing or forking from there, and a plan → execute → replan loop. The other items are already ours.
+- Board:
+  - **Rewind and fork from a past step** · B64, with C60 owning a task's single place of state · now: crash resume from `current_step` only · `method` · how it is used: on his "redo from step 3 with this change", the master restarts the run from a frozen snapshot of step 3 · first trial: on the construction engine, one 4-step workflow run rewound to step 2 with a changed input, checking that steps 1-2 are not re-paid · stops at the CEO: nothing.
+  - **Plan → execute → replan** · B64 (the master "designs the whole") · now: `decompose.ts` splits once · `method` · how it is used: after each finished part the master re-reads the plan against the result · first trial: the same 3-page site brief with and without a replan point, scored on parts redone · stops at the CEO: nothing.
+  - **Checkpoint per step, human-approval park** · `identical` (built in the kernel workflow runner).
+- The old verdict and reason: **partly holds.** The concepts are right and LangGraph is rightly not taken. But two of its five "to be measured" items are already built and can be read in the code today, and the promised B64 checklist was never written into the row.
+- Reader's first reading: **Yöntem** (two items into B64: rewind/fork, and replan).
+
+## e2-11 (EK19) — The "self-revising harness" idea ("grade the file, don't write it"): a post about an unfindable paper; the verifiable work is Self-Harness and Meta-Harness
+- Opened: `$J/old/e2-11.json`. `$J/src/e2-11.txt` names only `EK19-…mp4` (1.6 MB). The old reader's 29 frames are not on disk, and the video has no speech. I read the X thread and replies with opencli and the arXiv API record of 2606.09498. I read `gh api` on `stanford-iris-lab/meta-harness` (README) and `001TMF/harness-forge` (README), plus `gh search repos self-harness` and `meta-harness`. I grepped `.claude/skills/skill-creator/SKILL.md` and `dxb-persona/SKILL.md`. I did not open the quoted slash1sol link (it is only a t.co link).
+- His note: none.
+- What is in it:
+  - The post (virgilxbt, 2026-10-18, 614 likes) claims a paper "The End of Harness Engineering": 8 edits per round, scored on a held-out set the proposer never sees, 0.31 → 0.64 over 41 rounds. It plugs the author's own "300 Kimi K3 workers" setup. Replies: "clickbait", "arxiv link please?" (6 likes), "who grades the grader?". Per the old reading the paper was not found; its numbers stay unverified.
+  - **Self-Harness: Harnesses That Improve Themselves** (arXiv 2606.09498, published 2026-06-08, Hangfan Zhang … Lei Bai, Shuyue Hu). Three stages: weakness mining from execution traces → minimal harness proposals tied to the failures → acceptance only after regression testing. Across Terminal-Bench-2.0, SWE-bench Verified and AppWorld with three model families, all nine combinations improved on both held-in and held-out sets, by up to 132% relative. No official code found (`datawhalechina/self-harness`, 281★, is a tutorial, not the paper's code).
+  - **Meta-Harness** `stanford-iris-lab/meta-harness`: MIT, 1,788★, pushed 2026-11-05, arXiv 2603.28052. A framework for automated search over a fixed model's harness (what to store, retrieve and show), with two reference experiments and a separate artifact repo for the Terminal-Bench 2 harness.
+  - **Harness Forge** `001TMF/harness-forge`: MIT, 82★, pushed 2026-06-14. A Claude Code skill (`skills/meta-harness/SKILL.md`) that reimplements Meta-Harness natively with the Agent and Workflow tools: propose k variants → validate → score on a held-out-protected eval → Pareto frontier (quality up, cost down) → a final score on an untouched test split. About 75 lines in place of about 1,260.
+  - The quoted Kimi K3 "five employees" guide is promotion; nothing to take.
+- What we have:
+  - `skill-creator` `scripts/run_loop.py` is the same loop (a 60/40 train and held-out split, proposals from failures, best chosen by held-out score), but **for a skill's description (triggering) only** (`.claude/skills/skill-creator/SKILL.md:394`).
+  - `dxb-persona` has a static quality gate with no scored eval (grep for eval, score, benchmark: no hit).
+  - B64's playbook note (2026-11-08) is the same discipline done by hand: a lesson enters a playbook only after its cause is found, a trial case is written and the smallest change passes it.
+  - C39's "dreaming" pass (find the defect repeating across runs, propose the repair) is the weakness-mining stage, unbuilt.
+  - The Workflow tool is present (B73). No harness-search skill is installed (`~/.claude/skills`, `~/.local/share/dxb/skills`: no hit).
+- What it has that we do not: an automatic propose → held-out score → keep-the-winner loop over a whole prompt, persona, playbook or harness body (not only a description), with a Pareto cost axis, and a ready Claude Code skill that runs it.
+- Board:
+  - **Harness Forge, the loop** · B64 (playbook lessons enter by trial case; the master signs) · now: the hand procedure in B64's 2026-11-08 note, plus `skill-creator` run_loop for descriptions · `new` for a body-level loop (`second` only to skill-creator's description loop) · how it is used: a playbook or persona is improved against a held-out set built from his approved work, and the master signs the winner · first trial: one job type's playbook, 20-30 cases from past jobs with known good outcomes, held out from the proposer; Harness Forge's loop against one hand edit by the lead; held-out score and tokens decide · stops at the CEO: nothing.
+  - **Self-Harness weakness mining** · C39 (the company doctor's out-of-band pass) · now: nothing built · `method` · how it is used: the doctor reads a period's traces, names the repeating failure and proposes the smallest fix with its regression case · first trial: the B65-class defect (`is_error` unread) seeded in a test run, to see whether a mining pass names it · stops at the CEO: nothing.
+  - **Meta-Harness framework** · B64 · `none` beyond the method. It is a Python driver for a headless Claude, which the Workflow tool already gives us. Read it for the method only.
+- The old verdict and reason: **partly holds.** The idea and the risk (the loop gaming its own score, so the set stays hidden) are right. But B51 is a weaker home than B64's playbook rule and C39. The old reading named no implementation, while Meta-Harness code and a ready Claude Code skill (Harness Forge) exist. And our `skill-creator` already runs this loop for descriptions.
+- Reader's first reading: **Dene** (Harness Forge in a B64 playbook trial). C39 takes the method.
+
+## e2-15 (EK23) — VoxYZ article: a 6-agent "company" closed loop on OpenClaw + Vercel + Supabase, and the voxyz.ai "hire an AI employee" product
+- Opened: `$J/old/e2-15.json`; `$J/src/e2-15.txt` is empty (there was no video). I read the whole article again as text with `opencli twitter article 2019914775061270747` (saved as `e2c-fetch/voxyz.md`). I read voxyz.ai and voxyz.ai/pricing with `fetch.py`. I read our code: `db/migrations/20260707000001_operational_core.sql:45-90`, `packages/orchestrator/src/worker-shim.ts:878-893`, `packages/outbox-executor/src/scheduler.ts:463`, `packages/orchestrator/src/subscription-cap.ts:1-75`, the head of `db/migrations/20260726015000_w25_halal_birth_refusal.sql`, and greps for task-insert sites, cooldowns and failure triggers. The article's images were not opened; the text carries the code.
+- His note: none.
+- What is in it:
+  - The loop: proposal → auto-approve → mission and steps → a worker claims → event → trigger or reaction → back to the start.
+  - Pitfall 1: two executors claimed the same step. The fix is one executor (the VPS); Vercel is only a control plane.
+  - Pitfall 2: triggers inserted proposals directly and skipped approval. The fix is one entry function, `createProposalAndMaybeAutoApprove`, that every source calls.
+  - Pitfall 3: with the quota full, workers skipped steps and the queue grew. The fix is per-step-kind cap gates at the entry, where a rejection is recorded and never silently dropped.
+  - Triggers with cooldowns (e.g. "mission failed → Sage diagnoses the root cause", 1 h).
+  - A "reaction matrix" with probabilities, which the author admits is "mostly simulated" free will.
+  - Stale steps (30 min with no progress) are marked failed and `maybeFinalizeMissionIfDone` runs: a mission succeeds only when every step does.
+  - An `ops_policy` JSON table for every limit, and a 5-minute heartbeat cron.
+  - voxyz.ai sells "Hire your first AI employee", "Powered by Hermes / OpenClaw". Agents PITCH (sales: finds leads, books calls) and CARE (support: auto-replies). A first job such as a daily morning brief. "Risky parts wait for you: outbound replies, public changes, commitments, spend". **$29/mo Cloud, $299/yr, $199 one-time "Playbook" (a do-it-yourself field guide)**, plus 3 starter months.
+- What we have, measured in code today:
+  - (1) One claim: `claim_next_task` uses `FOR UPDATE SKIP LOCKED` (`operational_core.sql:57`; `w24_allocation_work_seam.sql:79`). **Identical.**
+  - (2) Stale recovery: a 900 s lease, `reap_expired_leases()` every 60 s (`scheduler.ts:463`) and a live-worker heartbeat (`worker-shim.ts:878-893`). **Identical in function**, except that ours requeues where theirs fails the step and finalizes the mission.
+  - (3) One entry: tasks are born in at least four TS sites (`packages/revenue/src/discovery.ts`, `packages/gateway/src/pin-check.ts`, `packages/dxb-mcp/src/groups/queue.ts`, `packages/orchestrator/src/dispatch.ts`) and in several SQL functions. A halal screen at birth exists in the w25 door (`fn_halal_screen_hit`); whether every birth site runs it was not measured here. **Not one entry.**
+  - (4) A cap at birth: our subscription brake **stops claiming** (`subscription-cap.ts:29-32`), which is the pattern the article names as pitfall 3: the queue grows while the hour is full. Refuse-at-birth exists for halal and outward work only (w25 header, commit 750956b).
+  - (5) A job is done only when all its parts are: B64 measured that nothing assembles a job or reports its end, and an intent has no done state.
+  - (6) Policy as JSON rows: `hook_policies.rule` jsonb and settings keys (`orchestrator.subscription_tokens_per_hour`). **Identical in shape.**
+  - (7) A failure → diagnosis trigger with a cooldown: grep for `cooldown` and failure-diagnosis terms in `packages/` found none. The escalation ladder retries instead.
+  - OpenClaw is not installed (`command -v openclaw`: none), and STACK rules out a second runtime.
+  - H9 (digital-team setup) and the H7 membership at 4.99 are in `.planning/research/REVENUE-OPPORTUNITIES.md` §23, §25.
+- What it has that we do not: one birth function for all sources, a per-kind cap that refuses at birth with a recorded reason instead of stopping claims, "a job succeeds only when all parts did", a failure → diagnose trigger with a cooldown, and a self-serve price ladder for an "AI employee" product.
+- Board:
+  - **One birth function and per-kind refuse-at-birth caps** · B64 (how work reaches the holding) · now: four-plus insert sites, and a subscription brake that stops claiming · `method` · how it is used: every source (his goal, discovery, MCP queue, pin-check, SQL generators) calls one function that runs the halal screen, the caps and the approval class, and records any refusal · first trial: on the construction engine, fill the hourly cap and push 20 tasks from each source, then count the queued rows (should be 0) and the recorded refusals (should be 20 per source) · stops at the CEO: nothing.
+  - **A job succeeds only when all its parts did** · B64, with C60 showing it · now: nothing assembles a job's end · `method` · how it is used: the master's job closes only through a finalize check over its parts · first trial: one job with one failed part must show failed, not done · stops at the CEO: nothing.
+  - **A failure → diagnose trigger with a cooldown** · C39 (the company doctor) · now: nothing; escalate.ts retries · `new` · how it is used: a failed job raises one diagnosis task for the health team, with a cooldown so it is not repeated every cycle · first trial: seed one failing task class and check for exactly one diagnosis per cooldown window · stops at the CEO: nothing.
+  - **The reaction matrix with probability** · B10 · `none`: randomness for "feels alive" breaks "nothing moves for decoration". Only real event-to-reaction rules are taken, which is the C39 line above.
+  - **The voxyz.ai price ladder** · B83 H9 (digital-team setup; H7 membership beside it) · now: H9's five stations (paid discovery → design → install → 30-day handover → monthly care), done-for-you only · `method` · how it is used: a self-serve low tier (one "employee", one repeating job such as the morning brief, risky steps waiting for the client's approval) and a one-time DIY playbook beside the done-for-you install · first trial: written into H9's package page when B83's bench test of H9 is run · stops at the CEO: prices and opening for sale (the key turn).
+  - **OpenClaw, Vercel** · `none`: no second runtime.
+- The old verdict and reason: **partly holds.** B64 is right. B65 (`is_error`) is not what the article addresses; it is C39 for the failure trigger. Two of the five traps are already solved in our code, which the old reading left unmeasured. The voxyz.ai sales pattern was only called "a product idea sign".
+- Reader's first reading: **Yöntem** (B64, C39, B83 H9).

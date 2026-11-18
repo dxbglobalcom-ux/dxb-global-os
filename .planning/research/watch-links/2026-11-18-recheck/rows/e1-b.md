@@ -1,0 +1,247 @@
+# e1-b — tab "Ekim 9-15 linkleri", rows e1-05 … e1-08 (second reading, 2026-11-18)
+
+## e1-05 (EK05) — Karpathy with Stephanie Zhan at Sequoia ("From Vibe Coding to Agentic Engineering", YouTube `96jN2OCOfLs`, 2026-04-29), reposted on X under a false caption
+
+- **Opened:**
+  - The X post and its 13 replies, from the earlier reader's capture: `…/256bdf75-…/scratchpad/recheck/h10/2110481057418010989.yaml`. I did not fetch it again.
+  - The talk's transcript, read whole: `…/256bdf75-…/scratchpad/recheck/h10/subs/96jN2OCOfLs.clean.txt`, 138 lines. These are YouTube auto-captions. The earlier reader showed that this is the same recording as the X video (both 1789 s).
+  - The earlier reader's full report on this link (row w029), `…/recheck/rows/h10.md` l.229-274. It also covers the quoted beamnxw article. I did not re-read that article: its code and images were not captured.
+  - The X video `~/.cache/link-watch/X7-2110481057418010989.mp4` was **not** watched again, on his order.
+- **His note:** none. The old row has no "Sizin notunuz" field.
+- **What is in it:**
+  - The caption is false. The talk never says "harness" or "99 %", and never names "Opus 5.5". The only model names are "Opus 4.7" (11:39, the car-wash anecdote) and "codex 5.4 x high" (18:58).
+  - The practices he describes:
+    - Install by giving the agent a block of text, not a shell script (OpenClaw, 03:39).
+    - Replace an app pipeline with one model call: a photo goes to Gemini, which overlays images on it with Nano Banana (MenuGen, 04:52).
+    - LLM-compiled personal or company wikis that you ask questions of (06:51, 28:52).
+    - Find out whether your application sits inside the "circuits" the labs trained. If it does not, fine-tune in a verifiable domain with your own RL environments or examples (13:24-15:07).
+    - A council of LLM judges for work that cannot be verified, such as writing (15:07).
+    - Agentic engineering keeps the professional quality bar (15:50).
+    - Hire by giving a big build and then attacking it: "codex 5.4 x high … try to break it" (18:30-19:29).
+    - The human owns the spec and the taste (19:44-22:11).
+    - Code bloat: agents cannot simplify (22:28).
+    - Agent-native infrastructure and docs (25:25).
+    - Agent representation: "my agent talks to your agent" (27:06).
+- **What we have:**
+  - **The attack pass is already on the board:** `.planning/board-rows/B73.md` l.49-51 and `.planning/board-rows/B84.md` l.235, both from row w029 on 2026-11-17. That is this same talk, re-read as w029.
+  - Spec first and the quality bar: `.claude/skills/dxb-verify`, `dxb-team3`.
+  - A judge council at runtime: `critical-gate.ts`, with `gate.challengers` in `.planning/board-rows/B51.md` l.44.
+  - Agent-text installs: the doors are exactly that (`.claude/skills/*/SKILL.md`).
+  - The knowledge stack: `graphify`, and Obsidian + Graphify + open-notebook in `.planning/research/STACK.md` l.7.
+  - The LLM-wiki study card is a STUB: `.planning/research/study-cards/awesome-claude-code-system-prompts-leaks-llm-wiki.md`.
+  - Fine-tuning a text model: no board row mentions it.
+  - A wiki of what the CEO saves: none.
+  - `.claude/rules/` does not exist.
+- **What it has that we do not:**
+  - (a) Fine-tuning a small local model on a verifiable job, from graded examples.
+  - (b) A wiki compiled from the links he saves, which he can ask questions of. The raw material is already in `.planning/research/watch-links/`.
+  - (c) Agent-to-agent representation. This is something to watch, not to build.
+  - Everything else is ours already.
+- **Board:**
+  - **Attack pass** · B73 / B84 · already placed 2026-11-17 (w029) · `identical` · nothing more to write.
+  - **Fine-tune in a verifiable domain** · **B34** · what stands there: the exam is script-graded (w063 leg, `B34.md` l.53), and candidates are compared by cost per accepted change. No fine-tune leg exists.
+    - Relation: `new`.
+    - Use: the exam's graded answers (labels, extracted fields) become a training set. A LoRA of the resident candidate is then scored against the same exam.
+    - First trial: one classification job, untuned vs tuned, on this card under B33's queue. Decided by accept rate and seconds per item.
+    - Stops at the CEO: nothing (local, free). The winning model is his choice, as the row already says.
+  - **Wiki of his saved links** · no row owns it. The nearest is **B82** (Gözlem odası; it follows people, it does not keep a wiki).
+    - What stands there: nothing.
+    - Relation: `new`.
+    - Use: the watch-links folders are compiled into one queryable page for him.
+    - First trial: build it over one tab (this one) and ask it five questions he has asked in sessions.
+    - Stops at the CEO: his word to open it at all. His own words on B82 are *"bürokratik hale getirmeyin"*.
+  - **Agent representation** · nearest B83 · `none` for now.
+  - **Path-scoped `.claude/rules/`** (from the quoted beamnxw article) · no board row; this is for the construction sessions · `new` · Araştır only.
+- **The old verdict and reason ("Alma": "a nice chat, no new technique"):** partly holds. The talk is real and the caption is false. But "no new technique" does not hold: the attack pass has since been placed on two rows, and fine-tuning and the wiki are absent from ours.
+- **Reader's first reading:** Yöntem. The attack pass is already on the board. The fine-tune trial is a note for B34 and the wiki is an idea near B82, for the lead to weigh.
+
+## e1-06 (EK06) — Bonsai 27B, PrismML's 1-bit build of Qwen3.6-27B (XDA, 2026-10-10), and its family
+
+- **Opened:**
+  - The XDA article, fetched as text (`dxb-research/scripts/fetch.py --out`, scrapling, 38 KB) and read whole, comments included: `$J/../e1b/xda.md`.
+  - The Hugging Face API for author `prism-ml` (42 models), plus the file trees and model cards of `prism-ml/Bonsai-27B-gguf` and `prism-ml/Ternary-Bonsai-2-9B-gguf`.
+  - The earlier card of `Ternary-Bonsai-2-27B-gguf`: `…/85ae8c2f-…/scratchpad/bonsai.md`.
+  - `.planning/board-rows/B34.md` whole, B33's board line, `~/.lmstudio/models`, and `ollama list`.
+  - The source file `src/e1-06.txt` is empty: there is no video for this row.
+- **His note:** none.
+- **What is in it:**
+  - The article is by Nolen Jonker, 2026-10-10. The model is Bonsai 27B in the 1-bit Q1_0 build: 4.4 GB with vision in LM Studio, where it is a Staff Pick. It inherits a 262K context; on 8 GB of memory that is about 30-50K usable.
+  - PrismML's own figures:
+    - Math 91.7 against 95.3 for the full Qwen.
+    - Tool calling 66 against 80. The article calls this "the biggest weakness", and for tool work the author stays on Qwen 3.5 9B.
+    - Images are weak.
+    - 27 tok/s against Gemma 4 E4B's 35 tok/s on the same prompt.
+  - Strong points in the author's tests: summaries of long documents without splitting, and following five stacked rules in a product description.
+  - The model card (`Bonsai-27B-gguf`; apache-2.0; base `Qwen/Qwen3.6-27B`; 2026-07-04):
+    - `Q1_0` is 3.79 GB and the vision file (`mmproj Q8_0`) 0.63 GB.
+    - Peak memory is 5.2 GB at 4K context and 5.6 GB at 10K.
+    - The thinking-mode average is 76.11 = 89.5 % of FP16.
+    - It runs on PrismML's llama.cpp fork.
+  - Newer releases from the same maker:
+    - `Ternary-Bonsai-2-27B` (Qwen3.8 base): 98.2 % of FP16, 5.95-7.63 GB.
+    - **`Ternary-Bonsai-2-9B-gguf`** (base **`Qwen/Qwen3.5-9B`**, apache-2.0, 2026-09-23, 1.55 M downloads): PTQ1_0 2.00 GB, PQ2_0 2.42 GB, **Q2_0 2.56 GB, which runs on stock llama.cpp b11556 or newer**; vision file 0.62 GB. No benchmark table on its card.
+- **What we have:**
+  - B34 (the local worker model) names a resident budget of about 5 GB for a 7-8 B worker. It also names `Qwen/Qwen3.5-9B` as "the obvious third candidate", which has not been downloaded.
+  - On disk in LM Studio: Gemma 4 E4B (Q4_K_M), gpt-oss-20b and the Qwen3.8-27B uncensored build (`~/.lmstudio/models`).
+  - In Ollama 0.32.15: `bespoke-minicheck` and the embedding models.
+  - **`Ternary-Bonsai-2-27B` is already a B34 exam candidate** (`B34.md` l.41-45, row w062, 2026-11-17).
+  - Neither the 1-bit Bonsai 27B nor Ternary-Bonsai-2-9B is named anywhere.
+- **What it has that we do not:**
+  - Bonsai 2 27B, already on B34, does not fit the ~5 GB resident budget (5.95-7.63 GB). These two do:
+    - The 1-bit 27B: 3.8 GB plus 1.4 GB at 4K context.
+    - **Ternary-Bonsai-2-9B: 2.0-2.6 GB.** It is a ternary build of the very Qwen 3.5 9B that B34 already wants as its third candidate, and it would leave the most room for the B33 floor (ear and mouth).
+  - Tool calling is weak, but tool calling is not B34's job. B34's jobs are classification, tagging, summaries, extraction and draft translation, and the local model only drafts.
+- **Board:**
+  - **Ternary-Bonsai-2-9B** · **B34** · what stands there: Gemma 4 E4B (4.7-6.3 GB) as the only candidate in the resident budget, and Qwen 3.5 9B named but not downloaded.
+    - Relation: `second`, placed beside Gemma 4 E4B and beside its own full-size Qwen 3.5 9B.
+    - Use: as the resident drafter under the maker/checker gate.
+    - First trial: in the B34 exam, run the same script-graded jobs on the Q2_0 file (LM Studio's or Ollama's bundled llama.cpp must be b11556 or newer, otherwise it writes garbage silently; check the build first) against Gemma 4 E4B and full Qwen 3.5 9B. Decided by cost per accepted result and the VRAM left for the floor.
+    - Stops at the CEO: nothing for the download (free, apache-2.0). Adopting the winner is his, as B34 says.
+  - **Bonsai 27B 1-bit (Q1_0)** · **B34** · counterpart: Bonsai 2 27B, already a candidate.
+    - Relation: `second`, the smaller and weaker sibling: 89.5 % of FP16 against 98.2 %.
+    - Use: only if the exam wants a 27B-class model that stays resident.
+    - First trial: the same exam, Q1_0 against Bonsai 2 27B PQ2_0. It needs PrismML's fork, or LM Studio's runtime if it loads there (the article says it does; not checked on our runtime 2.28.2).
+    - Stops at the CEO: nothing.
+- **The old verdict and reason ("İzle": "tool-using agents are what we need, and it is weak there"):** does not hold. The row it names (B33/B34) wants a cheap resident worker that does not use tools. Also, the subject is already a B34 candidate under its newer name, so the 9B sibling is the real gap.
+- **Reader's first reading:** İkinci. Ternary-Bonsai-2-9B goes into the B34 exam beside Gemma 4 E4B. The 1-bit 27B goes in only as an optional extra.
+
+## e1-07 (EK07) — Higgsfield Ads Studio (Ad multiplier + Static ads), one user's 7.5-minute walkthrough (YouTube `xixxe38ar6g`, channel "ISFILMZ")
+
+- **Opened:**
+  - The transcript, read whole: `…/f8ac7479-…/scratchpad/links/transcripts/w026-xixxe38ar6g.txt`.
+  - The frame sheet and frames t36, t135 and t300 in `…/links/frames/w026-xixxe38ar6g/`.
+  - `.planning/board-rows/B43.md` (R26-R30, the 2026-11-17 Higgsfield leg, the "Gerek yok" leg) and `B28.md` (the weekly loop, and the style file w091).
+  - `~/.claude/skills/kisayol/SKILL.md` §1-4.
+  - The video was not watched again.
+- **His note:** none.
+- **What is in it:**
+  - **Ad multiplier:**
+    - Inputs: a reference ad of 4-30 s, plus up to 20 images of "characters, products, or clothes".
+    - Either a free prompt, or the "Change hook" and "Change CTA" toggles. The prompt disables the other two.
+    - In the demo, one prompt replaced the laptop, the woman and the setting in a single generation: "MUST REPLACE …", plus "DO NOT CHANGE HER DIALOGUE". The brand name was spelled phonetically for the voice.
+    - Cost on the button: 147 credits at 720p and 252 at 1080p, for an ad of about 16 s.
+    - A hook-only change also switched the laptop screen on. There are no negative prompts.
+  - **Static ads:**
+    - A brand kit is made from a website URL, or by hand: name, URL, product image, selling points, aesthetics and audience. It produces three statics.
+    - A built-in chat model then "researched popular laptop brand advertising" (it named Dell's and Lenovo's principles, "not their copy") and made a fourth, better static.
+  - Banners show a $10/month Lite plan with 250 credits, and "Unlimited Seedance 2.5 at 720p" on the Scale plan. **Seedance appears only in a banner. The title's "Seedance 2.5" is not the video's subject.**
+- **What we have:**
+  - **Higgsfield itself is already priced on the board as the paid fallback:** `B43.md` R30 (l.79) and the leg at l.215-222. Read 2026-11-17: Plus 33 € for 1,200 credits, Ultra 50 € for 3,000; Genjutsu 35/100 credits per 5 s. Its scope is "carrying a person onto a filmed performance".
+  - The free road for UGC ads:
+    - B43's UGC recipe (MiniMax H3 Ref2VA, Voice Studio clone).
+    - The clone-reel re-timing method (w097, `B43.md` l.211).
+    - WanGP's engines (R27).
+  - B28's weekly loop step (4): "the winner's variations go into next week". It names no tool or method for making the variations. Its risk line: Meta's Andromeda throttles variations that are near-identical.
+  - Static ads: `/kisayol`, 202 recipes. Its intake line has no selling points, audience or aesthetics, and it does not read from a URL. The style file per client (w091) covers video axes only.
+- **What it has that we do not:**
+  - A one-step "one winner → N versions" control, with exactly one changed variable per version (cast/product/setting, or hook only, or CTA only).
+  - A brand-kit intake read from the client's site.
+  - Price data: a full re-cast of a ~16 s ad is 147 credits at 720p, about 2.5 € on Ultra at the offer price. This is arithmetic, not a measured run.
+- **Board:**
+  - **Ad multiplier (Higgsfield Ads Studio)** · **B28** (the step-4 variations); B43 makes the variations.
+    - What stands there: B43's UGC recipe and the clone-reel method. Higgsfield is already in R30 for person swap.
+    - Relation: `second`. It is the paid twin inside the same subscription R30 already prices; no second purchase.
+    - Use: one accepted client ad becomes three versions for the next week.
+    - First trial: take one accepted film (OUTLETEURO OE-003, accepted 2026-11-09) and make three versions on our own road: new product and setting, new hook only, new CTA only. Do the same on Higgsfield only if R30's subscription has been bought. Decided by cost per accepted version, and whether the versions differ enough for Andromeda.
+    - Stops at the CEO: the subscription (money out). The re-cast follows the cast rule already in `/kisayol` §4.
+  - **The one-variable variation recipe, plus phonetic brand spelling for the voice** · **B28** step (4), with the voice part in B43's recipe step 5 · what stands there: nothing written · `method` · it is written into the weekly loop as the way variations are made · no trial of its own; it runs inside the trial above · stops at the CEO: nothing.
+  - **Brand kit from the client's URL** · **B43** (the `/kisayol` intake) and B28 (the style file per client).
+    - What stands there: kisayol's need line, and w091's video style file.
+    - Relation: `method`.
+    - Use: selling points, audience and aesthetics are read once from the client's site and passed to kisayol's slots.
+    - First trial: one real client product, kisayol with the kit against kisayol without it, in front of his eye.
+    - Stops at the CEO: nothing.
+- **The old verdict and reason ("İzle": "a good service idea; we do it with free local tools when the studio's turn comes"):** partly holds. Free first is right, and Higgsfield is now priced as R30's fallback. But the variation method and the brand-kit intake were never written anywhere. The "Seedance 2.5" in the title is not in the video.
+- **Reader's first reading:** Yöntem. The variation method goes into B28 step (4) and the brand-kit intake into kisayol. Ad multiplier stands as İkinci inside R30's existing subscription.
+
+## e1-08 (EK08) — Voxyz, two X posts: dynamic workflows in Claude Code, and the per-subagent 1-hour cache (with a quoted post on a cache countdown in the status line)
+
+- **Opened:**
+  - Both threads: `opencli twitter thread … -f yaml` → `$J/../e1b/2109237583704445140.yaml` (24 posts) and `…/2109056129884123370.yaml` (24 posts). I read both main posts and the quoted post whole.
+  - The t.co links, resolved:
+    - `code.claude.com/docs/en/workflows`
+    - `platform.claude.com/docs/en/managed-agents/multiagent-orchestration`
+    - `code.claude.com/docs/en/prompt-caching`
+  - I fetched those three docs plus `statusline.md` as Markdown and grepped them.
+  - Local checks:
+    - `claude --version` (2.1.327).
+    - `~/.claude/settings.json`; `.claude/settings*.json`; `~/.claude/agents` and `.claude/agents`.
+    - `~/.claude/hooks/dxb-statusline.js` l.190-236.
+    - `dxb-team3` §6-§7.
+    - `B73.md` and `B85.md`.
+    - A grep of this project's transcripts for real `Workflow` tool calls.
+- **His note:** none.
+- **What is in it:**
+  - **Post 1 (2026-10-11):**
+    - Dynamic workflows: Claude writes a script, the runtime fans work out to many subagents in phases and combines the results. Available on every paid plan and counted against plan usage; up to 1,000 agents per run; `/workflows` shows per-agent tokens and can stop the run.
+    - It gives a prompt:
+      - Find, in this repo, the one job worth splitting: a whole-repo check, a many-file migration, or a fix repeated until it passes (stop after two rounds with no progress).
+      - Plan it on one directory with ≤10 agents.
+      - Pair every piece with a reviewer agent that looks for what the first one missed.
+      - One failure must not fail the run; list what was not covered.
+      - Hand every reported issue to another agent to pick apart, and count only the ones that hold.
+      - Change nothing until confirmed.
+    - The "70 planted bugs, single agent 14/15/27, workflow 66 every time" figure **is not in either linked doc as fetched today** (grep for 70, 66, bugs, planted: no hit).
+  - **Post 2 (2026-10-10):**
+    - A subagent's cache lives 5 minutes. `experimental: cacheTtl: 1h` in an agent file gives that one subagent an hour; 1-hour writes cost 2× base input against 1.25×.
+    - `subagentPromptCacheTtl` overrides the per-agent setting.
+    - `/autocompact 400k` for 1M-context models.
+    - The docs confirm all of it: cacheTtl needs v2.1.248 or later, and it is ignored while a subscription is drawing on usage credits.
+  - **Quoted post:** the status line can read Claude Code's own `prompt_cache` object. Its fields include warm, ttl, expires_at, hit_ratio, misses, last_miss_cause and recache_tokens_if_cold. It needs v2.1.251 or later and is documented in `statusline.md` l.387-410.
+- **What we have:**
+  - **The Workflow tool:**
+    - Built into Claude Code 2.1.327.
+    - **It has been used in this project, contrary to the old row:** twice. On 2026-10-21 (session `40f6660d`, "arm-4-ultra") and on 2026-11-08 (session `e6b08cd7`, "web-office-state", three read-only readers).
+    - The "rank-4 security sweep" the old row named is B73's Claude Security scan. Its recipe already requires the Workflow tool ("Dynamic workflows" on in `/config`; `B73.md` l.45).
+  - **Cache:**
+    - `dxb-team3` §7 and `~/.claude/hooks/dxb-cost-gate.py`: "a subagent idle over 4 minutes is never resumed — its cache is the 5-minute one".
+    - No `cacheTtl` in any agent file and no `*PromptCacheTtl` setting (grep: none).
+  - **The status line:**
+    - `~/.claude/hooks/dxb-statusline.js` already counts the cache down, made on his order of 2026-11-12, with `refreshInterval: 30` set.
+    - But it **assumes a fixed 60 minutes** (`CACHE_MINUTES = 60`) and infers the last request from the transcript tail. It does not read `prompt_cache`.
+  - Autocompact: the handover at 50-60 % (team3 §7) comes long before the ~967K default, so there is nothing to change.
+- **What it has that we do not:**
+  - (1) The status line could read the real TTL and expiry from Claude Code, which drops to 5 minutes when the plan is past its limit and on usage credits. Ours would still say 60. It could also show the number of tokens a cold cache will re-cache, and the last miss cause.
+  - (2) A per-agent 1-hour cache for the writers that wait on a battery (builder, helper-writer). Today our only answer to idle writers is "never resume".
+  - (3) A workflow shape: every piece paired with a reviewer, every finding handed to a refuter, a coverage list for what was missed, and a no-progress stop. This could be the way a whole-repo read is done.
+- **Board:**
+  - **Workflow tool for the security sweep** · B73 · it already requires it · `identical` · nothing more to write.
+  - **Workflow shape (pair reviewer, refute each finding, coverage list)** · **B85** (the foundation dossier and verdict table are whole-repo reads; today they run on Opus hands, `B85.md` l.37-38, l.81-82).
+    - Counterpart: helper hands opened by the lead (`dxb-team3` §3), and Sol's blind audit.
+    - Relation: `method`.
+    - Use: the next dossier part runs as one workflow, with a part reader, a gap reviewer and a refuter for each defect named.
+    - First trial: one dossier part done both ways (hands against workflow). Compare defects that survive the refuter, quota points, and the lead's tokens.
+    - Stops at the CEO: nothing. It is a construction method and it spends quota.
+  - **`prompt_cache` in the status line** · no board row (construction sessions; the countdown was his 2026-11-12 order). The nearest is B51 move 7, "cost down".
+    - Counterpart: `dxb-statusline.js` cacheTag, fixed at 60 minutes.
+    - Relation: `second`.
+    - Use: read `prompt_cache.expires_at`, `ttl` and `recache_tokens_if_cold` when they are present, and fall back to today's transcript method when they are absent.
+    - First trial: the script is fed the docs' sample JSON (warm, about to expire, cold), then watched for one live session against today's count.
+    - Stops at the CEO: his eye on the changed line.
+  - **Per-agent `cacheTtl: 1h`** · no board row (sessions). The nearest is B51 move 7.
+    - Counterpart: the 4-minute "never resume" rule (`dxb-team3` §7, `dxb-cost-gate.py`).
+    - Relation: `second`.
+    - Use: on `helper-writer` and `builder` only, so a writer that sits through a battery of more than 5 minutes can be resumed warm.
+    - First trial: two equal pieces with a battery longer than 5 minutes. One writer has the 1-hour cache and is resumed; the other is a fresh hand. Compare quota points from `/usage`. How the Max quota weighs a 1-hour write is not documented.
+    - Stops at the CEO: his word, because it changes a written rule of the door (the 4-minute rule).
+  - **`/autocompact 400k`** · `none`: the handover rule already acts first.
+- **The old verdict and reason ("Workflow: use it at that rank · Cache: do not"):** partly holds.
+  - The workflow part holds: B73's scan already needs it.
+  - "Never used" is no longer true: it has been used twice.
+  - "The 4-minute rule already solves the cache" is only half true. The rule avoids paying for cold resumes; it does not let a waiting writer keep its cache.
+  - The status-line part was never read.
+- **Reader's first reading:** İkinci, for the two cache items beside ours. The workflow shape is Yöntem for B85, and the B73 use is Zaten kurulu.
+
+## Commands run (main ones)
+
+- `cat $J/old/e1-0{5..8}.json`, `cat $J/context.md`, `cat …/20261015-ekim-linkleri/RECORD.md`
+- `find /tmp/claude-1000 ~/.cache -iname '*2110481057418010989*'` (also for `xixxe38ar6g`, `bonsai`, and the two Voxyz ids). This located the transcripts, the frames and earlier readers' files.
+- Read: `96jN2OCOfLs.clean.txt` (whole), `w026-xixxe38ar6g.txt` (whole), the frame sheet + t36/t135/t300, `bonsai.md`, and `recheck/rows/h10.md` l.225-300.
+- `python3 dxb-research/scripts/fetch.py --out e1b/xda.md <XDA url>` → scrapling OK, 38,249 bytes.
+- `curl https://huggingface.co/api/models?author=prism-ml`, `…/api/models/<id>/tree/main`, `…/raw/main/README.md` for `Bonsai-27B-gguf` and `Ternary-Bonsai-2-9B-gguf`.
+- `ls ~/.lmstudio/models` and `ollama list`.
+- `opencli twitter thread https://x.com/Voxyz_ai/status/<id> -f yaml` ×2 → rc 0, 17,718 / 22,896 bytes.
+- `curl -s -w '%{redirect_url}' https://t.co/…` ×3, then `curl -sL https://code.claude.com/docs/en/{workflows,prompt-caching,statusline}.md` and `…/managed-agents/multiagent-orchestration.md`.
+- `claude --version`, and a grep for cacheTtl / PromptCacheTtl / autocompact / statusLine in the settings and agent files.
+- `grep -l -E '"type":"tool_use","id":"[^"]+","name":"Workflow"' ~/.claude/projects/-home-dxb-DxB-Global-OS/*.jsonl` → 2 sessions.
+- grep and Read over `.planning/board-rows/{B28,B33,B34,B43,B51,B73,B82,B84,B85}.md`, `00-BOARD-OPEN-WORK.md`, `STACK.md`, the study cards and `~/.claude/skills/kisayol/SKILL.md`.

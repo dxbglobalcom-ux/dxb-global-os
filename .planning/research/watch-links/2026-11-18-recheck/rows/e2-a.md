@@ -1,0 +1,246 @@
+# Tab "Ekim 15-21 linkleri" — rows e2-01, e2-08, e2-12 (second reading, reader e2-a)
+
+Working files (fetched text only): `$J/rows/e2a-work/` — README copies, the Voxyz thread and article, the Instagram caption.
+
+## e2-01 (EK09) — rananjay.ai carousel "20 repos to turn Opus 5.5 into your motion design studio": a list of code-video engines, motion skills and web-animation libraries
+
+- **Opened:**
+  - The old row `$J/old/e2-01.json`. `$J/src/e2-01.txt` is empty. The 9 slides are not on disk: no `~/.cache/link-watch` file for DeRvxD6gDCu, and the old `carousel.py` output was not kept. I did not download the slides again.
+  - The post's caption as text (`hidden.py read … --text`). It names no repo and says "Comment MOTION and I'll DM all 20 repo links".
+  - So the 20 names are known only from the old row, which names 14. The other 6 are **unread**.
+  - Lead for the missing names: Voxyz's sibling post "These 15 GitHub repos turn your Opus 5.5 into an entire motion studio" (2026-10-10, one day after rananjay's post of 2026-10-09). I read it with `opencli twitter thread` through the research door. I resolved its t.co links with `curl -w %{redirect_url}`. Items only in that list are marked as such below.
+  - `gh api repos/<o>/<r>` for every named repo, plus GitHub search for the names that had no owner.
+  - READMEs read for 11 repos, plus Barty-Bart's `object-separation` README.
+  - Checked against: our skill `dxb-motion-graphics` (SKILL.md and references), `tools/motion-graphics/mg.mjs`, OpenMontage `.agents/skills/` and `tools/`, `~/.local/share/dxb/skills/emil`, ComfyUI models, B43.md, B84.md and B28.md.
+- **His note:** none.
+- **What is in it** (stars and last push read 2026-11-18):
+  - `heygen-com/hyperframes`: HTML → deterministic MP4. 86,195★, push 2026-11-18, Apache-2.0.
+  - `remotion-dev/remotion`: React → video. 73,995★, push 2026-11-18. Licence NOASSERTION (company licence).
+  - `remotion-dev/skills`: Remotion's official agent rules. 7,454★, push 2026-11-16.
+  - `greensock/gsap-skills`: official GSAP agent skills. 18,664★, push 2026-07-29, MIT. Only in Voxyz's list; the old row named "GSAP".
+  - `greensock/GSAP`: the library. 30,868★, push 2026-11-04.
+  - `AbubakrChan/product-launch-motion`: 491★, push 2026-10-21, MIT.
+    - "Paste your website URL, get a launch video."
+    - v2 replaced GSAP and HyperFrames with plain HTML, closed-form springs, music-first timing, and Playwright with 4 subframes per frame plus ffmpeg `tmix` motion blur.
+    - Its rules: one shape that never cuts; a cursor drives every change; `DECISION:` lines the client can overturn in one reply; `references/prompts.md` keeps every review note verbatim.
+  - `charlie947/motion-graphics-skills`: 710★, push 2026-10-11, MIT. 15 skills:
+    - `brand-intake` writes brand.md and MOTION.md, which every other skill reads;
+    - `reference-to-motion` breaks down a reference video's moves into a scene-by-scene prompt;
+    - also `animated-chart` (every value exact), `milestone-reveal`, `motion-effects` (16 effects as 8-second loops), `vox-explainer`, `apple-launch-film`, `title-sequence-3d`, `reel-export` (1080×1920) and `model-showdown`.
+  - `howseen-ai/claude-motion-design`: 851★, push 2026-10-04, MIT. HTML, Playwright and ffmpeg.
+    - Render checks: a 540p draft; subframe motion blur; a pop and one-frame-flash detector; a loop-seam check in position and velocity.
+    - Honesty rule: illustrative data is labelled "Example data" on screen.
+    - "Remake mode": a frame-locked shot spec taken from a reference launch video, rebuilt for your brand. It never reuses the reference's music, voice or people.
+  - `nateherkai/hyperframes-student-kit`, now renamed `nateherkai/herk-edit-kit`: 2,937★, push 2026-10-14, NOASSERTION.
+    - An editing kit for your own footage, built on HyperFrames: silence cuts, mistake detection, transcript retiming, EDL review, beat-sync validation.
+    - Also captions, B-roll, 406 motion-graphics cards in two styles, and a short-form workflow.
+    - Transcription uses ElevenLabs Scribe by default; local Whisper is possible.
+  - `LottieFiles/motion-design-skill`: 3,299★, push 2026-11-17, MIT. Motion principles: timing and easing tables, choreography, Disney's principles for UI. The renderer is LottieFiles' hosted Creator MCP.
+  - `Sunwood-ai-labs/hyperframes-motion-reel-skill`: 191★, push 2026-09-29, MIT. A beat-locked showreel at 120 BPM and 60 fps, with code-generated kick, hi-hat and sub bass.
+  - `t3knobox/klik-anim-skill-creation`: 97★, push 2026-08-06, no licence. Remotion animation and camera "laws", and a method with a storyboard of rendered stills and QA in a fresh context.
+  - `Barty-Bart/motion-graphics`: 1,357★, push 2026-10-13. gh says NOASSERTION; the README says MIT. Six skills:
+    - `motion-broll`: B-roll timed to the speaker's words;
+    - `object-separation`: SAM 2.1, run locally, separates a person, product or hand from the background in every frame of a video. The large model is 898 MB and needs a GPU with 12 GB or more;
+    - `sound-effects`: CC0;
+    - three explainer skills.
+  - `airbnb/lottie-web`: After Effects JSON player. 32,498★, last push 2025-09-01, MIT.
+  - `motiondivision/motion`: web animation library. 35,324★, push 2026-11-18, MIT.
+  - Only in Voxyz's list:
+    - `whaleyxbt/claude-motion` (999★, MIT): self-review contact sheet per beat, a Python sound synthesiser, web sims rendered to 60 fps;
+    - `cth9191/animate` (2,096★, MIT): procedural canvas animation in 7 drawing kits — cut paper, crosshatch ink that "boils on 2s", riso, sketchbook, math, pixel, isometric;
+    - `haidrrrry/claude-remotion-skill` (1,106★, MIT);
+    - `199-biotechnologies/motion-dev-animations-skill` (233★, MIT; Motion.dev for sites).
+- **What we have:**
+  - Our own motion skill `dxb-motion-graphics` (`~/.claude/skills/dxb-motion-graphics` → `packages/gateway/plugins/dxb-motion-graphics`) and the command `mg` (`tools/motion-graphics/mg.mjs`). It covers:
+    - storyboard before motion; a page that is a pure function of time; HyperFrames rendering;
+    - contact sheets (`mg sheet`), a second-reader motion reading (`mg motion-read`), checks: same-second, in-frame, never-still, join, reading;
+    - an in-page `motion-blur.js`, a CC0 SFX set with `synth.mjs`, cues placed at start, peak or end;
+    - no music.
+  - HyperFrames: **identical, installed** — it is `mg`'s engine, and also OpenMontage `.agents/skills/hyperframes*`.
+  - Remotion: **identical, installed** — `~/tools/OpenMontage/remotion-composer`; B43's w089 leg keeps it as the fallback engine.
+  - `remotion-dev/skills`: **identical, on disk** — OpenMontage `.agents/skills/remotion-best-practices/` (38 rules, maps and captions among them). OpenMontage's `remotion/SKILL.md` says it is "synced from the official remotion-dev/skills". B43 w089 already compares it.
+  - `greensock/gsap-skills`: **identical, installed** — OpenMontage `.agents/skills/gsap-*` ("Sourced from greensock/gsap-skills, MIT").
+  - lottie-web: HyperFrames' Lottie adapter is on disk (`hyperframes-animation/adapters/lottie.md`).
+  - `haidrrrry/claude-remotion-skill`: already on B43 (w089).
+  - Motion principles: `~/.local/share/dxb/skills/emil` (animation-vocabulary, improve-animations, review-animations); OpenMontage `framer-motion` and `lottie-bodymovin` (Disney principles); `references/craft.md`.
+  - Footage editing: `video-use` (B43 leg 2026-11-07).
+  - Person or object separation from video: **not found**. OpenMontage `tools/enhancement/bg_remove.py` and `video/green_screen_processor.py` wrap rembg, but rembg is not importable in `~/tools/OpenMontage/.venv`. `~/tools/ComfyUI/models/background_removal/` holds only its placeholder file. No SAM is named in STACK.md or the board rows.
+- **What it has that we do not:**
+  - (1) Local video segmentation (SAM 2.1, Barty-Bart `object-separation`). Nothing of ours does it.
+  - (2) Render QA that `mg` lacks: a pop and one-frame-flash scan, a loop-seam check in position and velocity, subframe motion blur (`tmix`), a 540p draft (`mg`'s draft saves only about 1 s in 12).
+  - (3) The `DECISION:` log a client can overturn in one reply, and review notes kept verbatim as a prompt library.
+  - (4) Procedural drawing kits for 7 illustrated looks (cut paper, boiling ink line and the rest). Ours has no style kit; B43 lists Lemo-Opuscar's style docs.
+  - (5) The `brand-intake` brand.md and MOTION.md pair, and `reference-to-motion`.
+  - (6) A footage-editing kit on our own engine, beside video-use.
+  - The rest (Sunwood, klik, whaleyxbt's method, LottieFiles) repeats what our skill already does or carries music. I found nothing more in it.
+- **Board:**
+  - Barty-Bart `object-separation` (SAM 2.1):
+    - Row: B43, the motion-graphics leg and the footage effects (see e2-08).
+    - What stands there now: nothing.
+    - Relation: `new`.
+    - Use: cut a person or product out of our own footage, for the effects green screen, frame break, UI world and pull-back reveal, and for compositing on real plates.
+    - First trial: one 10-second talking-head clip of ours on the card, as a B33 guest. Measure time per frame, VRAM and the edge of the mask on hair and hands, beside OpenMontage's chromakey path on the same clip.
+    - What stops at the CEO: nothing beyond his word to install (the B43 leg rule).
+  - `howseen-ai/claude-motion-design` and `product-launch-motion` (the render-QA parts):
+    - Row: B43, the motion-graphics leg.
+    - What stands there now: `mg check` and `mg sheet`, and `motion-blur.js`.
+    - Relation: `second`.
+    - Use: port the flash/pop scan, the loop-seam check and tmix subframe blur into `mg` as checks. The `DECISION:` log goes into the brief and storyboard step.
+    - First trial: run their scan on film 1's render (`/home/dxb/Videos/dxb-motion/film-1-whatsapp-r2/`) and see whether it finds anything `mg` missed. Render one 5-second shot with tmix subframes beside `motion-blur.js`, for his eye.
+    - What stops at the CEO: nothing. Music-first timing is not taken: the holding's own work carries no music.
+  - `cth9191/animate` (drawing kits):
+    - Row: B43, the "effect vocabulary and style catalogue" leg.
+    - What stands there now: Lemo-Opuscar (w070, style docs) and ClaudeAnimationBase (w057, a character).
+    - Relation: `second`.
+    - Use: drawn looks for explainers (cut paper, ink boil, riso, isometric).
+    - First trial: the same 15-second explainer brief in one animate style beside `mg` with a Lemo-Opuscar direction; compare look, render time and his eye.
+    - What stops at the CEO: nothing (MIT).
+  - `charlie947` `brand-intake` and `reference-to-motion`:
+    - Row: B28, the style-file-per-client leg (w091), with B43's brief step.
+    - What stands there now: the style-file leg and `references/brief.md`.
+    - Relation: `method`.
+    - Use: one brand file (colours, type, timing, motion rules) per client, read by every film and cut.
+    - First trial: write it for one holding brand and use it in the next film; is it read and kept?
+    - What stops at the CEO: nothing.
+  - `nateherkai/herk-edit-kit`:
+    - Row: B43, the video-use leg.
+    - What stands there now: video-use.
+    - Relation: `second`.
+    - Use: editing filmed takes inside HyperFrames, with 406 card templates.
+    - First trial: the same raw take cut by video-use and by herk-edit-kit, with the ear from faster-whisper, not Scribe.
+    - What stops at the CEO: nothing; the licence is not stated and not a blocker.
+  - Web animation (`motiondivision/motion`, `motion-dev-animations-skill`):
+    - Row: B84.
+    - What stands there now: GSAP (measured on landonorris.com) and the emil skills on the shelf.
+    - Relation: `second`.
+    - Use: site micro-motion.
+    - First trial: one hero section in Motion beside GSAP.
+    - What stops at the CEO: nothing.
+  - Not worth taking further:
+    - `LottieFiles/motion-design-skill`: second to emil and craft.md, low value. Its renderer is a hosted MCP, an account step.
+    - `Sunwood` and `klik`: the same method as ours. Sunwood's generated drum score is music.
+    - `whaleyxbt/claude-motion`: our skill already has the contact sheet, the beat JSON and synthesised SFX.
+    - `lottie-web`: the adapter is on disk.
+- **The old verdict and reason:** partly holds. The list is real and belongs on B43, but:
+  - the old row named only 14 of 20 and read no README;
+  - it missed that HyperFrames, Remotion, remotion-dev/skills and gsap-skills are already on disk;
+  - its picks (product-launch-motion, Sunwood, LottieFiles) were not the strongest. The new things are SAM 2.1 separation, the render-QA checks and the drawing kits;
+  - its plan ("2-3 picked in the EK16 trial") never got a place on the board.
+- **Reader's first reading:** İkinci (the row as a whole). Within it, `object-separation` is Dene and new, and HyperFrames, Remotion, remotion-dev/skills and gsap-skills are Zaten kurulu.
+
+## e2-08 (EK16) — @aykutucesai reel: 20 named video effects applied by Claude-written code to one desk shot (an effect vocabulary)
+
+- **Opened:**
+  - The old row `$J/old/e2-08.json`. `$J/src/e2-08.txt` lists only `~/.cache/link-watch/EK16-DejsqKlT71p.mp4` (4,963,318 bytes) and empty `.err`/`.lock` files.
+  - **No transcript and no frame sheets are on disk.** The old row says a 98-second transcript, 12 frames and a `watchall` run of 9 sheets were read; none was kept. By his order the mp4 was not opened, run through ffmpeg or watched.
+  - Also read: yesterday's row and plan for the same link (`2026-11-16-whatsapp` w037 in `rows/all.jsonl` and `plan.jsonl`), B43.md lines 168-173 (where w037 is already placed), and our skill's SKILL.md and references.
+  - The content below therefore comes from the old reading, not from the video.
+- **His note:** none.
+- **What is in it** (from the old reading):
+  - 20 effects, each named: orbit, screen wall, UI world, frame break, digital zoom, phone mockup, checklist, headline wall, zoom-through cut, chart grow, pull-back reveal, green screen, paper cut, doodle boil, vertigo, cover story, glass type, kinetic captions, freeze frame, speed ramp.
+  - The end code screen shows React-like `<Sequence from=…>`, `<OrbitCards>`, `<FrameBreak>`, `<GlassType>`, `<SpeedRamp>` and `render("20-efekt.mp4")`. No tool is named.
+  - The reel's claim: name the effect exactly and Claude knows what is wanted.
+- **What we have:**
+  - B43 already holds this reel as "The effect vocabulary (w037)", placed 2026-11-17. The 20 names go into `dxb-motion-graphics` "as a vocabulary the storyboard may call by name", written in HyperFrames. The trial there: kinetic captions, green screen, chart grow and cover story on our own footage in the first client film.
+  - Checked: the vocabulary is **not yet written**. A grep of the skill's SKILL.md and references for doodle, kinetic caption, chart grow, green screen, speed ramp and freeze frame finds nothing. `references/storyboard.md` has its own transition vocabulary ("Ways one shot becomes the next").
+  - Filmed-footage editing: video-use (B43). Person cutout: none installed (see e2-01).
+- **What it has that we do not:** the names themselves, as a shared vocabulary.
+  - My engineering reading, from the names only (the video was not re-viewed):
+    - About half are pure graphics and fit `mg` as it is: orbit, screen wall, phone mockup, checklist, headline wall, chart grow, cover story, glass type, kinetic captions, paper cut, doodle boil.
+    - The rest work on filmed footage and need what `mg` lacks: a footage layer in the page, and person separation for green screen, frame break, UI world and pull-back reveal. Freeze frame, speed ramp, digital zoom, vertigo and zoom-through cut are retiming or camera moves on video.
+  - Ready material from e2-01 for some names:
+    - "paper cut" and "doodle boil": cth9191/animate's cut-paper kit and its ink line that "boils on 2s";
+    - "green screen" and "frame break": Barty-Bart `object-separation` (SAM 2.1);
+    - "kinetic captions": herk-edit-kit captions and Remotion's caption rules (already on disk in OpenMontage).
+- **Board:**
+  - Row: B43, the effect-vocabulary leg (w037).
+  - What stands there now: the leg's own plan (vocabulary into the skill, 3-4 effects in the first client film). Nothing is written yet.
+  - Relation: `method`.
+  - Use: write each name in the skill with one line on what it is and its lane, graphics or footage. The storyboard's shots may call them by name.
+  - First trial: as the leg says. Choose the four so that two are pure graphics (chart grow, kinetic captions) and two are on footage (green screen, freeze frame). Green screen depends on the SAM 2.1 trial from e2-01.
+  - What stops at the CEO: nothing. The leg already carries the halal screen on imagery.
+- **The old verdict and reason:** holds. Dene, on B43 and written in HyperFrames: B43 placed it so on 2026-11-17. The old reading did not see that some effects need footage and person separation, which `mg` does not have.
+- **Reader's first reading:** Yöntem (the vocabulary into the skill; already placed, still to be written).
+
+## e2-12 (EK20) — Voxyz X article: Claude Code + Revid's MCP as a weekly short-video service per client (find formats, make two videos, schedule, pick a winner on Monday)
+
+- **Opened:**
+  - The old row `$J/old/e2-12.json`. `$J/src/e2-12.txt` is empty.
+  - The article in full: `opencli twitter article 2112197160649253120` through the research door, 18,423 bytes. Its embedded images were not opened.
+  - The first reply's full recipe block: on disk from the 2026-11-07 research run, `var/research/runs/20261107-1806-20261107-viral-format-2/bodies/ccdf4d6e….txt` (evidence L1292 / L1425).
+  - Also read: B28.md lines 41-47 (the format-research and weekly-winner leg) and line 74, and yesterday's w041 row and plan.
+  - Revid itself was not opened or tried.
+- **His note:** none. His word on the subject stands in B28: "Revid is not bought (his word)". In yesterday's plan: "Revid ve n8n yok … Revid alınmaz".
+- **What is in it** (from the article and the recipe):
+  - The Revid MCP gives about a dozen tools in three groups:
+    - Find: viral search across 7 platforms, with transcripts and hooks; it costs no credits but is rate-limited;
+    - Make: `calculate_credits`, render, music-to-video;
+    - Post: `list_social_accounts`, `schedule_publish`, `publish_now`.
+  - The MCP cannot pull views or clicks, cannot hear library tracks and cannot watch the finished video. The ad libraries are searched on the website, not through the MCP.
+  - One folder per client, holding:
+    - CLAUDE.md under about 200 lines, with the profile and a never-say list;
+    - four rules: links copied never typed; borrow structure only; price and a "go" before spending; a numbered hook log, never reusing a hook;
+    - `hook-log.md`, `weekly-data.md`;
+    - `.claude/settings.json` with `deny: mcp__revid__publish_now` and `ask: mcp__revid__schedule_publish`. "Rules in CLAUDE.md are reminders … anything that has to be blocked goes into the permission settings."
+  - Cost trick: lock the shot list on the cheap setting (about 120 credits) before the best model (about 1,200 credits).
+  - A 10-item pre-publish check. Then one frame per second on a contact sheet, for black first and last frames (a black thumbnail), black flashes on reshot clips, and garbled logos.
+  - Publishing:
+    - V1 and V2 go on the same platform in the same slot, a day apart, so that only the format changes;
+    - leave each video up 48 hours, never delete and repost;
+    - record three numbers by hand: the opening held, watched to the end, and clicks on a **numbered link per video** (`/usage-limit-v1`).
+  - Winner rule:
+    - most clicks per 1,000 views, by 20% or more;
+    - under 20%, the opening's retention decides;
+    - judge only after 1,000 views and 48 hours;
+    - next week: one video keeps the winner's angle with a new opening, one tests an untried format.
+  - A Monday routine follows `weekly.md` and stops before any spend or post.
+  - Data claim: among 2.39 M TikToks with over 1,000 likes, 16-30 seconds has the highest median views (about 141,000). It comes from the author and Revid's data and is not verified.
+  - Sales road: one sample with the client's own product, priced by what the video brings the client, then a monthly fee for two videos a week and the Monday numbers.
+  - Cost: Growth $39/month for 2,000 credits; a 30-second video with images and a voice is about 40-80 credits; the author's V1 and V2 came to about $50 and $42.
+  - The example client is a song: music.
+- **What we have:**
+  - B28's "Format research + the weekly winner" leg (his yes 2026-11-07). It has the weekly loop (research → decode with rea-video → produce on our card → Monday measure and pick → report), free tools first (yt-viral, ig-viral, a self-hosted Meta ad tracker), paid twins on his word (ScrapeCreators, Foreplay, Apify), and the monthly "two videos a week + the Monday report" package. Its source line cites "EK20 (Voxyz/Revid)".
+  - The client style file (w091) and the approval gate.
+  - Checked: B28 has **none** of hook log, never-say list, pre-publish checklist, numbered link per video, 48-hour rule, "same slot a day apart", or blocking instant publishing in permissions. A grep of B28.md for hook, never-say, pre-publish, numbered, 48 h and 1,000 views finds only the weekly-loop line. Its Monday measure is a weighted score (view velocity 30 / retention 30 / shares+saves 20 / conversion 20).
+- **What it has that we do not:**
+  - the numbered link per video as the conversion measure (the platforms do not report it);
+  - a two-step winner rule with a 20% margin and minimum sample (1,000 views and 48 hours);
+  - "one keeps the winner's angle with a new opening, one tests a new format";
+  - the hook log (never reuse; drop the kinds that did not hold);
+  - the 10-item pre-publish check and the per-second contact sheet for black frames, flashes and garbled logos;
+  - the posting experiment design (same slot, a day apart, untouched 48 hours);
+  - instant publishing blocked in the permission layer, not in the instructions;
+  - the cheap-draft-then-best-model step (our Kanun D, in one line).
+- **Board:**
+  - Row: B28, the format-research leg.
+  - What stands there now: the weekly loop and the weighted Monday score.
+  - Relation: `method`.
+  - Use:
+    - steps (3) Produce and (4) Measure gain the hook log, the pre-publish check with its contact sheet, the numbered link, the 48-hour and same-slot rules, and "winner's angle and new opening, plus one new format";
+    - the click-per-1,000 rule with its 20% margin sits beside the weighted score as a second decision rule. The better one on our own numbers stays;
+    - in our engine, instant posting is blocked by permission, not by a written rule.
+  - First trial: B28's own "first week on the holding's own content". Two videos on one platform, same slot a day apart, each ending in its own numbered link. On Monday both rules pick a winner from the same numbers; see whether they agree.
+  - What stops at the CEO: the publishing accounts (identity step), and music on any client video, which follows his ruling for client work. Revid is out by his word, so no purchase.
+  - `Revid` (the tool):
+    - Row: B28.
+    - What stands there now: the free tools and the named paid twins.
+    - Relation: `none`.
+    - Why: his word "Revid is not bought".
+- **The old verdict and reason:** partly holds. The money road and the loop are real and are in B28. But the plan "try Revid's free tier and compare with our GPU" was set aside by his word, and the old reading did not pull out the method parts that B28 still lacks.
+- **Reader's first reading:** Yöntem (the method parts into B28's leg; Revid itself not taken).
+
+## Commands run (main ones)
+
+- `cat` of `$J/BRIEF.md`, `context.md`, `items.tsv`, `inv/e.tsv`, `old/e2-0{1,8}.json`, `old/e2-12.json`, `src/*.txt`
+- `grep -n` over `B43.md`, `B28.md` and B84.md; Read of `B43.md` lines 160-214 and `B28.md` lines 38-49
+- Python reads of `2026-11-16-whatsapp/rows/all.jsonl`, `plan.jsonl` and the 2026-11-07 research `evidence.jsonl` (L0344, L1290, L1292); Read of body `ccdf4d6e….txt`
+- `opencli twitter thread https://x.com/Voxyz_ai/status/2108905392776360333 -f yaml` and `opencli twitter article 2112197160649253120`, both with the research door's `bin` on PATH. The first try without the door failed: "Could not find X only through the X gate"
+- `python3 hidden.py read https://www.instagram.com/p/DeRvxD6gDCu/ --text --wait 4` (caption only)
+- `gh api repos/<17 repos>`, `gh api search/repositories` for the 5 names that had no owner, `gh api repos/<11 repos>/readme`, and `curl -w %{redirect_url}` on 5 t.co links
+- `ls` and `grep` over OpenMontage `.agents/skills` and `tools`, `~/.claude/skills`, `~/.local/share/dxb/skills`, `~/tools/ComfyUI/models`, and our skill's references and `mg.mjs`; `.venv/bin/python -I -c find_spec('rembg')` → False
+
+## Not read
+
+- e2-01: the 9 slides (not on disk). 6 of the 20 names are unknown; Voxyz's sibling list is only a lead for them.
+- e2-08: the video itself. There is no transcript or frame sheet on disk, and the mp4 was not opened, by his order.
+- e2-12: the article's embedded images. Revid was not tried.

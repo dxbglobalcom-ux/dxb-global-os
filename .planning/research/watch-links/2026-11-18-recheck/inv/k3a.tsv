@@ -1,0 +1,87 @@
+rid	tool	url_or_slug	found	where	evidence
+k3-01	OpenSEO	every-app/open-seo	installed	/home/dxb/.local/share/dxb/skills/openseo	Source: https://github.com/every-app/open-seo (plugins/openseo/skills — the product skills), commit d7ea78524806, MIT.
+k3-11	OpenSEO	every-app/open-seo	installed	/home/dxb/.local/share/dxb/skills/openseo	Source: https://github.com/every-app/open-seo (plugins/openseo/skills — the product skills), commit d7ea78524806, MIT.
+k3-01	Google Search Console	-	mentioned	/home/dxb/DxB Global OS/.planning/board-rows/B84.md	Real volumes come from the client's Search Console or paid data.
+k3-01	ChatGPT	-	mentioned	/home/dxb/DxB Global OS/.planning/board-rows/B83.md	The desk inside ChatGPT (w047, "Dene"). One MCP server (/mcp), one tool, one ui:// card
+k3-01	Perplexity	-	no	-	-
+k3-02	Opus 5.5	-	installed	-	model this session runs on (Claude Code)
+k3-02	Googlebot UA / curl check	-	mentioned	/home/dxb/DxB Global OS/.planning/board-rows/B84.md	Found on Google — the twelve checks and the phone list (w066, "Kur"). A prompt, not a tool... fetched as Googlebot
+k3-02	Lighthouse	GoogleChrome/lighthouse	mentioned	/home/dxb/DxB Global OS/.planning/board-rows/B84.md	Lighthouse is measured and reported, never a stop
+k3-02	CrUX	-	no	-	-
+k3-02	OpenSEO	every-app/open-seo	installed	/home/dxb/.local/share/dxb/skills/openseo	Source: https://github.com/every-app/open-seo (plugins/openseo/skills — the product skills), commit d7ea78524806, MIT.
+k3-02	Google Search Console	-	mentioned	/home/dxb/DxB Global OS/.planning/board-rows/B84.md	Real volumes come from the client's Search Console or paid data.
+k3-02	GPTBot/ClaudeBot/PerplexityBot	-	no	-	-
+k3-03	AI/ML API MCP	aimlapi.com/mcp	no	-	-
+k3-03	opencli	opencli	installed	/home/dxb/.npm-global/bin/opencli; /home/dxb/DxB Global OS/.claude/skills/dxb-research/bin/opencli	command -v opencli -> /home/dxb/.npm-global/bin/opencli
+k3-03	dxb-research	-	installed	/home/dxb/DxB Global OS/.claude/skills/dxb-research	skill folder present in repo .claude/skills
+k3-04	Agentation	benjitaylor/agentation	mentioned	/home/dxb/DxB Global OS/.planning/board-rows/B84.md	The revision hand — Agentation (w050, "Dene") ... npm install agentation -D
+k3-04	agentation-mcp	agentation-mcp	no	-	-
+k3-04	Marker.io	-	no	-	-
+k3-04	BugHerd	-	no	-	-
+k3-04	Playwright MCP	microsoft/playwright-mcp	installed	/home/dxb/.claude.json (mcpServers playwright, command playwright-mcp)	Playwright MCP headless and dxb-tui... two screenless hands now exist (B35)
+k3-04	operator	-	installed	/home/dxb/.claude/skills/operator; /home/dxb/tools/operator	skill folder present
+k3-04	Next.js	vercel/next.js	mentioned	/home/dxb/DxB Global OS/.planning/research/STACK.md	The Claude Agent SDK, the MCP SDK, Next.js, pg-boss ... (core stack)
+k3-05	ARM / presell	-	no	-	-
+k3-06	VoiceStudio	debpalash/VoiceStudio	installed	/home/dxb/tools/VoiceStudio	directory with AGENTS.md, CHANGELOG.md, CLAUDE.md; B43 R23: Voice Studio, a consenting cast voice
+k3-06	ElevenLabs	-	mentioned	/home/dxb/DxB Global OS/.planning/board-rows/B43.md	studio on our own card, free tools, Voice Studio instead of ElevenLabs
+k3-06	Chatterbox / Chatterbox V3	resemble-ai/chatterbox	mentioned	/home/dxb/DxB Global OS/.planning/board-rows/B12.md	voicebox runs on the card (port 17493) carrying chatterbox-tts · kokoro · piper · qwen-tts
+k3-06	VoxCPM2	-	mentioned	/home/dxb/DxB Global OS/.planning/board-rows/B43.md	Voice Studio's default engine OmniVoice; VoxCPM2 beside it
+k3-07	Open Higgsfield	wide-trace/open-higgsfield	no	-	-
+k3-07	VoiceStudio	debpalash/VoiceStudio	installed	/home/dxb/tools/VoiceStudio	see k3-06
+k3-07	OpenSEO	every-app/open-seo	installed	/home/dxb/.local/share/dxb/skills/openseo	Source: https://github.com/every-app/open-seo (plugins/openseo/skills — the product skills), commit d7ea78524806, MIT.
+k3-07	WeKnora	Tencent/WeKnora	mentioned	/home/dxb/DxB Global OS/.planning/board-rows/B84.md	Tencent WeKnora (row w052; 37,657★) — no counterpart found.
+k3-07	OpenWhispr	OpenWhispr/openwhispr	mentioned	/home/dxb/DxB Global OS/.planning/board-rows/B25.md	Kelam is measured side by side with the two open-source tools he sent — Handy ... (OpenWhispr named)
+k3-07	OpenProject	opf/openproject	mentioned	/home/dxb/DxB Global OS/.planning/board-rows/B84.md	OpenProject as the client's project room (row w082) — Community edition, self-hosted
+k3-07	Cal.com	calcom/cal.diy	mentioned	/home/dxb/DxB Global OS/.planning/board-rows/B83.md	The calendar (w083, "Dene"). calcom/cal.com now redirects to calcom/cal.diy (MIT, v6.2.0)
+k3-07	Chatwoot	chatwoot/chatwoot	mentioned	/home/dxb/DxB Global OS/.planning/board-rows/B83.md	the parts taken ready-made (Meta's official WhatsApp MCP, Chatwoot, ...)
+k3-07	Cap	CapSoftware/Cap	no	-	-
+k3-07	REA	reverse-engineer-anything	installed	/home/dxb/.local/share/dxb/skills/reverse-engineer-anything	name: reverse-engineer-anything — Reverse engineer ... targets with REA
+k3-07	Higgsfield (paid)	-	mentioned	/home/dxb/DxB Global OS/.planning/board-rows/B43.md	R30 paid fallback: Higgsfield by subscription (person swap)
+k3-07	ElevenLabs (paid)	-	mentioned	/home/dxb/DxB Global OS/.planning/board-rows/B43.md	Voice Studio instead of ElevenLabs
+k3-07	Semrush	-	mentioned	/home/dxb/DxB Global OS/.planning/board-rows/B84.md	Paid, strong, beside the free roads: ... Ahrefs and Semrush when a client pays
+k3-07	Notion AI	-	no	-	-
+k3-07	Wispr Flow	-	mentioned	/home/dxb/DxB Global OS/.planning/research/study-cards/whisperflow-clone.md	# Study Card: Kelam (WisprFlow clone — our own product)
+k3-07	Asana	-	no	-	(hit only in archify brand-mark catalog, not a tool here)
+k3-07	Calendly	-	no	-	-
+k3-07	Intercom	-	no	-	(hit only in archify brand-mark catalog)
+k3-07	Loom	-	no	-	-
+k3-08	lemo-opuscar	lemomo-ai/lemo-opuscar	mentioned	/home/dxb/DxB Global OS/.planning/board-rows/B43.md	The style catalogue — Lemo-Opuscar (w070). lemomo-ai/lemo-opuscar v2.0.0, 99 film styles for Claude Code
+k3-08	PDoomVideo	JohnHeibel/PDoomVideo	no	-	-
+k3-08	opus-video-prompts	joeseesun/opus-video-prompts	no	-	-
+k3-08	awesome-opus5-5-videos	yihui-dev/awesome-opus5-5-videos	mentioned	/home/dxb/DxB Global OS/.planning/board-rows/B43.md	A hand-painted character cartoon kit ... JohnHeibel/ClaudeAnimationBase (line also names this list)
+k3-08	brag	latent-spaces/brag	no	-	-
+k3-08	HyperFrames	-	mentioned	/home/dxb/DxB Global OS/.planning/board-rows/B43.md	nothing is copied — each effect is written in HyperFrames
+k3-08	Remotion	remotion-dev/remotion	removed	/home/dxb/DxB Global OS/.planning/research/study-cards/video-editing-toolchain.md	Rejected for v1: ... Remotion-class React renderers (company-license cost >3 devs; HyperFrames covers
+k3-08	OpenMontage	-	installed	/home/dxb/tools/OpenMontage; /home/dxb/.local/bin/dxb-tui (see dxb-operator)	R31 · OpenMontage is the default lane; video-use is not the default
+k3-08	scrollcraft	-	installed	/home/dxb/.claude/skills/scrollcraft	skill folder present; B84: One shared cupboard: ... ScrollCraft
+k3-09	ChatGPT Plugins / Apps SDK	-	mentioned	/home/dxb/DxB Global OS/.planning/board-rows/B83.md	The desk inside ChatGPT (w047, "Dene"). ... Tried on our own demo with MCP Inspector and a temporary HTTPS tunnel
+k3-09	MCP Inspector	modelcontextprotocol/inspector	mentioned	/home/dxb/DxB Global OS/.planning/board-rows/B83.md	Tried on our own demo with MCP Inspector and a temporary HTTPS tunnel
+k3-09	cloudflared	cloudflare/cloudflared	no	-	-
+k3-09	Claude Code	-	installed	/home/dxb/.local/bin/claude	command in ~/.local/bin
+k3-10	TestSprite CLI	TestSprite/testsprite-cli	mentioned	/home/dxb/DxB Global OS/.planning/board-rows/B84.md	Paid twin beside it: TestSprite — TestSprite/testsprite-cli v0.16.0 (Apache-2.0)
+k3-10	Playwright	microsoft/playwright	installed	/home/dxb/.claude.json (playwright MCP)	Playwright MCP headless ... Two screenless hands now exist
+k3-12	Shopify AI Toolkit / Dev MCP	Shopify/shopify-ai-toolkit	no	-	(only unrelated Shopify mentions in study cards sellthetrend, pagepilot)
+k3-12	Higgsfield MCP	mcp.higgsfield.ai	mentioned	/home/dxb/DxB Global OS/.planning/board-rows/B43.md	R30 paid fallback: Higgsfield by subscription (not an installed MCP)
+k3-12	AdAdvisor	adadvisor.ai/mcp	no	-	-
+k3-12	Meta Ads MCP	mcp.facebook.com/ads	no	-	-
+k3-12	google-analytics-mcp	googleanalytics/google-analytics-mcp	no	-	-
+k3-12	pipeboard meta-ads-mcp	pipeboard-co/meta-ads-mcp	no	-	-
+k3-12	adadvisor-mcp repo	RajeshAmb/adadvisor-mcp	no	-	-
+k3-12	Google Drive connector	-	installed	/home/dxb/.claude/skills/synced/*/google-workspace/SKILL.md	Read this before the first Google Drive, Docs, Sheets or Slides connector call
+k3-12	Open Higgsfield	wide-trace/open-higgsfield	no	-	-
+k3-13	Google Ads	-	mentioned	/home/dxb/DxB Global OS/.planning/board-rows/B84.md	Google Ads API keyword planning (SEO tools, Core installed line)
+k3-13	Meta Ads / Pixel / Conversions API	-	no	-	-
+k3-13	GA4	-	mentioned	/home/dxb/DxB Global OS/.planning/board-rows/B84.md	SEO tools Core line (GA4 named on the same line as Screaming Frog / DataForSEO)
+k3-13	Google Tag Manager	-	no	-	-
+k3-14	Pomelli	labs.google/pomelli	no	-	-
+k3-14	Canva Magic Studio	-	no	-	-
+k3-14	Holo	-	no	-	-
+k3-14	Media Studio	-	installed	/home/dxb/DxB Global OS/.planning/board-rows/B43.md	DXB MEDIA STUDIO — the CEO's own room for the advertising business (B43)
+k3-15	Superpowers	obra/superpowers	removed	/home/dxb/DxB Global OS/.planning/board-rows/B41.md	he ruled: "superpowers, gsd, ruflo, gstack vb pluginler holdingimize girmeyecek kaldırılabilir" (2026-08-27)
+k3-15	gstack	garrytan/gstack	removed	/home/dxb/DxB Global OS/.planning/board-rows/B41.md	superpowers, gsd, ruflo, gstack vb pluginler holdingimize girmeyecek
+k3-15	Everything Claude Code	affaan-m/everything-claude-code	installed	/home/dxb/tools/ECC	git checkout with CLAUDE.md, AGENTS.md; README 'ECC — the agent harness operating system'
+k3-15	ECC Pro	-	no	-	-
+k3-15	UI UX Pro Max	nextlevelbuilder/ui-ux-pro-max-skill	installed	/home/dxb/.claude/plugins/cache/ui-ux-pro-max-skill/ui-ux-pro-max	settings.json: "ui-ux-pro-max@ui-ux-pro-max-skill": false (installed, disabled)
+k3-15	claude-mem	thedotmack/claude-mem	installed	/home/dxb/.claude/plugins/cache/thedotmack/claude-mem; /home/dxb/.local/bin/claude-mem	settings.json: "claude-mem@thedotmack": true
+k3-15	n8n-MCP	czlonkowski/n8n-mcp	removed	/home/dxb/DxB Global OS/.planning/board-rows/B83.md	The first funnel film ...; the box follows B34's exam; no n8n.
+k3-15	n8n	n8n-io/n8n	removed	/home/dxb/DxB Global OS/.planning/board-rows/B83.md	no n8n

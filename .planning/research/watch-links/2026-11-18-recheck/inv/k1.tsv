@@ -1,0 +1,172 @@
+rid	tool	url_or_slug	found	where	evidence
+k1-01	Sequoia (thesis, not a tool)	-	no	-	nothing found in the searched places
+k1-01	Higgsfield	higgsfield.ai	mentioned	/home/dxb/DxB Global OS/.planning/board-rows/B43.md	R30 · The paid fallback of the UGC recipe — scope: that recipe (2026-11-07; prices as read that day)
+k1-01	Kimi	moonshotai/kimi	mentioned	/home/dxb/DxB Global OS/.planning/research/study-cards/litellm.md	| openrouter/moonshotai/kimi-2.7 | NOT LIVE | openrouter/moonshotai/kimi-k2.7-code | 262k ctx
+k1-01	REVENUE_ENGINE (internal spec)	-	no	-	nothing found in the searched places
+k1-02	yt-dlp	yt-dlp/yt-dlp	installed	/home/dxb/.local/bin/yt-dlp;/home/dxb/DxB Global OS/.planning/research/STACK.md	STACK.md: | yt-dlp | current (locked) | Video-learning module | P4 per plan |
+k1-02	Whop	whop.com	no	-	nothing found in the searched places
+k1-02	Anthropic Economic Index (report, not a tool)	-	no	-	nothing found in the searched places
+k1-03	Content Rewards	-	no	-	nothing found in the searched places
+k1-03	Claude Projects	-	no	-	not searched as a separate tool; no hit for the name
+k1-03	Perplexity	perplexity.ai	mentioned	/home/dxb/DxB Global OS/.claude/skills/dxb-research/fleet/ARSENAL.md	Reddit, Quora and Perplexity read as him (his site cookies are copied into the hidden ...
+k1-03	Wix	wix.com	mentioned	/home/dxb/DxB Global OS/.planning/research/study-cards/sellthetrend.md	its own integrations page names Shopify, WooCommerce, eBay, TikTok Shop, Wix and Amazon
+k1-03	Hostinger	hostinger.com	no	-	nothing found in the searched places
+k1-03	Shopify	shopify.com	mentioned	/home/dxb/DxB Global OS/.planning/research/study-cards/pagepilot.md	# Study Card: PagePilot — AI product-page builder for Shopify
+k1-03	BuildYourStore	-	no	-	nothing found in the searched places
+k1-03	AutoDS	autods.com	no	-	nothing found in the searched places
+k1-03	Dialzara	dialzara.com	mentioned	/home/dxb/DxB Global OS/.planning/research/watch-links/2026-11-01-gelir/items.tsv	only in the earlier 2026-11-01 watch-link reading (not in STACK, board rows, skills or tools)
+k1-03	Lovable	lovable.dev	no	-	nothing found in the searched places
+k1-03	Emergent	emergent.sh	no	-	nothing found in the searched places
+k1-03	Higgsfield	higgsfield.ai	mentioned	/home/dxb/DxB Global OS/.planning/board-rows/B43.md	R30 · The paid fallback of the UGC recipe — scope: that recipe (2026-11-07; prices as read that day)
+k1-03	Flip.gg	flip.gg	no	-	nothing found in the searched places
+k1-03	Sinparty	-	no	-	nothing found in the searched places
+k1-03	Fiverr	fiverr.com	no	-	nothing found in the searched places
+k1-04	Claude (model/Claude Code)	-	no	-	see Claude Code row below
+k1-04	Claude Code	anthropics/claude-code	installed	/home/dxb/DxB Global OS/.planning/research/STACK.md	STACK.md: Claude Code + @anthropic-ai/claude-agent-sdk (TS) 0.3.296 ... station's interactive Claude Code 2.1.296
+k1-04	Higgsfield (MCP connector)	higgsfield.ai	mentioned	/home/dxb/DxB Global OS/.planning/board-rows/B43.md	R30 · The paid fallback of the UGC recipe — scope: that recipe (2026-11-07; prices as read that day)
+k1-04	Stan Store	stan.store	mentioned	/home/dxb/DxB Global OS/.planning/research/watch-links/2026-11-01-gelir/items.tsv	only in the earlier 2026-11-01 watch-link reading (not in STACK, board rows, skills or tools)
+k1-04	Kit (free plan)	kit.com	no	-	no real hit (only substring matches)
+k1-04	Klarna / Afterpay	-	no	-	nothing found in the searched places
+k1-04	MiniMax H3	Comfy-Org/MiniMax-H3	installed	/home/dxb/.cache/huggingface/hub/models--Comfy-Org--MiniMax-H3;/home/dxb/DxB Global OS/.planning/board-rows/B43.md	B43 R19: MiniMax H3 on our own card, the only video engine measured on this station (HF cache holds Comfy-Org/MiniMax-H3)
+k1-04	Instagram	-	no	-	not a tool to install; not searched
+k1-05	HighLevel (GoHighLevel)	gohighlevel.com	no	-	nothing found in the searched places
+k1-05	Chatbase	chatbase.co	no	-	nothing found in the searched places
+k1-05	video-learn	tools/video-learn	installed	/home/dxb/DxB Global OS/tools/video-learn;/home/dxb/DxB Global OS/.planning/research/STACK.md	B14: tools/video-learn was proven live on 2026-07-09 (LIVE_INGEST_OK)
+k1-05	Higgsfield	higgsfield.ai	mentioned	/home/dxb/DxB Global OS/.planning/board-rows/B43.md	R30 · The paid fallback of the UGC recipe — scope: that recipe (2026-11-07; prices as read that day)
+k1-05	Whop	whop.com	no	-	nothing found in the searched places
+k1-05	WhatsApp MCP	-	no	-	no row/skill/binary found for the name (not searched beyond the brief paths)
+k1-06	Meta Muse	-	no	-	only substring false hits
+k1-06	Grokbot / Grok Bot	-	no	-	nothing found in the searched places
+k1-06	Instinct (agent)	-	no	-	only substring false hits
+k1-06	Mercury	-	mentioned	/home/dxb/DxB Global OS/.claude/skills/dxb-research/references/channels.md	three are `mercury check-login` (access read), `mercury reimbursement-draft` and ... (an opencli adapter)
+k1-06	GoHighLevel	gohighlevel.com	no	-	nothing found in the searched places
+k1-06	operator	operator	installed	/usr/local/bin/operator;/home/dxb/.claude/skills/operator	command -v operator = /usr/local/bin/operator; global skill folder present; B35 row
+k1-06	playwright	microsoft/playwright-mcp	installed	npm -g @playwright/mcp;/home/dxb/DxB Global OS/.planning/board-rows/B35.md	npm ls -g: @playwright/mcp@0.0.79
+k1-06	scrapling	D4Vinci/Scrapling	installed	/home/dxb/.claude/skills/scrapling;/home/dxb/scrapling-env	skill folder ~/.claude/skills/scrapling and venv ~/scrapling-env present
+k1-07	Claude Code	anthropics/claude-code	installed	/home/dxb/DxB Global OS/.planning/research/STACK.md	STACK.md: Claude Code + @anthropic-ai/claude-agent-sdk (TS) 0.3.296 ... station's interactive Claude Code 2.1.296
+k1-07	Astro	withastro/astro	no	-	only a substring hit in web-cupboard/teardown.cjs (framework detection), not installed
+k1-07	Supabase	supabase/supabase	mentioned	/home/dxb/DxB Global OS/.planning/research/STACK.md	locked decisions in the approved master plan: Supabase/Postgres for state+CRM, Hetzner-class EU VPS, OpenRouter primary ...
+k1-07	Vercel	vercel	mentioned	/home/dxb/DxB Global OS/.planning/research/STACK.md;/home/dxb/DxB Global OS/.planning/board-rows/B35.md	STACK.md: Jev through Vercel AI Gateway — added 2026-10-14, B64 decision 7 (via LiteLLM vercel_ai_gateway/ route)
+k1-07	Ahrefs / Ahrefs MCP Lite	ahrefs.com	mentioned	/home/dxb/DxB Global OS/.planning/board-rows/B84.md	B84 SEO-tools line (names Ahrefs among candidates); core installed list = Screaming Frog, DataForSEO, Google Ads API
+k1-07	DataForSEO	dataforseo.com	mentioned	/home/dxb/DxB Global OS/.planning/board-rows/B84.md	Core, installed: Screaming Frog free and paid · DataForSEO for client work (loading money is his, first load about 50 $)
+k1-07	OpenSEO	openseo	installed	/home/dxb/.local/share/dxb/skills/openseo;/home/dxb/DxB Global OS/.planning/board-rows/B84.md	skill folder ~/.local/share/dxb/skills/openseo (SOURCE.md, ai-prompt-research, local-seo ...)
+k1-07	Viktor (sponsor)	-	no	-	nothing found in the searched places
+k1-07	Ship Your Directory (course)	-	no	-	nothing found in the searched places
+k1-08	CallRail	callrail.com	no	-	nothing found in the searched places
+k1-08	Mangools	mangools.com	no	-	nothing found in the searched places
+k1-08	GoHighLevel	gohighlevel.com	no	-	nothing found in the searched places
+k1-08	rentlocalsites.com (course)	-	no	-	nothing found in the searched places
+k1-09	Hermes (hermes-agent)	NousResearch/hermes-agent	installed	/home/dxb/.local/bin/hermes;/home/dxb/.local/bin/hermes-agent;/home/dxb/DxB Global OS/.planning/board-rows/B09.md	~/.local/bin/hermes, hermes-acp, hermes-agent present; B09: the Hetzner machine this row stands on is gone since 2026-09-19
+k1-09	Skool	skool.com	no	-	nothing found in the searched places
+k1-09	Hetzner	hetzner.com	mentioned	/home/dxb/DxB Global OS/.planning/board-rows/B10.md;/home/dxb/DxB Global OS/.planning/research/STACK.md	B10: THE MACHINE THIS ROW STANDS ON IS GONE SINCE 2026-09-19, ON HIS OWN ORDER (hetzner-server-stopped)
+k1-10	Nichle	nichle.com	no	-	nothing found in the searched places
+k1-10	Gemini	google gemini api	mentioned	/home/dxb/DxB Global OS/.planning/board-rows/B26.md	B26: The Gemini key ... works — HTTP 200, 50 models — and lives in .env.daemon (an API key, no local tool)
+k1-10	Claude Code	anthropics/claude-code	installed	/home/dxb/DxB Global OS/.planning/research/STACK.md	STACK.md: Claude Code + @anthropic-ai/claude-agent-sdk (TS) 0.3.296 ... station's interactive Claude Code 2.1.296
+k1-10	ComfyUI	comfyanonymous/ComfyUI	installed	/home/dxb/tools/ComfyUI;/home/dxb/tools/ComfyUI-models;/home/dxb/DxB Global OS/.planning/board-rows/B33.md	~/tools/ComfyUI present; B43: ComfyUI FrameInterpolate with RIFE 4.25
+k1-10	OpenMontage	OpenMontage	installed	/home/dxb/tools/OpenMontage;/home/dxb/DxB Global OS/.planning/board-rows/B28.md	~/tools/OpenMontage present; B28: openmontage-opencut study card ... IT NOW LIVES IN T...
+k1-10	Remotion	remotion-dev/remotion	mentioned	/home/dxb/DxB Global OS/.planning/research/study-cards/openmontage-opencut.md	Remotion render pulls a 92 MB headless Chrome on first run and node_modules weighs 383 MB.
+k1-10	Pocket TTS	-	mentioned	/home/dxb/DxB Global OS/.planning/research/watch-links/2026-11-01-gelir/items.tsv	only in the earlier 2026-11-01 watch-link reading (not in STACK, board rows, skills or tools)
+k1-10	Chatterbox	resemble-ai/chatterbox	installed	/home/dxb/.cache/huggingface/hub/models--ResembleAI--chatterbox;/home/dxb/voicebox/voicebox-main	HF cache ResembleAI/chatterbox holds t3_mtl23ls_v2.safetensors, s3gen.pt, ve.pt (V2 weights)
+k1-10	Postiz	gitroomhq/postiz-app	mentioned	/home/dxb/DxB Global OS/.planning/research/watch-links/2026-11-01-gelir/items.tsv	only in the earlier 2026-11-01 watch-link reading (not in STACK, board rows, skills or tools)
+k1-10	YouTube Data API	-	no	-	no hit for the name
+k1-11	Trading 212	-	no	-	nothing found in the searched places
+k1-11	Webull	-	no	-	nothing found in the searched places
+k1-11	iShares MSCI World Islamic (ISWD/ISDW)	-	no	-	nothing found in the searched places
+k1-12	VoiceStudio	debpalash/VoiceStudio	installed	/home/dxb/tools/VoiceStudio	~/tools/VoiceStudio exists (AGENTS.md, README.md, backend, electron, frontend ...); B43 R23 names Voice Studio
+k1-12	Odysseus	odysseus-dev/odysseus	mentioned	/home/dxb/DxB Global OS/.planning/research/watch-links/2026-11-01-gelir/items.tsv	only in the earlier 2026-11-01 watch-link reading (not in STACK, board rows, skills or tools)
+k1-12	FreeLLMAPI	tashfeenahmed/freellmapi	shelf	/home/dxb/DxB Global OS/.planning/research/study-cards/freellmapi-9router.md	# Study Card: freellmapi, 9router (STUB) — Legitimacy Verdict: TBD
+k1-12	Vane	ItzCrazyKns/Vane	mentioned	/home/dxb/DxB Global OS/.planning/research/watch-links/2026-11-01-gelir/items.tsv	only in the earlier 2026-11-01 watch-link reading (not in STACK, board rows, skills or tools)
+k1-12	InvokeAI	invoke-ai/InvokeAI	mentioned	/home/dxb/DxB Global OS/.planning/research/watch-links/2026-11-01-gelir/items.tsv	only in the earlier 2026-11-01 watch-link reading (not in STACK, board rows, skills or tools)
+k1-12	ACE-Step 1.5	ace-step/ACE-Step-1.5	mentioned	/home/dxb/DxB Global OS/.planning/research/watch-links/2026-11-01-gelir/items.tsv	only in the earlier 2026-11-01 watch-link reading (not in STACK, board rows, skills or tools)
+k1-12	OpenShorts	mutonby/openshorts	mentioned	/home/dxb/DxB Global OS/.planning/board-rows/B28.md	H6 the studio agency ...: the monthly short-clip package cut from a client's long video (OpenShorts)
+k1-12	Dyad	dyad-sh/dyad	mentioned	/home/dxb/DxB Global OS/.planning/research/watch-links/2026-11-01-gelir/items.tsv	only in the earlier 2026-11-01 watch-link reading (not in STACK, board rows, skills or tools)
+k1-12	OpenManus	FoundationAgents/OpenManus	mentioned	/home/dxb/DxB Global OS/.planning/research/watch-links/2026-11-01-gelir/items.tsv	only in the earlier 2026-11-01 watch-link reading (not in STACK, board rows, skills or tools)
+k1-12	Upscayl	upscayl/upscayl	installed	/opt/Upscayl/upscayl;/home/dxb/DEVIR-STUDIO-ARACLARI.md	/opt/Upscayl/upscayl present; DEVIR-STUDIO-ARACLARI.md:14 Upscayl v18.17.1
+k1-12	VoxCPM2	openbmb/VoxCPM2	mentioned	/home/dxb/DxB Global OS/.planning/board-rows/B43.md	R23/B43 step 5: Voice Studio's default engine OmniVoice; VoxCPM2 beside it
+k1-12	Zapier (sponsor)	-	no	-	nothing found in the searched places
+k1-12	Voicebox	jamiepine/voicebox	installed	/home/dxb/voicebox/voicebox-main;/home/dxb/DxB Global OS/.planning/research/STACK.md;/home/dxb/DxB Global OS/.planning/board-rows/B12.md	~/voicebox/voicebox-main exists (README, Dockerfile, backend); named in B12/B43
+k1-12	ElevenLabs	elevenlabs.io	mentioned	/home/dxb/DxB Global OS/.planning/board-rows/B43.md;/home/dxb/DxB Global OS/.planning/research/STACK.md	B43 R25 hyper-realistic UGC recipe: voice via ElevenLabs paid fallback; STACK.md names ElevenLabs
+k1-12	Opus Clip	-	no	-	nothing found in the searched places
+k1-12	Suno	-	no	-	nothing found in the searched places
+k1-12	ChatGPT	-	no	-	not searched as a tool
+k1-12	ComfyUI	comfyanonymous/ComfyUI	installed	/home/dxb/tools/ComfyUI;/home/dxb/tools/ComfyUI-models;/home/dxb/DxB Global OS/.planning/board-rows/B33.md	~/tools/ComfyUI present; B43: ComfyUI FrameInterpolate with RIFE 4.25
+k1-12	FLUX	black-forest-labs/FLUX	shelf	/home/dxb/DxB Global OS/.planning/research/study-cards/flux-krea-dev.md;/home/dxb/tools/ComfyUI-models/flux	# Study Card: FLUX.1-Krea-dev (flux weights dir present under ~/tools/ComfyUI-models/flux)
+k1-12	RealESRGAN	xinntao/Real-ESRGAN	installed	/home/dxb/tools/ComfyUI/models/upscale_models/RealESRGAN_x4plus.pth;/home/dxb/tools/upscalers	upscale_models: 4x-UltraSharp.pth, RealESRGAN_x4plus.pth; ~/tools/upscalers has RealESRGAN_x2plus/x4plus + realesrgan-ncnn
+k1-12	Speaches	speaches-ai/speaches	installed	docker image ghcr.io/speaches-ai/speaches;/home/dxb/DxB Global OS/.planning/research/STACK.md	STACK.md: Speaches (Docker) latest image (bundles faster-whisper 1.2.1 + Kokoro-82M + Piper); docker images lists it
+k1-12	Piper	rhasspy/piper	installed	docker image ghcr.io/speaches-ai/speaches;/home/dxb/DxB Global OS/.planning/research/STACK.md	bundled in the Speaches image (STACK.md: faster-whisper 1.2.1 + Kokoro-82M + Piper)
+k1-12	Chatterbox Multilingual V3	ResembleAI/chatterbox	installed	/home/dxb/.cache/huggingface/hub/models--ResembleAI--chatterbox;/home/dxb/voicebox/voicebox-main	HF cache ResembleAI/chatterbox holds t3_mtl23ls_v2.safetensors, s3gen.pt, ve.pt (V2 weights)
+k1-13	Chatterbox Multilingual V3	ResembleAI/chatterbox	installed	/home/dxb/.cache/huggingface/hub/models--ResembleAI--chatterbox;/home/dxb/voicebox/voicebox-main	HF cache ResembleAI/chatterbox holds t3_mtl23ls_v2.safetensors, s3gen.pt, ve.pt (V2 weights)
+k1-13	Voicebox	jamiepine/voicebox	installed	/home/dxb/voicebox/voicebox-main;/home/dxb/DxB Global OS/.planning/research/STACK.md;/home/dxb/DxB Global OS/.planning/board-rows/B12.md	~/voicebox/voicebox-main exists (README, Dockerfile, backend); named in B12/B43
+k1-14	VoiceStudio	debpalash/VoiceStudio	installed	/home/dxb/tools/VoiceStudio	~/tools/VoiceStudio exists (AGENTS.md, README.md, backend, electron, frontend ...); B43 R23 names Voice Studio
+k1-14	OmniVoice	-	mentioned	/home/dxb/DxB Global OS/.planning/board-rows/B43.md	B43 step 5: Voice Studio's default engine OmniVoice; VoxCPM2 beside it
+k1-14	VoxCPM2	openbmb/VoxCPM2	mentioned	/home/dxb/DxB Global OS/.planning/board-rows/B43.md	R23/B43 step 5: Voice Studio's default engine OmniVoice; VoxCPM2 beside it
+k1-14	IndexTTS 2.5	-	no	-	nothing found in the searched places
+k1-14	CosyVoice3	-	no	-	nothing found in the searched places
+k1-14	MOSS-TTS	-	no	-	nothing found in the searched places
+k1-14	Voicebox	jamiepine/voicebox	installed	/home/dxb/voicebox/voicebox-main;/home/dxb/DxB Global OS/.planning/research/STACK.md;/home/dxb/DxB Global OS/.planning/board-rows/B12.md	~/voicebox/voicebox-main exists (README, Dockerfile, backend); named in B12/B43
+k1-14	ElevenLabs	elevenlabs.io	mentioned	/home/dxb/DxB Global OS/.planning/board-rows/B43.md;/home/dxb/DxB Global OS/.planning/research/STACK.md	B43 R25 hyper-realistic UGC recipe: voice via ElevenLabs paid fallback; STACK.md names ElevenLabs
+k1-14	Chatterbox ML	ResembleAI/chatterbox	installed	/home/dxb/.cache/huggingface/hub/models--ResembleAI--chatterbox;/home/dxb/voicebox/voicebox-main	HF cache ResembleAI/chatterbox holds t3_mtl23ls_v2.safetensors, s3gen.pt, ve.pt (V2 weights)
+k1-15	VoxCPM2	openbmb/VoxCPM2	mentioned	/home/dxb/DxB Global OS/.planning/board-rows/B43.md	R23/B43 step 5: Voice Studio's default engine OmniVoice; VoxCPM2 beside it
+k1-15	ElevenLabs	elevenlabs.io	mentioned	/home/dxb/DxB Global OS/.planning/board-rows/B43.md;/home/dxb/DxB Global OS/.planning/research/STACK.md	B43 R25 hyper-realistic UGC recipe: voice via ElevenLabs paid fallback; STACK.md names ElevenLabs
+k1-15	MiniMax-MLS (benchmark table)	-	no	-	benchmark, not a tool
+k1-15	VoiceStudio (carries it)	debpalash/VoiceStudio	installed	/home/dxb/tools/VoiceStudio	~/tools/VoiceStudio exists (AGENTS.md, README.md, backend, electron, frontend ...); B43 R23 names Voice Studio
+k1-15	Voicebox	jamiepine/voicebox	installed	/home/dxb/voicebox/voicebox-main;/home/dxb/DxB Global OS/.planning/research/STACK.md;/home/dxb/DxB Global OS/.planning/board-rows/B12.md	~/voicebox/voicebox-main exists (README, Dockerfile, backend); named in B12/B43
+k1-16	Voicebox	jamiepine/voicebox	installed	/home/dxb/voicebox/voicebox-main;/home/dxb/DxB Global OS/.planning/research/STACK.md;/home/dxb/DxB Global OS/.planning/board-rows/B12.md	~/voicebox/voicebox-main exists (README, Dockerfile, backend); named in B12/B43
+k1-16	Chatterbox Multilingual	ResembleAI/chatterbox	installed	/home/dxb/.cache/huggingface/hub/models--ResembleAI--chatterbox;/home/dxb/voicebox/voicebox-main	HF cache ResembleAI/chatterbox holds t3_mtl23ls_v2.safetensors, s3gen.pt, ve.pt (V2 weights)
+k1-16	Chatterbox Turbo	-	no	-	only the V2 multilingual weights are in the HF cache
+k1-16	Qwen3-TTS	Qwen/Qwen3-TTS	mentioned	/home/dxb/.local/share/dxb/skills/video-use/skills/manim-video/SKILL.md	| TTS | ElevenLabs / Qwen3-TTS (optional) | Narration voiceover |
+k1-16	Qwen CustomVoice / Qwen VoiceDesign	-	no	-	nothing found in the searched places
+k1-16	LuxTTS	-	no	-	nothing found in the searched places
+k1-16	TADA	-	no	-	only substring false hits
+k1-16	Kokoro	hexgrad/Kokoro-82M	installed	docker image ghcr.io/speaches-ai/speaches;/home/dxb/DxB Global OS/.planning/research/STACK.md	bundled in the Speaches image (STACK.md: faster-whisper 1.2.1 + Kokoro-82M + Piper)
+k1-16	Whisper	openai/whisper	installed	/home/dxb/.local/bin/whisper-ctranslate2;/home/dxb/.cache/huggingface/hub/models--Systran--faster-whisper-small.en	whisper-ctranslate2 binary + faster-whisper-small.en and large-v3-turbo models in HF cache
+k1-16	OmniVoice	-	mentioned	/home/dxb/DxB Global OS/.planning/board-rows/B43.md	B43 step 5: Voice Studio's default engine OmniVoice; VoxCPM2 beside it
+k1-16	Speaches Piper	speaches-ai/speaches	installed	docker image ghcr.io/speaches-ai/speaches;/home/dxb/DxB Global OS/.planning/research/STACK.md	bundled in the Speaches image (STACK.md: faster-whisper 1.2.1 + Kokoro-82M + Piper)
+k1-16	OpenAI-compatible /v1/audio/speech (feature)	-	no	-	feature, not a tool
+k1-16	VoxCPM2	openbmb/VoxCPM2	mentioned	/home/dxb/DxB Global OS/.planning/board-rows/B43.md	R23/B43 step 5: Voice Studio's default engine OmniVoice; VoxCPM2 beside it
+k1-17	ElevenLabs	elevenlabs.io	mentioned	/home/dxb/DxB Global OS/.planning/board-rows/B43.md;/home/dxb/DxB Global OS/.planning/research/STACK.md	B43 R25 hyper-realistic UGC recipe: voice via ElevenLabs paid fallback; STACK.md names ElevenLabs
+k1-17	Fish Audio S2 Pro	fishaudio	no	-	nothing found in the searched places
+k1-18	Odysseus	odysseus-dev/odysseus	mentioned	/home/dxb/DxB Global OS/.planning/research/watch-links/2026-11-01-gelir/items.tsv	only in the earlier 2026-11-01 watch-link reading (not in STACK, board rows, skills or tools)
+k1-18	Ollama	ollama/ollama	installed	/home/dxb/.local/bin/ollama	ollama list: embeddinggemma, bge-m3, qwen3-embedding:0.6b, bespoke-minicheck, qwen3.8-27b-uncensored
+k1-18	llama.cpp	ggml-org/llama.cpp	mentioned	/home/dxb/DxB Global OS/.planning/board-rows/B34.md;/home/dxb/DxB Global OS/.planning/board-rows/B33.md	B34 THE LOCAL WORKER MODEL ... (llama.cpp named as a runtime)
+k1-18	vLLM	vllm-project/vllm	no	-	nothing found in the searched places
+k1-18	ChatGPT	-	no	-	not searched as a tool
+k1-19	FreeLLMAPI	tashfeenahmed/freellmapi	shelf	/home/dxb/DxB Global OS/.planning/research/study-cards/freellmapi-9router.md	# Study Card: freellmapi, 9router (STUB) — Legitimacy Verdict: TBD
+k1-19	LiteLLM	BerriAI/litellm	mentioned	/home/dxb/DxB Global OS/.planning/research/STACK.md;/home/dxb/DxB Global OS/.planning/research/study-cards/skillspector.md	skillspector.md: run through LiteLLM virtual key if used (cost-tagged); STACK.md names LiteLLM
+k1-19	OpenRouter	openrouter.ai	mentioned	/home/dxb/DxB Global OS/.planning/research/STACK.md	STACK.md: OpenRouter primary + NVIDIA Build dev tier
+k1-19	9router	-	shelf	/home/dxb/DxB Global OS/.planning/research/study-cards/freellmapi-9router.md	# Study Card: freellmapi, 9router (STUB) — Legitimacy Verdict: TBD
+k1-20	Vane (Perplexica)	ItzCrazyKns/Vane	mentioned	/home/dxb/DxB Global OS/.planning/research/watch-links/2026-11-01-gelir/items.tsv	only in the earlier 2026-11-01 watch-link reading (not in STACK, board rows, skills or tools)
+k1-20	Perplexica	ItzCrazyKns/Perplexica	mentioned	/home/dxb/DxB Global OS/.planning/research/watch-links/2026-11-01-gelir/items.tsv	only in the earlier 2026-11-01 watch-link reading (not in STACK, board rows, skills or tools)
+k1-20	Perplexity	perplexity.ai	mentioned	/home/dxb/DxB Global OS/.claude/skills/dxb-research/fleet/ARSENAL.md	Reddit, Quora and Perplexity read as him (his site cookies are copied into the hidden ...
+k1-20	dxb-research	-	installed	/home/dxb/DxB Global OS/.claude/skills/dxb-research	skill folder .claude/skills/dxb-research with SKILL.md, fleet/, scripts/
+k1-20	agent-reach	Panniantong/Agent-Reach	installed	/home/dxb/.local/bin/agent-reach;/home/dxb/agent-reach-env;/home/dxb/.claude/skills/agent-reach	agent-reach binary, venv ~/agent-reach-env and skill folder present
+k1-20	scrapling	D4Vinci/Scrapling	installed	/home/dxb/.claude/skills/scrapling;/home/dxb/scrapling-env	skill folder ~/.claude/skills/scrapling and venv ~/scrapling-env present
+k1-21	InvokeAI	invoke-ai/InvokeAI	mentioned	/home/dxb/DxB Global OS/.planning/research/watch-links/2026-11-01-gelir/items.tsv	only in the earlier 2026-11-01 watch-link reading (not in STACK, board rows, skills or tools)
+k1-21	ComfyUI	comfyanonymous/ComfyUI	installed	/home/dxb/tools/ComfyUI;/home/dxb/tools/ComfyUI-models;/home/dxb/DxB Global OS/.planning/board-rows/B33.md	~/tools/ComfyUI present; B43: ComfyUI FrameInterpolate with RIFE 4.25
+k1-21	Flux Krea (FLUX.1-Krea-dev)	black-forest-labs/FLUX.1-Krea-dev	shelf	/home/dxb/DxB Global OS/.planning/research/study-cards/flux-krea-dev.md;/home/dxb/tools/ComfyUI-models/flux	# Study Card: FLUX.1-Krea-dev (flux weights dir present under ~/tools/ComfyUI-models/flux)
+k1-21	Midjourney	midjourney.com	mentioned	/home/dxb/DxB Global OS/.claude/skills/dxb-research/references/channels.md	`midjourney action`, which WILL open a foreground window unless OPENCLI_WINDOW is set (opencli adapter)
+k1-22	ACE-Step 1.5	ace-step/ACE-Step-1.5	mentioned	/home/dxb/DxB Global OS/.planning/research/watch-links/2026-11-01-gelir/items.tsv	only in the earlier 2026-11-01 watch-link reading (not in STACK, board rows, skills or tools)
+k1-22	Suno	suno.com	no	-	nothing found in the searched places
+k1-23	OpenShorts	mutonby/openshorts	mentioned	/home/dxb/DxB Global OS/.planning/board-rows/B28.md	H6 the studio agency ...: the monthly short-clip package cut from a client's long video (OpenShorts)
+k1-23	upload-post (service)	-	no	-	nothing found in the searched places
+k1-23	Opus Clip	-	no	-	nothing found in the searched places
+k1-23	AI-Youtube-Shorts-Generator	SamurAIGPT/AI-Youtube-Shorts-Generator	no	-	nothing found in the searched places
+k1-23	Gemini	google gemini api	mentioned	/home/dxb/DxB Global OS/.planning/board-rows/B26.md	B26: The Gemini key ... works — HTTP 200, 50 models — and lives in .env.daemon (an API key, no local tool)
+k1-24	Dyad	dyad-sh/dyad	mentioned	/home/dxb/DxB Global OS/.planning/research/watch-links/2026-11-01-gelir/items.tsv	only in the earlier 2026-11-01 watch-link reading (not in STACK, board rows, skills or tools)
+k1-24	Lovable	lovable.dev	no	-	nothing found in the searched places
+k1-24	Supabase	supabase/supabase	mentioned	/home/dxb/DxB Global OS/.planning/research/STACK.md	locked decisions in the approved master plan: Supabase/Postgres for state+CRM, Hetzner-class EU VPS, OpenRouter primary ...
+k1-24	Neon	neon.tech	no	-	only substring false hits
+k1-24	Vercel	vercel	mentioned	/home/dxb/DxB Global OS/.planning/research/STACK.md;/home/dxb/DxB Global OS/.planning/board-rows/B35.md	STACK.md: Jev through Vercel AI Gateway — added 2026-10-14, B64 decision 7 (via LiteLLM vercel_ai_gateway/ route)
+k1-24	Claude Code	anthropics/claude-code	installed	/home/dxb/DxB Global OS/.planning/research/STACK.md	STACK.md: Claude Code + @anthropic-ai/claude-agent-sdk (TS) 0.3.296 ... station's interactive Claude Code 2.1.296
+k1-24	DxB Global Web-Studio	-	mentioned	/home/dxb/DxB Global OS/.planning/board-rows/B84.md	B84 row opened 2026-11-03: the DxB Web Studio plan talk (the web office); no row owned it before
+k1-25	OpenManus	FoundationAgents/OpenManus	mentioned	/home/dxb/DxB Global OS/.planning/research/watch-links/2026-11-01-gelir/items.tsv	only in the earlier 2026-11-01 watch-link reading (not in STACK, board rows, skills or tools)
+k1-25	Manus	manus.im	no	-	nothing found in the searched places
+k1-25	Claude Agent SDK	anthropics/claude-agent-sdk	installed	/home/dxb/DxB Global OS/.planning/research/STACK.md	STACK.md: @anthropic-ai/claude-agent-sdk (TS) 0.3.296
+k1-25	Hamza (own agent)	-	mentioned	/home/dxb/DxB Global OS/CLAUDE.md	internal holding agent named in the project instructions (not an external tool)
+k1-26	Upscayl	upscayl/upscayl	installed	/opt/Upscayl/upscayl;/home/dxb/DEVIR-STUDIO-ARACLARI.md	/opt/Upscayl/upscayl present; DEVIR-STUDIO-ARACLARI.md:14 Upscayl v18.17.1
+k1-26	Topaz Gigapixel	topazlabs.com	mentioned	/home/dxb/DxB Global OS/.planning/research/study-cards/seedvr2-topaz-equivalent.md	# Topaz-equivalent local, free video upscaler for Linux — research report
+k1-26	Video2X	k4yt3x/video2x	installed	/home/dxb/.local/bin/video2x;/home/dxb/tools/appimages/Video2X-x86_64.AppImage	~/.local/bin/video2x present; DEVIR-STUDIO-ARACLARI.md: Video2X 6.4.0 (yedek)
+k1-26	SeedVR2	ByteDance-Seed/SeedVR	installed	/home/dxb/models/seedvr2;/home/dxb/DxB Global OS/.planning/research/study-cards/seedvr2-topaz-equivalent.md	~/models/seedvr2 exists; study card: The winner is SeedVR2 (ByteDance, Apache-2.0)
+k1-26	RealESRGAN	xinntao/Real-ESRGAN	installed	/home/dxb/tools/ComfyUI/models/upscale_models/RealESRGAN_x4plus.pth;/home/dxb/tools/upscalers	upscale_models: 4x-UltraSharp.pth, RealESRGAN_x4plus.pth; ~/tools/upscalers has RealESRGAN_x2plus/x4plus + realesrgan-ncnn
+k1-26	4x-UltraSharp	-	installed	/home/dxb/tools/ComfyUI/models/upscale_models/4x-UltraSharp.pth;/home/dxb/DEVIR-STUDIO-ARACLARI.md	~/DEVIR-STUDIO-ARACLARI.md:14 Modeller: ComfyUI/models/upscale_models/ -> RealESRGAN_x4plus.pth, 4x-UltraSharp.pth
+k1-26	ComfyUI	comfyanonymous/ComfyUI	installed	/home/dxb/tools/ComfyUI;/home/dxb/tools/ComfyUI-models;/home/dxb/DxB Global OS/.planning/board-rows/B33.md	~/tools/ComfyUI present; B43: ComfyUI FrameInterpolate with RIFE 4.25

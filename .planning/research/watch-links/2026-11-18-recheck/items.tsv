@@ -1,0 +1,82 @@
+rid	tab	old_id	old_verdict	old_board	links	title
+e1-01	e1	EK01	Alma	—	https://x.com/callanxai/status/2108285248223986139	callanxai — 'Karpathy: Prompting bitiyor, Graph kalıyor'
+e1-02	e1	EK02	İzle	Tahta satırı yok; inşaat bilgisi	https://x.com/hayatomaruu/status/2108329507442565186	hayatomaruu — 'Anthropic mühendisi: 100+ ajan döngüde'
+e1-03	e1	EK03	Alma	—	https://x.com/hanakoxbt/status/2108308634727760066	hanakoxbt — 'Karpathy'nin Opus 5.5'i grafiğe çeviren promptu'
+e1-04	e1	EK04	Alma	—	https://x.com/0xkichiro/status/2110338483256451241	0xkichiro — 'Anthropic mühendisi: %90 kendini geliştiren döngü, ajan grafikleri'
+e1-05	e1	EK05	Alma	—	https://x.com/hayatomaruu/status/2110481057418010989	hayatomaruu — 'Karpathy: Opus 5.5 harness mühendisliği, kodumun %99'u otomatik'
+e1-06	e1	EK06	İzle	B33 (GPU tezgâhı)	https://www.xda-developers.com/dropped-qwen-and-gemma-for-27b-model-that-runs-smoothly-on-8gb-card/	Bonsai 27B (PrismML) — XDA makalesi
+e1-07	e1	EK07	İzle	B43 (stüdyo), B28 (ajans)	https://www.youtube.com/watch?v=xixxe38ar6g	Higgsfield Ads Studio ve Seedance 2.5 — YouTube anlatımı
+e1-08	e1	EK08	İş akışı: o sırada kullan · Önbellek: ya	4. sıradaki güvenlik taraması	https://x.com/Voxyz_ai/status/2109237583704445140 ; https://x.com/Voxyz_ai/status/2109056129884123370	Voxyz — iki gönderi (dinamik iş akışı; alt-ajan önbellek süresi)
+e2-01	e2	EK09	Dene	B43	https://www.instagram.com/p/DeRvxD6gDCu/	rananjay.ai '20 repo ile Opus 5.5'i hareketli grafik stüdyosuna çevir' listesi — çekirdeği HyperFrames + Remotion + 18 skill/kütüphane
+e2-02	e2	EK10	Kur	B22 / B30	https://www.youtube.com/watch?v=vsFS1Ei79Qs	REA — Reverse Engineer Anything (morluto/rea): ajanla kapalı kaynak programın bir özelliğini çözüp kendi ürününe yazdırma
+e2-03	e2	EK11	Araştır	B17	https://www.youtube.com/watch?v=ZJj4_egB30Q	Mert Durmazer: açık kaynak Umami'yi ekran görüntüsünden 13 dakikada kopyalayıp 'yapay zekâdan gelen trafiği ölçen' niş ürüne çevirmek ve paz
+e2-04	e2	EK12	Dene	B28 / B17	https://is-agentic.com/	Is Agentic (is-agentic.com) — bir sitenin yapay zekâ ajanlarına ne kadar hazır olduğunu 0-100 puanlayan tarayıcı
+e2-05	e2	EK13	Araştır	B09 / B11	https://x.com/shikamarutsai/status/2110817965658571181	Anthropic'ten Gagan Bhat'ın 'Claude Managed Agents' konuşması — X'te '250-750 bin $ maaşlı mühendis harness kurmayı öğretiyor' diye pazarlan
+e2-06	e2	EK14	Kur	B03-bis / B32		TasteSkill v2 (Leonxlnx/taste-skill, 'design-taste-frontend') — sayfayı üç genişlikte açıp yapay zekâ sitesi izlerini listeleyen tasarım ski
+e2-07	e2	EK15	Gerek yok	B28 (reklam/ajans işi) — ileride ajans hizmet kalemi olarak	https://www.instagram.com/reel/DehmfSekvuX/	Claude Code /loop ile sayfa sayfa SEO denetimi
+e2-08	e2	EK16	Dene	B43	https://www.instagram.com/reel/DejsqKlT71p/	Claude ile kodla yapılmış 20 video efekti (Remotion tarzı kompozisyonlar)
+e2-09	e2	EK17	Araştır	B64 / B51	https://x.com/Dhruvkumar16797/status/2111766839516917979	'Andrew Ng'in Graph Engineering kursu' — aslında DeepLearning.AI'ın ücretsiz 'AI Agents in LangGraph' kursu (Andrew Ng, Harrison Chase, Rote
+e2-10	e2	EK18	Dene	B51 / B42	https://x.com/Voxyz_ai/status/2111200518379020292	Anthropic'in resmi claude-security eklentisi (çok ajanlı güvenlik taraması)
+e2-11	e2	EK19	Araştır	B51	https://x.com/virgilxbt/status/2111890105028022608	Kendini yeniden yazan harness: 'dosyayı yazma, puanla' (Self-Harness ve benzeri makaleler)
+e2-12	e2	EK20	Dene	B43 / B28	https://x.com/Voxyz_ai/status/2112197160649253120	Claude Code + Revid MCP ile müşteri başına haftalık kısa video stüdyosu (Voxyz makalesi)
+e2-13	e2	EK21	Kur	Yok — küçük inşaat işi, satır gerekmez	https://x.com/Voxyz_ai/status/2112257477173813573	Dosya boyutu cırcırı: 5.000 token üstü yeni dosya commit edilemez, büyük dosya büyüyemez (pre-commit kancası)
+e2-14	e2	EK22	Dene	B03-bis / B28	https://x.com/Voxyz_ai/status/2112302775547679169	Lansman öncesi 4 'ilk kullanıcı' alt-ajanı: sabırsız, şüpheci, telefoncu, kırıcı — takıldıkları yer ekran görüntüsüyle tek tabloda
+e2-15	e2	EK23	Araştır	B64 / B65	https://x.com/Voxyz_ai/status/2019914775061270747	VoxYZ Agent World: OpenClaw + Vercel + Supabase ile kendi kendini çalıştıran 6 ajanlı şirket — kapalı döngü mimarisi
+e2-16	e2	EK24	Araştır	B25 / B30 / B43	https://www.instagram.com/reel/Derv5JKxwPs/	Ücretli SaaS yerine 9 açık kaynak depo + REA (Reverse Engineer Anything)
+k1-01	k1	FqsAALrRhj4	Dene	Gelir hattı satırı (K1) · B17 · B64 · REVENUE_ENGINE_SPEC	https://www.youtube.com/watch?v=FqsAALrRhj4	Avenox — Yapay Zekadan Para Kazanamıyor Musun? Bunu İzle. (ikinci okuma)
+k1-02	k1	2uyhavEACdo	Kur	K9 · C41 (dünyaya bakan personalar) · Y11	https://www.youtube.com/watch?v=2uyhavEACdo	Mark Tilbury — 'Zengin olmak için 5 yılın kaldı' (Iman Gadzhi etkinliğinin fragmanı)
+k1-03	k1	ytAW1_g2IfI	Dene	H7 ön büro · H5 web ofisi	https://www.youtube.com/watch?v=ytAW1_g2IfI	Mark Tilbury — yeni başlayanlar için yedi 'tembel' AI para yolu
+k1-04	k1	LlhTEttKcwQ	Dene	H3 dijital ürün · H4 kanallar · B43 sanal sunucu planı	https://www.youtube.com/watch?v=LlhTEttKcwQ	Mark Tilbury — 7 günde üç AI influencer ve Stan Store'da dijital ürün (CEO notunun canlı örneği)
+k1-05	k1	hriu0irRcpE	Dene	H7 ön büro · H6 stüdyo (emlak görselleri)	https://www.youtube.com/watch?v=hriu0irRcpE	Mark Tilbury ve Iman Gadzhi — AI ile yedi para yolu, seviye listesi
+k1-06	k1	JhyVSrQPVSg	Dene	H5 (Y9 müşteri bulma tarifi) · H1	https://www.youtube.com/watch?v=JhyVSrQPVSg	Chris Koerner: YZ ajanlarıyla 6 iş fikri (teklif toplayıcı, Marketplace satıcısı, ajantik dropshipping, 11 $'lık lead sitesi, dışa ulaşma ma
+k1-07	k1	-u0JuVUdPQA	Dene	H2 niş dizinler · H3	https://www.youtube.com/watch?v=-u0JuVUdPQA	Frey Chu: YZ ile niş dizin siteleri (reklam, aday satışı, dijital ürün, affiliate, veri aboneliği)
+k1-08	k1	xUZYy3hCRUM	Dene	H1 yerel aday siteleri	https://www.youtube.com/watch?v=xUZYy3hCRUM	Kyle 'Website Landlord': rank and rent — yerel lead sitelerini sıralayıp aylık kirayla firmalara vermek
+k1-09	k1	oL2xB4DiXEo	Dene	H9 kurulum (yerinde yapay zekâ)	https://www.youtube.com/watch?v=oL2xB4DiXEo	Doruk Yalçınsoy — Yapay Zekayla Para Getiren 3 Sistem (sunucuya ajan, platform, lokal model)
+k1-10	k1	HN_1kEGNu3Y	Dene	H4 kanal fabrikası · B43 · YouTube sponsorluğu	https://www.youtube.com/watch?v=HN_1kEGNu3Y	Yüzsüz Ninja — Claude Code + Gemini ile yüzsüz YouTube kanalı üretim hattı
+k1-11	k1	OxQ47jXQApk	İzle	—	https://www.youtube.com/watch?v=OxQ47jXQApk	Mark Tilbury — kendi 7 gelir yolunu puanlıyor (perakende, marka, eBay, borsa, gayrimenkul, kişisel marka)
+k1-12	k1	V8	Dene	H8 · H6 · B12 · B43	https://www.youtube.com/watch?v=GZtLsvklYBI	Video: 10 ücretli aboneliğe 10 açık kaynak ikame (The Next New Thing, 32:30)
+k1-13	k1	V8-12	Dene	H8 · B12	https://huggingface.co/ResembleAI/chatterbox	Chatterbox Multilingual V3 (ResembleAI/chatterbox) — bizdeki Türkçe klon motorunun yeni sürümü
+k1-14	k1	ses-voicestudio	Kur	H8 dublaj · B43	https://github.com/debpalash/VoiceStudio	VoiceStudio (debpalash/VoiceStudio) — CEO'nun 'Voice Studio' dediği
+k1-15	k1	ses-voxcpm2	Dene	H8 · B12 (Hamza'nın sesi)	https://huggingface.co/openbmb/VoxCPM2	VoxCPM2 (OpenBMB) — en güçlü açık kaynak ses klon motoru
+k1-16	k1	ses-voicebox	Kur	B12 · H8	https://github.com/jamiepine/voicebox	Voicebox (jamiepine/voicebox) — bizde kurulu olanın durumu
+k1-17	k1	ses-ucretli-ikiz	İzle	H8 yedek	https://www.youtube.com/watch?v=GZtLsvklYBI	Ücretli ikiz: ElevenLabs / Fish Audio S2 Pro
+k1-18	k1	ses-odysseus	Gerek yok	—	https://github.com/odysseus-dev/odysseus	Odysseus (PewDiePie) — CEO'nun duyduğu 'Odysseus'
+k1-19	k1	ses-freellmapi	Gerek yok	B34, B51	https://github.com/tashfeenahmed/freellmapi	FreeLLMAPI — CEO'nun duyduğu 'Free Yarın'
+k1-20	k1	ses-vane	Dene	15 Ekim emriniz · dxb-research	https://github.com/ItzCrazyKns/Vane	Vane (eski Perplexica) — Perplexity yerine
+k1-21	k1	ses-invokeai	Gerek yok	B43	https://github.com/invoke-ai/InvokeAI	InvokeAI — Midjourney yerine
+k1-22	k1	ses-acestep	Gerek yok	—	https://github.com/ace-step/ACE-Step-1.5	ACE-Step 1.5 — Suno yerine
+k1-23	k1	ses-openshorts	Dene	H6 · B28 · B43	https://github.com/mutonby/openshorts	OpenShorts — Opus Clip yerine
+k1-24	k1	ses-dyad	Gerek yok	—	https://github.com/dyad-sh/dyad	Dyad — Lovable yerine
+k1-25	k1	ses-openmanus	Gerek yok	—	https://github.com/FoundationAgents/OpenManus	OpenManus — Manus yerine
+k1-26	k1	ses-upscayl	Gerek yok	B43	https://github.com/upscayl/upscayl	Upscayl — Topaz Gigapixel yerine
+k3-01	k3	c01	Gerek yok	B84	https://www.instagram.com/p/De8wDgYFh3x/	nextgensearchengine — 'SEO + AEO + GEO, 10 zihin haritası' (26 Ekim, 354 beğeni)
+k3-02	k3	c02	Kur	B84	https://x.com/Voxyz_ai/status/2116304148228722833	Voxyz — yapay zekâ ile kurulan siteyi Google'da bulunur yapan 12 kontrol + telefon cilası listesi
+k3-03	k3	c03	Gerek yok	B83 (yeni gelir hattı araştırması), B84 (metin yazımı)	https://x.com/Voxyz_ai/status/2114813063434231916	Voxyz — Reddit'ten pazar araştırması istemi (AI/ML API MCP)
+k3-04	k3	c04	Dene	B84	https://www.instagram.com/reel/De7MgbvIBeJ/	Agentation (benjitaylor/agentation) — sayfaya tıklayıp ajana not bırakma aracı
+k3-05	k3	c05	Araştır	B83, B64	https://www.instagram.com/reel/DewCUI6h89s/	ARM (Agentic Relationship Management) — Emanuel Speliers'in lüks konut projeleri için ajanlı satış hattı
+k3-06	k3	c06	İzle	B43	https://www.instagram.com/reel/De1zlGniBQp/	VoiceStudio (debpalash/VoiceStudio) — yerel ses klonlama (konu dışı)
+k3-07	k3	c07	İzle	B05	https://www.instagram.com/reel/De7DFk0IQkj/	nexoupdates — 'parasını ödediğin yazılımın GitHub'da ücretsiz ikizi' 9 depo listesi
+k3-08	k3	c08	Gerek yok	B43	https://www.instagram.com/p/De87U4Cjqs6/	sebintel — 'yapay zekâ film yapımı' 8 depo listesi (konu dışı, B43)
+k3-09	k3	c09	Dene	B84, B83	https://x.com/Voxyz_ai/status/2113016224292757624	Voxyz — ürünün bir özelliğini ChatGPT eklentisine çevirmek (OpenAI Plugins / eski Apps SDK)
+k3-10	k3	c10	Dene	B84	https://x.com/Voxyz_ai/status/2112906752748306454	Voxyz — yayından önce 12 kullanıcı akışı testi ve TestSprite CLI
+k3-11	k3	c11	Gerek yok	B84	https://www.instagram.com/p/Dbn-06ojHiN/	Gerçek Zamanlı SEO Süreci — 'Green Garden Plants' örnekli 10 adım (nextgensearchengine)
+k3-12	k3	d01	Araştır	B28	https://www.instagram.com/p/DYM-BYiFqvu/	wesso.hall — '7 haneli işletmelerin vazgeçemediği 5 MCP': Shopify, Higgsfield, AdAdvisor, Google Drive, Google Analytics
+k3-13	k3	d02	Gerek yok	B28	https://www.instagram.com/p/DYSU-WwjMHJ/	nextgensearchengine — '7 günde performans pazarlaması' planı (Google Ads, Meta Ads, izleme, açılış sayfası)
+k3-14	k3	d03	Dene	B84	https://www.instagram.com/reel/DRUbY-3D7ef/	Google Pomelli — Google Labs ve DeepMind'ın sosyal medya kampanya üreticisi (reelde 'Pamelli' diye duyuluyor)
+k3-15	k3	d05	Gerek yok	Tahtaya satır gerekmiyor; UI UX Pro Max için B84 ve B32 kart	https://www.instagram.com/reel/DY6_Uy0SfG4/	Her Claude Code projesine kurulan 5 depo: Superpowers (CEO emriyle dışlı), Everything Claude Code, UI UX Pro Max, claude-mem, n8n-MCP (konu 
+k3-16	k3	d06	Gerek yok	B84 (metin kontrolü), B41 (raf)	https://www.instagram.com/reel/DWrR5XyTQTq/	'Claude becerim yok' reeli: /last30days, stop-slop, duckdb-skills ve MLflow'un beceri sınama yazısı (konu dışı, oturum aracı)
+k3-17	k3	d07	Araştır	B84, B43	https://www.net-a-porter.com/en-tr	NET-A-PORTER — lüks mağaza okuması (masaüstü ve telefon; ana sayfa, liste, ürün)
+k3-18	k3	d08	Gerek yok	Yok	https://www.instagram.com/reel/DYX1yDJsRHA/	Erişilemedi — Instagram reeli DYX1yDJsRHA (kaldırılmış ya da gizli)
+k3-19	k3	d09	Kur	B84, B28	https://www.instagram.com/p/DZK1I6pEt0X/	divyannshisharma — '10 GitHub deposu': içinden işe yarayan claude-ads ve Hyperframes; gerisi finans, sohbet ve gizli tarayıcı
+k3-20	k3	d10	Dene	B84, B41	https://www.instagram.com/p/DZKtkLuErOQ/	avatarist.ai — 'Claude'a kurulacak 21 şey': marketingskills, claude-seo, claude-ads ve 18 başkası
+k3-21	k3	d11	Dene	B84, B83	https://www.instagram.com/reel/DZVsGZGt8dd/	vibha.in.progress — 'SEO + GEO Autopilot': Claude ile denetle, teşhis et, düzelt, haftalık izle döngüsü
+k3-22	k3	d12	Gerek yok	B84 — konu olarak	https://www.instagram.com/reel/DVxo_7MDOaA/	Erişilemedi — Instagram reeli DVxo_7MDOaA (onun notu: ChatGPT'de aramada çıkmak)
+k3-23	k3	d13	Gerek yok	B84, B51	https://www.instagram.com/reel/DZYuyupJf_a/	Yerel ajans sahibi — 'Claude Code'da ayda ~10 bin $: aynı oturumu sürdürme, /clear kullan' (konu dışına yakın, oturum dersi)
+k3-24	k3	d14	Dene	B84	https://share.google/BE7WmWVwzkr2t8770	WPDev — 'Build Premium WordPress Websites with Google AI Studio': Behance örneğinden Gutenberg bloklarına açılış sayfası
+k3-25	k3	d15	Gerek yok	Yok	https://www.instagram.com/reel/DXq7rtIgtjR/	'Yapay zekâ aletine para verme' — 6 ücretsiz site listesi (aifreeforever, mrfreetools, seostudio.tools, tinywow, bestfreeaiwebsites, 10015.i
+k3-26	k3	d16	Araştır	B43, B28	https://www.instagram.com/reel/DYAopkSSDL6/	Codex CLI + Higgsfield CLI — 'tek fotoğraftan içerik fabrikası' reeli
+k3-27	k3	d17	Gerek yok	Y9	https://www.instagram.com/reel/DZujU8XhvNx/	Scrapling + Hermes agent — Telegram'dan müşteri adayı listesi çıkarma
+k3-28	k3	d18	İzle	B35	https://www.instagram.com/reel/DZsVLjTNOEr/	UI-TARS Desktop (bytedance/UI-TARS-desktop) — ekranı görüp fare ve klavye süren ajan (konu dışı, B35)
+k3-29	k3	d19	Gerek yok	B42	https://www.instagram.com/reel/DaHjHEKjJTG/	OpenMontage (calesthio/OpenMontage) — kodlama ajanını video stüdyosuna çeviren çerçeve (konu dışı, B43; bizde kurulu)
+k3-30	k3	d20	Gerek yok	Yok	https://www.instagram.com/reel/DeAxOdLAgg8/	Portekizce berber reeli — saç kesimi önerisi (konu dışı, gürültü)
+k3-31	k3	d21	Dene	B84	https://share.google/E9BtLaIXSo9z2LqUY	Dave Davies, Search Engine Land — 'SEO için eyleme dönük ikinci beyin' (2 Kasım 2026)

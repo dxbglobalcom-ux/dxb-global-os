@@ -1,0 +1,92 @@
+rid	tool	url_or_slug	found	where	evidence
+k3-16	last30days	mvanhorn/last30days-skill	mentioned	/home/dxb/DxB Global OS/.planning/research/study-cards/last30days-scrapegraphai.md;/home/dxb/DxB Global OS/.planning/research/LITERATURE.md	| last30days | PLANLI (10) | Son-30-gün trend taraması | Research/Social | ... (study card Status: STUDY)
+k3-16	stop-slop	hardikpandya/stop-slop	mentioned	/home/dxb/DxB Global OS/.planning/board-rows/B84.md	## Leg 2026-11-17 - stop-slop: the office's copy read for AI tells before it goes out (row text only; no skill folder found)
+k3-16	duckdb-skills	duckdb/duckdb-skills	no	-	-
+k3-16	MLflow skills	mlflow/skills	no	-	-
+k3-17	Playwright	playwright	installed	~/.claude/plugins/cache/claude-plugins-official/playwright;mcp__playwright tools loaded	plugin folder 'playwright' in claude-plugins-official cache; mcp__playwright__* tools available in this session
+k3-17	scrapling-stealth	scrapling	installed	~/.claude/skills/scrapling;~/scrapling-env	skill folder ~/.claude/skills/scrapling and venv ~/scrapling-env; scrapling MCP tools (stealthy_fetch) loaded
+k3-17	tavily-extract	tavily	installed	/home/dxb/DxB Global OS/.claude/skills/dxb-research/SKILL.md	| Web | WebSearch · mcpx.sh exa|tavily|parallel|youcom|firecrawl "<q>" 10 | (reached through dxb-research door)
+k3-17	PageSpeed API	pagespeed	mentioned	/home/dxb/DxB Global OS/.planning/board-rows/B84.md	The measured WordPress speed fix (w014, "Dene") ... a free speed measurement, a fixed-price fix (mentions speed measurement; no PageSpeed key/tool found)
+k3-19	AutoHedge	The-Swarm-Corporation/AutoHedge	no	-	-
+k3-19	Vibe-Trading	HKUDS/Vibe-Trading	no	-	-
+k3-19	FinceptTerminal	Fincept-Corporation/FinceptTerminal	no	-	-
+k3-19	LibreChat	danny-avila/LibreChat	no	-	-
+k3-19	Open Higgsfield AI / Open-Generative-AI	Anil-matcha/Open-Generative-AI	mentioned	/home/dxb/DxB Global OS/.planning/board-rows/B43.md;/home/dxb/DxB Global OS/.planning/research/study-cards/freefield.md	Open-Generative-AI - a ready studio surface to try (2026-11-17) ... (MIT; 35,073 stars) - row text, not installed
+k3-19	Open-LLM-VTuber	Open-LLM-VTuber	no	-	-
+k3-19	claude-ads	AgriciDaniel/claude-ads	mentioned	/home/dxb/DxB Global OS/.planning/board-rows/B28.md;/home/dxb/DxB Global OS/.planning/research/study-cards/claude-ads.md	Leg 2026-11-17 - the ad-account audit, the agency seat's door-opener (claude-ads); card Status: STUDY (no skill folder on disk)
+k3-19	agentic-inbox	cloudflare/agentic-inbox	no	-	-
+k3-19	camofox-browser	jo-inc/camofox-browser	installed	~/tools/camofox-browser;~/tools/camofox-cli;~/.local/bin/camofox;/home/dxb/DxB Global OS/.planning/research/study-cards/camofox-browser.md	Status: INSTALLED for the construction's sessions (2026-11-17) | not yet in the holding's own agents
+k3-19	hyperframes	heygen-com/hyperframes	mentioned	/home/dxb/DxB Global OS/.planning/research/study-cards/heygen-hyperframes.md;~/.local/share/dxb/skills/video-use/README.md	Study Card: HeyGen HyperFrames (Status: STUDY); video-use README: animation overlays via HyperFrames, Remotion, Manim, or PIL
+k3-19	Scrapling	D4Vinci/Scrapling	installed	~/.claude/skills/scrapling;~/scrapling-env;/home/dxb/DxB Global OS/.planning/research/study-cards/scrapling.md	Status: INSTALL (retroactive: studied + installed, NOT wired into any DXB code path)
+k3-20	marketingskills	coreyhaines31/marketingskills	no	-	-
+k3-20	claude-for-legal	anthropics/claude-for-legal	no	-	-
+k3-20	claude-skills	claude-skills	no	-	only generic substring hits in unrelated study cards (cinema-world-builder, banana-pro-director); no tool of that name
+k3-20	financial-services-plugins	anthropics/financial-services-plugins	no	-	-
+k3-20	superpowers	obra/superpowers	removed	/home/dxb/DxB Global OS/.planning/research/LITERATURE.md	| superpowers - gsd-core - gstack - ruflo | HOLDINGE GIRMEZ - CEO emri 2026-08-27 | ... | Yok. Holdingin kendi yöntemi var
+k3-20	gstack	gstack	removed	/home/dxb/DxB Global OS/.planning/research/LITERATURE.md	same row: superpowers - gsd-core - gstack - ruflo | HOLDINGE GIRMEZ - CEO emri 2026-08-27 (/usr/bin/gstack is an unrelated system binary)
+k3-20	repomix	yamadashy/repomix	no	-	-
+k3-20	caveman	caveman	installed	~/.claude/plugins/cache/caveman;~/.claude/plugins/marketplaces/caveman;/home/dxb/DxB Global OS/.planning/research/study-cards/caveman.md	LITERATURE.md: | caveman | KURULU | Cikti token diyeti (%65 olculu) ... ; plugin folder present in cache
+k3-20	humanizer	humanizer	mentioned	/home/dxb/DxB Global OS/.planning/research/study-cards/humanizer.md	Study Card: humanizer - Claude Code skill that strips AI-writing tells (Status: STUDY, Target Phase 10); no skill folder
+k3-20	social-media-skills	social-media-skills	no	-	-
+k3-20	claude-seo	AgriciDaniel/claude-seo	no	-	-
+k3-20	ai-second-brain	ai-second-brain	no	-	-
+k3-20	frontend-design	anthropics/claude-code frontend-design	installed	~/.claude/plugins/cache/claude-plugins-official/frontend-design;/home/dxb/DxB Global OS/.planning/research/study-cards/design-bundle.md	plugin folder frontend-design in claude-plugins-official cache; card: Design bundle (+ frontend-design, ui-ux-pro-max, playwright)
+k3-20	Instagram MCP	instagram	no	-	only hits in dxb-research fleet scripts (merge.py, roles.tsv) as a channel name, no MCP server
+k3-20	Google Drive MCP/connector	google drive	installed	~/.claude/skills/synced/*/google-workspace/SKILL.md	synced skill google-workspace present (Claude account connector)
+k3-20	Perplexity MCP	perplexity	mentioned	/home/dxb/DxB Global OS/.claude/skills/dxb-research/scripts/evidence.py	word appears in dxb-research scripts only; no Perplexity MCP found
+k3-20	Zapier MCP	zapier	no	-	-
+k3-20	agent-browser	vercel-labs/agent-browser	no	-	only unrelated hits in expo skills
+k3-20	Slack MCP	slack	no	-	only generic word hits (deerflow card, synced skills); no Slack MCP server
+k3-20	Notion MCP	notion	mentioned	/home/dxb/DxB Global OS/.planning/research/study-cards/notion-granola-composio-stack.md	Study card notion-granola-composio-stack exists; no Notion MCP installed
+k3-20	OpenSEO	every-app/open-seo	shelf	~/.local/share/dxb/skills/openseo	SOURCE.md: Shelved 2026-10-15 (the lead's call on his principle: useful free skills wait on the shelf)
+k3-20	stop-slop	hardikpandya/stop-slop	mentioned	/home/dxb/DxB Global OS/.planning/board-rows/B84.md	Leg 2026-11-17 - stop-slop: the office's copy read for AI tells before it goes out (row text only)
+k3-21	Search Console MCP (mcp-gsc)	mcp-gsc	no	-	-
+k3-21	CrUX	crux	no	/home/dxb/DxB Global OS/.planning/board-rows/B84.md	no tool hit; substring only inside a longer word in B84 line
+k3-21	seo-technical	seo-technical	no	-	-
+k3-21	seo-geo	seo-geo	no	-	-
+k3-21	claude-seo	AgriciDaniel/claude-seo	no	-	-
+k3-21	OpenSEO	every-app/open-seo	shelf	~/.local/share/dxb/skills/openseo	SOURCE.md: Shelved 2026-10-15 ... useful free skills wait on the shelf; ai-visibility-audit/SKILL.md present
+k3-21	DataForSEO MCP	dataforseo	mentioned	/home/dxb/DxB Global OS/.planning/board-rows/B84.md;~/.local/share/dxb/skills/openseo/SOURCE.md	Core, installed: Screaming Frog ... DataForSEO for client work (loading money is his, first load about 50 $) - row line, no MCP found
+k3-21	Ahrefs	ahrefs	mentioned	/home/dxb/DxB Global OS/.planning/board-rows/B84.md	Core, installed: Screaming Frog free and paid ... DataForSEO for client work (Ahrefs substring from same list)
+k3-21	SEOgets	seogets	no	-	-
+k3-21	Cowork	cowork	mentioned	/home/dxb/DxB Global OS/.planning/research/study-cards/claude-design.md	Purpose: Designs, prototypes, slides, one-pagers with Claude (Opus 4.7 vision) (Cowork named in card)
+k3-23	Claude Code /clear	claude code	installed	~/.local/bin/claude	-
+k3-23	dxb-ctx	dxb-ctx	installed	~/.local/bin/dxb-ctx	-
+k3-24	Google AI Studio	aistudio.google.com	no	-	-
+k3-24	Midjourney	midjourney	mentioned	/home/dxb/DxB Global OS/.planning/board-rows/B43.md	row text names Midjourney among image hands; not installed (hit via grep of board rows/study cards)
+k3-24	Antigravity	antigravity	installed	~/.local/bin/agy;/home/dxb/DxB Global OS/.planning/board-rows/B43.md	Google AI Pro was cancelled ... Antigravity has only its free tier now (agy binary in ~/.local/bin; name link inferred)
+k3-24	create-block-theme	create-block-theme	no	-	-
+k3-24	wp-env	wp-env	no	-	only in .planning/quick job folders (outside searched places)
+k3-24	WordPress Playground	playground	no	-	only unrelated hits in expo/apple-design skills
+k3-24	WordPress Studio	wordpress studio	no	-	-
+k3-24	Interactivity API	interactivity api	no	-	-
+k3-25	aifreeforever.com	aifreeforever	no	-	-
+k3-25	mrfreetools.com	mrfreetools	no	-	-
+k3-25	seostudio.tools	seostudio	no	-	-
+k3-25	tinywow.com	tinywow	no	-	-
+k3-25	bestfreeaiwebsites.com	bestfreeaiwebsites	no	-	-
+k3-25	10015.io	10015	no	-	-
+k3-25	OpenSEO	every-app/open-seo	shelf	~/.local/share/dxb/skills/openseo	SOURCE.md: Shelved 2026-10-15 (the lead's call on his principle: useful free skills wait on the shelf)
+k3-26	Codex CLI	openai/codex	installed	~/.local/bin/codex;~/.claude/plugins/cache/openai-codex	codex binary in ~/.local/bin; openai-codex plugin in cache
+k3-26	Higgsfield CLI	higgsfield-ai/cli	mentioned	/home/dxb/DxB Global OS/.planning/board-rows/B28.md	R30 - The paid fallback of the UGC recipe ... buying is his (Higgsfield named as paid list; no binary found)
+k3-26	Higgsfield MCP	higgsfield	mentioned	/home/dxb/DxB Global OS/.planning/research/study-cards/higgsfield-mcp-figma-plugin.md	Study Card: Higgsfield MCP, Figma plugin (STUB) Status: STUDY - prepared for a trial, not installed
+k3-26	Media Studio (own)	media-studio	mentioned	/home/dxb/DxB Global OS/.planning/board-rows/B08.md;/home/dxb/DxB Global OS/.planning/board-rows/B43.md	own studio, in row files (B43); not an external tool
+k3-27	Scrapling	D4Vinci/Scrapling	installed	~/.claude/skills/scrapling;~/scrapling-env	skill + venv + MCP tools present
+k3-27	Hermes agent	NousResearch/hermes-agent	installed	~/.local/bin/hermes;~/.local/bin/hermes-agent;~/hermes-workspace;/home/dxb/DxB Global OS/.planning/research/study-cards/hermes-agent.md	binaries in ~/.local/bin; B11: THE MACHINE THIS ROW STANDS ON IS GONE SINCE 2026-09-19 (server deleted)
+k3-27	Apify	apify	mentioned	/home/dxb/DxB Global OS/.planning/research/study-cards/apify.md;/home/dxb/DxB Global OS/.planning/board-rows/B28.md	Study Card: Apify (STUB) Status: STUDY; B28: paid twins bought on his word
+k3-27	Apollo	apollo	no	-	only unrelated hits (seedvr2 card, expo catalog)
+k3-28	UI-TARS-desktop	bytedance/UI-TARS-desktop	no	-	only in old job folder .planning/quick/20261103-web-ders (outside searched places)
+k3-28	UI-TARS (model)	bytedance/UI-TARS	no	-	-
+k3-28	operator	operator	installed	/usr/local/bin/operator;~/.claude/skills/operator	global operator command and skill
+k3-28	playwright MCP	playwright	installed	~/.claude/plugins/cache/claude-plugins-official/playwright	mcp__playwright__* tools available
+k3-29	OpenMontage	calesthio/OpenMontage	installed	~/tools/OpenMontage;~/.openmontage;/home/dxb/DxB Global OS/.planning/research/study-cards/openmontage-opencut.md	R31 - OpenMontage is the default lane; video-use is not the default (B43)
+k3-29	Piper TTS	rhasspy/piper	mentioned	/home/dxb/DxB Global OS/.planning/board-rows/B12.md;/home/dxb/DxB Global OS/.planning/research/study-cards/speaches.md	Speaches - STT+TTS server (faster-whisper + Kokoro-82M + Piper); no piper binary (command -v empty)
+k3-29	Remotion	remotion	mentioned	~/.local/share/dxb/skills/video-use/README.md;~/.claude/skills/scrollcraft/scripts/encode.sh	video-use README: animation overlays via HyperFrames, Remotion, Manim, or PIL; no remotion binary
+k3-31	claude-mem	thedotmack/claude-mem	installed	~/.local/bin/claude-mem;~/.claude/plugins/cache/thedotmack	claude-mem binary and plugin present
+k3-31	dxb-verify	dxb-verify	installed	/home/dxb/DxB Global OS/.claude/skills/dxb-verify	skill folder present (project door)
+k3-31	Cursor	cursor	no	-	only generic word hits in skill-creator/dxb-research files
+k3-31	Weights & Biases	wandb	no	-	-
+k3-18	-	-	no	-	no tool named (unreadable post)
+k3-22	-	-	no	-	no tool named (unreadable post)
+k3-30	-	-	no	-	no tool named (barber reel)
+k3-24	ChatGPT / Gemini app	-	mentioned	/home/dxb/DxB Global OS/.planning/board-rows/B43.md	Gemini app named in row B43 (Google AI Pro cancelled 2026-10-18)
