@@ -165,7 +165,7 @@ Fable's quota runs short (§1). His word on the level overrides: "bunu high'da d
 | **Reader** | a one-shot `scout` or `Explore` | a wide search whose text would swell the lead's context | writes; is resumed (its cache dies at 5 min) |
 | **Escalation writer** | `builder` (Fable 5.2 · `xhigh`), one-shot | a piece the lead judges truly complex and important, from the start; or one that failed twice at `high` | is opened for a routine fix |
 | **Stand-in planner** | Opus 5.5 · `high` or `max` by the job's importance — the `Plan` agent, opened with that model and level <!-- CEO-OK: dxb-team3-orchestrator-six-points-2026-11-11 --> | writes the plan when Fable 5.2's quota runs short (§1) | is a standing step; audits; writes code |
-| **Auditor** | GPT-6.2 Astra (GPT-6.2 Sol when Astra's quota runs short) <!-- CEO-OK: auditor-gpt-6-2-astra-first-sol-6-2-if-quota-short-2026-11-18 -->, through `scripts/governance/refuter.sh` | one blind pass over the job's commits (§4); on a plan job, also the blind plan audit (§1) | writes; audits the same thing twice; sees the lead's reasoning or verdict |
+| **Auditor** | by the job's weight <!-- CEO-OK: auditor-by-weight-sol-6-2-simple-middle-astra-6-2-important-2026-11-18 -->: GPT-6.2 Sol on a simple or middle job (`--model sol`), GPT-6.2 Astra on an important job or plan (the profile's default), through `scripts/governance/refuter.sh` | one blind pass over the job's commits (§4); on a plan job, also the blind plan audit (§1) | writes; audits the same thing twice; sees the lead's reasoning or verdict |
 | **Second auditor** | Fable 5.2 — `high` — through `scripts/governance/fable-audit.sh` <!-- CEO-OK: fable-audits-opus-second-writer-effort-by-weight-2026-11-09 --> | on an important job, audits what Astra audits, from the same brief, at the same time, blind (§1, §4) | writes a plan or code; audits twice; sees Astra's findings or the lead's verdict |
 
 `design-eye` is not a seat of this door. The second auditor finds and never writes.
@@ -242,7 +242,9 @@ four, not the default.
 Every job that changes code, a rule or a door gets one Astra pass after BUILD — the light lane (§1) excepted. A simple or middle job gets Astra alone; an important job — the lead judges which — gets one Fable pass beside it, at the same time <!-- CEO-OK: lead-chooses-freely-fable-audits-important-jobs-2026-11-10 -->; a change to the records
 alone (STATE, the board) is checked by the rulers on commit instead.
 
-- **Launch:** `scripts/governance/refuter.sh [--effort medium|high|xhigh] [--model sol] "<brief>"` — the lead's
+- **Launch:** `scripts/governance/refuter.sh [--effort medium|high|xhigh] [--model sol] "<brief>"` — the model by the
+  job's weight <!-- CEO-OK: auditor-by-weight-sol-6-2-simple-middle-astra-6-2-important-2026-11-18 -->: `--model sol` (GPT-6.2 Sol) on a simple or middle job, the default GPT-6.2 Astra on an
+  important job or plan; the effort is the lead's
   choice per audit: `high` by default; `xhigh` usually for money, a database, security, approval, governance or the
   agents; `medium` for a text-only change. On an important job, Fable at the same moment: `scripts/governance/fable-audit.sh <job> <brief-file>
   high` — the same brief; its findings take the same form and
