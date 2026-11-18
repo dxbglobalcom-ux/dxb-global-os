@@ -34,3 +34,11 @@ A CEO-minted `storageState` on disk, and a re-mint cadence recorded so the leg d
 ## Done notes
 
 - ✓ 2026-10-21 — engineer account on the construction engine; eye-check copy on :3100 proven EN/TR at 1280/1920, overflow 0
+
+## Leg 2026-11-18 — from the second reading of the four older link tabs: a phone walker and a breaker on his surfaces <!-- CEO-OK: four-tabs-second-eye-placed-on-the-board-2026-11-18 -->
+
+On his word <!-- CEO-OK: four-tabs-second-eye-placed-on-the-board-2026-11-18 --> four older tabs of his link workbook were read a second time on 2026-11-18 and judged by the lead; the report is `.planning/research/watch-links/2026-11-18-recheck/rows/e2-d.md` §e2-14. Nothing is installed or bought without his word.
+
+**Methods written into the row**
+
+- **The phone walker and the breaker** (workbook EK22, Vox's prompt of 2026-10-19 — four "first-time user" subagents walk a product before launch; the four-walker method itself is placed at `B84.md:185-187`) — of the four, two fit a one-user cockpit: the phone walker (375 px wide) and the breaker (double clicks, back halfway, junk input), here on the approval buttons, where a double approval is the real harm. What stands today: `eye-proof.mjs` (route, heading, lang, status, overflow) at 1280 and 1920 only; `dxb-surface` asks for two widths and names no phone width. Use: both run with the engineer account on the eye-check copy (:3100); the visual verdict stays his eye (LAW B). First trial: the breaker on one approval card — does a double click write one decision or two. Stops at him: nothing.
