@@ -39,6 +39,12 @@ name, no invented history, no borrowed biography. Marketing and Sales personas c
 every persona carries a proactivity DNA. A department cannot be activated while its personas are
 still first-generation.
 
+Every defensive line in a persona or an agent prompt carries its reason beside it; when the model under
+it changes, those lines are tried again on the new model, and one the new model no longer needs goes —
+a patch written for an older model is over-applied by a newer one (his yes of 2026-10-15 to YE02, Anthropic's
+"The prompting playbook"; `.planning/quick/20261014-tahta-sirasi/HIS-WORDS-2026-10-15.md`)
+<!-- CEO-OK: yeni-eklenenler-second-reading-by-a-successor-and-one-helper-2026-11-18 -->.
+
 **The trap he named himself:** *"Burj Al Arab was one throwaway example I gave at the start — and
 it got written into the design department's persona as if it were the goal."* A construction-time
 example frozen into a permanent instruction is a defect. When you touch personas, sweep for the
