@@ -38,7 +38,7 @@ case " $* " in
                 n=$(cat "$CAPACITY_FAILS" 2>/dev/null || echo 0)
                 if [ "$n" -gt 0 ]; then echo $((n - 1)) > "$CAPACITY_FAILS"; printf 'ERROR: Selected model is at capacity. Please try a different model.\\ntokens used\\n87,812\\n' >&2; exit 1; fi
               fi
-              for a in "$@"; do case "$a" in model_reasoning_effort=*) echo "EFFORT_ARG $a";; --json) echo "--json";; esac; echo "ARG $a" | head -1; done
+              for a in "$@"; do case "$a" in model_reasoning_effort=*) echo "EFFORT_ARG $a";; model=*) echo "MODEL_ARG $a";; --json) echo "--json";; esac; echo "ARG $a" | head -1; done
               echo "PROMPT_BEGIN"; printf '%s\\n' "\${@: -1}"; echo "PROMPT_END" ;;
 esac
 `);
@@ -69,6 +69,29 @@ esac
     expect(r.status, r.stderr).toBe(0);
     expect(r.stdout).toContain('EFFORT_ARG model_reasoning_effort="xhigh"');
     expect(r.stderr).toMatch(/^AUDIT effort=xhigh$/m);
+  });
+
+  it("runs GPT-6.2 Astra from the profile, and GPT-6.2 Sol when the lead passes --model sol", () => {
+    // CEO 2026-11-18: the auditor is GPT-6.2 Astra; GPT-6.2 Sol when Astra's quota runs short.
+    const profile = readFileSync(join(REPO, "scripts", "governance", "codex-refuter.config.toml"), "utf8");
+    expect(profile).toMatch(/^model = "gpt-6\.2-astra"$/m);
+    const astra = run("audit this claim");
+    expect(astra.status, astra.stderr).toBe(0);
+    expect(astra.stdout).not.toMatch(/MODEL_ARG/);
+    const sol = run("--model", "sol", "--effort", "xhigh", "audit this claim");
+    expect(sol.status, sol.stderr).toBe(0);
+    expect(sol.stdout).toContain('MODEL_ARG model="gpt-6.2-sol"');
+    expect(sol.stdout).toContain('EFFORT_ARG model_reasoning_effort="xhigh"');
+    expect(sol.stderr).toMatch(/^AUDIT model=gpt-6\.2-sol$/m);
+  });
+
+  it("refuses a --model other than astra or sol, before Codex is asked anything", () => {
+    for (const bad of ["gpt-6.1-sol", "luna", ""]) {
+      const r = run("--model", bad, "audit this");
+      expect(r.status, bad).toBe(1);
+      expect(r.stderr).toMatch(/REFUTER_FAIL: --model takes astra or sol/);
+      expect(r.stdout).not.toMatch(/PROMPT_BEGIN/);
+    }
   });
 
   it("refuses an effort outside medium, high and xhigh, before Codex is asked anything", () => {
