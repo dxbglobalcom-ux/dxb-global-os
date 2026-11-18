@@ -12,8 +12,7 @@ model_list:
     # master-plan slug moonshotai/kimi-2.7 is not live on OpenRouter;
     # CEO-selected replacement (04-01 checkpoint): kimi-k2.7-code
     litellm_params: { model: openrouter/moonshotai/kimi-k2.7-code, api_key: os.environ/OPENROUTER_API_KEY }
-  - model_name: deepseek-v4-flash
-    litellm_params: { model: openrouter/deepseek/deepseek-v4-flash, api_key: os.environ/OPENROUTER_API_KEY }
+  # deepseek-v4-flash removed 2026-11-18 on his word: retired + banned in MODEL_ROUTING_SPEC (roster); no caller in code.
   - model_name: qwen3.6-flash
     litellm_params: { model: openrouter/qwen/qwen3.6-flash, api_key: os.environ/OPENROUTER_API_KEY }
   - model_name: minimax-m3
@@ -22,7 +21,7 @@ model_list:
   # 'testing' until their exams pass. OpenRouter ids MEASURED from the live
   # /api/v1/models listing this session (no guessed slugs):
   #   moonshotai/kimi-k3        ctx 1,048,576  $3.00/M in  $15.00/M out
-  #   deepseek/deepseek-v4-pro  ctx 1,048,576  $0.435/M in  $0.87/M out
+  #   deepseek/deepseek-v4-pro  ctx 1,048,576  $0.90/M in  $1.50/M out  (re-read from /api/v1/models 2026-11-18; was $0.435/$0.87 in July)
   # NOTE kimi-k3 pricing is PREMIUM-tier — activation is a CEO cost decision,
   # not an automatic post-exam step (C2 order names the replacement chain).
   - model_name: kimi-3

@@ -56,7 +56,7 @@ Earlier days: `.planning/STATE-ARCHIVE.md` § "Moved out of STATE.md on 2026-11-
 
 ## Next
 
-00000. The links workbook is read through (his word 2026-11-18: 'Tüm linkler' itself is not re-read); what remains is his look at the result, and his Desktop copy brought level with the master on his word.
+00000. The links workbook is read through ('Tüm linkler' itself is not re-read <!-- CEO-OK: eliminated-links-reread-carefully-only-the-really-useful-2026-11-18 -->); his Desktop copy equals the master (closed with no unsaved change, replaced and reopened). Agent-Reach 1.6.1 waits for the research door to be adapted to its new commands (B30 leg).
 0000. The second trial starts on his word in the morning: job 1 in both arms (tek-1 first, by lot), its spend told to him, then jobs 2-4; his judgement blind (`/home/dxb/deneme-2/OKU.md`, the handover note).
 000. B85, the foundation: at the weekly reset (the all-models week, Saturday 2026-11-21 about 09:00) the target design at xhigh, then the verdict table to him once. Still asked of him, one at a time: B43's two persona questions (the 'deceptive-realism' ban beside R25; 'or a product' in R5) and the audit under the holding's real name.
 00a. The file-size guard's two-week count (his word, 2026-11-17): on or after 2026-12-01 whichever session is open runs `node scripts/ops/dxb-size-report.mjs` and brings him the stops, the escapes and how the large files grew, with a recommendation — keep, change or remove; a badly split file seen before then is brought to him at once.
