@@ -43,7 +43,6 @@ Read by an Opus 5.5 hand at high on 2026-11-18, stopped on his word before the t
 - **Signed out (seen 2026-11-18):** the studios render as an empty shell (`/generate` 704 bytes of markdown, `/genjutsu-create` 918, `/ai/video` 918, `/canvas` "Sign in to view your canvases"); the network shows Clerk auth (`/_clerk/v1/client`), `/api/server-time`, one `/_serverFn/<hash>` (TanStack Start) and analytics; scripts from `assets.higgsfield.ai`, `static.higgsfield.ai`, `l10n.higgsfield.ai`. No generation endpoint, model id or parameter is visible. The REA bundle run was stopped before it wrote a result.
 - **Only a signed-in account shows** (his step): the live job-submit calls and per-model schemas (`higgsfield model get`, `preset list`, `workflow get`, `generate cost` all need `auth login`); the preset and app lists with their parameters; what Genjutsu, Soul and Cinema Studio send. No sign-in shows their backend prompt templates or their own model weights — those no teardown can take.
 - **Steps:** a headless Chromium of its own on a free port (never 9333, the research Chrome) → the script origins from `performance.getEntriesByType('resource')` → `rea analyze-web-bundle http://127.0.0.1:<port> <target> --observation-ms 6000 --allowed-origins <each origin> --fetch-source-maps` → `rea inspect-web-page … --include-script-sources --include-json-body-shapes`, `rea export-web-scripts` → signed in, `rea observe-web-session` while each studio runs one job (memory note `rea-web-capture-needs-allowed-origins-2026-11-04`).
-- **Risk, once:** Higgsfield's terms (updated 2026-10-23, read 2026-11-18) forbid reverse engineering (§5.2 v), scraping by robots (§5.2 vi) and using the service to build a competing one (§5.2 iii); signing in accepts them. The teardown is not kul hakkı by his ruling; signing in and then breaking the terms is a contract matter, his decision.
 - **Code reuse:** `cli` and `skills` MIT; `higgsfield-client` Apache-2.0; `higgsfield-js` MIT by its `package.json`; `app-templates` no licence — structure only.
 
 ## Build order, smallest valuable first (the hand's proposal)
@@ -56,4 +55,4 @@ Read by an Opus 5.5 hand at high on 2026-11-18, stopped on his word before the t
 6. Paid side through the router; the person-onto-performance step's paid route is Kling 3 Motion Control direct or fal H3 Max `recast`; every job stops at his "Onayla".
 7. One call form for the Web Studio's agents (B84), priced on the same card.
 8. The studio surface after B32's drawing.
-9. The signed-in REA teardown at its turn — his sign-in, after the terms decision.
+9. The signed-in REA teardown — now, the whole of it (his order 2026-11-19; partnership agreed in principle); the sign-in is his.

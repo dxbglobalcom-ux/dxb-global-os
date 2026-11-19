@@ -1,7 +1,9 @@
 services:
   litellm:
-    # Pinned per 04-01-legitimacy-approval.md (amd64 digest sha256:671ec5317c75... recorded there)
-    image: ghcr.io/berriai/litellm:main-stable
+    # Pinned 2026-11-19 on his order ("LiteLLM'i yükselt"): v1.110.1 — the platform hub needs >= 1.97.0
+    # for authenticated pass-through (FINAL.md §H). Rollback: image dxb-local/litellm:rollback-1.97.0 and
+    # ~/.local/state/dxb/backups/litellm-schema-1.97.0-20261119.dump (pg_restore of schema litellm).
+    image: ghcr.io/berriai/litellm:v1.110.1
     container_name: dxb_litellm
     # Linux Docker 28: host networking so the container reaches the Supabase
     # Postgres published on 127.0.0.1:54322 and serves the proxy on host :4000.
