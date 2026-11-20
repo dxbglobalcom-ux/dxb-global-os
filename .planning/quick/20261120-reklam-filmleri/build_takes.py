@@ -26,6 +26,7 @@ pre = merged[0].split("### Kare 1 |", 1)[0]
 negative = re.sub(r"\s+", " ", merged[1].strip()) if len(merged) > 1 else ""
 
 KEEP = re.compile(r"PRODUCT|CHARACTER|CAST|LIGHTING|COLOR|STYLE|OPTICS|REALISM|SKIN")
+CUTWORDS = re.compile(r"transition|whip|match cut|hard cut|speed.?ramp|multi-shot|\bcuts\b", re.I)
 blocks = {}
 for s in re.split(r"(?=^\*\*[A-Z])", pre.strip(), flags=re.M):
     s = s.strip()
@@ -81,6 +82,10 @@ for n, t in enumerate(spec["takes"], 1):
         look = [" ".join(x for x in re.split(r"(?<=[.;])\s+|\s+(?=[A-Z][a-z]+ ?[a-z]*: )", b) if own(x))
                 for b in look]
         where = f" The entire take stays in {places[t['place']]['name']}; no other place ever appears."
+    # Measured on film 08 (seed 3003): a STYLE block promising "fast whip pans" and "speed ramping
+    # transitions" made H3 cut to another set inside every take. A take is one continuous shot, so no look
+    # sentence that speaks of cuts or transitions reaches it; the cut between takes is cut.py's.
+    look = [" ".join(x for x in re.split(r"(?<=[.;])\s+", b) if not CUTWORDS.search(x)) for b in look]
     avoid = negative
     if not people:
         avoid = ", ".join(x for x in avoid.split(", ") if not re.search(r"finger|hand|face", x, re.I))

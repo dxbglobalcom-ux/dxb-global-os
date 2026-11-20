@@ -1,46 +1,71 @@
 {
- "takes": [
-  {
-   "frame": "kare-1.png",
-   "seconds": 2.5,
-   "in": "hard",
-   "people": false,
-   "action": "Molten liquid silver flows and swirls in mid-air against the vibrant green studio, and out of the pour the first chrome curve of the ORVO sneaker's toe emerges. Extreme macro, the camera tracking with the flow."
-  },
-  {
-   "frame": "kare-2.png",
-   "seconds": 2.5,
-   "in": "match",
-   "people": false,
-   "action": "The liquid silver pours over the chrome ORVO sneaker, rippling across its surface with real weight, filling every texture, the black ORVO wordmark surfacing through the ripples as heavy drops fall away."
-  },
-  {
-   "frame": "kare-3.png",
-   "seconds": 2.5,
-   "in": "whip",
-   "people": false,
-   "action": "The finished chrome sneaker rises slowly from the bottom of the frame and floats in the centre, the last drops of silver stretching from the sole into the mirror pool below. The camera arcs around it."
-  },
-  {
-   "frame": "kare-4.png",
-   "seconds": 2.5,
-   "in": "match",
-   "people": false,
-   "action": "Macro along the sculpted chrome midsole and sole pattern, light rolling along the structure, the etched ORVO wordmark sharp, a single bead of liquid silver sliding off the toe and dropping."
-  },
-  {
-   "frame": "kare-5.png",
-   "seconds": 2.5,
-   "in": "dissolve",
-   "people": false,
-   "action": "Darkness, and a single overhead beam on the chrome sneaker; the beam slowly brightens and the chrome begins to glow like a mirror. The camera pushes in quietly."
-  },
-  {
-   "frame": "kare-6.png",
-   "seconds": 2.5,
-   "in": "hard",
-   "people": false,
-   "action": "PACKSHOT: the chrome ORVO sneaker stands on the lid of the bright green box on a polished reflective surface, green light moving slowly across the chrome. The camera drifts in and settles."
+  "takes": [
+    {
+      "frame": "kare-1.png",
+      "seconds": 2.5,
+      "in": "hard",
+      "people": false,
+      "action": "Molten liquid silver flows and swirls in mid-air against the vibrant green studio, and out of the pour the first chrome curve of the ORVO sneaker's toe emerges. Extreme macro, the camera tracking with the flow.",
+      "place": "green"
+    },
+    {
+      "frame": "kare-2.png",
+      "seconds": 2.5,
+      "in": "match",
+      "people": false,
+      "action": "The liquid silver pours over the chrome ORVO sneaker, rippling across its surface with real weight, filling every texture, the black ORVO wordmark surfacing through the ripples as heavy drops fall away.",
+      "place": "green"
+    },
+    {
+      "frame": "kare-3.png",
+      "seconds": 2.5,
+      "in": "whip",
+      "people": false,
+      "action": "The finished chrome sneaker rises slowly from the bottom of the frame and floats in the centre, the last drops of silver stretching from the sole into the mirror pool below. The camera arcs around it.",
+      "place": "green"
+    },
+    {
+      "frame": "kare-4.png",
+      "seconds": 2.5,
+      "in": "match",
+      "people": false,
+      "action": "Macro along the sculpted chrome midsole and sole pattern, light rolling along the structure, the etched ORVO wordmark sharp, a single bead of liquid silver sliding off the toe and dropping.",
+      "place": "green"
+    },
+    {
+      "frame": "kare-5.png",
+      "seconds": 2.5,
+      "in": "dissolve",
+      "people": false,
+      "action": "Darkness, and a single overhead beam on the chrome sneaker; the beam slowly brightens and the chrome begins to glow like a mirror. The camera pushes in quietly.",
+      "place": "dark"
+    },
+    {
+      "frame": "kare-6.png",
+      "seconds": 2.5,
+      "in": "hard",
+      "people": false,
+      "action": "PACKSHOT: the chrome ORVO sneaker stands on the lid of the bright green box on a polished reflective surface, green light moving slowly across the chrome. The camera drifts in and settles.",
+      "place": "green"
+    }
+  ],
+  "places": {
+    "green": {
+      "name": "the vibrant green studio with its mirror pool of liquid silver",
+      "words": [
+        "green",
+        "pool",
+        "flares"
+      ]
+    },
+    "dark": {
+      "name": "the dark beat: pure black space with a single overhead beam on the sneaker",
+      "words": [
+        "dark beat",
+        "overhead beam",
+        "pure black",
+        "Darkness"
+      ]
+    }
   }
- ]
 }
