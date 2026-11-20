@@ -1,46 +1,46 @@
 {
- "takes": [
-  {
-   "frame": "kare-1.png",
-   "seconds": 2.5,
-   "in": "hard",
-   "people": false,
-   "action": "The ORVO trail shoe stands on a sandstone pillar in a desert storm, sand and debris whipping past in the low sun; the FPV camera rushes toward it in one fast push-in."
-  },
-  {
-   "frame": "kare-2.png",
-   "seconds": 2.5,
-   "in": "whip",
-   "people": false,
-   "action": "The FPV camera skims low over the shoe's upper like a drone over a landscape, the ripstop weave and burnt-orange overlays sliding past, the laces rising ahead like bridges as sand streaks by."
-  },
-  {
-   "frame": "kare-3.png",
-   "seconds": 2.5,
-   "in": "whip",
-   "people": false,
-   "action": "The camera dives through an eyelet into the material maze, bright light strobing through the mesh in hard beams, burnt-orange lace walls passing on both sides, dust hanging in the light."
-  },
-  {
-   "frame": "kare-4.png",
-   "seconds": 2.5,
-   "in": "whip",
-   "people": false,
-   "action": "A barrel roll beneath the outsole: the black lugs pass overhead like a mountain range, debris flying, the ORVO on the heel flashing past."
-  },
-  {
-   "frame": "kare-5.png",
-   "seconds": 2.5,
-   "in": "whip",
-   "people": true,
-   "action": "The camera bursts out as the same shoe, now on the runner's foot, strikes the red-rock trail mid-stride, lugs biting, sand spraying, and springs off into the next stride toward the storm."
-  },
-  {
-   "frame": "kare-6.png",
-   "seconds": 2.5,
-   "in": "hard",
-   "people": false,
-   "action": "PACKSHOT: the ORVO trail shoe hangs in the centre of the frame above the red-rock trail, sand drifting slowly around it in the warm light; the camera eases back and holds."
-  }
- ]
+  "takes": [
+    {
+      "frame": "kare-1.png",
+      "seconds": 2.5,
+      "in": "hard",
+      "people": false,
+      "action": "The ORVO trail shoe stands on a sandstone pillar in a desert storm, sand and debris whipping past in the low sun; the FPV camera rushes toward it in one fast push-in."
+    },
+    {
+      "frame": "kare-2.png",
+      "seconds": 2.5,
+      "in": "whip",
+      "people": false,
+      "action": "The FPV camera skims low over the shoe's upper like a drone over a landscape, the ripstop weave and burnt-orange overlays sliding past close beneath it, the laces rising ahead like bridges as sand streaks by. For the whole take the camera stays a hand's breadth above the shoe's own surface; the shoe fills the frame from edge to edge."
+    },
+    {
+      "frame": "kare-3.png",
+      "seconds": 2.5,
+      "in": "whip",
+      "people": false,
+      "action": "The camera dives through an eyelet into the material maze, bright light strobing through the mesh in hard beams, burnt-orange lace walls passing on both sides, dust hanging in the light. The whole take stays deep inside the weave, flying on through the tunnels of fibre and lace."
+    },
+    {
+      "frame": "kare-4.png",
+      "seconds": 2.5,
+      "in": "whip",
+      "people": false,
+      "action": "A barrel roll beneath the outsole: the black lugs pass overhead like a mountain range, debris flying, the ORVO on the heel flashing past."
+    },
+    {
+      "frame": "kare-5.png",
+      "seconds": 2.5,
+      "in": "whip",
+      "people": true,
+      "action": "The camera bursts out low and level, the horizon straight: the same shoe, now on the runner's foot, strikes the red-rock trail mid-stride. He runs like a real trail athlete — light, quick, powerful strides, a slight forward lean, arms driving close to his body, each foot landing under him and springing off the rock as sand sprays from the lugs — heading on toward the storm. The camera tracks low beside his feet."
+    },
+    {
+      "frame": "kare-6.png",
+      "seconds": 2.5,
+      "in": "hard",
+      "people": false,
+      "action": "PACKSHOT: the ORVO trail shoe hangs in the centre of the frame above the red-rock trail, sand drifting slowly around it in the warm light; the camera eases back and holds."
+    }
+  ]
 }
