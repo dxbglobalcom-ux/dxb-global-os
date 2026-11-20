@@ -18,7 +18,7 @@
     },
     {
       "frame": "continue",
-      "seconds": 1.0,
+      "seconds": 1.5,
       "in": "hard",
       "people": true,
       "action": "The same shot runs on without a break: he slowly lifts his head toward the warm late sun, closes his eyes fully and breathes in deeply, perfectly still and calm, the inward look of a man picturing his big game. The camera holds.",
@@ -27,7 +27,7 @@
     },
     {
       "frame": "kare-3.png",
-      "seconds": 2.0,
+      "seconds": 1.5,
       "in": "dream",
       "people": true,
       "action": "Out of the light he opens his eyes: he is standing on the centre circle of a packed arena in the royal-blue number 11 uniform. He looks around for a beat, takes it in, then rolls his shoulders and jogs into the play as both teams move around him. The camera pulls back low from the hardwood.",
@@ -38,7 +38,7 @@
       "seconds": 1.4,
       "in": "hard",
       "people": true,
-      "action": "He catches a teammate's chest pass and in one motion fires it to the right wing, already running. The camera tracks low along the sideline.",
+      "action": "He catches a teammate's chest pass and in one motion fires it to the right wing, already running, his face focused on the play. His royal-blue jersey is bare blue fabric apart from the big white 11. The camera tracks low along the sideline.",
       "place": "arena"
     },
     {

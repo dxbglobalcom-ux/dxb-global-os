@@ -1,8 +1,7 @@
-3009 03-sahadan-arenaya 1 2
-3008 04-top-gozu 4
-3007 06-sahin-inisi 1
-3007 05-kilitli-kamera 1 6
-3006 07-balikgozu-park 2 3 4
+3015 03-sahadan-arenaya 5
+3007 06-sahin-inisi 1 2 4 5
+3007 05-kilitli-kamera 1 5 6
+3006 07-balikgozu-park
 3006 08-sivi-krom
 3003 10-ugc-kutu-acilisi
 3003 12-dev-adim
