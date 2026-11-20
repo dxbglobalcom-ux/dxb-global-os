@@ -88,14 +88,17 @@ for n, t in enumerate(spec["takes"], 1):
     look = [" ".join(x for x in re.split(r"(?<=[.;])\s+", b) if not CUTWORDS.search(x)) for b in look]
     avoid = negative
     if not people:
-        avoid = ", ".join(x for x in avoid.split(", ") if not re.search(r"finger|hand|face", x, re.I))
+        # Measured on film 04 (seeds 3003, 3005): an empty packshot told to avoid "numbers other than 9 on the
+        # striker's kit" got a number-9 player walking in, twice. An empty take hears of no person at all.
+        avoid = ", ".join(x for x in avoid.split(", ") if not re.search(
+            r"finger|hand|face|kit|jersey|player|striker|uniform|number|\bm[ae]n\b|people|person|crowd|team|skin", x, re.I))
     prompt = clean(
         f"ONE CONTINUOUS TAKE, {sec:.1f} seconds, vertical 9:16 photoreal commercial footage. The first frame "
-        f"is the given picture exactly; from it the scene plays on in the same place with the same people.{where} "
+        f"is the given picture exactly; from it the scene plays on in the same place{' with the same people' if people else ''}.{where} "
         f"No cut, no scene change, no text overlays, no subtitles.\n\n"
         f"WHAT HAPPENS — {t['action'].strip()}\n\n"
         f"{HANDS if hands_only else NATURAL if people else EMPTY}\n\n" + "\n\n".join(look) +
-        f"\n\nAVOID — any cut or second shot, stiff posing, frozen smiles, pointing at the product; {avoid}"
+        f"\n\nAVOID — any cut or second shot{', stiff posing, frozen smiles, pointing at the product' if people else ''}; {avoid}"
     )
     pf = out / f"shot{n}.txt"
     pf.write_text(prompt + "\n", encoding="utf-8")
