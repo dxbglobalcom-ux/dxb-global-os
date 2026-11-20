@@ -1,0 +1,87 @@
+{
+ "takes": [
+  {
+   "frame": "kare-1.png",
+   "seconds": 2.0,
+   "in": "hard",
+   "people": true,
+   "action": "Seen from below the clear acrylic, the four men lean over the black ORVO oxford, chatting and laughing; one sweeps a glossy streak of polish across the acrylic while another leans closer to inspect. The camera looks up through the glass.",
+   "place": "studio"
+  },
+  {
+   "frame": "kare-2.png",
+   "seconds": 2.0,
+   "in": "whip",
+   "people": true,
+   "action": "The camera pulls back fast through the saturated Y2K studio: Man B swings a cinema camera onto the oxford, Man A adjusts it on the glossy table, Man C stretches back in his chair laughing. They move like a real crew.",
+   "place": "studio"
+  },
+  {
+   "frame": "kare-3.png",
+   "seconds": 2.0,
+   "in": "match",
+   "people": true,
+   "action": "Man A sets the oxford down on the cobalt pedestal and nudges it straight, Man B swings a light around, Man D adjusts a translucent backdrop, all talking over each other. The handheld camera drifts in.",
+   "place": "studio"
+  },
+  {
+   "frame": "kare-4.png",
+   "seconds": 2.5,
+   "in": "dissolve",
+   "people": false,
+   "action": "The commercial they are shooting: the black oxford alone in the dark, smoke rolling slowly around it under a single spotlight, the wet floor mirroring the leather. The camera holds at a low rear angle.",
+   "place": "ad"
+  },
+  {
+   "frame": "kare-5.png",
+   "seconds": 2.0,
+   "in": "match",
+   "people": true,
+   "action": "A soft cloth buffs the toe cap in quick circles until it shines like a mirror, the four men crowding in behind, squinting at the shine and grinning at each other. Macro, close on the toe.",
+   "place": "studio"
+  },
+  {
+   "frame": "kare-6.png",
+   "seconds": 2.0,
+   "in": "whip",
+   "people": true,
+   "action": "The four gather around Man B's phone watching the smoke-and-spotlight shot, Man C with one ORVO oxford forward in the foreground; they burst into reactions, a thumbs up, a laugh, a shoulder grab. Handheld push-in.",
+   "place": "studio"
+  },
+  {
+   "frame": "kare-7.png",
+   "seconds": 2.5,
+   "in": "match",
+   "people": true,
+   "action": "The black ORVO oxford stands on the glossy cobalt pedestal among chrome spheres and the last wisps of fog while the four men behind lean in admiring it, one nodding, one smiling proudly. The camera pushes in slowly toward the shoe.",
+   "place": "studio"
+  }
+ ],
+ "places": {
+  "studio": {
+   "name": "the bright Y2K studio with cobalt walls and pink panels",
+   "words": [
+    "cobalt",
+    "pink panel",
+    "chrome furniture",
+    "circular light",
+    "inflatable",
+    "product table",
+    "Y2K",
+    "Studio"
+   ]
+  },
+  "ad": {
+   "name": "the dark, smoky space of the commercial inside the commercial",
+   "words": [
+    "ad inside",
+    "dark space",
+    "spotlight",
+    "fog",
+    "black ground",
+    "automotive",
+    "smoke"
+   ]
+  }
+ }
+}

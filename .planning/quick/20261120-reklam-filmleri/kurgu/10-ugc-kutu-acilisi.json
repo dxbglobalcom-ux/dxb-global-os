@@ -1,0 +1,47 @@
+{
+ "keep_audio": true,
+ "takes": [
+  {
+   "frame": "kare-1.png",
+   "seconds": 2.5,
+   "in": "hard",
+   "people": true,
+   "action": "Front camera selfie in his bright bedroom: the curly-haired creator holds the green ORVO sneaker to the lens and tilts it so the beads tumble inside the clear sole, eyes wide, saying \"There are beads in the sole. Actual tiny beads.\" The phone wobbles at arm's length."
+  },
+  {
+   "frame": "kare-2.png",
+   "seconds": 2.5,
+   "in": "hard",
+   "people": true,
+   "action": "On the back camera he holds the sneaker sole-up close to the lens and taps the clear sole with one finger; the beads jump inside. His voice behind the phone, delighted: \"Look. They bounce.\""
+  },
+  {
+   "frame": "kare-3.png",
+   "seconds": 2.5,
+   "in": "hard",
+   "people": true,
+   "action": "The phone propped against something, he sits on the floor, pulls both sneakers on and laces them quickly, humming, glancing up at the phone with a grin. Slightly crooked phone framing."
+  },
+  {
+   "frame": "kare-4.png",
+   "seconds": 2.5,
+   "in": "whip",
+   "people": true,
+   "action": "He stands, points the phone down at his feet and gives one foot a light stomp; the beads bounce in the clear sole and he laughs. Real handheld wobble."
+  },
+  {
+   "frame": "kare-5.png",
+   "seconds": 2.5,
+   "in": "hard",
+   "people": true,
+   "action": "Front camera at face level, he holds one sneaker beside his face and says, genuine and a little shy, \"I am twenty-three and these are my favorite shoes I have ever owned,\" then laughs at himself."
+  },
+  {
+   "frame": "kare-6.png",
+   "seconds": 2.5,
+   "in": "hard",
+   "people": true,
+   "action": "He brings the clear sole close to the lens one last time, tilts it so the beads drift, grins behind it and says \"You are welcome,\" then reaches toward the phone to stop recording."
+  }
+ ]
+}

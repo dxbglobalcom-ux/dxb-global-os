@@ -1,0 +1,54 @@
+{
+ "takes": [
+  {
+   "frame": "kare-1.png",
+   "seconds": 2.0,
+   "in": "hard",
+   "people": true,
+   "action": "At the glossy powder-pink table the lead in the burgundy sweater reaches across, picks up the white ORVO sneaker with a mischievous grin and turns to look back at his three friends on the sofa, who burst out laughing. The camera sits low behind the shoe and drifts slightly with his reach."
+  },
+  {
+   "frame": "kare-2.png",
+   "seconds": 2.0,
+   "in": "whip",
+   "people": true,
+   "action": "The four friends stride toward us down the cherry-pink studio street, mid-conversation, one throwing his head back laughing and bumping another's shoulder, their white ORVO sneakers landing large in the foreground. The camera at knee height glides backward ahead of them."
+  },
+  {
+   "frame": "kare-3.png",
+   "seconds": 2.0,
+   "in": "match",
+   "people": true,
+   "action": "A friend's arm pushes the white ORVO sneaker through the round mirror window; the man with the low knot takes it casually, turns it once in his hand, then glances sideways at the camera with a confident half-smile as his friend laughs behind the glass. The camera drifts gently in."
+  },
+  {
+   "frame": "kare-4.png",
+   "seconds": 2.0,
+   "in": "whip",
+   "people": true,
+   "action": "Seen from straight above, the four men lie around the round cherry-red platform, laughing, passing the single white ORVO sneaker clockwise from hand to hand while two real cherries roll across the platform. The camera holds overhead and turns slowly."
+  },
+  {
+   "frame": "kare-5.png",
+   "seconds": 2.0,
+   "in": "match",
+   "people": true,
+   "action": "Macro: fingertips pull the flat white waxed lace taut through the eyelets, the leather grain catching a crisp highlight, the cherry-red ORVO wordmark sharp, a split cherry glistening beside the heel tab. The camera racks focus slowly along the shoe.",
+   "hands_only": true
+  },
+  {
+   "frame": "kare-6.png",
+   "seconds": 2.5,
+   "in": "whip",
+   "people": true,
+   "action": "From floor height the four friends around the round pedestal crack up at a joke; the lead pushes himself up, steps across the lens in his white ORVO sneakers and turns back to them grinning. The camera stays low, wide and close."
+  },
+  {
+   "frame": "reuse:/home/dxb/DxB Global OS/.planning/quick/20261120-reklam-filmleri/cekim2/01-tokyo-kiraz/paket-dogrulandi.mp4",
+   "seconds": 2.5,
+   "in": "hard",
+   "people": false,
+   "action": "PACKSHOT: one white ORVO sneaker stands on the small mirror-polished pedestal against the cream-to-pink background, two fresh cherries beside it, cherry blossoms swaying softly above. The camera pushes in slowly and settles."
+  }
+ ]
+}

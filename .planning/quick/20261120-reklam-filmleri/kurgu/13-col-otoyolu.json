@@ -1,0 +1,46 @@
+{
+ "takes": [
+  {
+   "frame": "kare-1.png",
+   "seconds": 3.0,
+   "in": "hard",
+   "people": true,
+   "action": "The dark muscle car slides in on the desert highway in a slow drift, rear tyre biting, a backlit fan of sand rolling up; through the open window the driver works the pedal with his sand ORVO boot. The camera tracks low alongside the rear quarter."
+  },
+  {
+   "frame": "kare-2.png",
+   "seconds": 2.0,
+   "in": "match",
+   "people": true,
+   "action": "The heavy door swings open and his sand ORVO desert boot comes down and plants in the grit, sand grains lifting in the amber backlight as his weight shifts onto it. The camera waits at ground level."
+  },
+  {
+   "frame": "kare-3.png",
+   "seconds": 2.2,
+   "in": "match",
+   "people": true,
+   "action": "Sitting sideways in the driver's seat with one boot on the door sill, he pulls the waxed tan laces tight with two practised tugs and looks out at the dunes. The camera holds above the passenger seat."
+  },
+  {
+   "frame": "kare-4.png",
+   "seconds": 2.4,
+   "in": "whip",
+   "people": true,
+   "action": "He stands with one boot up on the chrome bumper, forearm on his knee, the wind pulling at his olive jacket; he glances down the road with a calm smirk and takes his foot off the bumper. Low angle from hood height."
+  },
+  {
+   "frame": "kare-5.png",
+   "seconds": 1.6,
+   "in": "match",
+   "people": true,
+   "action": "He walks away up the centre line, his sand ORVO boots leaving crisp prints in the blown sand, headlight beams cutting through the dust past his legs. The camera stays low on the road."
+  },
+  {
+   "frame": "kare-6.png",
+   "seconds": 1.8,
+   "in": "hard",
+   "people": false,
+   "action": "PACKSHOT: the pair of sand ORVO desert boots stands on the asphalt beside the front wheel, amber light on the suede, sand drifting through the low headlight beam. The camera holds at bumper height."
+  }
+ ]
+}

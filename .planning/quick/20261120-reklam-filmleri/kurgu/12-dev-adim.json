@@ -1,0 +1,46 @@
+{
+ "takes": [
+  {
+   "frame": "kare-1.png",
+   "seconds": 2.5,
+   "in": "hard",
+   "people": true,
+   "action": "Over the grey river city the giant in the charcoal overcoat walks calmly between the glass towers, stepping over the tram line in his tan ORVO Chelsea boots as the crowd below stops to look. The aerial camera drifts backward ahead of him."
+  },
+  {
+   "frame": "kare-2.png",
+   "seconds": 2.5,
+   "in": "whip",
+   "people": true,
+   "action": "In the wet plaza at human height the colossal tan boot comes down gently onto the stone, spray and pigeons lifting; the commuters flinch, step back and stare up. The handheld camera shakes with the impact."
+  },
+  {
+   "frame": "kare-3.png",
+   "seconds": 2.5,
+   "in": "match",
+   "people": true,
+   "action": "Beside the planted boot the elastic gusset rises like a building wall above a parked red double-decker; commuters walk past its base, slowing, craning up, one taking a photo. The camera tilts up slowly at human height."
+  },
+  {
+   "frame": "kare-4.png",
+   "seconds": 2.5,
+   "in": "whip",
+   "people": true,
+   "action": "Looking straight up from the street, the giant's heel lifts overhead, rain dripping from the sole's edge onto the crowd, who duck and laugh with their phones raised. Handheld, real operator weight."
+  },
+  {
+   "frame": "kare-5.png",
+   "seconds": 2.5,
+   "in": "whip",
+   "people": true,
+   "action": "On the stone bridge the giant's boot rises carefully out of the river and steps over, water pouring off it, while people lean on the railing and look up open-mouthed. The handheld camera moves through the crowd."
+  },
+  {
+   "frame": "kare-6.png",
+   "seconds": 2.5,
+   "in": "dissolve",
+   "people": true,
+   "action": "The giant sits on the edge of a tower roof, elbows on knees, swings his tan ORVO Chelsea boots once and looks down at the crowd with a faint, friendly smile. The camera holds at street level looking up."
+  }
+ ]
+}

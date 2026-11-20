@@ -1,0 +1,46 @@
+{
+ "takes": [
+  {
+   "frame": "kare-1.png",
+   "seconds": 2.0,
+   "in": "hard",
+   "people": true,
+   "action": "The cognac ORVO loafer stands like a monument on the moss dome while the tiny man in the cream knit polo walks up the slope toward it; a cloud slides past and a bubble rises. The camera looks slightly up from below the sole and creeps forward."
+  },
+  {
+   "frame": "kare-2.png",
+   "seconds": 2.0,
+   "in": "match",
+   "people": true,
+   "action": "At moss level the tiny man keeps climbing toward the towering loafer, grass blades swaying past the lens, then stops, tilts his head back to take it in and breaks into a grin. The camera stays low and follows him."
+  },
+  {
+   "frame": "kare-3.png",
+   "seconds": 2.0,
+   "in": "whip",
+   "people": true,
+   "action": "The tiny man lounges inside the loafer's opening like on a sofa, stretches, settles into the cream insole and lets one arm hang lazily over the collar with an easy grin. The camera glides close along the burnished leather."
+  },
+  {
+   "frame": "kare-4.png",
+   "seconds": 2.0,
+   "in": "whip",
+   "people": true,
+   "action": "The camera orbits the loafer at toy scale while the tiny man waves up lazily; behind, the same man at full scale rests his chin on his folded arms and chuckles at his tiny self. The loafer itself stays perfectly still."
+  },
+  {
+   "frame": "kare-5.png",
+   "seconds": 3.0,
+   "in": "dissolve",
+   "people": true,
+   "action": "The tiny man sits on the loafer's heel counter swinging his legs, looking up at the sky, as a ring of pastel daisies pops up around the sole in a staggered wave and a big bubble drifts up. The camera holds low and frontal."
+  },
+  {
+   "frame": "kare-6.png",
+   "seconds": 4.0,
+   "in": "whip",
+   "people": true,
+   "action": "The full-scale man gently lifts the cognac ORVO loafer off the moss dome and looks at it with quiet satisfaction, while down on the crest the tiny man jumps and waves both arms after it, laughing. The camera eases back to show the whole little set."
+  }
+ ]
+}

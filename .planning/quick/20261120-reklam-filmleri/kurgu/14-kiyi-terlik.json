@@ -1,0 +1,46 @@
+{
+ "takes": [
+  {
+   "frame": "kare-1.png",
+   "seconds": 2.5,
+   "in": "hard",
+   "people": true,
+   "action": "He sits on the edge of the white volcanic rock with his back to us, the wind moving his linen shirt, flexing his feet in the sand-white ORVO slides on the warm rock as he looks out at the sea."
+  },
+  {
+   "frame": "kare-2.png",
+   "seconds": 2.5,
+   "in": "dissolve",
+   "people": true,
+   "action": "He slowly turns his head toward us with a relaxed, sun-warmed half-smile, brushing a curl out of his eyes, as the camera pushes in and orbits slightly; his slides stay at the rock's edge."
+  },
+  {
+   "frame": "kare-3.png",
+   "seconds": 2.5,
+   "in": "match",
+   "people": true,
+   "action": "He picks up one ORVO slide from beside him, turns it over and looks at the sole, then grins and bumps it lightly against his palm to shake off the sand, the sea glassy behind."
+  },
+  {
+   "frame": "kare-4.png",
+   "seconds": 2.5,
+   "in": "whip",
+   "people": true,
+   "action": "He walks slowly along the line where the sea meets the sand, linen rolled at the ankle, his ORVO slides splashing through the thin edge of the water as a small wave washes over his feet. The camera tracks low beside his steps."
+  },
+  {
+   "frame": "kare-5.png",
+   "seconds": 2.5,
+   "in": "dissolve",
+   "people": false,
+   "action": "One sand-white ORVO slide drops gently from above and lands on the pale chalky rock pinnacles, settling with a small bounce, the sea glittering out of focus. The camera zooms in slowly."
+  },
+  {
+   "frame": "kare-6.png",
+   "seconds": 2.5,
+   "in": "hard",
+   "people": false,
+   "action": "PACKSHOT: the ORVO slide rests on wet white rock at the water's edge, its outsole pattern mirrored in a thin film of seawater as a soft wash slides in and out. The camera holds close and still."
+  }
+ ]
+}

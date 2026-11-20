@@ -1,0 +1,46 @@
+{
+ "takes": [
+  {
+   "frame": "kare-1.png",
+   "seconds": 2.5,
+   "in": "hard",
+   "people": true,
+   "action": "Past the shaded limestone, the camera rises to reveal the hiker in the mustard jacket coming down the narrow trail in fast, sure strides, glancing up at the falcon gliding above the ridge."
+  },
+  {
+   "frame": "kare-2.png",
+   "seconds": 2.5,
+   "in": "whip",
+   "people": true,
+   "action": "Locked close to his right ORVO boot, the boot strides down between limestone rocks and golden grass, the lugged sole biting into loose gravel and kicking up dust, the trail rushing past at the edges."
+  },
+  {
+   "frame": "kare-3.png",
+   "seconds": 2.0,
+   "in": "match",
+   "people": true,
+   "action": "On a limestone step before the hairpin he stops for a second, pulls the red lace tight around the brass speed hooks with two quick tugs and pushes straight off again."
+  },
+  {
+   "frame": "kare-4.png",
+   "seconds": 2.5,
+   "in": "whip",
+   "people": true,
+   "action": "He leans into the broad hairpin, boots planting on loose scree with a spray of grit, arms out for balance, and carries his speed out of the turn. The camera flies diagonally beside the rock face."
+  },
+  {
+   "frame": "kare-5.png",
+   "seconds": 2.5,
+   "in": "whip",
+   "people": true,
+   "action": "He runs past the low trailside camera, his ORVO boot landing huge beside the lens, gravel jumping, while the peregrine falcon dives along the slope beside him; he turns his head to it with a fierce grin."
+  },
+  {
+   "frame": "kare-6.png",
+   "seconds": 3.0,
+   "in": "hard",
+   "people": false,
+   "action": "PACKSHOT: one ORVO boot stands on the limestone ledge in low golden sun, the winding trail far behind; the falcon perched beside it settles its half-open wings and turns its head. The camera drifts slowly in."
+  }
+ ]
+}

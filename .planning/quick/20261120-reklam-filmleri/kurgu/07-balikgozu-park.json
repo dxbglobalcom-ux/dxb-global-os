@@ -1,0 +1,46 @@
+{
+ "takes": [
+  {
+   "frame": "kare-1.png",
+   "seconds": 2.0,
+   "in": "hard",
+   "people": true,
+   "action": "The skater in the red cap rolls along the coping of the empty bowl, knees soft, arms loose, his navy ORVO skate shoes big in the fisheye foreground while his dachshund trots behind."
+  },
+  {
+   "frame": "kare-2.png",
+   "seconds": 2.5,
+   "in": "match",
+   "people": true,
+   "action": "Fisheye at ground level following the board: he pushes and carves across the sun-baked concrete, both ORVO shoes shifting on the grip tape, the concrete curving and rushing beneath."
+  },
+  {
+   "frame": "kare-3.png",
+   "seconds": 2.5,
+   "in": "whip",
+   "people": true,
+   "action": "He pops a kickflip off the concrete hip, the board spins once beneath his shoes, he catches it, lands with a clack and rolls away with a quick grin. The fisheye camera follows from below."
+  },
+  {
+   "frame": "kare-4.png",
+   "seconds": 2.5,
+   "in": "whip",
+   "people": true,
+   "action": "He ollies onto the brutalist ledge and grinds it straight toward the lens, front shoe pressing the nose, concrete dust kicking up, then pops off at the end. The low fisheye waits at the ledge's end."
+  },
+  {
+   "frame": "kare-5.png",
+   "seconds": 2.5,
+   "in": "whip",
+   "people": true,
+   "action": "He cruises across the flat and his dachshund sprints alongside the board, little legs pumping, ears flying; he looks down at it and laughs, slowing so it can keep up. The fisheye tracks low with them."
+  },
+  {
+   "frame": "kare-6.png",
+   "seconds": 3.0,
+   "in": "dissolve",
+   "people": true,
+   "action": "He sits on the bowl's coping catching his breath, one ORVO shoe on the tail of the board, scratching the panting dachshund's ears as it licks his hand; he laughs and looks out over the park. The fisheye stays low and still."
+  }
+ ]
+}
