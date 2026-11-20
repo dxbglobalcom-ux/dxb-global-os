@@ -20,6 +20,7 @@ for b in "$@"; do
   while IFS=$'\t' read -r n sec src name pf tin; do
     if [ -n "${SHOTS:-}" ] && ! [[ " $SHOTS " == *" $n "* ]]; then continue; fi
     if [[ "$src" == *.mp4 ]]; then cp -f "$src" "$dir/shot$n.mp4"; echo "  take $n reused" | tee -a "$log"; continue; fi
+    if [ ! -f "$src" ]; then echo "  take $n FAIL no first frame $src $(date +%H:%M:%S)" | tee -a "$log"; continue; fi
     cp -f "$src" "$IN/$name"
     # An empty final packshot is bound to end on its own frame (film 01: H3 let a hand reach in).
     last=()
@@ -32,6 +33,10 @@ for b in "$@"; do
     file=$(grep -o 'cikti: .*' "$dir/shot$n.log" | tail -1 | sed 's/^cikti: //')
     if [ $rc -eq 0 ] && [ -n "$file" ] && [ -f "$OUT/orvo/$file" ]; then
       cp -f "$OUT/orvo/$file" "$dir/shot$n.mp4"
+      # the last frame the cut shows of this take, for a next take that continues the shot
+      h=$HEAD; [ "$tin" = continue ] && h=0
+      ffmpeg -loglevel error -y -ss "$(python3 -c "print(max(0.0, $h + $sec - 1/24))")" -i "$dir/shot$n.mp4" \
+        -frames:v 1 "$dir/shot${n}_last.png"
       echo "  take $n OK $(grep -o 'duvar saati: [0-9.]* s' "$dir/shot$n.log") $(grep -o 'RAM tepe: [0-9.]* GiB' "$dir/shot$n.log") $(date +%H:%M:%S)" | tee -a "$log"
     else
       echo "  take $n FAIL rc=$rc $(date +%H:%M:%S)" | tee -a "$log"

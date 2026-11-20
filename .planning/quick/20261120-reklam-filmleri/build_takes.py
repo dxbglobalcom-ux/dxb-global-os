@@ -62,8 +62,15 @@ for n, t in enumerate(spec["takes"], 1):
     if t["frame"].startswith("reuse:"):
         rows.append(f"{n}\t{sec:.2f}\t{t['frame'][6:]}\t-\t-\t{t.get('in', 'hard')}\n")
         continue
-    frame = board / "kareler" / t["frame"]
-    assert frame.exists(), frame
+    # "continue": the take starts on the last frame the previous take shows, so two storyboard frames of one
+    # shot play as one shot (film 05: a dissolve between two nearly equal frames showed the man twice).
+    # render_takes.sh writes shot<n-1>_last.png when take n-1 is rendered.
+    tin = t.get("in", "hard")
+    if t["frame"] == "continue":
+        frame, tin = out / f"shot{n - 1}_last.png", "continue"
+    else:
+        frame = board / "kareler" / t["frame"]
+        assert frame.exists(), frame
     people = t.get("people", True)
     # Measured on film 01 (seed 3003): a macro with fingertips, given the cast, ended with two men standing
     # beside a giant shoe. A take whose only person is a hand gets no cast and says so.
@@ -102,7 +109,7 @@ for n, t in enumerate(spec["takes"], 1):
     )
     pf = out / f"shot{n}.txt"
     pf.write_text(prompt + "\n", encoding="utf-8")
-    rows.append(f"{n}\t{sec:.2f}\t{frame}\t{prefix}_k{n}.png\t{pf}\t{t.get('in', 'hard')}\n")
+    rows.append(f"{n}\t{sec:.2f}\t{frame}\t{prefix}_k{n}.png\t{pf}\t{tin}\n")
 (out / "shots.tsv").write_text("".join(rows), encoding="utf-8")
 # A film whose people speak (the UGC) keeps H3's own sound, cut with the picture.
 (out / "keep_audio").unlink(missing_ok=True)

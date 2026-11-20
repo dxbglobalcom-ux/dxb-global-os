@@ -1,79 +1,88 @@
 {
- "takes": [
-  {
-   "frame": "kare-1.png",
-   "seconds": 2.5,
-   "in": "hard",
-   "people": true,
-   "action": "Locked low to his right ORVO runner, the runner in black sprints flat out down the wet night street, the shoe centred and stable while neon and streetlights streak past, red laces bouncing with every hard stride.",
-   "place": "city"
-  },
-  {
-   "frame": "kare-2.png",
-   "seconds": 2.5,
-   "in": "match",
-   "people": true,
-   "action": "Still locked to the shoe, his foot smashes straight through a puddle without slowing, a crown of water bursting around the midsole, red laces whipping, taillights streaking behind.",
-   "place": "city"
-  },
-  {
-   "frame": "kare-3.png",
-   "seconds": 2.0,
-   "in": "match",
-   "people": true,
-   "action": "Still locked to the shoe, he leaps down the concrete subway stairs; the ORVO runner lands on a step edge and springs on, fluorescent tubes rushing upward past the frame.",
-   "place": "city"
-  },
-  {
-   "frame": "kare-4.png",
-   "seconds": 2.5,
-   "in": "match",
-   "people": true,
-   "action": "The same shoe lands on the pale belt of a white treadmill in the deep-red studio and keeps striking in rhythm, a drop of sweat splashing on the toe, the red room soft behind.",
-   "place": "room"
-  },
-  {
-   "frame": "kare-5.png",
-   "seconds": 3.0,
-   "in": "whip",
-   "people": true,
-   "action": "Full body: he runs hard on the treadmill facing us, feet hammering the belt, elbows driving, sweat shining, breathing ragged; for a beat he tips his head back to gulp air, then pushes on. The camera is still and low.",
-   "place": "room"
-  },
-  {
-   "frame": "kare-6.png",
-   "seconds": 2.5,
-   "in": "dissolve",
-   "people": true,
-   "action": "Wide: he keeps sprinting on the glowing white treadmill in the middle of the big empty red room, spent but unbroken, chest heaving, the bone-white ORVO runners catching the light. The camera slowly pulls back.",
-   "place": "room"
+  "takes": [
+    {
+      "frame": "kare-1.png",
+      "seconds": 2.5,
+      "in": "hard",
+      "people": true,
+      "action": "Locked low to his right ORVO runner, the runner in black sprints flat out down the wet night street, the shoe centred and stable while neon and streetlights streak past, red laces bouncing with every hard stride.",
+      "place": "street"
+    },
+    {
+      "frame": "kare-2.png",
+      "seconds": 2.5,
+      "in": "match",
+      "people": true,
+      "action": "Still locked to the shoe, his foot smashes straight through a puddle without slowing, a crown of water bursting around the midsole, red laces whipping, taillights streaking behind.",
+      "place": "street"
+    },
+    {
+      "frame": "kare-3.png",
+      "seconds": 2.0,
+      "in": "match",
+      "people": true,
+      "action": "Still locked to the shoe, he leaps down the concrete subway stairs; the ORVO runner lands on a step edge and springs on, fluorescent tubes rushing upward past the frame.",
+      "place": "subway"
+    },
+    {
+      "frame": "kare-4.png",
+      "seconds": 2.5,
+      "in": "match",
+      "people": true,
+      "action": "The same shoe lands on the pale belt of a white treadmill in the deep-red studio and keeps striking in rhythm, a drop of sweat splashing on the toe, the red room soft behind.",
+      "place": "room"
+    },
+    {
+      "frame": "kare-5.png",
+      "seconds": 3.0,
+      "in": "whip",
+      "people": true,
+      "action": "Full body: he runs hard on the treadmill facing us, feet hammering the belt, elbows driving, sweat shining, breathing ragged; for a beat he tips his head back to gulp air, then pushes on. The camera is still and low.",
+      "place": "room"
+    },
+    {
+      "frame": "continue",
+      "seconds": 2.5,
+      "in": "hard",
+      "people": true,
+      "action": "The same shot runs on: he keeps sprinting on the glowing white treadmill, chest heaving, spent but unbroken, while the camera slowly pulls back and the big empty red room opens up around him, the bone-white ORVO runners catching the light.",
+      "place": "room"
+    }
+  ],
+  "places": {
+    "street": {
+      "name": "the wet night city street, open to the sky, with shopfronts, neon, puddles and traffic",
+      "words": [
+        "street",
+        "neon",
+        "sodium",
+        "puddle",
+        "taillight",
+        "traffic",
+        "city"
+      ]
+    },
+    "subway": {
+      "name": "the concrete subway stairs under fluorescent tubes",
+      "words": [
+        "subway",
+        "stairs",
+        "fluorescent",
+        "tiles",
+        "tubes"
+      ]
+    },
+    "room": {
+      "name": "the big empty deep-red studio room with the white treadmill",
+      "words": [
+        "red room",
+        "studio",
+        "treadmill",
+        "machine",
+        "belt",
+        "walls",
+        "room"
+      ]
+    }
   }
- ],
- "places": {
-  "city": {
-   "name": "the wet night city (street, puddle, subway stairs)",
-   "words": [
-    "city",
-    "street",
-    "neon",
-    "sodium",
-    "puddle",
-    "stairs",
-    "taillight",
-    "traffic"
-   ]
-  },
-  "room": {
-   "name": "the big empty deep-red studio room with the white treadmill",
-   "words": [
-    "red room",
-    "studio",
-    "treadmill",
-    "machine",
-    "belt",
-    "walls",
-    "room"
-   ]
-  }
- }
 }

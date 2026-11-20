@@ -9,7 +9,8 @@ the way its storyboard says, as an editor would cut it:
             the same smear — a real fast pan, without a ghost of both;
   dissolve  a calm beat: a soft cross-dissolve, paid by the outgoing take's spare length;
   match     a straight cut on the continuing shape (a match cut is a cut);
-  hard      a straight cut.
+  hard      a straight cut;
+  continue  no cut at all: the take was rendered from the previous take's last frame, so the shot runs on.
 Every take holds the screen for its storyboard length; the film is the sum of them.
 
 Usage: cut.py <take-dir> <out.mp4>
@@ -40,7 +41,7 @@ def duration(p):
 takes = []
 for r in rows:
     n, sec = int(r[0]), float(r[1])
-    tin = r[5] if len(r) > 5 and r[5] in ("whip", "match", "dissolve", "hard") else "hard"
+    tin = r[5] if len(r) > 5 and r[5] in ("whip", "match", "dissolve", "hard", "continue") else "hard"
     clip = take_dir / f"shot{n}.mp4"
     if not clip.exists():
         sys.exit(f"missing {clip}")
@@ -60,7 +61,8 @@ def whip_in():
 
 
 for i, t in enumerate(takes):
-    t["head"] = HEAD if t["rendered"] and t["len"] >= t["sec"] + HEAD else 0.0
+    # a "continue" take starts on the frame the previous one ended on: nothing is dropped, the shot runs on
+    t["head"] = HEAD if t["rendered"] and t["in"] != "continue" and t["len"] >= t["sec"] + HEAD else 0.0
 for i, t in enumerate(takes):
     t["d"] = 0.0
     if i > 0 and t["in"] == "dissolve":
@@ -96,7 +98,7 @@ maps = ["-map", f"[{label}]"]
 if keep_audio:
     for i, t in enumerate(takes):
         fo = max(0.0, t["sec"] - 0.04)
-        h = HEAD if t["rendered"] and t["len"] >= t["sec"] + HEAD else 0.0
+        h = t["head"]
         filt.append(f"[{i}:a]atrim={h:.4f}:{h + t['sec']:.4f},asetpts=PTS-STARTPTS,aresample=48000,"
                     f"afade=t=in:d=0.04,afade=t=out:st={fo:.4f}:d=0.04[a{i}]")
     filt.append("".join(f"[a{i}]" for i in range(len(takes))) + f"concat=n={len(takes)}:v=0:a=1[aout]")
