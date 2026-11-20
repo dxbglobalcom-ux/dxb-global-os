@@ -17,12 +17,13 @@
       "place": "court"
     },
     {
-      "frame": "kare-2b-goz-kapali.png",
+      "frame": "continue",
       "seconds": 1.0,
       "in": "hard",
       "people": true,
-      "place": "court",
-      "action": "Close on his face on the bench in the warm late sun: his eyes stay closed, he breathes in slowly and deeply, perfectly still and calm, the inward look of a man picturing his big game. Only his breath moves him; the camera holds close, drifting in a touch."
+      "action": "The same shot runs on without a break: he slowly lifts his head toward the warm late sun, closes his eyes fully and breathes in deeply, perfectly still and calm, the inward look of a man picturing his big game. The camera holds.",
+      "end_on": "kare-2b-goz-kapali.png",
+      "place": "court"
     },
     {
       "frame": "kare-3.png",
