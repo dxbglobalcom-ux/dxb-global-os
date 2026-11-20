@@ -1,18 +1,16 @@
 #!/usr/bin/env python3
-"""Cut a film from its takes with the storyboard's own transitions — and never two pictures at once.
+"""Cut a film from its takes with the storyboard's own transitions, so it flows like a real commercial.
 
 His word, 2026-11-20: the first cut was "birbirinden kopuk sahneleri birleştirmişsiniz" — seven takes glued
-end to end with plain cuts. So each take enters the way its storyboard says. His next word, the same day:
-"İki sahne üst üste binmesin. İki hareket üst üste binmesin." The earlier cut blended takes with xfade (a
-0.40 s dissolve, a two-frame match blend, a blurred whip blend), which laid one take over the other. Here no
-frame ever holds two takes: every take is its own stretch of the film, joined by a clean cut, and the
-transition lives on either side of that cut —
+end to end with plain cuts. Then: "doğal bir akış olsun. Gerçek bir reklammış gibi" — a dissolve may show two
+pictures in a natural flow; what must not happen is anything a real editor would not do. So each take enters
+the way its storyboard says, as an editor would cut it:
   whip      the outgoing take smears sideways over its last frames, cut, the incoming one sharpens out of
-            the same smear (a fast pan, without a blend);
-  dissolve  a calm beat: a short blink to black — the outgoing take fades out, the incoming one fades in;
-  match     a straight cut on the continuing shape;
+            the same smear — a real fast pan, without a ghost of both;
+  dissolve  a calm beat: a soft cross-dissolve, paid by the outgoing take's spare length;
+  match     a straight cut on the continuing shape (a match cut is a cut);
   hard      a straight cut.
-Every take holds the screen for exactly its storyboard length; the film is the sum of them.
+Every take holds the screen for its storyboard length; the film is the sum of them.
 
 Usage: cut.py <take-dir> <out.mp4>
 <take-dir>/shots.tsv rows: n, seconds, source, input name, prompt file, in-transition.
@@ -26,7 +24,7 @@ from pathlib import Path
 HEAD = 0.35  # seconds of the still opening pose dropped from each rendered take (render_takes.sh renders them extra)
 FPS = 24
 WHIP = [8, 24, 64, 160]  # horizontal blur width, frame by frame toward the cut (and back, after it)
-BLINK = 0.17             # seconds of fade out, and of fade in, around a calm beat's cut
+DISSOLVE = 0.40          # seconds of a calm beat's cross-dissolve, at most (the outgoing take's spare pays)
 
 take_dir, out = Path(sys.argv[1]), Path(sys.argv[2])
 rows = [l.rstrip("\n").split("\t") for l in (take_dir / "shots.tsv").read_text().splitlines() if l.strip()]
@@ -61,27 +59,40 @@ def whip_in():
     return [f"avgblur=sizeX={w}:sizeY=1:enable='lt(t,{(k - j) / FPS:.4f})'" for j, w in enumerate(WHIP)]
 
 
+for i, t in enumerate(takes):
+    t["head"] = HEAD if t["rendered"] and t["len"] >= t["sec"] + HEAD else 0.0
+for i, t in enumerate(takes):
+    t["d"] = 0.0
+    if i > 0 and t["in"] == "dissolve":
+        prev = takes[i - 1]
+        t["d"] = max(0.0, min(DISSOLVE, prev["len"] - prev["head"] - prev["sec"] - 0.01))
+
 args, filt = [], []
 for i, t in enumerate(takes):
     args += ["-i", str(t["clip"])]
     # a rendered take drops its first HEAD s (the still storyboard pose); a reused, verified clip does not
-    head = HEAD if t["rendered"] and t["len"] >= t["sec"] + HEAD else 0.0
+    head = t["head"]
+    nd = takes[i + 1]["d"] if i + 1 < len(takes) else 0.0
     if t["len"] < head + t["sec"] - 0.01:
         sys.exit(f"take {t['n']} is {t['len']:.2f} s, shorter than its {t['sec']:.2f} s")
-    chain = [f"trim={head:.4f}:{head + t['sec']:.4f}", "setpts=PTS-STARTPTS", f"fps={FPS}", "format=yuv420p"]
+    chain = [f"trim={head:.4f}:{head + t['sec'] + nd:.4f}", "setpts=PTS-STARTPTS", f"fps={FPS}", "format=yuv420p"]
     nxt = takes[i + 1]["in"] if i + 1 < len(takes) else None
     if i > 0 and t["in"] == "whip":
         chain += whip_in()
-    if i > 0 and t["in"] == "dissolve":
-        chain.append(f"fade=t=in:st=0:d={BLINK}")
     if nxt == "whip":
         chain += whip_out(t["sec"])
-    if nxt == "dissolve":
-        chain.append(f"fade=t=out:st={t['sec'] - BLINK:.4f}:d={BLINK}")
     filt.append(f"[{i}:v]" + ",".join(chain) + f",settb=1/{FPS}[v{i}]")
 
-filt.append("".join(f"[v{i}]" for i in range(len(takes))) + f"concat=n={len(takes)}:v=1:a=0[vout]")
-maps = ["-map", "[vout]"]
+label, acc = "v0", takes[0]["sec"] + (takes[1]["d"] if len(takes) > 1 else 0.0)
+for i in range(1, len(takes)):
+    t = takes[i]
+    nd = takes[i + 1]["d"] if i + 1 < len(takes) else 0.0
+    if t["d"] > 0:
+        filt.append(f"[{label}][v{i}]xfade=transition=fade:duration={t['d']:.4f}:offset={acc - t['d']:.4f}[j{i}]")
+    else:
+        filt.append(f"[{label}][v{i}]concat=n=2:v=1:a=0,settb=1/{FPS}[j{i}]")
+    label, acc = f"j{i}", acc - t["d"] + t["sec"] + nd
+maps = ["-map", f"[{label}]"]
 if keep_audio:
     for i, t in enumerate(takes):
         fo = max(0.0, t["sec"] - 0.04)
