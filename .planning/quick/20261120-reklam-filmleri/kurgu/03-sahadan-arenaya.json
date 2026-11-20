@@ -1,53 +1,84 @@
 {
- "takes": [
-  {
-   "frame": "kare-1.png",
-   "seconds": 1.1,
-   "in": "hard",
-   "people": true,
-   "action": "On the Bronx court bench in late sun he grabs both laces of his black ORVO high-top and starts pulling them tight, one firm tug. The camera starts moving forward."
-  },
-  {
-   "frame": "kare-2.png",
-   "seconds": 2.3,
-   "in": "match",
-   "people": true,
-   "action": "The camera pushes in over the shoe as his fingers finish the same knot in one smooth motion and let go of the completed bow, the gold wordmark catching the sun; he sits back, exhales and slowly closes his eyes, calm and focused. The lace stays tied."
-  },
-  {
-   "frame": "kare-3.png",
-   "seconds": 2.0,
-   "in": "dissolve",
-   "people": true,
-   "action": "He opens his eyes: he is standing on the centre circle of a packed arena in the royal-blue number 11 uniform. He looks around for a beat, takes it in, then rolls his shoulders and jogs into the play as both teams move around him. The camera pulls back low from the hardwood."
-  },
-  {
-   "frame": "kare-4.png",
-   "seconds": 1.4,
-   "in": "hard",
-   "people": true,
-   "action": "He catches a teammate's chest pass and in one motion fires it to the right wing, already running. The camera tracks low along the sideline."
-  },
-  {
-   "frame": "kare-5.png",
-   "seconds": 2.2,
-   "in": "match",
-   "people": true,
-   "action": "He sprints toward the elbow, plants his black ORVO high-top hard and cuts past his marker, taking the bounce pass back in stride. The camera stays at hardwood level close to his planting foot."
-  },
-  {
-   "frame": "kare-6.png",
-   "seconds": 2.3,
-   "in": "whip",
-   "people": true,
-   "action": "He sells a drive with his shoulder, snaps a low crossover in front of the defender in white number 12 and bursts past his hip; the defender stumbles a step late. The camera tracks from a low sideline angle."
-  },
-  {
-   "frame": "kare-7.png",
-   "seconds": 3.7,
-   "in": "hard",
-   "people": true,
-   "action": "He rises into a pull-up jump shot near the elbow; the ball arcs high and drops through the net, he lands softly on his black ORVO high-tops and jogs back with a calm nod as the crowd jumps up. The camera follows from the sideline."
+  "takes": [
+    {
+      "frame": "kare-1.png",
+      "seconds": 1.1,
+      "in": "hard",
+      "people": true,
+      "action": "On the Bronx court bench in late sun he grabs both laces of his black ORVO high-top and starts pulling them tight, one firm tug. The camera starts moving forward.",
+      "place": "court"
+    },
+    {
+      "frame": "kare-2.png",
+      "seconds": 2.3,
+      "in": "match",
+      "people": true,
+      "action": "The camera pushes in over the shoe as his fingers finish the same knot in one smooth motion and let go of the completed bow, the gold wordmark catching the sun; he sits back, exhales and slowly closes his eyes, calm and focused. The lace stays tied.",
+      "place": "court"
+    },
+    {
+      "frame": "kare-3.png",
+      "seconds": 2.0,
+      "in": "dissolve",
+      "people": true,
+      "action": "He opens his eyes: he is standing on the centre circle of a packed arena in the royal-blue number 11 uniform. He looks around for a beat, takes it in, then rolls his shoulders and jogs into the play as both teams move around him. The camera pulls back low from the hardwood.",
+      "place": "arena"
+    },
+    {
+      "frame": "kare-4.png",
+      "seconds": 1.4,
+      "in": "hard",
+      "people": true,
+      "action": "He catches a teammate's chest pass and in one motion fires it to the right wing, already running. The camera tracks low along the sideline.",
+      "place": "arena"
+    },
+    {
+      "frame": "kare-5.png",
+      "seconds": 2.2,
+      "in": "match",
+      "people": true,
+      "action": "He sprints toward the elbow, plants his black ORVO high-top hard and cuts past his marker, taking the bounce pass back in stride. The camera stays at hardwood level close to his planting foot.",
+      "place": "arena"
+    },
+    {
+      "frame": "kare-6.png",
+      "seconds": 2.3,
+      "in": "whip",
+      "people": true,
+      "action": "He sells a drive with his shoulder, snaps a low crossover in front of the defender in white number 12 and bursts past his hip; the defender stumbles a step late. The camera tracks from a low sideline angle.",
+      "place": "arena"
+    },
+    {
+      "frame": "kare-7.png",
+      "seconds": 3.7,
+      "in": "hard",
+      "people": true,
+      "action": "He rises into a pull-up jump shot near the elbow; the ball arcs high and drops through the net, he lands softly on his black ORVO high-tops and jogs back with a calm nod as the crowd jumps up. The camera follows from the sideline.",
+      "place": "arena"
+    }
+  ],
+  "places": {
+    "court": {
+      "name": "the outdoor Bronx street court in late sun, chain-link fence and brick buildings around it, where he sits alone on the bench",
+      "words": [
+        "street court",
+        "outdoor",
+        "hoodie",
+        "sunlight"
+      ]
+    },
+    "arena": {
+      "name": "the packed indoor arena",
+      "words": [
+        "arena",
+        "UPTOWN",
+        "uniform",
+        "Teammates",
+        "opponents",
+        "players",
+        "jersey",
+        "number 11"
+      ]
+    }
   }
- ]
 }
