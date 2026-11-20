@@ -10,6 +10,9 @@ the way its storyboard says, as an editor would cut it:
   dissolve  a calm beat: a soft cross-dissolve, paid by the outgoing take's spare length;
   match     a straight cut on the continuing shape (a match cut is a cut);
   hard      a straight cut;
+  dream     into a dream: the outgoing take opens into white light and the incoming one comes out of it
+            (his word on 03, 2026-11-20: "gözlerini kapatıp rüya görme sahnesi olması lazım"); the incoming
+            take's own still opening, hidden in the light, and the outgoing take's spare pay for it;
   continue  no cut at all: the take was rendered from the previous take's last frame, so the shot runs on.
 Every take holds the screen for its storyboard length; the film is the sum of them.
 
@@ -26,6 +29,7 @@ HEAD = 0.35  # seconds of the still opening pose dropped from each rendered take
 FPS = 24
 WHIP = [8, 24, 64, 160]  # horizontal blur width, frame by frame toward the cut (and back, after it)
 DISSOLVE = 0.40          # seconds of a calm beat's cross-dissolve, at most (the outgoing take's spare pays)
+DREAM_OUT = 0.25         # at most this much of a dream's white light is paid by the outgoing take's spare
 
 take_dir, out = Path(sys.argv[1]), Path(sys.argv[2])
 rows = [l.rstrip("\n").split("\t") for l in (take_dir / "shots.tsv").read_text().splitlines() if l.strip()]
@@ -41,7 +45,7 @@ def duration(p):
 takes = []
 for r in rows:
     n, sec = int(r[0]), float(r[1])
-    tin = r[5] if len(r) > 5 and r[5] in ("whip", "match", "dissolve", "hard", "continue") else "hard"
+    tin = r[5] if len(r) > 5 and r[5] in ("whip", "match", "dissolve", "hard", "continue", "dream") else "hard"
     clip = take_dir / f"shot{n}.mp4"
     if not clip.exists():
         sys.exit(f"missing {clip}")
@@ -64,20 +68,25 @@ for i, t in enumerate(takes):
     # a "continue" take starts on the frame the previous one ended on: nothing is dropped, the shot runs on
     t["head"] = HEAD if t["rendered"] and t["in"] != "continue" and t["len"] >= t["sec"] + HEAD else 0.0
 for i, t in enumerate(takes):
-    t["d"] = 0.0
-    if i > 0 and t["in"] == "dissolve":
+    # p: overlap paid by the outgoing take's spare end; s: paid by this take's own opening, which it then shows
+    t["p"], t["s"] = 0.0, 0.0
+    if i > 0 and t["in"] in ("dissolve", "dream"):
         prev = takes[i - 1]
-        t["d"] = max(0.0, min(DISSOLVE, prev["len"] - prev["head"] - prev["sec"] - 0.01))
+        spare = max(0.0, prev["len"] - prev["head"] - prev["sec"] - 0.01)
+        t["p"] = min(DISSOLVE if t["in"] == "dissolve" else DREAM_OUT, spare)
+        if t["in"] == "dream":
+            t["s"] = t["head"]
+    t["d"] = t["p"] + t["s"]
 
 args, filt = [], []
 for i, t in enumerate(takes):
     args += ["-i", str(t["clip"])]
     # a rendered take drops its first HEAD s (the still storyboard pose); a reused, verified clip does not
     head = t["head"]
-    nd = takes[i + 1]["d"] if i + 1 < len(takes) else 0.0
+    nd = takes[i + 1]["p"] if i + 1 < len(takes) else 0.0
     if t["len"] < head + t["sec"] - 0.01:
         sys.exit(f"take {t['n']} is {t['len']:.2f} s, shorter than its {t['sec']:.2f} s")
-    chain = [f"trim={head:.4f}:{head + t['sec'] + nd:.4f}", "setpts=PTS-STARTPTS", f"fps={FPS}", "format=yuv420p"]
+    chain = [f"trim={head - t['s']:.4f}:{head + t['sec'] + nd:.4f}", "setpts=PTS-STARTPTS", f"fps={FPS}", "format=yuv420p"]
     nxt = takes[i + 1]["in"] if i + 1 < len(takes) else None
     if i > 0 and t["in"] == "whip":
         chain += whip_in()
@@ -85,15 +94,16 @@ for i, t in enumerate(takes):
         chain += whip_out(t["sec"])
     filt.append(f"[{i}:v]" + ",".join(chain) + f",settb=1/{FPS}[v{i}]")
 
-label, acc = "v0", takes[0]["sec"] + (takes[1]["d"] if len(takes) > 1 else 0.0)
+label, acc = "v0", takes[0]["sec"] + (takes[1]["p"] if len(takes) > 1 else 0.0)
 for i in range(1, len(takes)):
     t = takes[i]
-    nd = takes[i + 1]["d"] if i + 1 < len(takes) else 0.0
+    nd = takes[i + 1]["p"] if i + 1 < len(takes) else 0.0
     if t["d"] > 0:
-        filt.append(f"[{label}][v{i}]xfade=transition=fade:duration={t['d']:.4f}:offset={acc - t['d']:.4f}[j{i}]")
+        kind = "fadewhite" if t["in"] == "dream" else "fade"
+        filt.append(f"[{label}][v{i}]xfade=transition={kind}:duration={t['d']:.4f}:offset={acc - t['d']:.4f}[j{i}]")
     else:
         filt.append(f"[{label}][v{i}]concat=n=2:v=1:a=0,settb=1/{FPS}[j{i}]")
-    label, acc = f"j{i}", acc - t["d"] + t["sec"] + nd
+    label, acc = f"j{i}", acc - t["p"] + t["sec"] + nd
 maps = ["-map", f"[{label}]"]
 if keep_audio:
     for i, t in enumerate(takes):

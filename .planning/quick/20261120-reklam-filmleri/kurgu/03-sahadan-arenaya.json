@@ -5,23 +5,31 @@
       "seconds": 1.1,
       "in": "hard",
       "people": true,
-      "action": "On the Bronx court bench in late sun he grabs both laces of his black ORVO high-top and pulls them tight in one firm tug, his face calm and focused on his hands, not smiling. The camera starts moving forward.",
+      "action": "On the Bronx court bench in late sun he holds both laces of his black ORVO high-top and pulls them tight in one firm, smooth tug, his face calm and focused on the shoe, not smiling. The camera starts moving forward.",
       "place": "court"
     },
     {
       "frame": "continue",
-      "seconds": 2.3,
+      "seconds": 1.3,
       "in": "hard",
       "people": true,
-      "action": "The same shot runs on without a break: the camera keeps pushing in over the shoe while his same hands tie the knot and the bow in one smooth motion and let go, the gold wordmark catching the sun. Then the camera tilts up to his face as he sits back, rests his forearms on his knees, slowly closes his eyes and breathes in deeply — still, calm, the inward look of a man picturing his game. The lace stays tied.",
+      "action": "The same shot runs on without a break: he gives the laces one last firm pull, lets go, and sits back slowly on the bench, resting his forearms on his knees, calm and focused. The lace stays tied.",
       "place": "court"
+    },
+    {
+      "frame": "kare-2b-goz-kapali.png",
+      "seconds": 1.0,
+      "in": "hard",
+      "people": true,
+      "place": "court",
+      "action": "Close on his face on the bench in the warm late sun: his eyes stay closed, he breathes in slowly and deeply, perfectly still and calm, the inward look of a man picturing his big game. Only his breath moves him; the camera holds close, drifting in a touch."
     },
     {
       "frame": "kare-3.png",
       "seconds": 2.0,
-      "in": "dissolve",
+      "in": "dream",
       "people": true,
-      "action": "He opens his eyes: he is standing on the centre circle of a packed arena in the royal-blue number 11 uniform. He looks around for a beat, takes it in, then rolls his shoulders and jogs into the play as both teams move around him. The camera pulls back low from the hardwood.",
+      "action": "Out of the light he opens his eyes: he is standing on the centre circle of a packed arena in the royal-blue number 11 uniform. He looks around for a beat, takes it in, then rolls his shoulders and jogs into the play as both teams move around him. The camera pulls back low from the hardwood.",
       "place": "arena"
     },
     {

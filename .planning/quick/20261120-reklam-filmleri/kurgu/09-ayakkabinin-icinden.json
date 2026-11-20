@@ -12,12 +12,13 @@
       "seconds": 2.5,
       "in": "whip",
       "people": false,
-      "action": "The FPV camera skims low over the shoe's upper like a drone over a landscape, the ripstop weave and burnt-orange overlays sliding past close beneath it, the laces rising ahead like bridges as sand streaks by. For the whole take the camera stays a hand's breadth above the shoe's own surface; the shoe fills the frame from edge to edge."
+      "action": "The FPV camera skims low over the shoe's upper like a drone over a landscape, the ripstop weave and burnt-orange overlays sliding past close beneath it, the laces rising ahead like bridges as sand streaks by; it flies up the lacing toward the top eyelet and ends right at the eyelet's opening, the orange lace arching overhead and the low sun flaring through.",
+      "end_on": "kare-3.png"
     },
     {
       "frame": "kare-3.png",
       "seconds": 2.5,
-      "in": "whip",
+      "in": "continue",
       "people": false,
       "action": "The camera dives through an eyelet into the material maze, bright light strobing through the mesh in hard beams, burnt-orange lace walls passing on both sides, dust hanging in the light. The whole take stays deep inside the weave, flying on through the tunnels of fibre and lace."
     },
@@ -42,5 +43,8 @@
       "people": false,
       "action": "PACKSHOT: the ORVO trail shoe hangs in the centre of the frame above the red-rock trail, sand drifting slowly around it in the warm light; the camera eases back and holds."
     }
+  ],
+  "drop": [
+    "barrel roll"
   ]
 }

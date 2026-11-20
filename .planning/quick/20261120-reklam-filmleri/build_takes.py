@@ -121,7 +121,14 @@ for n, t in enumerate(spec["takes"], 1):
     )
     pf = out / f"shot{n}.txt"
     pf.write_text(prompt + "\n", encoding="utf-8")
-    rows.append(f"{n}\t{sec:.2f}\t{frame}\t{prefix}_k{n}.png\t{pf}\t{tin}\n")
+    # "end_on": the take must end on that storyboard frame (film 09: told to stay on the shoe, take 2 still
+    # flew off and showed it on a dune on two seeds; ending on the next take's own first frame makes the two
+    # one flight).
+    end = ""
+    if t.get("end_on"):
+        end = str(board / "kareler" / t["end_on"])
+        assert Path(end).exists(), end
+    rows.append(f"{n}\t{sec:.2f}\t{frame}\t{prefix}_k{n}.png\t{pf}\t{tin}\t{end}\n")
 (out / "shots.tsv").write_text("".join(rows), encoding="utf-8")
 # A film whose people speak (the UGC) keeps H3's own sound, cut with the picture.
 (out / "keep_audio").unlink(missing_ok=True)

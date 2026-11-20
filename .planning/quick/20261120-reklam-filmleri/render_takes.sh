@@ -17,7 +17,7 @@ mkdir -p "$JOB/log" "$DESK"
 for b in "$@"; do
   dir="$JOB/cekim2/$b"; log="$JOB/log/$b-cekim2.log"
   echo "== $b seed $seed start $(date +%H:%M:%S)" | tee -a "$log"
-  while IFS=$'\t' read -r n sec src name pf tin; do
+  while IFS=$'\t' read -r n sec src name pf tin endf; do
     if [ -n "${SHOTS:-}" ] && ! [[ " $SHOTS " == *" $n "* ]]; then continue; fi
     if [[ "$src" == *.mp4 ]]; then cp -f "$src" "$dir/shot$n.mp4"; echo "  take $n reused" | tee -a "$log"; continue; fi
     if [ ! -f "$src" ]; then echo "  take $n FAIL no first frame $src $(date +%H:%M:%S)" | tee -a "$log"; continue; fi
@@ -25,10 +25,12 @@ for b in "$@"; do
     # An empty final packshot is bound to end on its own frame (film 01: H3 let a hand reach in).
     last=()
     if grep -q "PACKSHOT" "$pf" && grep -q "The set is empty and still" "$pf"; then last=(--last-frame "$name"); fi
+    # a take told where to end (kurgu "end_on") is bound to that frame
+    if [ -n "${endf:-}" ]; then cp -f "$endf" "$IN/${name%.png}_end.png"; last=(--last-frame "${name%.png}_end.png"); fi
     systemd-run --user --scope --quiet -p MemoryMax=26G -p MemorySwapMax=8G -- \
       python3 /home/dxb/tools/h3/run.py --prompt "$(cat "$pf")" --first-frame "$name" "${last[@]}" \
-        --width 640 --height 1152 --seconds "$(python3 -c "print($sec+$HEAD+0.15)")" --steps 8 --seed "$seed" \
-        --prefix "orvo/$b-t$n-s$seed" > "$dir/shot$n.log" 2>&1
+        --width 640 --height 1152 --seconds "$(python3 -c "print($sec+$HEAD+0.15)")" --steps "${STEPS:-8}" --seed "$seed" \
+        --prefix "orvo/$b-t$n-s$seed-st${STEPS:-8}" > "$dir/shot$n.log" 2>&1
     rc=$?
     file=$(grep -o 'cikti: .*' "$dir/shot$n.log" | tail -1 | sed 's/^cikti: //')
     if [ $rc -eq 0 ] && [ -n "$file" ] && [ -f "$OUT/orvo/$file" ]; then
@@ -41,7 +43,7 @@ for b in "$@"; do
     else
       echo "  take $n FAIL rc=$rc $(date +%H:%M:%S)" | tee -a "$log"
     fi
-    rm -f "$IN/$name"
+    rm -f "$IN/$name" "$IN/${name%.png}_end.png"
   done < "$dir/shots.tsv"
   if r=$(python3 -I "$JOB/cut.py" "$dir" "$DESK/$b.mp4" 2>&1); then
     echo "FILM $b -> $DESK/$b.mp4 · $r · $(date +%H:%M:%S)" | tee -a "$log"
