@@ -1,46 +1,46 @@
 {
- "takes": [
-  {
-   "frame": "kare-1.png",
-   "seconds": 2.5,
-   "in": "hard",
-   "people": true,
-   "action": "In heavy rain under the floodlights the striker in green number 9 sprints at the ball, his white ORVO boots tearing through wet turf and spraying grass and water. The camera races a hand's height above the pitch beside his boots."
-  },
-  {
-   "frame": "kare-2.png",
-   "seconds": 2.5,
-   "in": "match",
-   "people": true,
-   "action": "From the ball's point of view on the penalty spot, his white ORVO boot plants hard beside the lens, studs sinking into the wet grass, his striking leg swinging back above with his face clenched in concentration. The camera stays at turf level."
-  },
-  {
-   "frame": "kare-3.png",
-   "seconds": 2.0,
-   "in": "hard",
-   "people": true,
-   "action": "Impact: the instep of the white ORVO boot drives through the ball, the knit flexing and rainwater exploding off the leather as his body twists through the strike. Low angle, floodlight streaks."
-  },
-  {
-   "frame": "kare-4.png",
-   "seconds": 3.0,
-   "in": "whip",
-   "people": true,
-   "action": "The camera flies with the ball toward the goal, spinning slightly; his boot falls away in follow-through below, and ahead the goalkeeper in black dives full length, too late, as the net rushes in."
-  },
-  {
-   "frame": "kare-5.png",
-   "seconds": 2.5,
-   "in": "whip",
-   "people": true,
-   "action": "He slides toward the lens on his knees across the soaked grass, arms flung wide, shouting with joy, water fanning off his white ORVO boots while the crowd jumps up behind. The camera tracks backward low over the turf."
-  },
-  {
-   "frame": "kare-6.png",
-   "seconds": 2.5,
-   "in": "hard",
-   "people": false,
-   "action": "PACKSHOT: one white ORVO boot stands on the wet penalty spot beside the ball, raindrops running down the knit, rain falling through the floodlight beams. The camera drifts slowly in and settles."
-  }
- ]
+  "takes": [
+    {
+      "frame": "kare-1.png",
+      "seconds": 2.5,
+      "in": "hard",
+      "people": true,
+      "action": "In heavy rain under the floodlights the striker in green number 9 sprints at the ball, his white ORVO boots tearing through wet turf and spraying grass and water. The camera races a hand's height above the pitch beside his boots."
+    },
+    {
+      "frame": "kare-2.png",
+      "seconds": 2.5,
+      "in": "match",
+      "people": true,
+      "action": "From the ball's point of view on the penalty spot, his white ORVO boot plants hard beside the lens, studs sinking into the wet grass, his striking leg swinging back above with his face clenched in concentration. The camera stays at turf level."
+    },
+    {
+      "frame": "kare-3.png",
+      "seconds": 2.0,
+      "in": "hard",
+      "people": true,
+      "action": "Impact: the instep of the white ORVO boot drives through the ball, the knit flexing and rainwater exploding off the leather as his body twists through the strike. Low angle, floodlight streaks."
+    },
+    {
+      "frame": "kare-4.png",
+      "seconds": 3.0,
+      "in": "whip",
+      "people": true,
+      "action": "The camera flies with the ball toward the goal, spinning slightly; his boot falls away in follow-through below, and ahead the goalkeeper in black dives full length, too late, as the ball beats his glove and bulges the net. When the striker runs into view, his plain green shirt carries only a big white 9 on the back."
+    },
+    {
+      "frame": "kare-5.png",
+      "seconds": 2.5,
+      "in": "whip",
+      "people": true,
+      "action": "He slides toward the lens on his knees across the soaked grass, arms flung wide, shouting with joy, water fanning off his white ORVO boots while the crowd jumps up behind. The camera tracks backward low over the turf."
+    },
+    {
+      "frame": "kare-6.png",
+      "seconds": 2.5,
+      "in": "hard",
+      "people": false,
+      "action": "PACKSHOT: one white ORVO boot stands on the wet penalty spot beside the ball, raindrops running down the knit, rain falling through the floodlight beams. The camera drifts slowly in and settles."
+    }
+  ]
 }
