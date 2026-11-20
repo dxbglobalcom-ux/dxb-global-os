@@ -94,6 +94,12 @@ for n, t in enumerate(spec["takes"], 1):
     # sentence that speaks of cuts or transitions reaches it; the cut between takes is cut.py's.
     look = [" ".join(x for x in re.split(r"(?<=[.;])\s+", b) if not CUTWORDS.search(x)) for b in look]
     avoid = negative
+    # A film's "drop" phrases leave its prompts: H3 reads a named thing as the thing (film 06: "no floating
+    # product presentation" and "no extra boots" brought a giant boot floating past the hiker, two seeds).
+    drop = [re.compile(x, re.I) for x in spec.get("drop", [])]
+    if drop:
+        look = [" ".join(x for x in re.split(r"(?<=[.;])\s+", b) if not any(d.search(x) for d in drop)) for b in look]
+        avoid = ", ".join(x for x in avoid.split(", ") if not any(d.search(x) for d in drop))
     if not people:
         # Measured on film 04 (seeds 3003, 3005): an empty packshot told to avoid "numbers other than 9 on the
         # striker's kit" got a number-9 player walking in, twice. An empty take hears of no person at all.
