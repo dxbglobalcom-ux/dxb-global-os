@@ -40,12 +40,18 @@ def clean(t):
     t = re.sub(r"\[([^\]]*)\]", r"\1", t)
     return re.sub(r"\n{3,}", "\n\n", t).strip()
 
+# His word on 03, 2026-11-20: "ilk saniye gülüyor, ondan sonra başka bir kişi sanki onun yerine geçip başka bir
+# bağlama işini tamamlıyor." The block used to tell everyone to "talk to each other, react, laugh with open
+# faces" — a man lacing alone laughed, and the next take's calm face read as another person. A face now shows
+# what the moment holds and keeps it.
 NATURAL = (
-    "NATURAL PERFORMANCE — This is candid, observed live action, not a pose. Real people with real energy: "
-    "they move continuously, shift their weight, talk to each other, react, laugh with open faces, glance at "
-    "each other more than at the lens, and their hands do practical things. Unhurried, believable timing; "
-    "nobody freezes, nobody points at the product, nobody presents it to the camera like a catalogue. The "
-    "camera is operated by a person and drifts and follows naturally."
+    "NATURAL PERFORMANCE — This is candid, observed live action, not a pose. A real person in a real moment: "
+    "he moves continuously and shifts his weight, and his face shows exactly what this moment holds — focus, "
+    "effort, calm or joy — and changes only when the action gives it a reason; the same person, the same face "
+    "and the same mood carry on from the first frame. Anyone else present reacts to the others more than to "
+    "the lens. Hands do practical things. Unhurried, believable timing; nobody freezes, nobody points at the "
+    "product, nobody presents it to the camera like a catalogue. The camera is operated by a person and "
+    "drifts and follows naturally."
 )
 HANDS = (
     "CLOSE DETAIL — Only the one hand described appears, close and partial, entering from the edge of the "
