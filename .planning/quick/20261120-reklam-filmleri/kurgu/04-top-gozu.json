@@ -12,14 +12,15 @@
       "seconds": 2.5,
       "in": "match",
       "people": true,
-      "action": "From the ball's point of view on the penalty spot, his white ORVO boot plants hard beside the lens, studs sinking into the wet grass, his striking leg swinging back above with his face clenched in concentration. The camera stays at turf level."
+      "action": "From the ball's point of view on the penalty spot, his white ORVO boot plants hard beside the lens, studs sinking into the wet grass, his face clenched in concentration; his striking leg swings back and comes through, and the ball sits still on the spot right up to the moment his instep meets it. The camera stays low at the ball.",
+      "end_on": "kare-3.png"
     },
     {
-      "frame": "kare-3.png",
+      "frame": "continue",
       "seconds": 2.0,
-      "in": "hard",
+      "in": "continue",
       "people": true,
-      "action": "Impact: the instep of the white ORVO boot drives through the ball, the knit flexing and rainwater exploding off the leather as his body twists through the strike. Low angle, floodlight streaks."
+      "action": "The same shot runs on without a break: his instep drives through the ball, the knit flexing, and the ball blasts off the boot out of frame toward the goal as rainwater explodes off the leather and his body twists through the strike. Low angle, floodlight streaks."
     },
     {
       "frame": "kare-4.png",
