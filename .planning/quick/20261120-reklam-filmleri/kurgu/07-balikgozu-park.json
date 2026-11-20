@@ -26,7 +26,8 @@
       "seconds": 2.5,
       "in": "whip",
       "people": true,
-      "action": "He ollies onto the brutalist ledge and grinds it straight toward the lens, coming closer and growing bigger in the frame the whole time, front shoe pressing the nose, concrete dust kicking up; at the ledge's end, right in front of the low fisheye, he pops off and rolls past the camera. The park behind him is empty: only him, the concrete and the sky."
+      "action": "He grinds the brutalist ledge right at the low fisheye, front shoe pressing the nose, concrete dust kicking up, while the camera rolls backward along the ledge at his speed, so he stays big and close in the frame the whole take. The park behind him is empty: only him, the concrete and the sky.",
+      "end_on": "kare-4.png"
     },
     {
       "frame": "kare-5.png",
@@ -42,5 +43,8 @@
       "people": true,
       "action": "He sits on the bowl's coping catching his breath, one ORVO shoe on the tail of the board, scratching the panting dachshund's ears as it licks his hand; he laughs and looks out over the park. The fisheye stays low and still."
     }
+  ],
+  "drop": [
+    "brown dachshund"
   ]
 }
