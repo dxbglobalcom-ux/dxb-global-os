@@ -1,5 +1,7 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
+import { getLocale } from "@/lib/locale";
+import { inPlainWords } from "@/lib/old-database-rules";
 import { createClient } from "@/lib/supabase/server";
 
 // Org mutation seam (E6.3 — API_CONTRACTS `control_org_*`). Same shape as
@@ -139,13 +141,14 @@ export async function POST(request: Request): Promise<NextResponse> {
                     });
 
   const { data, error } = await call;
+  const locale = await getLocale();
   if (error) {
     return NextResponse.json(
-      { ok: false, error: "INTERNAL", detail: error.message },
+      inPlainWords({ ok: false, error: "INTERNAL", detail: error.message }, locale),
       { status: 500 },
     );
   }
-  const result = data as { ok: boolean; error?: string };
+  const result = data as { ok: boolean; error?: string; detail?: string };
   const status = result.ok ? 200 : (ERROR_STATUS[result.error ?? ""] ?? 500);
-  return NextResponse.json(result, { status });
+  return NextResponse.json(inPlainWords(result, locale), { status });
 }

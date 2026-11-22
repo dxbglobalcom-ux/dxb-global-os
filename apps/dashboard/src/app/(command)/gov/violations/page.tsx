@@ -9,6 +9,7 @@ import {
 import { Panel, HelpTip } from "@/components/primitives";
 import { getDict } from "@/lib/i18n";
 import { getLocale } from "@/lib/locale";
+import { RETIRED_HOOK_POLICY_ID } from "@/lib/old-database-rules";
 import { createClient } from "@/lib/supabase/server";
 
 // /gov/violations — E10.1 (FABLE_5_HOOK_SPEC §5 "İhlal akışı UI", §14 "hook
@@ -56,11 +57,13 @@ export default async function Page() {
     supabase
       .from("hook_violations")
       .select("*, hook_policies(standard_no, title_en, title_tr)")
+      .neq("policy_id", RETIRED_HOOK_POLICY_ID)
       .order("id", { ascending: false })
       .limit(300),
     supabase
       .from("hook_policies")
       .select("*")
+      .neq("id", RETIRED_HOOK_POLICY_ID)
       .order("standard_no", { ascending: true })
       .order("id", { ascending: true }),
   ]);

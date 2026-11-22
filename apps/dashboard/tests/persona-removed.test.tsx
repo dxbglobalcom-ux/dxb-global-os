@@ -392,3 +392,61 @@ describe("/gov/permissions", () => {
     expect(markup).not.toMatch(/persona/i);
   });
 });
+
+describe("the retired hook check", () => {
+  const policy = (id: string, standardNo: number, severity: string, title: string): Row => ({
+    id,
+    standard_no: standardNo,
+    gate: "pre",
+    severity,
+    enabled: true,
+    version: 1,
+    cnt: 1,
+    title_en: title,
+    title_tr: title,
+  });
+  const violation = (id: number, of: Row): Row => ({
+    id,
+    run_id: null,
+    policy_id: of.id,
+    gate: "pre",
+    detail: `refusal-${id}`,
+    action_taken: "rejected",
+    created_at: "2026-11-01T00:00:00Z",
+    hook_policies: of,
+  });
+  const BUDGET = policy("std.budget", 1, "block", "budget-standard");
+  // The hook loader ignores this row; the database still holds it, blocking and enabled.
+  const RETIRED = policy("std.persona_gate", 12, "block", "Only quality-gated personas may run");
+  const HOOKS: Tables = {
+    hook_policies: [BUDGET, policy("std.tone", 2, "warn", "tone-standard"), RETIRED],
+    hook_violations: [violation(1, BUDGET), violation(2, RETIRED)],
+  };
+
+  it.each(["en", "tr"] as const)(
+    "/gov/violations lists neither the check nor a refusal it made (%s)",
+    async (locale) => {
+      world.locale = locale;
+      serve(HOOKS);
+      const { default: ViolationsPage } = await import("@/app/(command)/gov/violations/page");
+
+      const markup = await pageMarkup(ViolationsPage());
+
+      expect(markup).toContain(">std.budget<");
+      expect(markup).toContain(">std.tone<");
+      expect(markup).toContain(">refusal-1<");
+      expect(markup).not.toContain("refusal-2");
+      expect(markup).not.toMatch(/persona/i);
+    },
+  );
+
+  it("/gov/policies counts it in neither the hook standards nor the blocking ones", async () => {
+    serve(HOOKS);
+    const { default: PoliciesPage } = await import("@/app/(command)/gov/policies/page");
+
+    const markup = await pageMarkup(PoliciesPage());
+
+    expect(markup).toContain(">1/2<");
+    expect(markup).not.toContain(">2/3<");
+  });
+});

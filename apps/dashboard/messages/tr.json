@@ -2284,6 +2284,7 @@
       "micOffHint": "Siz burada ya da sohbete \"aç\" yazana kadar sessiz kalır.",
       "turnsSuffix": "konuşma"
     },
+    "oldRuleRefusal": "Eski bir veritabanı kuralı bu çalışanı reddediyor; kural, temel yeniden kurulunca kalkacak.",
     "boundary": {
       "errorTitle": "Bu görünümde bir şey bozuldu",
       "errorBody": "Komuta merkezinin geri kalanı etkilenmedi. Hata bu rotayla sınırlı; yeniden denemek sorgularını tekrar çalıştırır.",

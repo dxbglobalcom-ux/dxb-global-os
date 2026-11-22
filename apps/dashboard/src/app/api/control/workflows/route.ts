@@ -1,5 +1,7 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
+import { getLocale } from "@/lib/locale";
+import { inPlainWords } from "@/lib/old-database-rules";
 import { createClient } from "@/lib/supabase/server";
 
 // Workflow control seam (E9.1 — WORKFLOW_ENGINE §8, API_CONTRACTS row
@@ -92,13 +94,14 @@ export async function POST(request: Request): Promise<NextResponse> {
     },
     p_idempotency_key: idempotencyKey,
   });
+  const locale = await getLocale();
   if (error) {
     return NextResponse.json(
-      { ok: false, error: "VALIDATION_FAILED", detail: error.message },
+      inPlainWords({ ok: false, error: "VALIDATION_FAILED", detail: error.message }, locale),
       { status: 400 },
     );
   }
-  const result = data as { ok: boolean; error?: string };
+  const result = data as { ok: boolean; error?: string; detail?: string };
   const status = result.ok ? 200 : (ERROR_STATUS[result.error ?? ""] ?? 400);
-  return NextResponse.json(result, { status });
+  return NextResponse.json(inPlainWords(result, locale), { status });
 }

@@ -2284,6 +2284,7 @@
       "micOffHint": "Stays silent until you reopen it here or by typing \"aç\" in chat.",
       "turnsSuffix": "exchanges"
     },
+    "oldRuleRefusal": "An old database rule refuses this employee; the rule goes when the foundation is rebuilt.",
     "boundary": {
       "errorTitle": "Something broke in this view",
       "errorBody": "The rest of the command center is unaffected. The failure is contained to this route; retrying re-runs its queries.",

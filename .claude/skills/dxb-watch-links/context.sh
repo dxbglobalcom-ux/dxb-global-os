@@ -14,7 +14,7 @@ money continuously, in every halal way — its own companies and brands, service
 partners and sponsors, the OS itself — and every real advance of the machine raises all of it.
 
 THE HOLDING — DXB Global OS: an AI-native operating system for one holding company with one human, the CEO.
-It runs the company end to end: companies, departments, AI employee personas, projects, tasks, models,
+It runs the company end to end: companies, departments, AI employees (agents in seats), projects, tasks, models,
 costs, decisions, approvals, workflows, skills, knowledge, memory, risks, audit. Built with Claude Code
 (the "construction" sessions, subagents, a GPT Sol auditor) on Supabase/Postgres, a TypeScript monorepo,
 a scheduler, a runtime orchestrator (Hamza) routing tasks to models. A media studio makes video/images on a

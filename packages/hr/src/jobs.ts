@@ -63,7 +63,7 @@ export async function hrProbationCheck(db: Kysely<any>): Promise<void> {
 }
 
 // hr.training_queue (spec §2 "Eğitim verme"): employees with open training_needs —
-// digest count to audit; the training itself is a persona revision + library grant
+// digest count to audit; the training itself is a library grant
 // (owning flow), never executed here.
 export async function hrTrainingQueue(db: Kysely<any>): Promise<void> {
   await sql`

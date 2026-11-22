@@ -126,10 +126,7 @@ fn'ler + view'lar 0020x/0025x içinde; yeni tablo yok → rollback = fn/view DRO
 psql "$DB" -c "\df fn_hr_*" | grep -c fn_hr                      # → 5
 # 2. atomiklik kanıtı (test)
 pnpm --filter hr test -- --grep "create rollback"                 # → yeşil
-# 3. uçtan uca işe alım (staging)
-pnpm --filter hr run demo:hire                                    # → çıktıda 6/6 equipment + probation task id
-psql "$DB" -c "SELECT employment_status FROM agents WHERE id='<yeni>';"  # → probation
-# 4. HR job schedule
+# 3. HR job schedule
 psql "$DB" -c "SELECT name FROM pgboss.schedule WHERE name LIKE 'hr.%';" # → 3 satır
 ```
 

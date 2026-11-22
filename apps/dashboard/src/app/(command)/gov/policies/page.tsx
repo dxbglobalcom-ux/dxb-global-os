@@ -7,6 +7,7 @@ import {
   type Column, HelpTip } from "@/components/primitives";
 import { getDict } from "@/lib/i18n";
 import { getLocale } from "@/lib/locale";
+import { RETIRED_HOOK_POLICY_ID } from "@/lib/old-database-rules";
 import { createClient } from "@/lib/supabase/server";
 
 // /gov/policies v1 (E12.1-E) — the policy constitution in one view, three
@@ -42,7 +43,10 @@ export default async function PoliciesPage() {
       .from("approval_rules")
       .select("*")
       .order("priority", { ascending: true }),
-    supabase.from("hook_policies").select("severity, enabled, cnt:id.count()"),
+    supabase
+      .from("hook_policies")
+      .select("severity, enabled, cnt:id.count()")
+      .neq("id", RETIRED_HOOK_POLICY_ID),
     supabase
       .from("v_library_catalog")
       .select("id, name, kind, review_status, updated_at")

@@ -5,7 +5,6 @@ Tek soruya tek cevap: **"proje nerede, neyi okuyacağım?"**
 | Klasör | Ne | Kim okur |
 |---|---|---|
 | **`HOLDING-OS-MASTER-PLAN/`** | **PROJENİN KENDİSİ** — 31 spec + TÜM CEO direktifleri (`00-CEO-DIRECTIVE-*.md`) + `IMPLEMENTATION_ROADMAP.md` (canlı adım tablosu) + `WORKFORCE-GAP-MATRIX.md` (kadro kararları). Çelişkide BURASI kazanır. | CEO + tüm ajanlar |
-| **`personas/`** | Kadro dosyaları — çalışan başına TEK dosya (`<departman>/<slug>.md`): 33-alan sicil + kişilik (yazılmışsa tam, değilse dürüst "⏳ bekliyor"). Kurallar: `personas/README.md` | CEO (göz), HR akışı |
 | `.planning/` | Süreç defteri — `STATE.md` (neredeyiz), ROADMAP, faz planları, araştırma. `MASTER-PLAN.md` = eski dönem detayı (SÜPERSEDE bandlı — yeni iş buradan planlanmaz). | Ajanlar (session açılışı) |
 | `apps/` · `packages/` · `supabase/` · `db/` | Kod: dashboard (Next.js), @dxb paketleri (hr dahil), migration'lar, seed | Mühendislik işi |
 | `scripts/` | İşletim scriptleri (denetimler, kurulum, yönetişim) | Ajanlar |
@@ -15,7 +14,7 @@ Tek soruya tek cevap: **"proje nerede, neyi okuyacağım?"**
 
 **Açılış: kökteki `DXB.code-workspace` dosyasına çift tık → "Open Workspace".** Ağaçta iki bölüm görürsün:
 
-**1. 🏢 KOKPİT (üstte):** `HOLDING-OS-MASTER-PLAN/` · `personas/` · kod (`apps` `packages` `supabase`
+**1. 🏢 KOKPİT (üstte):** `HOLDING-OS-MASTER-PLAN/` · kod (`apps` `packages` `supabase`
 `db` `scripts`) · `docs` `references` `tests` · bu README.
 
 **2. ⚙ MAKİNE bölümleri (altında, AÇIK — istediğinde bakarsın):**

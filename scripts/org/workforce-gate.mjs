@@ -32,15 +32,12 @@ const gate = (name, pass, detail) => {
 };
 
 // 1. Promised-ADD absent = 0: every promised role has a live (non-archived)
-//    agents row with a bound, gate-passed persona.
+//    agents row.
 const live = await sql`
-  SELECT a.slug, a.persona_path, a.created_at,
-         (p.id IS NOT NULL AND p.quality_gate = 'passed') AS bound
-    FROM agents a LEFT JOIN personas p ON p.id = a.persona_id
-   WHERE a.employment_status != 'archived'
+  SELECT slug, created_at FROM agents WHERE employment_status != 'archived'
 `.execute(db);
-const bySlug = new Map(live.rows.map((r) => [r.slug, r]));
-const absent = promised.filter((s) => !bySlug.get(s)?.bound);
+const liveSlugs = new Set(live.rows.map((r) => r.slug));
+const absent = promised.filter((s) => !liveSlugs.has(s));
 gate("promised-ADD-absent", absent.length === 0, `missing ${absent.length}/${promised.length}${absent.length ? ": " + absent.join(",") : ""}`);
 
 // 2. Unpromised-role check: every live row is legacy import (< 2026-07-09),
@@ -51,11 +48,7 @@ const unpromised = live.rows.filter(
 );
 gate("unpromised-role", unpromised.length === 0, unpromised.length ? unpromised.map((r) => r.slug).join(",") : `all ${live.rows.length} rows accounted`);
 
-// 3. Stale persona_path = 0 (removed agency-agents tree).
-const stale = await sql`SELECT count(*)::int AS c FROM agents WHERE persona_path LIKE 'agency-agents/%'`.execute(db);
-gate("stale-persona-path", stale.rows[0].c === 0, `count ${stale.rows[0].c}`);
-
-// 4. Every active department has a head; heads structural across ALL depts.
+// 3. Every active department has a head; heads structural across ALL depts.
 const heads = await sql`
   SELECT count(*) FILTER (WHERE status = 'active' AND director_id IS NULL)::int AS headless_active,
          count(*) FILTER (WHERE director_id IS NULL)::int AS headless_any,
@@ -64,7 +57,7 @@ const heads = await sql`
 `.execute(db);
 gate("headless-active-dept", heads.rows[0].headless_active === 0, `headless-any ${heads.rows[0].headless_any}/${heads.rows[0].total} depts`);
 
-// 5. Orphans = 0: every non-archived worker below director has a manager.
+// 4. Orphans = 0: every non-archived worker below director has a manager.
 const orphans = await sql`
   SELECT count(*)::int AS c FROM agents
    WHERE employment_status != 'archived' AND manager_id IS NULL
@@ -72,26 +65,21 @@ const orphans = await sql`
 `.execute(db);
 gate("orphan-worker", orphans.rows[0].c === 0, `count ${orphans.rows[0].c}`);
 
-// 6. Persona chain: no live row without a bound gate-passed persona,
-//    no live row without an MCP profile, no stale persona_version tag.
-const chain = await sql`
-  SELECT count(*) FILTER (WHERE p.id IS NULL OR p.quality_gate != 'passed')::int AS unbound,
-         count(*) FILTER (WHERE a.mcp_profile IS NULL)::int AS no_mcp,
-         count(*) FILTER (WHERE a.persona_version IS DISTINCT FROM 'v2.0-fable')::int AS stale_tag
-    FROM agents a LEFT JOIN personas p ON p.id = a.persona_id
-   WHERE a.employment_status != 'archived'
+// 5. No live row without an MCP profile.
+const noMcp = await sql`
+  SELECT count(*)::int AS c FROM agents
+   WHERE employment_status != 'archived' AND mcp_profile IS NULL
 `.execute(db);
-gate("persona-chain", chain.rows[0].unbound === 0 && chain.rows[0].no_mcp === 0 && chain.rows[0].stale_tag === 0,
-  `unbound ${chain.rows[0].unbound} · no-mcp ${chain.rows[0].no_mcp} · stale-tag ${chain.rows[0].stale_tag}`);
+gate("mcp-profile", noMcp.rows[0].c === 0, `count ${noMcp.rows[0].c}`);
 
-// 7. Fixture debris: test-slug prefixes never live in the registry.
+// 6. Fixture debris: test-slug prefixes never live in the registry.
 const debris = await sql`
   SELECT count(*)::int AS c FROM agents
    WHERE slug LIKE 'r23t-%' OR slug LIKE 'e102t%' OR slug LIKE 'e124t-%' OR slug LIKE 'e125t-%'
 `.execute(db);
 gate("fixture-debris", debris.rows[0].c === 0, `count ${debris.rows[0].c}`);
 
-// 8. DEPUTY-FAILOVER-MAP covers the SPOF set (plan §6.2) + every dept head slug.
+// 7. DEPUTY-FAILOVER-MAP covers the SPOF set (plan §6.2) + every dept head slug.
 const mapPath = join(REPO, "HOLDING-OS-MASTER-PLAN/DEPUTY-FAILOVER-MAP.md");
 if (!existsSync(mapPath)) {
   gate("deputy-failover-map", false, "file missing");

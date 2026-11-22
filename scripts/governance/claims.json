@@ -13,14 +13,6 @@
     "sql": "SELECT count(*) FROM agents WHERE employment_status = 'archived'",
     "what": "retired registry rows, kept for history"
   },
-  "agents_stale_persona_path": {
-    "sql": "SELECT count(*) FROM agents WHERE persona_path LIKE 'agency-agents/%'",
-    "what": "registry rows still pointing at the pre-v2 persona tree — the E12.5 gate demands 0"
-  },
-  "agents_legacy_version_live": {
-    "sql": "SELECT count(*) FROM agents WHERE persona_version = 'v1.0-legacy' AND employment_status <> 'archived'",
-    "what": "LIVE rows whose persona_version tag still says legacy; archived rows are deliberately left alone, so this counts only rows that can still feed a running agent"
-  },
   "hr_employees_evaluated": {
     "sql": "SELECT count(*) FROM audit_log WHERE action = 'employee.evaluated'",
     "what": "employees that passed through the HR machine's evaluation step — the evidence that the draft to probation to active chain actually ran"
