@@ -176,6 +176,8 @@ possible are there. What is built now is the boundary a seat meets (C).
   brake stays as the brake on starting. An unknown read admits one seat at a time and raises an alert — never zero,
   never all. The studio's hands: the card's real availability, as measured today. Machine work: a number in
   the settings. Nothing cuts a running job for its turns, tokens or cost; stop and cancel are control requests.
+  A watcher, in code, wakes and cuts nothing: a seat that spends while its desk and artifacts stand still wakes its
+  master; a master that stands still wakes Hamza; he is told only when neither settles it.
 - **A seat runs in its own process.** The runner assembles the context (§3), opens the session through the model
   door, and reports through `part_transition`. Checks are parts (A28). A failed check returns the part to its owner
   with its notes on the desk.
@@ -542,7 +544,9 @@ the model and the level are not lowered to fit a week.
 7. **Over-building.** Not built now: per-company row policies, event sourcing, replay for surfaces, compaction of our
    own, any queue beyond parts, outbox and the clock.
 
-## 10. What needs his yes
+## 10. The seven decisions — his yes, 2026-11-22 <!-- CEO-OK: b85-seven-decisions-and-persona-removal-order-his-yes-2026-11-22 -->
+
+A yes to the plan; nothing is built, and the build's start follows the board's own order.
 
 1. **A new chain beside the old one** — a schema of its own in the same database, the sound mechanisms carried, the
    old one frozen until the key turns — instead of repairing in place. An architectural choice, not a necessity
