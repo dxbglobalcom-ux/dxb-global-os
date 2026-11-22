@@ -367,25 +367,29 @@ feedback. This section adds no mechanism to them. It records what the evidence g
 1. **A26–A33 stand as written.** Nothing in the record contradicts them. A closed list of grounds for opening a second
    worker, a ban on specialists and any new mechanism for lessons are not supported by the evidence and are not
    written.
-2. **A seat opens with a short card** — A29 items 1 and 14 as they read. The long persona file is not loaded on the
-   work path. The employee stays: its name, its department, its place in the queue and on his screen (A27; B84
-   decision 6; B43). Before the loading changes, the files are read once for the lines that rest on his recorded word,
-   and each gets its home — the standing layer, the job type's book or the card. Section 12 ("Discipline DNA & Islamic
-   conduct", the same in all 213 files, reaching a worker today only inside its persona body —
-   `packages/voice/src/prompt-core.ts`, `personaBlock`) is first delivered, word for word, from one shared source to
-   every seat and hand, and a gate fails when it is missing; only then do the long files stop loading. Nothing is
-   archived or deleted by this job. This is an engineering default taken on A29's own text and reversible — not a
-   proven gain (§10, decision 6).
+2. **The personas go; the workers are agents** — his order of 2026-11-22 (§10, decision 6). A worker is an agent in a
+   seat: what it does, the tools and data it may touch, the skills attached, a model and an effort the owner chooses.
+   No character file is written, loaded or shown. Departments stay; what a job needs to know stays, as skills. The
+   order of the removal, so that nothing in force is lost with the files:
+   - Section 12 ("Discipline DNA & Islamic conduct", the same in all 213 files, reaching a worker today only inside
+     its persona body — `packages/voice/src/prompt-core.ts`, `personaBlock`) is first delivered, word for word, from
+     one shared source to every agent, and a gate fails when it is missing.
+   - The files are read once for the lines that rest on his recorded word; each gets its home — the shared layer or
+     the job type's skill.
+   - Then the files, the persona door, the persona gate, the persona standard of the HR package and the code that
+     loads a persona body are removed, from a list he sees first; the repository's history keeps what was removed.
+   The engineers' reading of the evidence, said beside his order: no record shows a persona improving a result; none
+   isolates the persona text as the cause of bad work either. The order is his.
 3. **The foundation carries this and no more:** the job's owner; parts, each with its caller's recorded reason; parts
    in parallel, a choice that waits on him and a merge part (B84 decision 4, "three hands" — done once so far, by
    hand, on the olive page); the check path chosen from §2 D's inputs as A28, A30 and A32 say; a seat's tools as part
    of what it is given (on 18 Nov the first measured cause of the failed job was a missing tool, `B43.md:276-283`);
    the book's version on the job; his verdict as a record (§2 D).
 4. **What is unproven is tried inside stage 1 and called what it is.** On the stage's one live job the same master,
-   with the same tools, works three ways: with its short card; with the card and the job type's book; with the full
-   persona file and the book. He judges the three deliveries blind; time, tokens and cost are recorded per arm. One
-   job is an indication, for that job type only. After it, the rows every job leaves — who was called and why, what a
-   check changed, his verdict — carry the measuring. No standing rule is drawn from the one run.
+   with the same tools and skills, works twice: without a book for the job type, and with one. He judges the two
+   deliveries blind; time, tokens and cost are recorded per arm. One job is an indication, for that job type only.
+   After it, the rows every job leaves — who was called and why, what a check changed, his verdict — carry the
+   measuring. No standing rule is drawn from the one run.
 
 **Not decided here, because nothing proves it:** whether a working team's result is better than one master's; whether
 three hands yields work he praises; whether a one-line order becomes a brief that yields such work — stage 1's test of
@@ -466,8 +470,8 @@ Each stage ends with something that runs.
   seat receives a slice under its budget that still carries a decision made at the start; his one-line order for an
   advertisement arriving at the master as a full brief with the creative demands; a second job for the same client
   starting with what the first one learned, no seat having read the first job's desk; an idle hour with zero model calls.
-  On the live job, §4's three arms — the short card; the card and the book; the full persona file and the book —
-  are delivered for his blind judgement, each with its time, tokens and cost: an indication, not a proof.
+  On the live job, §4's two arms — without the job type's book and with it — are delivered for his blind
+  judgement, each with its time, tokens and cost: an indication, not a proof.
 - **Stage 2 — each part to its full contract:** rules and locked rules, the three carriers, relay and override; the
   executor's retry and park; the router and attempts; capacity per lane; stop and cancel; patterns, value tiers and
   checks as parts; the clock's catch-up; the views' verdicts.
@@ -519,8 +523,7 @@ the model and the level are not lowered to fit a week.
 9. How a step inside a browser is recognised as a payment or contract step (A11's mechanism; with Hermes and B41).
 10. The slice's budget and the result's length limit (§3).
 11. This design's own claims — zero loss across a crash, zero model calls when idle — until stage 1 runs them.
-12. Whether a job type's book makes our jobs better, and whether the long persona text adds anything to a seat
-    (§4; stage 1 gives an indication for one job type).
+12. Whether a job type's book makes our jobs better (§4; stage 1 gives an indication for one job type).
 
 ## 9. Risks
 
@@ -552,10 +555,11 @@ the model and the level are not lowered to fit a week.
 4. **One runner.** The workflow spec's records — patterns, line cards, versions, undo — stay; its separate runner
    goes and the engine runs them. Recommended: yes.
 5. **The order: one whole job first, thin**, then each part to its full contract. Recommended: yes.
-6. **A seat opens with a short card; the long persona files are not loaded on the work path** (§4, item 2). The
-   employees stay — name, department, queue, screen; Section 12 reaches every seat first; nothing is archived or
-   deleted now. An engineering default on A29's own text, reversible; its effect is taken as an indication in
-   stage 1. Recommended: yes.
+6. **The personas are removed; the workers are agents in seats** (§4, item 2) — his order of 2026-11-22
+   <!-- CEO-OK: personas-removed-workers-are-agents-2026-11-22 -->; departments stay. Decided; what waits is his eye on
+   the removal list. It changes A27's "filled from the persona pool", A28's named persona seat, A29 items 1 and 14,
+   B84 decision 6, B43's seats, C41, the 2026-11-02 linking of the 213 personas to the Web Studio, the persona door
+   and the HR package's persona standard — each rewritten in place when the removal is done.
 7. **Whether only work he praised may become an example or a pattern.** His words of 2026-11-22 say so; A30 today
    registers a pattern when a type "has finished well a second time", and B64 speaks of his approved work. It is
    written as standing only on his word. Recommended: yes — "finished well" then means praised.
