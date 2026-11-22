@@ -489,9 +489,12 @@ two receipts on two instalments). A client's later message is matched by client 
 
 His word of 2026-11-22 is met by what stands: the master gives a light part — extracting a client's product list
 from a file — to a lighter seat, and a part a human will see — the home page's design — stays on the strongest
-(MODEL_ROUTING §4d: the class decides; §4f: a seat's brain is a floor and is never lowered). No seat is made weaker
-to save cost. Tried at stage 1: creative direction on the strongest eligible route, one mechanical step on a lighter
-one, both recorded with the master's reason.
+(MODEL_ROUTING §4d: the class decides; §4f: a seat's derived brain is a floor and is never lowered). No seat is made
+weaker to save cost. **The order of precedence the router keeps** (§4f, §4b step 0): a model he himself assigned to
+an employee is selected outright, after the guardrails — never treated as a mere floor, so of two equally strong
+models the one he chose runs; then the master's choice per part, at or above the floor; then the seat's default.
+Tried at stage 1: creative direction on the strongest eligible route, one mechanical step on a lighter one, both
+recorded with the master's reason; and at stage 2, his explicit choice between two models of equal strength.
 
 #### N.12 The walk — an order from the first message to the money
 
