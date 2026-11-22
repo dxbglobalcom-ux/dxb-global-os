@@ -447,6 +447,15 @@ glue. The lead designs each part's contract and tests, verifies every piece and 
 | 32a | The bench tools (chain runner, rebuild and upgrade tests, test lock) | **New** | §6 stage 0 | F-h | — |
 | 33 | The dashboard | **Not judged** | B32, B81 | — | — |
 
+**A "repaired" row is written new** <!-- CEO-OK: repaired-rows-written-new-old-file-read-as-contract-2026-11-22 --> (the
+lead's addition, his yes of 2026-11-22). On every row whose verdict is repaired, repaired at the seams or shape kept,
+the old file is read once as the contract (K's carry list) and the new one is written test-first by Fable 5.2; old
+code is copied only where it passes the new tests, and the mechanisms §0 names are carried as mechanisms. This moves
+the repaired rows whose writer column says O to Fable 5.2; what that costs in quota is stage 1's figure (§8 item 7).
+An engineering judgement, not a measurement. Measured is only the age: of the lines alive today July wrote 66 % of
+`packages` — `observability` 100 %, `hook` 98 %, `revenue` 98 %, `memory-router` 86 %, `voice` 83 %, `shared` 78 %
+(`git blame`, 2026-11-22).
+
 Each runtime guard that stays (the API-spend cap, the breaker, the hook's monitors, the spill) and each one that goes
 (row 22) answers five questions from its own log first: which failure it prevents, how often that still occurs, what
 it costs, whether it can be simpler, what happens without it. The construction's own hooks take the same questions.

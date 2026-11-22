@@ -3209,5 +3209,13 @@
     "conditions": "He said 'Astra'; which model sits in the checking seat stays MODEL_ROUTING's and was not changed by this. The customer's-eye walkers of A28 are untouched.",
     "session": "Fable 5.2 session 231e6a12, heard first-hand (dictated), 2026-11-22.",
     "where": "HOLDING-OS-MASTER-PLAN/AGENT_ORCHESTRATION_SPEC.md A28, A32"
+  },
+  "repaired-rows-written-new-old-file-read-as-contract-2026-11-22": {
+    "date": "2026-11-22",
+    "what": "B85's verdict table: on every row whose verdict is repaired, the old file is read only as the contract and the new one is written test-first by Fable 5.2; old code is copied only where it passes the new tests. The lead's addition after he asked whether the OS should be built from zero with Fable 5.2; told to him as an engineering judgement, not a measurement.",
+    "verbatim": "Peki diyelim ki tamam ben evet diyorum da ama bu soldakinin de haberi olsun",
+    "conditions": "His sentence opens with 'diyelim ki'. The lead told him in the next reply that it was taken as his yes and asked him to say so if he had not decided; the other session was informed as he asked, and the job was handed to this session on the same sentence.",
+    "session": "Fable 5.2 session 2862d69d, heard first-hand (dictated), 2026-11-22.",
+    "where": ".planning/quick/20261117-temel/PLAN.md §5, under the verdict table"
   }
 }
