@@ -359,8 +359,18 @@ as written.
     demands for that job type — for an advertisement the creative step (several ideas, none of them the client's
     existing picture), fidelity to the product, the "done" checks — plus the value tier. Acceptance checks the brief
     that was produced from the one line together with the work delivered against it.
-  - Specialists are called through the queue onto the desk, with a reason, where A27 says. The check is separate and
-    blind (A28).
+  - **Where work is split.** Coupled work stays in one head, because every split hands the next seat a thinner
+    copy of the decisions. Work is given to another seat on four grounds only: parts that are independent and can run
+    side by side (variants, the pages after an approved design); a search or a read that would flood the master's
+    context; a tool or a hand the master lacks; and judgement that must be independent — the check, blind (A28).
+  - **One master is a role, not one session.** On a long job the same role continues through fresh sessions from the
+    desk (§3); the job is cut along time and checkpoints, not handed around by profession.
+  - **What a job type always needs is in its pattern, not in the master's mood.** A specialist's checklist or a check
+    that the type always requires — the legal read of a client's terms, the search check of a site — is a part the
+    pattern creates. The master's judgement adds calls, with a reason, where A27 says; it does not decide the
+    mandatory ones (in the trial a master left to itself called nobody).
+  - **The persona question answers itself from the records:** every job records which specialist was called and
+    what its part or its check changed; no separate trial is run.
 - **Not decided here:** whether personas add anything beyond a good book. It stays a measurement, as he said.
 
 ## 5. The verdict table
