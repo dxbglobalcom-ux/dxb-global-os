@@ -455,7 +455,8 @@ it costs, whether it can be simpler, what happens without it. The construction's
 
 Each stage ends with something that runs.
 
-- **Stage 0 — the bench.** The chain's runner, the roles, the new schema beside the old one in the construction
+- **Stage 0 — the bench.** Before it, one scan of the board's open rows with one question each — does this row need
+  something from the foundation that this plan does not carry? What it finds comes back into this plan. The chain's runner, the roles, the new schema beside the old one in the construction
   engine, the rebuild and upgrade tests, the test-lock script. Proven here, with the old battery running beside it:
   that the two systems' tables, roles, clock and broadcast targets do not meet, and that a service role of the new
   one cannot reach the old tables; the in-process tool door; per-turn usage. From here on B32 and B81 draw their
