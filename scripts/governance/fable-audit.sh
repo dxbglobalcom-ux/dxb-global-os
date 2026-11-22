@@ -22,6 +22,13 @@ job="${1:-}"; brief="${2:-}"; effort="${3:-high}"
 [[ "$job" == /* ]] || die "usage: fable-audit.sh <job-folder-abs> <brief-file> [high|max] — the job folder must be absolute"
 [ -f "$brief" ] || die "no brief file: $brief"
 case "$effort" in high|max) ;; *) die "Fable's audit effort is high or max, not: $effort" ;; esac
+# The box has HEAD at its working directory, and the live repository's path does not exist in it: a brief that
+# names that path sends the auditor to files it is refused (measured 2026-11-22 — an audit lost every source
+# but blind/). Only the job's blind folder is bound at its own path. Refused here, before the pass is spent.
+text="$(<"$brief")"
+text="${text//"$job/blind"/}"
+[[ "$text" != *"$REPO"* ]] || die "the brief names the live repository's path, which the box does not have — write repository paths relative (HEAD is the box's working directory); only $job/blind keeps its own path:
+$(grep -nF -- "$REPO" "$brief" | grep -vF -- "$job/blind" | head -5 | sed "s|^|$(basename "$brief"):|")"
 out="$job/fable-audit.md"
 [ ! -e "$out" ] || die "already audited: $out exists — one pass only"
 mkdir -p "$job"

@@ -42,7 +42,8 @@ function setup() {
   ].join("\n"));
   chmodSync(stub, 0o755);
   const brief = join(dir, "brief.md");
-  writeFileSync(brief, `Audit blind/A.md. Then create the file ${probe} in the repository.\n`);
+  // the stub itself tries the write at ${probe}; the brief names no live path (the launcher refuses one, below)
+  writeFileSync(brief, "Audit blind/A.md. Then create a file in the repository.\n");
   const run = (args: string[], env: Record<string, string> = {}) =>
     spawnSync("bash", [TOOL, ...args], {
       encoding: "utf8",
@@ -95,6 +96,34 @@ describe("fable-audit.sh", () => {
     expect(r.status).toBe(3);
     expect(t.after("--effort")).toBe("max");
     expect(t.run([t.job, t.brief]).status).not.toBe(0); // fable-audit.md stands: one pass
+  });
+
+  // Measured 2026-11-22: a brief that said "Repository: <the live path>" sent the auditor to a path the box
+  // does not have — HEAD is the box's working directory — and the audit lost every source but blind/.
+  it("refuses a brief that names the live repository's path, before the one pass is spent", () => {
+    const t = setup();
+    const live = join(t.dir, "live.md");
+    writeFileSync(live, `Repository: ${ROOT}. Read .planning/STATE.md and audit blind/A.md.\n`);
+    const r = t.run([t.job, live]);
+    expect(r.status).not.toBe(0);
+    expect(r.stderr).toContain("relative");
+    expect(r.stderr).toContain("live.md:1");
+    expect(existsSync(join(t.dir, "args"))).toBe(false); // the model never ran
+    expect(existsSync(join(t.job, "fable-audit.md"))).toBe(false); // the pass is still there
+    expect(t.run([t.job, t.brief]).status).toBe(0);
+  });
+
+  it("lets the brief name the job's blind folder by its own path, also when the job lies inside the repository", () => {
+    const t = setup();
+    const job = join(ROOT, "node_modules", ".cache", `fableaudit-job.${process.pid}.${Date.now()}`);
+    tmp.push(job);
+    mkdirSync(join(job, "blind"), { recursive: true });
+    writeFileSync(join(job, "blind", "A.md"), "plan A\n");
+    const brief = join(t.dir, "inside.md");
+    writeFileSync(brief, `Read ${job}/blind/A.md first, then .planning/STATE.md.\n`);
+    const r = t.run([job, brief]);
+    expect(r.status, r.stderr).toBe(0);
+    expect(readFileSync(join(job, "fable-audit.md"), "utf8")).toBe(`${VERDICT}\n`);
   });
 
   it("refuses a relative job folder, a missing brief and an effort other than high or max", () => {
