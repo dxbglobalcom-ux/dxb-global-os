@@ -245,10 +245,18 @@ describe("velocity breaker (COST-03)", () => {
 });
 
 describe("scheduler (KERN: one process owns all system routines)", () => {
-  it("registers tick 15s / reaper 60s / breaker 5min", async () => {
+  it("registers tick 15s / reaper 60s / breaker 5min, and retires the stale-persona schedule", async () => {
     const armedFrom = new Date();
     const boss = await openScheduler();
     bootedScheduler = boss;
+    // The database's old chain seeds a schedule for the stale-persona scan
+    // (20260712008000). Planted the way that migration writes it, so the clock
+    // is shown taking it out, not merely finding it absent.
+    await sql`
+      INSERT INTO pgboss.schedule (name, key, cron, timezone)
+      SELECT 'hr.stale_persona_scan', '', '0 5 * * *', 'UTC'
+       WHERE NOT EXISTS (SELECT 1 FROM pgboss.schedule WHERE name = 'hr.stale_persona_scan')
+    `.execute(getDb());
     await registerSchedules(boss);
     // Read the ids back at once, while nothing has had time to run: from here
     // on the sweep names these rows, not a moment in time.
@@ -264,6 +272,10 @@ describe("scheduler (KERN: one process owns all system routines)", () => {
       const byName = Object.fromEntries(schedules.map((s) => [s.name, s.cron]));
       expect(byName[QUEUES.reaper]).toBe("* * * * *");
       expect(byName[QUEUES.breaker]).toBe("*/5 * * * *");
+      // CEO 2026-11-22: the personas are removed — the scan has no queue, no
+      // worker and no cron here, and its stored schedule does not outlive the boot.
+      expect(Object.values(QUEUES)).not.toContain("hr.stale_persona_scan");
+      expect(byName["hr.stale_persona_scan"]).toBeUndefined();
 
       // the 15s tick is a self-perpetuating singleton chain, not a cron —
       // prove the chain is armed: the tick queue holds exactly one queued job

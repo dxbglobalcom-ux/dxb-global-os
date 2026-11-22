@@ -132,8 +132,8 @@ beforeAll(async () => {
   }
 
   // Fixture employee: real department (agents.department FK), MCP profile set,
-  // persona quality-gated 'passed' — hook_version deliberately NULL so the
-  // stamp is provable. employment_status 'active' also proves §21 end-state.
+  // a 'passed' persona row for the database's activation trigger only —
+  // hook_version deliberately NULL so the stamp is provable. employment_status 'active' also proves §21 end-state.
   const emp = await db()
     .insertInto("agents")
     .values({

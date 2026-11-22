@@ -1,5 +1,5 @@
 // Voice v1 answer half (VOICE_INTERACTION_SPEC §3.1 stages 3-6): routing
-// (Hamza classify law), persona answer through the ONE brain path (V2), TTS
+// (Hamza classify law), the agent's answer through the ONE brain path (V2), TTS
 // with the registered voice identity (V1), audio handoff file, final
 // voice_calls row. Runs INSIDE the resident scheduler (voice.drain) — the
 // dashboard can never host this half: PHASE-08 LOCKED forbids LLM surfaces

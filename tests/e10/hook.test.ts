@@ -41,7 +41,6 @@ let baseViolationId = 0;
 let baseDecisionId = 0;
 let realMilestoneId: string | null = null;
 let realProjectId: string | null = null;
-let gatedEmployeeId: string | null = null;
 let fxRunId: string;
 let fxToolCallId: string;
 
@@ -71,7 +70,6 @@ function goodCtx(overrides: Partial<HookCtx> = {}): HookCtx {
       department: "engineering",
       mcpProfile: "engineering",
       managerId: null,
-      personaGate: "passed",
     },
     task: {
       id: null,
@@ -135,12 +133,6 @@ beforeAll(async () => {
     SELECT id, project_id FROM project_milestones LIMIT 1`.execute(db());
   realMilestoneId = m.rows[0]?.id ?? null;
   realProjectId = m.rows[0]?.project_id ?? null;
-  const e = await sql<{ id: string }>`
-    SELECT a.id FROM agents a
-     WHERE EXISTS (SELECT 1 FROM personas p
-                    WHERE p.employee_id = a.id AND p.quality_gate = 'passed')
-     LIMIT 1`.execute(db());
-  gatedEmployeeId = e.rows[0]?.id ?? null;
   // run + tool_calls fixture for the std 15 tool_call_proof leg.
   const run = await db()
     .insertInto("agent_runs")
@@ -341,26 +333,55 @@ describe("pre-gate — 17-standard mechanisms (§2/§6)", () => {
     expect(inside.verdict).toBe("PASS");
   });
 
-  it("persona gate (std 12 row) RED+PASS incl. the DB-lookup leg", async () => {
-    const red = await preTask(
-      goodCtx({ employee: { ...goodCtx().employee, personaGate: "pending" } }),
+  // CEO 2026-11-22: the personas are removed — a worker is an agent in a seat,
+  // and nothing gates on a character file.
+  it("an employee with no passed persona row is let through when everything else is in order", async () => {
+    const before = await violationsSince(baseViolationId);
+    // A fresh id: no personas row can name it.
+    const verdict = await preTask(
+      goodCtx({ employee: { ...goodCtx().employee, id: randomUUID() } }),
     );
-    expect(red.verdict).toBe("REJECT");
-    if (red.verdict !== "REJECT") return;
-    expect(red.reason).toContain("persona quality gate");
+    expect(verdict.verdict).toBe("PASS");
+    if (verdict.verdict !== "PASS") return;
+    expect(verdict.warnings).toEqual([]);
+    expect(await violationsSince(baseViolationId)).toHaveLength(before.length);
+  });
 
-    const ghost = await preTask(
-      goodCtx({ employee: { ...goodCtx().employee, id: randomUUID(), personaGate: undefined } }),
-    );
-    expect(ghost.verdict).toBe("REJECT");
+  it("a hook_policies row naming the retired persona_gate check is ignored: not run, not invalid, not a conflict", async () => {
+    // The database's old chain keeps its `std.persona_gate` row (block). This
+    // fixture row names the same check at the OTHER severity, so a loader that
+    // still read either would run the check, or raise the pair as a conflict.
+    const fixtureId = `${M}.persona_gate`;
+    await sql`
+      INSERT INTO hook_policies (id, standard_no, gate, rule, severity, enabled, title_en, title_tr)
+      VALUES (${fixtureId}, 12, 'pre', '{"check":"persona_gate","require":"passed"}'::jsonb,
+              'warn', true, ${`${M} retired check`}, ${`${M} emekli kontrol`})
+      ON CONFLICT (id) DO NOTHING`.execute(db());
+    invalidatePolicyCache();
+    try {
+      const stored = await sql<{ id: string }>`
+        SELECT id FROM hook_policies
+         WHERE enabled AND rule->>'check' = 'persona_gate'`.execute(db());
+      const storedIds = stored.rows.map((r) => r.id);
+      expect(storedIds).toContain(fixtureId);
 
-    if (gatedEmployeeId) {
-      const real = await preTask(
-        goodCtx({
-          employee: { ...goodCtx().employee, id: gatedEmployeeId, personaGate: undefined },
-        }),
+      const load = await loadPolicies();
+      expect(load.rows.filter((p) => storedIds.includes(p.id))).toEqual([]);
+      expect(load.invalid.filter((p) => storedIds.includes(p.id))).toEqual([]);
+      expect(load.conflicts.filter((c) => c.check === "persona_gate")).toEqual([]);
+
+      const before = await violationsSince(baseViolationId);
+      const verdict = await preTask(
+        goodCtx({ employee: { ...goodCtx().employee, id: randomUUID() } }),
       );
-      expect(real.verdict).toBe("PASS");
+      expect(verdict).toMatchObject({ verdict: "PASS", warnings: [] });
+      expect(await violationsSince(baseViolationId)).toHaveLength(before.length);
+    } finally {
+      // What a loader that still read the row would have left (the violations FK the policy).
+      await sql`DELETE FROM alerts WHERE dedup_key = 'hook:conflict:pre:persona_gate'`.execute(db());
+      await sql`DELETE FROM hook_violations WHERE policy_id = ${fixtureId}`.execute(db());
+      await sql`DELETE FROM hook_policies WHERE id = ${fixtureId}`.execute(db());
+      invalidatePolicyCache();
     }
   });
 

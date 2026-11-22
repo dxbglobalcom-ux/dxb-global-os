@@ -31,8 +31,6 @@ export interface HookEmployeeCtx {
   department?: string | null;
   mcpProfile?: string | null;
   managerId?: string | null;
-  /** personas.quality_gate — when omitted the pre-gate looks it up by id. */
-  personaGate?: string | null;
 }
 
 export interface HookTaskCtx {

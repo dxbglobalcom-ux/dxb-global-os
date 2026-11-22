@@ -284,7 +284,7 @@ export async function buildBriefSnapshot(
 }
 
 /**
- * The instruction each leg adds on top of Hamza's persona.
+ * The instruction each leg adds on top of Hamza's standing section (his character, prompt-core).
  *
  * The brief leg is told, in the strongest terms available, that the numbers it
  * was handed are the only numbers it may use. The empty-company case is spelled

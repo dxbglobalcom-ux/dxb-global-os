@@ -31,8 +31,8 @@ const M = `r23t-${randomUUID().slice(0, 8)}`;
 const SLUG = (s: string) => `${M}-${s}`;
 
 // The holding's own project is a read-only fixture; the employee is a suite
-// fixture with the FULL hook surface (v2 persona, gate passed, MCP profile) —
-// the e10 spawn-binding idiom.
+// fixture with the FULL hook surface (MCP profile); its persona row is there
+// only for the database's activation trigger — the e10 spawn-binding idiom.
 //
 // B36 Block 2: this was the LITERAL uuid of one row in one database
 // ("68ce909a-6d93-4e12-82cc-afa9cee57a9f"), so the suite could only ever run

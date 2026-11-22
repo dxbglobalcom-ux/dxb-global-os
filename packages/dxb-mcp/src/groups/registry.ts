@@ -7,17 +7,25 @@ const ok = (data: unknown) => ({
   content: [{ type: "text" as const, text: JSON.stringify(data) }],
 });
 
+// CEO 2026-11-22: the personas are removed — a worker is an agent in a seat.
+// The agents table keeps its persona columns until the database's old chain
+// leaves; an agent row handed to an agent does not carry them.
+const PERSONA_COLUMNS: readonly string[] = ["persona_path", "persona_id", "persona_version"];
+function withoutPersonaColumns(row: object): Record<string, unknown> {
+  return Object.fromEntries(Object.entries(row).filter(([column]) => !PERSONA_COLUMNS.includes(column)));
+}
+
 export function registerRegistry(server: McpServer): void {
   server.registerTool(
     "registry_get_agent",
     {
       title: "Get agent (registry.get_agent)",
-      description: "Agent row incl. persona_path — the persona BODY never crosses this tool (REG-02 lazy activation).",
+      description: "Agent row by slug — the seat as the registry holds it: department, role, level, status, brain, MCP profile, skills.",
       inputSchema: { slug: z.string().min(1) },
     },
     async ({ slug }) => {
       const row = await getDb().selectFrom("agents").selectAll().where("slug", "=", slug).executeTakeFirst();
-      return ok(row ?? null);
+      return ok(row ? withoutPersonaColumns(row) : null);
     },
   );
 
@@ -37,7 +45,7 @@ export function registerRegistry(server: McpServer): void {
       if (department) q = q.where("department", "=", department);
       if (role) q = q.where("role", "=", role);
       if (status) q = q.where("status", "=", status);
-      return ok(await q.orderBy("department").orderBy("role").execute());
+      return ok((await q.orderBy("department").orderBy("role").execute()).map(withoutPersonaColumns));
     },
   );
 
@@ -98,7 +106,7 @@ export function registerRegistry(server: McpServer): void {
             .returningAll()
             .executeTakeFirst();
           if (!agent) throw new Error(`no department or agent with slug '${slug}'`);
-          target = agent;
+          target = withoutPersonaColumns(agent);
           kind = "agent";
         }
         await trx

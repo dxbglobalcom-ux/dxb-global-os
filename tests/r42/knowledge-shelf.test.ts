@@ -34,7 +34,6 @@ function goodCtx(overrides: Partial<HookCtx> = {}): HookCtx {
       department: "engineering",
       mcpProfile: "engineering",
       managerId: null,
-      personaGate: "passed",
     },
     task: {
       id: null,

@@ -1,6 +1,6 @@
 // E5.4b — HR job handlers (HR spec §3: run INSIDE the kernel/scheduler worker, no new
 // resident service — R5). Each handler is a pure SQL pass over existing tables; LLM-using
-// HR work is NOT here (that is a normal agent run per spec §14). All four write their
+// HR work is NOT here (that is a normal agent run per spec §14). All three write their
 // findings to audit_log (job log idiom) and broadcast only when something needs eyes.
 //
 // Handlers receive the shared kysely instance from the caller (outbox-executor scheduler)
@@ -59,21 +59,6 @@ export async function hrProbationCheck(db: Kysely<any>): Promise<void> {
     SELECT notify_broadcast('org', 'hr.probation_overdue',
              jsonb_build_object('count', (SELECT count(*) FROM overdue)))
      WHERE EXISTS (SELECT 1 FROM overdue)
-  `.execute(db);
-}
-
-// hr.stale_persona_scan (spec §3): non-archived employees still on a v0 placeholder
-// persona (unwritten) or with no bound persona — the "awaiting authorship" watchlist.
-export async function hrStalePersonaScan(db: Kysely<any>): Promise<void> {
-  await sql`
-    INSERT INTO audit_log (actor, actor_type, action, payload)
-    SELECT 'hr.stale_persona_scan', 'system', 'hr.stale_persona_scan',
-           jsonb_build_object(
-             'unbound', count(*) FILTER (WHERE persona_id IS NULL),
-             'v0_placeholder', count(*) FILTER (WHERE persona_version LIKE 'v0%'),
-             'at', now())
-      FROM agents
-     WHERE employment_status <> 'archived'
   `.execute(db);
 }
 

@@ -3,7 +3,7 @@
 // eder ve size raporlar. … İş dağıtan koltuklar (orkestrasyon ve işi bölme) için önerimiz Fable 5.1 … Konuşma
 // koltukları Opus 5.5 olur. Kritik karar koltukları Fable 5.1'de, xhigh seviyesinde çalışır. Sesli cevap … şimdilik
 // low'da kalır."). What must hold on every engine the canonical chain builds — read only.
-import { readFile, readdir } from "node:fs/promises";
+import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { afterAll, describe, expect, it } from "vitest";
 import { sql } from "kysely";
@@ -113,29 +113,5 @@ describe("one row splits a job — the unread 'decompose' row is gone (CEO 2026-
        WHERE action = 'routing_rule.removed' AND payload->>'task_class' = 'decompose'
          AND payload->>'authority' = 'ceo-approvals:decompose-row-removed-orchestration-stays-2026-10-12'`.execute(db());
     expect(r.rows[0].n).toBe(1);
-  });
-});
-
-describe("P6 — a dossier names no model (SİCİL field 8)", () => {
-  it("no persona dossier copies a brain: field 8 points at the live database", async () => {
-    const root = join(REPO_ROOT, "personas");
-    const stale: string[] = [];
-    for (const dept of await readdir(root, { withFileTypes: true })) {
-      if (!dept.isDirectory()) continue;
-      for (const f of await readdir(join(root, dept.name))) {
-        if (!f.endsWith(".md")) continue;
-        const text = await readFile(join(root, dept.name, f), "utf8");
-        const row = /^\| 8 \| Kullanılan model \| (.*) \|$/m.exec(text);
-        if (row && !row[1].startsWith("kaynak: canlı DB")) stale.push(`${dept.name}/${f}: ${row[1]}`);
-      }
-    }
-    expect(stale).toEqual([]);
-  });
-
-  it("the dossier generator writes the same pointer, never a model", async () => {
-    const gen = await readFile(join(REPO_ROOT, "scripts/gen-workforce-dossiers.sh"), "utf8");
-    const line = /^\| 8 \| Kullanılan model \| (.*) \|$/m.exec(gen);
-    expect(line?.[1]).toMatch(/^kaynak: canlı DB/);
-    expect(line?.[1]).not.toMatch(/\$\{brain\}/);
   });
 });

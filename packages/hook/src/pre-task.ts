@@ -1,7 +1,7 @@
-// Pre-task gate (§6). Rule order is FIXED: permission (std 12) → persona gate
-// (EMPLOYEE_PERSONA rule, filed under std 12) → task completeness (std 1, 3)
-// → budget fit (std 5, COST_CONTROL) → project link (std 11). Every check is
-// MECHANICAL (row exists / field present — no LLM call, §6 audit-cost rule).
+// Pre-task gate (§6). Rule order is FIXED: permission (std 12) → task
+// completeness (std 1, 3) → budget fit (std 5, COST_CONTROL) → project link
+// (std 11). Every check is MECHANICAL (row exists / field present — no LLM
+// call, §6 audit-cost rule).
 //
 // Any 'block' failure: REJECT — the run is never born (task failed(policy) and
 // the alert ride the violation row; the task-state write is the dispatcher's,
@@ -55,19 +55,6 @@ async function runCheck(policy: HookPolicyRow, ctx: HookCtx): Promise<CheckOutco
         }
       }
       return { ok: true };
-    }
-    case "persona_gate": {
-      let gate = ctx.employee.personaGate;
-      if (gate === undefined && ctx.employee.id) {
-        const res = await sql<{ passed: boolean }>`
-          SELECT EXISTS (SELECT 1 FROM personas
-                          WHERE employee_id = ${ctx.employee.id}
-                            AND quality_gate = 'passed') AS passed`.execute(getDb());
-        gate = res.rows[0]?.passed ? "passed" : null;
-      }
-      return gate === "passed"
-        ? { ok: true }
-        : { ok: false, detail: `persona quality gate is '${gate ?? "absent"}', not 'passed'` };
     }
     case "task_completeness": {
       const missing: string[] = [];

@@ -12,9 +12,6 @@
 # Preconditions (abort, named reason, BEFORE any run):
 #   P1 Supabase reachable
 #   P2 routing_rules enabled count >= 8
-#   P3 persona gate (criterion 6, enforced here — not honor system):
-#      agents WHERE department='product' AND persona_version <> 'v2.0-fable'
-#      must be 0 AND v2 count must be 5
 #   P4 if the worker's tier lookup resolves an api-mode row, LiteLLM key
 #      material must be present (slice normally rides subscription — ADAPT-4)
 set -euo pipefail
@@ -70,27 +67,7 @@ async function preconditions() {
     .where("enabled", "=", true)
     .executeTakeFirstOrThrow();
   if (Number(rr.n) < 8) fail(`PRECONDITION P2: routing_rules enabled count ${rr.n} < 8`);
-  // P3 — persona gate (criterion 6): the Fable v2 batch must be live in the
-  // registry. The gate CANNOT run without it — physically enforced here.
-  const nonV2 = await db
-    .selectFrom("agents")
-    .select(({ fn }) => fn.countAll().as("n"))
-    .where("department", "=", "product")
-    .where("persona_version", "<>", "v2.0-fable")
-    .executeTakeFirstOrThrow();
-  const v2 = await db
-    .selectFrom("agents")
-    .select(({ fn }) => fn.countAll().as("n"))
-    .where("department", "=", "product")
-    .where("persona_version", "=", "v2.0-fable")
-    .executeTakeFirstOrThrow();
-  if (Number(nonV2.n) !== 0 || Number(v2.n) !== 5) {
-    fail(
-      `PRECONDITION P3 (persona gate, criterion 6): product department must be ` +
-        `exactly 5 x v2.0-fable with 0 legacy rows — found v2=${v2.n}, non-v2=${nonV2.n}. ` +
-        `The 10/10 gate refuses to run without the Fable v2 batch.`,
-    );
-  }
+  // (P3, the persona-version precondition, went with the personas — CEO 2026-11-22.)
   // P4 — worker tier lookup (worker-shim takes the highest-priority enabled
   // row per tier, match-blind). If the slice tier (L4) resolves api-mode,
   // LiteLLM key material must exist in the env; subscription needs nothing.
@@ -279,7 +256,7 @@ async function drive() {
 }
 
 // E10.2: the LOCKED slice predates the Fable hook — its fixtures carry no
-// employee/persona/project surface, so the production-on gates would reject
+// employee/project surface, so the production-on gates would reject
 // the worker claim. Pin the §22 flag off for the gate's duration (restored
 // by the caller's trap; the flag-off period is alerted by design, and the
 // hook-on restore sweeps the pin-period alert).

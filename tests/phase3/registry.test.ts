@@ -3,7 +3,6 @@ import { Client } from "@modelcontextprotocol/sdk/client/index.js";
 import { InMemoryTransport } from "@modelcontextprotocol/sdk/inMemory.js";
 import { closeDb, getDb } from "../../packages/shared/src/db.js";
 import { createDxbMcpServer } from "../../packages/dxb-mcp/src/index.js";
-import { readFileSync } from "node:fs";
 import { watchLedgers } from "../helpers/suite-scope.js";
 
 // Its own footprints in audit_log / decision_log, swept in afterAll below.
@@ -47,6 +46,14 @@ async function sweepTraceTasks() {
   await db.deleteFrom("tasks").where("id", "in", ids).execute();
 }
 
+// The seat the persona-field case reads back. It stays dormant in
+// employment_status, so the database's activation trigger never asks it for a
+// persona row; persona_path is NOT NULL in the database's old chain.
+const PROBE_SEAT = "p3t-registry-probe";
+async function sweepProbeSeat() {
+  await getDb().deleteFrom("agents").where("slug", "=", PROBE_SEAT).execute();
+}
+
 beforeAll(async () => {
   const server = createDxbMcpServer();
   client = new Client({ name: "registry-test", version: "0.0.0" });
@@ -55,6 +62,7 @@ beforeAll(async () => {
   await getDb().deleteFrom("departments").where("slug", "=", "legal-de").execute();
   await sweepCostProbes();
   await sweepTraceTasks();
+  await sweepProbeSeat();
 });
 
 afterAll(async () => {
@@ -64,6 +72,7 @@ afterAll(async () => {
   await ledgerScope.sweep({ audit: [{ actor: "engineering", action: "queue.create_task" }, { actor: "registry" }, { actor: "test", action: "tool_call" }, { actor: "tracer", action: "decision" }] });
   await sweepCostProbes();
   await sweepTraceTasks();
+  await sweepProbeSeat();
   // legal-de is a probe department with no display_name_tr — leaving it live
   // fails the i18n purity gate between runs.
   await getDb().deleteFrom("departments").where("slug", "=", "legal-de").execute();
@@ -88,17 +97,36 @@ describe("dxb-mcp registry/audit/cost groups (gate criteria 4-5)", () => {
     expect(audits.length).toBeGreaterThanOrEqual(2);
   });
 
-  it("registry_get_agent returns persona_path but never the persona body (REG-02)", async () => {
-    const agents = await call("registry_list", { role: "worker" });
-    expect(agents.length).toBeGreaterThan(0);
-    const agent = await call("registry_get_agent", { slug: agents[0].slug });
-    // E5.2b file-first architecture: personas/<dept>/<slug>.md is canonical
-    // (the agency-agents/ mirror was retired).
-    expect(agent.persona_path).toMatch(/personas\//);
-    const body = readFileSync(agent.persona_path, "utf8");
-    // a distinctive line from the persona body must NOT appear in the tool response
-    const marker = body.split("\n").find((l) => l.length > 40) ?? body.slice(0, 80);
-    expect(JSON.stringify(agent)).not.toContain(marker.trim());
+  // CEO 2026-11-22: the personas are removed — a worker is an agent in a seat.
+  // The persona columns stay in the database's old chain; no tool hands them on.
+  it("an agent row handed out by a registry tool carries no persona field", async () => {
+    await getDb()
+      .insertInto("agents")
+      .values({
+        slug: PROBE_SEAT,
+        department: "engineering",
+        role: "worker",
+        persona_path: `var/${PROBE_SEAT}.md`,
+        persona_version: "v2.0-test",
+        status: "dormant",
+        employment_status: "dormant",
+      } as never)
+      .execute();
+    const personaKeys = (row: Record<string, unknown>) => Object.keys(row).filter((k) => k.startsWith("persona"));
+
+    const got = await call("registry_get_agent", { slug: PROBE_SEAT });
+    expect(got.slug).toBe(PROBE_SEAT);
+    expect(personaKeys(got)).toEqual([]);
+
+    const listed = await call("registry_list", { department: "engineering", role: "worker", status: "dormant" });
+    const mine = listed.find((a: any) => a.slug === PROBE_SEAT);
+    expect(mine).toBeTruthy();
+    expect(listed.flatMap(personaKeys)).toEqual([]);
+
+    const activated = await call("registry_activate", { slug: PROBE_SEAT });
+    expect(activated.kind).toBe("agent");
+    expect(activated.row.status).toBe("active");
+    expect(personaKeys(activated.row)).toEqual([]);
   });
 
   it("audit_append redacts secret keys — proven by DB read-back", async () => {

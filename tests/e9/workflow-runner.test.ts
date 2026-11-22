@@ -13,7 +13,7 @@ import {
 import { pinHookOff, watchLedgers } from "../helpers/suite-scope.js";
 
 // R2.3: the workflow agent step now runs the SAME hook constitution as the
-// task path. This suite's fixtures predate the hook (no persona/project
+// task path. This suite's fixtures predate the hook (no project
 // surface) — pinned off per the registered A13 mechanism (loud in DB,
 // restored in afterAll); the hooked workflow path is proven in tests/r23.
 pinHookOff(() => getDb());
@@ -577,6 +577,24 @@ describe("error classes, retry, fallback, limits (§17-19)", () => {
     await sql`UPDATE agents SET employment_status = 'archived' WHERE id = ${emp}::uuid`.execute(db());
     const outcome = await runWorkflowRun(String(run.run_id), deps);
     expect(outcome).toMatchObject({ status: "failed", reason: "EMPLOYEE_INELIGIBLE" });
+  });
+
+  // CEO 2026-11-22: the personas are removed — at step start eligibility is
+  // "exists and not archived". The employee is defined with a v2 tag because
+  // the database's write-time gate (old chain) still asks for one, then loses it.
+  it("a non-archived employee whose persona_version is not v2 still runs its step", async () => {
+    const emp = await makeEmployee("no-v2-emp");
+    await ceoAction({
+      action: "create",
+      slug: SLUG("no-v2"),
+      name: "No v2 probe",
+      trigger: { kind: "manual" },
+      steps: [agentStep(emp, "seat without a v2 tag works")],
+    });
+    const run = await ceoAction({ action: "run_now", slug: SLUG("no-v2") });
+    await sql`UPDATE agents SET persona_version = 'v1.0-legacy' WHERE id = ${emp}::uuid`.execute(db());
+    const outcome = await runWorkflowRun(String(run.run_id), deps);
+    expect(outcome).toMatchObject({ status: "succeeded" });
   });
 });
 

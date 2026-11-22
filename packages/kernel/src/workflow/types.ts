@@ -33,7 +33,6 @@ export interface StepSeat {
   slug: string;
   department: string;
   role_level: string | null;
-  persona_path: string | null;
 }
 
 /** R2.3 — the executor's result carries the A10 evidence package the hook

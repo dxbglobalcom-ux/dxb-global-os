@@ -92,7 +92,7 @@ describe("C2-4 — a workflow step runs as its seat", () => {
     model: "claude-sonnet-5-5",
     objective: "o",
     outputContract: "c",
-    seat: { slug: "finance-controller", department: "finance", role_level: "director", persona_path: "p.md" },
+    seat: { slug: "finance-controller", department: "finance", role_level: "director" },
   };
 
   it("the composition point's seat prompt becomes the run's system prompt", async () => {

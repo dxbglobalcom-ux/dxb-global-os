@@ -13,7 +13,7 @@ import type { DB } from "../../packages/shared/src/db-types.js";
 /**
  * E10.2: pin the Fable hook OFF for a pre-hook suite's lifetime. The certified
  * Phase-5/6 (and E8) slices predate the hook — their fixtures carry no
- * employee/persona/project surface, so the (production-on) gates would reject
+ * employee/project surface, so the (production-on) gates would reject
  * every claim. `hook.enabled` is exactly the §22 gradual-transition flag for
  * that old path; production stays ON (the E10.2 migration flip), and any
  * flag-off spawn raises the 'hook:disabled' attention alert, so this pin is

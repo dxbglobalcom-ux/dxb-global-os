@@ -27,6 +27,12 @@ function ruleIsValid(rule: unknown): rule is Record<string, unknown> {
   );
 }
 
+// CEO 2026-11-22: the personas are removed, and the pre-gate's persona check
+// with them. Its hook_policies row (`std.persona_gate`) belongs to the
+// database's old chain and leaves with it; until then a row naming the check
+// is IGNORED — not run, not invalid (§17), not a conflict (§27).
+const RETIRED_CHECK = "persona_gate";
+
 /** Most-restrictive-wins conflict resolution (§27). */
 function resolveConflicts(rows: HookPolicyRow[]): {
   rows: HookPolicyRow[];
@@ -87,8 +93,8 @@ export async function loadPolicies(): Promise<PolicyLoad> {
   const invalid: HookPolicyRow[] = [];
   for (const r of raw) {
     const row = r as unknown as HookPolicyRow;
-    if (ruleIsValid(row.rule)) rows.push(row);
-    else invalid.push(row);
+    if (!ruleIsValid(row.rule)) invalid.push(row);
+    else if (row.rule.check !== RETIRED_CHECK) rows.push(row);
   }
   const resolved = resolveConflicts(rows);
   if (resolved.conflicts.length > 0) await alertConflicts(resolved.conflicts);
@@ -100,7 +106,6 @@ export async function loadPolicies(): Promise<PolicyLoad> {
 /** Policies of one gate, in the §6 canonical check order for 'pre'. */
 const PRE_ORDER = [
   "permission_bounds",
-  "persona_gate",
   "task_completeness",
   "plan_evidence",
   "budget_fit",

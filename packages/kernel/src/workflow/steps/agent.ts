@@ -36,35 +36,30 @@ export interface EligibleEmployee {
   slug: string;
   department: string;
   role_level: string | null;
-  persona_path: string | null;
 }
 
 // §25 edge — "atanan çalışan arşivlenmiş → adım başlangıcında fn reddi → run
-// failed sebepli". Same HR gate the control fn applies at write time
-// (non-archived + persona v2), re-checked at STEP START because employees
-// change between definition and run.
+// failed sebepli". Re-checked at STEP START because employees change between
+// definition and run. CEO 2026-11-22: the personas are removed — eligible is
+// "exists and not archived"; the control fn's write-time persona-v2 check
+// belongs to the database's old chain and is not repeated here.
 export async function resolveEligibleEmployee(employeeId: string): Promise<EligibleEmployee> {
   const emp = await getDb()
     .selectFrom("agents")
-    .select(["id", "slug", "department", "role_level", "persona_path", "employment_status", "persona_version"])
+    .select(["id", "slug", "department", "role_level", "employment_status"])
     .where("id", "=", employeeId)
     .executeTakeFirst();
   if (!emp) {
     throw new StepError(`employee ${employeeId} does not exist`, "policy", "EMPLOYEE_MISSING");
   }
-  if (emp.employment_status === "archived" || !String(emp.persona_version ?? "").startsWith("v2")) {
-    throw new StepError(
-      `employee ${emp.slug} ineligible (archived or pre-v2 persona)`,
-      "policy",
-      "EMPLOYEE_INELIGIBLE",
-    );
+  if (emp.employment_status === "archived") {
+    throw new StepError(`employee ${emp.slug} ineligible (archived)`, "policy", "EMPLOYEE_INELIGIBLE");
   }
   return {
     id: emp.id,
     slug: emp.slug,
     department: emp.department,
     role_level: emp.role_level ?? null,
-    persona_path: emp.persona_path ?? null,
   };
 }
 
@@ -151,7 +146,6 @@ export function stepSeat(emp: EligibleEmployee): StepSeat {
     slug: emp.slug,
     department: emp.department,
     role_level: emp.role_level,
-    persona_path: emp.persona_path,
   };
 }
 

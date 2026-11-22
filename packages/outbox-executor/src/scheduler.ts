@@ -18,12 +18,7 @@ import {
   readFullInventory,
   watchToolLocks,
 } from "@dxb/gateway";
-import {
-  hrPerformanceDaily,
-  hrProbationCheck,
-  hrStalePersonaScan,
-  hrTrainingQueue,
-} from "@dxb/hr";
+import { hrPerformanceDaily, hrProbationCheck, hrTrainingQueue } from "@dxb/hr";
 import { drainWorkflowRuns, registerCronTriggers, triggerRunNow } from "@dxb/kernel";
 import { compactExpired } from "@dxb/memory-router";
 import {
@@ -74,7 +69,6 @@ export const QUEUES = {
   // boss.schedule() below upserts the same names.
   hrPerformance: "hr.performance_daily",
   hrProbation: "hr.probation_check",
-  hrStalePersona: "hr.stale_persona_scan",
   hrTraining: "hr.training_queue",
   // E9.1 workflow engine (WORKFLOW §3/§6): the runner stays a LIBRARY in the
   // kernel — this scheduler is its pg-boss vehicle. workflow.run drains
@@ -157,7 +151,6 @@ export const CADENCES = {
   // HR crons spread across the quiet window, after compaction, one per hour slot
   // (same session-mode pool contention rule as pinCheck).
   hrPerformanceCron: "30 2 * * *", // daily 02:30
-  hrStalePersonaCron: "0 5 * * *", // daily 05:00
   hrProbationCron: "0 6 * * *", // daily 06:00
   hrTrainingCron: "0 7 * * *", // daily 07:00
   // Workflow drain: run_now/resume write only DB rows (a Postgres fn cannot
@@ -185,8 +178,8 @@ export const CADENCES = {
   // the chain re-arms after the drain returns.
   chatDrainSeconds: 3,
   // Revenue cycle: spec §22 stagger inside the 05:00-06:00 UTC window, but
-  // off the exact hours already owned by hrStalePersona (05:00) and
-  // hrProbation (06:00) — session-mode pool contention rule.
+  // off the exact hour already owned by hrProbation (06:00) — session-mode
+  // pool contention rule.
   revenueScanCron: "10 5 * * *", // daily 05:10
   revenueScoreCron: "25 5 * * *", // daily 05:25
   revenueBriefCron: "40 5 * * *", // daily 05:40
@@ -202,6 +195,9 @@ export const CADENCES = {
   briefingMorningCron: "0 7 * * *",
   briefingMorningTz: "Europe/Berlin",
 } as const;
+
+/** The stale-persona scan's cron name: no queue, worker or cron here any more — see registerSchedules. */
+const RETIRED_SCHEDULE = "hr.stale_persona_scan";
 
 async function enqueueTick(boss: PgBoss, delaySeconds: number): Promise<void> {
   await boss.send(QUEUES.tick, {}, { startAfter: delaySeconds, singletonKey: QUEUES.tick });
@@ -406,7 +402,7 @@ let activeMediaLanes: MediaLanes | null = null;
 //
 // The three acts:
 //   openScheduler()      the connection and the queues — the boss exists
-//   startWorkers(boss)   the 23 handlers and the two lane pools — hands
+//   startWorkers(boss)   the 22 handlers and the two lane pools — hands
 //   registerSchedules()  the cron table and the eight bootstrap sends — a clock
 //
 // A bench that wants to read the clock calls the first and the third. It never
@@ -532,9 +528,6 @@ export async function startWorkers(boss: PgBoss): Promise<void> {
   });
   await boss.work(QUEUES.hrProbation, async () => {
     await hrProbationCheck(getDb());
-  });
-  await boss.work(QUEUES.hrStalePersona, async () => {
-    await hrStalePersonaScan(getDb());
   });
   await boss.work(QUEUES.hrTraining, async () => {
     await hrTrainingQueue(getDb());
@@ -747,13 +740,17 @@ export async function startWorkers(boss: PgBoss): Promise<void> {
  * a process that has not called startWorkers will not run a single one of them.
  */
 export async function registerSchedules(boss: PgBoss): Promise<void> {
+  // CEO 2026-11-22: the personas are removed, and the stale-persona scan with
+  // them. The database's old chain seeds its schedule (20260712008000) and a
+  // running engine already stores it; with no worker left it would only pile up
+  // jobs, so the clock takes it out — a plain DELETE, safe to repeat every boot.
+  await boss.unschedule(RETIRED_SCHEDULE);
   await boss.schedule(QUEUES.reaper, CADENCES.reaperCron);
   await boss.schedule(QUEUES.breaker, CADENCES.breakerCron);
   await boss.schedule(QUEUES.compaction, CADENCES.compactionCron);
   await boss.schedule(QUEUES.pinCheck, CADENCES.pinCheckCron);
   await boss.schedule(QUEUES.toolLockWatch, CADENCES.toolLockWatchCron);
   await boss.schedule(QUEUES.hrPerformance, CADENCES.hrPerformanceCron);
-  await boss.schedule(QUEUES.hrStalePersona, CADENCES.hrStalePersonaCron);
   await boss.schedule(QUEUES.hrProbation, CADENCES.hrProbationCron);
   await boss.schedule(QUEUES.hrTraining, CADENCES.hrTrainingCron);
   await boss.schedule(QUEUES.revenueScan, CADENCES.revenueScanCron);
