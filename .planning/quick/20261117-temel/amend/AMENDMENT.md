@@ -6,61 +6,96 @@ PLAN §9 risk 3 — "when the synthesis is written, this design is read against 
 The synthesis is `.planning/research/rival-intel/00-SYNTHESIS.md` (its §3: F0–F8; its §4: eleven gaps; its §5: what a
 living surface needs). PLAN's eight decisions (§1) stand.
 
-**What the second audit changed.** The second draft built more than the board's offices need and, in three places,
-replaced a decision of his with a new mechanism. Cut, each with what is lost:
+**What the second audit found, and what the lead did with each finding.** A finding is evidence, not a verdict: a
+defect is repaired and a sound idea stands. The lead first cut all five of the second draft's new mechanisms on the
+audit's word; he asked whether what was cut was good, and each was weighed again on its own (2026-11-22):
 
-| Cut | Why | Lost |
-|---|---|---|
-| The manifest, the generated registries, the zero-diff ruler, a per-office owner role, office handlers and readers holding a credential, the upgrade and retirement lifecycle (old part M, D3) | PLAN §2 B already says what an office is — a department and job types on the menu — and §11 leaves the studios' records to their rows. B43's own plan needs a proxy change and a remote lane, which the "zero change" promise would have forbidden | automatic packaging of offices nobody has asked for |
-| The child job (D6) | A26 gives mixed work to the master of its main deliverable, A27 gives a specialist part on that job, and B84 already asks for B43's two tools "priced on the same card and stopped at the same approval" | a second master, desk, price and acceptance for a site's film — which neither of his examples needs |
-| The standing spend policy (D2) | B43 carries his decision of 2026-10-18: one priced card per job, retakes free under its ceiling. A standing policy would have issued spend without a card reaching him | nothing he asked for |
-| The part "weight" list and the change to his brain switch (D4) | PLAN §2 G (the master's choice per part with its reason, the per-employee floor, one router) and MODEL_ROUTING §4d and §4f already hold it: the class decides, the brain is a floor and never lowered | nothing |
-| Autonomy "per job type, not per employee" (D5) | B15 carries both — the employee dial and his per-job-type lift of A9 — and neither retires the other | nothing |
+| The second draft had | Added to his decisions, or replaced one? | The defect the audit showed | Now |
+|---|---|---|---|
+| An office's "package": one declaration of everything it brings, a promise that adding it changes no foundation file, a test enforcing that, its own code holding credentials | **Added** — it is his own requirement (what is added works in harmony with the base; "yama istemiyoruz") made checkable | The promise was false for the first real office (B43 needs a proxy change and a new lane); office code holding a key could act past what he approved; its policy lived in a file while the live database is the truth; an installer was to be built before the first job ran | **Repaired, kept** (part M): the joining contract and the harmony rule stand, the test reports instead of forbidding, credentials stay in the foundation, and the contract's final form is fixed from the first two real offices, not on paper |
+| A site's film as a second job with its own master, desk and price (D6) | **Replaced** A26 and A27 (mixed work belongs to the master of the main deliverable; a specialist part on that job) and B84's own request (the same card) | Two masters, two acceptances, and no answer whether the film's cost is counted once or twice | **Cut.** The film is a part on the site job. What is lost is named in part M |
+| A standing spend rule: he sets once what a job of a service may spend, and jobs under it draw without a card reaching him (D2) | **Added** beside his card of 2026-10-18 — the card stayed for everything else | It lets money out without his click on the job; the brief's own ceiling could be exceeded in three ways | **The ceiling is repaired** (item 6). **The standing rule is his to decide — D2**, not the lead's to cut |
+| A "weight" on every part, and his brain switch meaning "the weighty parts" only (D4) | **Replaced** MODEL_ROUTING §4f (the brain is a floor and is never lowered) | A master could label a client-facing creative part "light"; a second scale beside §4d's four tiers | **Cut.** What he asked for today is reached without it (item 11) |
+| Autonomy decided per job type, not per employee (D5) | **Replaced** half of B15 (the employee dial) | B15 carries both dials on his word | **Not decided here.** It is a real question since the workers became agents in seats; it comes to him with B15 at the board's re-ordering |
+| Pausing or lowering an advertisement's spend is never gated | **Added** beside B28 ("every launch and every budget move passes the gate") | The two sentences disagree | **His to decide — D3** |
 
-## The one decision this asks of him
+## The decisions this asks of him
 
-- **D1 — the foundation's resident processes go from two to three: an intake, alone with the credentials that read
-  the outside** (item 5). It changes §10 decision 2. Recommended: yes — the process that parses what strangers send
-  must not be the one that can send, publish and pay; its worth is shown at stage 1 with one real reader.
+- **D1 — a third resident process, the intake, alone with the credentials that read the outside** (item 5). It
+  changes §10 decision 2. Recommended: yes — the process that parses what strangers send must not be the one that can
+  send, publish and pay; shown at stage 1 with one real reader.
+- **D2 — may a standing rule one day stand in for the card?** Today every job's paid generation waits for his click
+  on its card. At fifty client jobs a day that is fifty clicks, against the first face (it runs itself). Recommended:
+  **not now, and the door left open** — the ceiling the database enforces is the same whether it came from a card or
+  from a rule of his, so nothing is built twice; when he has seen a run of a service's cards pass without a
+  correction, one word of his turns that service to a standing rule (the way A9 lifts his eye per job type).
+- **D3 — pausing or lowering an advertisement's spend without his click.** Recommended: yes — it stops money, it
+  never starts it; a campaign that burns at night should not wait for the morning. Raising, launching and moving a
+  budget stay gated (B28).
 
 Everything else below is the lead's design inside what he approved, or his own earlier decision carried to its place.
 
-## M. How the board's offices sit on the foundation (added to §2 B; answers F0)
+## M. How an office joins the foundation — the joining contract (added to §2 B; answers F0)
 
-He said the picture of programs on an operating system was only an analogy: the offices and rows already on the board
-are to sit soundly on the foundation, and nothing new is invented. So this part is a list, not a mechanism.
+His requirement, in his words of 2026-11-22: "Bir temel bir sistem var. Ondan sonra ona eklenecek her program onunla
+aynı harmonide çalışıyor … Bize genişleme böyle olur. Ama bize güzel bir operating sistem lazım en başta." The
+picture was an analogy — no general application platform is built — and the requirement is real: **the holding's
+operating system is one base, and whatever is added to it — an office, a line, a company — joins through the same
+doors and works in harmony with the rest, without patching the base.** What is added is what the board holds: the web
+studio (B84), the media studio and its platform hub (B43), the revenue lines (B83), the social-media team and the ad
+factory (B28), and the rows after them.
 
-An office — the web studio (B84), the media studio and its platform hub (B43), the revenue lines (B83) — is what
-PLAN §2 B says: a department and job types on the menu. What it adds, each through a door or the chain the foundation
-already has:
+**The harmony rule — what no office ever brings.** No queue and no timer of its own (item 4), no model call outside
+the model door, no store of conversation or memory, no credential, no outward call outside the outward door, no
+approval rule of its own, no money record outside §2 J, no liveness of its own (item 1), no screen outside B32's
+shell. An office that needs one of these needs it *from the foundation*, and says so.
+
+**What an office adds, each through a door or the chain the foundation already has:**
 
 1. **Its job types** — menu rows (the card of A26, both locales), the owning seat role (A27), the checks it adds, its
-   patterns. The menu is his policy (§2 A): seeded once, then the database is the truth; a new default reaches a live
-   database as a versioned change that says what it changes, and never overwrites a row he changed.
+   patterns. The menu is his policy (§2 A): the office's file carries the first defaults only; from then on the
+   database is the truth, and a new default reaches a live database as a versioned change that says what it changes
+   and never overwrites a row he changed.
 2. **Its book** — a row with path, version and hash (B64's content). A job pins the version it started on (§2 D); a
    version stays readable while a job pinned to it is open.
-3. **Its seat roles and tools** — inside the role ceilings, which stay the code's own reference data (§2 A, §2 C);
-   tools as rows at the tool door.
-4. **Its own records** — ordinary tables in the foundation's chain, added by versioned change at the row's rank,
-   company and client carried by the composite key (§2 B), written only through door functions under §2 C's authority
-   check — run, role, act, job, company **and client**, for reads too. Tried with two clients inside one company, a
-   stale attempt, and a direct call under the runner's login.
+3. **Its seat roles and tools** — inside the foundation's maximum for an agent (§2 C); tools as rows at the tool door.
+4. **Its own records** — tables under its own subject in the foundation's chain, company and client carried by the
+   composite key (§2 B), written only through door functions under §2 C's authority check — run, role, act, job,
+   company **and client**, for reads too. Tried with two clients inside one company, a stale attempt, and a direct
+   call under the runner's login.
 5. **Its outward acts** — classified operations in the one handler registry (§2 H), written and audited as gate
-   code. Office code prepares validated arguments; it never holds a credential. An action under a new name keeps the
-   locked class of the effect it performs.
+   code. Office code prepares validated arguments; the foundation makes the call and holds the key. An action under
+   a new name keeps the locked class of the effect it performs.
 6. **Its area on his screen** — read contracts B32 composes; an interactive choice (B84's three home pages) goes
-   through PLAN's own verdict on an artifact version (§2 D), not a door of the office.
+   through PLAN's own verdict on an artifact version (§2 D).
 
-**What is a change to the foundation, said as one when it is met** — a new lane, a new event type, a new kind of
-artifact, a change to the proxy's configuration. Known now: B43's remote lane (provider concurrency, restart and
-poll) and its pass-through paths in the proxy. Each is a versioned change at that row's rank, not forbidden and not
-hidden. The new "media" event channel stays his open decision at B43's rank (2026-10-26); item 2 does not settle it.
-A spec adaptation a row owns is made in its spec (§2 L).
+**One place per office, and he can see it.** Everything an office declares lives together under its own name — one
+folder in the repository, one subject in the chain. From it the surface can show him an office as one card: its job
+types, its seats and tools, the outward acts it may ask for, what it spent and what it earned (B32 draws it).
 
-**Mixed work — a site that needs a film.** One job, the site's. The film is a part on it: the site master
-commissions it through B43's `media_quote` and `media_submit`, on the job's own card; the part names the media
-book's version, the checks, the quoted lines and the artifact version that comes back; the site master integrates and
-checks the finished site. A request beyond what was sold is a new offer by sales (REVENUE_ENGINE §7sexies 6).
+**The test reports; it does not forbid.** When an office is added or changed, a ruler lists every hand-written change
+that fell outside the office's own place. Each is then either moved in, or named as a change to the foundation — a
+new lane, a new event type, a new kind of artifact, a change to the proxy — versioned and said as such. Known now:
+B43's remote lane (provider concurrency, restart and poll) and its pass-through paths in the proxy. So "yama
+istemiyoruz" is measured on every addition: nothing reaches the base unseen. The new "media" event channel stays his
+open decision at B43's rank (2026-10-26). A spec adaptation a row owns is made in its spec (§2 L).
+
+**The contract's final form comes from two real offices, not from paper.** The first job type is built at stage 1
+with its declarations in its own place; the second office joins with B43 and B84 at their ranks. What both needed in
+common is then frozen as the contract — one declaration file per office, if the two show the same shape. No installer
+is built before that, and nothing is promised about a third office that two have not shown.
+
+**Switching off.** A job type switched off takes no new job; its open jobs, requests and unsettled charges finish
+first. Nothing is dropped (§2 A).
+
+**Mixed work — a site that needs a film.** The example is the board's own (B84's leg of 2026-11-18: the web studio
+calls the media studio's generation through one form): a client's site with a short film on its home page. One job,
+the site's. The film is a part on it: the site master commissions it through B43's `media_quote` and `media_submit`,
+on the job's own card; the part names the media book's version, the checks, the quoted lines and the artifact version
+that comes back; the site master integrates and checks the finished site. A request beyond what was sold is a new
+offer by sales (REVENUE_ENGINE §7sexies 6). *What this leaves out, named:* an order in which the film is large enough
+to deserve a master of its own. The evidence in hand (PLAN §4: one master did coupled work faster and cheaper in four
+studies) speaks for one master; when a trial shows a film too large for a part, it comes back with that evidence.
 
 ## 1. Life at rest (§2 E, §2 F; answers F1)
 
@@ -160,10 +195,14 @@ makes it hold:
 - a top-up of a provider balance is money out at his click (B43); the job's cost line warns and never stops (his word
   of 2026-10-28) — the ceiling refuses to *start* a call, it cuts nothing that runs (§2 F).
 
+**Where the ceiling comes from [D2]:** today always a card he clicked. The reserve does not care — a rule of his could
+set the same ceiling the day he says so; none exists until then.
+
 A paid call that is not generation (a data service, a scraper) is gated singly, as §2 H has it, until a row brings a
 card of its own.
 
-**Advertising spend** follows B28: every launch and every budget move passes the gate. A channel row says whose
+**Advertising spend** follows B28: every launch, every raise and every move of a budget passes the gate. Pausing or
+lowering spend is asked of him as **D3**. A channel row says whose
 account it is and who pays (§2 B gains the two facts): a bill the client pays is not the holding's expense, and an
 amount to be reimbursed is recorded as that.
 
@@ -198,7 +237,15 @@ is the chain of references, so one job is traceable from order to cash: **the si
 two receipts on two instalments). A client's later message is matched by client and thread to the open job's desk.
 *Unverified:* which of these tables the old CRM already has; read with the carry list (§2 K) at stage 4.
 
-## His two examples, walked
+## 11. "The important part by the strongest model, the light part by the lighter one" — no new rule (§2 G)
+
+His word of 2026-11-22 is met by what stands: the master gives a light part — extracting a client's product list
+from a file — to a lighter seat, and a part a human will see — the home page's design — stays on the strongest
+(MODEL_ROUTING §4d: the class decides; §4f: a seat's brain is a floor and is never lowered). No seat is made weaker
+to save cost. Tried at stage 1: creative direction on the strongest eligible route, one mechanical step on a lighter
+one, both recorded with the master's reason.
+
+## The walk — an order from the first message to the money
 
 | Step | Home |
 |---|---|
@@ -221,7 +268,7 @@ two receipts on two instalments). A client's later message is matched by client 
 
 | Synthesis | Disposition |
 |---|---|
-| F0 and §4 gaps 1–3 (what an office registers; its book) | M.1–2 — a list on existing doors; no installer |
+| F0 and §4 gaps 1–3 (what an office registers; its book) | M — the joining contract and the harmony rule; its final form from two real offices |
 | gap 4 (seat roles, lanes) | M.3; B43's remote lane is a named foundation change at B43's rank |
 | gaps 5–6 (outward acts, own records) | M.4–5 — inside the foundation's registry and authority, no office credential |
 | gap 7 (events) | existing events carry a part finishing with an artifact; B43's "media" channel stays his open decision |
@@ -231,12 +278,12 @@ two receipts on two instalments). A client's later message is matched by client 
 | gap 11 (retiring, upgrading) | not built: a job type switched off takes no new job; nothing is retired while a job, a request or an unsettled charge is open |
 | F1 · F2 · F3 · F4 | items 1 · 2 · 3 · 4 |
 | F5 | item 5 — **D1** |
-| F6 | item 6 — his card of 2026-10-18, no new authority |
+| F6 | item 6 — his card of 2026-10-18; a standing rule only by his word (**D2**) |
 | F7 · F8 | items 7 · 8 |
 
 ## What this adds to the order of the build (§6)
 
-- **Stage 0:** the liveness table.
+- **Stage 0:** the liveness table; the ruler that lists what an addition changed outside its own place.
 - **Stage 1**, added to the one job's trials: zero model calls in the idle hour while the liveness rows advance, and
   a stopped engine with an open run shown as stopped; the client's mail read by one real reader under its own login,
   refused when it files for another source (D1's proof); one due time that wakes its owner once and advances nothing;
@@ -258,7 +305,7 @@ two receipts on two instalments). A client's later message is matched by client 
 
 ## Risks this adds
 
-- **More foundation before the first job runs.** Held by the order: stage 1 builds each at its thinnest; the installer
-  and the child job are gone.
+- **More foundation before the first job runs.** Held by the order: stage 1 builds each at its thinnest; no
+  installer is built before two real offices have joined.
 - **A third resident process** — item 5's cost.
 - **An office meets a need this list does not carry.** It comes back as a named, versioned change — not as a patch.

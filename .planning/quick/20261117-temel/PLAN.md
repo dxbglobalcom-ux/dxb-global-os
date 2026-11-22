@@ -464,7 +464,7 @@ it costs, whether it can be simpler, what happens without it. The construction's
 
 Each stage ends with something that runs.
 
-- **Stage 0 — the bench.** Before it, one scan of the board's open rows with one question each — does this row need
+- **Stage 0 — the bench.** Before it, the folder's first cut <!-- CEO-OK: folder-clean-in-two-cuts-choice-left-to-the-lead-2026-11-22 -->: the job papers of the old construction leave, by a list of what stays and what goes that he sees before anything is deleted; the old system's code stays until stage 5, read as the contract while each part is written new. Then one scan of the board's open rows with one question each — does this row need
   something from the foundation that this plan does not carry? What it finds comes back into this plan. The chain's runner, the roles, the new schema beside the old one in the construction
   engine, the rebuild and upgrade tests, the test-lock script. Proven here, with the old battery running beside it:
   that the two systems' tables, roles, clock and broadcast targets do not meet, and that a service role of the new
