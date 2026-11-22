@@ -59,7 +59,7 @@ Durum değerleri: `—` başlanmadı · `YAZILIYOR` · `✓` tamam (derinlik şa
 | 12 | ORGANIZATION_ENGINE_SPEC.md | §15(org) + madde 5.3 | ✓ |
 | 13 | AGENT_ORCHESTRATION_SPEC.md | madde 5.2 + 18 | ✓ |
 | 14 | FABLE_5_HOOK_SPEC.md | madde 7 (Intelligence & Discipline Hook) | ✓ |
-| 15 | EMPLOYEE_PERSONA_STANDARD.md | madde 8 (persona + sicil; CEO emri: tümü Fable yazar) | ✓ |
+| 15 | EMPLOYEE_PERSONA_STANDARD.md | madde 8 (the conduct section every agent carries; the personas are removed — CEO 2026-11-22) | ✓ |
 | 16 | HR_OPERATING_SYSTEM_SPEC.md | madde 9 | ✓ |
 | 17 | PERMISSION_MODEL.md | §15 listesi | ✓ |
 | 18 | HOLDING_OS_PRODUCT_SPEC.md | madde 1 (doğru tanım) | ✓ |

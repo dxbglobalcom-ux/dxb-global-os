@@ -1,25 +1,25 @@
 # HR_OPERATING_SYSTEM_SPEC — AI ÇALIŞAN YAŞAM DÖNGÜSÜ
 
 > Dalga 3 · Yazar: Fable 5 bizzat · Kaynak hüküm: madde 9 birebir ("HR yalnızca çalışan listesi göstermeyecek")
-> Üst: [[SYSTEM_ARCHITECTURE]] · Kardeşler: [[ORGANIZATION_ENGINE_SPEC]] (org fn'leri), [[EMPLOYEE_PERSONA_STANDARD]] (üretim standardı), [[FABLE_5_HOOK_SPEC]] (otomatik donanım), [[MODEL_ROUTING_SPEC]] (model atama)
+> Üst: [[SYSTEM_ARCHITECTURE]] · Kardeşler: [[ORGANIZATION_ENGINE_SPEC]] (org fn'leri), [[EMPLOYEE_PERSONA_STANDARD]] (her ajanın taşıdığı davranış bölümü), [[FABLE_5_HOOK_SPEC]] (otomatik donanım), [[MODEL_ROUTING_SPEC]] (model atama)
 
 ## 1. Amaç
 
-HR = holding'in AI çalışan yaşam döngüsü motoru: oluşturma → donatma → deneme (probation) → aktif işletim (performans/eğitim/terfi) → askı/arşiv. Madde 9'un 22 modülü tek durum makinesi + fn ailesi + HR paneli olarak. Kritik hüküm: HR'ın yarattığı her çalışan OTOMATİK olarak tam donanımla doğar (hook, governance, security, cost, logging, quality, review) — donanımsız çalışan yaratmak İMKÂNSIZDIR (yol yoktur).
+HR = holding'in AI çalışan yaşam döngüsü motoru: oluşturma → donatma → deneme (probation) → aktif işletim (performans/eğitim/terfi) → askı/arşiv. Madde 9'un modülleri (§2) tek durum makinesi + fn ailesi + HR paneli olarak. Kritik hüküm: HR'ın yarattığı her çalışan OTOMATİK olarak tam donanımla doğar (hook, governance, security, cost, logging, quality, review) — donanımsız çalışan yaratmak İMKÂNSIZDIR (yol yoktur).
 
-## 2. Gereksinimler — madde 9'un 22 modülü → mekanizma
+## 2. Gereksinimler — madde 9'un 22 modülünden 21'i → mekanizma (persona oluşturma CEO emriyle kalktı, 2026-11-22 <!-- CEO-OK: personas-removed-workers-are-agents-2026-11-22 -->)
 
 | Modül (direktif) | Mekanizma |
 |------------------|-----------|
-| Çalışan oluşturma | `fn_hr_create_employee` — `draft` durumda doğar. A specialist is added to a department's cupboard as a job through Hamza's door, its persona written through the persona door (B64 v2, decision 6) <!-- CEO-OK: b64-v2-plan-and-six-decisions-his-yes-2026-10-26 --> |
-| Persona oluşturma · Sicil oluşturma | EMPLOYEE_PERSONA akışı (`fn_persona_submit` + sicil satırı otomatik) |
+| Çalışan oluşturma | `fn_hr_create_employee` — `draft` durumda doğar. A specialist is added to a department's cupboard as a job through Hamza's door (B64 v2, decision 6) <!-- CEO-OK: b64-v2-plan-and-six-decisions-his-yes-2026-10-26 --> |
+| Sicil oluşturma | `employee_records` iskeleti `fn_hr_create_employee` içinde otomatik (§6) |
 | Model atama · Departmana atama · Müdüre bağlama | create/move fn parametreleri (ORG fn'lerine delege — ikinci yazım yolu yok). A master's brain is never assigned below Opus 5.5 at `high`, the default brain included, and the model guide is handed to every master (owner: [[MODEL_ROUTING_SPEC]] §4f and A-2026-10-14 items 1 and 3; B64 decisions 2 and 11; B64 v2) <!-- CEO-OK: b64-decisions-1-5-8-9-11-12-16-his-yes-2026-10-14 --> <!-- CEO-OK: b64-v2-plan-and-six-decisions-his-yes-2026-10-26 --> <!-- CEO-OK: b64-v2-heads-and-dept-budgets-go-owner-by-job-2026-10-26 --> <!-- OPEN: B64 --> |
 | Yetki atama · Skill atama · Plugin atama · Tool erişimi | `library_grants` + MCP profil bağlama (`fn_hr_grant`) |
-| Eğitim verme | eğitim paketi = persona revizyonu + library `training` item ataması; `training_needs` düşülür |
+| Eğitim verme | eğitim paketi = library `training` item ataması; `training_needs` düşülür |
 | Performans değerlendirme | günlük HR job'ı: run/violation/review verisinden KPI skoru → `performance_history` |
 | Test görevleri | `fn_hr_assign_probation_task` — sandbox proje altında gerçek görev, sonucu değerlendirmeye girer |
 | Probation süreci | durum makinesi `probation` aşaması (aşağıda §4) |
-| Terfi | `fn_hr_promote` — role_level yükselir, persona revizyon görevi açılır, CEO onayı (director+ için) |
+| Terfi | `fn_hr_promote` — role_level yükselir, CEO onayı (director+ için) |
 | Departman/Müdür/Model değişikliği | ORG/ROUTING fn'lerine delege + sicil `version_history` |
 | Askıya alma · Devre dışı · Arşivleme · Yeniden aktive | durum makinesi geçişleri (ORG fn'leri) |
 
@@ -27,10 +27,10 @@ HR = holding'in AI çalışan yaşam döngüsü motoru: oluşturma → donatma �
 
 ```
 HR panel (dashboard) ──→ /api/control/hr/* ──→ fn_hr_* (SECURITY DEFINER)
-                                              ├─ delege: fn_org_*, fn_persona_*, grant fn
+                                              ├─ delege: fn_org_*, grant fn
                                               └─ HR job'ları (pg-boss, mevcut kuyruk):
                                                   hr.performance_daily · hr.probation_check
-                                                  hr.stale_persona_scan · hr.training_queue
+                                                  hr.training_queue
 ```
 
 Mevcut-varlık eşlemesi: `packages/hr` YENİ (kütüphane + job handler'ları — kernel worker İÇİNDE koşar, yeni resident servis YOK — R5); HR panel `(command)/org/hr` SIFIRDAN; tablolar 0020x org ailesi (yeni tablo gerekmiyor — durum `agents.employment_status`, geçmiş `employee_records`).
@@ -38,23 +38,23 @@ Mevcut-varlık eşlemesi: `packages/hr` YENİ (kütüphane + job handler'ları �
 ## 4. Veri modeli — yaşam döngüsü durum makinesi
 
 ```
-draft ──(donanım tam + persona passed)──→ probation ──(değerlendirme PASS)──→ active
-  │                                          │(FAIL → düzeltme turu veya)──→ archived
-  │                                          └────────────────────────────→ suspended
+draft ──(donanım tam)──→ probation ──(değerlendirme PASS)──→ active
+  │                         │(FAIL → düzeltme turu veya)──→ archived
+  │                         └────────────────────────────→ suspended
 active ⇄ suspended · active ──→ archived · archived ──(CEO kararı + gate yeniden)──→ probation
 dormant: mevcut stok varsayılanı (DATA_MODEL) — HR akışına girmemiş kayıt; aktivasyona giden tek yol bu makine
 ```
 
-Geçiş kuralları fn içinde: `draft→probation` yalnız donanım kontrol listesi TAM ise (§6); `probation→active` yalnız değerlendirme skoru eşiği (`settings 'hr.probation_pass_score'`) + persona `passed`; `→archived` aktif görev/koşu yokken (devir zorunlu). Her geçiş `audit_log` + `version_history` + Broadcast `org`.
+Geçiş kuralları fn içinde: `draft→probation` yalnız donanım kontrol listesi TAM ise (§6); `probation→active` yalnız değerlendirme skoru eşiği (`settings 'hr.probation_pass_score'`); `→archived` aktif görev/koşu yokken (devir zorunlu). Her geçiş `audit_log` + `version_history` + Broadcast `org`. Eski zincirin veritabanı `draft→probation` geçişinde ve aktivasyon tetikleyicisinde hâlâ `passed` bir persona satırı, donanım view'ında yedinci bir kolon (`e7_persona_task`) ister; bu şart eski zincirle birlikte gider (B85).
 
 ## 5. Component yapısı
 
 | Component | Konum | Etiket |
 |-----------|-------|--------|
-| `packages/hr` (fn sarmalayıcı + job handler + compiler/gate — PERSONA spec ile ortak paket) | yeni paket | YENİ |
+| `packages/hr` (fn sarmalayıcı + job handler) | yeni paket | YENİ |
 | `fn_hr_create_employee`, `fn_hr_grant`, `fn_hr_assign_probation_task`, `fn_hr_evaluate`, `fn_hr_promote` | 0020x | YENİ |
 | HR panel: kadro tablosu · yaşam döngüsü panosu · probation kuyruğu · eğitim kuyruğu · performans trendi | `(command)/org/hr` | SIFIRDAN |
-| Çalışan oluşturma sihirbazı (tek akış: kimlik→org yeri→model→grant paketi→persona görevi) | HR panel içinde | SIFIRDAN |
+| Çalışan oluşturma sihirbazı (tek akış: kimlik→org yeri→model→grant paketi) | HR panel içinde | SIFIRDAN |
 
 ## 6. Backend yapısı — otomatik donanım (madde 9 kritik hükmü)
 
@@ -66,9 +66,8 @@ Geçiş kuralları fn içinde: `draft→probation` yalnız donanım kontrol list
 4. Grant paketi: rol şablonundan `library_grants` + MCP profil eşlemesi (PERMISSION_MODEL rol şablonları)
 5. LiteLLM virtual key talebi (COST_CONTROL deseni; key alias `budgets` satırıyla)
 6. Bütçe satırı: `budgets(scope='employee')` varsayılan limitlerle
-7. Persona görevi: `fn_persona_submit` bekleyen iş olarak HR kuyruğuna (author dönem kuralı — G4)
 
-Kontrol listesi sorgusu `v_hr_equipment_check(employee_id)` → 7 kalemin her biri boolean; `draft→probation` geçişi 7/7 ister.
+Kontrol listesi sorgusu `v_hr_equipment_check(employee_id)` → 6 kalemin her biri boolean; `draft→probation` geçişi 6/6 ister.
 
 ## 7. Frontend yapısı
 
@@ -85,7 +84,7 @@ Kontrol listesi sorgusu `v_hr_equipment_check(employee_id)` → 7 kalemin her bi
 
 ## 11. Database tabloları / 12. İlişkiler
 
-Yeni tablo YOK — org ailesi yeter (kanıt: 22 modülün tamamı §2 tablosunda mevcut şemaya eşlendi). `v_hr_equipment_check`, `v_hr_roster`, `v_hr_probation_queue` view'ları 0025x pakette.
+Yeni tablo YOK — org ailesi yeter (kanıt: 21 modülün tamamı §2 tablosunda mevcut şemaya eşlendi). `v_hr_equipment_check`, `v_hr_roster`, `v_hr_probation_queue` view'ları 0025x pakette.
 
 ## 13. Yetkilendirme
 
@@ -93,7 +92,7 @@ Yeni tablo YOK — org ailesi yeter (kanıt: 22 modülün tamamı §2 tablosunda
 
 ## 14. Logging / 15. Audit
 
-Tüm fn'ler audit'li (desen aynı). HR job'ları çalışmalarını `agent_runs` DEĞİL job log'una yazar (LLM koşusu değilse); LLM kullanan HR işleri (persona üretimi, derin review) NORMAL ajan koşusudur — HR çalışanı olarak kadrodadır, kendi personası vardır (HR de bu standarda tabi — öz-uygulama).
+Tüm fn'ler audit'li (desen aynı). HR job'ları çalışmalarını `agent_runs` DEĞİL job log'una yazar (LLM koşusu değilse); LLM kullanan HR işleri (derin review) NORMAL ajan koşusudur — HR çalışanı olarak kadrodadır.
 
 ## 16. Security
 
@@ -101,20 +100,20 @@ Grant paketi rol şablonundan gelir — şablon dışı grant CEO onaylı (yetki
 
 ## 17. Error handling / 18. Retry / 19. Fallback
 
-Create transaction'ı parçalı başarısızlıkta tam geri alınır (yedi adım tek atomik blok; LiteLLM key talebi DB-dışı olduğundan: önce DB commit `key_pending` işaretiyle, key job'ı retry'lı tamamlar — eventual, çalışan `draft`ta bekler, probation'a key'siz geçemez). Değerlendirme job'ı hata verirse kuyrukta kalır (pg-boss retry), probation süresi otomatik uzar (çalışan cezalandırılmaz).
+Create transaction'ı parçalı başarısızlıkta tam geri alınır (altı adım tek atomik blok; LiteLLM key talebi DB-dışı olduğundan: önce DB commit `key_pending` işaretiyle, key job'ı retry'lı tamamlar — eventual, çalışan `draft`ta bekler, probation'a key'siz geçemez). Değerlendirme job'ı hata verirse kuyrukta kalır (pg-boss retry), probation süresi otomatik uzar (çalışan cezalandırılmaz).
 
 ## 20. Test planı
 
 - Durum makinesi: tüm geçerli geçişler + tüm geçersiz geçiş redleri (matris testi).
-- Donanım atomikliği: 7 adımın her birinin yapay hatasında transaction rollback kanıtı.
+- Donanım atomikliği: 6 adımın her birinin yapay hatasında transaction rollback kanıtı.
 - Probation: skor eşiği sınır vakaları (tam eşik, altı, üstü).
 - Delege bütünlüğü: HR üzerinden departman değişimi ORG fn'inin audit izini üretir (çift yol olmadığının kanıtı).
 
 ## 21. Acceptance criteria
 
 - Donanımsız aktif çalışan İMKÂNSIZ: `SELECT count(*) FROM agents WHERE employment_status IN ('probation','active') AND id NOT IN (SELECT employee_id FROM v_hr_equipment_check WHERE all_ok)` → 0.
-- HR panelinden uçtan uca işe alım: sihirbaz → draft → donanım → persona → gate → probation görevi → değerlendirme → active; her adımın DB izi (denetim scripti tek komutla listeler).
-- 22 modülün her birinin UI karşılığı HR panelinde erişilebilir (modül-buton eşleme listesi; eksik = kabul reddi).
+- HR panelinden uçtan uca işe alım: sihirbaz → draft → donanım → probation görevi → değerlendirme → active; her adımın DB izi (denetim scripti tek komutla listeler).
+- 21 modülün her birinin UI karşılığı HR panelinde erişilebilir (modül-buton eşleme listesi; eksik = kabul reddi).
 
 ## 22. Migration planı / 23. Rollback planı
 
@@ -128,22 +127,21 @@ psql "$DB" -c "\df fn_hr_*" | grep -c fn_hr                      # → 5
 # 2. atomiklik kanıtı (test)
 pnpm --filter hr test -- --grep "create rollback"                 # → yeşil
 # 3. uçtan uca işe alım (staging)
-pnpm --filter hr run demo:hire                                    # → çıktıda 7/7 equipment + probation task id
+pnpm --filter hr run demo:hire                                    # → çıktıda 6/6 equipment + probation task id
 psql "$DB" -c "SELECT employment_status FROM agents WHERE id='<yeni>';"  # → probation
 # 4. HR job schedule
-psql "$DB" -c "SELECT name FROM pgboss.schedule WHERE name LIKE 'hr.%';" # → 4 satır
+psql "$DB" -c "SELECT name FROM pgboss.schedule WHERE name LIKE 'hr.%';" # → 3 satır
 ```
 
 ## 25. Bağımlılıklar
 
-0020x org + persona standardı (aktivasyon kilidi) + FABLE_5_HOOK (hook_version) + 0021x (settings eşikleri, model_catalog) + 0024x library (grant'ler — 0024x'ten önce grant adımı `pending_library` işaretiyle geçer, probation 0024x sonrası). MODEL_ROUTING `role_slot='hr'`.
+0020x org + FABLE_5_HOOK (hook_version) + 0021x (settings eşikleri, model_catalog) + 0024x library (grant'ler — 0024x'ten önce grant adımı `pending_library` işaretiyle geçer, probation 0024x sonrası). MODEL_ROUTING `role_slot='hr'`.
 
 ## 26. Riskler / 27. Edge case'ler
 
-- Risk: HR-factory persona kalitesi (Opus dönemi) — panzehir: şablon + mekanik kapı + CEO örneklem onayı (PERSONA §26 sıralaması); kalite düşüşü trendi HR panelinde metrik.
 - Risk: performans skoru oyunlaşır (ajan skoru şişirecek davranış öğrenir) — skor formülü çok-kaynaklı (run başarı + hook ihlal + review + maliyet verimi), formül `settings`te CEO-görünür.
-- Edge: müdür arşivlenirken ekibi (yetim-müdür kuralı ORG'da — HR devir sihirbazı zinciri yeniden bağlar; bu raporlama zinciri iş yönlendirmez, işin sahibi iş türünün ustasıdır — B64 v2 <!-- CEO-OK: b64-v2-plan-and-six-decisions-his-yes-2026-10-26 --> <!-- CEO-OK: b64-v2-heads-and-dept-budgets-go-owner-by-job-2026-10-26 -->); probation'da süresiz kalma (`hr.probation_max_days` aşımı alert + otomatik değerlendirme zorlaması); tüm departman askıya alınırsa (workflow'ları da duraklar — ORCHESTRATION dispatch departman durumunu okur); ilk kuruluş kadro yüklemesi — 153 legacy + Fable'ın olmazsa-olmaz ekleri (EMPLOYEE_PERSONA_STANDARD G7, CEO sözlü ek hükmü 2026-07-10) — (toplu import YOK — her çalışan aynı sihirbaz yolundan, script'lenmiş ama aynı fn'lerle; kayıt-dışı yol açılmaz).
+- Edge: müdür arşivlenirken ekibi (yetim-müdür kuralı ORG'da — HR devir sihirbazı zinciri yeniden bağlar; bu raporlama zinciri iş yönlendirmez, işin sahibi iş türünün ustasıdır — B64 v2 <!-- CEO-OK: b64-v2-plan-and-six-decisions-his-yes-2026-10-26 --> <!-- CEO-OK: b64-v2-heads-and-dept-budgets-go-owner-by-job-2026-10-26 -->); probation'da süresiz kalma (`hr.probation_max_days` aşımı alert + otomatik değerlendirme zorlaması); tüm departman askıya alınırsa (workflow'ları da duraklar — ORCHESTRATION dispatch departman durumunu okur); ilk kuruluş kadro yüklemesi — 153 legacy + Fable'ın olmazsa-olmaz ekleri (CEO sözlü ek hükmü 2026-07-10) — (toplu import YOK — her çalışan aynı sihirbaz yolundan, script'lenmiş ama aynı fn'lerle; kayıt-dışı yol açılmaz).
 
 ## Done definition (bu spec)
 
-27 başlık ✓ · 22 modül → mekanizma eşleme tablosu ✓ · durum makinesi + geçiş kuralları ✓ · otomatik donanım 7-adım atomik listesi (madde 9 kritik hükmü) ✓ · delege deseni (ORG/PERSONA/ROUTING'e — çift yazım yolu yok) ✓ · KALIR/YENİ eşleme ✓ · doğrulama komutları ✓ · Opus-devralma: fn listesi + durum makinesi + view adları kopyala-uygula düzeyinde ✓
+27 başlık ✓ · 21 modül → mekanizma eşleme tablosu ✓ · durum makinesi + geçiş kuralları ✓ · otomatik donanım 6-adım atomik listesi (madde 9 kritik hükmü) ✓ · delege deseni (ORG/ROUTING'e — çift yazım yolu yok) ✓ · KALIR/YENİ eşleme ✓ · doğrulama komutları ✓ · Opus-devralma: fn listesi + durum makinesi + view adları kopyala-uygula düzeyinde ✓
