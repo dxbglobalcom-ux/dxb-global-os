@@ -1,6 +1,6 @@
 // B43 — THE RECORDS RULER'S OWN TEST: does the metre BITE before the records are judged by it?
 //
-// Same discipline as tests/b46/research-ruler.test.ts and tests/personas/persona-ruler.test.ts:
+// Same discipline as tests/b46/research-ruler.test.ts:
 // the ruler is broken on purpose on a COPY of the record held in memory, and each break must go
 // red; then the records as they actually stand must pass every rule. Dictated by the checker
 // session on 2026-09-19, committed by the builder (audit law, 2026-09-15).

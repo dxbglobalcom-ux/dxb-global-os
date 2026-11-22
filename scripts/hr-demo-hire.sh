@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # hr-demo-hire.sh — E5.4b acceptance run (HR spec §21/§24): end-to-end hire through the
-# HR factory fns, plus the atomicity failure-injection proof. Uses the same psql idiom as
-# sync-personas-to-db.sh. The probe employee is cleaned up at the end (roster unpolluted).
+# HR factory fns, plus the atomicity failure-injection proof. Uses the docker-exec psql
+# idiom. The probe employee is cleaned up at the end (roster unpolluted).
 #
 # Recorded adaptation (spec §24-3 expects `pnpm --filter hr run demo:hire`): the package
 # script delegates to this file — packages/hr stays connection-free, DB access via the

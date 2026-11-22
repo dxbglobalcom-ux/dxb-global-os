@@ -1,4 +1,4 @@
-import { existsSync, readFileSync } from "node:fs";
+import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { sql } from "kysely";
@@ -60,17 +60,11 @@ describe("E12.5 workforce completeness — machine gates", () => {
     expect(res.rows.map((r) => r.slug).filter((s) => !promisedSet.has(s))).toEqual([]);
   });
 
-  it("(4) stale persona_path = 0 and every stored path exists on disk", async () => {
+  it("(4) stale persona_path = 0", async () => {
     const stale = await sql<{ c: number }>`
       SELECT count(*)::int AS c FROM agents WHERE persona_path LIKE 'agency-agents/%'
     `.execute(db());
     expect(stale.rows[0].c).toBe(0);
-
-    const paths = await sql<{ slug: string; persona_path: string }>`
-      SELECT slug, persona_path FROM agents WHERE created_at < ${suiteStart}::timestamp
-    `.execute(db());
-    const ghosts = paths.rows.filter((r) => !existsSync(join(REPO, r.persona_path)));
-    expect(ghosts).toEqual([]);
   });
 
   it("(5) org structure: no headless dept, no orphan worker, no fixture debris", async () => {

@@ -23,7 +23,7 @@ while true; do
 
   CORR=$(q "SELECT count(*) FROM (
     SELECT fn_hr_assign_probation_task(a.id,
-      'correction round (clean infra) — first work sample as ' || a.role_level || ' ' || a.role || ' in ' || a.department || ': write your first-week priorities brief exactly as your persona works',
+      'correction round (clean infra) — first work sample as ' || a.role_level || ' ' || a.role || ' in ' || a.department || ': write your first-week priorities brief exactly as your seat works',
       'markdown brief in task.result with sections: Priorities (3-5, role-appropriate), Measures (one per priority, checkable), Risks (>=2). Honest unknowns marked UNVERIFIED. No invented facts, no tool claims — text only.',
       '$ACTOR')
     FROM agents a

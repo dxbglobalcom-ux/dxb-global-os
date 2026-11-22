@@ -18,8 +18,7 @@
 //   +20 owner_dept set (after this run's fill)
 //   +20 usage_notes non-empty
 //   +10 version present
-//   +10 live-link (gateway kinds: capability resolvable today; persona: roster
-//        file on disk)
+//   +10 live-link (gateway kinds: capability resolvable today)
 // review_status: 'approved' when score ≥ 80 AND source verified, else
 // 'needs_review'; rows already 'archived' keep their status (curated).
 //
@@ -80,16 +79,8 @@ const NAME_CUSTODY = {
   "report/solo-kadro-denetim-raporu": "people-hr",
   "report/design-bank-index": "design",
 };
-// Personas: intake left ceo-dir and _library rows NULL on purpose.
-function personaCustody(sourceRef) {
-  if (!sourceRef) return null;
-  if (sourceRef.startsWith("personas/ceo/")) return "ceo";
-  if (sourceRef.startsWith("personas/_library/")) return "people-hr";
-  return null; // dept personas already owned
-}
 
 function custodyFor(item) {
-  if (item.kind === "persona") return personaCustody(item.source_ref);
   return NAME_CUSTODY[`${item.kind}/${item.name}`] ?? KIND_CUSTODY[item.kind] ?? null;
 }
 
@@ -111,8 +102,8 @@ function sourceVerified(item, pins) {
 }
 
 function liveLink(item, pins, verified) {
-  // Gateway kinds: the capability resolves today; persona: roster file real.
-  if (["tool", "mcp", "skill", "plugin", "persona"].includes(item.kind)) {
+  // Gateway kinds: the capability resolves today.
+  if (["tool", "mcp", "skill", "plugin"].includes(item.kind)) {
     if (item.kind === "tool") {
       const [server, ...rest] = item.name.split(".");
       return pins.some((p) => p.server === server && p.tool === rest.join("."));
@@ -126,10 +117,12 @@ async function main() {
   const client = new pg.Client({ connectionString: DB_URL });
   await client.connect();
 
+  // Rows of kind 'persona' (the personas are removed, CEO 2026-11-22) are left
+  // exactly as they stand: not rescored, not re-reviewed, not deleted.
   const { rows: items } = await client.query(
     `SELECT id, kind, name, version, owner_dept, usage_notes, quality_score,
             review_status, source_ref
-       FROM library_items ORDER BY kind, name`,
+       FROM library_items WHERE kind <> 'persona' ORDER BY kind, name`,
   );
   const { rows: pins } = await client.query(
     "SELECT server, tool, quarantined FROM tool_pins",

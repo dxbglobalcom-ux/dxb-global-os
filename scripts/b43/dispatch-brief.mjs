@@ -2,7 +2,7 @@
 // department as a staffed task under an open project, through the company's own tool
 // (`queue_create_task` with agent_slug / project_id / label / label_tr) — the same door
 // Hamza will use from the CEO's chat. Nothing is produced here: the resident worker claims
-// the task within ten seconds, the seat runs with its persona, and the studio's road does
+// the task within ten seconds, the seat runs it, and the studio's road does
 // the rest (queue_dispatch → seats → media lanes → job book).
 //
 //   node scripts/b43/dispatch-brief.mjs --seat media-creative-director --project <uuid> \

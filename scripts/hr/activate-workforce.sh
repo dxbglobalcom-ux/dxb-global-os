@@ -176,7 +176,7 @@ probation)
          '$ID',
          'first work sample as ' || (SELECT role_level || ' ' || role FROM agents WHERE id='$ID') ||
          ' in ' || (SELECT department FROM agents WHERE id='$ID') ||
-         ': write your first-week priorities brief exactly as your persona works',
+         ': write your first-week priorities brief exactly as your seat works',
          'markdown brief in task.result with sections: Priorities (3-5, role-appropriate), Measures (one per priority, checkable), Risks (>=2). Honest unknowns marked UNVERIFIED. No invented facts, no tool claims — text only.',
          '$ACTOR');" > /dev/null < /dev/null
     DONE=$((DONE+1))

@@ -101,22 +101,14 @@ export function titlePairFor(seat: Seat): TitlePair {
 }
 
 /**
- * WHERE THE SEAT'S PERSONA DOCUMENT LIVES on the construction side.
+ * WHAT `agents.persona_path` HOLDS on the construction side.
  *
- * `agents.persona_path` used to point straight into `personas/<dept>/<slug>.md`
- * — the CEO's own authored dossiers, 205 of them — which is a link into his
- * record even after the stored body stopped being a copy of it. The last code
- * review of 2026-08-23 named it, and it is the last of the copies.
- *
- * The path must still be a real file: `tests/e125/workforce-gate.test.ts` case
- * (4) opens every stored path on disk, and `tests/phase3/registry.test.ts` reads one
- * and requires the path to contain `personas/`. (No prompt reads it since 2026-11-22.)
- * So the seed WRITES the generated document to this path — one file per seat,
- * archived seats included — under `var/`, which is not in the repository
- * (`.gitignore:76`): a fixture is a build artefact, not something to commit.
+ * The personas are removed (CEO 2026-11-22): there is no persona document on
+ * disk and nothing opens this column as a file. The column itself stays in the
+ * database's old chain and is NOT NULL, so every seat — archived included —
+ * carries this one constant, which is plainly not a path into any tree.
  */
-export const personaPathFor = (slug: string): string =>
-  `var/construction-fixtures/personas/${slug}.md`;
+export const NO_PERSONA_DOCUMENT = "no-persona-document";
 
 /** A short, stable stamp so a generated document can name its own revision. */
 export const revision = (slug: string): string =>

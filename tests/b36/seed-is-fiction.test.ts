@@ -1,5 +1,4 @@
-import { createHash } from "node:crypto";
-import { existsSync, readFileSync, readdirSync } from "node:fs";
+import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { afterAll, describe, expect, it } from "vitest";
 import { sql } from "kysely";
@@ -10,7 +9,11 @@ import {
   storeNoteFor,
   MEMORY_STORES,
 } from "../../db/seed/generated-holding-core.ts";
-import { personaPathFor, titlePairFor } from "../../db/seed/generated-workforce.ts";
+import {
+  NO_PERSONA_DOCUMENT,
+  personaBodyFor,
+  titlePairFor,
+} from "../../db/seed/generated-workforce.ts";
 
 // B36 · the independent auditor's third FAIL on Block 2, 2026-08-23:
 //
@@ -56,6 +59,11 @@ import { personaPathFor, titlePairFor } from "../../db/seed/generated-workforce.
 // Bellek page. The CEO's own line, 2026-08-23: *"Testlerin ihtiyaç duyduğu
 // yapısal anahtarlar kalabilir; şirket adı, görev metni, proje adı/amacı ve
 // gerçek dosya bağlantıları kopyalanamaz."*
+//
+// 2026-11-22: the personas are removed and the dossier files are gone from the
+// repository, so the cases that compared this engine against them are gone too.
+// The workforce is held from the one side that remains: every stored body and
+// every sicil row must BE the generated fixture, and say so.
 // ─────────────────────────────────────────────────────────────────────────────
 
 const REPO = join(process.cwd());
@@ -64,71 +72,6 @@ const db = () => getDb();
 afterAll(async () => {
   await closeDb();
 });
-
-/** Every persona dossier's authored body, exactly as the file-first sync reads it. */
-function dossierBodies(): Map<string, string> {
-  const out = new Map<string, string>();
-  for (const dept of readdirSync(join(REPO, "personas"))) {
-    const dir = join(REPO, "personas", dept);
-    let entries: string[];
-    try {
-      entries = readdirSync(dir);
-    } catch {
-      continue;
-    }
-    for (const file of entries) {
-      if (!file.endsWith(".md") || file === "README.md") continue;
-      const lines = readFileSync(join(dir, file), "utf8").split("\n");
-      const start = lines.findIndex((l) => l.startsWith("# PERSONA — "));
-      if (start < 0) continue;
-      out.set(file.replace(/\.md$/, ""), lines.slice(start).join("\n"));
-    }
-  }
-  return out;
-}
-
-/** Lines long enough that sharing one is copying, not coincidence. */
-function distinctiveLines(bodies: Iterable<string>): Set<string> {
-  const out = new Set<string>();
-  for (const body of bodies) {
-    for (const line of body.split("\n")) {
-      const t = line.trim();
-      if (t.length >= 60) out.add(t);
-    }
-  }
-  return out;
-}
-
-/** The sicil values the file-first tool copies (row numbers, not labels — the
- *  labels changed language, the numbers never did). */
-const SICIL_ROWS = new Set([10, 11, 12, 13, 15, 17, 18, 20]);
-function dossierSicilValues(): Set<string> {
-  const out = new Set<string>();
-  for (const dept of readdirSync(join(REPO, "personas"))) {
-    let entries: string[];
-    try {
-      entries = readdirSync(join(REPO, "personas", dept));
-    } catch {
-      continue;
-    }
-    for (const file of entries) {
-      if (!file.endsWith(".md")) continue;
-      const seen = new Set<number>();
-      for (const line of readFileSync(join(REPO, "personas", dept, file), "utf8").split("\n")) {
-        const m = /^\|\s*(\d+)\s*\|[^|]*\|(.*)\|\s*$/.exec(line);
-        if (!m) continue;
-        const n = Number(m[1]);
-        if (!SICIL_ROWS.has(n) || seen.has(n)) continue;
-        seen.add(n);
-        const v = m[2].trim().replace(/^`|`$/g, "").trim();
-        if (v.length >= 40) out.add(v);
-      }
-    }
-  }
-  return out;
-}
-
-const md5 = (s: string): string => createHash("md5").update(s).digest("hex");
 
 /**
  * The four places this repository writes company and project TEXT. They are
@@ -199,36 +142,14 @@ function authoredHoldingText(): Set<string> {
 
 
 /**
- * THE TITLES THE COMPANY GAVE ITS PEOPLE — read out of the repository's own two
- * sources, never typed here.
- *
- *   english  row 3 of every persona dossier (the row NUMBER is stable across the
- *            TR/EN label eras; the label is not — the file-first sync matches by
- *            number for exactly this reason)
- *   turkish  `db/migrations/20260713023000_org_bilingual_complete_v15.sql`, which
- *            carries 133 `UPDATE public.agents SET title_tr='…' WHERE slug='…'`
- *            statements and is where the 132 real Turkish titles came from
+ * THE TURKISH TITLES THE COMPANY GAVE ITS PEOPLE — read out of the repository's
+ * own source, never typed here:
+ * `db/migrations/20260713023000_org_bilingual_complete_v15.sql`, which carries
+ * 133 `UPDATE public.agents SET title_tr='…' WHERE slug='…'` statements and is
+ * where the 132 real Turkish titles came from. (The English ones stood only in
+ * the dossier files, removed 2026-11-22.)
  */
-function companyTitles(): { english: Set<string>; turkish: Set<string> } {
-  const english = new Set<string>();
-  for (const dept of readdirSync(join(REPO, "personas"))) {
-    let entries: string[];
-    try {
-      entries = readdirSync(join(REPO, "personas", dept));
-    } catch {
-      continue;
-    }
-    for (const file of entries) {
-      if (!file.endsWith(".md")) continue;
-      for (const line of readFileSync(join(REPO, "personas", dept, file), "utf8").split("\n")) {
-        const m = /^\|\s*3\s*\|[^|]*\|(.*)\|\s*$/.exec(line);
-        if (!m) continue;
-        const v = m[1].trim().replace(/^`|`$/g, "").trim();
-        if (v.length >= 3) english.add(v);
-        break; // row 3 of the sicil table — the first occurrence is the one
-      }
-    }
-  }
+function companyTurkishTitles(): Set<string> {
   const turkish = new Set<string>();
   const mig = readFileSync(
     join(REPO, "db/migrations/20260713023000_org_bilingual_complete_v15.sql"),
@@ -239,7 +160,7 @@ function companyTitles(): { english: Set<string>; turkish: Set<string> } {
   )) {
     turkish.add(m[1].replace(/''/g, "'").trim());
   }
-  return { english, turkish };
+  return turkish;
 }
 
 /** Which of those authored strings this value carries. */
@@ -258,70 +179,38 @@ function canonical(v: unknown): string {
   return JSON.stringify(v);
 }
 
+/** The line every generated persona body carries third — typed here, not derived. */
+const FIXTURE_ANNOUNCEMENT =
+  "> GENERATED FIXTURE. Written by db/seed/build-seed.ts for the DxB_Build";
+
 describe("B36 — the construction site's workforce is fiction, not his record", () => {
-  // THE INSTRUMENT FIRST. A comparison that can find nothing reports a
-  // comfortable zero and proves nothing at all.
-  it("(0) the dossier corpus is real and the comparison can register a copy", () => {
-    const bodies = dossierBodies();
-    expect(bodies.size, "no persona dossiers were read — the comparison is blind").toBeGreaterThan(
-      150,
-    );
-    const lines = distinctiveLines(bodies.values());
-    expect(lines.size, "no distinctive lines were extracted").toBeGreaterThan(1000);
-    const values = dossierSicilValues();
-    expect(values.size, "no sicil values were extracted").toBeGreaterThan(500);
-
-    // A positive control: a body taken straight out of a dossier IS recognised.
-    const [, sample] = [...bodies][0];
-    const fileHashes = new Set([...bodies.values()].map((b) => md5(b)));
-    expect(fileHashes.has(md5(sample)), "the md5 comparison cannot see an exact copy").toBe(true);
-    expect(
-      sample.split("\n").some((l) => lines.has(l.trim())),
-      "the line comparison cannot see a copied line",
-    ).toBe(true);
-  });
-
-  it("(1) no persona body stored here is a dossier file", async () => {
-    const hashes = [...dossierBodies().values()].map((b) => md5(b));
-    const r = await sql<{ n: string; who: string | null }>`
-      SELECT count(*)::text n,
-             string_agg(DISTINCT a.slug, ', ' ORDER BY a.slug) who
-        FROM personas p JOIN agents a ON a.id = p.employee_id
-       WHERE md5(p.body_md) = ANY(${hashes})`.execute(db());
-    expect(
-      Number(r.rows[0].n),
-      `persona rows holding a dossier file byte for byte: ${r.rows[0].who ?? ""}`,
-    ).toBe(0);
-  });
-
-  it("(2) no persona body stored here shares an authored line with a dossier", async () => {
-    const lines = distinctiveLines(dossierBodies().values());
-    const rows = await sql<{ slug: string; body_md: string }>`
-      SELECT a.slug, p.body_md FROM personas p JOIN agents a ON a.id = p.employee_id`.execute(db());
+  it("(1) every persona body stored here is the generated fixture for its seat, and says so", async () => {
+    const rows = await sql<{
+      slug: string; department: string | null; role_level: string | null; body_md: string;
+    }>`
+      SELECT a.slug, a.department, a.role_level, p.body_md
+        FROM personas p JOIN agents a ON a.id = p.employee_id ORDER BY a.slug`.execute(db());
     expect(rows.rows.length, "there are no personas here to judge").toBeGreaterThan(150);
-    const copied: string[] = [];
-    for (const row of rows.rows) {
-      const hit = row.body_md.split("\n").find((l) => lines.has(l.trim()));
-      if (hit) copied.push(`${row.slug}: ${hit.trim().slice(0, 90)}`);
-    }
-    expect(copied.slice(0, 8), `${copied.length} persona rows carry authored dossier lines`).toEqual(
-      [],
-    );
+    const unannounced = rows.rows
+      .filter((r) => r.body_md.split("\n")[2] !== FIXTURE_ANNOUNCEMENT)
+      .map((r) => r.slug);
+    expect(unannounced.slice(0, 8), `${unannounced.length} persona row(s) do not announce themselves`)
+      .toEqual([]);
+    const wrong = rows.rows.filter((r) => r.body_md !== personaBodyFor(r)).map((r) => r.slug);
+    expect(wrong.slice(0, 8), `${wrong.length} persona row(s) are not what the seed generates`)
+      .toEqual([]);
   });
 
-  it("(3) no employee record here carries a sicil entry out of a dossier", async () => {
-    const values = [...dossierSicilValues()];
-    const r = await sql<{ n: string }>`
-      SELECT count(*)::text n
-        FROM employee_records e
-        CROSS JOIN LATERAL unnest(
-          ARRAY[e.decision_scope, e.methodology, e.reporting_standard,
-                e.quality_standard, e.escalation_rules]
-          || coalesce(e.responsibilities, '{}')
-          || coalesce(e.authority_limits, '{}')
-          || coalesce(e.expertise, '{}')) AS f(v)
-       WHERE f.v = ANY(${values})`.execute(db());
-    expect(Number(r.rows[0].n), "sicil field values copied verbatim from his dossiers").toBe(0);
+  it("(3) every employee record here says it is a generated fixture", async () => {
+    const rows = await sql<{ slug: string; note: string | null }>`
+      SELECT a.slug, e.version_history -> 0 ->> 'note' AS note
+        FROM employee_records e JOIN agents a ON a.id = e.employee_id ORDER BY a.slug`.execute(db());
+    expect(rows.rows.length, "there are no employee records here to judge").toBeGreaterThan(150);
+    const unannounced = rows.rows
+      .filter((r) => !(r.note ?? "").includes("generated fixture"))
+      .map((r) => r.slug);
+    expect(unannounced.slice(0, 8), `${unannounced.length} sicil row(s) do not announce themselves`)
+      .toEqual([]);
   });
 
   it("(4) and the workforce is still whole — fiction, not an empty table", async () => {
@@ -461,7 +350,7 @@ describe("B36 — the construction site's workforce is fiction, not his record",
 
   // ── the last three columns that were still his ─────────────────────────────
 
-  it("(9) no employee's persona document is one of his — and every generated path is real", async () => {
+  it("(9) no employee points at a persona document — his or anybody's", async () => {
     const rows = await sql<{ slug: string; persona_path: string | null }>`
       SELECT slug, persona_path FROM agents ORDER BY slug`.execute(db());
     expect(rows.rows.length, "there are no employees here at all").toBeGreaterThan(200);
@@ -477,26 +366,20 @@ describe("B36 — the construction site's workforce is fiction, not his record",
       `${intoHisTree.length} employee(s) still point at the repository's real dossier tree`,
     ).toEqual([]);
 
+    // The column is NOT NULL in the database's old chain, so the seed stamps one
+    // constant on every seat. The value is spelled here as well as imported: the
+    // constant drifting back into a path must fail this case, not follow it.
+    expect(NO_PERSONA_DOCUMENT).toBe("no-persona-document");
     const wrong = rows.rows
-      .filter((r) => r.persona_path !== personaPathFor(r.slug))
+      .filter((r) => r.persona_path !== NO_PERSONA_DOCUMENT)
       .map((r) => `${r.slug}: ${String(r.persona_path)}`);
-    expect(wrong.slice(0, 8), "paths that are not what the seed generates").toEqual([]);
-
-    // A generated path that is not on disk would break the workforce gate, the
-    // registry tool and the live answer lane — the reason the seed writes the
-    // document rather than only naming it.
-    const missing = rows.rows
-      .filter((r) => !existsSync(join(REPO, r.persona_path ?? "")))
-      .map((r) => `${r.slug}: ${String(r.persona_path)}`);
-    expect(missing.slice(0, 8), "generated persona documents that do not exist").toEqual([]);
+    expect(wrong.slice(0, 8), `${wrong.length} path(s) are not the seed's constant`).toEqual([]);
   });
 
   it("(10) no employee wears a title the company gave him — either language", async () => {
-    const { english, turkish } = companyTitles();
+    const turkish = companyTurkishTitles();
     // THE INSTRUMENT FIRST.
-    expect(english.size, "no dossier titles were read — the check is blind").toBeGreaterThan(100);
     expect(turkish.size, "no Turkish titles were read — the check is blind").toBeGreaterThan(130);
-    expect(english.has("Head of Commerce"), "the English extraction missed a known title").toBe(true);
     expect(turkish.has("CEO Ofisi Müdürü"), "the Turkish extraction missed a known title").toBe(true);
 
     const rows = await sql<{
@@ -504,7 +387,7 @@ describe("B36 — the construction site's workforce is fiction, not his record",
       department: string | null; role_level: string | null;
     }>`SELECT slug, title, title_tr, department, role_level FROM agents ORDER BY slug`.execute(db());
     const worn = rows.rows
-      .filter((r) => english.has(r.title ?? "\u0000") || turkish.has(r.title_tr ?? "\u0000"))
+      .filter((r) => turkish.has(r.title_tr ?? "\u0000"))
       .map((r) => `${r.slug}: "${String(r.title)}" / "${String(r.title_tr)}"`);
     expect(
       worn.slice(0, 8),

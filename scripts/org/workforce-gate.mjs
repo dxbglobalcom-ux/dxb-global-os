@@ -91,12 +91,7 @@ const debris = await sql`
 `.execute(db);
 gate("fixture-debris", debris.rows[0].c === 0, `count ${debris.rows[0].c}`);
 
-// 8. File-first integrity: every persona_path (live AND archived) exists on disk.
-const allPaths = await sql`SELECT slug, persona_path FROM agents`.execute(db);
-const ghosts = allPaths.rows.filter((r) => !existsSync(join(REPO, r.persona_path)));
-gate("persona-file-exists", ghosts.length === 0, ghosts.length ? ghosts.map((r) => `${r.slug}→${r.persona_path}`).join(" ") : `all ${allPaths.rows.length} paths on disk`);
-
-// 9. DEPUTY-FAILOVER-MAP covers the SPOF set (plan §6.2) + every dept head slug.
+// 8. DEPUTY-FAILOVER-MAP covers the SPOF set (plan §6.2) + every dept head slug.
 const mapPath = join(REPO, "HOLDING-OS-MASTER-PLAN/DEPUTY-FAILOVER-MAP.md");
 if (!existsSync(mapPath)) {
   gate("deputy-failover-map", false, "file missing");

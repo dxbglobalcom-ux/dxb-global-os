@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // E9.5 — Holding Library intake (HOLDING_LIBRARY_SPEC G4/§24/§26).
 // Brings the EXISTING scattered assets into the record — skills dirs, plugin
-// cache, tool_pins, dxb-mcp groups, personas/, gateway policy files, corpus
+// cache, tool_pins, dxb-mcp groups, gateway policy files, corpus
 // docs, research, reports, study cards, workspace packages. Nothing invented:
 // every row points at a real source (source_ref, §16 — body never enters DB).
 //
@@ -50,7 +50,7 @@ if (!DB_URL) {
 }
 
 const KINDS = [
-  "skill", "plugin", "tool", "mcp", "prompt_template", "persona", "policy",
+  "skill", "plugin", "tool", "mcp", "prompt_template", "policy",
   "governance_rule", "workflow", "sop", "framework", "code_component",
   "design_system", "research", "report", "project_doc", "training",
   "memory_source", "best_practice", "lesson_learned",
@@ -130,27 +130,6 @@ function discoverMcpGroups() {
         usage_notes: `DXB MCP tool group (${group}_* tools).`,
       });
     });
-}
-
-function discoverPersonas() {
-  const dir = join(ROOT, "personas");
-  const out = [];
-  for (const dept of listDirs(dir)) {
-    for (const f of listFiles(join(dir, dept), ".md")) {
-      if (f === "README.md") continue;
-      out.push(
-        asset("persona", basename(f, ".md"), {
-          source_ref: `personas/${dept}/${f}`,
-          usage_notes:
-            dept === "_library"
-              ? null // curated archived templates — never overwrite their notes
-              : `Employee persona (roster file, dept ${dept}); body lives in the personas table (§27 single source).`,
-          owner_dept: dept === "_library" || dept === "ceo" ? null : dept,
-        }),
-      );
-    }
-  }
-  return out;
 }
 
 function discoverPolicies() {
@@ -299,7 +278,6 @@ async function main() {
     ...discoverPlugins(),
     ...(await discoverTools(client)),
     ...discoverMcpGroups(),
-    ...discoverPersonas(),
     ...discoverPolicies(),
     ...gov,
     ...discoverSops(),
@@ -311,8 +289,8 @@ async function main() {
     ...discoverDesignSystem(),
   ];
 
-  // Existing record (any version — the 15 archived _library personas carry
-  // v1.0-legacy and must match by kind+name, not duplicate on version null).
+  // Existing record (any version — a row that carries its own version tag
+  // must match by kind+name, not duplicate on version null).
   const { rows: existing } = await client.query(
     "SELECT id, kind, name, version, usage_notes, source_ref, owner_dept FROM library_items",
   );

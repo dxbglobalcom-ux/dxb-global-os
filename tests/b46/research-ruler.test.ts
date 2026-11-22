@@ -2,8 +2,7 @@
 //
 // The house rule the CEO registered on 2026-09-15: an audit's ruler is a runnable script, handed
 // to the builder before the work, and builder and checker run the same script. A ruler nobody has
-// tested is a second opinion, not a metre. This file does to `tests/b46/research-ruler.ts` what
-// `tests/personas/persona-ruler.test.ts` does to the persona ruler: it breaks the engine on
+// tested is a second opinion, not a metre. This file breaks `tests/b46/research-ruler.ts`'s engine on
 // purpose, one rule at a time, on a COPY, and checks that the rule goes red — and then that the
 // engine as it actually stands passes every rule.
 

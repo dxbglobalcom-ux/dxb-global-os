@@ -8,7 +8,7 @@
  * rows. A copy is a leak with a different name. This builds the same SHAPE from
  * the repository's own files and generates the rest.
  *
- * Every step below reads FILES — migrations, persona dossiers, the library
+ * Every step below reads FILES — migrations, the library
  * catalogue, the routing table, the pinned tool manifest — or writes rows this
  * script invents. No step reads the company database. The guard at the top
  * refuses to run against it at all, by asking the server who it is rather than
@@ -27,15 +27,15 @@
  */
 import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
-import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 import { sql } from "kysely";
 import { closeDb, getDb } from "../../packages/shared/dist/db.js";
 import { readDxbMcpInventory, DXB_MCP_SERVER_NAME } from "../../packages/gateway/dist/index.js";
 import {
+  NO_PERSONA_DOCUMENT,
   personaBodyFor,
-  personaPathFor,
   sicilFor,
   titlePairFor,
   type Seat,
@@ -135,7 +135,6 @@ let wrote = 0;
 let swpt = 0;
 let rewritten = 0;
 let stamped = 0;
-let files = 0;
 
 /** What the pin step believed and wrote this run, handed to its own measure(). */
 let pinRun: PinnedCorpus | null = null;
@@ -253,6 +252,11 @@ const steps: Array<{ name: string; run: () => void | Promise<void>; measure: () 
   {
     // THE WORKFORCE IS INVENTED HERE, not copied.
     //
+    // The personas are removed (CEO 2026-11-22) and no prompt reads these rows.
+    // They are still generated for one reason: the database's old chain stays,
+    // and its triggers refuse an ACTIVE employee without a gate-passed persona
+    // row. This step and the gate/bind/activate step below exist to satisfy them.
+    //
     // Until 2026-08-23 this step ran the company's own file-first persona sync
     // and put all 199 authored dossiers into the construction database word for
     // word — measured: 199 of 199 bodies were a dossier file byte for byte. The
@@ -342,33 +346,26 @@ const steps: Array<{ name: string; run: () => void | Promise<void>; measure: () 
     //
     // Three things are written together because they must agree:
     //   · `title` / `title_tr` — invented, paired, whole-language on both sides
-    //   · `persona_path` — a generated document under `var/`, written here so the
-    //     path is REAL: the workforce gate opens every stored path on disk, the
-    //     registry tool requires `personas/` in it, and the live answer lane
-    //     reads the file to give an employee its identity.
-    name: "generated titles and persona documents",
+    //   · `persona_path` — one constant that names no file. The personas are
+    //     removed (CEO 2026-11-22): no document is written and nothing opens the
+    //     column as a path, but it is NOT NULL in the database's old chain.
+    name: "generated titles and the persona-path constant",
     run: async () => {
-      const dir = join(REPO, "var/construction-fixtures/personas");
-      mkdirSync(dir, { recursive: true });
       stamped = 0;
-      files = 0;
       for (const seat of await allSeats()) {
-        const path = personaPathFor(seat.slug);
-        writeFileSync(join(REPO, path), personaBodyFor(seat), "utf8");
-        files++;
         const t = titlePairFor(seat);
         const r = await sql`
           UPDATE agents
-             SET title = ${t.title}, title_tr = ${t.title_tr}, persona_path = ${path}
+             SET title = ${t.title}, title_tr = ${t.title_tr}, persona_path = ${NO_PERSONA_DOCUMENT}
            WHERE id = ${seat.id}::uuid
              AND (title, title_tr, persona_path)
-                 IS DISTINCT FROM (${t.title}, ${t.title_tr}, ${path})`.execute(getDb());
+                 IS DISTINCT FROM (${t.title}, ${t.title_tr}, ${NO_PERSONA_DOCUMENT})`.execute(getDb());
         stamped += Number(r.numAffectedRows ?? 0);
       }
     },
     measure: async () =>
-      `${files} document(s) written · ${stamped} employee(s) restamped · ` +
-      `${await one("SELECT count(*) FROM agents WHERE persona_path LIKE 'personas/%'")} still pointing at a dossier`,
+      `${stamped} employee(s) restamped · ` +
+      `${await one(`SELECT count(*) FROM agents WHERE persona_path <> '${NO_PERSONA_DOCUMENT}'`)} pointing at a document`,
   },
   {
     // Gate → bind → activate. On the company each of these is a separate
@@ -406,9 +403,8 @@ COMMIT;`);
   {
     // The sicil, invented for the same reason and by the same rule. Measured
     // before this change: 975 field values in employee_records here were the
-    // CEO's own dossier wording, copied out of the files one for one by
-    // scripts/sync-employee-records.py — which is the right tool on the COMPANY,
-    // where the dossier IS the source, and the wrong one here.
+    // CEO's own dossier wording, copied out of the files one for one by the
+    // file-first sicil sync (removed with the personas, 2026-11-22).
     //
     // The operational columns (performance, errors, reviews, training needs) are
     // not touched: they fill with real operation on this engine or they stay
