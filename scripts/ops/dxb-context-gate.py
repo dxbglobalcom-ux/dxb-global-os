@@ -5,7 +5,8 @@ The CEO's numbers, 2026-09-26 ("tmm önerini yapalım"): at 50 % of its context 
 session hands over at the first clean break, and at 55 % it opened no more
 subagents. His word of 2026-10-06 (handover-at-the-clean-break-2026-10-06): the clean break
 and the quality decide, not the number -- a piece is finished well, subagents included, even
-when that takes the session to about 60 %; the refusal moved to 60 %. The rule was text only,
+when that takes the session to about 60 %; the refusal moved to 60 %. His word of 2026-11-22: a piece
+is cut to end before 45 %, and the lines are said at 45 % and 50 %. The rule was text only,
 and on 2026-09-26 he caught the chief
 engineer at 48 % with no handover, past the line of then; his word on the fix
 the same night ("tmm önerini uygula.") made it this hook. Until 2026-11-16 it put a red line
@@ -37,7 +38,7 @@ failure is in the .err log.
 
 Two prompts of one session decide one after the other: reading the state,
 saying the line and writing the state happen under an exclusive lock on
-<session_id>.gate-lock, so a prompt at 55 % and one at 61 % that overlap leave
+<session_id>.gate-lock, so a prompt at 47 % and one at 51 % that overlap leave
 both thresholds recorded and each line said once. A prompt that finds the lock
 still held after LOCK_WAIT_S says nothing -- the one holding it says what is
 due -- and never waits longer. A lock that cannot be taken at all (its file
@@ -78,12 +79,12 @@ import sys
 import time
 import traceback
 
-# His numbers (CEO, 2026-09-26; 40 / 45 from 2026-09-21 until then).
+# His numbers (CEO, 2026-11-22; 50 / 60 from 2026-09-26 until then, 40 / 45 before).
 # Change them here; nothing else holds them.
 # Used context, in percent, at which the handover line is said, once:
-RED_LINE_PCT = 50
+RED_LINE_PCT = 45
 # Used context, in percent, at which the session is told, once, to finish the piece in hand and hand over:
-FINISH_LINE_PCT = 60
+FINISH_LINE_PCT = 50
 
 # The session ids dxb-statusline.js writes a record for (its /^[0-9a-f-]{8,}$/i); no other id is read.
 SESSION_ID = re.compile(r"[0-9a-f-]{8,}", re.IGNORECASE)

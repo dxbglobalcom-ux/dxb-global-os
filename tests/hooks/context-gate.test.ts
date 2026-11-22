@@ -2,8 +2,9 @@
 // The CEO's numbers of 2026-09-26 ("tmm önerini yapalım"; 40 / 45 from 2026-09-21 until then): from
 // 50 % of its context a session hands over at the first clean break; on his word of 2026-09-26
 // ("tmm önerini uygula.") a hook holds them. Since 2026-11-16 the hook only informs (his word of
-// 2026-11-10: the meter shows, it does not stop): it says its line once at 50 % and once at 60 %, not on
-// every prompt, and refuses no tool -- until then it refused the Agent tool from 60 %. A threshold the context
+// 2026-11-10: the meter shows, it does not stop): it says its line once, not on every prompt, and refuses no
+// tool -- until then it refused the Agent tool from 60 %. Its lines were at 50 % and 60 % until 2026-11-22, and
+// are at 45 % and 50 % since (his numbers of 2026-11-22). A threshold the context
 // has fallen back below (a compaction) is forgotten, so each climb says its line once; two prompts of one
 // session decide one after the other, under the session's lock; the state is read only as a regular file,
 // never through a link and never blocking (the blind audit of 90a0f96e, 2026-11-16). The hook lives
@@ -133,15 +134,15 @@ function said(out: string): string {
   return a.additionalContext;
 }
 
-/** the line said once from 50 %, word for word */
+/** the line said once from 45 %, word for word */
 const redLine = (pct: number) =>
-  `🔴 CONTEXT ${pct}% — past 50 %: hand over at the first clean break (dxb-team3 §7): no battery running, tree `
+  `🔴 CONTEXT ${pct}% — past 45 %: hand over at the first clean break (dxb-team3 §7): no battery running, tree `
   + "committed, report sent; then the handover note and the successor session through operator. The job continues "
   + "in the successor; nothing is cut. Said once; `dxb-ctx --pct` prints the number.";
 
-/** the line said once from 60 %, word for word */
+/** the line said once from 50 %, word for word */
 const finishLine = (pct: number) =>
-  `🔴 CONTEXT ${pct}% — past 60 %: finish the piece in hand well and hand over at this clean break (dxb-team3 §7). `
+  `🔴 CONTEXT ${pct}% — past 50 %: finish the piece in hand well and hand over at this clean break (dxb-team3 §7). `
   + "The clean break and the quality decide, not the number; you judge it. Said once.";
 
 /** takes the session's lock as a prompt of it still deciding would, and holds it until the returned function is
@@ -161,7 +162,7 @@ async function holdLock(dir: string, sid: string): Promise<() => Promise<void>> 
   return async () => { holder.stdin.end(); await gone; };
 }
 
-describe("under 50 % the gate is silent; its line is said once at 50 % and once at 60 %, not on every prompt", () => {
+describe("under 45 % the gate is silent; its line is said once at 45 % and once at 50 %, not on every prompt", () => {
   it("says nothing and logs nothing when the session has no record", () => {
     const dir = box();
     expect(gate(dir, prompt(SID))).toBe("");
@@ -169,9 +170,9 @@ describe("under 50 % the gate is silent; its line is said once at 50 % and once 
     expect(existsSync(LOG(dir))).toBe(false);
     expect(existsSync(ERR(dir))).toBe(false);
   });
-  it("at 49: nothing on a prompt, nothing on Agent, nothing remembered", () => {
+  it("at 44: nothing on a prompt, nothing on Agent, nothing remembered", () => {
     const dir = box();
-    record(dir, SID, 49);
+    record(dir, SID, 44);
     expect(gate(dir, prompt(SID))).toBe("");
     expect(gate(dir, pre(SID, "Agent", SPAWN))).toBe("");
     expect(existsSync(LOG(dir))).toBe(false);
@@ -179,31 +180,31 @@ describe("under 50 % the gate is silent; its line is said once at 50 % and once 
     // a session that never reached a threshold leaves nothing beside its record, a lock neither
     expect(readdirSync(join(dir, "claude-ctx"))).toEqual([`${SID}.json`]);
   });
-  it("at 50: the line once — the next prompt, and one at 55, carry nothing — and exactly one line logged", () => {
+  it("at 45: the line once — the next prompt, and one at 47, carry nothing — and exactly one line logged", () => {
     const dir = box();
-    record(dir, SID, 50);
-    expect(said(gate(dir, prompt(SID)))).toBe(redLine(50));
+    record(dir, SID, 45);
+    expect(said(gate(dir, prompt(SID)))).toBe(redLine(45));
     expect(gate(dir, prompt(SID))).toBe("");
-    record(dir, SID, 55);
+    record(dir, SID, 47);
     expect(gate(dir, prompt(SID))).toBe("");
     const lines = logged(dir);
     expect(lines).toHaveLength(1);
-    expect(lines[0]).toMatchObject({ decision: "red-line", used_pct: 50, event: "UserPromptSubmit", session_id: SID });
+    expect(lines[0]).toMatchObject({ decision: "red-line", used_pct: 45, event: "UserPromptSubmit", session_id: SID });
     expect(Object.keys(lines[0]).sort()).toEqual(["decision", "event", "record_age_s", "session_id", "ts", "used_pct"]);
   });
-  it("first seen at 59: the 50 line; at 60 the 60 line, once; at 61 and at 90 nothing more", () => {
+  it("first seen at 49: the 45 line; at 50 the 50 line, once; at 51 and at 90 nothing more", () => {
     const dir = box();
-    record(dir, SID, 59);
-    expect(said(gate(dir, prompt(SID)))).toBe(redLine(59));
-    record(dir, SID, 60);
-    expect(said(gate(dir, prompt(SID)))).toBe(finishLine(60));
-    for (const pct of [60, 61, 90]) {
+    record(dir, SID, 49);
+    expect(said(gate(dir, prompt(SID)))).toBe(redLine(49));
+    record(dir, SID, 50);
+    expect(said(gate(dir, prompt(SID)))).toBe(finishLine(50));
+    for (const pct of [50, 51, 90]) {
       record(dir, SID, pct);
       expect(gate(dir, prompt(SID)), String(pct)).toBe("");
     }
-    expect(logged(dir).map((l) => [l.decision, l.used_pct])).toEqual([["red-line", 59], ["red-line", 60]]);
+    expect(logged(dir).map((l) => [l.decision, l.used_pct])).toEqual([["red-line", 49], ["red-line", 50]]);
   });
-  it("a session already past 60 the first time the gate sees it gets the 60 line only", () => {
+  it("a session already past 50 the first time the gate sees it gets the 50 line only", () => {
     const dir = box();
     record(dir, SID, 72);
     expect(said(gate(dir, prompt(SID)))).toBe(finishLine(72));
@@ -212,87 +213,87 @@ describe("under 50 % the gate is silent; its line is said once at 50 % and once 
   });
   it("what one session was told does not silence another", () => {
     const dir = box();
-    record(dir, SID, 50);
-    record(dir, OTHER, 50);
-    expect(said(gate(dir, prompt(SID)))).toBe(redLine(50));
-    expect(said(gate(dir, prompt(OTHER)))).toBe(redLine(50));
+    record(dir, SID, 45);
+    record(dir, OTHER, 45);
+    expect(said(gate(dir, prompt(SID)))).toBe(redLine(45));
+    expect(said(gate(dir, prompt(OTHER)))).toBe(redLine(45));
   });
-  it("an old record still says its line: 61 written two hours ago, and the log carries its age", () => {
+  it("an old record still says its line: 51 written two hours ago, and the log carries its age", () => {
     const dir = box();
-    record(dir, SID, 61, 2 * HOUR);
-    expect(said(gate(dir, prompt(SID)))).toBe(finishLine(61));
+    record(dir, SID, 51, 2 * HOUR);
+    expect(said(gate(dir, prompt(SID)))).toBe(finishLine(51));
     expect(logged(dir)[0].record_age_s).toBeGreaterThanOrEqual(7000);
   });
   it("what it leaves beside the record is its state and its lock: the state whole, no temporary file", () => {
     const dir = box();
-    record(dir, SID, 50);
+    record(dir, SID, 45);
     gate(dir, prompt(SID));
     expect(readdirSync(join(dir, "claude-ctx")).sort()).toEqual([`${SID}.gate-lock`, `${SID}.gate-said`, `${SID}.json`]);
-    expect(readFileSync(saidPath(dir, SID), "utf8")).toBe("[50]");
+    expect(readFileSync(saidPath(dir, SID), "utf8")).toBe("[45]");
   });
 });
 
 // The second auditor's finding, 2026-11-16: the state was never cleared, so after /compact or an automatic
 // compaction the number fell, climbed again, and nothing was said the second time.
 describe("a threshold the context has fallen back below is forgotten: each climb says its line once", () => {
-  it("told at 72, down to 55: nothing is said and only 50 is remembered; up to 61 again: the 60 line again", () => {
+  it("told at 72, down to 47: nothing is said and only 45 is remembered; up to 51 again: the 50 line again", () => {
     const dir = box();
     record(dir, SID, 72);
     expect(said(gate(dir, prompt(SID)))).toBe(finishLine(72));
-    expect(remembered(dir, SID)).toEqual([50, 60]);
-    record(dir, SID, 55);
+    expect(remembered(dir, SID)).toEqual([45, 50]);
+    record(dir, SID, 47);
     expect(gate(dir, prompt(SID))).toBe("");
-    expect(remembered(dir, SID)).toEqual([50]);
-    record(dir, SID, 61);
-    expect(said(gate(dir, prompt(SID)))).toBe(finishLine(61));
+    expect(remembered(dir, SID)).toEqual([45]);
+    record(dir, SID, 51);
+    expect(said(gate(dir, prompt(SID)))).toBe(finishLine(51));
     expect(gate(dir, prompt(SID))).toBe("");
   });
-  it("told both, down to 45: the state is empty again; the next climb says the 50 line, then the 60 line", () => {
+  it("told both, down to 40: the state is empty again; the next climb says the 45 line, then the 50 line", () => {
     const dir = box();
-    record(dir, SID, 45);
-    writeFileSync(saidPath(dir, SID), "[50, 60]");
+    record(dir, SID, 40);
+    writeFileSync(saidPath(dir, SID), "[45, 50]");
     expect(gate(dir, prompt(SID))).toBe("");
     expect(remembered(dir, SID)).toEqual([]);
-    record(dir, SID, 55);
-    expect(said(gate(dir, prompt(SID)))).toBe(redLine(55));
+    record(dir, SID, 47);
+    expect(said(gate(dir, prompt(SID)))).toBe(redLine(47));
     expect(gate(dir, prompt(SID))).toBe("");
-    record(dir, SID, 61);
-    expect(said(gate(dir, prompt(SID)))).toBe(finishLine(61));
-    expect(logged(dir).map((l) => l.used_pct)).toEqual([55, 61]);
+    record(dir, SID, 51);
+    expect(said(gate(dir, prompt(SID)))).toBe(finishLine(51));
+    expect(logged(dir).map((l) => l.used_pct)).toEqual([47, 51]);
   });
 });
 
 // Sol's finding B, 2026-11-16: read, say and write were not ordered between two prompts of one session — a
-// prompt at 55 and one at 61 overlapping could leave [50], and the 60 line was said again.
+// prompt at 55 and one at 61 overlapping could leave [50], and the 60 line was said again (the lines of then).
 describe("two prompts of one session decide one after the other", () => {
-  it("while a prompt at 55 still holds the session's lock, one at 61 says nothing, returns in time and loses nothing; after it both thresholds are recorded", async () => {
+  it("while a prompt at 47 still holds the session's lock, one at 51 says nothing, returns in time and loses nothing; after it both thresholds are recorded", async () => {
     const dir = box();
-    record(dir, SID, 55);
-    expect(said(gate(dir, prompt(SID)))).toBe(redLine(55));
+    record(dir, SID, 47);
+    expect(said(gate(dir, prompt(SID)))).toBe(redLine(47));
     const release = await holdLock(dir, SID);
     let waitedMs = 0;
     try {
-      record(dir, SID, 61);
+      record(dir, SID, 51);
       const started = Date.now();
       expect(gate(dir, prompt(SID))).toBe("");
       waitedMs = Date.now() - started;
-      expect(remembered(dir, SID)).toEqual([50]);
+      expect(remembered(dir, SID)).toEqual([45]);
     } finally {
       await release();
     }
     // a short, bounded wait for the lock — far from the limit that would fail the spawn
     expect(waitedMs).toBeLessThan(3000);
-    expect(said(gate(dir, prompt(SID)))).toBe(finishLine(61));
-    expect(remembered(dir, SID)).toEqual([50, 60]);
+    expect(said(gate(dir, prompt(SID)))).toBe(finishLine(51));
+    expect(remembered(dir, SID)).toEqual([45, 50]);
     expect(gate(dir, prompt(SID))).toBe("");
-    expect(logged(dir).map((l) => l.used_pct)).toEqual([55, 61]);
+    expect(logged(dir).map((l) => l.used_pct)).toEqual([47, 51]);
   });
   it("another session's lock does not hold this one back", async () => {
     const dir = box();
-    record(dir, SID, 55);
+    record(dir, SID, 47);
     const release = await holdLock(dir, OTHER);
     try {
-      expect(said(gate(dir, prompt(SID)))).toBe(redLine(55));
+      expect(said(gate(dir, prompt(SID)))).toBe(redLine(47));
     } finally {
       await release();
     }
@@ -303,9 +304,9 @@ describe("two prompts of one session decide one after the other", () => {
       ["a FIFO", (file: string) => expect(spawnSync("mkfifo", [file], { timeout: LIMIT_MS }).status).toBe(0)],
     ] as const) {
       const dir = box();
-      record(dir, SID, 55);
+      record(dir, SID, 47);
       plant(lockPath(dir, SID));
-      expect(said(gateWithBrokenState(dir, prompt(SID))), what).toBe(redLine(55));
+      expect(said(gateWithBrokenState(dir, prompt(SID))), what).toBe(redLine(47));
       expect(readFileSync(ERR(dir), "utf8"), what).toContain("Error");
       expect(gateWithBrokenState(dir, prompt(SID)), what).toBe("");
     }
@@ -314,7 +315,7 @@ describe("two prompts of one session decide one after the other", () => {
 
 describe("the gate refuses nothing: the meter only informs (CEO 2026-11-10)", () => {
   it("at any percentage Agent and Task pass — a subagent's too — and nothing is logged or remembered", () => {
-    for (const pct of [49, 50, 59, 60, 61, 90, 100]) {
+    for (const pct of [44, 45, 49, 50, 51, 90, 100]) {
       const dir = box();
       record(dir, SID, pct);
       expect(gate(dir, pre(SID, "Agent", SPAWN)), String(pct)).toBe("");
@@ -372,9 +373,9 @@ describe("the gate never breaks a session: what it cannot read is silent, not a 
     expect(existsSync(ERR(dir))).toBe(false);
     expect(existsSync(join(dir, "trav.gate-said"))).toBe(false);
   });
-  it("exits 0 with nothing on stderr when the reader of its answer is gone: the line at 61 into a closed pipe — and it is not counted as said", () => {
+  it("exits 0 with nothing on stderr when the reader of its answer is gone: the line at 51 into a closed pipe — and it is not counted as said", () => {
     const dir = box();
-    record(dir, SID, 61);
+    record(dir, SID, 51);
     // python3 gets its stdin 0.3 s late, so `true` has closed the pipe before the answer is written;
     // the status is python3's own (PIPESTATUS), not the pipeline's
     const r = spawnSync("bash", ["-c", '{ sleep 0.3; cat; } | python3 "$1" | true; exit "${PIPESTATUS[1]}"', "bash", GATE], {
@@ -390,46 +391,46 @@ describe("the gate never breaks a session: what it cannot read is silent, not a 
   it("a state file that cannot be understood means not said yet: the line is said, and then remembered", () => {
     // the whole list counts or none of it: a known threshold beside anything else is not a record (Sol's B), and
     // neither is a list longer than the gate ever writes
-    for (const garbage of ["{", "", '{"50": true}', '"50"', "[true, \"50\", 7, [50]]", "\u0000\u0001",
-      '[50, "garbage"]', "[50, 70]", "[50.0]", `[50${" ".repeat(300)}]`]) {
+    for (const garbage of ["{", "", '{"45": true}', '"45"', "[true, \"45\", 7, [45]]", "\u0000\u0001",
+      '[45, "garbage"]', "[45, 70]", "[45.0]", `[45${" ".repeat(300)}]`]) {
       const dir = box();
-      record(dir, SID, 55);
+      record(dir, SID, 47);
       writeFileSync(saidPath(dir, SID), garbage);
-      expect(said(gate(dir, prompt(SID))), garbage).toBe(redLine(55));
+      expect(said(gate(dir, prompt(SID))), garbage).toBe(redLine(47));
       expect(gate(dir, prompt(SID)), garbage).toBe("");
     }
   });
   it("a state file that cannot be read or written never crashes the prompt: the line is said, the failure goes to the .err log", () => {
     const dir = box();
-    record(dir, SID, 55);
+    record(dir, SID, 47);
     mkdirSync(saidPath(dir, SID));  // a directory where the state file belongs: neither readable nor writable as one
     // nothing could be remembered, so the line is said again rather than lost
-    for (let turn = 0; turn < 2; turn++) expect(said(gateWithBrokenState(dir, prompt(SID)))).toBe(redLine(55));
+    for (let turn = 0; turn < 2; turn++) expect(said(gateWithBrokenState(dir, prompt(SID)))).toBe(redLine(47));
     expect(readFileSync(ERR(dir), "utf8")).toContain("IsADirectoryError");
   });
   it("a link planted under the state file's name is never written through: the file it points at stands, the line is said", () => {
     const dir = box();
-    record(dir, SID, 55);
+    record(dir, SID, 47);
     const elsewhere = join(dir, "elsewhere.txt");
     writeFileSync(elsewhere, "not the gate's");
     expect(spawnSync("ln", ["-s", elsewhere, saidPath(dir, SID)], { timeout: LIMIT_MS }).status).toBe(0);
-    expect(said(gateWithBrokenState(dir, prompt(SID)))).toBe(redLine(55));
+    expect(said(gateWithBrokenState(dir, prompt(SID)))).toBe(redLine(47));
     expect(readFileSync(elsewhere, "utf8")).toBe("not the gate's");
   });
   it("a link under the state file's name is not read through either: a list the gate would trust, behind a link, is not a record", () => {
     const dir = box();
-    record(dir, SID, 55);
+    record(dir, SID, 47);
     const elsewhere = join(dir, "elsewhere.json");
-    writeFileSync(elsewhere, "[50, 60]");
+    writeFileSync(elsewhere, "[45, 50]");
     expect(spawnSync("ln", ["-s", elsewhere, saidPath(dir, SID)], { timeout: LIMIT_MS }).status).toBe(0);
-    expect(said(gate(dir, prompt(SID)))).toBe(redLine(55));
-    expect(readFileSync(elsewhere, "utf8")).toBe("[50, 60]");
+    expect(said(gate(dir, prompt(SID)))).toBe(redLine(47));
+    expect(readFileSync(elsewhere, "utf8")).toBe("[45, 50]");
   });
   it("a FIFO planted under the state file's name does not block the prompt: the line is said in the gate's normal time, and the state takes its place (Sol's A)", () => {
     const dir = box();
-    record(dir, SID, 55);
+    record(dir, SID, 47);
     expect(spawnSync("mkfifo", [saidPath(dir, SID)], { timeout: LIMIT_MS }).status).toBe(0);
-    expect(said(gate(dir, prompt(SID)))).toBe(redLine(55));
+    expect(said(gate(dir, prompt(SID)))).toBe(redLine(47));
     expect(statSync(saidPath(dir, SID)).isFile()).toBe(true);
     expect(gate(dir, prompt(SID))).toBe("");
   });
@@ -453,10 +454,10 @@ describe("the status line and the gate read the same record", () => {
     expect(r.status, r.stderr).toBe(0);
   }
 
-  it("55 % remaining is 54 % on the bar and CONTEXT 54% on the prompt; 90 % remaining is 12 % and the gate says nothing", () => {
+  it("61 % remaining is 47 % on the bar and CONTEXT 47% on the prompt; 90 % remaining is 12 % and the gate says nothing", () => {
     const dir = box();
-    statusLine(dir, 55);
-    expect(said(gate(dir, prompt(BAR_SID)))).toBe(redLine(54));
+    statusLine(dir, 61);
+    expect(said(gate(dir, prompt(BAR_SID)))).toBe(redLine(47));
     const low = box();
     statusLine(low, 90);
     expect(JSON.parse(readFileSync(recordPath(low, BAR_SID), "utf8")).used_pct).toBe(12);
@@ -468,10 +469,10 @@ describe("his numbers stand in one place, and the gate is wired", () => {
   type Entry = { matcher?: string; hooks: { type: string; command: string }[] };
   const runsGate = (e: Entry) => e.hooks.some((h) => h.command.endsWith("dxb-context-gate.py"));
 
-  it("holds 50 and 60 as RED_LINE_PCT and FINISH_LINE_PCT, and no number or answer that refuses a tool", () => {
+  it("holds 45 and 50 as RED_LINE_PCT and FINISH_LINE_PCT, and no number or answer that refuses a tool", () => {
     const source = readFileSync(GATE, "utf8");
-    expect(source).toMatch(/^RED_LINE_PCT = 50$/m);
-    expect(source).toMatch(/^FINISH_LINE_PCT = 60$/m);
+    expect(source).toMatch(/^RED_LINE_PCT = 45$/m);
+    expect(source).toMatch(/^FINISH_LINE_PCT = 50$/m);
     expect(source).not.toContain("AGENT_DENY_PCT");
     expect(source).not.toContain("permissionDecision");
   });

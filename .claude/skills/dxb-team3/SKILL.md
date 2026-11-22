@@ -116,6 +116,9 @@ and the session lifts itself; an important decision, and a question of how somet
 recommends, run at `high`; an evaluation that carries weight — weighing, comparing, judging which is better — is part of planning and
 runs at `high`, an easy one is the session's call by what an error costs (his word, 2026-11-16); managing — the lead opens a hand, writes a brief or verifies a piece that came back — at `high`, with
 `xhigh` open while it thinks through who does what <!-- CEO-OK: dxb-team3-orchestrator-six-points-2026-11-11 -->;
+the build of the holding — the foundation (B85) and what is built on it — is managed at `xhigh`, by the lead and by
+every successor: on each managing turn of it `dxb-effort-xhigh` is opened first; who does what, on which model and at
+which level, stays the lead's judgement <!-- CEO-OK: holding-build-managed-at-xhigh-2026-11-22 -->;
 a plan, a design, an architecture at `high`, and the build, the fixes and the tests at the level the piece's weight asks (Code, below); a truly complex, important
 job — its plan and its work — at `xhigh`. `max` is not used by the session
 <!-- CEO-OK: effort-high-xhigh-no-max-2026-11-10 -->; the one place it stands is the Opus 5.5 that plans when
@@ -333,21 +336,36 @@ alone (STATE, the board) is checked by the rulers on commit instead.
   is lost. It never shortens the job, drops a part of it or ends it early. The context meter only informs.
 - **The 4-minute rules** (held by `~/.claude/hooks/dxb-cost-gate.py`): a command over 4 minutes is the
   lead's; a subagent idle over 4 minutes is never resumed — its cache is the 5-minute one.
+- **The piece is the unit, not the percent** <!-- CEO-OK: careful-build-rhythm-and-handover-every-session-2026-11-22 -->: a session takes a piece it can finish —
+  written, tested, verified, committed — before 45 % of its context, and the lead cuts the pieces to that size. A
+  session never closes in the middle of a piece: a half-finished piece handed over is the worst source of defects.
+  That quality falls between 45 % and 60 % is not measured on Fable 5.2; the number is caution, his and the lead's.
 - **The context gate** (held by `~/.claude/hooks/dxb-context-gate.py`) and **the clean break**: from
-  50 % used, hand over at the first clean break — the piece finished well, the tree committed, no
-  battery running, the report sent — even when reaching it takes the session to about 60 %; never in
+  45 % used, hand over at the first clean break — the piece finished well, the tree committed, no
+  battery running, the report sent; a piece still open at 45 % is finished first, then handed over; never in
   the middle of a piece. The clean break and the quality decide, not the number; the lead judges it,
   helpers included <!-- CEO-OK: handover-at-the-clean-break-2026-10-06 -->. The gate says its line
-  once at 50 % and once at 60 % and refuses nothing — the meter only informs (his word, 2026-11-10);
+  once at 45 % and once at 50 % and refuses nothing — the meter only informs (his word, 2026-11-10);
   the job continues in the successor in full.
+- **The records carry the job; the note carries only what they lack** <!-- CEO-OK: careful-build-rhythm-and-handover-every-session-2026-11-22 -->. The plan, the board, STATE,
+  the ledger and the tests in the repository are the one truth, and a successor starts from them. A chain of notes
+  adds each author's reading to the last one's; a session that starts from the records does not.
+- **The successor weighs before it carries on** <!-- CEO-OK: careful-build-rhythm-and-handover-every-session-2026-11-22 -->. After this door, its first act is its own reading of
+  what it inherits — against the holding's written purpose (the core, already loaded), the approved plan's part for
+  the piece, and his words of the job at their source in the predecessor's transcript, not only as the note quotes
+  them. Its first reply tells him, in five lines at most, what it inherits and where it sees weakness; then it
+  carries on. A note's "next" is the predecessor's reading, not an order. Measured 2026-11-22: a successor ran the
+  note's "audit, fix, cut" unweighed, an example of his had been written into the work as a specification, and he
+  had to stop it himself.
 - **The handover** is done by the engineer, never the CEO
   <!-- CEO-OK: handover-at-50-without-asking-2026-10-01 -->. A note in the scratchpad, in the author's
   own voice, whose first line tells the successor to open this door — `Skill("dxb-team3")` — before
   anything else: it carries the job on as its lead, the orchestrator, not as a fresh session
   <!-- CEO-OK: successor-opens-dxb-team2-2026-10-09 -->; then the job's place in the whole, then his words of this job verbatim, every phase with
-  status and commit, under three headings <!-- CEO-OK: team3-one-answer-steps-are-code-handover-done-apart-from-said-2026-11-17 --> —
+  status and commit, under four headings <!-- CEO-OK: team3-one-answer-steps-are-code-handover-done-apart-from-said-2026-11-17 --> <!-- CEO-OK: careful-build-rhythm-and-handover-every-session-2026-11-22 --> —
   **Done**: what a command's decisive output shows (a commit shows that a file changed, never that it works);
-  **Said**: what was planned, promised or told to him and not measured; **Do not**: what the successor must not
+  **Said**: what was planned, promised or told to him and not measured; **Unsure**: the author's own readings and judgements, and where it may have misread
+  his words — an example or analogy of his is marked as an example, with the one point it illustrates; **Do not**: what the successor must not
   redo or undo — the traps met, the first message the successor sends; session-only orders marked
   as such; last, the path of this session's own conversation —
   `~/.claude/projects/-home-dxb-DxB-Global-OS/$CLAUDE_CODE_SESSION_ID.jsonl` — with the line *if

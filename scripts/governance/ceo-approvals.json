@@ -3233,5 +3233,29 @@
     "conditions": "A yes to the lead's recommendation on each, as told to him in the same conversation; on (2) the recommendation was 'not now, the door left open'. The amendment's rewritten form was not audited a second time. Nothing is built.",
     "session": "Fable 5.2 session 09321517, heard first-hand (dictated), 2026-11-22.",
     "where": ".planning/quick/20261117-temel/PLAN.md §2 M and N, §10 decisions 8–10; .planning/board-rows/B28.md"
+  },
+  "careful-build-rhythm-and-handover-every-session-2026-11-22": {
+    "date": "2026-11-22",
+    "what": "How the build proceeds, in every session: the unit is a finished piece, not a percent — a session takes a piece it can finish before 45 % of its context and never closes in the middle of one (a piece still open at 45 % is finished first, then handed over); the lead manages and fresh hands write from a fixed spec and locked tests; the records (plan, board, STATE, ledger, tests) carry the job and the handover note only what they lack. Three additions to the handover: the successor first weighs what it inherits against the written purpose, the approved plan and his words at their source, and tells him in five lines what it inherits and where it sees weakness; the note gains a heading for what its author is unsure of; an example of his is marked as an example with the one point it illustrates.",
+    "verbatim": "Oturumu X hayda yönet. Önerilerini kabul ediyorum. Gerçekten güzel böyle temkinli her şey böyle taslama titizlikle ilerleyelim. Yani sadece bu session'de değil, her session'da böyle olsun. Ve her yapılan iş bu şekilde devam etsin. … Önerin inşa nasıl ilerlesin? Konusunda da önerilerini kabul ediyorum.",
+    "conditions": "The 45 % figure is his (he named 40–50 %); that quality falls between 45 % and 60 % on Fable 5.2 is not measured, and he was told so. The context gate's lines move from 50 / 60 to 45 / 50.",
+    "session": "Fable 5.2 session 09321517, heard first-hand (dictated), 2026-11-22.",
+    "where": ".claude/skills/dxb-team3/SKILL.md §7; scripts/ops/dxb-context-gate.py"
+  },
+  "holding-build-managed-at-xhigh-2026-11-22": {
+    "date": "2026-11-22",
+    "what": "The build of the holding is managed at xhigh, by the lead and by every successor it hands over to. Who does what, on which model and at which level, stays the manager's own engineering judgement.",
+    "verbatim": "Bu iş X hayda yönetilsin, devreden de X hayda yönetsin. Çünkü gerçekten üst düzey zeka ile her şeyin yapılması gerekli, yönetimin. Yönetirken kim neyi nasıl yapacak o hangi seviyede yapacak yöneticinin tabii ki bileceği iş. Hayda mı X hayda mı Sonnet mi Opus mu yani o yöneticinin kendi mühendislik bilgisi, orkestratör, bilgisi ve yeteneği ne bırakıyorum ben bilmiyorum onu.",
+    "conditions": "Scoped by the lead to the holding's build (B85 and what is built on it), which is what 'bu iş' named; other doors' levels are unchanged.",
+    "session": "Fable 5.2 session 09321517, heard first-hand (dictated), 2026-11-22.",
+    "where": ".claude/skills/dxb-team3/SKILL.md §2"
+  },
+  "holding-builds-on-itself-row-opened-2026-11-22": {
+    "date": "2026-11-22",
+    "what": "Board row B86 is opened: once the foundation stands, the system's own code is written from inside it as a job — the holding's masters write a new office or a change through the same desk, checks and tests, and a change to the foundation itself stops at him. Until then the foundation is built from the construction's sessions.",
+    "verbatim": "Sistem kendi üstüne inşa edilmesin mi? Sorusu bu öneri neyse onu yapalım.",
+    "conditions": "A yes to the lead's recommendation as told in the same conversation; the lead had said the recommendation means a new board row and needs his word. Nothing is designed or built.",
+    "session": "Fable 5.2 session 09321517, heard first-hand (dictated), 2026-11-22.",
+    "where": "HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md B86; .planning/board-rows/B86.md"
   }
 }
