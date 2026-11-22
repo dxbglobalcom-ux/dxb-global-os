@@ -371,7 +371,32 @@ as written.
     mandatory ones (in the trial a master left to itself called nobody).
   - **The persona question answers itself from the records:** every job records which specialist was called and
     what its part or its check changed; no separate trial is run.
-- **Not decided here:** whether personas add anything beyond a good book. It stays a measurement, as he said.
+- **His verdict has three levels, and only one teaches "good"** (his words, 2026-11-22). "Wow / süper / elinize
+  sağlık": the work becomes an example in its job type's book and may become a pattern. "Okey / geç": the job is
+  closed and he did not like it — it is never an example, a base or a pattern. A rejection: closed as a lesson of
+  what not to do. At every level what he added or complained of is written into the book as a dated lesson, so a
+  correction is given once. A pattern is registered from work he praised, not from work that merely finished.
+- **The book, in one example.** A job type's folder — say "advertisement": a short page (when it applies; what is
+  collected first — the real product photograph, the brand's own files; the steps; the fixed decisions; the "done"
+  checks), its examples (only work he praised, and references he chose), its files (prompt blocks, checklists), its
+  dated lessons. Today such lessons sit in a session's private notes and reach no master by themselves.
+- **What keeps a book from failing:** it is read in slices like the desk; it is versioned and audited blind before
+  a version is used; until he has praised work of a type, its examples are real references he chose, labelled so;
+  what a type always needs is a part of its pattern.
+- **Eye-facing work starts from the one process he praised** (the olive site): real references first; three designs
+  made side by side by seats that do not see each other; his or the client's pick; the best sides merged into one;
+  an enrichment pass from the book's lessons; the blind check; his eye. A simple job skips the three.
+- **Proposed, for his word (§10): no persona experts on the work path.** His experience is that the personas added
+  almost nothing and narrowed the model; the engineering reading agrees — a character sheet gives the model no
+  knowledge it lacks, costs context in every session, and a title that does not match its content misleads the one
+  who calls it. What remains: a few named seats that own work (Hamza, Reception, a master per job type, the checker,
+  Hermes); hands without a persona, given a part and the skill it needs; and the skills themselves — the books, and
+  shared checklists (search, law, accessibility, fidelity to a product) that a pattern runs as checks. Nobody
+  chooses "which expert to call": the pattern names the parts. The 213 persona files leave the work path, are read
+  once for content worth a checklist, and are archived; deleting them is his word, on a list. The media studio's
+  seats, whose work he praised in October, stay as they are until looked at on their own. This changes A27's
+  "filled from the persona pool" and "a specialist from any department's cupboard", the persona door and the HR
+  package.
 
 ## 5. The verdict table
 
@@ -530,6 +555,8 @@ the model and the level are not lowered to fit a week.
 4. **One runner.** The workflow spec's records — patterns, line cards, versions, undo — stay; its separate runner
    goes and the engine runs them. Recommended: yes.
 5. **The order: one whole job first, thin**, then each part to its full contract. Recommended: yes.
+6. **No persona experts on the work path** (§4): a few named seats, hands without a persona, skills in books and
+   checklists; the 213 files archived, not deleted. Recommended: yes.
 
 Not asked now: A29 item 6 (§3) — it comes with its measurement. And the build's start: the board's head puts it after
 B22's synthesis and his yes to the re-ordered board; the synthesis is the author's next work, and this design is read
