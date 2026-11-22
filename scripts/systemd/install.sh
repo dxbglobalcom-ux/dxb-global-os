@@ -59,6 +59,8 @@ cp "${SRC_DIR}/dxb-board.service" "${UNIT_DIR}/"
 # the company existed on one desk and nowhere else.
 cp "${SRC_DIR}/dxb-backup.service" "${UNIT_DIR}/"
 cp "${SRC_DIR}/dxb-backup.timer" "${UNIT_DIR}/"
+# B72, 2026-11-22 — started by dxb-backup.service's OnFailure=, never enabled.
+cp "${SRC_DIR}/dxb-backup-alert.service" "${UNIT_DIR}/"
 
 systemctl --user daemon-reload
 systemctl --user enable dxb-scheduler.service dxb-jarvis.service dxb-company-read.service dxb-board.service
