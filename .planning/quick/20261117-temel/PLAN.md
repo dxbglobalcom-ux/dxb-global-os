@@ -754,6 +754,10 @@ Each stage ends with something that runs.
 
 The board's rows ride on these stages in the order he approved on 2026-11-22: `reorder/ORDER.md`.
 
+Stage 0 is cut into pieces in `stage-0/BUILD.md` (audited blind twice, 2026-11-22). It adapts one clause above on what the
+audits measured: the foundation gets a construction bench of its own, with the old chain applied and the new schema
+beside it in one database; the old battery keeps running on the old bench, which the foundation does not touch.
+
 **Added by §2 M and N:**
 
 - **Stage 0:** the liveness table; the ruler that lists what an addition changed outside its own place.
