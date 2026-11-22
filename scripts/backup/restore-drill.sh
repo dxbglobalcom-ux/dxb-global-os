@@ -1,22 +1,41 @@
 #!/usr/bin/env bash
-# B72 — the restore drill: a nightly dump is a backup only once it has been
-# restored. This replays one dump into a throwaway Postgres that it creates
-# itself and removes itself, and says what came back.
+# B72 — the restore drill: a night's backup is a backup only once it has been
+# restored. This replays one night's SET into a throwaway Postgres that it
+# creates itself and removes itself, from the set alone, and says whether what
+# came back is what the night held.
 #
-#   scripts/backup/restore-drill.sh [--require-equal] [dump]
-#   dump defaults to the newest non-empty dxb-laptop-*.dump in BACKUP_DIR.
+#   scripts/backup/restore-drill.sh [set]
+#   set is a stem (dxb-laptop-<date>; without a slash it is looked for in
+#   BACKUP_DIR) or any one of the set's three files. With nothing named it is
+#   TODAY's set, and a day that has none is a failure: an older night is never
+#   taken in its place.
+#
+# A set is three files with one stem (the contract:
+# .planning/quick/20261122-b72-yedek/SET-CONTRACT.md): .dump, .globals.sql and
+# .manifest.json — what the database held at the dump's own snapshot, as
+# scripts/backup/inventory.sql counted it, and the sha256 of the other two.
 #
 # WHAT "RESTORED" MEANS HERE — all of it, or RESTORE_DRILL_FAIL:
-#   1. pg_restore exits 0 and prints not one error. Nothing is ignored. An error
-#      is reported as its kind and a count (RESTORE_ERRORS), never as its text.
-#   2. Every table in the dump's own table of contents stands in the restored
-#      database.
-#   3. Every table is counted row by row; the last line carries the totals for
-#      the dump's tables.
-#   4. The same count is read from the company (SELECT only, in a read-only
-#      session) and every difference is printed, table by table. A difference
-#      is information — the company moves on after a dump — unless the caller
-#      knows it has stood still since and says --require-equal.
+#   1. The set is PROVEN before anything is created: its manifest parses, is of
+#      format 1, and names the sha256 of the dump and of the globals as they
+#      stand.
+#   2. The roles come from the set's own globals file. Nothing but "this role
+#      already exists" is tolerated — the image brings some of them — and the
+#      statements after it give that role the set's attributes and memberships.
+#   3. pg_restore exits 0 and prints not one error. Nothing is ignored.
+#   4. The inventory of the restored copy, taken with the same inventory.sql,
+#      EQUALS the manifest's, part by part and name by name. One exception, and
+#      it is the manifest's: a sequence is not transactional, so the dump may
+#      carry a later value than the manifest — a sequence passes when it is not
+#      BEHIND. Every difference is printed by name with both values (DIFF); one
+#      difference is a failure. Names and counts are printed, never a row.
+# No tool's own error text is printed or kept — it can quote a row. An error is
+# its kind and a count (GLOBALS_ERRORS, RESTORE_ERRORS), or a fixed reason and
+# an exit code.
+#
+# WHAT IT ASKS THE LIVING COMPANY — the name of its image, of docker, and
+# nothing else: not one query. (docker is also asked for the IDs of the two
+# protected containers, to stay away from them.)
 #
 # WHAT IT LEAVES BEHIND — nothing, or it says so. The container and the working
 # directory are removed however the drill ends (a signal too), each on its own,
@@ -31,23 +50,34 @@
 # image builds its own auth / realtime / storage / vault at their first shape;
 # replayed on top of that without --clean the dump's auth tables collide with
 # them (59 errors) and auth.users — the CEO's login — is silently lost. With
-# --clean the dump's objects replace the image's: 0 errors, exit 0, every table
-# of the dump there, counts equal to the company's (223 tables, 331,379 rows on
-# the dump of 2026-11-22). A pg_dump carries no roles, so the role NAMES the
-# company has and the image lacks are created first, without login or password,
-# and listed (ROLES_ADDED). The container is given no password either: with
-# trust on its local socket the image comes up healthy in 12 s with the same
-# roles, relations and extensions, and `docker inspect` then holds no secret.
+# --clean the dump's objects replace the image's: 0 errors, exit 0. The
+# container is given no password: with trust on its local socket the image
+# comes up healthy in 12 s, and `docker inspect` then holds no secret.
+#
+# BEFORE THE RESTORE the image's own default privileges are removed, every one.
+# The image grants anon, authenticated and service_role everything on whatever
+# is created in public; a dump writes an object's privileges only as they differ
+# from the owner's default, and --clean does not drop default privileges. Left
+# in place they open every restored object: measured, the set of 2026-11-22
+# came back with 1,440 privileges the company does not grant — anon could read
+# and write 96 relations of public. Removed first, the dump's own default
+# privileges are the only ones, and the privileges come back equal.
 #
 # THE WALL. --clean drops what it replaces: aimed at the company's database it
 # would end it. The drill restores only into the container whose ID its own
 # `docker create` returned, and only after own_container has proven that ID.
+#
+# 2026-11-22: restores from the set alone and demands equality with its
+# manifest — until then it compared with the living company and let it differ
+# (the blind audit's finding 6, .planning/quick/20261122-b72-yedek/SOL.md).
 set -euo pipefail
-export LC_ALL=C # one collation for sort and comm
+export LC_ALL=C # one collation for sort
 
 COMPANY="supabase_db_DxB_Global_OS"
 PROTECTED=("$COMPANY" "supabase_db_DxB_Build")
 BACKUP_DIR="${BACKUP_DIR:-$HOME/backups/dxb}"
+INVENTORY_SQL="$(dirname "${BASH_SOURCE[0]}")/inventory.sql"
+SET_PARTS=(dump globals.sql manifest.json) # the files of one night's set
 HEALTHY_WAIT=180
 DRILL_NAME="dxb-restore-drill-$(date +%Y%m%d-%H%M%S)-$$"
 # Every drill container carries this label; its value is a token only this run knows.
@@ -58,10 +88,11 @@ verdict_said=0
 ok_line="" # the success line once the restore has earned it — owed, and said only by finish
 WORK="$(mktemp -d "${TMPDIR:-/tmp}/dxb-restore-drill.XXXXXXXX")" # mode 700; everything the run writes is in here
 
-require_equal=0
-if [ "${1:-}" = "--require-equal" ]; then require_equal=1; shift; fi
-DUMP="${1:-}"
-[ -n "$DUMP" ] || DUMP="$(find "$BACKUP_DIR" -maxdepth 1 -name 'dxb-laptop-*.dump' -size +0 2>/dev/null | sort | tail -n 1 || true)"
+# The set, by its stem: named by the stem or by any of its files, and today's when nothing is named.
+if [ "$#" -eq 0 ]; then which_set="today's set"; else which_set="the set named"; fi
+SET="${1:-dxb-laptop-$(date +%F)}"
+for part in "${SET_PARTS[@]}"; do SET="${SET%."$part"}"; done
+[[ "$SET" == */* ]] || SET="$BACKUP_DIR/$SET"
 
 fail() { verdict_said=1; echo "RESTORE_DRILL_FAIL $*"; exit 1; }
 
@@ -113,34 +144,27 @@ require_own_container() {
   own_container "$DRILL_ID" || fail "refused: '$DRILL_ID' is not this drill's own container ($DRILL_NAME)"
 }
 
-# The two doors. `drill` is the only way anything is run in a container this
-# script writes to; `company_select` is the only way the company is asked.
+# The one door: nothing is run in a container this script writes to but through `drill`. Whoever sends drill's
+# output away calls require_own_container in the open first — in a pipeline or a capture, drill's own refusal
+# would go where the output goes.
 drill() {
   require_own_container
   docker exec -i "$DRILL_ID" "$@"
 }
-drill_sql() { drill psql -U supabase_admin -d postgres -AtX -v ON_ERROR_STOP=1 "$@"; }
-company_select() {
-  docker exec -e PGOPTIONS="-c default_transaction_read_only=on" "$COMPANY" \
-    psql -U postgres -d postgres -AtX -v ON_ERROR_STOP=1 -c "$1"
-}
+DRILL_PSQL=(psql -U supabase_admin -d postgres -AtqX)
+# One SQL script on stdin, its answer out; it stops at the first error, and what psql says of it goes nowhere.
+drill_sql() { drill "${DRILL_PSQL[@]}" -v ON_ERROR_STOP=1 2>/dev/null; }
 
-ROLE_NAMES="select quote_ident(rolname) from pg_roles where rolname !~ '^pg_'"
-# FROM ONLY: a partitioned parent counts 0 and each partition its own, so no row is counted twice.
-ROW_COUNTS="select n.nspname || '.' || c.relname || '|' ||
-  (xpath('/row/n/text()', query_to_xml(format('select count(*) as n from only %I.%I', n.nspname, c.relname), false, true, '')))[1]::text
-  from pg_class c join pg_namespace n on n.oid = c.relnamespace
-  where c.relkind in ('r', 'p') and n.nspname !~ '^pg_' and n.nspname <> 'information_schema'"
-
-# pg_restore's stderr in, one "kind=count" line per kind out: fixed words and digits. The text itself is neither
-# printed nor stored — an error line can carry a value from a row of the company's data. The kinds are a closed
-# list of message shapes; a shape nobody listed is `other`.
+# A tool's stderr in, one "kind=count" line per kind out: fixed words and digits. The text itself is neither
+# printed nor stored — an error line can carry a value from a row of the company's data. $1 is how an error line
+# of that tool begins. The kinds are a closed list of message shapes; a shape nobody listed is `other`.
 error_kinds() {
-  awk '
-    !/^pg_restore: error:/ { next }
+  awk -v error_line="$1" '
+    $0 !~ error_line { next }
     /^pg_restore: error: COPY failed/ { kind = "copy_failed" }
     /^pg_restore: error: (input file|could not (open|read)|unsupported version|unexpected end)/ { kind = "archive_unreadable" }
     /^pg_restore: error: connection|server closed the connection|terminating connection/ { kind = "connection_lost" }
+    kind == "" && /ERROR:  role ".*" already exists$/ { kind = "role_exists" }
     kind == "" && / already exists$/ { kind = "already_exists" }
     kind == "" && / does not exist$/ { kind = "does_not_exist" }
     kind == "" && /ERROR:  (permission denied|must be )/ { kind = "permission_denied" }
@@ -149,8 +173,81 @@ error_kinds() {
     { count[kind == "" ? "other" : kind]++; kind = "" }
     END { for (kind in count) print kind "=" count[kind] }' | sort
 }
+# Runs one tool in the drill's container on what stdin holds, keeps the kinds of its errors in $WORK/<step>.kinds
+# and returns the tool's own exit status: classified <step> <how an error line begins> <tool …>.
+classified() {
+  local step="$1" error_line="$2"
+  shift 2
+  require_own_container
+  drill "$@" 2>&1 >/dev/null | error_kinds "$error_line" > "$WORK/$step.kinds"
+}
+# How many errors a step's kinds hold; the kind $2, when given, is not one.
+errors_of() { awk -F= -v tolerated="${2:-}" '$1 != tolerated { sum += $2 } END { print sum + 0 }' "$WORK/$1.kinds"; }
+kinds_of() { paste -sd' ' "$WORK/$1.kinds"; }
+counted() { if [ "$1" -eq 1 ]; then echo "1 $2"; else echo "$1 $2s"; fi; }
 
-[ -s "$DUMP" ] || fail "no dump to restore: ${DUMP:-none in $BACKUP_DIR}"
+sha256_of() {
+  local sum
+  sum="$(sha256sum 2>/dev/null < "$1")" || return 1
+  printf '%s\n' "${sum%% *}"
+}
+
+# Whether a file is JSON with an inventory in it — the manifest's shape, and the shape of inventory.sql's answer.
+holds_inventory() { jq -e '.inventory | type == "object"' "$1" >/dev/null 2>&1; }
+
+# A set is proven when its three files are there, its manifest parses and is of format 1, and the dump and the
+# globals hash as the manifest says. The manifest is read ONCE, into the working directory: what was proven is
+# what the restored copy is compared with.
+prove_set() {
+  local part
+  for part in "${SET_PARTS[@]}"; do
+    [ -s "$SET.$part" ] || fail "$which_set is not there: $SET.$part is missing or empty"
+  done
+  cp "$SET.manifest.json" "$WORK/manifest.json" 2>/dev/null || fail "not a proven set: the manifest cannot be read"
+  holds_inventory "$WORK/manifest.json" || fail "not a proven set: the manifest does not parse, or holds no inventory"
+  [ "$(jq -r '.format' "$WORK/manifest.json" 2>/dev/null)" = 1 ] || fail "not a proven set: the manifest's format is not 1"
+  for part in dump globals.sql; do
+    [ "$(sha256_of "$SET.$part")" = "$(jq -r --arg key "${part%.sql}_sha256" '.[$key]' "$WORK/manifest.json" 2>/dev/null)" ] \
+      || fail "not a proven set: $SET.$part is not the file the manifest names (${part%.sql}_sha256)"
+  done
+}
+
+# Every default privilege of the instance, revoked from everyone it names; then how many are left. See the header.
+CLEAR_DEFAULT_PRIVILEGES="SELECT format('ALTER DEFAULT PRIVILEGES FOR ROLE %I%s REVOKE ALL ON %s FROM %s', pg_get_userbyid(d.defaclrole),
+         CASE WHEN n.oid IS NULL THEN '' ELSE format(' IN SCHEMA %I', n.nspname) END,
+         CASE d.defaclobjtype WHEN 'r' THEN 'TABLES' WHEN 'S' THEN 'SEQUENCES' WHEN 'f' THEN 'FUNCTIONS' WHEN 'T' THEN 'TYPES' WHEN 'n' THEN 'SCHEMAS' END,
+         string_agg(DISTINCT CASE WHEN x.grantee = 0 THEN 'PUBLIC' ELSE quote_ident(pg_get_userbyid(x.grantee)) END, ', '))
+  FROM pg_default_acl d LEFT JOIN pg_namespace n ON n.oid = d.defaclnamespace, LATERAL aclexplode(d.defaclacl) x
+  GROUP BY d.oid, d.defaclrole, n.oid, n.nspname, d.defaclobjtype
+\gexec
+SELECT count(*) FROM pg_default_acl;"
+
+# The manifest's inventory and the restored copy's in, one DIFF line per difference out. A part that is an object
+# on both sides is compared name by name, any other part as one value; no part is named here but the two a ruling
+# is about. A sequence passes when it is not behind the manifest: a greater value, or the same value and not back
+# from handed out to not yet.
+INVENTORY_DIFF='
+  def not_behind($was): .last_value > $was.last_value
+    or (.last_value == $was.last_value and (.is_called or ($was.is_called | not)));
+  def said($name): if has($name) then .[$name] | tojson else "absent" end;
+  $manifest[0].inventory as $m | $restored[0].inventory as $r
+  | ($m + $r | keys[]) as $part
+  | if [$m[$part], $r[$part]] | all(type == "object") then
+      $m[$part] as $was | $r[$part] as $is
+      | ($was + $is | keys[]) as $name
+      | select(([$was, $is] | all(has($name)))
+               and (if $part == "sequences" then $is[$name] | not_behind($was[$name]) else $is[$name] == $was[$name] end) | not)
+      | "DIFF \($part) \($name) manifest=\($was | said($name)) restored=\($is | said($name))"
+    else
+      select($m[$part] != $r[$part])
+      | "DIFF \($part) manifest=\($m | said($part)) restored=\($r | said($part))"
+        + (if $part == "acl_sha256" then " (the privileges differ)" else "" end)
+    end'
+# What the manifest holds of each part, for the line that says what was compared.
+INVENTORY_SIZE='.inventory | "\(.tables | length) tables, \(.sequences | length) sequences, \(.extensions | length) extensions, \(.roles | length) roles"'
+
+[ "$#" -le 1 ] || fail "one set at a time: a stem, or one of its three files"
+prove_set
 # A container of an earlier drill holds a copy of the company's data — a drill still running, or one killed before
 # it could clean up. This run removes only what it created, so it does not start beside one: it says so and stops.
 earlier="$(docker ps -a --filter "label=$DRILL_LABEL" --format '{{.Names}}' | tr '\n' ' ')" \
@@ -175,49 +272,39 @@ until [ "$(docker inspect -f '{{.State.Health.Status}}' "$DRILL_ID")" = healthy 
   waited=$((waited + 2))
 done
 
-company_select "$ROLE_NAMES" | sort > "$WORK/roles.company"
-drill_sql -c "$ROLE_NAMES" < /dev/null | sort > "$WORK/roles.drill"
-comm -23 "$WORK/roles.company" "$WORK/roles.drill" > "$WORK/roles.missing"
-sed 's/.*/create role & nologin;/' "$WORK/roles.missing" | drill_sql -q
-added="$(tr '\n' ' ' < "$WORK/roles.missing")"
-echo "ROLES_ADDED ${added:-none }(a pg_dump carries no roles: names only, no login, no password)"
+require_own_container
+defaults_left="$(drill_sql <<< "$CLEAR_DEFAULT_PRIVILEGES")" || fail "the image's default privileges could not be cleared (psql exited $?)"
+[ "$defaults_left" = 0 ] || fail "the image's default privileges could not be cleared: $defaults_left are left"
 
-require_own_container # said here in the open: inside the pipeline below, drill's own refusal would go to /dev/null
+# psql goes on after an error and exits 0 (no ON_ERROR_STOP here): every statement of the file is tried, and the
+# errors are judged by their kind afterwards. A role the image had already is not one; anything else is.
+globals_exit=0
+classified globals '^(ERROR|FATAL|PANIC|psql: error):' "${DRILL_PSQL[@]}" < "$SET.globals.sql" || globals_exit=$?
+errors="$(errors_of globals role_exists)"
+if [ "$globals_exit" -ne 0 ] || [ "$errors" -ne 0 ]; then
+  [ ! -s "$WORK/globals.kinds" ] || echo "GLOBALS_ERRORS $(kinds_of globals)"
+  fail "the set's globals: psql exited $globals_exit with $(counted "$errors" error) other than a role the image had already"
+fi
+echo "GLOBALS_APPLIED the set's own roles, attributes and memberships: $(counted "$(errors_of globals)" role) the image had already, nothing else refused"
+
 restore_exit=0
-drill pg_restore -U supabase_admin -d postgres --clean --if-exists < "$DUMP" 2>&1 >/dev/null | error_kinds > "$WORK/restore.kinds" \
-  || restore_exit=$?
-errors="$(awk -F= '{ sum += $2 } END { print sum + 0 }' "$WORK/restore.kinds")"
+classified restore '^pg_restore: error:' pg_restore -U supabase_admin -d postgres --clean --if-exists < "$SET.dump" || restore_exit=$?
+errors="$(errors_of restore)"
 if [ "$restore_exit" -ne 0 ] || [ "$errors" -ne 0 ]; then
-  [ "$errors" -eq 0 ] || echo "RESTORE_ERRORS $(paste -sd' ' "$WORK/restore.kinds")"
+  [ "$errors" -eq 0 ] || echo "RESTORE_ERRORS $(kinds_of restore)"
   fail "pg_restore exited $restore_exit with $errors errors — none is ignored"
 fi
 echo "RESTORED every schema of the dump with pg_restore --clean --if-exists: exit 0, 0 errors, nothing ignored"
 
-drill pg_restore --list < "$DUMP" | awk 'NF == 7 && $4 == "TABLE" { print $5 "." $6 }' | sort > "$WORK/tables.dump"
-drill_sql -c "$ROW_COUNTS" < /dev/null | sort > "$WORK/counts.drill"
-company_select "$ROW_COUNTS" | sort > "$WORK/counts.company"
-
-tables="$(wc -l < "$WORK/tables.dump")"
-[ "$tables" -gt 0 ] || fail "the dump's table of contents lists no table"
-missing="$(cut -d'|' -f1 "$WORK/counts.drill" | sort | comm -23 "$WORK/tables.dump" - | tr '\n' ' ')"
-[ -z "$missing" ] || fail "$(wc -w <<< "$missing") of the dump's $tables tables missing after restore: ${missing% }"
-rows="$(awk -F'|' 'NR == FNR { in_dump[$1]; next } $1 in in_dump { sum += $2 } END { print sum + 0 }' "$WORK/tables.dump" "$WORK/counts.drill")"
-
-awk -F'|' '
-  NR == FNR { dump[$1] = $2; next }
-  { company[$1] = $2 }
-  END {
-    for (t in dump) if (!(t in company)) print "DIFF", t, "dump=" dump[t], "company=absent"
-                    else if (dump[t] != company[t]) print "DIFF", t, "dump=" dump[t], "company=" company[t]
-    for (t in company) if (!(t in dump)) print "DIFF", t, "dump=absent", "company=" company[t]
-  }' "$WORK/counts.drill" "$WORK/counts.company" | sort > "$WORK/diff"
+require_own_container
+drill_sql < "$INVENTORY_SQL" > "$WORK/inventory.restored" || fail "the inventory of the restored copy could not be taken (psql exited $?)"
+holds_inventory "$WORK/inventory.restored" || fail "what the restored copy answered is not an inventory"
+jq -rn --slurpfile manifest "$WORK/manifest.json" --slurpfile restored "$WORK/inventory.restored" "$INVENTORY_DIFF" > "$WORK/diff" 2>/dev/null \
+  || fail "the restored copy's inventory could not be compared with the manifest's"
 cat "$WORK/diff"
 differ="$(wc -l < "$WORK/diff")"
-compared="$(cut -d'|' -f1 "$WORK/counts.drill" "$WORK/counts.company" | sort -u | wc -l)"
-echo "COMPARED $compared tables with the company: $differ differ"
-if [ "$require_equal" -eq 1 ] && [ "$differ" -ne 0 ]; then
-  fail "$differ tables differ from the company (--require-equal)"
-fi
+echo "COMPARED $(jq -r "$INVENTORY_SIZE" "$WORK/manifest.json"), the large objects and the privileges with the manifest: $differ differ"
+[ "$differ" -eq 0 ] || fail "$(counted "$differ" difference) between the restored copy and the manifest of ${SET##*/}"
 
+ok_line="RESTORE_DRILL_OK $SET $(jq -r '.inventory.tables | "\(length) tables \(add // 0) rows"' "$WORK/inventory.restored")"
 verdict_said=1
-ok_line="RESTORE_DRILL_OK $DUMP $tables tables $rows rows"
