@@ -36,7 +36,10 @@
     "tahta:yaz": "node scripts/board/render.mjs",
     "roadmap:tally": "node scripts/governance/roadmap-tally.mjs",
     "graph:refresh": "node scripts/governance/graph-refresh.mjs",
-    "graph:check": "node scripts/governance/graph-refresh.mjs --check"
+    "graph:check": "node scripts/governance/graph-refresh.mjs --check",
+    "foundation:typecheck": "tsc -p foundation/tsconfig.json",
+    "foundation:test": "vitest run --config foundation/tests/vitest.config.ts",
+    "foundation:instance": "node foundation/bench/src/cli.ts"
   },
   "devDependencies": {
     "@dxb/cli": "workspace:*",

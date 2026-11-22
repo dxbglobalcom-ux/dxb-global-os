@@ -158,6 +158,47 @@ importers:
         specifier: ^8.63.0
         version: 8.63.0(eslint@9.39.4(jiti@2.7.0))(typescript@6.0.3)
 
+  foundation/bench:
+    dependencies:
+      pg:
+        specifier: 'catalog:'
+        version: 8.22.0
+      supabase:
+        specifier: 'catalog:'
+        version: 2.109.0
+    devDependencies:
+      '@types/node':
+        specifier: 'catalog:'
+        version: 22.20.0
+      '@types/pg':
+        specifier: 'catalog:'
+        version: 8.20.0
+      typescript:
+        specifier: 'catalog:'
+        version: 6.0.3
+
+  foundation/tests:
+    dependencies:
+      '@dxb-foundation/bench':
+        specifier: workspace:*
+        version: link:../bench
+      pg:
+        specifier: 'catalog:'
+        version: 8.22.0
+    devDependencies:
+      '@types/node':
+        specifier: 'catalog:'
+        version: 22.20.0
+      '@types/pg':
+        specifier: 'catalog:'
+        version: 8.20.0
+      typescript:
+        specifier: 'catalog:'
+        version: 6.0.3
+      vitest:
+        specifier: 'catalog:'
+        version: 3.2.6(@types/node@22.20.0)(jiti@2.7.0)(jsdom@29.1.1(@noble/hashes@1.8.0))(lightningcss@1.32.0)
+
   packages/dxb-mcp:
     dependencies:
       '@dxb/memory-router':

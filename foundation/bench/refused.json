@@ -1,0 +1,12 @@
+{
+  "company": {
+    "sysid": "7674907968528752679",
+    "measured": "2026-11-23",
+    "why": "The holding's live engine (project DxB_Global_OS). The company's data is real; nothing the foundation's bench does may ever run on it."
+  },
+  "old-bench": {
+    "sysid": "7690665340837392423",
+    "measured": "2026-11-23",
+    "why": "The old construction bench (project DxB_Build). The old system's tests still stand on it; the foundation's bench did not make it and may not touch it."
+  }
+}

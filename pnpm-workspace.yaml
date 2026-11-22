@@ -2,6 +2,7 @@ packages:
   - "packages/*"
   - "apps/*"
   - "tools/*"
+  - "foundation/*"
 allowBuilds:
   esbuild: false
   sharp: false
