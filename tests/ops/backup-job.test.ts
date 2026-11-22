@@ -2,17 +2,15 @@
 // off-site copy failed every one of them (`scp … && echo OFFSITE_OK` under `set -e`), and on the 22nd it left a
 // 0-byte file under a backup's name because it dumped before the database accepted connections. These tests
 // drive the real scripts/backup/laptop-pg-dump.sh on the fakes of tests/ops/backup-fakes.ts. One night's backup
-// is a SET of three files (.planning/quick/20261122-b72-yedek/SET-CONTRACT.md). The alert and the units are in
-// tests/ops/backup-alert.test.ts.
+// is a SET of three files (.planning/quick/20261122-b72-yedek/SET-CONTRACT.md). The off-site copy and the far
+// side's prune are in tests/ops/backup-offsite.test.ts, the alert and the units in tests/ops/backup-alert.test.ts.
 import { execFileSync } from "node:child_process";
 import { existsSync, mkdirSync, readFileSync, utimesSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
-import { day, GLOBALS, GOOD, INVENTORY, LEAK, NEVER, runLine, setup, sha256, SNAPSHOT, TODAY } from "./backup-fakes";
+import { day, DEST, GLOBALS, GOOD, GOOD_NIGHT, INVENTORY, LEAK, NEVER, runLine, setup, sha256, SNAPSHOT, TODAY } from "./backup-fakes";
 
-const DEST = { BACKUP_DEST: "box:dumps" };
 const NO_SET = runLine("local=fail offsite=fail prune=skipped bytes=0", 1);
-const GOOD_NIGHT = [`BACKUP_OK ${TODAY} ${GOOD.length} bytes`, `OFFSITE_OK ${TODAY}`, runLine(`local=ok offsite=ok prune=ok bytes=${GOOD.length}`, 0)];
 
 describe("laptop-pg-dump.sh — the local set", () => {
   it("waits for a database that is not yet accepting connections, says it waited, then dumps", () => {
@@ -90,7 +88,7 @@ describe("laptop-pg-dump.sh — the local set", () => {
       expect(t.lines(r)).toEqual([`BACKUP_FAIL ${TODAY} ${reason}`, `OFFSITE_FAIL ${TODAY} no dump of tonight to copy`, NO_SET]);
       expect(t.everything()).toEqual(before); // a bad run never overwrites a good one, and leaves nothing of its own
       expect(r.stdout + r.stderr + t.backupLog()).not.toContain(LEAK);
-      expect(t.log("scp.log")).toBe(""); // what failed tonight is not what goes off-site
+      expect(t.log("gh.log")).toBe(""); // what failed tonight is not what goes off-site
     });
   }
 
@@ -108,7 +106,7 @@ describe("laptop-pg-dump.sh — the local set", () => {
     const r = t.run({ ...DEST, STUB_MV_FAIL: ".dump" });
     expect(r.status).not.toBe(0);
     expect(t.lines(r)).toEqual([`BACKUP_FAIL ${TODAY} the set could not take its names`, `OFFSITE_FAIL ${TODAY} no dump of tonight to copy`, NO_SET]);
-    expect(t.log("scp.log")).toBe(""); // the earlier run's dump did not travel as tonight's
+    expect(t.log("gh.log")).toBe(""); // the earlier run's set did not travel as tonight's
     expect(t.everything()).toEqual(before); // nothing was replaced, and nothing was pruned
   });
 
@@ -118,7 +116,7 @@ describe("laptop-pg-dump.sh — the local set", () => {
     const r = t.run({ ...DEST, STUB_MV_LIES: ".dump" });
     expect(r.status).not.toBe(0);
     expect(t.lines(r)).toEqual([`BACKUP_FAIL ${TODAY} what stands under tonight's names is not this run's set`, `OFFSITE_FAIL ${TODAY} no dump of tonight to copy`, NO_SET]);
-    expect(t.log("scp.log")).toBe("");
+    expect(t.log("gh.log")).toBe("");
     expect(t.files()).toEqual([]); // a dump of one run beside the manifest of another is no set
   });
 
@@ -195,50 +193,6 @@ describe("laptop-pg-dump.sh — its own log", () => {
   });
 });
 
-describe("laptop-pg-dump.sh — the off-site copy", () => {
-  it("exits 0 only when the set is proven and the copy was read back identical; the last line says so", () => {
-    const t = setup();
-    const r = t.run(DEST);
-    expect(r.status, r.stdout + r.stderr).toBe(0);
-    expect(t.lines(r)).toEqual(GOOD_NIGHT);
-    expect(readFileSync(join(t.dir, "remote/dumps", `dxb-laptop-${TODAY}.dump`), "utf8")).toBe(GOOD);
-    expect(t.files()).toEqual(t.tonightSet); // the read-back copy is not left lying
-  });
-
-  for (const [what, mode] of [["the copy is refused", "down"], ["the destination took the copy and kept nothing", "lost"], ["the copy that landed is not the dump", "corrupt"]]) {
-    it(`says OFFSITE_FAIL and exits non-zero when ${what}; the local set is kept`, () => {
-      const t = setup();
-      const r = t.run({ ...DEST, STUB_SCP: mode });
-      expect(r.status).not.toBe(0);
-      expect(r.stdout).toMatch(new RegExp(`^OFFSITE_FAIL ${TODAY} \\S`, "m"));
-      expect(r.stdout).not.toContain("OFFSITE_OK");
-      expect(readFileSync(`${t.tonight}.dump`, "utf8")).toBe(GOOD);
-      expect(t.files()).toEqual(t.tonightSet);
-      expect(t.lastLine(r)).toBe(runLine(`local=ok offsite=fail prune=skipped bytes=${GOOD.length}`, 1));
-    });
-  }
-
-  for (const [what, extra] of [["no destination is set", {}], ["the destination is set empty", { BACKUP_DEST: "" }]] as const) {
-    it(`treats "${what}" as a failure that is said, never as a skip`, () => {
-      const t = setup();
-      const r = t.run(extra);
-      expect(r.status).not.toBe(0);
-      expect(r.stdout).toMatch(new RegExp(`^OFFSITE_FAIL ${TODAY} no destination`, "m"));
-      expect(t.log("scp.log")).toBe(""); // it did not fall back to an address of its own
-      expect(readFileSync(`${t.tonight}.dump`, "utf8")).toBe(GOOD);
-      expect(t.lastLine(r)).toBe(runLine(`local=ok offsite=unset prune=skipped bytes=${GOOD.length}`, 1));
-    });
-  }
-
-  it("refuses a destination of a kind it has no way to verify", () => {
-    const t = setup();
-    const r = t.run({ BACKUP_DEST: "somewhere-without-a-kind" });
-    expect(r.status).not.toBe(0);
-    expect(r.stdout).toMatch(new RegExp(`^OFFSITE_FAIL ${TODAY} .*somewhere-without-a-kind`, "m"));
-    expect(t.log("scp.log")).toBe("");
-  });
-});
-
 describe("laptop-pg-dump.sh — pruning", () => {
   it("on a night proven here and off-site removes whole sets older than the retention, and nothing else", () => {
     const t = setup();
@@ -259,8 +213,8 @@ describe("laptop-pg-dump.sh — pruning", () => {
   });
 
   const UNPROVEN: [string, Record<string, string>][] = [
-    ["the off-site copy is refused", { ...DEST, STUB_SCP: "down" }],
-    ["the off-site copy read back is not the dump", { ...DEST, STUB_SCP: "corrupt" }],
+    ["the off-site copy is refused", { ...DEST, STUB_GH: "down" }],
+    ["the off-site copy read back is not what was sent", { ...DEST, STUB_GH: "corrupt" }],
     ["there is no destination", {}],
     ["the dump failed", { ...DEST, STUB_DUMP: "empty" }],
     ["the database never answered", { ...DEST, STUB_READY_AFTER: NEVER, BACKUP_DB_WAIT_SECONDS: "10" }],
@@ -283,8 +237,6 @@ describe("laptop-pg-dump.sh — pruning", () => {
     writeFileSync(join(stuck, "held"), "x");
     const r = t.run(DEST);
     expect(r.status).not.toBe(0);
-    expect(r.stdout).toContain(`PRUNE_FAIL ${TODAY}`);
-    expect(r.stdout).toContain(`OFFSITE_OK ${TODAY}`);
-    expect(t.lastLine(r)).toBe(runLine(`local=ok offsite=ok prune=fail bytes=${GOOD.length}`, 1));
+    expect(t.lines(r)).toEqual([GOOD_NIGHT[0], GOOD_NIGHT[1], `PRUNE_FAIL ${TODAY} local`, runLine(`local=ok offsite=ok prune=fail bytes=${GOOD.length}`, 1)]);
   });
 });

@@ -12,10 +12,10 @@
 #                   two. It is written last, and it is the set's proof.
 # Three legs, each of which says what happened: the set is taken and proven in
 # BACKUP_DIR; a copy goes to an off-site destination and is read back before it
-# is called landed; and only when BOTH are proven in this run are the sets older
-# than the retention pruned. The one transport written so far, scp, carries the
-# .dump alone and its home is gone: the transport that replaces it must carry
-# the three together (board row B72).
+# is called landed; and only when BOTH are proven in this run are the nights
+# older than each side's retention pruned, here and on the far side. The three
+# files travel together as ONE file, a tar encrypted on this machine before it
+# leaves: dxb-laptop-<date>.set.tar.gpg. Nothing leaves it unencrypted.
 #
 # WHY IT WAS REWRITTEN, measured 2026-11-22. The line that shipped the copy was
 # `scp … && echo OFFSITE_OK` under `set -e`: a failing left side of `&&` stops
@@ -39,11 +39,14 @@
 # (.planning/quick/20261122-b72-yedek/SOL.md).
 #
 # Settings (environment; the unit reads them from ~/.config/dxb/backup.env):
-#   BACKUP_DEST              where the off-site copy goes: <ssh host>:<directory>.
-#                            Empty tonight — the Storage Box is gone and the new
-#                            home is the CEO's choice (board row B72).
+#   BACKUP_DEST              where the off-site copy goes: github:<owner>/<repo>,
+#                            a PRIVATE repository. Unset is a failed night.
+#   BACKUP_PUBLIC_KEY        the public key the copy is encrypted to, a file
+#                            (default ~/.config/dxb/backup-public.asc)
 #   BACKUP_DIR               local sets (default ~/backups/dxb)
 #   BACKUP_RETENTION_DAYS    sets of nights older than this are pruned (default 14)
+#   BACKUP_OFFSITE_RETENTION_DAYS  the same for the far side (default 90)
+#   BACKUP_GH_WAIT_SECONDS   one call to gh is cut off after this (default 600)
 #   BACKUP_DB_WAIT_SECONDS   how long to wait for the database at boot (default 300)
 #
 # Log grammar, one line per event, <date> = the run's day. Every line goes to
@@ -52,7 +55,8 @@
 #   BACKUP_WAIT <date> database accepted connections after <n>s
 #   BACKUP_OK <date> <n> bytes        | BACKUP_FAIL <date> <reason>
 #   OFFSITE_OK <date>                 | OFFSITE_FAIL <date> <reason>
-#   PRUNE_FAIL <date>                 (an old set could not be removed)
+#   PRUNE_FAIL <date> local           (an old set could not be removed)
+#   PRUNE_FAIL <date> github <reason> (an old night's release could not be)
 #   BACKUP_RUN <date> invocation=<systemd's INVOCATION_ID|manual> local=<ok|fail> offsite=<ok|fail|unset> prune=<ok|fail|skipped> bytes=<n> exit=<n>
 # BACKUP_RUN is the last line of every run that ends by its own hand.
 #
@@ -73,10 +77,10 @@ DB_POLL=5
 ANSWER_WAIT=600
 ANSWER_MARK="dxb-backup-answer-ends"
 INVENTORY_SQL="$(dirname "${BASH_SOURCE[0]}")/inventory.sql"
+OFFSITE_GITHUB="$(dirname "${BASH_SOURCE[0]}")/offsite-github.sh"
 STAMP="$(date +%F)"
 STEM="dxb-laptop-$STAMP"
 SET="$BACKUP_DIR/$STEM"
-OUT="$SET.dump"
 SET_PARTS=(dump globals.sql manifest.json) # the files of one night, in the order they take their names
 LOG=""      # backup.log, once it is known to take a line
 RUN_DIR=""  # this run's own working folder; nothing in it has a backup's name
@@ -268,14 +272,18 @@ take_set() {
   say "BACKUP_OK $STAMP $bytes bytes"
 }
 
+# The first night a retention of $1 days still keeps, counted back from tonight.
+oldest_night_kept() {
+  [[ "$1" =~ ^[0-9]+$ ]] && date -d "$STAMP 12:00 $1 days ago" +%F 2>/dev/null
+}
+
 # Called only when tonight's set is proven here AND its copy is proven off-site:
 # on any other night the old sets may be all there is. A set's age is its night
 # — the date in its name — so the files of one night always go together, and
 # tonight's, the newest proven set, is never taken whatever the retention says.
 prune_old_sets() {
   local oldest_kept part file night failed=0
-  [[ "$RETENTION" =~ ^[0-9]+$ ]] || return 1
-  oldest_kept="$(date -d "$STAMP 12:00 $RETENTION days ago" +%F 2>/dev/null)" || return 1
+  oldest_kept="$(oldest_night_kept "$RETENTION")" || return 1
   for part in "${SET_PARTS[@]}"; do
     for file in "$BACKUP_DIR"/dxb-laptop-????-??-??."$part"; do
       [ -e "$file" ] || continue
@@ -288,17 +296,19 @@ prune_old_sets() {
   return "$failed"
 }
 
-# One function per KIND of destination: it copies $OUT there and proves the copy
-# landed, or prints the reason and returns non-zero. A new kind is a new function
-# and one more arm in copy_offsite. The scp kind proves by reading the copy back
-# and comparing every byte — it asks nothing of the far side but scp itself.
-offsite_by_scp() {
-  local remote="$BACKUP_DEST/${OUT##*/}" scp_opts=(-q -o BatchMode=yes -o ConnectTimeout=30)
-  scp "${scp_opts[@]}" "$OUT" "$remote" >&2 || { echo "scp to $BACKUP_DEST failed"; return 1; }
-  scp "${scp_opts[@]}" "$remote" "$READBACK" >&2 || { echo "the copy could not be read back from $BACKUP_DEST"; return 1; }
-  cmp -s "$OUT" "$READBACK" || { echo "the copy read back from $BACKUP_DEST is not the dump"; return 1; }
+# Both sides are tried whatever became of the other, and each that could not be
+# pruned is said.
+prune_both_sides() {
+  local reason failed=0
+  prune_old_sets || { failed=1; say "PRUNE_FAIL $STAMP local"; }
+  reason="$(prune_github_releases)" || { failed=1; say "PRUNE_FAIL $STAMP github $reason"; }
+  return "$failed"
 }
 
+# One function per KIND of destination: it carries tonight's set there and
+# proves the copy landed, or prints the reason and returns non-zero. A new kind
+# is a new function, one more arm here, and its own prune of its far side. The
+# github kind is a file of its own, offsite-github.sh.
 copy_offsite() {
   local reason
   if [ -z "$BACKUP_DEST" ]; then
@@ -308,8 +318,8 @@ copy_offsite() {
     reason="no dump of tonight to copy"
   else
     case "$BACKUP_DEST" in
-      *:*) reason="$(offsite_by_scp)" && offsite_leg=ok ;;
-      *)   reason="no known kind of destination: $BACKUP_DEST" ;;
+      github:*) reason="$(offsite_by_github)" && offsite_leg=ok ;;
+      *)        reason="no known kind of destination (BACKUP_DEST)" ;;
     esac
   fi
   if [ "$offsite_leg" = ok ]; then say "OFFSITE_OK $STAMP"; else say "OFFSITE_FAIL $STAMP $reason"; fi
@@ -319,6 +329,7 @@ mkdir -p "$BACKUP_DIR" 2>/dev/null || { refuse "the backup folder cannot be made
 umask 077
 LOG="$BACKUP_DIR/backup.log"
 { : >> "$LOG"; } 2>/dev/null || LOG="" # the night's work does not wait on its log: the lines still reach stdout
+source "$OFFSITE_GITHUB" 2>/dev/null || { refuse "offsite-github.sh is not beside the job"; exit 1; }
 exec {lock_fd}< "$BACKUP_DIR" || { refuse "the backup folder cannot be opened"; exit 1; }
 flock -n "$lock_fd" || { refuse "another run holds the lock"; exit 1; }
 sweep_dead_runs
@@ -328,7 +339,7 @@ READBACK="$RUN_DIR/readback"
 if wait_for_database && take_set; then local_leg=ok; fi
 copy_offsite
 if [ "$local_leg" = ok ] && [ "$offsite_leg" = ok ]; then
-  # An old set that cannot be removed is said and fails the run; tonight's set stands either way.
-  if prune_old_sets; then prune_leg=ok; else prune_leg=fail; say "PRUNE_FAIL $STAMP"; fi
+  # An old night that cannot be removed fails the run; tonight's set stands either way.
+  if prune_both_sides; then prune_leg=ok; else prune_leg=fail; fi
 fi
 [ "$local_leg" = ok ] && [ "$offsite_leg" = ok ] && [ "$prune_leg" = ok ] || exit 1
