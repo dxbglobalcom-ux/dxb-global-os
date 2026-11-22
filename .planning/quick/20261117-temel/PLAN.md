@@ -82,10 +82,9 @@ built as a new chain beside the old one — the sound mechanisms carried over, e
 company or a brand, flagged which; currency, jurisdiction), `clients` (a company's), `channels` (a company's shop
 front or account on a platform — its own site, Amazon, eBay, TikTok, Instagram, a mailbox), the CRM tables carried
 with their links, then the shared org: `departments` (a cupboard of specialists, checklists, examples
-and lessons — no head on a job's path), `agents`, `personas`, the library, tools, settings. The shared org is the holding's and its slugs are unique in the holding; what a company owns —
+and lessons — no head on a job's path), `agents`, the library, tools, settings. The shared org is the holding's and its slugs are unique in the holding; what a company owns —
 clients, channels, projects — is unique inside that company. A job's client must belong to the job's company, and every row hanging from a job carries the same
-company — by composite keys, so the database refuses a mismatch. One truth each for the persona's text (its file; the
-table is the register), a tool (one row that pins and library entries point at) and an agent's status. An agent's home
+company — by composite keys, so the database refuses a mismatch. One truth each for a tool (one row that pins and library entries point at) and an agent's status. An agent's home
 department and an additional assignment in another department are two facts with different meaning and both stay, with
 start and the decision they came from.
 
@@ -117,6 +116,11 @@ possible are there. What is built now is the boundary a seat meets (C).
   stage 0). Tools that let a seat close an approval-waiting part, create a department or name another actor go.
 - Every child process — a seat's session, the auditor's command-line run — starts from an allow-list of named
   variables: no database URL, no outward key.
+- **[0b · B41] A seat's own shell and file tools run inside a sandbox set per seat role:** its part's working folder
+  writable, the repository and the construction's home write-denied, secrets read-denied, no route to either
+  database. A seat role without the sandbox is given no shell and no file tool. An artifact is a file: without this
+  wall a shell reaches it past every door check above. Built at stage 1, before the trial of a seat asking for
+  another client's desk; stage 0's piece 12 reports what the bare seat can reach.
 
 ### D. The work model
 
@@ -125,7 +129,9 @@ possible are there. What is built now is the boundary a seat meets (C).
   (`received → routed → working ⇄ waiting → delivered → closed`, or `cancelled`, `failed`) and what it waits on.
 - **One birth door for every producer** — Hamza, Reception, the clock and a line, the revenue engine: `job_open`
   takes the source's own key, so the same mail or the same discovery never opens two jobs, and the job, its brief and
-  its first parts are born together or not at all.
+  its first parts are born together or not at all. **[0b · B64]** `job_open` runs the halal screen on the brief
+  before anything is born; a hit refuses the birth and records the refusal with its source and key (today's
+  behaviour, carried).
 - **What a job starts with is decided from separate inputs** — its type, its value tier, whether a registered pattern
   exists, the door it came through, whether it goes to a client — as A26–A32 say: a simple job runs its pattern; a
   normal one gets a plan; a valuable one two plans and a blind audit, and plans only its difference when its type is
@@ -200,6 +206,11 @@ lost. `is_error` is a failure. The backup pair by role, never a weaker model; bo
 Hermes waiting are three distinct outcomes (A31). LiteLLM listens on the loopback only. A ruler in the battery fails
 when a model is called anywhere else.
 
+**[0b · B08] One model register.** The router chooses only from it — his policy reference data (§2 A): each model's
+status (testing, active, banned, retired) and its tier floor. Routing rules, the per-employee choice and every
+attempt name a register row; the model door refuses a model that is not active. The register arrives at stage 1;
+the door that adds a model, with B08.
+
 ### H. The outward path (the approval gate)
 
 - **Kept:** the enqueue in the same transaction, the forward-only guard with one decision, the re-check at
@@ -233,6 +244,13 @@ when a model is called anywhere else.
   handler registry; the executor refuses to start when its handlers and the registry differ.
 - The quality and halal gates (the hook library) stay as steps of the seat runner that no flag skips; the halal
   screen is not switchable; a failed read refuses.
+- **[0b · B15] Each agent carries an autonomy level** that only his door sets, audited; the classifier reads the
+  acting agent's level after the locked rules — a level may relax a class that is not locked, never a locked one.
+  Stage 2.
+- **[0b · B43] Proposed — waits for his word, because it is the reach of an Islamic boundary:** the halal screen
+  also as a mandatory check on every artifact version before it is delivered or published, and on the arguments of
+  every studio-hands part (a prompt, a picked asset, a cut). Today's text screens a seat's steps; a render the
+  hands make from a prompt passes no seat.
 
 ### I. Context, prompt assembly and memory's door
 
@@ -249,7 +267,8 @@ when a model is called anywhere else.
 
 - **Kept from today's revenue door:** the request key, a manual entry without a document, a refund as a reasoned
   reverse entry.
-- Revenue rows carry company, client, job, currency, gross, net and tax; uniqueness is on the provider's account and
+- Revenue rows carry company, client, job, the line and the channel the sale came through **[0b · B83]**, currency,
+  gross, net and tax; uniqueness is on the provider's account and
   transaction inside the company, so two shops with the same order number never collide and a replay never books
   twice.
 - **One source for realised spend:** the attempt's cost row (amount and currency; NULL when unknown; subscription
@@ -258,10 +277,15 @@ when a model is called anywhere else.
 - **Money out that is not a model call** — ad spend, a payment, a marketplace fee: the executed outward act writes
   its expense row (company, job or line, channel, amount, currency, the provider's transaction, the request it came
   from). Realised net is revenue less model spend less these.
+- **[0b · B43] Money out tied to no single request** — a membership, a subscription fee, a balance top-up: one
+  expense row when it is paid, on the company and the office or line it serves, with no job. A call that draws on
+  prepaid credit or a membership records usage on its attempt and books no second amount.
 - **Corrections are reverse entries**, never edits. **Each amount stays in its own currency;** a holding total
   converts at a recorded rate for the period and is derived, never stored over the original.
 - One `budgets` table for holding → company → project or employee → job and line. The per-job cost line warns and
-  never stops.
+  never stops. **[0b · B64]** A budget carries the thresholds he sets once: at 70 % and 90 % he is
+  warned; at 100 % no new non-critical job or part starts under it and nothing running is cut (COST_CONTROL A5,
+  kept by his word of 2026-10-28); which work is critical is his policy.
 
 ### K. The tests and the bench
 
@@ -293,6 +317,9 @@ factory (B28), and the rows after them.
 the model door, no store of conversation or memory, no credential, no outward call outside the outward door, no
 approval rule of its own, no money record outside §2 J, no liveness of its own (N.1), no screen outside B32's
 shell. An office that needs one of these needs it *from the foundation*, and says so.
+**[0b · B84]** A boxed third-party product an office runs (OpenSEO, Chatwoot, OpenProject) sits behind the tool door:
+its own store holds only its craft data, its keys sit with the intake or the executor, its own spending is bounded
+by a balance he tops up and booked under §2 J, and the report of additions names it.
 
 **What an office adds, each through a door or the chain the foundation already has:**
 
@@ -412,6 +439,9 @@ door: `inbound_receive`, the revenue door, or `measurement_record`.
   is acknowledged only after the record is durably received.
 - **A credential that can also write** (a provider with no read-only access) is not given to the intake: that read is
   a trusted read operation in the executor.
+- **[0b · B84] A seat's on-demand read that needs a credential** is a request classified as reading, run by a read
+  handler in the intake (a read-only key) or the executor (a key that can also write); its answer returns to the run
+  as a desk entry; the key never enters the agents' host.
 - **Money in is booked automatically only from an authenticated feed** — a mail never books revenue or marks a deal
   paid. PLAN's authorised manual entry (§2 J) stays.
 - **A client's acceptance** counts only from an authorised contact of that client, on a verified channel, for that
@@ -438,6 +468,8 @@ makes it hold:
 - a call the provider may have accepted while its reply was lost keeps its reservation **until it is reconciled** —
   neither expiry nor the job's close frees it (§2 H: parked for review, never repeated by itself);
 - a route with no enforceable maximum cannot go on a card;
+- **[0b · B83, B84]** the card's shape is general — one gated request that later requests join, bounded by what it
+  names (a template's hash, a daily cap); whether an outreach campaign rides it is decided at those rows' ranks;
 - the key stays where B43 put it — in the proxy (SECURITY O4/O7). The process that may ask the proxy for a paid
   render is not the agents' host. Which process carries the remote lane's submit and poll is tried at B43's rank;
 - **one posting per charge:** the money is one expense row, linked to its attempt, its request and the provider's
@@ -650,7 +682,7 @@ glue. The lead designs each part's contract and tests, verifies every piece and 
 | # | Part (today) | Verdict | What happens | Writer | Absorbs |
 |---|---|---|---|---|---|
 | 1 | Migration chain, bootstrap, seed | **Rewritten** | Baseline by subject plus versioned changes, atomic with the ledger; functions once; defaults apart from his live values; roles in the chain | F-h | B68 |
-| 2 | The holding's shape (companies, clients and CRM, departments, agents, personas, library keys) | **Rewritten** | Company and client consistent by key; one truth for persona, tool, status; home department and extra assignment both kept | F-h | B67 |
+| 2 | The holding's shape (companies, clients and CRM, departments, agents, library keys) | **Rewritten** | Company and client consistent by key; one truth for persona, tool, status; home department and extra assignment both kept | F-h | B67 |
 | 3 | Identity and authorization (`fn_org_actor`, grants, RLS, logins) | **Rewritten** | Principals, service logins, authority checked at every door, append-only for everyone | F-x | B73 |
 | 4 | Work records (tasks, intents, workflow runs, generated work, media jobs, dependencies) | **Rewritten** | Jobs, parts, artifacts, desk, runs; one birth door; one law; the closing condition | F-h | C60 |
 | 5 | Leased claim and reaper | **Claim kept, ownership repaired** | Atomic claim carried; a new attempt per claim, and only the current attempt may act; attempt cap | F-h | B75 (cap) |
@@ -737,9 +769,11 @@ Each stage ends with something that runs.
 - **Stage 5 — the move and the key turn.**
   - Every record family gets its line: moved, kept as a read-only archive, or left with its reason — tasks, runs,
     cost rows, outbox rows, media jobs and routing rules included. The simplest truthful form is proposed: living
-    reference data moves (personas, the library, settings and rules he changed, conversations); history stays readable
+    reference data moves (the library, settings and rules he changed, conversations); history stays readable
     where it is — the old schema, in the same database, frozen as an archive. The move is statements inside one
-    database, in one transaction.
+    database, in one transaction. **[0b · C52]** A conversation he ordered deleted leaves no copy in
+    the frozen archive: the move carries none, and a deletion after the move removes the archived copy in the same
+    transaction.
   - A past actor written as text stays what it is — a legacy principal, not a verified person.
   - Old outward rows are reconciled and none is ever emitted again; the new outbox starts empty.
   - The move has a last-write line, a count-and-sum reconciliation per family, and a way back: the services point
@@ -757,6 +791,11 @@ The board's rows ride on these stages in the order he approved on 2026-11-22: `r
 Stage 0 is cut into pieces in `stage-0/BUILD.md` (audited blind twice, 2026-11-22). It adapts one clause above on what the
 audits measured: the foundation gets a construction bench of its own, with the old chain applied and the new schema
 beside it in one database; the old battery keeps running on the old bench, which the foundation does not touch.
+
+The scan of the board's open rows is checked at the source (`stage-0/scan/WEIGHED.md`, 2026-11-22): of 66 findings,
+twelve are needs this plan did not carry. Eleven entered it as sentences marked **[0b]** under the sections that own
+them — the lead's additions under stage 0's own text above, not yet seen by him; the twelfth, the halal screen's
+reach (§2 H), is written as a proposal and waits for his word. No finding changes a decision of §1 or §10.
 
 **Added by §2 M and N:**
 
