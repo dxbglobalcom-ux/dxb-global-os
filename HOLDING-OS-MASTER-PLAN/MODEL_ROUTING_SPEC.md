@@ -499,7 +499,7 @@ RUNTIME tree. The design he answered decision by decision: `.planning/quick/2026
    | a long unattended build (over half an hour) | Opus 5.5 `xhigh` |
    | final check of internal work | Opus 5.5 `high` |
    | plan audit (valuable work only) | Sol 6.1 `high` (item 7) |
-   | check of client work (the critical gate) | Sol 6.1 `high` reads and tries what runs, Fable 5.1 `high` reads, blind to each other; a routine client message Sol alone (§4e) |
+   | check of client work (the critical gate) | Sol 6.1 `high` reads and tries what runs; on a valuable or risky job Fable 5.1 `high` reads too, blind to each other (AGENT_ORCHESTRATION A28, 2026-11-22); a routine client message Sol alone (§4e) |
    | the customer's eye (first-user walkers, where [[AGENT_ORCHESTRATION_SPEC]] A28 puts it) | Opus 5.5, effort by the owner, starting at `medium` |
 
    A known job type runs from its job type's registered pattern ([[WORKFLOW_ENGINE_SPEC]] A8), like a skill or a

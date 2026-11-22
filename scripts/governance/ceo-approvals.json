@@ -3201,5 +3201,13 @@
     "conditions": "Written as a reminder on his word 'hatırlatma kuraldan ziyade'; not a law. The scan is a narrow one, not a row-by-row review.",
     "session": "Fable 5.2 session 231e6a12, heard first-hand (dictated), 2026-11-22.",
     "where": "HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md (before the laws) · .planning/quick/20261117-temel/PLAN.md §6 stage 0"
+  },
+  "client-work-one-checking-seat-two-on-valuable-or-risky-2026-11-22": {
+    "date": "2026-11-22",
+    "what": "Work that goes to a client is checked by one seat by default — the seat that reads it and tries what runs; the second, blind seat stays only on a valuable or risky job as A30 defines it (a deal of 1,000 $ or more, his word, the first job of its kind, health, law, personal data, a money flow) and on money and contracts. The lead's recommendation, accepted. Replaces 'two seats on all client work' of 2026-10-21.",
+    "verbatim": "Ya şu iki ayrı gözden geçere gerek yok. Astra denetimi yapar işte bu. Değil mi? Sen ne düşünüyorsun? … Yukarıdaki önerilerini de kabul ediyorum. Tamam.",
+    "conditions": "He said 'Astra'; which model sits in the checking seat stays MODEL_ROUTING's and was not changed by this. The customer's-eye walkers of A28 are untouched.",
+    "session": "Fable 5.2 session 231e6a12, heard first-hand (dictated), 2026-11-22.",
+    "where": "HOLDING-OS-MASTER-PLAN/AGENT_ORCHESTRATION_SPEC.md A28, A32"
   }
 }
