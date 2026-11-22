@@ -23,7 +23,7 @@ export const AUDIO_RETENTION_HOURS = 24;
 export interface DrainVoiceDeps {
   db: Kysely<DB>;
   audioDir?: string | null;
-  /** test seams forwarded to answerVoiceCall (tts/answer/speaches/repoRoot) */
+  /** test seams forwarded to answerVoiceCall (tts/answer/speaches) */
   answerDeps?: Omit<VoiceAnswerDeps, "db" | "audioDir">;
 }
 

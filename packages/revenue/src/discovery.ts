@@ -103,9 +103,10 @@ async function settingBool(db: Kysely<any>, key: string, fallback: boolean): Pro
  *  halal screen fail-closed the task on its own brief — the same trap that
  *  produced the CEO's "bahis" incident on 2026-07-23. The screen matches TEXT,
  *  it cannot read intent, and it is right not to try. So the boundary is stated
- *  as a rule the agent already carries (persona §12, MASTER_PLAN §11) and never
- *  as a word list. That is also better design: a copy of the term list in a
- *  prompt is a second source of truth that drifts from the policy. */
+ *  as a rule the agent already carries (the Islamic conduct section of its
+ *  standing instructions, MASTER_PLAN §11) and never as a word list. That is
+ *  also better design: a copy of the term list in a prompt is a second source
+ *  of truth that drifts from the policy. */
 function scoutBrief(opts: {
   maxCandidates: number;
   engines: string[];
@@ -125,10 +126,10 @@ function scoutBrief(opts: {
     "",
     "HARD BOUNDARIES — a candidate that breaks any of these is not a candidate:",
     `· Capital required must be €0 up to €${opts.capitalLimitEur}. No inventory purchase, no ad budget, no deposits.`,
-    "· The holding's Islamic boundaries are absolute and constitutional (MASTER_PLAN §11, your own",
-    "  persona §12). You already know them; apply them without being told what they are, and drop any",
-    "  candidate that touches a prohibited category — including the two market activities the CEO",
-    "  excluded by name. If you are unsure whether something qualifies, it does not.",
+    "· The holding's Islamic boundaries are absolute and constitutional (MASTER_PLAN §11, the Islamic",
+    "  conduct section of your standing instructions). You already know them; apply them without being",
+    "  told what they are, and drop any candidate that touches a prohibited category — including the two",
+    "  market activities the CEO excluded by name. If you are unsure whether something qualifies, it does not.",
     "· It must be something a small remote team of specialists can deliver from Europe, in English or Turkish.",
     "",
     "HOW TO WORK — this is the part that decides whether the run was worth anything:",

@@ -26,7 +26,7 @@ export type { PlanStep, PlanHarvest, GenerateWorkResult, GeneratedTask } from ".
 // R2.2 — worker real tool surface (audit F-02/F-04): profile → SDK bridge.
 export { buildSdkToolOptions, resolveEvidenceToolCalls, resolveExecutionRoute } from "./worker-shim.js";
 // B43 plan ② (2026-09-05): a seat runs as the seat, in SDK isolation — exported so the delivery is pinned by tests
-export { composeSeatPrompt, seatStandingPrompt } from "./worker-shim.js";
+export { composeSeatPrompt } from "./worker-shim.js";
 export type { SeatIdentity } from "./worker-shim.js";
 export {
   runCriticalGate,

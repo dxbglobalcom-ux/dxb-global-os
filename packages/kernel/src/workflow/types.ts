@@ -19,7 +19,7 @@ export interface AgentWork {
   effort?: StepEffort;
   /** B51 P5b (C2-4) — who the seat is: what the composition point needs to build its standing prompt. */
   seat?: StepSeat;
-  /** B51 P5b (C2-4) — the seat's standing prompt (identity, persona, the laws), the system prompt of the
+  /** B51 P5b (C2-4) — the seat's standing prompt (identity, conduct, the laws), the system prompt of the
    *  run. Filled by the composition point (RunnerDeps.seatPrompt); absent → the one-line identity. */
   systemPrompt?: string;
 }
@@ -54,7 +54,7 @@ export interface RunnerDeps {
   /** Backoff sleeper — tests inject an instant one. */
   sleep?: (ms: number) => Promise<void>;
   /** B51 P5b (C2-4) — builds a seat's standing prompt. The one definition lives in the orchestrator
-   *  (`seatStandingPrompt`, prompt-core underneath), which the kernel cannot import (it depends on the
+   *  (`composeSeatPrompt`, prompt-core underneath), which the kernel cannot import (it depends on the
    *  kernel), so the composition point — the scheduler — hands it in. Absent → no system prompt. */
   seatPrompt?: (seat: StepSeat) => Promise<string | null>;
 }

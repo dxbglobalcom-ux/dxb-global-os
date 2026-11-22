@@ -37,13 +37,12 @@ const REPO_ROOT = join(import.meta.dirname, "..", "..");
 const hamza = { slug: HAMZA_SLUG, department: "ceo", role_level: "orchestrator" };
 const base = {
   agent: hamza,
-  personaBody: "# PERSONA — Hamza\n\n## 1. Role\nOrchestrator.",
   memoryLines: ["the holding has no revenue yet"],
   lang: "tr" as const,
 };
 
 describe("B21 — one standing context, both lanes", () => {
-  it("gives voice and chat the IDENTICAL identity, persona, memory and law blocks", () => {
+  it("gives voice and chat the IDENTICAL identity, conduct, memory and law blocks", () => {
     const voice = standingPrompt({ ...base, lane: "voice" });
     const chat = standingPrompt({ ...base, lane: "chat" });
     const voiceGate = approvalGateLine("voice");
@@ -173,8 +172,8 @@ describe("B21 — one standing context, both lanes", () => {
     }
   });
 
-  it("emits no empty block for an agent with no persona and no matched memory", () => {
-    const blocks = standingPrompt({ ...base, personaBody: "", memoryLines: [], lane: "chat" });
+  it("emits no empty block for an agent with no matched memory, and no persona block at all", () => {
+    const blocks = standingPrompt({ ...base, memoryLines: [], lane: "chat" });
     expect(blocks.every((b) => b.trim().length > 0)).toBe(true);
     expect(blocks.join("\n")).not.toContain("Your persona");
     expect(blocks.join("\n")).not.toContain("Relevant company memory");

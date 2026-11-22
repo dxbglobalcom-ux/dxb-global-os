@@ -121,14 +121,13 @@ describe("C2-4 — a workflow step runs as its seat", () => {
 
   it("the scheduler hands in the orchestrator's one definition", async () => {
     const src = await readFile(join(REPO_ROOT, "packages/outbox-executor/src/scheduler.ts"), "utf8");
-    expect(src).toContain("drainWorkflowRuns({ seatPrompt: (seat) => seatStandingPrompt(seat) })");
+    expect(src).toContain("drainWorkflowRuns({ seatPrompt: async (seat) => composeSeatPrompt(seat) })");
   });
 });
 
 describe("C2-9 — Hamza's standing layer is the cached system prompt", () => {
   const input = {
     agent: { slug: "agents-orchestrator" },
-    personaBody: "PERSONA BODY",
     memoryLines: ["the board met on Monday"],
     lang: "tr" as const,
     lane: "chat" as const,
@@ -144,7 +143,9 @@ describe("C2-9 — Hamza's standing layer is the cached system prompt", () => {
       [...standingPrompt({ ...input, memoryLines: [] }), "LANE LINE"].join("\n\n"),
     );
     expect(a.system).toContain("HE IS TALKING TO YOU, Hamza");
-    expect(a.system).toContain("PERSONA BODY");
+    // CEO 2026-11-22: no persona body — the conduct it used to carry stands in the cached layer
+    expect(a.system).toContain("## 12. Discipline DNA & Islamic conduct");
+    expect(a.system).not.toContain("Your persona");
     expect(a.system).not.toContain("Relevant company memory");
     expect(a.memory).toContain("the board met on Monday");
     expect(c.memory).toContain("could not be read");

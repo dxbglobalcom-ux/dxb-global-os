@@ -1,11 +1,10 @@
 // B51 move 5, code bundle 2 (CEO 2026-10-04: "gerekeni yap") — the runtime prompt rows of the
 // prompt audit (.planning/quick/20260923-prompt-audit/slices/c-personas-108-213-code.md PART 2).
 // Each test pins one row: the old text is gone and the replacement carries its reason.
-import { mkdtemp, mkdir, readFile, writeFile } from "node:fs/promises";
-import { tmpdir } from "node:os";
+import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
-import { routeEffort, loadPersonaBody } from "../../packages/voice/src/index.js";
+import { routeEffort } from "../../packages/voice/src/index.js";
 import { voiceLaneLines } from "../../packages/voice/src/answer.js";
 import { chatLaneLines } from "../../packages/orchestrator/src/chat-drain.js";
 import { draftPrompt } from "../../packages/orchestrator/src/decompose.js";
@@ -92,7 +91,7 @@ describe("C2-10 — no JSON-forcing prose beside the json_schema the SDK already
 
 describe("C2-11 — the task lane does not tell a tool-less seat to call a tool, nor grade it", () => {
   it("seat standing prompt", () => {
-    const p = composeSeatPrompt({ slug: "x", department: "y" }, "");
+    const p = composeSeatPrompt({ slug: "x", department: "y" });
     expect(p).toContain("ONE task from the company's queue");
     expect(p).not.toContain("verify with a real tool call");
     expect(p).not.toContain("judged empty");
@@ -102,30 +101,6 @@ describe("C2-11 — the task lane does not tell a tool-less seat to call a tool,
     const src = await readFile(join(REPO_ROOT, "packages/orchestrator/src/worker-shim.ts"), "utf8");
     expect(src).not.toContain("rejected by the gate");
     expect(src).toContain("the file entry carries that ref exactly");
-  });
-});
-
-describe("R14 — a persona file's HTML comments never reach the model", () => {
-  it("strips single- and multi-line comments, keeps the text around them", async () => {
-    const root = await mkdtemp(join(tmpdir(), "r14-"));
-    await mkdir(join(root, "personas", "x"), { recursive: true });
-    await writeFile(
-      join(root, "personas", "x", "p.md"),
-      "<!-- head -->\n## SİCİL\n| 1 | Employee ID |\n\n" +
-        "<!-- v1 · fable-5 · 2026-07-11 -->\n# PERSONA — X\n\n## 1. Role\nKeeps this.\n" +
-        "<!-- Constitutional section —\n   two lines -->\n## 12. Discipline DNA\nAnd this.\n",
-    );
-    const body = await loadPersonaBody(root, "personas/x/p.md");
-    expect(body).not.toContain("<!--");
-    expect(body).not.toContain("fable-5");
-    expect(body).not.toContain("two lines");
-    expect(body.startsWith("# PERSONA — X")).toBe(true);
-    expect(body).toContain("Keeps this.");
-    expect(body).toContain("## 12. Discipline DNA\nAnd this.");
-  });
-  it("the live Hamza persona carries no comment", async () => {
-    const body = await loadPersonaBody(REPO_ROOT, "personas/ceo/agents-orchestrator.md");
-    expect(body).not.toContain("<!--");
   });
 });
 

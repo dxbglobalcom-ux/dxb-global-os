@@ -135,7 +135,6 @@ describe("R3.1 — service e2e (real DB + Speaches, deterministic answer)", () =
       {
         db: db(),
         answer: async (q) => `R31 deterministic answer as ${q.agent.slug}`,
-        repoRoot: process.cwd(),
       },
       { audio: wav, lang: "tr", targetSlug: "agents-orchestrator" },
     );

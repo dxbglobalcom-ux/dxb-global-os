@@ -15,7 +15,6 @@ import { recallForAnswer } from "./answer-memory.js";
 import { ttsSpeak, ttsForLang, speachesConfig, type SpeachesConfig } from "./speaches.js";
 import { assertTransition, type CallState, type TimelineEntry } from "./machine.js";
 import { logCall } from "./log.js";
-import { loadPersonaBody } from "./persona.js";
 import { HAMZA_SLUG, answerLayers, routeEffort } from "./prompt-core.js";
 
 // Re-exported, not re-declared: `prompt-core` owns the one definition of who the CEO is talking
@@ -27,8 +26,7 @@ export { HAMZA_SLUG };
 export interface AnswerQuestion {
   question: string;
   lang: "tr" | "en";
-  agent: { slug: string; department: string; role_level: string | null; persona_path: string | null };
-  personaBody: string;
+  agent: { slug: string; department: string; role_level: string | null };
   memoryLines: string[];
   /** The recall failed — Hamza is told so (prompt-core memoryBlock), never handed an empty memory. */
   memoryUnreachable?: boolean;
@@ -42,12 +40,11 @@ export interface VoiceAnswerDeps {
   db: Kysely<DB>;
   tts?: typeof ttsSpeak;
   /** answer producer — overridable in tests; default = SDK on the
-   *  orchestration route (one brain, V2; persona rides the system prompt, V7) */
+   *  orchestration route (one brain, V2; the standing layer rides the system prompt, V7) */
   answer?: (q: AnswerQuestion) => Promise<string>;
   /** Test seam for the memory recall; production default = recallMemory. */
   recall?: typeof recallMemory;
   speaches?: SpeachesConfig;
-  repoRoot?: string;
   /** where the answer WAV lands for the dashboard playback route;
    *  null/undefined = keep it in memory only (tests, inline proofs) */
   audioDir?: string | null;
@@ -105,7 +102,7 @@ async function defaultAnswer(db: Kysely<DB>, q: AnswerQuestion): Promise<string>
   } catch {
     r = route({ ...ci, task_class: "orchestration" }, rules);
   }
-  // Standing layer from the ONE definition (prompt-core): identity, persona, memory, the CEO
+  // Standing layer from the ONE definition (prompt-core): identity, conduct, memory, the CEO
   // language law, the honesty rule and the approval gate. Only what is genuinely spoken-lane
   // specific is written here — the style ruling of 2026-07-24 ("türkçesi çok kötü... tarzanca")
   // and the TOPIC contract the transcript header depends on.
@@ -114,7 +111,6 @@ async function defaultAnswer(db: Kysely<DB>, q: AnswerQuestion): Promise<string>
   const { system, memory } = answerLayers(
     {
       agent: q.agent,
-      personaBody: q.personaBody,
       memoryLines: q.memoryLines,
       memoryUnreachable: q.memoryUnreachable,
       lang: q.lang,
@@ -174,7 +170,6 @@ export async function answerVoiceCall(
   const tts = deps.tts ?? ttsSpeak;
   const produceAnswer = deps.answer ?? ((q: AnswerQuestion) => defaultAnswer(db, q));
   const cfg = deps.speaches ?? speachesConfig();
-  const repoRoot = deps.repoRoot ?? process.cwd();
 
   const result: VoiceAnswerResult = {
     callId: job.callId, state: "routing", targetSlug: null,
@@ -237,18 +232,18 @@ export async function answerVoiceCall(
   //    CEO explicitly picks one in the ASK dropdown (id parked by intake).
   //    Bonus: dropping the classify call removes one LLM round from the
   //    latency-critical lane.
-  let agent: { id: string; slug: string; department: string; role_level: string | null; persona_path: string | null } | undefined;
+  let agent: { id: string; slug: string; department: string; role_level: string | null } | undefined;
   if (row.target_agent_id) {
     agent = await db
       .selectFrom("agents")
-      .select(["id", "slug", "department", "role_level", "persona_path"])
+      .select(["id", "slug", "department", "role_level"])
       .where("id", "=", row.target_agent_id)
       .where("employment_status", "<>", "archived")
       .executeTakeFirst();
   } else {
     agent = await db
       .selectFrom("agents")
-      .select(["id", "slug", "department", "role_level", "persona_path"])
+      .select(["id", "slug", "department", "role_level"])
       .where("slug", "=", HAMZA_SLUG)
       .where("employment_status", "<>", "archived")
       .executeTakeFirst();
@@ -256,7 +251,7 @@ export async function answerVoiceCall(
   if (!agent) return fail("target_not_found");
   result.targetSlug = agent.slug;
 
-  // 4. Claim + answer (V7 persona in prompt, V8 memory via the ONE read door)
+  // 4. Claim + answer (V7 standing layer in prompt, V8 memory via the ONE read door)
   step("answering");
   await logCall(db, {
     id: job.callId, status: "answering", target_agent_slug: agent.slug,
@@ -265,8 +260,7 @@ export async function answerVoiceCall(
   const answerStart = Date.now();
   let answerText: string;
   try {
-    const [head, recall, historyRows] = await Promise.all([
-      loadPersonaBody(repoRoot, agent.persona_path),
+    const [recall, historyRows] = await Promise.all([
       recallForAnswer(db, question, "voice", { recall: deps.recall }),
       // U15 D12 (one-conversation law): the voice answer sees the same board
       // history chat sees — a voice question continues the chat thread. W1.5
@@ -286,8 +280,8 @@ export async function answerVoiceCall(
     ]);
     answerText = await produceAnswer({
       question, lang,
-      agent: { slug: agent.slug, department: agent.department, role_level: agent.role_level, persona_path: agent.persona_path },
-      personaBody: head, memoryLines: recall.lines, memoryUnreachable: recall.unreachable,
+      agent: { slug: agent.slug, department: agent.department, role_level: agent.role_level },
+      memoryLines: recall.lines, memoryUnreachable: recall.unreachable,
       history: historyRows.reverse().map((m) => ({ role: m.role, content: m.content.slice(0, 500) })),
     });
   } catch (e) {

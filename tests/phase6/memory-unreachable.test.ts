@@ -52,7 +52,6 @@ const working = async (): Promise<RecallResult> => ({
 describe("the standing layer — the unreachable sentence only when flagged", () => {
   const base = {
     agent: { slug: HAMZA_SLUG, department: "ceo", role_level: "orchestrator" },
-    personaBody: "",
     lang: "tr" as const,
     lane: "chat" as const,
   };

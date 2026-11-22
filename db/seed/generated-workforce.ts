@@ -109,9 +109,8 @@ export function titlePairFor(seat: Seat): TitlePair {
  * review of 2026-08-23 named it, and it is the last of the copies.
  *
  * The path must still be a real file: `tests/e125/workforce-gate.test.ts` case
- * (4) opens every stored path on disk, `tests/phase3/registry.test.ts` reads one
- * and requires the path to contain `personas/`, and the live answer lane
- * (`packages/voice/src/persona.ts`) reads it to give an employee its identity.
+ * (4) opens every stored path on disk, and `tests/phase3/registry.test.ts` reads one
+ * and requires the path to contain `personas/`. (No prompt reads it since 2026-11-22.)
  * So the seed WRITES the generated document to this path — one file per seat,
  * archived seats included — under `var/`, which is not in the repository
  * (`.gitignore:76`): a fixture is a build artefact, not something to commit.

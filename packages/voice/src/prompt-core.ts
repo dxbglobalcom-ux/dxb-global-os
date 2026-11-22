@@ -21,6 +21,8 @@
 // Anything that is neither is not context, it is noise.
 
 /** The lane an answer is going out on. The only thing that legitimately differs between them. */
+
+import { disciplineAndConduct, hamzaCharacterText, handsLine } from "./standing-conduct.js";
 export type AnswerLane = "voice" | "chat" | "task";
 
 /** Slug of the orchestrator identity the CEO speaks to. */
@@ -62,10 +64,6 @@ export function identityLine(agent: {
   return `You are ${agent.slug}, ${agent.role_level ?? "member"} of the ${agent.department ?? "unassigned"} department at DXB Global.`;
 }
 
-/** The authored identity, delivered whole. Empty persona = no block, never a placeholder. */
-export function personaBlock(personaBody: string): string {
-  return personaBody ? `Your persona (authoritative identity, follow it):\n${personaBody}` : "";
-}
 
 /** Company memory that matched this turn. Empty = no block. */
 export function memoryBlock(lines: readonly string[], unreachable = false): string {
@@ -232,16 +230,20 @@ export function holdingLine(): string {
   );
 }
 
+/** Hamza's character is for Hamza alone (the CEO's ruling of 2026-07-27); the text is standing-conduct's. */
+function hamzaCharacter(agent: { slug: string }): string {
+  return agent.slug === HAMZA_SLUG ? hamzaCharacterText() : "";
+}
+
 /**
  * The standing layer, assembled in one place.
  *
  * Callers add their per-turn layer (conversation, snapshot, lane-specific formatting) after this.
- * Blank entries drop out, so an agent without a persona or without matched memory simply carries
- * fewer blocks — never an empty heading.
+ * Blank entries drop out, so an agent without matched memory, or one who is not Hamza, simply
+ * carries fewer blocks — never an empty heading.
  */
 export function standingPrompt(input: {
   agent: { slug: string; department?: string | null; role_level?: string | null };
-  personaBody: string;
   memoryLines: readonly string[];
   /** The recall failed (recallForAnswer) — said to the agent, never passed as an empty memory. */
   memoryUnreachable?: boolean;
@@ -251,7 +253,9 @@ export function standingPrompt(input: {
   return [
     identityLine(input.agent),
     holdingLine(),
-    personaBlock(input.personaBody),
+    handsLine(),
+    disciplineAndConduct(),
+    hamzaCharacter(input.agent),
     memoryBlock(input.memoryLines, input.memoryUnreachable),
     languageLine(input.lang, input.lane),
     ceoLanguageLaw(input.lang),

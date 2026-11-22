@@ -29,7 +29,7 @@ import {
   type SdkToolOptions,
 } from "@dxb/gateway";
 import { companyIsolation, dxbInventoryNames, isolationReceipt, loadPolicy, sdkModel, type RoutingRule } from "@dxb/kernel";
-import { loadPersonaBody, standingPrompt } from "@dxb/voice";
+import { standingPrompt } from "@dxb/voice";
 import { recordSubscriptionSpend } from "./subscription-cap.js";
 
 // R2.3: the R2.2 pieces moved to their dependency-clean homes so the workflow
@@ -163,16 +163,15 @@ export interface ExecutionRoute {
   /** The routing row that won, and therefore the model. */
   rule: RoutingRule;
   /** The employee, when the task is staffed — the tool surface rides on this, and
-   *  (B43 plan ②) so does the seat's own identity: the persona file it was written in. */
+   *  (B43 plan ②) so does the seat's own identity. */
   employee: SeatIdentity | null;
 }
 
-/** What a seat's run needs to be THAT seat: the slug names it, the persona file carries it. */
+/** What a seat's run needs to be THAT seat: its slug, its department and its level. */
 export interface SeatIdentity {
   slug: string;
   department: string;
   role_level?: string | null;
-  persona_path?: string | null;
 }
 
 /**
@@ -230,11 +229,10 @@ export async function resolveExecutionRoute(task: ClaimedTask): Promise<Executio
       slug: string;
       department: string;
       role_level: string | null;
-      persona_path: string | null;
       department_id: string | null;
       effective_tier: string;
     }>`
-      SELECT a.slug, a.department, a.role_level, a.persona_path, d.id AS department_id,
+      SELECT a.slug, a.department, a.role_level, d.id AS department_id,
              fn_effective_tier(${task.model_tier}, a.id) AS effective_tier
         FROM agents a
         LEFT JOIN departments d ON d.slug = a.department
@@ -246,7 +244,6 @@ export async function resolveExecutionRoute(task: ClaimedTask): Promise<Executio
         slug: emp.rows[0].slug,
         department: emp.rows[0].department,
         role_level: emp.rows[0].role_level,
-        persona_path: emp.rows[0].persona_path,
       };
       departmentId = emp.rows[0].department_id ?? null;
     }
@@ -306,8 +303,11 @@ export function turnBudgetFor(allowedTools: readonly string[]): number {
 // Director — reached nobody but Hamza's answer lanes. So "the Creative Director's plan"
 // was drafted by an anonymous worker holding the director's tools. The standing layer is
 // the ONE definition the answer lanes already share (prompt-core.ts, the door
-// dxb-hamza-context: identity line, the persona WHOLE, the CEO language law, honesty, the
-// approval gate, the no-refusal law); the task lane is a parameter of it, never a copy.
+// dxb-hamza-context: identity line, the conduct every agent carries, the CEO language law,
+// honesty, the approval gate, the no-refusal law); the task lane is a parameter of it, never a copy.
+// CEO 2026-11-22: the persona files go — a worker is an agent in a seat, and no persona body is
+// loaded. What reached a seat only through its persona file and binds every agent (the hands line,
+// Discipline DNA & Islamic conduct, and for Hamza his character) stands in that standing layer.
 // B51 move 5 (C2-11, 2026-10-04): this line goes to every seat, tool-less ones too, so it no longer
 // asks for "a real tool call" — that request lives once, in the block sent only when the seat holds
 // tools — and it states the requirement instead of the grader's verdict ("judged empty").
@@ -319,27 +319,16 @@ const TASK_LANE_LINE =
   "queue_transition, no queue_return on it) and never claim tasks (no queue_claim).";
 
 /** Pure: the standing layer for a seat at work. Exported so the delivery can be pinned. */
-export function composeSeatPrompt(employee: SeatIdentity, personaBody: string): string {
+export function composeSeatPrompt(employee: SeatIdentity): string {
   return [
     ...standingPrompt({
       agent: { slug: employee.slug, department: employee.department, role_level: employee.role_level ?? null },
-      personaBody,
       memoryLines: [],
       lang: "en",
       lane: "task",
     }),
     TASK_LANE_LINE,
   ].join("\n\n");
-}
-
-/** The seat's standing prompt with its authored persona loaded from the roster file
- *  (file-first: the .md is the source of authorship, `agents.persona_path` names it). */
-export async function seatStandingPrompt(
-  employee: SeatIdentity,
-  repoRoot: string = process.env.DXB_REPO_ROOT ?? process.cwd(),
-): Promise<string> {
-  const personaBody = await loadPersonaBody(repoRoot, employee.persona_path ?? null);
-  return composeSeatPrompt(employee, personaBody);
 }
 
 // Default executor: routing decided above; this function owns the SDK call. Exported (not from the
@@ -425,7 +414,7 @@ export async function defaultExecutor(task: ClaimedTask): Promise<WorkerOutput> 
     }
     // B43 plan ②: the seat's identity is the system prompt; the run is the seat's, not the
     // session's (kernel sdk-isolation.ts). An unstaffed task keeps the CLI's default prompt.
-    const seatPrompt = employee ? await seatStandingPrompt(employee) : null;
+    const seatPrompt = employee ? composeSeatPrompt(employee) : null;
     const seen = isolationReceipt("task");
     // B51 P5b (C2-12): the catalogue's API name and its fallback model, read uncached per call
     const sdk = await sdkModel(getDb(), rule.model);

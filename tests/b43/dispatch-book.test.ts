@@ -3,8 +3,8 @@
 // Pure (no engine):
 //   1. deps point only at earlier seats; a backward or repeated dependency is refused
 //   2. levels: [engineer] → [five reviewers together] → [verdict] — the graph, not a line
-//   3. a seat's standing prompt carries its identity line and its persona WHOLE, never the
-//      dossier table; SDK isolation is on by default and DXB_WORKER_ISOLATION=0 rolls it back
+//   3. a seat's standing prompt carries its identity line and the conduct every agent carries,
+//      and no persona body; SDK isolation is on by default and DXB_WORKER_ISOLATION=0 rolls it back
 // On the construction engine (its own cluster, tests/construction-engine.ts):
 //   4. queue_dispatch writes one staffed task per seat under the author's project, with
 //      depends_on resolved, parent_task_id = the author, labels in both locales, and tells
@@ -196,19 +196,18 @@ describe("B43 plan ② · the dispatch book — pure", () => {
     expect(p).toContain("task aaaa — media-ai-video-engineer: the take");
   });
 
-  it("a seat's standing prompt carries its identity and the persona WHOLE, never the dossier", () => {
-    const body = "# PERSONA — Creative Director\n\n## 1. Role identity\nThe idea before the instrument.\n\n## 12. Discipline DNA\nConstitutional.";
-    const p = composeSeatPrompt({ slug: "media-creative-director", department: "media-studio", role_level: "director" }, body);
+  // CEO 2026-11-22: the persona files go — the seat carries no persona body; the conduct that reached
+  // it only through one stands in the standing layer (pinned whole in tests/r31/standing-conduct)
+  it("a seat's standing prompt carries its identity and the standing conduct, and no persona body", () => {
+    const p = composeSeatPrompt({ slug: "media-creative-director", department: "media-studio", role_level: "director" });
     expect(p).toContain("You are media-creative-director, director of the media-studio department");
-    expect(p).toContain("Your persona (authoritative identity, follow it):");
-    expect(p).toContain("## 12. Discipline DNA");
+    expect(p).toContain("## 12. Discipline DNA & Islamic conduct");
+    expect(p).toContain("works only through the tools its session grants");
     expect(p).toContain("artifact language");
     expect(p).toContain("approval class");
     expect(p).toContain("ONE task from the company's queue");
-    expect(p).not.toContain("DOSSIER");
-    // an unwritten persona: identity and laws only, no placeholder block
-    const bare = composeSeatPrompt({ slug: "x", department: "y" }, "");
-    expect(bare).not.toContain("Your persona");
+    expect(p).not.toContain("Your persona");
+    expect(p).not.toContain("# PERSONA");
   });
 
   it("runs seats in SDK isolation unless DXB_WORKER_ISOLATION=0", () => {

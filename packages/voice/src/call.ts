@@ -24,7 +24,6 @@ export interface VoiceCallDeps {
   tts?: typeof ttsSpeak;
   answer?: (q: AnswerQuestion) => Promise<string>;
   speaches?: SpeachesConfig;
-  repoRoot?: string;
   /** answer WAV handoff dir; omitted = in-memory only (tests, proofs) */
   audioDir?: string | null;
 }
@@ -70,7 +69,6 @@ export async function runVoiceCall(deps: VoiceCallDeps, input: VoiceCallInput): 
       ...(deps.tts ? { tts: deps.tts } : {}),
       ...(deps.answer ? { answer: deps.answer } : {}),
       ...(deps.speaches ? { speaches: deps.speaches } : {}),
-      ...(deps.repoRoot ? { repoRoot: deps.repoRoot } : {}),
       audioDir: deps.audioDir ?? null,
     },
     { callId: intake.callId },

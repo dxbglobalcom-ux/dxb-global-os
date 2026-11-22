@@ -1,6 +1,6 @@
 // chat.drain — the CEO Chat Board answer half (complaint ledger C1/C7/C10,
-// 2026-07-19). The CEO writes on the board; Hamza (the orchestrator,
-// HAMZA persona) answers CONVERSATIONALLY — greeting stays a greeting,
+// 2026-07-19). The CEO writes on the board; Hamza (the orchestrator)
+// answers CONVERSATIONALLY — greeting stays a greeting,
 // planning stays planning. Nothing dispatches from here: dispatch is an
 // explicit CEO action handled by the dashboard intent API and linked via
 // chat_messages.intent_id.
@@ -16,7 +16,7 @@ import { sql, type Kysely } from "kysely";
 import type { DB } from "@dxb/shared";
 import { companyIsolation, isolationReceipt, loadPolicy, route, sdkModel } from "@dxb/kernel";
 import type { recallMemory } from "@dxb/memory-router";
-import { matchMute, matchUnmute, loadPersonaBody, recallForAnswer, routeEffort, answerLayers, HAMZA_SLUG } from "@dxb/voice";
+import { matchMute, matchUnmute, recallForAnswer, routeEffort, answerLayers, HAMZA_SLUG } from "@dxb/voice";
 import {
   buildBriefSnapshot,
   classifyLeg,
@@ -42,7 +42,6 @@ export interface ChatAnswerInput {
   mode: "normal" | "plan";
   lang: "tr" | "en";
   history: Array<{ role: "ceo" | "hamza"; content: string }>;
-  personaBody: string;
   memoryLines: string[];
   /** The recall failed — Hamza is told so (prompt-core memoryBlock), never handed an empty memory. */
   memoryUnreachable?: boolean;
@@ -56,7 +55,6 @@ export interface ChatAnswerInput {
 
 export interface DrainChatDeps {
   db: Kysely<DB>;
-  repoRoot?: string;
   /** answer producer — overridable in tests; default = SDK on this message's
    *  leg row (same one-brain law as the voice line, V2). */
   answer?: (q: ChatAnswerInput) => Promise<string>;
@@ -114,16 +112,15 @@ async function defaultAnswer(db: Kysely<DB>, q: ChatAnswerInput): Promise<string
   if (!routed) throw new Error("chat answer: no routing row for any chat class");
   r = routed;
   const planMode = q.mode === "plan";
-  // Standing layer from the ONE definition (`@dxb/voice` prompt-core): identity, persona, memory,
+  // Standing layer from the ONE definition (`@dxb/voice` prompt-core): identity, conduct, memory,
   // the CEO language law, the honesty rule and the approval gate. This lane used to write its own
-  // versions of all six, and the identity line had already drifted from the voice lane's — the
+  // versions of them, and the identity line had already drifted from the voice lane's — the
   // same person answering with a different self-understanding depending on which door was used.
   // B51 P5b (C2-9): what stands goes into the system prompt, which the cache keeps; the memory that
   // matched, the leg's instruction (the brief leg's live figures) and the conversation ride the turn.
   const { system, memory } = answerLayers(
     {
       agent: { slug: CHAT_HAMZA_SLUG },
-      personaBody: q.personaBody,
       memoryLines: q.memoryLines,
       memoryUnreachable: q.memoryUnreachable,
       lang: q.lang,
@@ -292,7 +289,6 @@ function langOf(text: string): "tr" | "en" {
  *  a competing drain seeing non-pending skips (single scheduler by design). */
 export async function drainChatMessages(deps: DrainChatDeps): Promise<DrainChatResult> {
   const db = deps.db;
-  const repoRoot = deps.repoRoot ?? process.cwd();
   const produce = deps.answer ?? ((q: ChatAnswerInput) => defaultAnswer(db, q));
   const result: DrainChatResult = { answered: 0, failed: 0 };
 
@@ -392,11 +388,6 @@ export async function drainChatMessages(deps: DrainChatDeps): Promise<DrainChatR
       confirmation = levelConfirmation(levelCommand.level, lang);
     }
     const question = levelCommand?.rest || row.content;
-    const hamza = await db
-      .selectFrom("agents")
-      .select(["persona_path"])
-      .where("slug", "=", CHAT_HAMZA_SLUG)
-      .executeTakeFirst();
     // W1.5: the window is scoped to THIS conversation. Before sessions existed
     // it was the newest 20 rows on a single flat board, so a question about
     // video production carried the tail of a conversation about the budget.
@@ -410,12 +401,9 @@ export async function drainChatMessages(deps: DrainChatDeps): Promise<DrainChatR
       ? historyQuery.where("session_id", "=", row.session_id)
       : historyQuery.where("session_id", "is", null);
     const historyRows = await historyQuery.execute();
-    const [head, recall] = await Promise.all([
-      loadPersonaBody(repoRoot, hamza?.persona_path ?? null),
-      recallForAnswer(db, question, "chat", { recall: deps.recall }),
-    ]);
+    const recall = await recallForAnswer(db, question, "chat", { recall: deps.recall });
     // Which leg — and, on the report leg, the live figures it is allowed to
-    // quote. The snapshot is read AFTER the persona/memory fetch so it is as
+    // quote. The snapshot is read AFTER the memory fetch so it is as
     // fresh as possible when the model sees it.
     // Plan mode on the board is plan talk: it never answers on the normal leg.
     const classified = classifyLeg(question);
@@ -431,7 +419,6 @@ export async function drainChatMessages(deps: DrainChatDeps): Promise<DrainChatR
       mode: row.mode,
       lang,
       history: historyRows.reverse().map((m) => ({ role: m.role, content: m.content })),
-      personaBody: head,
       memoryLines: recall.lines,
       memoryUnreachable: recall.unreachable,
       leg,

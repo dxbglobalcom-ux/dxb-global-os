@@ -11,7 +11,6 @@ export type { CallState, TimelineEntry } from "./machine.js";
 export { intakeVoiceCall, LINE_BUSY_WINDOW_MINUTES } from "./intake.js";
 export type { VoiceIntakeDeps, VoiceIntakeInput, VoiceIntakeResult } from "./intake.js";
 export { answerVoiceCall } from "./answer.js";
-export { loadPersonaBody } from "./persona.js";
 // prompt-core owns the standing instruction layer both answer lanes carry, and the one
 // definition of the orchestrator's slug (context architecture, 2026-07-30).
 export {
@@ -20,7 +19,6 @@ export {
   standingPrompt,
   answerLayers,
   identityLine,
-  personaBlock,
   memoryBlock,
   ceoLanguageLaw,
   honestyLine,
