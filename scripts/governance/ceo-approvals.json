@@ -3257,5 +3257,13 @@
     "conditions": "A yes to the lead's recommendation as told in the same conversation; the lead had said the recommendation means a new board row and needs his word. Nothing is designed or built.",
     "session": "Fable 5.2 session 09321517, heard first-hand (dictated), 2026-11-22.",
     "where": "HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md B86; .planning/board-rows/B86.md"
+  },
+  "board-reordered-on-the-foundation-six-decisions-his-yes-2026-11-22": {
+    "date": "2026-11-22",
+    "what": "The board re-ordered on the foundation (`.planning/quick/20261117-temel/reorder/`), with the lead's recommendation taken on each of its six questions: (a) the backup (B72) is repaired now, beside stage 0 — a named exception to 'rows one after another'; (b) B64's nine steps keep their approved order 1→9; (c) a conversation may be deleted for good — the conversation, its turns and its share of the day summary go; the job and its brief, approvals, money rows and one audit line stay; (d) board §3.2's six-wave table is replaced by a pointer to the synthesis's mapping, C42's duty staying whole; (e) three merges — B02 into B32, B09 into B11, C30 into B16 — every condition travelling; (f) the order itself, and with it exactly these board sentences: the head's 'When the build starts' condition goes, law 4 becomes 'the order is the one he approved', §2d's three 'Order of work' lines go, §2d's 'THE ENGINE STAYS' becomes 'the foundation is rebuilt; the company's data, rules and history stay'.",
+    "verbatim": "Tamam, önerilerini kabul ediyorum. İşe devam edelim. Titizlikle devam edilsin. Tamamdır.",
+    "conditions": "One sentence of his for six recommendations, each put to him in the reply before with what it changes. The order's corrected draft was audited blind once (Astra) before the corrections, not after. Most rows were placed from their board cells; a row is read against the foundation again when its work starts.",
+    "session": "Fable 5.2 session 09321517, heard first-hand (dictated), 2026-11-22.",
+    "where": "HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md (head, law 4, §2d, §3.2, B02, B09, C30, B72, C52); .planning/quick/20261117-temel/reorder/ORDER.md; .planning/quick/20261117-temel/PLAN.md §2 A"
   }
 }

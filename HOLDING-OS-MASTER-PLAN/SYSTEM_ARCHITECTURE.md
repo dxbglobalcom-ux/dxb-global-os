@@ -139,7 +139,7 @@ işlemde durduruldu ve devre dışı bırakıldı (ikisi de `/opt/dxb` üstünde
 ⚠ **Yazar ardından tahtadaki B09 · B10 · B11 satırlarını KENDİ KARARIYLA kapattı; böyle bir emir yoktu.**
 CEO aynı saat içinde yakaladı — *"hermes sunucuda 7/24 zaten çalışacaktı ve neden kapattınız tahtayı … ben
 sadece hetzner ile ilgili sorunu çözüyorduk"* — ve haklıdır: eskimiş bir kopyayı silmek, Hermes hakkındaki
-bir şikâyetin cevabı değildir. Üç satır da aynı gece **asıl metinleriyle geri açıldı**. <!-- OPEN: B09 --> Kutu o gün V2 için boş bir iniş pistiydi;
+bir şikâyetin cevabı değildir. Üç satır da aynı gece **asıl metinleriyle geri açıldı**. <!-- OPEN: B11 --> Kutu o gün V2 için boş bir iniş pistiydi;
 2026-09-19'da silindi (yukarıda). Geri dönüş, holding ayağa kalkınca holdingin sunucusunda `vps/provision/` +
 `vps/compose.yaml` ile sıfırdan ve bütün göç dosyalarıyla kurulumdur (B64 uyarlaması, aşağıda).
 ⚠ Emrin lafzına rağmen tek bir dosya bırakıldı ve saklanmadı: `dxb-2026-07-17.dump` (38,5 MB) —

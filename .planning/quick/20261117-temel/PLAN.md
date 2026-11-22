@@ -67,8 +67,11 @@ built as a new chain beside the old one — the sound mechanisms carried over, e
   shape check or becomes columns.
 - **Append-only is enforced for everyone**, the owner included, TRUNCATE too. Nothing deletes history: "remove from
   my list" hides a row from his list and leaves the record; retention is not built now, and when a log needs it a
-  whole period moves to the archive by a versioned change. Tests do not sweep rows: each creates a company of its own
-  and asserts inside it.
+  whole period moves to the archive by a versioned change. The one exception is a conversation he orders deleted
+  (C52): the conversation, its turns and its share of the day summary are removed, the deletion itself is one audit
+  line with its count, and the job with its brief, approvals and money rows stay
+  <!-- CEO-OK: board-reordered-on-the-foundation-six-decisions-his-yes-2026-11-22 -->. Tests do not sweep rows: each
+  creates a company of its own and asserts inside it.
 - **Roles** are created by the chain: an owner role with no login; one login per resident service with EXECUTE on its
   doors only; the dashboard as `authenticated`; the read roles. No role with RLS bypass serves at runtime. Set-up acts
   of the owner and the behaviour of service roles are tested apart.
@@ -674,7 +677,7 @@ glue. The lead designs each part's contract and tests, verifies every piece and 
 | 25 | Engine wall and read gateway | **Kept** | — | — | — |
 | 26 | Process isolation (`sdk-isolation`, the auditor's launcher) | **Repaired** | Every child from a named allow-list | F-h | — |
 | 27 | Views (34) and the RPC read contracts | **Inventory first** | Unread today. Each is mapped to its consumer and gets its verdict — recreated on the new tables, served by a compatibility view, or retired — before stage 2 ends | O, after the lead's map | — |
-| 28 | Logs and their doors (audit, decision, file-change evidence, alerts, control idempotency) | **Kept, moved** | Actors become principals; append-only enforced; alert assign and mute leave events; the purge door becomes "hide from my list" | O | — |
+| 28 | Logs and their doors (audit, decision, file-change evidence, alerts, control idempotency) | **Kept, moved** | Actors become principals; append-only enforced; alert assign and mute leave events; the purge door becomes "hide from my list" — a conversation's real deletion is the exception (C52; §2 A) | O | — |
 | 28a | Intake chain (`classify`, `intent-intake`, `decompose`, `dispatch`, `work-generation`) | **Rewritten** | The birth door, routing by the menu, what a job starts with by its inputs (D) | F-h (with 4, 7) | — |
 | 28b | Hamza's chat lane (`chat-drain`, `chat-legs`, `morning-briefing`) | **Repaired at the seams** | Turns as runs through the model door; one conversation store; his hands are B64's | O | B65 |
 | 28c | Critical gate (`critical-gate`) | **Repaired** | Its seats become check parts (A28, A32); it verifies, never refutes; its command-line run passes the model door and the isolation | F-h | — |
@@ -748,6 +751,8 @@ Each stage ends with something that runs.
     today on compatibility views (row 27 decides; the owner is B32's) — and the whole holding has run once on the
     construction copy (B76). The resident services, disabled today, come back here, on the new schema. The old
     chain, packages and battery leave here, not before.
+
+The board's rows ride on these stages in the order he approved on 2026-11-22: `reorder/ORDER.md`.
 
 **Added by §2 M and N:**
 
@@ -851,6 +856,7 @@ A yes to the plan; nothing is built, and the build's start follows the board's o
    (B43, 2026-10-18); a service turns to a standing rule only by one word of his (N.6).
 10. **Pausing or lowering an advertisement's spend does not wait for his click**; launching, raising and moving a
     budget stay gated (N.6, B28).
+11. **A conversation may be deleted for good** (C52; §2 A). <!-- CEO-OK: board-reordered-on-the-foundation-six-decisions-his-yes-2026-11-22 -->
 
 Not asked now: A29 item 6 (§3) — it comes with its measurement. And the build's start: the board's head puts it after
 B22's synthesis and his yes to the re-ordered board; the synthesis is written and this design was read against it (§2 M and N).

@@ -606,7 +606,7 @@ RUNTIME tree. The design he answered decision by decision: `.planning/quick/2026
    spent. Hermes's brain never runs on Sol's ChatGPT subscription. Once installed, 20 real holding jobs — a page
    hiding an instruction and a payment step that must stop among them — compare Opus and Sonnet at `medium` and
    `high`; the cheapest that finishes as many as Opus `high` wins, "done" checked from outside; the same 20 jobs
-   gate every Hermes upgrade. Installation waits for the holding's server. <!-- OPEN: B09 --> <!-- OPEN: B11 -->
+   gate every Hermes upgrade. Installation waits for the holding's server. <!-- OPEN: B11 -->
 11. **Quota state (Omnigent's method 3, decided).** <!-- CEO-OK: b64-plan-his-yes-2026-10-14 --> §3 step 3's health check reads how much of each subscription's 5-hour
    and weekly windows remains; a full subscription shows `full`, never `ready`; every run records the model that
    really did the work. The display is [[COST_CONTROL_SPEC]]'s.

@@ -1,10 +1,13 @@
-# The board re-ordered on the foundation — DRAFT 2 (2026-11-22)
+# The board re-ordered on the foundation — the order he approved on 2026-11-22
 
-A draft by the lead's fork, rewritten to Astra's blind audit (`ASTRA.md`, beside this file; the first draft is in git).
-Nothing here is on the board, in ORDER.md, in STATE or in the ledger; no row is opened, closed, merged or re-ranked
-until he says yes. Read from: today's order (`.planning/quick/20261014-tahta-sirasi/ORDER.md`), the board's 76 open
-rows, their row files (section 6 says which), B64's plan, the rival synthesis (§7) and the foundation's plan
-(`PLAN.md` §2 M and N, §5, §6).
+This is the order he approved on 2026-11-22 <!-- CEO-OK: board-reordered-on-the-foundation-six-decisions-his-yes-2026-11-22 -->,
+no longer a draft. His words: *"Tamam, önerilerini kabul ediyorum. İşe devam edelim. Titizlikle devam edilsin."* —
+the lead's recommendation on each of section 5's six questions. It was drafted by the lead's fork and rewritten to
+Astra's blind audit (`ASTRA.md`, beside this file, which names it by its draft name `ORDER-DRAFT.md`; the first draft
+is in git); what he approved is written into the board, the plan, STATE and the ledger. Read from: the order of
+2026-10-14 — "today's order" in the text below (`.planning/quick/20261014-tahta-sirasi/ORDER.md`) — the 76 rows open
+on the board that night, their row files (section 6 says which), B64's plan, the rival synthesis (§7) and the
+foundation's plan (`PLAN.md` §2 M and N, §5, §6).
 
 ## 1. The principle
 
@@ -30,17 +33,19 @@ board's head) · **unchanged** · **design dependency** — the row needs a desi
 **contradicts** — a sentence of the row and a sentence of the plan cannot both stand.
 
 Counts: absorbed: 2 · absorbed in part: 10 · rewritten: 17 · unchanged: 42 · design dependency: 2 · contradicts: 1 · opened on the foundation: 1 · the foundation itself: 1 — 76 rows.
+Three of the 76 — B02, B09 and C30 — were merged that night (question e); they stay in the table, marked, and 73
+rows are open on the board.
 
 | Row | Subject | Build starts | Proven on the bench | Closes on — and when | Changed by the foundation? | The synthesis's upgrade |
 |---|---|---|---|---|---|---|
 | B01 | Boardroom — job masters discuss a question aloud while he listens | on his order; it would stand on stage 3 (conversations) and stage 4 (voice seams) | — | his order to build it (its own closing cell) | **unchanged** — compatible, not a contradiction: the discussion may be held aloud; its conclusions land on a job's desk, which stays the one keeper of state (PLAN §3) | — |
-| B02 | Small design symmetry defects he disliked (list never captured) | with B32's screens, surface by surface | each surface's RULE #0 pass | a written surface-by-surface defect list, then the pass per surface | **unchanged** — merge into B32 asked (question e) | — |
+| B02 | Small design symmetry defects he disliked (list never captured) | with B32's screens, surface by surface | each surface's RULE #0 pass | a written surface-by-surface defect list, then the pass per surface | **unchanged** — merged into B32, 2026-11-22 (question e) | — |
 | B03 | Voice line — his ear test | stage 4, after B12 | — | the five-minute spoken protocol at the real mic, legs timed — his ear, and the mic (his) | **unchanged** | — |
 | B03-bis | Real-browser eye check of every logged-in CEO surface | with each V2 surface as it is built, from stage 1's first screen | each surface: EN and TR, two widths, a proof that fails on a miss | when the last V2 surface has passed — before the key | **unchanged** — its bench copy serves V2's screens | — |
 | B04 | University product layer — a separate product | on his order (no forced "after the key"); it would join as an office (§2 M) | — | his order to start (its own closing cell) | **unchanged** — H3's eCourse and H9's training are its first products; none is sold before the holding is its own proof (row file) | — |
 | B05 | Payments, signing, outbound mail (Stripe, DocuSign, Gmail send) | stage 2 — its send-and-approve path as handlers in the one registry; stage 4 — the order-to-cash links are read (N.10) | stage 2: a send through the gate with a test handler, then the real handler in its provider's test mode | collection, signing and outbound mail working before the revenue lines' second wave (his K11); real accounts and contracts are his click, real collection only after the key | **rewritten** — its integrations are handlers and intake feeds | — |
 | B08 | Per-employee brain switch | stage 2 (the router); its door with Hamza's hands (B64 step 1), its control with B32 | the order of precedence tried with two models of equal strength: his explicit choice, then the seat's default, then the master's per-part choice | the function, the dashboard control and an audited change | **rewritten** — precedence written and tried, not assumed | SAME for the switch (S10) |
-| B09 | Hermes has no brain (server deleted; row kept open) | after the key — the server is money out ("when the holding stands") | the brain trial at install | one real job handed to Hermes inside the holding returns and is recorded, and the 20-job measurement is before him — after the key | **unchanged** — merge into B11 asked (question e) | — |
+| B09 | Hermes has no brain (server deleted; row kept open) | after the key — the server is money out ("when the holding stands") | the brain trial at install | one real job handed to Hermes inside the holding returns and is recorded, and the 20-job measurement is before him — after the key | **unchanged** — merged into B11, 2026-11-22 (question e) | — |
 | B10 | Hermes and every night worker watched alive on his dashboard | stage 3–4 with B32 (N.1, N.2): first the night card of the one dream (B64 step 8) | the dream's night card on the bench | Hermes's and the night workers' work alive on his board, and his eye — Hermes's part only after the server, so after the key | **rewritten** — a finished night's replay is a report over a closed period (N.2) | a state line, a session count and one restart control for the action layer (P5) |
 | B11 | Hermes set up inside the holding; first unattended overnight job | stage 2 — the carrier (§2 H carrier 2: a seat's own step in the world); the install after the key, on the server (B64 step 9) | before the key: the carrier's connection test on the bench | installed inside the holding and one unattended overnight job reaching Hamza's morning line and his screen — after the key | **rewritten** — needs PLAN §8 item 9 (how a step is recognised as a payment or contract step — A11's mechanism) | — |
 | B12 | Voice heard and answered in 1.0–1.3 s | stage 4 (voice seams), on B33's floor | a live round trip measured on this machine | at or under 1.3 s in his hearing, a Turkish sentence transcribed correctly — his ear | **unchanged** — the seams are the foundation's; the speed and the ear are the row's | the act dispatched when the order is recognised, the voice after; the ear open while work runs; heard and will-do on the screen before the act (P3) |
@@ -48,7 +53,7 @@ Counts: absorbed: 2 · absorbed in part: 10 · rewritten: 17 · unchanged: 42 ·
 | B34 | The local worker model (exam, his approval of the winner) | stage 2 (the model door: a route among routes), after B33 | candidates measured on this card on the holding's own jobs | his word on which one stays | **unchanged** | — |
 | B15 | The autonomy dial | after B64 steps 6 and 7 (the rule table, a line's step, N.9's lift); its control with B32 | a level raised for one employee, audited, changing what it may do without asking | he raises one employee's autonomy from the dashboard, the change is audited, and the level changes what that employee may do | **unchanged** — no question: the employee dial and his per-job-type lift of A9 stand together (the row carries both); only B64's old "1,000 $ / first delivery" sentence is stale against A9 | the rung as three written sentences on the job, the live one marked, the refused one with its reason (W15) |
 | B14 | Video-learn reaches his screen | stage 3 (memory's door: quarantine for video), after B64 step 3; its entry on a B32 surface | — | he gives a video link on a DXB surface, the run is visible and the artefact reachable — with its screen | **unchanged** | — |
-| B16 | The deep-study waves' gate (his complaint C30) | stage 3, after B30 | — | with C30: per source a study card, an install decision with a reason, a code path or a written refusal; LITERATURE.md finalised | **unchanged** — merge with C30 asked (question e) | — |
+| B16 | The deep-study waves' gate (his complaint C30) | stage 3, after B30 | — | with C30: per source a study card, an install decision with a reason, a code path or a written refusal; LITERATURE.md finalised | **unchanged** — C30 merged into it, 2026-11-22 (question e) | — |
 | B17 | The standing revenue report (sixteen structures) | any time — a records job; it needs no stage | — | the sixteen re-measured and put before him as one table | **unchanged** — section 4 proposes it now, re-measured against the foundation's stages | — |
 | B42 | The arsenal watch | stage 2–3: a line with its standing owner (§2 D), after B31's catalogue; Hamza's one unasked line after B64 step 1 | the watch silent where nothing was surpassed | Hamza opens a conversation with one unasked line — version N, the world at N+1, what changes and what it costs | **unchanged** | — |
 | B41 | The supply chain — request, search, customs, grant, card | stage 3: first its leg of 2026-10-04 (Claude's own tools behind two walls), which B64 step 3 stands on; then the five-link chain after B31's catalogue; stage 4 for the tool gateway | the leg's probe `OPEN_TOOLS=2/2 WALLS=4/4`; a worker mid-task names a missing capability and the chain finds, scans and grants it | that grant made without the author, with the request record, the scan report and the usage row | **rewritten** — the request and the grant pass the tool door; the gateway's lock opens work through the birth door | — |
@@ -88,7 +93,7 @@ Counts: absorbed: 2 · absorbed in part: 10 · rewritten: 17 · unchanged: 42 ·
 | C26 | The chat receives no page context | stage 3 (N.3) with B32 | three pages, three page-correct answers | that, in his hand | **rewritten** — the page is per-turn material of the one assembler | the surface moves to what is being said, and the assistant prints what it sees (S4) |
 | C27 | Every entity on every page reaches its own detail | with each B32 screen | a navigation audit per surface | the audit table whole | **unchanged** | — |
 | C29 | The Skills page — grouping | with B31's catalogue and its B32 screen | — | parent and child grouping with his progressive disclosure | **unchanged** | — |
-| C30 | Nearly 100 repos given, none properly studied and integrated | stage 3, with B16 | — | per source: a real study card, an install decision with a reason, a code path that consumes it or a written refusal | **unchanged** — merge into B16 asked (question e) | — |
+| C30 | Nearly 100 repos given, none properly studied and integrated | stage 3, with B16 | — | per source: a real study card, an install decision with a reason, a code path that consumes it or a written refusal | **unchanged** — merged into B16, 2026-11-22 (question e) | — |
 | C31 | The catalogue's use is not recorded | stage 3 (the tool door records every call) | one tool call linked to the right catalogue item and counted once | usage recorded per item and the catalogue reflecting it — the counter proven before B75 closes | **absorbed in part** — section 2a | — |
 | C37 | Hamza's and the system's messages readable without complaint | stage 3 (Hamza's turns) with B32 | a machine language check on system-produced text | he reports a run of messages he could read without complaint | **unchanged** | — |
 | C38 | Wake word live without a press | stage 4, with B12 | — | the wake word live without a press; the control mutes on demand | **unchanged** | — |
@@ -153,8 +158,9 @@ time. Two of them — 4 and 5 — have their ground a stage earlier. Whether the
 ## 3. The order
 
 **The gate, before any build.** His answers to section 5 and his yes to this order — the board head's own exit
-condition (the synthesis is made; this order carries what it changes). The synthesis itself (B22, C42 with it) is
-his to read when he chooses; no stage waits for it.
+condition (the synthesis is made; this order carries what it changes). Both were given on 2026-11-22 (section 5).
+His reading of the synthesis (B22, C42 with it) comes before the first screen is drawn with him (B32) — B22's row
+says no design work starts until he has read it; the foundation's bench (stage 0) does not wait for it.
 
 **The spine, and what rides on each stage** — inside a stage, rows run one after another (board line 3).
 
@@ -223,7 +229,7 @@ companies — not the company: the company's continuous work begins at the key t
   and B70 inside ranks 16–17, were repairs of the old engine and database. They are not run as jobs; their rows stay
   open and close as section 2a says.
 - B72 and B71 were ranks 2 and 1, before everything. The board's head makes B85 the first job of the build: they
-  stand beside it, and B72's earlier start is asked (question a).
+  stand beside it, and B72's earlier start has his yes (question a).
 - B32 moves from rank 21 to the start; B33 and B34 from 34 and 37 to stage 2.
 - B64's steps keep their approved order, on stage 3's ground (question b names the one alternative).
 - The joining contract freezes after the joint proof of B43 and B84, not after B43.
@@ -257,7 +263,9 @@ decision:
 
 Not looked for: an opportunity outside the rows. REVENUE-OPPORTUNITIES §D was searched by word, not read.
 
-## 5. Questions for him
+## 5. His answers (2026-11-22)
+
+Each question stands as it was put to him; the answer taken follows it.
 
 **a. The backup (B72) — repaired now, beside stage 0?** Measured by the lead on 2026-11-22 (`~/backups/dxb/backup.log`
 and the folder): the last `OFFSITE_OK` is 2026-09-24; every night since, the job writes `BACKUP_OK` and then
@@ -268,12 +276,14 @@ copy, on this machine, and no proof that it restores. Its hard deadline is stage
 restore drill of the real backup. *Now:* a small job beside the foundation, a named exception to "rows one after
 another", and his one look at Hetzner for the off-site leg. *At stage 5:* nothing is spent now, and the company stays
 on one copy for the weeks the build takes. **Recommended: yes, now.**
+**His answer: yes** — B72 is repaired now, beside stage 0, a named exception to "rows one after another".
 
 **b. B64's steps — keep 1 → 9, or let the two that are ready a stage early go first?** Section 2b's table. *Keep:*
 his order of 2026-10-14 and 2026-10-26 stands word for word; steps 4 (the backup pair) and 5 (work from outside)
 wait one stage behind Hamza's hands, and stage 2's own trials prove the router and a reader meanwhile. *Early:* the
 backup pair and live inbound mail are delivered at stage 2; his approved order changes and Hamza's hands come third.
 **Recommended: keep.**
+**His answer: keep** — B64's nine steps keep their approved order 1 → 9.
 
 **c. C52 — may a conversation be deleted for good?** His word: *"TAMAMEN DATA BASETEN SİLİNSİN"*; the plan says
 nothing deletes history. One example — a conversation with Hamza of fourteen turns, in which he gave an order that
@@ -290,18 +300,22 @@ became a job and approved one sending:
 This boundary is the draft's proposal; no spec states it yet. *Yes:* real deletion, for conversations only — the
 plan gains that one exception; a deleted conversation can no longer explain a job beyond its brief. *No:* hidden
 only, and his one request for the chat stays unmet. **Recommended: yes.**
+**His answer: yes** — a conversation may be deleted for good; the boundary is the table above, written into the
+foundation's plan (`PLAN.md` §2 A) and C52's row file.
 
 **d. Board §3.2's six waves — replaced by the synthesis's mapping?** The table's own text says it is "a wave list
 whose evidence has been withdrawn" and goes when B22 finishes. *Yes:* §3.2's table leaves and points at synthesis §7.
 C42's duty stays whole — per source, parity or better, delivered and proven; completing the map source → capability
 → owner row → evidence is the engineer's work; what no row owns (a camera mode) stays a proposal until he opens a
 row. *No:* the withdrawn table stays. **Recommended: yes.**
+**His answer: yes** — board §3.2's table is replaced by one line pointing at synthesis §7; C42's duty stays whole.
 
 **e. Three merges today's order already proposed — each with what must travel.** B02 into B32: its closing (a
 written surface-by-surface defect list, then the pass per surface) and its leg, the remark pinned to the element it
 is about. B09 into B11: its closing — one real job handed to Hermes returning and recorded — and the 20-job model
 measurement put before him. C30 into B16: per source a real study card, an install decision with a reason, a code
 path that consumes it or a written refusal. Three row numbers go; no condition goes. **Recommended: yes.**
+**His answer: yes** — B02 into B32, B09 into B11, C30 into B16; every condition travels.
 
 **f. This order — yes?** His yes covers the order of section 3 and exactly these sentences of the board, nothing
 else (line numbers at HEAD, 2026-11-22, after B86 was added):
@@ -320,6 +334,7 @@ Every other ruling of §2d continues and is not touched — how the sources are 
 him, V1 dead and where V2 lives, Hermes, the Ferrari, the V2 memory, the first law of V2, skills, Hamza's hands.
 Line 269 is listed although it stands in §2d, because it does not continue as written: his opening word for B85 and
 the plan's first decision replace the engine it says stays.
+**His answer: yes** — the order of section 3 and exactly the board sentences of the table above.
 
 **Not asked:** B15 (the employee dial and his per-job-type lift stand together) · C41 (it stays open: its order of
 2026-10-22 — the staff face the outside world and know what the holding holds — now speaks to seat texts and job
@@ -329,7 +344,8 @@ proposed when B84's and B64's legs show both built) · B86 (opened on his word t
 ## 6. Unverified
 
 - **The count.** `awk '/^## Section 5/{exit} /^\| [A-Z]+[0-9]+[a-z-]* \|/{n++} END{print n}' HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md`
-  prints `76`; the table is generated from a list that is compared with the board's and refuses a mismatch.
+  printed `76` when the order was drawn and prints `73` since the three merges of 2026-11-22; the table was generated
+  from a list that was compared with the board's and refused a mismatch, and was not regenerated after the merges.
 - **Row files opened whole:** B72, B75, B74, B71, B76, B81, B82, B14, B16, B17, B01, B04, B27, C31, C60, C41, C52,
   C42, C30; B64's plan (`.planning/quick/20261012-b64-is-akisi/PLAN.md`) whole. **In part:** B73 (its load, his
   scan decision and the legs' first lines), B51 (the closing, his order of 2026-10-12, move 7), B41 (waits-on and
@@ -344,7 +360,8 @@ proposed when B84's and B64's legs show both built) · B86 (opened on his word t
 - **Readings, not measurements:** the stage that gives each B64 step its ground (section 2b); every class label;
   what "stays the row's own" in section 2a for B51, B71, B74, C31 and C60, which PLAN §5's Absorbs column does not
   name (it names B65–B68, B70, B73, B75, C60, B71, B74, B76).
-- **The deletion boundary of question c** is this draft's proposal; no spec holds it.
+- **The deletion boundary of question c** has his yes (2026-11-22) and stands in the foundation's plan (§2 A) and
+  C52's row file; no spec holds it yet.
 - **The synthesis's own limit stands:** its SAME verdicts on B43, B84, B83 and B28 rest on searches; no upgrade in
   the table was re-checked against a rival report.
 - **Section 4** read B28's audit leg and B83's ownership table; REVENUE-OPPORTUNITIES §D was searched by word.

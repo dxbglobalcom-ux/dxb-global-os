@@ -66,7 +66,9 @@ function parse(text) {
     // CLOSED only when the cell OPENS with it. Two rows (B18, C42) quote another
     // row's closing words in the middle of their text, and a looser test reads
     // them as closed — measured 2026-08-25, which is why this is anchored.
-    const closed = /✓ CLOSED/.test(body.slice(0, 45));
+    // A row merged into another on his word (2026-11-22: B02, B09, C30) is not open either: its
+    // conditions travel with the row it was merged into, and its line opens with "MERGED INTO".
+    const closed = /✓ CLOSED|MERGED INTO/.test(body.slice(0, 45));
     rows.push({
       id,
       opened: at("opened"),

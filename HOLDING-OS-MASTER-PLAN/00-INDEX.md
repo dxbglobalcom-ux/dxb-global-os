@@ -122,7 +122,7 @@ Wave 4 closing note: spec'lerin "kayıtlı ek"leri (yeni kolon/tablo/fn envanter
 | U13 | CEO Operating Manual enters as E13.3; Turkish main text + English mirror (registered language exception) | CEO 2026-07-17 | [[00-CEO-DIRECTIVE-LANGUAGE]] |
 | U14 | No Education department and no Operations department — existing roles and the library shelf cover it; reconsidered at first profit | CEO 2026-07-17 | This table |
 | U15 | Voice line reopened as unfinished; machine work done 2026-07-25; only the CEO's own ear test remains | CEO 2026-07-17 | [[00-NOTE-R32-VOICE-REMEDIATION-PLAN]] <!-- OPEN: B03 --> |
-| U16 | Small design symmetry defects deferred | CEO 2026-07-17 | Board B02 <!-- OPEN: B02 --> |
+| U16 | Small design symmetry defects deferred | CEO 2026-07-17 | Board B32 (B02 merged into it, 2026-11-22) <!-- OPEN: B32 --> |
 | U17 | Workforce activation machinery: machine intake for dormant employees, task due dates, derived probation scores, per-employee model keys | CEO answers D10/D11, 2026-07-18 | [[00-CEO-DIRECTIVE-REVENUE-FIRST]] §3-bis |
 | U18 | Activation repairs: department model keys, the toolless-run waiver, probation score = gate result, model ladder repaired at L3 | Found mid-activation 2026-07-18 | `packages/hook/src/post-task.ts` |
 | U19 | **Outleteuro pilot cancelled entirely** — the holding must first run excellently at low cost; a future CEO intent reopens it | CEO 2026-07-19, given twice | [[00-NOTE-CEO-COMPLAINT-LEDGER-2026-07-19]] |
