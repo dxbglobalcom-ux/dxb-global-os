@@ -7,7 +7,8 @@
 #   dump defaults to the newest non-empty dxb-laptop-*.dump in BACKUP_DIR.
 #
 # WHAT "RESTORED" MEANS HERE — all of it, or RESTORE_DRILL_FAIL:
-#   1. pg_restore exits 0 and prints not one error. Nothing is ignored.
+#   1. pg_restore exits 0 and prints not one error. Nothing is ignored. An error
+#      is reported as its kind and a count (RESTORE_ERRORS), never as its text.
 #   2. Every table in the dump's own table of contents stands in the restored
 #      database.
 #   3. Every table is counted row by row; the last line carries the totals for
@@ -16,6 +17,14 @@
 #      session) and every difference is printed, table by table. A difference
 #      is information — the company moves on after a dump — unless the caller
 #      knows it has stood still since and says --require-equal.
+#
+# WHAT IT LEAVES BEHIND — nothing, or it says so. The container and the working
+# directory are removed however the drill ends (a signal too), each on its own,
+# and then looked for. RESTORE_DRILL_OK is the last line only when both are
+# gone. A good restore with something left ends RESTORE_DRILL_LEFTOVER <what>
+# and a non-zero exit. A drill killed outright (kill -9) removes nothing: the
+# next run finds its container by the label every drill carries and refuses to
+# start until it is gone.
 #
 # THE INVOCATION, measured 2026-11-22 on supabase/postgres 17.6.1.140: the whole
 # dump, every schema, as the image's superuser, with --clean --if-exists. The
@@ -26,11 +35,13 @@
 # of the dump there, counts equal to the company's (223 tables, 331,379 rows on
 # the dump of 2026-11-22). A pg_dump carries no roles, so the role NAMES the
 # company has and the image lacks are created first, without login or password,
-# and listed (ROLES_ADDED).
+# and listed (ROLES_ADDED). The container is given no password either: with
+# trust on its local socket the image comes up healthy in 12 s with the same
+# roles, relations and extensions, and `docker inspect` then holds no secret.
 #
 # THE WALL. --clean drops what it replaces: aimed at the company's database it
 # would end it. The drill restores only into the container whose ID its own
-# `docker run` returned, and only after own_container has proven that ID.
+# `docker create` returned, and only after own_container has proven that ID.
 set -euo pipefail
 export LC_ALL=C # one collation for sort and comm
 
@@ -39,10 +50,13 @@ PROTECTED=("$COMPANY" "supabase_db_DxB_Build")
 BACKUP_DIR="${BACKUP_DIR:-$HOME/backups/dxb}"
 HEALTHY_WAIT=180
 DRILL_NAME="dxb-restore-drill-$(date +%Y%m%d-%H%M%S)-$$"
+# Every drill container carries this label; its value is a token only this run knows.
+DRILL_LABEL="dxb.restore-drill"
+RUN_TOKEN="$(od -An -N16 -tx1 /dev/urandom | tr -d ' \n')"
 DRILL_ID=""
-started=0
 verdict_said=0
-WORK="$(mktemp -d)"
+ok_line="" # the success line once the restore has earned it — owed, and said only by finish
+WORK="$(mktemp -d "${TMPDIR:-/tmp}/dxb-restore-drill.XXXXXXXX")" # mode 700; everything the run writes is in here
 
 require_equal=0
 if [ "${1:-}" = "--require-equal" ]; then require_equal=1; shift; fi
@@ -51,23 +65,46 @@ DUMP="${1:-}"
 
 fail() { verdict_said=1; echo "RESTORE_DRILL_FAIL $*"; exit 1; }
 
-# Removal is by the NAME this run made up, never by an ID: the name can only be
-# the container this run started, even when the ID it was handed is refused.
-remove_own_container() {
-  local status=$?
-  [ "$verdict_said" -eq 1 ] || echo "RESTORE_DRILL_FAIL stopped before its verdict (exit $status)"
-  rm -rf "$WORK"
-  [ "$started" -eq 0 ] || docker rm -f -v "$DRILL_NAME" >/dev/null 2>&1 \
-    || echo "RESTORE_DRILL_WARN could not remove container $DRILL_NAME"
-}
-trap remove_own_container EXIT
+# The containers this run created, by full ID — asked of docker by the label, not remembered: one that exists is
+# known here even when `docker create` was stopped before it handed its ID back.
+labelled_ids() { docker ps -aq --no-trunc --filter "label=$DRILL_LABEL=$RUN_TOKEN" 2>/dev/null; }
 
-# An ID is this run's own when it is a full container ID, docker resolves it to
-# the name this run made up, and it is the ID of neither protected container.
+# The one way out, however the drill ends. The two removals are independent — neither's failure skips the other —
+# and neither is believed: what is left is looked for afterwards, and only when nothing is does the OK line follow.
+finish() {
+  local status=$? id ids left=() what
+  set +e
+  trap '' HUP INT TERM # a second signal must not stop the removal half-way
+  [ "$verdict_said" -eq 1 ] || echo "RESTORE_DRILL_FAIL stopped before its verdict (exit $status)"
+  rm -rf "$WORK" 2>/dev/null
+  for id in $(labelled_ids); do
+    own_container "$id" && docker rm -f -v "$id" >/dev/null 2>&1
+  done
+  [ ! -e "$WORK" ] || left+=("the working directory $WORK")
+  if ! ids="$(labelled_ids)"; then left+=("a container, perhaps: docker did not answer")
+  elif [ -n "$ids" ]; then left+=("the container ${ids//$'\n'/ }")
+  elif docker inspect "$DRILL_NAME" >/dev/null 2>&1; then left+=("the container $DRILL_NAME"); fi
+  if [ "${#left[@]}" -gt 0 ]; then
+    printf -v what '%s; ' "${left[@]}"
+    echo "RESTORE_DRILL_LEFTOVER ${what%; }"
+    exit 1
+  fi
+  # The line is said when the drill reached its own end (it is owed) and nothing stopped it after (status 0).
+  if [ "$status" -eq 0 ] && [ -n "$ok_line" ]; then echo "$ok_line"; exit 0; fi
+  [ "$status" -ne 0 ] || status=1 # bash hands an untrapped fatal signal to this trap as status 0
+  exit "$status"
+}
+trap finish EXIT
+# Trapped, a signal waits for the docker command in flight and then ends the drill through finish: nothing this
+# run started is still running when the removal is verified.
+trap 'fail "stopped by a signal"' HUP INT TERM
+
+# An ID is this run's own when it is a full container ID, docker resolves it to the name this run made up AND to
+# the label token only this run knows, and it is the ID of neither protected container.
 own_container() {
   local id="$1" protected
   [[ "$id" =~ ^[0-9a-f]{64}$ ]] || return 1
-  [ "$(docker inspect -f '{{.Name}}' "$id" 2>/dev/null)" = "/$DRILL_NAME" ] || return 1
+  [ "$(docker inspect -f "{{.Name}} {{index .Config.Labels \"$DRILL_LABEL\"}}" "$id" 2>/dev/null)" = "/$DRILL_NAME $RUN_TOKEN" ] || return 1
   for protected in "${PROTECTED[@]}"; do
     [ "$(docker inspect -f '{{.Id}}' "$protected" 2>/dev/null)" != "$id" ] || return 1
   done
@@ -95,15 +132,39 @@ ROW_COUNTS="select n.nspname || '.' || c.relname || '|' ||
   from pg_class c join pg_namespace n on n.oid = c.relnamespace
   where c.relkind in ('r', 'p') and n.nspname !~ '^pg_' and n.nspname <> 'information_schema'"
 
+# pg_restore's stderr in, one "kind=count" line per kind out: fixed words and digits. The text itself is neither
+# printed nor stored — an error line can carry a value from a row of the company's data. The kinds are a closed
+# list of message shapes; a shape nobody listed is `other`.
+error_kinds() {
+  awk '
+    !/^pg_restore: error:/ { next }
+    /^pg_restore: error: COPY failed/ { kind = "copy_failed" }
+    /^pg_restore: error: (input file|could not (open|read)|unsupported version|unexpected end)/ { kind = "archive_unreadable" }
+    /^pg_restore: error: connection|server closed the connection|terminating connection/ { kind = "connection_lost" }
+    kind == "" && / already exists$/ { kind = "already_exists" }
+    kind == "" && / does not exist$/ { kind = "does_not_exist" }
+    kind == "" && /ERROR:  (permission denied|must be )/ { kind = "permission_denied" }
+    kind == "" && / depend on it$/ { kind = "dependency" }
+    kind == "" && /violates .*constraint/ { kind = "constraint_violated" }
+    { count[kind == "" ? "other" : kind]++; kind = "" }
+    END { for (kind in count) print kind "=" count[kind] }' | sort
+}
+
 [ -s "$DUMP" ] || fail "no dump to restore: ${DUMP:-none in $BACKUP_DIR}"
+# A container of an earlier drill holds a copy of the company's data — a drill still running, or one killed before
+# it could clean up. This run removes only what it created, so it does not start beside one: it says so and stops.
+earlier="$(docker ps -a --filter "label=$DRILL_LABEL" --format '{{.Names}}' | tr '\n' ' ')" \
+  || fail "cannot ask docker for the containers of earlier drills"
+[ -z "$earlier" ] || fail "refused: a container of an earlier drill exists (${earlier% }): still running, or killed before it cleaned up"
 image="$(docker inspect -f '{{.Config.Image}}' "$COMPANY")" || fail "cannot read the company container's image"
 
 # No published port and no network: the copy of the company inside it can be reached by `docker exec` alone.
-# The password is made here, handed over in the environment, and never printed.
-DRILL_ID="$(POSTGRES_PASSWORD="$(head -c 24 /dev/urandom | base64)" \
-  docker run -d --name "$DRILL_NAME" --network none -e POSTGRES_PASSWORD "$image")" || fail "docker run failed"
-started=1
+# No password: trust on the local socket, which is all that leads in. Created first and started second, so that a
+# container whose start fails is already one this run has proven its own.
+DRILL_ID="$(docker create --name "$DRILL_NAME" --label "$DRILL_LABEL=$RUN_TOKEN" --network none \
+  -e POSTGRES_HOST_AUTH_METHOD=trust "$image")" || fail "docker create failed"
 require_own_container
+docker start "$DRILL_ID" >/dev/null || fail "docker start failed"
 
 # The image's own health check, not pg_isready: its first start runs a temporary server that answers on the
 # socket before the platform schemas exist.
@@ -121,13 +182,13 @@ sed 's/.*/create role & nologin;/' "$WORK/roles.missing" | drill_sql -q
 added="$(tr '\n' ' ' < "$WORK/roles.missing")"
 echo "ROLES_ADDED ${added:-none }(a pg_dump carries no roles: names only, no login, no password)"
 
+require_own_container # said here in the open: inside the pipeline below, drill's own refusal would go to /dev/null
 restore_exit=0
-drill pg_restore -U supabase_admin -d postgres --clean --if-exists < "$DUMP" > /dev/null 2> "$WORK/restore.err" \
+drill pg_restore -U supabase_admin -d postgres --clean --if-exists < "$DUMP" 2>&1 >/dev/null | error_kinds > "$WORK/restore.kinds" \
   || restore_exit=$?
-errors="$(grep -c '^pg_restore: error:' "$WORK/restore.err" || true)"
+errors="$(awk -F= '{ sum += $2 } END { print sum + 0 }' "$WORK/restore.kinds")"
 if [ "$restore_exit" -ne 0 ] || [ "$errors" -ne 0 ]; then
-  # Only the error lines themselves: a DETAIL or CONTEXT line can carry a row of the company's data.
-  grep '^pg_restore: error:' "$WORK/restore.err" | cut -c1-240 | sort | uniq -c | sort -rn | head -n 40
+  [ "$errors" -eq 0 ] || echo "RESTORE_ERRORS $(paste -sd' ' "$WORK/restore.kinds")"
   fail "pg_restore exited $restore_exit with $errors errors — none is ignored"
 fi
 echo "RESTORED every schema of the dump with pg_restore --clean --if-exists: exit 0, 0 errors, nothing ignored"
@@ -159,4 +220,4 @@ if [ "$require_equal" -eq 1 ] && [ "$differ" -ne 0 ]; then
 fi
 
 verdict_said=1
-echo "RESTORE_DRILL_OK $DUMP $tables tables $rows rows"
+ok_line="RESTORE_DRILL_OK $DUMP $tables tables $rows rows"
