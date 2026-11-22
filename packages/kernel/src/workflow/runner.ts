@@ -287,22 +287,33 @@ async function attemptWithPolicies(
  * (fallback alternates included) goes through the executor, so the seat's standing prompt is joined there,
  * once: the composition point's `seatPrompt` builds it from the step's seat (the orchestrator's one
  * definition, the same the task lane gives a staffed run). Built per attempt, like the task lane.
- * No seatPrompt dependency → the executor unchanged.
+ * CEO 2026-11-22 — fail closed: the conduct section reaches a step only through this prompt, so a step
+ * with no seat, or whose prompt comes out empty, is refused before its executor (fatal: never retried).
  */
-export function seatedExecutor(executor: WorkflowExecutor, seatPrompt?: RunnerDeps["seatPrompt"]): WorkflowExecutor {
-  if (!seatPrompt) return executor;
+export function seatedExecutor(executor: WorkflowExecutor, seatPrompt: RunnerDeps["seatPrompt"]): WorkflowExecutor {
+  requireSeatPrompt(seatPrompt);
   return async (work) => {
-    const systemPrompt = work.seat ? await seatPrompt(work.seat) : null;
-    return executor(systemPrompt ? { ...work, systemPrompt } : work);
+    const systemPrompt = work.seat ? await seatPrompt(work.seat) : "";
+    if (!systemPrompt) {
+      throw new StepError(`step refused: no standing prompt for ${work.employeeSlug}`, "fatal", "NO_SEAT_PROMPT");
+    }
+    return executor({ ...work, systemPrompt });
   };
+}
+
+/** The runtime half of the required type: a cast or plain JavaScript can still arrive without it. */
+function requireSeatPrompt(seatPrompt: unknown): void {
+  if (typeof seatPrompt !== "function") {
+    throw new Error("workflow runner: refused — no seatPrompt dependency, and a step never runs without its seat's standing prompt");
+  }
 }
 
 /** Advance one run to completion / park / failure. Idempotent on terminal runs. */
 export async function runWorkflowRun(
   runId: string,
-  deps: RunnerDeps = {},
+  deps: RunnerDeps,
 ): Promise<RunOutcome> {
-  const executor = seatedExecutor(deps.executor ?? defaultWorkflowExecutor, deps.seatPrompt);
+  const executor = seatedExecutor(deps?.executor ?? defaultWorkflowExecutor, deps?.seatPrompt);
   const sleep = deps.sleep ?? defaultSleep;
   const db = getDb();
 
@@ -461,7 +472,8 @@ export interface DrainResult {
 // or fail (rejected) — the LOCKED 0015 decision fn stays untouched
 // (adaptation 2). The P7 scheduler chains this off pg-boss; tests and the
 // §24 smoke call it directly.
-export async function drainWorkflowRuns(deps: RunnerDeps = {}): Promise<DrainResult> {
+export async function drainWorkflowRuns(deps: RunnerDeps): Promise<DrainResult> {
+  requireSeatPrompt(deps?.seatPrompt); // before a parked run is resumed or failed
   const db = getDb();
   const result: DrainResult = { processed: 0, resumed: 0, rejected: 0, outcomes: [] };
 

@@ -80,7 +80,10 @@ describe("C2-3 — a workflow step carries its routing row's effort", () => {
     const src = await readFile(join(REPO_ROOT, "packages/kernel/src/workflow/executor.ts"), "utf8");
     expect(src).toContain("const sdk = await sdkModel(getDb(), work.model);");
     expect(src).toContain("...(work.effort ? { effort: work.effort } : {})");
-    expect(src).toContain("...(work.systemPrompt ? { systemPrompt: work.systemPrompt } : {})");
+    // CEO 2026-11-22: handed unconditionally — the executor refuses a work without one
+    // (what query() really receives is pinned in tests/r31/conduct-on-the-wire.test.ts)
+    expect(src).toMatch(/\n +systemPrompt,\n/);
+    expect(src).not.toContain("work.systemPrompt ?");
   });
 });
 
@@ -113,10 +116,10 @@ describe("C2-4 — a workflow step runs as its seat", () => {
     expect(seen[0].systemPrompt).toBe("STANDING for finance-controller");
   });
 
-  it("no seat prompt dependency, or none built → the work goes through unchanged", async () => {
+  it("no seat prompt dependency, or none built → refused, never run without one (CEO 2026-11-22)", async () => {
     const base = async (w: AgentWork) => ({ output: w.systemPrompt ?? "none", confidence: 1 });
-    expect(seatedExecutor(base)).toBe(base);
-    expect((await seatedExecutor(base, async () => null)(work)).output).toBe("none");
+    expect(() => seatedExecutor(base, undefined as never)).toThrow(/seatPrompt/);
+    await expect(seatedExecutor(base, async () => "")(work)).rejects.toThrow(/no standing prompt/);
   });
 
   it("the scheduler hands in the orchestrator's one definition", async () => {

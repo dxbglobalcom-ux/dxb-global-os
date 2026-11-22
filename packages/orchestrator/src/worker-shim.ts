@@ -318,6 +318,11 @@ const TASK_LANE_LINE =
   "moves your task the moment you answer — so never move your own task's status (no " +
   "queue_transition, no queue_return on it) and never claim tasks (no queue_claim).";
 
+/** A task nobody is staffed on still runs as a seat of its department, under the same standing layer. */
+function unstaffedSeat(task: Pick<ClaimedTask, "department">): SeatIdentity {
+  return { slug: "unstaffed-worker", department: task.department, role_level: null };
+}
+
 /** Pure: the standing layer for a seat at work. Exported so the delivery can be pinned. */
 export function composeSeatPrompt(employee: SeatIdentity): string {
   return [
@@ -399,6 +404,11 @@ export async function defaultExecutor(task: ClaimedTask): Promise<WorkerOutput> 
       : []),
   ].join("\n");
 
+  // B43 plan ②: the seat's identity is the system prompt; the run is the seat's, not the
+  // session's (kernel sdk-isolation.ts). CEO 2026-11-22: built before the mode branch, for whoever
+  // runs — the api route and an unstaffed task carry the conduct section like every other run.
+  const seatPrompt = composeSeatPrompt(employee ?? unstaffedSeat(task));
+
   // Observability tap (E8.1): the run scope travels on AsyncLocalStorage so
   // this certified Executor signature stays untouched.
   const obs = currentRunScope();
@@ -412,9 +422,6 @@ export async function defaultExecutor(task: ClaimedTask): Promise<WorkerOutput> 
     if (task.tools_allowed === false && companyIsolation() === null) {
       throw new Error("worker-shim: a tool-less review task is refused while the company isolation is off (DXB_WORKER_ISOLATION=0)");
     }
-    // B43 plan ②: the seat's identity is the system prompt; the run is the seat's, not the
-    // session's (kernel sdk-isolation.ts). An unstaffed task keeps the CLI's default prompt.
-    const seatPrompt = employee ? composeSeatPrompt(employee) : null;
     const seen = isolationReceipt("task");
     // B51 P5b (C2-12): the catalogue's API name and its fallback model, read uncached per call
     const sdk = await sdkModel(getDb(), rule.model);
@@ -424,7 +431,7 @@ export async function defaultExecutor(task: ClaimedTask): Promise<WorkerOutput> 
         model: sdk.model,
         ...(sdk.fallbackModel ? { fallbackModel: sdk.fallbackModel } : {}),
         effort: rule.effort as "low" | "medium" | "high" | "xhigh" | "max",
-        ...(seatPrompt ? { systemPrompt: seatPrompt } : {}),
+        systemPrompt: seatPrompt,
         ...(companyIsolation() ?? {}),
         // R2.2: built-ins stay OFF (least privilege); the MCP surface is the
         // compiled gateway profile — allowed set mounted, everything else in
@@ -505,7 +512,10 @@ export async function defaultExecutor(task: ClaimedTask): Promise<WorkerOutput> 
     const res = await llmCall({
       department: task.department,
       model: rule.model,
-      messages: [{ role: "user", content: prompt }],
+      messages: [
+        { role: "system", content: seatPrompt },
+        { role: "user", content: prompt },
+      ],
       maxTokens: Math.min(task.budget_max_tokens, 8192),
     });
     obs?.addUsage({

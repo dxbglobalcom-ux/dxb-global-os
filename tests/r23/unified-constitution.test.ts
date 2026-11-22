@@ -29,6 +29,8 @@ const db = () => getDb();
 const ledgerScope = watchLedgers(db);
 const M = `r23t-${randomUUID().slice(0, 8)}`;
 const SLUG = (s: string) => `${M}-${s}`;
+// The runner refuses a run without a seat prompt (CEO 2026-11-22); these deterministic executors ignore it.
+const seatPrompt = async () => "r23 probe seat prompt";
 
 // The holding's own project is a read-only fixture; the employee is a suite
 // fixture with the FULL hook surface (MCP profile); its persona row is there
@@ -221,6 +223,7 @@ describe("R2.3 — one constitution on the workflow path (A9 unification)", () =
     const out = await runWorkflowRun(runId, {
       executor: async () => ({ output: "must never execute", confidence: 1 }),
       sleep: async () => {},
+      seatPrompt,
     });
     expect(out.status).toBe("failed");
     expect(String((out as { reason?: string }).reason ?? "")).toContain("HOOK_REJECTED");
@@ -248,7 +251,7 @@ describe("R2.3 — one constitution on the workflow path (A9 unification)", () =
       };
     };
     const runId = await makeHookedWorkflow("pass", `${M} produce one probe line`);
-    const out = await runWorkflowRun(runId, { executor: evidenced, sleep: async () => {} });
+    const out = await runWorkflowRun(runId, { executor: evidenced, sleep: async () => {}, seatPrompt });
     expect(out.status).toBe("succeeded");
 
     const anchored = await sql<{ id: string }>`
@@ -282,7 +285,7 @@ describe("R2.3 — one constitution on the workflow path (A9 unification)", () =
       };
     };
     const runId = await makeHookedWorkflow("revise", `${M} produce one revisable line`);
-    const out = await runWorkflowRun(runId, { executor: learner, sleep: async () => {} });
+    const out = await runWorkflowRun(runId, { executor: learner, sleep: async () => {}, seatPrompt });
     expect(out.status).toBe("succeeded");
     expect(calls).toBe(2);
     expect(feedbackSeen[0]).toBe("");

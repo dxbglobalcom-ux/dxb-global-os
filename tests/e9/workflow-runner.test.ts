@@ -98,7 +98,9 @@ const mockExecutor: WorkflowExecutor = async (work) => {
     confidence: conf ? Number(conf[1]) : 0.9,
   };
 };
-const deps = { executor: mockExecutor, sleep: async () => {} };
+// The runner refuses a run without a seat prompt (CEO 2026-11-22); what the prompt must carry is
+// pinned on the real executor in tests/r31/conduct-on-the-wire.test.ts — the mock here ignores it.
+const deps = { executor: mockExecutor, sleep: async () => {}, seatPrompt: async () => "e9 probe seat prompt" };
 
 function agentStep(employeeId: string, objective: string, extra: Record<string, unknown> = {}) {
   return {

@@ -21,7 +21,7 @@ import {
 } from "@dxb/gateway";
 import { resolveModel, sdkModel } from "../models.js";
 import { companyIsolation, isolationReceipt } from "../sdk-isolation.js";
-import type { AgentWork, AgentWorkResult } from "./types.js";
+import { StepError, type AgentWork, type AgentWorkResult } from "./types.js";
 
 // Same envelope as the worker-shim (A10 executor-declared evidence).
 const WorkerEvidence = z.object({
@@ -62,6 +62,13 @@ async function resolveMode(model: string): Promise<"subscription" | "api"> {
 }
 
 export async function defaultWorkflowExecutor(work: AgentWork): Promise<AgentWorkResult> {
+  // CEO 2026-11-22: the seat's standing prompt carries the conduct section every agent is bound by — a
+  // work that arrives without it (a caller that went round the runner) is refused before any model call.
+  const systemPrompt = work.systemPrompt;
+  if (!systemPrompt) {
+    throw new StepError(`workflow executor: refused — no standing prompt for ${work.employeeSlug}`, "fatal", "NO_SEAT_PROMPT");
+  }
+
   // R2.2/R2.3 tool surface: the employee's compiled profile, re-read per run.
   let toolOpts: SdkToolOptions | null = null;
   const surface = resolveRuntimeProfile({
@@ -74,12 +81,8 @@ export async function defaultWorkflowExecutor(work: AgentWork): Promise<AgentWor
     toolOpts = buildSdkToolOptions(surface, await dxbInventoryNames(), { cwd: companyIsolation()?.cwd ?? process.cwd() });
   }
 
-  // B51 P5b (C2-4): with the seat's standing prompt as the system prompt, the seat already knows who it
-  // is; the one-line name stays only for a run without one (a test executor, no composition point).
+  // B51 P5b (C2-4): the seat's standing prompt is the system prompt, so the seat already knows who it is.
   const prompt = [
-    ...(work.systemPrompt
-      ? []
-      : [`You are ${work.employeeSlug}, a DXB Global OS employee agent (${work.department}).`]),
     "Complete the work below and answer as strict JSON only:",
     '{"result": "<deliverable text>", "confidence": <0..1>,',
     ' "evidence": [{"kind": "verification", "tool": "<mcp tool you called>", "note": "<what you checked>"}],',
@@ -122,7 +125,7 @@ export async function defaultWorkflowExecutor(work: AgentWork): Promise<AgentWor
         model: sdk.model,
         ...(sdk.fallbackModel ? { fallbackModel: sdk.fallbackModel } : {}),
         ...(work.effort ? { effort: work.effort } : {}),
-        ...(work.systemPrompt ? { systemPrompt: work.systemPrompt } : {}),
+        systemPrompt,
         // B41: a seat granted a plugin gets Skill and a Read confined to that plugin's folder.
         tools: [],
         ...(toolOpts
@@ -182,8 +185,8 @@ export async function defaultWorkflowExecutor(work: AgentWork): Promise<AgentWor
       department: work.department,
       model: work.model,
       messages: [
-        ...(work.systemPrompt ? [{ role: "system" as const, content: work.systemPrompt }] : []),
-        { role: "user" as const, content: prompt },
+        { role: "system", content: systemPrompt },
+        { role: "user", content: prompt },
       ],
       maxTokens: 8192,
     });

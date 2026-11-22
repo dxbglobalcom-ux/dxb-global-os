@@ -20,7 +20,8 @@ export interface AgentWork {
   /** B51 P5b (C2-4) — who the seat is: what the composition point needs to build its standing prompt. */
   seat?: StepSeat;
   /** B51 P5b (C2-4) — the seat's standing prompt (identity, conduct, the laws), the system prompt of the
-   *  run. Filled by the composition point (RunnerDeps.seatPrompt); absent → the one-line identity. */
+   *  run. Joined by the runner (seatedExecutor, from RunnerDeps.seatPrompt); the default executor
+   *  refuses a work without it (CEO 2026-11-22: no agent runs without the conduct section). */
   systemPrompt?: string;
 }
 
@@ -54,8 +55,9 @@ export interface RunnerDeps {
   sleep?: (ms: number) => Promise<void>;
   /** B51 P5b (C2-4) — builds a seat's standing prompt. The one definition lives in the orchestrator
    *  (`composeSeatPrompt`, prompt-core underneath), which the kernel cannot import (it depends on the
-   *  kernel), so the composition point — the scheduler — hands it in. Absent → no system prompt. */
-  seatPrompt?: (seat: StepSeat) => Promise<string | null>;
+   *  kernel), so the composition point — the scheduler — hands it in. Required (CEO 2026-11-22): it is
+   *  the only road the conduct section has to a workflow step, so a run without it is refused. */
+  seatPrompt: (seat: StepSeat) => Promise<string>;
 }
 
 /** §17 error triple: transient → retry policy · policy → escalate · fatal → run failed + alert. */
