@@ -1,7 +1,8 @@
 # B85 — amendment to the foundation's plan, after the rival synthesis
 
 The amendment as it stands after two blind audits (`fable-audit.md` on the first draft, `ASTRA.md` on the second; the
-audited second draft is `blind/AMENDMENT.md`). A draft: nothing here is in `PLAN.md` and nothing is built. It answers
+audited second draft is `blind/AMENDMENT.md`). **Written into `PLAN.md` (§2 M and N, §6, §8, §9, §10 decisions 8–10) on his yes of 2026-11-22; this file stays as the
+record of what was weighed. Nothing is built.** It answers
 PLAN §9 risk 3 — "when the synthesis is written, this design is read against it, and what changes comes back to him".
 The synthesis is `.planning/research/rival-intel/00-SYNTHESIS.md` (its §3: F0–F8; its §4: eleven gaps; its §5: what a
 living surface needs). PLAN's eight decisions (§1) stand.
