@@ -61,11 +61,6 @@ export type OrgLabels = {
   detailLoading: string;
   detailError: string;
   governanceTitle: string;
-  personaLabel: string;
-  personaGate: Record<string, string>;
-  personaBy: string;
-  personaRead: string;
-  personaHide: string;
   recordLabel: string;
   recordNone: string;
   kpisLabel: string;
@@ -81,8 +76,8 @@ export type OrgLabels = {
   phase7Hint: string;
 };
 
-// madde 5.3 field set served by v_org_node_detail (spec §12) — fetched per
-// selected employee; the persona body stays lazy behind ?include=persona.
+// madde 5.3 field set served by /api/org/node from v_org_node_detail (spec
+// §12) — fetched per selected employee.
 type NodeDetail = {
   employee_id: string;
   slug: string;
@@ -103,11 +98,6 @@ type NodeDetail = {
   model_status: string | null;
   autonomy_level: number;
   mcp_profile: string;
-  persona_id: string | null;
-  persona_version: number | null;
-  persona_gate: string | null;
-  persona_author: string | null;
-  persona_updated_at: string | null;
   has_employee_record: boolean;
   kpi_count: number;
   cost_30d_eur: number;
@@ -237,15 +227,11 @@ export function OrgTree({
   const [selected, setSelected] = useState<OrgNode | null>(null);
   const [detail, setDetail] = useState<NodeDetail | null>(null);
   const [detailState, setDetailState] = useState<"idle" | "loading" | "error">("idle");
-  const [personaBody, setPersonaBody] = useState<string | null>(null);
-  const [personaOpen, setPersonaOpen] = useState(false);
 
   // madde 5.3 set arrives per selection from /api/org/node (spec §12 view);
   // stale responses are dropped when the selection has already moved on.
   useEffect(() => {
     setDetail(null);
-    setPersonaBody(null);
-    setPersonaOpen(false);
     if (selected?.kind !== "employee") {
       setDetailState("idle");
       return;
@@ -266,22 +252,6 @@ export function OrgTree({
       stale = true;
     };
   }, [selected]);
-
-  async function togglePersona() {
-    if (personaOpen) {
-      setPersonaOpen(false);
-      return;
-    }
-    setPersonaOpen(true);
-    if (personaBody || selected?.kind !== "employee") return;
-    try {
-      const r = await fetch(`/api/org/node?id=${selected.nodeId}&include=persona`);
-      const json = await r.json();
-      setPersonaBody(json.personaBody ?? "");
-    } catch {
-      setPersonaBody("");
-    }
-  }
 
   function toggle(id: string) {
     setOpen((prev) => {
@@ -526,37 +496,12 @@ export function OrgTree({
 
                 {selected.kind === "employee" && detail && (
                   <>
-                    {/* Governance — persona + sicil (madde 5.3: persona, sicil) */}
+                    {/* Governance — sicil (madde 5.3) */}
                     <div className="space-y-1.5 border-t border-edge-neutral pt-3">
                       <p className="label-caps text-caption text-ink-muted">
                         {labels.governanceTitle}
                       </p>
                       <dl className="space-y-1.5 text-body-s">
-                        <div className="flex flex-wrap items-center gap-2">
-                          <dt className="text-ink-muted">{labels.personaLabel}:</dt>
-                          <dd className="flex flex-wrap items-center gap-2 text-ink-primary">
-                            v{detail.persona_version ?? "—"}
-                            {detail.persona_gate && (
-                              <StatusBadge
-                                level={
-                                  detail.persona_gate === "passed"
-                                    ? "ok"
-                                    : detail.persona_gate === "failed"
-                                      ? "danger"
-                                      : "info"
-                                }
-                              >
-                                {labels.personaGate[detail.persona_gate] ??
-                                  detail.persona_gate}
-                              </StatusBadge>
-                            )}
-                            {detail.persona_author && (
-                              <span className="text-caption text-ink-muted">
-                                {labels.personaBy} {detail.persona_author}
-                              </span>
-                            )}
-                          </dd>
-                        </div>
                         <div className="flex gap-2">
                           <dt className="text-ink-muted">{labels.recordLabel}:</dt>
                           <dd className="text-ink-primary">
@@ -566,20 +511,6 @@ export function OrgTree({
                           </dd>
                         </div>
                       </dl>
-                      {detail.persona_id && (
-                        <button
-                          type="button"
-                          onClick={togglePersona}
-                          className="text-body-s text-accent-champagne hover:text-accent-ivory"
-                        >
-                          {personaOpen ? labels.personaHide : labels.personaRead}
-                        </button>
-                      )}
-                      {personaOpen && (
-                        <pre className="max-h-72 overflow-y-auto whitespace-pre-wrap rounded-input border border-edge-neutral bg-surface-graphite p-2 font-data text-caption text-ink-secondary">
-                          {personaBody ?? labels.detailLoading}
-                        </pre>
-                      )}
                     </div>
 
                     {/* Runtime — model, yetki, tool access, görev/koşu/maliyet/memory */}

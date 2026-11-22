@@ -381,7 +381,6 @@
       "entities": {
         "agents": "çalışan",
         "all_agents": "tüm çalışanlar",
-        "personas": "personalar",
         "department": "departmanlar",
         "org": "org birimleri",
         "workflows": "iş akışları",
@@ -582,15 +581,12 @@
       "colRole": "Rol",
       "colBrain": "Beyin",
       "colAutonomy": "Otonomi",
-      "colPersona": "Persona",
-      "personaVersionHelp": "Bu çalışanın gerçekten bağlı olduğu ve üzerinde çalıştığı persona metninin sürümü — personanın kendisinden okunur; metin her yeniden yazılıp kalite kapısından geçtiğinde bir artar.",
-      "personaUnbound": "Bağsız",
       "colHook": "Opus 5 Hook",
       "colStatus": "Durum",
       "showing": "Gösterilen",
       "of": "/",
       "empty": "Bu filtreye uyan çalışan yok.",
-      "emptyHint": "Persona v2 dalgaları roadmap E5 adımında gelir; her işe alım kaydı oluştuğu an burada görünür.",
+      "emptyHint": "Her işe alım, kaydı oluştuğu an burada görünür.",
       "roles": {
         "general_manager": "Genel Müdür",
         "head": "Müdür",
@@ -642,16 +638,6 @@
       "detailLoading": "Detay yükleniyor",
       "detailError": "Detay yüklenemedi.",
       "governanceTitle": "Yönetişim",
-      "personaLabel": "Persona",
-      "personaGate": {
-        "passed": "Kapı: geçti",
-        "pending": "Kapı: bekliyor",
-        "failed": "Kapı: kaldı",
-        "superseded": "Kapı: yenisiyle değişti"
-      },
-      "personaBy": "yazan",
-      "personaRead": "Personayı oku →",
-      "personaHide": "Personayı gizle",
       "recordLabel": "Sicil",
       "recordNone": "Henüz sicil kaydı yok",
       "kpisLabel": "KPI",
@@ -993,15 +979,12 @@
     },
     "directors": {
       "kpiTotal": "Direktör",
-      "kpiPersonaBound": "Persona bağlı",
       "kpiHookBound": "Hook bağlı",
       "kpiDepartments": "Yönetilen departman",
       "colDirector": "Direktör",
       "colDept": "Departman",
       "colBrain": "Beyin",
       "colAutonomy": "Otonomi",
-      "colPersona": "Persona",
-      "personaVersionHelp": "Bu direktörün gerçekten bağlı olduğu ve üzerinde çalıştığı persona metninin sürümü — personanın kendisinden okunur; metin her yeniden yazılıp kalite kapısından geçtiğinde bir artar.",
       "colHook": "Opus 5 Hook",
       "colStatus": "Durum",
       "statusActive": "Aktif",
@@ -1037,7 +1020,7 @@
       "probationEmpty": "Denemede kimse yok — işe alımlar İK taslaktan geçirdiğinde bu kuyruğa girer.",
       "probationDays": "gün",
       "probationOverdue": "Gecikmiş",
-      "equipmentTitle": "Donanım kontrolü (7 maddelik işe alım sözleşmesi)",
+      "equipmentTitle": "Donanım kontrolü (6 maddelik işe alım sözleşmesi)",
       "equipmentHint": "Donanımsız kitle kayıtlı işgücü-aktivasyon-açığı riskidir — gerçek durum, hata değil.",
       "equipmentEmpty": "Bu filtreye uyan çalışan yok.",
       "equipment": {
@@ -1046,12 +1029,11 @@
         "e3_hook": "Hook",
         "e4_grants": "Yetki",
         "e5_litellm_key": "Anahtar",
-        "e6_budget": "Bütçe",
-        "e7_persona_task": "Persona"
+        "e6_budget": "Bütçe"
       },
       "equipOk": "var",
       "equipMissing": "eksik",
-      "equipComplete": "7/7",
+      "equipComplete": "6/6",
       "colEmployee": "Çalışan",
       "colStatus": "Durum",
       "colAllOk": "Tamam",
@@ -1401,7 +1383,7 @@
       "badgeGate": "E13.0 KAPISI",
       "postureGit": "Korpus, planlama durumu ve dosya-hafıza depoları git'te yaşar — her dalga push'lu; geri alma = revert.",
       "postureDump": "Günlük pg_dump → Hetzner Storage Box dxb-backup-1 (yalnız SSH anahtarı; bu panodan görünmez). Doğrulama:",
-      "postureDrill": "\"Test edilmemiş yedek yok hükmündedir\": geri yükleme tatbikatı E13.0 kabul kapısıdır, sahibi Backup & DR Officer personası.",
+      "postureDrill": "\"Test edilmemiş yedek yok hükmündedir\": geri yükleme tatbikatı E13.0 kabul kapısıdır, sahibi Backup & DR Officer.",
       "honestyNote": "Bu pano göremediği yeşil ışığı asla göstermez — Storage Box durumu P7 probu raporlayana dek operatör-doğrulamalıdır.",
       "capacityLink": "VPS kapasitesi",
       "boundaryNote": "yedek işi durum akışı → P7 health-probe ailesi."
@@ -2107,7 +2089,6 @@
         "tool": "Araçlar",
         "mcp": "MCP grupları",
         "prompt_template": "Prompt şablonları",
-        "persona": "Personalar",
         "policy": "Politikalar",
         "governance_rule": "Yönetişim kuralları",
         "workflow": "İş akışları",
@@ -2551,11 +2532,11 @@
       "sections": [
         {
           "t": "Sayaçlar",
-          "b": "Kaç direktör olduğu, kaçının karakter kartı ve disiplin kancası bağlı olduğu, kaç departmanın yönetildiği."
+          "b": "Kaç direktör olduğu, kaçının disiplin kancası bağlı olduğu, kaç departmanın yönetildiği."
         },
         {
           "t": "Tablo",
-          "b": "Her departman başkanı: yönettiği departman, çalıştığı yapay zekâ beyni ve ne kadar serbestlikle hareket ettiği. 'Persona' çalışanın yazılı karakteri ve görevleridir; 'bağlı' demek ekli ve yürürlükte demektir."
+          "b": "Her departman başkanı: yönettiği departman, çalıştığı yapay zekâ beyni ve ne kadar serbestlikle hareket ettiği. 'Bağlı' demek, disiplin kancasının ekli ve yürürlükte olduğu demektir."
         },
         {
           "t": "Bu veri nereden geliyor",
@@ -2589,7 +2570,7 @@
         },
         {
           "t": "Donanım kontrolü",
-          "b": "Her yeni işe alınanın başlamadan önce sahip olması gereken 7 şey (karakter kartı, görevler, erişim ve diğerleri) — otomatik denetlenir."
+          "b": "Her yeni işe alınanın başlamadan önce sahip olması gereken 6 şey (organizasyondaki yeri, sicil, disiplin kancası, erişim, anahtar ve bütçe) — otomatik denetlenir."
         },
         {
           "t": "Departmanlar",

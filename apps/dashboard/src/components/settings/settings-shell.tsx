@@ -148,7 +148,6 @@ const RISK_LEVEL: Record<string, StatusLevel> = {
 const AREA_COUNT_KEY: Record<string, string> = {
   agents: "agents",
   all_agents: "agents",
-  personas: "agents",
   department: "departments",
   org: "departments",
   all_workflows: "workflows",

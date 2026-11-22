@@ -52,9 +52,11 @@ export default async function PermissionsPage({
   let grantsQuery = supabase
     .from("library_grants")
     .select(
-      "id, grantee_kind, grantee_id, granted_by, created_at, expires_at, library_items(name, kind)",
+      "id, grantee_kind, grantee_id, granted_by, created_at, expires_at, library_items!inner(name, kind)",
       { count: "exact" },
     )
+    // a grant on an item of the retired kind is not listed
+    .neq("library_items.kind", "persona")
     .order("created_at", { ascending: false })
     .limit(100);
   if (deptFilterId) grantsQuery = grantsQuery.eq("grantee_id", deptFilterId);

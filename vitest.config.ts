@@ -46,7 +46,9 @@ export default defineConfig({
     },
   },
   test: {
-    include: ["tests/**/*.test.ts", "tests/**/*.test.tsx"],
+    // apps/dashboard/tests: a test that mocks `next/*` must sit inside the
+    // dashboard, where that specifier resolves to the copy its pages import.
+    include: ["tests/**/*.test.ts", "tests/**/*.test.tsx", "apps/dashboard/tests/**/*.test.tsx"],
     // ── The company database is not a test fixture (CEO, 2026-07-28: "bu bok
     // inşaa sürecinin her boku neden bu şirkete yansıyor — burası ayrı bir
     // platform"). Until that night every suite wrote into the SAME Postgres

@@ -72,8 +72,9 @@ export default async function SettingsSectionPage({
           "key, category, value_schema, risk, requires_approval, cost_impact, affected_areas, locked, delegate, scope_types, description_en, description_tr",
         )
         .eq("category", section)
+        .not("key", "ilike", "%persona%")
         .order("key"),
-      supabase.from("settings_registry").select("category"),
+      supabase.from("settings_registry").select("category").not("key", "ilike", "%persona%"),
       supabase.from("departments").select("id, slug, name_en").order("slug"),
       supabase
         .from("agents")
@@ -122,6 +123,11 @@ export default async function SettingsSectionPage({
     count: sectionCounts.get(slug) ?? 0,
   }));
 
+  // The registry (old chain, not migrated) still holds two persona settings and
+  // closes five descriptions with a "(… persona §n …)" note. The personas were
+  // removed on 2026-11-22: the two settings are not read, the note is not shown.
+  const withoutPersonaNote = (text: string) => text.replace(/\s*\([^)]*persona[^)]*\)/i, "");
+
   const rows: SettingRowData[] = registry.map((r) => ({
     key: r.key,
     category: r.category,
@@ -129,12 +135,14 @@ export default async function SettingsSectionPage({
     risk: r.risk,
     requiresApproval: r.requires_approval,
     costImpact: r.cost_impact,
-    affectedAreas: r.affected_areas ?? [],
+    // The registry still tags some settings with the retired `personas` area;
+    // it names nothing the dashboard shows, so it is not carried to the screen.
+    affectedAreas: (r.affected_areas ?? []).filter((area) => area !== "personas"),
     locked: r.locked,
     delegate: r.delegate,
     scopeTypes: r.scope_types,
-    descriptionEn: r.description_en,
-    descriptionTr: r.description_tr,
+    descriptionEn: withoutPersonaNote(r.description_en),
+    descriptionTr: withoutPersonaNote(r.description_tr),
   }));
 
   const values: SettingValueRow[] = ((valuesRes.data ?? []) as Array<{

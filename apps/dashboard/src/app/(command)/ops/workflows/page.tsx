@@ -49,12 +49,12 @@ export default async function Page() {
         .not("workflow_run_id", "is", null)
         .order("started_at", { ascending: false })
         .limit(400),
-      // HR gate mirror (the fn is the wall): non-archived + persona v2 only.
+      // HR gate mirror (the fn is the wall): every employee that exists and
+      // is not archived.
       supabase
         .from("agents")
-        .select("id,slug,department,employment_status,persona_version")
+        .select("id,slug,department,employment_status")
         .neq("employment_status", "archived")
-        .like("persona_version", "v2%")
         .order("slug")
         .limit(400),
       supabase.rpc("fn_routing_slots"),

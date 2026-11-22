@@ -6,7 +6,7 @@ import { getLocale } from "@/lib/locale";
 import { createClient } from "@/lib/supabase/server";
 
 // /ai/library — Holding Library (E9.5, HOLDING_LIBRARY §7). Kind-grouped
-// catalog over v_library_catalog: ALL 20 directive kinds stay visible — empty
+// catalog over v_library_catalog: ALL 19 listed kinds stay visible — empty
 // kinds show an honest zero, never fake fullness. Item record = the 11
 // directive fields; tabs: usage trend, access grants (CEO edits through
 // /api/control/library ONLY), change history, dependencies (list, v1).
@@ -15,7 +15,7 @@ import { createClient } from "@/lib/supabase/server";
 export const metadata = { title: "Library — DXB" };
 
 const KINDS = [
-  "skill", "plugin", "tool", "mcp", "prompt_template", "persona", "policy",
+  "skill", "plugin", "tool", "mcp", "prompt_template", "policy",
   "governance_rule", "workflow", "sop", "framework", "code_component",
   "design_system", "research", "report", "project_doc", "training",
   "memory_source", "best_practice", "lesson_learned",
@@ -109,6 +109,9 @@ export default async function LibraryPage({
   const { data: catalogData } = await supabase
     .from("v_library_catalog")
     .select("*")
+    // Only the listed kinds are read: a row of any other kind still in the
+    // table is neither counted, listed nor opened by its ?item= address.
+    .in("kind", KINDS)
     .order("kind", { ascending: true })
     .order("name", { ascending: true });
   const catalog = (catalogData ?? []) as unknown as CatalogRow[];
@@ -194,7 +197,7 @@ export default async function LibraryPage({
         </span>
       </header>
 
-      {/* ── kind rail: all 20 kinds, zero-kinds honest, never hidden (§7) ── */}
+      {/* ── kind rail: all 19 kinds, zero-kinds honest, never hidden (§7) ── */}
       <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5">
         {KINDS.map((k) => {
           const n = counts.get(k) ?? 0;

@@ -8,7 +8,7 @@ import { createClient } from "@/lib/supabase/server";
 // control_library_action.
 
 const KINDS = [
-  "skill", "plugin", "tool", "mcp", "prompt_template", "persona", "policy",
+  "skill", "plugin", "tool", "mcp", "prompt_template", "policy",
   "governance_rule", "workflow", "sop", "framework", "code_component",
   "design_system", "research", "report", "project_doc", "training",
   "memory_source", "best_practice", "lesson_learned",

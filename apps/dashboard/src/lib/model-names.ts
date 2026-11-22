@@ -2,7 +2,7 @@
 //
 // U20 decision 4 froze the runtime model ids as internal technical keys
 // (`fable-5`, `claude-sonnet-5`) because renaming them would break the live FK
-// chain, the settings undo chain and the persona gate — and put every label the
+// chain and the settings undo chain — and put every label the
 // CEO reads on `model_catalog.display_name`. The U21 eye-test (2026-07-26)
 // found four surfaces still rendering the raw id, so the CEO saw "fable-5" on
 // his own workforce page after the authorship handover to Opus 5. This helper is

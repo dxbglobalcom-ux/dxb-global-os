@@ -7,7 +7,7 @@ import { createClient } from "@/lib/supabase/server";
 // Voice call seam (VOICE_INTERACTION_SPEC §6, R3.1) — the dashboard hosts
 // ONLY the intake half: CEO auth → STT (self-hosted Speaches, €0/V9) →
 // intent lineage (V5) → 'routing' handoff row. The answer half (routing/
-// persona/TTS — an LLM surface) runs in the resident scheduler's voice.drain:
+// answer/TTS — an LLM surface) runs in the resident scheduler's voice.drain:
 // PHASE-08 LOCKED keeps every model call out of this process, which is why
 // this route imports the SDK-free "@dxb/voice/intake" subpath and nothing
 // heavier. Playback arrives via the sibling [id]/audio route once the drain

@@ -14,10 +14,16 @@ import { createClient } from "@/lib/supabase/server";
 // module with zero categorization is not a digital HR"). The landing view is
 // the ORGANIZATION: one card per active department — director, lifecycle
 // counts, equipment debt — and every card drills into /org/employees?dept=….
-// The E5.4b compliance surfaces stay: probation queue inline, the 7-point
+// The E5.4b compliance surfaces stay: probation queue inline, the six-check
 // equipment audit grid behind ?view=equipment (reachable, never the landing
 // dump). The unequipped figure remains the REGISTERED workforce-activation-
 // gap risk (project_risks, E9.4) — shown honestly, never smoothed.
+//
+// Equipped means: all six checks in EQUIP_KEYS hold. The page computes that
+// itself from the six columns, for the KPI, the department cards and the grid
+// alike. The database's own verdicts (v_hr_equipment_check.all_ok,
+// v_hr_roster.equipment_ok) also count a seventh check this page does not
+// show, so they are not read: he never sees a red whose reason is hidden.
 
 export const metadata = { title: "HR — DXB" };
 
@@ -28,15 +34,25 @@ const EQUIP_KEYS = [
   "e4_grants",
   "e5_litellm_key",
   "e6_budget",
-  "e7_persona_task",
 ] as const;
+
+type EquipChecks = Record<(typeof EQUIP_KEYS)[number], boolean>;
 
 type EquipRow = {
   employee_id: string;
   slug: string;
   employment_status: string;
-  all_ok: boolean;
-} & Record<(typeof EQUIP_KEYS)[number], boolean>;
+} & EquipChecks;
+
+const EQUIP_COLUMNS = `employee_id, slug, employment_status, ${EQUIP_KEYS.join(", ")}`;
+
+function equippedCount(checks: EquipChecks): number {
+  return EQUIP_KEYS.filter((key) => checks[key]).length;
+}
+
+function isEquipped(checks: EquipChecks): boolean {
+  return equippedCount(checks) === EQUIP_KEYS.length;
+}
 
 type ProbationRow = {
   employee_id: string;
@@ -55,7 +71,6 @@ type RosterRow = {
   role: string | null;
   role_level: string | null;
   employment_status: string;
-  equipment_ok: boolean;
 };
 
 type DeptRow = {
@@ -87,19 +102,19 @@ export default async function HrPage({
 
   let equipQuery = supabase
     .from("v_hr_equipment_check")
-    .select("*", { count: "exact" })
+    .select(EQUIP_COLUMNS, { count: "exact" })
     .order("slug")
     .limit(50);
   if (statusFilter) equipQuery = equipQuery.eq("employment_status", statusFilter);
   if (deptFilter) equipQuery = equipQuery.eq("department", deptFilter);
 
-  const [rosterRes, deptRes, probationRes, equipRes] = await Promise.all([
+  const [rosterRes, deptRes, probationRes, checksRes, equipRes] = await Promise.all([
     // C8 (CEO order 2026-07-19): the CEO sees the WORKING organization —
     // archived/dormant records are history, not headcount. They remain
     // reachable through the explicit status filter, never in the default view.
     supabase
       .from("v_hr_roster")
-      .select("employee_id, slug, department, role, role_level, employment_status, equipment_ok")
+      .select("employee_id, slug, department, role, role_level, employment_status")
       .not("employment_status", "in", "(archived,dormant)"),
     supabase
       .from("departments")
@@ -110,10 +125,19 @@ export default async function HrPage({
       .select("employee_id, slug, department, days_in_probation, max_days, overdue, open_tasks")
       .order("days_in_probation", { ascending: false })
       .limit(25),
+    // The whole workforce's six checks: the KPI and the department cards count
+    // from these, whatever filter the audit grid below is narrowed to.
+    supabase.from("v_hr_equipment_check").select(EQUIP_COLUMNS),
     equipmentView ? equipQuery : Promise.resolve(null),
   ]);
 
-  if (rosterRes.error || deptRes.error || probationRes.error || equipRes?.error) {
+  if (
+    rosterRes.error ||
+    deptRes.error ||
+    probationRes.error ||
+    checksRes.error ||
+    equipRes?.error
+  ) {
     return (
       <div className="mx-auto max-w-6xl">
         <Panel title={dict.command.nav.pages.hr} state="error">
@@ -122,6 +146,7 @@ export default async function HrPage({
             {rosterRes.error?.message ??
               deptRes.error?.message ??
               probationRes.error?.message ??
+              checksRes.error?.message ??
               equipRes?.error?.message}
           </p>
         </Panel>
@@ -132,13 +157,19 @@ export default async function HrPage({
   const roster = (rosterRes.data ?? []) as RosterRow[];
   const departments = (deptRes.data ?? []) as DeptRow[];
   const probation = (probationRes.data ?? []) as ProbationRow[];
-  const equip = (equipRes?.data ?? []) as EquipRow[];
+  const equip = (equipRes?.data ?? []) as unknown as EquipRow[];
   const equipMatched = equipRes?.count ?? equip.length;
+  const equippedIds = new Set(
+    ((checksRes.data ?? []) as unknown as EquipRow[])
+      .filter(isEquipped)
+      .map((r) => r.employee_id),
+  );
+  const lacksEquipment = (r: RosterRow) => !equippedIds.has(r.employee_id);
 
   const byStatus = new Map<string, number>();
   for (const r of roster)
     byStatus.set(r.employment_status, (byStatus.get(r.employment_status) ?? 0) + 1);
-  const unequipped = roster.filter((r) => !r.equipment_ok).length;
+  const unequipped = roster.filter(lacksEquipment).length;
 
   const statusLabels = t.statuses as Record<string, string>;
   const equipLabels = t.equipment as Record<string, string>;
@@ -174,7 +205,7 @@ export default async function HrPage({
         rows,
         head,
         counts,
-        missing: rows.filter((r) => !r.equipment_ok).length,
+        missing: rows.filter(lacksEquipment).length,
       };
     })
     .sort(
@@ -216,14 +247,14 @@ export default async function HrPage({
       }),
     ),
     {
-      key: "all_ok",
+      key: "equipped",
       label: t.colAllOk,
       render: (r) =>
-        r.all_ok ? (
+        isEquipped(r) ? (
           <StatusBadge level="ok">{t.equipComplete}</StatusBadge>
         ) : (
           <StatusBadge level="danger">
-            {`${EQUIP_KEYS.filter((k) => r[k]).length}/7`}
+            {`${equippedCount(r)}/${EQUIP_KEYS.length}`}
           </StatusBadge>
         ),
     },

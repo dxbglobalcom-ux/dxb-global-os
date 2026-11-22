@@ -381,7 +381,6 @@
       "entities": {
         "agents": "employees",
         "all_agents": "all employees",
-        "personas": "personas",
         "department": "departments",
         "org": "org units",
         "workflows": "workflows",
@@ -582,15 +581,12 @@
       "colRole": "Role",
       "colBrain": "Brain",
       "colAutonomy": "Autonomy",
-      "colPersona": "Persona",
-      "personaVersionHelp": "The version of the persona text this employee is actually bound to and runs on, read from the persona itself — it rises every time that text is rewritten and passes its quality gate.",
-      "personaUnbound": "Unbound",
       "colHook": "Opus 5 Hook",
       "colStatus": "Status",
       "showing": "Showing",
       "of": "of",
       "empty": "No employees match this filter.",
-      "emptyHint": "Persona v2 waves land at roadmap step E5; every hire appears here the moment its record exists.",
+      "emptyHint": "Every hire appears here the moment its record exists.",
       "roles": {
         "general_manager": "General Manager",
         "head": "Head",
@@ -642,16 +638,6 @@
       "detailLoading": "Loading detail",
       "detailError": "Detail could not be loaded.",
       "governanceTitle": "Governance",
-      "personaLabel": "Persona",
-      "personaGate": {
-        "passed": "Gate: passed",
-        "pending": "Gate: pending",
-        "failed": "Gate: failed",
-        "superseded": "Gate: superseded"
-      },
-      "personaBy": "by",
-      "personaRead": "Read persona →",
-      "personaHide": "Hide persona",
       "recordLabel": "Record",
       "recordNone": "No employment record yet",
       "kpisLabel": "KPIs",
@@ -993,15 +979,12 @@
     },
     "directors": {
       "kpiTotal": "Directors",
-      "kpiPersonaBound": "Persona bound",
       "kpiHookBound": "Hook bound",
       "kpiDepartments": "Departments led",
       "colDirector": "Director",
       "colDept": "Department",
       "colBrain": "Brain",
       "colAutonomy": "Autonomy",
-      "colPersona": "Persona",
-      "personaVersionHelp": "The version of the persona text this director is actually bound to and runs on, read from the persona itself — it rises every time that text is rewritten and passes its quality gate.",
       "colHook": "Opus 5 Hook",
       "colStatus": "Status",
       "statusActive": "Active",
@@ -1037,7 +1020,7 @@
       "probationEmpty": "No one is in probation — hires enter this queue when HR moves them from draft.",
       "probationDays": "days",
       "probationOverdue": "Overdue",
-      "equipmentTitle": "Equipment check (7-point onboarding contract)",
+      "equipmentTitle": "Equipment check (6-point onboarding contract)",
       "equipmentHint": "The unequipped mass is the registered workforce-activation-gap risk — real state, not an error.",
       "equipmentEmpty": "No employees match this filter.",
       "equipment": {
@@ -1046,12 +1029,11 @@
         "e3_hook": "Hook",
         "e4_grants": "Grants",
         "e5_litellm_key": "Key",
-        "e6_budget": "Budget",
-        "e7_persona_task": "Persona"
+        "e6_budget": "Budget"
       },
       "equipOk": "present",
       "equipMissing": "missing",
-      "equipComplete": "7/7",
+      "equipComplete": "6/6",
       "colEmployee": "Employee",
       "colStatus": "Status",
       "colAllOk": "Complete",
@@ -1401,7 +1383,7 @@
       "badgeGate": "E13.0 GATE",
       "postureGit": "Corpus, planning state and file-memory stores live in git — every wave is pushed; rollback = revert.",
       "postureDump": "Daily pg_dump → Hetzner Storage Box dxb-backup-1 (SSH-key-only; not visible from this dashboard). Verify:",
-      "postureDrill": "\"An untested backup counts as none\": the restore drill is the E13.0 acceptance gate, owned by the Backup & DR Officer persona.",
+      "postureDrill": "\"An untested backup counts as none\": the restore drill is the E13.0 acceptance gate, owned by the Backup & DR Officer.",
       "honestyNote": "This board never shows a green light it cannot see — Storage Box state is operator-verified until the P7 probe reports it.",
       "capacityLink": "VPS capacity",
       "boundaryNote": "backup job status feed → P7 health-probe family."
@@ -2107,7 +2089,6 @@
         "tool": "Tools",
         "mcp": "MCP groups",
         "prompt_template": "Prompt templates",
-        "persona": "Personas",
         "policy": "Policies",
         "governance_rule": "Governance rules",
         "workflow": "Workflows",
@@ -2551,11 +2532,11 @@
       "sections": [
         {
           "t": "The counters",
-          "b": "How many directors there are, how many have their character sheet and discipline hook attached, and how many departments are led."
+          "b": "How many directors there are, how many have their discipline hook attached, and how many departments are led."
         },
         {
           "t": "The table",
-          "b": "Each department head, the department they lead, the AI brain they run on, and how much freedom they act with. 'Persona' is the written character and duties of the employee; 'bound' means it is attached and enforced."
+          "b": "Each department head, the department they lead, the AI brain they run on, and how much freedom they act with. 'Bound' means the discipline hook is attached and enforced."
         },
         {
           "t": "Where the data comes from",
@@ -2589,7 +2570,7 @@
         },
         {
           "t": "Equipment check",
-          "b": "The 7 things every new hire must have before starting (character sheet, duties, access and the rest), checked automatically."
+          "b": "The 6 things every new hire must have before starting (a place in the organisation, a record, the discipline hook, access, a key and a budget), checked automatically."
         },
         {
           "t": "Departments",
