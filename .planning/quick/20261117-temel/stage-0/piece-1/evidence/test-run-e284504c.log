@@ -1,0 +1,23 @@
+$ tsc -p foundation/tsconfig.json
+$ vitest run --config foundation/tests/vitest.config.ts
+
+ RUN  v3.2.6 /home/dxb/DxB Global OS/foundation/tests
+
+ ✓ bench/instance.test.ts (14 tests) 58051ms
+   ✓ the instance — made, looked at and destroyed, in order > fresh makes an instance and says INSTANCE_UP with the cluster's identifier and the loopback address  51911ms
+   ✓ the instance — made, looked at and destroyed, in order > guarded refuses a throwaway database made in the same cluster  1314ms
+   ✓ the instance — made, looked at and destroyed, in order > while another holds the host lock the command says LOCK_REFUSED and exits 2 — with DXB_FOUNDATION_LOCK_WAIT, after waiting that long  2159ms
+   ✓ the instance — made, looked at and destroyed, in order > down says INSTANCE_DOWN and leaves no container, volume, network, listener or record  1639ms
+ ✓ bench/host-lock.test.ts (13 tests) 2906ms
+   ✓ the host lock — one holder on the machine, held by the kernel > with waitSeconds, acquires after the first lets go  1568ms
+   ✓ the host lock — one holder on the machine, held by the kernel > with waitSeconds, is refused once that time has passed and the holder has not let go  1062ms
+ ✓ bench/guard-decision.test.ts (20 tests) 568ms
+ ✓ bench/no-old-address.test.ts (21 tests) 10ms
+ ✓ bench/guard-connection.test.ts (25 tests) 8ms
+ ✓ bench/removal-authority.test.ts (17 tests) 4ms
+
+ Test Files  6 passed (6)
+      Tests  110 passed (110)
+   Start at  00:52:28
+   Duration  62.36s (transform 86ms, setup 0ms, collect 202ms, tests 61.55s, environment 1ms, prepare 186ms)
+
