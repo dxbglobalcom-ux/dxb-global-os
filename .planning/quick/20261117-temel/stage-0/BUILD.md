@@ -119,7 +119,8 @@ folder: what a living record names, what a frozen reader of the old system still
 edited), what is tracked (it stays in history) and what is untracked (deleting it is final, and the list says so). He
 sees it; then the deletion. **Done:** his look; one commit; the records ruler unchanged.
 *Weighed 2026-11-22 (`first-cut/WEIGHED.md`): 44 folders stay whole, 34 keep only the files a living record names or
-code reads, 99 leave; 11 MB of what leaves stays in history and 2,352 MB is gone for good. It waits for his look.*
+code reads, 99 leave; 11 MB of what leaves stays in history and 2,352 MB is gone for good. His yes the same night
+<!-- CEO-OK: first-cut-deleted-and-halal-screen-reach-his-yes-2026-11-22 -->; deleted in one commit.*
 
 **0b — the scan's findings, weighed.** Four readers scanned the 72 other open rows (`scan/`). The lead checks each
 "needs", "unsure" and contradiction at its source. What a row needs from the foundation comes back into PLAN.md under
@@ -127,7 +128,7 @@ the section that owns it; a contradiction only his word settles goes to him once
 a seat's shell walled from files and the network — is weighed before piece 12. **Done:** PLAN.md carries them; his
 answers.
 *Done 2026-11-22 (`scan/WEIGHED.md`): eleven sentences marked `[0b]` entered PLAN.md, B41's wall among them (§2 C,
-stage 1); one proposal — the halal screen's reach — waits for his word; no contradiction needs him now.*
+stage 1); the halal screen's reach had his yes the same night; no contradiction needs him.*
 
 **1 — the frame and the foundation's own bench.** The workspace root, the foundation's typecheck, a frozen install
 proved. `foundation/bench`: one script makes a fresh stack on its own ports, applies the old chain, records the new

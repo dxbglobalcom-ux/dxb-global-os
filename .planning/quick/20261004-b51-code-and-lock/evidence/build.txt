@@ -1,3 +1,0 @@
-$ pnpm build   (2026-10-04T19:00:04+02:00)
-$ tsc --build
-EXIT=0

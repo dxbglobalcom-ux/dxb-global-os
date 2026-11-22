@@ -3273,5 +3273,21 @@
     "conditions": "Dictated; the dictation wrote 'Heads'ler' for Hetzner, and he typed the name himself in the same message ('buhetznerrrrrr'). The last sentence ('şu Git'le ilgili sorun') was not understood and was asked back; nothing rests on it. Measured the same night: the Storage Box host does not resolve and the API token is refused.",
     "session": "Fable 5.2 session 0254398b, heard first-hand (dictated, mid-turn), 2026-11-22.",
     "where": "HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md (B72); .planning/board-rows/B72.md"
+  },
+  "offsite-copy-goes-to-github-2026-11-22": {
+    "date": "2026-11-22",
+    "what": "B72's off-site copy goes to GitHub: a separate private repository under the login already on this machine, the dump encrypted on this machine before it leaves. Backblaze B2 may be added later as a second copy; it is not part of this yes.",
+    "verbatim": "Tamam, GitHub'a koyalım ya.",
+    "conditions": "He asked first: \"GitHub'a koyamaz mıyız? Ne diyeyim?\" He was told before his yes: GitHub needs no click from him; it has no lock against erasure — the same login can delete the copies — which Backblaze B2 has; the lead's recommendation was GitHub now and B2 later as a second copy; one step stops at him — a copy of the encryption key kept off this machine (his click). Measured candidates: the research report of the same night (B72's job folder).",
+    "session": "Fable 5.2 session 17eb1936, read first-hand (typed), 2026-11-22.",
+    "where": "HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md (B72); .planning/board-rows/B72.md"
+  },
+  "first-cut-deleted-and-halal-screen-reach-his-yes-2026-11-22": {
+    "date": "2026-11-22",
+    "what": "Two of the lead's recommendations accepted in one sentence. (1) The folder's first cut is deleted as weighed: 99 job folders leave whole and 34 keep only the files a living record names or code reads — 2.35 GB, of which 11 MB stays in git history and the rest is gone for good; the ad films, the storyboards and the work in hand stay. (2) The halal screen also runs on every artifact version before it is delivered or published and on the arguments of every studio-hands part (PLAN §2 H) — the reach of the boundary's enforcement, the boundary itself unchanged.",
+    "verbatim": "Diğer önerilerini de kabul ediyorum.",
+    "conditions": "Said right after his yes to GitHub for the off-site copy, in answer to a message that listed three things waiting on him, each with the lead's recommendation: the folder cut ('Önerim: silinsin'), the halal screen's reach ('Önerim: evet') and the off-site copy's home. He saw the cut as a three-row table with sizes and the five largest folders, not the full list (first-cut/WEIGHED.md). 'The others' is read by the lead as those two; nothing else is rested on it.",
+    "session": "Fable 5.2 session 17eb1936, read first-hand (typed, mid-turn), 2026-11-22.",
+    "where": ".planning/quick/20261117-temel/stage-0/first-cut/WEIGHED.md; .planning/quick/20261117-temel/PLAN.md §2 H; .planning/quick/20261117-temel/stage-0/BUILD.md (0a)"
   }
 }

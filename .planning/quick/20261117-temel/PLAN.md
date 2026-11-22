@@ -247,7 +247,8 @@ the door that adds a model, with B08.
 - **[0b · B15] Each agent carries an autonomy level** that only his door sets, audited; the classifier reads the
   acting agent's level after the locked rules — a level may relax a class that is not locked, never a locked one.
   Stage 2.
-- **[0b · B43] Proposed — waits for his word, because it is the reach of an Islamic boundary:** the halal screen
+- **[0b · B43] The halal screen's reach** — his yes of 2026-11-22
+  <!-- CEO-OK: first-cut-deleted-and-halal-screen-reach-his-yes-2026-11-22 -->: the halal screen runs
   also as a mandatory check on every artifact version before it is delivered or published, and on the arguments of
   every studio-hands part (a prompt, a picked asset, a cut). Today's text screens a seat's steps; a render the
   hands make from a prompt passes no seat.
@@ -794,8 +795,7 @@ beside it in one database; the old battery keeps running on the old bench, which
 
 The scan of the board's open rows is checked at the source (`stage-0/scan/WEIGHED.md`, 2026-11-22): of 66 findings,
 twelve are needs this plan did not carry. Eleven entered it as sentences marked **[0b]** under the sections that own
-them — the lead's additions under stage 0's own text above, not yet seen by him; the twelfth, the halal screen's
-reach (§2 H), is written as a proposal and waits for his word. No finding changes a decision of §1 or §10.
+them — the lead's additions under stage 0's own text above, not yet seen by him; the twelfth, the halal screen's reach (§2 H), had his yes the same night. No finding changes a decision of §1 or §10.
 
 **Added by §2 M and N:**
 

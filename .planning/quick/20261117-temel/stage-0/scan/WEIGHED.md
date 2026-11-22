@@ -21,7 +21,7 @@ lead read the plan's sections and the row sentences the verdicts rest on, and de
 | B83, B84 | the card's shape is general; an outreach campaign may ride it | N.6 | their ranks |
 | C52 | a deleted conversation leaves no copy in the frozen archive | §6 stage 5 | stage 5 |
 
-**Proposed, waits for his word** (the reach of an Islamic boundary): B43 — the halal screen also on every artifact
+**His yes, 2026-11-22** (the reach of an Islamic boundary; ledger `first-cut-deleted-and-halal-screen-reach-his-yes-2026-11-22`): B43 — the halal screen also on every artifact
 version before delivery or publication, and on the arguments of every studio-hands part (§2 H).
 
 ## Not taken as the checkers gave them — the lead's reading
