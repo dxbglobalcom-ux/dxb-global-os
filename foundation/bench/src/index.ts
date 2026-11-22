@@ -15,13 +15,9 @@ export { LockRefused, defaultLockPath, acquireHostLock, assertHeld } from "./loc
 export type { ContainerFacts, PendingRecord } from "./removal.ts";
 export { RemovalRefused, selectRemovalTargets } from "./removal.ts";
 
+export { BENCH, connectionString } from "./bench.ts";
+
 export type { Status } from "./instance.ts";
-export {
-  InstanceStands,
-  ExposureRefused,
-  BENCH,
-  connectionString,
-  instanceStatus,
-  makeInstance,
-  destroyInstance,
-} from "./instance.ts";
+export { instanceStatus, destroyInstance } from "./instance.ts";
+
+export { InstanceStands, ExposureRefused, makeInstance } from "./make.ts";

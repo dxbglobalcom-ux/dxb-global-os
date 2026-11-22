@@ -1,5 +1,8 @@
+import { chmodSync, closeSync, fsyncSync, mkdirSync, openSync, readFileSync, renameSync, writeSync } from "node:fs";
+import { homedir } from "node:os";
+import { dirname, isAbsolute, join } from "node:path";
 import type { Identity } from "./identity.ts";
-import { NotBuilt } from "./not-built.ts";
+import type { PendingRecord } from "./removal.ts";
 
 export type InstanceRecord = Identity & {
   project: string;
@@ -9,11 +12,72 @@ export type InstanceRecord = Identity & {
   madeAt: string;
 };
 
+/** The whole list file: the made instances, and the make that has started and not yet written its record. */
+export type ListFile = { instances: InstanceRecord[]; pending?: PendingRecord };
+
+/** `${XDG_STATE_HOME:-$HOME/.local/state}/dxb/foundation-bench/instances.json` — machine state, never committed. */
 export function defaultStatePath(): string {
-  throw new NotBuilt("defaultStatePath");
+  const configured = process.env.XDG_STATE_HOME;
+  // A relative state home would hang the list on the working directory; like an unset one, it is not used.
+  const stateHome = configured !== undefined && isAbsolute(configured) ? configured : join(homedir(), ".local/state");
+  return join(stateHome, "dxb/foundation-bench/instances.json");
+}
+
+const isText = (value: unknown): value is string => typeof value === "string" && value !== "";
+const isTexts = (value: unknown): value is string[] => Array.isArray(value) && value.every(isText);
+const isObject = (value: unknown): value is Record<string, unknown> =>
+  typeof value === "object" && value !== null && !Array.isArray(value);
+
+function isInstanceRecord(value: unknown): value is InstanceRecord {
+  if (!isObject(value)) return false;
+  const texts = ["sysid", "dboid", "dbname", "project", "dbContainer", "madeAt"];
+  return texts.every((field) => isText(value[field])) && isTexts(value["containers"]) && isTexts(value["volumes"]);
+}
+
+function isPendingRecord(value: unknown): value is PendingRecord {
+  return isObject(value) && isText(value["project"]) && value["pending"] === true && isText(value["startedAt"]);
+}
+
+function isListFile(value: unknown): value is ListFile {
+  if (!isObject(value) || !Array.isArray(value["instances"]) || !value["instances"].every(isInstanceRecord)) return false;
+  return value["pending"] === undefined || isPendingRecord(value["pending"]);
+}
+
+/**
+ * The list file as it stands. Fails closed: a file that is missing, unreadable
+ * or malformed in any part lists nothing — never a part of what it says.
+ */
+export function readListFile(statePath: string = defaultStatePath()): ListFile {
+  let content: unknown;
+  try {
+    content = JSON.parse(readFileSync(statePath, "utf8"));
+  } catch {
+    return { instances: [] };
+  }
+  return isListFile(content) ? content : { instances: [] };
 }
 
 /** The list file holds `{ "instances": InstanceRecord[] }`. */
 export function readInstances(statePath?: string): InstanceRecord[] {
-  throw new NotBuilt("readInstances");
+  return readListFile(statePath).instances;
+}
+
+/**
+ * Replaces the list file whole, atomically: written and synced beside it, then
+ * renamed over it — a reader sees the old list or the new one, never half of one.
+ */
+export function writeListFile(list: ListFile): void {
+  const statePath = defaultStatePath();
+  const directory = dirname(statePath);
+  mkdirSync(directory, { recursive: true, mode: 0o700 });
+  chmodSync(directory, 0o700);
+  const beside = `${statePath}.${process.pid}.writing`;
+  const descriptor = openSync(beside, "w", 0o600);
+  try {
+    writeSync(descriptor, `${JSON.stringify(list, null, 2)}\n`);
+    fsyncSync(descriptor);
+  } finally {
+    closeSync(descriptor);
+  }
+  renameSync(beside, statePath);
 }
