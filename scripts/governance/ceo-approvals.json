@@ -3265,5 +3265,13 @@
     "conditions": "One sentence of his for six recommendations, each put to him in the reply before with what it changes. The order's corrected draft was audited blind once (Astra) before the corrections, not after. Most rows were placed from their board cells; a row is read against the foundation again when its work starts.",
     "session": "Fable 5.2 session 09321517, heard first-hand (dictated), 2026-11-22.",
     "where": "HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md (head, law 4, §2d, §3.2, B02, B09, C30, B72, C52); .planning/quick/20261117-temel/reorder/ORDER.md; .planning/quick/20261117-temel/PLAN.md §2 A"
+  },
+  "hetzner-is-out-2026-11-22": {
+    "date": "2026-11-22",
+    "what": "The holding no longer works with Hetzner. B72's off-site copy gets a new home, chosen by him from the lead's measured recommendation; the row no longer waits on 'his look at Hetzner'.",
+    "verbatim": "Şimdi şöyle heads'lerle artık alakamız kalmadı. Onlarla çalışmayacağız artık bu arada. Heads'ler. Heads'ler. Heads'ler. Sunucuyla ilgili. Heads'ler. Heads'ler diyor buhetznerrrrrr Pardon, şu Git'le ilgili sorun.",
+    "conditions": "Dictated; the dictation wrote 'Heads'ler' for Hetzner, and he typed the name himself in the same message ('buhetznerrrrrr'). The last sentence ('şu Git'le ilgili sorun') was not understood and was asked back; nothing rests on it. Measured the same night: the Storage Box host does not resolve and the API token is refused.",
+    "session": "Fable 5.2 session 0254398b, heard first-hand (dictated, mid-turn), 2026-11-22.",
+    "where": "HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md (B72); .planning/board-rows/B72.md"
   }
 }
