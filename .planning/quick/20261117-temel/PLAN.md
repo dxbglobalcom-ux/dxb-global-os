@@ -134,6 +134,8 @@ possible are there. What is built now is the boundary a seat meets (C).
 - `artifacts`: what a job produces, versioned, with hash and path. A check, the CEO's choice, an approval and a
   delivery each name the artifact version they are about; a changed version is checked again. (Three designs, his pick,
   the merged version, the one delivered: four traceable rows.)
+- **His verdict** is a record on an artifact version: his words verbatim, the date, and a level only his word
+  sets. A version he has not looked at carries none.
 - **The desk**: `desk_entries`, append-only — the brief (the giver's words verbatim, the "done" criteria, the value
   tier), the plan, each decision, each part's spec and result, check notes, handovers, open items. It is written
   whole and read in slices (§3): `desk_read(job, part)` — code, not a model — assembles what a seat needs and is
@@ -340,68 +342,54 @@ tried for whether the morning's decision, the client's last word and a pending o
 `context-budget.ts` and the two unbuilt steps are dropped only on that evidence and his word. Until then A29 stands
 as written.
 
-## 4. How the workers are built
+## 4. How a job is worked
 
-- **The research's proposal** — one strong master per job, a job book per job type prepared ahead and attached by the
-  router, more agents only where the work is independent and parallel, a separate checker.
-- **What the trial measured** — not proof (two of four jobs, one judged, not blind), in the same direction: the single
-  master delivered in about 17 minutes against the team's 80-odd and was preferred by a little; the team run took about
-  60 points of a 5-hour window (the single run's quota was not recorded); a master left to itself called no
-  specialist; and the single master's weak point was the brief — it took the safest reading because nothing told it
-  what a good advertisement must attempt.
-- **The design:**
-  - The atom is **a seat on a job** — master, specialist, checker, walker — filled by an agent's identity card, a
-    model and an effort. The foundation does not make "an employee is a persona" its atom, so it stands whichever way
-    the persona question is later measured.
-  - Expertise lives in **the job type's book**, prepared and checked ahead, versioned, attached before the work
-    starts; the job records the version it ran on.
-  - **A one-line order becomes a full brief by construction:** the giver's words verbatim, plus the book's standing
-    demands for that job type — for an advertisement the creative step (several ideas, none of them the client's
-    existing picture), fidelity to the product, the "done" checks — plus the value tier. Acceptance checks the brief
-    that was produced from the one line together with the work delivered against it.
-  - **Where work is split.** Coupled work stays in one head, because every split hands the next seat a thinner
-    copy of the decisions. Work is given to another seat on four grounds only: parts that are independent and can run
-    side by side (variants, the pages after an approved design); a search or a read that would flood the master's
-    context; a tool or a hand the master lacks; and judgement that must be independent — the check, blind (A28).
-  - **One master is a role, not one session.** On a long job the same role continues through fresh sessions from the
-    desk (§3); the job is cut along time and checkpoints, not handed around by profession.
-  - **What a job type always needs is in its pattern, not in the master's mood.** A specialist's checklist or a check
-    that the type always requires — the legal read of a client's terms, the search check of a site — is a part the
-    pattern creates. The master's judgement adds calls, with a reason, where A27 says; it does not decide the
-    mandatory ones (in the trial a master left to itself called nobody).
-  - **The persona question answers itself from the records:** every job records which specialist was called and
-    what its part or its check changed; no separate trial is run.
-- **His verdict has three levels, and only one teaches "good"** (his words, 2026-11-22). "Wow / süper / elinize
-  sağlık": the work may become an example in its job type's book and may become a pattern. "Okey / geç": the job is
-  closed and he did not like it — it is never an example, a base or a pattern. A rejection closes it too.
-- **A wish for one job is not a lesson** (his correction, 2026-11-22: he asked for 3D on one site and against it on
-  another). What he asks of a job belongs to that job — its brief and desk — and ends with it. Something enters a
-  book only when it holds for every job of that type; it is proposed at a job's close, and the book's owner accepts
-  it or leaves it. A new lesson that contradicts a standing one replaces it or is written with its condition; two
-  opposite lessons never stand side by side. A fact about a tool — what a video model does well from text and badly
-  from a storyboard — is not a lesson of the craft: it is dated, tied to that tool and version on the tool's own
-  card, and measured again when the version changes.
-- **The book, in one example.** A job type's folder — say "advertisement": a short page (when it applies; what is
-  collected first — the real product photograph, the brand's own files; the steps; the fixed decisions; the "done"
-  checks), its examples (only work he praised, and references he chose), its files (prompt blocks, checklists), its
-  dated lessons. Today such lessons sit in a session's private notes and reach no master by themselves.
-- **What keeps a book from failing:** it is read in slices like the desk; it is versioned and audited blind before
-  a version is used; until he has praised work of a type, its examples are real references he chose, labelled so;
-  what a type always needs is a part of its pattern.
-- **Nothing in the foundation is drawn from one job.** How a job type is done is its book's content, written per
-  type; the foundation gives every type the same few things — brief, pattern, parts, checks, verdict — and no more.
-- **Proposed, for his word (§10): no persona experts on the work path.** His experience is that the personas added
-  almost nothing and narrowed the model; the engineering reading agrees — a character sheet gives the model no
-  knowledge it lacks, costs context in every session, and a title that does not match its content misleads the one
-  who calls it. What remains: a few named seats that own work (Hamza, Reception, a master per job type, the checker,
-  Hermes); hands without a persona, given a part and the skill it needs; and the skills themselves — the books, and
-  shared checklists (search, law, accessibility, fidelity to a product) that a pattern runs as checks. Nobody
-  chooses "which expert to call": the pattern names the parts. The 213 persona files leave the work path, are read
-  once for content worth a checklist, and are archived; deleting them is his word, on a list. The media studio is
-  under the same rule (his word, 2026-11-22; in the trial of 18 Nov one master delivered the same job): its hands
-  and tools — the pipelines, the card, the recipes — stay, its persona seats go the way of the others. This changes A27's
-  "filled from the persona pool" and "a specialist from any department's cupboard", the persona door and the HR
-  package.
+**The answer is already agreed: AGENT_ORCHESTRATION A26–A33.** One master owns a job and does the coupled work
+itself; it calls a specialist with a recorded reason; when it splits it writes the seams first and tries the whole
+itself; a fresh eye checks against the brief, client work as A28 and A32 say; every seat starts small and works from
+the desk (A29); value decides the plan and the checking (A30). The job type's book is B64's (`B64.md`, the playbook
+note): prepared ahead and checked, signed by the type's master, a liking or a rejection on one job staying that job's
+feedback. This section adds no mechanism to them. It records what the evidence gathered on 2026-11-22 says about them
+— `workers/blind/EVIDENCE.md`, audited blind by Astra and by Fable 5.2 (`workers/ASTRA.md`,
+`workers/fable-audit.md`) — and what the foundation must carry. Grades are the evidence file's.
+
+| The agreed way | Our own record | The maker's current documentation | What it amounts to |
+|---|---|---|---|
+| One master does the coupled work | The single maker was faster and cheaper in four studies: 16 m 44 s and 1.87 $ against the team's 80 m 33 s and 19.04 $ (18 Nov, job 1; the team's brief was changed mid-trial); 31 m 50 s against 84 m 47 s stopped undelivered (job 2); 1043 s and 135k tokens against 2273 s and 1284k (21 Oct; the team arm a hand-written 9-agent workflow); 37.15 $ against 330.35 $ (28 Oct); 831 s and 3.16 $ against about 100 $ (24 Oct) | "For simple tasks, sequential operations … or tasks where you need to maintain context across steps, work directly"; "Handing the same task to a subagent doesn't make the answer any better." | Speed and cost: an indication, one direction, each study confounded. Quality: shown neither way — his eye has never compared a working team's finished delivery with a single master's, blind; Sol's blind visual ranking of the olive pages put the team's last |
+| A specialist is called with a reason | A master left free called none (three runs) — which is why what a job always needs does not hang on the master's choice: A28 and A32 fix the checks | A subagent serves context isolation, parallelization, specialized instructions, tool restrictions. The Opus 5.5 page: "Teams given a budget kept answer quality comparable to the single agent's while finishing considerably sooner" — our Opus 5.5 trials on coupled work did not show that | A27 is not contradicted |
+| An independent check against the brief | 15 construction jobs on record, 14 audited: defects that would have reached him wrong; a second blind auditor found more in 2 jobs of 2. Eye-facing work: judged blind, he put both fix-round arms first (21 Oct, one page) | "A fresh reviewer does help, because it hasn't seen your reasoning"; "A reviewer that's asked to find problems will always find *something*". The Opus 5 page: explicit self-verification instructions can go with no loss. The Sonnet 5.5 page, coding at max: stopping self-started reviewers cut session cost by about a third with no change in quality | Measured for construction work, an indication for eye-facing work. It supports A28 as written: checks are parts fixed by the job's class, and they verify |
+| A small start, the desk, fresh sessions | A fresh session cost 5.62 $ where each resumed round of a giant one cost 8–16 $ (a different fix; Opus 5.5) | Context rot is named; the remedies are compaction, structured notes and sub-agents | An indication; §3's own paired measurement stands |
+| Short personas (A29 item 14), re-tested when the model changes (item 15) | The 213 files average 20.9 KB. No study isolates the persona text. The nearest: 18 Nov job 1, a master with a one-line card (16 m 44 s, 1.87 $) against a master with a 216-line persona and no team (43 m 25 s, 2.93 $); he preferred the first "bir tık" — one run, not blind, the two briefs' other files differing | A one-sentence role "focuses Claude's behavior and tone"; no measured effect is published | That the long text helps: no evidence. That it harms: not shown |
+| The book, prepared ahead (B64) | The construction's own doors are prepared, audited skills and carry its daily work. No measurement on a holding job | A skill's name and description are loaded at the start, its body when used | Unproven for our jobs |
+
+**What follows.**
+
+1. **A26–A33 stand as written.** Nothing in the record contradicts them. A closed list of grounds for opening a second
+   worker, a ban on specialists and any new mechanism for lessons are not supported by the evidence and are not
+   written.
+2. **A seat opens with a short card** — A29 items 1 and 14 as they read. The long persona file is not loaded on the
+   work path. The employee stays: its name, its department, its place in the queue and on his screen (A27; B84
+   decision 6; B43). Before the loading changes, the files are read once for the lines that rest on his recorded word,
+   and each gets its home — the standing layer, the job type's book or the card. Section 12 ("Discipline DNA & Islamic
+   conduct", the same in all 213 files, reaching a worker today only inside its persona body —
+   `packages/voice/src/prompt-core.ts`, `personaBlock`) is first delivered, word for word, from one shared source to
+   every seat and hand, and a gate fails when it is missing; only then do the long files stop loading. Nothing is
+   archived or deleted by this job. This is an engineering default taken on A29's own text and reversible — not a
+   proven gain (§10, decision 6).
+3. **The foundation carries this and no more:** the job's owner; parts, each with its caller's recorded reason; parts
+   in parallel, a choice that waits on him and a merge part (B84 decision 4, "three hands" — done once so far, by
+   hand, on the olive page); the check path chosen from §2 D's inputs as A28, A30 and A32 say; a seat's tools as part
+   of what it is given (on 18 Nov the first measured cause of the failed job was a missing tool, `B43.md:276-283`);
+   the book's version on the job; his verdict as a record (§2 D).
+4. **What is unproven is tried inside stage 1 and called what it is.** On the stage's one live job the same master,
+   with the same tools, works three ways: with its short card; with the card and the job type's book; with the full
+   persona file and the book. He judges the three deliveries blind; time, tokens and cost are recorded per arm. One
+   job is an indication, for that job type only. After it, the rows every job leaves — who was called and why, what a
+   check changed, his verdict — carry the measuring. No standing rule is drawn from the one run.
+
+**Not decided here, because nothing proves it:** whether a working team's result is better than one master's; whether
+three hands yields work he praises; whether a one-line order becomes a brief that yields such work — stage 1's test of
+the brief (§6) stays a test, and its remedy is untried.
 
 ## 5. The verdict table
 
@@ -478,6 +466,8 @@ Each stage ends with something that runs.
   seat receives a slice under its budget that still carries a decision made at the start; his one-line order for an
   advertisement arriving at the master as a full brief with the creative demands; a second job for the same client
   starting with what the first one learned, no seat having read the first job's desk; an idle hour with zero model calls.
+  On the live job, §4's three arms — the short card; the card and the book; the full persona file and the book —
+  are delivered for his blind judgement, each with its time, tokens and cost: an indication, not a proof.
 - **Stage 2 — each part to its full contract:** rules and locked rules, the three carriers, relay and override; the
   executor's retry and park; the router and attempts; capacity per lane; stop and cancel; patterns, value tiers and
   checks as parts; the clock's catch-up; the views' verdicts.
@@ -529,6 +519,8 @@ the model and the level are not lowered to fit a week.
 9. How a step inside a browser is recognised as a payment or contract step (A11's mechanism; with Hermes and B41).
 10. The slice's budget and the result's length limit (§3).
 11. This design's own claims — zero loss across a crash, zero model calls when idle — until stage 1 runs them.
+12. Whether a job type's book makes our jobs better, and whether the long persona text adds anything to a seat
+    (§4; stage 1 gives an indication for one job type).
 
 ## 9. Risks
 
@@ -560,8 +552,13 @@ the model and the level are not lowered to fit a week.
 4. **One runner.** The workflow spec's records — patterns, line cards, versions, undo — stay; its separate runner
    goes and the engine runs them. Recommended: yes.
 5. **The order: one whole job first, thin**, then each part to its full contract. Recommended: yes.
-6. **No persona experts on the work path** (§4): a few named seats, hands without a persona, skills in books and
-   checklists; the 213 files archived, not deleted. Recommended: yes.
+6. **A seat opens with a short card; the long persona files are not loaded on the work path** (§4, item 2). The
+   employees stay — name, department, queue, screen; Section 12 reaches every seat first; nothing is archived or
+   deleted now. An engineering default on A29's own text, reversible; its effect is taken as an indication in
+   stage 1. Recommended: yes.
+7. **Whether only work he praised may become an example or a pattern.** His words of 2026-11-22 say so; A30 today
+   registers a pattern when a type "has finished well a second time", and B64 speaks of his approved work. It is
+   written as standing only on his word. Recommended: yes — "finished well" then means praised.
 
 Not asked now: A29 item 6 (§3) — it comes with its measurement. And the build's start: the board's head puts it after
 B22's synthesis and his yes to the re-ordered board; the synthesis is the author's next work, and this design is read
