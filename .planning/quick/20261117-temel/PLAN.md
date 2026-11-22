@@ -372,10 +372,15 @@ as written.
   - **The persona question answers itself from the records:** every job records which specialist was called and
     what its part or its check changed; no separate trial is run.
 - **His verdict has three levels, and only one teaches "good"** (his words, 2026-11-22). "Wow / süper / elinize
-  sağlık": the work becomes an example in its job type's book and may become a pattern. "Okey / geç": the job is
-  closed and he did not like it — it is never an example, a base or a pattern. A rejection: closed as a lesson of
-  what not to do. At every level what he added or complained of is written into the book as a dated lesson, so a
-  correction is given once. A pattern is registered from work he praised, not from work that merely finished.
+  sağlık": the work may become an example in its job type's book and may become a pattern. "Okey / geç": the job is
+  closed and he did not like it — it is never an example, a base or a pattern. A rejection closes it too.
+- **A wish for one job is not a lesson** (his correction, 2026-11-22: he asked for 3D on one site and against it on
+  another). What he asks of a job belongs to that job — its brief and desk — and ends with it. Something enters a
+  book only when it holds for every job of that type; it is proposed at a job's close, and the book's owner accepts
+  it or leaves it. A new lesson that contradicts a standing one replaces it or is written with its condition; two
+  opposite lessons never stand side by side. A fact about a tool — what a video model does well from text and badly
+  from a storyboard — is not a lesson of the craft: it is dated, tied to that tool and version on the tool's own
+  card, and measured again when the version changes.
 - **The book, in one example.** A job type's folder — say "advertisement": a short page (when it applies; what is
   collected first — the real product photograph, the brand's own files; the steps; the fixed decisions; the "done"
   checks), its examples (only work he praised, and references he chose), its files (prompt blocks, checklists), its
@@ -383,9 +388,8 @@ as written.
 - **What keeps a book from failing:** it is read in slices like the desk; it is versioned and audited blind before
   a version is used; until he has praised work of a type, its examples are real references he chose, labelled so;
   what a type always needs is a part of its pattern.
-- **Eye-facing work starts from the one process he praised** (the olive site): real references first; three designs
-  made side by side by seats that do not see each other; his or the client's pick; the best sides merged into one;
-  an enrichment pass from the book's lessons; the blind check; his eye. A simple job skips the three.
+- **Nothing in the foundation is drawn from one job.** How a job type is done is its book's content, written per
+  type; the foundation gives every type the same few things — brief, pattern, parts, checks, verdict — and no more.
 - **Proposed, for his word (§10): no persona experts on the work path.** His experience is that the personas added
   almost nothing and narrowed the model; the engineering reading agrees — a character sheet gives the model no
   knowledge it lacks, costs context in every session, and a title that does not match its content misleads the one
@@ -393,8 +397,9 @@ as written.
   Hermes); hands without a persona, given a part and the skill it needs; and the skills themselves — the books, and
   shared checklists (search, law, accessibility, fidelity to a product) that a pattern runs as checks. Nobody
   chooses "which expert to call": the pattern names the parts. The 213 persona files leave the work path, are read
-  once for content worth a checklist, and are archived; deleting them is his word, on a list. The media studio's
-  seats, whose work he praised in October, stay as they are until looked at on their own. This changes A27's
+  once for content worth a checklist, and are archived; deleting them is his word, on a list. The media studio is
+  under the same rule (his word, 2026-11-22; in the trial of 18 Nov one master delivered the same job): its hands
+  and tools — the pipelines, the card, the recipes — stay, its persona seats go the way of the others. This changes A27's
   "filled from the persona pool" and "a specialist from any department's cupboard", the persona door and the HR
   package.
 
