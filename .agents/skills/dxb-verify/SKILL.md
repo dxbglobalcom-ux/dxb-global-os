@@ -38,7 +38,6 @@ at a boundary, a security check wherever authorisation, secrets or isolation mov
 | Records — STATE, the board, the ledger | `node --no-warnings tests/b43/records-truth.ts` · `pnpm verify:ledger` (every record agrees with what it claims, the live company database included) · parity (`dxb-close-row`) | the commit hook runs records-truth; `verify:ledger` by the author |
 | A door, the core, the opening hook | `node --no-warnings tests/hooks/opening-budget.ts` · `bash scripts/governance/sync-codex-mirror.sh` (regenerates the auditor's copy; `--check` must pass) | the hook runs the budget; the mirror by the author |
 | Research engine | `bash scripts/research-ruler.sh` · `tests/b46/` · `.agents/skills/dxb-research/scripts/accept.sh` (the live run, before claiming the engine works) | the hook runs the first two |
-| A persona under the ruler's contract | `bash scripts/persona-ruler.sh` | the author — the hook does not |
 | CEO-visible text | `bash scripts/i18n-purity-check.sh` (both locales at parity) | the author |
 | His vitrin or its catalogue (`~/tools/h3/studio`) | `bash scripts/b43/vitrin-register-gate.sh` | the author, by hand — nothing calls it (measured 2026-11-07) |
 | A CEO-visible surface | the design pass, door `dxb-surface` — a human eye, `⚠ UNVERIFIED` until his | the author |

@@ -207,8 +207,7 @@ alone (STATE, the board) is checked by the rulers on commit instead.
   its exit wakes the lead; green is the line
   `BATTERY_GREEN`. It answers the one question no single test can: did this break anything else.
 - **Text only** → no battery. A door, the core or a record: the commit hook's rulers read those on
-  every commit. A persona's words: `bash scripts/persona-ruler.sh` (dxb-verify), which the commit
-  hook does not run.
+  every commit.
 - The commit hook runs by itself on every commit: the secret scan (gitleaks); the records ruler when
   STATE, the board or the ledger change; the opening ruler when the core, a skill or the opening hook
   change; the research ruler and `tests/b46` when the research engine changes.

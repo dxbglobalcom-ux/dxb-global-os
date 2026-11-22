@@ -178,7 +178,6 @@ locales at parity. Owner: `00-CEO-DIRECTIVE-LANGUAGE.md`.
 | changing anything the CEO looks at | `dxb-surface` |
 | researching anything in the outside world | `dxb-research` |
 | reading a rival system, video or repository | `dxb-rival-intel` |
-| writing or repairing an employee's identity | `dxb-persona` |
 | changing what Hamza or an agent knows at runtime | `dxb-hamza-context` |
 
 Doors live in `.agents/skills/<name>/SKILL.md`. A door holds the procedure, this file only
@@ -193,8 +192,7 @@ the boundary; a rule in both means the door is wrong.
   same canonical chain (`scripts/bootstrap-db.sh`); its data is GENERATED from the repository's
   own files by `db/seed/build-seed.ts` and holds not one row of the holding's. A gate that must
   prove what is true in the *company* reads the company database with SELECT only.
-- **Internal technical identifiers still say `fable-5`** on purpose (live keys, undo chains,
-  a persona-gate heading). Every label the CEO *sees* says Opus 5.
+- **Internal technical identifiers still say `fable-5`** on purpose (live keys, undo chains). Every label the CEO *sees* says Opus 5.
 - **Tools before packages:** `.planning/research/STACK.md` is read before installing,
   upgrading or replacing anything. No Redis, no second job runtime, no second agent
   framework, no raw provider keys.

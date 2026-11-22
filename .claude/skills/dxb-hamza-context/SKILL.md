@@ -31,7 +31,7 @@ reach an employee.
 | Block | Rule |
 |---|---|
 | identity | one line, from `identityLine()`. Hamza's carries the anti-impersonation clause on every lane |
-| persona | the authored body, **whole**, from `loadPersonaBody()` — never a line-count head, never the dossier |
+| standing conduct | `handsLine()` and `disciplineAndConduct()` for every agent, `hamzaCharacterText()` for Hamza alone — all from `packages/voice/src/standing-conduct.ts`. No persona file is loaded: the personas were removed on the CEO's order of 2026-11-22 and a worker is an agent in a seat <!-- CEO-OK: personas-removed-workers-are-agents-2026-11-22 --> |
 | memory | only what matched this turn |
 | language of the answer | Turkish or English, as the CEO used |
 | the CEO language law | `ceoLanguageLaw()` — he is the owner, not a developer |
@@ -54,16 +54,16 @@ what makes an agent slow, expensive and vague.
 2. **A lane difference is a parameter, never a second copy.** Only the genuinely lane-specific
    parts stay local: the spoken-answer shape and the transcript header for voice; the
    conversation/plan-mode framing for chat.
-3. **A degraded persona is empty, never a placeholder.** A missing or unwritten persona yields
-   nothing — shipping a dossier table as an identity is the exact defect this replaced.
+3. **The conduct section's words are the CEO's.** `standing-conduct.ts` is changed on his word
+   only; a prompt that reaches an agent without it is a defect.
 4. **A number an agent remembers is a number he can invent.** Hand it to him measured, or let him
    say he cannot measure it.
 5. **Restart the residents** as `dxb-verify`'s restart trap says — its one owner. The chat and voice
    lanes load new code only after it: `dxb-scheduler` drains both
    (`packages/outbox-executor/src/scheduler.ts`) <!-- CEO-OK: dxb-hamza-context-restart-line-2026-10-03 -->.
-6. **Pin it.** `tests/b21/agent-context.test.ts` and `tests/r31/persona-delivery.test.ts` fail if
+6. **Pin it.** `tests/b21/agent-context.test.ts` and `tests/r31/standing-conduct.test.ts` fail if
    the slug is declared twice, if the lanes drift apart, if the language law stops reaching him,
-   or if the persona is truncated on the way in.
+   or if the conduct section is missing or altered on the way in.
 
 ## Boundaries — what this contract does NOT yet give him
 

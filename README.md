@@ -8,7 +8,7 @@ Tek soruya tek cevap: **"proje nerede, neyi okuyacağım?"**
 | **`personas/`** | Kadro dosyaları — çalışan başına TEK dosya (`<departman>/<slug>.md`): 33-alan sicil + kişilik (yazılmışsa tam, değilse dürüst "⏳ bekliyor"). Kurallar: `personas/README.md` | CEO (göz), HR akışı |
 | `.planning/` | Süreç defteri — `STATE.md` (neredeyiz), ROADMAP, faz planları, araştırma. `MASTER-PLAN.md` = eski dönem detayı (SÜPERSEDE bandlı — yeni iş buradan planlanmaz). | Ajanlar (session açılışı) |
 | `apps/` · `packages/` · `supabase/` · `db/` | Kod: dashboard (Next.js), @dxb paketleri (hr dahil), migration'lar, seed | Mühendislik işi |
-| `scripts/` | İşletim scriptleri (`sync-personas-to-db.sh`, `gen-workforce-dossiers.sh`, denetimler) | Ajanlar |
+| `scripts/` | İşletim scriptleri (denetimler, kurulum, yönetişim) | Ajanlar |
 | `docs/` · `references/` · `graphify-out/` · `memory-store/` | Yardımcı: dokümantasyon, tasarım referansları, bilgi grafı, bellek | İhtiyaç halinde |
 
 ## Görünüm: iki bölümlü ağaç (KOKPİT + MAKİNE) — `DXB.code-workspace`

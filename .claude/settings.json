@@ -12,7 +12,6 @@
       "Bash(awk '{print $6, $7}')",
       "Bash(awk '{print $5, $9}')",
       "Bash(python3 -c \"import json,sys; print\\(json.load\\(sys.stdin\\).get\\('scripts'\\)\\)\")",
-      "Bash(bash scripts/sync-personas-to-db.sh --verify)",
       "Bash(pnpm --filter @dxb/hr test)",
       "Bash(grep -n \"ON CONFLICT\\\\|DO \\\\$\\\\|IF NOT EXISTS\\\\|WHERE NOT EXISTS\" db/migrations/20260711006000_hr_family_e54.sql)",
       "Bash(grep -rniA30 \"INTO model_catalog\" db/migrations/)",
