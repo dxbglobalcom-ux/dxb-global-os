@@ -9,17 +9,24 @@
 # automatic dump was 2026-08-13. Thirteen days in which the holding existed on
 # one desk and nowhere else.
 #
-# It writes a custom-format pg_dump of the COMPANY engine
-# (supabase_db_DxB_Global_OS) to ~/backups/dxb, prunes local copies older than
-# 14 days, and copies tonight's dump to the off-site destination, reading it
-# back before calling it landed. It opens no other door and carries no
-# credential of its own.
+# It writes the night's set — a custom-format pg_dump of the COMPANY engine
+# (supabase_db_DxB_Global_OS), its roles and a manifest — to ~/backups/dxb,
+# copies tonight's dump to the off-site destination, reading it back before
+# calling it landed, and prunes the sets older than 14 days only on a night
+# proven on both sides. It opens no other door and carries no credential of its
+# own. Installed, with its timer and its alert, by scripts/backup/install-units.sh.
 #
 # B72, 2026-11-22. The Storage Box is gone, so the destination is a SETTING and
 # no longer an address in the script: BACKUP_DEST in ~/.config/dxb/backup.env
 # (the leading "-" lets the file be absent). While it is unset the job fails
 # every night, on purpose — a night without an off-site copy is a failed night
 # — and OnFailure= says so on the desktop (dxb-backup-alert.service).
+#
+# It logs to the JOURNAL, so nothing has to be opened before the script starts;
+# the script appends its own lines to ~/backups/dxb/backup.log once that folder
+# is there. A oneshot has no start timeout unless it is given one: a hung
+# docker or transfer is cut off after 30 minutes, which fails the unit and
+# raises the alert like any other failure.
 [Unit]
 Description=DXB — daily dump of the holding's database, with the off-site copy
 OnFailure=dxb-backup-alert.service
@@ -28,5 +35,4 @@ OnFailure=dxb-backup-alert.service
 Type=oneshot
 EnvironmentFile=-%h/.config/dxb/backup.env
 ExecStart=/usr/bin/bash "%h/DxB Global OS/scripts/backup/laptop-pg-dump.sh"
-StandardOutput=append:%h/backups/dxb/backup.log
-StandardError=append:%h/backups/dxb/backup.log
+TimeoutStartSec=30min

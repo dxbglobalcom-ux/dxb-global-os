@@ -1,4 +1,4 @@
-# THE BACKUP'S FAILURE, SAID ALOUD — systemd USER unit (install: scripts/systemd/install.sh).
+# THE BACKUP'S FAILURE, SAID ALOUD — systemd USER unit (install: scripts/backup/install-units.sh).
 #
 # B72, 2026-11-22: the nightly copy had failed its off-site leg for 55 nights and
 # nobody was told, because the only place it spoke was a log nobody opens.
@@ -7,11 +7,15 @@
 # leg that failed (scripts/backup/backup-alert.sh). It runs in the user manager,
 # which carries the session's D-Bus address — measured from a transient user
 # unit the same night: gnome-shell took the notification.
+#
+# It logs to the JOURNAL and needs no file to start: an alert that waited on the
+# backup's own log would be silent exactly when the backup folder is the thing
+# that broke. The script keeps trying the desktop for 10 minutes; 15 minutes
+# bounds it, a notify-send that hangs included.
 [Unit]
 Description=DXB — says on the desktop that the nightly backup failed
 
 [Service]
 Type=oneshot
 ExecStart=/usr/bin/bash "%h/DxB Global OS/scripts/backup/backup-alert.sh"
-StandardOutput=append:%h/backups/dxb/backup.log
-StandardError=append:%h/backups/dxb/backup.log
+TimeoutStartSec=15min
