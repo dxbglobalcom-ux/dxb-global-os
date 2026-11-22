@@ -4,14 +4,14 @@
 
 ## 1. Amaç
 
-Holdingin merkezi bilgi ve kapasite kütüphanesi: skills, plugins, tools, MCP'ler, prompt template'ler, personalar, policy'ler, SOP'lar, kod bileşenleri, araştırmalar… tek kayıt sisteminde — kim sahibi, hangi sürüm, kim kullanabilir, ne kadar kaliteli. CEO "kimin hangi skill veya plugin'i kullanabileceğini" buradan ayarlar (madde 13 kapanış hükmü); MCP gateway profilleri bu kayıttan DERLENİR — kayıt dışı yetenek fiilen kullanılamaz hale gelir. The one exception (B64 decision 15): the skills Hermes writes for itself are registered by themselves and are never narrowed by a gateway profile (A10).
+Holdingin merkezi bilgi ve kapasite kütüphanesi: skills, plugins, tools, MCP'ler, prompt template'ler, policy'ler, SOP'lar, kod bileşenleri, araştırmalar… tek kayıt sisteminde — kim sahibi, hangi sürüm, kim kullanabilir, ne kadar kaliteli. CEO "kimin hangi skill veya plugin'i kullanabileceğini" buradan ayarlar (madde 13 kapanış hükmü); MCP gateway profilleri bu kayıttan DERLENİR — kayıt dışı yetenek fiilen kullanılamaz hale gelir. The one exception (B64 decision 15): the skills Hermes writes for itself are registered by themselves and are never narrowed by a gateway profile (A10).
 
 ## 2. Gereksinimler
 
 - G1. Madde 13'ün 20 içerik türü birebir `library_items.kind` enum'udur (DATA_MODEL 4.5 — kod listesi oradadır, birebir).
 - G2. Madde 13'ün 11 öğe alanı karşılıksız kalamaz (eşleme tablosu §4).
 - G3. Grant değişikliği FİİLİ etki üretir: `library_grants` → gateway profil derlemesi (kayıt-yetki-uygulama zinciri kopmaz).
-- G4. Mevcut dağınık varlıklar (skills dizinleri, study-cards, personas/, 8 MCP grubu, plugin seti, tool_pins) intake ile kayda GİRER — envanter sıfırdan uydurulmaz.
+- G4. Mevcut dağınık varlıklar (skills dizinleri, study-cards, 8 MCP grubu, plugin seti, tool_pins) intake ile kayda GİRER — envanter sıfırdan uydurulmaz.
 
 ## 3. Mimari
 
@@ -107,7 +107,7 @@ change_log = alan-düzeyi fark (append-only, UPDATE/DELETE grant'i yok); usage_l
 ## 20. Test planı / 21. Acceptance criteria
 
 - Fn testleri: update→change_log satırı; grant→profil derleme tetiklenir (mock); revoke→profilden düşer.
-- Kabul: intake sonrası katalogda ≥1 kayıt bulunan türler: skill, plugin, tool, mcp, persona, policy, sop, research, report, memory_source (mevcut varlık gerçeği); CEO bir çalışandan skill grant'ini kaldırır → o çalışanın profili yeniden derlenir → gateway çağrısı reddedilir (uçtan uca kanıt).
+- Kabul: intake sonrası katalogda ≥1 kayıt bulunan türler: skill, plugin, tool, mcp, policy, sop, research, report, memory_source (mevcut varlık gerçeği); CEO bir çalışandan skill grant'ini kaldırır → o çalışanın profili yeniden derlenir → gateway çağrısı reddedilir (uçtan uca kanıt).
 
 ## 22. Migration planı / 23. Rollback planı
 
@@ -127,7 +127,7 @@ curl -s -X POST localhost:3000/api/control/library -H "Idempotency-Key: $(uuidge
 
 - Bağımlılık: 0024x, MCP gateway profil üretimi (Phase 7 canlı), agent_runs (usage köprüsü).
 - Risk: intake'in dağınık kaynakları eksik taraması → intake raporu CEO'ya tür-başı sayımla sunulur, "0 kayıt" türler açıkça listelenir (sessiz eksik yok).
-- Edge: aynı yeteneğin iki sürümü aktif (v1 skill + v2 skill) → `UNIQUE(kind,name,version)` izin verir, grant sürüm-özel; sahibi arşivlenen öğe → owner `archived` işaretli kalır, HR devir önerisi üretir; kind listesi genişletme → enum CHECK değişikliği = migration + bu spec'e satır (⛔ değil, kayıtlı ek yeter); persona kayıtları ↔ personas tablosu çakışması → library'deki `kind='persona'` satırı personas tablosuna REFERANStIR (meta), gövde personas'ta (tek kaynak).
+- Edge: aynı yeteneğin iki sürümü aktif (v1 skill + v2 skill) → `UNIQUE(kind,name,version)` izin verir, grant sürüm-özel; sahibi arşivlenen öğe → owner `archived` işaretli kalır, HR devir önerisi üretir; kind listesi genişletme → enum CHECK değişikliği = migration + bu spec'e satır (⛔ değil, kayıtlı ek yeter).
 
 ## Registered adaptations (E9.5 execution, 2026-07-14 — CEO-visible; no silent deviation)
 

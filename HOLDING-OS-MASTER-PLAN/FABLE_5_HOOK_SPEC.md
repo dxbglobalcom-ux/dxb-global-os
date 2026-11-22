@@ -2,12 +2,11 @@
 
 > **⚠ İSİM/ID AYRIMI (U20, CEO kararı 2026-07-25):** motorun CEO'ya görünen adı **Opus 5 Hook**'tur.
 > Teknik kimlikler DEĞİŞMEZ: bu dosyanın adı `FABLE_5_HOOK_SPEC.md`, ayar anahtarı
-> `orchestrator.fable_review_required`, escalation basamağı `fable-final` ve persona §11 başlığı
-> (`## 11. Fable 5 hook bağlantısı` — kapı bu başlıkla eşleşir, `packages/hr/src/template.ts:25`)
-> yerinde kalır; yeniden adlandırma 196 personanın kapısını ve canlı ayar undo zincirini kırardı.
+> `orchestrator.fable_review_required` ve escalation basamağı `fable-final` yerinde kalır;
+> yeniden adlandırma canlı ayar undo zincirini kırardı.
 
 > Dalga 3 · Yazar: Fable 5 bizzat · Kaynak hüküm: madde 7 birebir ("bu hook yalnızca bir prompt olmamalıdır")
-> Üst: [[SYSTEM_ARCHITECTURE]] (R6) · Kardeşler: [[AGENT_ORCHESTRATION_SPEC]] (çağrı noktaları), [[EMPLOYEE_PERSONA_STANDARD]] (hook bağlantısı), [[HR_OPERATING_SYSTEM_SPEC]] (otomatik donanım)
+> Üst: [[SYSTEM_ARCHITECTURE]] (R6) · Kardeşler: [[AGENT_ORCHESTRATION_SPEC]] (çağrı noktaları), [[EMPLOYEE_PERSONA_STANDARD]] (her ajanın taşıdığı davranış bölümü), [[HR_OPERATING_SYSTEM_SPEC]] (otomatik donanım)
 
 ## 1. Amaç
 
@@ -42,13 +41,13 @@ Madde 7'nin 12 uygulama katmanı (system policy, governance, pre/post validation
 ```
 orchestrator.dispatch
   └─ hook.preTask(ctx)  ── kural seti (DB'den) ──→ PASS | REJECT(reason)
-       ctx: {employee, persona_version, task, project, grants, budget, settings}
+       ctx: {employee, task, project, grants, budget, settings}
   └─ [SDK koşusu — koşu-içi kurallar runner'a enjekte: token bütçe, spawn kuralı, context eşiği;
       pre-step check (B64, A16): money / contract / identity step → PASS | STOP | HOLD(his approval)]
   └─ hook.postTask(output, evidence) ──→ PASS | REVISE(feedback) | ESCALATE(chain)
 ```
 
-Mevcut-varlık eşlemesi: `packages/hook` YENİ (kütüphane — resident servis DEĞİL, R5); kural seti DB'de YENİ (aşağıda); system-prompt derleme (persona + hook standartları metni) HR persona derleyicisiyle ORTAK (EMPLOYEE_PERSONA_STANDARD §6); runner çağrı noktaları ORCHESTRATION §3'te sabit.
+Mevcut-varlık eşlemesi: `packages/hook` YENİ (kütüphane — resident servis DEĞİL, R5); kural seti DB'de YENİ (aşağıda); system-prompt'u koltuğun duran katmanı verir (`packages/voice/src/prompt-core.ts` — AGENT_ORCHESTRATION A20); runner çağrı noktaları ORCHESTRATION §3'te sabit.
 
 ## 4. Veri modeli
 
@@ -88,7 +87,7 @@ CREATE TABLE hook_violations (
 
 ## 6. Backend yapısı — gate'ler
 
-- **preTask:** kural sırası: yetki (std 12) → görev tamlığı (std 1,3) → bütçe uygunluğu (std 5, COST_CONTROL sorgusu) → proje bağı (std 11) → persona kalite kapısı (`passed` değilse spawn RED — EMPLOYEE_PERSONA kuralı). Herhangi `block` reddi: run hiç doğmaz, task `failed(policy)`, ihlal satırı + alert.
+- **preTask:** kural sırası: yetki (std 12) → görev tamlığı (std 1,3) → bütçe uygunluğu (std 5, COST_CONTROL sorgusu) → proje bağı (std 11). Herhangi `block` reddi: run hiç doğmaz, task `failed(policy)`, ihlal satırı + alert.
 - **runtime:** runner'a enjekte edilen sınırlar (token bütçe sayacı, spawn gerekçe zorunluluğu, context eşiği) — hook kütüphanesi sınır İZLER, kesme kararını runner uygular (tek kesme otoritesi — çift beyin yok); token bütçe sayacı yalnız uyarır, çalışan bir koşuyu hiçbir zaman kesmez (CEO 2026-10-28).
 - **postTask:** kanıt paketi `{output, evidence[], acceptance_map}` üzerinden: her kabul kriterine karşılık (std 4,16), doğrulama komutu kanıtı (std 7,15), çıktı şeması (std 8), memory kaydı (std 17). Sonuç: PASS → run kapanır; REVISE → geri bildirimle revizyon turu (limit ORCHESTRATION §19); ESCALATE → §7.
 - Denetim maliyeti ilkesi: post-gate denetimlerinin çoğu MEKANİKTİR (satır var/yok, şema uyar/uymaz — LLM çağrısı yok). Örneklem tabanlı derin kalite denetimi (çıktının gerçek kalitesi) HR review görevi olarak AYRI koşuda yapılır (madde 9) — hook her koşuya LLM-denetçi bindirmez (token disiplini).
@@ -155,7 +154,7 @@ pnpm --filter hook test -- --grep "fail-closed"                         # → sp
 
 ## 25. Bağımlılıklar
 
-0022x (observability ailesi — run_id FK) · settings ailesi (0021x — eşik ayarları) · PERMISSION_MODEL matrisi (pre-gate yetki okuması) · EMPLOYEE_PERSONA kalite kapısı alanı. Paket bağımlılığı: yalnız `packages/shared` (yeni dış bağımlılık YOK).
+0022x (observability ailesi — run_id FK) · settings ailesi (0021x — eşik ayarları) · PERMISSION_MODEL matrisi (pre-gate yetki okuması). Paket bağımlılığı: yalnız `packages/shared` (yeni dış bağımlılık YOK).
 
 ## 26. Riskler / 27. Edge case'ler
 
@@ -169,7 +168,7 @@ pnpm --filter hook test -- --grep "fail-closed"                         # → sp
 |---|-----------|-----|
 | A1 | `fn_hook_set_policy(p_payload, p_idempotency_key)` — spec §13 name kept, sibling control-seam payload idiom adopted (action `set_policy`; CEO wall — system actor rejected; idempotency twin; audit row; `hook_policy.changed` settings-channel broadcast = §10 cache drop). Weakening a block policy (severity→warn OR enabled→false) stamps `risk='high'` in the audit payload. | One door per family (E9.1-E9.5 precedent); §13's high-risk clause made machine-visible. |
 | A2 | `hook_policies.title_en/title_tr` columns added to the §4 DDL. | §14 "insan-okur TR/EN" + bilingual purity directive (DB text = i18n surface); §4 had no human-readable field. |
-| A3 | Seed severities: `block` everywhere except std 5 token budget (`warn`, and only a warning — no hard stop cuts a running run, his order of 2026-10-28; COST_CONTROL A5, §2 row 5) and std 10 context integrity (`warn` — monitor-and-reload semantic). 19 seed rows / 17 distinct standards: std 5 has a pre `budget_fit` row (§6 gate order) AND a runtime `token_budget` row; std 12 carries a second row `std.persona_gate` (§6 "persona kalite kapısı" — EMPLOYEE_PERSONA rule filed under spawn eligibility). | §2/§6 both demand these mechanisms; severity defaults were unspecified per-standard. |
+| A3 | Seed severities: `block` everywhere except std 5 token budget (`warn`, and only a warning — no hard stop cuts a running run, his order of 2026-10-28; COST_CONTROL A5, §2 row 5) and std 10 context integrity (`warn` — monitor-and-reload semantic). 19 seed rows / 17 distinct standards: std 5 has a pre `budget_fit` row (§6 gate order) AND a runtime `token_budget` row; std 12's second row `std.persona_gate` is the old chain's: the loader ignores it and it leaves with that chain (B85). | §2/§6 both demand these mechanisms; severity defaults were unspecified per-standard. |
 | A4 | Violations→alerts mapping (§9 left it open): AFTER INSERT trigger — escalated→`high` (§7), rejected→`attention`, revised/warned→`informational`; dedup key `hook:<policy>:<action>:<run|no-run>` (action included so an early 'revised' informational never masks a later 'escalated' high); alert write swallowed on failure (projection, never blocks the record). | E8.4b single-producer + storm-guard idiom. |
 | A5 | Package depends on `@dxb/observability` in addition to `@dxb/shared`: every violation writes decision_log through `logDecision` (`hook_reject` / `hook_escalation` — the two points E8.2 recorded as boundaries to E10.1). | AUDIT R6 single-mechanism rule outranks §25's "yalnız packages/shared"; workspace-internal, zero new external deps — §25's intent preserved. |
 | A6 | Fail-closed surface (§17): policy load failure → `preTask` returns `REJECT('hook_unavailable')` + best-effort critical alert (dedup `hook:unavailable`); post-gate degrades to REVISE('hook_unavailable') — the run cannot close until the hook recovers. Spawn stop is the caller's contract (queue holds the work). | §17 verbatim, expressed as library return values (the hook is a library, not a service — R5). |
@@ -207,7 +206,7 @@ The design he answered decision by decision: `.planning/quick/20261012-b64-is-ak
 |---|-----------|-----|
 | A15 | **The brief feeds the gates.** The brief Hamza or the owner writes carries the "done" criteria; they are std 1's acceptance criteria. The post-gate is the automatic check on every part, in code and in seconds; a failed part returns to the job's owner with the check's notes — the notes reach the retry ladder. | B64 design (the check verifies against the brief by trial, never looks for a better version) |
 | A16 | **Every step is checked before it runs.** A step carrying money, a contract or identity — filling a payment form, signing, an identity step — or an outward critical step gets one of three answers before it runs: pass, stop, or hold for his approval card; held, it runs only after his yes. Browser-using employees and Hermes cannot pass it ([[APPROVAL_ENGINE_SPEC]], [[PERMISSION_MODEL]] G4). | Omnigent's method 5, decided <!-- CEO-OK: b64-plan-his-yes-2026-10-14 -->; decision 15 — his gate is the one gate |
-| A17 | **Hermes's binding.** Hermes is no `agents` row and carries no `hook_version`: A16 is the only check it runs under. The 17 standards, the token budget and the persona gate are not put on it. | Decision 15 — "Hermes'e kısıt konmaz"; the remedy is that every change it makes is recorded and reversible |
+| A17 | **Hermes's binding.** Hermes is no `agents` row and carries no `hook_version`: A16 is the only check it runs under. The 17 standards and the token budget are not put on it. | Decision 15 — "Hermes'e kısıt konmaz"; the remedy is that every change it makes is recorded and reversible |
 | A18 | **His word against a policy.** §27's CEO case is a one-time exception, never a policy change: one warning, an answer to "why" and "what harm" if he asks, then his "kurala göre yap" or "devam"; "devam" passes that run, recorded (`warned` violation + `override` decision line). A policy changes only through `fn_hook_set_policy` when he says "bu kuralı kaldır, şunu koy". | Decision 17 |
 | A19 | **The escalation chain** is worker → the job's owner → Hamza → him, and he is reached only for his own items (§7). | B64 design: the owner assembles and owns the job; the morning brings him only exceptions |
 

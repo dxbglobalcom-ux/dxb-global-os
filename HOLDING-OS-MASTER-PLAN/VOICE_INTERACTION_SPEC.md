@@ -2,7 +2,7 @@
 
 > Dalga 6 · Spec #33 · Author: Fable 5 in person (K1) · Written 2026-07-17
 > Source rulings: Talep `MUSTS from Fable 5 - English.md` §5 (binding voice layer) · CEO decisions D1 (free-first) + D3 (v1 = orchestrator-mediated call line, boardroom deferred) recorded in [[00-CEO-DIRECTIVE-REVENUE-FIRST]] · registered adaptation U4 (JARVIS deferral, [[00-INDEX]])
-> Parent: [[MASTER_PLAN]] · Siblings: [[AGENT_ORCHESTRATION_SPEC]] (routing), [[MEMORY_ARCHITECTURE]] (§5.9 continuity), [[APPROVAL_ENGINE_SPEC]] (gates unchanged), [[COST_CONTROL_SPEC]] (paid-upgrade gate), [[EMPLOYEE_PERSONA_STANDARD]] (Hamza/master personas), [[FABLE_5_HOOK_SPEC]] (decision principles enforcement)
+> Parent: [[MASTER_PLAN]] · Siblings: [[AGENT_ORCHESTRATION_SPEC]] (routing), [[MEMORY_ARCHITECTURE]] (§5.9 continuity), [[APPROVAL_ENGINE_SPEC]] (gates unchanged), [[COST_CONTROL_SPEC]] (paid-upgrade gate), [[EMPLOYEE_PERSONA_STANDARD]] (the conduct section every agent carries), [[FABLE_5_HOOK_SPEC]] (decision principles enforcement)
 
 ## 0. Existing-asset mapping (KALIR / YENİ / DEĞİŞİR)
 
@@ -33,7 +33,7 @@ Give the CEO a working spoken channel into the Holding at €0 marginal cost: he
 - **V4 — One speaker + CEO override (Talep §5.5):** only one AI voice speaks at a time; CEO interruption stops playback immediately. v1 satisfies this trivially (single-voice call); the boardroom design (§3.4) inherits it as a floor-control state machine.
 - **V5 — Single authoritative path (Talep §5.8):** a spoken goal or decision enters the SAME path as a typed one — Hamza's one conversation → the brief → the job-type menu → that type's master → audit (B64 E02a; B64 v2); no shadow channel. Measured 2026-10-12: the intake skips spoken items by design (`packages/orchestrator/src/intent-intake.ts:78`) and 51 spoken items from July wait unprocessed — B64 closes this gap for what he says from now on; the 51 July records are not run automatically and stay as they are (B64 plan, CEO 2026-10-14). <!-- OPEN: B64 --> <!-- CEO-OK: b64-plan-his-yes-2026-10-14 --> <!-- CEO-OK: b64-v2-plan-and-six-decisions-his-yes-2026-10-26 -->
 - **V6 — No approvals by voice in v1:** there is no voice-print authentication; therefore outward-facing/destructive confirmations (money, contracts, identity) can NEVER be granted by voice. Approval stays in the dashboard. Voice may REQUEST; it may not APPROVE. Releasing a finished delivery to its client — "gönderin" — is not an approval of money, a contract or identity, and may be spoken (B64 decision 4, §24sexies).
-- **V7 — Fixed style & decision principles (Talep §5.6–5.7, §5.11):** Hamza's communication style and 5-step decision hierarchy (truth → safety → efficiency → profitability → cost discipline) live in the Hamza persona file + hook policy, in the DB persona record — never in model-specific config. Model routing may change the engine, never the persona.
+- **V7 — Fixed style & decision principles (Talep §5.6–5.7, §5.11):** Hamza's communication style and 5-step decision hierarchy (truth → safety → efficiency → profitability → cost discipline) live in Hamza's standing character section (`packages/voice/src/standing-conduct.ts`) + hook policy — never in model-specific config. Model routing may change the engine, never the character.
 - **V8 — Memory continuity (Talep §5.9):** Hamza answers from existing [[MEMORY_ARCHITECTURE]] surfaces (doctrine, prior CEO decisions, objectives); a master answers from its job desk and the departments' cupboards (B64 v2). No separate voice memory store. <!-- CEO-OK: b64-v2-plan-and-six-decisions-his-yes-2026-10-26 -->
 - **V9 — Audio privacy:** in v1 no audio ever leaves CEO hardware + own VPS (Speaches self-hosted, voicebox local). External audio APIs are forbidden until the V3 paid path is approved.
 - **V10 — Observable, not scripted (Talep §5.13):** every call writes `voice_calls` + `decision_log`; a demo that fakes any stage is a §35 violation.
@@ -48,7 +48,7 @@ CEO push-to-talk (dashboard /voice or laptop client)
   → transcript → Hamza's one conversation (the chat path)  [V5]
   → answerer: Hamza himself, or the open job's master he asked for
     (explicit pick or "Beni bu işin ustasına bağla" — §24sexies)
-  → the answerer replies from persona + memory              [V2, V8]
+  → the answerer replies from its standing section + memory [V2, V8]
   → answer text → TTS:
        primary: voicebox cloned voice of that master/Hamza [V1]
        fallback: Speaches Kokoro voice (marked non-cloned)
@@ -208,8 +208,8 @@ Every call → `voice_calls` (full transcript + timing) + `decision_log` entry f
 | Floor transfer by natural speech | — | ✓ deferred |
 | One AI voice at a time | ✓ (single call) | state machine |
 | CEO interrupt stops speech | ✓ (stop button + push-to-talk cuts playback) | barge-in ≤250ms |
-| Correct persona/authority/memory per speaker | ✓ | ✓ |
-| Persona stable across model change | ✓ (V7 — DB/persona, not model config) | ✓ |
+| Correct seat/authority/memory per speaker | ✓ | ✓ |
+| Character stable across model change | ✓ (V7 — the standing section, not model config) | ✓ |
 | Spoken decision = same authoritative path | ✓ (V5) | ✓ |
 | OpenAI realtime genuinely evaluated | ✓ DONE 2026-07-16 (§3.3 — mini selected, gated on profit) | reuse |
 | Observable, not scripted | ✓ (`voice_calls` + decision_log) | ✓ |
@@ -279,8 +279,8 @@ CEO, verbatim: *"2 ayak var: 1- para kazanma planları projeleri konusu konuşul
 
 | Leg | Class | Effort | What it is handed | What it does |
 |---|---|---|---|---|
-| **Normal** — talk, questions, everything that is not a plan or a report | the default leg (class at build, B64) | `medium` | persona + memory + conversation | Answers plainly, like a person. |
-| **Strategy** — money, plans, projects, architecture, decisions | `chat.strategy` | `xhigh` — `max` only on his "Max'a geç", held until the subject ends | persona + memory + conversation | Says so first: "Plan konuşuyoruz, xhigh'a geçtim; isterseniz max." Thinks WITH the CEO. Takes a position, names the trade-off, says what it would do and why. A decision he can act on beats a balanced survey he cannot. |
+| **Normal** — talk, questions, everything that is not a plan or a report | the default leg (class at build, B64) | `medium` | his standing character section + memory + conversation | Answers plainly, like a person. |
+| **Strategy** — money, plans, projects, architecture, decisions | `chat.strategy` | `xhigh` — `max` only on his "Max'a geç", held until the subject ends | his standing character section + memory + conversation | Says so first: "Plan konuşuyoruz, xhigh'a geçtim; isterseniz max." Thinks WITH the CEO. Takes a position, names the trade-off, says what it would do and why. A decision he can act on beats a balanced survey he cannot. |
 | **Brief** — how is the company doing | `chat.brief` | `medium` | the above **plus a live snapshot** | Reports MEASURED numbers only. |
 
 **Routing is one-directional (CEO safety rule):** anything smelling of money or planning goes UP, never down. `classifyLeg()` defaults to the **normal** leg (B64 decision 3 — until it ships, every message but a status question runs at max), routes UP to strategy on any money or planning marker, and to brief only on an explicit report/status marker, in both languages, because the CEO switches mid-sentence. When in doubt between normal and strategy it goes up: misrouting a chat line to strategy costs tokens; misrouting a money decision down costs a decision. <!-- OPEN: B64 -->

@@ -29,7 +29,7 @@ Yedi test katmanının (L1-L7) tek stratejisi: ne, hangi araçla, hangi kapıda,
 ## 4. Veri modeli (test verisi)
 
 - Test DB: **inşaatın kendi Supabase yığını** — `DxB_Build`, port 54422, kendi kümesi (kayıtlı uyarlama, B36 Blok 2, 2026-08-23). Şirket motorunda test veritabanı YOK; `dxb_test` klonu düşürüldü. ASLA canlı DB. **Adres tek yerde yazılıdır: `tests/construction-engine.ts`.** Şemasını aynı `db/migrations`'tan aynı zincirle alır (`scripts/bootstrap-db.sh`); verisi bu deponun kendi dosyalarından **üretilir** (`db/seed/build-seed.ts`) ve holdingin tek satırını taşımaz.
-- Fixture seti: `db/seed/test/` — 1 company, 3 departman, 5 çalışan (v2 persona'lı 3 + v2'siz 2 — negatif test için), 2 proje, 1 workflow (5 adım), 20 task, cost satırları. Deterministik ID'ler (uuid sabit) — snapshot karşılaştırılabilir.
+- Fixture seti: `db/seed/test/` — 1 company, 3 departman, 5 çalışan, 2 proje, 1 workflow (5 adım), 20 task, cost satırları. Deterministik ID'ler (uuid sabit) — snapshot karşılaştırılabilir.
 - Kural: fixture gerçek şemadan sapamaz (migration değişince fixture güncellenir, aynı commit'te).
 
 **KAYITLI UYARLAMA — B36 Blok 3-bis / 4 / 6, 2026-08-24…25: BATARYA ŞİRKETE ULAŞAMAZ, VE BU HER
@@ -92,7 +92,7 @@ Test durumu commit'e bağlı: her test koşusu temiz fixture'dan başlar (DB res
 
 ## 11. Database tabloları / 12. İlişkiler
 
-Yeni tablo yok. L2 assert envanteri (bağlayıcı çekirdek): v2'siz persona aktivasyon reddi · the backup pair's rules (written by role, never a weaker model, Fable clamped to `high`..`xhigh`, Hermes waits — B64 decision 13; replaces today's fallback-cycle refusal when `fallback_of` closes, B66) · append-only UPDATE reddi · task_dependencies self/döngü reddi · money_out onaysız outbox reddi (O1 — HER koşuda) · settings value_schema ihlal reddi · idempotency mismatch 409.
+Yeni tablo yok. L2 assert envanteri (bağlayıcı çekirdek): the backup pair's rules (written by role, never a weaker model, Fable clamped to `high`..`xhigh`, Hermes waits — B64 decision 13; replaces today's fallback-cycle refusal when `fallback_of` closes, B66) · append-only UPDATE reddi · task_dependencies self/döngü reddi · money_out onaysız outbox reddi (O1 — HER koşuda) · settings value_schema ihlal reddi · idempotency mismatch 409.
 
 ## 13. Yetkilendirme (test yetkileri)
 
@@ -110,7 +110,7 @@ Kapsam (madde 4 sınırında — yeni bürokrasi değil, mevcut omurganın kanı
 
 - Flaky test politikası: 2 kez üst üste flake → karantina etiketi + RISK_REGISTER satırı; sessiz retry-until-green YASAK.
 - Timeout'lar sabit (vitest 30s, E2E 60s/senaryo); aşan test optimize edilir, süre uzatma gerekçe ister.
-- LLM-mock sınırı: classify/persona derleme testleri sabit yanıt fixture'ı kullanır; canlı LLM çağrısı test suite'inde YOK (maliyet + determinizm).
+- LLM-mock sınırı: classify testleri sabit yanıt fixture'ı kullanır; canlı LLM çağrısı test suite'inde YOK (maliyet + determinizm).
 - Live model measurements stand outside the suite (B64): the model guide's test set built from our own jobs, Hermes's 20-job trial (which also gates every Hermes upgrade), and the 20-sentence voice side-by-side are measurements run by hand when their moment comes, each with its brief, its raw output and its verdict kept as evidence in its job folder — the form of the 2026-10-13 mail-sorting trial (`.planning/quick/20261013-jev-olcum/`). They never enter the battery. <!-- OPEN: B64 -->
 - B64 v2 acceptance cases for the build (AGENT_ORCHESTRATION A26-A29) — written, not yet run; the build is not done until each passes: (1) a seat's context crosses its hard ceiling → the large read is split or the seat hands over before reading; (2) a handover cut halfway → the successor resumes from the job desk, the old session acts no more; (3) the subscription runs out in the middle of an outward action → the successor sees the action on the desk as non-repeatable and does not send it twice; (4) several jobs at once → masters start by priority and remaining subscription quota; (5) a decision he gives Hamza in the morning is still in front of Hamza in the afternoon, after compaction; (6) a misrouted job → its master returns it to Hamza, who settles it, and it does not loop at the desk; (7) a mixed job → it goes to the master of its main deliverable, the other part becomes a part of that plan; (8) the desk's shadow trial → live only when ≥ 47 of 50 labelled jobs route right and every unknown reaches the "unclear" door, every decision logged. <!-- OPEN: B64 --> <!-- CEO-OK: b64-v2-plan-and-six-decisions-his-yes-2026-10-26 -->
 

@@ -54,7 +54,7 @@ Sayfa-başı tek round-trip hedefi (SYSTEM_ARCHITECTURE §8) → her ana görün
 | `v_holding_health` | Health panel skor + açıklama katmanı | v_holding_overview + agent_runs (hata oranı) + model_catalog (availability) + budget durumu |
 | `v_live_operations` | Live Ops stream/grid | agent_runs ⋈ tasks ⋈ employees ⋈ tool_calls (son N) |
 | `v_org_graph` | Org Intelligence node+edge seti | org_units, employees (parent_id), + lens join'leri (maliyet/performans/risk/workload) |
-| `v_employee_card` | AI Employee Card + detay sayfası | employees ⋈ personas ⋈ employee_records ⋈ agent_runs özeti ⋈ cost_ledger özeti |
+| `v_employee_card` | AI Employee Card + detay sayfası | employees ⋈ employee_records ⋈ agent_runs özeti ⋈ cost_ledger özeti |
 | `v_global_search` | Command bar global search | UNION: employees, org_units, companies, projects, tasks, workflows, approvals, decision_log, library_items, audit_log |
 | `v_cost_summary` | Overview maliyet widget'ları | cost_ledger gün/hafta/ay aggregate (detay COST_CONTROL_SPEC) |
 | `v_alerts_active` | Critical alerts panel + sağ ray | alerts (yeni tablo, OBSERVABILITY_SPEC) + approvals(risk=critical) |

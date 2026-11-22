@@ -101,7 +101,7 @@ Bu spec'in kendi nesneleri: ceilings okuma herkese (ajan kendi tavanını bilir 
 
 ## 14. Logging / 15. Audit
 
-Her RED `fn_permission_check` tarafından loglanır (`hook_violations` DEĞİL — ayrı hafif sayaç `permission_denials`: employee, action, reason, count/gün toplamalı). Süreğen red deseni (aynı çalışan aynı aksiyon ≥10/gün) HR alert'i — ya yetki eksik (grant ver) ya görev tanımı yanlış (persona düzelt): ikisi de insan-görünür karar.
+Her RED `fn_permission_check` tarafından loglanır (`hook_violations` DEĞİL — ayrı hafif sayaç `permission_denials`: employee, action, reason, count/gün toplamalı). Süreğen red deseni (aynı çalışan aynı aksiyon ≥10/gün) HR alert'i — ya yetki eksik (grant ver) ya görev tanımı yanlış (koltuğun tanımını düzelt): ikisi de insan-görünür karar.
 
 ## 16. Security
 

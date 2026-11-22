@@ -2,7 +2,7 @@
 
 **Status:** LIVE (D7-D deliverable, E5.7e) · **Author:** Fable 5, in person · **Date:** 2026-07-12
 **Source of obligation:** external audit finding F3 (no persona had a deputy/failover definition) → [[00-CEO-DIRECTIVE-MUST-ROSTER]] holding 6 → [[WORKFORCE-MUST-EXPANSION-PLAN]] §6.
-**Authority rule:** this map is the AUTHORITATIVE failover source for every role listed. The 19 D7-wave personas additionally carry their deputy in-body (§2/dossier); for the remaining 179 pre-expansion bodies, in-body §2 amendments are the recorded honest follow-up (plan §11) — until those land, THIS FILE governs.
+**Authority rule:** this map is the AUTHORITATIVE failover source for every role listed.
 
 ## 1. Takeover protocol (applies to every row)
 
@@ -24,7 +24,7 @@
 
 ## 3. Masters, standing owners and department seats (every seat → named senior/strongest seat in its cupboard)
 
-Every master and every standing owner has a named deputy in this map, written when its persona is written; the department seats below keep their 2026-07-12 deputies (B64 v2). <!-- CEO-OK: b64-v2-plan-and-six-decisions-his-yes-2026-10-26 --> <!-- CEO-OK: b64-v2-heads-and-dept-budgets-go-owner-by-job-2026-10-26 -->
+Every master and every standing owner has a named deputy in this map; the department seats below keep their 2026-07-12 deputies (B64 v2). <!-- CEO-OK: b64-v2-plan-and-six-decisions-his-yes-2026-10-26 --> <!-- CEO-OK: b64-v2-heads-and-dept-budgets-go-owner-by-job-2026-10-26 -->
 
 | Seat (owner) | Dept | Deputy | Temporary authority (uniform) |
 |---|---|---|---|

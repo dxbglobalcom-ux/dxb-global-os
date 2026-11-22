@@ -68,7 +68,7 @@ Hata:   { "ok": false, "code": "<KOD>", "message_en": "...", "message_tr": "..."
 |------|----------|--------------|-----|
 | `settings` | set, undo | `control_settings_*` | undo = change_log satırından ters yazım ([[SETTINGS_AND_CONTROL_SPEC]]) |
 | `org` | create_company, create_department, assign_director, move_employee, suspend, reactivate, archive | `control_org_*` | org Broadcast olayları ([[ORGANIZATION_ENGINE_SPEC]] §9) |
-| `hr` | create_employee, update_persona, promote_version, set_status | `control_hr_*` | v2 kalite kapısı fn içinde ([[HR_OPERATING_SYSTEM_SPEC]]) |
+| `hr` | create_employee, promote_version, set_status | `control_hr_*` | [[HR_OPERATING_SYSTEM_SPEC]] |
 | `models` | set_role_slot, set the backup pair by role (replaces `set_fallback`, whose path closes with B66 — B64 A4), set_catalog_status, add_model, test_model | `control_models_*` | banned/mechanical_only denetimi fn içinde ([[MODEL_ROUTING_SPEC]]; Sonnet runtime SERBEST — CEO 2026-07-12); add_model→testing→duman→active akışı §4c |
 | `jobs` | stop, cancel | `control_job_*` (named at build) | every job can be stopped and cancelled (B64 A2) |
 | `workflows` | create, update, copy, enable, disable, run_now, cancel_run, resume_run | `control_workflow_*` | [[WORKFLOW_ENGINE_SPEC]] |

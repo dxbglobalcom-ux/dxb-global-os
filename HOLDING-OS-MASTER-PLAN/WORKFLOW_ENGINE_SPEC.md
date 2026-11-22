@@ -13,7 +13,7 @@ pg-boss üstünde CEO-görünür ve CEO-düzenlenebilir **deklaratif workflow va
 | Oluşturma / düzenleme / kopyalama / devre dışı | `control_workflow_{create,update,copy,disable}` fn'leri ([[API_CONTRACTS]] 8b) |
 | Trigger ayarlama | `workflows.trigger` jsonb: `{kind:'cron'|'event'|'manual', ...}` |
 | Model atama | adım config `model_role_slot` → [[MODEL_ROUTING_SPEC]] slot çözümü (doğrudan model ID sabitlemek istisna, slot varsayılan) |
-| Çalışan atama | adım config `employee_id` (aktif + persona v2 kapısı fn'de denetlenir) |
+| Çalışan atama | adım config `employee_id` (arşivlenmiş çalışan atanamaz — fn'de denetlenir; eski zincirin fn'i ayrıca `agents.persona_version` `v2%` ister, o şart eski zincirle gider — B85) |
 | Approval / review / retry / fallback adımı | `workflow_steps.kind` enum'u birebir (DATA_MODEL 4.4) |
 | Bütçe sınırı / token sınırı / zaman aşımı | `workflows.budget_eur, token_limit, timeout_s` — koşu-düzeyi enforcement §17 |
 | Risk seviyesi | `workflows.risk` → approval zorunluluğu eşiği ([[APPROVAL_ENGINE_SPEC]] risk matrisi) |
@@ -72,7 +72,7 @@ DATA_MODEL 4.4 + kayıtlı ek: `workflow_runs.steps_snapshot jsonb NOT NULL DEFA
 
 ## 13. Yetkilendirme
 
-Workflow CRUD: the CEO (control seam), and a line's owner for its own line only, within the limits he drew — those limits stay his (B64 A7; decision 9 <!-- CEO-OK: b64-decisions-1-5-8-9-11-12-16-his-yes-2026-10-14 -->); `run_now` CEO veya sistem (cron/event); no other agent changes a workflow definition (gateway profillerinde workflow yazım fn'i yok). Çalışan ataması v2-persona-aktif kontrolünden geçer (HR kuralı fn içinde).
+Workflow CRUD: the CEO (control seam), and a line's owner for its own line only, within the limits he drew — those limits stay his (B64 A7; decision 9 <!-- CEO-OK: b64-decisions-1-5-8-9-11-12-16-his-yes-2026-10-14 -->); `run_now` CEO veya sistem (cron/event); no other agent changes a workflow definition (gateway profillerinde workflow yazım fn'i yok). Çalışan ataması fn içinde denetlenir (§2).
 
 ## 14. Logging / 15. Audit
 
@@ -159,12 +159,12 @@ Adım kind semantiği + durum makinesi + snapshot kuralı kapalıdır; Opus yeni
 
 Measured on the company engine, 2026-09-15: the `workflows` table holds **0** rows. The studio has nevertheless produced films since 2026-09-03 along a fixed order of seats. That order lives in two places, neither of them this engine:
 
-1. **Persona text** — the production line is written as the Creative Director's responsibility in `db/migrations/20260903001000_b43_media_studio_department.sql` and in the seats' own files under `personas/media-studio/`.
+1. **The department's migration** — the production line is written as the Creative Director's responsibility in `db/migrations/20260903001000_b43_media_studio_department.sql`.
 2. **The dispatch book** — `queue_dispatch` (`packages/dxb-mcp/src/groups/queue.ts`, contract and graph checks in `packages/dxb-mcp/src/dispatch-book.ts`, registered as AGENT_ORCHESTRATION A19): for each film the director turns a plan into one task per named seat, with dependencies, under his own task's project. It is a **per-job chain born at dispatch time**, not a stored template.
 
 **The registered exception.** §1 of this spec says a code-defined chain becomes a `workflows` row. The studio's chain is code-defined *per job*: the seats, their levels and their budgets differ from film to film, and the director chooses them. It was therefore built as a dispatch book and not as a workflow template, and that is the state of the company today — recorded here so no later reader concludes the engine simply failed to register it.
 
-**What it costs the CEO, named.** Because the **production line** is not an entity, he cannot see the studio's order of work from the cockpit, and he cannot change it without a persona being rewritten. That is the opposite of the third face of this product — *he changes anything at any moment*.
+**What it costs the CEO, named.** Because the **production line** is not an entity, he cannot see the studio's order of work from the cockpit, and he cannot change it from there. That is the opposite of the third face of this product — *he changes anything at any moment*.
 
 **The gap, named and not closed here.** Either the **dispatch book** gains a stored, CEO-editable template for the standard ten steps (a `workflows` row the studio job type's master instantiates and may deviate from, with the deviation recorded — B64 v2 <!-- CEO-OK: b64-v2-plan-and-six-decisions-his-yes-2026-10-26 -->), or the studio's screen gives him the order as an editable object. Both are builds. **Who closes it:** the stored template is B64's registered pattern (A8 below), closed when it is built; the screen that shows him the order stays with W14's screen plan.
 

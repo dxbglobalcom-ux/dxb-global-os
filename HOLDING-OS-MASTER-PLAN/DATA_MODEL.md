@@ -74,9 +74,7 @@ CREATE TABLE personas (
   -- the model running the session is its author. The DDL line above is the founding text and
   -- stays as written; the constraint was widened by 20260728001000_persona_author_u30.sql and
   -- the activation trigger's own copy of the same list by
-  -- 20260915001000_activation_gate_author_list_u30.sql. Owner of the rule:
-  -- EMPLOYEE_PERSONA_STANDARD §G4-bis + §G4-ter. One list, two enforcers, kept equal by
-  -- tests/personas/activation-gate-author-list.test.ts.
+  -- 20260915001000_activation_gate_author_list_u30.sql. One list, two enforcers.
   body_md text NOT NULL,                    -- rol kimliği→hook bağlantısı, madde 8 şablonu
   quality_gate text NOT NULL DEFAULT 'pending'
     CHECK (quality_gate IN ('pending','passed','failed')),
@@ -120,7 +118,7 @@ CREATE TABLE employee_records (              -- kurumsal sicil (madde 8 listesi)
 );
 ```
 
-Kural (trigger ile): `employment_status='active'` ancak `persona_id` → `quality_gate='passed'` VE `author` v2-damgalı ise (v2'siz persona ile aktivasyon YASAK — CEO kararı 2026-07-07).
+Eski zincirin kuralı (trigger ile; zincirle birlikte gider — B85): `employment_status='active'` ancak `persona_id` → `quality_gate='passed'` VE `author` v2-damgalı ise (v2'siz persona ile aktivasyon YASAK — CEO kararı 2026-07-07).
 
 ### 4.2 Kontrol ailesi — `0021x_settings_family`
 
@@ -339,7 +337,7 @@ Madde 4 sınırı: bu şema yeni kimlik/erişim bürokrasisi EKLEMEZ; RLS mevcut
 ## 18. Test planı / 19. Acceptance criteria
 
 - Migration testi: boş DB'de 0001→0024x sıralı push → `\dt` beklenen tablo sayısı; ikinci push idempotent (0 değişiklik).
-- Kısıt testleri: v2'siz persona ile aktivasyon reddi; a backup brain weaker than its main brain is refused (B64 A6); append-only tablolarda UPDATE reddi.
+- Kısıt testleri: a backup brain weaker than its main brain is refused (B64 A6); append-only tablolarda UPDATE reddi.
 - Kabul: her yeni aile için en az bir uçtan-uca kanıt sorgusu (örn. `INSERT settings değişimi → change_log satırı + audit_log satırı + Broadcast payload`).
 
 ## 20. Migration planı / 21. Rollback planı
