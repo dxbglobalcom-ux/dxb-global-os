@@ -168,7 +168,7 @@ Fable's quota runs short (§1). His word on the level overrides: "bunu high'da d
 | **Reader** | a one-shot `scout` or `Explore` | a wide search whose text would swell the lead's context | writes; is resumed (its cache dies at 5 min) |
 | **Escalation writer** | `builder` (Fable 5.2 · `xhigh`), one-shot | a piece the lead judges truly complex and important, from the start; or one that failed twice at `high` | is opened for a routine fix |
 | **Stand-in planner** | Opus 5.5 · `high` or `max` by the job's importance — the `Plan` agent, opened with that model and level <!-- CEO-OK: dxb-team3-orchestrator-six-points-2026-11-11 --> | writes the plan when Fable 5.2's quota runs short (§1) | is a standing step; audits; writes code |
-| **Auditor** | GPT-6.2 Sol on every job <!-- CEO-OK: auditor-sol-6-2-default-astra-does-not-audit-2026-11-23 -->, through `scripts/governance/refuter.sh` — the model is named here and in one line of `scripts/governance/codex-refuter.config.toml`, nowhere else: a switch is that line, `refuter.sh --install-profile` and this row | one blind pass over the job's commits (§4); on a plan job, also the blind plan audit (§1) | writes; audits the same thing twice; sees the lead's reasoning or verdict |
+| **Auditor** | GPT-6.2 Sol by default; GPT-6.2 Astra on a very critical job, the lead's call (`--model astra`) <!-- CEO-OK: auditor-sol-6-2-default-astra-on-very-critical-2026-11-23 -->, through `scripts/governance/refuter.sh` — the default's model is named here and in one line of `scripts/governance/codex-refuter.config.toml`: a switch is that line, `refuter.sh --install-profile` and this row | one blind pass over the job's commits (§4); on a plan job, also the blind plan audit (§1) | writes; audits the same thing twice; sees the lead's reasoning or verdict |
 | **Second auditor** | Fable 5.2 — `high` — through `scripts/governance/fable-audit.sh` <!-- CEO-OK: fable-audits-opus-second-writer-effort-by-weight-2026-11-09 --> | on an important job, audits what the auditor audits, from the same brief, at the same time, blind (§1, §4) | writes a plan or code; audits twice; sees the auditor's findings or the lead's verdict |
 
 `design-eye` is not a seat of this door. The second auditor finds and never writes.
@@ -242,10 +242,10 @@ four, not the default.
 
 ## 4. The audit — the auditor, Fable beside it on an important job
 
-Every job that changes code, a rule or a door gets one audit pass after BUILD — the light lane (§1) excepted. The auditor audits every job <!-- CEO-OK: auditor-sol-6-2-default-astra-does-not-audit-2026-11-23 -->; an important job or plan gets one Fable pass beside it, at the same time <!-- CEO-OK: lead-chooses-freely-fable-audits-important-jobs-2026-11-10 -->; a change to the records
+Every job that changes code, a rule or a door gets one audit pass after BUILD — the light lane (§1) excepted. The auditor audits every job <!-- CEO-OK: auditor-sol-6-2-default-astra-on-very-critical-2026-11-23 -->; an important job or plan gets one Fable pass beside it, at the same time <!-- CEO-OK: lead-chooses-freely-fable-audits-important-jobs-2026-11-10 -->; a change to the records
 alone (STATE, the board) is checked by the rulers on commit instead.
 
-- **Launch:** `scripts/governance/refuter.sh [--effort medium|high|xhigh] "<brief>"` — the effort is the lead's
+- **Launch:** `scripts/governance/refuter.sh [--effort medium|high|xhigh] [--model astra] "<brief>"` — the effort is the lead's
   choice per audit: `high` by default; `xhigh` usually for money, a database, security, approval, governance or the
   agents; `medium` for a text-only change. On an important job, Fable at the same moment: `scripts/governance/fable-audit.sh <job> <brief-file>
   high` — the same brief; its findings take the same form and
@@ -272,7 +272,8 @@ alone (STATE, the board) is checked by the rulers on commit instead.
   build commit it measures <!-- CEO-OK: audit-law-checker-only-checks-2026-09-15 -->.
 - **Dispute:** the lead runs the evidence the auditor gave — it fails → real, fixed; it holds → the finding drops
   and the report says why. A question no test can settle is the lead's, with its reason in the report.
-- **The auditor unavailable** (quota, error, timeout): on an ordinary job the
+- **The auditor unavailable** (quota, error, timeout): the same brief runs again on the other GPT-6.2 model, and the
+  report names it. Both unavailable: on an ordinary job the
   `refuter` subagent (Opus 5.5 · `high`) audits once, and the report says *"audited by Opus instead of
   the auditor — read-only by word, not by tool — because …"*; on money, a database or security the lead waits
   for the auditor's window and works on

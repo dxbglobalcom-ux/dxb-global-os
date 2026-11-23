@@ -11,16 +11,17 @@
 # to be the one way the refuter is launched. Never call `codex` directly for an
 # audit.
 #
-# The auditor's model is named in ONE place: the `model = …` line of
-# scripts/governance/codex-refuter.config.toml (today gpt-6.2-sol, CEO 2026-11-23). To switch it,
-# change that line and run `refuter.sh --install-profile`; nothing here names a model, and
-# `--model` is not taken. The lead chooses its effort
+# The default auditor's model is named in ONE place: the `model = …` line of
+# scripts/governance/codex-refuter.config.toml (today gpt-6.2-sol, CEO 2026-11-23). To switch the
+# default, change that line and run `refuter.sh --install-profile`. `--model astra` runs
+# gpt-6.2-astra instead, for a very critical job (the lead's call). The lead chooses its effort
 # (CEO 2026-10-06): high by default, xhigh for money, database, security, approval or governance work, medium for a
 # text-only change — dxb-team2 owns that rule; this door only bounds the level.
 #
 # Usage:
 #   scripts/governance/refuter.sh "<claim + where to measure it>"                  # effort high
 #   scripts/governance/refuter.sh --effort xhigh "<claim + where to measure it>"   # medium, high or xhigh
+#   scripts/governance/refuter.sh --model astra "<claim + where to measure it>"    # a very critical job: gpt-6.2-astra
 #   scripts/governance/refuter.sh --deny-read /abs/path [--deny-read …] "<claim>"   # paths the audit may not read
 #   scripts/governance/refuter.sh --proof                                          # prove it cannot write
 #   scripts/governance/refuter.sh --install-profile                                # copy the tracked profile into ~/.codex
@@ -42,6 +43,7 @@ cd "$ROOT"
 
 PROFILE="refuter"
 EFFORT="high"
+MODEL=()   # empty: the profile's model
 # --deny-read only NARROWS what the read-only sandbox may read (a Codex permissions profile: the whole
 # disk readable and nothing writable, as the profile's own read-only mode, minus each named path —
 # measured 2026-10-19 with `codex sandbox`: a denied path answers "Permission denied", a write still
@@ -56,7 +58,10 @@ while :; do
         *) echo "REFUTER_FAIL: --effort takes medium, high or xhigh." >&2; exit 1 ;;
       esac ;;
     --model)
-      echo "REFUTER_FAIL: --model is not taken — the auditor's model is the one \`model = …\` line of scripts/governance/codex-refuter.config.toml (change it, then --install-profile)." >&2; exit 1 ;;
+      case "${2:-}" in
+        astra) MODEL=(-c 'model="gpt-6.2-astra"'); shift 2 ;;
+        *) echo "REFUTER_FAIL: --model takes astra (a very critical job); without it the profile's model audits." >&2; exit 1 ;;
+      esac ;;
     --deny-read)
       case "${2:-}" in
         /*) case "$2" in *'"'*|*'\\'*) echo "REFUTER_FAIL: --deny-read path may not hold a quote or a backslash: $2" >&2; exit 1 ;; esac
@@ -251,7 +256,7 @@ fi
 LOG_DIR="$HOME/.local/state/dxb"; mkdir -p "$LOG_DIR"
 echo "AUDIT effort=$EFFORT" >&2
 # Read from the installed profile, the one place the model is named (identical to the tracked copy, above).
-echo "AUDIT model=$(sed -n 's/^model *= *"\([^"]*\)".*/\1/p' "$INSTALLED")" >&2
+if [ ${#MODEL[@]} -eq 0 ]; then echo "AUDIT model=$(sed -n 's/^model *= *"\([^"]*\)".*/\1/p' "$INSTALLED")" >&2; else echo "AUDIT model=gpt-6.2-astra" >&2; fi
 
 # OpenAI can answer "Selected model is at capacity" in the middle of an audit (measured 2026-10-01
 # 17:44, one of eight Sol 6.1 runs that day; Codex does not retry it). The CEO: "sol 6.1 normal şekilde
@@ -267,7 +272,7 @@ attempt=0
 while :; do
   printf '%s\t%s\ttry=%s\n' "$(date -Iseconds)" "$EFFORT" "$((attempt + 1))" >> "$LOG_DIR/audits.log"
   set +e
-  codex -p "$PROFILE" "${REACH[@]}" "${PERMS[@]}" -c "model_reasoning_effort=\"$EFFORT\"" exec "${OPTS[@]}" -- "$PROMPT" < /dev/null 2> "$ERRF" | tee "$OUTF"
+  codex -p "$PROFILE" "${REACH[@]}" "${PERMS[@]}" "${MODEL[@]}" -c "model_reasoning_effort=\"$EFFORT\"" exec "${OPTS[@]}" -- "$PROMPT" < /dev/null 2> "$ERRF" | tee "$OUTF"
   st=("${PIPESTATUS[@]}")
   set -e
   rc=${st[0]}

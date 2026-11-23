@@ -84,11 +84,16 @@ esac
     expect(r.stderr.split("\n")).toContain(`AUDIT model=${named}`);
   });
 
-  it("takes no --model at all, before Codex is asked anything", () => {
-    for (const any of ["sol", "astra", "gpt-6.1-sol", ""]) {
-      const r = run("--model", any, "audit this");
-      expect(r.status, any).toBe(1);
-      expect(r.stderr).toMatch(/^REFUTER_FAIL: --model is not taken/m);
+  it("runs GPT-6.2 Astra when the lead passes --model astra, and refuses any other --model before Codex is asked anything", () => {
+    // CEO 2026-11-23: Sol by default; Astra on a very critical job.
+    const astra = run("--model", "astra", "audit this claim");
+    expect(astra.status, astra.stderr).toBe(0);
+    expect(astra.stdout).toContain('MODEL_ARG model="gpt-6.2-astra"');
+    expect(astra.stderr).toMatch(/^AUDIT model=gpt-6\.2-astra$/m);
+    for (const bad of ["sol", "gpt-6.1-sol", ""]) {
+      const r = run("--model", bad, "audit this");
+      expect(r.status, bad).toBe(1);
+      expect(r.stderr).toMatch(/^REFUTER_FAIL: --model takes astra/m);
       expect(r.stdout).toBe("");
     }
   });

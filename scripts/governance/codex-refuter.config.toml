@@ -13,9 +13,10 @@
 # The base config is left alone on purpose — it serves the CEO's other projects,
 # and disarming those was not what he approved.
 
-# THE ONE PLACE THE AUDITOR'S MODEL IS NAMED. To switch the auditor: change the next line, run
+# THE ONE PLACE THE DEFAULT AUDITOR'S MODEL IS NAMED. To switch the default: change the next line, run
 # `scripts/governance/refuter.sh --install-profile`, and the seat row of dxb-team3 §3. Nothing else.
-# CEO 2026-11-23: gpt-6.2-sol audits every job; gpt-6.2-astra does not audit. The lead chooses the
+# CEO 2026-11-23: gpt-6.2-sol is the default; gpt-6.2-astra on a very critical job (refuter.sh
+# --model astra). The lead chooses the
 # effort per audit (refuter.sh --effort, high when not given; CEO 2026-10-06).
 model = "gpt-6.2-sol"
 model_reasoning_effort = "high"
