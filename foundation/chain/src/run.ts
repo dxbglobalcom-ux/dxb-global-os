@@ -116,14 +116,15 @@ export async function runChain(input: Input, say: Say): Promise<Outcome> {
 
     // 8. The functions pass, 9. the reference pass — each when its directory stands. One that does not end green
     // ends the run: what committed before it stays — the schema files, and the functions pass before the
-    // reference pass — and a functions pass that failed is not followed by the reference pass.
+    // reference pass — and a functions pass that failed is not followed by the reference pass. A pass writes no
+    // ledger row, so the lock is asked before it and again by the pass itself, before its commit (SPEC §12.10).
     const ran: { functions?: number; reference?: number } = {};
     for (const [pass, make] of PASSES) {
       const files = disk[pass];
       if (files === undefined) continue;
       await assertHeld();
       say(`${pass} …`);
-      const ended = await make(inASession, files);
+      const ended = await make(inASession, files, assertHeld);
       if (typeof ended !== "number") return { ...ended, applied };
       say(`${pass}: ${ended} files`);
       ran[pass] = ended;

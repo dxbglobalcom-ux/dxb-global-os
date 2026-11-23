@@ -38,12 +38,36 @@ export function columnsOf(text: string): string[] | undefined {
   return others.every(asTheFirst) ? first : undefined;
 }
 
+// White space before a function file's statement and between its words: the ASCII space, tab, line feed and carriage
+// return, nothing else — a byte-order mark is none (SPEC §12a).
+const BLANK = "[ \\t\\n\\r]";
+
+/**
+ * Whether a function file begins with its own function (SPEC §12.1): its text, after white space and `--` comments,
+ * begins with `create or replace function os.<name>(` — or `procedure`, or `aggregate` — so the first statement the
+ * server executes of it sets its function's body. Any case, the schema's and the name's too, as the server folds
+ * them; any white space between the words and before the bracket, none inside `os.<name>`.
+ */
+function beginsWithItsOwn(file: PassFile): boolean {
+  // One pattern, built from the file's name — which passed the directory's pattern, so it holds nothing a pattern
+  // reads as more than itself. A comment ends where the server ends it, at a line feed or a carriage return, and
+  // is taken whole. Without the `u` flag `i` folds the ASCII letters alone, as the server does: `ſ` is no `s`.
+  const pattern = new RegExp(
+    `^(?:${BLANK}|--[^\\n\\r]*(?=[\\n\\r]|$))*create${BLANK}+or${BLANK}+replace${BLANK}+(?:function|procedure|aggregate)${BLANK}+os\\.${namedBy(file)}${BLANK}*\\(`,
+    "i",
+  );
+  return pattern.test(file.text);
+}
+
 /** What each directory asks of an entry: a regular file of this name — and what a file of no text, and a text, is there. */
-const ASKED: Record<"functions" | "reference", { name: RegExp; empty: OffenceKind; wellFormed: (text: string) => boolean }> = {
-  functions: { name: /^[a-z][a-z0-9_]{0,62}\.sql$/, empty: "empty", wellFormed: () => true },
+const ASKED: Record<"functions" | "reference", { name: RegExp; empty: OffenceKind; wellFormed: (file: PassFile) => boolean }> = {
+  functions: { name: /^[a-z][a-z0-9_]{0,62}\.sql$/, empty: "empty", wellFormed: beginsWithItsOwn },
   // A file of no bytes, or of white space only, is no JSON array either.
-  reference: { name: /^[a-z][a-z0-9_]{0,62}\.json$/, empty: "malformed", wellFormed: (text) => columnsOf(text) !== undefined },
+  reference: { name: /^[a-z][a-z0-9_]{0,62}\.json$/, empty: "malformed", wellFormed: ({ text }) => columnsOf(text) !== undefined },
 };
+
+/** The one name git needs to deliver a directory that holds no file yet (SPEC §12.12). */
+const KEPT_FOR_GIT = ".gitkeep";
 
 /** One of the two directories: its files by name — none said when it does not stand — and its offences. */
 function read(root: string, directory: "functions" | "reference"): { files?: PassFile[]; offences: Offence[] } {
@@ -58,6 +82,8 @@ function read(root: string, directory: "functions" | "reference"): { files?: Pas
   for (const entry of readdirSync(path, { withFileTypes: true })) {
     const { name } = entry;
     const detail = `${directory}/${name}`;
+    // A regular file of that name is passed over: no file of the pass, no offence, its content not read.
+    if (entry.isFile() && name === KEPT_FOR_GIT) continue;
     // isFile() is said of the entry itself: a link is no file, whatever it leads to.
     if (!entry.isFile() || !asked.name.test(name)) {
       offences.push({ kind: "unknown-entry", detail });
@@ -66,8 +92,11 @@ function read(root: string, directory: "functions" | "reference"): { files?: Pas
     const content = contentOf(join(path, name));
     if (content === "unreadable") offences.push({ kind: "unreadable", detail });
     else if (content === "empty") offences.push({ kind: asked.empty, detail });
-    else if (!asked.wellFormed(content.text)) offences.push({ kind: "malformed", detail });
-    else files.push({ name, text: content.text });
+    else {
+      const file = { name, text: content.text };
+      if (asked.wellFormed(file)) files.push(file);
+      else offences.push({ kind: "malformed", detail });
+    }
   }
   // By code unit, so the order hangs on no locale; a directory holds no name twice.
   return { files: files.sort((one, other) => (one.name < other.name ? -1 : 1)), offences };

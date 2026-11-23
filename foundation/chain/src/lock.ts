@@ -31,6 +31,9 @@ async function granted(conn: Client, waitSeconds: number): Promise<boolean> {
   }
 }
 
+/** Asks whether the run still holds its lock: throws once the lock's session no longer answers. */
+export type AssertHeld = () => Promise<void>;
+
 /**
  * `work` while this run holds the target's lock, on a session of the run's own (`inASession`). Not granted at once
  * (or within `waitSeconds`) → ChainRefused("busy").
@@ -38,7 +41,7 @@ async function granted(conn: Client, waitSeconds: number): Promise<boolean> {
  * lets the lock go on every path. `assertHeld` is for the work to call before each thing it writes — it throws
  * once that session no longer answers, for then the lock is gone and another run may have begun.
  */
-export async function underTheLock<T>(inASession: InASession, waitSeconds: number | undefined, work: (assertHeld: () => Promise<void>) => Promise<T>): Promise<T> {
+export async function underTheLock<T>(inASession: InASession, waitSeconds: number | undefined, work: (assertHeld: AssertHeld) => Promise<T>): Promise<T> {
   if (waitSeconds !== undefined && !(Number.isFinite(waitSeconds) && waitSeconds >= 0)) {
     throw new RangeError(`lockWaitSeconds must be a number of seconds, zero or more — not ${waitSeconds}`);
   }

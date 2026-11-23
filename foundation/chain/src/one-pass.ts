@@ -1,6 +1,7 @@
 // What the two passes share (piece 4's SPEC §6 steps 8–9): a session of its own, one transaction, and an ending that leaves nothing of the pass.
 import { DatabaseError } from "pg";
 import type { Client } from "pg";
+import type { AssertHeld } from "./lock.ts";
 import type { Offence } from "./outcome.ts";
 import { inOneTransaction } from "./session.ts";
 import type { InASession } from "./session.ts";
@@ -45,11 +46,17 @@ export async function asTheFiles<T>(pass: "functions" | "reference", file: strin
  * ended it (`endThePass`, `asTheFiles`): the transaction is rolled back then, so a pass that fails leaves nothing of
  * itself. Answers nothing when the pass is green and committed. A failure of the runner's own — a catalogue it
  * could not read, a commit the server refused — is no ending of the contract: rolled back as well, and thrown on.
+ *
+ * The pass's last act, before its commit, is `assertHeld` (SPEC §12.10): a pass writes no ledger row, so nothing
+ * else would stop one whose run lost its lock meanwhile. A lock lost by then is such a failure of the runner's own.
  */
-export function inOnePass(inASession: InASession, work: (conn: Client) => Promise<void>): Promise<NotGreen | undefined> {
+export function inOnePass(inASession: InASession, assertHeld: AssertHeld, work: (conn: Client) => Promise<void>): Promise<NotGreen | undefined> {
   return inASession(async (conn) => {
     try {
-      await inOneTransaction(conn, () => work(conn));
+      await inOneTransaction(conn, async () => {
+        await work(conn);
+        await assertHeld();
+      });
       return undefined;
     } catch (failure) {
       if (failure instanceof Ended) return failure.how;
