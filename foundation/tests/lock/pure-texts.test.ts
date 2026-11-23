@@ -17,6 +17,10 @@ describe("relativeImports — the relative specifiers of one source text", () =>
     ["an export of names", 'export { d, e as f } from "./d.ts";', ["./d.ts"]],
     ["a dynamic import of a literal", 'const later = await import("./later.ts");', ["./later.ts"]],
     ["an import spread over lines", 'import {\n  one,\n  two,\n} from "./many.ts";', ["./many.ts"]],
+    // SPEC §10 item 4: what the runner loads by a literal that is no import statement.
+    ["a module mocked by its path", 'vi.mock("./x.ts");', ["./x.ts"]],
+    ["a module mocked later, in single quotes", "vi.doMock('./y.ts');", ["./y.ts"]],
+    ["a dynamic import with a comment before its literal", 'const z = await import(/* @vite-ignore */ "./z.ts");', ["./z.ts"]],
   ])("%s is reached", (_what, source, expected) => {
     expect(reached(source)).toEqual(expected);
   });

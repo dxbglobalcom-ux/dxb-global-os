@@ -1,6 +1,7 @@
 import { afterAll, describe, expect, it } from "vitest";
 import type { LockFile } from "@dxb-foundation/lock";
 import { FOUNDATION_SCRIPTS, LOCKED_CASES, PIECE, PROTECTED_BESIDE_THE_TOOL, SUBJECT } from "./fixtures/fixture-files.ts";
+import { expectRefused } from "./fixtures/expectations.ts";
 import { command, copyOf, fixtureOfOneFile, git, read, replacing, stage, tail, write } from "./fixtures/fixture-repo.ts";
 
 // SPEC §5 `lock`, on the fixture: what the real command wrote into
@@ -100,42 +101,55 @@ describe("lock — the same input gives the same bytes", { timeout: 120_000 }, (
 });
 
 describe("lock — what it refuses", { timeout: 120_000 }, () => {
-  /** `lock` of the piece after one change to a copy: refused with a reason, exit 2, the standing lock as it stood. */
-  async function expectRefused(change: (repo: string) => void): Promise<void> {
+  /** `lock` of the piece after one change to a copy: refused for the reason that carries `itsWord`, the standing lock as it stood. */
+  async function expectLockRefused(itsWord: string, change: (repo: string) => void): Promise<void> {
     const built = await fixture.ready();
     const repo = copyOf(built);
     change(repo);
-    const answer = await command(repo, ["lock", PIECE]);
-    expect(answer.lines.at(-1), tail(answer)).toMatch(/^LOCK_REFUSED \S/);
-    expect(answer.code).toBe(2);
+    expectRefused(await command(repo, ["lock", PIECE]), itsWord);
     expect(read(repo, LOCK_PATH)).toBe(read(built.original, LOCK_PATH));
   }
 
+  const DOUBLED_CASE = 'it("is doubled by the helper", () => {';
+
   it.each([
-    ["a retry", "{ retry: 2 }"],
-    ["a repeat", "{ repeats: 2 }"],
-  ])("a locked test that declares %s", async (_what, declared) => {
-    await expectRefused((repo) => {
-      const declaring = replacing(read(repo, VALUE_TEST), 'it("is doubled by the helper", () => {', `it("is doubled by the helper", ${declared}, () => {`);
+    ["a retry", "{ retry: 2 }", "retry"],
+    ["a repeat", "{ repeats: 2 }", "repeat"],
+  ])("a locked test that declares %s", async (_what, declared, itsWord) => {
+    await expectLockRefused(itsWord, (repo) => {
+      const declaring = replacing(read(repo, VALUE_TEST), DOUBLED_CASE, `it("is doubled by the helper", ${declared}, () => {`);
       stage(repo, VALUE_TEST, declaring);
     });
   });
 
+  it("a locked test that declares .only — run alone it would leave the file's other cases out", async () => {
+    await expectLockRefused("only", (repo) => {
+      stage(repo, VALUE_TEST, replacing(read(repo, VALUE_TEST), DOUBLED_CASE, 'it.only("is doubled by the helper", () => {'));
+    });
+  });
+
   it("a test file with no case", async () => {
-    await expectRefused((repo) => {
+    await expectLockRefused("no case", (repo) => {
       stage(repo, `${SUBJECT}/nothing-yet.test.ts`, 'import { describe } from "vitest";\n\ndescribe("nothing yet", () => {});\n');
     });
   });
 
+  it.each([
+    ["does not parse", "\nconst broken = ;\n"],
+    ["throws while it is loaded", '\nthrow new Error("thrown while the module is loaded");\n'],
+  ])("a locked test that %s — the module fails to collect", async (_what, appended) => {
+    await expectLockRefused("collect", (repo) => stage(repo, VALUE_TEST, `${read(repo, VALUE_TEST)}${appended}`));
+  });
+
   it("a relative import that leaves foundation/tests/ — the test reaches the product past its package", async () => {
-    await expectRefused((repo) => {
+    await expectLockRefused("leaves", (repo) => {
       const reaching = replacing(read(repo, VALUE_TEST), 'from "@dxb-foundation/product";', 'from "../../product/src/index.ts";');
       stage(repo, VALUE_TEST, reaching);
     });
   });
 
   it("a running tool that differs from foundation/lock/ in the index", async () => {
-    await expectRefused((repo) => {
+    await expectLockRefused("differs", (repo) => {
       const toolFile = "foundation/lock/src/index.ts";
       write(repo, toolFile, `${read(repo, toolFile)}\n// edited in the working tree, not staged\n`);
     });

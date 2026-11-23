@@ -1,5 +1,6 @@
 import { afterAll, describe, expect, it } from "vitest";
 import { expectGreen } from "./fixtures/expect-green.ts";
+import { expectRefused } from "./fixtures/expectations.ts";
 import { OTHER_PIECE, OTHER_SUBJECT, PIECE, PRODUCT_FILE, SUBJECT, json } from "./fixtures/fixture-files.ts";
 import {
   command,
@@ -7,6 +8,7 @@ import {
   copyOf,
   fixtureOfOneFile,
   git,
+  lockAgainAndCommit,
   namesCommit,
   offencesOf,
   read,
@@ -61,6 +63,18 @@ describe("verify — a staged change to what the lock protects", { timeout: 120_
     expectRedBy(ran, [{ kind: "protected-changed", detail: path }]);
   });
 
+  // SPEC §10 item 8. The entry carries the locked blob's id, so a comparison of ids alone finds nothing changed.
+  it.each([
+    ["a gitlink", "160000"],
+    ["a link", "120000"],
+  ])("a protected path staged as %s that carries the locked blob's id — no regular file → protected-missing <path>", async (_what, mode) => {
+    const helper = "foundation/tests/shared/doubled.ts";
+    const ran = await verifiedWithoutInstall((repo) => {
+      git(repo, "update-index", "--add", "--cacheinfo", `${mode},${git(repo, "rev-parse", `:${helper}`)},${helper}`);
+    });
+    expectRedBy(ran, [{ kind: "protected-missing", detail: helper }]);
+  });
+
   it("a foundation script of the root package file → scripts-changed <name>", async () => {
     const ran = await verifiedWithoutInstall((repo) => {
       const changed = replacing(read(repo, "package.json"), "vitest run --config foundation/tests/vitest.config.ts", "vitest run --config foundation/tests/vitest.config.ts --bail=1");
@@ -103,6 +117,17 @@ describe("verify — a staged change under foundation/locks/", { timeout: 120_00
   });
 });
 
+describe("verify — a lock file that says it is another piece's", { timeout: 120_000 }, () => {
+  it("a committed foundation/locks/piece-b.json whose piece says piece-a → verify piece-b is LOCK_REFUSED, exit 2", async () => {
+    const ran = await verifiedWithoutInstall((repo) => {
+      stage(repo, `foundation/locks/${OTHER_PIECE}.json`, read(repo, LOCK_PATH));
+      commit(repo, "the first piece's lock, committed under the other piece's name");
+    }, [OTHER_PIECE]);
+    expectRefused(ran.answer, "piece-b");
+    expect(ran.installStarted).toBe(false);
+  });
+});
+
 describe("verify — a lock that does not describe the commit it was committed with", { timeout: 120_000 }, () => {
   it("a committed lock whose record of a helper is not that commit's blob → lock-inconsistent <path>, beside protected-changed", async () => {
     const helper = "foundation/tests/shared/doubled.ts";
@@ -120,19 +145,19 @@ describe("verify — a lock that does not describe the commit it was committed w
   });
 });
 
-describe("verify --rev — a lock changed in one commit with product code", { timeout: 120_000 }, () => {
-  /** The one offence of a red verify, seen to be `lock-commit-impure <that commit> <the product file>`. */
-  function expectImpure(ran: { repo: string; answer: Answer; installStarted: boolean }, impure: string): void {
-    const offences = offencesOf(ran.answer);
-    expect(offences.map((offence) => offence.kind), tail(ran.answer)).toEqual(["lock-commit-impure"]);
-    const [named, path] = offences[0]?.detail.split(" ") ?? [];
-    expect(namesCommit(named, impure), `${named} does not name ${impure}`).toBe(true);
-    expect(path).toBe(PRODUCT_FILE);
-    expect(verdictOf(ran.answer)).toMatchObject({ word: "LOCK_RED", fields: { candidate: git(ran.repo, "rev-parse", `${impure}^{tree}`), offences: "1" } });
-    expect(ran.answer.code).toBe(1);
-    expect(ran.installStarted).toBe(false);
-  }
+/** The one offence of a red verify, seen to be `lock-commit-impure <that commit> <what makes it impure>`. */
+function expectImpure(ran: { repo: string; answer: Answer; installStarted: boolean }, impure: string, madeImpureBy: string): void {
+  const offences = offencesOf(ran.answer);
+  expect(offences.map((offence) => offence.kind), tail(ran.answer)).toEqual(["lock-commit-impure"]);
+  const [named, ...said] = offences[0]?.detail.split(" ") ?? [];
+  expect(namesCommit(named, impure), `${named} does not name ${impure}`).toBe(true);
+  expect(said.join(" ")).toBe(madeImpureBy);
+  expect(verdictOf(ran.answer)).toMatchObject({ word: "LOCK_RED", fields: { candidate: git(ran.repo, "rev-parse", `${impure}^{tree}`), offences: "1" } });
+  expect(ran.answer.code).toBe(1);
+  expect(ran.installStarted).toBe(false);
+}
 
+describe("verify --rev — a lock changed in one commit with product code", { timeout: 120_000 }, () => {
   it("another piece's lock committed together with a product file → lock-commit-impure <commit> <path>", async () => {
     let impure = "";
     const ran = await verifiedWithoutInstall(async (repo) => {
@@ -141,7 +166,7 @@ describe("verify --rev — a lock changed in one commit with product code", { ti
       stage(repo, PRODUCT_FILE, `${read(repo, PRODUCT_FILE)}\n// changed in the commit that carries a lock\n`);
       impure = commit(repo, "a lock and product code in one commit");
     }, [PIECE, "--rev", "HEAD"]);
-    expectImpure(ran, impure);
+    expectImpure(ran, impure, PRODUCT_FILE);
   });
 
   it("the piece's own lock made again and committed together with the product change it was made for → the lock commit itself is impure", async () => {
@@ -152,11 +177,43 @@ describe("verify --rev — a lock changed in one commit with product code", { ti
       git(repo, "add", "--", LOCK_PATH);
       impure = commit(repo, "the lock made again, with the product change, in one commit");
     }, [PIECE, "--rev", "HEAD"]);
-    expectImpure(ran, impure);
+    expectImpure(ran, impure, PRODUCT_FILE);
+  });
+});
+
+describe("verify --rev — a merge that brings a change of foundation/locks/ (SPEC §10 item 6)", { timeout: 120_000 }, () => {
+  it("a side branch that adds another piece's lock alone, merged → lock-commit-impure <the merge> (a merge of 2 commits)", async () => {
+    let merge = "";
+    const ran = await verifiedWithoutInstall(async (repo) => {
+      git(repo, "checkout", "-q", "-b", "side");
+      await writeLock(repo, OTHER_PIECE, OTHER_SUBJECT);
+      git(repo, "add", "--", `foundation/locks/${OTHER_PIECE}.json`);
+      commit(repo, `the lock of ${OTHER_PIECE}, alone, on a side branch`);
+      git(repo, "checkout", "-q", "main");
+      stage(repo, PRODUCT_FILE, `${read(repo, PRODUCT_FILE)}\n// changed on the main line\n`);
+      commit(repo, "product code on the main line");
+      git(repo, "merge", "-q", "--no-ff", "-m", "the side branch, merged", "side");
+      merge = git(repo, "rev-parse", "HEAD");
+    }, [PIECE, "--rev", "HEAD"]);
+    // The plant is seen to be a merge of two before the offence is read: the commit, then its two parents.
+    expect(git(ran.repo, "rev-list", "--parents", "-n", "1", merge).split(" ")).toHaveLength(3);
+    expectImpure(ran, merge, "(a merge of 2 commits)");
   });
 });
 
 describe("verify — what is no structural offence: the tests are run, and they are green", { timeout: 120_000 }, () => {
+  it("--rev of a lock commit that removes a locked test — the test gone and the lock made again, in one commit → no lock-commit-impure, LOCK_GREEN", async () => {
+    const repo = copyOf(await fixture.ready());
+    git(repo, "rm", "-q", "--", `${SUBJECT}/rows.test.ts`);
+    const removing = await lockAgainAndCommit(repo, "a locked test removed and the lock made again, in one commit");
+
+    const answer = await command(repo, ["verify", PIECE, "--rev", "HEAD"]);
+    expect(offencesOf(answer).filter((offence) => offence.kind === "lock-commit-impure"), tail(answer)).toEqual([]);
+    expectGreen(answer, git(repo, "rev-parse", `${removing}^{tree}`));
+    const judgedBy = verdictOf(answer).fields.lock;
+    expect(namesCommit(judgedBy, removing), `${judgedBy} does not name ${removing}`).toBe(true);
+  });
+
   it("--rev of a later commit that adds another piece's lock alone → LOCK_GREEN by the first piece's own lock commit", async () => {
     const built = await fixture.ready();
     const repo = copyOf(built);

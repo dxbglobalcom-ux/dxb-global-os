@@ -5,12 +5,12 @@
 // Every git call here names a repository under the temporary directory; nothing
 // here stages, commits or configures anything anywhere else.
 import { execFile, execFileSync } from "node:child_process";
-import { chmodSync, cpSync, existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
+import { chmodSync, cpSync, existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, realpathSync, rmSync, symlinkSync, writeFileSync } from "node:fs";
 import { tmpdir, userInfo } from "node:os";
 import { basename, dirname, join, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 import type { Offence } from "@dxb-foundation/lock";
-import { FIXTURE_FILES, FOUNDATION_SCRIPTS, PIECE, SUBJECT, json } from "./fixture-files.ts";
+import { EXECUTABLE_FILE, FIXTURE_FILES, FOUNDATION_SCRIPTS, OUTSIDE_DEPENDENCY, PIECE, PRODUCT_LINK, SUBJECT, json } from "./fixture-files.ts";
 
 const repositoryRoot = fileURLToPath(new URL("../../../../", import.meta.url));
 /** The real tool's entry in this repository — the judge the lead holds. */
@@ -93,6 +93,16 @@ export async function writeLock(repo: string, piece: string, ...dirs: string[]):
   if (answer.code !== 0) throw new Error(`lock ${piece} ended with ${answer.code}: ${tail(answer)}`);
 }
 
+/**
+ * The fixture's piece locked again on what is staged, and the lock committed in
+ * one commit with it — a lock commit of the lead's kind. Answers that commit's id.
+ */
+export async function lockAgainAndCommit(repo: string, message: string): Promise<string> {
+  await writeLock(repo, PIECE);
+  git(repo, "add", "--", `foundation/locks/${PIECE}.json`);
+  return commit(repo, message);
+}
+
 /** Every `OFFENCE <kind> <detail>` line of an answer, in the order printed. */
 export const offencesOf = (answer: Answer): Offence[] =>
   answer.lines.flatMap((line) => {
@@ -115,6 +125,19 @@ export const namesCommit = (printed: string | undefined, commit: string): boolea
 
 /** The work directories standing under `~/.cache/dxb/foundation-verify/` now. */
 export const workDirectories = (): string[] => (existsSync(WORK_HOME) ? readdirSync(WORK_HOME).sort() : []);
+
+/**
+ * A work directory as a run that died would have left it: made here, under the
+ * work home's real path as the tool spells it, with one file in it. `remove`
+ * removes the directory this call made, and nothing else.
+ */
+export function staleWorkDirectory(): { path: string; leftInIt: string; remove: () => void } {
+  mkdirSync(WORK_HOME, { recursive: true });
+  const path = mkdtempSync(join(realpathSync(WORK_HOME), "run-"));
+  const leftInIt = join(path, "left-by-a-run-that-died");
+  writeFileSync(leftInIt, "");
+  return { path, leftInIt, remove: () => rmSync(path, { recursive: true, force: true }) };
+}
 
 /**
  * A PATH on which `pnpm` is a witness and not the installer: it notes that it
@@ -166,11 +189,13 @@ function workspaceFile(): string {
   };
   const pinned = [
     ["vitest", installedVersion("foundation/tests", "vitest")],
+    [OUTSIDE_DEPENDENCY, installedVersion("foundation/tests", OUTSIDE_DEPENDENCY)],
     ...Object.keys({ ...tool.dependencies, ...tool.devDependencies }).map((name) => [name, installedVersion("foundation/lock", name)]),
   ];
   return [
     "packages:",
     '  - "foundation/*"',
+    '  - "packages/*"',
     "allowBuilds:",
     "  esbuild: false",
     "catalog:",
@@ -186,6 +211,8 @@ function workspaceFile(): string {
  */
 export async function makeRepository(root: string): Promise<void> {
   for (const [path, text] of Object.entries(FIXTURE_FILES)) write(root, path, text);
+  chmodSync(join(root, EXECUTABLE_FILE), 0o755);
+  symlinkSync(PRODUCT_LINK.target, join(root, PRODUCT_LINK.path));
   write(root, "package.json", rootManifest());
   write(root, "pnpm-workspace.yaml", workspaceFile());
   cpSync(join(repositoryRoot, "foundation/lock"), join(root, "foundation/lock"), {
@@ -244,7 +271,8 @@ export async function buildFixture(): Promise<Fixture> {
 /** A copy of the original for one case to change. */
 export function copyOf(fixture: Fixture): string {
   const copy = mkdtempSync(join(fixture.directory, "case-"));
-  cpSync(fixture.original, copy, { recursive: true });
+  // A link is copied as the text it points with: resolved, it would point into the original and git would call it changed.
+  cpSync(fixture.original, copy, { recursive: true, verbatimSymlinks: true });
   return copy;
 }
 

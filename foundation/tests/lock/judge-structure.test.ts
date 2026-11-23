@@ -54,13 +54,13 @@ const UNPROTECTED = {
 type Candidate = { tree: Map<string, string>; scripts: Record<string, string> };
 
 /** The offences of a candidate that equals its lock, after one change to it. */
-function judged(plant: (candidate: Candidate) => void): Offence[] {
+function judged(plant: (candidate: Candidate) => void, lock: LockFile = LOCK): Offence[] {
   const candidate: Candidate = {
-    tree: new Map(Object.entries({ ...LOCK.protected, ...UNPROTECTED })),
-    scripts: { ...LOCK.scripts, build: "tsc --build" },
+    tree: new Map(Object.entries({ ...lock.protected, ...UNPROTECTED })),
+    scripts: { ...lock.scripts, build: "tsc --build" },
   };
   plant(candidate);
-  return judgeStructure({ lock: LOCK, candidate: candidate.tree, candidateScripts: candidate.scripts });
+  return judgeStructure({ lock, candidate: candidate.tree, candidateScripts: candidate.scripts });
 }
 
 describe("judgeStructure — a candidate that equals its lock", () => {
@@ -102,12 +102,36 @@ describe("judgeStructure — a closed directory", () => {
     ["a subject directory, deeper", "foundation/tests/subject/fixtures/slipped-in.ts"],
     ["foundation/lock/", "foundation/lock/src/slipped-in.ts"],
     ["foundation/tests/ itself", "foundation/tests/vitest.workspace.ts"],
+    // SPEC §10 item 4: a directory that directly holds a protected file is closed, though no lock names it.
+    ["the directory of a protected helper", "foundation/tests/shared/slipped-in.ts"],
+    ["the directory of the set-up file", "foundation/tests/support/slipped-in.ts"],
   ])("a file added to %s → closed-dir-added <path>", (_what, path) => {
     expect(judged(({ tree }) => tree.set(path, blob(999)))).toEqual([{ kind: "closed-dir-added", detail: path }]);
   });
 
   it("a file added deeper under foundation/tests/, in a directory no lock names → no offence", () => {
     expect(judged(({ tree }) => tree.set("foundation/tests/other/second.test.ts", blob(999)))).toEqual([]);
+  });
+
+  it("a file added one level below a protected helper's directory — that level holds no protected file → no offence", () => {
+    expect(judged(({ tree }) => tree.set("foundation/tests/shared/deeper/slipped-in.ts", blob(999)))).toEqual([]);
+  });
+});
+
+describe("judgeStructure — the root's install settings (SPEC §10 item 3)", () => {
+  const SETTINGS = ".npmrc";
+  const LOCK_WITH_SETTINGS: LockFile = { ...LOCK, protected: { ...LOCK.protected, [SETTINGS]: blob(14) } };
+
+  it.each([".npmrc", ".pnpmfile.cjs", ".pnpmfile.mjs"])("%s in the candidate, which the lock does not hold → closed-dir-added <path>", (path) => {
+    expect(judged(({ tree }) => tree.set(path, blob(999)))).toEqual([{ kind: "closed-dir-added", detail: path }]);
+  });
+
+  it("one the lock holds, with the same id → no offence", () => {
+    expect(judged(() => {}, LOCK_WITH_SETTINGS)).toEqual([]);
+  });
+
+  it("one the lock holds, changed → protected-changed <path>", () => {
+    expect(judged(({ tree }) => tree.set(SETTINGS, blob(999)), LOCK_WITH_SETTINGS)).toEqual([{ kind: "protected-changed", detail: ".npmrc" }]);
   });
 });
 

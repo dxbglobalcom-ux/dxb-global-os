@@ -1,6 +1,8 @@
-import { afterAll, afterEach, beforeEach, describe, expect, it } from "vitest";
+import { existsSync } from "node:fs";
+import { afterAll, describe, expect, it } from "vitest";
 import { expectGreen } from "./fixtures/expect-green.ts";
-import { LOCKED_CASES, PIECE, PRODUCT_FILE, SUBJECT } from "./fixtures/fixture-files.ts";
+import { expectNoWorkDirectoryLeftByACase, expectRed, kindsOf, naming } from "./fixtures/expectations.ts";
+import { LOCKED_CASES, OTHER_PIECE, OTHER_SUBJECT, PIECE, PRODUCT_FILE, SUBJECT } from "./fixtures/fixture-files.ts";
 import {
   command,
   commit,
@@ -12,9 +14,10 @@ import {
   read,
   replacing,
   stage,
+  staleWorkDirectory,
   tail,
   verdictOf,
-  workDirectories,
+  writeLock,
   type Answer,
 } from "./fixtures/fixture-repo.ts";
 
@@ -26,13 +29,7 @@ const fixture = fixtureOfOneFile();
 afterAll(fixture.remove);
 
 // "The work directory is gone after each run" — asked after every case of this file.
-let standingBefore: string[];
-beforeEach(() => {
-  standingBefore = workDirectories();
-});
-afterEach(() => {
-  expect(workDirectories()).toEqual(standingBefore);
-});
+expectNoWorkDirectoryLeftByACase();
 
 /** `verify` of the piece on a copy whose product was changed and staged. */
 async function verifiedWithProduct(change: (product: string) => string): Promise<{ repo: string; answer: Answer }> {
@@ -40,19 +37,6 @@ async function verifiedWithProduct(change: (product: string) => string): Promise
   stage(repo, PRODUCT_FILE, change(read(repo, PRODUCT_FILE)));
   return { repo, answer: await command(repo, ["verify", PIECE]) };
 }
-
-const kindsOf = (answer: Answer): string[] => [...new Set(offencesOf(answer).map((offence) => offence.kind))].sort();
-
-/** Red, exit 1, and the last line counts the offence lines printed above it. */
-function expectRed(answer: Answer): void {
-  expect(verdictOf(answer), tail(answer)).toMatchObject({ word: "LOCK_RED", fields: { piece: "piece-a", offences: String(offencesOf(answer).length) } });
-  expect(offencesOf(answer).length).toBeGreaterThan(0);
-  expect(answer.code).toBe(1);
-}
-
-/** The offences of one kind whose detail names this case. */
-const naming = (answer: Answer, kind: string, caseName: string) =>
-  offencesOf(answer).filter((offence) => offence.kind === kind && offence.detail.includes(caseName));
 
 describe("verify — the candidate as it was locked", { timeout: 120_000 }, () => {
   it("the untouched candidate → LOCK_GREEN, exit 0, naming the lock commit and the tree id of the index", async () => {
@@ -101,6 +85,37 @@ describe("verify — the search for the runner's names: a note, never an offence
     expect(answer.lines.filter((line) => line.startsWith("NOTE "))).toHaveLength(1);
     expectGreen(answer, git(repo, "write-tree"));
   });
+
+  // SPEC §10 item 12: the search is for product code that detects the run — the tests' side and the records are not product.
+  it("the name spelled under foundation/tests/, in the root package file and in a later commit's lock file → no note", async () => {
+    const repo = copyOf(await fixture.ready());
+    // Another piece's lock spells the runner in the scripts it records.
+    await writeLock(repo, OTHER_PIECE, OTHER_SUBJECT);
+    git(repo, "add", "--", `foundation/locks/${OTHER_PIECE}.json`);
+    commit(repo, `the lock of ${OTHER_PIECE}, alone`);
+    expect(read(repo, `foundation/locks/${OTHER_PIECE}.json`)).toContain("vitest run");
+    stage(repo, `${OTHER_SUBJECT}/second.test.ts`, 'import { expect, it } from "vitest";\n\nit("is another piece\'s", () => {\n  expect(1).toBe(1);\n});\n');
+    stage(repo, "package.json", replacing(read(repo, "package.json"), "node --version", "vitest --version"));
+
+    const answer = await command(repo, ["verify", PIECE]);
+    expect(answer.lines.filter((line) => line.startsWith("NOTE runner-name")), tail(answer)).toEqual([]);
+    expectGreen(answer, git(repo, "write-tree"));
+  });
+});
+
+describe("verify — a work directory an earlier run left standing (SPEC §10 item 9)", { timeout: 120_000 }, () => {
+  it("is said once — NOTE stale-work-directory <path> — and still stands afterwards, with what was in it; the verdict stays LOCK_GREEN", async () => {
+    const repo = copyOf(await fixture.ready());
+    const stale = staleWorkDirectory();
+    try {
+      const answer = await command(repo, ["verify", PIECE]);
+      expect(answer.lines.filter((line) => line.startsWith("NOTE stale-work-directory")), tail(answer)).toEqual([`NOTE stale-work-directory ${stale.path}`]);
+      expect(existsSync(stale.leftInIt)).toBe(true);
+      expectGreen(answer, git(repo, "write-tree"));
+    } finally {
+      stale.remove();
+    }
+  });
 });
 
 describe("verify — product staged so that a locked case does not pass", { timeout: 120_000 }, () => {
@@ -111,6 +126,8 @@ describe("verify — product staged so that a locked case does not pass", { time
     expect(kindsOf(answer)).toEqual(["case-not-passed", "exit-nonzero", "file-failed"]);
     expect(offencesOf(answer)).toContainEqual({ kind: "file-failed", detail: `${SUBJECT}/value.test.ts` });
     expect(offencesOf(answer)).toContainEqual({ kind: "exit-nonzero", detail: "1" });
+    // SPEC §10 item 11: the reader of a red verdict sees the failing assertion's own message, not only its kind.
+    expect(answer.output).toContain("expected 41 to be 42");
   });
 
   it("the product says unavailable and the case skips itself → case-skipped, though the run ended with 0", async () => {
