@@ -178,6 +178,23 @@ in one transaction owned by the runner; a file that opens or closes a transactio
 leaves nothing of itself; what committed before it stays and a retry is safe. One runner at a time. *Tests first, on
 fixture chains in throwaway databases of the foundation's bench:* each sentence above, the ledger's own bootstrap, two
 independent connections contending, and a populated fixture upgraded with its rows kept.
+*Done 2026-11-23 (`piece-3/SPEC.md`, its two audits and evidence beside it): `pnpm foundation:chain up [--root <dir>]
+[--wait <seconds>]`, package `foundation/chain`, 133 locked cases. What the cut did not say was measured and decided
+there by the lead: order is a four-digit number in the file's name and `schema/` is closed; the ledger lives in schema
+`os_chain` and its row 0 is its own bootstrap; **a file that opens or closes a transaction is refused by the server in
+the act** — its text is handed over as data and executed there — not by a search of the text; **each file runs in a
+session of its own** (a session's settings outlive a file, so a clean build and an upgrade could differ); the row is
+written before the file's text, at the position the run expects, so a ledger that moved under a run stops it; the
+command takes no target, only the library does, through a list file. Audited blind by GPT-6.2 Sol (five A, seven B)
+and Fable 5.2 (no A, eight B) from one brief — the stage's first GPT pass; each finding weighed against what the piece
+is for, the rest written down with the reason (SPEC §12). **"A failing file leaves nothing of itself" is read from
+here as PostgreSQL allows it: a sequence a failed file drew from stays advanced** (measured, pinned). For piece 4:
+the ledger's `kind` takes `ledger` and `schema` only and row 0's hash pins the bootstrap's text, so a pass that is
+ledgered changes the bootstrap and makes every standing ledger unknown — decided in piece 4's contract. For piece 5:
+the command's green run on its real target is first made there. For piece 14: the bench's own connections take the
+driver's `PG*` variables, as the runner's did before this piece's correction. Costs: a `verify` of piece 3 takes about
+1.5 minutes with the instance to make; the piece took four writing hands, two helpers and one session, the 5-hour
+window from 2 % to 43 %.*
 
 **4 — the chain: functions and reference.** The functions pass re-applies every file in one transaction; the files
 are the manifest: after the pass the functions in `os` are exactly the manifest's, name and signature — one whose file
