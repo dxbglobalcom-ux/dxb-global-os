@@ -20,7 +20,8 @@ enough, and it is not only for sleep (CEO, 2026-11-16).
   session left him, or go on with it, hours later. Away ends on his word that he is back — "geldim", "PC
   başındayım", "kapat" — or ten hours after the last turn that was not the clock's own ping (his number: "10
   saat sonra kapatsın"); the session never takes the marker off by its own judgement
-  (CEO, 2026-11-17 <!-- CEO-OK: away-ends-only-on-his-word-2026-11-17 -->). Measured 2026-11-16: a session that
+  (CEO, 2026-11-17 <!-- CEO-OK: away-ends-only-on-his-word-2026-11-17 -->). The one other end is the handover: a
+  session that has handed its job over closes its own away at once — the successor carries the wait (step 9). Measured 2026-11-16: a session that
   had finished and asked him three questions closed away by this door's own last step, and his answer would
   have been paid for cold.
 
@@ -75,8 +76,8 @@ line, so a session he does not come back to stops costing by itself.
    **The hands.** A hand's cache lasts five minutes: keeping one warm for an hour would take fifteen pings,
    more than opening it cold. No hand is kept warm; a running hand finishes and its piece is verified and
    committed before the wait, and after it a fresh hand is opened (dxb-team3 §3, §7).
-6. **Everything finished, recorded and told** → the clock stays armed and away stays on: every ping is
-   re-armed (step 4). The machine is suspended only if he said so for this job.
+6. **Everything finished, recorded and told** — and the job not handed over (step 9) → the clock stays armed and
+   away stays on: every ping is re-armed (step 4). The machine is suspended only if he said so for this job.
 7. **He says he is back, or that it be closed** — in his own words, in this session →
    `scripts/ops/dxb-warm-wait --away off "<his words>"`: a few of his own words in a row, as he wrote them. The
    command looks for them in the messages he himself sent to this session after away was set, and refuses
@@ -87,6 +88,11 @@ line, so a session he does not come back to stops costing by itself.
    is running: run the close command (`scripts/ops/dxb-warm-wait --away off --idle`, which the command takes
    only after the clock has said so), arm nothing, end the turn in one short line. Work is still running — a
    render, a hand — : arm `scripts/ops/dxb-warm-wait --watch` again; the ten hours are for a quiet session.
+9. **The job is handed over while he is away** → once the successor is seen alive and has marked itself away and
+   armed its own clock, the session that handed over closes its own away — `scripts/ops/dxb-warm-wait --away off
+   "<his words>"` when he said so in this session, `--away off --handover` otherwise — and re-arms nothing: two
+   sessions kept warm for one job is the cost he ordered gone (CEO, 2026-11-23: "Eğer devredilmişse ve ben uzaktaysam
+   mutlaka kapatılsın" <!-- CEO-OK: away-closed-by-the-session-that-handed-over-2026-11-23 -->).
 
 ## What it cannot do
 

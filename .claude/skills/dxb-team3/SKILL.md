@@ -383,6 +383,9 @@ alone (STATE, the board) is checked by the rulers on commit instead.
   (dictation off) → `operator key Return` → `operator key ctrl+space` (on again), each checked on a shot
   <!-- CEO-OK: handover-dictation-off-enter-on-2026-11-09 -->.
   Proof it is alive: `ListAgents` shows it and it answers.
+  **He is away at the handover** → the note's first lines tell the successor to open `dxb-warm-wait`, and once it is
+  seen alive with its own clock armed, the session that handed over closes its own away mode (`dxb-warm-wait`, step 9)
+  <!-- CEO-OK: away-closed-by-the-session-that-handed-over-2026-11-23 -->.
 
 ## 8. The prompts for Fable 5.2 — the video's, in Anthropic's own wording
 

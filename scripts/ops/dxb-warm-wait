@@ -19,6 +19,7 @@ the warm-keeping itself. The session then runs the line this command printed, an
   dxb-warm-wait --away off "<his words>"   he is back: words he typed or dictated in this session after away
                                    was set, found in its transcript
   dxb-warm-wait --away off --idle  the ten quiet hours are over: taken only after this session's clock said so
+  dxb-warm-wait --away off --handover   the job was handed over: the successor carries the wait
 
 The cache goes cold 55 minutes after the session's LAST TURN, not after the arming: the turn
 is read from the session's transcript ($CLAUDE_CODE_SESSION_ID's, or --transcript PATH), and a
@@ -68,7 +69,8 @@ import time
 
 USAGE = ("usage: dxb-warm-wait (--watch | --until-reset | --until HH:MM | --until @EPOCH | --for MINUTES) [--transcript PATH]\n"
          "       dxb-warm-wait --watch --idle-since @EPOCH [--transcript PATH]\n"
-         "       dxb-warm-wait --status [--transcript PATH] | --away on | --away off \"<his words that he is back>\" | --away off --idle")
+         "       dxb-warm-wait --status [--transcript PATH] | --away on | --away off \"<his words that he is back>\" | --away off --idle\n"
+         "       dxb-warm-wait --away off --handover   the job was handed over: the successor carries the wait")
 
 
 def test_knob(name, real):
@@ -702,6 +704,24 @@ def idle_away_off(session):
     return 0
 
 
+def handover_away_off(session):
+    """--away off --handover: the job was handed over to a successor while he is away, and the successor carries
+    the wait (CEO, 2026-11-23): this session closes its own away, with no word of his and no clock asked."""
+    if not session:
+        print("dxb-warm-wait: no session to mark; CLAUDE_CODE_SESSION_ID is not set", file=sys.stderr)
+        return 2
+    try:
+        os.remove(away_file(session))
+    except FileNotFoundError:
+        print("AWAY off")  # it was not on: nothing to end
+        return 0
+    with contextlib.suppress(OSError), open(LOG, "a") as handle:
+        handle.write(json.dumps({"ts": datetime.datetime.now().isoformat(timespec="seconds"), "event": "away_off",
+                                 "mode": "handover"}) + "\n")
+    print("AWAY off")
+    return 0
+
+
 def set_away(session, switch, transcript=None):
     """--away on, --away off "<his words>": write or remove the marker that says the session was left to work alone.
 
@@ -713,6 +733,8 @@ def set_away(session, switch, transcript=None):
     """
     if switch == ["off", "--idle"]:
         return idle_away_off(session)
+    if switch == ["off", "--handover"]:
+        return handover_away_off(session)
     his_words = switch[1].strip() if len(switch) == 2 and switch[0] == "off" else ""
     if switch == ["off"] or (switch[:1] == ["off"] and not his_words):
         print("dxb-warm-wait: away ends only on his word that he is back -- a finished job does not end it, the clock "

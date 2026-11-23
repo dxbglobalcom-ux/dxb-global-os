@@ -945,6 +945,16 @@ def the_away_marker():
         handle.write("then\n")
     run("--away", "on")
     check("--away on clears an older quiet's end", os.path.exists(said), False)
+    # a job handed over to a successor while he is away (CEO, 2026-11-23): the session closes its own away, no word or clock asked
+    handover = run("--away", "off", "--handover")
+    check("--away off --handover takes the marker off", (handover.returncode, handover.stdout, os.path.exists(marker)), (0, "AWAY off\n", False))
+    with open(os.path.join(RUNTIME, "warm-wait.log")) as lines:
+        last = json.loads(lines.readlines()[-1])
+    check("the handover goes into the log", (last["event"], last.get("mode")), ("away_off", "handover"))
+    handover = run("--away", "off", "--handover")
+    check("--away off --handover when it is not on: nothing to end", (handover.returncode, handover.stdout), (0, "AWAY off\n"))
+    check("--away off --handover with no session to mark", run("--away", "off", "--handover", session=None).returncode, 2)
+    run("--away", "on")
     with open(marker, "w") as broken:
         broken.write("no time\n")
     check("a marker that does not say when: his words anywhere in the session", off("geldim PC"), (0, "AWAY off\n", False))
