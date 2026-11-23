@@ -82,7 +82,9 @@ gives the first line alone. An unlogged table's rows are rows.
 pure. Both are rows' texts.
 
 - **A row is kept** when a row of the same table in `after` holds every key of it with an equal JSON value; each
-  row of `after` answers for one row of `before` at most (rows are a multiset). A row that is not kept is *lost*.
+  row of `after` answers for one row of `before` at most (rows are a multiset). **Equal is "the server printed it
+  the same"** (§6a.1): a row's own keys are a set, and under each key the value's text is compared as it stands —
+  `12.5000` is not `12.5`, and no number passes through a double. A row that is not kept is *lost*.
   New columns and new rows cost nothing; a column dropped or retyped, a value changed, a row deleted, a table
   emptied, dropped or renamed lose rows — and the piece that means such a change says so (§9).
 - **A sequence is kept** when `after` holds its line and it does not stand behind: by `ascending`, `last_value`
@@ -115,7 +117,8 @@ under `db/schema/`, `db/functions/` and `db/reference/`, at its path below `db/`
 byte for byte, from git's objects. A directory the commit does not hold is not made. It throws `RevisionRefused`
 with a `reason`: `unknown-revision` (also a revision that begins with `-`); `into-not-empty` (`into` stands and
 holds anything); `not-a-file` (an entry under the three directories that is a link or a gitlink). `files: 0` is an
-answer: that commit holds no chain. Nothing of the working tree or the index is read; nothing outside `into` is
+answer: that commit holds no chain, and a missing `into` is then not made. **A refused call writes nothing:** every
+entry is judged before the first byte is written. An `into` that is a regular file is `into-not-empty`. Nothing of the working tree or the index is read; nothing outside `into` is
 written; the repository is not written to.
 
 ## 6. The tests — `foundation/tests/upgrade/`, written before the code
@@ -187,6 +190,37 @@ The ordered module stops at its first red step; before the code exists every ben
 `rows` call or at B, and the test hand shows each later case red for its own reason by neutralising the earlier
 ones in the working tree and restoring them — as 6a's did.
 
+## 6a. What the tests pinned beyond §6 (the test hand's readings, read and accepted by the lead)
+
+108 cases of this piece: 71 without the bench, 24 of `chainAt` on a throwaway repository, 5 steps on a fresh
+instance (clean) and 8 on a second (upgraded). The lead read the fixtures, the three expected texts and both bench
+modules, and saw the files red before the code (`evidence/lead-run-on-the-tests.log`).
+
+1. **Equal JSON values** — decided by the lead when the test hand asked: the same text as the server printed it.
+   A column retyped to another scale changes every value's text and loses its rows (§9's rule for a change that
+   means it). A nested object that gains a key is a changed value: only a row's own keys may be added.
+2. `lost` and `back` are sorted by the line after its sign, as §5 says — so a `+` stands before its `-` when the
+   new line sorts lower (C.5's sequence: `+ … 100 called f` then `- … 110 called t`).
+3. `ROWS_KEPT rows=<n> sequences=<m>` counts `row` and `sequence-position` lines of the file; the first line is
+   not counted. A rows' text that holds a line twice, and the first line alone, are well formed.
+4. Words: `rows --kept --kept` answers `rows`' usage line; `--kept a` without a call piece 3's; `snapshot --kept a`
+   the snapshot's.
+5. **A versioned change that writes rows of a table whose row security is forced lifts the force for its own
+   statements and puts it back in the same file** (`no force row level security` … `force row level security`):
+   as the owner, whom no policy names, an `update` would otherwise meet no row. B's `0005` and C's `0006` do so;
+   the snapshot is the same after. Carried to stage 1's first change to a populated table.
+6. A changed signature is `drop function if exists` in the schema file: on a clean build the old signature never
+   stood, because the functions pass runs after the schema files.
+7. `chainAt` is synchronous. Every file counts, a `.gitkeep`, an empty file and a nested one too; `main:db` (a
+   tree), a revision that does not exist and any that begins with `-` are `unknown-revision`; an `into` holding
+   only an empty directory is `into-not-empty`; a link outside the three directories is no refusal.
+8. **Beyond §6 B:** the clean module also runs C on the clean B — green, and red by `0006`'s ledger line alone —
+   so "C's index is absent from a clean build" is run, not read. C.4 checks `--kept` against the text C.1
+   printed and kept aside in a temporary file, as §7's proof does. C.1 shows the hostile session biting.
+9. A case pins the whole difference between `b.snapshot.txt` and 6a's fixture text (7 lines out, 25 in): a lock
+   commit that changes `fixture.snapshot.txt` changes `b.snapshot.txt` and that case with it. C.3 pins
+   PostgreSQL 17.6's own message for the refused column.
+
 ## 7. Where the real chain's upgrade is proven from **[lead]** — an adaptation of BUILD.md §6
 
 BUILD.md says "an instance built at the previous committed revision". Read as "the commit before", that proof is
@@ -233,8 +267,8 @@ corrections taken tests-first; BUILD.md's piece 6 carries the Done note of 6b an
 - A row is a JSON value (6a §9): array bounds, `-0` and a `json` column's duplicate keys are not told apart.
 - A sequence that cycles may stand behind by right; a large object is not read; rows of a table outside the
   covered schemas are not read, whoever owns it.
-- **That *refused-when-populated* is green on an empty database, and that C's index is absent from a clean
-  build, are PostgreSQL's own rules read from the files' text, not run** — each would cost an instance.
+- **That *refused-when-populated* is green on an empty database is PostgreSQL's own rule read from the file's
+  text, not run** — it would cost an instance. (That C's index is absent from a clean build is run — §6a.8.)
 - The real chain's upgrade is not under the lock (§7) and, until piece 13, is run by hand.
 - What a build changes outside the snapshot's reach is still unseen (6a §9's first limit) — 6c. Measured for it
   already: a fresh instance of 2026-11-23 holds the platform's partitions `realtime.messages_2026_11_22` …

@@ -1,0 +1,271 @@
+== at 8bab78fc, tree: ?? foundation/tests/upgrade/;
+== typecheck
+foundation/tests/upgrade/cases/kept.ts(2,10): error TS2305: Module '"@dxb-foundation/chain"' has no exported member 'keptOf'.
+foundation/tests/upgrade/chain-at.test.ts(4,10): error TS2305: Module '"@dxb-foundation/chain"' has no exported member 'RevisionRefused'.
+foundation/tests/upgrade/chain-at.test.ts(4,27): error TS2305: Module '"@dxb-foundation/chain"' has no exported member 'chainAt'.
+foundation/tests/upgrade/clean.test.ts(3,10): error TS2305: Module '"@dxb-foundation/chain"' has no exported member 'rowsOf'.
+foundation/tests/upgrade/upgraded.test.ts(6,10): error TS2305: Module '"@dxb-foundation/chain"' has no exported member 'rowsOf'.
+typecheck exit=2
+== foundation/tests/upgrade/chain-at.test.ts
+   ✓ A.4 chainAt — the chain as a commit holds it > the fixture is what the case says: three commits on main, the working tree and the index ahead of the last 7ms
+   × A.4 chainAt — the chain as a commit holds it > the middle commit: every file of schema/, functions/ and reference/ at its path below db/, byte for byte — the CRLF, the file without a final newline, the bytes that are not UTF-8, the empty and the nested file among them — and none of db/'s other directories 2ms
+   × A.4 chainAt — the chain as a commit holds it > a branch name, a short id and a full id resolve to the same commit and the same files 0ms
+   × A.4 chainAt — the chain as a commit holds it > the first commit holds no chain: files 0, and no directory is made in an empty into 0ms
+   × A.4 chainAt — the chain as a commit holds it > the first commit with into missing: files 0, and into is not made (the lead's reading) 0ms
+   × A.4 chainAt — the chain as a commit holds it > the last commit, by HEAD and by main: its files — not the working tree's change, not the index's, not the untracked file 0ms
+   × A.4 chainAt — the chain as a commit holds it > an into that stands empty is written into 0ms
+   × A.4 chainAt refuses, each by its reason > a name no ref carries → unknown-revision 0ms
+   × A.4 chainAt refuses, each by its reason > an id no object carries → unknown-revision 0ms
+   × A.4 chainAt refuses, each by its reason > a revision past the first commit → unknown-revision 0ms
+   × A.4 chainAt refuses, each by its reason > a revision that names a tree, not a commit → unknown-revision 0ms
+   × A.4 chainAt refuses, each by its reason > a revision that begins with -: --all → unknown-revision 0ms
+   × A.4 chainAt refuses, each by its reason > a revision that begins with -: -h → unknown-revision 0ms
+   × A.4 chainAt refuses, each by its reason > a revision that begins with -: an id behind a dash → unknown-revision 0ms
+   × A.4 chainAt refuses, each by its reason > an into that holds a file → into-not-empty, and the file is as it was 0ms
+   × A.4 chainAt refuses, each by its reason > an into that holds only an empty directory → into-not-empty 0ms
+   × A.4 chainAt refuses, each by its reason > a link under schema/ → not-a-file 0ms
+   × A.4 chainAt refuses, each by its reason > a gitlink under functions/ → not-a-file 0ms
+   × A.4 chainAt refuses, each by its reason > a refused call (unknown-revision, at no-such-branch) writes nothing: a missing into is still missing, an empty into still empty 0ms
+   × A.4 chainAt refuses, each by its reason > a refused call (not-a-file, at link) writes nothing: a missing into is still missing, an empty into still empty 0ms
+   × A.4 chainAt refuses, each by its reason > a refused call (not-a-file, at gitlink) writes nothing: a missing into is still missing, an empty into still empty 0ms
+   × A.4 chainAt refuses, each by its reason > an into that is a regular file → into-not-empty, and its bytes are as before 0ms
+   ✓ A.4 chainAt refuses, each by its reason > a link outside the three directories is no refusal: the middle commit, answered above, holds two 2ms
+   ✓ A.4 the repository is not written to > after every call above: HEAD, the index, every file of .git and of the working tree as before 2ms
+⎯⎯⎯⎯⎯⎯ Failed Tests 21 ⎯⎯⎯⎯⎯⎯⎯
+ FAIL  upgrade/chain-at.test.ts > A.4 chainAt — the chain as a commit holds it > the middle commit: every file of schema/, functions/ and reference/ at its path below db/, byte for byte — the CRLF, the file without a final newline, the bytes that are not UTF-8, the empty and the nested file among them — and none of db/'s other directories
+TypeError: (0 , chainAt) is not a function
+ FAIL  upgrade/chain-at.test.ts > A.4 chainAt — the chain as a commit holds it > a branch name, a short id and a full id resolve to the same commit and the same files
+TypeError: (0 , chainAt) is not a function
+ FAIL  upgrade/chain-at.test.ts > A.4 chainAt — the chain as a commit holds it > the first commit holds no chain: files 0, and no directory is made in an empty into
+TypeError: (0 , chainAt) is not a function
+ FAIL  upgrade/chain-at.test.ts > A.4 chainAt — the chain as a commit holds it > the first commit with into missing: files 0, and into is not made (the lead's reading)
+TypeError: (0 , chainAt) is not a function
+ FAIL  upgrade/chain-at.test.ts > A.4 chainAt — the chain as a commit holds it > the last commit, by HEAD and by main: its files — not the working tree's change, not the index's, not the untracked file
+TypeError: (0 , chainAt) is not a function
+ FAIL  upgrade/chain-at.test.ts > A.4 chainAt — the chain as a commit holds it > an into that stands empty is written into
+TypeError: (0 , chainAt) is not a function
+ FAIL  upgrade/chain-at.test.ts > A.4 chainAt refuses, each by its reason > a name no ref carries → unknown-revision
+ FAIL  upgrade/chain-at.test.ts > A.4 chainAt refuses, each by its reason > an id no object carries → unknown-revision
+ FAIL  upgrade/chain-at.test.ts > A.4 chainAt refuses, each by its reason > a revision past the first commit → unknown-revision
+ FAIL  upgrade/chain-at.test.ts > A.4 chainAt refuses, each by its reason > a revision that names a tree, not a commit → unknown-revision
+ FAIL  upgrade/chain-at.test.ts > A.4 chainAt refuses, each by its reason > a revision that begins with -: --all → unknown-revision
+ FAIL  upgrade/chain-at.test.ts > A.4 chainAt refuses, each by its reason > a revision that begins with -: -h → unknown-revision
+ FAIL  upgrade/chain-at.test.ts > A.4 chainAt refuses, each by its reason > a revision that begins with -: an id behind a dash → unknown-revision
+TypeError: Right-hand side of 'instanceof' is not an object
+ FAIL  upgrade/chain-at.test.ts > A.4 chainAt refuses, each by its reason > an into that holds a file → into-not-empty, and the file is as it was
+TypeError: Right-hand side of 'instanceof' is not an object
+ FAIL  upgrade/chain-at.test.ts > A.4 chainAt refuses, each by its reason > an into that holds only an empty directory → into-not-empty
+TypeError: Right-hand side of 'instanceof' is not an object
+ FAIL  upgrade/chain-at.test.ts > A.4 chainAt refuses, each by its reason > a link under schema/ → not-a-file
+TypeError: Right-hand side of 'instanceof' is not an object
+ FAIL  upgrade/chain-at.test.ts > A.4 chainAt refuses, each by its reason > a gitlink under functions/ → not-a-file
+TypeError: Right-hand side of 'instanceof' is not an object
+ FAIL  upgrade/chain-at.test.ts > A.4 chainAt refuses, each by its reason > a refused call (unknown-revision, at no-such-branch) writes nothing: a missing into is still missing, an empty into still empty
+ FAIL  upgrade/chain-at.test.ts > A.4 chainAt refuses, each by its reason > a refused call (not-a-file, at link) writes nothing: a missing into is still missing, an empty into still empty
+ FAIL  upgrade/chain-at.test.ts > A.4 chainAt refuses, each by its reason > a refused call (not-a-file, at gitlink) writes nothing: a missing into is still missing, an empty into still empty
+TypeError: Right-hand side of 'instanceof' is not an object
+ FAIL  upgrade/chain-at.test.ts > A.4 chainAt refuses, each by its reason > an into that is a regular file → into-not-empty, and its bytes are as before
+TypeError: Right-hand side of 'instanceof' is not an object
+ Test Files  1 failed (1)
+      Tests  21 failed | 3 passed (24)
+   Duration  338ms (transform 109ms, setup 0ms, collect 149ms, tests 82ms, environment 0ms, prepare 31ms)
+exit=1 seconds=1
+== foundation/tests/upgrade/clean.test.ts
+   ✓ piece 6b — B on a fresh instance: clean > fresh makes an instance: INSTANCE_UP, listed  52354ms
+   ✓ piece 6b — B on a fresh instance: clean > B from nothing: chain up --root <B> → CHAIN_GREEN applied=5 standing=5 functions=3 reference=1; snapshot --check expected/b.snapshot.txt → SNAPSHOT_EQUAL  354ms
+   × piece 6b — B on a fresh instance: clean > rows holds the seeded row and no row of os.parts: the text written here, printed by the command and answered by the library 81ms
+   × piece 6b — B on a fresh instance: clean > C on the clean instance: chain up --root <C> → CHAIN_GREEN applied=1; the check is red by 0006's ledger line alone — no index; rows as before 0ms
+   × piece 6b — B on a fresh instance: clean > down → INSTANCE_DOWN 0ms
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 3 ⎯⎯⎯⎯⎯⎯⎯
+ FAIL  upgrade/clean.test.ts > piece 6b — B on a fresh instance: clean > rows holds the seeded row and no row of os.parts: the text written here, printed by the command and answered by the library
+AssertionError: expected 'usage: cli.ts up [--root <dir>] [--wa…' to be 'rows-format 1\nrow os.notes {"note": …' // Object.is equality
+ FAIL  upgrade/clean.test.ts > piece 6b — B on a fresh instance: clean > C on the clean instance: chain up --root <C> → CHAIN_GREEN applied=1; the check is red by 0006's ledger line alone — no index; rows as before
+ FAIL  upgrade/clean.test.ts > piece 6b — B on a fresh instance: clean > down → INSTANCE_DOWN
+Error: not run: the step "rows holds the seeded row and no row of os.parts: the text written here, printed by the command and answered by the library" failed before it
+ Test Files  1 failed (1)
+      Tests  3 failed | 2 passed (5)
+   Duration  54.68s (transform 121ms, setup 0ms, collect 168ms, tests 54.41s, environment 0ms, prepare 31ms)
+exit=1 seconds=55
+== foundation/tests/upgrade/upgraded.test.ts
+   ✓ piece 6b — built at A, given rows, upgraded: on a second fresh instance, in order > fresh makes an instance: INSTANCE_UP, listed  52855ms
+   × piece 6b — built at A, given rows, upgraded: on a second fresh instance, in order > C.1 chain up --root <A> → CHAIN_GREEN; equal to 6a's fixture text; the rows given — the text still equal; rows is expected/a.rows.txt, byte for byte 1039ms
+   × piece 6b — built at A, given rows, upgraded: on a second fresh instance, in order > C.1 read twice by the library, and once through a connection whose own settings are hostile: the same bytes 1ms
+   × piece 6b — built at A, given rows, upgraded: on a second fresh instance, in order > C.2 an applied file edited: chain up --root <edited> → CHAIN_RED, 0003-inside.sql changed; the snapshot still A's; rows --kept a.rows.txt → ROWS_KEPT 0ms
+   × piece 6b — built at A, given rows, upgraded: on a second fresh instance, in order > C.3 a change a populated table refuses: chain up --root <refused-when-populated> is red at 0005; the snapshot still A's — no ledger row for it; the rows kept 0ms
+   × piece 6b — built at A, given rows, upgraded: on a second fresh instance, in order > C.4 upgraded equals clean: chain up --root <B> → CHAIN_GREEN; SNAPSHOT_EQUAL to b.snapshot.txt; rows is b.rows.txt, byte for byte; ROWS_KEPT against a.rows.txt and against what C.1 read 0ms
+   × piece 6b — built at A, given rows, upgraded: on a second fresh instance, in order > C.5 chain up --root <C> → CHAIN_GREEN; the check is red by exactly 0006's ledger line and the index; rows --kept b.rows.txt → ROWS_RED, its difference whole 0ms
+   × piece 6b — built at A, given rows, upgraded: on a second fresh instance, in order > down → INSTANCE_DOWN 0ms
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 7 ⎯⎯⎯⎯⎯⎯⎯
+ FAIL  upgrade/upgraded.test.ts > piece 6b — built at A, given rows, upgraded: on a second fresh instance, in order > C.1 chain up --root <A> → CHAIN_GREEN; equal to 6a's fixture text; the rows given — the text still equal; rows is expected/a.rows.txt, byte for byte
+AssertionError: expected 'usage: cli.ts up [--root <dir>] [--wa…' to be 'rows-format 1\nrow os.parts {"id": 10…' // Object.is equality
+ FAIL  upgrade/upgraded.test.ts > piece 6b — built at A, given rows, upgraded: on a second fresh instance, in order > C.1 read twice by the library, and once through a connection whose own settings are hostile: the same bytes
+ FAIL  upgrade/upgraded.test.ts > piece 6b — built at A, given rows, upgraded: on a second fresh instance, in order > C.2 an applied file edited: chain up --root <edited> → CHAIN_RED, 0003-inside.sql changed; the snapshot still A's; rows --kept a.rows.txt → ROWS_KEPT
+ FAIL  upgrade/upgraded.test.ts > piece 6b — built at A, given rows, upgraded: on a second fresh instance, in order > C.3 a change a populated table refuses: chain up --root <refused-when-populated> is red at 0005; the snapshot still A's — no ledger row for it; the rows kept
+ FAIL  upgrade/upgraded.test.ts > piece 6b — built at A, given rows, upgraded: on a second fresh instance, in order > C.4 upgraded equals clean: chain up --root <B> → CHAIN_GREEN; SNAPSHOT_EQUAL to b.snapshot.txt; rows is b.rows.txt, byte for byte; ROWS_KEPT against a.rows.txt and against what C.1 read
+ FAIL  upgrade/upgraded.test.ts > piece 6b — built at A, given rows, upgraded: on a second fresh instance, in order > C.5 chain up --root <C> → CHAIN_GREEN; the check is red by exactly 0006's ledger line and the index; rows --kept b.rows.txt → ROWS_RED, its difference whole
+ FAIL  upgrade/upgraded.test.ts > piece 6b — built at A, given rows, upgraded: on a second fresh instance, in order > down → INSTANCE_DOWN
+Error: not run: the step "C.1 chain up --root <A> → CHAIN_GREEN; equal to 6a's fixture text; the rows given — the text still equal; rows is expected/a.rows.txt, byte for byte" failed before it
+ Test Files  1 failed (1)
+      Tests  7 failed | 1 passed (8)
+   Duration  55.63s (transform 130ms, setup 0ms, collect 177ms, tests 55.35s, environment 0ms, prepare 30ms)
+exit=1 seconds=56
+== foundation/tests/upgrade/without-the-bench.test.ts
+   × A.1 keptOf — rows > equal texts: nothing lost, nothing back, the counts of before 2ms
+   × A.1 keptOf — rows > the first line alone against the first line alone: zero rows, zero sequences 0ms
+   × A.1 keptOf — rows > a column added costs nothing: every key of before is held, with its value 0ms
+   × A.1 keptOf — rows > a row added, and a table added, cost nothing 0ms
+   × A.1 keptOf — rows > a value changed: one `-` for the row before, one `+` for what it became; the rows that answered are not named 0ms
+   × A.1 keptOf — rows > a value inside a nested JSON value that gained a key is a changed value: only a row's own keys may be added 0ms
+   × A.1 keptOf — rows > a row deleted: its `-` alone — every row left in its table answered for one 0ms
+   × A.1 keptOf — rows > a table gone — or emptied, or renamed — loses every row of it; the rows of another table are not named 0ms
+   × A.1 keptOf — rows > a column gone loses every row of its table, each beside the row of after that answered for none 0ms
+   × A.1 keptOf — rows > a column retyped — its value's JSON changed — loses the rows whose value changed 0ms
+   × A.1 keptOf — rows > rows are a multiset: two equal rows against one lose one; two against two lose none 0ms
+   × A.1 keptOf — rows > one row of after answers for one row of before at most: two rows of before that it would each match lose one 0ms
+   × A.1 keptOf — equal is printed the same (the lead's reading of §5) > a number's text changed with its value unchanged — 12.5000 to 12.5, 1.0 to 1, 1e-7 to 0.0000001 — loses the row, `-` and `+` printed 0ms
+   × A.1 keptOf — equal is printed the same (the lead's reading of §5) > two rows that differ only in a digit a double cannot hold, unchanged while a column is added: both kept 0ms
+   × A.1 keptOf — equal is printed the same (the lead's reading of §5) > after holds the …0001 row twice and no …0002: one row lost — a value rounded through a double would have kept it 0ms
+   × A.1 keptOf — equal is printed the same (the lead's reading of §5) > a row's keys are a set: the same keys in another order are kept, with a key added too 0ms
+   × A.1 keptOf — equal is printed the same (the lead's reading of §5) > a string holding \", \\ and \n escapes and an é is equal to itself 0ms
+   × A.1 keptOf — equal is printed the same (the lead's reading of §5) > a string that differs only inside an escape — \n becomes \t — loses its row 0ms
+   × A.1 keptOf — sequences > further on is kept: ascending higher, descending lower, and `called` from f to t at the same value 0ms
+   × A.1 keptOf — sequences > behind, ascending: its line of before and its line of after 0ms
+   × A.1 keptOf — sequences > behind, descending: a higher last_value 0ms
+   × A.1 keptOf — sequences > `called` gone back from t to f at the same value; sorted by the line after its sign, so the `+` comes first 0ms
+   × A.1 keptOf — sequences > a sequence gone: its line of before alone 0ms
+   × A.1 keptOf — the lists' order and the counts > lost across tables and back apart, each sorted by the line after its sign — `x": 0` before `x": 2`, `os.p 6` before `os.p 7` before `os.q`; the rows of a table that lost none are not named; the counts are the lines of before 0ms
+   × A.1 keptOf — the lists' order and the counts > sorted by UTF-8 bytes, not by UTF-16 code units: U+FF01 before U+1F600 0ms
+   ✓ A.2 rows --kept refuses before any connection > no instance stands while these cases run 1ms
+   × A.2 rows --kept refuses before any connection > a file that is absent → ROWS_REFUSED no-before, exit 2 81ms
+   × A.2 rows --kept refuses before any connection > a directory → ROWS_REFUSED no-before, exit 2 80ms
+   × A.2 rows --kept refuses before any connection > a file that cannot be read → ROWS_REFUSED no-before, exit 2 77ms
+   ✓ A.2 rows --kept refuses before any connection > the absent file is still absent after the refusal: the command never writes a file 76ms
+   × A.2 rows --kept refuses before any connection > no bytes at all → ROWS_REFUSED before-malformed, exit 2 80ms
+   × A.2 rows --kept refuses before any connection > a first line that is not rows-format 1 → ROWS_REFUSED before-malformed, exit 2 79ms
+   × A.2 rows --kept refuses before any connection > a snapshot's text, not a rows' text → ROWS_REFUSED before-malformed, exit 2 78ms
+   × A.2 rows --kept refuses before any connection > a first line missing → ROWS_REFUSED before-malformed, exit 2 73ms
+   × A.2 rows --kept refuses before any connection > a line out of order → ROWS_REFUSED before-malformed, exit 2 79ms
+   × A.2 rows --kept refuses before any connection > out of order by UTF-8 bytes, though in order by UTF-16 code units → ROWS_REFUSED before-malformed, exit 2 76ms
+   × A.2 rows --kept refuses before any connection > a carriage return ending each line → ROWS_REFUSED before-malformed, exit 2 76ms
+   × A.2 rows --kept refuses before any connection > a carriage return inside a line → ROWS_REFUSED before-malformed, exit 2 76ms
+   × A.2 rows --kept refuses before any connection > no final newline → ROWS_REFUSED before-malformed, exit 2 74ms
+   × A.2 rows --kept refuses before any connection > an empty line → ROWS_REFUSED before-malformed, exit 2 75ms
+   × A.2 rows --kept refuses before any connection > an empty last line → ROWS_REFUSED before-malformed, exit 2 76ms
+   × A.2 rows --kept refuses before any connection > a byte-order mark before the first line → ROWS_REFUSED before-malformed, exit 2 75ms
+   × A.2 rows --kept refuses before any connection > a byte that is never UTF-8 (0xff) → ROWS_REFUSED before-malformed, exit 2 76ms
+   × A.2 rows --kept refuses before any connection > a continuation byte with nothing before it (0x80) → ROWS_REFUSED before-malformed, exit 2 74ms
+   × A.2 rows --kept refuses before any connection > a character cut short (0xe2 0x82) → ROWS_REFUSED before-malformed, exit 2 75ms
+   × A.2 rows --kept refuses before any connection > an overlong spelling of '/' (0xc0 0xaf) → ROWS_REFUSED before-malformed, exit 2 75ms
+   × A.2 rows --kept refuses before any connection > a row held twice, side by side, is no malformation: answered as the file holding it once is, by the refused connection 153ms
+   × A.2 rows --kept refuses before any connection > the first line alone is a rows' text (a database with no covered schema): no refusal, the refused connection 74ms
+   × A.2 the usage lines > rows extra → its own usage line, exit 2 77ms
+   × A.2 the usage lines > rows --kept → its own usage line, exit 2 76ms
+   × A.2 the usage lines > rows --kept a b → its own usage line, exit 2 75ms
+   × A.2 the usage lines > rows --kept a --kept b → its own usage line, exit 2 76ms
+   × A.2 the usage lines > rows --check a → its own usage line, exit 2 80ms
+   × A.2 the usage lines > rows --root a → its own usage line, exit 2 78ms
+   × A.2 the usage lines > rows --kept --kept → its own usage line, exit 2 78ms
+   ✓ A.2 the usage lines > snapshot extra → snapshot's usage line, unchanged, exit 2 75ms
+   ✓ A.2 the usage lines > snapshot --kept a → snapshot's usage line, unchanged, exit 2 75ms
+   ✓ A.2 the usage lines > no word, none of up, snapshot or rows → piece 3's usage line unchanged, exit 2 75ms
+   ✓ A.2 the usage lines > row, none of up, snapshot or rows → piece 3's usage line unchanged, exit 2 76ms
+   ✓ A.2 the usage lines > Rows, none of up, snapshot or rows → piece 3's usage line unchanged, exit 2 78ms
+   ✓ A.2 the usage lines > kept, none of up, snapshot or rows → piece 3's usage line unchanged, exit 2 75ms
+   ✓ A.2 the usage lines > --kept a, none of up, snapshot or rows → piece 3's usage line unchanged, exit 2 75ms
+   ✓ A.3 the rows' texts obey SPEC §4's form and hold only its two kinds of line > the judge is seen to work first: it finds each offence planted in a text that is otherwise in the form 1ms
+   ✓ A.3 the rows' texts obey SPEC §4's form and hold only its two kinds of line > expected/a.rows.txt: the first line, sorted by bytes, no \r, no empty line, a final newline, only row and sequence-position lines of their shapes 0ms
+   ✓ A.3 the rows' texts obey SPEC §4's form and hold only its two kinds of line > expected/b.rows.txt: the first line, sorted by bytes, no \r, no empty line, a final newline, only row and sequence-position lines of their shapes 0ms
+   ✓ A.3 the rows' texts obey SPEC §4's form and hold only its two kinds of line > a.rows.txt holds the five rows given and the two sequences; b.rows.txt the same five, the seeded row and the same two 0ms
+   ✓ A.3 b.snapshot.txt: 6a's form, and 6a's fixture text with exactly the lines B's files cause > the first line, sorted by bytes, no \r, no empty line, no double space outside a last field, a final newline, every line of 6a §4.3's kinds and shapes 2ms
+   ✓ A.3 b.snapshot.txt: 6a's form, and 6a's fixture text with exactly the lines B's files cause > against 6a's committed fixture text: out the lines A's next_ticket, count_parts body and two vocabulary rows made; in the lines B's files make 0ms
+   ✓ A.3 b.snapshot.txt: 6a's form, and 6a's fixture text with exactly the lines B's files cause > its ledger carries each schema file's SHA-256, as the runner writes it: the real two, the fixture's two, then B's 0005 0ms
+   ✓ A.3 b.snapshot.txt: 6a's form, and 6a's fixture text with exactly the lines B's files cause > B's root and C's, assembled, read with no offence: five and six schema files, A's three function files with B's two, B's reference file 3ms
+   ✓ A.3 real/from.txt (SPEC §7) > is forty lower-case hex digits and one newline 0ms
+⎯⎯⎯⎯⎯⎯ Failed Tests 53 ⎯⎯⎯⎯⎯⎯⎯
+ FAIL  upgrade/without-the-bench.test.ts > A.1 keptOf — rows > equal texts: nothing lost, nothing back, the counts of before
+TypeError: (0 , keptOf) is not a function
+ FAIL  upgrade/without-the-bench.test.ts > A.1 keptOf — rows > the first line alone against the first line alone: zero rows, zero sequences
+TypeError: (0 , keptOf) is not a function
+ FAIL  upgrade/without-the-bench.test.ts > A.1 keptOf — rows > a column added costs nothing: every key of before is held, with its value
+TypeError: (0 , keptOf) is not a function
+ FAIL  upgrade/without-the-bench.test.ts > A.1 keptOf — rows > a row added, and a table added, cost nothing
+TypeError: (0 , keptOf) is not a function
+ FAIL  upgrade/without-the-bench.test.ts > A.1 keptOf — rows > a value changed: one `-` for the row before, one `+` for what it became; the rows that answered are not named
+TypeError: (0 , keptOf) is not a function
+ FAIL  upgrade/without-the-bench.test.ts > A.1 keptOf — rows > a value inside a nested JSON value that gained a key is a changed value: only a row's own keys may be added
+TypeError: (0 , keptOf) is not a function
+ FAIL  upgrade/without-the-bench.test.ts > A.1 keptOf — rows > a row deleted: its `-` alone — every row left in its table answered for one
+TypeError: (0 , keptOf) is not a function
+ FAIL  upgrade/without-the-bench.test.ts > A.1 keptOf — rows > a table gone — or emptied, or renamed — loses every row of it; the rows of another table are not named
+TypeError: (0 , keptOf) is not a function
+ FAIL  upgrade/without-the-bench.test.ts > A.1 keptOf — rows > a column gone loses every row of its table, each beside the row of after that answered for none
+TypeError: (0 , keptOf) is not a function
+ FAIL  upgrade/without-the-bench.test.ts > A.1 keptOf — rows > a column retyped — its value's JSON changed — loses the rows whose value changed
+TypeError: (0 , keptOf) is not a function
+ FAIL  upgrade/without-the-bench.test.ts > A.1 keptOf — rows > rows are a multiset: two equal rows against one lose one; two against two lose none
+TypeError: (0 , keptOf) is not a function
+ FAIL  upgrade/without-the-bench.test.ts > A.1 keptOf — rows > one row of after answers for one row of before at most: two rows of before that it would each match lose one
+TypeError: (0 , keptOf) is not a function
+ FAIL  upgrade/without-the-bench.test.ts > A.1 keptOf — equal is printed the same (the lead's reading of §5) > a number's text changed with its value unchanged — 12.5000 to 12.5, 1.0 to 1, 1e-7 to 0.0000001 — loses the row, `-` and `+` printed
+TypeError: (0 , keptOf) is not a function
+ FAIL  upgrade/without-the-bench.test.ts > A.1 keptOf — equal is printed the same (the lead's reading of §5) > two rows that differ only in a digit a double cannot hold, unchanged while a column is added: both kept
+TypeError: (0 , keptOf) is not a function
+ FAIL  upgrade/without-the-bench.test.ts > A.1 keptOf — equal is printed the same (the lead's reading of §5) > after holds the …0001 row twice and no …0002: one row lost — a value rounded through a double would have kept it
+TypeError: (0 , keptOf) is not a function
+ FAIL  upgrade/without-the-bench.test.ts > A.1 keptOf — equal is printed the same (the lead's reading of §5) > a row's keys are a set: the same keys in another order are kept, with a key added too
+TypeError: (0 , keptOf) is not a function
+ FAIL  upgrade/without-the-bench.test.ts > A.1 keptOf — equal is printed the same (the lead's reading of §5) > a string holding \", \\ and \n escapes and an é is equal to itself
+TypeError: (0 , keptOf) is not a function
+ FAIL  upgrade/without-the-bench.test.ts > A.1 keptOf — equal is printed the same (the lead's reading of §5) > a string that differs only inside an escape — \n becomes \t — loses its row
+TypeError: (0 , keptOf) is not a function
+ FAIL  upgrade/without-the-bench.test.ts > A.1 keptOf — sequences > further on is kept: ascending higher, descending lower, and `called` from f to t at the same value
+TypeError: (0 , keptOf) is not a function
+ FAIL  upgrade/without-the-bench.test.ts > A.1 keptOf — sequences > behind, ascending: its line of before and its line of after
+TypeError: (0 , keptOf) is not a function
+ FAIL  upgrade/without-the-bench.test.ts > A.1 keptOf — sequences > behind, descending: a higher last_value
+TypeError: (0 , keptOf) is not a function
+ FAIL  upgrade/without-the-bench.test.ts > A.1 keptOf — sequences > `called` gone back from t to f at the same value; sorted by the line after its sign, so the `+` comes first
+TypeError: (0 , keptOf) is not a function
+ FAIL  upgrade/without-the-bench.test.ts > A.1 keptOf — sequences > a sequence gone: its line of before alone
+TypeError: (0 , keptOf) is not a function
+ FAIL  upgrade/without-the-bench.test.ts > A.1 keptOf — the lists' order and the counts > lost across tables and back apart, each sorted by the line after its sign — `x": 0` before `x": 2`, `os.p 6` before `os.p 7` before `os.q`; the rows of a table that lost none are not named; the counts are the lines of before
+TypeError: (0 , keptOf) is not a function
+ FAIL  upgrade/without-the-bench.test.ts > A.1 keptOf — the lists' order and the counts > sorted by UTF-8 bytes, not by UTF-16 code units: U+FF01 before U+1F600
+TypeError: (0 , keptOf) is not a function
+ FAIL  upgrade/without-the-bench.test.ts > A.2 rows --kept refuses before any connection > a file that is absent → ROWS_REFUSED no-before, exit 2
+ FAIL  upgrade/without-the-bench.test.ts > A.2 rows --kept refuses before any connection > a directory → ROWS_REFUSED no-before, exit 2
+ FAIL  upgrade/without-the-bench.test.ts > A.2 rows --kept refuses before any connection > a file that cannot be read → ROWS_REFUSED no-before, exit 2
+AssertionError: expected [ Array(1) ] to deeply equal [ 'ROWS_REFUSED no-before' ]
+ FAIL  upgrade/without-the-bench.test.ts > A.2 rows --kept refuses before any connection > no bytes at all → ROWS_REFUSED before-malformed, exit 2
+ FAIL  upgrade/without-the-bench.test.ts > A.2 rows --kept refuses before any connection > a first line that is not rows-format 1 → ROWS_REFUSED before-malformed, exit 2
+ FAIL  upgrade/without-the-bench.test.ts > A.2 rows --kept refuses before any connection > a snapshot's text, not a rows' text → ROWS_REFUSED before-malformed, exit 2
+ FAIL  upgrade/without-the-bench.test.ts > A.2 rows --kept refuses before any connection > a first line missing → ROWS_REFUSED before-malformed, exit 2
+ FAIL  upgrade/without-the-bench.test.ts > A.2 rows --kept refuses before any connection > a line out of order → ROWS_REFUSED before-malformed, exit 2
+ FAIL  upgrade/without-the-bench.test.ts > A.2 rows --kept refuses before any connection > out of order by UTF-8 bytes, though in order by UTF-16 code units → ROWS_REFUSED before-malformed, exit 2
+ FAIL  upgrade/without-the-bench.test.ts > A.2 rows --kept refuses before any connection > a carriage return ending each line → ROWS_REFUSED before-malformed, exit 2
+ FAIL  upgrade/without-the-bench.test.ts > A.2 rows --kept refuses before any connection > a carriage return inside a line → ROWS_REFUSED before-malformed, exit 2
+ FAIL  upgrade/without-the-bench.test.ts > A.2 rows --kept refuses before any connection > no final newline → ROWS_REFUSED before-malformed, exit 2
+ FAIL  upgrade/without-the-bench.test.ts > A.2 rows --kept refuses before any connection > an empty line → ROWS_REFUSED before-malformed, exit 2
+ FAIL  upgrade/without-the-bench.test.ts > A.2 rows --kept refuses before any connection > an empty last line → ROWS_REFUSED before-malformed, exit 2
+ FAIL  upgrade/without-the-bench.test.ts > A.2 rows --kept refuses before any connection > a byte-order mark before the first line → ROWS_REFUSED before-malformed, exit 2
+ FAIL  upgrade/without-the-bench.test.ts > A.2 rows --kept refuses before any connection > a byte that is never UTF-8 (0xff) → ROWS_REFUSED before-malformed, exit 2
+ FAIL  upgrade/without-the-bench.test.ts > A.2 rows --kept refuses before any connection > a continuation byte with nothing before it (0x80) → ROWS_REFUSED before-malformed, exit 2
+ FAIL  upgrade/without-the-bench.test.ts > A.2 rows --kept refuses before any connection > a character cut short (0xe2 0x82) → ROWS_REFUSED before-malformed, exit 2
+ FAIL  upgrade/without-the-bench.test.ts > A.2 rows --kept refuses before any connection > an overlong spelling of '/' (0xc0 0xaf) → ROWS_REFUSED before-malformed, exit 2
+AssertionError: expected [ Array(1) ] to deeply equal [ 'ROWS_REFUSED before-malformed' ]
+ FAIL  upgrade/without-the-bench.test.ts > A.2 rows --kept refuses before any connection > a row held twice, side by side, is no malformation: answered as the file holding it once is, by the refused connection
+AssertionError: expected '' to match /ECONNREFUSED/
+ FAIL  upgrade/without-the-bench.test.ts > A.2 rows --kept refuses before any connection > the first line alone is a rows' text (a database with no covered schema): no refusal, the refused connection
+AssertionError: expected '' to match /ECONNREFUSED/
+ FAIL  upgrade/without-the-bench.test.ts > A.2 the usage lines > rows extra → its own usage line, exit 2
+ FAIL  upgrade/without-the-bench.test.ts > A.2 the usage lines > rows --kept → its own usage line, exit 2
+ FAIL  upgrade/without-the-bench.test.ts > A.2 the usage lines > rows --kept a b → its own usage line, exit 2
+exit=1 seconds=4
+== foundation/tests/bench/no-old-address.test.ts
+ ✓ bench/no-old-address.test.ts (28 tests) 42ms
+ Test Files  1 passed (1)
+      Tests  28 passed (28)
+   Duration  231ms (transform 61ms, setup 0ms, collect 84ms, tests 42ms, environment 0ms, prepare 29ms)
+exit=0 seconds=0
+== what stands
+INSTANCE_ABSENT
