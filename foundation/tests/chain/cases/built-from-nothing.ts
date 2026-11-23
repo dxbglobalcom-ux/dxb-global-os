@@ -47,6 +47,26 @@ export function builtFromNothing(): void {
       });
     });
 
+    it("a file's row and what the file made were written by one transaction — and so were row 0 and the ledger's schema", async () => {
+      await inAThrowawayDatabase(async (db) => {
+        await applyChain({ target: db.target, root: chainRoot(chainOf(PEOPLE, PLACES)) });
+        // SPEC §12.1: the transaction that wrote a row, as the server keeps it on the row itself.
+        const writerOf = async (row: string, named: string): Promise<string> => String(await valueOf(db.client, `select xmin::text from ${row}`, [named]));
+        const ofTheLedgerRow = "os_chain.ledger where file = $1";
+        const ofTheTable = "pg_catalog.pg_class where oid = $1::regclass";
+
+        const people = await writerOf(ofTheLedgerRow, "0001-people.sql");
+        const places = await writerOf(ofTheLedgerRow, "0002-places.sql");
+        const bootstrap = await writerOf(ofTheLedgerRow, "(ledger)");
+        expect(await writerOf(ofTheTable, "public.people")).toBe(people);
+        expect(await writerOf(ofTheTable, "public.places")).toBe(places);
+        expect(await writerOf("pg_catalog.pg_namespace where nspname = $1", "os_chain")).toBe(bootstrap);
+        // Three transactions the server numbered, each file in its own: the equalities above are not of three empty answers.
+        expect([bootstrap, people, places].join(" ")).toMatch(/^\d+ \d+ \d+$/);
+        expect(new Set([bootstrap, people, places]).size).toBe(3);
+      });
+    });
+
     it("a second run applies nothing and changes no row", async () => {
       await inAThrowawayDatabase(async (db) => {
         const root = chainRoot(chainOf(PEOPLE, PLACES, VISITS));

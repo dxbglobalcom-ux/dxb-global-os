@@ -1,6 +1,7 @@
 import type { Client } from "pg";
 import { describe, expect, it } from "vitest";
 import { ChainRefused, applyChain } from "@dxb-foundation/chain";
+import { dropTheConstraint, swallowWhatIsWritten, writeARowByHand, type ConstraintKind } from "../fixtures/by-hand.ts";
 import { PEOPLE, chainOf } from "../fixtures/chain-files.ts";
 import { chainRoot } from "../fixtures/chain-on-disk.ts";
 import { columnOf, granteesOnSchema, granteesOnTable, ledgerOf, standingIn, valueOf } from "../fixtures/looking.ts";
@@ -37,6 +38,19 @@ async function saidToARow(client: Client, row: Partial<ByHand>): Promise<string>
 const UNIQUE_VIOLATION = "23505";
 const CHECK_VIOLATION = "23514";
 
+// SPEC §12.2: row 0's hash, read once from a ledger this runner made and spelled here. Another text of the
+// bootstrap carries another hash — a change of contract: every ledger that stands becomes one the runner does not know.
+const ROW_0_HASH = "2179aece49242b6bde8643739f2c3bdf4939c21d5f95770b97c0debe74fced00";
+
+/** SPEC §12.2: what "known" includes. Each is dropped by the test's own hand from a ledger a real run made. */
+const CONSTRAINTS: [string, ConstraintKind, string][] = [
+  ["the primary key on position", "p", "position"],
+  ["the unique on file", "u", "file"],
+  ["the check on position", "c", "position"],
+  ["the check on kind", "c", "kind"],
+  ["the check on hash", "c", "hash"],
+];
+
 /** The ledgers SPEC §5 says this runner does not know: each made by the test's own hand, some from a ledger a real run made. */
 const UNKNOWN_LEDGERS: [string, (db: Throwaway) => Promise<unknown>][] = [
   [
@@ -61,6 +75,28 @@ const UNKNOWN_LEDGERS: [string, (db: Throwaway) => Promise<unknown>][] = [
       await db.client.query("create table os_chain.ledger (id integer primary key, note text)");
     },
   ],
+  ...CONSTRAINTS.map(([what, kind, column]): [string, (db: Throwaway) => Promise<unknown>] => [
+    `${what} was dropped`,
+    async (db) => {
+      await makeTheLedger(db);
+      await dropTheConstraint(db.client, kind, column);
+    },
+  ]),
+  [
+    "a second row of kind ledger stands at a later position",
+    async (db) => {
+      await makeTheLedger(db);
+      await writeARowByHand(db.client, { position: 1, file: "(another ledger)", kind: "ledger" });
+    },
+  ],
+  [
+    // SPEC §12.1: known when it is read — and unknown when the row of the pending file is not there after its insert.
+    "a trigger swallows every row written to it",
+    async (db) => {
+      await makeTheLedger(db);
+      await swallowWhatIsWritten(db.client);
+    },
+  ],
 ];
 
 export function theBootstrap(): void {
@@ -71,6 +107,13 @@ export function theBootstrap(): void {
         expect(await ledgerOf(db.client)).toEqual([
           { position: 0, file: "(ledger)", kind: "ledger", hash: expect.stringMatching(/^[0-9a-f]{64}$/), applied_by: LOGIN, runner_version: "1" },
         ]);
+      });
+    });
+
+    it("row 0 carries the hash of the bootstrap as this contract holds it, spelled here", async () => {
+      await inAThrowawayDatabase(async (db) => {
+        await makeTheLedger(db);
+        expect(await valueOf(db.client, "select hash from os_chain.ledger where position = 0")).toBe(ROW_0_HASH);
       });
     });
 

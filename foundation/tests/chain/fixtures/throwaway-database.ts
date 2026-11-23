@@ -9,7 +9,7 @@ import { mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { Client } from "pg";
-import { connectionString, readIdentity, type Identity, type InstanceRecord, type ListFile } from "@dxb-foundation/bench";
+import { assertFoundationTarget, connectionString, readIdentity, type Identity, type InstanceRecord, type ListFile } from "@dxb-foundation/bench";
 import type { Target } from "@dxb-foundation/chain";
 
 /** One case: a database made (0.06 s, measured), a run or two, the database dropped (0.5 s) — with room for a busy machine. */
@@ -41,8 +41,16 @@ async function connected<T>(address: string, work: (client: Client) => Promise<T
   }
 }
 
-/** A connection to the instance's own database — to make, to drop and to read the catalog of databases, nothing else. */
-export const onTheInstance = <T>(work: (client: Client) => Promise<T>): Promise<T> => connected(connectionString(), work);
+/**
+ * A connection to the instance's own database — to make, to drop and to read the catalog of databases, nothing else.
+ * It passes the bench's guard under the machine's own list before `work` is sent anything (SPEC §12.7): an address
+ * that led to a cluster the list does not hold is refused here, before a `create database` reaches it.
+ */
+export const onTheInstance = <T>(work: (client: Client) => Promise<T>): Promise<T> =>
+  connected(connectionString(), async (client) => {
+    await assertFoundationTarget(client);
+    return work(client);
+  });
 
 /** The bench's address, with another database of the same cluster in the place of its own. */
 function addressOf(database: string): string {
@@ -109,6 +117,19 @@ export async function inAThrowawayDatabase(work: (db: Throwaway) => Promise<void
     await dropTheOneMadeAs(oid, name);
     rmSync(listDirectory, { recursive: true, force: true });
   }
+}
+
+/**
+ * Two databases of their own on one list: the first's list file names both, and both targets read it — so a run
+ * aimed at either passes the guard, and nothing but the run itself keeps it on the one it began on.
+ */
+export function inTwoThrowawayDatabases(work: (first: Throwaway, second: Throwaway) => Promise<void>): Promise<void> {
+  return inAThrowawayDatabase((first) =>
+    inAThrowawayDatabase(async (second) => {
+      first.relist([first.identity, second.identity]);
+      await work(first, { ...second, target: { ...second.target, statePath: first.target.statePath }, relist: first.relist });
+    }),
+  );
 }
 
 /** The names of the databases made here that the server still holds — asked by the oids recorded, not by a pattern. */

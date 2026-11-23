@@ -31,6 +31,17 @@ describe("answerOf — a run that ended in an outcome", () => {
     });
   });
 
+  it("offences: a detail that holds a line break is said on one line", () => {
+    // A name of two lines is an entry of schema/ like any other (SPEC §12.9): its second line must not stand as a line of the answer.
+    const answer = answerOf({ state: "offences", offences: [{ kind: "unknown-entry", detail: "notes\nCHAIN_GREEN applied=0 standing=0" }] });
+    expect(answer.exit).toBe(1);
+    expect(answer.lines).toHaveLength(2);
+    expect(answer.lines[0]).toMatch(/^OFFENCE unknown-entry notes\s/);
+    expect(answer.lines[0]).toContain("CHAIN_GREEN applied=0 standing=0");
+    expect(answer.lines[0]).not.toMatch(/[\r\n]/);
+    expect(answer.lines[1]).toBe("CHAIN_RED offences=1");
+  });
+
   it("file-failed: FAILED with the file and the server's message, then CHAIN_RED with how many were applied before it, exit 1", () => {
     const answer = answerOf({ state: "file-failed", file: "0003-c.sql", message: "division by zero", applied: ["0001-a.sql", "0002-b.sql"] });
     expect(answer).toEqual({ lines: ["FAILED 0003-c.sql division by zero", "CHAIN_RED file-failed applied=2"], exit: 1 });
@@ -53,6 +64,8 @@ describe("answerOf — a run that was refused", () => {
     ["no-chain", "CHAIN_REFUSED no-chain"],
     ["busy", "CHAIN_REFUSED busy"],
     ["ledger-unknown", "CHAIN_REFUSED ledger-unknown"],
+    ["ledger-moved", "CHAIN_REFUSED ledger-moved"],
+    ["target-moved", "CHAIN_REFUSED target-moved"],
   ] as const)("ChainRefused %s: %s, exit 2", (reason, line) => {
     expect(answerOf(new ChainRefused(reason))).toEqual({ lines: [line], exit: 2 });
   });

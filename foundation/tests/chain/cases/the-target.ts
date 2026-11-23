@@ -3,10 +3,10 @@ import { TargetRefused } from "@dxb-foundation/bench";
 import { applyChain } from "@dxb-foundation/chain";
 import { PEOPLE, chainOf } from "../fixtures/chain-files.ts";
 import { chainRoot } from "../fixtures/chain-on-disk.ts";
-import { filesLedgered, hasTheLedgersSchema, standingOf } from "../fixtures/looking.ts";
+import { filesLedgered, hasTheLedgersSchema, standingIn, standingOf } from "../fixtures/looking.ts";
 import { refusalOf } from "../fixtures/refusal.ts";
 import { sleepingFile, startRun, untilASessionSleeps } from "../fixtures/running.ts";
-import { CASE_MS, inAThrowawayDatabase } from "../fixtures/throwaway-database.ts";
+import { CASE_MS, inAThrowawayDatabase, inTwoThrowawayDatabases } from "../fixtures/throwaway-database.ts";
 
 // SPEC §6, "the guard", and §9.4, "the target": every connection of a run is
 // asked who it is before it is sent anything else, and the bench's refusal is
@@ -51,6 +51,34 @@ export function theTarget(): void {
         // The list holds it again: the refused run let the lock go, and the next one applies what was left.
         db.relist([db.identity]);
         expect(await applyChain({ target: db.target, root })).toEqual({ state: "applied", applied: ["0002-next.sql"], standing: 2 });
+      });
+    });
+
+    // SPEC §12.3, one run, one database: the input is copied when the run begins. Both databases are on the
+    // run's list, so the guard would let the next file's connection into either.
+    it("the caller's own target changed to a second listed database while a file sleeps: the run finishes on the first, and the second is untouched", async () => {
+      await inTwoThrowawayDatabases(async (first, second) => {
+        const root = chainRoot({
+          "0001-slow.sql": sleepingFile("create table public.slow (id integer);"),
+          "0002-next.sql": "create table public.next (id integer);\n",
+        });
+        const untouched = await standingIn(second.client);
+        // The caller's own object: the run was handed it, and the caller goes on to change it.
+        const target = { ...first.target };
+        const run = startRun({ target, root });
+        try {
+          await untilASessionSleeps(first.client, first.identity.dbname);
+          // Changed within the sleep — one assignment: the next file's connection cannot open before the sleep ends.
+          target.connectionString = second.target.connectionString;
+          expect(run.ended()).toBe(false);
+          expect(await run.outcome()).toEqual({ state: "applied", applied: ["0001-slow.sql", "0002-next.sql"], standing: 2 });
+        } finally {
+          await run.over;
+        }
+        expect(await filesLedgered(first.client)).toEqual(["(ledger)", "0001-slow.sql", "0002-next.sql"]);
+        expect(await standingOf(first.client, "public.slow", "public.next")).toEqual(["public.slow", "public.next"]);
+        expect(await hasTheLedgersSchema(second.client)).toBe(false);
+        expect(await standingIn(second.client)).toEqual(untouched);
       });
     });
   });

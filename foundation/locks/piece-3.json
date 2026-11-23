@@ -22,25 +22,27 @@
     "foundation/lock/src/structure.ts": "2be52f774ae2801017563d4acc28363a1defab0b",
     "foundation/lock/src/verify.ts": "1f86148d1c73260e0c815b07e83818cb960dd88b",
     "foundation/lock/src/work.ts": "7477aef03217178572bb1b6ef26b85409325f813",
-    "foundation/tests/chain/answer.test.ts": "44c7822e5a77fec8799d039f773514014bc9ff4b",
-    "foundation/tests/chain/cases/bootstrap.ts": "82621c4b110448c83aefb2e9048178341ac6b4f4",
-    "foundation/tests/chain/cases/built-from-nothing.ts": "b86c2014eca687315e88a9b2cd280e62d28301eb",
-    "foundation/tests/chain/cases/failing-files.ts": "a3fe1cbe1eb433aac2c1f7732b4bf7053e61b3f2",
-    "foundation/tests/chain/cases/one-runner.ts": "31f93582fd43d9dd1443da6a7a2be6ff23928d8f",
-    "foundation/tests/chain/cases/sessions-and-upgrade.ts": "2cdc573ddee9cd60ca0ef475a5bb64c409343c5d",
+    "foundation/tests/chain/answer.test.ts": "790a9ce00608e90937e12a2a3b99ef5742988e0b",
+    "foundation/tests/chain/cases/bootstrap.ts": "72921760614c02293d4a1afa1dd11c7ce57091be",
+    "foundation/tests/chain/cases/built-from-nothing.ts": "b68a56c5dce3498915f6d1a8d73a5f03e1b35d5b",
+    "foundation/tests/chain/cases/failing-files.ts": "9940e438f7b80843c7c2a5da8977eeae015bab3d",
+    "foundation/tests/chain/cases/one-runner.ts": "c8ce127d816d7bc7d7ba0d4c6ab709039733dc23",
+    "foundation/tests/chain/cases/sessions-and-upgrade.ts": "00ced01395720d525cade3034d729ae159996df3",
     "foundation/tests/chain/cases/the-check.ts": "a0fc77183aa6cf1b19e2019a8610f0ece14f4b29",
-    "foundation/tests/chain/cases/the-command.ts": "878a2e346948acd7ecd2c92f323017732e913478",
-    "foundation/tests/chain/cases/the-target.ts": "46dd4370aa37c3c67d8db9532e218c20f1efe82a",
+    "foundation/tests/chain/cases/the-command.ts": "89f322e771376f91de15c5502b14e25b1dd61656",
+    "foundation/tests/chain/cases/the-target.ts": "d3791f78e321ccb8beeaf01092dba3503d30a902",
     "foundation/tests/chain/compare.test.ts": "062f7dd94d211fb1eadea93bae348717e47c810d",
+    "foundation/tests/chain/fixtures/a-run-in-its-own-process.ts": "9444c5a0366276b6fe0961ac1cab87c815219b18",
+    "foundation/tests/chain/fixtures/by-hand.ts": "27c839f7a9dfbf0d77fec4fcc3d11c40dba7c16b",
     "foundation/tests/chain/fixtures/chain-files.ts": "df35f0ef85e4539c6e3b80d2994f3f2a773cb7aa",
     "foundation/tests/chain/fixtures/chain-on-disk.ts": "63e37be2666bec3d664d68c7a2c017f2b5731d4e",
-    "foundation/tests/chain/fixtures/command.ts": "667d87690e9b652df019253e28979a5450eecbd1",
+    "foundation/tests/chain/fixtures/command.ts": "79d67190dcc6f8b53fb9b2529181d79bf0655a24",
     "foundation/tests/chain/fixtures/looking.ts": "8ef727b11eec523c3a6108af72d349c052de2f4c",
     "foundation/tests/chain/fixtures/refusal.ts": "5ebb6eaf5fe0c1d40837bd042f70388726f563b0",
-    "foundation/tests/chain/fixtures/running.ts": "bf07a2c8b20441115edf93f53cced089b97e59c0",
-    "foundation/tests/chain/fixtures/throwaway-database.ts": "e56a2031e42ad3e8b8d3719ef39cb8c94ec85157",
+    "foundation/tests/chain/fixtures/running.ts": "d8228cb810af51a841060986bb949bb07d032dfd",
+    "foundation/tests/chain/fixtures/throwaway-database.ts": "57226327de683d5261f0b8ddbaf51e191f6ed109",
     "foundation/tests/chain/on-the-bench.test.ts": "9904ba8cfab77bef3839af43b3c1893b63d7d4b0",
-    "foundation/tests/chain/read-chain.test.ts": "3a0bf9c7ddf3a02caebbda65e62dda87c0636707",
+    "foundation/tests/chain/read-chain.test.ts": "7e77e8412f2c85b265ee097ccec3e70b8449cc16",
     "foundation/tests/package.json": "bd4e193ba789b2552c5d2cc6d620ace556ae951e",
     "foundation/tests/vitest.config.ts": "c95853266badd11995fc806996a5df94ee4f1198",
     "foundation/tsconfig.json": "4eb3b5c0b63913b217384ba6edb5cf33b78c4f9e",
@@ -93,6 +95,14 @@
       "suite": [
         "answerOf — a run that ended in an outcome"
       ],
+      "name": "offences: a detail that holds a line break is said on one line",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/chain/answer.test.ts",
+      "suite": [
+        "answerOf — a run that ended in an outcome"
+      ],
       "name": "offences: one OFFENCE line each, as they were given, then CHAIN_RED with their count, exit 1",
       "count": 1
     },
@@ -109,6 +119,14 @@
       "suite": [
         "answerOf — a run that was refused"
       ],
+      "name": "ChainRefused ledger-moved: CHAIN_REFUSED ledger-moved, exit 2",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/chain/answer.test.ts",
+      "suite": [
+        "answerOf — a run that was refused"
+      ],
       "name": "ChainRefused ledger-unknown: CHAIN_REFUSED ledger-unknown, exit 2",
       "count": 1
     },
@@ -118,6 +136,14 @@
         "answerOf — a run that was refused"
       ],
       "name": "ChainRefused no-chain: CHAIN_REFUSED no-chain, exit 2",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/chain/answer.test.ts",
+      "suite": [
+        "answerOf — a run that was refused"
+      ],
+      "name": "ChainRefused target-moved: CHAIN_REFUSED target-moved, exit 2",
       "count": 1
     },
     {
@@ -261,6 +287,14 @@
       "suite": [
         "a failing file"
       ],
+      "name": "a failed file that drew from a sequence standing before it leaves it advanced, the one thing it leaves — and the corrected file applies",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/chain/on-the-bench.test.ts",
+      "suite": [
+        "a failing file"
+      ],
       "name": "the file corrected: the next run applies it and the one after it",
       "count": 1
     },
@@ -341,6 +375,14 @@
       "suite": [
         "built from nothing — an empty database and a chain of three"
       ],
+      "name": "a file's row and what the file made were written by one transaction — and so were row 0 and the ledger's schema",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/chain/on-the-bench.test.ts",
+      "suite": [
+        "built from nothing — an empty database and a chain of three"
+      ],
       "name": "a second run applies nothing and changes no row",
       "count": 1
     },
@@ -389,7 +431,15 @@
       "suite": [
         "one runner at a time"
       ],
-      "name": "a second run with a wait runs after the first, and applies nothing",
+      "name": "a file added while a run waits for the lock is applied by that run: its disk is the disk as it stands under the lock",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/chain/on-the-bench.test.ts",
+      "suite": [
+        "one runner at a time"
+      ],
+      "name": "a second run with a wait stands at the lock while the first sleeps, runs after it, and applies nothing",
       "count": 1
     },
     {
@@ -421,6 +471,22 @@
       "suite": [
         "the bootstrap — a ledger this runner does not know"
       ],
+      "name": "a second row of kind ledger stands at a later position: ledger-unknown, and nothing is changed",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/chain/on-the-bench.test.ts",
+      "suite": [
+        "the bootstrap — a ledger this runner does not know"
+      ],
+      "name": "a trigger swallows every row written to it: ledger-unknown, and nothing is changed",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/chain/on-the-bench.test.ts",
+      "suite": [
+        "the bootstrap — a ledger this runner does not know"
+      ],
       "name": "row 0 carries another hash: ledger-unknown, and nothing is changed",
       "count": 1
     },
@@ -437,6 +503,38 @@
       "suite": [
         "the bootstrap — a ledger this runner does not know"
       ],
+      "name": "the check on hash was dropped: ledger-unknown, and nothing is changed",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/chain/on-the-bench.test.ts",
+      "suite": [
+        "the bootstrap — a ledger this runner does not know"
+      ],
+      "name": "the check on kind was dropped: ledger-unknown, and nothing is changed",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/chain/on-the-bench.test.ts",
+      "suite": [
+        "the bootstrap — a ledger this runner does not know"
+      ],
+      "name": "the check on position was dropped: ledger-unknown, and nothing is changed",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/chain/on-the-bench.test.ts",
+      "suite": [
+        "the bootstrap — a ledger this runner does not know"
+      ],
+      "name": "the primary key on position was dropped: ledger-unknown, and nothing is changed",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/chain/on-the-bench.test.ts",
+      "suite": [
+        "the bootstrap — a ledger this runner does not know"
+      ],
       "name": "the schema os_chain holds no table: ledger-unknown, and nothing is changed",
       "count": 1
     },
@@ -446,6 +544,14 @@
         "the bootstrap — a ledger this runner does not know"
       ],
       "name": "the table os_chain.ledger is of another shape: ledger-unknown, and nothing is changed",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/chain/on-the-bench.test.ts",
+      "suite": [
+        "the bootstrap — a ledger this runner does not know"
+      ],
+      "name": "the unique on file was dropped: ledger-unknown, and nothing is changed",
       "count": 1
     },
     {
@@ -469,6 +575,14 @@
       "suite": [
         "the bootstrap — the ledger this runner makes"
       ],
+      "name": "row 0 carries the hash of the bootstrap as this contract holds it, spelled here",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/chain/on-the-bench.test.ts",
+      "suite": [
+        "the bootstrap — the ledger this runner makes"
+      ],
       "name": "the schema and the table are the login's own, and the table has the seven columns of SPEC §5, none of them nullable",
       "count": 1
     },
@@ -478,6 +592,38 @@
         "the bootstrap — the ledger this runner makes"
       ],
       "name": "the table itself holds a position and a file to one row each, the kind to the two kinds, the hash to 64 lower-case hex digits",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/chain/on-the-bench.test.ts",
+      "suite": [
+        "the caller's shell chooses nothing of a session"
+      ],
+      "name": "with PGOPTIONS, PGAPPNAME and PGCLIENTENCODING set, a file meets the search path, application name and client encoding of a run with none set",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/chain/on-the-bench.test.ts",
+      "suite": [
+        "the caller's shell chooses nothing of a session"
+      ],
+      "name": "with PGREPLICATION=database set for the run, the run ends as it does with none set: the file is applied",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/chain/on-the-bench.test.ts",
+      "suite": [
+        "the caller's shell chooses nothing of a session"
+      ],
+      "name": "with PGSSLMODE=require set for the run, the run ends as it does with none set: the file is applied",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/chain/on-the-bench.test.ts",
+      "suite": [
+        "the caller's shell chooses nothing of a session"
+      ],
+      "name": "with PGSSLNEGOTIATION=direct set for the run, the run ends as it does with none set: the file is applied",
       "count": 1
     },
     {
@@ -493,7 +639,7 @@
       "suite": [
         "the command"
       ],
-      "name": "after them, the instance's own postgres database holds no schema os_chain",
+      "name": "after them, the instance's own postgres database is as it was before them: its ledger to the instant, or none, and its schemas",
       "count": 1
     },
     {
@@ -541,6 +687,14 @@
       "suite": [
         "the command"
       ],
+      "name": "up --root <dir> --wait <five digits> is taken too: the answer is the disk's",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/chain/on-the-bench.test.ts",
+      "suite": [
+        "the command"
+      ],
       "name": "up --root <dir> and then --wait 0: the usage line, exit 2",
       "count": 1
     },
@@ -573,6 +727,14 @@
       "suite": [
         "the command"
       ],
+      "name": "up --root <dir> and then --wait with six digits: the usage line, exit 2",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/chain/on-the-bench.test.ts",
+      "suite": [
+        "the command"
+      ],
       "name": "up --root <dir> and then a word after the options: the usage line, exit 2",
       "count": 1
     },
@@ -582,6 +744,14 @@
         "the command"
       ],
       "name": "up --root <dir> and then an option the command does not have: the usage line, exit 2",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/chain/on-the-bench.test.ts",
+      "suite": [
+        "the command"
+      ],
+      "name": "up --root with an option's name where its value belongs: the usage line, exit 2",
       "count": 1
     },
     {
@@ -651,6 +821,14 @@
     {
       "file": "foundation/tests/chain/on-the-bench.test.ts",
       "suite": [
+        "the ledger moved under a run"
+      ],
+      "name": "another hand writes at the position a run's third file will want: ledger-moved, the third left nothing, the first two stay ledgered",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/chain/on-the-bench.test.ts",
+      "suite": [
         "the target"
       ],
       "name": "a database whose identity the list does not hold is refused: not-listed, and no schema os_chain is made in it",
@@ -662,6 +840,14 @@
         "the target"
       ],
       "name": "a list that loses the identity while a file sleeps: the next file's connection is refused, and the first file stays ledgered",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/chain/on-the-bench.test.ts",
+      "suite": [
+        "the target"
+      ],
+      "name": "the caller's own target changed to a second listed database while a file sleeps: the run finishes on the first, and the second is untouched",
       "count": 1
     },
     {
@@ -686,6 +872,14 @@
         "readChain — no chain"
       ],
       "name": "a root that holds a file named schema, not a directory is refused: no-chain",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/chain/read-chain.test.ts",
+      "suite": [
+        "readChain — no chain"
+      ],
+      "name": "a root that holds a link named schema, though it leads to a directory is refused: no-chain",
       "count": 1
     },
     {

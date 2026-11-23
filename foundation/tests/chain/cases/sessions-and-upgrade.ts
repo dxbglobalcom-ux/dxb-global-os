@@ -3,6 +3,7 @@ import { describe, expect, it } from "vitest";
 import { applyChain } from "@dxb-foundation/chain";
 import { BORN_AND_PETS, PEOPLE, PLACES, chainOf } from "../fixtures/chain-files.ts";
 import { chainRoot, inSchema } from "../fixtures/chain-on-disk.ts";
+import { runApart } from "../fixtures/command.ts";
 import { ledgerOf, ledgerToTheInstant, standingOf, valueOf } from "../fixtures/looking.ts";
 import { CASE_MS, LOGIN, inAThrowawayDatabase } from "../fixtures/throwaway-database.ts";
 
@@ -21,6 +22,33 @@ const RECORDS_WHAT_IT_MEETS = [
   "",
 ].join("\n");
 
+// SPEC §12.4: the driver reads variables of its own from the environment of the process that runs it. Measured
+// on the driver this piece is built on (pg 8.22.0): PGOPTIONS and PGAPPNAME reach every session it opens;
+// PGSSLMODE=require, PGSSLNEGOTIATION=direct and PGREPLICATION=database each end a connection to this bench before
+// a statement is sent; PGCLIENTENCODING it does not read — it tells the server UTF8 whatever is set. That one is
+// planted all the same: the contract names it, and a driver that came to read it would show here.
+const SHELL_OF_THE_CALLER = { PGOPTIONS: "-c search_path=pg_catalog", PGAPPNAME: "planted by the caller's shell", PGCLIENTENCODING: "LATIN1" };
+
+const SETTINGS = ["search_path", "application_name", "client_encoding"];
+const WHAT_A_SESSION_MEETS = `select ${SETTINGS.map((setting) => `current_setting('${setting}') as ${setting}`).join(", ")}`;
+const RECORDING = { "0001-records-its-session.sql": `create table public.met_by_the_file as ${WHAT_A_SESSION_MEETS};\n` };
+const RECORDING_APPLIED = { state: "applied", applied: ["0001-records-its-session.sql"], standing: 1 };
+
+/**
+ * The recording file applied in a database of its own, by a run in a process of its own that holds `planted`
+ * in its environment: what the file's session met, and what a session nobody guards met in that same process.
+ */
+async function metWith(planted: Readonly<Record<string, string>>): Promise<{ theFile: unknown[]; aPlainSession: unknown }> {
+  let met: { theFile: unknown[]; aPlainSession: unknown } | undefined;
+  await inAThrowawayDatabase(async (db) => {
+    const ran = await runApart({ target: db.target, root: chainRoot(RECORDING), asked: WHAT_A_SESSION_MEETS }, planted, CASE_MS);
+    expect(ran.outcome).toEqual(RECORDING_APPLIED);
+    met = { theFile: (await db.client.query("select * from public.met_by_the_file")).rows, aPlainSession: ran.aPlainSessionAnswered };
+  });
+  if (met === undefined) throw new Error("the run in a process of its own answered nothing");
+  return met;
+}
+
 export function sessionsAndUpgrade(): void {
   describe("a session of its own", { timeout: CASE_MS }, () => {
     it("a file that sets a search path, a role and a temporary table; the next file meets the defaults, and no temporary table", async () => {
@@ -37,6 +65,33 @@ export function sessionsAndUpgrade(): void {
         });
         const { rows } = await db.client.query("select search_path, role, no_temporary_table from public.met");
         expect(rows).toEqual([{ search_path: untouched, role: LOGIN, no_temporary_table: true }]);
+      });
+    });
+  });
+
+  // Two runs, each a process and a database of its own: twice the room of one case.
+  describe("the caller's shell chooses nothing of a session", { timeout: 2 * CASE_MS }, () => {
+    it("with PGOPTIONS, PGAPPNAME and PGCLIENTENCODING set, a file meets the search path, application name and client encoding of a run with none set", async () => {
+      const withNone = await metWith({});
+      const withThem = await metWith(SHELL_OF_THE_CALLER);
+      // Seen first: the two the driver takes reach a session nobody guards, and change it — the planting works.
+      expect(withThem.aPlainSession).toMatchObject({ search_path: "pg_catalog", application_name: SHELL_OF_THE_CALLER.PGAPPNAME });
+      expect(withNone.aPlainSession).not.toEqual(withThem.aPlainSession);
+
+      expect(withNone.theFile).toHaveLength(1);
+      expect(withThem.theFile).toEqual(withNone.theFile);
+    });
+
+    it.each([
+      ["PGSSLMODE", "require"],
+      ["PGSSLNEGOTIATION", "direct"],
+      ["PGREPLICATION", "database"],
+    ])("with %s=%s set for the run, the run ends as it does with none set: the file is applied", async (variable, value) => {
+      await inAThrowawayDatabase(async (db) => {
+        // No question is asked here: a session nobody guards does not open at all under these (measured, above).
+        const ran = await runApart({ target: db.target, root: chainRoot(RECORDING) }, { [variable]: value }, CASE_MS);
+        expect(ran.outcome).toEqual(RECORDING_APPLIED);
+        expect(await standingOf(db.client, "public.met_by_the_file")).toEqual(["public.met_by_the_file"]);
       });
     });
   });

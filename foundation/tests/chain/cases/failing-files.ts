@@ -42,6 +42,32 @@ export function failingFiles(): void {
         expect(await standingOf(db.client, "public.half_made", "public.after_it", "public.later")).toEqual(["public.half_made", "public.after_it", "public.later"]);
       });
     });
+
+    // SPEC §12, the limit: the server does not give a sequence's values back on rollback. Measured, said, and seen here.
+    it("a failed file that drew from a sequence standing before it leaves it advanced, the one thing it leaves — and the corrected file applies", async () => {
+      await inAThrowawayDatabase(async (db) => {
+        const drawsAndThen = (statement: string): string => `create table public.drawn as select nextval('public.tickets') as ticket;\n${statement}\n`;
+        const root = chainRoot({ "0001-tickets.sql": "create sequence public.tickets;\n" });
+        const theSequence = async (): Promise<unknown[]> => (await db.client.query("select last_value::int, is_called from public.tickets")).rows;
+
+        // Seen first: the sequence stands, and nothing has drawn from it.
+        expect(await applyChain({ target: db.target, root })).toEqual({ state: "applied", applied: ["0001-tickets.sql"], standing: 1 });
+        expect(await theSequence()).toEqual([{ last_value: 1, is_called: false }]);
+
+        writeFileSync(inSchema(root, "0002-draws.sql"), drawsAndThen("select 1/0;"));
+        expect(await applyChain({ target: db.target, root })).toMatchObject({ state: "file-failed", file: "0002-draws.sql", applied: [] });
+        // The file's table and its row went with its transaction; the value it drew did not come back.
+        expect(await standingOf(db.client, "public.drawn")).toEqual([]);
+        expect(await filesLedgered(db.client)).toEqual(["(ledger)", "0001-tickets.sql"]);
+        expect(await theSequence()).toEqual([{ last_value: 1, is_called: true }]);
+
+        writeFileSync(inSchema(root, "0002-draws.sql"), drawsAndThen("select 1/1;"));
+        expect(await applyChain({ target: db.target, root })).toEqual({ state: "applied", applied: ["0002-draws.sql"], standing: 2 });
+        // The retry is safe, and it drew the next value: the first is spent.
+        expect(await columnOf(db.client, "select ticket from public.drawn")).toEqual(["2"]);
+        expect(await theSequence()).toEqual([{ last_value: 2, is_called: true }]);
+      });
+    });
   });
 
   describe("a file that opens or closes a transaction", { timeout: CASE_MS }, () => {

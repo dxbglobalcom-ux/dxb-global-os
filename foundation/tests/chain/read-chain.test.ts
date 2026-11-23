@@ -157,6 +157,15 @@ describe("readChain — no chain", () => {
         return root;
       },
     ],
+    [
+      // SPEC §12.11. A chain of one file lies behind the link: followed, it would be read as this root's chain.
+      "holds a link named schema, though it leads to a directory",
+      () => {
+        const root = emptyDirectory();
+        symlinkSync(join(chainRoot(chainOf(PEOPLE)), "schema"), join(root, "schema"));
+        return root;
+      },
+    ],
   ])("a root that %s is refused: no-chain", async (_what, prepare) => {
     const refusal = await refusalOf(ChainRefused, () => readChain(prepare()));
     expect(refusal.reason).toBe("no-chain");
