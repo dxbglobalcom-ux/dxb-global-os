@@ -112,7 +112,7 @@ Raw output: `piece-6/evidence/` (the whole-catalogue inventories `inv-*.txt.gz` 
 - Fields are separated by one space. A line is read by its kind's row in §4.3, not by splitting at spaces: a name
   the server spells with a space (`double precision`, a signature, `operator class`) stands where its field stands;
   a field of free text — a definition, an expression, a line of a body, a row — is the last of its line. An empty
-  value is `-`; a boolean is `t` or `f`. Inside a line a backslash is written `\\` and a newline `\n`.
+  value is `-`; a boolean is `t` or `f`. Inside a line a backslash is written `\\`, a newline `\n` and a carriage return `\r`.
 - A text of several lines (a function's body, a view's definition, a comment) is one line of the snapshot per line
   of the text, numbered from `00001`: `<kind> <object> <number>|<the line>`, split at `\n` and nothing else.
 - Names are the server's own spelling under an empty `search_path`: `regclass`, `regprocedure`, `format_type`,
@@ -125,20 +125,21 @@ Raw output: `piece-6/evidence/` (the whole-catalogue inventories `inv-*.txt.gz` 
 
 | Line | For |
 |---|---|
-| `database <name> owner <role> encoding <e> collate <c> ctype <c>` | the database |
+| `database <name> owner <role> encoding <e> collate <c> ctype <c> connlimit <n>` | the database |
 | `role <role> super <b> inherit <b> createrole <b> createdb <b> login <b> replication <b> bypassrls <b> connlimit <n> validuntil <text\|->` | each chain role; never the password column, nor whether one is set |
 | `member <role> has <member> admin <b> inherit <b> set <b> by <grantor>` | each `pg_auth_members` row with a chain role on either side |
 | `role-setting <role\|*> in <database\|*> <name>=<value>` | each setting of each `pg_db_role_setting` row whose role is a chain role or all roles, and whose database is this one or all. **The value of a name that holds a dot is written `<hidden>`** — a core setting holds no secret, a custom one may (fact 7) |
 | `schema <schema> owner <role>` | each covered schema |
-| `default-acl for <role> in <schema\|*> on <r\|S\|f\|T\|n> to <grantee> <PRIVILEGE> option <b>` | each item of each `pg_default_acl` row whose role is a chain role, whose schema is covered, or that names a chain role |
+| `default-acl for <role> in <schema\|*> on <r\|S\|f\|T\|n> to <grantee> <PRIVILEGE> option <b>` | each item of each `pg_default_acl` row whose role is a chain role, whose schema is covered, or that names a chain role; a row whose ACL is empty is `default-acl-none for <role> in <schema\|*> on <r\|S\|f\|T\|n>` |
 | `relation <regclass> kind <relkind> owner <role> persistence <p\|u\|t> rowsecurity <b> force <b> replident <c> options <a=b,c=d sorted\|->` | each relation of kind `r p v m S f c` in a covered schema |
-| `partition-key <regclass> <pg_get_partkeydef>` · `partition-of <regclass> <parent> <bound>` · `inherits <regclass> <parent> <n>` | where they exist |
+| `partition-key <regclass> <pg_get_partkeydef>` · `partition-of <regclass> <parent> <bound>` · `inherits <regclass> <parent> <n>` | where they exist; a partition has `partition-of` and no `inherits`; `inherits` when the child or the parent is covered (§11.1) |
 | `column <regclass> <position> <name> type <format_type> not-null <b> identity <a\|d\|-> generated <s\|-> collation <name\|-> default <pg_get_expr\|->` | each live column; position is its rank among live columns; collation is `-` unless it differs from its type's own |
 | `constraint <regclass> <name> type <contype> deferrable <b> deferred <b> validated <b> def <pg_get_constraintdef>` | each table constraint |
-| `index <regclass of the table> valid <b> def <pg_get_indexdef>` | each index |
+| `index <regclass of the table> valid <b> replident <b> clustered <b> def <pg_get_indexdef>` | each index |
 | `trigger <regclass> <name> enabled <O\|D\|R\|A> def <pg_get_triggerdef>` | each trigger that is not internal |
+| `trigger-internal <regclass> <constraint\|-> <regprocedure of its function> enabled <D\|R\|A>` | each internal trigger whose `tgenabled` is not `O` (§11.1) — never its generated name |
 | `rule <regclass> <name> enabled <c> def <pg_get_ruledef>` | each rule but a view's `_RETURN` |
-| `policy <regclass> <name> cmd <r\|a\|w\|d\|*> <permissive\|restrictive> to <roles, sorted, comma>` | each policy |
+| `policy <regclass> <name> cmd <r\|a\|w\|d\|*> <permissive\|restrictive> to <roles, sorted, comma>` | each policy on a covered relation, and each policy anywhere that names a chain role (§11.1) |
 | `policy-using <regclass> <name> <pg_get_expr>` · `policy-check <regclass> <name> <pg_get_expr>` | each predicate that exists — a line of its own, so one changed predicate is one changed line |
 | `view <regclass> <number>\|<line of pg_get_viewdef>` | views and materialized views |
 | `sequence <regclass> type <format_type> start <n> increment <n> min <n> max <n> cache <n> cycle <b> owned-by <regclass.column\|->` | each sequence; never `last_value` |
@@ -149,10 +150,10 @@ Raw output: `piece-6/evidence/` (the whole-catalogue inventories `inv-*.txt.gz` 
 | `function-body <regprocedure> <number>\|<line>` | `prosrc`; a SQL-standard body's `pg_get_function_sqlbody` instead |
 | `object <type> <identity> owner <role\|->` | **everything else that stands in a covered schema** (operator, collation, conversion, operator class or family, text-search object, extended statistics …), by `pg_identify_object` — nothing stands in `os` without a line |
 | `extension <name> schema <schema> owner <role> version <v>` | an extension whose schema is covered or that has a member in one |
-| `publication <name> has <regclass>` | each covered relation a publication names |
+| `publication <name> has <regclass> columns <names in column order, comma\|*> where <pg_get_expr\|->` | each covered relation a publication names |
 | `comment <type> <identity> <number>\|<line>` | each comment on a covered schema or on anything in one, by `pg_identify_object` |
-| `grant <database\|schema\|relation\|column\|function\|type> <object> to <grantee> <PRIVILEGE> option <b> by <grantor> <stored\|default>` | **every** item of the database and of each covered object (`default`: the ACL is NULL and the items are `acldefault`'s; a column has stored items only; `<object>` of a column is `<regclass>.<name>`); **and, for an object of these kinds anywhere else, each item whose grantee or grantor is a chain role** |
-| `outside <owns\|granted\|in-policy\|other> <role> <type> <identity>` | each `pg_shdepend` row of a chain role whose object is not this database, a covered schema, something in one (a policy, trigger, constraint or column belongs where its relation does) or a default-ACL row. A row of another database: `outside <…> <role> other-database <database> <catalogue>` |
+| `grant <database\|schema\|relation\|column\|function\|type> <object> to <grantee> <PRIVILEGE> option <b> by <grantor> <stored\|default>` | **every** item of the database and of each covered object (`default`: the ACL is NULL and the items are `acldefault`'s; a column has stored items only; `<object>` of a column is `<regclass>.<name>`); **and, for an object of these kinds anywhere else, each item whose grantee or grantor is a chain role** — and so for the kinds `language`, `fdw`, `server`, `tablespace`, `parameter` (`<object>` is `quote_ident` of the name), which have lines for a chain role's items only (§11.1) |
+| `outside <owns\|granted\|in-policy\|other> <role> <type> <identity>` | each `pg_shdepend` row of a chain role whose object is not this database, a covered schema, something in one (a policy, trigger, constraint or column belongs where its relation does) or a default-ACL row. A row of another database: `outside <…> <role> other-database <database> <catalogue>`. A large object's identity is `-` |
 | `reference <regclass> <to_jsonb(row)::text>` | each row of each vocabulary's table |
 | `ledger <position> <file> <kind> <hash> runner <runner_version>` | each ledger row |
 
@@ -161,7 +162,9 @@ Raw output: `piece-6/evidence/` (the whole-catalogue inventories `inv-*.txt.gz` 
 One connection, through the bench's guard as every connection of the chain's; one transaction,
 `repeatable read read only`; `set local` of `search_path = ''`, `extra_float_digits = 3`, `TimeZone = 'UTC'`,
 `DateStyle = 'ISO, YMD'`, `IntervalStyle = 'postgres'`, `bytea_output = 'hex'`, `quote_all_identifiers = off`,
-`standard_conforming_strings = on` before the first read. It reads as whoever the target logs in — no `set role`.
+`standard_conforming_strings = on`, and — settled by the code and §11.1 — `row_security = off` (a read row security
+would filter is refused, not answered short) and `client_encoding = 'UTF8'`, before the first read. Nothing temporary
+is read: no relation of persistence `t`, no object of a session's temporary schema. It reads as whoever the target logs in — no `set role`.
 It writes nothing and takes no advisory lock. **A text is whole or there is none:** a read the server refuses is a
 failure of the call, never a shorter text. No `ledger` schema standing is not a failure: the text then has no
 `ledger` line and no `os_chain` line.
@@ -292,13 +295,15 @@ this place.
 expected text — written from that piece's contract, the lead reading its difference line by line — goes in with
 piece 6's lock made again, in a commit that holds nothing else (`git add` the text, `pnpm foundation:lock piece-6`,
 add the lock, commit); the lock commit comes first, so "clean" is red before the code and green after it. A chain
-file never rides in a lock commit (`lock-commit-impure`).
+file never rides in a lock commit (`lock-commit-impure`). The same lock commit changes the cases that count or name
+the real chain's files — `REAL_SCHEMA_FILES`, B.1's counts, the fixture's own file numbers when they collide (§11.2, B6).
 
 ## 8. Where the proof stands before a restored database is believed (piece 5's audit, A5) **[lead]**
 
 `CHAIN_GREEN` says the ledger and the disk agree and the passes ran. It says nothing of an owner, a grant, a
 setting, or an object no file names (facts 4, 5). **A database that was not built here from nothing — restored,
-copied, or left alone for a time — is believed only when `pnpm foundation:chain up` is green and
+copied, or left alone for a time — is believed, as to its structure (§11.2: not its passwords, sequence positions or
+rows), only when `pnpm foundation:chain up` is green and
 `pnpm foundation:chain snapshot --check foundation/tests/snapshot/expected/real.snapshot.txt` says
 `SNAPSHOT_EQUAL` on it.** The bench command (13) runs both; the stage's verdict (14), B72's restore drill and stage
 5's delivery are told so in their own records when this piece closes. The check is not wired into `chain up`: the
@@ -322,8 +327,14 @@ runner stays what piece 3's lock judges, and a red check after a green chain mus
   materialized views, partitioned tables, rules, foreign tables. Each has its line; none has a case.
 - **A vocabulary's file taken out of the chain leaves its rows on a database that had them**, and nothing says so
   (§6a.3) — piece 4's pass is silent without its file. Only a build from nothing shows it, which is what "clean" is.
-- **That the reader's transaction is `repeatable read read only` is read in the code, not proven by a case.**
-- Large objects and temporary objects are no part of the text; a large object a chain role owns is an `outside` line.
+- Large objects and temporary objects are no part of the text; a large object a chain role owns is an `outside` line
+  without its identity (§11.1).
+- **Not read, by decision (§11.2):** a column's storage, compression, statistics target and `attoptions`; a
+  relation's access method and tablespace; `pg_init_privs`; an extension's list of members; a security label; the
+  definition of anything that has only the `object` line, of an aggregate, of a C routine's library, of a base
+  type; the definition of an object a chain role owns outside the covered schemas.
+- **A function's settings are printed whole, dotted ones too** — a function of `os` stands only by its file.
+- **A vocabulary's row is a JSON value:** array bounds, `-0` and duplicate keys of a `json` column are not told apart.
 
 ## 10. Done when
 
@@ -331,3 +342,69 @@ The tests are committed with their lock alone and seen red for the right reason;
 `pnpm -s foundation:typecheck` is 0; `foundation/tests/snapshot` is green and pieces 3–5's suites are green,
 untouched; `pnpm foundation:verify --all --rev HEAD` says `LOCK_GREEN` for pieces 1–6; one blind audit pass by
 GPT-6.2 Sol is weighed and its corrections taken tests-first; BUILD.md's piece 6 carries the Done note of 6a.
+
+## 11. The blind audit and its corrections (GPT-6.2 Sol, xhigh, one pass, 2026-11-23 — `SOL.md`; the lead's weighing)
+
+Before the audit two things were found by the lead's own runs and corrected in lock commits that hold nothing else:
+both expected texts said `CONNECT` where the catalogue has `CREATE` for two platform roles on the database
+(`15b31ea6`; the code hand's first run was red by exactly those lines and the code was not bent to them), and a test
+fixture read `HOME` from the environment, which turned piece 1's lock red (`cffd5fa1`; the audit's B1).
+
+The audit's verdict was REFUTED: eight A, eight B. Each is weighed against what the piece is for — the check must
+not say EQUAL over a change of meaning that an ordinary build, restore or mistake can produce inside §4.1; no
+secret; the same bytes for the same meaning; a reader that writes nothing.
+
+### 11.1 Taken — tests first, then the code
+
+| # | From | The rule the text now obeys |
+|---|---|---|
+| 1 | A1 | **An internal trigger that is not enabled as at its making is a line:** `trigger-internal <regclass> <constraint\|-> <regprocedure of its function> enabled <D\|R\|A>` — each `pg_trigger` row with `tgisinternal` on a covered relation whose `tgenabled` is not `O`. The generated name is never printed. `disable trigger all` (a data-only restore does it, and one that dies leaves it) silences a foreign key and the text was the same. |
+| 2 | A2 | `index` gains two fields: `index <regclass> valid <b> replident <b> clustered <b> def <…>` (`indisreplident`, `indisclustered`); `database` gains `connlimit <n>` at its end. |
+| 3 | A3 | **A policy that names a chain role is read like one on a covered relation, wherever it stands:** its `policy`, `policy-using` and `policy-check` lines (the `outside in-policy` line stays). `inherits` is written when the child **or** the parent is covered. |
+| 4 | A4 | `grant` knows five more kinds — `language`, `fdw`, `server`, `tablespace`, `parameter` (`<object>` is `quote_ident` of the name) — for which **only the items whose grantee or grantor is a chain role** are lines (stored, or `default` when the ACL is NULL and the owner is one). A `pg_default_acl` row whose ACL is empty is the line `default-acl-none for <role> in <schema\|*> on <r\|S\|f\|T\|n>`. |
+| 5 | A5 | `publication <name> has <regclass> columns <names in column order, comma\|*> where <pg_get_expr\|->`. |
+| 6 | A7 | A tenth `set local`: `client_encoding = 'UTF8'`. **Nothing temporary is a line of any kind:** a relation of persistence `t`, and every object whose schema is a session's temporary schema (`pg_temp_<n>`, `pg_toast_temp_<n>`) — in the grants read "anywhere" and in `outside` too (§9 said so; the code did not obey it). |
+| 7 | B2, the lead's reading | Inside a line a carriage return is written `\r` (after the backslash's own doubling): what `snapshot` prints is always a text `--check` accepts. A raw carriage return in an expected file is still `expected-malformed`. |
+| 8 | the helper's reading | A large object is `outside <…> <role> large object -`: its identity is an oid. |
+| 9 | B4 | Cases: the reader's own statements are recorded in process — the first after the guard's is `start transaction isolation level repeatable read, read only`, the ten settings follow before any read, and no statement of the reading begins with a word that writes, locks or sets a role; an expected file with a byte-order mark, and one that is not UTF-8, are `expected-malformed`; a line held twice in the file is no malformation. §9's "read in the code, not proven" goes with it. |
+
+### 11.2 Not taken — each with its reason, and named in §9 where it is a limit
+
+- **A2, the rest** — a column's storage, compression and statistics target, `attoptions`, a relation's access method
+  and tablespace, a materialized view's populated flag: physical tuning, not meaning; a dump carries them. Limits.
+- **A3, the rest** — the *definition* of an object a chain role owns outside the covered schemas (its columns,
+  defaults, triggers): the text says it is owned and by whom it is reached. The real chain makes none; **a piece
+  whose file makes an object outside `os` gives its schema to `os_owner`**, and the schema is then covered whole.
+  What a build changes anywhere is 6b's whole-catalogue proof. A tie in another database is named by its catalogue
+  only (§4.3). Limits.
+- **A4, the rest** — `pg_init_privs`: an extension's own first privileges, of use to a dump only. Limit.
+- **A5, the rest / B8** — a kind that has only the `object` line (collation, operator, text-search object …), an
+  aggregate's transition functions, a C routine's library, a base type's own functions, a security label, an
+  extension's list of members: the text says such a thing *stands* and whose it is, not what it does. Putting one
+  in or taking one out is seen; changing one in place is not. The stage's chain holds none. **The piece whose file
+  first makes one gives the kind its lines, in that piece's contract, before its tests.** Limit.
+- **A6** — a function's dotted setting is printed: a function of `os` stands only by its file (an orphan turns the
+  chain red — piece 4), so its `set` clause is in the repository already; hiding it would hide a change of meaning.
+  A core setting's value is not a secret's place. The vocabulary's mark is piece 4's own, set by the owner's files;
+  a table marked by mistake is a mistake of a file read in review, and the pass asks for its file. Not a finding
+  against this piece; the reasons are in §9.
+- **A8** — a vocabulary's row is compared as a JSON value: array bounds, `-0` and a `json` column's duplicate keys
+  are one text. A vocabulary's rows come from a JSON file through piece 4's pass, which cannot say those
+  differences either. Limit.
+- **B3** — user code a deparse or `to_jsonb` may run (a type's output function): only a role that can already make
+  types in `os` can put one there; the reader's transaction is read only. A ledger that is a view turns the
+  `relation` line red. Not taken.
+- **B5** — the bench modules' cleanup is the pattern of pieces 3–5's locked fixtures; hardening it is piece 13's
+  (the bench command owns the instance's life). Carried there.
+- **B6** — true, and now said in §7: **a later piece that adds a file to the real chain changes, in the same lock
+  commit as the new expected text, the cases that count or name the real chain's files** (`REAL_SCHEMA_FILES`,
+  B.1's counts, the fixture's own file numbers when they collide). The lock commit stays tests and lock alone.
+- **B7** — the probe's evidence holds an md5 of the bench's `app.settings.jwt_secret`. The bench is a local,
+  disposable stack; the product's text writes `<hidden>`. ⚠ UNVERIFIED that the value is the platform's public
+  default for local stacks; no company secret is involved. Not rewritten; later probes mask before they hash.
+- **B4, the rest** — C.3's limit stands as §9 says; a third instance to show a reference file left out from nothing
+  would cost a minute per run for what C.1 and C.2 already prove of "a file left out". B.7's enumeration shares the
+  product's reading of "covered" by design — it proves that nothing in it lacks a line, not the rule itself.
+- **§8's sentence** is narrowed: green chain and equal snapshot say the *structure* is the committed one — roles,
+  owners, grants, definitions, reference values. They say nothing of passwords, sequence positions or the rows of
+  his data; those are the restore drill's own proofs (B72) and 6b's "rows kept".

@@ -1,0 +1,82 @@
+== at 15b31ea6, tree:  M foundation/chain/src/cli.ts; M foundation/chain/src/index.ts; M foundation/chain/src/reference-judgement.ts;?? foundation/chain/src/snapshot/;
+== typecheck
+typecheck exit=0
+== foundation/tests/snapshot/without-the-bench.test.ts
+ ✓ snapshot/without-the-bench.test.ts (36 tests) 1977ms
+ Test Files  1 passed (1)
+      Tests  36 passed (36)
+   Duration  2.25s (transform 122ms, setup 0ms, collect 167ms, tests 1.98s, environment 0ms, prepare 31ms)
+exit=0 seconds=3
+== foundation/tests/snapshot/on-a-fresh-instance.test.ts
+ ✓ snapshot/on-a-fresh-instance.test.ts (40 tests) 63775ms
+   ✓ piece 6a — the snapshot on a fresh instance, in order: clean, and every change seen > fresh makes an instance: INSTANCE_UP with its cluster identifier, listed, and answering it  51180ms
+   ✓ piece 6a — the snapshot on a fresh instance, in order: clean, and every change seen > B.3 instance logins: LOGINS_SET; then the same bytes, holding none of the file's passwords and no SCRAM-SHA-256  365ms
+   ✓ piece 6a — the snapshot on a fresh instance, in order: clean, and every change seen > B.5 os given to another owner by the bench's superuser: chain up is still CHAIN_GREEN — the gap, pinned — and the check is red by the schema's owner and its default grants; put back: equal  494ms
+   ✓ piece 6a — the snapshot on a fresh instance, in order: clean, and every change seen > B.6 the fixture chain on top (chain up --root <fixture>) → CHAIN_GREEN; --check expected/fixture.snapshot.txt → SNAPSHOT_EQUAL  308ms
+   ✓ piece 6a — the snapshot on a fresh instance, in order: clean, and every change seen > B.8 a grant no file says: chain up leaves it standing and is CHAIN_GREEN, the check is red by its line  436ms
+   ✓ piece 6a — the snapshot on a fresh instance, in order: clean, and every change seen > B.8 **the owner of one object in os** (the bench's superuser): its function line and its stored grant, the owner's name in each  390ms
+   ✓ piece 6a — the snapshot on a fresh instance, in order: clean, and every change seen > B.8 a reference value changed by hand: one reference line out, one in — and chain up puts it back: equal  432ms
+   ✓ piece 6a — the snapshot on a fresh instance, in order: clean, and every change seen > down → INSTANCE_DOWN  1642ms
+ Test Files  1 passed (1)
+      Tests  40 passed (40)
+   Duration  64.08s (transform 143ms, setup 0ms, collect 200ms, tests 63.78s, environment 0ms, prepare 30ms)
+exit=0 seconds=64
+== foundation/tests/snapshot/a-file-left-out.test.ts
+ ✓ snapshot/a-file-left-out.test.ts (6 tests) 53860ms
+   ✓ piece 6a — a file left out, on a second fresh instance, in order > fresh makes an instance: INSTANCE_UP, listed  51054ms
+   ✓ piece 6a — a file left out, on a second fresh instance, in order > C.1 from nothing, the fixture chain without its last schema file → CHAIN_GREEN; the check is red by exactly that file's lines  323ms
+   ✓ piece 6a — a file left out, on a second fresh instance, in order > C.4 the whole fixture chain → CHAIN_GREEN, SNAPSHOT_EQUAL: the committed text's bytes, which B reached on another instance by another road  338ms
+   ✓ piece 6a — a file left out, on a second fresh instance, in order > down → INSTANCE_DOWN  1498ms
+ Test Files  1 passed (1)
+      Tests  6 passed (6)
+   Duration  54.13s (transform 121ms, setup 0ms, collect 164ms, tests 53.86s, environment 0ms, prepare 30ms)
+exit=0 seconds=55
+== foundation/tests/chain
+ ✓ chain/on-the-bench.test.ts (72 tests) 86004ms
+   ✓ the harness — seen to work before a case rests on it > a throwaway database is made on the bench's cluster, the guard allows it through its own list, and it is gone afterwards  1344ms
+   ✓ the harness — seen to work before a case rests on it > a session inside pg_sleep is seen as such by another session — and no longer once it woke  1118ms
+   ✓ the caller's shell chooses nothing of a session > with PGOPTIONS, PGAPPNAME and PGCLIENTENCODING set, a file meets the search path, application name and client encoding of a run with none set  442ms
+   ✓ one runner at a time > while a run sits in a file that sleeps, a second run with no wait is refused at once: busy — and the first goes on to its end  3138ms
+   ✓ one runner at a time > a second run with a wait stands at the lock while the first sleeps, runs after it, and applies nothing  3186ms
+   ✓ one runner at a time > a file added while a run waits for the lock is applied by that run: its disk is the disk as it stands under the lock  3197ms
+   ✓ one runner at a time > a wait that runs out is the same refusal: busy, after the wait and not before  3142ms
+   ✓ the ledger moved under a run > another hand writes at the position a run's third file will want: ledger-moved, the third left nothing, the first two stay ledgered  3155ms
+   ✓ the target > a list that loses the identity while a file sleeps: the next file's connection is refused, and the first file stays ledgered  3172ms
+   ✓ the target > the caller's own target changed to a second listed database while a file sleeps: the run finishes on the first, and the second is untouched  3398ms
+ ✓ chain/read-chain.test.ts (33 tests) 10ms
+ ✓ chain/answer.test.ts (15 tests) 3ms
+ ✓ chain/compare.test.ts (13 tests) 3ms
+ Test Files  4 passed (4)
+      Tests  133 passed (133)
+   Duration  86.73s (transform 153ms, setup 0ms, collect 304ms, tests 86.02s, environment 1ms, prepare 118ms)
+exit=0 seconds=87
+== foundation/tests/passes
+ ✓ passes/on-the-bench.test.ts (117 tests) 83848ms
+   ✓ the functions pass — built from nothing > a schema file that makes os and two function files: applied with functions: 2, and both answer what their files say  1399ms
+   ✓ the disk of the passes is read with the chain's > a function file changed while a run waits for the lock is applied as it stands under the lock  3236ms
+   ✓ the passes' sessions pass the guard > a list that loses the identity while the schema file sleeps: the functions pass's session is refused — the file stays ledgered, no function is made  3170ms
+   ✓ the passes' sessions pass the guard > a list that loses the identity while a function file sleeps: the reference pass's session is refused — the functions pass stays, no row is written  6213ms
+ ✓ passes/read-passes.test.ts (92 tests) 27ms
+ ✓ passes/answer.test.ts (10 tests) 3ms
+ Test Files  3 passed (3)
+      Tests  219 passed (219)
+   Duration  84.51s (transform 190ms, setup 0ms, collect 319ms, tests 83.88s, environment 0ms, prepare 92ms)
+exit=0 seconds=85
+== foundation/tests/roles
+ ✓ roles/on-a-fresh-instance.test.ts (35 tests) 70001ms
+   ✓ piece 5 — the roles and the schema os on a fresh instance, in order > fresh makes an instance: INSTANCE_UP with its cluster identifier, listed, and answering it  53525ms
+   ✓ piece 5 — the roles and the schema os on a fresh instance, in order > B.10 what the platform leaves open to every login: a temporary table, a large object made and unlinked, hstore put into os and dropped again by the login — while it stands, the chain is red by its manifest; afterwards green  359ms
+   ✓ piece 5 — the roles and the schema os on a fresh instance, in order > B.12 the step's refusals — createdb on os_intake, pg_monitor to os_reader, the host lock held by another — each leaving every stored password and the file as they were, each put back  619ms
+   ✓ piece 5 — the roles and the schema os on a fresh instance, in order > B.12 the order of SPEC §6 step 2, pinned: a login with two faults says its first reason — os_intake given createdb and made a member of pg_monitor → os_intake createdb; two faulty logins say the first login, not the first reason — os_executor a member, os_reader given createdb → os_executor member  533ms
+   ✓ piece 5 — the roles and the schema os on a fresh instance, in order > §11 item 1: connection limit 0 on os_executor → logins → LOGINS_REFUSED os_executor cannot-log-in, exit 6; the file kept, the verifiers the step's new ones of it; put back, logins green and all four come in  414ms
+   ✓ piece 5 — the roles and the schema os on a fresh instance, in order > §11 items 4, 5: another session holds os_reader's row — the last login's — and four are minted → logins ends within 20 s, exit 1, 'the server refused the verifier of os_reader (55P03)', nothing secret said, no SCRAM-SHA-256$ in the log's window, every stored verifier as it was, the file ahead; rolled back, logins green with the file as it stood and all four come in  5461ms
+   ✓ piece 5 — the roles and the schema os on a fresh instance, in order > §11 item 4, the cancel path: with the installer's own statement_timeout = '2s' (role-level, put back) and os_reader's row held as above → logins ends within 20 s, exit 1, 'the server refused the verifier of os_reader (57014)', nothing secret said, no SCRAM-SHA-256$ in the log's window, every stored verifier as it was; rolled back, logins green and all four come in  2486ms
+   ✓ piece 5 — the roles and the schema os on a fresh instance, in order > B.13 a taken name: the real root applied to a throwaway database of the same instance → file-failed at 0001-roles.sql, role "os_owner" already exists, nothing applied, the ledger's bootstrap row alone  1150ms
+   ✓ piece 5 — the roles and the schema os on a fresh instance, in order > down → INSTANCE_DOWN, and the secret file stands as it stood: down does not remove it  1536ms
+ ✓ roles/without-the-bench.test.ts (20 tests) 9ms
+ Test Files  2 passed (2)
+      Tests  55 passed (55)
+   Duration  70.48s (transform 169ms, setup 0ms, collect 265ms, tests 70.01s, environment 0ms, prepare 58ms)
+exit=0 seconds=71
+== what stands
+INSTANCE_ABSENT
