@@ -1,7 +1,7 @@
 // The snapshot's lines of everything else that stands in or touches a covered schema (piece 6a's SPEC §4.3):
 // `object`, `extension`, `publication`, `comment`.
 import type { Client } from "pg";
-import { linesOf, numberedLinesOf, placeOf, role } from "./sql.ts";
+import { linesOf, numberedLinesOf, orDash, placeOf, role } from "./sql.ts";
 import type { Covered } from "./sql.ts";
 
 // The catalogues whose rows have lines of their own kind: a relation or an index, a routine, a type — an array and
@@ -42,12 +42,21 @@ select 'extension ' || pg_catalog.quote_ident(e.extname) || ' schema ' || pg_cat
                 where m.refclassid = 'pg_catalog.pg_extension'::pg_catalog.regclass and m.refobjid = e.oid and m.deptype = 'e'
                   and ${placeOf("m.classid", "m.objid")} = any ($1::pg_catalog.oid[]))`;
 
-// Each covered relation a publication publishes, as the server itself expands it: named, by its schema, or all tables.
+// Each covered relation a publication publishes, as the server itself expands it: named, by its schema, or all
+// tables — with the column list and the row filter its own `pg_publication_rel` row gives it (SPEC §11.1 row 5). The
+// list is read from that row, not from the expansion's `attrs`, which names every column when there is no list: no
+// list (`*`) publishes a column added later, a list of every column does not. Its names stand in the table's column
+// order. A relation published by its schema or by all tables has no row: `*` and `-`.
 const PUBLICATIONS = `
-select 'publication ' || pg_catalog.quote_ident(p.pubname) || ' has ' || g.relid::pg_catalog.regclass::pg_catalog.text as line
+select 'publication ' || pg_catalog.quote_ident(p.pubname) || ' has ' || g.relid::pg_catalog.regclass::pg_catalog.text
+       || ' columns ' || coalesce((select pg_catalog.string_agg(pg_catalog.quote_ident(a.attname), ',' order by a.attnum)
+                                     from pg_catalog.pg_attribute a
+                                    where a.attrelid = r.prrelid and a.attnum = any (r.prattrs::pg_catalog.int2[])), '*')
+       || ' where ' || ${orDash("pg_catalog.pg_get_expr(r.prqual, r.prrelid)")} as line
   from pg_catalog.pg_publication p
  cross join lateral pg_catalog.pg_get_publication_tables(variadic array[p.pubname::pg_catalog.text]) g
   join pg_catalog.pg_class c on c.oid = g.relid
+  left join pg_catalog.pg_publication_rel r on r.prpubid = p.oid and r.prrelid = g.relid
  where c.relnamespace = any ($1::pg_catalog.oid[])`;
 
 // Each comment on a covered schema or on anything in one — a column's, a constraint's or a trigger's among them.

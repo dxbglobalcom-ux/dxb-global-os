@@ -26,6 +26,17 @@ export async function coveredBy(conn: Client): Promise<Covered> {
   return covered;
 }
 
+/**
+ * SPEC §4.4 and §11.1 row 6's rule, in the one place it is spelled: whether the schema `namespace` is a session's
+ * temporary schema — `pg_temp_<n>` or `pg_toast_temp_<n>`, the server's own test of its names (`isAnyTempNamespace`);
+ * no other schema may take a name beginning `pg_`. Nothing in one is a line of any kind. A relation of persistence `t`
+ * stands only in one: the server refuses a temporary relation in any other schema. Null — no schema — is none.
+ * Wherever an object is found by its owner or by an item rather than by a covered schema, its schema is asked this.
+ */
+export const inATemporarySchema = (namespace: string): string => `coalesce((
+  select pg_catalog.starts_with(temp_n.nspname::pg_catalog.text, 'pg_temp_') or pg_catalog.starts_with(temp_n.nspname::pg_catalog.text, 'pg_toast_temp_')
+    from pg_catalog.pg_namespace temp_n where temp_n.oid = ${namespace}), false)`;
+
 /** A role as §4.2 spells it: `quote_ident` of its name, role 0 `PUBLIC`. */
 export const role = (oid: string): string => `case when ${oid} = 0 then 'PUBLIC' else pg_catalog.quote_ident(pg_catalog.pg_get_userbyid(${oid})) end`;
 

@@ -17,13 +17,14 @@ import { textOf } from "./text.ts";
 import { typeLines } from "./types.ts";
 
 // One snapshot of the catalogue, and nothing written in it: the server refuses every write of a read-only
-// transaction (SPEC §4.4; that it is read only is read here, not proven by a case — §9).
+// transaction (SPEC §4.4; the statements this reader sends are recorded by a case — §11.1 row 9).
 const BEGIN = "start transaction isolation level repeatable read, read only";
 
 // Said before the first read, for this transaction only, whatever the session said (SPEC §3 fact 2, §4.4): each
 // changes a catalogue's deparse or a float's text. The empty search_path makes every name the server spells carry
-// its schema. And row security off: a read row security would filter is refused, not answered with fewer rows —
-// a text is whole or there is none (§4.4).
+// its schema. Row security off: a read row security would filter is refused, not answered with fewer rows — a text
+// is whole or there is none (§4.4). And the client encoding UTF-8 (§11.1 row 6): the text is UTF-8 whatever
+// encoding the session asked for, so a name or a comment outside ASCII reads as the same bytes.
 const ITS_OWN_SETTINGS = [
   "set local search_path = ''",
   "set local extra_float_digits = 3",
@@ -34,6 +35,7 @@ const ITS_OWN_SETTINGS = [
   "set local quote_all_identifiers = off",
   "set local standard_conforming_strings = on",
   "set local row_security = off",
+  "set local client_encoding = 'UTF8'",
 ];
 
 /** The readers, subject by subject: each answers its lines, unescaped and in no order. */

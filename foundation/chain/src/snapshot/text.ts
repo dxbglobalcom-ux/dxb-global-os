@@ -7,8 +7,12 @@ const FIRST_LINE = "snapshot-format 1";
 /** Ascending by UTF-8 bytes — never by UTF-16 code units, the order of JavaScript's own sort. */
 const byBytes = (one: string, other: string): number => Buffer.compare(Buffer.from(one, "utf8"), Buffer.from(other, "utf8"));
 
-/** Inside a line a backslash is written `\\` and a newline `\n` (§4.2): the line stays one line. */
-const escaped = (line: string): string => line.replaceAll("\\", "\\\\").replaceAll("\n", "\\n");
+/**
+ * Inside a line a backslash is written `\\`, a newline `\n` and a carriage return `\r` (§4.2, §11.1 row 7): the line
+ * stays one line, and what `snapshot` prints is always a text `--check` accepts. The backslash is doubled first, so a
+ * stored backslash followed by `r` reads `\\r` and a carriage return `\r`.
+ */
+const escaped = (line: string): string => line.replaceAll("\\", "\\\\").replaceAll("\n", "\\n").replaceAll("\r", "\\r");
 
 /** The text of these lines (§4.2): the first line, then every line escaped and sorted by its bytes, equal lines kept; each ends with `\n`. */
 export function textOf(lines: readonly string[]): string {

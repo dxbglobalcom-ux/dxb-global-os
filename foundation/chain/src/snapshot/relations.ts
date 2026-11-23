@@ -1,7 +1,7 @@
 // The snapshot's lines of the covered schemas and their relations (piece 6a's SPEC §4.3): `schema`, `relation`,
 // `partition-key`, `partition-of`, `inherits`, `column`, `sequence`, `view`.
 import type { Client } from "pg";
-import { collationUnlessTheTypes, flag, linesOf, numberedLinesOf, orDash, role, typeName } from "./sql.ts";
+import { collationUnlessTheTypes, flag, inATemporarySchema, linesOf, numberedLinesOf, orDash, role, typeName } from "./sql.ts";
 import type { Covered } from "./sql.ts";
 
 /** The kinds of `pg_class` a `relation` line is for (SPEC §4.3); an index has its `index` line. */
@@ -38,12 +38,18 @@ select 'partition-of ' || c.oid::pg_catalog.regclass::pg_catalog.text || ' ' || 
   join pg_catalog.pg_inherits i on i.inhrelid = c.oid
  where ${IN_COVERED} and c.relispartition`;
 
+// When the child or the parent is covered (SPEC §11.1 row 3): a table outside that inherits one of `os` reads its
+// rows into every query of the parent. A temporary child is none (§11.1 row 6); a parent is never temporary when its
+// child is not — the server refuses a permanent child of a temporary table.
 const INHERITS = `
 select 'inherits ' || c.oid::pg_catalog.regclass::pg_catalog.text || ' ' || i.inhparent::pg_catalog.regclass::pg_catalog.text
        || ' ' || i.inhseqno::pg_catalog.text as line
-  from pg_catalog.pg_class c
-  join pg_catalog.pg_inherits i on i.inhrelid = c.oid
- where ${IN_COVERED} and not c.relispartition`;
+  from pg_catalog.pg_inherits i
+  join pg_catalog.pg_class c on c.oid = i.inhrelid
+  join pg_catalog.pg_class p on p.oid = i.inhparent
+ where c.relkind in ${RELATION_KINDS} and not c.relispartition
+   and (c.relnamespace = any ($1::pg_catalog.oid[]) or p.relnamespace = any ($1::pg_catalog.oid[]))
+   and not ${inATemporarySchema("c.relnamespace")}`;
 
 // Each live column; its position is its rank among the live ones, so a dropped column moves no other line.
 const COLUMNS = `

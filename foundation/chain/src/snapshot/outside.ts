@@ -3,7 +3,7 @@
 // default-ACL row. `pg_shdepend` is no whole enumerator of the outside (SPEC §3 fact 8; §9): it says what a role
 // owns, is granted on or is named in a policy of.
 import type { Client } from "pg";
-import { linesOf, placeOf, role } from "./sql.ts";
+import { inATemporarySchema, linesOf, placeOf, role } from "./sql.ts";
 import type { Covered } from "./sql.ts";
 
 // How a row ties its role: `o` owner, `a` an ACL item, `r` a policy; an initial privilege (`i`) and anything a later
@@ -11,17 +11,22 @@ import type { Covered } from "./sql.ts";
 const HOW = `case s.deptype when 'o' then 'owns' when 'a' then 'granted' when 'r' then 'in-policy' else 'other' end`;
 
 // `$1` the covered schemas, `$2` the chain's roles. A row of this database or of a shared catalogue (`dbid` 0) names
-// an object this session can identify: its type and identity, as `pg_identify_object` spells them.
+// an object this session can identify: its type and identity, as `pg_identify_object` spells them — but a large
+// object's identity is its oid, which is never printed: `-` (SPEC §11.1 row 8). An object in a covered schema has
+// its own lines; one in a temporary schema has none (§11.1 row 6).
 const HERE = `
-select 'outside ' || ${HOW} || ' ' || ${role("s.refobjid")} || ' ' || i.type || ' ' || i.identity as line
+select 'outside ' || ${HOW} || ' ' || ${role("s.refobjid")} || ' ' || i.type
+       || ' ' || case when s.classid = 'pg_catalog.pg_largeobject'::pg_catalog.regclass then '-' else i.identity end as line
   from pg_catalog.pg_shdepend s
  cross join lateral pg_catalog.pg_identify_object(s.classid, s.objid, s.objsubid) i
+ cross join lateral (select ${placeOf("s.classid", "s.objid")} as schema) w
  where s.refclassid = 'pg_catalog.pg_authid'::pg_catalog.regclass and s.refobjid = any ($2::pg_catalog.oid[])
    and (s.dbid = 0 or s.dbid = (select d.oid from pg_catalog.pg_database d where d.datname = pg_catalog.current_database()))
    and s.classid <> 'pg_catalog.pg_default_acl'::pg_catalog.regclass
    and not (s.classid = 'pg_catalog.pg_database'::pg_catalog.regclass
             and s.objid = (select d.oid from pg_catalog.pg_database d where d.datname = pg_catalog.current_database()))
-   and not coalesce(${placeOf("s.classid", "s.objid")} = any ($1::pg_catalog.oid[]), false)`;
+   and not coalesce(w.schema = any ($1::pg_catalog.oid[]), false)
+   and not ${inATemporarySchema("w.schema")}`;
 
 // A row of another database names an object only that database can identify: its database and its catalogue.
 const ELSEWHERE = `
