@@ -177,11 +177,23 @@ importers:
         specifier: 'catalog:'
         version: 6.0.3
 
+  foundation/lock:
+    devDependencies:
+      '@types/node':
+        specifier: 'catalog:'
+        version: 22.20.0
+      typescript:
+        specifier: 'catalog:'
+        version: 6.0.3
+
   foundation/tests:
     dependencies:
       '@dxb-foundation/bench':
         specifier: workspace:*
         version: link:../bench
+      '@dxb-foundation/lock':
+        specifier: workspace:*
+        version: link:../lock
       pg:
         specifier: 'catalog:'
         version: 8.22.0
