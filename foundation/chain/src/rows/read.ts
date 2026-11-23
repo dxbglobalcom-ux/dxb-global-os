@@ -20,15 +20,21 @@ select pg_catalog.format($s$select %L || s.last_value::pg_catalog.text || ' call
   join pg_catalog.pg_sequence q on q.seqrelid = c.oid
  where c.relnamespace = any ($1::pg_catalog.oid[]) and c.relkind = 'S'`;
 
-/** Every `row` and `sequence-position` line (§4), unescaped and in no order. */
+/**
+ * Every `row` and `sequence-position` line (§4), unescaped and in no order. Each line is appended alone, never spread
+ * into `push`'s arguments: a table of 150,000 rows would overflow the stack (§10.1 row 8).
+ */
 async function rowAndSequenceLines(conn: Client, covered: Covered): Promise<string[]> {
   const lines: string[] = [];
+  const append = (read: readonly string[]): void => {
+    for (const line of read) lines.push(line);
+  };
   // The ledger and every vocabulary are lines of the snapshot, and change by the chain's own design (§4's "but").
   for (const { vocabulary, ledger, statement } of await tablesOf(conn, covered, "row")) {
-    if (!vocabulary && !ledger) lines.push(...(await linesOf(conn, statement)));
+    if (!vocabulary && !ledger) append(await linesOf(conn, statement));
   }
   const { rows } = await conn.query<{ statement: string }>(SEQUENCES, [covered.schemas]);
-  for (const { statement } of rows) lines.push(...(await linesOf(conn, statement)));
+  for (const { statement } of rows) append(await linesOf(conn, statement));
   return lines;
 }
 

@@ -6,7 +6,7 @@ import { membersOfARow } from "./json.ts";
 /** The rows' text's first line (§4), alone of its kind. */
 export const ROWS_FIRST_LINE = "rows-format 1";
 
-/** A `row` line: its table, and each of its keys with its value's own spelling (json.ts). */
+/** A `row` line: its table, and each of its own keys with its value's text as it stands (json.ts). */
 type Row = { line: string; table: string; members: Map<string, string> };
 
 /** A `sequence-position` line, its `last_value` as an integer of any size — never a double. */
@@ -15,10 +15,14 @@ type Position = { line: string; sequence: string; last: bigint; called: boolean;
 /** A rows' text read: its rows by table and its positions by sequence, each in the text's order. */
 type Read = { rows: Map<string, Row[]>; positions: Map<string, Position[]> };
 
+// A part of a name that `regclass` leaves unquoted (§10.1 row 6): what `quote_ident` calls safe, the letters alone —
+// a reserved word is not asked after (§10.3.5).
+const UNQUOTED = /[a-z_][a-z0-9_]*/y;
+
 /**
  * Where the name that begins at `from` ends: a name as `regclass` spells it — parts joined by `.`, each a quoted
- * identifier (`""` inside it is one quote, and it may hold a space, a dot or a newline) or a run of anything else
- * but a space, a dot or a quote. Nothing when no name begins there.
+ * identifier (`""` inside it is one quote, and it may hold a space, a dot or a newline) or an unquoted one of
+ * UNQUOTED's letters. Nothing when no name begins there.
  */
 function nameEnd(raw: string, from: number): number | undefined {
   let at = from;
@@ -31,9 +35,9 @@ function nameEnd(raw: string, from: number): number | undefined {
       }
       at += 1;
     } else {
-      const start = at;
-      while (at < raw.length && !' ."'.includes(raw[at] ?? " ")) at += 1;
-      if (at === start) return undefined;
+      UNQUOTED.lastIndex = at;
+      if (!UNQUOTED.test(raw)) return undefined;
+      at = UNQUOTED.lastIndex;
     }
     if (raw[at] !== ".") return at;
     at += 1;
@@ -48,7 +52,8 @@ function namedAfter(raw: string, kind: string): { name: string; rest: string } |
   return { name: raw.slice(kind.length + 1, end), rest: raw.slice(end + 1) };
 }
 
-const POSITION = /^(-?\d+) called ([tf]) ascending ([tf])$/;
+// `last_value` in the one spelling the server prints a bigint in (§10.1 row 6): `0`, or no leading zero — and no `-0`.
+const POSITION = /^(0|-?[1-9]\d*) called ([tf]) ascending ([tf])$/;
 
 /** A line of the text, as it stands there, read as one of §4's two kinds; nothing when it is of neither. */
 function lineOf(line: string): Row | Position | undefined {
@@ -100,7 +105,7 @@ export const isARowsText = (text: string): boolean => isFormedUnder(ROWS_FIRST_L
 
 /**
  * The rows of `before` that no row of `after` answers for, and the rows of `after` that answer for none — one table's.
- * A row of `after` answers for a row of `before` when it holds each of its keys with the same spelling; each answers
+ * A row of `after` answers for a row of `before` when it holds each of its keys with the same text; each answers
  * for one at most. The most rows of `before` are answered for — a matching of most edges — and which ones hangs on
  * no order the texts gave: both lists come in the order of their bytes (`linesRead`), equal rows side by side.
  */
@@ -179,8 +184,12 @@ function freePath(start: number, candidates: readonly number[][], answeredBy: nu
   }
 }
 
-/** Whether `now` stands behind `was` (§5): by `was`'s direction, `last_value` back, or at the same, `called` t to f. */
+/**
+ * Whether `now` stands behind `was` (§5): turned round — whatever its `last_value`, a sequence whose direction changed
+ * gives again what it gave (§10.1 row 1) —, or by `was`'s direction `last_value` back, or at the same `called` t to f.
+ */
 function behind(was: Position, now: Position): boolean {
+  if (now.ascending !== was.ascending) return true;
   if (now.last === was.last) return was.called && !now.called;
   return was.ascending ? now.last < was.last : now.last > was.last;
 }
@@ -204,8 +213,9 @@ export function keptOf(before: string, after: string): Kept {
   for (const [table, rows] of was.rows) {
     const { lost: lostHere, unused } = unanswered(rows, now.rows.get(table) ?? []);
     if (lostHere.length === 0) continue;
-    lost.push(...lostHere.map((row) => row.line));
-    answeredNone.push(...unused.map((row) => row.line));
+    // One by one, never spread into `push`'s arguments: a table of 150,000 rows would overflow the stack (§10.1 row 8).
+    for (const row of lostHere) lost.push(row.line);
+    for (const row of unused) answeredNone.push(row.line);
   }
   const back: string[] = [];
   const whereNow: string[] = [];
@@ -213,8 +223,8 @@ export function keptOf(before: string, after: string): Kept {
     const lines = now.positions.get(sequence) ?? [];
     const behindHere = positions.filter((position) => lines.every((line) => behind(position, line)));
     if (behindHere.length === 0) continue;
-    back.push(...behindHere.map((position) => position.line));
-    whereNow.push(...lines.map((line) => line.line));
+    for (const position of behindHere) back.push(position.line);
+    for (const line of lines) whereNow.push(line.line);
   }
   const count = (map: Map<string, unknown[]>): number => [...map.values()].reduce((sum, list) => sum + list.length, 0);
   return { lost: signedInOrder(lost, answeredNone), back: signedInOrder(back, whereNow), rows: count(was.rows), sequences: count(was.positions) };

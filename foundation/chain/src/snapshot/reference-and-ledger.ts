@@ -7,15 +7,18 @@ import { linesOf } from "./sql.ts";
 import type { Covered } from "./sql.ts";
 
 // Every ordinary table of the covered schemas (`$1`) with its comment, which may mark it a vocabulary — judged
-// here by piece 4's own mark —, whether it is the ledger, and the statement that reads its rows as lines headed by
+// here by piece 4's own mark —, whether it is the ledger — by the catalogue's own rows, its schema's name and its
+// own: `to_regclass` would ask for USAGE on `os_chain`, and refuse a reader of rows that never reads the ledger
+// (piece 6b's SPEC §10.1 row 7) —, and the statement that reads its rows as lines headed by
 // `$2`, spelled by the server: the table by `regclass`, never by this reader. `only`, as the reference pass reads and
 // writes. `t.*`, not `t`: a column named `t` would be read instead of the row.
 const TABLES = `
 select pg_catalog.obj_description(c.oid, 'pg_class') as comment,
-       coalesce(c.oid = pg_catalog.to_regclass('os_chain.ledger')::pg_catalog.oid, false) as ledger,
+       n.nspname = 'os_chain' and c.relname = 'ledger' as ledger,
        pg_catalog.format('select %L || pg_catalog.to_jsonb(t.*)::pg_catalog.text as line from only %s t',
                          $2::pg_catalog.text || ' ' || c.oid::pg_catalog.regclass::pg_catalog.text || ' ', c.oid::pg_catalog.regclass) as statement
   from pg_catalog.pg_class c
+  join pg_catalog.pg_namespace n on n.oid = c.relnamespace
  where c.relnamespace = any ($1::pg_catalog.oid[]) and c.relkind = 'r'`;
 
 /** An ordinary table of a covered schema: what it is to the chain, and the statement that reads its rows as lines. */
