@@ -182,7 +182,7 @@ export function setLogins(lock: HostLock): Promise<{ sysid: string; logins: read
 export function scramVerifier(password: string, salt: Uint8Array, iterations?: number): string;   // iterations: 4096
 /** The address a resident service or a test logs in with, read from the secret file. LoginsRefused("no-secret")
  *  when the file is missing, malformed or does not hold the role. Never printed by the bench itself. */
-export function loginConnectionString(role: FoundationLogin): string;
+export function loginConnectionString(role: FoundationLogin, loginsPath?: string): string;   // default: defaultLoginsPath()
 export function defaultLoginsPath(): string;
 ```
 
@@ -212,8 +212,7 @@ skipped, retried or conditional. What a case makes, it removes by the identity i
 3. No file under `db/schema`, `db/functions` or `db/reference` sets a password: none holds the word `password`
    followed by a quote, a dollar-quote or `null` (in any letter case).
 4. `loginConnectionString` on a secret file that is missing, malformed, or without the role → `LoginsRefused`,
-   reason `no-secret` (the file's path handed to the case through the library's own seam — the test hand says in
-   its report which seam it needed, and the lead adds it to §6).
+   reason `no-secret` (the file's path handed over as the second argument).
 
 **B. On a fresh instance, in order** (one module; it begins with `fresh` and ends with `down`, as piece 1's does;
 a failed step stops the later ones)

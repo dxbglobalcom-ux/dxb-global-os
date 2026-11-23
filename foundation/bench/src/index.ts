@@ -24,3 +24,6 @@ export type { Status } from "./instance.ts";
 export { instanceStatus, destroyInstance } from "./instance.ts";
 
 export { InstanceStands, ExposureRefused, makeInstance } from "./make.ts";
+
+export type { FoundationLogin } from "./logins.ts";
+export { FOUNDATION_LOGINS, LoginsRefused, defaultLoginsPath, scramVerifier, setLogins, loginConnectionString } from "./logins.ts";
