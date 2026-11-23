@@ -1,0 +1,70 @@
+## before logins
+== Q5.1 pg_roles for the five (never rolpassword): every attribute
+  os_engine | f | f | f | f | t | f | f | -1 | ∅ | ∅
+  os_executor | f | f | f | f | t | f | f | -1 | ∅ | ∅
+  os_intake | f | f | f | f | t | f | f | -1 | ∅ | ∅
+  os_owner | f | f | f | f | f | f | f | -1 | ∅ | ∅
+  os_reader | f | f | f | f | t | f | f | -1 | ∅ | ∅
+== Q5.2 pg_authid: how many of the five carry a password (a count; the column is never read out)
+  0 | 0
+== Q5.3 pg_auth_members in both directions: role | member | admin | inherit | set | grantor
+  os_engine | postgres | t | f | f | supabase_admin
+  os_executor | postgres | t | f | f | supabase_admin
+  os_intake | postgres | t | f | f | supabase_admin
+  os_owner | postgres | f | f | t | postgres
+  os_owner | postgres | t | f | f | supabase_admin
+  os_reader | postgres | t | f | f | supabase_admin
+== Q5.4 pg_db_role_setting for the five and for all roles (values of secret-like names hidden): role | database | settings
+  (all roles) | postgres | app.settings.jwt_secret=<hidden>, app.settings.jwt_exp=<hidden>
+SNAPSHOT lines=52 bytes=4560 ms=18
+## logins
+LOGINS_SET logins=4 sysid=<…>
+## after logins
+== Q5.1 pg_roles for the five (never rolpassword): every attribute
+  os_engine | f | f | f | f | t | f | f | -1 | ∅ | ∅
+  os_executor | f | f | f | f | t | f | f | -1 | ∅ | ∅
+  os_intake | f | f | f | f | t | f | f | -1 | ∅ | ∅
+  os_owner | f | f | f | f | f | f | f | -1 | ∅ | ∅
+  os_reader | f | f | f | f | t | f | f | -1 | ∅ | ∅
+== Q5.2 pg_authid: how many of the five carry a password (a count; the column is never read out)
+  4 | 4
+== Q5.3 pg_auth_members in both directions: role | member | admin | inherit | set | grantor
+  os_engine | postgres | t | f | f | supabase_admin
+  os_executor | postgres | t | f | f | supabase_admin
+  os_intake | postgres | t | f | f | supabase_admin
+  os_owner | postgres | f | f | t | postgres
+  os_owner | postgres | t | f | f | supabase_admin
+  os_reader | postgres | t | f | f | supabase_admin
+== Q5.4 pg_db_role_setting for the five and for all roles (values of secret-like names hidden): role | database | settings
+  (all roles) | postgres | app.settings.jwt_secret=<hidden>, app.settings.jwt_exp=<hidden>
+SNAPSHOT lines=52 bytes=4560 ms=16
+## diff of the reads before/after logins (only the password count may move)
+8c8
+<   0 | 0
+---
+>   4 | 4
+## snapshot before/after logins: cmp
+IDENTICAL
+## os_reader over TCP gives itself settings
+connected over TCP as os_reader (port 5432)
+  alter role os_reader set work_mem = '7MB' -> done
+  alter role os_reader in database postgres set statement_timeout = '5s' -> done
+  alter role os_reader set search_path = 'public' -> done
+  alter role os_reader set role = 'anon' -> done
+  alter role os_reader set session_replication_role = 'replica' -> ERROR 42501 permission denied to set parameter "session_replication_role"
+  alter role os_engine set work_mem = '1MB' -> ERROR 42501 permission denied to alter role
+## after
+== Q5.4 pg_db_role_setting for the five and for all roles (values of secret-like names hidden): role | database | settings
+  (all roles) | postgres | app.settings.jwt_secret=<hidden>, app.settings.jwt_exp=<hidden>
+  os_reader | (all databases) | work_mem=7MB, search_path=public, role=anon
+  os_reader | postgres | statement_timeout=5s
+SNAPSHOT lines=54 bytes=4740 ms=17
+## snapshot diff after the login's own settings
+9c9
+< role os_reader super f inherit f createrole f createdb f login t replication f bypassrls f connlimit -1 validuntil - config -
+---
+> role os_reader super f inherit f createrole f createdb f login t replication f bypassrls f connlimit -1 validuntil - config work_mem=7MB,search_path=public,role=anon
+16a17,18
+> role-setting os_reader in (all databases) role=anon,search_path=public,work_mem=7MB
+> role-setting os_reader in postgres statement_timeout=5s
+next login of os_reader: {"current_user":"os_reader","session_user":"os_reader","current_setting":"5s"}

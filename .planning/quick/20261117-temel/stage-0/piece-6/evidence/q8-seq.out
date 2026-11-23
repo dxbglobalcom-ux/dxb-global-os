@@ -1,0 +1,9 @@
+== Q8.4 sequence parameters (pg_sequence) and the volatile part: last_value read from the relation (the installer reads it through pg_read_all_data), before / after a nextval in a ROLLED-BACK transaction
+  os.ticket_seq | 100 | 5 | 1 | 9223372036854775807 | 1 | f | 100 called=false
+== Q8.4a nextval as the owner, then rollback
+  (BEGIN )
+  (SET )
+  100
+  (ROLLBACK )
+== Q8.4b after the rollback: the sequence moved anyway (not transactional); pg_sequence unchanged
+  100 called=true | 100 | 5

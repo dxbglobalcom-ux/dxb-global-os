@@ -1,0 +1,343 @@
+== Q1.1 server version; installer name and attributes
+  PostgreSQL 17.6 on x86_64-pc-linux-gnu, compiled by gcc (GCC) 15.2.0, 64-bit | postgres | postgres | false | true | true | true | true | true | true | -1
+== Q1.2 the installer's memberships (role it is member of: admin/inherit/set, grantor)
+  anon | true | true | true | supabase_admin
+  authenticated | true | true | true | supabase_admin
+  authenticator | true | true | true | supabase_admin
+  h6_role | true | false | false | supabase_admin
+  os_engine | true | false | false | supabase_admin
+  os_executor | true | false | false | supabase_admin
+  os_intake | true | false | false | supabase_admin
+  os_owner | false | false | true | postgres
+  os_owner | true | false | false | supabase_admin
+  os_reader | true | false | false | supabase_admin
+  pg_create_subscription | true | true | true | supabase_admin
+  pg_monitor | true | true | true | supabase_admin
+  pg_read_all_data | true | true | true | supabase_admin
+  pg_signal_backend | true | true | true | supabase_admin
+  service_role | true | true | true | supabase_admin
+  supabase_functions_admin | false | true | true | supabase_admin
+  supabase_privileged_role | false | true | true | supabase_admin
+  supabase_realtime_admin | false | true | true | supabase_admin
+== Q1.3 a session's defaults on this bench, and where each comes from
+  array_nulls | on | default
+  bytea_output | hex | default
+  client_encoding | UTF8 | client
+  DateStyle | ISO, MDY | default
+  default_toast_compression | pglz | default
+  escape_string_warning | on | default
+  extra_float_digits | 0 | configuration file
+  IntervalStyle | postgres | default
+  lc_messages | en_US.UTF-8 | configuration file
+  lc_monetary | en_US.UTF-8 | configuration file
+  lc_numeric | en_US.UTF-8 | configuration file
+  lc_time | en_US.UTF-8 | configuration file
+  plpgsql.variable_conflict | error | default
+  quote_all_identifiers | off | default
+  row_security | on | configuration file
+  search_path | "\$user", public, extensions | user
+  session_replication_role | origin | default
+  standard_conforming_strings | on | default
+  TimeZone | UTC | configuration file
+  transform_null_equals | off | default
+== Q1.4 pg_db_role_setting for the installer and for all roles (names only, values of secret-like names hidden)
+  (all roles) | postgres | app.settings.jwt_secret=<hidden>, app.settings.jwt_exp=<hidden>
+  postgres | (all dbs) | search_path="\$user", public, extensions
+== Q1.5 baseline (the session's defaults): every deparse
+  defaults | ts='2020-01-02 00:04:05+00'::timestamp with time zone ; d='2020-01-02'::date ; iv='1 day 02:03:04'::interval ; b='\x41ff'::bytea ; f8=((0.1)::double precision + (0.0000001)::double precision) ; f4=(0.1)::real ; m=12.34 ; s='a\b'::text ; nm=(1.0 / (3)::numeric) ; arr='{1,NULL,3}'::integer[]
+  fn-args | x timestamp with time zone DEFAULT '2020-01-02 00:04:05+00'::timestamp with time zone, y double precision DEFAULT 0.1, z interval DEFAULT '01:30:00'::interval, w text DEFAULT 'a\b'::text
+  view |  SELECT ts,
+    (f8 * (0.1)::double precision) AS g,
+    (iv + '01:00:00'::interval) AS h
+   FROM os.q1p
+  WHERE ((ts > '2020-01-01 00:00:00+00'::timestamp with time zone) AND (s <> 'x\y'::text));
+  index | CREATE INDEX q1p_i ON os.q1p USING btree (lower(s)) WHERE (f8 > (0.5)::double precision)
+  check | CHECK (((f8 < ('10000000000'::numeric)::double precision) AND (ts > '2000-01-01 00:00:00+00'::timestamp with time zone)))
+  policy | ((ts > '2020-01-01 00:00:00+00'::timestamp with time zone) AND (f8 > (0.3)::double precision))
+  trigger | CREATE TRIGGER q1t BEFORE INSERT ON os.q1p FOR EACH ROW WHEN ((new.f8 > (0.2)::double precision)) EXECUTE FUNCTION os.q1trg()
+  functiondef-head | CREATE OR REPLACE FUNCTION os.q1f(x timestamp with time zone DEFAULT '2020-01-02 00:04:05+00'::timestamp with time zone, y double precision DEFAULT 0.1, z interval DEFAULT '01:30:00'::interval, w text DEFAULT 'a\b'::text)
+== Q1.6 search_path = '' (and everything else default)
+  (SET )
+  defaults | ts='2020-01-02 00:04:05+00'::timestamp with time zone ; d='2020-01-02'::date ; iv='1 day 02:03:04'::interval ; b='\x41ff'::bytea ; f8=((0.1)::double precision + (0.0000001)::double precision) ; f4=(0.1)::real ; m=12.34 ; s='a\b'::text ; nm=(1.0 / (3)::numeric) ; arr='{1,NULL,3}'::integer[]
+  fn-args | x timestamp with time zone DEFAULT '2020-01-02 00:04:05+00'::timestamp with time zone, y double precision DEFAULT 0.1, z interval DEFAULT '01:30:00'::interval, w text DEFAULT 'a\b'::text
+  view |  SELECT ts,
+    (f8 * (0.1)::double precision) AS g,
+    (iv + '01:00:00'::interval) AS h
+   FROM os.q1p
+  WHERE ((ts > '2020-01-01 00:00:00+00'::timestamp with time zone) AND (s <> 'x\y'::text));
+  index | CREATE INDEX q1p_i ON os.q1p USING btree (lower(s)) WHERE (f8 > (0.5)::double precision)
+  check | CHECK (((f8 < ('10000000000'::numeric)::double precision) AND (ts > '2000-01-01 00:00:00+00'::timestamp with time zone)))
+  policy | ((ts > '2020-01-01 00:00:00+00'::timestamp with time zone) AND (f8 > (0.3)::double precision))
+  trigger | CREATE TRIGGER q1t BEFORE INSERT ON os.q1p FOR EACH ROW WHEN ((new.f8 > (0.2)::double precision)) EXECUTE FUNCTION os.q1trg()
+  functiondef-head | CREATE OR REPLACE FUNCTION os.q1f(x timestamp with time zone DEFAULT '2020-01-02 00:04:05+00'::timestamp with time zone, y double precision DEFAULT 0.1, z interval DEFAULT '01:30:00'::interval, w text DEFAULT 'a\b'::text)
+== Q1.6b search_path = os, public (the object's own schema first)
+  (SET )
+  defaults | ts='2020-01-02 00:04:05+00'::timestamp with time zone ; d='2020-01-02'::date ; iv='1 day 02:03:04'::interval ; b='\x41ff'::bytea ; f8=((0.1)::double precision + (0.0000001)::double precision) ; f4=(0.1)::real ; m=12.34 ; s='a\b'::text ; nm=(1.0 / (3)::numeric) ; arr='{1,NULL,3}'::integer[]
+  view |  SELECT ts,
+    (f8 * (0.1)::double precision) AS g,
+    (iv + '01:00:00'::interval) AS h
+   FROM q1p
+  WHERE ((ts > '2020-01-01 00:00:00+00'::timestamp with time zone) AND (s <> 'x\y'::text));
+  index | CREATE INDEX q1p_i ON os.q1p USING btree (lower(s)) WHERE (f8 > (0.5)::double precision)
+  trigger | CREATE TRIGGER q1t BEFORE INSERT ON os.q1p FOR EACH ROW WHEN ((new.f8 > (0.2)::double precision)) EXECUTE FUNCTION q1trg()
+  functiondef-head | CREATE OR REPLACE FUNCTION os.q1f(x timestamp with time zone DEFAULT '2020-01-02 00:04:05+00'::timestamp with time zone, y double precision DEFAULT 0.1, z interval DEFAULT '01:30:00'::interval, w text DEFAULT 'a\b'::text)
+  regclass/regprocedure text | q1p q1f(timestamp with time zone,double precision,interval,text) mood
+  (RESET )
+== Q1.7 reference text: search_path '' + the other settings at their session values
+  (SET )
+  722c9bc9d4f4f6039507a5b1ad8f17b1 | ts='2020-01-02 00:04:05+00'::timestamp with time zone ; d='2020-01-02'::date ; iv='1 day 02:03:04'::interval ; b='\x41ff'::bytea ; f8=((0.1)::double precision + (0.0000001)::double precision) ; f4=(0.1)::real ; m=12.34 ; s='a\b'::text ; nm=(1.0 / (3)::numeric) ; arr='{1,NULL,3}'::integer[]
+x timestamp with time zone DEFAULT '2020-01-02 00:04:05+00'::timestamp with time zone, y double precision DEFAULT 0.1, z interval DEFAULT '01:30:00'::interval, w text DEFAULT 'a\b'::text
+ SELECT ts,
+    (f8 * (0.1)::double precision) AS g,
+    (iv + '01:00:00'::interval) AS h
+   FROM os.q1p
+  WHERE ((ts > '2020-01-01 00:00:00+00'::timestamp with time zone) AND (s <> 'x\y'::text));
+CHECK (((f8 < ('10000000000'::numeric)::double precision) AND (ts > '2000-01-01 00:00:00+00'::timestamp with time zone)))
+((ts > '2020-01-01 00:00:00+00'::timestamp with time zone) AND (f8 > (0.3)::double precision))
+CREATE TRIGGER q1t BEFORE INSERT ON os.q1p FOR EACH ROW WHEN ((new.f8 > (0.2)::double precision)) EXECUTE FUNCTION os.q1trg()
+CREATE INDEX q1p_i ON os.q1p USING btree (lower(s)) WHERE (f8 > (0.5)::double precision)
+CREATE OR REPLACE FUNCTION os.q1f(x timestamp with time zone DEFAULT '2020-01-02 00:04:05+00'::timestamp with time zone, y double precision DEFAULT 0.1, z interval DEFAULT '01:30:00'::interval, w text DEFAULT 'a\b'::text)
+ RETURNS integer
+ LANGUAGE sql
+AS $function$ select 1 $function$
+
+== Q1.7 changed alone: extra_float_digits = 3
+  (SAVEPOINT )
+  (SET )
+  722c9bc9d4f4f6039507a5b1ad8f17b1 | ts='2020-01-02 00:04:05+00'::timestamp with time zone ; d='2020-01-02'::date ; iv='1 day 02:03:04'::interval ; b='\x41ff'::bytea ; f8=((0.1)::double precision + (0.0000001)::double precision) ; f4=(0.1)::real ; m=12.34 ; s='a\b'::text ; nm=(1.0 / (3)::numeric) ; arr='{1,NULL,3}'::integer[]
+x timestamp with time zone DEFAULT '2020-01-02 00:04:05+00'::timestamp with time zone, y double precision DEFAULT 0.1, z interval DEFAULT '01:30:00'::interval, w text DEFAULT 'a\b'::text
+ SELECT ts,
+    (f8 * (0.1)::double precision) AS g,
+    (iv + '01:00:00'::interval) AS h
+   FROM os.q1p
+  WHERE ((ts > '2020-01-01 00:00:00+00'::timestamp with time zone) AND (s <> 'x\y'::text));
+CHECK (((f8 < ('10000000000'::numeric)::double precision) AND (ts > '2000-01-01 00:00:00+00'::timestamp with time zone)))
+((ts > '2020-01-01 00:00:00+00'::timestamp with time zone) AND (f8 > (0.3)::double precision))
+CREATE TRIGGER q1t BEFORE INSERT ON os.q1p FOR EACH ROW WHEN ((new.f8 > (0.2)::double precision)) EXECUTE FUNCTION os.q1trg()
+CREATE INDEX q1p_i ON os.q1p USING btree (lower(s)) WHERE (f8 > (0.5)::double precision)
+CREATE OR REPLACE FUNCTION os.q1f(x timestamp with time zone DEFAULT '2020-01-02 00:04:05+00'::timestamp with time zone, y double precision DEFAULT 0.1, z interval DEFAULT '01:30:00'::interval, w text DEFAULT 'a\b'::text)
+ RETURNS integer
+ LANGUAGE sql
+AS $function$ select 1 $function$
+
+  (ROLLBACK )
+== Q1.7 changed alone: extra_float_digits = 1
+  (SAVEPOINT )
+  (SET )
+  722c9bc9d4f4f6039507a5b1ad8f17b1 | ts='2020-01-02 00:04:05+00'::timestamp with time zone ; d='2020-01-02'::date ; iv='1 day 02:03:04'::interval ; b='\x41ff'::bytea ; f8=((0.1)::double precision + (0.0000001)::double precision) ; f4=(0.1)::real ; m=12.34 ; s='a\b'::text ; nm=(1.0 / (3)::numeric) ; arr='{1,NULL,3}'::integer[]
+x timestamp with time zone DEFAULT '2020-01-02 00:04:05+00'::timestamp with time zone, y double precision DEFAULT 0.1, z interval DEFAULT '01:30:00'::interval, w text DEFAULT 'a\b'::text
+ SELECT ts,
+    (f8 * (0.1)::double precision) AS g,
+    (iv + '01:00:00'::interval) AS h
+   FROM os.q1p
+  WHERE ((ts > '2020-01-01 00:00:00+00'::timestamp with time zone) AND (s <> 'x\y'::text));
+CHECK (((f8 < ('10000000000'::numeric)::double precision) AND (ts > '2000-01-01 00:00:00+00'::timestamp with time zone)))
+((ts > '2020-01-01 00:00:00+00'::timestamp with time zone) AND (f8 > (0.3)::double precision))
+CREATE TRIGGER q1t BEFORE INSERT ON os.q1p FOR EACH ROW WHEN ((new.f8 > (0.2)::double precision)) EXECUTE FUNCTION os.q1trg()
+CREATE INDEX q1p_i ON os.q1p USING btree (lower(s)) WHERE (f8 > (0.5)::double precision)
+CREATE OR REPLACE FUNCTION os.q1f(x timestamp with time zone DEFAULT '2020-01-02 00:04:05+00'::timestamp with time zone, y double precision DEFAULT 0.1, z interval DEFAULT '01:30:00'::interval, w text DEFAULT 'a\b'::text)
+ RETURNS integer
+ LANGUAGE sql
+AS $function$ select 1 $function$
+
+  (ROLLBACK )
+== Q1.7 changed alone: extra_float_digits = -3
+  (SAVEPOINT )
+  (SET )
+  722c9bc9d4f4f6039507a5b1ad8f17b1 | ts='2020-01-02 00:04:05+00'::timestamp with time zone ; d='2020-01-02'::date ; iv='1 day 02:03:04'::interval ; b='\x41ff'::bytea ; f8=((0.1)::double precision + (0.0000001)::double precision) ; f4=(0.1)::real ; m=12.34 ; s='a\b'::text ; nm=(1.0 / (3)::numeric) ; arr='{1,NULL,3}'::integer[]
+x timestamp with time zone DEFAULT '2020-01-02 00:04:05+00'::timestamp with time zone, y double precision DEFAULT 0.1, z interval DEFAULT '01:30:00'::interval, w text DEFAULT 'a\b'::text
+ SELECT ts,
+    (f8 * (0.1)::double precision) AS g,
+    (iv + '01:00:00'::interval) AS h
+   FROM os.q1p
+  WHERE ((ts > '2020-01-01 00:00:00+00'::timestamp with time zone) AND (s <> 'x\y'::text));
+CHECK (((f8 < ('10000000000'::numeric)::double precision) AND (ts > '2000-01-01 00:00:00+00'::timestamp with time zone)))
+((ts > '2020-01-01 00:00:00+00'::timestamp with time zone) AND (f8 > (0.3)::double precision))
+CREATE TRIGGER q1t BEFORE INSERT ON os.q1p FOR EACH ROW WHEN ((new.f8 > (0.2)::double precision)) EXECUTE FUNCTION os.q1trg()
+CREATE INDEX q1p_i ON os.q1p USING btree (lower(s)) WHERE (f8 > (0.5)::double precision)
+CREATE OR REPLACE FUNCTION os.q1f(x timestamp with time zone DEFAULT '2020-01-02 00:04:05+00'::timestamp with time zone, y double precision DEFAULT 0.1, z interval DEFAULT '01:30:00'::interval, w text DEFAULT 'a\b'::text)
+ RETURNS integer
+ LANGUAGE sql
+AS $function$ select 1 $function$
+
+  (ROLLBACK )
+== Q1.7 changed alone: timezone = 'Asia/Tokyo'
+  (SAVEPOINT )
+  (SET )
+  8c1280886153929b75e400ec3c616db7 | ts='2020-01-02 09:04:05+09'::timestamp with time zone ; d='2020-01-02'::date ; iv='1 day 02:03:04'::interval ; b='\x41ff'::bytea ; f8=((0.1)::double precision + (0.0000001)::double precision) ; f4=(0.1)::real ; m=12.34 ; s='a\b'::text ; nm=(1.0 / (3)::numeric) ; arr='{1,NULL,3}'::integer[]
+x timestamp with time zone DEFAULT '2020-01-02 09:04:05+09'::timestamp with time zone, y double precision DEFAULT 0.1, z interval DEFAULT '01:30:00'::interval, w text DEFAULT 'a\b'::text
+ SELECT ts,
+    (f8 * (0.1)::double precision) AS g,
+    (iv + '01:00:00'::interval) AS h
+   FROM os.q1p
+  WHERE ((ts > '2020-01-01 09:00:00+09'::timestamp with time zone) AND (s <> 'x\y'::text));
+CHECK (((f8 < ('10000000000'::numeric)::double precision) AND (ts > '2000-01-01 09:00:00+09'::timestamp with time zone)))
+((ts > '2020-01-01 09:00:00+09'::timestamp with time zone) AND (f8 > (0.3)::double precision))
+CREATE TRIGGER q1t BEFORE INSERT ON os.q1p FOR EACH ROW WHEN ((new.f8 > (0.2)::double precision)) EXECUTE FUNCTION os.q1trg()
+CREATE INDEX q1p_i ON os.q1p USING btree (lower(s)) WHERE (f8 > (0.5)::double precision)
+CREATE OR REPLACE FUNCTION os.q1f(x timestamp with time zone DEFAULT '2020-01-02 09:04:05+09'::timestamp with time zone, y double precision DEFAULT 0.1, z interval DEFAULT '01:30:00'::interval, w text DEFAULT 'a\b'::text)
+ RETURNS integer
+ LANGUAGE sql
+AS $function$ select 1 $function$
+
+  (ROLLBACK )
+== Q1.7 changed alone: datestyle = 'SQL, DMY'
+  (SAVEPOINT )
+  (SET )
+  2d2f102549fed88d389a6ac29bb5279a | ts='02/01/2020 00:04:05 UTC'::timestamp with time zone ; d='02/01/2020'::date ; iv='1 day 02:03:04'::interval ; b='\x41ff'::bytea ; f8=((0.1)::double precision + (0.0000001)::double precision) ; f4=(0.1)::real ; m=12.34 ; s='a\b'::text ; nm=(1.0 / (3)::numeric) ; arr='{1,NULL,3}'::integer[]
+x timestamp with time zone DEFAULT '02/01/2020 00:04:05 UTC'::timestamp with time zone, y double precision DEFAULT 0.1, z interval DEFAULT '01:30:00'::interval, w text DEFAULT 'a\b'::text
+ SELECT ts,
+    (f8 * (0.1)::double precision) AS g,
+    (iv + '01:00:00'::interval) AS h
+   FROM os.q1p
+  WHERE ((ts > '01/01/2020 00:00:00 UTC'::timestamp with time zone) AND (s <> 'x\y'::text));
+CHECK (((f8 < ('10000000000'::numeric)::double precision) AND (ts > '01/01/2000 00:00:00 UTC'::timestamp with time zone)))
+((ts > '01/01/2020 00:00:00 UTC'::timestamp with time zone) AND (f8 > (0.3)::double precision))
+CREATE TRIGGER q1t BEFORE INSERT ON os.q1p FOR EACH ROW WHEN ((new.f8 > (0.2)::double precision)) EXECUTE FUNCTION os.q1trg()
+CREATE INDEX q1p_i ON os.q1p USING btree (lower(s)) WHERE (f8 > (0.5)::double precision)
+CREATE OR REPLACE FUNCTION os.q1f(x timestamp with time zone DEFAULT '02/01/2020 00:04:05 UTC'::timestamp with time zone, y double precision DEFAULT 0.1, z interval DEFAULT '01:30:00'::interval, w text DEFAULT 'a\b'::text)
+ RETURNS integer
+ LANGUAGE sql
+AS $function$ select 1 $function$
+
+  (ROLLBACK )
+== Q1.7 changed alone: datestyle = 'German'
+  (SAVEPOINT )
+  (SET )
+  2847813afba864a08a7a99a5c4c95a72 | ts='02.01.2020 00:04:05 UTC'::timestamp with time zone ; d='02.01.2020'::date ; iv='1 day 02:03:04'::interval ; b='\x41ff'::bytea ; f8=((0.1)::double precision + (0.0000001)::double precision) ; f4=(0.1)::real ; m=12.34 ; s='a\b'::text ; nm=(1.0 / (3)::numeric) ; arr='{1,NULL,3}'::integer[]
+x timestamp with time zone DEFAULT '02.01.2020 00:04:05 UTC'::timestamp with time zone, y double precision DEFAULT 0.1, z interval DEFAULT '01:30:00'::interval, w text DEFAULT 'a\b'::text
+ SELECT ts,
+    (f8 * (0.1)::double precision) AS g,
+    (iv + '01:00:00'::interval) AS h
+   FROM os.q1p
+  WHERE ((ts > '01.01.2020 00:00:00 UTC'::timestamp with time zone) AND (s <> 'x\y'::text));
+CHECK (((f8 < ('10000000000'::numeric)::double precision) AND (ts > '01.01.2000 00:00:00 UTC'::timestamp with time zone)))
+((ts > '01.01.2020 00:00:00 UTC'::timestamp with time zone) AND (f8 > (0.3)::double precision))
+CREATE TRIGGER q1t BEFORE INSERT ON os.q1p FOR EACH ROW WHEN ((new.f8 > (0.2)::double precision)) EXECUTE FUNCTION os.q1trg()
+CREATE INDEX q1p_i ON os.q1p USING btree (lower(s)) WHERE (f8 > (0.5)::double precision)
+CREATE OR REPLACE FUNCTION os.q1f(x timestamp with time zone DEFAULT '02.01.2020 00:04:05 UTC'::timestamp with time zone, y double precision DEFAULT 0.1, z interval DEFAULT '01:30:00'::interval, w text DEFAULT 'a\b'::text)
+ RETURNS integer
+ LANGUAGE sql
+AS $function$ select 1 $function$
+
+  (ROLLBACK )
+== Q1.7 changed alone: intervalstyle = 'iso_8601'
+  (SAVEPOINT )
+  (SET )
+  890b6ae023670723cc9f11ed2e46c2fe | ts='2020-01-02 00:04:05+00'::timestamp with time zone ; d='2020-01-02'::date ; iv='P1DT2H3M4S'::interval ; b='\x41ff'::bytea ; f8=((0.1)::double precision + (0.0000001)::double precision) ; f4=(0.1)::real ; m=12.34 ; s='a\b'::text ; nm=(1.0 / (3)::numeric) ; arr='{1,NULL,3}'::integer[]
+x timestamp with time zone DEFAULT '2020-01-02 00:04:05+00'::timestamp with time zone, y double precision DEFAULT 0.1, z interval DEFAULT 'PT1H30M'::interval, w text DEFAULT 'a\b'::text
+ SELECT ts,
+    (f8 * (0.1)::double precision) AS g,
+    (iv + 'PT1H'::interval) AS h
+   FROM os.q1p
+  WHERE ((ts > '2020-01-01 00:00:00+00'::timestamp with time zone) AND (s <> 'x\y'::text));
+CHECK (((f8 < ('10000000000'::numeric)::double precision) AND (ts > '2000-01-01 00:00:00+00'::timestamp with time zone)))
+((ts > '2020-01-01 00:00:00+00'::timestamp with time zone) AND (f8 > (0.3)::double precision))
+CREATE TRIGGER q1t BEFORE INSERT ON os.q1p FOR EACH ROW WHEN ((new.f8 > (0.2)::double precision)) EXECUTE FUNCTION os.q1trg()
+CREATE INDEX q1p_i ON os.q1p USING btree (lower(s)) WHERE (f8 > (0.5)::double precision)
+CREATE OR REPLACE FUNCTION os.q1f(x timestamp with time zone DEFAULT '2020-01-02 00:04:05+00'::timestamp with time zone, y double precision DEFAULT 0.1, z interval DEFAULT 'PT1H30M'::interval, w text DEFAULT 'a\b'::text)
+ RETURNS integer
+ LANGUAGE sql
+AS $function$ select 1 $function$
+
+  (ROLLBACK )
+== Q1.7 changed alone: intervalstyle = 'sql_standard'
+  (SAVEPOINT )
+  (SET )
+  647f067c534bc12f8ca7892ecff5d21f | ts='2020-01-02 00:04:05+00'::timestamp with time zone ; d='2020-01-02'::date ; iv='1 2:03:04'::interval ; b='\x41ff'::bytea ; f8=((0.1)::double precision + (0.0000001)::double precision) ; f4=(0.1)::real ; m=12.34 ; s='a\b'::text ; nm=(1.0 / (3)::numeric) ; arr='{1,NULL,3}'::integer[]
+x timestamp with time zone DEFAULT '2020-01-02 00:04:05+00'::timestamp with time zone, y double precision DEFAULT 0.1, z interval DEFAULT '1:30:00'::interval, w text DEFAULT 'a\b'::text
+ SELECT ts,
+    (f8 * (0.1)::double precision) AS g,
+    (iv + '1:00:00'::interval) AS h
+   FROM os.q1p
+  WHERE ((ts > '2020-01-01 00:00:00+00'::timestamp with time zone) AND (s <> 'x\y'::text));
+CHECK (((f8 < ('10000000000'::numeric)::double precision) AND (ts > '2000-01-01 00:00:00+00'::timestamp with time zone)))
+((ts > '2020-01-01 00:00:00+00'::timestamp with time zone) AND (f8 > (0.3)::double precision))
+CREATE TRIGGER q1t BEFORE INSERT ON os.q1p FOR EACH ROW WHEN ((new.f8 > (0.2)::double precision)) EXECUTE FUNCTION os.q1trg()
+CREATE INDEX q1p_i ON os.q1p USING btree (lower(s)) WHERE (f8 > (0.5)::double precision)
+CREATE OR REPLACE FUNCTION os.q1f(x timestamp with time zone DEFAULT '2020-01-02 00:04:05+00'::timestamp with time zone, y double precision DEFAULT 0.1, z interval DEFAULT '1:30:00'::interval, w text DEFAULT 'a\b'::text)
+ RETURNS integer
+ LANGUAGE sql
+AS $function$ select 1 $function$
+
+  (ROLLBACK )
+== Q1.7 changed alone: bytea_output = 'escape'
+  (SAVEPOINT )
+  (SET )
+  0960d492a41d5c139437e09f3c2d273f | ts='2020-01-02 00:04:05+00'::timestamp with time zone ; d='2020-01-02'::date ; iv='1 day 02:03:04'::interval ; b='A\377'::bytea ; f8=((0.1)::double precision + (0.0000001)::double precision) ; f4=(0.1)::real ; m=12.34 ; s='a\b'::text ; nm=(1.0 / (3)::numeric) ; arr='{1,NULL,3}'::integer[]
+x timestamp with time zone DEFAULT '2020-01-02 00:04:05+00'::timestamp with time zone, y double precision DEFAULT 0.1, z interval DEFAULT '01:30:00'::interval, w text DEFAULT 'a\b'::text
+ SELECT ts,
+    (f8 * (0.1)::double precision) AS g,
+    (iv + '01:00:00'::interval) AS h
+   FROM os.q1p
+  WHERE ((ts > '2020-01-01 00:00:00+00'::timestamp with time zone) AND (s <> 'x\y'::text));
+CHECK (((f8 < ('10000000000'::numeric)::double precision) AND (ts > '2000-01-01 00:00:00+00'::timestamp with time zone)))
+((ts > '2020-01-01 00:00:00+00'::timestamp with time zone) AND (f8 > (0.3)::double precision))
+CREATE TRIGGER q1t BEFORE INSERT ON os.q1p FOR EACH ROW WHEN ((new.f8 > (0.2)::double precision)) EXECUTE FUNCTION os.q1trg()
+CREATE INDEX q1p_i ON os.q1p USING btree (lower(s)) WHERE (f8 > (0.5)::double precision)
+CREATE OR REPLACE FUNCTION os.q1f(x timestamp with time zone DEFAULT '2020-01-02 00:04:05+00'::timestamp with time zone, y double precision DEFAULT 0.1, z interval DEFAULT '01:30:00'::interval, w text DEFAULT 'a\b'::text)
+ RETURNS integer
+ LANGUAGE sql
+AS $function$ select 1 $function$
+
+  (ROLLBACK )
+== Q1.7 changed alone: lc_monetary = 'C'
+  (SAVEPOINT )
+  (SET )
+  722c9bc9d4f4f6039507a5b1ad8f17b1 | ts='2020-01-02 00:04:05+00'::timestamp with time zone ; d='2020-01-02'::date ; iv='1 day 02:03:04'::interval ; b='\x41ff'::bytea ; f8=((0.1)::double precision + (0.0000001)::double precision) ; f4=(0.1)::real ; m=12.34 ; s='a\b'::text ; nm=(1.0 / (3)::numeric) ; arr='{1,NULL,3}'::integer[]
+x timestamp with time zone DEFAULT '2020-01-02 00:04:05+00'::timestamp with time zone, y double precision DEFAULT 0.1, z interval DEFAULT '01:30:00'::interval, w text DEFAULT 'a\b'::text
+ SELECT ts,
+    (f8 * (0.1)::double precision) AS g,
+    (iv + '01:00:00'::interval) AS h
+   FROM os.q1p
+  WHERE ((ts > '2020-01-01 00:00:00+00'::timestamp with time zone) AND (s <> 'x\y'::text));
+CHECK (((f8 < ('10000000000'::numeric)::double precision) AND (ts > '2000-01-01 00:00:00+00'::timestamp with time zone)))
+((ts > '2020-01-01 00:00:00+00'::timestamp with time zone) AND (f8 > (0.3)::double precision))
+CREATE TRIGGER q1t BEFORE INSERT ON os.q1p FOR EACH ROW WHEN ((new.f8 > (0.2)::double precision)) EXECUTE FUNCTION os.q1trg()
+CREATE INDEX q1p_i ON os.q1p USING btree (lower(s)) WHERE (f8 > (0.5)::double precision)
+CREATE OR REPLACE FUNCTION os.q1f(x timestamp with time zone DEFAULT '2020-01-02 00:04:05+00'::timestamp with time zone, y double precision DEFAULT 0.1, z interval DEFAULT '01:30:00'::interval, w text DEFAULT 'a\b'::text)
+ RETURNS integer
+ LANGUAGE sql
+AS $function$ select 1 $function$
+
+  (ROLLBACK )
+== Q1.7 changed alone: quote_all_identifiers = on
+  (SAVEPOINT )
+  (SET )
+  f3019339ad912482f52eb7b3dcdde2c5 | ts='2020-01-02 00:04:05+00'::timestamp with time zone ; d='2020-01-02'::"date" ; iv='1 day 02:03:04'::interval ; b='\x41ff'::"bytea" ; f8=((0.1)::double precision + (0.0000001)::double precision) ; f4=(0.1)::real ; m=12.34 ; s='a\b'::"text" ; nm=(1.0 / (3)::numeric) ; arr='{1,NULL,3}'::integer[]
+"x" timestamp with time zone DEFAULT '2020-01-02 00:04:05+00'::timestamp with time zone, "y" double precision DEFAULT 0.1, "z" interval DEFAULT '01:30:00'::interval, "w" "text" DEFAULT 'a\b'::"text"
+ SELECT "ts",
+    ("f8" * (0.1)::double precision) AS "g",
+    ("iv" + '01:00:00'::interval) AS "h"
+   FROM "os"."q1p"
+  WHERE (("ts" > '2020-01-01 00:00:00+00'::timestamp with time zone) AND ("s" <> 'x\y'::"text"));
+CHECK ((("f8" < ('10000000000'::numeric)::double precision) AND ("ts" > '2000-01-01 00:00:00+00'::timestamp with time zone)))
+(("ts" > '2020-01-01 00:00:00+00'::timestamp with time zone) AND ("f8" > (0.3)::double precision))
+CREATE TRIGGER "q1t" BEFORE INSERT ON "os"."q1p" FOR EACH ROW WHEN (("new"."f8" > (0.2)::double precision)) EXECUTE FUNCTION "os"."q1trg"()
+CREATE INDEX "q1p_i" ON "os"."q1p" USING "btree" ("lower"("s")) WHERE ("f8" > (0.5)::double precision)
+CREATE OR REPLACE FUNCTION "os"."q1f"("x" timestamp with time zone DEFAULT '2020-01-02 00:04:05+00'::timestamp with time zone, "y" double precision DEFAULT 0.1, "z" interval DEFAULT '01:30:00'::interval, "w" "text" DEFAULT 'a\b'::"text")
+ RETURNS integer
+ LANGUAGE "sql"
+AS $function$ select 1 $function$
+
+  (ROLLBACK )
+== Q1.7 changed alone: standard_conforming_strings = off
+  (SAVEPOINT )
+  (SET )
+  74849e822605984a3dd52b9d5e7de344 | ts='2020-01-02 00:04:05+00'::timestamp with time zone ; d='2020-01-02'::date ; iv='1 day 02:03:04'::interval ; b='\\x41ff'::bytea ; f8=((0.1)::double precision + (0.0000001)::double precision) ; f4=(0.1)::real ; m=12.34 ; s='a\\b'::text ; nm=(1.0 / (3)::numeric) ; arr='{1,NULL,3}'::integer[]
+x timestamp with time zone DEFAULT '2020-01-02 00:04:05+00'::timestamp with time zone, y double precision DEFAULT 0.1, z interval DEFAULT '01:30:00'::interval, w text DEFAULT 'a\\b'::text
+ SELECT ts,
+    (f8 * (0.1)::double precision) AS g,
+    (iv + '01:00:00'::interval) AS h
+   FROM os.q1p
+  WHERE ((ts > '2020-01-01 00:00:00+00'::timestamp with time zone) AND (s <> 'x\\y'::text));
+CHECK (((f8 < ('10000000000'::numeric)::double precision) AND (ts > '2000-01-01 00:00:00+00'::timestamp with time zone)))
+((ts > '2020-01-01 00:00:00+00'::timestamp with time zone) AND (f8 > (0.3)::double precision))
+CREATE TRIGGER q1t BEFORE INSERT ON os.q1p FOR EACH ROW WHEN ((new.f8 > (0.2)::double precision)) EXECUTE FUNCTION os.q1trg()
+CREATE INDEX q1p_i ON os.q1p USING btree (lower(s)) WHERE (f8 > (0.5)::double precision)
+CREATE OR REPLACE FUNCTION os.q1f(x timestamp with time zone DEFAULT '2020-01-02 00:04:05+00'::timestamp with time zone, y double precision DEFAULT 0.1, z interval DEFAULT '01:30:00'::interval, w text DEFAULT 'a\\b'::text)
+ RETURNS integer
+ LANGUAGE sql
+AS $function$ select 1 $function$
+
+  (ROLLBACK )

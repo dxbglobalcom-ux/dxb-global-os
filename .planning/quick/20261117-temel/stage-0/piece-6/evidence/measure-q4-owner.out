@@ -1,0 +1,56 @@
+## before
+== read: owner and stored ACL of os.next_ticket and of schema os; oid/ctid of the function row
+  function | os.next_ticket(text,integer,double precision) | os_owner | {os_owner=X/os_owner} | (126,11) | b9624c1ec3e8e07e5afe9d4781be9151
+  schema | os | os_owner | {os_owner=UC/os_owner,os_reader=U/os_owner,os_engine=U/os_owner,os_executor=U/os_owner,os_intake=U/os_owner} | (0,52) | 
+## the installer tries
+== Q4.4a as the installer: alter function os.next_ticket owner to os_engine
+  ERROR 42501 must be owner of function next_ticket
+== Q4.4b as the installer, set role os_owner first: alter … owner to os_engine
+  ERROR 42501 must be able to SET ROLE "os_engine"
+== Q4.4c as the installer: alter schema os owner to postgres
+  ERROR 42501 must be owner of schema os
+## superuser: function owner -> os_engine, and an extra grant to os_intake
+== read: owner and stored ACL of os.next_ticket and of schema os; oid/ctid of the function row
+  function | os.next_ticket(text,integer,double precision) | os_engine | {os_engine=X/os_engine,os_intake=X/os_engine} | (126,13) | b9624c1ec3e8e07e5afe9d4781be9151
+  schema | os | os_owner | {os_owner=UC/os_owner,os_reader=U/os_owner,os_engine=U/os_owner,os_executor=U/os_owner,os_intake=U/os_owner} | (0,52) | 
+## chain up (rootB; the functions pass replaces every function as os_owner)
+FAILED functions/next_ticket.sql must be owner of function next_ticket
+CHAIN_RED functions-failed applied=0
+== read: owner and stored ACL of os.next_ticket and of schema os; oid/ctid of the function row
+  function | os.next_ticket(text,integer,double precision) | os_engine | {os_engine=X/os_engine,os_intake=X/os_engine} | (126,13) | b9624c1ec3e8e07e5afe9d4781be9151
+  schema | os | os_owner | {os_owner=UC/os_owner,os_reader=U/os_owner,os_engine=U/os_owner,os_executor=U/os_owner,os_intake=U/os_owner} | (0,52) | 
+## create or replace of the same text by its present owner (os_engine) as superuser: owner and ACL after
+ERROR:  permission denied for schema os
+== read: owner and stored ACL of os.next_ticket and of schema os; oid/ctid of the function row
+  function | os.next_ticket(text,integer,double precision) | os_engine | {os_engine=X/os_engine,os_intake=X/os_engine} | (126,13) | b9624c1ec3e8e07e5afe9d4781be9151
+  schema | os | os_owner | {os_owner=UC/os_owner,os_reader=U/os_owner,os_engine=U/os_owner,os_executor=U/os_owner,os_intake=U/os_owner} | (0,52) | 
+## the snapshot's lines for it
+function os.next_ticket(text,integer,double precision) kind f owner os_engine language sql returns text definer f volatility v strict f parallel u leakproof f cost 100 rows 0 config - arguments prefix text DEFAULT 'T-'::text, width integer DEFAULT 6, scale double precision DEFAULT 0.1
+function-body os.next_ticket(text,integer,double precision) \n  select prefix || lpad(nextval('os.ticket_seq')::text, width, '0') || (scale * 1)::text\n
+grant function os.next_ticket(text,integer,double precision) to os_engine EXECUTE  by os_engine 
+grant function os.next_ticket(text,integer,double precision) to os_intake EXECUTE  by os_engine 
+## superuser: function owner back to os_owner; schema os owner -> postgres
+== read: owner and stored ACL of os.next_ticket and of schema os; oid/ctid of the function row
+  function | os.next_ticket(text,integer,double precision) | os_owner | {os_owner=X/os_owner,os_intake=X/os_owner} | (126,12) | b9624c1ec3e8e07e5afe9d4781be9151
+  schema | os | postgres | {postgres=UC/postgres,os_reader=U/postgres,os_engine=U/postgres,os_executor=U/postgres,os_intake=U/postgres} | (0,53) | 
+## chain up (rootB) with schema os owned by postgres
+FAILED functions/count_parts.sql must be owner of function count_parts
+CHAIN_RED functions-failed applied=0
+## the real chain (default root) — refused as another root's ledger, or green?
+OFFENCE missing 0004-outside.sql
+CHAIN_RED offences=2
+== read: owner and stored ACL of os.next_ticket and of schema os; oid/ctid of the function row
+  function | os.next_ticket(text,integer,double precision) | os_owner | {os_owner=X/os_owner,os_intake=X/os_owner} | (126,12) | b9624c1ec3e8e07e5afe9d4781be9151
+  schema | os | postgres | {postgres=UC/postgres,os_reader=U/postgres,os_engine=U/postgres,os_executor=U/postgres,os_intake=U/postgres} | (0,53) | 
+## the snapshot's schema lines
+schema os owner postgres
+grant schema os to os_engine USAGE  by postgres 
+grant schema os to os_executor USAGE  by postgres 
+grant schema os to os_intake USAGE  by postgres 
+grant schema os to os_reader USAGE  by postgres 
+grant schema os to postgres CREATE  by postgres 
+grant schema os to postgres USAGE  by postgres 
+## put back: schema os owner -> os_owner
+== read: owner and stored ACL of os.next_ticket and of schema os; oid/ctid of the function row
+  function | os.next_ticket(text,integer,double precision) | os_owner | {os_owner=X/os_owner,os_intake=X/os_owner} | (126,12) | b9624c1ec3e8e07e5afe9d4781be9151
+  schema | os | os_owner | {os_owner=UC/os_owner,os_reader=U/os_owner,os_engine=U/os_owner,os_executor=U/os_owner,os_intake=U/os_owner} | (0,54) | 

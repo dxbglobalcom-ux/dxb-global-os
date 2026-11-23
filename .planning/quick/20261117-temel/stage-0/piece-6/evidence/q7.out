@@ -1,0 +1,33 @@
+== Q7.0 the session's default extra_float_digits and its source
+  0 | configuration file | t
+== Q7 extra_float_digits = 0 — server text (cast to text): f4 0.1 | f4 1e-7 | f4 1/3 | f8 0.1 | f8 1e-7 | f8 1/3 | f8 0.1+0.2 | num 0.1 | num 1e-7 | num 1/3
+  (SET )
+  0.1 | 1e-07 | 0.333333 | 0.1 | 1e-07 | 0.333333333333333 | 0.3 | 0.1 | 0.0000001 | 0.33333333333333333333
+== Q7 extra_float_digits = 0 — to_jsonb(f4 1/3) | to_jsonb(f8 1/3) | to_jsonb(f8 0.1+0.2) | to_jsonb(f8 1e-7) | row_to_json(f4,f8,numeric 1/3)
+  0.333333 | 0.333333333333333 | 0.3 | 0.0000001 | {"a":0.333333,"b":0.333333333333333,"c":0.33333333333333333333}
+== Q7 extra_float_digits = 0 — round trip through text: f4 1/3 | f8 1/3 | f8 0.1+0.2 | via to_jsonb f8 1/3 | via to_jsonb f4 1/3
+  false | false | false | false | false
+== Q7 extra_float_digits = 1 — server text (cast to text): f4 0.1 | f4 1e-7 | f4 1/3 | f8 0.1 | f8 1e-7 | f8 1/3 | f8 0.1+0.2 | num 0.1 | num 1e-7 | num 1/3
+  (SET )
+  0.1 | 1e-07 | 0.33333334 | 0.1 | 1e-07 | 0.3333333333333333 | 0.30000000000000004 | 0.1 | 0.0000001 | 0.33333333333333333333
+== Q7 extra_float_digits = 1 — to_jsonb(f4 1/3) | to_jsonb(f8 1/3) | to_jsonb(f8 0.1+0.2) | to_jsonb(f8 1e-7) | row_to_json(f4,f8,numeric 1/3)
+  0.33333334 | 0.3333333333333333 | 0.30000000000000004 | 0.0000001 | {"a":0.33333334,"b":0.3333333333333333,"c":0.33333333333333333333}
+== Q7 extra_float_digits = 1 — round trip through text: f4 1/3 | f8 1/3 | f8 0.1+0.2 | via to_jsonb f8 1/3 | via to_jsonb f4 1/3
+  true | true | true | true | true
+== Q7 extra_float_digits = 3 — server text (cast to text): f4 0.1 | f4 1e-7 | f4 1/3 | f8 0.1 | f8 1e-7 | f8 1/3 | f8 0.1+0.2 | num 0.1 | num 1e-7 | num 1/3
+  (SET )
+  0.1 | 1e-07 | 0.33333334 | 0.1 | 1e-07 | 0.3333333333333333 | 0.30000000000000004 | 0.1 | 0.0000001 | 0.33333333333333333333
+== Q7 extra_float_digits = 3 — to_jsonb(f4 1/3) | to_jsonb(f8 1/3) | to_jsonb(f8 0.1+0.2) | to_jsonb(f8 1e-7) | row_to_json(f4,f8,numeric 1/3)
+  0.33333334 | 0.3333333333333333 | 0.30000000000000004 | 0.0000001 | {"a":0.33333334,"b":0.3333333333333333,"c":0.33333333333333333333}
+== Q7 extra_float_digits = 3 — round trip through text: f4 1/3 | f8 1/3 | f8 0.1+0.2 | via to_jsonb f8 1/3 | via to_jsonb f4 1/3
+  true | true | true | true | true
+== Q7.5 the reference rows of os.kinds as they stand, under 0: name | weight::text | to_jsonb
+  (SET )
+  bolt | 0.1 | {"name": "bolt", "label": "Bolt", "weight": 0.1}
+  nut | 1e-07 | {"name": "nut", "label": "Nut", "weight": 0.0000001}
+  washer | 0.3 | {"name": "washer", "label": "Washer", "weight": 0.3}
+== Q7.5b under 3
+  (SET )
+  bolt | 0.1 | {"name": "bolt", "label": "Bolt", "weight": 0.1}
+  nut | 1e-07 | {"name": "nut", "label": "Nut", "weight": 0.0000001}
+  washer | 0.30000000000000004 | {"name": "washer", "label": "Washer", "weight": 0.30000000000000004}

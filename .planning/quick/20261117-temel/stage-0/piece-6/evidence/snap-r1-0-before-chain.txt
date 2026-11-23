@@ -1,0 +1,5 @@
+snapshot-settings DateStyle=ISO, YMD IntervalStyle=postgres TimeZone=UTC bytea_output=hex extra_float_digits=3 quote_all_identifiers=off search_path="" standard_conforming_strings=on
+database postgres owner postgres encoding UTF8 collate en_US.UTF-8 ctype en_US.UTF-8
+grant database postgres to PUBLIC CONNECT  by postgres 
+grant database postgres to PUBLIC TEMPORARY  by postgres 
+role-setting (all roles) in postgres app.settings.jwt_exp=<redacted:md5 0dcb651c5f0012395e793735b6e86282>,app.settings.jwt_secret=<redacted:md5 d204faee84fe048dbda4c6993b6737c8>

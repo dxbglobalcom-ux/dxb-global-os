@@ -1,0 +1,35 @@
+r2 0-before-chain -> 1-real-chain: added=42 removed=0 ; by catalogue (added):  15 pg_attribute, 5 pg_authid, 6 pg_auth_members, 3 pg_class, 5 pg_constraint, 2 pg_default_acl, 2 pg_index, 2 pg_namespace, 2 pg_type,
+r2 1-real-chain -> 2-fixture-in-os: added=97 removed=1 ; by catalogue (added):  5 pg_attrdef, 50 pg_attribute, 9 pg_class, 6 pg_constraint, 1 pg_default_acl, 2 pg_description, 2 pg_enum, 4 pg_index, 1 pg_namespace, 2 pg_policy, 3 pg_proc, 1 pg_rewrite, 2 pg_sequence, 1 pg_trigger, 8 pg_type,
+r2 2-fixture-in-os -> 3-fixture-outside: added=50 removed=4 ; by catalogue (added):  23 pg_attribute, 1 pg_authid, 2 pg_auth_members, 4 pg_class, 1 pg_constraint, 1 pg_default_acl, 1 pg_description, 1 pg_event_trigger, 1 pg_index, 2 pg_namespace, 1 pg_policy, 2 pg_proc, 1 pg_publication, 2 pg_publication_rel, 1 pg_shdescription, 6 pg_type,
+## r2 step 2->3 (the fixture's outside-os file), lines outside schema os only:
+> pg_auth_members|role membership membership of role anon in role os_reader os_reader>anon by postgres|||0540d55f5f33960378fca1191b3f392d
+> pg_auth_members|role membership membership of role postgres in role h6_role h6_role>postgres by supabase_admin|||b13255aad5fcd5ae43027a7a8568ce8d
+> pg_authid|role h6_role|||0aeaed5cc1832537e264b830a0aa9a2d
+> pg_class|index public.h6_probe_pkey|postgres|∅|f06a628f29a9b24f9510fb773806fcf0
+> pg_class|table h6_elsewhere.owned|os_owner|∅|cfba9572c7c936c71f1f33706399570d
+> pg_class|table h6_elsewhere.t|postgres|anon=r/postgres,postgres=arwdDxtm/postgres|ec910fddc2f79de41c34683963b5249f
+> pg_class|table public.h6_probe|postgres|anon=Dxtm/postgres,authenticated=Dxtm/postgres,os_reader=r/postgres,postgres=arwdDxtm/postgres,service_role=Dxtm/postgres|73b305
+> pg_constraint|table constraint h6_probe_pkey on public.h6_probe|||cc0cf1ffb553072ae2165d0669f51961
+< pg_default_acl|default acl for role postgres in schema public on tables||anon=Dxtm/postgres,authenticated=Dxtm/postgres,postgres=arwdDxtm/postgres,service_role=Dxtm/pos
+> pg_default_acl|default acl for role postgres in schema public on tables||anon=Dxtm/postgres,authenticated=Dxtm/postgres,os_reader=r/postgres,postgres=arwdDxtm/postgres,
+< pg_description|schema public|||cb58bfced4454e91baf467eb0d669d2d
+> pg_description|schema public|||0f0a4e6fa80afe8dd008d46ee1014113
+> pg_event_trigger|event trigger h6_et|postgres||2d79a4ff1330fd2eb53ef55117879cf7
+> pg_index|index public.h6_probe_pkey|||15298cd32965865ab8fe8d3b000f94b9
+> pg_namespace|schema h6_elsewhere|postgres|os_owner=C/postgres,postgres=UC/postgres|2b0e544bcd6f199d5a8276de32860333
+< pg_namespace|schema public|pg_database_owner|=U/pg_database_owner,anon=U/pg_database_owner,authenticated=U/pg_database_owner,pg_database_owner=UC/pg_database_owner,post
+> pg_namespace|schema public|pg_database_owner|=UC/pg_database_owner,anon=U/pg_database_owner,authenticated=U/pg_database_owner,pg_database_owner=UC/pg_database_owner,pos
+> pg_policy|policy h6_probe_reader on public.h6_probe|||e0082de573b78773ae6d30350424dc4c
+< pg_proc|function os.count_parts(integer)|os_owner|os_engine=X/os_owner,os_owner=X/os_owner,os_reader=X/os_owner|e755b487abb7a9ed0fa2298fbcf7daa7
+> pg_proc|function os.count_parts(integer)|os_owner|=X/os_owner,os_engine=X/os_owner,os_owner=X/os_owner,os_reader=X/os_owner|e755b487abb7a9ed0fa2298fbcf7daa7
+> pg_proc|function public.h6_et()|postgres|postgres=X/postgres|a787996c4081e776d58d3b935985f2e2
+> pg_publication_rel|publication relation public.h6_probe in publication h6_pub|||8647ea72640d01ba9e6ba0501185bb47
+> pg_publication_rel|publication relation public.h6_probe in publication supabase_realtime|||8647ea72640d01ba9e6ba0501185bb47
+> pg_publication|publication h6_pub|postgres||e6c07ad40440995eecb682d147529d7a
+> pg_shdescription|role anon|||9af62b9c068abb8ca3b6bf59a656c5af
+> pg_type|type h6_elsewhere.owned[]|os_owner|∅|355a247640c31571bc00073b77a212b9
+> pg_type|type h6_elsewhere.owned|os_owner|∅|40126f542315a0bf60fd3afd6e14d109
+> pg_type|type h6_elsewhere.t[]|postgres|∅|198e5d6dd220ebec8a0dabfc03f00a4b
+> pg_type|type h6_elsewhere.t|postgres|∅|89cdcc9961c2e52fd931a96289debef6
+> pg_type|type public.h6_probe[]|postgres|∅|c11b82c42915b0ebdbc2f9143aaff199
+> pg_type|type public.h6_probe|postgres|∅|08db936010bbd016230ddae1f09b0280

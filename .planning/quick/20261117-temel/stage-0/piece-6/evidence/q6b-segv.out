@@ -1,0 +1,10 @@
+== alone, no transaction: alter role all in database postgres set h6.x = '1'
+  ERROR  Connection terminated unexpectedly
+ 2026-11-23 17:54:44.167 UTC [11] LOG:  server process (PID 4678) was terminated by signal 11: Segmentation fault
+ 2026-11-23 17:54:44.167 UTC [11] DETAIL:  Failed process was running: alter role all in database postgres set h6.x = '1';
+ 2026-11-23 17:54:45.245 UTC [11] LOG:  database system is ready to accept connections
+== the same with a real setting: alter role all in database postgres set work_mem = '5MB'
+  ERROR  Connection terminated unexpectedly
+ 2026-11-23 17:54:52.305 UTC [11] LOG:  server process (PID 4756) was terminated by signal 11: Segmentation fault
+ 2026-11-23 17:54:52.305 UTC [11] DETAIL:  Failed process was running: alter role all in database postgres set work_mem = '5MB';
+ 2026-11-23 17:54:53.381 UTC [11] LOG:  database system is ready to accept connections

@@ -1,0 +1,160 @@
+1967a1968,1972
+> pg_attrdef|default value for os.parts.amount|||d278b072dd32e57b4928deb3b95db4f6
+> pg_attrdef|default value for os.parts.created_at|||6f30cd02e9ed477c7b771c60e3fe4891
+> pg_attrdef|default value for os.parts.qty|||675470c57032e24c3a624bacd3ddc082
+> pg_attrdef|default value for os.parts.ratio4|||7d94283b29df72b0a8a29c2d8f21018c
+> pg_attrdef|default value for os.parts.ratio8|||c4feeb9f8de68692ad4396140cfb25ed
+2431a2437,2441
+> pg_attribute|index column os.kinds_pkey.name||∅|374d156e78f7c63204d4f7b27d27de4e
+> pg_attribute|index column os.parts_code_key.code||∅|dcc45ad6f12258eaa6f8a3e526acb6c8
+> pg_attribute|index column os.parts_kind_idx.kind||∅|34501c838068897855dffe2b660b4d64
+> pg_attribute|index column os.parts_kind_idx.qty||∅|7aa281f8e78031450b757b28139962bc
+> pg_attribute|index column os.parts_pkey.id||∅|20ded124d0a277396a06d4cecb7b83ef
+2870a2881,2884
+> pg_attribute|index column pg_toast.pg_toast_20049_index.chunk_id||∅|c01085f6e68cd8515b7abde3e135d1f3
+> pg_attribute|index column pg_toast.pg_toast_20049_index.chunk_seq||∅|e25c4364444561a44acb701bbb21376c
+> pg_attribute|index column pg_toast.pg_toast_20057_index.chunk_id||∅|c01085f6e68cd8515b7abde3e135d1f3
+> pg_attribute|index column pg_toast.pg_toast_20057_index.chunk_seq||∅|e25c4364444561a44acb701bbb21376c
+3213a3228,3245
+> pg_attribute|sequence column os.parts_id_seq.cmax||∅|05bc9e995bf2929e09639fc54abde7e6
+> pg_attribute|sequence column os.parts_id_seq.cmin||∅|1bcc8536f88a76d7d8c7dceaab4d5652
+> pg_attribute|sequence column os.parts_id_seq.ctid||∅|9ba5e7d56371333f6759286e0e81641c
+> pg_attribute|sequence column os.parts_id_seq.is_called||∅|f737571a58c43bf9f2aafa9fd68c2ea7
+> pg_attribute|sequence column os.parts_id_seq.last_value||∅|1a86876fd9563c7b2a1b14fd190577e1
+> pg_attribute|sequence column os.parts_id_seq.log_cnt||∅|d46bf289c55eabea29a6f3868d89f23d
+> pg_attribute|sequence column os.parts_id_seq.tableoid||∅|1adc79286f3a3d4de9b5fbe7c4180701
+> pg_attribute|sequence column os.parts_id_seq.xmax||∅|dd32399d09b83eb0f66e7d8be494c952
+> pg_attribute|sequence column os.parts_id_seq.xmin||∅|60d92cc7f047983ed577c2603276d744
+> pg_attribute|sequence column os.ticket_seq.cmax||∅|05bc9e995bf2929e09639fc54abde7e6
+> pg_attribute|sequence column os.ticket_seq.cmin||∅|1bcc8536f88a76d7d8c7dceaab4d5652
+> pg_attribute|sequence column os.ticket_seq.ctid||∅|9ba5e7d56371333f6759286e0e81641c
+> pg_attribute|sequence column os.ticket_seq.is_called||∅|f737571a58c43bf9f2aafa9fd68c2ea7
+> pg_attribute|sequence column os.ticket_seq.last_value||∅|1a86876fd9563c7b2a1b14fd190577e1
+> pg_attribute|sequence column os.ticket_seq.log_cnt||∅|d46bf289c55eabea29a6f3868d89f23d
+> pg_attribute|sequence column os.ticket_seq.tableoid||∅|1adc79286f3a3d4de9b5fbe7c4180701
+> pg_attribute|sequence column os.ticket_seq.xmax||∅|dd32399d09b83eb0f66e7d8be494c952
+> pg_attribute|sequence column os.ticket_seq.xmin||∅|60d92cc7f047983ed577c2603276d744
+3878a3911,3933
+> pg_attribute|table column os.kinds.cmax||∅|05bc9e995bf2929e09639fc54abde7e6
+> pg_attribute|table column os.kinds.cmin||∅|1bcc8536f88a76d7d8c7dceaab4d5652
+> pg_attribute|table column os.kinds.ctid||∅|9ba5e7d56371333f6759286e0e81641c
+> pg_attribute|table column os.kinds.label||∅|f0124032363c393abbe1bb68207cf835
+> pg_attribute|table column os.kinds.name||∅|6b078070981d41a7b3d92eef2a6af601
+> pg_attribute|table column os.kinds.tableoid||∅|1adc79286f3a3d4de9b5fbe7c4180701
+> pg_attribute|table column os.kinds.weight||∅|3ae0f58cbc8b75ca11f098f3e4b20dc7
+> pg_attribute|table column os.kinds.xmax||∅|dd32399d09b83eb0f66e7d8be494c952
+> pg_attribute|table column os.kinds.xmin||∅|60d92cc7f047983ed577c2603276d744
+> pg_attribute|table column os.parts.amount||∅|e880ecc46c724451e37e1bc7f043113d
+> pg_attribute|table column os.parts.cmax||∅|05bc9e995bf2929e09639fc54abde7e6
+> pg_attribute|table column os.parts.cmin||∅|1bcc8536f88a76d7d8c7dceaab4d5652
+> pg_attribute|table column os.parts.code||os_intake=ar/os_owner|d2aff4346fa2bb62ee78d759e64c116b
+> pg_attribute|table column os.parts.created_at||∅|2d607028e037948d53dca35c4bbb1491
+> pg_attribute|table column os.parts.ctid||∅|9ba5e7d56371333f6759286e0e81641c
+> pg_attribute|table column os.parts.id||∅|90110eeff842697104adf52454e9d183
+> pg_attribute|table column os.parts.kind||∅|15a0bd19056121b4d3c55d68d22d99f0
+> pg_attribute|table column os.parts.qty||os_intake=ar/os_owner|32507ea94059c39f1aaf9de6310347b7
+> pg_attribute|table column os.parts.ratio4||∅|b98dd79f99ee98e92b3ac5b76cd66777
+> pg_attribute|table column os.parts.ratio8||∅|7eeb2ca07a9d93ecac81e9388a1773d5
+> pg_attribute|table column os.parts.tableoid||∅|1adc79286f3a3d4de9b5fbe7c4180701
+> pg_attribute|table column os.parts.xmax||∅|dd32399d09b83eb0f66e7d8be494c952
+> pg_attribute|table column os.parts.xmin||∅|60d92cc7f047983ed577c2603276d744
+7320a7376,7393
+> pg_attribute|toast table column pg_toast.pg_toast_20049.chunk_data||∅|5d2c63aa959961049b2606391fedfd11
+> pg_attribute|toast table column pg_toast.pg_toast_20049.chunk_id||∅|c01085f6e68cd8515b7abde3e135d1f3
+> pg_attribute|toast table column pg_toast.pg_toast_20049.chunk_seq||∅|e25c4364444561a44acb701bbb21376c
+> pg_attribute|toast table column pg_toast.pg_toast_20049.cmax||∅|05bc9e995bf2929e09639fc54abde7e6
+> pg_attribute|toast table column pg_toast.pg_toast_20049.cmin||∅|1bcc8536f88a76d7d8c7dceaab4d5652
+> pg_attribute|toast table column pg_toast.pg_toast_20049.ctid||∅|9ba5e7d56371333f6759286e0e81641c
+> pg_attribute|toast table column pg_toast.pg_toast_20049.tableoid||∅|1adc79286f3a3d4de9b5fbe7c4180701
+> pg_attribute|toast table column pg_toast.pg_toast_20049.xmax||∅|dd32399d09b83eb0f66e7d8be494c952
+> pg_attribute|toast table column pg_toast.pg_toast_20049.xmin||∅|60d92cc7f047983ed577c2603276d744
+> pg_attribute|toast table column pg_toast.pg_toast_20057.chunk_data||∅|5d2c63aa959961049b2606391fedfd11
+> pg_attribute|toast table column pg_toast.pg_toast_20057.chunk_id||∅|c01085f6e68cd8515b7abde3e135d1f3
+> pg_attribute|toast table column pg_toast.pg_toast_20057.chunk_seq||∅|e25c4364444561a44acb701bbb21376c
+> pg_attribute|toast table column pg_toast.pg_toast_20057.cmax||∅|05bc9e995bf2929e09639fc54abde7e6
+> pg_attribute|toast table column pg_toast.pg_toast_20057.cmin||∅|1bcc8536f88a76d7d8c7dceaab4d5652
+> pg_attribute|toast table column pg_toast.pg_toast_20057.ctid||∅|9ba5e7d56371333f6759286e0e81641c
+> pg_attribute|toast table column pg_toast.pg_toast_20057.tableoid||∅|1adc79286f3a3d4de9b5fbe7c4180701
+> pg_attribute|toast table column pg_toast.pg_toast_20057.xmax||∅|dd32399d09b83eb0f66e7d8be494c952
+> pg_attribute|toast table column pg_toast.pg_toast_20057.xmin||∅|60d92cc7f047983ed577c2603276d744
+8307a8381,8384
+> pg_attribute|view column os.parts_view.code||∅|f06722e732870886b9714177d30d4fd7
+> pg_attribute|view column os.parts_view.id||∅|20ded124d0a277396a06d4cecb7b83ef
+> pg_attribute|view column os.parts_view.qty||∅|59d483b6eaf3f9658f67d5438a534d2a
+> pg_attribute|view column os.parts_view.twice||∅|215798488c8d27ba6f17eb6fd02f14e7
+9976a10054,10057
+> pg_class|index os.kinds_pkey|os_owner|∅|79a0039a9ca99189c1aba7d9b4e17876
+> pg_class|index os.parts_code_key|os_owner|∅|5758598bc696bed322e90021aeeeb2e8
+> pg_class|index os.parts_kind_idx|os_owner|∅|385996e2a2e1792802e117b40dabc9f9
+> pg_class|index os.parts_pkey|os_owner|∅|0f5ba6ddf0dc9a136c9318d0a42b89f6
+10218a10300,10301
+> pg_class|index pg_toast.pg_toast_20049_index|os_owner|∅|a92cd457fd94fa4306c7e627e4d2a4de
+> pg_class|index pg_toast.pg_toast_20057_index|os_owner|∅|89137018e6b7fceb51644bd254983c29
+10422a10506,10507
+> pg_class|sequence os.parts_id_seq|os_owner|∅|17abb269749128c1167d9ea2b0640054
+> pg_class|sequence os.ticket_seq|os_owner|os_engine=rU/os_owner,os_owner=rwU/os_owner|6a7b1905b611af4f9b240b621afc9243
+10472a10558,10559
+> pg_class|table os.kinds|os_owner|∅|0354f386be95d14e04dfa2f209dea803
+> pg_class|table os.parts|os_owner|os_engine=a*r*w*/os_owner,os_owner=arwdDxtm/os_owner,os_reader=r/os_owner|f638bf2e6d5eaa908f4a1fee36b406be
+10739a10827,10828
+> pg_class|toast table pg_toast.pg_toast_20049|os_owner|∅|08c99c1066e8c66b1b581c41875bba1f
+> pg_class|toast table pg_toast.pg_toast_20057|os_owner|∅|9aabaf0c979e187c6f5bab953f2258be
+10835a10925
+> pg_class|view os.parts_view|os_owner|os_owner=arwdDxtm/os_owner,os_reader=r/os_owner|23d7e8fab3a71de7628dc064c1701e97
+11971a12062
+> pg_constraint|table constraint kinds_pkey on os.kinds|||80db1b2a564005d957ba60dbf1c1911c
+12075a12167,12171
+> pg_constraint|table constraint parts_code_key on os.parts|||639f5b0204a2b63512ed375c62a52fbf
+> pg_constraint|table constraint parts_code_shape on os.parts|||da92d102f6da0ecaadbf371ccf98a638
+> pg_constraint|table constraint parts_kind_fkey on os.parts|||ef2ddc1dc189bd09ba01cd45d5bdda37
+> pg_constraint|table constraint parts_pkey on os.parts|||ebdbcbfb564ec4f4382e108c97b461ba
+> pg_constraint|table constraint parts_qty_check on os.parts|||4a36d11de0bbad0370ba7a53595e1505
+12465a12562
+> pg_default_acl|default acl for role os_owner in schema os on tables||os_reader=r/os_owner|a04c70caa2da3db4eb84a73534552731
+17655a17753
+> pg_description|table column os.parts.code|||90c363ce5d1879dc0004465f16191d57
+17692a17791
+> pg_description|table os.kinds|||5241b92ea7726e7f19951b56d2f95de0
+17938a18038,18039
+> pg_enum|enum os.mood 'busy'|||b74655f82268502bf24f8df853405f7a
+> pg_enum|enum os.mood 'calm'|||e1363a4382dcc93221c04105e941866e
+18073a18175,18178
+> pg_index|index os.kinds_pkey|||15298cd32965865ab8fe8d3b000f94b9
+> pg_index|index os.parts_code_key|||6d88f91eebecb9d9fce152c81d973765
+> pg_index|index os.parts_kind_idx|||32fef062bcf220e31c5bf7f08ffa8946
+> pg_index|index os.parts_pkey|||15298cd32965865ab8fe8d3b000f94b9
+18315a18421,18422
+> pg_index|index pg_toast.pg_toast_20049_index|||d18b9e9d46a0aca480687153d9b3ca30
+> pg_index|index pg_toast.pg_toast_20057_index|||d18b9e9d46a0aca480687153d9b3ca30
+18791c18898
+< pg_namespace|schema os|os_owner|∅|c545dec6e7eee5cb50cc540c64268502
+---
+> pg_namespace|schema os|os_owner|os_engine=U/os_owner,os_executor=U/os_owner,os_intake=U/os_owner,os_owner=UC/os_owner,os_reader=U/os_owner|c545dec6e7eee5cb50cc540c64268502
+20049a20157,20158
+> pg_policy|policy parts_read on os.parts|||a4245648f7c1efd692ac6c49e1d05675
+> pg_policy|policy parts_write on os.parts|||79dd4738e4ff64aa14198b7647dd035b
+20316a20426,20428
+> pg_proc|function os.count_parts(integer)|os_owner|os_engine=X/os_owner,os_owner=X/os_owner,os_reader=X/os_owner|e755b487abb7a9ed0fa2298fbcf7daa7
+> pg_proc|function os.next_ticket(pg_catalog.text,integer,double precision)|os_owner|os_owner=X/os_owner|105c2cfbb91d48f8f8d1f4ca6413e172
+> pg_proc|function os.parts_touch()|os_owner|os_owner=X/os_owner|bfe0eb04d30ec7fbcc4f1014256ae016
+23809a23922
+> pg_rewrite|rule "_RETURN" on os.parts_view|||7301248ebf4081cf3b11f0a411ec6d6d
+23926a24040,24041
+> pg_sequence|sequence os.parts_id_seq|||13f61fd8aeb2d92a89f8b405159ad0bb
+> pg_sequence|sequence os.ticket_seq|||4e3e86f72fe9287b0a9a0f28c1f0c3ad
+24177a24293,24294
+> pg_trigger|trigger "RI_ConstraintTrigger_a_20074" on os.kinds|||a76b888c1e0e32444f8012f6a05fc419
+> pg_trigger|trigger "RI_ConstraintTrigger_a_20075" on os.kinds|||08f61abd9f4ab45ab53943ed5e9499c7
+24407a24525,24527
+> pg_trigger|trigger "RI_ConstraintTrigger_c_20076" on os.parts|||a722b0b2c5135372e185228701e6d288
+> pg_trigger|trigger "RI_ConstraintTrigger_c_20077" on os.parts|||b75852db9140c2c0007a60436497babd
+> pg_trigger|trigger parts_touch on os.parts|||c926228aef3fdcf3e89bdb5eea1dcaca
+24764a24885,24892
+> pg_type|type os.kinds[]|os_owner|∅|36ce73a6380877200074ec4ab03e1ef7
+> pg_type|type os.kinds|os_owner|∅|498e8e47c060066cfbb2cecb450a4b4f
+> pg_type|type os.mood[]|os_owner|∅|577a65fab59626d744af55ab49b2e31c
+> pg_type|type os.mood|os_owner|os_owner=U/os_owner,os_reader=U/os_owner|9789f664f26afb8f7720e5c263d59505
+> pg_type|type os.parts[]|os_owner|∅|a0bbc46e50c17f8c34e0c47fdc5a701d
+> pg_type|type os.parts_view[]|os_owner|∅|72b8adc7bbd22c77db9fcf94371a244f
+> pg_type|type os.parts_view|os_owner|∅|07de61c2fe13c63dc5ec06a17a356f90
+> pg_type|type os.parts|os_owner|∅|185d06f457773b9c55de5dbd7f7cbc76

@@ -1,0 +1,75 @@
+== comment on schema public
+  (BEGIN )
+  (COMMENT )
+  (ROLLBACK )
+== comment on a platform table (auth.users)
+  ERROR 42501 must be owner of table users
+== comment on the database
+  (BEGIN )
+  (COMMENT )
+  (ROLLBACK )
+== comment on role anon
+  (BEGIN )
+  (COMMENT )
+  (ROLLBACK )
+== alter a platform object: add a column to auth.users
+  ERROR 42501 must be owner of table users
+== alter a platform function owned by postgres in public (first one)
+  (BEGIN )
+  notify_broadcast(text,text,jsonb)
+  (ROLLBACK )
+== create publication
+  (BEGIN )
+  (CREATE )
+  (CREATE )
+  (ROLLBACK )
+== alter publication supabase_realtime add table
+  (BEGIN )
+  (CREATE )
+  (ALTER )
+  (ROLLBACK )
+== create event trigger
+  (BEGIN )
+  (CREATE )
+  (CREATE )
+  (ROLLBACK )
+== alter database set
+  ERROR 42501 permission denied to set parameter "h6.x"
+== alter role all set (all roles, this database)
+  ERROR  Connection terminated unexpectedly
+== alter role anon set
+  ERROR  Client has encountered a connection error and is not queryable
+== create role
+  ERROR  Client has encountered a connection error and is not queryable
+== grant on public schema to PUBLIC (create)
+  ERROR  Client has encountered a connection error and is not queryable
+== grant to a platform role anon on a new public table
+  ERROR  Client has encountered a connection error and is not queryable
+== grant execute on an os function to public
+  ERROR  Client has encountered a connection error and is not queryable
+== grant on os schema to a platform role
+  ERROR  Client has encountered a connection error and is not queryable
+== grant os_reader to anon (membership)
+  ERROR  Client has encountered a connection error and is not queryable
+== grant anon to os_reader (membership)
+  ERROR  Client has encountered a connection error and is not queryable
+== alter default privileges for role postgres in public granting to os_reader
+  ERROR  Client has encountered a connection error and is not queryable
+== create extension in os (pg_trgm)
+  ERROR  Client has encountered a connection error and is not queryable
+== security label
+  ERROR  Client has encountered a connection error and is not queryable
+== alter system
+  ERROR  Client has encountered a connection error and is not queryable
+== grant set on parameter
+  ERROR  Client has encountered a connection error and is not queryable
+== create schema outside os
+  ERROR  Client has encountered a connection error and is not queryable
+== large object
+  ERROR  Client has encountered a connection error and is not queryable
+== create database
+  ERROR  Client has encountered a connection error and is not queryable
+== installer can read pg_authid? (counts only)
+  ERROR  Client has encountered a connection error and is not queryable
+== has_table_privilege pg_authid
+  ERROR  Client has encountered a connection error and is not queryable

@@ -1,0 +1,101 @@
+Q1.7 reference text: search_path '' + the other settings at their session values: md5=722c9bc9d4f4f6039507a5b1ad8f17b1
+Q1.7 changed alone: extra_float_digits = 3: md5=722c9bc9d4f4f6039507a5b1ad8f17b1 SAME as reference
+Q1.7 changed alone: extra_float_digits = 1: md5=722c9bc9d4f4f6039507a5b1ad8f17b1 SAME as reference
+Q1.7 changed alone: extra_float_digits = -3: md5=722c9bc9d4f4f6039507a5b1ad8f17b1 SAME as reference
+Q1.7 changed alone: timezone = 'Asia/Tokyo': md5=8c1280886153929b75e400ec3c616db7 DIFFERS:
+   -ts='2020-01-02 00:04:05+00'::timestamp with time zone ; d='2020-01-02'::date ; iv='1 day 02:03:04'::interval ; b='\x41ff'::bytea ; f8=((0.1)::double precision + (0.0000001)::double precision) ; f4=(0.1)::real ; m=12.34 ; s='a\b'::text ; nm=(1.0 / (3)::numeric) ; arr='{1,NULL,3}'::integer[]
+   -x timestamp with time zone DEFAULT '2020-01-02 00:04:05+00'::timestamp with time zone, y double precision DEFAULT 0.1, z interval DEFAULT '01:30:00'::interval, w text DEFAULT 'a\b'::text
+   +ts='2020-01-02 09:04:05+09'::timestamp with time zone ; d='2020-01-02'::date ; iv='1 day 02:03:04'::interval ; b='\x41ff'::bytea ; f8=((0.1)::double precision + (0.0000001)::double precision) ; f4=(0.1)::real ; m=12.34 ; s='a\b'::text ; nm=(1.0 / (3)::numeric) ; arr='{1,NULL,3}'::integer[]
+   +x timestamp with time zone DEFAULT '2020-01-02 09:04:05+09'::timestamp with time zone, y double precision DEFAULT 0.1, z interval DEFAULT '01:30:00'::interval, w text DEFAULT 'a\b'::text
+   -  WHERE ((ts > '2020-01-01 00:00:00+00'::timestamp with time zone) AND (s <> 'x\y'::text));
+   -CHECK (((f8 < ('10000000000'::numeric)::double precision) AND (ts > '2000-01-01 00:00:00+00'::timestamp with time zone)))
+   -((ts > '2020-01-01 00:00:00+00'::timestamp with time zone) AND (f8 > (0.3)::double precision))
+   +  WHERE ((ts > '2020-01-01 09:00:00+09'::timestamp with time zone) AND (s <> 'x\y'::text));
+   +CHECK (((f8 < ('10000000000'::numeric)::double precision) AND (ts > '2000-01-01 09:00:00+09'::timestamp with time zone)))
+   +((ts > '2020-01-01 09:00:00+09'::timestamp with time zone) AND (f8 > (0.3)::double precision))
+   -CREATE OR REPLACE FUNCTION os.q1f(x timestamp with time zone DEFAULT '2020-01-02 00:04:05+00'::timestamp with time zone, y double precision DEFAULT 0.1, z interval DEFAULT '01:30:00'::interval, w text DEFAULT 'a\b'::text)
+   +CREATE OR REPLACE FUNCTION os.q1f(x timestamp with time zone DEFAULT '2020-01-02 09:04:05+09'::timestamp with time zone, y double precision DEFAULT 0.1, z interval DEFAULT '01:30:00'::interval, w text DEFAULT 'a\b'::text)
+Q1.7 changed alone: datestyle = 'SQL, DMY': md5=2d2f102549fed88d389a6ac29bb5279a DIFFERS:
+   -ts='2020-01-02 00:04:05+00'::timestamp with time zone ; d='2020-01-02'::date ; iv='1 day 02:03:04'::interval ; b='\x41ff'::bytea ; f8=((0.1)::double precision + (0.0000001)::double precision) ; f4=(0.1)::real ; m=12.34 ; s='a\b'::text ; nm=(1.0 / (3)::numeric) ; arr='{1,NULL,3}'::integer[]
+   -x timestamp with time zone DEFAULT '2020-01-02 00:04:05+00'::timestamp with time zone, y double precision DEFAULT 0.1, z interval DEFAULT '01:30:00'::interval, w text DEFAULT 'a\b'::text
+   +ts='02/01/2020 00:04:05 UTC'::timestamp with time zone ; d='02/01/2020'::date ; iv='1 day 02:03:04'::interval ; b='\x41ff'::bytea ; f8=((0.1)::double precision + (0.0000001)::double precision) ; f4=(0.1)::real ; m=12.34 ; s='a\b'::text ; nm=(1.0 / (3)::numeric) ; arr='{1,NULL,3}'::integer[]
+   +x timestamp with time zone DEFAULT '02/01/2020 00:04:05 UTC'::timestamp with time zone, y double precision DEFAULT 0.1, z interval DEFAULT '01:30:00'::interval, w text DEFAULT 'a\b'::text
+   -  WHERE ((ts > '2020-01-01 00:00:00+00'::timestamp with time zone) AND (s <> 'x\y'::text));
+   -CHECK (((f8 < ('10000000000'::numeric)::double precision) AND (ts > '2000-01-01 00:00:00+00'::timestamp with time zone)))
+   -((ts > '2020-01-01 00:00:00+00'::timestamp with time zone) AND (f8 > (0.3)::double precision))
+   +  WHERE ((ts > '01/01/2020 00:00:00 UTC'::timestamp with time zone) AND (s <> 'x\y'::text));
+   +CHECK (((f8 < ('10000000000'::numeric)::double precision) AND (ts > '01/01/2000 00:00:00 UTC'::timestamp with time zone)))
+   +((ts > '01/01/2020 00:00:00 UTC'::timestamp with time zone) AND (f8 > (0.3)::double precision))
+   -CREATE OR REPLACE FUNCTION os.q1f(x timestamp with time zone DEFAULT '2020-01-02 00:04:05+00'::timestamp with time zone, y double precision DEFAULT 0.1, z interval DEFAULT '01:30:00'::interval, w text DEFAULT 'a\b'::text)
+   +CREATE OR REPLACE FUNCTION os.q1f(x timestamp with time zone DEFAULT '02/01/2020 00:04:05 UTC'::timestamp with time zone, y double precision DEFAULT 0.1, z interval DEFAULT '01:30:00'::interval, w text DEFAULT 'a\b'::text)
+Q1.7 changed alone: datestyle = 'German': md5=2847813afba864a08a7a99a5c4c95a72 DIFFERS:
+   -ts='2020-01-02 00:04:05+00'::timestamp with time zone ; d='2020-01-02'::date ; iv='1 day 02:03:04'::interval ; b='\x41ff'::bytea ; f8=((0.1)::double precision + (0.0000001)::double precision) ; f4=(0.1)::real ; m=12.34 ; s='a\b'::text ; nm=(1.0 / (3)::numeric) ; arr='{1,NULL,3}'::integer[]
+   -x timestamp with time zone DEFAULT '2020-01-02 00:04:05+00'::timestamp with time zone, y double precision DEFAULT 0.1, z interval DEFAULT '01:30:00'::interval, w text DEFAULT 'a\b'::text
+   +ts='02.01.2020 00:04:05 UTC'::timestamp with time zone ; d='02.01.2020'::date ; iv='1 day 02:03:04'::interval ; b='\x41ff'::bytea ; f8=((0.1)::double precision + (0.0000001)::double precision) ; f4=(0.1)::real ; m=12.34 ; s='a\b'::text ; nm=(1.0 / (3)::numeric) ; arr='{1,NULL,3}'::integer[]
+   +x timestamp with time zone DEFAULT '02.01.2020 00:04:05 UTC'::timestamp with time zone, y double precision DEFAULT 0.1, z interval DEFAULT '01:30:00'::interval, w text DEFAULT 'a\b'::text
+   -  WHERE ((ts > '2020-01-01 00:00:00+00'::timestamp with time zone) AND (s <> 'x\y'::text));
+   -CHECK (((f8 < ('10000000000'::numeric)::double precision) AND (ts > '2000-01-01 00:00:00+00'::timestamp with time zone)))
+   -((ts > '2020-01-01 00:00:00+00'::timestamp with time zone) AND (f8 > (0.3)::double precision))
+   +  WHERE ((ts > '01.01.2020 00:00:00 UTC'::timestamp with time zone) AND (s <> 'x\y'::text));
+   +CHECK (((f8 < ('10000000000'::numeric)::double precision) AND (ts > '01.01.2000 00:00:00 UTC'::timestamp with time zone)))
+   +((ts > '01.01.2020 00:00:00 UTC'::timestamp with time zone) AND (f8 > (0.3)::double precision))
+   -CREATE OR REPLACE FUNCTION os.q1f(x timestamp with time zone DEFAULT '2020-01-02 00:04:05+00'::timestamp with time zone, y double precision DEFAULT 0.1, z interval DEFAULT '01:30:00'::interval, w text DEFAULT 'a\b'::text)
+   +CREATE OR REPLACE FUNCTION os.q1f(x timestamp with time zone DEFAULT '02.01.2020 00:04:05 UTC'::timestamp with time zone, y double precision DEFAULT 0.1, z interval DEFAULT '01:30:00'::interval, w text DEFAULT 'a\b'::text)
+Q1.7 changed alone: intervalstyle = 'iso_8601': md5=890b6ae023670723cc9f11ed2e46c2fe DIFFERS:
+   -ts='2020-01-02 00:04:05+00'::timestamp with time zone ; d='2020-01-02'::date ; iv='1 day 02:03:04'::interval ; b='\x41ff'::bytea ; f8=((0.1)::double precision + (0.0000001)::double precision) ; f4=(0.1)::real ; m=12.34 ; s='a\b'::text ; nm=(1.0 / (3)::numeric) ; arr='{1,NULL,3}'::integer[]
+   -x timestamp with time zone DEFAULT '2020-01-02 00:04:05+00'::timestamp with time zone, y double precision DEFAULT 0.1, z interval DEFAULT '01:30:00'::interval, w text DEFAULT 'a\b'::text
+   +ts='2020-01-02 00:04:05+00'::timestamp with time zone ; d='2020-01-02'::date ; iv='P1DT2H3M4S'::interval ; b='\x41ff'::bytea ; f8=((0.1)::double precision + (0.0000001)::double precision) ; f4=(0.1)::real ; m=12.34 ; s='a\b'::text ; nm=(1.0 / (3)::numeric) ; arr='{1,NULL,3}'::integer[]
+   +x timestamp with time zone DEFAULT '2020-01-02 00:04:05+00'::timestamp with time zone, y double precision DEFAULT 0.1, z interval DEFAULT 'PT1H30M'::interval, w text DEFAULT 'a\b'::text
+   -    (iv + '01:00:00'::interval) AS h
+   +    (iv + 'PT1H'::interval) AS h
+   -CREATE OR REPLACE FUNCTION os.q1f(x timestamp with time zone DEFAULT '2020-01-02 00:04:05+00'::timestamp with time zone, y double precision DEFAULT 0.1, z interval DEFAULT '01:30:00'::interval, w text DEFAULT 'a\b'::text)
+   +CREATE OR REPLACE FUNCTION os.q1f(x timestamp with time zone DEFAULT '2020-01-02 00:04:05+00'::timestamp with time zone, y double precision DEFAULT 0.1, z interval DEFAULT 'PT1H30M'::interval, w text DEFAULT 'a\b'::text)
+Q1.7 changed alone: intervalstyle = 'sql_standard': md5=647f067c534bc12f8ca7892ecff5d21f DIFFERS:
+   -ts='2020-01-02 00:04:05+00'::timestamp with time zone ; d='2020-01-02'::date ; iv='1 day 02:03:04'::interval ; b='\x41ff'::bytea ; f8=((0.1)::double precision + (0.0000001)::double precision) ; f4=(0.1)::real ; m=12.34 ; s='a\b'::text ; nm=(1.0 / (3)::numeric) ; arr='{1,NULL,3}'::integer[]
+   -x timestamp with time zone DEFAULT '2020-01-02 00:04:05+00'::timestamp with time zone, y double precision DEFAULT 0.1, z interval DEFAULT '01:30:00'::interval, w text DEFAULT 'a\b'::text
+   +ts='2020-01-02 00:04:05+00'::timestamp with time zone ; d='2020-01-02'::date ; iv='1 2:03:04'::interval ; b='\x41ff'::bytea ; f8=((0.1)::double precision + (0.0000001)::double precision) ; f4=(0.1)::real ; m=12.34 ; s='a\b'::text ; nm=(1.0 / (3)::numeric) ; arr='{1,NULL,3}'::integer[]
+   +x timestamp with time zone DEFAULT '2020-01-02 00:04:05+00'::timestamp with time zone, y double precision DEFAULT 0.1, z interval DEFAULT '1:30:00'::interval, w text DEFAULT 'a\b'::text
+   -    (iv + '01:00:00'::interval) AS h
+   +    (iv + '1:00:00'::interval) AS h
+   -CREATE OR REPLACE FUNCTION os.q1f(x timestamp with time zone DEFAULT '2020-01-02 00:04:05+00'::timestamp with time zone, y double precision DEFAULT 0.1, z interval DEFAULT '01:30:00'::interval, w text DEFAULT 'a\b'::text)
+   +CREATE OR REPLACE FUNCTION os.q1f(x timestamp with time zone DEFAULT '2020-01-02 00:04:05+00'::timestamp with time zone, y double precision DEFAULT 0.1, z interval DEFAULT '1:30:00'::interval, w text DEFAULT 'a\b'::text)
+Q1.7 changed alone: bytea_output = 'escape': md5=0960d492a41d5c139437e09f3c2d273f DIFFERS:
+   -ts='2020-01-02 00:04:05+00'::timestamp with time zone ; d='2020-01-02'::date ; iv='1 day 02:03:04'::interval ; b='\x41ff'::bytea ; f8=((0.1)::double precision + (0.0000001)::double precision) ; f4=(0.1)::real ; m=12.34 ; s='a\b'::text ; nm=(1.0 / (3)::numeric) ; arr='{1,NULL,3}'::integer[]
+   +ts='2020-01-02 00:04:05+00'::timestamp with time zone ; d='2020-01-02'::date ; iv='1 day 02:03:04'::interval ; b='A\377'::bytea ; f8=((0.1)::double precision + (0.0000001)::double precision) ; f4=(0.1)::real ; m=12.34 ; s='a\b'::text ; nm=(1.0 / (3)::numeric) ; arr='{1,NULL,3}'::integer[]
+Q1.7 changed alone: lc_monetary = 'C': md5=722c9bc9d4f4f6039507a5b1ad8f17b1 SAME as reference
+Q1.7 changed alone: quote_all_identifiers = on: md5=f3019339ad912482f52eb7b3dcdde2c5 DIFFERS:
+   -ts='2020-01-02 00:04:05+00'::timestamp with time zone ; d='2020-01-02'::date ; iv='1 day 02:03:04'::interval ; b='\x41ff'::bytea ; f8=((0.1)::double precision + (0.0000001)::double precision) ; f4=(0.1)::real ; m=12.34 ; s='a\b'::text ; nm=(1.0 / (3)::numeric) ; arr='{1,NULL,3}'::integer[]
+   -x timestamp with time zone DEFAULT '2020-01-02 00:04:05+00'::timestamp with time zone, y double precision DEFAULT 0.1, z interval DEFAULT '01:30:00'::interval, w text DEFAULT 'a\b'::text
+   - SELECT ts,
+   -    (f8 * (0.1)::double precision) AS g,
+   -    (iv + '01:00:00'::interval) AS h
+   -   FROM os.q1p
+   -  WHERE ((ts > '2020-01-01 00:00:00+00'::timestamp with time zone) AND (s <> 'x\y'::text));
+   -CHECK (((f8 < ('10000000000'::numeric)::double precision) AND (ts > '2000-01-01 00:00:00+00'::timestamp with time zone)))
+   -((ts > '2020-01-01 00:00:00+00'::timestamp with time zone) AND (f8 > (0.3)::double precision))
+   -CREATE TRIGGER q1t BEFORE INSERT ON os.q1p FOR EACH ROW WHEN ((new.f8 > (0.2)::double precision)) EXECUTE FUNCTION os.q1trg()
+   -CREATE INDEX q1p_i ON os.q1p USING btree (lower(s)) WHERE (f8 > (0.5)::double precision)
+   -CREATE OR REPLACE FUNCTION os.q1f(x timestamp with time zone DEFAULT '2020-01-02 00:04:05+00'::timestamp with time zone, y double precision DEFAULT 0.1, z interval DEFAULT '01:30:00'::interval, w text DEFAULT 'a\b'::text)
+   +ts='2020-01-02 00:04:05+00'::timestamp with time zone ; d='2020-01-02'::"date" ; iv='1 day 02:03:04'::interval ; b='\x41ff'::"bytea" ; f8=((0.1)::double precision + (0.0000001)::double precision) ; f4=(0.1)::real ; m=12.34 ; s='a\b'::"text" ; nm=(1.0 / (3)::numeric) ; arr='{1,NULL,3}'::integer[]
+   +"x" timestamp with time zone DEFAULT '2020-01-02 00:04:05+00'::timestamp with time zone, "y" double precision DEFAULT 0.1, "z" interval DEFAULT '01:30:00'::interval, "w" "text" DEFAULT 'a\b'::"text"
+   + SELECT "ts",
+   +    ("f8" * (0.1)::double precision) AS "g",
+   +    ("iv" + '01:00:00'::interval) AS "h"
+   +   FROM "os"."q1p"
+   +  WHERE (("ts" > '2020-01-01 00:00:00+00'::timestamp with time zone) AND ("s" <> 'x\y'::"text"));
+   +CHECK ((("f8" < ('10000000000'::numeric)::double precision) AND ("ts" > '2000-01-01 00:00:00+00'::timestamp with time zone)))
+   +(("ts" > '2020-01-01 00:00:00+00'::timestamp with time zone) AND ("f8" > (0.3)::double precision))
+   +CREATE TRIGGER "q1t" BEFORE INSERT ON "os"."q1p" FOR EACH ROW WHEN (("new"."f8" > (0.2)::double precision)) EXECUTE FUNCTION "os"."q1trg"()
+   +CREATE INDEX "q1p_i" ON "os"."q1p" USING "btree" ("lower"("s")) WHERE ("f8" > (0.5)::double precision)
+   +CREATE OR REPLACE FUNCTION "os"."q1f"("x" timestamp with time zone DEFAULT '2020-01-02 00:04:05+00'::timestamp with time zone, "y" double precision DEFAULT 0.1, "z" interval DEFAULT '01:30:00'::interval, "w" "text" DEFAULT 'a\b'::"text")
+   - LANGUAGE sql
+   + LANGUAGE "sql"
+Q1.7 changed alone: standard_conforming_strings = off: md5=74849e822605984a3dd52b9d5e7de344 DIFFERS:
+   -ts='2020-01-02 00:04:05+00'::timestamp with time zone ; d='2020-01-02'::date ; iv='1 day 02:03:04'::interval ; b='\x41ff'::bytea ; f8=((0.1)::double precision + (0.0000001)::double precision) ; f4=(0.1)::real ; m=12.34 ; s='a\b'::text ; nm=(1.0 / (3)::numeric) ; arr='{1,NULL,3}'::integer[]
+   -x timestamp with time zone DEFAULT '2020-01-02 00:04:05+00'::timestamp with time zone, y double precision DEFAULT 0.1, z interval DEFAULT '01:30:00'::interval, w text DEFAULT 'a\b'::text
+   +ts='2020-01-02 00:04:05+00'::timestamp with time zone ; d='2020-01-02'::date ; iv='1 day 02:03:04'::interval ; b='\\x41ff'::bytea ; f8=((0.1)::double precision + (0.0000001)::double precision) ; f4=(0.1)::real ; m=12.34 ; s='a\\b'::text ; nm=(1.0 / (3)::numeric) ; arr='{1,NULL,3}'::integer[]
+   +x timestamp with time zone DEFAULT '2020-01-02 00:04:05+00'::timestamp with time zone, y double precision DEFAULT 0.1, z interval DEFAULT '01:30:00'::interval, w text DEFAULT 'a\\b'::text
+   -  WHERE ((ts > '2020-01-01 00:00:00+00'::timestamp with time zone) AND (s <> 'x\y'::text));
+   +  WHERE ((ts > '2020-01-01 00:00:00+00'::timestamp with time zone) AND (s <> 'x\\y'::text));
+   -CREATE OR REPLACE FUNCTION os.q1f(x timestamp with time zone DEFAULT '2020-01-02 00:04:05+00'::timestamp with time zone, y double precision DEFAULT 0.1, z interval DEFAULT '01:30:00'::interval, w text DEFAULT 'a\b'::text)
+   +CREATE OR REPLACE FUNCTION os.q1f(x timestamp with time zone DEFAULT '2020-01-02 00:04:05+00'::timestamp with time zone, y double precision DEFAULT 0.1, z interval DEFAULT '01:30:00'::interval, w text DEFAULT 'a\\b'::text)

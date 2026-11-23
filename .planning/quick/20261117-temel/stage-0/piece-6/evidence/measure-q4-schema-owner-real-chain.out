@@ -1,0 +1,24 @@
+## Q4.6 real chain only; schema os owner -> postgres by the bench superuser, then the real chain again
+CHAIN_GREEN applied=0 standing=2 functions=0 reference=0
+SNAPSHOT lines=54 bytes=4740 ms=16
+schema os owner postgres
+schema os_chain owner postgres
+grant schema os to postgres CREATE  by postgres (default)
+grant schema os to postgres USAGE  by postgres (default)
+grant schema os_chain to postgres CREATE  by postgres (default)
+grant schema os_chain to postgres USAGE  by postgres (default)
+default-acl for os_owner in - on T to os_owner USAGE 
+default-acl for os_owner in - on f to os_owner EXECUTE 
+## diff against the snapshot before (snap-q5-3)
+19c19
+< schema os owner os_owner
+---
+> schema os owner postgres
+21,22c21,22
+< grant schema os to os_owner CREATE  by os_owner (default)
+< grant schema os to os_owner USAGE  by os_owner (default)
+---
+> grant schema os to postgres CREATE  by postgres (default)
+> grant schema os to postgres USAGE  by postgres (default)
+## put back
+CHAIN_GREEN applied=0 standing=2 functions=0 reference=0

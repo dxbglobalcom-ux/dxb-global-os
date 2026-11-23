@@ -1,0 +1,92 @@
+== Q8.1 comments: obj_description / col_description (the vocabulary mark is a table comment)
+  vocabulary: kinds of parts | the code | ∅
+== Q8.2 columns: default (pg_attrdef via pg_get_expr), identity (attidentity), generated (attgenerated), collation (attcollation), not null
+  id | ∅ | a |  | - | t
+  code | ∅ |  |  | "default" | t
+  qty | 1 |  |  | - | t
+  ratio4 | 0.1 |  |  | - | f
+  ratio8 | 0.0000001 |  |  | - | f
+  amount | (1.0 / (3)::numeric) |  |  | - | f
+  created_at | now() |  |  | - | t
+  kind | ∅ |  |  | "default" | f
+== Q8.3 relation flags: reloptions (raw order as written: fillfactor first), relpersistence, relreplident, relkind, relispartition, relrowsecurity, relforcerowsecurity
+  os.kinds | ∅ | p | d | r | f | f | f
+  os.kinds_pkey | ∅ | p | n | i | f | f | f
+  os.parts | {fillfactor=90,autovacuum_enabled=false} | p | d | r | f | t | t
+  os.parts_code_key | ∅ | p | n | i | f | f | f
+  os.parts_id_seq | ∅ | p | n | S | f | f | f
+  os.parts_kind_idx | ∅ | p | n | i | f | f | f
+  os.parts_pkey | ∅ | p | n | i | f | f | f
+  os.parts_view | ∅ | p | n | v | f | f | f
+  os.ticket_seq | ∅ | p | n | S | f | f | f
+== Q8.4 sequence parameters (pg_sequence) and the volatile part (pg_sequences.last_value / the relation itself) — before and after nextval in a rolled-back transaction
+  ERROR 42501 permission denied for sequence ticket_seq
+== Q8.4b after the rollback: a sequence is not transactional
+  100 | f
+== Q8.5 types: enum labels (pg_enum.enumsortorder), domains (typbasetype, typnotnull, typdefault, domain constraints via pg_constraint.contypid)
+  os.mood | e | calm:1,busy:2
+== Q8.6 triggers: tgenabled (O origin, D disabled, R replica, A always), tgisinternal (FK triggers are internal, named RI_ConstraintTrigger_<a|c>_<oid>)
+  os.kinds | RI_ConstraintTrigger_a_20069 | O | t
+  os.kinds | RI_ConstraintTrigger_a_20070 | O | t
+  os.parts | RI_ConstraintTrigger_c_20071 | O | t
+  os.parts | RI_ConstraintTrigger_c_20072 | O | t
+  os.parts | parts_touch | O | f
+== Q8.6b `alter table os.parts disable trigger parts_touch` as the owner (rolled back): only tgenabled moves; pg_get_triggerdef does not show it
+  (BEGIN )
+  (SET )
+  (ALTER )
+  D | CREATE TRIGGER parts_touch BEFORE INSERT OR UPDATE ON os.parts FOR EACH ROW EXECUTE FUNCTION os.parts_touch()
+  (ROLLBACK )
+== Q8.7 event triggers (pg_event_trigger: evtevent, evtowner, evtfoid, evtenabled, evttags) — the database's, all of them (no schema)
+  h6_et | ddl_command_end | postgres | h6_et | O | ∅
+  issue_graphql_placeholder | sql_drop | supabase_admin | set_graphql_placeholder | O | {"DROP EXTENSION"}
+  issue_pg_cron_access | ddl_command_end | supabase_admin | grant_pg_cron_access | O | {"CREATE EXTENSION"}
+  issue_pg_graphql_access | ddl_command_end | supabase_admin | grant_pg_graphql_access | O | {"CREATE EXTENSION"}
+  issue_pg_net_access | ddl_command_end | supabase_admin | grant_pg_net_access | O | {"CREATE EXTENSION"}
+  pgrst_ddl_watch | ddl_command_end | supabase_admin | pgrst_ddl_watch | O | ∅
+  pgrst_drop_watch | sql_drop | supabase_admin | pgrst_drop_watch | O | ∅
+== Q8.8 policies: polcmd, polpermissive, polroles (0 = PUBLIC) as names, quals
+  parts_read | r | t | os_reader | (qty > 0) | ∅
+  parts_write | a | f | os_engine,os_executor | ∅ | (code <> ''::text)
+== Q8.9 publications and their members (pg_publication, pg_publication_rel, pg_publication_namespace; pg_publication_tables): any table of os or the h6 probe in one?
+  h6_pub | postgres | f | h6_probe
+  supabase_realtime | postgres | f | h6_probe
+== Q8.10 an extension with members in os: made in os in a rolled-back transaction, its members found by pg_depend deptype 'e'
+  (BEGIN )
+  (CREATE )
+  pg_trgm | os | supabase_admin | 47
+  34
+  (ROLLBACK )
+== Q8.11 large objects (pg_largeobject_metadata: lomowner, lomacl) — a database-wide object, no schema; temporary objects (pg_temp_N schemas): counts on this instance
+  0 | 4 | 0
+== Q8.11b a large object made by os_owner (rolled back): seen in pg_largeobject_metadata and pg_shdepend as owned by os_owner
+  (BEGIN )
+  (SET )
+  t
+  (RESET )
+  os_owner | 1
+  (ROLLBACK )
+== Q8.12 partitioning: pg_partitioned_table / relpartbound (none in os); realtime's and pgboss's date-named partitions on this instance
+  pgboss.job_common | DEFAULT
+  pgboss.job_common_pkey | ∅
+  pgboss.queue_stats_20261123 | FOR VALUES FROM ('2026-11-23 00:00:00+00') TO ('2026-11-24 00:00:00+00')
+  pgboss.queue_stats_20261123_name_captured_on_deferred_count_queued_idx | ∅
+  pgboss.queue_stats_20261123_pkey | ∅
+  pgboss.queue_stats_20261124 | FOR VALUES FROM ('2026-11-24 00:00:00+00') TO ('2026-11-25 00:00:00+00')
+  pgboss.queue_stats_20261124_name_captured_on_deferred_count_queued_idx | ∅
+  pgboss.queue_stats_20261124_pkey | ∅
+  realtime.messages_2026_11_22 | FOR VALUES FROM ('2026-11-22 00:00:00') TO ('2026-11-23 00:00:00')
+  realtime.messages_2026_11_22_inserted_at_topic_idx | ∅
+  realtime.messages_2026_11_22_pkey | ∅
+  realtime.messages_2026_11_23 | FOR VALUES FROM ('2026-11-23 00:00:00') TO ('2026-11-24 00:00:00')
+  realtime.messages_2026_11_23_inserted_at_topic_idx | ∅
+  realtime.messages_2026_11_23_pkey | ∅
+  realtime.messages_2026_11_24 | FOR VALUES FROM ('2026-11-24 00:00:00') TO ('2026-11-25 00:00:00')
+  realtime.messages_2026_11_24_inserted_at_topic_idx | ∅
+  realtime.messages_2026_11_24_pkey | ∅
+  realtime.messages_2026_11_25 | FOR VALUES FROM ('2026-11-25 00:00:00') TO ('2026-11-26 00:00:00')
+  realtime.messages_2026_11_25_inserted_at_topic_idx | ∅
+  realtime.messages_2026_11_25_pkey | ∅
+  realtime.messages_2026_11_26 | FOR VALUES FROM ('2026-11-26 00:00:00') TO ('2026-11-27 00:00:00')
+  realtime.messages_2026_11_26_inserted_at_topic_idx | ∅
+  realtime.messages_2026_11_26_pkey | ∅

@@ -1,0 +1,13 @@
+== Q1.9 a float default folded into a float Const (function argument default; a table default given as a quoted literal) under extra_float_digits 0, 1, 3
+  0 | true | y double precision DEFAULT 0.30000000000000004, z real DEFAULT 0.1, w double precision DEFAULT 0.0000001 | 0.30000000000000004 ; '0.1'::real ; '1e-07'::double precision
+  1 | true | y double precision DEFAULT 0.30000000000000004, z real DEFAULT 0.1, w double precision DEFAULT 0.0000001 | 0.30000000000000004 ; '0.1'::real ; '1e-07'::double precision
+  3 | true | y double precision DEFAULT 0.30000000000000004, z real DEFAULT 0.1, w double precision DEFAULT 0.0000001 | 0.30000000000000004 ; '0.1'::real ; '1e-07'::double precision
+== Q1.9b the same, each in its own statement (set_config in a row is ordered with the select list only per row)
+  (SET )
+  0 | y double precision DEFAULT 0.30000000000000004, z real DEFAULT 0.1, w double precision DEFAULT 0.0000001 | 0.30000000000000004 ; '0.1'::real ; '1e-07'::double precision
+== Q1.9c
+  (SET )
+  1 | y double precision DEFAULT 0.30000000000000004, z real DEFAULT 0.1, w double precision DEFAULT 0.0000001 | 0.30000000000000004 ; '0.1'::real ; '1e-07'::double precision
+== Q1.9d
+  (SET )
+  3 | y double precision DEFAULT 0.30000000000000004, z real DEFAULT 0.1, w double precision DEFAULT 0.0000001 | 0.30000000000000004 ; '0.1'::real ; '1e-07'::double precision

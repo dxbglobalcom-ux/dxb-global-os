@@ -1,0 +1,25 @@
+-- Piece 6 measuring fixture: changes outside os, as the installer — what a snapshot must see without a list of names.
+create table public.h6_probe (id int primary key, who text);
+grant select on public.h6_probe to os_reader;
+alter table public.h6_probe enable row level security;
+create policy h6_probe_reader on public.h6_probe for select to os_reader using (true);
+create schema h6_elsewhere;
+grant create on schema h6_elsewhere to os_owner;
+create table h6_elsewhere.owned (id int);
+alter table h6_elsewhere.owned owner to os_owner;
+create table h6_elsewhere.t (id int);
+grant select on h6_elsewhere.t to anon;
+comment on schema public is 'h6 changed this comment';
+comment on role anon is 'h6';
+create publication h6_pub for table public.h6_probe;
+alter publication supabase_realtime add table public.h6_probe;
+create function public.h6_et() returns event_trigger language plpgsql as $$ begin end $$;
+create event trigger h6_et on ddl_command_end execute function public.h6_et();
+create role h6_role nologin;
+grant create on schema public to public;
+grant usage on schema os to authenticated;
+set local role os_owner;
+grant execute on function os.count_parts(integer) to public;
+reset role;
+grant os_reader to anon;
+alter default privileges in schema public grant select on tables to os_reader;

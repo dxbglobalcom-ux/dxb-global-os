@@ -1,0 +1,65 @@
+pg_aggregate: 161 rows, 1 ms
+pg_am: 9 rows, 1 ms
+pg_amop: 981 rows, 5 ms
+pg_amproc: 750 rows, 3 ms
+pg_attrdef: 396 rows, 5 ms
+pg_attribute: 7233 rows, 75 ms
+pg_auth_members: 23 rows, 1 ms
+pg_authid: 31 rows, 0 ms
+pg_cast: 252 rows, 2 ms
+pg_class: 1070 rows, 43 ms
+pg_collation: 861 rows, 5 ms
+pg_constraint: 509 rows, 6 ms
+pg_conversion: 128 rows, 0 ms
+pg_database: 4 rows, 1 ms
+pg_db_role_setting: 10 rows, 0 ms
+pg_default_acl: 28 rows, 0 ms
+pg_depend: skipped (no oid, no key handled: classid,objid,objsubid,refclassid…)
+pg_description: 5415 rows, 21 ms
+pg_enum: 52 rows, 1 ms
+pg_event_trigger: 6 rows, 0 ms
+pg_extension: 7 rows, 0 ms
+pg_foreign_data_wrapper: 0 rows, 1 ms
+pg_foreign_server: 0 rows, 0 ms
+pg_foreign_table: 0 rows, 0 ms
+pg_index: 539 rows, 4 ms
+pg_inherits: 23 rows, 0 ms
+pg_init_privs: 237 rows, 1 ms
+pg_language: 4 rows, 1 ms
+pg_largeobject: skipped (no oid, no key handled: loid,pageno,data…)
+pg_largeobject_metadata: 0 rows, 0 ms
+pg_namespace: 22 rows, 0 ms
+pg_opclass: 201 rows, 1 ms
+pg_operator: 839 rows, 3 ms
+pg_opfamily: 170 rows, 1 ms
+pg_parameter_acl: 0 rows, 1 ms
+pg_partitioned_table: 3 rows, 0 ms
+pg_policy: 58 rows, 0 ms
+pg_proc: 3663 rows, 38 ms
+pg_publication: 1 rows, 2 ms
+pg_publication_namespace: 0 rows, 0 ms
+pg_publication_rel: 0 rows, 1 ms
+pg_range: 6 rows, 0 ms
+pg_replication_origin: skipped (no oid, no key handled: roident,roname…)
+pg_rewrite: 182 rows, 14 ms
+pg_seclabel: 0 rows, 1 ms
+pg_sequence: 18 rows, 0 ms
+pg_shdepend: skipped (no oid, no key handled: dbid,classid,objid,objsubid…)
+pg_shdescription: 3 rows, 0 ms
+pg_shseclabel: 0 rows, 0 ms
+pg_statistic: skipped (no oid, no key handled: starelid,staattnum,stainherit,stanullfrac…)
+pg_statistic_ext: 0 rows, 0 ms
+pg_statistic_ext_data: skipped (no oid, no key handled: stxoid,stxdinherit,stxdndistinct,stxddependencies…)
+pg_subscription: 0 rows, 0 ms
+pg_subscription_rel: skipped (no oid, no key handled: srsubid,srrelid,srsubstate,srsublsn…)
+pg_tablespace: 2 rows, 0 ms
+pg_transform: 0 rows, 0 ms
+pg_trigger: 493 rows, 5 ms
+pg_ts_config: 29 rows, 0 ms
+pg_ts_config_map: skipped (no oid, no key handled: mapcfg,maptokentype,mapseqno,mapdict…)
+pg_ts_dict: 29 rows, 0 ms
+pg_ts_parser: 1 rows, 0 ms
+pg_ts_template: 5 rows, 1 ms
+pg_type: 967 rows, 7 ms
+pg_user_mapping: 0 rows, 0 ms
+TOTAL lines=25417 (of which naming os in identity ≈ 6) ms=437

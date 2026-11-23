@@ -1,0 +1,30 @@
+-- @ Q8.1 comments: obj_description / col_description (the vocabulary mark is a table comment)
+select pg_catalog.obj_description('os.kinds'::regclass, 'pg_class'), pg_catalog.col_description('os.parts'::regclass, 2), pg_catalog.obj_description('os'::regnamespace, 'pg_namespace');
+-- @ Q8.2 columns: default (pg_attrdef via pg_get_expr), identity (attidentity), generated (attgenerated), collation (attcollation), not null
+select a.attname, pg_catalog.pg_get_expr(d.adbin, d.adrelid), a.attidentity, a.attgenerated, a.attcollation::regcollation::text, a.attnotnull from pg_catalog.pg_attribute a left join pg_catalog.pg_attrdef d on d.adrelid = a.attrelid and d.adnum = a.attnum where a.attrelid = 'os.parts'::regclass and a.attnum > 0 order by a.attnum;
+-- @ Q8.3 relation flags: reloptions (raw order as written: fillfactor first), relpersistence, relreplident, relkind, relispartition, relrowsecurity, relforcerowsecurity
+select c.oid::regclass::text, c.reloptions::text, c.relpersistence, c.relreplident, c.relkind, c.relispartition, c.relrowsecurity, c.relforcerowsecurity from pg_catalog.pg_class c where c.relnamespace = 'os'::regnamespace order by 1;
+-- @ Q8.4 sequence parameters (pg_sequence) and the volatile part (pg_sequences.last_value / the relation itself) — before and after nextval in a rolled-back transaction
+begin; select s.seqrelid::regclass::text, s.seqstart, s.seqincrement, s.seqmin, s.seqmax, s.seqcache, s.seqcycle, (select last_value::text from pg_catalog.pg_sequences where schemaname='os' and sequencename='ticket_seq') as last_value_before from pg_catalog.pg_sequence s where s.seqrelid = 'os.ticket_seq'::regclass; select nextval('os.ticket_seq'); select (select last_value::text from pg_catalog.pg_sequences where schemaname='os' and sequencename='ticket_seq') as last_value_after_nextval_in_a_rolled_back_txn; rollback;
+-- @ Q8.4b after the rollback: a sequence is not transactional
+select last_value::text, is_called from os.ticket_seq;
+-- @ Q8.5 types: enum labels (pg_enum.enumsortorder), domains (typbasetype, typnotnull, typdefault, domain constraints via pg_constraint.contypid)
+select t.oid::regtype::text, t.typtype, (select string_agg(enumlabel || ':' || enumsortorder::text, ',' order by enumsortorder) from pg_catalog.pg_enum where enumtypid = t.oid) from pg_catalog.pg_type t where t.typnamespace = 'os'::regnamespace and t.typtype = 'e';
+-- @ Q8.6 triggers: tgenabled (O origin, D disabled, R replica, A always), tgisinternal (FK triggers are internal, named RI_ConstraintTrigger_<a|c>_<oid>)
+select t.tgrelid::regclass::text, t.tgname, t.tgenabled, t.tgisinternal from pg_catalog.pg_trigger t join pg_catalog.pg_class c on c.oid = t.tgrelid where c.relnamespace = 'os'::regnamespace order by 1, 2;
+-- @ Q8.6b `alter table os.parts disable trigger parts_touch` as the owner (rolled back): only tgenabled moves; pg_get_triggerdef does not show it
+begin; set local role os_owner; alter table os.parts disable trigger parts_touch; select tgenabled, pg_catalog.pg_get_triggerdef(oid) from pg_catalog.pg_trigger where tgname = 'parts_touch'; rollback;
+-- @ Q8.7 event triggers (pg_event_trigger: evtevent, evtowner, evtfoid, evtenabled, evttags) — the database's, all of them (no schema)
+select evtname, evtevent, pg_catalog.pg_get_userbyid(evtowner), evtfoid::regproc::text, evtenabled, evttags::text from pg_catalog.pg_event_trigger order by 1;
+-- @ Q8.8 policies: polcmd, polpermissive, polroles (0 = PUBLIC) as names, quals
+select p.polname, p.polcmd, p.polpermissive, (select string_agg(case r when 0 then 'PUBLIC' else pg_catalog.pg_get_userbyid(r) end, ',') from unnest(p.polroles) r), pg_catalog.pg_get_expr(p.polqual, p.polrelid), pg_catalog.pg_get_expr(p.polwithcheck, p.polrelid) from pg_catalog.pg_policy p where p.polrelid = 'os.parts'::regclass order by 1;
+-- @ Q8.9 publications and their members (pg_publication, pg_publication_rel, pg_publication_namespace; pg_publication_tables): any table of os or the h6 probe in one?
+select p.pubname, pg_catalog.pg_get_userbyid(p.pubowner), p.puballtables, r.prrelid::regclass::text from pg_catalog.pg_publication p left join pg_catalog.pg_publication_rel r on r.prpubid = p.oid order by 1, 4;
+-- @ Q8.10 an extension with members in os: made in os in a rolled-back transaction, its members found by pg_depend deptype 'e'
+begin; create extension pg_trgm schema os; select e.extname, e.extnamespace::regnamespace::text, pg_catalog.pg_get_userbyid(e.extowner), count(*) as members_in_os from pg_catalog.pg_extension e join pg_catalog.pg_depend d on d.refclassid = 'pg_catalog.pg_extension'::regclass and d.refobjid = e.oid and d.deptype = 'e' where e.extname = 'pg_trgm' group by 1,2,3; select (select count(*) from pg_catalog.pg_proc where pronamespace = 'os'::regnamespace) as functions_in_os_now; rollback;
+-- @ Q8.11 large objects (pg_largeobject_metadata: lomowner, lomacl) — a database-wide object, no schema; temporary objects (pg_temp_N schemas): counts on this instance
+select (select count(*) from pg_catalog.pg_largeobject_metadata) as large_objects, (select count(*) from pg_catalog.pg_namespace where nspname ~ '^pg_(toast_)?temp_') as temp_schemas, (select count(*) from pg_catalog.pg_class c join pg_catalog.pg_namespace n on n.oid = c.relnamespace where n.nspname ~ '^pg_temp_') as temp_relations;
+-- @ Q8.11b a large object made by os_owner (rolled back): seen in pg_largeobject_metadata and pg_shdepend as owned by os_owner
+begin; set local role os_owner; select lo_create(0) is not null as made; reset role; select pg_catalog.pg_get_userbyid(lomowner), (select count(*) from pg_catalog.pg_shdepend s where s.classid = 'pg_catalog.pg_largeobject'::regclass and s.refobjid = 'os_owner'::regrole) as shdepend_rows from pg_catalog.pg_largeobject_metadata; rollback;
+-- @ Q8.12 partitioning: pg_partitioned_table / relpartbound (none in os); realtime's and pgboss's date-named partitions on this instance
+select c.oid::regclass::text, pg_catalog.pg_get_expr(c.relpartbound, c.oid) from pg_catalog.pg_class c where c.relispartition order by 1;

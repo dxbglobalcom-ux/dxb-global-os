@@ -1,0 +1,72 @@
+2431a2432,2433
+> pg_attribute|index column os_chain.ledger_file_key.file||∅|7c4bbe440a1ce15f5f9e28c2ed783a3c
+> pg_attribute|index column os_chain.ledger_pkey."position"||∅|02d294fbae2ca970c0ed3cb16a1834f1
+2866a2869,2870
+> pg_attribute|index column pg_toast.pg_toast_20023_index.chunk_id||∅|c01085f6e68cd8515b7abde3e135d1f3
+> pg_attribute|index column pg_toast.pg_toast_20023_index.chunk_seq||∅|e25c4364444561a44acb701bbb21376c
+3874a3879,3891
+> pg_attribute|table column os_chain.ledger."position"||∅|7fb22065e6a4e19253976b352934ad01
+> pg_attribute|table column os_chain.ledger.applied_at||∅|dd17140116914c4ad8304b1e9e72068a
+> pg_attribute|table column os_chain.ledger.applied_by||∅|712631a4b96f07b1769d4bf86f9372f1
+> pg_attribute|table column os_chain.ledger.cmax||∅|05bc9e995bf2929e09639fc54abde7e6
+> pg_attribute|table column os_chain.ledger.cmin||∅|1bcc8536f88a76d7d8c7dceaab4d5652
+> pg_attribute|table column os_chain.ledger.ctid||∅|9ba5e7d56371333f6759286e0e81641c
+> pg_attribute|table column os_chain.ledger.file||∅|e20f94fce668b4b2f5b5c292f3352d15
+> pg_attribute|table column os_chain.ledger.hash||∅|eca52b7283f6881a556721c2c373e5e3
+> pg_attribute|table column os_chain.ledger.kind||∅|7808b6bae56be5f116e87e13f52e8c6c
+> pg_attribute|table column os_chain.ledger.runner_version||∅|b24290c40569482d2c2cfde3058e932e
+> pg_attribute|table column os_chain.ledger.tableoid||∅|1adc79286f3a3d4de9b5fbe7c4180701
+> pg_attribute|table column os_chain.ledger.xmax||∅|dd32399d09b83eb0f66e7d8be494c952
+> pg_attribute|table column os_chain.ledger.xmin||∅|60d92cc7f047983ed577c2603276d744
+7294a7312,7320
+> pg_attribute|toast table column pg_toast.pg_toast_20023.chunk_data||∅|5d2c63aa959961049b2606391fedfd11
+> pg_attribute|toast table column pg_toast.pg_toast_20023.chunk_id||∅|c01085f6e68cd8515b7abde3e135d1f3
+> pg_attribute|toast table column pg_toast.pg_toast_20023.chunk_seq||∅|e25c4364444561a44acb701bbb21376c
+> pg_attribute|toast table column pg_toast.pg_toast_20023.cmax||∅|05bc9e995bf2929e09639fc54abde7e6
+> pg_attribute|toast table column pg_toast.pg_toast_20023.cmin||∅|1bcc8536f88a76d7d8c7dceaab4d5652
+> pg_attribute|toast table column pg_toast.pg_toast_20023.ctid||∅|9ba5e7d56371333f6759286e0e81641c
+> pg_attribute|toast table column pg_toast.pg_toast_20023.tableoid||∅|1adc79286f3a3d4de9b5fbe7c4180701
+> pg_attribute|toast table column pg_toast.pg_toast_20023.xmax||∅|dd32399d09b83eb0f66e7d8be494c952
+> pg_attribute|toast table column pg_toast.pg_toast_20023.xmin||∅|60d92cc7f047983ed577c2603276d744
+9539a9566,9571
+> pg_auth_members|role membership membership of role postgres in role os_engine os_engine>postgres by supabase_admin|||b13255aad5fcd5ae43027a7a8568ce8d
+> pg_auth_members|role membership membership of role postgres in role os_executor os_executor>postgres by supabase_admin|||b13255aad5fcd5ae43027a7a8568ce8d
+> pg_auth_members|role membership membership of role postgres in role os_intake os_intake>postgres by supabase_admin|||b13255aad5fcd5ae43027a7a8568ce8d
+> pg_auth_members|role membership membership of role postgres in role os_owner os_owner>postgres by postgres|||16fc675f744a97612a99a0ff417ca680
+> pg_auth_members|role membership membership of role postgres in role os_owner os_owner>postgres by supabase_admin|||b13255aad5fcd5ae43027a7a8568ce8d
+> pg_auth_members|role membership membership of role postgres in role os_reader os_reader>postgres by supabase_admin|||b13255aad5fcd5ae43027a7a8568ce8d
+9557a9590,9594
+> pg_authid|role os_engine|||49fcf2baae46b1f1b2bd80fcb2b61a3c
+> pg_authid|role os_executor|||8dba4171a2d23cc839200a8372f3af1f
+> pg_authid|role os_intake|||1fffceb1c7a9de47f439d76a5dd3a0b7
+> pg_authid|role os_owner|||b055280cada924cbd2616caa76647df3
+> pg_authid|role os_reader|||783d5a2ef19f618ba2ee1ac809a2e5d9
+9939a9977,9978
+> pg_class|index os_chain.ledger_file_key|postgres|∅|5e8358cf5b6cb463dad25cacb6d82d14
+> pg_class|index os_chain.ledger_pkey|postgres|∅|13ea4dfb0500d059700485b9b46ea66f
+10178a10218
+> pg_class|index pg_toast.pg_toast_20023_index|postgres|∅|53259146912187fcb59fa836970fe908
+10432a10473
+> pg_class|table os_chain.ledger|postgres|∅|39fabbf509e277bae2542711b97a2d7c
+10697a10739
+> pg_class|toast table pg_toast.pg_toast_20023|postgres|∅|e55320b6cb02a10e89835504ffe552b8
+11929a11972,11976
+> pg_constraint|table constraint ledger_file_key on os_chain.ledger|||7d47bbd0797f9bc71fb8ff7c23d9e97e
+> pg_constraint|table constraint ledger_hash_check on os_chain.ledger|||c017e4bf597664956364468268dc635b
+> pg_constraint|table constraint ledger_kind_check on os_chain.ledger|||5345748f0a351fe06a881090af3e6bd7
+> pg_constraint|table constraint ledger_pkey on os_chain.ledger|||d2053bf263a67576ea99a18d0c70b892
+> pg_constraint|table constraint ledger_position_check on os_chain.ledger|||71a5be4f45cb59f11b44b9b6a2d98af9
+12418a12466,12467
+> pg_default_acl|default acl for role os_owner on functions||os_owner=X/os_owner|baf9e1168562095329d1c28473f91496
+> pg_default_acl|default acl for role os_owner on types||os_owner=U/os_owner|8ddd168d2d9d290220ce049324681ac9
+18024a18074,18075
+> pg_index|index os_chain.ledger_file_key|||6d88f91eebecb9d9fce152c81d973765
+> pg_index|index os_chain.ledger_pkey|||15298cd32965865ab8fe8d3b000f94b9
+18263a18315
+> pg_index|index pg_toast.pg_toast_20023_index|||d18b9e9d46a0aca480687153d9b3ca30
+18737a18790,18791
+> pg_namespace|schema os_chain|postgres|∅|eceecee4166c9de1efac16079f140e43
+> pg_namespace|schema os|os_owner|∅|c545dec6e7eee5cb50cc540c64268502
+24710a24765,24766
+> pg_type|type os_chain.ledger[]|postgres|∅|4c9a6b9c33ca25fcacbd905b884779aa
+> pg_type|type os_chain.ledger|postgres|∅|1e241765b92f295109b43aef6dc9b369

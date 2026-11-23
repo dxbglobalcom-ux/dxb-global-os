@@ -1,0 +1,7 @@
+## Q4.5 schema put back; next_ticket owned by os_owner but carrying a grant to os_intake no file says. chain up (rootB): the functions pass runs create or replace of every function as os_owner
+CHAIN_GREEN applied=0 standing=4 functions=3 reference=1
+== read: owner and stored ACL of os.next_ticket and of schema os; oid/ctid of the function row
+  function | os.next_ticket(text,integer,double precision) | os_owner | {os_owner=X/os_owner,os_intake=X/os_owner} | (126,14) | b9624c1ec3e8e07e5afe9d4781be9151
+  schema | os | os_owner | {os_owner=UC/os_owner,os_reader=U/os_owner,os_engine=U/os_owner,os_executor=U/os_owner,os_intake=U/os_owner} | (0,54) | 
+grant function os.next_ticket(text,integer,double precision) to os_intake EXECUTE  by os_owner 
+grant function os.next_ticket(text,integer,double precision) to os_owner EXECUTE  by os_owner 

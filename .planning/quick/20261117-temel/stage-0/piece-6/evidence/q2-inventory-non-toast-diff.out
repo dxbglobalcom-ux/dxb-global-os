@@ -1,0 +1,64 @@
+## 0-before-chain non-toast lines differing r1 vs r2:
+22072,22075c22072,22075
+< pg_trigger|trigger "RI_ConstraintTrigger_a_19605" on public.agents|||0146f63b1ade5c7989b45d2bb02e4de7
+< pg_trigger|trigger "RI_ConstraintTrigger_a_19606" on public.agents|||7aaee18b7ac7f137b0de98485ce7e1fd
+< pg_trigger|trigger "RI_ConstraintTrigger_a_19625" on public.agents|||e62b1c627e2e63eb5c1a2c351f2813d2
+< pg_trigger|trigger "RI_ConstraintTrigger_a_19626" on public.agents|||e9e997a937b2e271729959bc78579be3
+---
+> pg_trigger|trigger "RI_ConstraintTrigger_a_19593" on public.agents|||de2935c15ea702444a89314fa9ea692d
+> pg_trigger|trigger "RI_ConstraintTrigger_a_19594" on public.agents|||09fb258c0cb33d0832b5e84b32723f25
+> pg_trigger|trigger "RI_ConstraintTrigger_a_19613" on public.agents|||8b66d53e0c9745a1f69217106654fcf8
+> pg_trigger|trigger "RI_ConstraintTrigger_a_19614" on public.agents|||f393eb6c60ec2e17920f70c660301647
+22302,22305c22302,22305
+< pg_trigger|trigger "RI_ConstraintTrigger_c_19607" on public.voice_identities|||8ed2948b0d8d4d4e27c1093203d1082d
+< pg_trigger|trigger "RI_ConstraintTrigger_c_19608" on public.voice_identities|||77531cf0a4a932bcaf177f60f84c972b
+< pg_trigger|trigger "RI_ConstraintTrigger_c_19627" on public.voice_calls|||191c23983ca52169923b0fc2a89b369e
+< pg_trigger|trigger "RI_ConstraintTrigger_c_19628" on public.voice_calls|||872c013805f105741aa64e3cff1b4891
+---
+> pg_trigger|trigger "RI_ConstraintTrigger_c_19595" on public.voice_identities|||092cac5b59c336ed1c1a51098ecd9ec8
+> pg_trigger|trigger "RI_ConstraintTrigger_c_19596" on public.voice_identities|||e8299fa03835b4c30c9a69256830bb5a
+> pg_trigger|trigger "RI_ConstraintTrigger_c_19615" on public.voice_calls|||8d960e8ee37d7c29ff714f20935ac25f
+> pg_trigger|trigger "RI_ConstraintTrigger_c_19616" on public.voice_calls|||47025af787edb1794c8f21559aca475d
+## 3-fixture-outside non-toast lines differing r1 vs r2:
+22239,22242c22239,22242
+< pg_trigger|trigger "RI_ConstraintTrigger_a_19605" on public.agents|||0146f63b1ade5c7989b45d2bb02e4de7
+< pg_trigger|trigger "RI_ConstraintTrigger_a_19606" on public.agents|||7aaee18b7ac7f137b0de98485ce7e1fd
+< pg_trigger|trigger "RI_ConstraintTrigger_a_19625" on public.agents|||e62b1c627e2e63eb5c1a2c351f2813d2
+< pg_trigger|trigger "RI_ConstraintTrigger_a_19626" on public.agents|||e9e997a937b2e271729959bc78579be3
+---
+> pg_trigger|trigger "RI_ConstraintTrigger_a_19593" on public.agents|||de2935c15ea702444a89314fa9ea692d
+> pg_trigger|trigger "RI_ConstraintTrigger_a_19594" on public.agents|||09fb258c0cb33d0832b5e84b32723f25
+> pg_trigger|trigger "RI_ConstraintTrigger_a_19613" on public.agents|||8b66d53e0c9745a1f69217106654fcf8
+> pg_trigger|trigger "RI_ConstraintTrigger_a_19614" on public.agents|||f393eb6c60ec2e17920f70c660301647
+22275,22276c22275,22276
+< pg_trigger|trigger "RI_ConstraintTrigger_a_20074" on os.kinds|||a76b888c1e0e32444f8012f6a05fc419
+< pg_trigger|trigger "RI_ConstraintTrigger_a_20075" on os.kinds|||08f61abd9f4ab45ab53943ed5e9499c7
+---
+> pg_trigger|trigger "RI_ConstraintTrigger_a_20069" on os.kinds|||9bec33a4c6ce0e28dcf9e4b319b09b6d
+> pg_trigger|trigger "RI_ConstraintTrigger_a_20070" on os.kinds|||dd05f7b2ca354d575dd9f3936768e676
+22471,22474c22471,22474
+< pg_trigger|trigger "RI_ConstraintTrigger_c_19607" on public.voice_identities|||8ed2948b0d8d4d4e27c1093203d1082d
+< pg_trigger|trigger "RI_ConstraintTrigger_c_19608" on public.voice_identities|||77531cf0a4a932bcaf177f60f84c972b
+< pg_trigger|trigger "RI_ConstraintTrigger_c_19627" on public.voice_calls|||191c23983ca52169923b0fc2a89b369e
+< pg_trigger|trigger "RI_ConstraintTrigger_c_19628" on public.voice_calls|||872c013805f105741aa64e3cff1b4891
+---
+> pg_trigger|trigger "RI_ConstraintTrigger_c_19595" on public.voice_identities|||092cac5b59c336ed1c1a51098ecd9ec8
+> pg_trigger|trigger "RI_ConstraintTrigger_c_19596" on public.voice_identities|||e8299fa03835b4c30c9a69256830bb5a
+> pg_trigger|trigger "RI_ConstraintTrigger_c_19615" on public.voice_calls|||8d960e8ee37d7c29ff714f20935ac25f
+> pg_trigger|trigger "RI_ConstraintTrigger_c_19616" on public.voice_calls|||47025af787edb1794c8f21559aca475d
+22507,22508c22507,22508
+< pg_trigger|trigger "RI_ConstraintTrigger_c_20076" on os.parts|||a722b0b2c5135372e185228701e6d288
+< pg_trigger|trigger "RI_ConstraintTrigger_c_20077" on os.parts|||b75852db9140c2c0007a60436497babd
+---
+> pg_trigger|trigger "RI_ConstraintTrigger_c_20071" on os.parts|||d56d97a9e43d87b7a130a0f8799dd17a
+> pg_trigger|trigger "RI_ConstraintTrigger_c_20072" on os.parts|||f8ce952474978be8119b517941dac839
+toast-name normalised (pg_toast_<oid> -> pg_toast_N), line counts r1 r2 and diff:
+75
+0-before-chain: lines-after-normalising=24957 differing=8
+1-real-chain: lines-after-normalising=25013 differing=12
+2-fixture-in-os: lines-after-normalising=25137 differing=20
+3-fixture-outside: lines-after-normalising=25197 differing=24
+excluding toast relations and RI triggers — 0-before-chain: lines=22941 differing-r1-r2=0
+excluding toast relations and RI triggers — 1-real-chain: lines=22983 differing-r1-r2=0
+excluding toast relations and RI triggers — 2-fixture-in-os: lines=23079 differing-r1-r2=0
+excluding toast relations and RI triggers — 3-fixture-outside: lines=23125 differing-r1-r2=0

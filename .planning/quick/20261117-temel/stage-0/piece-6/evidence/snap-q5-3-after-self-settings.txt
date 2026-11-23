@@ -1,0 +1,54 @@
+snapshot-settings DateStyle=ISO, YMD IntervalStyle=postgres TimeZone=UTC bytea_output=hex extra_float_digits=3 quote_all_identifiers=off search_path="" standard_conforming_strings=on
+database postgres owner postgres encoding UTF8 collate en_US.UTF-8 ctype en_US.UTF-8
+grant database postgres to PUBLIC CONNECT  by postgres 
+grant database postgres to PUBLIC TEMPORARY  by postgres 
+role os_engine super f inherit f createrole f createdb f login t replication f bypassrls f connlimit -1 validuntil - config -
+role os_executor super f inherit f createrole f createdb f login t replication f bypassrls f connlimit -1 validuntil - config -
+role os_intake super f inherit f createrole f createdb f login t replication f bypassrls f connlimit -1 validuntil - config -
+role os_owner super f inherit f createrole f createdb f login f replication f bypassrls f connlimit -1 validuntil - config -
+role os_reader super f inherit f createrole f createdb f login t replication f bypassrls f connlimit -1 validuntil - config work_mem=7MB,search_path=public,role=anon
+member os_engine has postgres admin t inherit f set f by supabase_admin
+member os_executor has postgres admin t inherit f set f by supabase_admin
+member os_intake has postgres admin t inherit f set f by supabase_admin
+member os_owner has postgres admin f inherit f set t by postgres
+member os_owner has postgres admin t inherit f set f by supabase_admin
+member os_reader has postgres admin t inherit f set f by supabase_admin
+role-setting (all roles) in postgres app.settings.jwt_exp=<redacted:md5 0dcb651c5f0012395e793735b6e86282>,app.settings.jwt_secret=<redacted:md5 d204faee84fe048dbda4c6993b6737c8>
+role-setting os_reader in (all databases) role=anon,search_path=public,work_mem=7MB
+role-setting os_reader in postgres statement_timeout=5s
+schema os owner os_owner
+schema os_chain owner postgres
+grant schema os to os_owner CREATE  by os_owner (default)
+grant schema os to os_owner USAGE  by os_owner (default)
+grant schema os_chain to postgres CREATE  by postgres (default)
+grant schema os_chain to postgres USAGE  by postgres (default)
+default-acl for os_owner in - on T to os_owner USAGE 
+default-acl for os_owner in - on f to os_owner EXECUTE 
+relation os_chain.ledger kind r owner postgres persistence p rowsecurity f force f replident d partitioned f options -
+column os_chain.ledger 1 "position" integer not-null identity generated collation default
+column os_chain.ledger 2 file text not-null identity generated collation default
+column os_chain.ledger 3 kind text not-null identity generated collation default
+column os_chain.ledger 4 hash text not-null identity generated collation default
+column os_chain.ledger 5 applied_at timestamp with time zone not-null identity generated collation default
+column os_chain.ledger 6 applied_by text not-null identity generated collation default
+column os_chain.ledger 7 runner_version text not-null identity generated collation default
+constraint os_chain.ledger ledger_file_key u deferrable f deferred f validated t UNIQUE (file)
+constraint os_chain.ledger ledger_hash_check c deferrable f deferred f validated t CHECK ((hash ~ '^[0-9a-f]{64}$'::text))
+constraint os_chain.ledger ledger_kind_check c deferrable f deferred f validated t CHECK ((kind = ANY (ARRAY['ledger'::text, 'schema'::text])))
+constraint os_chain.ledger ledger_pkey p deferrable f deferred f validated t PRIMARY KEY ("position")
+constraint os_chain.ledger ledger_position_check c deferrable f deferred f validated t CHECK (("position" >= 0))
+index os_chain.ledger CREATE UNIQUE INDEX ledger_file_key ON os_chain.ledger USING btree (file)
+index os_chain.ledger CREATE UNIQUE INDEX ledger_pkey ON os_chain.ledger USING btree ("position")
+grant relation os_chain.ledger to postgres DELETE  by postgres (default)
+grant relation os_chain.ledger to postgres INSERT  by postgres (default)
+grant relation os_chain.ledger to postgres MAINTAIN  by postgres (default)
+grant relation os_chain.ledger to postgres REFERENCES  by postgres (default)
+grant relation os_chain.ledger to postgres SELECT  by postgres (default)
+grant relation os_chain.ledger to postgres TRIGGER  by postgres (default)
+grant relation os_chain.ledger to postgres TRUNCATE  by postgres (default)
+grant relation os_chain.ledger to postgres UPDATE  by postgres (default)
+outside owns os_owner default acl for role os_owner on functions 
+outside owns os_owner default acl for role os_owner on types 
+ledger 0 (ledger) ledger 2179aece49242b6bde8643739f2c3bdf4939c21d5f95770b97c0debe74fced00 runner 1
+ledger 1 0001-roles.sql schema 6e4099fff7783a16856bf28b743e48beb4c44fd5ec726e9b9c16b7952a6a7dc9 runner 1
+ledger 2 0002-os.sql schema 5b814cb9fd1e86a0a7f68ae70c7938c86afc578f0964ffa2f8f0630de45a2d0f runner 1

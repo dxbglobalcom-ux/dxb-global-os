@@ -1,0 +1,98 @@
+== comment on schema public
+  (BEGIN )
+  (COMMENT )
+  (ROLLBACK )
+== comment on a platform table (auth.users)
+  ERROR 42501 must be owner of table users
+== comment on the database
+  (BEGIN )
+  (COMMENT )
+  (ROLLBACK )
+== comment on role anon
+  (BEGIN )
+  (COMMENT )
+  (ROLLBACK )
+== alter a platform object: add a column to auth.users
+  ERROR 42501 must be owner of table users
+== alter a platform function owned by postgres in public (first one)
+  (BEGIN )
+  notify_broadcast(text,text,jsonb)
+  (ROLLBACK )
+== create publication
+  (BEGIN )
+  (CREATE )
+  (CREATE )
+  (ROLLBACK )
+== alter publication supabase_realtime add table
+  (BEGIN )
+  (CREATE )
+  (ALTER )
+  (ROLLBACK )
+== create event trigger
+  (BEGIN )
+  (CREATE )
+  (CREATE )
+  (ROLLBACK )
+== alter database set
+  ERROR 42501 permission denied to set parameter "h6.x"
+== alter role anon set
+  ERROR 42501 permission denied to set parameter "h6.x"
+== create role
+  (BEGIN )
+  (CREATE )
+  (ROLLBACK )
+== grant on public schema to PUBLIC (create)
+  (BEGIN )
+  (GRANT )
+  (ROLLBACK )
+== grant to a platform role anon on a new public table
+  (BEGIN )
+  (CREATE )
+  (GRANT )
+  (ROLLBACK )
+== grant execute on an os function to public
+  (BEGIN )
+  (SET )
+  (GRANT )
+  (ROLLBACK )
+== grant on os schema to a platform role
+  (BEGIN )
+  (SET )
+  (GRANT )
+  (ROLLBACK )
+== grant os_reader to anon (membership)
+  (BEGIN )
+  (GRANT )
+  (ROLLBACK )
+== grant anon to os_reader (membership)
+  (BEGIN )
+  (GRANT )
+  (ROLLBACK )
+== alter default privileges for role postgres in public granting to os_reader
+  (BEGIN )
+  (ALTER )
+  (ROLLBACK )
+== create extension in os (pg_trgm)
+  (BEGIN )
+  (CREATE )
+  (ROLLBACK )
+== security label
+  ERROR 0A000 pgsodium provider does not support labels on this object
+== alter system
+  ERROR 42501 permission denied to set parameter "work_mem"
+== grant set on parameter
+  ERROR 42501 permission denied for parameter work_mem
+== create schema outside os
+  (BEGIN )
+  (CREATE )
+  (ROLLBACK )
+== large object
+  (BEGIN )
+  true
+  (ROLLBACK )
+== create database
+  (CREATE )
+== installer can read pg_authid? (counts only)
+  36 | 8
+== has_table_privilege pg_authid
+  true | true | anon,authenticated,authenticator,os_engine,os_executor,os_intake,os_owner,os_owner,os_reader,pg_create_subscription,pg_monitor,pg_read_all_data,pg_signal_backend,service_role,supabase_functions_admin,supabase_privileged_role,supabase_realtime_admin

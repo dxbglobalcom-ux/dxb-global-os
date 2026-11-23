@@ -1,0 +1,16 @@
+== step 1 real-chain: chain up 
+CHAIN_GREEN applied=2 standing=2 functions=0 reference=0
+TOTAL lines=25473 (of which naming os in identity ≈ 7) ms=443
+SNAPSHOT lines=52 bytes=4560 ms=15
+== step 2 fixture-in-os: chain up --root /tmp/claude-1000/-home-dxb-DxB-Global-OS/8e9a56bf-6609-4e01-a8ec-ee3eba2f5cd9/scratchpad/h-measure/rootA
+CHAIN_GREEN applied=1 standing=3 functions=3 reference=1
+TOTAL lines=25601 (of which naming os in identity ≈ 107) ms=443
+SNAPSHOT lines=157 bytes=13051 ms=18
+== step 3 fixture-outside: chain up --root /tmp/claude-1000/-home-dxb-DxB-Global-OS/8e9a56bf-6609-4e01-a8ec-ee3eba2f5cd9/scratchpad/h-measure/rootB
+CHAIN_RED file-failed applied=0
+TOTAL lines=25601 (of which naming os in identity ≈ 107) ms=440
+SNAPSHOT lines=157 bytes=13051 ms=18
+== step 3 fixture-outside: chain up --root /tmp/claude-1000/-home-dxb-DxB-Global-OS/8e9a56bf-6609-4e01-a8ec-ee3eba2f5cd9/scratchpad/h-measure/rootB
+CHAIN_GREEN applied=1 standing=4 functions=3 reference=1
+TOTAL lines=25661 (of which naming os in identity ≈ 107) ms=441
+SNAPSHOT lines=165 bytes=13589 ms=18

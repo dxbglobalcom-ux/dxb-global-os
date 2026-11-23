@@ -1,0 +1,8 @@
+-- @ Q5.1 pg_roles for the five (never rolpassword): every attribute
+select rolname, rolsuper, rolinherit, rolcreaterole, rolcreatedb, rolcanlogin, rolreplication, rolbypassrls, rolconnlimit, coalesce(rolvaliduntil::text, '∅'), coalesce(rolconfig::text, '∅') from pg_catalog.pg_roles where rolname like 'os\_%' order by 1;
+-- @ Q5.2 pg_authid: how many of the five carry a password (a count; the column is never read out)
+select count(*) filter (where rolpassword is not null) as with_password, count(*) filter (where rolpassword like 'SCRAM-SHA-256$%') as scram from pg_catalog.pg_authid where rolname like 'os\_%';
+-- @ Q5.3 pg_auth_members in both directions: role | member | admin | inherit | set | grantor
+select pg_catalog.pg_get_userbyid(roleid), pg_catalog.pg_get_userbyid(member), admin_option, inherit_option, set_option, pg_catalog.pg_get_userbyid(grantor) from pg_catalog.pg_auth_members where pg_catalog.pg_get_userbyid(roleid) like 'os\_%' or pg_catalog.pg_get_userbyid(member) like 'os\_%' order by 1, 2, 6;
+-- @ Q5.4 pg_db_role_setting for the five and for all roles (values of secret-like names hidden): role | database | settings
+select coalesce(pg_catalog.pg_get_userbyid(nullif(setrole, 0)), '(all roles)'), coalesce((select datname from pg_catalog.pg_database where oid = setdatabase), '(all databases)'), (select string_agg(case when split_part(x,'=',1) ~* '(secret|key|password|token|jwt)' then split_part(x,'=',1) || '=<hidden>' else x end, ', ') from unnest(setconfig) x) from pg_catalog.pg_db_role_setting where setrole = 0 or pg_catalog.pg_get_userbyid(setrole) like 'os\_%' order by 1, 2;

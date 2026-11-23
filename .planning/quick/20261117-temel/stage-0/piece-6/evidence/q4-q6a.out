@@ -1,0 +1,145 @@
+== Q4.1 effective grants of every kind in os: aclexplode(coalesce(acl, acldefault(kind, owner))) — kind | object | grantee (0=PUBLIC) | privilege | grantable | grantor | acl stored?
+  column | os.parts.code | os_intake | INSERT | f | os_owner | t
+  column | os.parts.code | os_intake | SELECT | f | os_owner | t
+  column | os.parts.qty | os_intake | INSERT | f | os_owner | t
+  column | os.parts.qty | os_intake | SELECT | f | os_owner | t
+  database | postgres | PUBLIC | CONNECT | f | postgres | t
+  database | postgres | PUBLIC | TEMPORARY | f | postgres | t
+  database | postgres | dashboard_user | CONNECT | f | postgres | t
+  database | postgres | dashboard_user | CREATE | f | postgres | t
+  database | postgres | dashboard_user | TEMPORARY | f | postgres | t
+  database | postgres | postgres | CONNECT | f | postgres | t
+  database | postgres | postgres | CREATE | f | postgres | t
+  database | postgres | postgres | TEMPORARY | f | postgres | t
+  database | postgres | supabase_etl_admin | CREATE | f | postgres | t
+  database | postgres | supabase_storage_admin | CREATE | f | postgres | t
+  function | os.count_parts(integer) | PUBLIC | EXECUTE | f | os_owner | t
+  function | os.count_parts(integer) | os_engine | EXECUTE | f | os_owner | t
+  function | os.count_parts(integer) | os_owner | EXECUTE | f | os_owner | t
+  function | os.count_parts(integer) | os_reader | EXECUTE | f | os_owner | t
+  function | os.next_ticket(text,integer,double precision) | os_owner | EXECUTE | f | os_owner | t
+  function | os.parts_touch() | os_owner | EXECUTE | f | os_owner | t
+  relation | os.kinds | os_owner | DELETE | f | os_owner | f
+  relation | os.kinds | os_owner | INSERT | f | os_owner | f
+  relation | os.kinds | os_owner | MAINTAIN | f | os_owner | f
+  relation | os.kinds | os_owner | REFERENCES | f | os_owner | f
+  relation | os.kinds | os_owner | SELECT | f | os_owner | f
+  relation | os.kinds | os_owner | TRIGGER | f | os_owner | f
+  relation | os.kinds | os_owner | TRUNCATE | f | os_owner | f
+  relation | os.kinds | os_owner | UPDATE | f | os_owner | f
+  relation | os.parts | os_engine | INSERT | t | os_owner | t
+  relation | os.parts | os_engine | SELECT | t | os_owner | t
+  relation | os.parts | os_engine | UPDATE | t | os_owner | t
+  relation | os.parts | os_owner | DELETE | f | os_owner | t
+  relation | os.parts | os_owner | INSERT | f | os_owner | t
+  relation | os.parts | os_owner | MAINTAIN | f | os_owner | t
+  relation | os.parts | os_owner | REFERENCES | f | os_owner | t
+  relation | os.parts | os_owner | SELECT | f | os_owner | t
+  relation | os.parts | os_owner | TRIGGER | f | os_owner | t
+  relation | os.parts | os_owner | TRUNCATE | f | os_owner | t
+  relation | os.parts | os_owner | UPDATE | f | os_owner | t
+  relation | os.parts | os_reader | SELECT | f | os_owner | t
+  relation | os.parts_view | os_owner | DELETE | f | os_owner | t
+  relation | os.parts_view | os_owner | INSERT | f | os_owner | t
+  relation | os.parts_view | os_owner | MAINTAIN | f | os_owner | t
+  relation | os.parts_view | os_owner | REFERENCES | f | os_owner | t
+  relation | os.parts_view | os_owner | SELECT | f | os_owner | t
+  relation | os.parts_view | os_owner | TRIGGER | f | os_owner | t
+  relation | os.parts_view | os_owner | TRUNCATE | f | os_owner | t
+  relation | os.parts_view | os_owner | UPDATE | f | os_owner | t
+  relation | os.parts_view | os_reader | SELECT | f | os_owner | t
+  schema | os | os_engine | USAGE | f | os_owner | t
+  schema | os | os_executor | USAGE | f | os_owner | t
+  schema | os | os_intake | USAGE | f | os_owner | t
+  schema | os | os_owner | CREATE | f | os_owner | t
+  schema | os | os_owner | USAGE | f | os_owner | t
+  schema | os | os_reader | USAGE | f | os_owner | t
+  sequence | os.parts_id_seq | os_owner | SELECT | f | os_owner | f
+  sequence | os.parts_id_seq | os_owner | UPDATE | f | os_owner | f
+  sequence | os.parts_id_seq | os_owner | USAGE | f | os_owner | f
+  sequence | os.ticket_seq | os_engine | SELECT | f | os_owner | t
+  sequence | os.ticket_seq | os_engine | USAGE | f | os_owner | t
+  sequence | os.ticket_seq | os_owner | SELECT | f | os_owner | t
+  sequence | os.ticket_seq | os_owner | UPDATE | f | os_owner | t
+  sequence | os.ticket_seq | os_owner | USAGE | f | os_owner | t
+  type | os.mood | os_owner | USAGE | f | os_owner | t
+  type | os.mood | os_reader | USAGE | f | os_owner | t
+== Q4.1b types made with a table/view (row types) and arrays: typacl is null; acldefault('T', owner) gives PUBLIC USAGE
+  os.kinds | c | t | {=U/os_owner,os_owner=U/os_owner}
+  os.kinds[] | b | t | {=U/os_owner,os_owner=U/os_owner}
+  os.mood | e | f | {=U/os_owner,os_owner=U/os_owner}
+  os.mood[] | b | t | {=U/os_owner,os_owner=U/os_owner}
+  os.parts | c | t | {=U/os_owner,os_owner=U/os_owner}
+  os.parts_view | c | t | {=U/os_owner,os_owner=U/os_owner}
+  os.parts_view[] | b | t | {=U/os_owner,os_owner=U/os_owner}
+  os.parts[] | b | t | {=U/os_owner,os_owner=U/os_owner}
+== Q4.2 who may CONNECT to this database: has_database_privilege for the five roles (CONNECT comes from PUBLIC)
+  os_owner | t | f | t
+  os_engine | t | f | t
+  os_executor | t | f | t
+  os_intake | t | f | t
+  os_reader | t | f | t
+== Q4.3 pg_default_acl: every row whose role is one of the five, or whose grantee is (a row's absence means the built-in default: acldefault)
+  os_owner | - | T | {os_owner=U/os_owner}
+  os_owner | - | f | {os_owner=X/os_owner}
+  os_owner | os | r | {os_reader=r/os_owner}
+  postgres | public | r | {postgres=arwdDxtm/postgres,anon=Dxtm/postgres,authenticated=Dxtm/postgres,service_role=Dxtm/postgres,os_reader=r/postgres}
+== Q4.3b the platform's own default ACLs (count by role), which the chain's objects in os do NOT get (they apply to objects made BY that role)
+  os_owner | 3
+  postgres | 7
+  supabase_admin | 18
+  supabase_auth_admin | 3
+== Q6a pg_shdepend: every row naming one of the five roles — database (0 = shared), catalogue, object, deptype (o owner, a acl, r policy, i init acl)
+  postgres | pg_proc | function os.count_parts(integer) | a | os_engine
+  postgres | pg_policy | policy parts_write on os.parts | r | os_engine
+  postgres | pg_namespace | schema os | a | os_engine
+  postgres | pg_class | sequence os.ticket_seq | a | os_engine
+  postgres | pg_class | table os.parts | a | os_engine
+  postgres | pg_policy | policy parts_write on os.parts | r | os_executor
+  postgres | pg_namespace | schema os | a | os_executor
+  postgres | pg_namespace | schema os | a | os_intake
+  postgres | pg_class | table column os.parts.code | a | os_intake
+  postgres | pg_class | table column os.parts.qty | a | os_intake
+  postgres | pg_default_acl | default acl for role os_owner in schema os on tables | o | os_owner
+  postgres | pg_default_acl | default acl for role os_owner on functions | o | os_owner
+  postgres | pg_default_acl | default acl for role os_owner on types | o | os_owner
+  postgres | pg_proc | function os.count_parts(integer) | o | os_owner
+  postgres | pg_proc | function os.next_ticket(pg_catalog.text,integer,double precision) | o | os_owner
+  postgres | pg_proc | function os.parts_touch() | o | os_owner
+  postgres | pg_namespace | schema h6_elsewhere | a | os_owner
+  postgres | pg_namespace | schema os | o | os_owner
+  postgres | pg_class | sequence os.parts_id_seq | o | os_owner
+  postgres | pg_class | sequence os.ticket_seq | o | os_owner
+  postgres | pg_class | table h6_elsewhere.owned | o | os_owner
+  postgres | pg_class | table os.kinds | o | os_owner
+  postgres | pg_class | table os.parts | o | os_owner
+  postgres | pg_type | type os.mood | o | os_owner
+  postgres | pg_class | view os.parts_view | o | os_owner
+  postgres | pg_default_acl | default acl for role os_owner in schema os on tables | a | os_reader
+  postgres | pg_default_acl | default acl for role postgres in schema public on tables | a | os_reader
+  postgres | pg_proc | function os.count_parts(integer) | a | os_reader
+  postgres | pg_policy | policy h6_probe_reader on public.h6_probe | r | os_reader
+  postgres | pg_policy | policy parts_read on os.parts | r | os_reader
+  postgres | pg_namespace | schema os | a | os_reader
+  postgres | pg_class | table os.parts | a | os_reader
+  postgres | pg_class | table public.h6_probe | a | os_reader
+  postgres | pg_type | type os.mood | a | os_reader
+  postgres | pg_class | view os.parts_view | a | os_reader
+== Q6a.2 what pg_shdepend does NOT carry for the five roles: memberships (pg_auth_members) and role settings (pg_db_role_setting) — read where they live
+  membership | os_engine | postgres | supabase_admin
+  membership | os_executor | postgres | supabase_admin
+  membership | os_intake | postgres | supabase_admin
+  membership | os_owner | postgres | postgres
+  membership | os_owner | postgres | supabase_admin
+  membership | os_reader | anon | postgres
+  membership | os_reader | postgres | supabase_admin
+== Q6.runner what the runner leaves outside os: os_chain's owner and grants
+  os_chain | postgres | ∅ | ∅ | postgres | 3
+== Q6.runner-b who may read/write the ledger (has_table_privilege)
+  postgres | t | t
+  os_owner | f | f
+  os_reader | f | f
+  anon | f | f
+  authenticated | f | f
+  service_role | f | f
+  supabase_read_only_user | t | f

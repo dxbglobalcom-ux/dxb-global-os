@@ -1,0 +1,32 @@
+== Q3.1 os.count_parts: prosrc alone (what it lacks: the header) vs pg_get_functiondef (search_path '')
+  (SET )
+  ' select count(*) from os.parts where qty >= min_qty ' | CREATE OR REPLACE FUNCTION os.count_parts(min_qty integer)
+ RETURNS bigint
+ LANGUAGE sql
+ STABLE STRICT SECURITY DEFINER
+ SET work_mem TO '8MB'
+ SET search_path TO ''
+AS $function$ select count(*) from os.parts where qty >= min_qty $function$
+
+== Q3.2 where each property is read: prosecdef, proconfig (raw order: the file said work_mem first), provolatile, proisstrict, proparallel, proleakproof, procost, prorows, prokind, proretset, owner, proacl, pronargdefaults, pg_get_function_arguments / identity / result, prosupport, prolang
+  os.count_parts(integer) | t | {work_mem=8MB,"search_path=\"\""} | s | t | u | f | 100 | 0 | f | f | os_owner | {os_owner=X/os_owner,os_reader=X/os_owner,os_engine=X/os_owner,=X/os_owner} | 0 | min_qty integer | min_qty integer | bigint | - | sql
+  os.next_ticket(text,integer,double precision) | f | ∅ | v | f | u | f | 100 | 0 | f | f | os_owner | {os_owner=X/os_owner} | 3 | prefix text DEFAULT 'T-'::text, width integer DEFAULT 6, scale double precision DEFAULT 0.1 | prefix text, width integer, scale double precision | text | - | sql
+  os.parts_touch() | f | ∅ | v | f | u | f | 100 | 0 | f | f | os_owner | {os_owner=X/os_owner} | 0 |  |  | trigger | - | plpgsql
+== Q3.3 proacl null: what the server takes it to mean — acldefault('f', owner) exploded (a function made by a role whose default ACL does not revoke PUBLIC): made in a rolled-back transaction as the installer in schema public
+  (BEGIN )
+  (CREATE )
+  f | PUBLIC:EXECUTE:false:by postgres, postgres:EXECUTE:false:by postgres | f
+  (ROLLBACK )
+== Q3.3b the same function, but made by the installer in public: did the platform's default privileges fill proacl at creation?
+  (BEGIN )
+  (CREATE )
+  {postgres=X/postgres}
+  (ROLLBACK )
+== Q3.4 os functions: proacl is stored (not null) because os_owner's global default revokes PUBLIC EXECUTE — acldefault for os_owner vs the stored ACL
+  os.count_parts(integer) | {os_owner=X/os_owner,os_reader=X/os_owner,os_engine=X/os_owner,=X/os_owner} | {=X/os_owner,os_owner=X/os_owner}
+  os.next_ticket(text,integer,double precision) | {os_owner=X/os_owner} | {=X/os_owner,os_owner=X/os_owner}
+  os.parts_touch() | {os_owner=X/os_owner} | {=X/os_owner,os_owner=X/os_owner}
+== Q3.5 leakproof: may the owner (os_owner, via set role) make one? (rolled back)
+  ERROR 42501 only superuser can define a leakproof function
+== Q3.6 leakproof as the installer itself (rolled back)
+  ERROR 42501 only superuser can define a leakproof function

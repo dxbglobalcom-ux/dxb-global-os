@@ -1,0 +1,5 @@
+[
+  {"name": "bolt", "label": "Bolt", "weight": 0.1},
+  {"name": "nut", "label": "Nut", "weight": 1e-7},
+  {"name": "washer", "label": "Washer", "weight": 0.30000000000000004}
+]
