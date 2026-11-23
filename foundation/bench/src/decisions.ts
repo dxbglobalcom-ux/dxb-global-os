@@ -4,6 +4,7 @@
 // it stands above them all, and the command's file runs the command when loaded.
 import { TargetRefused } from "./guard.ts";
 import { LockRefused } from "./lock.ts";
+import { LoginsRefused } from "./logins.ts";
 import { InstanceStands } from "./make.ts";
 import { RemovalRefused } from "./removal.ts";
 import { oneLine } from "./run.ts";
@@ -17,5 +18,7 @@ export function answerOf(failure: unknown): { line: string; exit: number } {
   if (failure instanceof InstanceStands) return { line: "INSTANCE_STANDS", exit: 3 };
   if (failure instanceof TargetRefused) return { line: `TARGET_REFUSED reason=${failure.reason}`, exit: 4 };
   if (failure instanceof RemovalRefused) return { line: `REMOVAL_REFUSED ${oneLine(failure.message)}`, exit: 4 };
+  // Every refusal of the install step (piece 5's SPEC §6): its reason says a role and a fault at most — never a secret.
+  if (failure instanceof LoginsRefused) return { line: `LOGINS_REFUSED ${failure.reason}`, exit: 6 };
   return { line: oneLine(String(failure)), exit: 1 };
 }

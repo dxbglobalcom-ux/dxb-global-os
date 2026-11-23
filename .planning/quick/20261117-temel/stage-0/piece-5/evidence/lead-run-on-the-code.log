@@ -1,0 +1,20 @@
+== typecheck
+typecheck exit=0
+== foundation/tests/roles
+ Test Files  2 passed (2)
+      Tests  38 passed (38)
+   Duration  58.67s (transform 136ms, setup 0ms, collect 212ms, tests 58.25s, environment 0ms, prepare 60ms)
+exit=0
+== foundation/tests/passes
+ Test Files  3 passed (3)
+      Tests  219 passed (219)
+   Duration  86.72s (transform 167ms, setup 0ms, collect 279ms, tests 86.13s, environment 0ms, prepare 91ms)
+exit=0
+== foundation/tests/chain
+ Test Files  4 passed (4)
+      Tests  133 passed (133)
+   Duration  88.08s (transform 133ms, setup 0ms, collect 261ms, tests 87.41s, environment 0ms, prepare 122ms)
+exit=0
+== static: no password or verifier literal, no company address in the new code
+(end of search)
+INSTANCE_ABSENT

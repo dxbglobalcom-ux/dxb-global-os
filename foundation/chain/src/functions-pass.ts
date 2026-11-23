@@ -1,7 +1,7 @@
 // The functions pass (piece 4's SPEC §6 step 8): every file of `functions/` applied again, each held to its own function, then the manifest.
 import type { Client } from "pg";
 import type { AssertHeld } from "./lock.ts";
-import { asTheFiles, endThePass, inOnePass } from "./one-pass.ts";
+import { asTheFiles, becomingTheOwnerOfOs, endThePass, inOnePass } from "./one-pass.ts";
 import type { NotGreen } from "./one-pass.ts";
 import { inOrder } from "./outcome.ts";
 import type { Offence } from "./outcome.ts";
@@ -54,13 +54,20 @@ function notItsOwn(name: string, before: readonly Routine[], after: readonly Rou
 }
 
 /**
- * A file's text executed, and its session put back as every file meets it (SPEC §12.3): the role first, then every
- * setting — measured: `reset all` alone leaves the role. So what a file set reaches neither the runner's reading
- * after it nor the next file, whose bytes would otherwise be read in another encoding. The server's refusal of the
- * text is the file's; the two resets are the runner's own statements.
+ * A file's text executed as the owner of `os`, when one stands (piece 5's SPEC §5): a function file begins with its
+ * own function and cannot say `set role` itself, and the installer, which may only SET the owner's role, is refused
+ * every making in `os` without it — so the runner says it before the text. A `set role` the server refuses is the
+ * file's failure, as a refusal of its text is. Then the session is put back as every file meets it (SPEC §12.3): the
+ * role first, then every setting — measured: `reset all` alone leaves the role. So what a file set reaches neither
+ * the runner's reading after it nor the next file, whose bytes would otherwise be read in another encoding. The two
+ * resets are the runner's own statements.
  */
 async function applyThenPutBack(conn: Client, file: PassFile): Promise<void> {
-  await asTheFiles("functions", file.name, () => executeText(conn, file.text));
+  const asTheOwner = await becomingTheOwnerOfOs(conn, "set role");
+  await asTheFiles("functions", file.name, async () => {
+    if (asTheOwner !== undefined) await conn.query(asTheOwner);
+    await executeText(conn, file.text);
+  });
   await conn.query("reset role");
   await conn.query("reset all");
 }
