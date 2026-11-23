@@ -1,0 +1,106 @@
+== the lead's run of the corrections' tests on the code that stands (28f9e471), 2026-11-23T18:03:09+01:00
+typecheck exit=0
+   ✓ A.1 scramVerifier — PostgreSQL's own stored form > pencil-of-the-bench with the salt UNx3tZGuHcbFu2SKdUYfPA== answers the server's verifier — with the iterations left out and with 4096 said 2ms
+   ✓ A.1 scramVerifier — PostgreSQL's own stored form > Zq8-throwaway_vector.2 with the salt FhOPpGYFfvxdPt87LkbMPQ== answers the server's verifier — with the iterations left out and with 4096 said 1ms
+   ✓ A.2 the real root reads as a chain > with no offence; its first two files are 0001-roles.sql and 0002-os.sql 1ms
+   ✓ A.2 the real root reads as a chain > db/functions stands as a directory and holds a regular file .gitkeep 0ms
+   ✓ A.2 the real root reads as a chain > db/reference stands as a directory and holds a regular file .gitkeep 0ms
+   ✓ A.3 no file of the chain sets a password > no file under db/schema, db/functions or db/reference holds the word password followed by a quote, a dollar-quote or null 1ms
+   ✓ A.4 loginConnectionString reads the secret file > a file of mode 600 holding four passwords of the minted form gives each login the bench's address — 127.0.0.1, port 54522, database postgres — with its role and its password 1ms
+   ✓ A.4 loginConnectionString reads the secret file > a file missing → LoginsRefused, reason no-secret 0ms
+   ✓ A.4 loginConnectionString reads the secret file > a file not JSON → LoginsRefused, reason no-secret 0ms
+   ✓ A.4 loginConnectionString reads the secret file > a file a JSON array → LoginsRefused, reason no-secret 0ms
+   ✓ A.4 loginConnectionString reads the secret file > a file without logins → LoginsRefused, reason no-secret 0ms
+   ✓ A.4 loginConnectionString reads the secret file > a file logins not an object → LoginsRefused, reason no-secret 0ms
+   ✓ A.4 loginConnectionString reads the secret file > a file the password not a text → LoginsRefused, reason no-secret 0ms
+   ✓ A.4 loginConnectionString reads the secret file > a file the password empty → LoginsRefused, reason no-secret 0ms
+   ✓ A.4 loginConnectionString reads the secret file > a file without the role → LoginsRefused, reason no-secret 0ms
+   × A.4 loginConnectionString reads the secret file > a well-formed file of mode 644 → LoginsRefused, reason no-secret, for each of the four 4ms
+     → expected [ …(4) ] to deeply equal [ 'os_engine no-secret', …(3) ]
+   × A.4 loginConnectionString reads the secret file > a well-formed file that is a symbolic link to a well-formed file of mode 600 → LoginsRefused, reason no-secret, for each of the four 1ms
+     → expected [ …(4) ] to deeply equal [ 'os_engine no-secret', …(3) ]
+   × A.4 loginConnectionString reads the secret file > a well-formed file holding a password of another form — 43 characters, %41 among them → LoginsRefused, reason no-secret, for each of the four 1ms
+     → expected [ …(4) ] to deeply equal [ 'os_engine no-secret', …(3) ]
+   × A.4 loginConnectionString reads the secret file > a well-formed file in which two logins hold one password → LoginsRefused, reason no-secret, for each of the four 0ms
+     → expected [ …(4) ] to deeply equal [ 'os_engine no-secret', …(3) ]
+   ✓ A.5 the secrets guard of a command's output sees a verifier by its shape (SPEC §11 item 8) > each salt and each key of a verifier is found alone, inside a line; an answer of the step and its progress are not 1ms
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 4 ⎯⎯⎯⎯⎯⎯⎯
+ FAIL  roles/without-the-bench.test.ts > A.4 loginConnectionString reads the secret file > a well-formed file of mode 644 → LoginsRefused, reason no-secret, for each of the four
+ FAIL  roles/without-the-bench.test.ts > A.4 loginConnectionString reads the secret file > a well-formed file that is a symbolic link to a well-formed file of mode 600 → LoginsRefused, reason no-secret, for each of the four
+ FAIL  roles/without-the-bench.test.ts > A.4 loginConnectionString reads the secret file > a well-formed file holding a password of another form — 43 characters, %41 among them → LoginsRefused, reason no-secret, for each of the four
+ FAIL  roles/without-the-bench.test.ts > A.4 loginConnectionString reads the secret file > a well-formed file in which two logins hold one password → LoginsRefused, reason no-secret, for each of the four
+AssertionError: expected [ …(4) ] to deeply equal [ 'os_engine no-secret', …(3) ]
+ Test Files  1 failed (1)
+      Tests  4 failed | 16 passed (20)
+   ✓ piece 5 — the roles and the schema os on a fresh instance, in order > fresh makes an instance: INSTANCE_UP with its cluster identifier, listed, and answering it  53246ms
+   ✓ piece 5 — the roles and the schema os on a fresh instance, in order > B.1 before the chain: none of the five roles and no schema os stands; logins → LOGINS_REFUSED os_engine missing, exit 6, the secret file untouched 148ms
+   ✓ piece 5 — the roles and the schema os on a fresh instance, in order > B.2 the chain: foundation:chain up, no --root, by an installer whose own createrole_self_grant is 'set, inherit' (put back after it) → exit 0, CHAIN_GREEN applied=n standing=n, n ≥ 2 16
+   × piece 5 — the roles and the schema os on a fresh instance, in order > B.3 the roles: each of the five has exactly SPEC §4's attributes, no setting, is a member of nothing, and its membership rows are exactly the platform's one and, for os_owner, the insta
+     → expected [ …(10) ] to deeply equal [ …(6) ]
+   × piece 5 — the roles and the schema os on a fresh instance, in order > B.4 the schema: os is os_owner's, no one outside the foundation's five holds a privilege on it, PUBLIC none and no login CREATE; os_owner may create nowhere else; the ledger is the inst
+   × piece 5 — the roles and the schema os on a fresh instance, in order > B.5 the default privileges: exactly the two global rows of os_owner; one object of every kind made in os as os_owner is its own, and no one else holds a privilege of its kind 0ms
+   × piece 5 — the roles and the schema os on a fresh instance, in order > B.6 before the install step, each of the four over TCP — no password, an empty one, a guessed one — is refused as an authentication failure; so is os_owner 0ms
+   × piece 5 — the roles and the schema os on a fresh instance, in order > B.7 the install step: logins → LOGINS_SET logins=4 sysid=<the instance's>, exit 0, nothing secret said; the file, the stored verifiers and the server's log as SPEC §8 says 0ms
+   × piece 5 — the roles and the schema os on a fresh instance, in order > B.8 after it: each login comes in with loginConnectionString(<role>) on the bench's address and is itself; a wrong password is still refused; os_owner still is — with a right password t
+   × piece 5 — the roles and the schema os on a fresh instance, in order > B.9 none can create: each login, as itself, is refused with 42501 a schema, a table and a function in os, a table in every schema, a role, a database, a publication, set role to os_owne
+   × piece 5 — the roles and the schema os on a fresh instance, in order > B.10 what the platform leaves open to every login: a temporary table, a large object made and unlinked, hstore put into os and dropped again by the login — while it stands, the chain is
+   × piece 5 — the roles and the schema os on a fresh instance, in order > B.11 again: a second chain up → applied=0, the same standing; the five are the same rows and the logins still come in 0ms
+   × piece 5 — the roles and the schema os on a fresh instance, in order > B.11 again: a second logins keeps the file's passwords — and puts back the one a login changed — and the logins come in 0ms
+   × piece 5 — the roles and the schema os on a fresh instance, in order > B.11 again: with the file's sysid changed to another, logins mints four new passwords — the old are refused, the new come in 0ms
+   × piece 5 — the roles and the schema os on a fresh instance, in order > B.12 the step's refusals — createdb on os_intake, pg_monitor to os_reader, the host lock held by another — each leaving every stored password and the file as they were, each put back 0m
+   × piece 5 — the roles and the schema os on a fresh instance, in order > B.12 the order of SPEC §6 step 2, pinned: a login with two faults says its first reason — os_intake given createdb and made a member of pg_monitor → os_intake createdb; two faulty login
+   × piece 5 — the roles and the schema os on a fresh instance, in order > §11 item 1: connection limit 0 on os_executor → logins → LOGINS_REFUSED os_executor cannot-log-in, exit 6; the file kept, the verifiers the step's new ones of it; put back, logins green
+   × piece 5 — the roles and the schema os on a fresh instance, in order > §11 item 2: the file made mode 644 → logins green, the file 600 again with four new passwords; the old refused, the new come in 1ms
+   × piece 5 — the roles and the schema os on a fresh instance, in order > §11 item 2: a symbolic link in the file's place, to a well-formed file of mode 600 → logins green, a regular file of mode 600 in its place with four new passwords, the link's target unt
+   × piece 5 — the roles and the schema os on a fresh instance, in order > §11 item 2: two logins holding one password (os_intake holds os_engine's) → logins green, four new passwords, the old refused, the new come in 0ms
+   × piece 5 — the roles and the schema os on a fresh instance, in order > §11 item 2: a password of another form (os_reader's: 43 characters, %41 among them) → logins green, four new passwords, the old refused, the new come in 0ms
+   × piece 5 — the roles and the schema os on a fresh instance, in order > §11 items 4, 5: another session holds os_engine's row and four are minted → logins ends within 20 s, exit 1, 'the server refused the verifier of os_engine', nothing secret said, no SCRA
+   × piece 5 — the roles and the schema os on a fresh instance, in order > §11 item 5: with statement logging on for the installer's sessions (log_min_duration_statement = 0, role-level, put back) a green logins leaves no SCRAM-SHA-256$ in the log's window 0ms
+   × piece 5 — the roles and the schema os on a fresh instance, in order > B.13 a taken name: the real root applied to a throwaway database of the same instance → file-failed at 0001-roles.sql, role "os_owner" already exists, nothing applied, the ledger's boot
+   × piece 5 — the roles and the schema os on a fresh instance, in order > B.14 a function file → os.<name> stands, os_owner's; run again with another body → the same oid, the new body, still os_owner's 0ms
+   × piece 5 — the roles and the schema os on a fresh instance, in order > B.14 a vocabulary made under set role os_owner, and its file → reconciled, the table and its rows the owner's; the installer, not saying set role, is refused a row of it (42501) 1ms
+   × piece 5 — the roles and the schema os on a fresh instance, in order > B.14 the same vocabulary with force row level security and a policy that hides its one row → pass-failed at that file, naming row-level security; the row stands as it was 0ms
+   × piece 5 — the roles and the schema os on a fresh instance, in order > B.14 a schema os whose owner the runner may not SET ROLE to → pass-failed at the first function file, permission denied to set role; nothing is made 0ms
+   × piece 5 — the roles and the schema os on a fresh instance, in order > B.14 pin: the same met by the reference pass → pass-failed at its first file by name, permission denied to set role; no row written 0ms
+   × piece 5 — the roles and the schema os on a fresh instance, in order > B.14 pin: a second function file after one whose text ends with reset role is still os_owner's 0ms
+   × piece 5 — the roles and the schema os on a fresh instance, in order > §11 item 7: os the runner's own → neither pass says a role: a function file meets role none, a vocabulary's column of current_setting('role') reads none 0ms
+   × piece 5 — the roles and the schema os on a fresh instance, in order > what the module made, it removed: no throwaway database it made still stands 0ms
+   × piece 5 — the roles and the schema os on a fresh instance, in order > down → INSTANCE_DOWN, and the secret file stands as it stood: down does not remove it 0ms
+   × piece 5 — the roles and the schema os on a fresh instance, in order > B.15 at the end, after down: logins → LOGINS_REFUSED no-instance, exit 6, and the secret file untouched 0ms
+⎯⎯⎯⎯⎯⎯ Failed Tests 31 ⎯⎯⎯⎯⎯⎯⎯
+ FAIL  roles/on-a-fresh-instance.test.ts > piece 5 — the roles and the schema os on a fresh instance, in order > B.3 the roles: each of the five has exactly SPEC §4's attributes, no setting, is a member of nothing, and its membership rows are exactly the platf
+AssertionError: expected [ …(10) ] to deeply equal [ …(6) ]
+ FAIL  roles/on-a-fresh-instance.test.ts > piece 5 — the roles and the schema os on a fresh instance, in order > B.4 the schema: os is os_owner's, no one outside the foundation's five holds a privilege on it, PUBLIC none and no login CREATE; os_owner may creat
+ FAIL  roles/on-a-fresh-instance.test.ts > piece 5 — the roles and the schema os on a fresh instance, in order > B.5 the default privileges: exactly the two global rows of os_owner; one object of every kind made in os as os_owner is its own, and no one else ho
+ FAIL  roles/on-a-fresh-instance.test.ts > piece 5 — the roles and the schema os on a fresh instance, in order > B.6 before the install step, each of the four over TCP — no password, an empty one, a guessed one — is refused as an authentication failure; so is 
+ FAIL  roles/on-a-fresh-instance.test.ts > piece 5 — the roles and the schema os on a fresh instance, in order > B.7 the install step: logins → LOGINS_SET logins=4 sysid=<the instance's>, exit 0, nothing secret said; the file, the stored verifiers and the serv
+ FAIL  roles/on-a-fresh-instance.test.ts > piece 5 — the roles and the schema os on a fresh instance, in order > B.8 after it: each login comes in with loginConnectionString(<role>) on the bench's address and is itself; a wrong password is still refused; os_ow
+ FAIL  roles/on-a-fresh-instance.test.ts > piece 5 — the roles and the schema os on a fresh instance, in order > B.9 none can create: each login, as itself, is refused with 42501 a schema, a table and a function in os, a table in every schema, a role, a databa
+ FAIL  roles/on-a-fresh-instance.test.ts > piece 5 — the roles and the schema os on a fresh instance, in order > B.10 what the platform leaves open to every login: a temporary table, a large object made and unlinked, hstore put into os and dropped again by the
+ FAIL  roles/on-a-fresh-instance.test.ts > piece 5 — the roles and the schema os on a fresh instance, in order > B.11 again: a second chain up → applied=0, the same standing; the five are the same rows and the logins still come in
+ FAIL  roles/on-a-fresh-instance.test.ts > piece 5 — the roles and the schema os on a fresh instance, in order > B.11 again: a second logins keeps the file's passwords — and puts back the one a login changed — and the logins come in
+ FAIL  roles/on-a-fresh-instance.test.ts > piece 5 — the roles and the schema os on a fresh instance, in order > B.11 again: with the file's sysid changed to another, logins mints four new passwords — the old are refused, the new come in
+ FAIL  roles/on-a-fresh-instance.test.ts > piece 5 — the roles and the schema os on a fresh instance, in order > B.12 the step's refusals — createdb on os_intake, pg_monitor to os_reader, the host lock held by another — each leaving every stored password and t
+ FAIL  roles/on-a-fresh-instance.test.ts > piece 5 — the roles and the schema os on a fresh instance, in order > B.12 the order of SPEC §6 step 2, pinned: a login with two faults says its first reason — os_intake given createdb and made a member of pg_monitor 
+ FAIL  roles/on-a-fresh-instance.test.ts > piece 5 — the roles and the schema os on a fresh instance, in order > §11 item 1: connection limit 0 on os_executor → logins → LOGINS_REFUSED os_executor cannot-log-in, exit 6; the file kept, the verifiers the step's 
+ FAIL  roles/on-a-fresh-instance.test.ts > piece 5 — the roles and the schema os on a fresh instance, in order > §11 item 2: the file made mode 644 → logins green, the file 600 again with four new passwords; the old refused, the new come in
+ FAIL  roles/on-a-fresh-instance.test.ts > piece 5 — the roles and the schema os on a fresh instance, in order > §11 item 2: a symbolic link in the file's place, to a well-formed file of mode 600 → logins green, a regular file of mode 600 in its place with fou
+ FAIL  roles/on-a-fresh-instance.test.ts > piece 5 — the roles and the schema os on a fresh instance, in order > §11 item 2: two logins holding one password (os_intake holds os_engine's) → logins green, four new passwords, the old refused, the new come in
+ FAIL  roles/on-a-fresh-instance.test.ts > piece 5 — the roles and the schema os on a fresh instance, in order > §11 item 2: a password of another form (os_reader's: 43 characters, %41 among them) → logins green, four new passwords, the old refused, the new co
+ FAIL  roles/on-a-fresh-instance.test.ts > piece 5 — the roles and the schema os on a fresh instance, in order > §11 items 4, 5: another session holds os_engine's row and four are minted → logins ends within 20 s, exit 1, 'the server refused the verifier of os
+ FAIL  roles/on-a-fresh-instance.test.ts > piece 5 — the roles and the schema os on a fresh instance, in order > §11 item 5: with statement logging on for the installer's sessions (log_min_duration_statement = 0, role-level, put back) a green logins leaves no 
+ FAIL  roles/on-a-fresh-instance.test.ts > piece 5 — the roles and the schema os on a fresh instance, in order > B.13 a taken name: the real root applied to a throwaway database of the same instance → file-failed at 0001-roles.sql, role "os_owner" already exis
+ FAIL  roles/on-a-fresh-instance.test.ts > piece 5 — the roles and the schema os on a fresh instance, in order > B.14 a function file → os.<name> stands, os_owner's; run again with another body → the same oid, the new body, still os_owner's
+ FAIL  roles/on-a-fresh-instance.test.ts > piece 5 — the roles and the schema os on a fresh instance, in order > B.14 a vocabulary made under set role os_owner, and its file → reconciled, the table and its rows the owner's; the installer, not saying set role, 
+ FAIL  roles/on-a-fresh-instance.test.ts > piece 5 — the roles and the schema os on a fresh instance, in order > B.14 the same vocabulary with force row level security and a policy that hides its one row → pass-failed at that file, naming row-level security; t
+ FAIL  roles/on-a-fresh-instance.test.ts > piece 5 — the roles and the schema os on a fresh instance, in order > B.14 a schema os whose owner the runner may not SET ROLE to → pass-failed at the first function file, permission denied to set role; nothing is mad
+ FAIL  roles/on-a-fresh-instance.test.ts > piece 5 — the roles and the schema os on a fresh instance, in order > B.14 pin: the same met by the reference pass → pass-failed at its first file by name, permission denied to set role; no row written
+ FAIL  roles/on-a-fresh-instance.test.ts > piece 5 — the roles and the schema os on a fresh instance, in order > B.14 pin: a second function file after one whose text ends with reset role is still os_owner's
+ FAIL  roles/on-a-fresh-instance.test.ts > piece 5 — the roles and the schema os on a fresh instance, in order > §11 item 7: os the runner's own → neither pass says a role: a function file meets role none, a vocabulary's column of current_setting('role') reads
+ FAIL  roles/on-a-fresh-instance.test.ts > piece 5 — the roles and the schema os on a fresh instance, in order > what the module made, it removed: no throwaway database it made still stands
+ FAIL  roles/on-a-fresh-instance.test.ts > piece 5 — the roles and the schema os on a fresh instance, in order > down → INSTANCE_DOWN, and the secret file stands as it stood: down does not remove it
+ FAIL  roles/on-a-fresh-instance.test.ts > piece 5 — the roles and the schema os on a fresh instance, in order > B.15 at the end, after down: logins → LOGINS_REFUSED no-instance, exit 6, and the secret file untouched
+ Test Files  1 failed (1)
+      Tests  31 failed | 3 passed (34)
+   Duration  55.40s (transform 138ms, setup 0ms, collect 191ms, tests 55.10s, environment 0ms, prepare 30ms)
+INSTANCE_ABSENT

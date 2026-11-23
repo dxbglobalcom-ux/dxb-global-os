@@ -501,3 +501,34 @@ them, which stops an install loudly. **Any login can put a privileged extension 
 piece 7's to enumerate and stage 5's to close. **A server that logs every statement with its bound values** is
 answered by item 5 for this step; what else the platform's logging and audit extensions write is stage 5's, with
 the secret store.
+
+## 11a. What the corrections' tests pinned beyond §11 (read and accepted by the lead)
+
+55 cases: 20 without the bench, 35 ordered steps. Written by an Opus 5.5 hand; read case by case against §11 by an
+Opus helper, who found four places where wrong code could pass; a second hand closed them (1, 2, 5 and 10 below).
+The lead read the three new case files and the guard, and ran them on the code that stood
+(`evidence/lead-run-on-the-corrections-tests.log`: 4 red of 20; the ordered module red at B.3, ten membership rows
+against six).
+
+1. **A refused verifier is said with its SQLSTATE:** the step's last line holds `the server refused the verifier of
+   <role> (<SQLSTATE>)`, exit 1 — `55P03` for the lock's timeout, `57014` for a cancel.
+2. **The row held is the last login's** (`os_reader`): a step that committed role by role would have changed three
+   verifiers before it failed — "all four in one transaction" is pinned by it. **The cancel path is a case of its
+   own:** the installer's own `statement_timeout = '2s'` (role-level, accepted, put back) ends the wait before the
+   lock's timeout does; a block that caught `others` alone would write the verifier to the log there.
+3. Item 1: the kept file is untouched (digest, inode, time, mode); each stored verifier is new and is the verifier
+   of the file's password under its own salt; `os_executor`'s own password meets `53300`, the other three come in.
+4. Item 2: "new" is none of the passwords that lay in the file before the change or in it; a minted password is
+   exactly 43 characters (B.7 said "at least"). Without the bench each of the four roles is asked of a faulty
+   file: the file is judged whole, not the asked role's password alone.
+5. **A window of the log is closed by a second line of the case's own**, and both lines are seen before any line
+   is counted: a line the container wrote late cannot make "none" true by being absent.
+6. Item 5: `alter role postgres set log_min_duration_statement = 0` is accepted at role level; with it the code
+   that stood wrote 8 lines holding a verifier on the green path. `log_parameter_max_length_on_error` has no case:
+   the statement that fails carries no bound value — read in the diff, not proven.
+7. Item 7 is asked of both passes: a function file's own `do` refuses any role but `none`.
+8. Item 9: "all `supabase_admin`'s" is said of the routines the extension brought into `os`, so a later piece's
+   own functions do not break it; B.10 no longer pins the extension made in its default schema.
+9. Item 8: `os_owner`'s throwaway verifier travels as a parameter, inside B.8, after B.7 has read its log.
+10. The order pin tells role order from reason order: `os_executor` a member and `os_reader` given `createdb` →
+    `LOGINS_REFUSED os_executor member`.
