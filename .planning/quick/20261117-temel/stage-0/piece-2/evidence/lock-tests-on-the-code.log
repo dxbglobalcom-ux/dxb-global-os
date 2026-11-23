@@ -1,0 +1,52 @@
+$ vitest run --config foundation/tests/vitest.config.ts lock/judge-run.test.ts lock/judge-structure.test.ts lock/pure-texts.test.ts lock/lock-command.test.ts lock/verify-structure.test.ts lock/verify-run.test.ts lock/verify-judge.test.ts lock/verify-all.test.ts bench/no-old-address.test.ts bench/pure-decisions.test.ts
+
+ RUN  v3.2.6 /home/dxb/DxB Global OS/foundation/tests
+
+ ✓ lock/verify-run.test.ts (12 tests) 15140ms
+   ✓ verify — the candidate as it was locked > the untouched candidate → LOCK_GREEN, exit 0, naming the lock commit and the tree id of the index  3000ms
+   ✓ verify — the candidate as it was locked > a staged .gitattributes that marks a locked test export-ignore and the product export-subst → still LOCK_GREEN  1174ms
+   ✓ verify — the candidate as it was locked > the same two attributes committed, verified with --rev — where an archive of the commit would expand the placeholder → still LOCK_GREEN  1191ms
+   ✓ verify — the search for the runner's names: a note, never an offence > a product line that spells the runner's name → NOTE runner-name <path>:<line>, and the verdict stays LOCK_GREEN  1154ms
+   ✓ verify — product staged so that a locked case does not pass > the value case fails → case-not-passed for it; the file and the exit code say so too  1146ms
+   ✓ verify — product staged so that a locked case does not pass > the product says unavailable and the case skips itself → case-skipped, though the run ended with 0  1149ms
+   ✓ verify — product staged so that a locked case does not pass > the product says not ready and the case returns before its assertion → case-not-passed  1147ms
+   ✓ verify — product staged so that the cases are not the locked ones > a shorter list → case-missing for the row that is gone, though every case that ran passed  1124ms
+   ✓ verify — product staged so that the cases are not the locked ones > a longer list → case-unknown for the row the lock does not hold  1157ms
+   ✓ verify — product that ends the run its own way > product that calls process.exit(0) when imported → result-missing, red though the runner ended with 0  860ms
+   ✓ verify — product that ends the run its own way > product that leaves an unhandled rejection → red with every case passed  1131ms
+   ✓ verify — product that ends the run its own way > product that writes an earlier run's green result to the result path and exits 0 → result-stale  874ms
+ ✓ lock/verify-all.test.ts (5 tests) 9711ms
+   ✓ verify --all — every piece the inventory says is locked > one piece, present and green → LOCKS_GREEN pieces=1, exit 0  2909ms
+   ✓ verify --all — every piece the inventory says is locked > two pieces present and green, and one the inventory says is not locked → LOCKS_GREEN, each verified in the inventory's order  3263ms
+   ✓ verify --all — every piece the inventory says is locked > a piece the inventory says is locked and that has no lock file → lock-owed <piece>, LOCKS_RED, exit 1  1153ms
+   ✓ verify --all — every piece the inventory says is locked > a lock file whose piece the inventory does not name → lock-unlisted <piece>, red, exit 1  2290ms
+ ✓ lock/verify-structure.test.ts (14 tests) 9840ms
+   ✓ verify — a staged change to what the lock protects > a locked test → protected-changed <path>, and the tests are not run  1858ms
+   ✓ verify — a staged change under foundation/locks/ > a lock file that is staged and not committed has no lock commit → LOCK_REFUSED, exit 2  1112ms
+   ✓ verify --rev — a lock changed in one commit with product code > another piece's lock committed together with a product file → lock-commit-impure <commit> <path>  1222ms
+   ✓ verify --rev — a lock changed in one commit with product code > the piece's own lock made again and committed together with the product change it was made for → the lock commit itself is impure  1226ms
+   ✓ verify — what is no structural offence: the tests are run, and they are green > --rev of a later commit that adds another piece's lock alone → LOCK_GREEN by the first piece's own lock commit  2329ms
+   ✓ verify — what is no structural offence: the tests are run, and they are green > an unstaged edit of a locked test is not in the candidate → no offence from it, LOCK_GREEN  1207ms
+ ✓ lock/lock-command.test.ts (24 tests) 9086ms
+   ✓ lock — the cases it holds > holds every case of the locked tests with its file, its suite path and its name, and no other  1875ms
+   ✓ lock — the same input gives the same bytes > run again, with its directory and then without one, it writes the lock it wrote before and stages nothing  2329ms
+   ✓ lock — what it refuses > a locked test that declares a retry  1127ms
+   ✓ lock — what it refuses > a locked test that declares a repeat  1169ms
+   ✓ lock — what it refuses > a test file with no case  1197ms
+   ✓ lock — what it refuses > a relative import that leaves foundation/tests/ — the test reaches the product past its package  1251ms
+ ✓ lock/verify-judge.test.ts (5 tests) 5679ms
+   ✓ verify — a staged change that makes the candidate's own tool say LOCK_GREEN for everything > staged, the working tree's tool as it was locked, started through the fixture's own entry → still LOCK_RED, protected-changed  1914ms
+   ✓ verify — which tool judges > the untouched tool → first line JUDGE in-place lock=<the lock commit>  1155ms
+   ✓ verify — which tool judges > an unstaged edit of the fixture's tool, run through the fixture's own entry → first line JUDGE extracted lock=<the lock commit>  1222ms
+   ✓ verify — which tool judges > an unstaged edit that breaks the reporter → the run is judged by the lock commit's reporter, not by the edited one: LOCK_GREEN  1236ms
+ ✓ bench/no-old-address.test.ts (28 tests) 17ms
+ ✓ bench/pure-decisions.test.ts (21 tests) 11ms
+ ✓ lock/pure-texts.test.ts (17 tests) 4ms
+ ✓ lock/judge-structure.test.ts (20 tests) 5ms
+ ✓ lock/judge-run.test.ts (20 tests) 4ms
+
+ Test Files  10 passed (10)
+      Tests  166 passed (166)
+   Start at  02:55:57
+   Duration  50.77s (transform 119ms, setup 0ms, collect 222ms, tests 49.50s, environment 1ms, prepare 327ms)
+
