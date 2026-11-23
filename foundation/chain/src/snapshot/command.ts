@@ -25,19 +25,25 @@ function callOf(words: readonly string[]): { check?: string } | undefined {
 }
 
 /**
- * The committed text at `path`, or why the check refuses it (SPEC §5): `no-expected` when it is absent, no regular
- * file or cannot be read; `expected-malformed` when it is not a snapshot's spelling. Only reads: the command never
- * writes an expected text.
+ * The bytes of the regular file at `path`, or nothing when it is absent, no regular file or cannot be read — a
+ * committed text as the check and piece 6b's `rows --kept` take one. Only reads: neither command writes a file.
  */
-function expectedAt(path: string): { text: string } | "no-expected" | "expected-malformed" {
-  let bytes: Buffer;
+export function bytesOfAFileAt(path: string): Buffer | undefined {
   try {
     // A FIFO or a device would be read as it streams, or block: only a regular file is a committed text.
-    if (!statSync(path).isFile()) return "no-expected";
-    bytes = readFileSync(path);
+    return statSync(path).isFile() ? readFileSync(path) : undefined;
   } catch {
-    return "no-expected";
+    return undefined;
   }
+}
+
+/**
+ * The committed text at `path`, or why the check refuses it (SPEC §5): `no-expected` when it is absent, no regular
+ * file or cannot be read; `expected-malformed` when it is not a snapshot's spelling.
+ */
+function expectedAt(path: string): { text: string } | "no-expected" | "expected-malformed" {
+  const bytes = bytesOfAFileAt(path);
+  if (bytes === undefined) return "no-expected";
   return isSpelledAsASnapshot(bytes) ? { text: bytes.toString("utf8") } : "expected-malformed";
 }
 

@@ -52,22 +52,29 @@ const READERS: readonly ((conn: Client, covered: Covered) => Promise<string[]>)[
 ];
 
 /**
- * The snapshot of `target` (SPEC §4): one session, through the bench's guard as every session of the chain's; one
- * transaction, `repeatable read read only`, its own settings first; as whoever the target logs in — no `set role` —
- * and with no advisory lock. A read the server refuses is thrown, never a shorter text.
+ * `read` as the snapshot is read (SPEC §4.4), with what is covered (§4.1): one session, through the bench's guard as
+ * every session of the chain's; one transaction, `repeatable read read only`, its own settings first; as whoever the
+ * target logs in — no `set role` — and with no advisory lock. A read the server refuses is thrown, never a shorter
+ * text. The one place that sets the session of a reading — the snapshot's and piece 6b's rows' (its SPEC §4).
  */
-export function snapshotOf(target: Target): Promise<string> {
+export function readAsTheSnapshotIs<T>(target: Target, read: (conn: Client, covered: Covered) => Promise<T>): Promise<T> {
   return sessionsOn(target)(async (conn) => {
     await conn.query(BEGIN);
     try {
       for (const setting of ITS_OWN_SETTINGS) await conn.query(setting);
-      const covered = await coveredBy(conn);
-      const lines: string[] = [];
-      for (const read of READERS) lines.push(...(await read(conn, covered)));
-      return textOf(lines);
+      return await read(conn, await coveredBy(conn));
     } finally {
       // Nothing to keep: the transaction wrote nothing. A rollback that fails leaves a session about to be closed.
       await conn.query("rollback").catch(() => undefined);
     }
+  });
+}
+
+/** The snapshot of `target` (SPEC §4): every reader's lines, read as above, as one text. */
+export function snapshotOf(target: Target): Promise<string> {
+  return readAsTheSnapshotIs(target, async (conn, covered) => {
+    const lines: string[] = [];
+    for (const read of READERS) lines.push(...(await read(conn, covered)));
+    return textOf(lines);
   });
 }

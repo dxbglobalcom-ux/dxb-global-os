@@ -1,12 +1,15 @@
 // node foundation/chain/src/cli.ts up [--root <dir>] [--wait <seconds>]
 // node foundation/chain/src/cli.ts snapshot [--check <file>]
+// node foundation/chain/src/cli.ts rows [--kept <file>]
 //
 // Progress goes to stderr as the run goes; stdout carries the answer of SPEC §8's
-// table (piece 6a's SPEC §5 for `snapshot`), its last line the verdict, and the
-// exit code is the one beside it. `snapshot` alone prints the text and nothing else.
+// table (piece 6a's SPEC §5 for `snapshot`, piece 6b's §5 for `rows`), its last line
+// the verdict, and the exit code is the one beside it. `snapshot` and `rows` alone
+// print their text and nothing else.
 import { fileURLToPath } from "node:url";
 import { TargetRefused, connectionString } from "@dxb-foundation/bench";
 import { ChainRefused, answerOf } from "./index.ts";
+import { rowsAnswer } from "./rows/command.ts";
 import { runChain } from "./run.ts";
 import { printedLines, snapshotAnswer } from "./snapshot/command.ts";
 import type { Printed } from "./snapshot/command.ts";
@@ -57,10 +60,11 @@ async function answer(words: readonly string[]): Promise<Answer> {
   }
 }
 
-/** `snapshot …` answers its own table; every other call — `up …` or none of the command's — piece 3's. */
+/** `snapshot …` and `rows …` answer their own tables; every other call — `up …` or none of the command's — piece 3's. */
 async function printed(words: readonly string[]): Promise<Printed> {
   const [call, ...rest] = words;
   if (call === "snapshot") return snapshotAnswer(rest);
+  if (call === "rows") return rowsAnswer(rest);
   const { lines, exit } = await answer(words);
   return printedLines(lines, exit);
 }

@@ -22,3 +22,9 @@ export { answerOf } from "./answer.ts";
 
 export { snapshotOf } from "./snapshot/read.ts";
 export { differenceOf } from "./snapshot/text.ts";
+
+export { rowsOf } from "./rows/read.ts";
+export type { Kept } from "./rows/text.ts";
+export { keptOf } from "./rows/text.ts";
+
+export { RevisionRefused, chainAt } from "./revision.ts";
