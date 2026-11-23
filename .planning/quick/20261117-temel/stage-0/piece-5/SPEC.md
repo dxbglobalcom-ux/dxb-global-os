@@ -55,8 +55,10 @@ The old part: `scripts/b36/company-one-way-window.sql`, `scripts/governance/sol-
   nor make a schema for it. After `grant <owner> to <installer> with set true, inherit false`: `create schema …
   authorization <owner>` works with no CREATE on the database for the owner; under `set role <owner>` every object
   is the owner's; `alter default privileges` works only as the owner itself (or with INHERIT). **Without INHERIT
-  the installer, not saying `set role`, is refused in the owner's schema** (`permission denied for schema`) — so a
-  file or a pass that forgets the role fails loudly instead of making an object owned by the installer. With
+  the installer, not saying `set role`, is refused every making and every writing in the owner's schema**
+  (`permission denied for schema`) — so a file or a pass that forgets the role fails loudly instead of making an
+  object owned by the installer. **It still reads there**: the platform makes `postgres` an inheriting member of
+  `pg_read_all_data` (the test hand's measurement, 2026-11-23), as it reads every schema of the database. With
   INHERIT instead, an object the installer makes there is the installer's (M1.d(iii)).
 - **PUBLIC by default** (M2). On a fresh database `pg_default_acl` is empty. PostgreSQL's built-in defaults give
   PUBLIC EXECUTE on functions and procedures and USAGE on types and domains; tables, views and sequences give it
@@ -197,7 +199,8 @@ run again, `applied=0` and the same `standing`. The order on a new instance is: 
 
 Real logins over TCP, from the host, on the bench's address. **A refusal counts only after something permitted
 succeeded on the same address in the same case** (the installer's own connection, or the login's own `select`);
-an error is told apart by its SQLSTATE (`28P01`, `28000`, `42501`, `42710`), never by "it threw". Nothing is
+an error is told apart by its SQLSTATE (`28P01`, `42501`, `42710`) or, where the driver refuses before the server
+is asked for more, by the driver's own message (§8a.1), never by "it threw". Nothing is
 skipped, retried or conditional. What a case makes, it removes by the identity it made.
 
 **A. Without the bench**
@@ -226,7 +229,9 @@ a failed step stops the later ones)
    password; no expiry) and no row in `pg_db_role_setting`. None is a member of any role. No role but the installer
    is a member of any of them; the installer inherits from none; it may `SET ROLE` to `os_owner` and to none of the
    four (`pg_has_role`, and the act itself).
-4. **The schema:** `os` is `os_owner`'s and no one else holds a privilege on it. `os_owner` has CREATE on no other
+4. **The schema:** `os` is `os_owner`'s; no role outside the foundation's five holds a privilege on it, PUBLIC
+   holds none and no login holds CREATE (USAGE reaches a login with its first door — a later piece's grant, which
+   this case must not forbid). `os_owner` has CREATE on no other
    schema and not on the database. The ledger's schema and table are the installer's, and none of the five holds a
    privilege on either.
 5. **The default privileges:** `pg_default_acl` holds for `os_owner` exactly the two global rows of §3. And the
@@ -246,7 +251,9 @@ a failed step stops the later ones)
 9. **None can create**, each tried as the real login, each refused with `42501`: a schema; a table and a function
    in `os`; a table in **every** schema of the database, enumerated from `pg_namespace` (temporary and toast
    schemas apart); a role; a database; a publication; `set role os_owner`; `set role` to the installer; a reading
-   of the ledger. Afterwards the counts of schemas, roles, databases and relations are what they were.
+   of the ledger. Afterwards the counts of schemas, roles and databases are what they were, and the four logins
+   own nothing — no relation, function, type or schema (the bench's own services make relations meanwhile, so
+   every relation is not counted).
 10. **What the platform leaves open to every login** — measured, pinned so that a change is seen, carried to piece 7
     and stage 5 (§9): a temporary table; a large object, made and unlinked; an extension of the platform's
     privileged list that does not stand in the database (`hstore`), made and dropped again by the login.
@@ -266,7 +273,8 @@ a failed step stops the later ones)
     - a function file → `os.<name>` stands, owned by `os_owner`; run again with another body → the same oid, the
       new body, still `os_owner`'s;
     - a vocabulary made by a schema file under `set role os_owner`, and its file → reconciled, the table and its
-      rows the owner's; the installer, not saying `set role`, is refused a reading of it (`42501`);
+      rows the owner's; the installer, not saying `set role`, is refused a writing of it (`42501`) — a reading it
+      has, through `pg_read_all_data` (§3);
     - the same vocabulary with `force row level security` and a policy that hides its one standing row →
       `pass-failed` at that file, the message naming row-level security; the row stands as it was;
     - a schema `os` whose owner the runner may not `SET ROLE` to (a role the case makes and removes) →
@@ -275,6 +283,45 @@ a failed step stops the later ones)
 
 The module is long-running by its nature (two makes of an instance): its hooks and steps carry their own timeouts.
 The fixtures of `chain/` and `bench/` are reused by import; a new helper lives in `roles/fixtures/`.
+
+## 8a. What the tests pinned beyond §8 (the test hand's readings, read and accepted by the lead)
+
+38 cases: 15 without the bench, 23 ordered steps on a fresh instance. The lead changed two of them on the test
+hand's own findings (B.4 and B.9, as §8 now says them).
+
+1. **No password and an empty password never reach the server's judgement:** the driver (`pg` 8.22) refuses after
+   the server's first SCRAM message — which shows the server asked for a password. Pinned as the driver's two
+   messages; the password is handed over as a function, so no `PGPASSWORD` and no password file can fill it in.
+2. `os_owner` is tried with no password, an empty one, a guess and, after the step, each of the four file
+   passwords: `28P01` every time.
+3. B.5 checks every privilege each kind has (MAINTAIN on tables among them) for `public` and the four.
+4. B.7: the file holds exactly the keys `sysid` and `logins`; a password is base64url, at least 43 characters; the
+   state directory is mode 700; `defaultLoginsPath()` is `logins.json` beside `instances.json`; each stored salt
+   is 16 bytes and each key 32, and the four salts differ; the step's output holds no `SCRAM-SHA-256$` at all;
+   the log's window is proven readable by a line the case writes first.
+5. B.8: the address `loginConnectionString` gives is the bench's host, port and database, the role as user.
+6. B.9: every try runs in a transaction that is rolled back, `create database` apart; the schemas are listed from
+   the login's own session; "a reading of the ledger" is `select count(*) from os_chain.ledger`.
+7. B.10 runs for each of the four; the extension's owner, `supabase_admin`, is pinned.
+8. B.11 adds §9's sentence as a case: `os_engine` sets its own password to null, and the next `logins` puts the
+   file's password back. The "other" `sysid` is the instance's plus one.
+9. B.12: "the file unchanged" is its digest, inode, modification time and mode; stored passwords are compared by
+   digest, so a failure prints none.
+10. B.13 also asks the server itself (`42710` for `create role os_owner`), and that the throwaway database holds no
+    `os` and no default-privilege row.
+11. B.14: the body is proven by calling the function as the owner; "the rows the owner's" is a column whose default
+    is `current_user`; the row-security case is two runs — the table and its row, then a schema file that hides
+    it — with the exact message and what was applied asserted; the fourth case's role is granted SET, then loses it.
+12. After `down` the secret file still stands, unchanged (§6); B.15 reads it again.
+13. B.2 pins neither `functions=` nor `reference=` to a number: a later piece's files keep it green.
+14. A.3's pattern is tried against examples in the same case; A.4 holds a well-formed file as its positive case.
+15. A password in the file that is not a non-empty text makes the file malformed (`no-secret`); a minted password
+    is base64url without padding — 43 characters.
+16. **After the tests were read a second time** (an Opus helper, against §8, case by case — no case found that
+    wrong code would pass): the guard that no output holds a secret is the same for every run of `logins` as for
+    B.7 — the file's passwords and the stored verifiers, before the run and after it, each verifier also as its
+    salt and its two keys alone; the spawner's own failure says nothing of the child's output; `os_owner`'s null
+    password is asserted without printing what stands instead.
 
 ## 9. Known limits, said before the build
 
@@ -303,6 +350,8 @@ The fixtures of `chain/` and `bench/` are reused by import; a new helper lives i
   database the foundation lives in.
 - **The real chain's files are not protected by this piece's lock** (piece 2's audit, F4 — decided in piece 6): the
   tests read what stands on the server, not the files' text, so a changed file must still make the same state.
+- **The installer reads every table of `os` without saying `set role`** — and so does every member of
+  `pg_read_all_data` (§3). Who is one is piece 7's enumeration.
 - The runner on the real target logs in as the bench's installer. A runner that is not the ledger's owner is stage
   5's (piece 3 §12, not built).
 

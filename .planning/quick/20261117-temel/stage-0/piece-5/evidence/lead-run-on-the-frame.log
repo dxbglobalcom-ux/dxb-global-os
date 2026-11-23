@@ -1,0 +1,259 @@
+
+ RUN  v3.2.6 /home/dxb/DxB Global OS/foundation/tests
+
+ ❯ roles/on-a-fresh-instance.test.ts (23 tests | 22 failed) 55256ms
+   ✓ piece 5 — the roles and the schema os on a fresh instance, in order > fresh makes an instance: INSTANCE_UP with its cluster identifier, listed, and answering it  53654ms
+   × piece 5 — the roles and the schema os on a fresh instance, in order > B.1 before the chain: none of the five roles and no schema os stands; logins → LOGINS_REFUSED os_engine missing, exit 6, the secret file untouched 88ms
+     → usage: cli.ts <up|down|fresh|status>
+
+: expected 'usage: cli.ts <up|down|fresh|status>' to be 'LOGINS_REFUSED os_engine missing' // Object.is equality
+   × piece 5 — the roles and the schema os on a fresh instance, in order > B.2 the chain: foundation:chain up, no --root → exit 0, CHAIN_GREEN applied=n standing=n, n ≥ 2 0ms
+     → not run: the step "B.1 before the chain: none of the five roles and no schema os stands; logins → LOGINS_REFUSED os_engine missing, exit 6, the secret file untouched" failed before it
+   × piece 5 — the roles and the schema os on a fresh instance, in order > B.3 the roles: each of the five has exactly SPEC §4's attributes, no setting, no membership either way but the installer's, which may SET ROLE to os_owner alone 0ms
+     → not run: the step "B.1 before the chain: none of the five roles and no schema os stands; logins → LOGINS_REFUSED os_engine missing, exit 6, the secret file untouched" failed before it
+   × piece 5 — the roles and the schema os on a fresh instance, in order > B.4 the schema: os is os_owner's, no one outside the foundation's five holds a privilege on it, PUBLIC none and no login CREATE; os_owner may create nowhere else; the ledger is the installer's and none of the five reaches it 0ms
+     → not run: the step "B.1 before the chain: none of the five roles and no schema os stands; logins → LOGINS_REFUSED os_engine missing, exit 6, the secret file untouched" failed before it
+   × piece 5 — the roles and the schema os on a fresh instance, in order > B.5 the default privileges: exactly the two global rows of os_owner; one object of every kind made in os as os_owner is its own, and no one else holds a privilege of its kind 0ms
+     → not run: the step "B.1 before the chain: none of the five roles and no schema os stands; logins → LOGINS_REFUSED os_engine missing, exit 6, the secret file untouched" failed before it
+   × piece 5 — the roles and the schema os on a fresh instance, in order > B.6 before the install step, each of the four over TCP — no password, an empty one, a guessed one — is refused as an authentication failure; so is os_owner 0ms
+     → not run: the step "B.1 before the chain: none of the five roles and no schema os stands; logins → LOGINS_REFUSED os_engine missing, exit 6, the secret file untouched" failed before it
+   × piece 5 — the roles and the schema os on a fresh instance, in order > B.7 the install step: logins → LOGINS_SET logins=4 sysid=<the instance's>, exit 0, nothing secret said; the file, the stored verifiers and the server's log as SPEC §8 says 1ms
+     → not run: the step "B.1 before the chain: none of the five roles and no schema os stands; logins → LOGINS_REFUSED os_engine missing, exit 6, the secret file untouched" failed before it
+   × piece 5 — the roles and the schema os on a fresh instance, in order > B.8 after it: each login comes in with loginConnectionString(<role>) on the bench's address and is itself; a wrong password is still refused; os_owner still is 0ms
+     → not run: the step "B.1 before the chain: none of the five roles and no schema os stands; logins → LOGINS_REFUSED os_engine missing, exit 6, the secret file untouched" failed before it
+   × piece 5 — the roles and the schema os on a fresh instance, in order > B.9 none can create: each login, as itself, is refused with 42501 a schema, a table and a function in os, a table in every schema, a role, a database, a publication, set role to os_owner and to the installer, a reading of the ledger 0ms
+     → not run: the step "B.1 before the chain: none of the five roles and no schema os stands; logins → LOGINS_REFUSED os_engine missing, exit 6, the secret file untouched" failed before it
+   × piece 5 — the roles and the schema os on a fresh instance, in order > B.10 what the platform leaves open to every login: a temporary table, a large object made and unlinked, hstore made and dropped again by the login 0ms
+     → not run: the step "B.1 before the chain: none of the five roles and no schema os stands; logins → LOGINS_REFUSED os_engine missing, exit 6, the secret file untouched" failed before it
+   × piece 5 — the roles and the schema os on a fresh instance, in order > B.11 again: a second chain up → applied=0, the same standing; the five are the same rows and the logins still come in 0ms
+     → not run: the step "B.1 before the chain: none of the five roles and no schema os stands; logins → LOGINS_REFUSED os_engine missing, exit 6, the secret file untouched" failed before it
+   × piece 5 — the roles and the schema os on a fresh instance, in order > B.11 again: a second logins keeps the file's passwords — and puts back the one a login changed — and the logins come in 0ms
+     → not run: the step "B.1 before the chain: none of the five roles and no schema os stands; logins → LOGINS_REFUSED os_engine missing, exit 6, the secret file untouched" failed before it
+   × piece 5 — the roles and the schema os on a fresh instance, in order > B.11 again: with the file's sysid changed to another, logins mints four new passwords — the old are refused, the new come in 0ms
+     → not run: the step "B.1 before the chain: none of the five roles and no schema os stands; logins → LOGINS_REFUSED os_engine missing, exit 6, the secret file untouched" failed before it
+   × piece 5 — the roles and the schema os on a fresh instance, in order > B.12 the step's refusals — createdb on os_intake, pg_monitor to os_reader, the host lock held by another — each leaving every stored password and the file as they were, each put back 0ms
+     → not run: the step "B.1 before the chain: none of the five roles and no schema os stands; logins → LOGINS_REFUSED os_engine missing, exit 6, the secret file untouched" failed before it
+   × piece 5 — the roles and the schema os on a fresh instance, in order > B.13 a taken name: the real root applied to a throwaway database of the same instance → file-failed at 0001-roles.sql, role "os_owner" already exists, nothing applied, the ledger's bootstrap row alone 0ms
+     → not run: the step "B.1 before the chain: none of the five roles and no schema os stands; logins → LOGINS_REFUSED os_engine missing, exit 6, the secret file untouched" failed before it
+   × piece 5 — the roles and the schema os on a fresh instance, in order > B.14 a function file → os.<name> stands, os_owner's; run again with another body → the same oid, the new body, still os_owner's 0ms
+     → not run: the step "B.1 before the chain: none of the five roles and no schema os stands; logins → LOGINS_REFUSED os_engine missing, exit 6, the secret file untouched" failed before it
+   × piece 5 — the roles and the schema os on a fresh instance, in order > B.14 a vocabulary made under set role os_owner, and its file → reconciled, the table and its rows the owner's; the installer, not saying set role, is refused a row of it (42501) 0ms
+     → not run: the step "B.1 before the chain: none of the five roles and no schema os stands; logins → LOGINS_REFUSED os_engine missing, exit 6, the secret file untouched" failed before it
+   × piece 5 — the roles and the schema os on a fresh instance, in order > B.14 the same vocabulary with force row level security and a policy that hides its one row → pass-failed at that file, naming row-level security; the row stands as it was 0ms
+     → not run: the step "B.1 before the chain: none of the five roles and no schema os stands; logins → LOGINS_REFUSED os_engine missing, exit 6, the secret file untouched" failed before it
+   × piece 5 — the roles and the schema os on a fresh instance, in order > B.14 a schema os whose owner the runner may not SET ROLE to → pass-failed at the first function file, permission denied to set role; nothing is made 0ms
+     → not run: the step "B.1 before the chain: none of the five roles and no schema os stands; logins → LOGINS_REFUSED os_engine missing, exit 6, the secret file untouched" failed before it
+   × piece 5 — the roles and the schema os on a fresh instance, in order > what the module made, it removed: no throwaway database it made still stands 0ms
+     → not run: the step "B.1 before the chain: none of the five roles and no schema os stands; logins → LOGINS_REFUSED os_engine missing, exit 6, the secret file untouched" failed before it
+   × piece 5 — the roles and the schema os on a fresh instance, in order > down → INSTANCE_DOWN, and the secret file stands as it stood: down does not remove it 0ms
+     → not run: the step "B.1 before the chain: none of the five roles and no schema os stands; logins → LOGINS_REFUSED os_engine missing, exit 6, the secret file untouched" failed before it
+   × piece 5 — the roles and the schema os on a fresh instance, in order > B.15 at the end, after down: logins → LOGINS_REFUSED no-instance, exit 6, and the secret file untouched 0ms
+     → not run: the step "B.1 before the chain: none of the five roles and no schema os stands; logins → LOGINS_REFUSED os_engine missing, exit 6, the secret file untouched" failed before it
+ ❯ roles/without-the-bench.test.ts (15 tests | 15 failed) 7ms
+   × A.1 scramVerifier — PostgreSQL's own stored form > pencil-of-the-bench with the salt UNx3tZGuHcbFu2SKdUYfPA== answers the server's verifier — with the iterations left out and with 4096 said 2ms
+     → scramVerifier: not built (piece 5's frame)
+   × A.1 scramVerifier — PostgreSQL's own stored form > Zq8-throwaway_vector.2 with the salt FhOPpGYFfvxdPt87LkbMPQ== answers the server's verifier — with the iterations left out and with 4096 said 0ms
+     → scramVerifier: not built (piece 5's frame)
+   × A.2 the real root reads as a chain > with no offence; its first two files are 0001-roles.sql and 0002-os.sql 0ms
+     → chain refused: no-chain
+   × A.2 the real root reads as a chain > db/functions stands as a directory and holds a regular file .gitkeep 0ms
+     → ENOENT: no such file or directory, lstat '/home/dxb/DxB Global OS/db/functions'
+   × A.2 the real root reads as a chain > db/reference stands as a directory and holds a regular file .gitkeep 0ms
+     → ENOENT: no such file or directory, lstat '/home/dxb/DxB Global OS/db/reference'
+   × A.3 no file of the chain sets a password > no file under db/schema, db/functions or db/reference holds the word password followed by a quote, a dollar-quote or null 1ms
+     → ENOENT: no such file or directory, scandir '/home/dxb/DxB Global OS/db/schema'
+   × A.4 loginConnectionString reads the secret file > a file of the four gives each login the bench's own address with its role and its password 0ms
+     → loginConnectionString: not built (piece 5's frame)
+   × A.4 loginConnectionString reads the secret file > a file missing → LoginsRefused, reason no-secret 0ms
+     → loginConnectionString: not built (piece 5's frame)
+   × A.4 loginConnectionString reads the secret file > a file not JSON → LoginsRefused, reason no-secret 0ms
+     → loginConnectionString: not built (piece 5's frame)
+   × A.4 loginConnectionString reads the secret file > a file a JSON array → LoginsRefused, reason no-secret 0ms
+     → loginConnectionString: not built (piece 5's frame)
+   × A.4 loginConnectionString reads the secret file > a file without logins → LoginsRefused, reason no-secret 0ms
+     → loginConnectionString: not built (piece 5's frame)
+   × A.4 loginConnectionString reads the secret file > a file logins not an object → LoginsRefused, reason no-secret 0ms
+     → loginConnectionString: not built (piece 5's frame)
+   × A.4 loginConnectionString reads the secret file > a file the password not a text → LoginsRefused, reason no-secret 0ms
+     → loginConnectionString: not built (piece 5's frame)
+   × A.4 loginConnectionString reads the secret file > a file the password empty → LoginsRefused, reason no-secret 0ms
+     → loginConnectionString: not built (piece 5's frame)
+   × A.4 loginConnectionString reads the secret file > a file without the role → LoginsRefused, reason no-secret 0ms
+     → loginConnectionString: not built (piece 5's frame)
+
+⎯⎯⎯⎯⎯⎯ Failed Tests 37 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  roles/on-a-fresh-instance.test.ts > piece 5 — the roles and the schema os on a fresh instance, in order > B.1 before the chain: none of the five roles and no schema os stands; logins → LOGINS_REFUSED os_engine missing, exit 6, the secret file untouched
+AssertionError: usage: cli.ts <up|down|fresh|status>
+
+: expected 'usage: cli.ts <up|down|fresh|status>' to be 'LOGINS_REFUSED os_engine missing' // Object.is equality
+
+Expected: [32m"LOGINS_REFUSED os_engine missing"[39m
+Received: [31m"usage: cli.ts <up|down|fresh|status>"[39m
+
+ ❯ loginsSaying roles/fixtures/bench-command.ts:75:39
+     73|   const [passwordsAfter, verifiersAfter] = [passwordsIfReadable(THE_FO…
+     74|   expect(holdsNoneOf(said, secretsToSeek([...passwordsBefore, ...passw…
+     75|   expect(said.lastLine, tailOf(said)).toBe(expected);
+       |                                       ^
+     76|   expect(said.code).toBe(code);
+     77|   return said;
+ ❯ roles/cases/the-chain.ts:23:5
+ ❯ bench/fixtures/ordered-steps.ts:16:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/37]⎯
+
+ FAIL  roles/on-a-fresh-instance.test.ts > piece 5 — the roles and the schema os on a fresh instance, in order > B.2 the chain: foundation:chain up, no --root → exit 0, CHAIN_GREEN applied=n standing=n, n ≥ 2
+ FAIL  roles/on-a-fresh-instance.test.ts > piece 5 — the roles and the schema os on a fresh instance, in order > B.3 the roles: each of the five has exactly SPEC §4's attributes, no setting, no membership either way but the installer's, which may SET ROLE to os_owner alone
+ FAIL  roles/on-a-fresh-instance.test.ts > piece 5 — the roles and the schema os on a fresh instance, in order > B.4 the schema: os is os_owner's, no one outside the foundation's five holds a privilege on it, PUBLIC none and no login CREATE; os_owner may create nowhere else; the ledger is the installer's and none of the five reaches it
+ FAIL  roles/on-a-fresh-instance.test.ts > piece 5 — the roles and the schema os on a fresh instance, in order > B.5 the default privileges: exactly the two global rows of os_owner; one object of every kind made in os as os_owner is its own, and no one else holds a privilege of its kind
+ FAIL  roles/on-a-fresh-instance.test.ts > piece 5 — the roles and the schema os on a fresh instance, in order > B.6 before the install step, each of the four over TCP — no password, an empty one, a guessed one — is refused as an authentication failure; so is os_owner
+ FAIL  roles/on-a-fresh-instance.test.ts > piece 5 — the roles and the schema os on a fresh instance, in order > B.7 the install step: logins → LOGINS_SET logins=4 sysid=<the instance's>, exit 0, nothing secret said; the file, the stored verifiers and the server's log as SPEC §8 says
+ FAIL  roles/on-a-fresh-instance.test.ts > piece 5 — the roles and the schema os on a fresh instance, in order > B.8 after it: each login comes in with loginConnectionString(<role>) on the bench's address and is itself; a wrong password is still refused; os_owner still is
+ FAIL  roles/on-a-fresh-instance.test.ts > piece 5 — the roles and the schema os on a fresh instance, in order > B.9 none can create: each login, as itself, is refused with 42501 a schema, a table and a function in os, a table in every schema, a role, a database, a publication, set role to os_owner and to the installer, a reading of the ledger
+ FAIL  roles/on-a-fresh-instance.test.ts > piece 5 — the roles and the schema os on a fresh instance, in order > B.10 what the platform leaves open to every login: a temporary table, a large object made and unlinked, hstore made and dropped again by the login
+ FAIL  roles/on-a-fresh-instance.test.ts > piece 5 — the roles and the schema os on a fresh instance, in order > B.11 again: a second chain up → applied=0, the same standing; the five are the same rows and the logins still come in
+ FAIL  roles/on-a-fresh-instance.test.ts > piece 5 — the roles and the schema os on a fresh instance, in order > B.11 again: a second logins keeps the file's passwords — and puts back the one a login changed — and the logins come in
+ FAIL  roles/on-a-fresh-instance.test.ts > piece 5 — the roles and the schema os on a fresh instance, in order > B.11 again: with the file's sysid changed to another, logins mints four new passwords — the old are refused, the new come in
+ FAIL  roles/on-a-fresh-instance.test.ts > piece 5 — the roles and the schema os on a fresh instance, in order > B.12 the step's refusals — createdb on os_intake, pg_monitor to os_reader, the host lock held by another — each leaving every stored password and the file as they were, each put back
+ FAIL  roles/on-a-fresh-instance.test.ts > piece 5 — the roles and the schema os on a fresh instance, in order > B.13 a taken name: the real root applied to a throwaway database of the same instance → file-failed at 0001-roles.sql, role "os_owner" already exists, nothing applied, the ledger's bootstrap row alone
+ FAIL  roles/on-a-fresh-instance.test.ts > piece 5 — the roles and the schema os on a fresh instance, in order > B.14 a function file → os.<name> stands, os_owner's; run again with another body → the same oid, the new body, still os_owner's
+ FAIL  roles/on-a-fresh-instance.test.ts > piece 5 — the roles and the schema os on a fresh instance, in order > B.14 a vocabulary made under set role os_owner, and its file → reconciled, the table and its rows the owner's; the installer, not saying set role, is refused a row of it (42501)
+ FAIL  roles/on-a-fresh-instance.test.ts > piece 5 — the roles and the schema os on a fresh instance, in order > B.14 the same vocabulary with force row level security and a policy that hides its one row → pass-failed at that file, naming row-level security; the row stands as it was
+ FAIL  roles/on-a-fresh-instance.test.ts > piece 5 — the roles and the schema os on a fresh instance, in order > B.14 a schema os whose owner the runner may not SET ROLE to → pass-failed at the first function file, permission denied to set role; nothing is made
+ FAIL  roles/on-a-fresh-instance.test.ts > piece 5 — the roles and the schema os on a fresh instance, in order > what the module made, it removed: no throwaway database it made still stands
+ FAIL  roles/on-a-fresh-instance.test.ts > piece 5 — the roles and the schema os on a fresh instance, in order > down → INSTANCE_DOWN, and the secret file stands as it stood: down does not remove it
+ FAIL  roles/on-a-fresh-instance.test.ts > piece 5 — the roles and the schema os on a fresh instance, in order > B.15 at the end, after down: logins → LOGINS_REFUSED no-instance, exit 6, and the secret file untouched
+Error: not run: the step "B.1 before the chain: none of the five roles and no schema os stands; logins → LOGINS_REFUSED os_engine missing, exit 6, the secret file untouched" failed before it
+ ❯ bench/fixtures/ordered-steps.ts:14:43
+     12|   return (name, timeoutMs, body) => {
+     13|     it(name, { timeout: timeoutMs }, async () => {
+     14|       if (failedStep !== undefined) throw new Error(`not run: the step…
+       |                                           ^
+     15|       failedStep = name; // stays so when the body throws or never com…
+     16|       await body();
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/37]⎯
+
+ FAIL  roles/without-the-bench.test.ts > A.1 scramVerifier — PostgreSQL's own stored form > pencil-of-the-bench with the salt UNx3tZGuHcbFu2SKdUYfPA== answers the server's verifier — with the iterations left out and with 4096 said
+ FAIL  roles/without-the-bench.test.ts > A.1 scramVerifier — PostgreSQL's own stored form > Zq8-throwaway_vector.2 with the salt FhOPpGYFfvxdPt87LkbMPQ== answers the server's verifier — with the iterations left out and with 4096 said
+Error: scramVerifier: not built (piece 5's frame)
+ ❯ notBuilt ../bench/src/logins.ts:20:9
+     18| 
+     19| const notBuilt = (what: string): never => {
+     20|   throw new Error(`${what}: not built (piece 5's frame)`);
+       |         ^
+     21| };
+     22| 
+ ❯ scramVerifier ../bench/src/logins.ts:31:10
+ ❯ roles/without-the-bench.test.ts:34:12
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/37]⎯
+
+ FAIL  roles/without-the-bench.test.ts > A.2 the real root reads as a chain > with no offence; its first two files are 0001-roles.sql and 0002-os.sql
+ChainRefused: chain refused: no-chain
+ ❯ readChain ../chain/src/disk.ts:61:52
+     59| export function readChain(root: string): { files: ChainFile[]; offence…
+     60|   const directory = join(root, "schema");
+     61|   if (standingAt(directory) !== "directory") throw new ChainRefused("n…
+       |                                                    ^
+     62| 
+     63|   const offences: Offence[] = [];
+ ❯ roles/without-the-bench.test.ts:41:19
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/37]⎯
+
+ FAIL  roles/without-the-bench.test.ts > A.2 the real root reads as a chain > db/functions stands as a directory and holds a regular file .gitkeep
+Error: ENOENT: no such file or directory, lstat '/home/dxb/DxB Global OS/db/functions'
+ ❯ roles/without-the-bench.test.ts:48:12
+     46| 
+     47|   it.each(["functions", "reference"])("db/%s stands as a directory and…
+     48|     expect(lstatSync(join(REAL_ROOT, directory)).isDirectory()).toBe(t…
+       |            ^
+     49|     expect(lstatSync(join(REAL_ROOT, directory, ".gitkeep")).isFile())…
+     50|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/37]⎯
+
+ FAIL  roles/without-the-bench.test.ts > A.2 the real root reads as a chain > db/reference stands as a directory and holds a regular file .gitkeep
+Error: ENOENT: no such file or directory, lstat '/home/dxb/DxB Global OS/db/reference'
+ ❯ roles/without-the-bench.test.ts:48:12
+     46| 
+     47|   it.each(["functions", "reference"])("db/%s stands as a directory and…
+     48|     expect(lstatSync(join(REAL_ROOT, directory)).isDirectory()).toBe(t…
+       |            ^
+     49|     expect(lstatSync(join(REAL_ROOT, directory, ".gitkeep")).isFile())…
+     50|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/37]⎯
+
+ FAIL  roles/without-the-bench.test.ts > A.3 no file of the chain sets a password > no file under db/schema, db/functions or db/reference holds the word password followed by a quote, a dollar-quote or null
+Error: ENOENT: no such file or directory, scandir '/home/dxb/DxB Global OS/db/schema'
+ ❯ roles/without-the-bench.test.ts:68:27
+     66|     const setting: string[] = [];
+     67|     for (const directory of ["schema", "functions", "reference"]) {
+     68|       for (const entry of readdirSync(join(REAL_ROOT, directory), { wi…
+       |                           ^
+     69|         if (!entry.isFile()) continue;
+     70|         const name = `${directory}/${entry.name}`;
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/37]⎯
+
+ FAIL  roles/without-the-bench.test.ts > A.4 loginConnectionString reads the secret file > a file of the four gives each login the bench's own address with its role and its password
+Error: loginConnectionString: not built (piece 5's frame)
+ ❯ notBuilt ../bench/src/logins.ts:20:9
+     18| 
+     19| const notBuilt = (what: string): never => {
+     20|   throw new Error(`${what}: not built (piece 5's frame)`);
+       |         ^
+     21| };
+     22| 
+ ❯ loginConnectionString ../bench/src/logins.ts:43:10
+ ❯ roles/without-the-bench.test.ts:95:31
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/37]⎯
+
+ FAIL  roles/without-the-bench.test.ts > A.4 loginConnectionString reads the secret file > a file missing → LoginsRefused, reason no-secret
+ FAIL  roles/without-the-bench.test.ts > A.4 loginConnectionString reads the secret file > a file not JSON → LoginsRefused, reason no-secret
+ FAIL  roles/without-the-bench.test.ts > A.4 loginConnectionString reads the secret file > a file a JSON array → LoginsRefused, reason no-secret
+ FAIL  roles/without-the-bench.test.ts > A.4 loginConnectionString reads the secret file > a file without logins → LoginsRefused, reason no-secret
+ FAIL  roles/without-the-bench.test.ts > A.4 loginConnectionString reads the secret file > a file logins not an object → LoginsRefused, reason no-secret
+ FAIL  roles/without-the-bench.test.ts > A.4 loginConnectionString reads the secret file > a file the password not a text → LoginsRefused, reason no-secret
+ FAIL  roles/without-the-bench.test.ts > A.4 loginConnectionString reads the secret file > a file the password empty → LoginsRefused, reason no-secret
+Error: loginConnectionString: not built (piece 5's frame)
+ ❯ notBuilt ../bench/src/logins.ts:20:9
+     18| 
+     19| const notBuilt = (what: string): never => {
+     20|   throw new Error(`${what}: not built (piece 5's frame)`);
+       |         ^
+     21| };
+     22| 
+ ❯ loginConnectionString ../bench/src/logins.ts:43:10
+ ❯ roles/without-the-bench.test.ts:116:58
+ ❯ refusalOf chain/fixtures/refusal.ts:9:22
+ ❯ roles/without-the-bench.test.ts:116:27
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/37]⎯
+
+ FAIL  roles/without-the-bench.test.ts > A.4 loginConnectionString reads the secret file > a file without the role → LoginsRefused, reason no-secret
+Error: loginConnectionString: not built (piece 5's frame)
+ ❯ notBuilt ../bench/src/logins.ts:20:9
+     18| 
+     19| const notBuilt = (what: string): never => {
+     20|   throw new Error(`${what}: not built (piece 5's frame)`);
+       |         ^
+     21| };
+     22| 
+ ❯ loginConnectionString ../bench/src/logins.ts:43:10
+ ❯ roles/without-the-bench.test.ts:123:58
+ ❯ refusalOf chain/fixtures/refusal.ts:9:22
+ ❯ roles/without-the-bench.test.ts:123:27
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[10/37]⎯
+
+
+ Test Files  2 failed (2)
+      Tests  37 failed | 1 passed (38)
+   Start at  16:52:56
+   Duration  55.68s (transform 129ms, setup 0ms, collect 207ms, tests 55.26s, environment 0ms, prepare 61ms)
+
