@@ -159,6 +159,16 @@ that must have a lock is the lead's file. *Tests first, the lead's own, on fixtu
 offences planted and caught; a previous green result of the same suite replayed and refused. *The limit, said:* code
 that detects the test run is caught only by the lead's reading; a search for the runner's names in product paths
 helps and proves nothing.
+*Done 2026-11-23 (`piece-2/SPEC.md`, its audit and evidence beside it): `pnpm foundation:lock <piece> <dir>` and
+`pnpm foundation:verify <piece> [--rev <commit>]`, the records in `foundation/locks/`. Three things the cut did not
+say were decided there by the lead: the candidate is a git tree (the index, or a commit) and never the working tree;
+the judge is always the tool as it stands at the lock commit, extracted; and "the range touches `foundation/locks/`"
+is a staged change there, or a lock committed together with a path no lock protects. The lock's first real run found
+what no test had: piece 1's bench could not be made in a clean copy, because the install left out an old package the
+old chain needs — the install is the whole workspace now, and runs no script of the candidate's (a `postinstall` had
+rewritten a locked test and the verdict was green). Audited blind by Fable 5.2 alone, one blocking finding and ten to
+fix, all taken; the GPT pass is owed at piece 14, as piece 1's. Costs measured: a `verify` of piece 2 takes about
+1.6 minutes, of piece 1 about 1.4; a `lock` four seconds; the piece took four writing hands and one session.*
 
 **3 — the chain: schema files.** One command builds an empty target to the full schema and upgrades a populated one;
 its only targets are instances on the foundation's identity list. Before any write the disk is checked against the

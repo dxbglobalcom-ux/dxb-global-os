@@ -1,0 +1,115 @@
+$ node foundation/lock/src/cli.ts verify piece-2 --rev HEAD
+JUDGE extracted lock=a8b1a75b9d0f5505df7bbd335565ee2c91f42f60
+Scope: all 19 workspace projects
+✓ Lockfile passes supply-chain policies (verified 2h ago)
+Lockfile is up to date, resolution step is skipped
+Progress: resolved 1, reused 0, downloaded 0, added 0
+Packages: +396
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Progress: resolved 396, reused 396, downloaded 0, added 396, done
+[WARN] Failed to create bin at /home/dxb/.cache/dxb/foundation-verify/run-TXg122/candidate/node_modules/.bin/dxb. ENOENT: no such file or directory, open '/home/dxb/.cache/dxb/foundation-verify/run-TXg122/candidate/tools/dxb-cli/dist/index.js'
+[WARN] Failed to create bin at /home/dxb/.cache/dxb/foundation-verify/run-TXg122/candidate/node_modules/.bin/video-learn. ENOENT: no such file or directory, open '/home/dxb/.cache/dxb/foundation-verify/run-TXg122/candidate/tools/video-learn/dist/cli.js'
+
+dependencies:
++ @playwright/mcp 0.0.78
++ @upstash/context7-mcp 3.2.4
+
+devDependencies:
++ @dxb/cli 0.0.0 <- tools/dxb-cli
++ @dxb/video-learn 0.0.0 <- tools/video-learn
++ @modelcontextprotocol/sdk 1.29.0
++ @playwright/test 1.61.1
++ @testing-library/react 16.3.2
++ @types/node 22.20.0
++ jsdom 29.1.1
++ kysely 0.29.3
++ react 19.2.7
++ react-dom 19.2.7
++ supabase 2.109.0
++ typescript 6.0.3
++ vitest 3.2.6
+
+Done in 740ms using pnpm v11.10.0
+
+ RUN  v3.2.6 /home/dxb/.cache/dxb/foundation-verify/run-TXg122/candidate/foundation/tests
+
+ ✓ lock/verify-structure.test.ts (19 tests) 15218ms
+   ✓ verify — a staged change to what the lock protects > a locked test → protected-changed <path>, and the tests are not run  1992ms
+   ✓ verify — a staged change under foundation/locks/ > a lock file that is staged and not committed has no lock commit → LOCK_REFUSED, exit 2  1179ms
+   ✓ verify --rev — a lock changed in one commit with product code > another piece's lock committed together with a product file → lock-commit-impure <commit> <path>  1275ms
+   ✓ verify --rev — a lock changed in one commit with product code > the piece's own lock made again and committed together with the product change it was made for → the lock commit itself is impure  1362ms
+   ✓ verify --rev — a merge that brings a change of foundation/locks/ (SPEC §10 item 6) > a side branch that adds another piece's lock alone, merged → lock-commit-impure <the merge> (a merge of 2 commits)  1340ms
+   ✓ verify — what is no structural offence: the tests are run, and they are green > --rev of a lock commit that removes a locked test — the test gone and the lock made again, in one commit → no lock-commit-impure, LOCK_GREEN  2375ms
+   ✓ verify — what is no structural offence: the tests are run, and they are green > --rev of a later commit that adds another piece's lock alone → LOCK_GREEN by the first piece's own lock commit  2351ms
+   ✓ verify — what is no structural offence: the tests are run, and they are green > an unstaged edit of a locked test is not in the candidate → no offence from it, LOCK_GREEN  1287ms
+ ✓ lock/verify-run.test.ts (14 tests) 20259ms
+   ✓ verify — the candidate as it was locked > the untouched candidate → LOCK_GREEN, exit 0, naming the lock commit and the tree id of the index  2983ms
+   ✓ verify — the candidate as it was locked > a staged .gitattributes that marks a locked test export-ignore and the product export-subst → still LOCK_GREEN  1492ms
+   ✓ verify — the candidate as it was locked > the same two attributes committed, verified with --rev — where an archive of the commit would expand the placeholder → still LOCK_GREEN  1387ms
+   ✓ verify — the search for the runner's names: a note, never an offence > a product line that spells the runner's name → NOTE runner-name <path>:<line>, and the verdict stays LOCK_GREEN  1264ms
+   ✓ verify — the search for the runner's names: a note, never an offence > the name spelled under foundation/tests/, in the root package file and in a later commit's lock file → no note  2466ms
+   ✓ verify — a work directory an earlier run left standing (SPEC §10 item 9) > is said once — NOTE stale-work-directory <path> — and still stands afterwards, with what was in it; the verdict stays LOCK_GREEN  1254ms
+   ✓ verify — product staged so that a locked case does not pass > the value case fails → case-not-passed for it; the file and the exit code say so too  1227ms
+   ✓ verify — product staged so that a locked case does not pass > the product says unavailable and the case skips itself → case-skipped, though the run ended with 0  1243ms
+   ✓ verify — product staged so that a locked case does not pass > the product says not ready and the case returns before its assertion → case-not-passed  1229ms
+   ✓ verify — product staged so that the cases are not the locked ones > a shorter list → case-missing for the row that is gone, though every case that ran passed  1227ms
+   ✓ verify — product staged so that the cases are not the locked ones > a longer list → case-unknown for the row the lock does not hold  1252ms
+   ✓ verify — product that ends the run its own way > product that calls process.exit(0) when imported → result-missing, red though the runner ended with 0  931ms
+   ✓ verify — product that ends the run its own way > product that leaves an unhandled rejection → red with every case passed  1302ms
+   ✓ verify — product that ends the run its own way > product that writes an earlier run's green result to the result path and exits 0 → result-stale  963ms
+ ✓ lock/judge-structure.test.ts (28 tests) 6ms
+ ✓ lock/lock-command.test.ts (27 tests) 12067ms
+   ✓ lock — the cases it holds > holds every case of the locked tests with its file, its suite path and its name, and no other  1752ms
+   ✓ lock — the same input gives the same bytes > run again, with its directory and then without one, it writes the lock it wrote before and stages nothing  2261ms
+   ✓ lock — what it refuses > a locked test that declares a retry  1102ms
+   ✓ lock — what it refuses > a locked test that declares a repeat  1102ms
+   ✓ lock — what it refuses > a locked test that declares .only — run alone it would leave the file's other cases out  1160ms
+   ✓ lock — what it refuses > a test file with no case  1130ms
+   ✓ lock — what it refuses > a locked test that does not parse — the module fails to collect  1131ms
+   ✓ lock — what it refuses > a locked test that throws while it is loaded — the module fails to collect  1109ms
+   ✓ lock — what it refuses > a relative import that leaves foundation/tests/ — the test reaches the product past its package  1161ms
+ ✓ lock/judge-run.test.ts (20 tests) 4ms
+ ✓ lock/verify-copy.test.ts (6 tests) 11608ms
+   ✓ verify — the install is the whole workspace (SPEC §10 item 1) > a locked test that needs the dependency of a package outside the foundation's scope → LOCK_GREEN  4133ms
+   ✓ verify — the install runs nothing of the candidate's (SPEC §10 item 1) > a staged postinstall of the product that would rewrite a locked test so it passes, and product that fails it → case-not-passed: the script did not run  1264ms
+   ✓ verify — the copy is still the candidate's tree after the run (SPEC §10 item 2) > product that answers 41 and writes over the locked test in the copy so it expects 41 → copy-changed <path>, red though every case passed  1244ms
+   ✓ verify — the copy is still the candidate's tree after the run (SPEC §10 item 2) > product that writes a new file into the subject directory of the copy → copy-added <path>, red though every case passed  1289ms
+   ✓ verify — the runner retries nothing, whatever the locked config says (SPEC §10 item 13) > a locked config that sets retry: 2, product whose answer is wrong once and right from then on → case-not-passed, never case-retried  2407ms
+   ✓ verify — the copy keeps what git records of a file beside its bytes (SPEC §10 item 13) > the executable file staged without its bit, the link staged as a regular file → case-not-passed for each of the two cases that assert them  1250ms
+ ✓ lock/lock-closure.test.ts (10 tests) 13133ms
+   ✓ lock — a relative specifier is resolved as the runner resolves it > a helper outside the subject directory, spelled .js while the index holds the .ts → protected  2802ms
+   ✓ lock — a relative specifier is resolved as the runner resolves it > a helper outside the subject directory, spelled without an extension → protected  1161ms
+   ✓ lock — a relative specifier is resolved as the runner resolves it > a helper outside the subject directory, spelled .mjs while the index holds the .mts → protected  1165ms
+   ✓ lock — a relative specifier is resolved as the runner resolves it > a helper outside the subject directory, that names a directory holding an index.ts → protected  1171ms
+   ✓ lock — what a locked test reaches without an import statement > a file named by new URL("…", import.meta.url), under foundation/tests/ → protected  1146ms
+   ✓ lock — what a locked test reaches without an import statement > a new URL that leaves foundation/tests/ — the repository's root — is no import → no refusal, the lock is written  1142ms
+   ✓ lock — what a locked test reaches without an import statement > import.meta.glob in a locked test — what it reaches cannot be listed → LOCK_REFUSED, the standing lock as it stood  1150ms
+   ✓ lock — a relative specifier that resolves to no file of the index > an import spelled inside a string → NOTE unresolved-import <from> <specifier>, and the lock is still written  1129ms
+   ✓ lock — a relative specifier that resolves to no file of the index > the fixture as it was built reaches nothing that is not there → no such note  1135ms
+   ✓ lock — the root's install settings (SPEC §10 item 3) > a committed .npmrc at the root → protected  1101ms
+ ✓ lock/verify-judge.test.ts (6 tests) 6010ms
+   ✓ verify — a staged change that makes the candidate's own tool say LOCK_GREEN for everything > staged, the working tree's tool as it was locked, started through the fixture's own entry → still LOCK_RED, protected-changed  1961ms
+   ✓ verify — which tool judges > the untouched tool → first line JUDGE extracted lock=<the lock commit>  1263ms
+   ✓ verify — which tool judges > an unstaged edit of the fixture's tool, run through the fixture's own entry → first line JUDGE extracted lock=<the lock commit>  1246ms
+   ✓ verify — which tool judges > an unstaged edit that breaks the reporter → the run is judged by the lock commit's reporter, not by the edited one: LOCK_GREEN  1219ms
+ ✓ lock/pure-texts.test.ts (20 tests) 5ms
+ ✓ lock/lock-baseline.test.ts (8 tests) 4092ms
+   ✓ lock — a lock file for the piece that is staged and is not HEAD's > narrowed by hand to another directory and no case → LOCK_REFUSED, exit 2, and nothing is written over it  1820ms
+   ✓ lock — the difference it prints against HEAD's lock: a case, a helper and a script changed, all staged > the lock is written  1126ms
+   ✓ lock — the difference it prints when the piece is given a second directory > DIRS added <dir>, and none removed  1133ms
+ ✓ lock/verify-all.test.ts (5 tests) 10186ms
+   ✓ verify --all — every piece the inventory says is locked > one piece, present and green → LOCKS_GREEN pieces=1, exit 0  3055ms
+   ✓ verify --all — every piece the inventory says is locked > two pieces present and green, and one the inventory says is not locked → LOCKS_GREEN, each verified in the inventory's order  3473ms
+   ✓ verify --all — every piece the inventory says is locked > a piece the inventory says is locked and that has no lock file → lock-owed <piece>, LOCKS_RED, exit 1  1263ms
+   ✓ verify --all — every piece the inventory says is locked > a lock file whose piece the inventory does not name → lock-unlisted <piece>, red, exit 1  2299ms
+
+ Test Files  11 passed (11)
+      Tests  163 passed (163)
+   Start at  04:06:59
+   Duration  93.89s (transform 110ms, setup 0ms, collect 187ms, tests 92.59s, environment 1ms, prepare 344ms)
+
+LOCK_GREEN piece=piece-2 lock=a8b1a75b9d0f5505df7bbd335565ee2c91f42f60 candidate=8061b81320bbe07beb95b99068f8afd8055f5ac1 cases=163
+
+real	1m36.771s
+user	5m27.924s
+sys	2m20.342s

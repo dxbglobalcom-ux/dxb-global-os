@@ -1,0 +1,10 @@
+== ls ~/.cache/dxb/foundation-verify
+== foundation containers / volumes
+0
+0
+== the two other stacks, containers up
+5
+5
+== pnpm install --frozen-lockfile
+Done in 229ms using pnpm v11.10.0
+== git status, tracked

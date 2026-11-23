@@ -1,0 +1,54 @@
+$ node foundation/lock/src/cli.ts lock piece-1
+Scope: all 19 workspace projects
+✓ Lockfile passes supply-chain policies (verified 2h ago)
+Lockfile is up to date, resolution step is skipped
+Progress: resolved 1, reused 0, downloaded 0, added 0
+Packages: +396
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Progress: resolved 396, reused 396, downloaded 0, added 396, done
+[WARN] Failed to create bin at /home/dxb/.cache/dxb/foundation-verify/run-5ApQ3p/candidate/node_modules/.bin/video-learn. ENOENT: no such file or directory, open '/home/dxb/.cache/dxb/foundation-verify/run-5ApQ3p/candidate/tools/video-learn/dist/cli.js'
+[WARN] Failed to create bin at /home/dxb/.cache/dxb/foundation-verify/run-5ApQ3p/candidate/node_modules/.bin/dxb. ENOENT: no such file or directory, open '/home/dxb/.cache/dxb/foundation-verify/run-5ApQ3p/candidate/tools/dxb-cli/dist/index.js'
+
+dependencies:
++ @playwright/mcp 0.0.78
++ @upstash/context7-mcp 3.2.4
+
+devDependencies:
++ @dxb/cli 0.0.0 <- tools/dxb-cli
++ @dxb/video-learn 0.0.0 <- tools/video-learn
++ @modelcontextprotocol/sdk 1.29.0
++ @playwright/test 1.61.1
++ @testing-library/react 16.3.2
++ @types/node 22.20.0
++ jsdom 29.1.1
++ kysely 0.29.3
++ react 19.2.7
++ react-dom 19.2.7
++ supabase 2.109.0
++ typescript 6.0.3
++ vitest 3.2.6
+
+Done in 752ms using pnpm v11.10.0
+
+ RUN  v3.2.6 /home/dxb/.cache/dxb/foundation-verify/run-5ApQ3p/candidate/foundation/tests
+
+ ↓ bench/instance.test.ts (17 tests | 17 skipped)
+ ↓ bench/removal-authority.test.ts (27 tests | 27 skipped)
+ ↓ bench/no-old-address.test.ts (28 tests | 28 skipped)
+ ↓ bench/guard-connection.test.ts (24 tests | 24 skipped)
+ ↓ bench/pure-decisions.test.ts (21 tests | 21 skipped)
+ ↓ bench/guard-decision.test.ts (20 tests | 20 skipped)
+ ↓ bench/host-lock.test.ts (12 tests | 12 skipped)
+ ↓ bench/instance-unfinished.test.ts (6 tests | 6 skipped)
+ ↓ bench/status-of.test.ts (10 tests | 10 skipped)
+ ↓ bench/refused-against-the-old-record.test.ts (6 tests | 6 skipped)
+ ↓ bench/state-directory.test.ts (6 tests | 6 skipped)
+
+ Test Files  11 skipped (11)
+      Tests  177 skipped (177)
+   Start at  04:06:07
+   Duration  1.43s (transform 98ms, setup 0ms, collect 310ms, tests 0ms, environment 1ms, prepare 351ms)
+
+NOTE unresolved-import foundation/tests/bench/no-old-address.test.ts ./settings.ts
+PROTECTED changed foundation/lock/src/work.ts
+LOCK_WRITTEN piece=piece-1 cases=177 protected=38

@@ -432,3 +432,19 @@ sees `foundation/tests/` unchanged since the tests' commit, commits, locks again
 Still pinned by no test: SIGHUP; the comparison after the install apart from the one after the run (with scripts and
 the pnpmfile ignored no way was found for a candidate to change the copy during the install); `install-failed`;
 `lockfile-changed-by-install`.
+
+## 10b. After the first verify of piece 2 through its own lock (the lead, 2026-11-23)
+
+`verify piece-2 --rev HEAD` was red on two cases: the piece's tests start the tool, and that tool called the judging
+run's own work directory stale. **A run leaves its process id in its work directory (`owner`); the stale note is said
+only of a directory whose owner no longer runs, or that names none.** The lead wrote this one correction itself, saw
+the affected files green, and made both locks again. The glob rule of §10 item 4 counts a call only
+(`import.meta.glob(`), and the one line of `lock-closure.test.ts` that plants it is spelled in two pieces — whole, it
+would refuse piece 2's own lock. The 22 unresolved-import notes of the two locks were read: each is an import spelled
+inside a string of a test.
+
+**The lock refused the lead, rightly.** The lead committed the two locks together with two evidence logs; both pieces
+went red with `lock-commit-impure`. Making the locks again gives the same bytes, so no later commit could move the lock
+commit past it: the lead split its own unpushed commit, and the locks went in alone. **Open, owed before the stage
+closes (piece 13):** an impure lock commit that is already pushed can be healed only by a change of the lock's bytes
+— the tool needs a way to make a lock anew on purpose (the audit's F5 named the same trap for a removed test).

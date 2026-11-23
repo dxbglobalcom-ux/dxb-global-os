@@ -1,0 +1,10 @@
+$ node foundation/lock/src/cli.ts verify piece-1 --rev HEAD
+JUDGE extracted lock=92d2be372a56b0498d57888b80ed5fc3cf800c5b
+OFFENCE lock-commit-impure 92d2be372a56b0498d57888b80ed5fc3cf800c5b .planning/quick/20261117-temel/stage-0/piece-2/evidence/relock2-piece-1.log
+OFFENCE lock-commit-impure 92d2be372a56b0498d57888b80ed5fc3cf800c5b .planning/quick/20261117-temel/stage-0/piece-2/evidence/relock2-piece-2.log
+LOCK_RED piece=piece-1 lock=92d2be372a56b0498d57888b80ed5fc3cf800c5b candidate=cb317981d4039463646db1b11e218d4e6868d4f3 offences=2
+[ELIFECYCLE] Command failed with exit code 1.
+
+real	0m0.510s
+user	0m0.452s
+sys	0m0.196s

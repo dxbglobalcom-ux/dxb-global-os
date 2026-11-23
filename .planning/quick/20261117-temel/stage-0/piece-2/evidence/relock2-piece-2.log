@@ -1,0 +1,74 @@
+$ node foundation/lock/src/cli.ts lock piece-2
+Scope: all 19 workspace projects
+✓ Lockfile passes supply-chain policies (verified 2h ago)
+Lockfile is up to date, resolution step is skipped
+Progress: resolved 1, reused 0, downloaded 0, added 0
+Packages: +396
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Progress: resolved 396, reused 396, downloaded 0, added 396, done
+[WARN] Failed to create bin at /home/dxb/.cache/dxb/foundation-verify/run-oi9bKN/candidate/node_modules/.bin/dxb. ENOENT: no such file or directory, open '/home/dxb/.cache/dxb/foundation-verify/run-oi9bKN/candidate/tools/dxb-cli/dist/index.js'
+[WARN] Failed to create bin at /home/dxb/.cache/dxb/foundation-verify/run-oi9bKN/candidate/node_modules/.bin/video-learn. ENOENT: no such file or directory, open '/home/dxb/.cache/dxb/foundation-verify/run-oi9bKN/candidate/tools/video-learn/dist/cli.js'
+
+dependencies:
++ @playwright/mcp 0.0.78
++ @upstash/context7-mcp 3.2.4
+
+devDependencies:
++ @dxb/cli 0.0.0 <- tools/dxb-cli
++ @dxb/video-learn 0.0.0 <- tools/video-learn
++ @modelcontextprotocol/sdk 1.29.0
++ @playwright/test 1.61.1
++ @testing-library/react 16.3.2
++ @types/node 22.20.0
++ jsdom 29.1.1
++ kysely 0.29.3
++ react 19.2.7
++ react-dom 19.2.7
++ supabase 2.109.0
++ typescript 6.0.3
++ vitest 3.2.6
+
+Done in 787ms using pnpm v11.10.0
+
+ RUN  v3.2.6 /home/dxb/.cache/dxb/foundation-verify/run-oi9bKN/candidate/foundation/tests
+
+ ↓ lock/verify-structure.test.ts (19 tests | 19 skipped)
+ ↓ lock/verify-run.test.ts (14 tests | 14 skipped)
+ ↓ lock/judge-structure.test.ts (28 tests | 28 skipped)
+ ↓ lock/lock-command.test.ts (27 tests | 27 skipped)
+ ↓ lock/judge-run.test.ts (20 tests | 20 skipped)
+ ↓ lock/verify-copy.test.ts (6 tests | 6 skipped)
+ ↓ lock/lock-closure.test.ts (10 tests | 10 skipped)
+ ↓ lock/verify-judge.test.ts (6 tests | 6 skipped)
+ ↓ lock/pure-texts.test.ts (20 tests | 20 skipped)
+ ↓ lock/lock-baseline.test.ts (8 tests | 8 skipped)
+ ↓ lock/verify-all.test.ts (5 tests | 5 skipped)
+
+ Test Files  11 skipped (11)
+      Tests  163 skipped (163)
+   Start at  04:06:03
+   Duration  1.29s (transform 99ms, setup 0ms, collect 181ms, tests 0ms, environment 1ms, prepare 349ms)
+
+NOTE unresolved-import foundation/tests/lock/pure-texts.test.ts ./a.ts
+NOTE unresolved-import foundation/tests/lock/pure-texts.test.ts ../shared/b.ts
+NOTE unresolved-import foundation/tests/lock/pure-texts.test.ts ./types.ts
+NOTE unresolved-import foundation/tests/lock/pure-texts.test.ts ./side-effect.ts
+NOTE unresolved-import foundation/tests/lock/pure-texts.test.ts ./c.ts
+NOTE unresolved-import foundation/tests/lock/pure-texts.test.ts ./d.ts
+NOTE unresolved-import foundation/tests/lock/pure-texts.test.ts ./many.ts
+NOTE unresolved-import foundation/tests/lock/pure-texts.test.ts ../shared/doubled.ts
+NOTE unresolved-import foundation/tests/lock/pure-texts.test.ts ./fixtures/refusal-of.ts
+NOTE unresolved-import foundation/tests/lock/pure-texts.test.ts ./fixtures/ordered-steps.ts
+NOTE unresolved-import foundation/tests/lock/pure-texts.test.ts ./later.ts
+NOTE unresolved-import foundation/tests/lock/pure-texts.test.ts ./x.ts
+NOTE unresolved-import foundation/tests/lock/pure-texts.test.ts ./y.ts
+NOTE unresolved-import foundation/tests/lock/pure-texts.test.ts ./z.ts
+NOTE unresolved-import foundation/tests/lock/pure-texts.test.ts ./fixtures/late.ts
+NOTE unresolved-import foundation/tests/lock/lock-closure.test.ts ../shared/doubled.ts
+NOTE unresolved-import foundation/tests/lock/lock-closure.test.ts ../shared/second.js
+NOTE unresolved-import foundation/tests/lock/lock-closure.test.ts ../shared/second
+NOTE unresolved-import foundation/tests/lock/lock-closure.test.ts ../shared/third.mjs
+NOTE unresolved-import foundation/tests/lock/lock-closure.test.ts ../shared/fourth
+NOTE unresolved-import foundation/tests/lock/fixtures/fixture-files.ts ../shared/doubled.ts
+PROTECTED changed foundation/lock/src/work.ts
+LOCK_WRITTEN piece=piece-2 cases=163 protected=36
