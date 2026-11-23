@@ -71,26 +71,25 @@ esac
     expect(r.stderr).toMatch(/^AUDIT effort=xhigh$/m);
   });
 
-  it("runs GPT-6.2 Astra from the profile, and GPT-6.2 Sol when the lead passes --model sol", () => {
-    // CEO 2026-11-18: the auditor is GPT-6.2 Astra; GPT-6.2 Sol when Astra's quota runs short.
+  it("runs the model the profile names — the one place it is named — and passes Codex no model of its own", () => {
+    // CEO 2026-11-23: the auditor is switched by one line of the profile; the script names no model.
     const profile = readFileSync(join(REPO, "scripts", "governance", "codex-refuter.config.toml"), "utf8");
-    expect(profile).toMatch(/^model = "gpt-6\.2-astra"$/m);
-    const astra = run("audit this claim");
-    expect(astra.status, astra.stderr).toBe(0);
-    expect(astra.stdout).not.toMatch(/MODEL_ARG/);
-    const sol = run("--model", "sol", "--effort", "xhigh", "audit this claim");
-    expect(sol.status, sol.stderr).toBe(0);
-    expect(sol.stdout).toContain('MODEL_ARG model="gpt-6.2-sol"');
-    expect(sol.stdout).toContain('EFFORT_ARG model_reasoning_effort="xhigh"');
-    expect(sol.stderr).toMatch(/^AUDIT model=gpt-6\.2-sol$/m);
+    const named = /^model = "([^"]+)"$/m.exec(profile)?.[1];
+    expect(named, "the profile names exactly one model").toBeTruthy();
+    expect(profile.match(/^model = /gm)).toHaveLength(1);
+    const r = run("--effort", "xhigh", "audit this claim");
+    expect(r.status, r.stderr).toBe(0);
+    expect(r.stdout).not.toMatch(/MODEL_ARG/);
+    expect(r.stdout).toContain('EFFORT_ARG model_reasoning_effort="xhigh"');
+    expect(r.stderr.split("\n")).toContain(`AUDIT model=${named}`);
   });
 
-  it("refuses a --model other than astra or sol, before Codex is asked anything", () => {
-    for (const bad of ["gpt-6.1-sol", "luna", ""]) {
-      const r = run("--model", bad, "audit this");
-      expect(r.status, bad).toBe(1);
-      expect(r.stderr).toMatch(/REFUTER_FAIL: --model takes astra or sol/);
-      expect(r.stdout).not.toMatch(/PROMPT_BEGIN/);
+  it("takes no --model at all, before Codex is asked anything", () => {
+    for (const any of ["sol", "astra", "gpt-6.1-sol", ""]) {
+      const r = run("--model", any, "audit this");
+      expect(r.status, any).toBe(1);
+      expect(r.stderr).toMatch(/^REFUTER_FAIL: --model is not taken/m);
+      expect(r.stdout).toBe("");
     }
   });
 

@@ -23,7 +23,7 @@ burada yalnız hangi koltukta hangi modelin oturduğu. `dxb-team2` karşılaşt�
 | Toplayıcı (`gatherer`), salt-okur | Sonnet 5.5 · `medium` |
 | Okuyucu (`scout`, `Explore`) | tek seferlik |
 | Yedek planlayıcı (`Plan`) | Opus 5.5 · `high` ya da `max` — Fable 5.2 kotası sıkıştığında (dxb-team3 §1) |
-| Denetçi | GPT-6.1 Sol <!-- CEO-OK: auditor-sol-6-1-2026-10-01 -->, yalnız `scripts/governance/refuter.sh` ile — kör, salt-okur, iş başına bir geçiş; yokken `refuter` alt-ajanı (Opus 5.5 · `high`), kayda yazılır |
+| Denetçi | GPT-6.2 Sol <!-- CEO-OK: auditor-sol-6-2-default-astra-does-not-audit-2026-11-23 -->, yalnız `scripts/governance/refuter.sh` ile — kör, salt-okur, iş başına bir geçiş; yokken `refuter` alt-ajanı (Opus 5.5 · `high`), kayda yazılır |
 | İkinci denetçi | Fable 5.2 · `high`, `scripts/governance/fable-audit.sh` ile — önemli işte Sol'un yanında <!-- CEO-OK: lead-chooses-freely-fable-audits-important-jobs-2026-11-10 --> |
 
 `design-eye` bu kapının koltuğu değildir. Koltuk tanımları `~/.claude/agents/` altındadır. Eski sürümler (v1-v19) git geçmişindedir.

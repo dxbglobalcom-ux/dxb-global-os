@@ -3289,5 +3289,13 @@
     "conditions": "Said right after his yes to GitHub for the off-site copy, in answer to a message that listed three things waiting on him, each with the lead's recommendation: the folder cut ('Önerim: silinsin'), the halal screen's reach ('Önerim: evet') and the off-site copy's home. He saw the cut as a three-row table with sizes and the five largest folders, not the full list (first-cut/WEIGHED.md). 'The others' is read by the lead as those two; nothing else is rested on it.",
     "session": "Fable 5.2 session 17eb1936, read first-hand (typed, mid-turn), 2026-11-22.",
     "where": ".planning/quick/20261117-temel/stage-0/first-cut/WEIGHED.md; .planning/quick/20261117-temel/PLAN.md §2 H; .planning/quick/20261117-temel/stage-0/BUILD.md (0a)"
+  },
+  "auditor-sol-6-2-default-astra-does-not-audit-2026-11-23": {
+    "date": "2026-11-23",
+    "what": "GPT-6.2 Sol sits in the auditor's seat as the default for every job; GPT-6.2 Astra no longer audits, because the subscription's quota does not carry it. Fable 5.2 audits as it already does.",
+    "verbatim": "Astra'ya denetim yaptırmıyorum çünkü onun kotası yetmiyor. O pahalı yapmışlar. … Sen sol 6.2'ye denetimci yaptıralım. Şimdi koltuğa otursun. Default olarak. Bir de Fable (5.2) zaten. Tamam.",
+    "conditions": "Replaces the Astra part of auditor-by-weight-sol-6-2-simple-middle-astra-6-2-important-2026-11-18 and of auditor-gpt-6-2-astra-first-sol-6-2-if-quota-short-2026-11-18: the choice of auditor by the job's weight is gone, Sol audits every job. The lead's reading, not his words: \"Bir de Fable zaten\" leaves Fable 5.2 where it stands — the second auditor beside Sol on an important job.",
+    "where": ".claude/skills/dxb-team3/SKILL.md §3, §4; scripts/governance/refuter.sh",
+    "session": "Fable 5.2 session ea6adb32, written in the conversation"
   }
 }

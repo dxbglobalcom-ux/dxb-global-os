@@ -1,6 +1,6 @@
 ---
 name: dxb-team3
-description: Use when the CEO hands the construction a job, or says a plan will be talked ("plan konuşacağız", "plan moduna geçelim") — the default construction door. The lead (the session) holds the whole and chooses who writes — itself, a fork, helpers, or a fork with helpers — and verifies every piece; GPT-6.2 Sol or Astra audits blind, read-only, Fable 5.2 beside it on an important job; their findings are fixed and tested; the session sets its own effort, low to xhigh, never max. Trigger `/dxb-team3 <the job in one sentence>`.
+description: Use when the CEO hands the construction a job, or says a plan will be talked ("plan konuşacağız", "plan moduna geçelim") — the default construction door. The lead (the session) holds the whole and chooses who writes — itself, a fork, helpers, or a fork with helpers — and verifies every piece; the auditor audits blind, read-only, Fable 5.2 beside it on an important job; their findings are fixed and tested; the session sets its own effort, low to xhigh, never max. Trigger `/dxb-team3 <the job in one sentence>`.
 ---
 
 # The team — one lead, the hands it chooses, two blind auditors
@@ -40,7 +40,7 @@ BUILD     the hands write and run their own tests; the lead verifies every piece
    │
 TEST      code changed → typecheck and the battery (§5), ended before the auditor starts
    │
-AUDIT     the auditor (Sol or Astra by weight) — and on an important job Fable beside it — one blind, read-only pass, over the job's commits, the
+AUDIT     the auditor — and on an important job Fable beside it — one blind, read-only pass, over the job's commits, the
           battery's output in hand (§4) — A blocks · B fixed now · C in the report
    │
 FIX       a fork or a writing helper fixes; the lead verifies; no second audit round; the touched tests,
@@ -71,7 +71,7 @@ from the brief alone, what the job needs and what the plan lacks.
    one source with the employees' `holdingLine()` (`packages/voice/src/prompt-core.ts`) <!-- CEO-OK: holding-reminder-every-turn-and-brief-2026-11-09 --> — and, when the
    job belongs to a business line, that line's mission and vision; then his words verbatim, the scope, the facts measured.
 2. The lead writes its plan in its scratchpad.
-3. The audit — the auditor (Sol or Astra by weight), and on an important job Fable beside it (§4), blind, one pass each, from the same brief
+3. The audit — the auditor, and on an important job Fable beside it (§4), blind, one pass each, from the same brief
    <!-- CEO-OK: fable-audits-opus-second-writer-effort-by-weight-2026-11-09 -->. The brief and the plan — no
    model or effort named — go into `<job>/blind/`; the auditor runs through `scripts/governance/refuter.sh` with the
    lead's scratchpad, the transcripts and its memory denied (`--deny-read`), and
@@ -116,6 +116,9 @@ and the session lifts itself; an important decision, and a question of how somet
 recommends, run at `high`; an evaluation that carries weight — weighing, comparing, judging which is better — is part of planning and
 runs at `high`, an easy one is the session's call by what an error costs (his word, 2026-11-16); managing — the lead opens a hand, writes a brief or verifies a piece that came back — at `high`, with
 `xhigh` open while it thinks through who does what <!-- CEO-OK: dxb-team3-orchestrator-six-points-2026-11-11 -->;
+the build of the holding — the foundation (B85) and what is built on it — is managed at `xhigh`, by the lead and by
+every successor: on each managing turn of it `dxb-effort-xhigh` is opened first; who does what, on which model and at
+which level, stays the lead's judgement <!-- CEO-OK: holding-build-managed-at-xhigh-2026-11-22 -->;
 a plan, a design, an architecture at `high`, and the build, the fixes and the tests at the level the piece's weight asks (Code, below); a truly complex, important
 job — its plan and its work — at `xhigh`. `max` is not used by the session
 <!-- CEO-OK: effort-high-xhigh-no-max-2026-11-10 -->; the one place it stands is the Opus 5.5 that plans when
@@ -165,7 +168,7 @@ Fable's quota runs short (§1). His word on the level overrides: "bunu high'da d
 | **Reader** | a one-shot `scout` or `Explore` | a wide search whose text would swell the lead's context | writes; is resumed (its cache dies at 5 min) |
 | **Escalation writer** | `builder` (Fable 5.2 · `xhigh`), one-shot | a piece the lead judges truly complex and important, from the start; or one that failed twice at `high` | is opened for a routine fix |
 | **Stand-in planner** | Opus 5.5 · `high` or `max` by the job's importance — the `Plan` agent, opened with that model and level <!-- CEO-OK: dxb-team3-orchestrator-six-points-2026-11-11 --> | writes the plan when Fable 5.2's quota runs short (§1) | is a standing step; audits; writes code |
-| **Auditor** | by the job's weight <!-- CEO-OK: auditor-by-weight-sol-6-2-simple-middle-astra-6-2-important-2026-11-18 -->: GPT-6.2 Sol on a simple or middle job (`--model sol`), GPT-6.2 Astra on an important job or plan (the profile's default), through `scripts/governance/refuter.sh` | one blind pass over the job's commits (§4); on a plan job, also the blind plan audit (§1) | writes; audits the same thing twice; sees the lead's reasoning or verdict |
+| **Auditor** | GPT-6.2 Sol on every job <!-- CEO-OK: auditor-sol-6-2-default-astra-does-not-audit-2026-11-23 -->, through `scripts/governance/refuter.sh` — the model is named here and in one line of `scripts/governance/codex-refuter.config.toml`, nowhere else: a switch is that line, `refuter.sh --install-profile` and this row | one blind pass over the job's commits (§4); on a plan job, also the blind plan audit (§1) | writes; audits the same thing twice; sees the lead's reasoning or verdict |
 | **Second auditor** | Fable 5.2 — `high` — through `scripts/governance/fable-audit.sh` <!-- CEO-OK: fable-audits-opus-second-writer-effort-by-weight-2026-11-09 --> | on an important job, audits what the auditor audits, from the same brief, at the same time, blind (§1, §4) | writes a plan or code; audits twice; sees the auditor's findings or the lead's verdict |
 
 `design-eye` is not a seat of this door. The second auditor finds and never writes.
@@ -237,14 +240,12 @@ four, not the default.
   <!-- CEO-OK: lead-manages-hands-by-difficulty-2026-11-10 -->; every other piece is written by Fable 5.2: the
   lead, its fork, the writing helper and the escalation writer <!-- CEO-OK: code-written-by-fable-5-2-2026-11-10 -->.
 
-## 4. The audit — Sol or Astra by the job's weight, Fable beside it on an important one
+## 4. The audit — the auditor, Fable beside it on an important job
 
-Every job that changes code, a rule or a door gets one audit pass after BUILD — the light lane (§1) excepted. The lead — the orchestrator of the session — judges each job's weight <!-- CEO-OK: auditor-by-weight-sol-6-2-simple-middle-astra-6-2-important-2026-11-18 -->: a simple or middle job gets GPT-6.2 Sol alone; an important job or plan gets GPT-6.2 Astra and one Fable pass beside it, at the same time <!-- CEO-OK: lead-chooses-freely-fable-audits-important-jobs-2026-11-10 -->; a change to the records
+Every job that changes code, a rule or a door gets one audit pass after BUILD — the light lane (§1) excepted. The auditor audits every job <!-- CEO-OK: auditor-sol-6-2-default-astra-does-not-audit-2026-11-23 -->; an important job or plan gets one Fable pass beside it, at the same time <!-- CEO-OK: lead-chooses-freely-fable-audits-important-jobs-2026-11-10 -->; a change to the records
 alone (STATE, the board) is checked by the rulers on commit instead.
 
-- **Launch:** `scripts/governance/refuter.sh [--effort medium|high|xhigh] [--model sol] "<brief>"` — the model by the
-  job's weight <!-- CEO-OK: auditor-by-weight-sol-6-2-simple-middle-astra-6-2-important-2026-11-18 -->: `--model sol` (GPT-6.2 Sol) on a simple or middle job, the default GPT-6.2 Astra on an
-  important job or plan; the effort is the lead's
+- **Launch:** `scripts/governance/refuter.sh [--effort medium|high|xhigh] "<brief>"` — the effort is the lead's
   choice per audit: `high` by default; `xhigh` usually for money, a database, security, approval, governance or the
   agents; `medium` for a text-only change. On an important job, Fable at the same moment: `scripts/governance/fable-audit.sh <job> <brief-file>
   high` — the same brief; its findings take the same form and
@@ -271,8 +272,7 @@ alone (STATE, the board) is checked by the rulers on commit instead.
   build commit it measures <!-- CEO-OK: audit-law-checker-only-checks-2026-09-15 -->.
 - **Dispute:** the lead runs the evidence the auditor gave — it fails → real, fixed; it holds → the finding drops
   and the report says why. A question no test can settle is the lead's, with its reason in the report.
-- **The auditor unavailable** (quota, error, timeout): the same brief runs again on the other GPT-6.2 model (`--model sol` or the default)
-  (GPT-6.2 Sol), and the report names it <!-- CEO-OK: auditor-gpt-6-2-astra-first-sol-6-2-if-quota-short-2026-11-18 -->. Both unavailable: on an ordinary job the
+- **The auditor unavailable** (quota, error, timeout): on an ordinary job the
   `refuter` subagent (Opus 5.5 · `high`) audits once, and the report says *"audited by Opus instead of
   the auditor — read-only by word, not by tool — because …"*; on money, a database or security the lead waits
   for the auditor's window and works on
@@ -333,21 +333,36 @@ alone (STATE, the board) is checked by the rulers on commit instead.
   is lost. It never shortens the job, drops a part of it or ends it early. The context meter only informs.
 - **The 4-minute rules** (held by `~/.claude/hooks/dxb-cost-gate.py`): a command over 4 minutes is the
   lead's; a subagent idle over 4 minutes is never resumed — its cache is the 5-minute one.
+- **The piece is the unit, not the percent** <!-- CEO-OK: careful-build-rhythm-and-handover-every-session-2026-11-22 -->: a session takes a piece it can finish —
+  written, tested, verified, committed — before 45 % of its context, and the lead cuts the pieces to that size. A
+  session never closes in the middle of a piece: a half-finished piece handed over is the worst source of defects.
+  That quality falls between 45 % and 60 % is not measured on Fable 5.2; the number is caution, his and the lead's.
 - **The context gate** (held by `~/.claude/hooks/dxb-context-gate.py`) and **the clean break**: from
-  50 % used, hand over at the first clean break — the piece finished well, the tree committed, no
-  battery running, the report sent — even when reaching it takes the session to about 60 %; never in
+  45 % used, hand over at the first clean break — the piece finished well, the tree committed, no
+  battery running, the report sent; a piece still open at 45 % is finished first, then handed over; never in
   the middle of a piece. The clean break and the quality decide, not the number; the lead judges it,
   helpers included <!-- CEO-OK: handover-at-the-clean-break-2026-10-06 -->. The gate says its line
-  once at 50 % and once at 60 % and refuses nothing — the meter only informs (his word, 2026-11-10);
+  once at 45 % and once at 50 % and refuses nothing — the meter only informs (his word, 2026-11-10);
   the job continues in the successor in full.
+- **The records carry the job; the note carries only what they lack** <!-- CEO-OK: careful-build-rhythm-and-handover-every-session-2026-11-22 -->. The plan, the board, STATE,
+  the ledger and the tests in the repository are the one truth, and a successor starts from them. A chain of notes
+  adds each author's reading to the last one's; a session that starts from the records does not.
+- **The successor weighs before it carries on** <!-- CEO-OK: careful-build-rhythm-and-handover-every-session-2026-11-22 -->. After this door, its first act is its own reading of
+  what it inherits — against the holding's written purpose (the core, already loaded), the approved plan's part for
+  the piece, and his words of the job at their source in the predecessor's transcript, not only as the note quotes
+  them. Its first reply tells him, in five lines at most, what it inherits and where it sees weakness; then it
+  carries on. A note's "next" is the predecessor's reading, not an order. Measured 2026-11-22: a successor ran the
+  note's "audit, fix, cut" unweighed, an example of his had been written into the work as a specification, and he
+  had to stop it himself.
 - **The handover** is done by the engineer, never the CEO
   <!-- CEO-OK: handover-at-50-without-asking-2026-10-01 -->. A note in the scratchpad, in the author's
   own voice, whose first line tells the successor to open this door — `Skill("dxb-team3")` — before
   anything else: it carries the job on as its lead, the orchestrator, not as a fresh session
   <!-- CEO-OK: successor-opens-dxb-team2-2026-10-09 -->; then the job's place in the whole, then his words of this job verbatim, every phase with
-  status and commit, under three headings <!-- CEO-OK: team3-one-answer-steps-are-code-handover-done-apart-from-said-2026-11-17 --> —
+  status and commit, under four headings <!-- CEO-OK: team3-one-answer-steps-are-code-handover-done-apart-from-said-2026-11-17 --> <!-- CEO-OK: careful-build-rhythm-and-handover-every-session-2026-11-22 --> —
   **Done**: what a command's decisive output shows (a commit shows that a file changed, never that it works);
-  **Said**: what was planned, promised or told to him and not measured; **Do not**: what the successor must not
+  **Said**: what was planned, promised or told to him and not measured; **Unsure**: the author's own readings and judgements, and where it may have misread
+  his words — an example or analogy of his is marked as an example, with the one point it illustrates; **Do not**: what the successor must not
   redo or undo — the traps met, the first message the successor sends; session-only orders marked
   as such; last, the path of this session's own conversation —
   `~/.claude/projects/-home-dxb-DxB-Global-OS/$CLAUDE_CODE_SESSION_ID.jsonl` — with the line *if
