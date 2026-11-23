@@ -1,8 +1,9 @@
 # The skill register — every skill candidate of the eight studies, written once
 
 The eight studies name 77 skill candidates between them, and many are the same skill reached from two or
-three experts. This register merges them: **49 skills, one line each** — 44 along the chain of `README.md`,
-in its order, and 5 that bind every station. The full specification — triggers, inputs, steps, output — stays in the study named in the
+three experts. This register merges them, and takes four more from the research of the rival's unowned
+services (`local-and-profile-services/METHODS.md`, short name **LP**): **53 skills, one line each** — 48 along
+the chain of `README.md`, in its order, and 5 that bind every station. The full specification — triggers, inputs, steps, output — stays in the study named in the
 "Specified in" column; where two studies specify the same skill, the first one named is the fuller and the
 others are what it must absorb. Nothing here is built or tried. Written 2026-11-23 by the lead from a whole
 reading of the eight `FOR-THE-HOLDING.md` files.
@@ -22,6 +23,12 @@ Study short names: **MA** `matt-diamante/a` · **MB** `matt-diamante/b` · **HS*
 | 5 | `prospect-brief` | Three findings about a prospect's own site, each *fact → what a customer feels → what it costs*, every figure with its tool run; no finding without a run | SS `sales-prospect-brief` · absorbs HS idea 11, MK idea 1's three facts | B84, B83 |
 | 6 | `ad-funnel-leak-read` | An ad account read in order — arrived, page sold, paid — each leak routed to the office that fixes it | MM C | B28 |
 
+Featured snippets and voice answers (LP 3) are **not a skill and not a line of sale**: a snippet cannot be
+marked up, speakable markup serves a surface Google is retiring, and no console measures a voice answer. What
+is real in them is done by skills 18 (answer-first sections for questions the page already ranks for), 19
+(snippet ownership as a line of the report), 2 and 7 (the same entity data at Google, Apple and the partners
+the assistants read).
+
 The gap tools of MA idea 2 (profile gap, link-and-listing gap, listing checker, missing money pages,
 question finder) and HS idea 4's four public tools are **surfaces of engines 1–5**, not further skills.
 
@@ -40,6 +47,8 @@ question finder) and HS idea 4's four public tools are **surfaces of engines 1�
 | 15 | `money-page-audit-fix` | Service, location and category pages against the pattern table: range, tiers, drivers, caveat, the unique fact, local detail | MA | B84 |
 | 16 | `internal-links` | After every publish: 3–5 links in with the target's phrase, conflicts and orphans flagged | MB S6 | B84 |
 | 17 | `landing-page-gate` | Ten points before any opt-in or lead page ships; also sold as an audit | MK 3.4 | B84, B28 |
+| 45 | `gbp-chain-manage` | A chain's profiles in one business group, the client as owner and the office as manager: the bulk sheet checked against Google's field rules before upload, store codes, bulk verification where the client qualifies; then every Google-made change, duplicate and lost verification caught the same day and a nightly diff against the client's master data | LP 1 | B84 |
+| 46 | `location-page` | One page per real branch inside a browsable locator, built from that branch's own facts and media, LocalBusiness markup per page; a uniqueness gate refuses a city-swap page and a place with no presence; no self-serving review stars | LP 4 · beside 15 `money-page-audit-fix` | B84 |
 
 ## 3. Care — the monthly loop
 
@@ -53,6 +62,7 @@ question finder) and HS idea 4's four public tools are **surfaces of engines 1�
 | 23 | `data-story` | One finding from the client's own data or a scan of ours, with its table and methodology page | HS 8 | B84 |
 | 24 | `press-list-and-pitch` | Twenty to thirty journalists who wrote on it in ninety days; the pitch; one follow-up; the reactive lane | HS 9 | B84 |
 | 25 | `winner-loser` | After a Google update: which page types moved, the hypothesis; no change while it rolls | HS 14 | B84 |
+| 47 | `gbp-suspension-recovery` | The decision read in the appeals tool, the cause found at profile and account level, everything fixed and the documents matched to the profile character by character **before** the one appeal Google allows; nothing edited while it is reviewed; never a replacement profile | LP 2 | B84 |
 | 26 | `roadmap-12-month` | Baseline, low-hanging list, money-page map, link gap, twelve months of dated work — promises work, never a rank | MA | B84 |
 
 ## 4. The ad office and content
@@ -64,9 +74,10 @@ question finder) and HS idea 4's four public tools are **surfaces of engines 1�
 | 29 | `ad-format-render` | A passed brief into a faceless asset drawn in code | MM E | B43 |
 | 30 | `ad-winner-read` | Why it won, with confidence and the cheapest separating test; the next briefs | MM D | B28 |
 | 31 | `hook-writer` | Fifty hooks, forty remade from proven ones; reading level; every claim backed by a ledger row; written natively per language | MK 3.1 · absorbs MB S8 steps 1–2, HS 15's hook slot | B28 |
-| 32 | `short-script` | Six lines, one sentence each, timed aloud; caption, call to action; fixed formats (tier list, teardown, blueprint) | MB S8 · absorbs HS 15 `reel-script`, MM F `ad-teardown` as one format | B28 |
+| 32 | `short-script` | Six lines, one sentence each, timed aloud; caption, call to action; fixed formats (tier list, teardown, blueprint, and the audit on air of a business that asked for it — LP 6) | MB S8 · absorbs HS 15 `reel-script`, MM F `ad-teardown` as one format | B28 |
 | 33 | `short-postmortem` | At 24 hours and 7 days: the numbers into the hook bank; what to make more of | MB S9 | B28 |
 | 34 | `winner-kaleidoscope` | Ten variants of a winner on named axes before any new concept | MK 3.2 | B28, B43 |
+| 48 | `social-profile-setup` | Name, handle, bio, category, links and buttons per platform, written for what that platform's search documents it matches, and identical to the canonical identity of skill 2; a drift check after | LP 5 (Facebook's field rules not yet read at source) | B28 |
 | 35 | `repurposing-chain` | One long piece into clips, carousel, post, article, mail, profile posts; one call to action; a link to measure each | MK 3.6 · absorbs MA `repurpose-8x` | B28 |
 
 ## 5. Offer and sell

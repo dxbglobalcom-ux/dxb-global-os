@@ -28,6 +28,11 @@ what to do with it.
 PARTLY = part of it is named or built — the part is said. MISSING = in no row, no tool, no skill read.
 Strict reading: a general "SEO" or "care package" does not cover a named sub-deliverable.
 
+**After this table was written (the same day).** Six MISSING rows that no leg owned — 8, 23, 26, 27, 34, 87 — were
+researched at the platforms' own documentation (`.planning/research/expert-library/local-and-profile-services/METHODS.md`)
+and given owners: 8, 23, 26, 27 and 34 in B84's leg of 2026-11-23, 87 in B28's. The table below is left as it was read;
+those six are now PLANNED.
+
 **What actually exists on disk and touches this ground** (the only BUILT parts below):
 - LibreCrawl crawler — Docker image `dxbcrawl-librecrawl:local` present (`docker images`, 2026-11-23); measured on
   a real site, `.planning/quick/20261104-web-bedava-aletler/crawl-test/RUN.md`. No container runs.

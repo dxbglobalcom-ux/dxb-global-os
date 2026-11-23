@@ -35,6 +35,11 @@ Beside the experts, from the single links of the two groups (job folder
   40 partly, 17 missing (local SEO 6, Meta Ads 4).
 - `notes/` — the rival's full service inventory, the 50-site list with its listing kit, the ten search mind maps.
 
+Beside both, `local-and-profile-services/METHODS.md` — the method of six of the rival's deliverables that no row
+owned and no study taught (multi-branch Business Profiles, recovery of a suspended profile, featured snippets
+and voice, location pages, social profile set-up, education videos), from Google's and the platforms' own
+documentation first.
+
 ## What the five of them say together — the lead's reading
 
 They teach different trades and arrive at one shape. The office that wins:
@@ -114,7 +119,7 @@ The link rows themselves are a tab in the CEO's workbook.
 ## What a deeper study would read next
 
 Each folder's `OPEN-QUESTIONS.md` names its own. The skill candidates of all eight studies are merged once in
-`SKILLS.md` (49 skills, and the points where the studies disagree).
+`SKILLS.md` (53 skills, and the points where the studies disagree).
 
 Gathered on 2026-11-23 and not yet studied — on this machine, in the job folder: the slides of Matt Diamante's
 40 most-commented and most-liked carousels, written out slide by slide (`notes/matt-carousels/read-0…3.md`,
