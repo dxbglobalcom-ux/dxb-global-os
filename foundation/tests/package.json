@@ -5,6 +5,7 @@
   "type": "module",
   "dependencies": {
     "@dxb-foundation/bench": "workspace:*",
+    "@dxb-foundation/chain": "workspace:*",
     "@dxb-foundation/lock": "workspace:*",
     "pg": "catalog:"
   },

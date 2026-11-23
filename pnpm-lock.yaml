@@ -177,6 +177,25 @@ importers:
         specifier: 'catalog:'
         version: 6.0.3
 
+  foundation/chain:
+    dependencies:
+      '@dxb-foundation/bench':
+        specifier: workspace:*
+        version: link:../bench
+      pg:
+        specifier: 'catalog:'
+        version: 8.22.0
+    devDependencies:
+      '@types/node':
+        specifier: 'catalog:'
+        version: 22.20.0
+      '@types/pg':
+        specifier: 'catalog:'
+        version: 8.20.0
+      typescript:
+        specifier: 'catalog:'
+        version: 6.0.3
+
   foundation/lock:
     devDependencies:
       '@types/node':
@@ -191,6 +210,9 @@ importers:
       '@dxb-foundation/bench':
         specifier: workspace:*
         version: link:../bench
+      '@dxb-foundation/chain':
+        specifier: workspace:*
+        version: link:../chain
       '@dxb-foundation/lock':
         specifier: workspace:*
         version: link:../lock

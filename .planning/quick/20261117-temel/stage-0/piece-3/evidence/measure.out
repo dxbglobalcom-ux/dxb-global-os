@@ -1,0 +1,161 @@
+== M0 identity of the target
+7711292384683360295
+postgres|f
+== M4 names free?
+db|template1
+db|template0
+db|postgres
+db|_supabase
+== M1 throwaway database
+real	0m0.057s
+20017|chain_measure_m1
+7711292384683360295
+== M2 the wrapper (plpgsql EXECUTE of the whole file text, inside the runner's transaction)
+-- a. two statements, the second needs the first
+     xid-before=2431
+     t
+     xid-after=2431
+     left behind: m_a,m_a2,m_a_pkey
+-- b. COMMIT in the middle
+     xid-before=2433
+     t
+     ERROR:  EXECUTE of transaction commands is not implemented
+     CONTEXT:  PL/pgSQL function inline_code_block line 1 at EXECUTE
+     ERROR:  current transaction is aborted, commands ignored until end of transaction block
+     left behind: (nothing)
+-- c. ROLLBACK in the middle
+     xid-before=2434
+     t
+     ERROR:  EXECUTE of transaction commands is not implemented
+     CONTEXT:  PL/pgSQL function inline_code_block line 1 at EXECUTE
+     ERROR:  current transaction is aborted, commands ignored until end of transaction block
+     left behind: (nothing)
+-- d. BEGIN at the top
+     xid-before=2435
+     t
+     ERROR:  EXECUTE of transaction commands is not implemented
+     CONTEXT:  PL/pgSQL function inline_code_block line 1 at EXECUTE
+     ERROR:  current transaction is aborted, commands ignored until end of transaction block
+     left behind: (nothing)
+-- e. SAVEPOINT
+     xid-before=2436
+     t
+     ERROR:  EXECUTE of transaction commands is not implemented
+     CONTEXT:  PL/pgSQL function inline_code_block line 1 at EXECUTE
+     ERROR:  current transaction is aborted, commands ignored until end of transaction block
+     left behind: (nothing)
+-- f. START TRANSACTION
+     xid-before=2437
+     t
+     ERROR:  EXECUTE of transaction commands is not implemented
+     CONTEXT:  PL/pgSQL function inline_code_block line 1 at EXECUTE
+     ERROR:  current transaction is aborted, commands ignored until end of transaction block
+     left behind: (nothing)
+-- g. END
+     xid-before=2438
+     t
+     ERROR:  EXECUTE of transaction commands is not implemented
+     CONTEXT:  PL/pgSQL function inline_code_block line 1 at EXECUTE
+     ERROR:  current transaction is aborted, commands ignored until end of transaction block
+     left behind: (nothing)
+-- h. ABORT
+     xid-before=2439
+     t
+     ERROR:  EXECUTE of transaction commands is not implemented
+     CONTEXT:  PL/pgSQL function inline_code_block line 1 at EXECUTE
+     ERROR:  current transaction is aborted, commands ignored until end of transaction block
+     left behind: (nothing)
+-- i. PREPARE TRANSACTION
+     xid-before=2440
+     t
+     ERROR:  EXECUTE of transaction commands is not implemented
+     CONTEXT:  PL/pgSQL function inline_code_block line 1 at EXECUTE
+     ERROR:  current transaction is aborted, commands ignored until end of transaction block
+     left behind: (nothing)
+-- j. a DO block that commits
+     xid-before=2441
+     t
+     ERROR:  invalid transaction termination
+     CONTEXT:  PL/pgSQL function inline_code_block line 1 at COMMIT
+     SQL statement "create table m_j(id int); do $$ begin commit; end $$;"
+     PL/pgSQL function inline_code_block line 1 at EXECUTE
+     ERROR:  current transaction is aborted, commands ignored until end of transaction block
+     left behind: (nothing)
+-- k. a procedure that commits, called
+     xid-before=2442
+     t
+     ERROR:  invalid transaction termination
+     CONTEXT:  PL/pgSQL function pg_temp_21.p() line 1 at COMMIT
+     SQL statement "create table m_k(id int); create procedure pg_temp.p() language plpgsql as $$ begin commit; end $$; call pg_temp.p();"
+     PL/pgSQL function inline_code_block line 1 at EXECUTE
+     ERROR:  current transaction is aborted, commands ignored until end of transaction block
+     left behind: (nothing)
+-- l. a plpgsql body with BEGIN/END, and the word COMMIT in a string and a comment
+     xid-before=2443
+     t
+     xid-after=2443
+     left behind: m_l
+-- m. BEGIN ATOMIC function
+     xid-before=2446
+     t
+     xid-after=2446
+     left behind: m_m
+-- n. a failing statement after a good one
+     xid-before=2448
+     t
+     ERROR:  division by zero
+     CONTEXT:  SQL statement "create table m_n(id int); select 1/0; create table m_n2(id int);"
+     PL/pgSQL function inline_code_block line 1 at EXECUTE
+     ERROR:  current transaction is aborted, commands ignored until end of transaction block
+     left behind: (nothing)
+-- o. CREATE INDEX CONCURRENTLY
+     xid-before=2449
+     t
+     ERROR:  CREATE INDEX CONCURRENTLY cannot run inside a transaction block
+     CONTEXT:  SQL statement "create table m_o(id int); create index concurrently m_o_i on m_o(id);"
+     PL/pgSQL function inline_code_block line 1 at EXECUTE
+     ERROR:  current transaction is aborted, commands ignored until end of transaction block
+     left behind: (nothing)
+-- p. a syntax error late in the text
+     xid-before=2450
+     t
+     ERROR:  syntax error at or near "creat"
+     LINE 1: create table m_p(id int); creat table m_p2(id int);
+                                       ^
+     QUERY:  create table m_p(id int); creat table m_p2(id int);
+     CONTEXT:  PL/pgSQL function inline_code_block line 1 at EXECUTE
+     ERROR:  current transaction is aborted, commands ignored until end of transaction block
+     left behind: (nothing)
+-- q. empty text
+     xid-before=2451
+     t
+     xid-after=2451
+     left behind: (nothing)
+-- r. only a comment
+     xid-before=2452
+     t
+     xid-after=2452
+     left behind: (nothing)
+== M3 the same text without the wrapper: one simple Query message inside the runner's BEGIN
+     ERROR:  division by zero
+     WARNING:  there is no transaction in progress
+     left behind: m_s1
+== M5 a session setting made by one file is met by the next file in the same session
+     t
+     next file meets: search_path=pg_catalog role=pg_monitor temp table=true
+== M6 a large text as a setting
+     2000000
+     ran 2 MB
+== M7 the error's fields as the server gives them (which statement failed)
+     t
+     ERROR:  22012: division by zero
+     CONTEXT:  SQL statement "create table m_v(id int);
+     select 1/0;"
+     PL/pgSQL function inline_code_block line 1 at EXECUTE
+     LOCATION:  int4div, int.c:841
+== M8 two sessions and one advisory lock
+     second gets=false
+     after the first ended, a third gets=true
+== drop
+real	0m0.466s
+databases now: _supabase,postgres,template0,template1

@@ -40,6 +40,7 @@
     "foundation:typecheck": "tsc -p foundation/tsconfig.json",
     "foundation:test": "vitest run --config foundation/tests/vitest.config.ts",
     "foundation:instance": "node foundation/bench/src/cli.ts",
+    "foundation:chain": "node foundation/chain/src/cli.ts",
     "foundation:lock": "node foundation/lock/src/cli.ts lock",
     "foundation:verify": "node foundation/lock/src/cli.ts verify"
   },
