@@ -31,7 +31,7 @@ export type Outcome =
   | { state: "file-failed"; file: string; message: string; applied: string[] };
 
 export class ChainRefused extends Error {
-  readonly reason: "no-chain" | "busy" | "ledger-unknown";
+  readonly reason: "no-chain" | "busy" | "ledger-unknown" | "ledger-moved" | "target-moved";
 
   constructor(reason: ChainRefused["reason"], options?: ErrorOptions) {
     super(`chain refused: ${reason}`, options);

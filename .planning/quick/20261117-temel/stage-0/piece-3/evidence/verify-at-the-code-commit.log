@@ -1,0 +1,26 @@
+== verify --all --rev HEAD (73ae6f0508b7c14fb8dc9c3a4959f643de5e1f2d)
+OFFENCE lock-owed piece-4
+OFFENCE lock-owed piece-5
+OFFENCE lock-owed piece-6
+OFFENCE lock-owed piece-7
+OFFENCE lock-owed piece-8
+OFFENCE lock-owed piece-9
+OFFENCE lock-owed piece-10
+OFFENCE lock-owed piece-11
+OFFENCE lock-owed piece-13
+JUDGE extracted lock=2cf8e2f851bc7ae08891d35940d1fbb838811e5d
+LOCK_GREEN piece=piece-1 lock=2cf8e2f851bc7ae08891d35940d1fbb838811e5d candidate=55eb8d5c8ad569687bb72fbce99707ef45ee9b44 cases=177
+JUDGE extracted lock=2cf8e2f851bc7ae08891d35940d1fbb838811e5d
+LOCK_GREEN piece=piece-2 lock=2cf8e2f851bc7ae08891d35940d1fbb838811e5d candidate=55eb8d5c8ad569687bb72fbce99707ef45ee9b44 cases=163
+JUDGE extracted lock=2cf8e2f851bc7ae08891d35940d1fbb838811e5d
+LOCK_GREEN piece=piece-3 lock=2cf8e2f851bc7ae08891d35940d1fbb838811e5d candidate=55eb8d5c8ad569687bb72fbce99707ef45ee9b44 cases=109
+LOCKS_RED pieces=3 red=0 owed=9
+verify exit=1
+== the old system's typecheck
+old typecheck exit=0
+== pnpm install --frozen-lockfile
+Done in 368ms using pnpm v11.10.0
+0
+== what stands
+INSTANCE_ABSENT
+0

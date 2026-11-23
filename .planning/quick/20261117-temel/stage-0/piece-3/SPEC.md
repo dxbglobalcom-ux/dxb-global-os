@@ -290,3 +290,76 @@ The test hand was cut off by a server error before its report; the lead read eve
 stub (100 red by `NOT_BUILT`, 9 green: the harness seen to work and the fixture hashes seen to be right) and found
 in the hand's scratch folder a stand-in runner it had used to see the tests green and, wrong in one way at a time,
 red. The stand-in is not the product and is not given to the hand that writes the code.
+
+## 12. After the two blind audits (`SOL.md` — GPT-6.2 Sol, xhigh; `fable-audit.md` — Fable 5.2, high) — the contract as corrected
+
+Sol: five A, seven B. Fable: no A, eight B. Both say the piece does what was asked on its ordinary paths. **Each
+finding was weighed against what the piece is for** — a database that holds exactly the files its ledger names, each
+once, whole, in order, by one runner, on the foundation's own database: on a disposable bench today, on the company's
+data at stage 5. A finding that touches that is taken, whatever its grade. One that only hardens the runner against a
+hostile hand on the operator's own machine is not built: the chain's files are trusted code (§10), and whoever can
+plant a link or a trigger there can do worse directly. Where this section and §4–§9a differ, this section holds.
+
+**Taken — tests first, then code:**
+
+1. **A row is written at the position the run expects** (Sol A1, Fable F2). The run knows the ledger it read under
+   the lock; a file's row carries that count plus one, said by the runner, and the primary key refuses a second row
+   there. So when the ledger moved under a run — its lock lost, another hand writing — the row is refused before the
+   file's text is sent, nothing of the file is left, and the run ends `ChainRefused("ledger-moved")`
+   (`CHAIN_REFUSED ledger-moved`, exit 2). The insert must write exactly one row; none written is `ledger-unknown`.
+   *Tests:* while a run sleeps in its second file the test's own hand writes a row at the position the third will
+   want → `ledger-moved`, the third file's table absent; a ledger with a trigger that swallows inserts →
+   `ledger-unknown`, nothing of the file left; **a file's row and what the file made were written by one
+   transaction** (the row's `xmin` equals the `xmin` of the catalogue row of the table the file created; row 0's
+   equals the schema's).
+2. **What "known" means includes the ledger's constraints** (Fable F4, Sol A3): the primary key on `position`, the
+   unique `file`, the three checks — item 1 rests on the first. A ledger without one of them is `ledger-unknown`.
+   *Tests:* the primary key dropped by hand; a second row of kind `ledger`; row 0's hash as a literal (a change of
+   the bootstrap's text is a change of contract: every standing ledger becomes unknown).
+3. **One run, one database** (Sol A2). The input is copied when the run begins; the identity the lock's session
+   answered is the run's, and a later session that answers another ends the run `ChainRefused("target-moved")`
+   (`CHAIN_REFUSED target-moved`, exit 2). *Test:* the caller's own `target` object changed to a second listed
+   database while a file sleeps → the run finishes on the first, the second is untouched. The pin itself — an address
+   that leads elsewhere — is read by the lead.
+4. **The caller's shell chooses nothing of a session** (Fable F1, Sol B4). The driver reads `PGOPTIONS`,
+   `PGAPPNAME`, `PGCLIENTENCODING`, `PGSSLMODE` and their like by itself; every session is opened so that none of
+   them is taken. *Test:* with such variables set for the run, a file records the search path, the application name
+   and the client encoding it meets → the same as with none set. The bench's own connections have the same gap: owed
+   to the stage's audit (piece 14), not built here.
+5. **The disk that is compared and applied is the disk as it stands under the lock** (Fable F5). The first reading
+   only answers early — a disk offence or `no-chain`, before any connection; under the lock the disk is read again
+   and that reading is the run's. *Test:* a run waiting for the lock; a file added meanwhile; the waiting run applies it.
+6. **The command's cases leave the instance's own database as they found it** (Fable F3): its ledger and what
+   stands in it are compared before and after, instead of asserting that no `os_chain` is there — from piece 5 on
+   one rightly is.
+7. **The fixture's own connection to the instance passes the guard first** (Sol A5, Fable F6), under the machine's
+   own list.
+8. **The wait is an upper bound** (Sol B3): the deadline is asked before the lock is asked again. **The wait case
+   shows contention** (Fable, Sol B6): it asserts that the first run was still going when the second was started
+   and that the second had not ended while the first slept.
+9. **The command's words** (Sol B5, B2): a value that begins with `--` is no value; `--wait` has at most five
+   digits; an offence's detail is said on one line. §8's stdout is the command's own (`node foundation/chain/src/cli.ts`,
+   or `pnpm -s`): `pnpm` without `-s` adds a line of its own after a non-zero exit.
+10. **A rollback that fails does not hide the refusal it follows** (Fable F7).
+11. **A symlinked `schema/` is `no-chain`** — pinned (Fable F8).
+
+**A limit, measured and said** (Sol A4): PostgreSQL does not give back a sequence's values on rollback. A failed file
+that drew from a sequence standing before it leaves that sequence advanced — the one thing of itself a failed file
+leaves; a retry is still safe. *Test:* exactly that, seen. BUILD.md's "leaves nothing of itself" is read so from here.
+
+**Not built, with the reason:**
+
+- A link swapped in between the listing and the reading of a file; a database renamed by another administrator
+  between the fixture's look-up and its drop (Sol B1, A5): races only a hostile hand on this machine makes.
+- The ledger's ownership, triggers and row security read from the catalogue beyond item 2 (Sol A3): item 1's
+  one-row check catches the trigger that matters; the rest is the same hostile hand.
+- `duplicated-content` among files that are already `empty` or `unreadable` (Sol B2): each already stops the run.
+- Operators spelled with their schema in the runner's own SQL (Sol B4): after item 1 the row's insert holds none,
+  and item 4 removes the route by which a session's search path came from outside.
+- A ledger this login may not read said as `ledger-unknown` (Sol A3, Fable F7): the ledger is its owner's and the
+  runner is that owner; another installing role is stage 5's question. It is thrown on, whole.
+- The fixture's leftovers when the server fails between `create database` and the look-up of its oid, and separate
+  `finally` paths for every cleanup (Sol B7): a throwaway database left so dies with the instance.
+- That `--wait`'s value reaches the run (Sol B6): one line, read by the lead; a case on the real target would have
+  to write there.
+- A transaction pooler in front of the target: the runner's targets are direct connections; said, not enforced.

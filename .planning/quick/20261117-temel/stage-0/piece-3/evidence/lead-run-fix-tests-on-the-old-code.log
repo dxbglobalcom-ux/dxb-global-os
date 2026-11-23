@@ -1,0 +1,502 @@
+
+ RUN  v3.2.6 /home/dxb/DxB Global OS/foundation/tests
+
+ ❯ chain/on-the-bench.test.ts (72 tests | 15 failed) 32030ms
+   ✓ the harness — seen to work before a case rests on it > a throwaway database is made on the bench's cluster, the guard allows it through its own list, and it is gone afterwards 120ms
+   ✓ the harness — seen to work before a case rests on it > a session inside pg_sleep is seen as such by another session — and no longer once it woke  1131ms
+   ✓ built from nothing — an empty database and a chain of three > applies the three in order, and their tables stand 171ms
+   ✓ built from nothing — an empty database and a chain of three > the ledger holds row 0 and one row for each: name, kind, the file's hash, the login, the runner's version, positions 1 to 3 169ms
+   ✓ built from nothing — an empty database and a chain of three > a file's row and what the file made were written by one transaction — and so were row 0 and the ledger's schema 156ms
+   ✓ built from nothing — an empty database and a chain of three > a second run applies nothing and changes no row 192ms
+   ✓ the bootstrap — the ledger this runner makes > a chain of no files leaves row 0 alone 144ms
+   ✓ the bootstrap — the ledger this runner makes > row 0 carries the hash of the bootstrap as this contract holds it, spelled here 138ms
+   ✓ the bootstrap — the ledger this runner makes > the schema and the table are the login's own, and the table has the seven columns of SPEC §5, none of them nullable 139ms
+   ✓ the bootstrap — the ledger this runner makes > the table itself holds a position and a file to one row each, the kind to the two kinds, the hash to 64 lower-case hex digits 133ms
+   ✓ the bootstrap — the ledger this runner makes > in a database that carries planted default privileges, the schema and the ledger have no grantee but their owner 154ms
+   ✓ the bootstrap — a ledger this runner does not know > row 0 carries another hash: ledger-unknown, and nothing is changed 132ms
+   ✓ the bootstrap — a ledger this runner does not know > row 0 is absent: ledger-unknown, and nothing is changed 144ms
+   ✓ the bootstrap — a ledger this runner does not know > the schema os_chain holds no table: ledger-unknown, and nothing is changed 123ms
+   ✓ the bootstrap — a ledger this runner does not know > the table os_chain.ledger is of another shape: ledger-unknown, and nothing is changed 126ms
+   × the bootstrap — a ledger this runner does not know > the primary key on position was dropped: ledger-unknown, and nothing is changed 145ms
+     → the call was not refused: it answered {"state":"applied","applied":["0001-people.sql"],"standing":1}
+   × the bootstrap — a ledger this runner does not know > the unique on file was dropped: ledger-unknown, and nothing is changed 144ms
+     → the call was not refused: it answered {"state":"applied","applied":["0001-people.sql"],"standing":1}
+   × the bootstrap — a ledger this runner does not know > the check on position was dropped: ledger-unknown, and nothing is changed 146ms
+     → the call was not refused: it answered {"state":"applied","applied":["0001-people.sql"],"standing":1}
+   × the bootstrap — a ledger this runner does not know > the check on kind was dropped: ledger-unknown, and nothing is changed 150ms
+     → the call was not refused: it answered {"state":"applied","applied":["0001-people.sql"],"standing":1}
+   × the bootstrap — a ledger this runner does not know > the check on hash was dropped: ledger-unknown, and nothing is changed 146ms
+     → the call was not refused: it answered {"state":"applied","applied":["0001-people.sql"],"standing":1}
+   ✓ the bootstrap — a ledger this runner does not know > a second row of kind ledger stands at a later position: ledger-unknown, and nothing is changed 137ms
+   × the bootstrap — a ledger this runner does not know > a trigger swallows every row written to it: ledger-unknown, and nothing is changed 153ms
+     → the call was not refused: it answered {"state":"applied","applied":["0001-people.sql"],"standing":1}
+   ✓ the disk against a real ledger — each sentence of SPEC §4's second table > changed — an applied file is rewritten 157ms
+   ✓ the disk against a real ledger — each sentence of SPEC §4's second table > renamed — an applied file is given another name 172ms
+   ✓ the disk against a real ledger — each sentence of SPEC §4's second table > missing — an applied file is removed 188ms
+   ✓ the disk against a real ledger — each sentence of SPEC §4's second table > before-applied — a new file with a number lower than the last applied one 204ms
+   ✓ the disk against a real ledger — each sentence of SPEC §4's second table > before-applied — a new file with the number of the last applied one, which is gone: both faults are said 206ms
+   ✓ the disk against a real ledger — each sentence of SPEC §4's second table > reordered — the ledger holds a file after one of a greater number 174ms
+   ✓ nothing before the check > an empty database and a chain with an offence of the disk's own: the offence is said, and no schema os_chain is made 104ms
+   ✓ nothing before the check > the disk is judged before the target is asked who it is: a database no list holds, and still the disk's offence is the answer 100ms
+   ✓ nothing before the check > a root with no schema/ is refused as no-chain, and no schema os_chain is made 102ms
+   ✓ a failing file > the second of three fails after making a table: file-failed, the first stands ledgered, nothing of the second or third 135ms
+   ✓ a failing file > the file corrected: the next run applies it and the one after it 166ms
+   ✓ a failing file > a failed file that drew from a sequence standing before it leaves it advanced, the one thing it leaves — and the corrected file applies 164ms
+   ✓ a file that opens or closes a transaction > commit in the middle of a file: file-failed with a message that says transaction, and the statements before it left nothing 130ms
+   ✓ a file that opens or closes a transaction > rollback in the middle of a file: file-failed with a message that says transaction, and the statements before it left nothing 133ms
+   ✓ a file that opens or closes a transaction > begin in the middle of a file: file-failed with a message that says transaction, and the statements before it left nothing 140ms
+   ✓ a file that opens or closes a transaction > savepoint in the middle of a file: file-failed with a message that says transaction, and the statements before it left nothing 142ms
+   ✓ a file that opens or closes a transaction > a do block that commits in the middle of a file: file-failed with a message that says transaction, and the statements before it left nothing 128ms
+   ✓ a file that opens or closes a transaction > a file with a plpgsql body, and the words inside a string and a comment, is applied 131ms
+   ✓ a session of its own > a file that sets a search path, a role and a temporary table; the next file meets the defaults, and no temporary table 137ms
+   × the caller's shell chooses nothing of a session > with PGOPTIONS, PGAPPNAME and PGCLIENTENCODING set, a file meets the search path, application name and client encoding of a run with none set 421ms
+     → expected [ { search_path: 'pg_catalog', …(2) } ] to deeply equal [ { …(3) } ]
+   × the caller's shell chooses nothing of a session > with PGSSLMODE=require set for the run, the run ends as it does with none set: the file is applied 167ms
+     → the run in a process of its own ended 1: /home/dxb/DxB Global OS/node_modules/.pnpm/pg@8.22.0/node_modules/pg/lib/connection.js:85
+          return self.emit('error', new Error('The server does not support SSL connections'))
+                                    ^
+
+Error: The server does not support SSL connections
+    at Socket.<anonymous> (/home/dxb/DxB Global OS/node_modules/.pnpm/pg@8.22.0/node_modules/pg/lib/connection.js:85:37)
+    at Object.onceWrapper (node:events:634:26)
+    at Socket.emit (node:events:519:28)
+    at addChunk (node:internal/streams/readable:561:12)
+    at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+    at Readable.push (node:internal/streams/readable:392:5)
+    at TCP.onStreamRead (node:internal/stream_base_commons:189:23)
+
+Node.js v22.23.3
+
+   × the caller's shell chooses nothing of a session > with PGSSLNEGOTIATION=direct set for the run, the run ends as it does with none set: the file is applied 165ms
+     → the run in a process of its own ended 1: /home/dxb/DxB Global OS/node_modules/.pnpm/pg@8.22.0/node_modules/pg/lib/connection-parameters.js:111
+      throw new Error('sslnegotiation=direct requires SSL to be enabled')
+            ^
+
+Error: sslnegotiation=direct requires SSL to be enabled
+    at new ConnectionParameters (/home/dxb/DxB Global OS/node_modules/.pnpm/pg@8.22.0/node_modules/pg/lib/connection-parameters.js:111:13)
+    at new Client (/home/dxb/DxB Global OS/node_modules/.pnpm/pg@8.22.0/node_modules/pg/lib/client.js:54:33)
+    at inASession (file:///home/dxb/DxB%20Global%20OS/foundation/chain/src/session.ts:14:16)
+    at underTheLock (file:///home/dxb/DxB%20Global%20OS/foundation/chain/src/lock.ts:37:10)
+    at runChain (file:///home/dxb/DxB%20Global%20OS/foundation/chain/src/run.ts:58:10)
+    at applyChain (file:///home/dxb/DxB%20Global%20OS/foundation/chain/src/run.ts:97:10)
+    at file:///home/dxb/DxB%20Global%20OS/foundation/tests/chain/fixtures/a-run-in-its-own-process.ts:26:23
+    at ModuleJob.run (node:internal/modules/esm/module_job:343:25)
+    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:681:26)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5)
+
+Node.js v22.23.3
+
+   × the caller's shell chooses nothing of a session > with PGREPLICATION=database set for the run, the run ends as it does with none set: the file is applied 168ms
+     → the run in a process of its own ended 1: /home/dxb/DxB Global OS/node_modules/.pnpm/pg@8.22.0/node_modules/pg/lib/client.js:652
+          Error.captureStackTrace(err)
+                ^
+
+error: extended query protocol not supported in a replication connection
+    at /home/dxb/DxB Global OS/node_modules/.pnpm/pg@8.22.0/node_modules/pg/lib/client.js:652:17
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async granted (file:///home/dxb/DxB%20Global%20OS/foundation/chain/src/lock.ts:19:22)
+    at async file:///home/dxb/DxB%20Global%20OS/foundation/chain/src/lock.ts:38:11
+    at async inASession (file:///home/dxb/DxB%20Global%20OS/foundation/chain/src/session.ts:20:12)
+    at async file:///home/dxb/DxB%20Global%20OS/foundation/tests/chain/fixtures/a-run-in-its-own-process.ts:26:17 {
+  length: 136,
+  severity: 'ERROR',
+  code: '08P01',
+  detail: undefined,
+  hint: undefined,
+  position: undefined,
+  internalPosition: undefined,
+  internalQuery: undefined,
+  where: undefined,
+  schema: undefined,
+  table: undefined,
+  column: undefined,
+  dataType: undefined,
+  constraint: undefined,
+  file: 'postgres.c',
+  line: '5035',
+  routine: 'forbidden_in_wal_sender'
+}
+
+Node.js v22.23.3
+
+   ✓ a populated database upgraded > a third file alters a table that holds rows and adds another: the rows are there, and the first two ledger rows are unchanged to the instant 160ms
+   ✓ one runner at a time > while a run sits in a file that sleeps, a second run with no wait is refused at once: busy — and the first goes on to its end  3137ms
+   ✓ one runner at a time > a second run with a wait stands at the lock while the first sleeps, runs after it, and applies nothing  3182ms
+   × one runner at a time > a file added while a run waits for the lock is applied by that run: its disk is the disk as it stands under the lock 3180ms
+     → expected { state: 'applied', applied: [], …(1) } to deeply equal { state: 'applied', …(2) }
+   ✓ one runner at a time > a wait that runs out is the same refusal: busy, after the wait and not before  3130ms
+   ✓ one runner at a time > after a run ended — in a failed file, well, in offences — the next takes the lock at once 176ms
+   × the ledger moved under a run > another hand writes at the position a run's third file will want: ledger-moved, the third left nothing, the first two stay ledgered 3154ms
+     → the call was not refused: it answered {"state":"applied","applied":["0001-people.sql","0002-slow.sql","0003-later.sql"],"standing":3}
+   ✓ the target > a database whose identity the list does not hold is refused: not-listed, and no schema os_chain is made in it 103ms
+   ✓ the target > a list that loses the identity while a file sleeps: the next file's connection is refused, and the first file stays ledgered  3180ms
+   × the target > the caller's own target changed to a second listed database while a file sleeps: the run finishes on the first, and the second is untouched 3402ms
+     → expected { state: 'file-failed', …(3) } to deeply equal { state: 'applied', …(2) }
+   ✓ the command > up --root <a root with a disk offence>: the OFFENCE line, then CHAIN_RED, exit 1 69ms
+   ✓ the command > up --root <dir> --wait <a positive integer> is the same command: the wait is taken, and the answer is the disk's 68ms
+   ✓ the command > up --root <dir> --wait <five digits> is taken too: the answer is the disk's 69ms
+   ✓ the command > up --root <a directory with no schema/>: CHAIN_REFUSED no-chain, exit 2 70ms
+   ✓ the command > a wrong word: the usage line, exit 2 68ms
+   ✓ the command > the word in capitals: the usage line, exit 2 72ms
+   ✓ the command > no word at all: the usage line, exit 2 67ms
+   × the command > up --root with an option's name where its value belongs: the usage line, exit 2 72ms
+     → expected [ 'CHAIN_REFUSED no-chain' ] to deeply equal [ Array(1) ]
+   ✓ the command > up --root <dir> and then a word after the options: the usage line, exit 2 88ms
+   ✓ the command > up --root <dir> and then an option the command does not have: the usage line, exit 2 98ms
+   ✓ the command > up --root <dir> and then --wait 0: the usage line, exit 2 89ms
+   ✓ the command > up --root <dir> and then --wait with a fraction: the usage line, exit 2 106ms
+   ✓ the command > up --root <dir> and then --wait with a word: the usage line, exit 2 84ms
+   ✓ the command > up --root <dir> and then --wait with nothing after it: the usage line, exit 2 91ms
+   × the command > up --root <dir> and then --wait with six digits: the usage line, exit 2 101ms
+     → expected [ 'CHAIN_REFUSED no-chain' ] to deeply equal [ Array(1) ]
+   ✓ the command > after them, the instance's own postgres database is as it was before them: its ledger to the instant, or none, and its schemas 10ms
+   ✓ what the module leaves > no database that it made still stands 8ms
+ ✓ bench/no-old-address.test.ts (28 tests) 32ms
+ ✓ chain/read-chain.test.ts (33 tests) 12ms
+ ❯ chain/answer.test.ts (15 tests | 1 failed) 6ms
+   ✓ answerOf — a run that ended in an outcome > applied: CHAIN_GREEN with how many were applied now and how many stand, exit 0 1ms
+   ✓ answerOf — a run that ended in an outcome > applied, with nothing to apply: CHAIN_GREEN applied=0, exit 0 0ms
+   ✓ answerOf — a run that ended in an outcome > offences: one OFFENCE line each, as they were given, then CHAIN_RED with their count, exit 1 0ms
+   × answerOf — a run that ended in an outcome > offences: a detail that holds a line break is said on one line 3ms
+     → expected 'OFFENCE unknown-entry notes\nCHAIN_GR…' not to match /[\r\n]/
+   ✓ answerOf — a run that ended in an outcome > file-failed: FAILED with the file and the server's message, then CHAIN_RED with how many were applied before it, exit 1 0ms
+   ✓ answerOf — a run that ended in an outcome > file-failed: a message of several lines is said on one 0ms
+   ✓ answerOf — a run that was refused > ChainRefused no-chain: CHAIN_REFUSED no-chain, exit 2 0ms
+   ✓ answerOf — a run that was refused > ChainRefused busy: CHAIN_REFUSED busy, exit 2 0ms
+   ✓ answerOf — a run that was refused > ChainRefused ledger-unknown: CHAIN_REFUSED ledger-unknown, exit 2 0ms
+   ✓ answerOf — a run that was refused > ChainRefused ledger-moved: CHAIN_REFUSED ledger-moved, exit 2 0ms
+   ✓ answerOf — a run that was refused > ChainRefused target-moved: CHAIN_REFUSED target-moved, exit 2 0ms
+   ✓ answerOf — a run that was refused > the bench's TargetRefused company: CHAIN_REFUSED target-company, exit 2 0ms
+   ✓ answerOf — a run that was refused > the bench's TargetRefused old-bench: CHAIN_REFUSED target-old-bench, exit 2 0ms
+   ✓ answerOf — a run that was refused > the bench's TargetRefused not-listed: CHAIN_REFUSED target-not-listed, exit 2 0ms
+   ✓ answerOf — a run that was refused > the bench's TargetRefused unreadable: CHAIN_REFUSED target-unreadable, exit 2 0ms
+ ✓ chain/compare.test.ts (13 tests) 4ms
+
+⎯⎯⎯⎯⎯⎯ Failed Tests 16 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  chain/answer.test.ts > answerOf — a run that ended in an outcome > offences: a detail that holds a line break is said on one line
+AssertionError: expected 'OFFENCE unknown-entry notes\nCHAIN_GR…' not to match /[\r\n]/
+
+[32m- Expected:[39m 
+/[\r\n]/
+
+[31m+ Received:[39m 
+"OFFENCE unknown-entry notes
+CHAIN_GREEN applied=0 standing=0"
+
+ ❯ chain/answer.test.ts:41:33
+     39|     expect(answer.lines[0]).toMatch(/^OFFENCE unknown-entry notes\s/);
+     40|     expect(answer.lines[0]).toContain("CHAIN_GREEN applied=0 standing=…
+     41|     expect(answer.lines[0]).not.toMatch(/[\r\n]/);
+       |                                 ^
+     42|     expect(answer.lines[1]).toBe("CHAIN_RED offences=1");
+     43|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/16]⎯
+
+ FAIL  chain/on-the-bench.test.ts > the bootstrap — a ledger this runner does not know > the primary key on position was dropped: ledger-unknown, and nothing is changed
+ FAIL  chain/on-the-bench.test.ts > the bootstrap — a ledger this runner does not know > the unique on file was dropped: ledger-unknown, and nothing is changed
+ FAIL  chain/on-the-bench.test.ts > the bootstrap — a ledger this runner does not know > the check on position was dropped: ledger-unknown, and nothing is changed
+ FAIL  chain/on-the-bench.test.ts > the bootstrap — a ledger this runner does not know > the check on kind was dropped: ledger-unknown, and nothing is changed
+ FAIL  chain/on-the-bench.test.ts > the bootstrap — a ledger this runner does not know > the check on hash was dropped: ledger-unknown, and nothing is changed
+ FAIL  chain/on-the-bench.test.ts > the bootstrap — a ledger this runner does not know > a trigger swallows every row written to it: ledger-unknown, and nothing is changed
+Error: the call was not refused: it answered {"state":"applied","applied":["0001-people.sql"],"standing":1}
+ ❯ refusalOf chain/fixtures/refusal.ts:14:9
+     12|     throw failure;
+     13|   }
+     14|   throw new Error(`the call was not refused: it answered ${JSON.string…
+       |         ^
+     15| }
+     16| 
+ ❯ chain/cases/bootstrap.ts:191:25
+ ❯ chain/fixtures/throwaway-database.ts:114:7
+ ❯ connected chain/fixtures/throwaway-database.ts:38:12
+ ❯ inAThrowawayDatabase chain/fixtures/throwaway-database.ts:110:5
+ ❯ chain/cases/bootstrap.ts:187:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/16]⎯
+
+ FAIL  chain/on-the-bench.test.ts > the caller's shell chooses nothing of a session > with PGOPTIONS, PGAPPNAME and PGCLIENTENCODING set, a file meets the search path, application name and client encoding of a run with none set
+AssertionError: expected [ { search_path: 'pg_catalog', …(2) } ] to deeply equal [ { …(3) } ]
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[2m  [[22m
+[2m    {[22m
+[32m-     "application_name": "",[39m
+[31m+     "application_name": "planted by the caller's shell",[39m
+[2m      "client_encoding": "UTF8",[22m
+[32m-     "search_path": "\"\\$user\", public, extensions",[39m
+[31m+     "search_path": "pg_catalog",[39m
+[2m    },[22m
+[2m  ][22m
+
+ ❯ chain/cases/sessions-and-upgrade.ts:82:32
+     80| 
+     81|       expect(withNone.theFile).toHaveLength(1);
+     82|       expect(withThem.theFile).toEqual(withNone.theFile);
+       |                                ^
+     83|     });
+     84| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/16]⎯
+
+ FAIL  chain/on-the-bench.test.ts > the caller's shell chooses nothing of a session > with PGSSLMODE=require set for the run, the run ends as it does with none set: the file is applied
+Error: the run in a process of its own ended 1: /home/dxb/DxB Global OS/node_modules/.pnpm/pg@8.22.0/node_modules/pg/lib/connection.js:85
+          return self.emit('error', new Error('The server does not support SSL connections'))
+                                    ^
+
+Error: The server does not support SSL connections
+    at Socket.<anonymous> (/home/dxb/DxB Global OS/node_modules/.pnpm/pg@8.22.0/node_modules/pg/lib/connection.js:85:37)
+    at Object.onceWrapper (node:events:634:26)
+    at Socket.emit (node:events:519:28)
+    at addChunk (node:internal/streams/readable:561:12)
+    at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+    at Readable.push (node:internal/streams/readable:392:5)
+    at TCP.onStreamRead (node:internal/stream_base_commons:189:23)
+
+Node.js v22.23.3
+
+ ❯ Socket.<anonymous> ../../node_modules/.pnpm/pg@8.22.0/node_modules/pg/lib/connection.js:85:37
+ ❯ runApart chain/fixtures/command.ts:52:54
+     50|   const said = await started(A_RUN, [target.connectionString, target.s…
+     51|   const [answer] = said.lines;
+     52|   if (said.code !== 0 || answer === undefined) throw new Error(`the ru…
+       |                                                      ^
+     53|   return JSON.parse(answer) as RanApart;
+     54| }
+ ❯ chain/cases/sessions-and-upgrade.ts:92:21
+ ❯ chain/fixtures/throwaway-database.ts:114:7
+ ❯ connected chain/fixtures/throwaway-database.ts:38:12
+ ❯ inAThrowawayDatabase chain/fixtures/throwaway-database.ts:110:5
+ ❯ chain/cases/sessions-and-upgrade.ts:90:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/16]⎯
+
+ FAIL  chain/on-the-bench.test.ts > the caller's shell chooses nothing of a session > with PGSSLNEGOTIATION=direct set for the run, the run ends as it does with none set: the file is applied
+Error: the run in a process of its own ended 1: /home/dxb/DxB Global OS/node_modules/.pnpm/pg@8.22.0/node_modules/pg/lib/connection-parameters.js:111
+      throw new Error('sslnegotiation=direct requires SSL to be enabled')
+            ^
+
+Error: sslnegotiation=direct requires SSL to be enabled
+    at new ConnectionParameters (/home/dxb/DxB Global OS/node_modules/.pnpm/pg@8.22.0/node_modules/pg/lib/connection-parameters.js:111:13)
+    at new Client (/home/dxb/DxB Global OS/node_modules/.pnpm/pg@8.22.0/node_modules/pg/lib/client.js:54:33)
+    at inASession (file:///home/dxb/DxB%20Global%20OS/foundation/chain/src/session.ts:14:16)
+    at underTheLock (file:///home/dxb/DxB%20Global%20OS/foundation/chain/src/lock.ts:37:10)
+    at runChain (file:///home/dxb/DxB%20Global%20OS/foundation/chain/src/run.ts:58:10)
+    at applyChain (file:///home/dxb/DxB%20Global%20OS/foundation/chain/src/run.ts:97:10)
+    at file:///home/dxb/DxB%20Global%20OS/foundation/tests/chain/fixtures/a-run-in-its-own-process.ts:26:23
+    at ModuleJob.run (node:internal/modules/esm/module_job:343:25)
+    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:681:26)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5)
+
+Node.js v22.23.3
+
+ ❯ new ConnectionParameters ../../node_modules/.pnpm/pg@8.22.0/node_modules/pg/lib/connection-parameters.js:111:13
+ ❯ new Client ../../node_modules/.pnpm/pg@8.22.0/node_modules/pg/lib/client.js:54:33
+ ❯ inASession ../../../DxB%20Global%20OS/foundation/chain/src/session.ts:14:16
+ ❯ underTheLock ../../../DxB%20Global%20OS/foundation/chain/src/lock.ts:37:10
+ ❯ runChain ../../../DxB%20Global%20OS/foundation/chain/src/run.ts:58:10
+ ❯ applyChain ../../../DxB%20Global%20OS/foundation/chain/src/run.ts:97:10
+ ❯ ../../../DxB%20Global%20OS/foundation/tests/chain/fixtures/a-run-in-its-own-process.ts:26:23
+ ❯ runApart chain/fixtures/command.ts:52:54
+     50|   const said = await started(A_RUN, [target.connectionString, target.s…
+     51|   const [answer] = said.lines;
+     52|   if (said.code !== 0 || answer === undefined) throw new Error(`the ru…
+       |                                                      ^
+     53|   return JSON.parse(answer) as RanApart;
+     54| }
+ ❯ chain/cases/sessions-and-upgrade.ts:92:21
+ ❯ chain/fixtures/throwaway-database.ts:114:7
+ ❯ connected chain/fixtures/throwaway-database.ts:38:12
+ ❯ inAThrowawayDatabase chain/fixtures/throwaway-database.ts:110:5
+ ❯ chain/cases/sessions-and-upgrade.ts:90:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/16]⎯
+
+ FAIL  chain/on-the-bench.test.ts > the caller's shell chooses nothing of a session > with PGREPLICATION=database set for the run, the run ends as it does with none set: the file is applied
+Error: the run in a process of its own ended 1: /home/dxb/DxB Global OS/node_modules/.pnpm/pg@8.22.0/node_modules/pg/lib/client.js:652
+          Error.captureStackTrace(err)
+                ^
+
+error: extended query protocol not supported in a replication connection
+    at /home/dxb/DxB Global OS/node_modules/.pnpm/pg@8.22.0/node_modules/pg/lib/client.js:652:17
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async granted (file:///home/dxb/DxB%20Global%20OS/foundation/chain/src/lock.ts:19:22)
+    at async file:///home/dxb/DxB%20Global%20OS/foundation/chain/src/lock.ts:38:11
+    at async inASession (file:///home/dxb/DxB%20Global%20OS/foundation/chain/src/session.ts:20:12)
+    at async file:///home/dxb/DxB%20Global%20OS/foundation/tests/chain/fixtures/a-run-in-its-own-process.ts:26:17 {
+  length: 136,
+  severity: 'ERROR',
+  code: '08P01',
+  detail: undefined,
+  hint: undefined,
+  position: undefined,
+  internalPosition: undefined,
+  internalQuery: undefined,
+  where: undefined,
+  schema: undefined,
+  table: undefined,
+  column: undefined,
+  dataType: undefined,
+  constraint: undefined,
+  file: 'postgres.c',
+  line: '5035',
+  routine: 'forbidden_in_wal_sender'
+}
+
+Node.js v22.23.3
+
+ ❯ ../../node_modules/.pnpm/pg@8.22.0/node_modules/pg/lib/client.js:652:17
+ ❯ granted ../../../DxB%20Global%20OS/foundation/chain/src/lock.ts:19:22
+ ❯ ../../../DxB%20Global%20OS/foundation/chain/src/lock.ts:38:11
+ ❯ inASession ../../../DxB%20Global%20OS/foundation/chain/src/session.ts:20:12
+ ❯ runApart chain/fixtures/command.ts:52:54
+     50|   const said = await started(A_RUN, [target.connectionString, target.s…
+     51|   const [answer] = said.lines;
+     52|   if (said.code !== 0 || answer === undefined) throw new Error(`the ru…
+       |                                                      ^
+     53|   return JSON.parse(answer) as RanApart;
+     54| }
+ ❯ chain/cases/sessions-and-upgrade.ts:92:21
+ ❯ chain/fixtures/throwaway-database.ts:114:7
+ ❯ connected chain/fixtures/throwaway-database.ts:38:12
+ ❯ inAThrowawayDatabase chain/fixtures/throwaway-database.ts:110:5
+ ❯ chain/cases/sessions-and-upgrade.ts:90:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/16]⎯
+
+ FAIL  chain/on-the-bench.test.ts > one runner at a time > a file added while a run waits for the lock is applied by that run: its disk is the disk as it stands under the lock
+AssertionError: expected { state: 'applied', applied: [], …(1) } to deeply equal { state: 'applied', …(2) }
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[2m  {[22m
+[32m-   "applied": [[39m
+[32m-     "0002-added.sql",[39m
+[32m-   ],[39m
+[32m-   "standing": 2,[39m
+[31m+   "applied": [],[39m
+[31m+   "standing": 1,[39m
+[2m    "state": "applied",[22m
+[2m  }[22m
+
+ ❯ chain/cases/one-runner.ts:81:42
+     79|           writeFileSync(inSchema(root, "0002-added.sql"), "create tabl…
+     80|           expect(first.ended()).toBe(false);
+     81|           expect(await second.outcome()).toEqual({ state: "applied", a…
+       |                                          ^
+     82|           expect(await first.outcome()).toEqual(SLOW_APPLIED);
+     83|         });
+ ❯ withASecondRunAtTheLock chain/cases/one-runner.ts:39:5
+ ❯ chain/cases/one-runner.ts:76:9
+ ❯ chain/fixtures/throwaway-database.ts:114:7
+ ❯ connected chain/fixtures/throwaway-database.ts:38:12
+ ❯ inAThrowawayDatabase chain/fixtures/throwaway-database.ts:110:5
+ ❯ chain/cases/one-runner.ts:74:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/16]⎯
+
+ FAIL  chain/on-the-bench.test.ts > the ledger moved under a run > another hand writes at the position a run's third file will want: ledger-moved, the third left nothing, the first two stay ledgered
+Error: the call was not refused: it answered {"state":"applied","applied":["0001-people.sql","0002-slow.sql","0003-later.sql"],"standing":3}
+ ❯ refusalOf chain/fixtures/refusal.ts:14:9
+     12|     throw failure;
+     13|   }
+     14|   throw new Error(`the call was not refused: it answered ${JSON.string…
+       |         ^
+     15| }
+     16| 
+ ❯ chain/cases/one-runner.ts:142:27
+ ❯ chain/fixtures/throwaway-database.ts:114:7
+ ❯ connected chain/fixtures/throwaway-database.ts:38:12
+ ❯ inAThrowawayDatabase chain/fixtures/throwaway-database.ts:110:5
+ ❯ chain/cases/one-runner.ts:128:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/16]⎯
+
+ FAIL  chain/on-the-bench.test.ts > the target > the caller's own target changed to a second listed database while a file sleeps: the run finishes on the first, and the second is untouched
+AssertionError: expected { state: 'file-failed', …(3) } to deeply equal { state: 'applied', …(2) }
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[2m  {[22m
+[2m    "applied": [[22m
+[2m      "0001-slow.sql",[22m
+[32m-     "0002-next.sql",[39m
+[2m    ],[22m
+[32m-   "standing": 2,[39m
+[32m-   "state": "applied",[39m
+[31m+   "file": "0002-next.sql",[39m
+[31m+   "message": "relation \"os_chain.ledger\" does not exist",[39m
+[31m+   "state": "file-failed",[39m
+[2m  }[22m
+
+ ❯ chain/cases/the-target.ts:74:39
+     72|           target.connectionString = second.target.connectionString;
+     73|           expect(run.ended()).toBe(false);
+     74|           expect(await run.outcome()).toEqual({ state: "applied", appl…
+       |                                       ^
+     75|         } finally {
+     76|           await run.over;
+ ❯ chain/fixtures/throwaway-database.ts:130:7
+ ❯ chain/fixtures/throwaway-database.ts:114:7
+ ❯ connected chain/fixtures/throwaway-database.ts:38:12
+ ❯ inAThrowawayDatabase chain/fixtures/throwaway-database.ts:110:5
+ ❯ chain/fixtures/throwaway-database.ts:114:7
+ ❯ connected chain/fixtures/throwaway-database.ts:38:12
+ ❯ inAThrowawayDatabase chain/fixtures/throwaway-database.ts:110:5
+ ❯ chain/cases/the-target.ts:60:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/16]⎯
+
+ FAIL  chain/on-the-bench.test.ts > the command > up --root with an option's name where its value belongs: the usage line, exit 2
+AssertionError: expected [ 'CHAIN_REFUSED no-chain' ] to deeply equal [ Array(1) ]
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[2m  [[22m
+[32m-   "usage: cli.ts up [--root <dir>] [--wait <seconds>]",[39m
+[31m+   "CHAIN_REFUSED no-chain",[39m
+[2m  ][22m
+
+ ❯ chain/cases/the-command.ts:62:39
+     60|     ])("%s: the usage line, exit 2", async (_what, args) => {
+     61|       const said = await chainCommand(args, COMMAND_MS);
+     62|       expect(said.lines, said.stderr).toEqual([USAGE]);
+       |                                       ^
+     63|       expect(said.code).toBe(2);
+     64|     });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[10/16]⎯
+
+ FAIL  chain/on-the-bench.test.ts > the command > up --root <dir> and then --wait with six digits: the usage line, exit 2
+AssertionError: expected [ 'CHAIN_REFUSED no-chain' ] to deeply equal [ Array(1) ]
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[2m  [[22m
+[32m-   "usage: cli.ts up [--root <dir>] [--wait <seconds>]",[39m
+[31m+   "CHAIN_REFUSED no-chain",[39m
+[2m  ][22m
+
+ ❯ chain/cases/the-command.ts:76:39
+     74|     ])("up --root <dir> and then %s: the usage line, exit 2", async (_…
+     75|       const said = await chainCommand(["up", "--root", emptyDirectory(…
+     76|       expect(said.lines, said.stderr).toEqual([USAGE]);
+       |                                       ^
+     77|       expect(said.code).toBe(2);
+     78|     });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[11/16]⎯
+
+
+ Test Files  2 failed | 3 passed (5)
+      Tests  16 failed | 145 passed (161)
+   Start at  11:57:22
+   Duration  33.06s (transform 140ms, setup 0ms, collect 310ms, tests 32.08s, environment 1ms, prepare 210ms)
+
