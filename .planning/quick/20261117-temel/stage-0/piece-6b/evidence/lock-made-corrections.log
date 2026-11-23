@@ -1,0 +1,117 @@
+Scope: all 20 workspace projects
+✓ Lockfile passes supply-chain policies (verified 13h ago)
+Lockfile is up to date, resolution step is skipped
+Progress: resolved 1, reused 0, downloaded 0, added 0
+Packages: +396
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Progress: resolved 396, reused 396, downloaded 0, added 396, done
+[WARN] Failed to create bin at /home/dxb/.cache/dxb/foundation-verify/run-ENPWVO/candidate/node_modules/.bin/dxb. ENOENT: no such file or directory, open '/home/dxb/.cache/dxb/foundation-verify/run-ENPWVO/candidate/tools/dxb-cli/dist/index.js'
+[WARN] Failed to create bin at /home/dxb/.cache/dxb/foundation-verify/run-ENPWVO/candidate/node_modules/.bin/video-learn. ENOENT: no such file or directory, open '/home/dxb/.cache/dxb/foundation-verify/run-ENPWVO/candidate/tools/video-learn/dist/cli.js'
+
+dependencies:
++ @playwright/mcp 0.0.78
++ @upstash/context7-mcp 3.2.4
+
+devDependencies:
++ @dxb/cli 0.0.0 <- tools/dxb-cli
++ @dxb/video-learn 0.0.0 <- tools/video-learn
++ @modelcontextprotocol/sdk 1.29.0
++ @playwright/test 1.61.1
++ @testing-library/react 16.3.2
++ @types/node 22.20.0
++ jsdom 29.1.1
++ kysely 0.29.3
++ react 19.2.7
++ react-dom 19.2.7
++ supabase 2.109.0
++ typescript 6.0.3
++ vitest 3.2.6
+
+Done in 734ms using pnpm v11.10.0
+
+ RUN  v3.2.6 /home/dxb/.cache/dxb/foundation-verify/run-ENPWVO/candidate/foundation/tests
+
+ ↓ snapshot/without-the-bench.test.ts (44 tests | 44 skipped)
+ ↓ upgrade/upgraded.test.ts (13 tests | 13 skipped)
+ ↓ upgrade/chain-at-bent.test.ts (18 tests | 18 skipped)
+ ↓ upgrade/chain-at.test.ts (24 tests | 24 skipped)
+ ↓ snapshot/a-file-left-out.test.ts (6 tests | 6 skipped)
+ ↓ upgrade/clean.test.ts (5 tests | 5 skipped)
+ ↓ snapshot/on-a-fresh-instance.test.ts (57 tests | 57 skipped)
+ ↓ upgrade/without-the-bench.test.ts (101 tests | 101 skipped)
+
+ Test Files  8 skipped (8)
+      Tests  268 skipped (268)
+   Start at  23:33:30
+   Duration  1.33s (transform 218ms, setup 0ms, collect 542ms, tests 0ms, environment 1ms, prepare 243ms)
+
+CASE added foundation/tests/upgrade/chain-at-bent.test.ts > §10.1 row 2 — a replace ref changes nothing of what is written (SOL A3) > the commit's replace ref bites in plain git: the middle commit reads as the last one's tree, and only without replace objects as its own (count 1)
+CASE added foundation/tests/upgrade/chain-at-bent.test.ts > §10.1 row 2 — a replace ref changes nothing of what is written (SOL A3) > chainAt of the middle commit, by its id and by its branch: the middle commit's own files, byte for byte (count 1)
+CASE added foundation/tests/upgrade/chain-at-bent.test.ts > §10.1 row 2 — a replace ref changes nothing of what is written (SOL A3) > the blob's replace ref bites in plain git: the middle commit's schema/0002-b.sql reads as the replacing bytes (count 1)
+CASE added foundation/tests/upgrade/chain-at-bent.test.ts > §10.1 row 2 — a replace ref changes nothing of what is written (SOL A3) > chainAt of the middle commit: the blob's own bytes, every file byte for byte (count 1)
+CASE added foundation/tests/upgrade/chain-at-bent.test.ts > §10.1 row 3 — a name under the three directories that is not UTF-8 is not-a-file (SOL A4) > the commit holds the name byte for byte, 0xff and all (count 1)
+CASE added foundation/tests/upgrade/chain-at-bent.test.ts > §10.1 row 3 — a name under the three directories that is not UTF-8 is not-a-file (SOL A4) > → not-a-file, and nothing written: a missing into is still missing, an empty into still empty (count 1)
+CASE added foundation/tests/upgrade/chain-at-bent.test.ts > §10.1 row 3 — a name under the three directories that is not UTF-8 is not-a-file (SOL A4) > the same name under db/migrations/, outside the three directories, is no refusal: the one file of the chain (count 1)
+CASE added foundation/tests/upgrade/chain-at-bent.test.ts > §10.1 row 4 — a revision that holds a `:` is unknown-revision, never handed to git (SOL B4) > in plain git each of them resolves — to the object named here — so the refusal below is the code's, not git's (count 1)
+CASE added foundation/tests/upgrade/chain-at-bent.test.ts > §10.1 row 4 — a revision that holds a `:` is unknown-revision, never handed to git (SOL B4) > a path in the index, a blob — :db/schema/0001-a.sql → unknown-revision, and nothing written (count 1)
+CASE added foundation/tests/upgrade/chain-at-bent.test.ts > §10.1 row 4 — a revision that holds a `:` is unknown-revision, never handed to git (SOL B4) > a path in the index, a gitlink to the middle commit — :db/staged-link → unknown-revision, and nothing written (count 1)
+CASE added foundation/tests/upgrade/chain-at-bent.test.ts > §10.1 row 4 — a revision that holds a `:` is unknown-revision, never handed to git (SOL B4) > a stage of a path in the index — :0:db/schema/0001-a.sql → unknown-revision, and nothing written (count 1)
+CASE added foundation/tests/upgrade/chain-at-bent.test.ts > §10.1 row 4 — a revision that holds a `:` is unknown-revision, never handed to git (SOL B4) > a path in a tree — main:db → unknown-revision, and nothing written (count 1)
+CASE added foundation/tests/upgrade/chain-at-bent.test.ts > §10.1 row 4 — a revision that holds a `:` is unknown-revision, never handed to git (SOL B4) > a path in a tree, a gitlink to the first commit — gitlink:db/functions/sub → unknown-revision, and nothing written (count 1)
+CASE added foundation/tests/upgrade/chain-at-bent.test.ts > §10.1 row 4 — a revision that holds a `:` is unknown-revision, never handed to git (SOL B4) > the root tree of HEAD — HEAD: → unknown-revision, and nothing written (count 1)
+CASE added foundation/tests/upgrade/chain-at-bent.test.ts > §10.1 row 4 — a revision that holds a `:` is unknown-revision, never handed to git (SOL B4) > a search of the commits' messages — :/chain changed → unknown-revision, and nothing written (count 1)
+CASE added foundation/tests/upgrade/chain-at-bent.test.ts > §10.1 row 5 — an into that is a symbolic link is into-not-empty, wherever it points (SOL B5) > a link to an empty directory → into-not-empty; nothing is written through it, and the link stands as it was (count 1)
+CASE added foundation/tests/upgrade/chain-at-bent.test.ts > §10.1 row 5 — an into that is a symbolic link is into-not-empty, wherever it points (SOL B5) > a link to nothing → into-not-empty, for a commit with a chain and for one with none; what it points at is not made (count 1)
+CASE added foundation/tests/upgrade/chain-at-bent.test.ts > §10.1 the bent repository is not written to > after every call above: HEAD, the index, every file of .git and of the working tree as before (count 1)
+CASE added foundation/tests/upgrade/upgraded.test.ts > piece 6b — built at A, given rows, upgraded: on a second fresh instance, in order > C.2 an applied file edited: chain up --root <edited> → CHAIN_RED, 0003-inside.sql changed; the snapshot still A's; rows is a.rows.txt, byte for byte; rows --kept a.rows.txt → ROWS_KEPT (count 1)
+CASE added foundation/tests/upgrade/upgraded.test.ts > piece 6b — built at A, given rows, upgraded: on a second fresh instance, in order > C.3 a change a populated table refuses: chain up --root <refused-when-populated> is red at 0005; the snapshot still A's — no ledger row for it; rows is a.rows.txt but for os.ticket_seq, drawn once: 115 called t — the row the file wrote is gone; the rows kept (count 1)
+CASE added foundation/tests/upgrade/upgraded.test.ts > piece 6b — built at A, given rows, upgraded: on a second fresh instance, in order > C.4 upgraded equals clean: chain up --root <B> → CHAIN_GREEN; SNAPSHOT_EQUAL to b.snapshot.txt; rows is b.rows.txt, byte for byte, but for os.ticket_seq as C.3 left it (115 called t); ROWS_KEPT against a.rows.txt and against what C.1 read (count 1)
+CASE added foundation/tests/upgrade/upgraded.test.ts > piece 6b — built at A, given rows, upgraded: on a second fresh instance, in order > C.6 (§10.1 row 10) the superuser makes in os a partitioned table and two partitions, a parent and a child that inherits it, an unlogged table, a table with no column, a quoted table and column — rows is exactly the lines written here, by the command and by the library (count 1)
+CASE added foundation/tests/upgrade/upgraded.test.ts > piece 6b — built at A, given rows, upgraded: on a second fresh instance, in order > C.7 (§10.1 row 10) os_reader, given SELECT on every table and sequence of os, with row security standing on os.parts — its policy parts_read would filter: rowsOf through it rejects with the server's refusal of row security, and gives no text (count 1)
+CASE added foundation/tests/upgrade/upgraded.test.ts > piece 6b — built at A, given rows, upgraded: on a second fresh instance, in order > C.8 (§10.1 row 7) the same login, row security lifted from os.parts by the superuser and still no USAGE on os_chain: rowsOf through it is C.6's text — the ledger it is not asked to read refuses nothing; row security put back (count 1)
+CASE added foundation/tests/upgrade/upgraded.test.ts > piece 6b — built at A, given rows, upgraded: on a second fresh instance, in order > C.9 (§10.1 row 10) rows --kept, its raw stdout byte for byte, final newline and all: ROWS_KEPT against C.6's text; ROWS_RED against b.rows.txt — C.5's difference (count 1)
+CASE added foundation/tests/upgrade/upgraded.test.ts > piece 6b — built at A, given rows, upgraded: on a second fresh instance, in order > C.10 (§10.1 row 8) a table of 150,000 rows made by the superuser in os: rowsOf reads it whole — 150,000 lines of it, the first and the last as written, the rest C.6's text; dropped after (count 1)
+CASE added foundation/tests/upgrade/without-the-bench.test.ts > §10.1 row 1 — a sequence whose direction changed is back (SOL A2) > ascending to descending, last_value and called the same — 110 called t both — the audit's case: back holds the - line of before and the + line of after (count 1)
+CASE added foundation/tests/upgrade/without-the-bench.test.ts > §10.1 row 1 — a sequence whose direction changed is back (SOL A2) > descending to ascending, last_value and called the same: back (count 1)
+CASE added foundation/tests/upgrade/without-the-bench.test.ts > §10.1 row 1 — a sequence whose direction changed is back (SOL A2) > ascending to descending with a last_value further on by the old direction (110 to 120): still back (count 1)
+CASE added foundation/tests/upgrade/without-the-bench.test.ts > §10.1 row 1 — a sequence whose direction changed is back (SOL A2) > descending to ascending with a last_value further on by the old direction (-10 to -20): still back (count 1)
+CASE added foundation/tests/upgrade/without-the-bench.test.ts > §10.1 row 1 — a sequence whose direction changed is back (SOL A2) > called gone from f to t with the direction changed — further on by every other measure: still back (count 1)
+CASE added foundation/tests/upgrade/without-the-bench.test.ts > §10.1 row 1 — a sequence whose direction changed is back (SOL A2) > the direction the same, further on: kept — the rule bites only on a turn (count 1)
+CASE added foundation/tests/upgrade/without-the-bench.test.ts > §10.1 row 6 — under a row's own key a value is compared as its text stands (SOL B3) > two rows that differ only in a nested object's key order: lost, `-` and `+` printed (count 1)
+CASE added foundation/tests/upgrade/without-the-bench.test.ts > §10.1 row 6 — under a row's own key a value is compared as its text stands (SOL B3) > two rows that differ only in white space inside a nested object: lost (count 1)
+CASE added foundation/tests/upgrade/without-the-bench.test.ts > §10.1 row 6 — under a row's own key a value is compared as its text stands (SOL B3) > two rows that differ only in white space inside a nested array: lost (count 1)
+CASE added foundation/tests/upgrade/without-the-bench.test.ts > §10.1 row 6 — under a row's own key a value is compared as its text stands (SOL B3) > "é" against "\u00e9" under a row's own key: lost — another text (count 1)
+CASE added foundation/tests/upgrade/without-the-bench.test.ts > §10.1 row 6 — under a row's own key a value is compared as its text stands (SOL B3) > "é" against "\u00e9" inside a nested value: lost (count 1)
+CASE added foundation/tests/upgrade/without-the-bench.test.ts > §10.1 row 6 — under a row's own key a value is compared as its text stands (SOL B3) > the same nested text, the row's own keys in another order and one added: kept — a row's own keys are still a set (count 1)
+CASE added foundation/tests/upgrade/without-the-bench.test.ts > §10.1 row 8 — no list is spread into a call's arguments (SOL B2) > 150,000 rows of one table in before and none in after: lost holds 150,000 lines, the first and the last as written; under ten seconds (count 1)
+CASE added foundation/tests/upgrade/without-the-bench.test.ts > §10.1 row 8 — no list is spread into a call's arguments (SOL B2) > 150,000 rows of one table, all kept; under ten seconds (count 1)
+CASE added foundation/tests/upgrade/without-the-bench.test.ts > §10.1 row 6 — rows --kept refuses a spelling the server never prints > no instance stands while these cases run (count 1)
+CASE added foundation/tests/upgrade/without-the-bench.test.ts > §10.1 row 6 — rows --kept refuses a spelling the server never prints > a last_value with leading zeros: 000110 → ROWS_REFUSED before-malformed, exit 2 (count 1)
+CASE added foundation/tests/upgrade/without-the-bench.test.ts > §10.1 row 6 — rows --kept refuses a spelling the server never prints > a last_value of minus zero: -0 → ROWS_REFUSED before-malformed, exit 2 (count 1)
+CASE added foundation/tests/upgrade/without-the-bench.test.ts > §10.1 row 6 — rows --kept refuses a spelling the server never prints > a last_value of minus zero with leading zeros: -0010 → ROWS_REFUSED before-malformed, exit 2 (count 1)
+CASE added foundation/tests/upgrade/without-the-bench.test.ts > §10.1 row 6 — rows --kept refuses a spelling the server never prints > a row whose unquoted name part holds a tab → ROWS_REFUSED before-malformed, exit 2 (count 1)
+CASE added foundation/tests/upgrade/without-the-bench.test.ts > §10.1 row 6 — rows --kept refuses a spelling the server never prints > a row whose unquoted table part holds an upper-case letter → ROWS_REFUSED before-malformed, exit 2 (count 1)
+CASE added foundation/tests/upgrade/without-the-bench.test.ts > §10.1 row 6 — rows --kept refuses a spelling the server never prints > a row whose unquoted schema part holds an upper-case letter → ROWS_REFUSED before-malformed, exit 2 (count 1)
+CASE added foundation/tests/upgrade/without-the-bench.test.ts > §10.1 row 6 — rows --kept refuses a spelling the server never prints > a row whose unquoted name part holds a $ → ROWS_REFUSED before-malformed, exit 2 (count 1)
+CASE added foundation/tests/upgrade/without-the-bench.test.ts > §10.1 row 6 — rows --kept refuses a spelling the server never prints > a row whose unquoted name part begins with a digit → ROWS_REFUSED before-malformed, exit 2 (count 1)
+CASE added foundation/tests/upgrade/without-the-bench.test.ts > §10.1 row 6 — rows --kept refuses a spelling the server never prints > a sequence whose unquoted name part holds an upper-case letter → ROWS_REFUSED before-malformed, exit 2 (count 1)
+CASE added foundation/tests/upgrade/without-the-bench.test.ts > §10.1 row 6 — rows --kept refuses a spelling the server never prints > a quoted name part holding a tab → no refusal of the file: the refused connection (count 1)
+CASE added foundation/tests/upgrade/without-the-bench.test.ts > §10.1 row 6 — rows --kept refuses a spelling the server never prints > a quoted name part holding upper-case letters → no refusal of the file: the refused connection (count 1)
+CASE added foundation/tests/upgrade/without-the-bench.test.ts > §10.1 row 6 — rows --kept refuses a spelling the server never prints > a quoted name part holding a $ → no refusal of the file: the refused connection (count 1)
+CASE added foundation/tests/upgrade/without-the-bench.test.ts > §10.1 row 6 — rows --kept refuses a spelling the server never prints > a quoted name part holding a space and a doubled quote → no refusal of the file: the refused connection (count 1)
+CASE added foundation/tests/upgrade/without-the-bench.test.ts > §10.1 row 6 — rows --kept refuses a spelling the server never prints > an unquoted name with an underscore and digits: _a1.b_2 → no refusal of the file: the refused connection (count 1)
+CASE added foundation/tests/upgrade/without-the-bench.test.ts > §10.1 row 6 — rows --kept refuses a spelling the server never prints > a last_value of 0, and a negative one → no refusal of the file: the refused connection (count 1)
+CASE removed foundation/tests/upgrade/upgraded.test.ts > piece 6b — built at A, given rows, upgraded: on a second fresh instance, in order > C.2 an applied file edited: chain up --root <edited> → CHAIN_RED, 0003-inside.sql changed; the snapshot still A's; rows --kept a.rows.txt → ROWS_KEPT (count 1)
+CASE removed foundation/tests/upgrade/upgraded.test.ts > piece 6b — built at A, given rows, upgraded: on a second fresh instance, in order > C.3 a change a populated table refuses: chain up --root <refused-when-populated> is red at 0005; the snapshot still A's — no ledger row for it; the rows kept (count 1)
+CASE removed foundation/tests/upgrade/upgraded.test.ts > piece 6b — built at A, given rows, upgraded: on a second fresh instance, in order > C.4 upgraded equals clean: chain up --root <B> → CHAIN_GREEN; SNAPSHOT_EQUAL to b.snapshot.txt; rows is b.rows.txt, byte for byte; ROWS_KEPT against a.rows.txt and against what C.1 read (count 1)
+PROTECTED added foundation/tests/upgrade/cases/after-c5.ts
+PROTECTED added foundation/tests/upgrade/cases/before-spelled.ts
+PROTECTED added foundation/tests/upgrade/cases/kept-as-it-stands.ts
+PROTECTED added foundation/tests/upgrade/chain-at-bent.test.ts
+PROTECTED added foundation/tests/upgrade/fixtures/a-repository-bent.ts
+PROTECTED changed foundation/tests/upgrade/fixtures/a-repository.ts
+PROTECTED changed foundation/tests/upgrade/fixtures/variants/0005-not-null-no-default.sql
+PROTECTED changed foundation/tests/upgrade/upgraded.test.ts
+PROTECTED changed foundation/tests/upgrade/without-the-bench.test.ts
+LOCK_WRITTEN piece=piece-6 cases=268 protected=95
+lock exit=0

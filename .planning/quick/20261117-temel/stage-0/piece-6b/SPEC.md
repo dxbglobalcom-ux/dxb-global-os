@@ -327,3 +327,26 @@ same bytes for the same rows; a reader that writes nothing; `chainAt` gives the 
 - **Sequence positions are not read in the transaction's snapshot** (the audit's remark): the proofs run when
   nothing writes, as 6a §9 says of the catalogue's functions.
 
+### 10.3 What the corrections' cases pinned (read and accepted by the lead)
+
+The cases were written by a hand that wrote neither the first cases nor the code, and seen red each for its own
+reason before the code changed (`evidence/lead-run-on-the-corrections-tests.log`; the neutralised runs are in that
+hand's report).
+
+1. **C.3's refused file** inserts its row with `overriding system value`, so that one sequence is drawn and named,
+   and lifts the force of row security for the insert as B's `0005` does. After it the rows' text is `a.rows.txt`
+   but for `os.ticket_seq`, which reads `115 called t`: the row is gone, the draw is not.
+2. **C.4 reads `b.rows.txt` but for that one line**, written in the case — nothing is put back by hand between the
+   refused upgrade and the one under proof, so C.4 reads what the delivery path left; a `setval` would hide a B
+   that moved the sequence. `b.rows.txt` is unchanged; C.5 compares with the file and its difference is as before.
+3. **A login reads the rows' text** (rows 7 and 10): `os_reader` over TCP, given SELECT on every table and sequence
+   of `os` by the superuser. With row security standing on `os.parts` its reading is refused with the server's own
+   words; with it lifted, and still no USAGE on `os_chain`, it reads the same text the installer reads.
+4. Of the revisions holding a `:`, those that name a blob or a tree were refused already (they are no commit); the
+   ones that today resolve to a commit are an index gitlink, a gitlink under a tree, and `:/<text>`.
+5. A reserved word standing unquoted in a `before` file's name (`os.select`) is accepted: the rule is the letters,
+   not the server's list of words. Not pinned.
+6. `GIT_NO_LAZY_FETCH` has no case: only a promisor clone could show it.
+7. A table of 150,000 rows is read whole on the bench (the module stays under its four minutes), and 150,000 lost
+   rows are printed.
+
