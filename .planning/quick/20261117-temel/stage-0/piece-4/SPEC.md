@@ -352,3 +352,109 @@ runs) and 5 green (piece 3's behaviour and the harness) — `evidence/lead-run-o
 progress lines on stderr; the command's green, `pass-failed` and `manifest` lines on a real run (they would write
 to the instance's own database — `answerOf` covers the lines, piece 5 makes the first real run); "row security
 hid a row" (the proof's comparison is the same for a hidden row as for a rewritten one, which is tested).
+
+## 12. After the two blind audits (`SOL.md` — GPT-6.2 Sol, xhigh; `fable-audit.md` — Fable 5.2, high) — the contract as corrected
+
+Sol: seven A, six B. Fable: two A, nine B. They agree on the heart of it, and the code hand had met the first
+finding by its own probe before either: **the run could end green while a function kept a body its file never
+set, and while a removal reached a table that has no file.** Both are what this piece exists to make impossible,
+and the first was the lead's own contract (§6's check proved that a row moved, not that a body was replaced).
+**Each finding was weighed against what the piece is for** — after a green run every function in `os` is exactly
+its file's, none stands without a file, every vocabulary that has a file reads as its file does, and nothing else
+was written — on a database built from nothing and on one upgraded from any earlier state. A finding that touches
+that is taken, whatever its grade; one that hardens the runner against a hand that already writes the chain's own
+files or holds the operator's machine is not built, with the reason. Where this section and §4–§9a differ, this
+section holds. The mechanisms below were measured first (`evidence/measure-corrections.sh`, `.out`).
+
+**Taken — tests first, then code:**
+
+1. **A function file begins with its own function** (Sol A1, Fable A1, the code hand's probe). Its text — after
+   white space and `--` comments, nothing else — begins with `create or replace function os.<name>(`, or
+   `procedure`, or `aggregate`, in any case and with any white space between the words (none inside
+   `os.<name>`). A file that does not is `malformed`, detail `functions/<name>` — on the disk, before any
+   connection. So the first statement the server executes of a file sets its function's body, on every run: a
+   file that only grants, alters, comments, creates "if it is not there" or names its function without the schema
+   never reaches the server. **A comment-only function file is `malformed` from here** (§9a said it was a file);
+   a block comment before the statement is not accepted (it nests, and a pattern cannot read that).
+2. **The per-file check reads `pg_proc` in every schema** (Fable A1): an unqualified `create` lands in `public`
+   (measured). A row outside `os` that a file made, moved or removed fails the file as one inside does; in §6's
+   message such a row is said `<schema>.<name>`, a row of `os` bare as before, each list ascending by what is said.
+3. **Every function file meets the same session** (Sol A2, B1; Fable B1). After each file's text and before its
+   rows are read, the runner says `reset role` and `reset all` (measured: role, search path, client encoding and
+   every setting are back, inside the transaction, also after `set local`). So a file's role, path or encoding
+   reaches neither the runner's reading nor the next file — whose bytes would otherwise be read in another
+   encoding — and the manifest's arguments are said the same whatever a file set.
+4. **A removal cannot reach a table that has no file** (Sol A3, Fable A2). Before any write, every foreign key
+   onto a vocabulary's table, from any table of any schema, itself included, is read: one whose delete or update
+   action is not NO ACTION or RESTRICT fails the pass at that vocabulary's file —
+   `the reference <constraint> on <schema>.<table> writes when a row of os.<vocabulary> is removed or changed`
+   (the first by constraint name, then by table). Every statement of the pass says `only`: an inheritance child's
+   rows are not the vocabulary's.
+5. **A table is a vocabulary because the schema says so** (Fable B4) **[lead]**. The pass asks that the table's
+   comment begins with the word `vocabulary` — set by the schema file that made the table, so the table's kind is
+   decided where the table is born, ledgered and read in that diff — else `os.<table> is not marked as a
+   vocabulary`. For an empty array too: `[]` no longer empties whatever table a file is named after. A file
+   planted for a table of his policy is refused by the runner, not left to a reader.
+6. **Equal means reads the same** (Sol A6, Fable B2). The decision to write a row and the proof compare each
+   column's text, not the type's equality: `1.1` standing against a file's `1.10` is written; a key that the
+   type calls equal and that reads otherwise (`Alpha`, `alpha`) is not rewritten and fails the proof. A column of
+   type `json` can be owned now. The pass's transaction says `timezone = 'UTC'` and `datestyle = 'ISO, YMD'`, so a
+   time the file writes without an offset is the same instant on every database.
+7. **Rows that are there are changed, rows that are not are inserted — two statements, no `on conflict`**
+   (Sol B3, Fable B6); and **a table that already reads as its file is sent no statement at all** (Sol A3): it is
+   compared first. So an equal vocabulary fires no trigger and draws from no sequence; a standing row is changed
+   though the table has a not-null column of its own with no default (a new row there is still refused, by the
+   server); a deferrable primary key serves. **A key the file holds twice** is said before any write: `the file
+   holds a key twice: <the key's values, joined by ", ">` (the first by those values' text) — the server's
+   `ON CONFLICT` message of §9a is gone with the statement. **A column a row names twice** is said too: `the file
+   names the column <column> twice in one row` (the first by name) — read by the server from the text as `json`,
+   which keeps both (Fable B8, Sol B5).
+8. **What is deferred happens inside the pass** (Sol A4, B4; Fable B5): its transaction begins with `set
+   constraints all immediate`, so a deferred reference's refusal comes at the statement — `pass-failed` at that
+   file — and a deferred trigger has run before the proof reads (measured both). **Row security off** (Sol A5,
+   Fable B3): the transaction says `row_security = off`, so a statement row security would filter is refused by
+   the server instead of answering fewer rows.
+9. **The key is the key** (Sol B3, Fable B6): a primary key's included columns are not key columns
+   (`indnkeyatts`).
+10. **The lock is asked again as each pass's last act, before its commit** (Sol A7, Fable B7): the passes write no
+    ledger row, so piece 3's `ledger-moved` does not stand behind them. A lock lost by then ends the run as it
+    does before a file — thrown on, the pass rolled back.
+11. **A circle names its own tables only** (Sol B2): the tables that reference each other in a circle are those
+    of a strongly connected group of more than one — a table on a path between two circles is not named.
+12. **`.gitkeep`** (Fable's limit for piece 5): in `functions/` and `reference/` a regular file of that name is
+    not an entry of the pass — neither a file nor an offence. Git delivers no empty directory, and a directory
+    that left the checkout with its last file would silence the manifest.
+13. **The judgement's order**, for a file: a table · marked · no column named twice in a row · every key a column ·
+    a primary key · the key carried · no key twice · no reference that writes. Every file so, by name, before any
+    row of any table is written; a value the server cannot read as its column's type is refused there, at that
+    file.
+
+**The tests the audits asked for** (beside one for each item above, each asserting what stands afterwards from a
+session of the test's own): a body changed by hand between two runs of the same file is the file's again (a
+runner that skipped an unchanged file would stay green on the old case); a second function file after one that
+left its session changed; a value removed under `on delete cascade`, `set null` and an update action, with the
+other table's rows read to the instant; an inheritance child; a deferred reference and a deferred trigger; a
+standing `1.1` against `1.10`; the included key column; two circles joined by a path.
+
+**Not built, with the reason:**
+
+- A second writer on a vocabulary between its proof and the commit (Sol A7): a vocabulary is written by the pass
+  alone — no door writes one (PLAN.md §2 A), and that no runtime login may is piece 7's measurement.
+- An operator or a function planted on a search path to answer the runner's own catalogue reads (Sol B1, Fable
+  C): item 3 puts the path back before every reading; what remains needs a hand that writes the chain's files.
+- Row security pinned by a test (Sol A5, Fable B3): the bench's login bypasses it (measured), so the refusal
+  cannot be seen there; the statement is in, and piece 5's roles make the case real.
+- A range type or an extension inside `os` (Fable B6, Sol B1): its functions are rows no file holds, so the
+  manifest refuses them — loudly, for good. `os` holds what the chain's files make; said in §10.
+- A unique value moved from a row the file drops to a row it keeps (Fable B6): written before removed, so the
+  server refuses — loudly; it takes two deliveries. Removing first would break the opposite case.
+- Values PostgreSQL does not read that JavaScript does — `\u0000`, a lone surrogate, a number beyond its range
+  (Sol B5): refused by the server at the pass, at that file, nothing written — not on the disk.
+- A link swapped between the listing and the reading; `evidence/measure.sh`'s own drop by name (Sol, Fable C):
+  piece 3's "not built", and an evidence script that ran once on a throwaway database.
+
+**§10, corrected:** "the manifest is names and bodies" is true from item 1 on — a file's first statement sets its
+function's body on every run. "A vocabulary cannot own a column of type `json`" is gone (item 6). The check no
+longer reads `os` alone (item 2). **Added:** `os` holds no range type and no extension; a unique value moves
+between rows in two deliveries; a file's time without an offset is UTC; a trigger on a vocabulary is the schema's
+own code — what it writes elsewhere is not seen by the pass.

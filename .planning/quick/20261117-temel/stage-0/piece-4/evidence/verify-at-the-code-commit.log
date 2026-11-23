@@ -1,0 +1,62 @@
+== verify --all --rev HEAD (6f80cc26a8db9b2e8029d7680714d41a5b83fce5)
+OFFENCE lock-owed piece-5
+OFFENCE lock-owed piece-6
+OFFENCE lock-owed piece-7
+OFFENCE lock-owed piece-8
+OFFENCE lock-owed piece-9
+OFFENCE lock-owed piece-10
+OFFENCE lock-owed piece-11
+OFFENCE lock-owed piece-13
+JUDGE extracted lock=2cf8e2f851bc7ae08891d35940d1fbb838811e5d
+NOTE runner-name .planning/quick/20261117-temel/stage-0/piece-3/run-verify.sh:8
+NOTE runner-name .planning/quick/20261117-temel/stage-0/piece-4/SPEC.md:17
+NOTE runner-name .planning/quick/20261117-temel/stage-0/piece-4/run-verify.sh:9
+NOTE runner-name HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md:365
+NOTE runner-name HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md:370
+NOTE runner-name scripts/governance/ceo-approvals.json:807
+NOTE runner-name scripts/governance/ceo-approvals.json:954
+NOTE runner-name scripts/governance/ceo-approvals.json:956
+NOTE runner-name scripts/governance/ceo-approvals.json:1095
+NOTE runner-name scripts/governance/ceo-approvals.json:1896
+NOTE runner-name scripts/governance/ceo-approvals.json:1980
+LOCK_GREEN piece=piece-1 lock=2cf8e2f851bc7ae08891d35940d1fbb838811e5d candidate=5de20c854433021a6d4cab8d1815a2933e7c2bbf cases=177
+JUDGE extracted lock=2cf8e2f851bc7ae08891d35940d1fbb838811e5d
+NOTE runner-name .planning/quick/20261117-temel/stage-0/piece-3/run-verify.sh:8
+NOTE runner-name .planning/quick/20261117-temel/stage-0/piece-4/SPEC.md:17
+NOTE runner-name .planning/quick/20261117-temel/stage-0/piece-4/run-verify.sh:9
+NOTE runner-name HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md:365
+NOTE runner-name HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md:370
+NOTE runner-name scripts/governance/ceo-approvals.json:807
+NOTE runner-name scripts/governance/ceo-approvals.json:954
+NOTE runner-name scripts/governance/ceo-approvals.json:956
+NOTE runner-name scripts/governance/ceo-approvals.json:1095
+NOTE runner-name scripts/governance/ceo-approvals.json:1896
+NOTE runner-name scripts/governance/ceo-approvals.json:1980
+LOCK_GREEN piece=piece-2 lock=2cf8e2f851bc7ae08891d35940d1fbb838811e5d candidate=5de20c854433021a6d4cab8d1815a2933e7c2bbf cases=163
+JUDGE extracted lock=9ac4c993e25954eb696644407c3b12fc7a56894e
+NOTE runner-name .planning/quick/20261117-temel/stage-0/piece-3/run-verify.sh:8
+NOTE runner-name .planning/quick/20261117-temel/stage-0/piece-4/SPEC.md:17
+NOTE runner-name .planning/quick/20261117-temel/stage-0/piece-4/run-verify.sh:9
+NOTE runner-name HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md:365
+NOTE runner-name HOLDING-OS-MASTER-PLAN/00-BOARD-OPEN-WORK.md:370
+NOTE runner-name scripts/governance/ceo-approvals.json:807
+NOTE runner-name scripts/governance/ceo-approvals.json:954
+NOTE runner-name scripts/governance/ceo-approvals.json:956
+NOTE runner-name scripts/governance/ceo-approvals.json:1095
+NOTE runner-name scripts/governance/ceo-approvals.json:1896
+NOTE runner-name scripts/governance/ceo-approvals.json:1980
+LOCK_GREEN piece=piece-3 lock=9ac4c993e25954eb696644407c3b12fc7a56894e candidate=5de20c854433021a6d4cab8d1815a2933e7c2bbf cases=133
+JUDGE extracted lock=458335897fc16aedf31e005ac38a88cc318eea02
+NOTE runner-name .planning/quick/20261117-temel/stage-0/piece-4/SPEC.md:17
+NOTE runner-name .planning/quick/20261117-temel/stage-0/piece-4/run-verify.sh:9
+LOCK_GREEN piece=piece-4 lock=458335897fc16aedf31e005ac38a88cc318eea02 candidate=5de20c854433021a6d4cab8d1815a2933e7c2bbf cases=133
+LOCKS_RED pieces=4 red=0 owed=8
+verify exit=1
+== the old system's typecheck
+old typecheck exit=0
+== pnpm install --frozen-lockfile
+Done in 220ms using pnpm v11.10.0
+0
+== what stands
+INSTANCE_ABSENT
+0

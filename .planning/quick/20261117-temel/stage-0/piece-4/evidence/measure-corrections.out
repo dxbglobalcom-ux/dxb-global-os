@@ -1,0 +1,68 @@
+NOTICE:  database "chain_measure_p4c" does not exist, skipping
+== C1 a session put back after a function file: reset role, reset all — inside the runner's transaction
+     before: role=postgres search_path="\$user", public, extensions client_encoding=UTF8 timezone=UTC
+     the file left: role=pg_monitor search_path=os client_encoding=LATIN1 statement_timeout=5s
+     after reset role, reset all: role=postgres search_path="\$user", public, extensions client_encoding=UTF8 statement_timeout=0 temp table=true
+     after commit: role=postgres search_path="\$user", public, extensions client_encoding=UTF8
+-- reset all as the role a file left (without reset role first):
+     role=pg_monitor search_path="\$user", public, extensions
+-- a text of another encoding after the reset: é handed over as a parameter arrives as é?
+     client_encoding=UTF8 length(é)=1 bytes=2
+== C2 pg_proc over every schema: how many rows, and where an unqualified create lands
+rows of pg_proc: 3330
+3330
+Time: 0.782 ms
+unqualified create landed in: public
+== C3 the references onto a table, with their actions
+far_event on far del=n upd=c
+logs_event_fkey on os.logs del=a upd=a
+rules_event_fkey on os.rules del=c upd=a
+-- the table's mark, read from the catalogue:
+vocabulary: the event types the code emits
+(no comment)
+== C4 written as an update of rows that read differently and an insert of rows that are not there; equal by text
+-- first: proof before (expect false), then write, remove, proof
+     equal=false
+     inserted a
+     inserted b
+     equal=true
+-- the same again: nothing written
+     equal=true
+-- 1.1 stands, the file says 1.10: read differently, so written
+     equal=false
+     updated a
+     equal=true
+     a.weight=1.10
+-- an unowned not-null column with no default: a standing row is changed, a new row is refused
+     updated a
+     ERROR:  null value in column "note" of relation "event_types" violates not-null constraint
+     DETAIL:  Failing row contains (c, C, 3, null, 0).
+-- a key twice in one file, found before any write:
+     twice: a
+-- a column twice in one row, seen when the text is read as json:
+     row 1 names twice: weight
+-- an inheritance child's rows, with only:
+     equal=false
+     child rows left: 1
+-- a deferrable primary key:
+updated a
+-- a primary key with an included column: the key's columns by indnkeyatts
+all of indkey: id,label
+key columns only: id
+== C5 deferred work made immediate for the pass's transaction
+-- without it: the removal passes, the commit fails
+     the delete passed
+     ERROR:  update or delete on table "event_types" violates foreign key constraint "uses_event" on table "uses"
+     DETAIL:  Key (name)=(b) is still referenced from table "uses".
+-- with set constraints all immediate first: the statement fails
+     ERROR:  update or delete on table "event_types" violates foreign key constraint "uses_event" on table "uses"
+     DETAIL:  Key (name)=(b) is still referenced from table "uses".
+     ERROR:  current transaction is aborted, commands ignored until end of transaction block
+-- a deferred constraint trigger that rewrites the row: when does it fire?
+     default — before commit reads: as filed
+     default — after commit reads: rewritten
+     immediate — before commit reads: rewritten
+== C6 row security off, and the time zone and date style said for the pass
+     row_security=off a time with no offset is read as: 2026-01-02 03:04:05+00 ; 01/02/2026 as: 2026-01-02
+     the role bypasses row security: true
+== done; throwaway database dropped: 0 left
