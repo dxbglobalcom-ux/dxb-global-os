@@ -1,0 +1,26 @@
+== the command on its real target after the corrections (46115fd1), 2026-11-23T18:42:25+01:00
+-- pnpm foundation:instance up
+INSTANCE_UP sysid=7711423711592087591 db=127.0.0.1:54522 seconds=<n>
+   exit=0
+-- pnpm foundation:chain up
+CHAIN_GREEN applied=2 standing=2 functions=0 reference=0
+   exit=0
+-- pnpm foundation:instance logins
+LOGINS_SET logins=4 sysid=7711423711592087591
+   exit=0
+-- pnpm foundation:chain up
+CHAIN_GREEN applied=0 standing=2 functions=0 reference=0
+   exit=0
+-- pnpm foundation:instance logins
+LOGINS_SET logins=4 sysid=7711423711592087591
+   exit=0
+-- pnpm foundation:instance status
+INSTANCE_STANDING sysid=7711423711592087591
+   exit=0
+-- pnpm foundation:instance down
+INSTANCE_DOWN
+   exit=0
+-- pnpm foundation:instance status
+INSTANCE_ABSENT
+   exit=0
+600 dxb 313 bytes

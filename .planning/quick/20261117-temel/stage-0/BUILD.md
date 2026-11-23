@@ -232,6 +232,36 @@ member of nothing; schema `os`; `os_owner`'s default privileges give PUBLIC noth
 each login's password as a SCRAM verifier from a file outside the repository (mode 600, never printed, never in a
 snapshot). *Tests first, over TCP as real logins:* each login refused before the install step and accepted after it;
 none can create in `os` or anywhere.
+*Done 2026-11-23 (`piece-5/SPEC.md`, its audit and evidence beside it): `db/schema/0001-roles.sql` and `0002-os.sql`
+are the chain's first files; `pnpm foundation:chain up` is green on its real target (`applied=2 standing=2`, again
+`applied=0`); `pnpm foundation:instance logins` gives the four logins their passwords; 55 locked cases. What the cut
+did not say was measured and decided there by the lead: **the installer is a member of `os_owner` with SET and
+without INHERIT** — it acts as the owner only by saying so, and a file that forgets is refused by the server; **the
+passes act as the owner of `os`** (a change to piece 4's runner; no role is said where the owner already runs);
+**`os_reader` is a login**; a verifier reaches the server as a parameter, in a transaction that keeps bound values
+out of the log, and a refused one says nothing of itself; **the step says `LOGINS_SET` only after each login came in
+over TCP**, and keeps only a file it could have written (regular, this user's, mode 600, four minted passwords); the
+first file fixes `createrole_self_grant` for its own transaction; the installer reads `os` without saying a role,
+through the platform's `pg_read_all_data`. **"None can create anywhere" is true of what persists in a schema, of
+roles, databases and publications; three things the platform leaves open to every login are pinned, not closed:**
+temporary objects, large objects, and the platform's privileged extensions — any login may create and drop them,
+**into `os` too** (measured: 60 functions of `supabase_admin` stand in `os`; the chain answers red at once and is
+green when the login drops it). Audited blind by GPT-6.2 Sol at xhigh (five A, five B): nine corrections taken,
+tests first (SPEC §11); what is not built is written there with its reason. **For piece 6:** owners, grants, default
+privileges, the roles' attributes, memberships and settings (`pg_db_role_setting` — a login may give itself one) are
+its to see; **an owner changed on `os` and on one object in it must turn its proof red** (Sol A5: a restore that
+drops owners, with its ledger, leaves the chain green), and its contract says where the proof stands before a
+restored database is believed; the file of passwords is never in a snapshot; the real chain's files are still not
+under a lock (piece 2's F4). **For piece 7:** the allow-list names `net`, the 163 functions of `public`, the
+privileged extensions and their way into `os`; a login's own persistent setting; the catalogue's view of `os`; the
+chain's advisory lock, which any login can hold; who is a member of `pg_read_all_data`. **For stage 5:** the
+loopback `trust` inside the database container, the installing role and its `createrole_self_grant`, the extensions
+closed in the platform's configuration, the platform's statement logging and the secret store. Costs: a `verify` of
+all five pieces about 8 minutes; the piece took two lead sessions (Fable 5.2's own week 81 % → 86 %) and, on
+Opus 5.5, three test hands and two code hands at high, an easy-writer and six helpers at medium — about 2.0M tokens.
+The first session ended at about 340k tokens of context and the second at about 320k, both over the 250k set for a
+lead: a piece with its audit's weighing is two sessions' work, and the contract and the audit's report read whole
+are most of a lead's load.*
 
 **6 — the snapshot and the install proofs.** The snapshot is a normalised text of meaning, not of names: each
 function's body, definer flag and settings; tables, constraints, indexes, triggers; row-security flags and policy

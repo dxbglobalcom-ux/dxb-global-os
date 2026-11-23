@@ -532,3 +532,26 @@ against six).
 9. Item 8: `os_owner`'s throwaway verifier travels as a parameter, inside B.8, after B.7 has read its log.
 10. The order pin tells role order from reason order: `os_executor` a member and `os_reader` given `createdb` →
     `LOGINS_REFUSED os_executor member`.
+
+## 11b. What the corrections' code settled beyond §11 and §11a (read and accepted by the lead)
+
+Written by an Opus 5.5 hand at high against the locked tests; the lead read the whole diff.
+
+1. The file's reading and writing live in `foundation/bench/src/the-logins-file.ts`: one reader for the step and
+   for `loginConnectionString`, the keep-or-mint rule beside it; `logins.ts` keeps the server's side and the proof.
+2. "Mode 600 exactly" is said of all twelve permission bits: a setuid, setgid or sticky bit is another mode.
+3. The file is opened non-blocking: a FIFO in its place is judged at once, not waited on under the host lock.
+4. A reading that fails after the descriptor was judged is thrown — it is not "the file does not stand".
+5. A refusal of the server inside the transaction that is not a verifier's — one of the transaction's own
+   settings — is said `<its message> (<SQLSTATE>)`, exit 1.
+6. The installer's connection is closed before the proof. A login that did not come in is named on stderr with
+   the server's SQLSTATE or the driver's code — never a message, which may hold the address.
+7. Item 7 is one clause of the catalogue reading both passes share (`one-pass.ts`): no row when the owner of `os`
+   is `current_user`, so neither pass says a role.
+
+**The verdict:** `evidence/lead-run-on-the-corrections-code.log` — typecheck 0; roles 20/20 and 35/35, passes
+219/219, chain 133/133. `evidence/verify-at-the-corrections-commit.log` — `LOCK_GREEN` for pieces 1–5 at
+`46115fd1`, `red=0 owed=7`; the old system's typecheck 0. `evidence/real-target-after-the-corrections.log` — on a
+new instance `CHAIN_GREEN applied=2 standing=2 functions=0 reference=0`, `LOGINS_SET logins=4`, and again
+`applied=0` and `LOGINS_SET`; the file mode 600. No second audit round (the door): the corrections rest on their
+tests, read by a third hand, and on the stage's audit (piece 14).

@@ -1,0 +1,24 @@
+== the lead's run on the corrections' code (working tree on 70e5dba0), 2026-11-23T18:30:41+01:00
+typecheck exit=0
+== foundation/tests/roles/without-the-bench.test.ts
+ Test Files  1 passed (1)
+      Tests  20 passed (20)
+   Duration  261ms (transform 106ms, setup 0ms, collect 143ms, tests 9ms, environment 0ms, prepare 31ms)
+exit=0
+== foundation/tests/roles/on-a-fresh-instance.test.ts
+ Test Files  1 passed (1)
+      Tests  35 passed (35)
+   Duration  70.12s (transform 135ms, setup 0ms, collect 184ms, tests 69.83s, environment 0ms, prepare 31ms)
+exit=0
+== foundation/tests/passes
+ Test Files  3 passed (3)
+      Tests  219 passed (219)
+   Duration  86.36s (transform 168ms, setup 0ms, collect 286ms, tests 85.75s, environment 0ms, prepare 95ms)
+exit=0
+== foundation/tests/chain
+ Test Files  4 passed (4)
+      Tests  133 passed (133)
+   Duration  87.44s (transform 131ms, setup 0ms, collect 262ms, tests 86.78s, environment 0ms, prepare 121ms)
+exit=0
+INSTANCE_ABSENT
+0
