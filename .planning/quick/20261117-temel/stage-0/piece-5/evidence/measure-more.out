@@ -1,0 +1,61 @@
+NOTICE:  database "roles_measure_p5b" does not exist, skipping
+NOTICE:  role "m5_plain" does not exist, skipping
+NOTICE:  role "m5_owner" does not exist, skipping
+== M7 a verifier set without its text in a statement
+-- a. the verifier travels as a parameter into a transaction-local setting; ALTER ROLE runs inside a DO
+t
+   the verifier computed: 133 characters, begins SCRAM-SHA-256$
+   stored equals sent: t
+   login with the plain password: m5_plain
+   log lines since the start that hold the verifier's first 40 characters: 0
+   log lines since the start that name m5_plain: 2
+172.21.0.1 2026-11-23 15:16:46.986 UTC [7736] postgres@postgres LOG:  statement: drop role if exists m5_plain
+172.21.0.1 2026-11-23 15:16:47.020 UTC [7736] postgres@postgres LOG:  statement: create role m5_plain login
+-- b. may the installer silence the statement log for its transaction?
+-- c. a failing ALTER ROLE inside the DO: what the log keeps (log_min_error_statement = error)
+t
+ERROR:  role "m5_nobody" does not exist
+CONTEXT:  SQL statement "alter role m5_nobody password 'SCRAM-SHA-256$4096:FYdHPPhIFGJDB4rTV+Ui2A==$26lioE7mZBtpPEhqkx4mnpH6KtzThQN2JjUp9mnS5nI=:/dJa2Ke3kDI5cJlmWH7dCLUMpGh6wdTYwcJyuULXynI='"
+PL/pgSQL function inline_code_block line 1 at EXECUTE
+   log lines since then that hold the verifier's head: 1
+172.21.0.1 2026-11-23 15:16:48.260 UTC [7741] postgres@roles_measure_p5b CONTEXT:  SQL statement "alter role m5_nobody password '<the verifier follows>
+== M8 an extension, asked for by a login that is member of nothing
+-- a. the platform's lists (as postgres)
+   supautils.privileged_extensions = address_standardizer, address_standardizer_data_us, autoinc, bloom, btree_gin, btree_gist, citext, cube, dblink, dict_int, dict_xsyn, earthdistance, fuzzystrmatch, hstore, http, hypopg, index_advisor, insert_username, intarray, isn, ltree, moddatetime, orioledb, pg_buffercache, pg_cron, pg_graphql, 
+   supautils.superuser = supabase_admin
+   supautils.privileged_role = supabase_privileged_role
+   supautils.reserved_roles = supabase_admin, supabase_auth_admin, supabase_storage_admin, supabase_read_only_user, supabase_realtime_admin, supabase_replication_admin, supabase_etl_admin, dashboard_user, pgbouncer, service_role*, authenticator*, authenticated*, anon*, supabase_privileged_role
+   supautils.extensions_parameter_overrides = {"pg_cron":{"schema":"pg_catalog"}}
+-- b. as m5_plain over TCP, each tried and dropped again if made
+   create extension pgcrypto: made, owner supabase_admin in public
+   create extension pg_net: made, owner supabase_admin in public
+   create extension dblink: made, owner supabase_admin in public
+   create extension postgres_fdw: made, owner supabase_admin in public
+   create extension http: made, owner supabase_admin in public
+   create extension pg_cron: ERROR:  can only create extension in database postgres
+DETAIL:  Jobs must be scheduled from the database configured in cron.database_name, since the pg_cron background worker reads job descriptions from this database.
+HINT:  Add cron.database_name = 'roles_measure_p5b' in postgresql.conf to use the current database.
+CONTEXT:  PL/pgSQL function inline_code_block line 4 at RAISE
+   create extension plpython3u: ERROR:  extension "plpython3u" is not available
+DETAIL:  Could not open extension control file "/nix/var/nix/profiles/default/share/postgresql/extension/plpython3u.control": No such file or directory.
+HINT:  The extension must first be installed on the system where PostgreSQL is running.
+   create extension file_fdw: ERROR:  permission denied to create extension "file_fdw"
+HINT:  Must be superuser to create this extension.
+   create extension pg_stat_statements: made, owner supabase_admin in public
+-- c. as m5_plain: an extension into a schema of its choosing, and drop of one it asked for
+   ERROR:  schema "pg_temp" does not exist
+   dropped by the plain login
+-- d. the same in a database where PUBLIC has lost nothing: has m5_plain CREATE on the database?
+   f
+== M9 the guard's reading, and the owner's reach, as a login that is member of nothing
+-- a. pg_control_system() as m5_plain: t
+-- b. set role to the owner of a schema, by the installer with SET only, then a function made and a forced row-security table read
+row_security on, rows the owner reads: 0
+ERROR:  query would be affected by row-level security policy for table "kinds"
+HINT:  To disable the policy for the table's owner, use ALTER TABLE NO FORCE ROW LEVEL SECURITY.
+-- c. the same reading by the installer itself (BYPASSRLS), not as the owner: needs a grant it does not have
+ERROR:  relation "m5_s.kinds" does not exist
+LINE 1: select count(*) from m5_s.kinds
+                             ^
+== clean-up
+m5 roles left: (none)

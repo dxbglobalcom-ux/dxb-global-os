@@ -1,0 +1,1139 @@
+== start: leftovers from an earlier run
+     NOTICE:  database "roles_measure_p5" does not exist, skipping
+     NOTICE:  database "m5_db" does not exist, skipping
+     NOTICE:  role "m5_owner" does not exist, skipping
+     NOTICE:  role "m5_plain" does not exist, skipping
+     NOTICE:  role "m5_login" does not exist, skipping
+     NOTICE:  role "m5_y" does not exist, skipping
+== M0 the target
+     select version();
+     PostgreSQL 17.6 on x86_64-pc-linux-gnu, compiled by gcc (GCC) 15.2.0, 64-bit
+     select system_identifier from pg_control_system();
+     7711370004733567015
+     select 'super='||rolsuper||' createrole='||rolcreaterole||' createdb='||rolcreatedb||' bypassrls='||rolbypassrls||' replication='||rolreplication||' inherit='||rolinherit||' connlimit='||rolconnlimit from pg_roles where rolname = 'postgres';
+     super=false createrole=true createdb=true bypassrls=true replication=true inherit=true connlimit=-1
+     show createrole_self_grant;
+     
+     show password_encryption;
+     scram-sha-256
+     select 'mem: '||roleid::regrole||' <- '||member::regrole||' grantor='||grantor::regrole||' admin='||admin_option||' inherit='||inherit_option||' set='||set_option from pg_auth_members where roleid = 'postgres'::regrole or member = 'postgres'::regrole order by 1;
+     mem: anon <- postgres grantor=supabase_admin admin=true inherit=true set=true
+     mem: authenticated <- postgres grantor=supabase_admin admin=true inherit=true set=true
+     mem: authenticator <- postgres grantor=supabase_admin admin=true inherit=true set=true
+     mem: pg_create_subscription <- postgres grantor=supabase_admin admin=true inherit=true set=true
+     mem: pg_monitor <- postgres grantor=supabase_admin admin=true inherit=true set=true
+     mem: pg_read_all_data <- postgres grantor=supabase_admin admin=true inherit=true set=true
+     mem: pg_signal_backend <- postgres grantor=supabase_admin admin=true inherit=true set=true
+     mem: service_role <- postgres grantor=supabase_admin admin=true inherit=true set=true
+     mem: supabase_functions_admin <- postgres grantor=supabase_admin admin=false inherit=true set=true
+     mem: supabase_privileged_role <- postgres grantor=supabase_admin admin=false inherit=true set=true
+     mem: supabase_realtime_admin <- postgres grantor=supabase_admin admin=false inherit=true set=true
+     select 'db postgres owner='||datdba::regrole||' datacl='||coalesce(datacl::text,'(null)') from pg_database where datname = 'postgres';
+     db postgres owner=postgres datacl={=Tc/postgres,postgres=CTc/postgres,supabase_etl_admin=C/postgres,supabase_storage_admin=C/postgres,dashboard_user=CTc/postgres}
+-- create the throwaway database
+     create database roles_measure_p5;
+     select 'db roles_measure_p5 owner='||datdba::regrole||' datacl='||coalesce(datacl::text,'(null)') from pg_database where datname = 'roles_measure_p5';
+     db roles_measure_p5 owner=postgres datacl=(null)
+-- M2.0 every pg_default_acl row of the fresh throwaway database (before anything is made in it)
+     :dacl;
+     select 'count='||count(*) from pg_default_acl;
+     count=0
+-- the login roles used later: m5_plain (login, member of nothing) with a client-computed SCRAM verifier
+     create role m5_plain login;
+     alter role m5_plain password :'ver';
+     select 'mem: '||roleid::regrole||' <- '||member::regrole||' grantor='||grantor::regrole||' admin='||admin_option||' inherit='||inherit_option||' set='||set_option from pg_auth_members where roleid = 'm5_plain'::regrole or member = 'm5_plain'::regrole;
+     mem: m5_plain <- postgres grantor=supabase_admin admin=true inherit=false set=false
+== M1 creating objects as an owner role with no login
+-- defaults: create role m5_owner nologin (no options), its pg_roles row and the membership rows it produced
+     create role m5_owner nologin;
+     select row_to_json(r) from pg_roles r where rolname = 'm5_owner';
+     {"rolname":"m5_owner","rolsuper":false,"rolinherit":true,"rolcreaterole":false,"rolcreatedb":false,"rolcanlogin":false,"rolreplication":false,"rolconnlimit":-1,"rolpassword":"********","rolvaliduntil":null,"rolbypassrls":false,"rolconfig":null,"oid":"20481"}
+     :mem;
+     mem: m5_owner <- postgres grantor=supabase_admin admin=true inherit=false set=false
+-- state (i): no grant beyond what CREATE ROLE produced
+     create role m5_owner nologin;
+     grant m5_owner to postgres with set true, inherit false;
+     create schema m5_s authorization m5_owner;
+     set role m5_owner;
+     create function m5_s.fx() returns int language sql return 1;
+     revoke execute on function m5_s.fx() from public;
+     reset role;
+     revoke m5_owner from postgres;
+-- M1 state (i): the membership rows
+     :mem;
+     mem: m5_owner <- postgres grantor=supabase_admin admin=true inherit=false set=false
+-- a(i). set role m5_owner
+     set role m5_owner;
+     ERROR:  permission denied to set role "m5_owner"
+     select current_user, session_user;
+     postgres|postgres
+     reset role;
+-- b(i). create schema m5_a authorization m5_owner (rolled back)
+     begin;
+     create schema m5_a authorization m5_owner;
+     ERROR:  must be able to SET ROLE "m5_owner"
+     select 'owner='||nspowner::regrole||' nspacl='||coalesce(nspacl::text,'(null)') from pg_namespace where nspname = 'm5_a';
+     ERROR:  current transaction is aborted, commands ignored until end of transaction block
+     rollback;
+-- c(i). as m5_owner: create schema m5_b, without and then with CREATE on the database (rolled back)
+     begin;
+     set local role m5_owner;
+     ERROR:  permission denied to set role "m5_owner"
+     create schema m5_b;
+     ERROR:  current transaction is aborted, commands ignored until end of transaction block
+     rollback;
+     grant create on database roles_measure_p5 to m5_owner;
+     begin;
+     set local role m5_owner;
+     ERROR:  permission denied to set role "m5_owner"
+     create schema m5_b;
+     ERROR:  current transaction is aborted, commands ignored until end of transaction block
+     select 'owner='||nspowner::regrole||' nspacl='||coalesce(nspacl::text,'(null)') from pg_namespace where nspname = 'm5_b';
+     ERROR:  current transaction is aborted, commands ignored until end of transaction block
+     rollback;
+     revoke create on database roles_measure_p5 from m5_owner;
+-- d(i). as postgres, no set role, into m5_s (owned by m5_owner): a table, a function (each rolled back)
+     begin;
+     create table m5_s.t1(id int);
+     ERROR:  permission denied for schema m5_s
+     LINE 1: create table m5_s.t1(id int);
+                          ^
+     select 'owner='||relowner::regrole from pg_class where oid = 'm5_s.t1'::regclass;
+     ERROR:  current transaction is aborted, commands ignored until end of transaction block
+     rollback;
+     begin;
+     create function m5_s.f1() returns int language sql return 1;
+     ERROR:  permission denied for schema m5_s
+     select 'owner='||proowner::regrole from pg_proc where oid = 'm5_s.f1()'::regprocedure;
+     ERROR:  current transaction is aborted, commands ignored until end of transaction block
+     rollback;
+-- e(i). as m5_owner (set local role): table, function, sequence, enum, composite, view in m5_s (rolled back)
+     begin;
+     set local role m5_owner;
+     ERROR:  permission denied to set role "m5_owner"
+     create table m5_s.e_t(id int);
+     ERROR:  current transaction is aborted, commands ignored until end of transaction block
+     create function m5_s.e_f() returns int language sql return 1;
+     ERROR:  current transaction is aborted, commands ignored until end of transaction block
+     create sequence m5_s.e_seq;
+     ERROR:  current transaction is aborted, commands ignored until end of transaction block
+     create type m5_s.e_enum as enum ('a');
+     ERROR:  current transaction is aborted, commands ignored until end of transaction block
+     create type m5_s.e_comp as (a int);
+     ERROR:  current transaction is aborted, commands ignored until end of transaction block
+     create view m5_s.e_v as select 1 as x;
+     ERROR:  current transaction is aborted, commands ignored until end of transaction block
+     :objs;
+     ERROR:  current transaction is aborted, commands ignored until end of transaction block
+     rollback;
+-- f(i). as postgres, no set role: create or replace on m5_s.fx() owned by m5_owner (rolled back)
+     begin;
+     create or replace function m5_s.fx() returns int language sql return 2;
+     ERROR:  permission denied for schema m5_s
+     select 'owner='||proowner::regrole||' acl='||coalesce(proacl::text,'(null)')||' body='||pg_get_function_sqlbody(oid) from pg_proc where oid = 'm5_s.fx()'::regprocedure;
+     ERROR:  current transaction is aborted, commands ignored until end of transaction block
+     rollback;
+     select 'after rollback: owner='||proowner::regrole||' acl='||coalesce(proacl::text,'(null)') from pg_proc where oid = 'm5_s.fx()'::regprocedure;
+     after rollback: owner=m5_owner acl={m5_owner=X/m5_owner}
+-- g(i). alter function ... owner to m5_owner (each rolled back): g1 in m5_s; g2 in a schema postgres owns, without and with CREATE on it for m5_owner
+     begin;
+     create function m5_s.g1() returns int language sql return 1;
+     ERROR:  permission denied for schema m5_s
+     alter function m5_s.g1() owner to m5_owner;
+     ERROR:  current transaction is aborted, commands ignored until end of transaction block
+     select 'g1 owner='||proowner::regrole from pg_proc where oid = 'm5_s.g1()'::regprocedure;
+     ERROR:  current transaction is aborted, commands ignored until end of transaction block
+     rollback;
+     begin;
+     create schema m5_pg;
+     create function m5_pg.g2() returns int language sql return 1;
+     alter function m5_pg.g2() owner to m5_owner;
+     ERROR:  must be able to SET ROLE "m5_owner"
+     select 'g2 owner='||proowner::regrole from pg_proc where oid = 'm5_pg.g2()'::regprocedure;
+     ERROR:  current transaction is aborted, commands ignored until end of transaction block
+     rollback;
+     begin;
+     create schema m5_pg;
+     grant create on schema m5_pg to m5_owner;
+     create function m5_pg.g2() returns int language sql return 1;
+     alter function m5_pg.g2() owner to m5_owner;
+     ERROR:  must be able to SET ROLE "m5_owner"
+     select 'g2 (CREATE granted) owner='||proowner::regrole from pg_proc where oid = 'm5_pg.g2()'::regprocedure;
+     ERROR:  current transaction is aborted, commands ignored until end of transaction block
+     rollback;
+-- h(i). alter default privileges for role m5_owner (global and in schema m5_s), kept; then pg_default_acl rows for m5_owner
+     alter default privileges for role m5_owner revoke execute on functions from public;
+     ERROR:  permission denied to change default privileges
+     alter default privileges for role m5_owner revoke usage on types from public;
+     ERROR:  permission denied to change default privileges
+     alter default privileges for role m5_owner in schema m5_s revoke execute on functions from public;
+     ERROR:  permission denied to change default privileges
+     alter default privileges for role m5_owner in schema m5_s revoke usage on types from public;
+     ERROR:  permission denied to change default privileges
+     select 'dacl: schema='||case defaclnamespace when 0 then '(global)' else defaclnamespace::regnamespace::text end||' type='||defaclobjtype::text||' acl='||coalesce(defaclacl::text,'(null)') from pg_default_acl where defaclrole = 'm5_owner'::regrole order by 1;
+-- h2(i). the same four as m5_owner itself (set local role, no FOR ROLE), rows shown, then rolled back
+     begin;
+     set local role m5_owner;
+     ERROR:  permission denied to set role "m5_owner"
+     alter default privileges revoke execute on functions from public;
+     ERROR:  current transaction is aborted, commands ignored until end of transaction block
+     alter default privileges revoke usage on types from public;
+     ERROR:  current transaction is aborted, commands ignored until end of transaction block
+     alter default privileges in schema m5_s revoke execute on functions from public;
+     ERROR:  current transaction is aborted, commands ignored until end of transaction block
+     alter default privileges in schema m5_s revoke usage on types from public;
+     ERROR:  current transaction is aborted, commands ignored until end of transaction block
+     select 'dacl: schema='||case defaclnamespace when 0 then '(global)' else defaclnamespace::regnamespace::text end||' type='||defaclobjtype::text||' acl='||coalesce(defaclacl::text,'(null)') from pg_default_acl where defaclrole = 'm5_owner'::regrole order by 1;
+     ERROR:  current transaction is aborted, commands ignored until end of transaction block
+     rollback;
+-- i(i). alter schema m5_s owner to postgres / drop schema m5_s cascade / drop role m5_owner (each rolled back)
+     begin;
+     alter schema m5_s owner to postgres;
+     ERROR:  must be owner of schema m5_s
+     select 'owner now='||nspowner::regrole from pg_namespace where nspname = 'm5_s';
+     ERROR:  current transaction is aborted, commands ignored until end of transaction block
+     rollback;
+     begin;
+     drop schema m5_s cascade;
+     ERROR:  must be owner of schema m5_s
+     rollback;
+     begin;
+     drop role m5_owner;
+     ERROR:  role "m5_owner" cannot be dropped because some objects depend on it
+     DETAIL:  owner of schema m5_s
+     owner of function m5_s.fx()
+     rollback;
+-- reset
+     revoke m5_owner from postgres;
+     WARNING:  role "postgres" has not been granted membership in role "m5_owner" by role "postgres"
+     grant m5_owner to postgres with inherit true, set true;
+     drop owned by m5_owner cascade;
+     revoke m5_owner from postgres;
+     drop role m5_owner;
+-- state (ii): grant m5_owner to postgres with set true, inherit false
+     create role m5_owner nologin;
+     grant m5_owner to postgres with set true, inherit false;
+     create schema m5_s authorization m5_owner;
+     set role m5_owner;
+     create function m5_s.fx() returns int language sql return 1;
+     revoke execute on function m5_s.fx() from public;
+     reset role;
+     revoke m5_owner from postgres;
+     grant m5_owner to postgres with set true, inherit false;
+-- M1 state (ii): the membership rows
+     :mem;
+     mem: m5_owner <- postgres grantor=postgres admin=false inherit=false set=true
+     mem: m5_owner <- postgres grantor=supabase_admin admin=true inherit=false set=false
+-- a(ii). set role m5_owner
+     set role m5_owner;
+     select current_user, session_user;
+     m5_owner|postgres
+     reset role;
+-- b(ii). create schema m5_a authorization m5_owner (rolled back)
+     begin;
+     create schema m5_a authorization m5_owner;
+     select 'owner='||nspowner::regrole||' nspacl='||coalesce(nspacl::text,'(null)') from pg_namespace where nspname = 'm5_a';
+     owner=m5_owner nspacl=(null)
+     rollback;
+-- c(ii). as m5_owner: create schema m5_b, without and then with CREATE on the database (rolled back)
+     begin;
+     set local role m5_owner;
+     create schema m5_b;
+     ERROR:  permission denied for database roles_measure_p5
+     rollback;
+     grant create on database roles_measure_p5 to m5_owner;
+     begin;
+     set local role m5_owner;
+     create schema m5_b;
+     select 'owner='||nspowner::regrole||' nspacl='||coalesce(nspacl::text,'(null)') from pg_namespace where nspname = 'm5_b';
+     owner=m5_owner nspacl=(null)
+     rollback;
+     revoke create on database roles_measure_p5 from m5_owner;
+-- d(ii). as postgres, no set role, into m5_s (owned by m5_owner): a table, a function (each rolled back)
+     begin;
+     create table m5_s.t1(id int);
+     ERROR:  permission denied for schema m5_s
+     LINE 1: create table m5_s.t1(id int);
+                          ^
+     select 'owner='||relowner::regrole from pg_class where oid = 'm5_s.t1'::regclass;
+     ERROR:  current transaction is aborted, commands ignored until end of transaction block
+     rollback;
+     begin;
+     create function m5_s.f1() returns int language sql return 1;
+     ERROR:  permission denied for schema m5_s
+     select 'owner='||proowner::regrole from pg_proc where oid = 'm5_s.f1()'::regprocedure;
+     ERROR:  current transaction is aborted, commands ignored until end of transaction block
+     rollback;
+-- e(ii). as m5_owner (set local role): table, function, sequence, enum, composite, view in m5_s (rolled back)
+     begin;
+     set local role m5_owner;
+     create table m5_s.e_t(id int);
+     create function m5_s.e_f() returns int language sql return 1;
+     create sequence m5_s.e_seq;
+     create type m5_s.e_enum as enum ('a');
+     create type m5_s.e_comp as (a int);
+     create view m5_s.e_v as select 1 as x;
+     :objs;
+     proc e_f kind=f owner=m5_owner acl=(null)
+     proc fx kind=f owner=m5_owner acl={m5_owner=X/m5_owner}
+     rel  e_comp kind=c owner=m5_owner acl=(null)
+     rel  e_seq kind=S owner=m5_owner acl=(null)
+     rel  e_t kind=r owner=m5_owner acl=(null)
+     rel  e_v kind=v owner=m5_owner acl=(null)
+     type e_comp typtype=c owner=m5_owner acl=(null)
+     type e_enum typtype=e owner=m5_owner acl=(null)
+     rollback;
+-- f(ii). as postgres, no set role: create or replace on m5_s.fx() owned by m5_owner (rolled back)
+     begin;
+     create or replace function m5_s.fx() returns int language sql return 2;
+     ERROR:  permission denied for schema m5_s
+     select 'owner='||proowner::regrole||' acl='||coalesce(proacl::text,'(null)')||' body='||pg_get_function_sqlbody(oid) from pg_proc where oid = 'm5_s.fx()'::regprocedure;
+     ERROR:  current transaction is aborted, commands ignored until end of transaction block
+     rollback;
+     select 'after rollback: owner='||proowner::regrole||' acl='||coalesce(proacl::text,'(null)') from pg_proc where oid = 'm5_s.fx()'::regprocedure;
+     after rollback: owner=m5_owner acl={m5_owner=X/m5_owner}
+-- g(ii). alter function ... owner to m5_owner (each rolled back): g1 in m5_s; g2 in a schema postgres owns, without and with CREATE on it for m5_owner
+     begin;
+     create function m5_s.g1() returns int language sql return 1;
+     ERROR:  permission denied for schema m5_s
+     alter function m5_s.g1() owner to m5_owner;
+     ERROR:  current transaction is aborted, commands ignored until end of transaction block
+     select 'g1 owner='||proowner::regrole from pg_proc where oid = 'm5_s.g1()'::regprocedure;
+     ERROR:  current transaction is aborted, commands ignored until end of transaction block
+     rollback;
+     begin;
+     create schema m5_pg;
+     create function m5_pg.g2() returns int language sql return 1;
+     alter function m5_pg.g2() owner to m5_owner;
+     ERROR:  permission denied for schema m5_pg
+     select 'g2 owner='||proowner::regrole from pg_proc where oid = 'm5_pg.g2()'::regprocedure;
+     ERROR:  current transaction is aborted, commands ignored until end of transaction block
+     rollback;
+     begin;
+     create schema m5_pg;
+     grant create on schema m5_pg to m5_owner;
+     create function m5_pg.g2() returns int language sql return 1;
+     alter function m5_pg.g2() owner to m5_owner;
+     select 'g2 (CREATE granted) owner='||proowner::regrole from pg_proc where oid = 'm5_pg.g2()'::regprocedure;
+     g2 (CREATE granted) owner=m5_owner
+     rollback;
+-- h(ii). alter default privileges for role m5_owner (global and in schema m5_s), kept; then pg_default_acl rows for m5_owner
+     alter default privileges for role m5_owner revoke execute on functions from public;
+     ERROR:  permission denied to change default privileges
+     alter default privileges for role m5_owner revoke usage on types from public;
+     ERROR:  permission denied to change default privileges
+     alter default privileges for role m5_owner in schema m5_s revoke execute on functions from public;
+     ERROR:  permission denied to change default privileges
+     alter default privileges for role m5_owner in schema m5_s revoke usage on types from public;
+     ERROR:  permission denied to change default privileges
+     select 'dacl: schema='||case defaclnamespace when 0 then '(global)' else defaclnamespace::regnamespace::text end||' type='||defaclobjtype::text||' acl='||coalesce(defaclacl::text,'(null)') from pg_default_acl where defaclrole = 'm5_owner'::regrole order by 1;
+-- h2(ii). the same four as m5_owner itself (set local role, no FOR ROLE), rows shown, then rolled back
+     begin;
+     set local role m5_owner;
+     alter default privileges revoke execute on functions from public;
+     alter default privileges revoke usage on types from public;
+     alter default privileges in schema m5_s revoke execute on functions from public;
+     alter default privileges in schema m5_s revoke usage on types from public;
+     select 'dacl: schema='||case defaclnamespace when 0 then '(global)' else defaclnamespace::regnamespace::text end||' type='||defaclobjtype::text||' acl='||coalesce(defaclacl::text,'(null)') from pg_default_acl where defaclrole = 'm5_owner'::regrole order by 1;
+     dacl: schema=(global) type=f acl={m5_owner=X/m5_owner}
+     dacl: schema=(global) type=T acl={m5_owner=U/m5_owner}
+     rollback;
+-- i(ii). alter schema m5_s owner to postgres / drop schema m5_s cascade / drop role m5_owner (each rolled back)
+     begin;
+     alter schema m5_s owner to postgres;
+     ERROR:  must be owner of schema m5_s
+     select 'owner now='||nspowner::regrole from pg_namespace where nspname = 'm5_s';
+     ERROR:  current transaction is aborted, commands ignored until end of transaction block
+     rollback;
+     begin;
+     drop schema m5_s cascade;
+     ERROR:  must be owner of schema m5_s
+     rollback;
+     begin;
+     drop role m5_owner;
+     ERROR:  role "m5_owner" cannot be dropped because some objects depend on it
+     DETAIL:  owner of schema m5_s
+     owner of function m5_s.fx()
+     rollback;
+-- reset
+     revoke m5_owner from postgres;
+     grant m5_owner to postgres with inherit true, set true;
+     drop owned by m5_owner cascade;
+     revoke m5_owner from postgres;
+     drop role m5_owner;
+-- state (iii): grant m5_owner to postgres with inherit true, set false
+     create role m5_owner nologin;
+     grant m5_owner to postgres with set true, inherit false;
+     create schema m5_s authorization m5_owner;
+     set role m5_owner;
+     create function m5_s.fx() returns int language sql return 1;
+     revoke execute on function m5_s.fx() from public;
+     reset role;
+     revoke m5_owner from postgres;
+     grant m5_owner to postgres with inherit true, set false;
+-- M1 state (iii): the membership rows
+     :mem;
+     mem: m5_owner <- postgres grantor=postgres admin=false inherit=true set=false
+     mem: m5_owner <- postgres grantor=supabase_admin admin=true inherit=false set=false
+-- a(iii). set role m5_owner
+     set role m5_owner;
+     ERROR:  permission denied to set role "m5_owner"
+     select current_user, session_user;
+     postgres|postgres
+     reset role;
+-- b(iii). create schema m5_a authorization m5_owner (rolled back)
+     begin;
+     create schema m5_a authorization m5_owner;
+     ERROR:  must be able to SET ROLE "m5_owner"
+     select 'owner='||nspowner::regrole||' nspacl='||coalesce(nspacl::text,'(null)') from pg_namespace where nspname = 'm5_a';
+     ERROR:  current transaction is aborted, commands ignored until end of transaction block
+     rollback;
+-- c(iii). as m5_owner: create schema m5_b, without and then with CREATE on the database (rolled back)
+     begin;
+     set local role m5_owner;
+     ERROR:  permission denied to set role "m5_owner"
+     create schema m5_b;
+     ERROR:  current transaction is aborted, commands ignored until end of transaction block
+     rollback;
+     grant create on database roles_measure_p5 to m5_owner;
+     begin;
+     set local role m5_owner;
+     ERROR:  permission denied to set role "m5_owner"
+     create schema m5_b;
+     ERROR:  current transaction is aborted, commands ignored until end of transaction block
+     select 'owner='||nspowner::regrole||' nspacl='||coalesce(nspacl::text,'(null)') from pg_namespace where nspname = 'm5_b';
+     ERROR:  current transaction is aborted, commands ignored until end of transaction block
+     rollback;
+     revoke create on database roles_measure_p5 from m5_owner;
+-- d(iii). as postgres, no set role, into m5_s (owned by m5_owner): a table, a function (each rolled back)
+     begin;
+     create table m5_s.t1(id int);
+     select 'owner='||relowner::regrole from pg_class where oid = 'm5_s.t1'::regclass;
+     owner=postgres
+     rollback;
+     begin;
+     create function m5_s.f1() returns int language sql return 1;
+     select 'owner='||proowner::regrole from pg_proc where oid = 'm5_s.f1()'::regprocedure;
+     owner=postgres
+     rollback;
+-- e(iii). as m5_owner (set local role): table, function, sequence, enum, composite, view in m5_s (rolled back)
+     begin;
+     set local role m5_owner;
+     ERROR:  permission denied to set role "m5_owner"
+     create table m5_s.e_t(id int);
+     ERROR:  current transaction is aborted, commands ignored until end of transaction block
+     create function m5_s.e_f() returns int language sql return 1;
+     ERROR:  current transaction is aborted, commands ignored until end of transaction block
+     create sequence m5_s.e_seq;
+     ERROR:  current transaction is aborted, commands ignored until end of transaction block
+     create type m5_s.e_enum as enum ('a');
+     ERROR:  current transaction is aborted, commands ignored until end of transaction block
+     create type m5_s.e_comp as (a int);
+     ERROR:  current transaction is aborted, commands ignored until end of transaction block
+     create view m5_s.e_v as select 1 as x;
+     ERROR:  current transaction is aborted, commands ignored until end of transaction block
+     :objs;
+     ERROR:  current transaction is aborted, commands ignored until end of transaction block
+     rollback;
+-- f(iii). as postgres, no set role: create or replace on m5_s.fx() owned by m5_owner (rolled back)
+     begin;
+     create or replace function m5_s.fx() returns int language sql return 2;
+     select 'owner='||proowner::regrole||' acl='||coalesce(proacl::text,'(null)')||' body='||pg_get_function_sqlbody(oid) from pg_proc where oid = 'm5_s.fx()'::regprocedure;
+     owner=m5_owner acl={m5_owner=X/m5_owner} body=RETURN 2
+     rollback;
+     select 'after rollback: owner='||proowner::regrole||' acl='||coalesce(proacl::text,'(null)') from pg_proc where oid = 'm5_s.fx()'::regprocedure;
+     after rollback: owner=m5_owner acl={m5_owner=X/m5_owner}
+-- g(iii). alter function ... owner to m5_owner (each rolled back): g1 in m5_s; g2 in a schema postgres owns, without and with CREATE on it for m5_owner
+     begin;
+     create function m5_s.g1() returns int language sql return 1;
+     alter function m5_s.g1() owner to m5_owner;
+     ERROR:  must be able to SET ROLE "m5_owner"
+     select 'g1 owner='||proowner::regrole from pg_proc where oid = 'm5_s.g1()'::regprocedure;
+     ERROR:  current transaction is aborted, commands ignored until end of transaction block
+     rollback;
+     begin;
+     create schema m5_pg;
+     create function m5_pg.g2() returns int language sql return 1;
+     alter function m5_pg.g2() owner to m5_owner;
+     ERROR:  must be able to SET ROLE "m5_owner"
+     select 'g2 owner='||proowner::regrole from pg_proc where oid = 'm5_pg.g2()'::regprocedure;
+     ERROR:  current transaction is aborted, commands ignored until end of transaction block
+     rollback;
+     begin;
+     create schema m5_pg;
+     grant create on schema m5_pg to m5_owner;
+     create function m5_pg.g2() returns int language sql return 1;
+     alter function m5_pg.g2() owner to m5_owner;
+     ERROR:  must be able to SET ROLE "m5_owner"
+     select 'g2 (CREATE granted) owner='||proowner::regrole from pg_proc where oid = 'm5_pg.g2()'::regprocedure;
+     ERROR:  current transaction is aborted, commands ignored until end of transaction block
+     rollback;
+-- h(iii). alter default privileges for role m5_owner (global and in schema m5_s), kept; then pg_default_acl rows for m5_owner
+     alter default privileges for role m5_owner revoke execute on functions from public;
+     alter default privileges for role m5_owner revoke usage on types from public;
+     alter default privileges for role m5_owner in schema m5_s revoke execute on functions from public;
+     alter default privileges for role m5_owner in schema m5_s revoke usage on types from public;
+     select 'dacl: schema='||case defaclnamespace when 0 then '(global)' else defaclnamespace::regnamespace::text end||' type='||defaclobjtype::text||' acl='||coalesce(defaclacl::text,'(null)') from pg_default_acl where defaclrole = 'm5_owner'::regrole order by 1;
+     dacl: schema=(global) type=f acl={m5_owner=X/m5_owner}
+     dacl: schema=(global) type=T acl={m5_owner=U/m5_owner}
+-- h2(iii). the same four as m5_owner itself (set local role, no FOR ROLE), rows shown, then rolled back
+     begin;
+     set local role m5_owner;
+     ERROR:  permission denied to set role "m5_owner"
+     alter default privileges revoke execute on functions from public;
+     ERROR:  current transaction is aborted, commands ignored until end of transaction block
+     alter default privileges revoke usage on types from public;
+     ERROR:  current transaction is aborted, commands ignored until end of transaction block
+     alter default privileges in schema m5_s revoke execute on functions from public;
+     ERROR:  current transaction is aborted, commands ignored until end of transaction block
+     alter default privileges in schema m5_s revoke usage on types from public;
+     ERROR:  current transaction is aborted, commands ignored until end of transaction block
+     select 'dacl: schema='||case defaclnamespace when 0 then '(global)' else defaclnamespace::regnamespace::text end||' type='||defaclobjtype::text||' acl='||coalesce(defaclacl::text,'(null)') from pg_default_acl where defaclrole = 'm5_owner'::regrole order by 1;
+     ERROR:  current transaction is aborted, commands ignored until end of transaction block
+     rollback;
+-- i(iii). alter schema m5_s owner to postgres / drop schema m5_s cascade / drop role m5_owner (each rolled back)
+     begin;
+     alter schema m5_s owner to postgres;
+     select 'owner now='||nspowner::regrole from pg_namespace where nspname = 'm5_s';
+     owner now=postgres
+     rollback;
+     begin;
+     drop schema m5_s cascade;
+     NOTICE:  drop cascades to function m5_s.fx()
+     rollback;
+     begin;
+     drop role m5_owner;
+     ERROR:  role "m5_owner" cannot be dropped because some objects depend on it
+     DETAIL:  owner of schema m5_s
+     owner of function m5_s.fx()
+     owner of default privileges on new functions belonging to role m5_owner
+     owner of default privileges on new types belonging to role m5_owner
+     rollback;
+-- reset
+     revoke m5_owner from postgres;
+     grant m5_owner to postgres with inherit true, set true;
+     drop owned by m5_owner cascade;
+     revoke m5_owner from postgres;
+     drop role m5_owner;
+== M2 the owner's default privileges and PUBLIC
+-- a. pg_default_acl of the throwaway database now (after M1's reset)
+     :dacl;
+     select 'count='||count(*) from pg_default_acl;
+     count=0
+-- b. m5_owner owns m5_s; NO default-privilege change; objects set _a made as m5_owner
+     create role m5_owner nologin;
+     grant m5_owner to postgres with set true, inherit false;
+     create schema m5_s authorization m5_owner;
+     set role m5_owner;
+     create table m5_s.t_a(id int);
+     create sequence m5_s.s_a;
+     create function m5_s.f_a() returns int language sql return 1;
+     create procedure m5_s.p_a() language sql begin atomic select 1; end;
+     create type m5_s.e_a as enum ('a');
+     create domain m5_s.d_a as int;
+     create view m5_s.v_a as select 1 as x;
+     reset role;
+     :objs;
+     proc f_a kind=f owner=m5_owner acl=(null)
+     proc p_a kind=p owner=m5_owner acl=(null)
+     rel  s_a kind=S owner=m5_owner acl=(null)
+     rel  t_a kind=r owner=m5_owner acl=(null)
+     rel  v_a kind=v owner=m5_owner acl=(null)
+     type d_a typtype=d owner=m5_owner acl=(null)
+     type e_a typtype=e owner=m5_owner acl=(null)
+-- c. matrix for m5_plain, set _a
+     schema m5_s: USAGE=false CREATE=false
+     table t_a: SELECT=false INSERT=false UPDATE=false DELETE=false TRUNCATE=false REFERENCES=false TRIGGER=false
+     view v_a: SELECT=false INSERT=false UPDATE=false DELETE=false
+     seq s_a: USAGE=false SELECT=false UPDATE=false
+     function f_a: EXECUTE=true
+     procedure p_a: EXECUTE=true
+     enum e_a: USAGE=true
+     domain d_a: USAGE=true
+-- d. the two global revokes (functions, types) for m5_owner, issued as m5_owner (postgres holds SET, not INHERIT, here), then set _b
+     set role m5_owner;
+     alter default privileges for role m5_owner revoke execute on functions from public;
+     alter default privileges for role m5_owner revoke usage on types from public;
+     reset role;
+     :dacl;
+     dacl: role=m5_owner schema=(global) type=f acl={m5_owner=X/m5_owner}
+     dacl: role=m5_owner schema=(global) type=T acl={m5_owner=U/m5_owner}
+     set role m5_owner;
+     create table m5_s.t_b(id int);
+     create sequence m5_s.s_b;
+     create function m5_s.f_b() returns int language sql return 1;
+     create procedure m5_s.p_b() language sql begin atomic select 1; end;
+     create type m5_s.e_b as enum ('a');
+     create domain m5_s.d_b as int;
+     create view m5_s.v_b as select 1 as x;
+     reset role;
+     :objs;
+     proc f_a kind=f owner=m5_owner acl=(null)
+     proc f_b kind=f owner=m5_owner acl={m5_owner=X/m5_owner}
+     proc p_a kind=p owner=m5_owner acl=(null)
+     proc p_b kind=p owner=m5_owner acl={m5_owner=X/m5_owner}
+     rel  s_a kind=S owner=m5_owner acl=(null)
+     rel  s_b kind=S owner=m5_owner acl=(null)
+     rel  t_a kind=r owner=m5_owner acl=(null)
+     rel  t_b kind=r owner=m5_owner acl=(null)
+     rel  v_a kind=v owner=m5_owner acl=(null)
+     rel  v_b kind=v owner=m5_owner acl=(null)
+     type d_a typtype=d owner=m5_owner acl=(null)
+     type d_b typtype=d owner=m5_owner acl={m5_owner=U/m5_owner}
+     type e_a typtype=e owner=m5_owner acl=(null)
+     type e_b typtype=e owner=m5_owner acl={m5_owner=U/m5_owner}
+-- e. matrix for m5_plain, set _b
+     schema m5_s: USAGE=false CREATE=false
+     table t_b: SELECT=false INSERT=false UPDATE=false DELETE=false TRUNCATE=false REFERENCES=false TRIGGER=false
+     view v_b: SELECT=false INSERT=false UPDATE=false DELETE=false
+     seq s_b: USAGE=false SELECT=false UPDATE=false
+     function f_b: EXECUTE=false
+     procedure p_b: EXECUTE=false
+     enum e_b: USAGE=false
+     domain d_b: USAGE=false
+-- f. as m5_plain over TCP, no USAGE on m5_s: call f_a / f_b, use e_a / e_b, call p_a
+     select current_user;
+     m5_plain
+     select m5_s.f_a();
+     ERROR:  permission denied for schema m5_s
+     LINE 1: select m5_s.f_a();
+                    ^
+     select m5_s.f_b();
+     ERROR:  permission denied for schema m5_s
+     LINE 1: select m5_s.f_b();
+                    ^
+     select 'a'::m5_s.e_a;
+     ERROR:  permission denied for schema m5_s
+     LINE 1: select 'a'::m5_s.e_a;
+                         ^
+     select 'a'::m5_s.e_b;
+     ERROR:  permission denied for schema m5_s
+     LINE 1: select 'a'::m5_s.e_b;
+                         ^
+     call m5_s.p_a();
+     ERROR:  permission denied for schema m5_s
+     LINE 1: call m5_s.p_a();
+                  ^
+-- g. contrast: grant usage on schema m5_s to m5_plain, the same calls, then revoke it again
+     set role m5_owner;
+     grant usage on schema m5_s to m5_plain;
+     reset role;
+     select m5_s.f_a();
+     1
+     select m5_s.f_b();
+     ERROR:  permission denied for function f_b
+     select 'a'::m5_s.e_a;
+     a
+     select 'a'::m5_s.e_b;
+     a
+     call m5_s.p_a();
+     call m5_s.p_b();
+     ERROR:  permission denied for procedure p_b
+     select * from m5_s.t_a;
+     ERROR:  permission denied for table t_a
+     set role m5_owner;
+     revoke usage on schema m5_s from m5_plain;
+     reset role;
+== M3 the image's login rules
+-- a. hba file and settings
+     show hba_file;
+     /etc/postgresql/pg_hba.conf
+     select count(*) from pg_hba_file_rules;
+     ERROR:  permission denied for function pg_hba_file_rules
+     show ssl;
+     off
+     show listen_addresses;
+     *
+     show log_statement;
+     ddl
+     show log_connections;
+     off
+     show log_min_error_statement;
+     error
+     show log_min_messages;
+     warning
+-- a. the hba file's non-comment lines (docker exec, read-only)
+     85:local all  supabase_admin     trust
+     86:local all  all                peer map=supabase_map
+     87:host  all  all  127.0.0.1/32  trust
+     88:host  all  all  ::1/128       trust
+     91:host  all  all  10.0.0.0/8  scram-sha-256
+     92:host  all  all  172.16.0.0/12  scram-sha-256
+     93:host  all  all  192.168.0.0/16  scram-sha-256
+     94:host  all  all  0.0.0.0/0     scram-sha-256
+     97:host  all  all  ::0/0     scram-sha-256
+-- b. create role m5_login login (no password); membership rows naming it
+     create role m5_login login;
+     select 'mem: '||roleid::regrole||' <- '||member::regrole||' grantor='||grantor::regrole||' admin='||admin_option||' inherit='||inherit_option||' set='||set_option from pg_auth_members where roleid = 'm5_login'::regrole or member = 'm5_login'::regrole order by 1;
+     mem: m5_login <- postgres grantor=supabase_admin admin=true inherit=false set=false
+-- b. host TCP, no password (-w)
+     WARNING: password file "/dev/null" is not a plain file
+     psql: error: connection to server at "127.0.0.1", port 54522 failed: fe_sendauth: no password supplied
+-- b. host TCP, PGPASSWORD=''
+     WARNING: password file "/dev/null" is not a plain file
+     psql: error: connection to server at "127.0.0.1", port 54522 failed: fe_sendauth: no password supplied
+-- b. host TCP, wrong password
+     psql: error: connection to server at "127.0.0.1", port 54522 failed: FATAL:  password authentication failed for user "m5_login"
+-- b. inside the container, unix socket, no password
+     psql: error: connection to server on socket "/run/postgresql/.s.PGSQL.5432" failed: FATAL:  Peer authentication failed for user "m5_login"
+-- b. inside the container, -h 127.0.0.1, no password
+     m5_login|127.0.0.1
+-- b. inside the container, -h localhost, no password
+     m5_login|127.0.0.1
+-- b. the address the server sees for a connection from the host (as postgres)
+     select inet_client_addr(), inet_server_addr();
+     172.21.0.1|172.21.0.2
+-- c. alter role m5_login password '<client-computed SCRAM verifier>'
+     alter role m5_login password :'ver';
+     select 'pg_authid as postgres: equal='||(rolpassword = :'ver')||' head='||left(rolpassword,14) from pg_authid where rolname = 'm5_login';
+     pg_authid as postgres: equal=true head=SCRAM-SHA-256$
+-- c. the same, read-only, as supabase_admin over the container's unix socket
+     equal=true head=SCRAM-SHA-256$
+-- c. host TCP with the throwaway password
+     m5_login
+-- c. host TCP with a wrong password
+     psql: error: connection to server at "127.0.0.1", port 54522 failed: FATAL:  password authentication failed for user "m5_login"
+-- c./d. alter role m5_login password null (postgres made m5_login), then the throwaway password again
+     alter role m5_login password null;
+     select 'rolpassword is null='||(rolpassword is null) from pg_authid where rolname = 'm5_login';
+     rolpassword is null=true
+     psql: error: connection to server at "127.0.0.1", port 54522 failed: FATAL:  password authentication failed for user "m5_login"
+-- c. the server log: lines naming m5_login since the script started (2026-11-23T15:12:19Z) (count, then at most 3, cut at 200)
+     count=13
+     172.21.0.1 2026-11-23 15:12:19.746 UTC [7335] postgres@postgres LOG:  statement: drop role if exists m5_login;
+     172.21.0.1 2026-11-23 15:12:21.268 UTC [7406] postgres@roles_measure_p5 LOG:  statement: create role m5_login login;
+     172.21.0.1 2026-11-23 15:12:21.322 UTC [7409] m5_login@roles_measure_p5 FATAL:  password authentication failed for user "m5_login"
+     lines naming ALTER ROLE since the script started (2026-11-23T15:12:19Z): 3
+     lines containing the verifier text sent: 2
+     172.21.0.1 2026-11-23 15:12:21.460 UTC [7432] postgres@roles_measure_p5 LOG:  statement: alter role m5_login password 'SCRAM-SHA-256$4096:rK
+     172.21.0.1 2026-11-23 15:12:21.562 UTC [7442] postgres@roles_measure_p5 LOG:  statement: alter role m5_login password null;
+-- d. a role postgres did not make and holds no ADMIN on (supabase_etl_admin): its membership rows naming postgres, then ALTER ... PASSWORD NULL inside a transaction that is rolled back
+     select 'rows naming both: '||count(*) from pg_auth_members where (roleid = 'supabase_etl_admin'::regrole and member = 'postgres'::regrole) or (roleid = 'postgres'::regrole and member = 'supabase_etl_admin'::regrole);
+     rows naming both: 0
+     select 'rolsuper='||rolsuper from pg_roles where rolname = 'supabase_etl_admin';
+     rolsuper=false
+     begin;
+     alter role supabase_etl_admin password null;
+     ERROR:  "supabase_etl_admin" is a reserved role, only superusers can modify it
+     rollback;
+-- e. pg_db_role_setting (all rows), event triggers (throwaway database and database postgres)
+     select 'setting: db='||coalesce((select datname from pg_database where oid = setdatabase),'(all)')||' role='||coalesce(nullif(setrole,0)::regrole::text,'(all)')||' '||(select string_agg(case when split_part(c,'=',1) ~* '(secret|password|key|token)' then split_part(c,'=',1)||'=<value not printed
+     setting: db=(all) role=anon statement_timeout=3s
+     setting: db=(all) role=authenticated statement_timeout=8s
+     setting: db=(all) role=authenticator session_preload_libraries=supautils, safeupdate, statement_timeout=8s, lock_timeout=8s, pgrst.db_aggregates_enabled=true
+     setting: db=(all) role=postgres search_path="\$user", public, extensions
+     setting: db=(all) role=supabase_admin search_path="\$user", public, auth, extensions, log_statement=none
+     setting: db=(all) role=supabase_auth_admin search_path=auth, idle_in_transaction_session_timeout=60000, log_statement=none
+     setting: db=(all) role=supabase_functions_admin search_path=supabase_functions
+     setting: db=(all) role=supabase_read_only_user default_transaction_read_only=on
+     setting: db=(all) role=supabase_storage_admin search_path=storage, log_statement=none
+     setting: db=postgres role=(all) app.settings.jwt_secret=<value not printed>, app.settings.jwt_exp=604800
+     select 'm5 rows='||count(*) from pg_db_role_setting where setrole in (to_regrole('m5_login'), to_regrole('m5_owner'), to_regrole('m5_plain'));
+     m5 rows=0
+     select 'evt('||current_database()||'): '||evtname||' '||evtevent||' owner='||evtowner::regrole||' fn='||evtfoid::regproc||' enabled='||evtenabled::text from pg_event_trigger order by 1;
+     select 'event triggers in '||current_database()||': '||count(*) from pg_event_trigger;
+     event triggers in roles_measure_p5: 0
+     select 'evt('||current_database()||'): '||evtname||' '||evtevent||' owner='||evtowner::regrole||' fn='||evtfoid::regproc||' enabled='||evtenabled::text from pg_event_trigger order by 1;
+     evt(postgres): issue_graphql_placeholder sql_drop owner=supabase_admin fn=set_graphql_placeholder enabled=O
+     evt(postgres): issue_pg_cron_access ddl_command_end owner=supabase_admin fn=grant_pg_cron_access enabled=O
+     evt(postgres): issue_pg_graphql_access ddl_command_end owner=supabase_admin fn=grant_pg_graphql_access enabled=O
+     evt(postgres): issue_pg_net_access ddl_command_end owner=supabase_admin fn=grant_pg_net_access enabled=O
+     evt(postgres): pgrst_ddl_watch ddl_command_end owner=supabase_admin fn=pgrst_ddl_watch enabled=O
+     evt(postgres): pgrst_drop_watch sql_drop owner=supabase_admin fn=pgrst_drop_watch enabled=O
+     select 'event triggers in '||current_database()||': '||count(*) from pg_event_trigger;
+     event triggers in postgres: 6
+-- extensions in the throwaway database before M4 (as postgres)
+     select 'ext '||extname||' owner='||extowner::regrole||' schema='||extnamespace::regnamespace from pg_extension order by 1;
+     ext plpgsql owner=supabase_admin schema=pg_catalog
+== M4 what a fresh login, member of nothing, can create or reach (m5_plain over TCP)
+     select current_user, session_user;
+     m5_plain|m5_plain
+     create schema m5_x;
+     ERROR:  permission denied for database roles_measure_p5
+     create table public.m5_t(id int);
+     ERROR:  permission denied for schema public
+     LINE 1: create table public.m5_t(id int);
+                          ^
+     create temp table m5_tmp(id int);
+     create table pg_temp.m5_tmp2(id int);
+     select lo_create(0) as loid \gset
+     select lo_unlink(:loid);
+     1
+     select lo_from_bytea(0, '\x00') as loid2 \gset
+     select lo_unlink(:loid2);
+     1
+     create role m5_y;
+     ERROR:  permission denied to create role
+     DETAIL:  Only roles with the CREATEROLE attribute may create roles.
+     create database m5_db;
+     ERROR:  permission denied to create database
+     create extension if not exists pgcrypto;
+     create publication m5_pub;
+     ERROR:  permission denied for database roles_measure_p5
+     create type pg_temp.m5_e as enum ('a');
+     create function pg_temp.m5_f() returns int language sql return 1;
+     do $$ begin null; end $$;
+     listen m5_ch;
+     notify m5_ch;
+     Asynchronous notification "m5_ch" received from server process with PID 7448.
+     select pg_advisory_lock(1);
+     
+     select pg_advisory_unlock(1);
+     t
+     select set_config('search_path', 'pg_catalog', false);
+     pg_catalog
+-- extensions in the throwaway database after M4 (as postgres)
+     select 'ext '||extname||' owner='||extowner::regrole||' schema='||extnamespace::regnamespace from pg_extension order by 1;
+     ext pgcrypto owner=supabase_admin schema=public
+     ext plpgsql owner=supabase_admin schema=pg_catalog
+-- catalogue, as postgres asking about m5_plain: every schema of the throwaway database
+-- database: roles_measure_p5
+     schema information_schema owner=supabase_admin USAGE=true CREATE=false
+     schema m5_s owner=m5_owner USAGE=false CREATE=false
+     schema pg_catalog owner=supabase_admin USAGE=true CREATE=false
+     schema pg_temp_1 owner=supabase_admin USAGE=false CREATE=false
+     schema pg_toast owner=supabase_admin USAGE=false CREATE=false
+     schema pg_toast_temp_1 owner=supabase_admin USAGE=false CREATE=false
+     schema public owner=pg_database_owner USAGE=true CREATE=false
+     db postgres: CREATE=false TEMP=true CONNECT=true
+     db roles_measure_p5: CREATE=false TEMP=true CONNECT=true
+     counts information_schema usage=true | table-ACL: select=62 write=0 seq=0 exec=11 of rel=69 fn=11
+     counts m5_s usage=false | table-ACL: select=0 write=0 seq=0 exec=2 of rel=6 fn=4
+     counts pg_catalog usage=true | table-ACL: select=128 write=1 seq=0 exec=3257 of rel=142 fn=3319
+     counts public usage=true | table-ACL: select=0 write=0 seq=0 exec=36 of rel=0 fn=36
+     list m5_s select: (none)
+     list m5_s write: (none)
+     list m5_s seq: (none)
+     list m5_s exec: f_a, p_a
+     list public select: (none)
+     list public write: (none)
+     list public seq: (none)
+     list public exec: armor, crypt, dearmor, decrypt, decrypt_iv, digest, encrypt, encrypt_iv, gen_random_bytes, gen_random_uuid, gen_salt, hmac, pgp_armor_headers, pgp_key_id, pgp_pub_decrypt
+-- database: postgres
+     schema _realtime owner=postgres USAGE=false CREATE=false
+     schema auth owner=supabase_admin USAGE=false CREATE=false
+     schema dxb_internal owner=postgres USAGE=false CREATE=false
+     schema extensions owner=postgres USAGE=false CREATE=false
+     schema graphql owner=supabase_admin USAGE=false CREATE=false
+     schema graphql_public owner=supabase_admin USAGE=false CREATE=false
+     schema information_schema owner=supabase_admin USAGE=true CREATE=false
+     schema net owner=supabase_admin USAGE=true CREATE=false
+     schema pg_catalog owner=supabase_admin USAGE=true CREATE=false
+     schema pg_temp_13 owner=supabase_admin USAGE=false CREATE=false
+     schema pg_temp_52 owner=supabase_admin USAGE=false CREATE=false
+     schema pg_toast owner=supabase_admin USAGE=false CREATE=false
+     schema pg_toast_temp_13 owner=supabase_admin USAGE=false CREATE=false
+     schema pg_toast_temp_52 owner=supabase_admin USAGE=false CREATE=false
+     schema pgboss owner=postgres USAGE=false CREATE=false
+     schema pgbouncer owner=pgbouncer USAGE=false CREATE=false
+     schema public owner=pg_database_owner USAGE=true CREATE=false
+     schema realtime owner=supabase_admin USAGE=false CREATE=false
+     schema storage owner=supabase_admin USAGE=false CREATE=false
+     schema supabase_functions owner=supabase_admin USAGE=false CREATE=false
+     schema supabase_migrations owner=postgres USAGE=false CREATE=false
+     schema vault owner=supabase_admin USAGE=false CREATE=false
+     db postgres: CREATE=false TEMP=true CONNECT=true
+     db roles_measure_p5: CREATE=false TEMP=true CONNECT=true
+     counts _realtime usage=false | table-ACL: select=0 write=0 seq=0 exec=0 of rel=4 fn=0
+     counts auth usage=false | table-ACL: select=0 write=0 seq=0 exec=4 of rel=24 fn=4
+     counts dxb_internal usage=false | table-ACL: select=0 write=0 seq=0 exec=0 of rel=1 fn=0
+     counts extensions usage=false | table-ACL: select=2 write=0 seq=0 exec=54 of rel=2 fn=55
+     counts graphql_public usage=false | table-ACL: select=0 write=0 seq=0 exec=1 of rel=0 fn=1
+     counts information_schema usage=true | table-ACL: select=62 write=0 seq=0 exec=11 of rel=69 fn=11
+     counts net usage=true | table-ACL: select=2 write=2 seq=1 exec=10 of rel=3 fn=12
+     counts pg_catalog usage=true | table-ACL: select=128 write=1 seq=0 exec=3257 of rel=142 fn=3319
+     counts pgboss usage=false | table-ACL: select=0 write=0 seq=0 exec=5 of rel=12 fn=5
+     counts pgbouncer usage=false | table-ACL: select=0 write=0 seq=0 exec=0 of rel=0 fn=1
+     counts public usage=true | table-ACL: select=0 write=0 seq=0 exec=163 of rel=110 fn=234
+     counts realtime usage=false | table-ACL: select=0 write=0 seq=0 exec=15 of rel=9 fn=15
+     counts supabase_functions usage=false | table-ACL: select=0 write=0 seq=0 exec=0 of rel=3 fn=1
+     counts supabase_migrations usage=false | table-ACL: select=0 write=0 seq=0 exec=0 of rel=1 fn=0
+     counts vault usage=false | table-ACL: select=0 write=0 seq=0 exec=0 of rel=2 fn=5
+     list _realtime select: (none)
+     list _realtime write: (none)
+     list _realtime seq: (none)
+     list _realtime exec: (none)
+     list auth select: (none)
+     list auth write: (none)
+     list auth seq: (none)
+     list auth exec: email, jwt, role, uid
+     list dxb_internal select: (none)
+     list dxb_internal write: (none)
+     list dxb_internal seq: (none)
+     list dxb_internal exec: (none)
+     list extensions select: pg_stat_statements, pg_stat_statements_info
+     list extensions write: (none)
+     list extensions seq: (none)
+     list extensions exec: armor, crypt, dearmor, decrypt, decrypt_iv, digest, encrypt, encrypt_iv, gen_random_bytes, gen_random_uuid, gen_salt, grant_pg_cron_access, grant_pg_graphql_access, grant_pg_net_access, hmac
+     list graphql select: (none)
+     list graphql write: (none)
+     list graphql seq: (none)
+     list graphql exec: (none)
+     list graphql_public select: (none)
+     list graphql_public write: (none)
+     list graphql_public seq: (none)
+     list graphql_public exec: graphql
+     list net select: _http_response, http_request_queue
+     list net write: _http_response, http_request_queue
+     list net seq: http_request_queue_id_seq
+     list net exec: _await_response, _encode_url_with_params_array, _http_collect_response, _urlencode_string, check_worker_is_up, http_collect_response, http_delete, wait_until_running, wake, worker_restart
+     list pgboss select: (none)
+     list pgboss write: (none)
+     list pgboss seq: (none)
+     list pgboss exec: create_queue, delete_queue, job_table_format, job_table_run, job_table_run_async
+     list pgbouncer select: (none)
+     list pgbouncer write: (none)
+     list pgbouncer seq: (none)
+     list pgbouncer exec: (none)
+     list public select: (none)
+     list public write: (none)
+     list public seq: (none)
+     list public exec: array_to_halfvec, array_to_sparsevec, array_to_vector, avg, binary_quantize, broadcast_approvals, broadcast_chat_messages, broadcast_cost_ledger, broadcast_opslive_agent_runs, broadcast_opslive_decisions, broadcast_opslive_task_events, broadcast_opslive_workflow_runs, broadcas
+     list realtime select: (none)
+     list realtime write: (none)
+     list realtime seq: (none)
+     list realtime exec: apply_rls, broadcast_changes, build_prepared_statement_sql, cast, check_equality_op, is_visible_through_filters, list_changes, quote_wal2json, send, send_binary, subscription_check_filters, to_regrole, topic, wal2json_escape_identifier
+     list storage select: (none)
+     list storage write: (none)
+     list storage seq: (none)
+     list storage exec: (none)
+     list supabase_functions select: (none)
+     list supabase_functions write: (none)
+     list supabase_functions seq: (none)
+     list supabase_functions exec: (none)
+     list supabase_migrations select: (none)
+     list supabase_migrations write: (none)
+     list supabase_migrations seq: (none)
+     list supabase_migrations exec: (none)
+     list vault select: (none)
+     list vault write: (none)
+     list vault seq: (none)
+     list vault exec: (none)
+== M5 pg_catalog grants on this instance (database postgres, read-only, asking about m5_plain)
+-- a. relations in pg_catalog / information_schema
+     select 'not selectable: '||n.nspname||'.'||c.relname||' kind='||c.relkind::text from pg_class c join pg_namespace n on n.oid = c.relnamespace where n.nspname in ('pg_catalog','information_schema') and c.relkind in ('r','v','m','p','f') and not has_table_privilege('m5_plain', c.oid, 'SELECT') or
+     not selectable: information_schema._pg_foreign_data_wrappers kind=v
+     not selectable: information_schema._pg_foreign_servers kind=v
+     not selectable: information_schema._pg_foreign_table_columns kind=v
+     not selectable: information_schema._pg_foreign_tables kind=v
+     not selectable: information_schema._pg_user_mappings kind=v
+     not selectable: information_schema.sql_parts kind=r
+     not selectable: information_schema.transforms kind=v
+     not selectable: pg_catalog.pg_authid kind=r
+     not selectable: pg_catalog.pg_backend_memory_contexts kind=v
+     not selectable: pg_catalog.pg_config kind=v
+     not selectable: pg_catalog.pg_file_settings kind=v
+     not selectable: pg_catalog.pg_hba_file_rules kind=v
+     not selectable: pg_catalog.pg_ident_file_mappings kind=v
+     not selectable: pg_catalog.pg_largeobject kind=r
+     not selectable: pg_catalog.pg_replication_origin_status kind=v
+     not selectable: pg_catalog.pg_shadow kind=v
+     not selectable: pg_catalog.pg_shmem_allocations kind=v
+     not selectable: pg_catalog.pg_statistic kind=r
+     not selectable: pg_catalog.pg_statistic_ext_data kind=r
+     not selectable: pg_catalog.pg_subscription kind=r
+     not selectable: pg_catalog.pg_user_mapping kind=r
+     select 'selectable count: '||n.nspname||'='||count(*) from pg_class c join pg_namespace n on n.oid = c.relnamespace where n.nspname in ('pg_catalog','information_schema') and c.relkind in ('r','v','m','p','f') and has_table_privilege('m5_plain', c.oid, 'SELECT') group by n.nspname order by 1;
+     selectable count: information_schema=62
+     selectable count: pg_catalog=128
+     select 'writable: '||n.nspname||'.'||c.relname from pg_class c join pg_namespace n on n.oid = c.relnamespace where n.nspname in ('pg_catalog','information_schema') and c.relkind in ('r','v','m','p','f') and (has_table_privilege('m5_plain', c.oid, 'INSERT') or has_table_privilege('m5_plain', c.o
+     writable: pg_catalog.pg_settings
+     select 'writable count='||count(*) from pg_class c join pg_namespace n on n.oid = c.relnamespace where n.nspname in ('pg_catalog','information_schema') and c.relkind in ('r','v','m','p','f') and (has_table_privilege('m5_plain', c.oid, 'INSERT') or has_table_privilege('m5_plain', c.oid, 'UPDATE'
+     writable count=1
+-- b. functions in pg_catalog m5_plain may NOT execute
+     select 'not executable count='||count(*)||' of '||(select count(*) from pg_proc where pronamespace = 'pg_catalog'::regnamespace) from pg_proc where pronamespace = 'pg_catalog'::regnamespace and not has_function_privilege('m5_plain', oid, 'EXECUTE');
+     not executable count=62 of 3319
+     select 'no-exec: '||proname||'('||pg_get_function_identity_arguments(oid)||')' from pg_proc where pronamespace = 'pg_catalog'::regnamespace and not has_function_privilege('m5_plain', oid, 'EXECUTE') order by 1;
+     no-exec: lo_export(oid, text)
+     no-exec: lo_import(text)
+     no-exec: lo_import(text, oid)
+     no-exec: pg_backup_start(label text, fast boolean)
+     no-exec: pg_backup_stop(wait_for_archive boolean, OUT lsn pg_lsn, OUT labelfile text, OUT spcmapfile text)
+     no-exec: pg_config(OUT name text, OUT setting text)
+     no-exec: pg_create_restore_point(text)
+     no-exec: pg_current_logfile()
+     no-exec: pg_current_logfile(text)
+     no-exec: pg_get_backend_memory_contexts(OUT name text, OUT ident text, OUT parent text, OUT level integer, OUT total_bytes bigint, OUT total_nblocks bigint, OUT free_bytes bigint, OUT free_chunks bigint, OUT used_bytes bigint)
+     no-exec: pg_get_shmem_allocations(OUT name text, OUT off bigint, OUT size bigint, OUT allocated_size bigint)
+     no-exec: pg_hba_file_rules(OUT rule_number integer, OUT file_name text, OUT line_number integer, OUT type text, OUT database text[], OUT user_name text[], OUT address text, OUT netmask text, OUT auth_method text, OUT options text[], OUT error text)
+     no-exec: pg_ident_file_mappings(OUT map_number integer, OUT file_name text, OUT line_number integer, OUT map_name text, OUT sys_name text, OUT pg_username text, OUT error text)
+     no-exec: pg_log_backend_memory_contexts(integer)
+     no-exec: pg_log_standby_snapshot()
+     no-exec: pg_ls_archive_statusdir(OUT name text, OUT size bigint, OUT modification timestamp with time zone)
+     no-exec: pg_ls_dir(text)
+     no-exec: pg_ls_dir(text, boolean, boolean)
+     no-exec: pg_ls_logdir(OUT name text, OUT size bigint, OUT modification timestamp with time zone)
+     no-exec: pg_ls_logicalmapdir(OUT name text, OUT size bigint, OUT modification timestamp with time zone)
+     no-exec: pg_ls_logicalsnapdir(OUT name text, OUT size bigint, OUT modification timestamp with time zone)
+     no-exec: pg_ls_replslotdir(slot_name text, OUT name text, OUT size bigint, OUT modification timestamp with time zone)
+     no-exec: pg_ls_tmpdir(OUT name text, OUT size bigint, OUT modification timestamp with time zone)
+     no-exec: pg_ls_tmpdir(tablespace oid, OUT name text, OUT size bigint, OUT modification timestamp with time zone)
+     no-exec: pg_ls_waldir(OUT name text, OUT size bigint, OUT modification timestamp with time zone)
+     no-exec: pg_promote(wait boolean, wait_seconds integer)
+     no-exec: pg_read_binary_file(text)
+     no-exec: pg_read_binary_file(text, bigint, bigint)
+     no-exec: pg_read_binary_file(text, bigint, bigint, boolean)
+     no-exec: pg_read_binary_file(text, boolean)
+     no-exec: pg_read_file(text)
+     no-exec: pg_read_file(text, bigint, bigint)
+     no-exec: pg_read_file(text, bigint, bigint, boolean)
+     no-exec: pg_read_file(text, boolean)
+     no-exec: pg_reload_conf()
+     no-exec: pg_replication_origin_advance(text, pg_lsn)
+     no-exec: pg_replication_origin_create(text)
+     no-exec: pg_replication_origin_drop(text)
+     no-exec: pg_replication_origin_oid(text)
+     no-exec: pg_replication_origin_progress(text, boolean)
+     no-exec: pg_replication_origin_session_is_setup()
+     no-exec: pg_replication_origin_session_progress(boolean)
+     no-exec: pg_replication_origin_session_reset()
+     no-exec: pg_replication_origin_session_setup(text)
+     no-exec: pg_replication_origin_xact_reset()
+     no-exec: pg_replication_origin_xact_setup(pg_lsn, timestamp with time zone)
+     no-exec: pg_rotate_logfile()
+     no-exec: pg_show_all_file_settings(OUT sourcefile text, OUT sourceline integer, OUT seqno integer, OUT name text, OUT setting text, OUT applied boolean, OUT error text)
+     no-exec: pg_show_replication_origin_status(OUT local_id oid, OUT external_id text, OUT remote_lsn pg_lsn, OUT local_lsn pg_lsn)
+     no-exec: pg_stat_file(filename text, OUT size bigint, OUT access timestamp with time zone, OUT modification timestamp with time zone, OUT change timestamp with time zone, OUT creation timestamp with time zone, OUT isdir boolean)
+     no-exec: pg_stat_file(filename text, missing_ok boolean, OUT size bigint, OUT access timestamp with time zone, OUT modification timestamp with time zone, OUT change timestamp with time zone, OUT creation timestamp with time zone, OUT isdir boolean)
+     no-exec: pg_stat_have_stats(text, oid, oid)
+     no-exec: pg_stat_reset()
+     no-exec: pg_stat_reset_replication_slot(text)
+     no-exec: pg_stat_reset_shared(target text)
+     no-exec: pg_stat_reset_single_function_counters(oid)
+     no-exec: pg_stat_reset_single_table_counters(oid)
+     no-exec: pg_stat_reset_slru(target text)
+     no-exec: pg_stat_reset_subscription_stats(oid)
+     no-exec: pg_switch_wal()
+     no-exec: pg_wal_replay_pause()
+     no-exec: pg_wal_replay_resume()
+-- b. the named functions, every signature found in any schema
+     select 'fn '||pronamespace::regnamespace||'.'||proname||'('||pg_get_function_identity_arguments(oid)||') EXECUTE='||has_function_privilege('m5_plain', oid, 'EXECUTE')||' acl='||coalesce(proacl::text,'(null)') from pg_proc where proname in ('pg_read_file','pg_read_binary_file','pg_ls_dir','pg_st
+     fn extensions.pg_stat_statements_reset(userid oid, dbid oid, queryid bigint, minmax_only boolean) EXECUTE=false acl={supabase_admin=X/supabase_admin,postgres=X*/supabase_admin}
+     fn pg_catalog.current_setting(text) EXECUTE=true acl=(null)
+     fn pg_catalog.current_setting(text, boolean) EXECUTE=true acl=(null)
+     fn pg_catalog.lo_export(oid, text) EXECUTE=false acl={supabase_admin=X/supabase_admin}
+     fn pg_catalog.lo_import(text) EXECUTE=false acl={supabase_admin=X/supabase_admin}
+     fn pg_catalog.lo_import(text, oid) EXECUTE=false acl={supabase_admin=X/supabase_admin}
+     fn pg_catalog.pg_advisory_lock(bigint) EXECUTE=true acl=(null)
+     fn pg_catalog.pg_advisory_lock(integer, integer) EXECUTE=true acl=(null)
+     fn pg_catalog.pg_cancel_backend(integer) EXECUTE=true acl=(null)
+     fn pg_catalog.pg_create_restore_point(text) EXECUTE=false acl={supabase_admin=X/supabase_admin}
+     fn pg_catalog.pg_logical_emit_message(transactional boolean, prefix text, message bytea, flush boolean) EXECUTE=true acl=(null)
+     fn pg_catalog.pg_logical_emit_message(transactional boolean, prefix text, message text, flush boolean) EXECUTE=true acl=(null)
+     fn pg_catalog.pg_ls_dir(text) EXECUTE=false acl={supabase_admin=X/supabase_admin}
+     fn pg_catalog.pg_ls_dir(text, boolean, boolean) EXECUTE=false acl={supabase_admin=X/supabase_admin}
+     fn pg_catalog.pg_notify(text, text) EXECUTE=true acl=(null)
+     fn pg_catalog.pg_read_binary_file(text) EXECUTE=false acl={supabase_admin=X/supabase_admin}
+     fn pg_catalog.pg_read_binary_file(text, bigint, bigint) EXECUTE=false acl={supabase_admin=X/supabase_admin}
+     fn pg_catalog.pg_read_binary_file(text, bigint, bigint, boolean) EXECUTE=false acl={supabase_admin=X/supabase_admin}
+     fn pg_catalog.pg_read_binary_file(text, boolean) EXECUTE=false acl={supabase_admin=X/supabase_admin}
+     fn pg_catalog.pg_read_file(text) EXECUTE=false acl={supabase_admin=X/supabase_admin}
+     fn pg_catalog.pg_read_file(text, bigint, bigint) EXECUTE=false acl={supabase_admin=X/supabase_admin}
+     fn pg_catalog.pg_read_file(text, bigint, bigint, boolean) EXECUTE=false acl={supabase_admin=X/supabase_admin}
+     fn pg_catalog.pg_read_file(text, boolean) EXECUTE=false acl={supabase_admin=X/supabase_admin}
+     fn pg_catalog.pg_reload_conf() EXECUTE=false acl={supabase_admin=X/supabase_admin,postgres=X*/supabase_admin}
+     fn pg_catalog.pg_rotate_logfile() EXECUTE=false acl={supabase_admin=X/supabase_admin}
+     fn pg_catalog.pg_sleep(double precision) EXECUTE=true acl=(null)
+     fn pg_catalog.pg_stat_file(filename text, OUT size bigint, OUT access timestamp with time zone, OUT modification timestamp with time zone, OUT change timestamp with time zone, OUT creation timestamp with time zone, OUT isdir boolean) EXECUTE=false acl={supabase_admin=X/supabase_admin}
+     fn pg_catalog.pg_stat_file(filename text, missing_ok boolean, OUT size bigint, OUT access timestamp with time zone, OUT modification timestamp with time zone, OUT change timestamp with time zone, OUT creation timestamp with time zone, OUT isdir boolean) EXECUTE=false acl={supabase_admin=X/supab
+     fn pg_catalog.pg_stat_reset() EXECUTE=false acl={supabase_admin=X/supabase_admin}
+     fn pg_catalog.pg_switch_wal() EXECUTE=false acl={supabase_admin=X/supabase_admin}
+     fn pg_catalog.pg_terminate_backend(pid integer, timeout bigint) EXECUTE=true acl=(null)
+     fn pg_catalog.set_config(text, text, boolean) EXECUTE=true acl=(null)
+     select 'present? pg_stat_statements_reset='||exists(select 1 from pg_proc where proname = 'pg_stat_statements_reset')||' dblink_connect='||exists(select 1 from pg_proc where proname = 'dblink_connect');
+     present? pg_stat_statements_reset=true dblink_connect=false
+     select 'm5_plain member of pg_read_server_files='||pg_has_role('m5_plain','pg_read_server_files','MEMBER');
+     m5_plain member of pg_read_server_files=false
+-- b. real outcome: m5_plain calls them over its own TCP connection (throwaway database)
+     select pg_terminate_backend(2147483647);
+     WARNING:  PID 2147483647 is not a PostgreSQL backend process
+     f
+     select pg_cancel_backend(2147483647);
+     WARNING:  PID 2147483647 is not a PostgreSQL backend process
+     f
+     select pg_ls_dir('.');
+     ERROR:  permission denied for function pg_ls_dir
+     select pg_read_file('PG_VERSION');
+     ERROR:  permission denied for function pg_read_file
+-- c. roles that have members (grouped), and the roles m5_plain is a member of
+     select 'has members: '||roleid::regrole||' <- '||string_agg(member::regrole::text, ',' order by member::regrole::text) from pg_auth_members group by roleid order by 1;
+     has members: anon <- authenticator,postgres
+     has members: authenticated <- authenticator,postgres
+     has members: authenticator <- postgres,supabase_storage_admin
+     has members: m5_login <- postgres
+     has members: m5_owner <- postgres,postgres
+     has members: m5_plain <- postgres
+     has members: pg_create_subscription <- postgres
+     has members: pg_monitor <- postgres,supabase_etl_admin,supabase_read_only_user
+     has members: pg_read_all_data <- postgres,supabase_etl_admin,supabase_read_only_user
+     has members: pg_read_all_settings <- pg_monitor
+     has members: pg_read_all_stats <- pg_monitor
+     has members: pg_signal_backend <- postgres
+     has members: pg_stat_scan_tables <- pg_monitor
+     has members: service_role <- authenticator,postgres
+     has members: supabase_functions_admin <- postgres
+     has members: supabase_privileged_role <- postgres,supabase_etl_admin
+     has members: supabase_realtime_admin <- postgres
+     select 'm5_plain member of: '||coalesce(string_agg(rolname, ',' order by rolname), '(none)') from pg_roles where rolname <> 'm5_plain' and pg_has_role('m5_plain', oid, 'MEMBER');
+     m5_plain member of: (none)
+     select 'rows with member 0 (PUBLIC)='||count(*) from pg_auth_members where member = 0;
+     rows with member 0 (PUBLIC)=0
+-- d. relation and column ACLs on the named catalogues, as stored
+     select 'relacl '||oid::regclass||' = '||coalesce(relacl::text,'(null)') from pg_class where oid in ('pg_catalog.pg_authid'::regclass,'pg_catalog.pg_shadow'::regclass,'pg_catalog.pg_user_mapping'::regclass,'pg_catalog.pg_subscription'::regclass,'pg_catalog.pg_statistic'::regclass,'pg_catalog.pg_
+     relacl pg_authid = {supabase_admin=arwdDxtm/supabase_admin}
+     relacl pg_largeobject = {supabase_admin=arwdDxtm/supabase_admin}
+     relacl pg_shadow = {supabase_admin=arwdDxtm/supabase_admin}
+     relacl pg_statistic = {supabase_admin=arwdDxtm/supabase_admin}
+     relacl pg_subscription = {supabase_admin=arwdDxtm/supabase_admin}
+     relacl pg_user_mapping = {supabase_admin=arwdDxtm/supabase_admin}
+     select 'attacl '||attrelid::regclass||'.'||attname||' = '||attacl::text from pg_attribute where attrelid in ('pg_catalog.pg_authid'::regclass,'pg_catalog.pg_shadow'::regclass,'pg_catalog.pg_user_mapping'::regclass,'pg_catalog.pg_subscription'::regclass,'pg_catalog.pg_statistic'::regclass,'pg_ca
+     attacl pg_subscription.oid = {=r/supabase_admin}
+     attacl pg_subscription.subbinary = {=r/supabase_admin}
+     attacl pg_subscription.subdbid = {=r/supabase_admin}
+     attacl pg_subscription.subdisableonerr = {=r/supabase_admin}
+     attacl pg_subscription.subenabled = {=r/supabase_admin}
+     attacl pg_subscription.subfailover = {=r/supabase_admin}
+     attacl pg_subscription.subname = {=r/supabase_admin}
+     attacl pg_subscription.suborigin = {=r/supabase_admin}
+     attacl pg_subscription.subowner = {=r/supabase_admin}
+     attacl pg_subscription.subpasswordrequired = {=r/supabase_admin}
+     attacl pg_subscription.subpublications = {=r/supabase_admin}
+     attacl pg_subscription.subrunasowner = {=r/supabase_admin}
+     attacl pg_subscription.subskiplsn = {=r/supabase_admin}
+     attacl pg_subscription.subslotname = {=r/supabase_admin}
+     attacl pg_subscription.substream = {=r/supabase_admin}
+     attacl pg_subscription.subsynccommit = {=r/supabase_admin}
+     attacl pg_subscription.subtwophasestate = {=r/supabase_admin}
+     select 'column-ACL rows on these='||count(*) from pg_attribute where attrelid in ('pg_catalog.pg_authid'::regclass,'pg_catalog.pg_shadow'::regclass,'pg_catalog.pg_user_mapping'::regclass,'pg_catalog.pg_subscription'::regclass,'pg_catalog.pg_statistic'::regclass,'pg_catalog.pg_largeobject'::regc
+     column-ACL rows on these=17
+== M6 two side facts
+-- a. revoke temporary on database roles_measure_p5 from public; then m5_plain's create temp table
+     select 'datacl before='||coalesce(datacl::text,'(null)') from pg_database where datname = 'roles_measure_p5';
+     datacl before={=Tc/postgres,postgres=CTc/postgres}
+     revoke temporary on database roles_measure_p5 from public;
+     select 'datacl after='||coalesce(datacl::text,'(null)') from pg_database where datname = 'roles_measure_p5';
+     datacl after={=c/postgres,postgres=CTc/postgres}
+     select 'm5_plain TEMP='||has_database_privilege('m5_plain', 'roles_measure_p5', 'TEMP');
+     m5_plain TEMP=false
+     create temp table m5_tmp3(id int);
+     ERROR:  permission denied to create temporary tables in database "roles_measure_p5"
+     LINE 1: create temp table m5_tmp3(id int);
+                               ^
+-- b. connected to database postgres: create role m5_owner while it already exists
+     select 'exists='||exists(select 1 from pg_roles where rolname = 'm5_owner');
+     exists=true
+     create role m5_owner;
+     ERROR:  role "m5_owner" already exists
+== clean-up
+     drop database if exists roles_measure_p5 with (force);
+     drop database if exists m5_db;
+     NOTICE:  database "m5_db" does not exist, skipping
+     drop role if exists m5_owner;
+     drop role if exists m5_plain;
+     drop role if exists m5_login;
+     drop role if exists m5_y;
+     NOTICE:  role "m5_y" does not exist, skipping
+     select 'm5 roles left: '||coalesce(string_agg(rolname, ','),'(none)') from pg_roles where rolname like 'm5\_%';
+     m5 roles left: (none)
+     select 'database roles_measure_p5 exists='||exists(select 1 from pg_database where datname = 'roles_measure_p5')||' m5_db exists='||exists(select 1 from pg_database where datname = 'm5_db');
+     database roles_measure_p5 exists=false m5_db exists=false
