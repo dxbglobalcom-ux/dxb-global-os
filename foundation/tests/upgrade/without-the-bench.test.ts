@@ -3,6 +3,8 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { afterAll } from "vitest";
 import { removeTheChainRoots } from "../chain/fixtures/chain-on-disk.ts";
+import { beforeSpelledCases } from "./cases/before-spelled.ts";
+import { keptAsItStandsCases } from "./cases/kept-as-it-stands.ts";
 import { keptCases } from "./cases/kept.ts";
 import { refusalCases } from "./cases/refusals.ts";
 import { theTextsCases } from "./cases/the-texts.ts";
@@ -25,3 +27,6 @@ afterAll(() => {
 keptCases();
 refusalCases(() => scratch);
 theTextsCases();
+// SPEC §10.1 rows 1, 6 and 8: the blind audit's corrections, without the bench.
+keptAsItStandsCases();
+beforeSpelledCases(() => scratch);

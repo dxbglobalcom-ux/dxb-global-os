@@ -26,6 +26,16 @@ export function git(repo: string, ...args: string[]): string {
   return execFileSync("git", ["-C", repo, ...ON_EACH_CALL, ...args], { env, encoding: "utf8", stdio: ["ignore", "pipe", "pipe"] }).trim();
 }
 
+/**
+ * `git -C <repo> <args>` fed `input` on its stdin, and what it printed as bytes — for the objects a case makes from
+ * bytes no file system is asked to hold (SPEC §10.1 row 3). Only under the temporary directory, blind as `git` is.
+ */
+export function gitFed(repo: string, input: Buffer, ...args: string[]): Buffer {
+  if (!repo.startsWith(tmpdir() + sep)) throw new Error(`refused: ${repo} is not under the temporary directory`);
+  const env = { PATH: process.env.PATH, GIT_CONFIG_GLOBAL: "/dev/null", GIT_CONFIG_NOSYSTEM: "1" };
+  return execFileSync("git", ["-C", repo, ...ON_EACH_CALL, ...args], { env, input, stdio: ["pipe", "pipe", "pipe"] });
+}
+
 const made: string[] = [];
 
 /** A fresh empty directory under the temporary directory; removed by removeTheRepositories. */
