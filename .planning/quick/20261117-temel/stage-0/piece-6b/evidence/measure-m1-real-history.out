@@ -1,0 +1,49 @@
+== HEAD c1079ad7; previous chain revision 8faf72e6
+== files at 8faf72e6
+0001-roles.sql
+0002-os.sql
+e06f309291b1a2fa2b457a209ead72c227280dd5e29228a7b8afe1eeca47802b  PREV/db/schema/0001-roles.sql
+5b814cb9fd1e86a0a7f68ae70c7938c86afc578f0964ffa2f8f0630de45a2d0f  PREV/db/schema/0002-os.sql
+6e4099fff7783a16856bf28b743e48beb4c44fd5ec726e9b9c16b7952a6a7dc9  HEAD/db/schema/0001-roles.sql
+5b814cb9fd1e86a0a7f68ae70c7938c86afc578f0964ffa2f8f0630de45a2d0f  HEAD/db/schema/0002-os.sql
+== the edit between them
+diff --git a/db/schema/0001-roles.sql b/db/schema/0001-roles.sql
+index 772c46fa..3cb69e26 100644
+--- a/db/schema/0001-roles.sql
++++ b/db/schema/0001-roles.sql
+@@ -2,7 +2,9 @@
+ -- system. Each holds no attribute but LOGIN and is a member of nothing. No password is written in the chain:
+ -- the bench's install step (or, later, the company's) gives each login its own, as a verifier only. The installer
+ -- that runs this file is named by session_user and may act as the owner (SET), never inherit what it holds.
+-create role os_owner    nologin nosuperuser nocreatedb nocreaterole noinherit noreplication nobypassrls;
++-- A new role gives its maker nothing but what this file grants; the runner applies the file in one transaction, so the setting dies with it.
++set local createrole_self_grant to '';
++create role os_owner   nologin nosuperuser nocreatedb nocreaterole noinherit noreplication nobypassrls;
+ create role os_engine   login   nosuperuser nocreatedb nocreaterole noinherit noreplication nobypassrls;
+ create role os_executor login   nosuperuser nocreatedb nocreaterole noinherit noreplication nobypassrls;
+ create role os_intake   login   nosuperuser nocreatedb nocreaterole noinherit noreplication nobypassrls;
+== instance fresh
+INSTANCE_UP sysid=7711472575208640551 db=127.0.0.1:54522 seconds=52.1
+seconds=52
+== chain up --root PREV/db
+CHAIN_GREEN applied=2 standing=2 functions=0 reference=0
+exit=0
+== snapshot --check real (at the previous revision)
+- ledger 1 0001-roles.sql schema 6e4099fff7783a16856bf28b743e48beb4c44fd5ec726e9b9c16b7952a6a7dc9 runner 1
++ ledger 1 0001-roles.sql schema e06f309291b1a2fa2b457a209ead72c227280dd5e29228a7b8afe1eeca47802b runner 1
+SNAPSHOT_RED expected_only=1 database_only=1
+exit=1
+== chain up (HEAD) — the upgrade
+[chain] disk: 2 files
+[chain] ledger: 2 files
+OFFENCE changed 0001-roles.sql
+CHAIN_RED offences=1
+exit=1
+== snapshot --check real (after the upgrade attempt)
+- ledger 1 0001-roles.sql schema 6e4099fff7783a16856bf28b743e48beb4c44fd5ec726e9b9c16b7952a6a7dc9 runner 1
++ ledger 1 0001-roles.sql schema e06f309291b1a2fa2b457a209ead72c227280dd5e29228a7b8afe1eeca47802b runner 1
+SNAPSHOT_RED expected_only=1 database_only=1
+exit=1
+== instance down
+INSTANCE_DOWN
+M1_DONE seconds=55

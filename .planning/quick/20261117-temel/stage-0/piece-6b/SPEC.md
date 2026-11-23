@@ -1,0 +1,242 @@
+# B85 — stage 0, piece 6b: "upgraded equals clean", and the rows kept — the contract
+
+The lead's contract for the second part of BUILD.md §6 piece 6 (2026-11-23). What 6a left for "6b" is cut once
+more where its parts stand alone **[lead]**: **6b** (this file) — a database built at an earlier revision of the
+chain, given rows and upgraded by the delivery command has the same snapshot as a clean one, and its rows;
+**6c** (its own contract, after this) — what a build changes outside the snapshot's reach, by a whole-catalogue
+reading before and after. Marks: **[lead]** a decision of the lead's inside the cut; everything under §3 is measured.
+6a's contract (`piece-6/SPEC.md`) stands whole and is not repeated: "§4.2 of 6a" and the like point into it.
+
+## 1. What the piece leaves standing
+
+- **The rows' text** — `rowsOf(target)` in `@dxb-foundation/chain`: one text of what the tables of the covered
+  schemas *hold* — every row, and where every sequence stands — in the snapshot's form and read as the snapshot is.
+- **"Kept"** — the pure `keptOf(before, after)`: every row the earlier text holds is still held, column for column,
+  and no sequence stands behind where it stood.
+- **Its command** — `pnpm foundation:chain rows` prints the text; `pnpm foundation:chain rows --kept <file>` says
+  `ROWS_KEPT` or names every row that is lost and every sequence that went back.
+- **The chain at a revision** — `chainAt(repository, revision, into)`: the chain's three directories as a commit
+  holds them, written out as a root `chain up --root` takes. Read from git's objects, never from the working tree.
+- **The proof "upgraded equals clean", on two revisions of a fixture chain:** a clean build of the later revision
+  equals its committed text; an instance built at the earlier one, given rows and upgraded by `chain up`, equals
+  the same text and keeps its rows.
+- **The proofs that go red:** an applied file edited in place of a new one; a change that a populated table
+  refuses; a change that loses a row, a value and a sequence's place while the chain is green; a change whose
+  structure depends on the rows it meets.
+- **Where the real chain's upgrade is proven from** (§7): one committed revision, held by the lock.
+
+Not in this piece: the outside proof (6c); the bench command that runs the real chain's upgrade on every run (13).
+
+## 2. The carry list (PLAN.md §2 K) — read once
+
+| Old contract | Verdict | Where it lands |
+|---|---|---|
+| Content, not counts: each row as text (`scripts/b36/prove-restore-content.mjs:3-8`) | kept | §4 `row` |
+| One md5 per table (`prove-restore-content.mjs:24-27`) | rewritten | a line per row — a hash hides which row |
+| Sequences are part of what a database holds (`scripts/b36/company-state-fingerprint.mjs:4-9`) | kept | §4 `sequence-position` |
+| Large objects, the audit records as a class of their own (same file) | dropped | `os` holds no large object; an audit record is a row |
+| "A populated fixture upgraded with its rows kept" (`foundation/tests/chain/cases/sessions-and-upgrade.ts:99`) | stands | piece 3's lock; it reads two tables by hand — this piece reads every table |
+
+The old system never built a database at an earlier revision of its own chain.
+
+## 3. Measured facts (2026-11-23) — not to be re-litigated
+
+1. **The real chain cannot be upgraded from the revision before its last change.** Built at `8faf72e6` and
+   upgraded at `c1079ad7`: `OFFENCE changed 0001-roles.sql`, `CHAIN_RED offences=1`, exit 1 — piece 5's audit
+   corrected an applied file while no database lived on it (`piece-6b/evidence/measure-m1-real-history.out`).
+   Since `46115fd1` the three directories are unchanged (`git diff 46115fd1 HEAD -- db` is empty).
+2. **`db/` is not the chain's alone:** it holds the old system's `db/migrations/` (188 files) and `db/seed/`.
+   The chain's own are `db/schema/`, `db/functions/`, `db/reference/`; the last two hold a `.gitkeep` each.
+3. A fresh instance takes about 52 s to make; `chain up` on it about a second.
+4. The lock's clean copy holds no `.git` (`foundation/lock/src/runner.ts`: the tree's entries are written out).
+   A locked test may make a throwaway repository of its own (`foundation/tests/lock/fixtures/fixture-repo.ts`).
+5. A lock is made over several directories: `pnpm foundation:lock <piece> <dir>…` (`foundation/lock/src/cli.ts:14`);
+   piece 6's lock holds `foundation/tests/snapshot` today. The inventory of pieces has no `piece-6b`.
+6. From 6a, carried: a session's settings change a value's text (6a §3.2); `to_jsonb(row)::text` is what a
+   vocabulary's `reference` line already prints; the bench's superuser is reached as
+   `foundation/tests/snapshot/fixtures/superuser.ts` does; the fixture chain of 6a makes `os.parts` (an identity
+   key, row security forced, a trigger, a foreign key to the vocabulary `os.kinds` with `on delete restrict`), the
+   sequence `os.ticket_seq`, and its committed text is `foundation/tests/snapshot/expected/fixture.snapshot.txt`.
+7. Piece 4's rules an upgrade meets: a function's body is replaced by its file on every run; a removed function
+   or a changed signature arrives as a schema file, and after the pass the functions of `os` are exactly the
+   files'; a vocabulary is made equal to its file, and a removal that a foreign key refuses stops the pass.
+
+## 4. The rows' text **[lead]**
+
+Its form is the snapshot's (6a §4.2) with its own first line, `rows-format 1`: every other line stands alone, the
+lines are sorted by their UTF-8 bytes, the same escapes, no oid, no ctid.
+
+| Line | For |
+|---|---|
+| `row <regclass> <to_jsonb(row)::text>` | each row of each ordinary table (`relkind` `r`; a partition is one) of a covered schema (6a §4.1), read `only` — **but** the ledger and every vocabulary's table: both are lines of the snapshot, and both change by the chain's own design |
+| `sequence-position <regclass> <last_value> called <b> ascending <b>` | each sequence of a covered schema, an identity column's too: `last_value` and `is_called` read from the sequence itself; `ascending` is `t` when its increment is above zero |
+
+It is read as the snapshot is (6a §4.4): one guarded connection, one `repeatable read, read only` transaction, the
+same ten `set local` before the first read, as whoever the target logs in, nothing temporary. **A text is whole or
+there is none:** a table or a sequence the session may not read fails the call. A database with no covered schema
+gives the first line alone. An unlogged table's rows are rows.
+
+## 5. "Kept", the command and the library
+
+**`keptOf(before: string, after: string): { lost: string[]; back: string[]; rows: number; sequences: number }`**,
+pure. Both are rows' texts.
+
+- **A row is kept** when a row of the same table in `after` holds every key of it with an equal JSON value; each
+  row of `after` answers for one row of `before` at most (rows are a multiset). A row that is not kept is *lost*.
+  New columns and new rows cost nothing; a column dropped or retyped, a value changed, a row deleted, a table
+  emptied, dropped or renamed lose rows — and the piece that means such a change says so (§9).
+- **A sequence is kept** when `after` holds its line and it does not stand behind: by `ascending`, `last_value`
+  is not lower (not higher, descending), and at the same `last_value` `called` has not gone from `t` to `f`.
+- `lost`: for each lost row `- row <regclass> <its JSON>`; then, **for each table that lost a row**, every row of
+  `after` in that table that answered for none, whole, as `+ row <regclass> <its JSON>` — so a changed value is
+  read beside what it became. `back`: `- sequence-position …` (the line of `before`) and, when `after` holds the
+  sequence, `+ sequence-position …` (its line). Each list sorted by the line after its sign, `-` before `+` for
+  one line. `rows` and `sequences` count the lines of `before`.
+
+`rowsOf(target: Target): Promise<string>`, `keptOf` and `chainAt` are exported from `foundation/chain/src/index.ts`;
+the code lies under `foundation/chain/src/` and reuses the snapshot's reader — one place sets the session.
+
+| `pnpm foundation:chain …` | stdout | exit |
+|---|---|---|
+| `rows` | the text, byte for byte, and nothing else | 0 |
+| `rows --kept <file>`, all kept | `ROWS_KEPT rows=<n> sequences=<m>` | 0 |
+| `rows --kept <file>`, not all | `lost`, then `back`, then `ROWS_RED lost=<rows lost> back=<sequences back>` (the counts are of `-` lines) | 1 |
+| the file is absent, no regular file, or cannot be read | `ROWS_REFUSED no-before` — before any connection | 2 |
+| the file is not a rows' text (6a §5's malformations, with this first line; a byte-order mark; not UTF-8) | `ROWS_REFUSED before-malformed` — before any connection | 2 |
+| the bench's guard refuses the target | `ROWS_REFUSED target-<reason>` | 2 |
+| `rows` with any other words | `usage: cli.ts rows [--kept <file>]` | 2 |
+
+Every other call answers as today: `snapshot …` its own table, the rest piece 3's usage line. The command never
+writes a file. The difference is never cut short.
+
+**`chainAt(repository: string, revision: string, into: string): { commit: string; files: number }`** — resolves
+`revision` to a commit of the repository at `repository` and writes, under `into`, every file that commit holds
+under `db/schema/`, `db/functions/` and `db/reference/`, at its path below `db/` (`into/schema/0001-roles.sql`),
+byte for byte, from git's objects. A directory the commit does not hold is not made. It throws `RevisionRefused`
+with a `reason`: `unknown-revision` (also a revision that begins with `-`); `into-not-empty` (`into` stands and
+holds anything); `not-a-file` (an entry under the three directories that is a link or a gitlink). `files: 0` is an
+answer: that commit holds no chain. Nothing of the working tree or the index is read; nothing outside `into` is
+written; the repository is not written to.
+
+## 6. The tests — `foundation/tests/upgrade/`, written before the code
+
+By a hand that will not write the code, as the chain's own callers (the library through `@dxb-foundation/chain`,
+the commands as child processes). The fixtures of pieces 1–6a are reused by import, not copied. Each bench module
+makes its own fresh instance and destroys it; each file is one command under four minutes.
+
+**The two revisions of the fixture chain.**
+- **A — the earlier:** 6a's fixture chain as it stands (`fixtureRoot()`); its text is 6a's committed one.
+- **B — the later:** A's schema files byte for byte, then `0005-…sql`, a versioned change made as the owner: a
+  column added to `os.parts` with a default and `not null`; a second column added, filled from each row's own
+  values by an `update`, then set `not null`; a CHECK that the given rows satisfy; an index; a table of his policy
+  kind (no vocabulary mark) with one seeded row; `os.next_ticket` dropped in its old signature and made in a new
+  one (its file in B carries the new one — piece 4's rule). B's `functions/` changes one other function's body in
+  its file alone; B's `reference/kinds.json` changes one row's label, adds a row and removes one that no given
+  row names.
+- **The rows given** (`fixtures/rows.sql`, run by the bench's superuser on A): five or more rows of `os.parts` —
+  the three numeric defaults left to themselves in one, a null in another, a text holding a newline, a backslash,
+  a carriage return and a letter outside ASCII, kinds that B keeps; `os.ticket_seq` drawn from three times.
+- **Written by hand from this contract and 6a's**, never by the code under test, in
+  `foundation/tests/upgrade/expected/`: `b.snapshot.txt` (6a's fixture text with the lines B changes),
+  `a.rows.txt` (the rows given, as §4 reads them) and `b.rows.txt` (the same rows after B: the two new columns'
+  values, the seeded row, the sequences where they stand).
+- **The variants** — each a root made in a temporary directory:
+  *edited* — A with one statement added inside `0003-inside.sql`, and no `0005`;
+  *refused-when-populated* — A, then a `0005` that adds a `not null` column without a default;
+  *C* — B, then `0006-…sql`, which on an empty database changes nothing the snapshot reads: it changes one
+  value of one row, deletes another row, restarts `os.ticket_seq`, and makes an index only if `os.parts` holds a row.
+
+**A — without the bench.**
+1. `keptOf`, on texts written in the case: equal texts; a column added; a row added; a value changed (one `-`,
+   one `+`); a row deleted; a table gone; a column gone (every row of it lost); two equal rows against one (one
+   lost); two against two; a sequence behind, ascending and descending; `called` gone back; a sequence gone;
+   a sequence further on; the lists' order; the counts.
+2. The command refuses a missing file, a directory and each malformed spelling — with no instance standing, said
+   by a case of its own; `rows` with unknown words answers its usage line; `snapshot` and piece 3's usage line
+   are unchanged.
+3. The three expected texts obey their form (first line, sorted, no `\r`, no empty line, final newline) and hold
+   no line of a kind their table does not name. `real/from.txt` (§7) is forty lower-case hex digits and a newline.
+4. `chainAt`, on a throwaway repository the case makes (three commits: no chain; a chain beside other files under
+   `db/` and outside it; the chain changed): the files of the middle commit byte for byte — a CRLF and a file
+   without a final newline among them — and none of `db/`'s other directories; the first commit gives `files: 0`
+   and no directory; a file changed in the working tree and one staged are not seen; a branch name, a short id
+   and a full id resolve to the same commit; each refusal by its reason; nothing is written beside `into`; the
+   repository's `HEAD`, index and working tree are as before.
+
+**B — on a fresh instance: clean.** `chain up --root <B>` from nothing is `CHAIN_GREEN`;
+`snapshot --check expected/b.snapshot.txt` → `SNAPSHOT_EQUAL`; `rows` holds the seeded row and no row of `os.parts`.
+
+**C — on a second fresh instance, in order: upgraded.**
+1. `chain up --root <A>`; the check against 6a's fixture text is `SNAPSHOT_EQUAL`; the rows are given;
+   `rows` is `expected/a.rows.txt`, byte for byte — read twice, and once through a connection whose own settings
+   are hostile (6a §6 B.2's), the same bytes.
+2. **An applied file edited:** `chain up --root <edited>` is `CHAIN_RED` and names `0003-inside.sql` as changed;
+   the snapshot still equals A's text and `rows --kept expected/a.rows.txt` is `ROWS_KEPT`.
+3. **A change a populated table refuses:** `chain up --root <refused-when-populated>` is red at `0005`; the
+   snapshot still equals A's text — the ledger holds no row for it — and the rows are kept.
+4. **Upgraded equals clean:** `chain up --root <B>` is `CHAIN_GREEN`; `snapshot --check expected/b.snapshot.txt`
+   → `SNAPSHOT_EQUAL` — the text the clean instance reached; `rows` is `expected/b.rows.txt`, byte for byte;
+   `rows --kept expected/a.rows.txt` → `ROWS_KEPT`, its counts those of `a.rows.txt`.
+5. **A change that loses, and one that depends on the rows:** `chain up --root <C>` is `CHAIN_GREEN`. The check
+   against `b.snapshot.txt` is red by exactly two lines of the database's — `0006`'s ledger line, which a clean
+   build has too, and the index, which a clean build has not: an upgraded database that differs from a clean one,
+   seen. `rows --kept expected/b.rows.txt` is `ROWS_RED`, and its printed difference is asserted whole: the two
+   lost rows, the row one of them became, the sequence's two lines.
+
+The ordered module stops at its first red step; before the code exists every bench case is red at its first
+`rows` call or at B, and the test hand shows each later case red for its own reason by neutralising the earlier
+ones in the working tree and restoring them — as 6a's did.
+
+## 7. Where the real chain's upgrade is proven from **[lead]** — an adaptation of BUILD.md §6
+
+BUILD.md says "an instance built at the previous committed revision". Read as "the commit before", that proof is
+red today by an act that was right (fact 1), and would be red again whenever an audit corrects a file its own
+piece has just written. Read as nothing at all, an applied file could be edited for ever. So:
+
+- **One committed revision is where upgrades are owed from:** `foundation/tests/upgrade/real/from.txt` — a full
+  commit id and a newline, inside piece 6's locked directories. It begins at
+  `46115fd119f23b07baef3d462e448c0cdba76f0e`, the last commit that changed an applied file of the real chain.
+- **The real chain's proof**, which the bench command (13) runs on every run and the lead runs by hand until then:
+  `chainAt(<repository>, <from>, <dir>)`; a fresh instance; `chain up --root <dir>`; the rows of
+  `foundation/tests/upgrade/real/rows.sql`, when that file stands; `rows` kept aside; `chain up`; `snapshot --check`
+  on the real text → `SNAPSHOT_EQUAL`; `rows --kept` → `ROWS_KEPT`. Today the two chains are the same files and
+  no table stands to hold a row: the proof is thin, as BUILD.md said it would be, and it is standing.
+- **From here on an applied schema file of the real chain is not edited** — a correction is a new file — unless
+  the lead moves `from.txt` forward in a lock commit that holds nothing else, and says why in that piece's
+  record. No such move is made after a database that is not disposable holds the chain (stage 5 writes that rule
+  where the delivery is decided).
+- **The piece that first gives the real chain a table** writes `real/rows.sql` in the same lock commit as its
+  expected text (6a §7), so that from then on the real upgrade carries rows.
+- The proof needs the repository's history; the lock's clean copy has none (fact 4). It is therefore the bench
+  command's and never a locked test; what the lock holds is every part it is made of, on fixtures.
+
+**The lock.** The tests and the three expected texts go in with piece 6's lock made again over both directories —
+`pnpm foundation:lock piece-6 foundation/tests/snapshot foundation/tests/upgrade` — in a commit that holds nothing
+else. No new lock name, no new `foundation:*` script, no change to the lock tool.
+
+## 8. Done when
+
+The tests are committed with the lock alone and seen red for the right reason; the code is committed apart;
+`pnpm -s foundation:typecheck` is 0; `foundation/tests/upgrade` is green and the suites of pieces 3–6a are green,
+untouched; `pnpm foundation:verify --all --rev HEAD` says `LOCK_GREEN` for pieces 1–6; the lead has run §7's proof
+on the real chain from `from.txt` and kept its output; one blind audit pass by GPT-6.2 Sol is weighed and its
+corrections taken tests-first; BUILD.md's piece 6 carries the Done note of 6b and names 6c.
+
+## 9. Known limits, said before the build
+
+- **The rows' text is the bench's instrument:** it holds every row in memory and prints it. The company's move
+  (stage 5) and the restore drill (B72) prove their rows by their own means.
+- **A change that means to alter what rows hold** — a column dropped or retyped, values rewritten, a table
+  renamed — is `ROWS_RED` here by design. The piece that makes one commits the difference it expects, and the
+  bench compares what the command prints with it; no option for that is built before a piece needs it.
+- A table emptied and a table dropped read the same in `lost`; the snapshot tells them apart.
+- A row is a JSON value (6a §9): array bounds, `-0` and a `json` column's duplicate keys are not told apart.
+- A sequence that cycles may stand behind by right; a large object is not read; rows of a table outside the
+  covered schemas are not read, whoever owns it.
+- **That *refused-when-populated* is green on an empty database, and that C's index is absent from a clean
+  build, are PostgreSQL's own rules read from the files' text, not run** — each would cost an instance.
+- The real chain's upgrade is not under the lock (§7) and, until piece 13, is run by hand.
+- What a build changes outside the snapshot's reach is still unseen (6a §9's first limit) — 6c. Measured for it
+  already: a fresh instance of 2026-11-23 holds the platform's partitions `realtime.messages_2026_11_22` …
+  `_26`, so two whole-catalogue readings are compared on one instance, moments apart, never across instances
+  made on different days.
