@@ -1,0 +1,23 @@
+
+ RUN  v3.2.6 /home/dxb/DxB Global OS/foundation/tests
+
+ ✓ chain/on-the-bench.test.ts (72 tests) 31748ms
+   ✓ the harness — seen to work before a case rests on it > a session inside pg_sleep is seen as such by another session — and no longer once it woke  1118ms
+   ✓ the caller's shell chooses nothing of a session > with PGOPTIONS, PGAPPNAME and PGCLIENTENCODING set, a file meets the search path, application name and client encoding of a run with none set  420ms
+   ✓ one runner at a time > while a run sits in a file that sleeps, a second run with no wait is refused at once: busy — and the first goes on to its end  3136ms
+   ✓ one runner at a time > a second run with a wait stands at the lock while the first sleeps, runs after it, and applies nothing  3182ms
+   ✓ one runner at a time > a file added while a run waits for the lock is applied by that run: its disk is the disk as it stands under the lock  3198ms
+   ✓ one runner at a time > a wait that runs out is the same refusal: busy, after the wait and not before  3142ms
+   ✓ the ledger moved under a run > another hand writes at the position a run's third file will want: ledger-moved, the third left nothing, the first two stay ledgered  3152ms
+   ✓ the target > a list that loses the identity while a file sleeps: the next file's connection is refused, and the first file stays ledgered  3177ms
+   ✓ the target > the caller's own target changed to a second listed database while a file sleeps: the run finishes on the first, and the second is untouched  3406ms
+ ✓ bench/no-old-address.test.ts (28 tests) 27ms
+ ✓ chain/read-chain.test.ts (33 tests) 10ms
+ ✓ chain/answer.test.ts (15 tests) 3ms
+ ✓ chain/compare.test.ts (13 tests) 3ms
+
+ Test Files  5 passed (5)
+      Tests  161 passed (161)
+   Start at  12:13:54
+   Duration  32.56s (transform 123ms, setup 0ms, collect 260ms, tests 31.79s, environment 0ms, prepare 155ms)
+

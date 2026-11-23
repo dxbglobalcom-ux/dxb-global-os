@@ -7,8 +7,8 @@ import type { ChainFile } from "./disk.ts";
 import { makeTheLedger, readLedger, writeRow } from "./ledger.ts";
 import { underTheLock } from "./lock.ts";
 import type { Outcome } from "./outcome.ts";
-import { inASession, inOneTransaction } from "./session.ts";
-import type { Target } from "./session.ts";
+import { inOneTransaction, sessionsOn } from "./session.ts";
+import type { InASession, Target } from "./session.ts";
 
 type Input = { target: Target; root: string; lockWaitSeconds?: number };
 
@@ -23,17 +23,18 @@ const EXECUTE = "do $w$ begin execute pg_catalog.current_setting('os_chain.file'
 
 /**
  * One file, in a session of its own — a session outlives a file, and what one left there the next must not
- * meet — and in one transaction with its ledger row. Answers the server's message when the server refuses
- * the file, at whichever statement: nothing of the file is left then. Any other failure is thrown on.
+ * meet — and in one transaction with its ledger row, written at `position`. Answers the server's message when
+ * the server refuses the file, at whichever statement: nothing of the file is left then. Any other failure is
+ * thrown on — the ledger's refusal of the row among them (SPEC §12.1), before the text is sent.
  */
-function apply(target: Target, file: ChainFile): Promise<"applied" | { refusedWith: string }> {
-  return inASession(target, async (conn) => {
+function apply(inASession: InASession, file: ChainFile, position: number): Promise<"applied" | { refusedWith: string }> {
+  return inASession(async (conn) => {
     try {
       await inOneTransaction(conn, async () => {
         // The row first, the text after it, both in this one transaction: nothing the file does to its
         // session — another role, a read-only transaction, a search path — can reach the writing of its
         // own row, and a file the server refuses takes the row with it.
-        await writeRow(conn, { file: file.name, kind: "schema", hash: file.hash });
+        await writeRow(conn, { position, file: file.name, kind: "schema", hash: file.hash });
         await conn.query(HAND_OVER, [file.text]);
         await conn.query(EXECUTE);
       });
@@ -47,17 +48,25 @@ function apply(target: Target, file: ChainFile): Promise<"applied" | { refusedWi
 
 /** `applyChain`, saying each step to `say` as it goes. */
 export async function runChain(input: Input, say: Say): Promise<Outcome> {
-  const { target, root, lockWaitSeconds } = input;
+  // The input is copied here, before the run first waits for anything (SPEC §12.3): what the caller does to its
+  // object afterwards moves nothing of the run.
+  const { root, lockWaitSeconds } = input;
+  const inASession = sessionsOn(input.target);
 
-  // 1. The disk — before any connection is opened.
-  const disk = readChain(root);
-  if (disk.offences.length > 0) return { state: "offences", offences: disk.offences };
-  say(`disk: ${disk.files.length} files`);
+  // 1. The disk — before any connection is opened. This reading only answers early: a disk offence, or no chain.
+  const early = readChain(root);
+  if (early.offences.length > 0) return { state: "offences", offences: early.offences };
 
   // 2. The lock — from here to the run's end, however it ends.
-  return underTheLock(target, lockWaitSeconds, async (assertHeld) => {
+  return underTheLock(inASession, lockWaitSeconds, async (assertHeld) => {
+    // The disk again, as it stands under the lock (SPEC §12.5): a run may have waited here while another hand
+    // changed the disk, so this reading is the one compared and applied — and it ends the run as the first would.
+    const disk = readChain(root);
+    if (disk.offences.length > 0) return { state: "offences", offences: disk.offences };
+    say(`disk: ${disk.files.length} files`);
+
     // 3. The ledger, read under the lock.
-    const ledger = await inASession(target, readLedger);
+    const ledger = await inASession(readLedger);
     say(ledger === undefined ? "ledger: none stands" : `ledger: ${ledger.length} files`);
 
     // 4. The comparison. Nothing has been written when it stops the run — not the ledger's bootstrap either.
@@ -68,17 +77,20 @@ export async function runChain(input: Input, say: Say): Promise<Outcome> {
     // 5. The bootstrap, when no ledger stands.
     if (ledger === undefined) {
       await assertHeld();
-      await inASession(target, makeTheLedger);
+      await inASession(makeTheLedger);
       say("ledger: made");
     }
 
     // 6. Each pending file, in order. 7. One that fails stops the run; what committed before it stays.
+    // A file's row goes to the position the run says (SPEC §12.1): after row 0, the files that stood when the
+    // ledger was read and the files applied since. A row another hand put there meanwhile ends the run.
+    const stood = ledger?.length ?? 0;
     const applied: string[] = [];
     for (const file of pending) {
       await assertHeld();
       const started = performance.now();
       say(`${file.name} …`);
-      const ended = await apply(target, file);
+      const ended = await apply(inASession, file, 1 + stood + applied.length);
       const seconds = ((performance.now() - started) / 1_000).toFixed(1);
       if (ended !== "applied") {
         say(`${file.name} — failed after ${seconds} s`);
@@ -88,7 +100,7 @@ export async function runChain(input: Input, say: Say): Promise<Outcome> {
       applied.push(file.name);
     }
     // Counted, not read again: under the lock no other run writes a row.
-    return { state: "applied", applied, standing: (ledger?.length ?? 0) + applied.length };
+    return { state: "applied", applied, standing: stood + applied.length };
   });
 }
 

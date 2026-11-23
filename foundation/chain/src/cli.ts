@@ -19,7 +19,8 @@ type Option = (typeof OPTIONS)[number];
 
 /**
  * What was asked for, or nothing when the words are not the command's one call spelled as the usage line says:
- * `up`, then each option at most once with a value after it — and `--wait` a positive integer of seconds.
+ * `up`, then each option at most once with a value after it — and `--wait` a positive integer of seconds, of
+ * five digits at most. A word that begins with `--` is no value: it is an option whose own value was left out.
  * No word of it names a target: there is one, the bench's own.
  */
 function callOf(words: readonly string[]): { root: string; lockWaitSeconds?: number } | undefined {
@@ -29,11 +30,11 @@ function callOf(words: readonly string[]): { root: string; lockWaitSeconds?: num
   for (let at = 0; at < rest.length; at += 2) {
     const option = OPTIONS.find((known) => known === rest[at]);
     const value = rest[at + 1];
-    if (option === undefined || !value || given.has(option)) return undefined;
+    if (option === undefined || !value || value.startsWith("--") || given.has(option)) return undefined;
     given.set(option, value);
   }
   const wait = given.get("--wait");
-  if (wait !== undefined && !/^[1-9]\d*$/.test(wait)) return undefined;
+  if (wait !== undefined && !/^[1-9]\d{0,4}$/.test(wait)) return undefined;
   return { root: given.get("--root") ?? DEFAULT_ROOT, lockWaitSeconds: wait === undefined ? undefined : Number(wait) };
 }
 

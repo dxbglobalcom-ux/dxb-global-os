@@ -363,3 +363,24 @@ leaves; a retry is still safe. *Test:* exactly that, seen. BUILD.md's "leaves no
 - That `--wait`'s value reaches the run (Sol B6): one line, read by the lead; a case on the real target would have
   to write there.
 - A transaction pooler in front of the target: the runner's targets are direct connections; said, not enforced.
+
+## 12a. What the corrections' tests and code settled beyond §12 (read and accepted by the lead)
+
+- **Tests:** each of the five constraints dropped is `ledger-unknown`; `PGSSLMODE=require`, `PGSSLNEGOTIATION=direct`
+  and `PGREPLICATION=database` each leave a run as with none set (measured: each ended a connection before);
+  `PGCLIENTENCODING` is planted though this driver does not read it; `--wait 99999` is taken; the command's last case
+  compares the instance's ledger and schemas, not its relations — the bench's own services make some as they run.
+- **Code:** a row's position is `1 +` the schema rows read under the lock `+` the files applied since; any unique
+  violation on the row's insert is `ledger-moved` (the primary key or the unique `file` — either is a row the run
+  did not read), so a hand-made gap in the positions is answered `ledger-moved` too. Every constraint the table
+  holds is compared, of any kind, by the catalogue's own definition as PostgreSQL 17.6 writes it — a server that
+  writes them otherwise makes every ledger unknown, loudly, on its first run. **An address must itself say its user,
+  host, port and database**: what it leaves unsaid the driver would take from the environment, so such an address
+  is refused when the first session is wanted. A rollback is tried after any failure of a transaction's work. A
+  grant of the lock that comes after the deadline is not taken; the last ask may fall up to 100 ms before it.
+- **Seen by the code hand's probes, pinned by no locked test:** the identity pin (`target-moved` on a database
+  remade under the same address); the wait's bound; the first failure surviving a failed rollback; thirteen `PG*`
+  variables planted at once changing nothing of a session.
+- **Left open, said:** a password the address does not carry can still come from `PGPASSWORD` or `~/.pgpass`;
+  `NODE_PG_FORCE_NATIVE` ends the process when the driver loads, before the runner can answer; a session's own
+  `end()` failing can still replace an earlier failure.
