@@ -9,6 +9,9 @@ import { DESTROY_MS, MAKE_MS } from "../roles/fixtures/the-run.ts";
 import { clean } from "./cases/clean.ts";
 import { ownersRolesStructure } from "./cases/owners-roles-structure.ts";
 import { routinesPoliciesGrants } from "./cases/routines-policies-grants.ts";
+import { theAuditGrantsPublicationLargeObject } from "./cases/the-audit-grants-publication-large-object.ts";
+import { theAuditReading } from "./cases/the-audit-reading.ts";
+import { theAuditTriggersIndexesPolicies } from "./cases/the-audit-triggers-indexes-policies.ts";
 import { theFixture } from "./cases/the-fixture.ts";
 import { theVocabularyTheExtensionOutside } from "./cases/the-vocabulary-extension-outside.ts";
 import { whatTheChainDoesNotSee } from "./cases/what-the-chain-does-not-see.ts";
@@ -41,6 +44,10 @@ describe("piece 6a — the snapshot on a fresh instance, in order: clean, and ev
   routinesPoliciesGrants(step);
   ownersRolesStructure(step);
   theVocabularyTheExtensionOutside(step);
+  // SPEC §11.1: the blind audit's corrections, each case red by its own lines before the code obeys them.
+  theAuditTriggersIndexesPolicies(step);
+  theAuditGrantsPublicationLargeObject(step);
+  theAuditReading(step);
 
   step("down → INSTANCE_DOWN", DESTROY_MS, async () => {
     const down = await command("down", DESTROY_MS - 5_000);

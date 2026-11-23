@@ -44,15 +44,18 @@
     "foundation/tests/roles/fixtures/tcp-logins.ts": "75fc7e102faa076159015dd1a4422de93e1528cb",
     "foundation/tests/roles/fixtures/the-logins-file.ts": "191455e7391e08f6aaf389d4b35e55321d024c3c",
     "foundation/tests/roles/fixtures/the-run.ts": "795ac994046e8c3d35605aba550095f40087bdff",
-    "foundation/tests/snapshot/a-file-left-out.test.ts": "13c626fe8ecad4ac37015cc0246c3d5f6bc0f95d",
-    "foundation/tests/snapshot/cases/clean.ts": "32966de476003d97f7812147523a93ac88d5bea1",
-    "foundation/tests/snapshot/cases/owners-roles-structure.ts": "8081f6ce0ea78258946d9a41e164019f07b21d3a",
+    "foundation/tests/snapshot/a-file-left-out.test.ts": "92f1a75d608427e5b4f6e7167d77fc1389cc5f55",
+    "foundation/tests/snapshot/cases/clean.ts": "a44feab17230e68822e2cd94fbf8e16c7d325f7c",
+    "foundation/tests/snapshot/cases/owners-roles-structure.ts": "446b6412298c89e525cb7cb0d84c0f6b528292a2",
     "foundation/tests/snapshot/cases/routines-policies-grants.ts": "364863f740fcd6f40a77904ee50a61125d2069a3",
-    "foundation/tests/snapshot/cases/the-fixture.ts": "7fc044edd3382eb015df18230516ddbb4adb67dd",
-    "foundation/tests/snapshot/cases/the-vocabulary-extension-outside.ts": "dc3d11ed024376ff0983441227f9021afb2ec3c7",
+    "foundation/tests/snapshot/cases/the-audit-grants-publication-large-object.ts": "1ed10fc1f8bc74102a2cb53b2f7b09f06c8096df",
+    "foundation/tests/snapshot/cases/the-audit-reading.ts": "12966982ec88dde2747857cd9a217497c1c2e269",
+    "foundation/tests/snapshot/cases/the-audit-triggers-indexes-policies.ts": "6646e6ee5edf546df631c2bedff6037fa68172d7",
+    "foundation/tests/snapshot/cases/the-fixture.ts": "d520bb07c9d5a47e3fd3b4f7ab39cac9d63000c1",
+    "foundation/tests/snapshot/cases/the-vocabulary-extension-outside.ts": "c89d70239a54c2d40bd7daf2c33a11a790fdd0f4",
     "foundation/tests/snapshot/cases/what-the-chain-does-not-see.ts": "b019cd923f92c199c9063bd5c050b16e5bfb1d80",
-    "foundation/tests/snapshot/expected/fixture.snapshot.txt": "028920e549167cd42bca85f57150172eb7b5e2e2",
-    "foundation/tests/snapshot/expected/real.snapshot.txt": "f5c1ad039ed512b71e3d0cd21e163d22aeabe785",
+    "foundation/tests/snapshot/expected/fixture.snapshot.txt": "adc8763ee9498289584e858402c6f4974c4361b0",
+    "foundation/tests/snapshot/expected/real.snapshot.txt": "e62f3cbf004879b7de8011b0fd5d4d37e4004777",
     "foundation/tests/snapshot/fixtures/chain/functions/count_parts.sql": "fb648190ea6bcdf74fedb5bd70edd876fe2447bf",
     "foundation/tests/snapshot/fixtures/chain/functions/next_ticket.sql": "35a4eac5478876fbe77e192432f8bd0873de80ed",
     "foundation/tests/snapshot/fixtures/chain/functions/parts_touch.sql": "ff79ed23a793a8bd5203f5721d77cafbccea6f7c",
@@ -63,9 +66,9 @@
     "foundation/tests/snapshot/fixtures/superuser.ts": "1df6ea1c04d4d9d36a4d351a4edd205aae5a286e",
     "foundation/tests/snapshot/fixtures/the-chains.ts": "4c775fe3349820be964a2cf880ddf0f901129cbf",
     "foundation/tests/snapshot/fixtures/the-check.ts": "62f9d45901721987cc3bbdfc489b568e654ed903",
-    "foundation/tests/snapshot/fixtures/the-form.ts": "69d0483a523f22c13c4ae923fd8030be69ceecb5",
-    "foundation/tests/snapshot/on-a-fresh-instance.test.ts": "61d976f4fe142778903fb075c7b0ccb575d1608e",
-    "foundation/tests/snapshot/without-the-bench.test.ts": "c0ba9d5245ad5bd053b48a7d8508c0dbc10291fc",
+    "foundation/tests/snapshot/fixtures/the-form.ts": "5cf804cfe2e93ab0ede7a884d08fb819af01b649",
+    "foundation/tests/snapshot/on-a-fresh-instance.test.ts": "646bd3887306ce049772a9ff2cb370a200e3915f",
+    "foundation/tests/snapshot/without-the-bench.test.ts": "3aa217f25fee84ba3b929e0b644dc82ad60ecc0f",
     "foundation/tests/vitest.config.ts": "c95853266badd11995fc806996a5df94ee4f1198",
     "foundation/tsconfig.json": "4eb3b5c0b63913b217384ba6edb5cf33b78c4f9e",
     "pnpm-lock.yaml": "fda8eb167c85bc00d0c176c2ccd300383968a79c",
@@ -397,7 +400,7 @@
       "suite": [
         "piece 6a — the snapshot on a fresh instance, in order: clean, and every change seen"
       ],
-      "name": "B.8 outside os, a policy elsewhere naming a login: its outside line",
+      "name": "B.8 outside os, a policy elsewhere naming a login: its outside line, and its policy and policy-using lines (SPEC §11.1 row 3)",
       "count": 1
     },
     {
@@ -446,6 +449,142 @@
         "piece 6a — the snapshot on a fresh instance, in order: clean, and every change seen"
       ],
       "name": "fresh makes an instance: INSTANCE_UP with its cluster identifier, listed, and answering it",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/snapshot/on-a-fresh-instance.test.ts",
+      "suite": [
+        "piece 6a — the snapshot on a fresh instance, in order: clean, and every change seen"
+      ],
+      "name": "§11.1 row 1 a foreign key silenced on its referencing side (the superuser: disable trigger all): its two trigger-internal lines in, the table's own trigger O out and D in — no generated name anywhere; enable trigger all: equal",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/snapshot/on-a-fresh-instance.test.ts",
+      "suite": [
+        "piece 6a — the snapshot on a fresh instance, in order: clean, and every change seen"
+      ],
+      "name": "§11.1 row 1 the same foreign key silenced on its referenced side (os.kinds, no trigger of its own): its two trigger-internal lines in, nothing out; enable: equal",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/snapshot/on-a-fresh-instance.test.ts",
+      "suite": [
+        "piece 6a — the snapshot on a fresh instance, in order: clean, and every change seen"
+      ],
+      "name": "§11.1 row 2 cluster on the primary key's index: the index line clustered f → t; set without cluster: equal",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/snapshot/on-a-fresh-instance.test.ts",
+      "suite": [
+        "piece 6a — the snapshot on a fresh instance, in order: clean, and every change seen"
+      ],
+      "name": "§11.1 row 2 replica identity using the primary key's index: the relation line replident d → i, the index line replident f → t; default again: equal",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/snapshot/on-a-fresh-instance.test.ts",
+      "suite": [
+        "piece 6a — the snapshot on a fresh instance, in order: clean, and every change seen"
+      ],
+      "name": "§11.1 row 2 the database's connection limit (its owner, the installer): the database line connlimit -1 → 1000; -1 again: equal",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/snapshot/on-a-fresh-instance.test.ts",
+      "suite": [
+        "piece 6a — the snapshot on a fresh instance, in order: clean, and every change seen"
+      ],
+      "name": "§11.1 row 3 a table in public that inherits a table of os (the superuser): its inherits line, and nothing else of it; dropped: equal",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/snapshot/on-a-fresh-instance.test.ts",
+      "suite": [
+        "piece 6a — the snapshot on a fresh instance, in order: clean, and every change seen"
+      ],
+      "name": "§11.1 row 3 the policy in public that names a login, its predicate changed (the table's owner, the installer): exactly one policy-using line out, one in",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/snapshot/on-a-fresh-instance.test.ts",
+      "suite": [
+        "piece 6a — the snapshot on a fresh instance, in order: clean, and every change seen"
+      ],
+      "name": "§11.1 row 4 a chain role's item on a language, with grant option (the superuser): its grant language line and its outside line in; revoked: equal",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/snapshot/on-a-fresh-instance.test.ts",
+      "suite": [
+        "piece 6a — the snapshot on a fresh instance, in order: clean, and every change seen"
+      ],
+      "name": "§11.1 row 4 a chain role's item on a parameter (the superuser): its grant parameter line and its outside line in; revoked: equal",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/snapshot/on-a-fresh-instance.test.ts",
+      "suite": [
+        "piece 6a — the snapshot on a fresh instance, in order: clean, and every change seen"
+      ],
+      "name": "§11.1 row 4 a chain role's item on a tablespace (the superuser): its grant tablespace line and its outside line in; revoked: equal",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/snapshot/on-a-fresh-instance.test.ts",
+      "suite": [
+        "piece 6a — the snapshot on a fresh instance, in order: clean, and every change seen"
+      ],
+      "name": "§11.1 row 4 a default-privilege row left with an empty ACL (os_owner revokes its own on sequences): one default-acl-none line in; granted back: equal",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/snapshot/on-a-fresh-instance.test.ts",
+      "suite": [
+        "piece 6a — the snapshot on a fresh instance, in order: clean, and every change seen"
+      ],
+      "name": "§11.1 row 5 a publication with a column list and a filter: its line; the filter changed: one line out, one in; no list and no filter: * and -; dropped: equal",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/snapshot/on-a-fresh-instance.test.ts",
+      "suite": [
+        "piece 6a — the snapshot on a fresh instance, in order: clean, and every change seen"
+      ],
+      "name": "§11.1 row 6 while a login holds a session in which it made a temporary table: SNAPSHOT_EQUAL, and the printed text holds no pg_temp",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/snapshot/on-a-fresh-instance.test.ts",
+      "suite": [
+        "piece 6a — the snapshot on a fresh instance, in order: clean, and every change seen"
+      ],
+      "name": "§11.1 row 6 with a non-ASCII comment standing in os, the text read through a session whose options say client_encoding=LATIN1 equals the text read without them, byte for byte",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/snapshot/on-a-fresh-instance.test.ts",
+      "suite": [
+        "piece 6a — the snapshot on a fresh instance, in order: clean, and every change seen"
+      ],
+      "name": "§11.1 row 7 a comment holding \\r\\n: the difference holds the two characters \\r and no raw carriage return; snapshot prints no raw one; what it prints, as a file, is SNAPSHOT_EQUAL",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/snapshot/on-a-fresh-instance.test.ts",
+      "suite": [
+        "piece 6a — the snapshot on a fresh instance, in order: clean, and every change seen"
+      ],
+      "name": "§11.1 row 8 large objects os_owner owns: one → `outside owns os_owner large object -`; two → the line twice; no oid in the answer; removed: equal",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/snapshot/on-a-fresh-instance.test.ts",
+      "suite": [
+        "piece 6a — the snapshot on a fresh instance, in order: clean, and every change seen"
+      ],
+      "name": "§11.1 row 9 the reader's own statements, recorded in process: the guard's, then start transaction … read only, the ten set local before any read, nothing that writes, locks or sets a role, the rollback last",
       "count": 1
     },
     {
@@ -734,6 +873,70 @@
         "A.3 the texts carry the chains' ledger: each schema file's SHA-256, as the runner writes it (SPEC §7)"
       ],
       "name": "the fixture chain, assembled, reads with no offence: its schema files, its function files and its reference file",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/snapshot/without-the-bench.test.ts",
+      "suite": [
+        "SPEC §11.1 rows 7 and 9 without the bench: a byte-order mark and bytes that are not UTF-8 are malformations, a line held twice is not; a carriage return does not split a line"
+      ],
+      "name": "a byte that is never UTF-8 (0xff) → SNAPSHOT_REFUSED expected-malformed, exit 2",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/snapshot/without-the-bench.test.ts",
+      "suite": [
+        "SPEC §11.1 rows 7 and 9 without the bench: a byte-order mark and bytes that are not UTF-8 are malformations, a line held twice is not; a carriage return does not split a line"
+      ],
+      "name": "a byte-order mark before the first line → SNAPSHOT_REFUSED expected-malformed, exit 2",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/snapshot/without-the-bench.test.ts",
+      "suite": [
+        "SPEC §11.1 rows 7 and 9 without the bench: a byte-order mark and bytes that are not UTF-8 are malformations, a line held twice is not; a carriage return does not split a line"
+      ],
+      "name": "a character cut short (0xe2 0x82, then a newline) → SNAPSHOT_REFUSED expected-malformed, exit 2",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/snapshot/without-the-bench.test.ts",
+      "suite": [
+        "SPEC §11.1 rows 7 and 9 without the bench: a byte-order mark and bytes that are not UTF-8 are malformations, a line held twice is not; a carriage return does not split a line"
+      ],
+      "name": "a continuation byte with nothing before it (0x80) → SNAPSHOT_REFUSED expected-malformed, exit 2",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/snapshot/without-the-bench.test.ts",
+      "suite": [
+        "SPEC §11.1 rows 7 and 9 without the bench: a byte-order mark and bytes that are not UTF-8 are malformations, a line held twice is not; a carriage return does not split a line"
+      ],
+      "name": "a line held twice, side by side, is no malformation: answered as the file holding it once is, by the refused connection, never expected-malformed",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/snapshot/without-the-bench.test.ts",
+      "suite": [
+        "SPEC §11.1 rows 7 and 9 without the bench: a byte-order mark and bytes that are not UTF-8 are malformations, a line held twice is not; a carriage return does not split a line"
+      ],
+      "name": "an overlong spelling of '/' (0xc0 0xaf) → SNAPSHOT_REFUSED expected-malformed, exit 2",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/snapshot/without-the-bench.test.ts",
+      "suite": [
+        "SPEC §11.1 rows 7 and 9 without the bench: a byte-order mark and bytes that are not UTF-8 are malformations, a line held twice is not; a carriage return does not split a line"
+      ],
+      "name": "differenceOf splits at \\n and nothing else: a text holding \\r\\n keeps the carriage return on its line",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/snapshot/without-the-bench.test.ts",
+      "suite": [
+        "SPEC §11.1 rows 7 and 9 without the bench: a byte-order mark and bytes that are not UTF-8 are malformations, a line held twice is not; a carriage return does not split a line"
+      ],
+      "name": "no instance stands while these cases run",
       "count": 1
     }
   ]

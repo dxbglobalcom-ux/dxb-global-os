@@ -57,6 +57,8 @@ describe("piece 6a — a file left out, on a second fresh instance, in order", (
         "outside granted os_reader table public.snap_probe",
         "outside in-policy os_reader policy snap_probe_reader on public.snap_probe",
         "outside owns os_owner table snap_elsewhere.owned",
+        "policy public.snap_probe snap_probe_reader cmd r permissive to os_reader",
+        "policy-using public.snap_probe snap_probe_reader true",
       ],
     });
   });

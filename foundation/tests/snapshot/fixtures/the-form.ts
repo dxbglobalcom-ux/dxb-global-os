@@ -5,20 +5,23 @@ const B = "[tf]";
 
 /** §4.3, kind by kind: the shape of a whole line. A field written `.+` is one the server's text fills. */
 export const SHAPES: Readonly<Record<string, RegExp>> = {
-  database: /^database \S+ owner \S+ encoding \S+ collate \S+ ctype \S+$/,
+  database: /^database \S+ owner \S+ encoding \S+ collate \S+ ctype \S+ connlimit -?\d+$/,
   role: new RegExp(`^role \\S+ super ${B} inherit ${B} createrole ${B} createdb ${B} login ${B} replication ${B} bypassrls ${B} connlimit -?\\d+ validuntil .+$`),
   member: new RegExp(`^member \\S+ has \\S+ admin ${B} inherit ${B} set ${B} by \\S+$`),
   "role-setting": /^role-setting \S+ in \S+ [^=\s]+=.*$/,
   schema: /^schema \S+ owner \S+$/,
   "default-acl": new RegExp(`^default-acl for \\S+ in \\S+ on [rSfTn] to \\S+ [A-Z]+ option ${B}$`),
+  "default-acl-none": /^default-acl-none for \S+ in \S+ on [rSfTn]$/,
   relation: new RegExp(`^relation \\S+ kind [rpvmSfc] owner \\S+ persistence [put] rowsecurity ${B} force ${B} replident [dnfi] options \\S+$`),
   "partition-key": /^partition-key \S+ .+$/,
   "partition-of": /^partition-of \S+ \S+ .+$/,
   inherits: /^inherits \S+ \S+ \d+$/,
   column: new RegExp(`^column \\S+ \\d+ \\S+ type .+ not-null ${B} identity [ad-] generated [s-] collation \\S+ default .+$`),
   constraint: new RegExp(`^constraint \\S+ \\S+ type [cfpuxtn] deferrable ${B} deferred ${B} validated ${B} def .+$`),
-  index: new RegExp(`^index \\S+ valid ${B} def .+$`),
+  index: new RegExp(`^index \\S+ valid ${B} replident ${B} clustered ${B} def .+$`),
   trigger: /^trigger \S+ \S+ enabled [ODRA] def .+$/,
+  // The function's regprocedure may hold a space (`double precision`): it ends at its closing parenthesis.
+  "trigger-internal": /^trigger-internal \S+ \S+ \S.*\) enabled [DRA]$/,
   rule: /^rule \S+ \S+ enabled \S def .+$/,
   policy: /^policy \S+ \S+ cmd [rawd*] (permissive|restrictive) to \S+$/,
   "policy-using": /^policy-using \S+ \S+ .+$/,
@@ -38,9 +41,12 @@ export const SHAPES: Readonly<Record<string, RegExp>> = {
   "function-body": /^function-body \S.*\) \d{5}\|.*$/,
   object: /^object .+ owner \S+$/,
   extension: /^extension \S+ schema \S+ owner \S+ version \S+$/,
-  publication: /^publication \S+ has \S+$/,
+  publication: /^publication \S+ has \S+ columns \S+ where .+$/,
   comment: /^comment .+ \d{5}\|.*$/,
-  grant: new RegExp(`^grant (database|schema|relation|column|function|type) .+ to \\S+ [A-Z]+ option ${B} by \\S+ (stored|default)$`),
+  // A parameter's privilege may be the server's two words `ALTER SYSTEM`.
+  grant: new RegExp(
+    `^grant (database|schema|relation|column|function|type|language|fdw|server|tablespace|parameter) .+ to \\S+ [A-Z]+(?: [A-Z]+)? option ${B} by \\S+ (stored|default)$`,
+  ),
   outside: /^outside (owns|granted|in-policy|other) \S+ .+$/,
   reference: /^reference \S+ \{.*\}$/,
   ledger: /^ledger \d+ \S+ (ledger|schema) [0-9a-f]{64} runner \S+$/,
@@ -77,6 +83,8 @@ export function headOf(line: string): string {
     case "function-arguments":
     case "function-setting":
       return cutAt(") ");
+    case "publication":
+      return cutAt(" where ");
     case "policy-using":
     case "policy-check":
     case "role-setting":

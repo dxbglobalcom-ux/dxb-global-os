@@ -11,7 +11,7 @@ constraint os_chain.ledger ledger_hash_check type c deferrable f deferred f vali
 constraint os_chain.ledger ledger_kind_check type c deferrable f deferred f validated t def CHECK ((kind = ANY (ARRAY['ledger'::text, 'schema'::text])))
 constraint os_chain.ledger ledger_pkey type p deferrable f deferred f validated t def PRIMARY KEY ("position")
 constraint os_chain.ledger ledger_position_check type c deferrable f deferred f validated t def CHECK (("position" >= 0))
-database postgres owner postgres encoding UTF8 collate en_US.UTF-8 ctype en_US.UTF-8
+database postgres owner postgres encoding UTF8 collate en_US.UTF-8 ctype en_US.UTF-8 connlimit -1
 default-acl for os_owner in * on T to os_owner USAGE option f
 default-acl for os_owner in * on f to os_owner EXECUTE option f
 grant database postgres to PUBLIC CONNECT option f by postgres stored
@@ -36,8 +36,8 @@ grant schema os to os_owner CREATE option f by os_owner default
 grant schema os to os_owner USAGE option f by os_owner default
 grant schema os_chain to postgres CREATE option f by postgres default
 grant schema os_chain to postgres USAGE option f by postgres default
-index os_chain.ledger valid t def CREATE UNIQUE INDEX ledger_file_key ON os_chain.ledger USING btree (file)
-index os_chain.ledger valid t def CREATE UNIQUE INDEX ledger_pkey ON os_chain.ledger USING btree ("position")
+index os_chain.ledger valid t replident f clustered f def CREATE UNIQUE INDEX ledger_file_key ON os_chain.ledger USING btree (file)
+index os_chain.ledger valid t replident f clustered f def CREATE UNIQUE INDEX ledger_pkey ON os_chain.ledger USING btree ("position")
 ledger 0 (ledger) ledger 2179aece49242b6bde8643739f2c3bdf4939c21d5f95770b97c0debe74fced00 runner 1
 ledger 1 0001-roles.sql schema 6e4099fff7783a16856bf28b743e48beb4c44fd5ec726e9b9c16b7952a6a7dc9 runner 1
 ledger 2 0002-os.sql schema 5b814cb9fd1e86a0a7f68ae70c7938c86afc578f0964ffa2f8f0630de45a2d0f runner 1

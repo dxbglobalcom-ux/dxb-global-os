@@ -19,7 +19,7 @@ import { COMMAND_MS, expectEqual, snapshotPrinted } from "../fixtures/the-check.
 // cannot write; and the same after the install step, which gives the logins their passwords.
 
 /** The bench's address with these settings said by the connection itself (libpq's `options`), as a login could. */
-function withTheSessionSaying(settings: Record<string, string>): string {
+export function withTheSessionSaying(settings: Record<string, string>): string {
   const address = new URL(connectionString());
   address.searchParams.set("options", Object.entries(settings).map(([name, value]) => `-c ${name}=${value}`).join(" "));
   return address.toString();

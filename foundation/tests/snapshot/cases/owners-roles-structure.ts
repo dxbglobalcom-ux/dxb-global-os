@@ -60,7 +60,7 @@ export function ownersRolesStructure(step: Step): void {
   aChange(step, "B.8 an index dropped: its index line out", {
     change: () => asTheOwner("drop index os.parts_kind_idx"),
     undo: () => asTheOwner("create index parts_kind_idx on os.parts (kind) where qty > 1"),
-    expectedOnly: ["index os.parts valid t def CREATE INDEX parts_kind_idx ON os.parts USING btree (kind) WHERE (qty > 1)"],
+    expectedOnly: ["index os.parts valid t replident f clustered f def CREATE INDEX parts_kind_idx ON os.parts USING btree (kind) WHERE (qty > 1)"],
   });
 
   aChange(step, "B.8 a constraint dropped: its constraint line out", {

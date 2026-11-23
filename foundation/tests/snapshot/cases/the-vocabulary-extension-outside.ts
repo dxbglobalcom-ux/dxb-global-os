@@ -59,9 +59,13 @@ export function theVocabularyTheExtensionOutside(step: Step): void {
     actualOnly: ["outside owns os_owner table snap_elsewhere.extra", ...EXTRA_GRANTS],
   });
 
-  aChange(step, "B.8 outside os, a policy elsewhere naming a login: its outside line", {
+  aChange(step, "B.8 outside os, a policy elsewhere naming a login: its outside line, and its policy and policy-using lines (SPEC §11.1 row 3)", {
     change: () => asTheInstaller("create policy snap_probe_engine on public.snap_probe for select to os_engine using (true)"),
     undo: () => asTheInstaller("drop policy snap_probe_engine on public.snap_probe"),
-    actualOnly: ["outside in-policy os_engine policy snap_probe_engine on public.snap_probe"],
+    actualOnly: [
+      "outside in-policy os_engine policy snap_probe_engine on public.snap_probe",
+      "policy public.snap_probe snap_probe_engine cmd r permissive to os_engine",
+      "policy-using public.snap_probe snap_probe_engine true",
+    ],
   });
 }

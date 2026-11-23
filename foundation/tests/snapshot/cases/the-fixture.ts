@@ -41,6 +41,7 @@ async function whatStands(client: Client): Promise<string[]> {
     `select 'policy ' || y.polrelid::pg_catalog.regclass::text || ' ' || pg_catalog.quote_ident(y.polname) || ' cmd '
        from pg_catalog.pg_policy y join pg_catalog.pg_class c on c.oid = y.polrelid where c.relnamespace in ${COVERED}`,
     `select 'index ' || i.indrelid::pg_catalog.regclass::text || ' valid ' || (case when i.indisvalid then 't' else 'f' end)
+            || ' replident ' || (case when i.indisreplident then 't' else 'f' end) || ' clustered ' || (case when i.indisclustered then 't' else 'f' end)
             || ' def ' || '%INDEX ' || pg_catalog.quote_ident(x.relname) || ' ON %'
        from pg_catalog.pg_index i join pg_catalog.pg_class x on x.oid = i.indexrelid where x.relnamespace in ${COVERED}`,
   ];

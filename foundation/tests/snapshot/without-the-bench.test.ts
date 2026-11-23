@@ -154,6 +154,48 @@ describe("A.2 the command refuses before any connection, and answers its usage l
   });
 });
 
+describe("SPEC §11.1 rows 7 and 9 without the bench: a byte-order mark and bytes that are not UTF-8 are malformations, a line held twice is not; a carriage return does not split a line", { timeout: COMMAND_MS }, () => {
+  it("no instance stands while these cases run", () => {
+    expect(readInstances()).toEqual([]);
+  });
+
+  const bytesWritten = (name: string, bytes: Buffer): string => {
+    const path = join(scratch, name);
+    writeFileSync(path, bytes);
+    return path;
+  };
+  const ascii = (text: string): Buffer => Buffer.from(text, "utf8");
+
+  const notASnapshotsBytes: [string, Buffer][] = [
+    ["a byte-order mark before the first line", Buffer.concat([Buffer.from([0xef, 0xbb, 0xbf]), ascii("snapshot-format 1\nrole a\n")])],
+    ["a byte that is never UTF-8 (0xff)", Buffer.concat([ascii("snapshot-format 1\nrole "), Buffer.from([0xff]), ascii("\n")])],
+    ["a continuation byte with nothing before it (0x80)", Buffer.concat([ascii("snapshot-format 1\nrole "), Buffer.from([0x80]), ascii("\n")])],
+    ["a character cut short (0xe2 0x82, then a newline)", Buffer.concat([ascii("snapshot-format 1\nrole "), Buffer.from([0xe2, 0x82]), ascii("\n")])],
+    ["an overlong spelling of '/' (0xc0 0xaf)", Buffer.concat([ascii("snapshot-format 1\nrole "), Buffer.from([0xc0, 0xaf]), ascii("\n")])],
+  ];
+  it.each(notASnapshotsBytes)("%s → SNAPSHOT_REFUSED expected-malformed, exit 2", async (what, bytes) => {
+    const said = await chainCommand(["snapshot", "--check", bytesWritten(`bytes-${what.replaceAll(/[^a-z0-9]+/g, "-")}.txt`, bytes)], COMMAND_MS);
+    expect(said.lines, said.stderr).toEqual(["SNAPSHOT_REFUSED expected-malformed"]);
+    expect(said.code).toBe(2);
+  });
+
+  // With no instance standing, a file the check accepts can only be answered by the reach for a connection, which
+  // fails: what proves the file got past its judgement is that it is answered as the same file with the line once
+  // is — not by a refusal of the file — and that the answer is the refused connection's.
+  it("a line held twice, side by side, is no malformation: answered as the file holding it once is, by the refused connection, never expected-malformed", async () => {
+    const once = await chainCommand(["snapshot", "--check", bytesWritten("held-once.txt", ascii("snapshot-format 1\nrole a\n"))], COMMAND_MS);
+    const twice = await chainCommand(["snapshot", "--check", bytesWritten("held-twice.txt", ascii("snapshot-format 1\nrole a\nrole a\n"))], COMMAND_MS);
+    expect(twice.lines, twice.stderr).toEqual(once.lines);
+    expect(twice.code).toBe(once.code);
+    for (const refusal of ["SNAPSHOT_REFUSED expected-malformed", "SNAPSHOT_REFUSED no-expected"]) expect(twice.lines).not.toContain(refusal);
+    expect(twice.stderr).toMatch(/ECONNREFUSED/);
+  });
+
+  it("differenceOf splits at \\n and nothing else: a text holding \\r\\n keeps the carriage return on its line", () => {
+    expect(differenceOf("snapshot-format 1\nrole a\r\n", "snapshot-format 1\nrole a\n")).toEqual({ expectedOnly: ["role a\r"], actualOnly: ["role a"] });
+  });
+});
+
 describe("A.3 both expected texts obey SPEC §4.2 and hold no line of a kind §4.3 does not name", () => {
   it("the judge is seen to work first: it finds each offence planted in a text that is otherwise in the form", () => {
     const good = "snapshot-format 1\nschema os owner os_owner\nschema os_chain owner postgres\n";
