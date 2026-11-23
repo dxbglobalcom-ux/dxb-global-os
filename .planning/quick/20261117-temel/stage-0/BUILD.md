@@ -89,7 +89,7 @@ ownership and is never the authority to remove.
 | What | Place |
 |---|---|
 | The chain's files | `db/schema/` · `db/functions/` (one door function per file) · `db/reference/` (vocabularies the code owns) |
-| The snapshot | `db/__snapshots__/os.snapshot.txt` — generated and committed by the lead, never by a writer |
+| The snapshot | `foundation/tests/snapshot/expected/real.snapshot.txt` — written by hand from the piece's contract by a test hand, never by the code under test, and held by piece 6's lock (piece 6's SPEC §7) |
 | The foundation's code | `foundation/*` — a workspace root; each subject a package (`chain`, `bench`, `tests`) |
 | The foundation's bench | its address, its refused identities and its guard live in `foundation/bench`; the list of made instances and the host lock are machine state (piece 1) — nothing is imported from the old `tests/` or `tools/` |
 | The test locks | `foundation/locks/` |
@@ -275,6 +275,39 @@ schema is thin — there is little to keep; it becomes real with stage 1's first
 proof is standing from here on. *Open from piece 2's audit (F4), decided in this piece's contract before its tests
 are signed:* a lock protects nothing outside `foundation/tests/`, so the expected snapshot either lies in the piece's
 subject directory or the lock is given named paths — otherwise a writer changes a body and the snapshot in one diff.
+
+*6a done 2026-11-23 (`piece-6/SPEC.md`, its audit `SOL.md` and evidence beside it; the piece was cut in two where its
+parts stand alone — 6b, "upgraded equals clean" and the proof of what a build changes outside the text's reach, has
+its own contract next): `snapshotOf(target)` reads, in one guarded session and one `repeatable read, read only`
+transaction with its own ten settings, the chain's roles and what ties them to anything else, every object of the
+covered schemas with its owner and effective grants, the vocabularies' rows and the ledger, as stand-alone lines
+sorted by their bytes; `pnpm foundation:chain snapshot` prints it and `snapshot --check <file>` says
+`SNAPSHOT_EQUAL` or names every differing line. **Clean** is proven (a new instance, the real chain from nothing,
+equals the committed text) and so are the proofs that go red — a body, a policy predicate, a grant, the owner of `os`
+and of one object in it, a role's attribute, a login's own setting, a file left out. **F4 is decided:** the expected
+texts lie inside the piece's locked directory and carry the ledger's hashes, so an applied schema file of the real
+chain is under the lock through them. 107 locked cases (44 without the bench, 57 on a fresh instance, 6 on a second).
+Before the audit the lead's own runs found two wrong lines in both hand-written expected texts (`CONNECT` for
+`CREATE`; the code was not bent to them) and a test fixture's read of `HOME` that turned piece 1's lock red — each
+corrected in a lock commit that holds nothing else. One blind pass by GPT-6.2 Sol at xhigh: REFUTED, 8 blocking and
+8 must-fix; nine corrections taken tests-first (SPEC §11.1) — the heaviest, a foreign key silenced by `disable
+trigger all` (a data-only restore that dies leaves it) was invisible, and a login's open temporary table put
+`pg_temp_<n>` lines into the text; the rest are named with their reasons (§11.2, §9): the text says that an object
+of a kind with only the `object` line stands and whose it is, not what it does. **For a later piece that changes the
+chain:** its expected text goes in with piece 6's lock made again, in a lock commit that also changes the cases
+that count the real chain's files (SPEC §7); the piece whose file first makes an aggregate, an operator, a
+collation or an object outside `os` gives that kind its lines in its own contract first — and an object outside
+`os` gets a schema `os_owner` owns. **For piece 7:** the installer's `alter role all in database … set` crashes the
+server (signal 11, three times — `piece-6/evidence/q6b-segv.out`); the installer reads `pg_authid`; `LEAKPROOF` is
+refused to the owner and the installer; `supabase_read_only_user` reads the ledger; the installer is refused a grant
+on a tablespace or a parameter and only warned on a language. **For piece 13:** the bench command runs `chain up`
+and then `snapshot --check` on the real text, and owns the instance's life — the bench modules' cleanup after a
+failure is hardened there (Sol's B5). **For piece 14, stage 5 and B72's restore drill:** a database not built here
+from nothing is believed, as to its structure, only when the chain is green *and* the snapshot is equal (SPEC §8) —
+not as to passwords, sequence positions or rows; the company's installing role and platform roles differ from the
+bench's, so that database's expected text is decided at stage 5. Costs: one lead session after the contract's
+(Fable 5.2's own week 88 % → 90 %); on Opus 5.5 two code hands and one test hand at high, a helper at medium —
+about 0.85M tokens; Sol about 0.22M; the first `verify --all` after the code about 10 minutes.*
 
 **7 — the separation, measured on the foundation's bench.** By role class — the foundation's runtime logins, the old
 system's runtime roles, the platform's administrators, the installer — and by operation: read and write on every old

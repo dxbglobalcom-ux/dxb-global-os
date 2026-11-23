@@ -399,7 +399,7 @@ script.
     forbids spelling a read of another variable anywhere under `foundation/`.
 
 Not built, written down (F4): a lock protects nothing outside `foundation/tests/` beside the files of §4. Piece 6's
-expected snapshot (`db/__snapshots__/`) must either lie in its subject directory or the lock be given named paths —
+expected snapshot (then planned at `db/__snapshots__/`; decided in piece 6: `foundation/tests/snapshot/expected/`) must either lie in its subject directory or the lock be given named paths —
 decided in piece 6's contract, before its tests are signed (`../BUILD.md` §6 says so).
 
 Not taken: F10's "recomputes the way the code does" for `git write-tree` — the tests ask git, which is the oracle,

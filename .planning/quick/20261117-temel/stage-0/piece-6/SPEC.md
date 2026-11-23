@@ -334,6 +334,8 @@ runner stays what piece 3's lock judges, and a red check after a green chain mus
   definition of anything that has only the `object` line, of an aggregate, of a C routine's library, of a base
   type; the definition of an object a chain role owns outside the covered schemas.
 - **A function's settings are printed whole, dotted ones too** — a function of `os` stands only by its file.
+- A partition that stands outside the covered schemas has no line, whatever its parent; a temporary object of another
+  database is an `outside … other-database` line like a permanent one; `fdw` and `server` grants have no case (§11.3).
 - **A vocabulary's row is a JSON value:** array bounds, `-0` and duplicate keys of a `json` column are not told apart.
 
 ## 10. Done when
@@ -408,3 +410,37 @@ secret; the same bytes for the same meaning; a reader that writes nothing.
 - **§8's sentence** is narrowed: green chain and equal snapshot say the *structure* is the committed one — roles,
   owners, grants, definitions, reference values. They say nothing of passwords, sequence positions or the rows of
   his data; those are the restore drill's own proofs (B72) and 6b's "rows kept".
+
+### 11.3 What the corrections' cases pinned and their code settled (read and accepted by the lead)
+
+The cases were written by a hand that did not write the code, seen red each for its own reason, and locked
+(`8b2465ad`, 107 cases: 44 without the bench, 57 on a fresh instance, 6 on a second); the code by another hand.
+
+1. `trigger-internal` writes its function as `regprocedure` under the empty search_path — `"RI_FKey_check_ins"()`,
+   a `pg_catalog` function unqualified; both sides of a foreign key are shown (the referencing table's two check
+   triggers, the referenced table's action triggers).
+2. A parameter's `outside` line is `outside granted <role> parameter ACL <name>` (the server's own type word), and
+   its `grant parameter` lines stand beside it. A parameter has no owner: only a stored ACL gives a line. The
+   installer is refused a grant on a tablespace or a parameter and only warned on a language — on the bench those
+   grants are the superuser's. `fdw` and `server` have their lines and no case: the bench holds neither (§9).
+3. A publication's column list is read from its own `pg_publication_rel` row, in the table's column order; no list
+   is `*`, no filter `-`; a table published through its schema, through "all tables" or through its parent is `* -`.
+4. A policy "names a chain role" when its roles hold one; a policy `to PUBLIC` outside the covered schemas is not
+   read (6b's ground).
+5. "Temporary" is the schema's name — `pg_temp_<n>`, `pg_toast_temp_<n>`, the server's own test — asked in one
+   place (`inATemporarySchema`, `snapshot/sql.ts`); a relation of persistence `t` stands only in such a schema.
+6. **The driver fixes the client encoding itself** (measured: pg 8.22 writes `client_encoding UTF8` into every
+   startup packet, and the server takes it over the connection's `options` and over a role's setting). The audit's
+   route to another encoding is closed before the reader speaks; the case that reads through `LATIN1` options is
+   green with or without the tenth `set local`, and the recorded-statements case is what holds the setting.
+7. The recorded reading: the guard's statements, then exactly `start transaction isolation level repeatable read,
+   read only`, the ten `set local` before the first read and none after, one transaction, `rollback` last, and no
+   statement that begins with or holds a word of the case's two lists (`cases/the-audit-reading.ts`).
+8. A vocabulary is read `only`: a child table that inherits it adds no `reference` line. A child outside the
+   covered schemas has its `inherits` line and nothing else.
+
+Known and left, named in §9: a partition outside the covered schemas whose parent is covered has no line (only
+`inherits` got the "either end" rule — a partition of an `os` table made outside `os` would be a file's own
+mistake, and its parent's `relation` kind `p` is seen); a temporary object in *another* database still gives its
+`outside … other-database` line, which this database cannot tell from a permanent one.
+
