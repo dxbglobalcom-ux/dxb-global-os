@@ -41,16 +41,19 @@ export async function asTheFiles<T>(pass: "functions" | "reference", file: strin
 }
 
 // The statement `$1` spells with `%I`, said of the owner of `os` — read from the catalogue and quoted as an
-// identifier by the server, never spliced by the runner. No row when no schema `os` stands.
+// identifier by the server, never spliced by the runner. No row when no schema `os` stands, and none when its owner
+// is already the role the session runs as: a `set role` to oneself still changes `current_setting('role')` from
+// `none` (piece 5's SPEC §11 item 7, measured C6).
 const OF_THE_OWNER_OF_OS = `
 select pg_catalog.format($1::pg_catalog.text, pg_catalog.pg_get_userbyid(n.nspowner)) as statement
   from pg_catalog.pg_namespace n
- where n.nspname = 'os'`;
+ where n.nspname = 'os' and pg_catalog.pg_get_userbyid(n.nspowner) <> current_user`;
 
 /**
  * The statement that makes this session the owner of `os` (piece 5's SPEC §5) — `set role` for the session, `set
- * local role` for the transaction — or nothing when no schema `os` stands. Only read here: the pass says it, as a
- * statement of the file it is said for, so that the server's refusal of it is that file's.
+ * local role` for the transaction — or nothing when no schema `os` stands or the session already runs as its owner
+ * (§11 item 7). Only read here: the pass says it, as a statement of the file it is said for, so that the server's
+ * refusal of it is that file's.
  */
 export async function becomingTheOwnerOfOs(conn: Client, set: "set role" | "set local role"): Promise<string | undefined> {
   const { rows } = await conn.query<{ statement: string }>(OF_THE_OWNER_OF_OS, [`${set} %I`]);

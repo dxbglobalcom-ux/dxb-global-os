@@ -54,7 +54,8 @@ function notItsOwn(name: string, before: readonly Routine[], after: readonly Rou
 }
 
 /**
- * A file's text executed as the owner of `os`, when one stands (piece 5's SPEC §5): a function file begins with its
+ * A file's text executed as the owner of `os`, when one stands and the session is not it already (piece 5's SPEC §5,
+ * §11 item 7): a function file begins with its
  * own function and cannot say `set role` itself, and the installer, which may only SET the owner's role, is refused
  * every making in `os` without it — so the runner says it before the text. A `set role` the server refuses is the
  * file's failure, as a refusal of its text is. Then the session is put back as every file meets it (SPEC §12.3): the

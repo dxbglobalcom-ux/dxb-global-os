@@ -143,7 +143,8 @@ export async function referencePass(inASession: InASession, files: readonly Pass
     // As the owner of `os`, before anything is read or written (piece 5's SPEC §5): a row the pass writes is the
     // owner's, and what it reads is what the owner sees — the installer reads `os` through `pg_read_all_data` and
     // bypasses row security, the owner does neither (piece 5's SPEC §3). The server's refusal is said at the first file by
-    // name; a pass of no file reads and writes nothing, and says nothing either.
+    // name; a pass of no file reads and writes nothing, and says nothing either; a session that is the owner already
+    // says nothing (§11 item 7).
     const [firstFile] = files;
     const asTheOwner = await becomingTheOwnerOfOs(conn, "set local role");
     if (firstFile !== undefined && asTheOwner !== undefined) await asTheFiles("reference", firstFile.name, () => conn.query(asTheOwner));

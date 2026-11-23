@@ -1,22 +1,23 @@
 // The bench's install step (piece 5's SPEC §6): each foundation login gets a password the step mints, kept in one
 // file outside the repository, and the server is sent a SCRAM verifier only — never the password, never in a
-// statement's text. The password lives in this process's memory and in the secret file, nowhere else: no argument,
-// no variable of the environment, no output and no error's message carries it.
+// statement's text. The password lives in this process's memory and in the file of passwords, nowhere else: no
+// argument, no variable of the environment, no output and no error's message carries it. The file's reading and
+// writing are `the-logins-file.ts`'s.
 import { createHash, createHmac, pbkdf2Sync, randomBytes } from "node:crypto";
-import { closeSync, constants, fchmodSync, fsyncSync, openSync, readFileSync, renameSync, rmSync, writeSync } from "node:fs";
-import { join } from "node:path";
 import { Client, DatabaseError } from "pg";
-import { connectionString, makeTheStateDirectory, stateDirectory } from "./bench.ts";
+import { connectionString } from "./bench.ts";
 import { assertFoundationTarget } from "./guard.ts";
 import { instanceStatus } from "./instance.ts";
 import { assertTheHostLock } from "./lock.ts";
 import type { HostLock } from "./lock.ts";
 import { step } from "./run.ts";
+import { FOUNDATION_LOGINS, defaultLoginsPath, passwordsKeptOrMinted, readTheLogins } from "./the-logins-file.ts";
+import type { FoundationLogin } from "./the-logins-file.ts";
 
-export const FOUNDATION_LOGINS = ["os_engine", "os_executor", "os_intake", "os_reader"] as const;
-export type FoundationLogin = (typeof FOUNDATION_LOGINS)[number];
+export { FOUNDATION_LOGINS, defaultLoginsPath };
+export type { FoundationLogin };
 
-/** A refusal of the install step, or of the reading of its secret file: `no-instance`, `<role> <reason>`, `no-secret`. */
+/** A refusal of the install step, or of the reading of its file: `no-instance`, `<role> <reason>`, `no-secret`. */
 export class LoginsRefused extends Error {
   readonly reason: string;
   constructor(reason: string) {
@@ -24,11 +25,6 @@ export class LoginsRefused extends Error {
     this.name = "LoginsRefused";
     this.reason = reason;
   }
-}
-
-/** The secret file's place: `logins.json` beside the list file, in the bench's state directory (mode 700). */
-export function defaultLoginsPath(): string {
-  return join(stateDirectory, "logins.json");
 }
 
 const base64 = (bytes: Uint8Array): string => Buffer.from(bytes).toString("base64");
@@ -47,38 +43,13 @@ export function scramVerifier(password: string, salt: Uint8Array, iterations: nu
   return `SCRAM-SHA-256$${iterations}:${base64(salt)}$${base64(storedKey)}:${base64(serverKey)}`;
 }
 
-/** What the secret file holds (SPEC §6 step 3): the instance it was written for, and a password by login. */
-type Secrets = { sysid: string; logins: Partial<Record<FoundationLogin, string>> };
-
-const isObject = (value: unknown): value is Record<string, unknown> => typeof value === "object" && value !== null && !Array.isArray(value);
-const isLogin = (name: string): name is FoundationLogin => FOUNDATION_LOGINS.some((login) => login === name);
-
-/**
- * The secret file, read whole — or nothing when it is missing, unreadable, not JSON or not of SPEC §6's shape:
- * exactly `sysid`, a cluster identifier, and `logins`, whose every key is a foundation login and every value a
- * non-empty text (SPEC §8a.15). A file of three logins is of the shape; it does not hold the fourth.
- */
-function readSecrets(path: string): Secrets | undefined {
-  let content: unknown;
-  try {
-    content = JSON.parse(readFileSync(path, "utf8"));
-  } catch {
-    return undefined;
-  }
-  if (!isObject(content) || Object.keys(content).sort().join(",") !== "logins,sysid") return undefined;
-  const { sysid, logins } = content;
-  if (typeof sysid !== "string" || !/^\d+$/.test(sysid) || !isObject(logins)) return undefined;
-  const wellFormed = Object.entries(logins).every(([name, password]) => isLogin(name) && typeof password === "string" && password !== "");
-  return wellFormed ? { sysid, logins: logins as Secrets["logins"] } : undefined;
-}
-
 /**
  * The address a resident service or a test logs in with: the bench's own, with the role as its user and the file's
- * password as its password. LoginsRefused("no-secret") when the file is missing, malformed or does not hold the
- * role. Never printed by the bench itself.
+ * password as its password. LoginsRefused("no-secret") when the file does not stand (SPEC §11 item 2) or does not
+ * hold the role. Never printed by the bench itself.
  */
 export function loginConnectionString(role: FoundationLogin, loginsPath: string = defaultLoginsPath()): string {
-  const password = readSecrets(loginsPath)?.logins[role];
+  const password = readTheLogins(loginsPath)?.logins[role];
   if (password === undefined) throw new LoginsRefused("no-secret");
   const address = new URL(connectionString());
   // The URL's own setters percent-encode what an address may not hold as it is.
@@ -124,61 +95,39 @@ async function assertTheChainsLogins(conn: Client): Promise<void> {
   }
 }
 
-/** 32 bytes of the system's random source, base64url without padding: 43 characters. */
-const minted = (): string => randomBytes(32).toString("base64url");
-
-/**
- * Replaces the secret file whole, as the list file is replaced: written and synced beside it, then renamed over it.
- * The file beside it is made new (never one that stood) with mode 600 before a byte is written — its mode is set
- * on the open descriptor, so no mask of the process makes it other — and it is removed when the writing fails.
- */
-function writeSecrets(path: string, secrets: Secrets): void {
-  makeTheStateDirectory();
-  const beside = `${path}.${randomBytes(6).toString("hex")}.writing`;
-  const descriptor = openSync(beside, constants.O_WRONLY | constants.O_CREAT | constants.O_EXCL | constants.O_NOFOLLOW, 0o600);
-  try {
-    try {
-      fchmodSync(descriptor, 0o600);
-      writeSync(descriptor, `${JSON.stringify(secrets, null, 2)}\n`);
-      fsyncSync(descriptor);
-    } finally {
-      closeSync(descriptor);
-    }
-    renameSync(beside, path);
-  } catch (failure) {
-    rmSync(beside, { force: true });
-    throw failure;
-  }
-}
-
-/**
- * The passwords the step gives the four (SPEC §6 step 3): the file's, when it stands, is of the shape, names this
- * instance and holds all four — the file is then not written; otherwise four new ones, and the file replaced.
- */
-function passwordsKeptOrWritten(sysid: string): Record<FoundationLogin, string> {
-  const path = defaultLoginsPath();
-  const standing = readSecrets(path);
-  const { os_engine, os_executor, os_intake, os_reader } = standing?.logins ?? {};
-  if (standing?.sysid === sysid && os_engine && os_executor && os_intake && os_reader) return { os_engine, os_executor, os_intake, os_reader };
-  const passwords = { os_engine: minted(), os_executor: minted(), os_intake: minted(), os_reader: minted() };
-  writeSecrets(path, { sysid, logins: passwords });
-  return passwords;
-}
+// What the transaction says of itself before any verifier is sent (SPEC §11 items 4, 5): it waits for a role's row
+// no longer than 5 s — it runs under the host lock and must not wait for ever behind another session's open
+// transaction (measured: it waits) — and no bound value reaches the server's log, also where the installer turned
+// statement logging on (measured C4: 1–2 lines with the verifier). A server that refuses the installer these
+// settings refuses the step here, before a verifier is sent.
+const ITS_OWN_SETTINGS = [
+  "set local lock_timeout = '5s'",
+  "set local log_parameter_max_length = 0",
+  "set local log_parameter_max_length_on_error = 0",
+];
 
 // A verifier reaches the server as a parameter, into a transaction-local setting, and is applied by `alter role`
 // inside a `do` block (SPEC §3, measured — M7): the statements' texts are these constants, and the server's log,
 // which writes DDL statements as they are sent, sees no verifier. The role travels the same way and is quoted there.
+// The block catches its own `alter role`'s failure — a cancel too, which `others` does not take — and raises one of
+// its own, of the same SQLSTATE, whose context holds no verifier: the failing statement's would, in the server's log
+// and in the client's error (SPEC §11 item 4, measured C1.b, C1.d).
 const HAND_OVER = "select pg_catalog.set_config('os_install.role', $1, true), pg_catalog.set_config('os_install.verifier', $2, true)";
-const APPLY = `do $apply$ begin execute pg_catalog.format('alter role %I password %L', pg_catalog.current_setting('os_install.role'), pg_catalog.current_setting('os_install.verifier')); end $apply$`;
+const APPLY = `do $apply$ begin
+  execute pg_catalog.format('alter role %I password %L', pg_catalog.current_setting('os_install.role'), pg_catalog.current_setting('os_install.verifier'));
+exception when query_canceled or others then
+  raise exception using errcode = sqlstate, message = 'the server refused the verifier of ' || pg_catalog.current_setting('os_install.role');
+end $apply$`;
 
 /**
  * Each login's verifier, of a new 16-byte salt, set in one transaction for all four (SPEC §6 step 4). The server's
- * refusal is passed on as its primary message alone, in an error of its own: the error the driver gives carries the
- * failing `alter role`'s context — the verifier with it (SPEC §3).
+ * refusal is passed on as its primary message and its SQLSTATE alone, in an error of the step's own — never the
+ * driver's error, whose other fields are the server's to fill.
  */
 async function setTheVerifiers(conn: Client, passwords: Record<FoundationLogin, string>): Promise<void> {
   await conn.query("begin");
   try {
+    for (const setting of ITS_OWN_SETTINGS) await conn.query(setting);
     for (const role of FOUNDATION_LOGINS) {
       await conn.query(HAND_OVER, [role, scramVerifier(passwords[role], randomBytes(16))]);
       await conn.query(APPLY);
@@ -186,7 +135,7 @@ async function setTheVerifiers(conn: Client, passwords: Record<FoundationLogin, 
     await conn.query("commit");
   } catch (failure) {
     await conn.query("rollback").catch(() => undefined);
-    if (failure instanceof DatabaseError) throw new Error(`the server refused a login's verifier: ${failure.message}`);
+    if (failure instanceof DatabaseError) throw new Error(`${failure.message} (${failure.code ?? "no SQLSTATE"})`);
     throw failure;
   }
 }
@@ -194,9 +143,45 @@ async function setTheVerifiers(conn: Client, passwords: Record<FoundationLogin, 
 const CONNECT_MS = 10_000;
 
 /**
- * SPEC §6 steps 1–4, under a held host lock: an instance stands; on one connection to it, guarded before its first
- * statement, the four logins are what the chain made; the file holds their passwords before the server is sent
- * anything of them; and the server is sent a verifier of each.
+ * Who the server says a login is, logged in over TCP with the address the file gives it — or, when it does not come
+ * in, why: the file's refusal, the server's SQLSTATE or the driver's own code; never a message, which may hold the
+ * address.
+ */
+async function whoComesIn(role: FoundationLogin): Promise<{ who: string } | { refused: string }> {
+  let client: Client | undefined;
+  try {
+    client = new Client({ connectionString: loginConnectionString(role), connectionTimeoutMillis: CONNECT_MS });
+    client.on("error", () => undefined);
+    await client.connect();
+    const { rows } = await client.query<{ who: string }>("select current_user::pg_catalog.text as who");
+    return { who: String(rows[0]?.who) };
+  } catch (failure) {
+    if (failure instanceof LoginsRefused) return { refused: failure.reason };
+    const code = (failure as { code?: unknown }).code;
+    return { refused: typeof code === "string" ? code : "no code" };
+  } finally {
+    await client?.end().catch(() => undefined);
+  }
+}
+
+/**
+ * After the commit, the proof that the step did what it says (SPEC §11 item 1): each of the four, in SPEC §6's order,
+ * comes in and is itself. The first that does not refuses the step; the file and the verifiers stand as set. One
+ * proof for every way a login can be unusable — an expiry, a connection limit, a file that parted from the server.
+ */
+async function assertEachComesIn(): Promise<void> {
+  for (const role of FOUNDATION_LOGINS) {
+    const came = await whoComesIn(role);
+    if ("who" in came && came.who === role) continue;
+    process.stderr.write(`[bench] ${role} did not come in as itself (${"refused" in came ? came.refused : "another role"})\n`);
+    throw new LoginsRefused(`${role} cannot-log-in`);
+  }
+}
+
+/**
+ * SPEC §6 steps 1–4 and the proof of §11 item 1, under a held host lock: an instance stands; on one connection to
+ * it, guarded before its first statement, the four logins are what the chain made; the file holds their passwords
+ * before the server is sent anything of them; the server is sent a verifier of each; and each then comes in.
  */
 export async function setLogins(lock: HostLock): Promise<{ sysid: string; logins: readonly FoundationLogin[] }> {
   assertTheHostLock(lock);
@@ -206,15 +191,17 @@ export async function setLogins(lock: HostLock): Promise<{ sysid: string; logins
   // A connection lost while it idles shows in the next query's rejection; without a listener it would end the process.
   conn.on("error", () => undefined);
   await conn.connect();
+  let sysid: string;
   try {
-    const { sysid } = await assertFoundationTarget(conn);
+    ({ sysid } = await assertFoundationTarget(conn));
     await assertTheChainsLogins(conn);
     assertTheHostLock(lock);
-    const passwords = passwordsKeptOrWritten(sysid);
+    const passwords = passwordsKeptOrMinted(sysid);
     assertTheHostLock(lock);
     await step("the logins' verifiers", () => setTheVerifiers(conn, passwords));
-    return { sysid, logins: FOUNDATION_LOGINS };
   } finally {
     await conn.end();
   }
+  await step("each login comes in", assertEachComesIn);
+  return { sysid, logins: FOUNDATION_LOGINS };
 }
