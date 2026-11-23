@@ -1,0 +1,37 @@
+$ node foundation/lock/src/cli.ts verify piece-1
+JUDGE in-place lock=31bdc67a38190979f0a420c5444af888bafbb0dc
+Scope: 3 of 19 workspace projects
+✓ Lockfile passes supply-chain policies (verified 57m ago)
+Lockfile is up to date, resolution step is skipped
+Progress: resolved 1, reused 0, downloaded 0, added 0
+.                                        | +256 ++++++++++++++++++++++++++
+Progress: resolved 256, reused 256, downloaded 0, added 256, done
+[WARN] Failed to create bin at /home/dxb/.cache/dxb/foundation-verify/run-rF7U7r/candidate/node_modules/.bin/dxb. ENOENT: no such file or directory, open '/home/dxb/.cache/dxb/foundation-verify/run-rF7U7r/candidate/tools/dxb-cli/dist/index.js'
+[WARN] Failed to create bin at /home/dxb/.cache/dxb/foundation-verify/run-rF7U7r/candidate/node_modules/.bin/video-learn. ENOENT: no such file or directory, open '/home/dxb/.cache/dxb/foundation-verify/run-rF7U7r/candidate/tools/video-learn/dist/cli.js'
+[WARN] Failed to create bin at /home/dxb/.cache/dxb/foundation-verify/run-rF7U7r/candidate/node_modules/.bin/dxb. ENOENT: no such file or directory, open '/home/dxb/.cache/dxb/foundation-verify/run-rF7U7r/candidate/node_modules/@dxb/cli/dist/index.js'
+[WARN] Failed to create bin at /home/dxb/.cache/dxb/foundation-verify/run-rF7U7r/candidate/node_modules/.bin/video-learn. ENOENT: no such file or directory, open '/home/dxb/.cache/dxb/foundation-verify/run-rF7U7r/candidate/node_modules/@dxb/video-learn/dist/cli.js'
+Done in 580ms using pnpm v11.10.0
+OFFENCE case-not-passed foundation/tests/bench/instance.test.ts > the instance — made, looked at and destroyed, in order > down again says INSTANCE_ABSENT and exits 0; destroyInstance answers absent
+OFFENCE case-not-passed foundation/tests/bench/instance.test.ts > the instance — made, looked at and destroyed, in order > down says INSTANCE_DOWN and leaves no container, volume, network, listener or record
+OFFENCE case-not-passed foundation/tests/bench/instance.test.ts > the instance — made, looked at and destroyed, in order > every published port is bound to 127.0.0.1 and nowhere else
+OFFENCE case-not-passed foundation/tests/bench/instance.test.ts > the instance — made, looked at and destroyed, in order > fresh makes an instance and says INSTANCE_UP with the cluster's identifier and the loopback address
+OFFENCE case-not-passed foundation/tests/bench/instance.test.ts > the instance — made, looked at and destroyed, in order > guarded refuses a throwaway database made in the same cluster
+OFFENCE case-not-passed foundation/tests/bench/instance.test.ts > the instance — made, looked at and destroyed, in order > guarded refuses the real connection against an empty list — no work, no row — and runs the work against the real list
+OFFENCE case-not-passed foundation/tests/bench/instance.test.ts > the instance — made, looked at and destroyed, in order > it holds no foundation object: no schema os or os_clock, no role named os_…
+OFFENCE case-not-passed foundation/tests/bench/instance.test.ts > the instance — made, looked at and destroyed, in order > makeInstance and destroyInstance refuse a held lock that is not the host lock, and the same instance still stands
+OFFENCE case-not-passed foundation/tests/bench/instance.test.ts > the instance — made, looked at and destroyed, in order > makeInstance and destroyInstance refuse a lock that has been released, and one held elsewhere — nothing is made
+OFFENCE case-not-passed foundation/tests/bench/instance.test.ts > the instance — made, looked at and destroyed, in order > status answers the same with a hostile DOCKER_HOST in the caller's environment — the command hands it to no child
+OFFENCE case-not-passed foundation/tests/bench/instance.test.ts > the instance — made, looked at and destroyed, in order > the list holds one record of it, and status says INSTANCE_STANDING with the same identifier
+OFFENCE case-not-passed foundation/tests/bench/instance.test.ts > the instance — made, looked at and destroyed, in order > the old chain stood: the ledger holds one row per file of db/migrations and the old schema is there
+OFFENCE case-not-passed foundation/tests/bench/instance.test.ts > the instance — made, looked at and destroyed, in order > the recorded identity is what the server answers on TCP and inside the database container
+OFFENCE case-not-passed foundation/tests/bench/instance.test.ts > the instance — made, looked at and destroyed, in order > up while it stands says INSTANCE_STANDS and exits 3; makeInstance throws InstanceStands; the same instance still answers
+OFFENCE case-not-passed foundation/tests/bench/instance.test.ts > the instance — made, looked at and destroyed, in order > while another holds the host lock the command says LOCK_REFUSED and exits 2 — with DXB_FOUNDATION_LOCK_WAIT, after waiting that long
+OFFENCE case-not-passed foundation/tests/bench/instance.test.ts > the instance — made, looked at and destroyed, in order > with the list emptied, status says INSTANCE_FOREIGN and exits 5, down is refused and exits 4, and the instance still stands
+OFFENCE file-failed foundation/tests/bench/instance.test.ts
+OFFENCE exit-nonzero 1
+LOCK_RED piece=piece-1 lock=31bdc67a38190979f0a420c5444af888bafbb0dc candidate=8afaf78c6ebf2b89a12b44496b017bf718de4e9a offences=18
+[ELIFECYCLE] Command failed with exit code 1.
+
+real	0m56.786s
+user	0m9.212s
+sys	0m4.034s

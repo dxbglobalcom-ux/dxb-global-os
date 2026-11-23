@@ -1,0 +1,1241 @@
+$ vitest run --config foundation/tests/vitest.config.ts lock/judge-run.test.ts lock/judge-structure.test.ts lock/pure-texts.test.ts lock/lock-command.test.ts lock/lock-closure.test.ts lock/lock-baseline.test.ts lock/verify-structure.test.ts lock/verify-run.test.ts lock/verify-copy.test.ts lock/verify-judge.test.ts lock/verify-all.test.ts bench/no-old-address.test.ts
+
+ RUN  v3.2.6 /home/dxb/DxB Global OS/foundation/tests
+
+ ❯ lock/verify-run.test.ts (14 tests | 3 failed) 18634ms
+   ✓ verify — the candidate as it was locked > the untouched candidate → LOCK_GREEN, exit 0, naming the lock commit and the tree id of the index  2893ms
+   ✓ verify — the candidate as it was locked > a staged .gitattributes that marks a locked test export-ignore and the product export-subst → still LOCK_GREEN  1206ms
+   ✓ verify — the candidate as it was locked > the same two attributes committed, verified with --rev — where an archive of the commit would expand the placeholder → still LOCK_GREEN  1188ms
+   ✓ verify — the search for the runner's names: a note, never an offence > a product line that spells the runner's name → NOTE runner-name <path>:<line>, and the verdict stays LOCK_GREEN  1174ms
+   × verify — the search for the runner's names: a note, never an offence > the name spelled under foundation/tests/, in the root package file and in a later commit's lock file → no note 2255ms
+     → JUDGE in-place lock=8bf75de2cdb647f565f5d9111681176f1127a090
+NOTE runner-name foundation/locks/piece-b.json:7
+NOTE runner-name foundation/locks/piece-b.json:28
+NOTE runner-name foundation/locks/piece-b.json:35
+NOTE runner-name foundation/tests/other/second.test.ts:1
+NOTE runner-name package.json:8
+NOTE runner-name package.json:10
+LOCK_GREEN piece=piece-a lock=8bf75de2cdb647f565f5d9111681176f1127a090 candidate=682a598ec03c08eb1185a2b94197dc774778ef7b cases=12
+
+Scope: 3 of 5 workspace projects
+✓ Lockfile passes supply-chain policies (verified 7s ago)
+Lockfile is up to date, resolution step is skipped
+Progress: resolved 1, reused 0, downloaded 0, added 0
+.                                        |  +96 ++++++++++
+Progress: resolved 96, reused 96, downloaded 0, added 96, done
+Done in 434ms using pnpm v11.10.0
+: expected [ …(6) ] to deeply equal []
+   × verify — a work directory an earlier run left standing (SPEC §10 item 9) > is said once — NOTE stale-work-directory <path> — and still stands afterwards, with what was in it; the verdict stays LOCK_GREEN 1142ms
+     → JUDGE in-place lock=8bf75de2cdb647f565f5d9111681176f1127a090
+LOCK_GREEN piece=piece-a lock=8bf75de2cdb647f565f5d9111681176f1127a090 candidate=26cc2621b1ee001063470caca2962a25078bb2da cases=12
+
+Scope: 3 of 5 workspace projects
+✓ Lockfile passes supply-chain policies (verified 8s ago)
+Lockfile is up to date, resolution step is skipped
+Progress: resolved 1, reused 0, downloaded 0, added 0
+.                                        |  +96 ++++++++++
+Progress: resolved 96, reused 96, downloaded 0, added 96, done
+Done in 443ms using pnpm v11.10.0
+: expected [] to deeply equal [ Array(1) ]
+   × verify — product staged so that a locked case does not pass > the value case fails → case-not-passed for it; the file and the exit code say so too 1135ms
+     → expected 'JUDGE in-place lock=8bf75de2cdb647f56…' to contain 'expected 41 to be 42'
+   ✓ verify — product staged so that a locked case does not pass > the product says unavailable and the case skips itself → case-skipped, though the run ended with 0  1178ms
+   ✓ verify — product staged so that a locked case does not pass > the product says not ready and the case returns before its assertion → case-not-passed  1159ms
+   ✓ verify — product staged so that the cases are not the locked ones > a shorter list → case-missing for the row that is gone, though every case that ran passed  1199ms
+   ✓ verify — product staged so that the cases are not the locked ones > a longer list → case-unknown for the row the lock does not hold  1185ms
+   ✓ verify — product that ends the run its own way > product that calls process.exit(0) when imported → result-missing, red though the runner ended with 0  852ms
+   ✓ verify — product that ends the run its own way > product that leaves an unhandled rejection → red with every case passed  1176ms
+   ✓ verify — product that ends the run its own way > product that writes an earlier run's green result to the result path and exits 0 → result-stale  853ms
+ ❯ lock/lock-closure.test.ts (10 tests | 8 failed) 13104ms
+   × lock — a relative specifier is resolved as the runner resolves it > a helper outside the subject directory, spelled .js while the index holds the .ts → protected 2842ms
+     → foundation/tests/shared/second.ts is not protected: expected undefined to be 'bdccc765fb52c7c7ea442be37d49ef4266c25…' // Object.is equality
+   × lock — a relative specifier is resolved as the runner resolves it > a helper outside the subject directory, spelled without an extension → protected 1154ms
+     → foundation/tests/shared/second.ts is not protected: expected undefined to be 'bdccc765fb52c7c7ea442be37d49ef4266c25…' // Object.is equality
+   × lock — a relative specifier is resolved as the runner resolves it > a helper outside the subject directory, spelled .mjs while the index holds the .mts → protected 1121ms
+     → foundation/tests/shared/third.mts is not protected: expected undefined to be 'bdccc765fb52c7c7ea442be37d49ef4266c25…' // Object.is equality
+   × lock — a relative specifier is resolved as the runner resolves it > a helper outside the subject directory, that names a directory holding an index.ts → protected 1168ms
+     → foundation/tests/shared/fourth/index.ts is not protected: expected undefined to be 'bdccc765fb52c7c7ea442be37d49ef4266c25…' // Object.is equality
+   × lock — what a locked test reaches without an import statement > a file named by new URL("…", import.meta.url), under foundation/tests/ → protected 1138ms
+     → foundation/tests/shared/data.txt is not protected: expected undefined to be '029624a3c2b06ce30a97f29aeee9c7ae6a610…' // Object.is equality
+   ✓ lock — what a locked test reaches without an import statement > a new URL that leaves foundation/tests/ — the repository's root — is no import → no refusal, the lock is written  1147ms
+   × lock — what a locked test reaches without an import statement > import.meta.glob in a locked test — what it reaches cannot be listed → LOCK_REFUSED, the standing lock as it stood 1127ms
+     → PROTECTED changed foundation/tests/subject/value.test.ts
+LOCK_WRITTEN piece=piece-a cases=12 protected=30
+
+Scope: 3 of 5 workspace projects
+✓ Lockfile passes supply-chain policies (verified 8s ago)
+Lockfile is up to date, resolution step is skipped
+Progress: resolved 1, reused 0, downloaded 0, added 0
+.                                        |  +96 ++++++++++
+Progress: resolved 96, reused 96, downloaded 0, added 96, done
+Done in 442ms using pnpm v11.10.0
+: expected 'LOCK_WRITTEN piece=piece-a cases=12 p…' to match /^LOCK_REFUSED \S/
+   × lock — a relative specifier that resolves to no file of the index > an import spelled inside a string → NOTE unresolved-import <from> <specifier>, and the lock is still written 1139ms
+     → PROTECTED changed foundation/tests/subject/value.test.ts
+LOCK_WRITTEN piece=piece-a cases=12 protected=30
+
+Scope: 3 of 5 workspace projects
+✓ Lockfile passes supply-chain policies (verified 9s ago)
+Lockfile is up to date, resolution step is skipped
+Progress: resolved 1, reused 0, downloaded 0, added 0
+.                                        |  +96 ++++++++++
+Progress: resolved 96, reused 96, downloaded 0, added 96, done
+Done in 448ms using pnpm v11.10.0
+: expected [ …(2) ] to include 'NOTE unresolved-import foundation/tes…'
+   ✓ lock — a relative specifier that resolves to no file of the index > the fixture as it was built reaches nothing that is not there → no such note  1122ms
+   × lock — the root's install settings (SPEC §10 item 3) > a committed .npmrc at the root → protected 1116ms
+     → .npmrc is not protected: expected undefined to be '6a0841928ecc99c7ae2a326fd0e82f2f62b3d…' // Object.is equality
+ ❯ lock/verify-structure.test.ts (19 tests | 3 failed) 12524ms
+   ✓ verify — a staged change to what the lock protects > a locked test → protected-changed <path>, and the tests are not run  1902ms
+   ✓ verify — a staged change to what the lock protects > the config → protected-changed <path>, and the tests are not run 104ms
+   ✓ verify — a staged change to what the lock protects > the set-up file → protected-changed <path>, and the tests are not run 104ms
+   ✓ verify — a staged change to what the lock protects > the lockfile → protected-changed <path>, and the tests are not run 106ms
+   × verify — a staged change to what the lock protects > a protected path staged as a gitlink that carries the locked blob's id — no regular file → protected-missing <path> 119ms
+     → JUDGE in-place lock=6085952a1e24f70a8f92e7b3302757a9acecfa86
+OFFENCE install-failed pnpm ended with 1
+LOCK_RED piece=piece-a lock=6085952a1e24f70a8f92e7b3302757a9acecfa86 candidate=46461dd219bc35c516c8b64f8236432b7cfbae27 offences=1
+
+: expected [ { kind: 'install-failed', …(1) } ] to deeply equal [ { kind: 'protected-missing', …(1) } ]
+   × verify — a staged change to what the lock protects > a protected path staged as a link that carries the locked blob's id — no regular file → protected-missing <path> 126ms
+     → JUDGE in-place lock=6085952a1e24f70a8f92e7b3302757a9acecfa86
+OFFENCE install-failed pnpm ended with 1
+LOCK_RED piece=piece-a lock=6085952a1e24f70a8f92e7b3302757a9acecfa86 candidate=45c9dcdcb06ec4239bd1036c5e4ffe09f62ae729 offences=1
+
+: expected [ { kind: 'install-failed', …(1) } ] to deeply equal [ { kind: 'protected-missing', …(1) } ]
+   ✓ verify — a staged change to what the lock protects > a foundation script of the root package file → scripts-changed <name> 108ms
+   ✓ verify — a staged change to what the lock protects > a file added directly in foundation/tests/ — a workspace file beside the config → closed-dir-added <path> 109ms
+   ✓ verify — a staged change under foundation/locks/ > an edit of the piece's own lock → locks-touched <path>; the lock that judges is the committed one 104ms
+   ✓ verify — a staged change under foundation/locks/ > an edit of the inventory → locks-touched <path> 106ms
+   ✓ verify — a staged change under foundation/locks/ > a lock file that is staged and not committed has no lock commit → LOCK_REFUSED, exit 2  1151ms
+   ✓ verify — a lock file that says it is another piece's > a committed foundation/locks/piece-b.json whose piece says piece-a → verify piece-b is LOCK_REFUSED, exit 2 79ms
+   ✓ verify — a lock that does not describe the commit it was committed with > a committed lock whose record of a helper is not that commit's blob → lock-inconsistent <path>, beside protected-changed 106ms
+   ✓ verify --rev — a lock changed in one commit with product code > another piece's lock committed together with a product file → lock-commit-impure <commit> <path>  1226ms
+   ✓ verify --rev — a lock changed in one commit with product code > the piece's own lock made again and committed together with the product change it was made for → the lock commit itself is impure  1233ms
+   ✓ verify --rev — a merge that brings a change of foundation/locks/ (SPEC §10 item 6) > a side branch that adds another piece's lock alone, merged → lock-commit-impure <the merge> (a merge of 2 commits)  1215ms
+   × verify — what is no structural offence: the tests are run, and they are green > --rev of a lock commit that removes a locked test — the test gone and the lock made again, in one commit → no lock-commit-impure, LOCK_GREEN 1200ms
+     → JUDGE in-place lock=41ad67785b178ed4309dad0942452df11245b768
+OFFENCE lock-commit-impure 41ad67785b178ed4309dad0942452df11245b768 foundation/tests/subject/rows.test.ts
+LOCK_RED piece=piece-a lock=41ad67785b178ed4309dad0942452df11245b768 candidate=c741fb872039bfb2ff862b29d521636dfb2a859c offences=1
+
+: expected [ Array(1) ] to deeply equal []
+   ✓ verify — what is no structural offence: the tests are run, and they are green > --rev of a later commit that adds another piece's lock alone → LOCK_GREEN by the first piece's own lock commit  2219ms
+   ✓ verify — what is no structural offence: the tests are run, and they are green > an unstaged edit of a locked test is not in the candidate → no offence from it, LOCK_GREEN  1153ms
+ ❯ lock/lock-command.test.ts (27 tests | 1 failed) 12141ms
+   ✓ lock — the cases it holds > holds every case of the locked tests with its file, its suite path and its name, and no other  1799ms
+   ✓ lock — the cases it holds > holds a case inside two suites with the whole path, outer first 0ms
+   ✓ lock — the cases it holds > holds the name two cases of one suite carry once, with count 2 0ms
+   ✓ lock — the cases it holds > holds the row alpha of the each as a case of its own 0ms
+   ✓ lock — the cases it holds > holds the row beta of the each as a case of its own 0ms
+   ✓ lock — the cases it holds > holds the row gamma of the each as a case of its own 0ms
+   ✓ lock — what it records beside the cases > names its piece, its subject directory, its config and the foundation's scripts — not the root's other script 0ms
+   ✓ lock — what it records beside the cases > protects the helper outside the subject directory, reached by a relative import, with the blob id git gives it at the lock commit 2ms
+   ✓ lock — what it records beside the cases > protects the set-up file the config names, with the blob id git gives it at the lock commit 2ms
+   ✓ lock — what it records beside the cases > protects the fixture file started by path, with the blob id git gives it at the lock commit 2ms
+   ✓ lock — what it records beside the cases > protects a locked test, with the blob id git gives it at the lock commit 2ms
+   ✓ lock — what it records beside the cases > protects the config, with the blob id git gives it at the lock commit 2ms
+   ✓ lock — what it records beside the cases > protects always: the tests' package file, with the blob id git gives it at the lock commit 2ms
+   ✓ lock — what it records beside the cases > protects always: the foundation's tsconfig, with the blob id git gives it at the lock commit 2ms
+   ✓ lock — what it records beside the cases > protects always: the lockfile, with the blob id git gives it at the lock commit 2ms
+   ✓ lock — what it records beside the cases > protects always: the workspace file, with the blob id git gives it at the lock commit 2ms
+   ✓ lock — what it records beside the cases > protects every file of the tool, each with its blob id 29ms
+   ✓ lock — what it records beside the cases > protects those and nothing else — not the product, not another piece's subject directory, not the root package file 2ms
+   ✓ lock — the same input gives the same bytes > run again, with its directory and then without one, it writes the lock it wrote before and stages nothing  2285ms
+   ✓ lock — what it refuses > a locked test that declares a retry  1119ms
+   ✓ lock — what it refuses > a locked test that declares a repeat  1122ms
+   × lock — what it refuses > a locked test that declares .only — run alone it would leave the file's other cases out 1135ms
+     → PROTECTED changed foundation/tests/subject/value.test.ts
+LOCK_WRITTEN piece=piece-a cases=12 protected=30
+
+Scope: 3 of 5 workspace projects
+✓ Lockfile passes supply-chain policies (verified 6s ago)
+Lockfile is up to date, resolution step is skipped
+Progress: resolved 1, reused 0, downloaded 0, added 0
+.                                        |  +96 ++++++++++
+Progress: resolved 96, reused 96, downloaded 0, added 96, done
+Done in 443ms using pnpm v11.10.0
+: expected 'LOCK_WRITTEN piece=piece-a cases=12 p…' to match /^LOCK_REFUSED \S/
+   ✓ lock — what it refuses > a test file with no case  1123ms
+   ✓ lock — what it refuses > a locked test that does not parse — the module fails to collect  1105ms
+   ✓ lock — what it refuses > a locked test that throws while it is loaded — the module fails to collect  1145ms
+   ✓ lock — what it refuses > a relative import that leaves foundation/tests/ — the test reaches the product past its package  1161ms
+   ✓ lock — what it refuses > a running tool that differs from foundation/lock/ in the index 71ms
+ ❯ lock/verify-copy.test.ts (6 tests | 4 failed) 11133ms
+   × verify — the install is the whole workspace (SPEC §10 item 1) > a locked test that needs the dependency of a package outside the foundation's scope → LOCK_GREEN 4074ms
+     → JUDGE in-place lock=7708b46961c60ee738e63abb6b2532298a3591a8
+OFFENCE case-not-passed foundation/tests/subject/old-chain.test.ts > the old chain finds its own dependency
+OFFENCE file-failed foundation/tests/subject/old-chain.test.ts
+OFFENCE exit-nonzero 1
+LOCK_RED piece=piece-a lock=7708b46961c60ee738e63abb6b2532298a3591a8 candidate=1fc3a313da15bd7f689067c97be5a4f880e820d4 offences=3
+
+Scope: 3 of 5 workspace projects
+✓ Lockfile passes supply-chain policies (verified 2s ago)
+Lockfile is up to date, resolution step is skipped
+Progress: resolved 1, reused 0, downloaded 0, added 0
+.                                        |  +96 ++++++++++
+Progress: resolved 96, reused 96, downloaded 0, added 96, done
+Done in 450ms using pnpm v11.10.0
+node:internal/modules/package_json_reader:314
+  throw new ERR_MODULE_NOT_FOUND(packageName, fileURLToPath(base), null);
+        ^
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'pg' imported from /home/dxb/.cache/dxb/foundation-verify/run-gJygn0/candidate/packages/old-chain/src/names-its-driver.mjs
+    at Object.getPackageJSONURL (node:internal/modules/package_json_reader:314:9)
+    at packageResolve (node:internal/modules/esm/resolve:772:81)
+    at moduleResolve (node:internal/modules/esm/resolve:859:18)
+    at defaultResolve (node:internal/modules/esm/resolve:989:11)
+    at #cachedDefaultResolve (node:internal/modules/esm/loader:747:20)
+    at ModuleLoader.resolve (node:internal/modules/esm/loader:724:38)
+    at ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:320:38)
+    at ModuleJob._link (node:internal/modules/esm/module_job:182:49) {
+  code: 'ERR_MODULE_NOT_FOUND'
+}
+
+Node.js v22.23.3
+: expected [ …(3) ] to deeply equal []
+   × verify — the install runs nothing of the candidate's (SPEC §10 item 1) > a staged postinstall of the product that would rewrite a locked test so it passes, and product that fails it → case-not-passed: the script did not run 1165ms
+     → JUDGE in-place lock=77e300565f303395db50623d911dbfbadf34ff68
+LOCK_GREEN piece=piece-a lock=77e300565f303395db50623d911dbfbadf34ff68 candidate=dd6dbaeb774a66471c58fe3bbb9d34d6eb1f1766 cases=12
+
+Scope: 3 of 5 workspace projects
+✓ Lockfile passes supply-chain policies (verified 3s ago)
+Lockfile is up to date, resolution step is skipped
+Progress: resolved 1, reused 0, downloaded 0, added 0
+.                                        |  +96 ++++++++++
+Progress: resolved 96, reused 96, downloaded 0, added 96, done
+foundation/product postinstall$ node rewrite-the-locked-test.mjs
+foundation/product postinstall: Done
+Done in 460ms using pnpm v11.10.0
+: expected { Object (word, fields) } to match object { word: 'LOCK_RED', fields: { …(2) } }
+(3 matching properties omitted from actual)
+   × verify — the copy is still the candidate's tree after the run (SPEC §10 item 2) > product that answers 41 and writes over the locked test in the copy so it expects 41 → copy-changed <path>, red though every case passed 1154ms
+     → JUDGE in-place lock=77e300565f303395db50623d911dbfbadf34ff68
+LOCK_GREEN piece=piece-a lock=77e300565f303395db50623d911dbfbadf34ff68 candidate=dbfc94ce768e17cae2eca0b7c550b20564954243 cases=12
+
+Scope: 3 of 5 workspace projects
+✓ Lockfile passes supply-chain policies (verified 5s ago)
+Lockfile is up to date, resolution step is skipped
+Progress: resolved 1, reused 0, downloaded 0, added 0
+.                                        |  +96 ++++++++++
+Progress: resolved 96, reused 96, downloaded 0, added 96, done
+Done in 432ms using pnpm v11.10.0
+: expected { Object (word, fields) } to match object { word: 'LOCK_RED', fields: { …(2) } }
+(3 matching properties omitted from actual)
+   × verify — the copy is still the candidate's tree after the run (SPEC §10 item 2) > product that writes a new file into the subject directory of the copy → copy-added <path>, red though every case passed 1183ms
+     → JUDGE in-place lock=77e300565f303395db50623d911dbfbadf34ff68
+LOCK_GREEN piece=piece-a lock=77e300565f303395db50623d911dbfbadf34ff68 candidate=f4daf0b5a5761a10c5a26408a6cb8ad34b79bb13 cases=12
+
+Scope: 3 of 5 workspace projects
+✓ Lockfile passes supply-chain policies (verified 6s ago)
+Lockfile is up to date, resolution step is skipped
+Progress: resolved 1, reused 0, downloaded 0, added 0
+.                                        |  +96 ++++++++++
+Progress: resolved 96, reused 96, downloaded 0, added 96, done
+Done in 456ms using pnpm v11.10.0
+: expected { Object (word, fields) } to match object { word: 'LOCK_RED', fields: { …(2) } }
+(3 matching properties omitted from actual)
+   ✓ verify — the runner retries nothing, whatever the locked config says (SPEC §10 item 13) > a locked config that sets retry: 2, product whose answer is wrong once and right from then on → case-not-passed, never case-retried  2347ms
+   ✓ verify — the copy keeps what git records of a file beside its bytes (SPEC §10 item 13) > the executable file staged without its bit, the link staged as a regular file → case-not-passed for each of the two cases that assert them  1188ms
+ ❯ lock/verify-judge.test.ts (6 tests | 3 failed) 5671ms
+   × verify — a staged change that makes the candidate's own tool say LOCK_GREEN for everything > staged, the working tree's tool as it was locked, started through the fixture's own entry → still LOCK_RED, protected-changed 1838ms
+     → JUDGE in-place lock=1e31b6c3889050db8dfda46b5c2df5102b844975
+OFFENCE protected-changed foundation/lock/src/cli.ts
+LOCK_RED piece=piece-a lock=1e31b6c3889050db8dfda46b5c2df5102b844975 candidate=ac1b757cf8463827f17610a33d3a41ab081979fa offences=1
+
+: expected false to be true // Object.is equality
+   × verify — a staged change that makes the candidate's own tool say LOCK_GREEN for everything > staged and standing in the working tree, started through this repository's entry → still LOCK_RED, protected-changed 141ms
+     → JUDGE in-place lock=1e31b6c3889050db8dfda46b5c2df5102b844975
+OFFENCE protected-changed foundation/lock/src/cli.ts
+LOCK_RED piece=piece-a lock=1e31b6c3889050db8dfda46b5c2df5102b844975 candidate=ac1b757cf8463827f17610a33d3a41ab081979fa offences=1
+
+: expected false to be true // Object.is equality
+   × verify — which tool judges > the untouched tool → first line JUDGE extracted lock=<the lock commit> 1129ms
+     → JUDGE in-place lock=1e31b6c3889050db8dfda46b5c2df5102b844975
+LOCK_GREEN piece=piece-a lock=1e31b6c3889050db8dfda46b5c2df5102b844975 candidate=26cc2621b1ee001063470caca2962a25078bb2da cases=12
+
+Scope: 3 of 5 workspace projects
+✓ Lockfile passes supply-chain policies (verified 1s ago)
+Lockfile is up to date, resolution step is skipped
+Progress: resolved 1, reused 0, downloaded 0, added 0
+.                                        |  +96 ++++++++++
+Progress: resolved 96, reused 96, downloaded 0, added 96, done
+Done in 438ms using pnpm v11.10.0
+: expected false to be true // Object.is equality
+   ✓ verify — which tool judges > an unstaged edit of the fixture's tool, run through the fixture's own entry → first line JUDGE extracted lock=<the lock commit>  1212ms
+   ✓ verify — which tool judges > an unstaged edit that breaks the reporter → the run is judged by the lock commit's reporter, not by the edited one: LOCK_GREEN  1256ms
+   ✓ verify — the argument a judge hands the tool it extracted, given by hand > --extracted-judge-in <a directory no judge extracted this tool into> → LOCK_REFUSED, exit 2, nothing installed 77ms
+ ❯ lock/lock-baseline.test.ts (8 tests | 3 failed) 5152ms
+   × lock — a lock file for the piece that is staged and is not HEAD's > narrowed by hand to another directory and no case → LOCK_REFUSED, exit 2, and nothing is written over it 2842ms
+     → CASE added foundation/tests/other/single.test.ts > the other piece has one case (count 1)
+PROTECTED added foundation/tests/other/single.test.ts
+PROTECTED removed foundation/tests/shared/doubled.ts
+PROTECTED removed foundation/tests/subject/copied.test.ts
+PROTECTED removed foundation/tests/subject/fixtures/runs-by-itself.sh
+PROTECTED removed foundation/tests/subject/fixtures/say-ready.ts
+PROTECTED removed foundation/tests/subject/rows.test.ts
+PROTECTED removed foundation/tests/subject/started.test.ts
+PROTECTED removed foundation/tests/subject/states.test.ts
+PROTECTED removed foundation/tests/subject/value.test.ts
+LOCK_WRITTEN piece=piece-a cases=1 protected=23
+
+Scope: 3 of 5 workspace projects
+✓ Lockfile passes supply-chain policies (verified 1s ago)
+Lockfile is up to date, resolution step is skipped
+Progress: resolved 1, reused 0, downloaded 0, added 0
+.                                        |  +96 ++++++++++
+Progress: resolved 96, reused 96, downloaded 0, added 96, done
+Done in 441ms using pnpm v11.10.0
+: expected 'LOCK_WRITTEN piece=piece-a cases=1 pr…' to match /^LOCK_REFUSED \S/
+   ✓ lock — the difference it prints against HEAD's lock: a case, a helper and a script changed, all staged > the lock is written  1164ms
+   ✓ lock — the difference it prints against HEAD's lock: a case, a helper and a script changed, all staged > CASE added <the new case>, once — and no case is said to be removed 1ms
+   ✓ lock — the difference it prints against HEAD's lock: a case, a helper and a script changed, all staged > PROTECTED changed <the helper>, and <the locked test> — nothing else 0ms
+   × lock — the difference it prints against HEAD's lock: a case, a helper and a script changed, all staged > SCRIPT changed <name> 1ms
+     → CASE added foundation/tests/subject/value.test.ts > the value > is positive (count 1)
+PROTECTED changed foundation/tests/shared/doubled.ts
+PROTECTED changed foundation/tests/subject/value.test.ts
+LOCK_WRITTEN piece=piece-a cases=13 protected=30
+
+Scope: 3 of 5 workspace projects
+✓ Lockfile passes supply-chain policies (verified 2s ago)
+Lockfile is up to date, resolution step is skipped
+Progress: resolved 1, reused 0, downloaded 0, added 0
+.                                        |  +96 ++++++++++
+Progress: resolved 96, reused 96, downloaded 0, added 96, done
+Done in 452ms using pnpm v11.10.0
+: expected [] to deeply equal [ 'SCRIPT changed foundation:test' ]
+   ✓ lock — the difference it prints against HEAD's lock: a case, a helper and a script changed, all staged > no directory is said to be added or removed 0ms
+   × lock — the difference it prints when the piece is given a second directory > DIRS added <dir>, and none removed 1131ms
+     → CASE added foundation/tests/other/single.test.ts > the other piece has one case (count 1)
+PROTECTED added foundation/tests/other/single.test.ts
+LOCK_WRITTEN piece=piece-a cases=13 protected=31
+
+Scope: 3 of 5 workspace projects
+✓ Lockfile passes supply-chain policies (verified 3s ago)
+Lockfile is up to date, resolution step is skipped
+Progress: resolved 1, reused 0, downloaded 0, added 0
+.                                        |  +96 ++++++++++
+Progress: resolved 96, reused 96, downloaded 0, added 96, done
+Done in 457ms using pnpm v11.10.0
+: expected [] to deeply equal [ 'DIRS added foundation/tests/other' ]
+   ✓ lock — the difference it prints when the piece is given a second directory > CASE added <the case of that directory>, PROTECTED added <its test> 0ms
+ ❯ lock/judge-structure.test.ts (28 tests | 5 failed) 11ms
+   ✓ judgeStructure — a candidate that equals its lock > finds no offence 1ms
+   ✓ judgeStructure — a candidate that equals its lock > finds no offence in a changed product file that no lock protects 0ms
+   ✓ judgeStructure — a candidate that equals its lock > finds no offence in a script that is not the foundation's, changed or added 0ms
+   ✓ judgeStructure — a protected file whose content is not the lock's > a locked test changed → protected-changed <path> 0ms
+   ✓ judgeStructure — a protected file whose content is not the lock's > a helper outside the subject directory changed → protected-changed <path> 0ms
+   ✓ judgeStructure — a protected file whose content is not the lock's > a file of the lock tool changed → protected-changed <path> 0ms
+   ✓ judgeStructure — a protected file whose content is not the lock's > the lockfile changed → protected-changed <path> 0ms
+   ✓ judgeStructure — a protected file whose content is not the lock's > a protected file gone → protected-missing <path> 0ms
+   ✓ judgeStructure — a closed directory > a file added to a subject directory → closed-dir-added <path> 0ms
+   ✓ judgeStructure — a closed directory > a file added to a subject directory, deeper → closed-dir-added <path> 0ms
+   ✓ judgeStructure — a closed directory > a file added to foundation/lock/ → closed-dir-added <path> 0ms
+   ✓ judgeStructure — a closed directory > a file added to foundation/tests/ itself → closed-dir-added <path> 0ms
+   × judgeStructure — a closed directory > a file added to the directory of a protected helper → closed-dir-added <path> 4ms
+     → expected [] to deeply equal [ { kind: 'closed-dir-added', …(1) } ]
+   × judgeStructure — a closed directory > a file added to the directory of the set-up file → closed-dir-added <path> 1ms
+     → expected [] to deeply equal [ { kind: 'closed-dir-added', …(1) } ]
+   ✓ judgeStructure — a closed directory > a file added deeper under foundation/tests/, in a directory no lock names → no offence 0ms
+   ✓ judgeStructure — a closed directory > a file added one level below a protected helper's directory — that level holds no protected file → no offence 0ms
+   × judgeStructure — the root's install settings (SPEC §10 item 3) > .npmrc in the candidate, which the lock does not hold → closed-dir-added <path> 0ms
+     → expected [] to deeply equal [ { kind: 'closed-dir-added', …(1) } ]
+   × judgeStructure — the root's install settings (SPEC §10 item 3) > .pnpmfile.cjs in the candidate, which the lock does not hold → closed-dir-added <path> 1ms
+     → expected [] to deeply equal [ { kind: 'closed-dir-added', …(1) } ]
+   × judgeStructure — the root's install settings (SPEC §10 item 3) > .pnpmfile.mjs in the candidate, which the lock does not hold → closed-dir-added <path> 0ms
+     → expected [] to deeply equal [ { kind: 'closed-dir-added', …(1) } ]
+   ✓ judgeStructure — the root's install settings (SPEC §10 item 3) > one the lock holds, with the same id → no offence 0ms
+   ✓ judgeStructure — the root's install settings (SPEC §10 item 3) > one the lock holds, changed → protected-changed <path> 0ms
+   ✓ judgeStructure — nothing installed may come from the tree > a path with a node_modules segment at the root → candidate-carries-node-modules <path> 0ms
+   ✓ judgeStructure — nothing installed may come from the tree > a path with a node_modules segment inside a package → candidate-carries-node-modules <path> 0ms
+   ✓ judgeStructure — nothing installed may come from the tree > a file that only has the word in its name is not such a path 0ms
+   ✓ judgeStructure — the foundation's scripts of the root package file > one changed → scripts-changed <name> 0ms
+   ✓ judgeStructure — the foundation's scripts of the root package file > one added → scripts-changed <name> 0ms
+   ✓ judgeStructure — the foundation's scripts of the root package file > one removed → scripts-changed <name> 0ms
+   ✓ judgeStructure — all offences are collected > a changed test, a missing helper and an added file are three offences 0ms
+ ❯ lock/pure-texts.test.ts (20 tests | 3 failed) 10ms
+   ✓ relativeImports — the relative specifiers of one source text > a static import is reached 1ms
+   ✓ relativeImports — the relative specifiers of one source text > a default import in single quotes is reached 0ms
+   ✓ relativeImports — the relative specifiers of one source text > a type import is reached 0ms
+   ✓ relativeImports — the relative specifiers of one source text > an import for its effect alone is reached 0ms
+   ✓ relativeImports — the relative specifiers of one source text > an export of everything is reached 0ms
+   ✓ relativeImports — the relative specifiers of one source text > an export of names is reached 0ms
+   ✓ relativeImports — the relative specifiers of one source text > a dynamic import of a literal is reached 0ms
+   ✓ relativeImports — the relative specifiers of one source text > an import spread over lines is reached 0ms
+   × relativeImports — the relative specifiers of one source text > a module mocked by its path is reached 4ms
+     → expected [] to deeply equal [ './x.ts' ]
+   × relativeImports — the relative specifiers of one source text > a module mocked later, in single quotes is reached 1ms
+     → expected [] to deeply equal [ './y.ts' ]
+   × relativeImports — the relative specifiers of one source text > a dynamic import with a comment before its literal is reached 1ms
+     → expected [] to deeply equal [ './z.ts' ]
+   ✓ relativeImports — the relative specifiers of one source text > a package is not a relative import 0ms
+   ✓ relativeImports — the relative specifiers of one source text > a scoped package — the code under test is not a relative import 0ms
+   ✓ relativeImports — the relative specifiers of one source text > a built-in is not a relative import 0ms
+   ✓ relativeImports — the relative specifiers of one source text > a dynamic import of a package is not a relative import 0ms
+   ✓ relativeImports — the relative specifiers of one source text > every relative specifier of a whole file is found, and nothing else 0ms
+   ✓ serializeLock — the same lock gives the same bytes > does not depend on the order its keys and lists were given in 0ms
+   ✓ serializeLock — the same lock gives the same bytes > is JSON of the same lock, indented by two spaces, ending in exactly one newline 1ms
+   ✓ serializeLock — the same lock gives the same bytes > writes the protected paths and the directories in order 0ms
+   ✓ serializeLock — the same lock gives the same bytes > a different lock gives different bytes 0ms
+ ✓ lock/verify-all.test.ts (5 tests) 9785ms
+   ✓ verify --all — every piece the inventory says is locked > one piece, present and green → LOCKS_GREEN pieces=1, exit 0  2920ms
+   ✓ verify --all — every piece the inventory says is locked > two pieces present and green, and one the inventory says is not locked → LOCKS_GREEN, each verified in the inventory's order  3270ms
+   ✓ verify --all — every piece the inventory says is locked > a piece the inventory says is locked and that has no lock file → lock-owed <piece>, LOCKS_RED, exit 1  1225ms
+   ✓ verify --all — every piece the inventory says is locked > a lock file whose piece the inventory does not name → lock-unlisted <piece>, red, exit 1  2273ms
+ ✓ bench/no-old-address.test.ts (28 tests) 21ms
+ ✓ lock/judge-run.test.ts (20 tests) 4ms
+
+⎯⎯⎯⎯⎯⎯ Failed Tests 33 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  lock/judge-structure.test.ts > judgeStructure — a closed directory > a file added to the directory of a protected helper → closed-dir-added <path>
+ FAIL  lock/judge-structure.test.ts > judgeStructure — a closed directory > a file added to the directory of the set-up file → closed-dir-added <path>
+AssertionError: expected [] to deeply equal [ { kind: 'closed-dir-added', …(1) } ]
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- [[39m
+[32m-   {[39m
+[32m-     "detail": "foundation/tests/shared/slipped-in.ts",[39m
+[32m-     "kind": "closed-dir-added",[39m
+[32m-   },[39m
+[32m- ][39m
+[31m+ [][39m
+
+ ❯ lock/judge-structure.test.ts:109:61
+    107|     ["the directory of the set-up file", "foundation/tests/support/sli…
+    108|   ])("a file added to %s → closed-dir-added <path>", (_what, path) => {
+    109|     expect(judged(({ tree }) => tree.set(path, blob(999)))).toEqual([{…
+       |                                                             ^
+    110|   });
+    111| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/33]⎯
+
+ FAIL  lock/judge-structure.test.ts > judgeStructure — the root's install settings (SPEC §10 item 3) > .npmrc in the candidate, which the lock does not hold → closed-dir-added <path>
+ FAIL  lock/judge-structure.test.ts > judgeStructure — the root's install settings (SPEC §10 item 3) > .pnpmfile.cjs in the candidate, which the lock does not hold → closed-dir-added <path>
+ FAIL  lock/judge-structure.test.ts > judgeStructure — the root's install settings (SPEC §10 item 3) > .pnpmfile.mjs in the candidate, which the lock does not hold → closed-dir-added <path>
+AssertionError: expected [] to deeply equal [ { kind: 'closed-dir-added', …(1) } ]
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- [[39m
+[32m-   {[39m
+[32m-     "detail": ".npmrc",[39m
+[32m-     "kind": "closed-dir-added",[39m
+[32m-   },[39m
+[32m- ][39m
+[31m+ [][39m
+
+ ❯ lock/judge-structure.test.ts:126:61
+    124| 
+    125|   it.each([".npmrc", ".pnpmfile.cjs", ".pnpmfile.mjs"])("%s in the can…
+    126|     expect(judged(({ tree }) => tree.set(path, blob(999)))).toEqual([{…
+       |                                                             ^
+    127|   });
+    128| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/33]⎯
+
+ FAIL  lock/lock-baseline.test.ts > lock — a lock file for the piece that is staged and is not HEAD's > narrowed by hand to another directory and no case → LOCK_REFUSED, exit 2, and nothing is written over it
+AssertionError: CASE added foundation/tests/other/single.test.ts > the other piece has one case (count 1)
+PROTECTED added foundation/tests/other/single.test.ts
+PROTECTED removed foundation/tests/shared/doubled.ts
+PROTECTED removed foundation/tests/subject/copied.test.ts
+PROTECTED removed foundation/tests/subject/fixtures/runs-by-itself.sh
+PROTECTED removed foundation/tests/subject/fixtures/say-ready.ts
+PROTECTED removed foundation/tests/subject/rows.test.ts
+PROTECTED removed foundation/tests/subject/started.test.ts
+PROTECTED removed foundation/tests/subject/states.test.ts
+PROTECTED removed foundation/tests/subject/value.test.ts
+LOCK_WRITTEN piece=piece-a cases=1 protected=23
+
+Scope: 3 of 5 workspace projects
+✓ Lockfile passes supply-chain policies (verified 1s ago)
+Lockfile is up to date, resolution step is skipped
+Progress: resolved 1, reused 0, downloaded 0, added 0
+.                                        |  +96 ++++++++++
+Progress: resolved 96, reused 96, downloaded 0, added 96, done
+Done in 441ms using pnpm v11.10.0
+: expected 'LOCK_WRITTEN piece=piece-a cases=1 pr…' to match /^LOCK_REFUSED \S/
+
+[32m- Expected:[39m 
+/^LOCK_REFUSED \S/
+
+[31m+ Received:[39m 
+"LOCK_WRITTEN piece=piece-a cases=1 protected=23"
+
+ ❯ expectRefused lock/fixtures/expectations.ts:26:45
+     24|  */
+     25| export function expectRefused(answer: Answer, itsWord: string): void {
+     26|   expect(answer.lines.at(-1), tail(answer)).toMatch(/^LOCK_REFUSED \S/…
+       |                                             ^
+     27|   expect(answer.lines.at(-1)).toContain(itsWord);
+     28|   expect(answer.code).toBe(2);
+ ❯ lock/lock-baseline.test.ts:38:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/33]⎯
+
+ FAIL  lock/lock-baseline.test.ts > lock — the difference it prints against HEAD's lock: a case, a helper and a script changed, all staged > SCRIPT changed <name>
+AssertionError: CASE added foundation/tests/subject/value.test.ts > the value > is positive (count 1)
+PROTECTED changed foundation/tests/shared/doubled.ts
+PROTECTED changed foundation/tests/subject/value.test.ts
+LOCK_WRITTEN piece=piece-a cases=13 protected=30
+
+Scope: 3 of 5 workspace projects
+✓ Lockfile passes supply-chain policies (verified 2s ago)
+Lockfile is up to date, resolution step is skipped
+Progress: resolved 1, reused 0, downloaded 0, added 0
+.                                        |  +96 ++++++++++
+Progress: resolved 96, reused 96, downloaded 0, added 96, done
+Done in 452ms using pnpm v11.10.0
+: expected [] to deeply equal [ 'SCRIPT changed foundation:test' ]
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- [[39m
+[32m-   "SCRIPT changed foundation:test",[39m
+[32m- ][39m
+[31m+ [][39m
+
+ ❯ lock/lock-baseline.test.ts:72:60
+     70|   it("SCRIPT changed <name>", async () => {
+     71|     const answer = await locked();
+     72|     expect(linesStarting(answer, "SCRIPT "), tail(answer)).toEqual(["S…
+       |                                                            ^
+     73|   });
+     74| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/33]⎯
+
+ FAIL  lock/lock-baseline.test.ts > lock — the difference it prints when the piece is given a second directory > DIRS added <dir>, and none removed
+AssertionError: CASE added foundation/tests/other/single.test.ts > the other piece has one case (count 1)
+PROTECTED added foundation/tests/other/single.test.ts
+LOCK_WRITTEN piece=piece-a cases=13 protected=31
+
+Scope: 3 of 5 workspace projects
+✓ Lockfile passes supply-chain policies (verified 3s ago)
+Lockfile is up to date, resolution step is skipped
+Progress: resolved 1, reused 0, downloaded 0, added 0
+.                                        |  +96 ++++++++++
+Progress: resolved 96, reused 96, downloaded 0, added 96, done
+Done in 457ms using pnpm v11.10.0
+: expected [] to deeply equal [ 'DIRS added foundation/tests/other' ]
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- [[39m
+[32m-   "DIRS added foundation/tests/other",[39m
+[32m- ][39m
+[31m+ [][39m
+
+ ❯ lock/lock-baseline.test.ts:85:58
+     83|   it("DIRS added <dir>, and none removed", async () => {
+     84|     const answer = await locked();
+     85|     expect(linesStarting(answer, "DIRS "), tail(answer)).toEqual(["DIR…
+       |                                                          ^
+     86|   });
+     87| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/33]⎯
+
+ FAIL  lock/lock-closure.test.ts > lock — a relative specifier is resolved as the runner resolves it > a helper outside the subject directory, spelled .js while the index holds the .ts → protected
+ FAIL  lock/lock-closure.test.ts > lock — a relative specifier is resolved as the runner resolves it > a helper outside the subject directory, spelled without an extension → protected
+AssertionError: foundation/tests/shared/second.ts is not protected: expected undefined to be 'bdccc765fb52c7c7ea442be37d49ef4266c25…' // Object.is equality
+
+[32m- Expected:[39m 
+"bdccc765fb52c7c7ea442be37d49ef4266c25b0a"
+
+[31m+ Received:[39m 
+undefined
+
+ ❯ expectProtected lock/lock-closure.test.ts:41:60
+     39|   expectWritten(locked);
+     40|   const lock = JSON.parse(read(locked.repo, LOCK_PATH)) as LockFile;
+     41|   expect(lock.protected[path], `${path} is not protected`).toBe(git(lo…
+       |                                                            ^
+     42| }
+     43| 
+ ❯ lock/lock-closure.test.ts:55:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/33]⎯
+
+ FAIL  lock/lock-closure.test.ts > lock — a relative specifier is resolved as the runner resolves it > a helper outside the subject directory, spelled .mjs while the index holds the .mts → protected
+AssertionError: foundation/tests/shared/third.mts is not protected: expected undefined to be 'bdccc765fb52c7c7ea442be37d49ef4266c25…' // Object.is equality
+
+[32m- Expected:[39m 
+"bdccc765fb52c7c7ea442be37d49ef4266c25b0a"
+
+[31m+ Received:[39m 
+undefined
+
+ ❯ expectProtected lock/lock-closure.test.ts:41:60
+     39|   expectWritten(locked);
+     40|   const lock = JSON.parse(read(locked.repo, LOCK_PATH)) as LockFile;
+     41|   expect(lock.protected[path], `${path} is not protected`).toBe(git(lo…
+       |                                                            ^
+     42| }
+     43| 
+ ❯ lock/lock-closure.test.ts:55:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/33]⎯
+
+ FAIL  lock/lock-closure.test.ts > lock — a relative specifier is resolved as the runner resolves it > a helper outside the subject directory, that names a directory holding an index.ts → protected
+AssertionError: foundation/tests/shared/fourth/index.ts is not protected: expected undefined to be 'bdccc765fb52c7c7ea442be37d49ef4266c25…' // Object.is equality
+
+[32m- Expected:[39m 
+"bdccc765fb52c7c7ea442be37d49ef4266c25b0a"
+
+[31m+ Received:[39m 
+undefined
+
+ ❯ expectProtected lock/lock-closure.test.ts:41:60
+     39|   expectWritten(locked);
+     40|   const lock = JSON.parse(read(locked.repo, LOCK_PATH)) as LockFile;
+     41|   expect(lock.protected[path], `${path} is not protected`).toBe(git(lo…
+       |                                                            ^
+     42| }
+     43| 
+ ❯ lock/lock-closure.test.ts:55:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/33]⎯
+
+ FAIL  lock/lock-closure.test.ts > lock — what a locked test reaches without an import statement > a file named by new URL("…", import.meta.url), under foundation/tests/ → protected
+AssertionError: foundation/tests/shared/data.txt is not protected: expected undefined to be '029624a3c2b06ce30a97f29aeee9c7ae6a610…' // Object.is equality
+
+[32m- Expected:[39m 
+"029624a3c2b06ce30a97f29aeee9c7ae6a610686"
+
+[31m+ Received:[39m 
+undefined
+
+ ❯ expectProtected lock/lock-closure.test.ts:41:60
+     39|   expectWritten(locked);
+     40|   const lock = JSON.parse(read(locked.repo, LOCK_PATH)) as LockFile;
+     41|   expect(lock.protected[path], `${path} is not protected`).toBe(git(lo…
+       |                                                            ^
+     42| }
+     43| 
+ ❯ lock/lock-closure.test.ts:66:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/33]⎯
+
+ FAIL  lock/lock-closure.test.ts > lock — what a locked test reaches without an import statement > import.meta.glob in a locked test — what it reaches cannot be listed → LOCK_REFUSED, the standing lock as it stood
+AssertionError: PROTECTED changed foundation/tests/subject/value.test.ts
+LOCK_WRITTEN piece=piece-a cases=12 protected=30
+
+Scope: 3 of 5 workspace projects
+✓ Lockfile passes supply-chain policies (verified 8s ago)
+Lockfile is up to date, resolution step is skipped
+Progress: resolved 1, reused 0, downloaded 0, added 0
+.                                        |  +96 ++++++++++
+Progress: resolved 96, reused 96, downloaded 0, added 96, done
+Done in 442ms using pnpm v11.10.0
+: expected 'LOCK_WRITTEN piece=piece-a cases=12 p…' to match /^LOCK_REFUSED \S/
+
+[32m- Expected:[39m 
+/^LOCK_REFUSED \S/
+
+[31m+ Received:[39m 
+"LOCK_WRITTEN piece=piece-a cases=12 protected=30"
+
+ ❯ expectRefused lock/fixtures/expectations.ts:26:45
+     24|  */
+     25| export function expectRefused(answer: Answer, itsWord: string): void {
+     26|   expect(answer.lines.at(-1), tail(answer)).toMatch(/^LOCK_REFUSED \S/…
+       |                                             ^
+     27|   expect(answer.lines.at(-1)).toContain(itsWord);
+     28|   expect(answer.code).toBe(2);
+ ❯ lock/lock-closure.test.ts:76:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[10/33]⎯
+
+ FAIL  lock/lock-closure.test.ts > lock — a relative specifier that resolves to no file of the index > an import spelled inside a string → NOTE unresolved-import <from> <specifier>, and the lock is still written
+AssertionError: PROTECTED changed foundation/tests/subject/value.test.ts
+LOCK_WRITTEN piece=piece-a cases=12 protected=30
+
+Scope: 3 of 5 workspace projects
+✓ Lockfile passes supply-chain policies (verified 9s ago)
+Lockfile is up to date, resolution step is skipped
+Progress: resolved 1, reused 0, downloaded 0, added 0
+.                                        |  +96 ++++++++++
+Progress: resolved 96, reused 96, downloaded 0, added 96, done
+Done in 448ms using pnpm v11.10.0
+: expected [ …(2) ] to include 'NOTE unresolved-import foundation/tes…'
+ ❯ lock/lock-closure.test.ts:84:54
+     82|   it("an import spelled inside a string → NOTE unresolved-import <from…
+     83|     const locked = await lockedAfter((repo) => reachAlso(repo, "const …
+     84|     expect(locked.answer.lines, tail(locked.answer)).toContain("NOTE u…
+       |                                                      ^
+     85|     expectWritten(locked);
+     86|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[11/33]⎯
+
+ FAIL  lock/lock-closure.test.ts > lock — the root's install settings (SPEC §10 item 3) > a committed .npmrc at the root → protected
+AssertionError: .npmrc is not protected: expected undefined to be '6a0841928ecc99c7ae2a326fd0e82f2f62b3d…' // Object.is equality
+
+[32m- Expected:[39m 
+"6a0841928ecc99c7ae2a326fd0e82f2f62b3d515"
+
+[31m+ Received:[39m 
+undefined
+
+ ❯ expectProtected lock/lock-closure.test.ts:41:60
+     39|   expectWritten(locked);
+     40|   const lock = JSON.parse(read(locked.repo, LOCK_PATH)) as LockFile;
+     41|   expect(lock.protected[path], `${path} is not protected`).toBe(git(lo…
+       |                                                            ^
+     42| }
+     43| 
+ ❯ lock/lock-closure.test.ts:102:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[12/33]⎯
+
+ FAIL  lock/lock-command.test.ts > lock — what it refuses > a locked test that declares .only — run alone it would leave the file's other cases out
+AssertionError: PROTECTED changed foundation/tests/subject/value.test.ts
+LOCK_WRITTEN piece=piece-a cases=12 protected=30
+
+Scope: 3 of 5 workspace projects
+✓ Lockfile passes supply-chain policies (verified 6s ago)
+Lockfile is up to date, resolution step is skipped
+Progress: resolved 1, reused 0, downloaded 0, added 0
+.                                        |  +96 ++++++++++
+Progress: resolved 96, reused 96, downloaded 0, added 96, done
+Done in 443ms using pnpm v11.10.0
+: expected 'LOCK_WRITTEN piece=piece-a cases=12 p…' to match /^LOCK_REFUSED \S/
+
+[32m- Expected:[39m 
+/^LOCK_REFUSED \S/
+
+[31m+ Received:[39m 
+"LOCK_WRITTEN piece=piece-a cases=12 protected=30"
+
+ ❯ expectRefused lock/fixtures/expectations.ts:26:45
+     24|  */
+     25| export function expectRefused(answer: Answer, itsWord: string): void {
+     26|   expect(answer.lines.at(-1), tail(answer)).toMatch(/^LOCK_REFUSED \S/…
+       |                                             ^
+     27|   expect(answer.lines.at(-1)).toContain(itsWord);
+     28|   expect(answer.code).toBe(2);
+ ❯ expectLockRefused lock/lock-command.test.ts:109:5
+ ❯ lock/lock-command.test.ts:126:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[13/33]⎯
+
+ FAIL  lock/pure-texts.test.ts > relativeImports — the relative specifiers of one source text > a module mocked by its path is reached
+AssertionError: expected [] to deeply equal [ './x.ts' ]
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- [[39m
+[32m-   "./x.ts",[39m
+[32m- ][39m
+[31m+ [][39m
+
+ ❯ lock/pure-texts.test.ts:25:29
+     23|     ["a dynamic import with a comment before its literal", 'const z = …
+     24|   ])("%s is reached", (_what, source, expected) => {
+     25|     expect(reached(source)).toEqual(expected);
+       |                             ^
+     26|   });
+     27| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[14/33]⎯
+
+ FAIL  lock/pure-texts.test.ts > relativeImports — the relative specifiers of one source text > a module mocked later, in single quotes is reached
+AssertionError: expected [] to deeply equal [ './y.ts' ]
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- [[39m
+[32m-   "./y.ts",[39m
+[32m- ][39m
+[31m+ [][39m
+
+ ❯ lock/pure-texts.test.ts:25:29
+     23|     ["a dynamic import with a comment before its literal", 'const z = …
+     24|   ])("%s is reached", (_what, source, expected) => {
+     25|     expect(reached(source)).toEqual(expected);
+       |                             ^
+     26|   });
+     27| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[15/33]⎯
+
+ FAIL  lock/pure-texts.test.ts > relativeImports — the relative specifiers of one source text > a dynamic import with a comment before its literal is reached
+AssertionError: expected [] to deeply equal [ './z.ts' ]
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- [[39m
+[32m-   "./z.ts",[39m
+[32m- ][39m
+[31m+ [][39m
+
+ ❯ lock/pure-texts.test.ts:25:29
+     23|     ["a dynamic import with a comment before its literal", 'const z = …
+     24|   ])("%s is reached", (_what, source, expected) => {
+     25|     expect(reached(source)).toEqual(expected);
+       |                             ^
+     26|   });
+     27| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[16/33]⎯
+
+ FAIL  lock/verify-copy.test.ts > verify — the install is the whole workspace (SPEC §10 item 1) > a locked test that needs the dependency of a package outside the foundation's scope → LOCK_GREEN
+AssertionError: JUDGE in-place lock=7708b46961c60ee738e63abb6b2532298a3591a8
+OFFENCE case-not-passed foundation/tests/subject/old-chain.test.ts > the old chain finds its own dependency
+OFFENCE file-failed foundation/tests/subject/old-chain.test.ts
+OFFENCE exit-nonzero 1
+LOCK_RED piece=piece-a lock=7708b46961c60ee738e63abb6b2532298a3591a8 candidate=1fc3a313da15bd7f689067c97be5a4f880e820d4 offences=3
+
+Scope: 3 of 5 workspace projects
+✓ Lockfile passes supply-chain policies (verified 2s ago)
+Lockfile is up to date, resolution step is skipped
+Progress: resolved 1, reused 0, downloaded 0, added 0
+.                                        |  +96 ++++++++++
+Progress: resolved 96, reused 96, downloaded 0, added 96, done
+Done in 450ms using pnpm v11.10.0
+node:internal/modules/package_json_reader:314
+  throw new ERR_MODULE_NOT_FOUND(packageName, fileURLToPath(base), null);
+        ^
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'pg' imported from /home/dxb/.cache/dxb/foundation-verify/run-gJygn0/candidate/packages/old-chain/src/names-its-driver.mjs
+    at Object.getPackageJSONURL (node:internal/modules/package_json_reader:314:9)
+    at packageResolve (node:internal/modules/esm/resolve:772:81)
+    at moduleResolve (node:internal/modules/esm/resolve:859:18)
+    at defaultResolve (node:internal/modules/esm/resolve:989:11)
+    at #cachedDefaultResolve (node:internal/modules/esm/loader:747:20)
+    at ModuleLoader.resolve (node:internal/modules/esm/loader:724:38)
+    at ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:320:38)
+    at ModuleJob._link (node:internal/modules/esm/module_job:182:49) {
+  code: 'ERR_MODULE_NOT_FOUND'
+}
+
+Node.js v22.23.3
+: expected [ …(3) ] to deeply equal []
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- [][39m
+[31m+ [[39m
+[31m+   {[39m
+[31m+     "detail": "foundation/tests/subject/old-chain.test.ts > the old chain finds its own dependency",[39m
+[31m+     "kind": "case-not-passed",[39m
+[31m+   },[39m
+[31m+   {[39m
+[31m+     "detail": "foundation/tests/subject/old-chain.test.ts",[39m
+[31m+     "kind": "file-failed",[39m
+[31m+   },[39m
+[31m+   {[39m
+[31m+     "detail": "1",[39m
+[31m+     "kind": "exit-nonzero",[39m
+[31m+   },[39m
+[31m+ ][39m
+
+ ❯ expectGreen lock/fixtures/expect-green.ts:6:44
+      4| /** Green: not one offence line, the last line LOCK_GREEN for the fixt…
+      5| export function expectGreen(answer: Answer, candidate?: string): void {
+      6|   expect(offencesOf(answer), tail(answer)).toEqual([]);
+       |                                            ^
+      7|   const verdict = verdictOf(answer);
+      8|   expect(verdict).toMatchObject({ word: "LOCK_GREEN", fields: { piece:…
+ ❯ lock/verify-copy.test.ts:36:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[17/33]⎯
+
+ FAIL  lock/verify-copy.test.ts > verify — the install runs nothing of the candidate's (SPEC §10 item 1) > a staged postinstall of the product that would rewrite a locked test so it passes, and product that fails it → case-not-passed: the script did not run
+AssertionError: JUDGE in-place lock=77e300565f303395db50623d911dbfbadf34ff68
+LOCK_GREEN piece=piece-a lock=77e300565f303395db50623d911dbfbadf34ff68 candidate=dd6dbaeb774a66471c58fe3bbb9d34d6eb1f1766 cases=12
+
+Scope: 3 of 5 workspace projects
+✓ Lockfile passes supply-chain policies (verified 3s ago)
+Lockfile is up to date, resolution step is skipped
+Progress: resolved 1, reused 0, downloaded 0, added 0
+.                                        |  +96 ++++++++++
+Progress: resolved 96, reused 96, downloaded 0, added 96, done
+foundation/product postinstall$ node rewrite-the-locked-test.mjs
+foundation/product postinstall: Done
+Done in 460ms using pnpm v11.10.0
+: expected { Object (word, fields) } to match object { word: 'LOCK_RED', fields: { …(2) } }
+(3 matching properties omitted from actual)
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[2m  {[22m
+[2m    "fields": {[22m
+[32m-     "offences": "0",[39m
+[2m      "piece": "piece-a",[22m
+[2m    },[22m
+[32m-   "word": "LOCK_RED",[39m
+[31m+   "word": "LOCK_GREEN",[39m
+[2m  }[22m
+
+ ❯ expectRed lock/fixtures/expectations.ts:16:43
+     14| /** Red, exit 1, and the last line counts the offence lines printed ab…
+     15| export function expectRed(answer: Answer): void {
+     16|   expect(verdictOf(answer), tail(answer)).toMatchObject({ word: "LOCK_…
+       |                                           ^
+     17|   expect(offencesOf(answer).length).toBeGreaterThan(0);
+     18|   expect(answer.code).toBe(1);
+ ❯ lock/verify-copy.test.ts:51:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[18/33]⎯
+
+ FAIL  lock/verify-copy.test.ts > verify — the copy is still the candidate's tree after the run (SPEC §10 item 2) > product that answers 41 and writes over the locked test in the copy so it expects 41 → copy-changed <path>, red though every case passed
+AssertionError: JUDGE in-place lock=77e300565f303395db50623d911dbfbadf34ff68
+LOCK_GREEN piece=piece-a lock=77e300565f303395db50623d911dbfbadf34ff68 candidate=dbfc94ce768e17cae2eca0b7c550b20564954243 cases=12
+
+Scope: 3 of 5 workspace projects
+✓ Lockfile passes supply-chain policies (verified 5s ago)
+Lockfile is up to date, resolution step is skipped
+Progress: resolved 1, reused 0, downloaded 0, added 0
+.                                        |  +96 ++++++++++
+Progress: resolved 96, reused 96, downloaded 0, added 96, done
+Done in 432ms using pnpm v11.10.0
+: expected { Object (word, fields) } to match object { word: 'LOCK_RED', fields: { …(2) } }
+(3 matching properties omitted from actual)
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[2m  {[22m
+[2m    "fields": {[22m
+[32m-     "offences": "0",[39m
+[2m      "piece": "piece-a",[22m
+[2m    },[22m
+[32m-   "word": "LOCK_RED",[39m
+[31m+   "word": "LOCK_GREEN",[39m
+[2m  }[22m
+
+ ❯ expectRed lock/fixtures/expectations.ts:16:43
+     14| /** Red, exit 1, and the last line counts the offence lines printed ab…
+     15| export function expectRed(answer: Answer): void {
+     16|   expect(verdictOf(answer), tail(answer)).toMatchObject({ word: "LOCK_…
+       |                                           ^
+     17|   expect(offencesOf(answer).length).toBeGreaterThan(0);
+     18|   expect(answer.code).toBe(1);
+ ❯ lock/verify-copy.test.ts:68:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[19/33]⎯
+
+ FAIL  lock/verify-copy.test.ts > verify — the copy is still the candidate's tree after the run (SPEC §10 item 2) > product that writes a new file into the subject directory of the copy → copy-added <path>, red though every case passed
+AssertionError: JUDGE in-place lock=77e300565f303395db50623d911dbfbadf34ff68
+LOCK_GREEN piece=piece-a lock=77e300565f303395db50623d911dbfbadf34ff68 candidate=f4daf0b5a5761a10c5a26408a6cb8ad34b79bb13 cases=12
+
+Scope: 3 of 5 workspace projects
+✓ Lockfile passes supply-chain policies (verified 6s ago)
+Lockfile is up to date, resolution step is skipped
+Progress: resolved 1, reused 0, downloaded 0, added 0
+.                                        |  +96 ++++++++++
+Progress: resolved 96, reused 96, downloaded 0, added 96, done
+Done in 456ms using pnpm v11.10.0
+: expected { Object (word, fields) } to match object { word: 'LOCK_RED', fields: { …(2) } }
+(3 matching properties omitted from actual)
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[2m  {[22m
+[2m    "fields": {[22m
+[32m-     "offences": "0",[39m
+[2m      "piece": "piece-a",[22m
+[2m    },[22m
+[32m-   "word": "LOCK_RED",[39m
+[31m+   "word": "LOCK_GREEN",[39m
+[2m  }[22m
+
+ ❯ expectRed lock/fixtures/expectations.ts:16:43
+     14| /** Red, exit 1, and the last line counts the offence lines printed ab…
+     15| export function expectRed(answer: Answer): void {
+     16|   expect(verdictOf(answer), tail(answer)).toMatchObject({ word: "LOCK_…
+       |                                           ^
+     17|   expect(offencesOf(answer).length).toBeGreaterThan(0);
+     18|   expect(answer.code).toBe(1);
+ ❯ lock/verify-copy.test.ts:76:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[20/33]⎯
+
+ FAIL  lock/verify-judge.test.ts > verify — a staged change that makes the candidate's own tool say LOCK_GREEN for everything > staged, the working tree's tool as it was locked, started through the fixture's own entry → still LOCK_RED, protected-changed
+AssertionError: JUDGE in-place lock=1e31b6c3889050db8dfda46b5c2df5102b844975
+OFFENCE protected-changed foundation/lock/src/cli.ts
+LOCK_RED piece=piece-a lock=1e31b6c3889050db8dfda46b5c2df5102b844975 candidate=ac1b757cf8463827f17610a33d3a41ab081979fa offences=1
+
+: expected false to be true // Object.is equality
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- true[39m
+[31m+ false[39m
+
+ ❯ lock/verify-judge.test.ts:58:80
+     56|     const witness = witnessedInstall(built.directory);
+     57|     const answer = await command(repo, ["verify", PIECE], { path: witn…
+     58|     expect(namesCommit(extractedFrom(answer), built.lockCommit), tail(…
+       |                                                                                ^
+     59|     expectRedByTheChangedTool(answer, witness.started());
+     60|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[21/33]⎯
+
+ FAIL  lock/verify-judge.test.ts > verify — a staged change that makes the candidate's own tool say LOCK_GREEN for everything > staged and standing in the working tree, started through this repository's entry → still LOCK_RED, protected-changed
+AssertionError: JUDGE in-place lock=1e31b6c3889050db8dfda46b5c2df5102b844975
+OFFENCE protected-changed foundation/lock/src/cli.ts
+LOCK_RED piece=piece-a lock=1e31b6c3889050db8dfda46b5c2df5102b844975 candidate=ac1b757cf8463827f17610a33d3a41ab081979fa offences=1
+
+: expected false to be true // Object.is equality
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- true[39m
+[31m+ false[39m
+
+ ❯ lock/verify-judge.test.ts:72:80
+     70|     const witness = witnessedInstall(built.directory);
+     71|     const answer = await command(repo, ["verify", PIECE], { entry: REA…
+     72|     expect(namesCommit(extractedFrom(answer), built.lockCommit), tail(…
+       |                                                                                ^
+     73|     expectRedByTheChangedTool(answer, witness.started());
+     74|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[22/33]⎯
+
+ FAIL  lock/verify-judge.test.ts > verify — which tool judges > the untouched tool → first line JUDGE extracted lock=<the lock commit>
+AssertionError: JUDGE in-place lock=1e31b6c3889050db8dfda46b5c2df5102b844975
+LOCK_GREEN piece=piece-a lock=1e31b6c3889050db8dfda46b5c2df5102b844975 candidate=26cc2621b1ee001063470caca2962a25078bb2da cases=12
+
+Scope: 3 of 5 workspace projects
+✓ Lockfile passes supply-chain policies (verified 1s ago)
+Lockfile is up to date, resolution step is skipped
+Progress: resolved 1, reused 0, downloaded 0, added 0
+.                                        |  +96 ++++++++++
+Progress: resolved 96, reused 96, downloaded 0, added 96, done
+Done in 438ms using pnpm v11.10.0
+: expected false to be true // Object.is equality
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- true[39m
+[31m+ false[39m
+
+ ❯ lock/verify-judge.test.ts:81:80
+     79|     const built = await fixture.ready();
+     80|     const answer = await command(copyOf(built), ["verify", PIECE]);
+     81|     expect(namesCommit(extractedFrom(answer), built.lockCommit), tail(…
+       |                                                                                ^
+     82|     expectGreen(answer);
+     83|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[23/33]⎯
+
+ FAIL  lock/verify-run.test.ts > verify — the search for the runner's names: a note, never an offence > the name spelled under foundation/tests/, in the root package file and in a later commit's lock file → no note
+AssertionError: JUDGE in-place lock=8bf75de2cdb647f565f5d9111681176f1127a090
+NOTE runner-name foundation/locks/piece-b.json:7
+NOTE runner-name foundation/locks/piece-b.json:28
+NOTE runner-name foundation/locks/piece-b.json:35
+NOTE runner-name foundation/tests/other/second.test.ts:1
+NOTE runner-name package.json:8
+NOTE runner-name package.json:10
+LOCK_GREEN piece=piece-a lock=8bf75de2cdb647f565f5d9111681176f1127a090 candidate=682a598ec03c08eb1185a2b94197dc774778ef7b cases=12
+
+Scope: 3 of 5 workspace projects
+✓ Lockfile passes supply-chain policies (verified 7s ago)
+Lockfile is up to date, resolution step is skipped
+Progress: resolved 1, reused 0, downloaded 0, added 0
+.                                        |  +96 ++++++++++
+Progress: resolved 96, reused 96, downloaded 0, added 96, done
+Done in 434ms using pnpm v11.10.0
+: expected [ …(6) ] to deeply equal []
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- [][39m
+[31m+ [[39m
+[31m+   "NOTE runner-name foundation/locks/piece-b.json:7",[39m
+[31m+   "NOTE runner-name foundation/locks/piece-b.json:28",[39m
+[31m+   "NOTE runner-name foundation/locks/piece-b.json:35",[39m
+[31m+   "NOTE runner-name foundation/tests/other/second.test.ts:1",[39m
+[31m+   "NOTE runner-name package.json:8",[39m
+[31m+   "NOTE runner-name package.json:10",[39m
+[31m+ ][39m
+
+ ❯ lock/verify-run.test.ts:101:94
+     99| 
+    100|     const answer = await command(repo, ["verify", PIECE]);
+    101|     expect(answer.lines.filter((line) => line.startsWith("NOTE runner-…
+       |                                                                                              ^
+    102|     expectGreen(answer, git(repo, "write-tree"));
+    103|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[24/33]⎯
+
+ FAIL  lock/verify-run.test.ts > verify — a work directory an earlier run left standing (SPEC §10 item 9) > is said once — NOTE stale-work-directory <path> — and still stands afterwards, with what was in it; the verdict stays LOCK_GREEN
+AssertionError: JUDGE in-place lock=8bf75de2cdb647f565f5d9111681176f1127a090
+LOCK_GREEN piece=piece-a lock=8bf75de2cdb647f565f5d9111681176f1127a090 candidate=26cc2621b1ee001063470caca2962a25078bb2da cases=12
+
+Scope: 3 of 5 workspace projects
+✓ Lockfile passes supply-chain policies (verified 8s ago)
+Lockfile is up to date, resolution step is skipped
+Progress: resolved 1, reused 0, downloaded 0, added 0
+.                                        |  +96 ++++++++++
+Progress: resolved 96, reused 96, downloaded 0, added 96, done
+Done in 443ms using pnpm v11.10.0
+: expected [] to deeply equal [ Array(1) ]
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- [[39m
+[32m-   "NOTE stale-work-directory /home/dxb/.cache/dxb/foundation-verify/run-OMS920",[39m
+[32m- ][39m
+[31m+ [][39m
+
+ ❯ lock/verify-run.test.ts:112:105
+    110|     try {
+    111|       const answer = await command(repo, ["verify", PIECE]);
+    112|       expect(answer.lines.filter((line) => line.startsWith("NOTE stale…
+       |                                                                                                         ^
+    113|       expect(existsSync(stale.leftInIt)).toBe(true);
+    114|       expectGreen(answer, git(repo, "write-tree"));
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[25/33]⎯
+
+ FAIL  lock/verify-run.test.ts > verify — product staged so that a locked case does not pass > the value case fails → case-not-passed for it; the file and the exit code say so too
+AssertionError: expected 'JUDGE in-place lock=8bf75de2cdb647f56…' to contain 'expected 41 to be 42'
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- expected 41 to be 42[39m
+[31m+ JUDGE in-place lock=8bf75de2cdb647f565f5d9111681176f1127a090[39m
+[31m+ OFFENCE case-not-passed foundation/tests/subject/value.test.ts > the value > as the product returns it > is 42[39m
+[31m+ OFFENCE case-not-passed foundation/tests/subject/value.test.ts > the value > is doubled by the helper[39m
+[31m+ OFFENCE file-failed foundation/tests/subject/value.test.ts[39m
+[31m+ OFFENCE exit-nonzero 1[39m
+[31m+ LOCK_RED piece=piece-a lock=8bf75de2cdb647f565f5d9111681176f1127a090 candidate=a048fed10e3ec9eaa9c1777254e98904d2f2e7a0 offences=4[39m
+[31m+[39m
+[31m+ Scope: 3 of 5 workspace projects[39m
+[31m+ ✓ Lockfile passes supply-chain policies (verified 9s ago)[39m
+[31m+ Lockfile is up to date, resolution step is skipped[39m
+[31m+ Progress: resolved 1, reused 0, downloaded 0, added 0[39m
+[31m+ .                                        |  +96 ++++++++++[39m
+[31m+ Progress: resolved 96, reused 96, downloaded 0, added 96, done[39m
+[31m+ Done in 428ms using pnpm v11.10.0[39m
+[31m+[39m
+
+ ❯ lock/verify-run.test.ts:130:27
+    128|     expect(offencesOf(answer)).toContainEqual({ kind: "exit-nonzero", …
+    129|     // SPEC §10 item 11: the reader of a red verdict sees the failing …
+    130|     expect(answer.output).toContain("expected 41 to be 42");
+       |                           ^
+    131|   });
+    132| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[26/33]⎯
+
+ FAIL  lock/verify-structure.test.ts > verify — a staged change to what the lock protects > a protected path staged as a gitlink that carries the locked blob's id — no regular file → protected-missing <path>
+AssertionError: JUDGE in-place lock=6085952a1e24f70a8f92e7b3302757a9acecfa86
+OFFENCE install-failed pnpm ended with 1
+LOCK_RED piece=piece-a lock=6085952a1e24f70a8f92e7b3302757a9acecfa86 candidate=46461dd219bc35c516c8b64f8236432b7cfbae27 offences=1
+
+: expected [ { kind: 'install-failed', …(1) } ] to deeply equal [ { kind: 'protected-missing', …(1) } ]
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[2m  [[22m
+[2m    {[22m
+[32m-     "detail": "foundation/tests/shared/doubled.ts",[39m
+[32m-     "kind": "protected-missing",[39m
+[31m+     "detail": "pnpm ended with 1",[39m
+[31m+     "kind": "install-failed",[39m
+[2m    },[22m
+[2m  ][22m
+
+ ❯ expectRedBy lock/verify-structure.test.ts:49:52
+     47| function expectRedBy(ran: { repo: string; answer: Answer; installStart…
+     48|   const candidate = git(ran.repo, "write-tree");
+     49|   expect(offencesOf(ran.answer), tail(ran.answer)).toEqual(offences);
+       |                                                    ^
+     50|   expect(verdictOf(ran.answer)).toMatchObject({ word: "LOCK_RED", fiel…
+     51|   expect(ran.answer.code).toBe(1);
+ ❯ lock/verify-structure.test.ts:75:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[27/33]⎯
+
+ FAIL  lock/verify-structure.test.ts > verify — a staged change to what the lock protects > a protected path staged as a link that carries the locked blob's id — no regular file → protected-missing <path>
+AssertionError: JUDGE in-place lock=6085952a1e24f70a8f92e7b3302757a9acecfa86
+OFFENCE install-failed pnpm ended with 1
+LOCK_RED piece=piece-a lock=6085952a1e24f70a8f92e7b3302757a9acecfa86 candidate=45c9dcdcb06ec4239bd1036c5e4ffe09f62ae729 offences=1
+
+: expected [ { kind: 'install-failed', …(1) } ] to deeply equal [ { kind: 'protected-missing', …(1) } ]
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[2m  [[22m
+[2m    {[22m
+[32m-     "detail": "foundation/tests/shared/doubled.ts",[39m
+[32m-     "kind": "protected-missing",[39m
+[31m+     "detail": "pnpm ended with 1",[39m
+[31m+     "kind": "install-failed",[39m
+[2m    },[22m
+[2m  ][22m
+
+ ❯ expectRedBy lock/verify-structure.test.ts:49:52
+     47| function expectRedBy(ran: { repo: string; answer: Answer; installStart…
+     48|   const candidate = git(ran.repo, "write-tree");
+     49|   expect(offencesOf(ran.answer), tail(ran.answer)).toEqual(offences);
+       |                                                    ^
+     50|   expect(verdictOf(ran.answer)).toMatchObject({ word: "LOCK_RED", fiel…
+     51|   expect(ran.answer.code).toBe(1);
+ ❯ lock/verify-structure.test.ts:75:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[28/33]⎯
+
+ FAIL  lock/verify-structure.test.ts > verify — what is no structural offence: the tests are run, and they are green > --rev of a lock commit that removes a locked test — the test gone and the lock made again, in one commit → no lock-commit-impure, LOCK_GREEN
+AssertionError: JUDGE in-place lock=41ad67785b178ed4309dad0942452df11245b768
+OFFENCE lock-commit-impure 41ad67785b178ed4309dad0942452df11245b768 foundation/tests/subject/rows.test.ts
+LOCK_RED piece=piece-a lock=41ad67785b178ed4309dad0942452df11245b768 candidate=c741fb872039bfb2ff862b29d521636dfb2a859c offences=1
+
+: expected [ Array(1) ] to deeply equal []
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- [][39m
+[31m+ [[39m
+[31m+   {[39m
+[31m+     "detail": "41ad67785b178ed4309dad0942452df11245b768 foundation/tests/subject/rows.test.ts",[39m
+[31m+     "kind": "lock-commit-impure",[39m
+[31m+   },[39m
+[31m+ ][39m
+
+ ❯ lock/verify-structure.test.ts:211:105
+    209| 
+    210|     const answer = await command(repo, ["verify", PIECE, "--rev", "HEA…
+    211|     expect(offencesOf(answer).filter((offence) => offence.kind === "lo…
+       |                                                                                                         ^
+    212|     expectGreen(answer, git(repo, "rev-parse", `${removing}^{tree}`));
+    213|     const judgedBy = verdictOf(answer).fields.lock;
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[29/33]⎯
+
+
+ Test Files  9 failed | 3 passed (12)
+      Tests  33 failed | 158 passed (191)
+   Start at  03:34:46
+   Duration  89.67s (transform 140ms, setup 0ms, collect 246ms, tests 88.19s, environment 1ms, prepare 383ms)
+
+[ELIFECYCLE] Command failed with exit code 1.

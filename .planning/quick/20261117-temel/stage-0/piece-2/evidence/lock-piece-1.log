@@ -1,0 +1,232 @@
+$ node foundation/lock/src/cli.ts lock piece-1 foundation/tests/bench
+Scope: 3 of 19 workspace projects
+✓ Lockfile passes supply-chain policies (verified 56m ago)
+Lockfile is up to date, resolution step is skipped
+Progress: resolved 1, reused 0, downloaded 0, added 0
+.                                        | +256 ++++++++++++++++++++++++++
+Progress: resolved 256, reused 256, downloaded 0, added 256, done
+[WARN] Failed to create bin at /home/dxb/.cache/dxb/foundation-verify/run-BVNWS6/candidate/node_modules/.bin/dxb. ENOENT: no such file or directory, open '/home/dxb/.cache/dxb/foundation-verify/run-BVNWS6/candidate/tools/dxb-cli/dist/index.js'
+[WARN] Failed to create bin at /home/dxb/.cache/dxb/foundation-verify/run-BVNWS6/candidate/node_modules/.bin/video-learn. ENOENT: no such file or directory, open '/home/dxb/.cache/dxb/foundation-verify/run-BVNWS6/candidate/tools/video-learn/dist/cli.js'
+[WARN] Failed to create bin at /home/dxb/.cache/dxb/foundation-verify/run-BVNWS6/candidate/node_modules/.bin/dxb. ENOENT: no such file or directory, open '/home/dxb/.cache/dxb/foundation-verify/run-BVNWS6/candidate/node_modules/@dxb/cli/dist/index.js'
+[WARN] Failed to create bin at /home/dxb/.cache/dxb/foundation-verify/run-BVNWS6/candidate/node_modules/.bin/video-learn. ENOENT: no such file or directory, open '/home/dxb/.cache/dxb/foundation-verify/run-BVNWS6/candidate/node_modules/@dxb/video-learn/dist/cli.js'
+Done in 598ms using pnpm v11.10.0
+CASE added foundation/tests/bench/guard-connection.test.ts > readIdentity — the server says who it is > answers the cluster's identifier, the database's oid and its name, as the connection gave them (count 1)
+CASE added foundation/tests/bench/guard-connection.test.ts > readIdentity — the server says who it is > asks with every catalog name schema-qualified: pg_catalog.pg_control_system(), .pg_database, .current_database() (count 1)
+CASE added foundation/tests/bench/guard-connection.test.ts > assertFoundationTarget — the identity is read on the connection that will do the work > answers the identity it read when the list holds it (count 1)
+CASE added foundation/tests/bench/guard-connection.test.ts > assertFoundationTarget — the identity is read on the connection that will do the work > sends the connection nothing but the identity queries — it writes nothing before the decision (count 1)
+CASE added foundation/tests/bench/guard-connection.test.ts > assertFoundationTarget — the identity is read on the connection that will do the work > refuses the company by name, even when the list file holds its identity (count 1)
+CASE added foundation/tests/bench/guard-connection.test.ts > assertFoundationTarget — the identity is read on the connection that will do the work > refuses the old-bench by name, even when the list file holds its identity (count 1)
+CASE added foundation/tests/bench/guard-connection.test.ts > assertFoundationTarget — the identity is read on the connection that will do the work > refuses an identity the list does not hold: not-listed (count 1)
+CASE added foundation/tests/bench/guard-connection.test.ts > assertFoundationTarget — the identity is read on the connection that will do the work > without a statePath it decides against the machine's own list, which holds no invented identity (count 1)
+CASE added foundation/tests/bench/guard-connection.test.ts > assertFoundationTarget — the identity is read on the connection that will do the work > refuses as unreadable when the connection throws — even with a list that would allow (count 1)
+CASE added foundation/tests/bench/guard-connection.test.ts > assertFoundationTarget — the identity is read on the connection that will do the work > refuses as unreadable when the connection answers no row — even with a list that would allow (count 1)
+CASE added foundation/tests/bench/guard-connection.test.ts > assertFoundationTarget — the identity is read on the connection that will do the work > refuses as unreadable when the connection answers rows without the identity's columns — even with a list that would allow (count 1)
+CASE added foundation/tests/bench/guard-connection.test.ts > guarded — the work runs after the guard, on the guarded connection > hands the work the very connection it checked, after the identity queries, and returns its result (count 1)
+CASE added foundation/tests/bench/guard-connection.test.ts > guarded — the work runs after the guard, on the guarded connection > refuses with company and never calls the work (count 1)
+CASE added foundation/tests/bench/guard-connection.test.ts > guarded — the work runs after the guard, on the guarded connection > refuses with old-bench and never calls the work (count 1)
+CASE added foundation/tests/bench/guard-connection.test.ts > guarded — the work runs after the guard, on the guarded connection > refuses with not-listed and never calls the work (count 1)
+CASE added foundation/tests/bench/guard-connection.test.ts > guarded — the work runs after the guard, on the guarded connection > refuses with unreadable and never calls the work (count 1)
+CASE added foundation/tests/bench/guard-connection.test.ts > guarded — the work runs after the guard, on the guarded connection > sends a refused connection no text of the work (count 1)
+CASE added foundation/tests/bench/guard-connection.test.ts > the list file — a list that cannot be read lists nothing > readInstances answers the records of a well-formed file (count 1)
+CASE added foundation/tests/bench/guard-connection.test.ts > the list file — a list that cannot be read lists nothing > a file that is missing lists nothing, and the guard refuses (count 1)
+CASE added foundation/tests/bench/guard-connection.test.ts > the list file — a list that cannot be read lists nothing > a file that is empty lists nothing, and the guard refuses (count 1)
+CASE added foundation/tests/bench/guard-connection.test.ts > the list file — a list that cannot be read lists nothing > a file that is not JSON lists nothing, and the guard refuses (count 1)
+CASE added foundation/tests/bench/guard-connection.test.ts > the list file — a list that cannot be read lists nothing > a file that has no instances lists nothing, and the guard refuses (count 1)
+CASE added foundation/tests/bench/guard-connection.test.ts > the list file — a list that cannot be read lists nothing > a file that holds instances that are not a list lists nothing, and the guard refuses (count 1)
+CASE added foundation/tests/bench/guard-connection.test.ts > the list file — a list that cannot be read lists nothing > a file that cannot be read as a file lists nothing, and the guard refuses (count 1)
+CASE added foundation/tests/bench/guard-decision.test.ts > decide — an identity is allowed only when the list holds all three of its fields > allows an identity that equals a listed one (count 1)
+CASE added foundation/tests/bench/guard-decision.test.ts > decide — an identity is allowed only when the list holds all three of its fields > allows it wherever it stands in the list (count 1)
+CASE added foundation/tests/bench/guard-decision.test.ts > decide — an identity is allowed only when the list holds all three of its fields > answers not-listed against an empty list (count 1)
+CASE added foundation/tests/bench/guard-decision.test.ts > decide — an identity is allowed only when the list holds all three of its fields > answers not-listed for a cluster the list does not hold (count 1)
+CASE added foundation/tests/bench/guard-decision.test.ts > decide — an identity is allowed only when the list holds all three of its fields > answers not-listed for another database of a listed cluster (count 1)
+CASE added foundation/tests/bench/guard-decision.test.ts > decide — an identity is allowed only when the list holds all three of its fields > answers not-listed when only the database's oid differs — a database dropped and made again (count 1)
+CASE added foundation/tests/bench/guard-decision.test.ts > decide — an identity is allowed only when the list holds all three of its fields > answers not-listed when only the database's name differs (count 1)
+CASE added foundation/tests/bench/guard-decision.test.ts > decide — an identity is allowed only when the list holds all three of its fields > does not assemble a match from two listed identities (count 1)
+CASE added foundation/tests/bench/guard-decision.test.ts > decide — the cluster '7674907968528752679' is refused by name: 'company' > is refused against an empty list (count 1)
+CASE added foundation/tests/bench/guard-decision.test.ts > decide — the cluster '7674907968528752679' is refused by name: 'company' > is refused even when the list holds exactly that identity (count 1)
+CASE added foundation/tests/bench/guard-decision.test.ts > decide — the cluster '7674907968528752679' is refused by name: 'company' > is refused whatever the database — another name, another oid (count 1)
+CASE added foundation/tests/bench/guard-decision.test.ts > decide — the cluster '7690665340837392423' is refused by name: 'old-bench' > is refused against an empty list (count 1)
+CASE added foundation/tests/bench/guard-decision.test.ts > decide — the cluster '7690665340837392423' is refused by name: 'old-bench' > is refused even when the list holds exactly that identity (count 1)
+CASE added foundation/tests/bench/guard-decision.test.ts > decide — the cluster '7690665340837392423' is refused by name: 'old-bench' > is refused whatever the database — another name, another oid (count 1)
+CASE added foundation/tests/bench/guard-decision.test.ts > refused.json — the committed list of refused identities > names the company and the old bench, each with its measured identifier, the date and the reason (count 1)
+CASE added foundation/tests/bench/guard-decision.test.ts > refused.json — the committed list of refused identities > when the file is absent, deciding throws — it never answers from an empty list (count 1)
+CASE added foundation/tests/bench/guard-decision.test.ts > refused.json — the committed list of refused identities > when the file is not JSON, deciding throws (count 1)
+CASE added foundation/tests/bench/guard-decision.test.ts > refused.json — the committed list of refused identities > when the file is empty, deciding throws (count 1)
+CASE added foundation/tests/bench/guard-decision.test.ts > refused.json — the committed list of refused identities > when the file names no identity, deciding throws (count 1)
+CASE added foundation/tests/bench/guard-decision.test.ts > refused.json — the committed list of refused identities > is read once: an answer asked after the file is gone is the same answer (count 1)
+CASE added foundation/tests/bench/host-lock.test.ts > the host lock — one holder on the machine, held by the kernel > is taken at the path it was asked for, and says so (count 1)
+CASE added foundation/tests/bench/host-lock.test.ts > the host lock — one holder on the machine, held by the kernel > refuses a second process at once while the first holds (count 1)
+CASE added foundation/tests/bench/host-lock.test.ts > the host lock — one holder on the machine, held by the kernel > refuses while a holder that is not the bench holds the kernel's flock on the path (count 1)
+CASE added foundation/tests/bench/host-lock.test.ts > the host lock — one holder on the machine, held by the kernel > refuses a second acquireHostLock on the same path from the same process, and the first stays held (count 1)
+CASE added foundation/tests/bench/host-lock.test.ts > the host lock — one holder on the machine, held by the kernel > with waitSeconds, acquires after the first lets go (count 1)
+CASE added foundation/tests/bench/host-lock.test.ts > the host lock — one holder on the machine, held by the kernel > with waitSeconds, is refused once that time has passed and the holder has not let go (count 1)
+CASE added foundation/tests/bench/host-lock.test.ts > the host lock — one holder on the machine, held by the kernel > is freed when its holder is killed with SIGKILL (count 1)
+CASE added foundation/tests/bench/host-lock.test.ts > the host lock — one holder on the machine, held by the kernel > is not held by a lock file left behind — a file holds nothing, only a living process does (count 1)
+CASE added foundation/tests/bench/host-lock.test.ts > the host lock — one holder on the machine, held by the kernel > after release() it is not held: held() is false, assertHeld throws, and the kernel gives it to the next (count 1)
+CASE added foundation/tests/bench/host-lock.test.ts > assertHeld — asked of the kernel, not of a flag > passes for a lock this process took and still holds (count 1)
+CASE added foundation/tests/bench/host-lock.test.ts > assertHeld — asked of the kernel, not of a flag > throws for an object that only says it is held, on a path nobody holds (count 1)
+CASE added foundation/tests/bench/host-lock.test.ts > assertHeld — asked of the kernel, not of a flag > throws for an object that only says it is held, on a path another process holds (count 1)
+CASE added foundation/tests/bench/instance-unfinished.test.ts > the instance — a make that does not finish, and a volume no record explains, in order > it begins with nothing standing (count 1)
+CASE added foundation/tests/bench/instance-unfinished.test.ts > the instance — a make that does not finish, and a volume no record explains, in order > up killed with SIGKILL once a container stands: at once another up says LOCK_REFUSED, exit 2 — the start it left still holds the kernel's lock (count 1)
+CASE added foundation/tests/bench/instance-unfinished.test.ts > the instance — a make that does not finish, and a volume no record explains, in order > down, waiting for the lock, removes what the killed make left: INSTANCE_DOWN, exit 0, and nothing stands (count 1)
+CASE added foundation/tests/bench/instance-unfinished.test.ts > the instance — a make that does not finish, and a volume no record explains, in order > up sent SIGTERM once a container stands stops its start, removes what it made and exits 143 — nothing stands, with no command after it (count 1)
+CASE added foundation/tests/bench/instance-unfinished.test.ts > the instance — a make that does not finish, and a volume no record explains, in order > a labelled volume that no record explains: status INSTANCE_FOREIGN 5, up INSTANCE_STANDS 3, down REMOVAL_REFUSED 4 — and the volume is untouched (count 1)
+CASE added foundation/tests/bench/instance-unfinished.test.ts > the instance — a make that does not finish, and a volume no record explains, in order > every container and volume that is not the bench's stands as it stood before the first step (count 1)
+CASE added foundation/tests/bench/instance.test.ts > the instance — made, looked at and destroyed, in order > fresh makes an instance and says INSTANCE_UP with the cluster's identifier and the loopback address (count 1)
+CASE added foundation/tests/bench/instance.test.ts > the instance — made, looked at and destroyed, in order > the list holds one record of it, and status says INSTANCE_STANDING with the same identifier (count 1)
+CASE added foundation/tests/bench/instance.test.ts > the instance — made, looked at and destroyed, in order > status answers the same with a hostile DOCKER_HOST in the caller's environment — the command hands it to no child (count 1)
+CASE added foundation/tests/bench/instance.test.ts > the instance — made, looked at and destroyed, in order > every published port is bound to 127.0.0.1 and nowhere else (count 1)
+CASE added foundation/tests/bench/instance.test.ts > the instance — made, looked at and destroyed, in order > the recorded identity is what the server answers on TCP and inside the database container (count 1)
+CASE added foundation/tests/bench/instance.test.ts > the instance — made, looked at and destroyed, in order > the old chain stood: the ledger holds one row per file of db/migrations and the old schema is there (count 1)
+CASE added foundation/tests/bench/instance.test.ts > the instance — made, looked at and destroyed, in order > it holds no foundation object: no schema os or os_clock, no role named os_… (count 1)
+CASE added foundation/tests/bench/instance.test.ts > the instance — made, looked at and destroyed, in order > guarded refuses the real connection against an empty list — no work, no row — and runs the work against the real list (count 1)
+CASE added foundation/tests/bench/instance.test.ts > the instance — made, looked at and destroyed, in order > guarded refuses a throwaway database made in the same cluster (count 1)
+CASE added foundation/tests/bench/instance.test.ts > the instance — made, looked at and destroyed, in order > up while it stands says INSTANCE_STANDS and exits 3; makeInstance throws InstanceStands; the same instance still answers (count 1)
+CASE added foundation/tests/bench/instance.test.ts > the instance — made, looked at and destroyed, in order > makeInstance and destroyInstance refuse a held lock that is not the host lock, and the same instance still stands (count 1)
+CASE added foundation/tests/bench/instance.test.ts > the instance — made, looked at and destroyed, in order > while another holds the host lock the command says LOCK_REFUSED and exits 2 — with DXB_FOUNDATION_LOCK_WAIT, after waiting that long (count 1)
+CASE added foundation/tests/bench/instance.test.ts > the instance — made, looked at and destroyed, in order > with the list emptied, status says INSTANCE_FOREIGN and exits 5, down is refused and exits 4, and the instance still stands (count 1)
+CASE added foundation/tests/bench/instance.test.ts > the instance — made, looked at and destroyed, in order > down says INSTANCE_DOWN and leaves no container, volume, network, listener or record (count 1)
+CASE added foundation/tests/bench/instance.test.ts > the instance — made, looked at and destroyed, in order > down again says INSTANCE_ABSENT and exits 0; destroyInstance answers absent (count 1)
+CASE added foundation/tests/bench/instance.test.ts > the instance — made, looked at and destroyed, in order > makeInstance and destroyInstance refuse a lock that has been released, and one held elsewhere — nothing is made (count 1)
+CASE added foundation/tests/bench/instance.test.ts > the instance — made, looked at and destroyed, in order > every container and volume that is not the bench's stands as it stood before the first step (count 1)
+CASE added foundation/tests/bench/no-old-address.test.ts > the detector — seen to find each forbidden spelling before its silence is trusted > finds the company's API port (count 1)
+CASE added foundation/tests/bench/no-old-address.test.ts > the detector — seen to find each forbidden spelling before its silence is trusted > finds the company's database port (count 1)
+CASE added foundation/tests/bench/no-old-address.test.ts > the detector — seen to find each forbidden spelling before its silence is trusted > finds the old bench's API port (count 1)
+CASE added foundation/tests/bench/no-old-address.test.ts > the detector — seen to find each forbidden spelling before its silence is trusted > finds the old bench's database port (count 1)
+CASE added foundation/tests/bench/no-old-address.test.ts > the detector — seen to find each forbidden spelling before its silence is trusted > finds a company variable (count 1)
+CASE added foundation/tests/bench/no-old-address.test.ts > the detector — seen to find each forbidden spelling before its silence is trusted > finds another company variable (count 1)
+CASE added foundation/tests/bench/no-old-address.test.ts > the detector — seen to find each forbidden spelling before its silence is trusted > finds the dot-env file (count 1)
+CASE added foundation/tests/bench/no-old-address.test.ts > the detector — seen to find each forbidden spelling before its silence is trusted > finds a dot-env file with an ending (count 1)
+CASE added foundation/tests/bench/no-old-address.test.ts > the detector — seen to find each forbidden spelling before its silence is trusted > finds a named env file with a hyphen (count 1)
+CASE added foundation/tests/bench/no-old-address.test.ts > the detector — seen to find each forbidden spelling before its silence is trusted > finds a named env file without one (count 1)
+CASE added foundation/tests/bench/no-old-address.test.ts > the detector — seen to find each forbidden spelling before its silence is trusted > finds a read of a variable the contract does not name (count 1)
+CASE added foundation/tests/bench/no-old-address.test.ts > the detector — seen to find each forbidden spelling before its silence is trusted > finds a bracketed read of one (count 1)
+CASE added foundation/tests/bench/no-old-address.test.ts > the detector — seen to find each forbidden spelling before its silence is trusted > finds the whole environment handed on (count 1)
+CASE added foundation/tests/bench/no-old-address.test.ts > the detector — seen to find each forbidden spelling before its silence is trusted > finds a read by a computed name (count 1)
+CASE added foundation/tests/bench/no-old-address.test.ts > the detector — seen to find each forbidden spelling before its silence is trusted > finds a read of HOME, which SPEC §5b.1 took from the contract (count 1)
+CASE added foundation/tests/bench/no-old-address.test.ts > the detector — seen to find each forbidden spelling before its silence is trusted > finds a read of XDG_STATE_HOME, taken from it too (count 1)
+CASE added foundation/tests/bench/no-old-address.test.ts > the detector — seen to find each forbidden spelling before its silence is trusted > finds a read of XDG_RUNTIME_DIR, taken from it too (count 1)
+CASE added foundation/tests/bench/no-old-address.test.ts > the detector — seen to find each forbidden spelling before its silence is trusted > finds the environment asked for in brackets, even for a variable of the contract (count 1)
+CASE added foundation/tests/bench/no-old-address.test.ts > the detector — seen to find each forbidden spelling before its silence is trusted > finds the environment imported by its own name (count 1)
+CASE added foundation/tests/bench/no-old-address.test.ts > the detector — seen to find each forbidden spelling before its silence is trusted > finds that import under another name, its list on several lines (count 1)
+CASE added foundation/tests/bench/no-old-address.test.ts > the detector — seen to find each forbidden spelling before its silence is trusted > finds that import from the module's bare name, beside its default (count 1)
+CASE added foundation/tests/bench/no-old-address.test.ts > the detector — seen to find each forbidden spelling before its silence is trusted > is silent on the foundation's own address and on the two variables SPEC §5b.1 names (count 1)
+CASE added foundation/tests/bench/no-old-address.test.ts > foundation/** — nothing in it spells an address of the old system > the scan reaches the foundation's own files and stays out of node_modules (count 1)
+CASE added foundation/tests/bench/no-old-address.test.ts > foundation/** — nothing in it spells an address of the old system > no file spells an old port, a company variable or an env file of the old system, and the environment is read only for the names of SPEC §5b.1 (count 1)
+CASE added foundation/tests/bench/no-old-address.test.ts > the foundation's own address — SPEC §3 > BENCH names the project, the two ports, the network and the only address it binds (count 1)
+CASE added foundation/tests/bench/no-old-address.test.ts > the foundation's own address — SPEC §3 > connectionString() is the bench's database on the loopback address (count 1)
+CASE added foundation/tests/bench/no-old-address.test.ts > the foundation's own address — SPEC §3 > the stack's config says project DxB_Foundation, API 54521, database 54522, shadow 54520 (count 1)
+CASE added foundation/tests/bench/no-old-address.test.ts > the foundation's own address — SPEC §3 > every port the stack's config names beside them is in the 545xx range (count 1)
+CASE added foundation/tests/bench/pure-decisions.test.ts > exposedBeyondLoopback — every published port bound anywhere but 127.0.0.1, each named > answers nothing when every published port is on 127.0.0.1, and when nothing is published (count 1)
+CASE added foundation/tests/bench/pure-decisions.test.ts > exposedBeyondLoopback — every published port bound anywhere but 127.0.0.1, each named > names a port published on every IPv4 address — the container and the host port, and not its loopback neighbour (count 1)
+CASE added foundation/tests/bench/pure-decisions.test.ts > exposedBeyondLoopback — every published port bound anywhere but 127.0.0.1, each named > names a port published on every IPv6 address — the container and the host port, and not its loopback neighbour (count 1)
+CASE added foundation/tests/bench/pure-decisions.test.ts > exposedBeyondLoopback — every published port bound anywhere but 127.0.0.1, each named > names a port published on an empty address, which is every address — the container and the host port, and not its loopback neighbour (count 1)
+CASE added foundation/tests/bench/pure-decisions.test.ts > exposedBeyondLoopback — every published port bound anywhere but 127.0.0.1, each named > names a port published on the LAN address — the container and the host port, and not its loopback neighbour (count 1)
+CASE added foundation/tests/bench/pure-decisions.test.ts > exposedBeyondLoopback — every published port bound anywhere but 127.0.0.1, each named > names each one: a port bound on 127.0.0.1 and also on the LAN, and another container's on every address (count 1)
+CASE added foundation/tests/bench/pure-decisions.test.ts > configMismatch — the stack's config must say the bench's project and its two ports > answers undefined for the committed foundation/bench/supabase/config.toml (count 1)
+CASE added foundation/tests/bench/pure-decisions.test.ts > configMismatch — the stack's config must say the bench's project and its two ports > names another project (count 1)
+CASE added foundation/tests/bench/pure-decisions.test.ts > configMismatch — the stack's config must say the bench's project and its two ports > names another API port (count 1)
+CASE added foundation/tests/bench/pure-decisions.test.ts > configMismatch — the stack's config must say the bench's project and its two ports > names another database port (count 1)
+CASE added foundation/tests/bench/pure-decisions.test.ts > answerOf — the line and the exit code of a call that did not end well > answers LOCK_REFUSED and 2 for a LockRefused (count 1)
+CASE added foundation/tests/bench/pure-decisions.test.ts > answerOf — the line and the exit code of a call that did not end well > answers INSTANCE_STANDS and 3 for an InstanceStands (count 1)
+CASE added foundation/tests/bench/pure-decisions.test.ts > answerOf — the line and the exit code of a call that did not end well > answers TARGET_REFUSED reason=company and 4 for the guard's refusal (count 1)
+CASE added foundation/tests/bench/pure-decisions.test.ts > answerOf — the line and the exit code of a call that did not end well > answers TARGET_REFUSED reason=old-bench and 4 for the guard's refusal (count 1)
+CASE added foundation/tests/bench/pure-decisions.test.ts > answerOf — the line and the exit code of a call that did not end well > answers TARGET_REFUSED reason=not-listed and 4 for the guard's refusal (count 1)
+CASE added foundation/tests/bench/pure-decisions.test.ts > answerOf — the line and the exit code of a call that did not end well > answers TARGET_REFUSED reason=unreadable and 4 for the guard's refusal (count 1)
+CASE added foundation/tests/bench/pure-decisions.test.ts > answerOf — the line and the exit code of a call that did not end well > answers REMOVAL_REFUSED with the reason and 4 for a RemovalRefused (count 1)
+CASE added foundation/tests/bench/pure-decisions.test.ts > answerOf — the line and the exit code of a call that did not end well > keeps the answer on one line — it is the last line the command prints (count 1)
+CASE added foundation/tests/bench/pure-decisions.test.ts > answerOf — the line and the exit code of a call that did not end well > answers the error itself and 1 for anything else: an Error (count 1)
+CASE added foundation/tests/bench/pure-decisions.test.ts > answerOf — the line and the exit code of a call that did not end well > answers the error itself and 1 for anything else: an ExposureRefused — no row of the table is its own (count 1)
+CASE added foundation/tests/bench/pure-decisions.test.ts > answerOf — the line and the exit code of a call that did not end well > answers the error itself and 1 for anything else: a thrown text (count 1)
+CASE added foundation/tests/bench/refused-against-the-old-record.test.ts > the comparison — seen to find a stale entry before its silence is trusted > is silent when both identifiers agree (count 1)
+CASE added foundation/tests/bench/refused-against-the-old-record.test.ts > the comparison — seen to find a stale entry before its silence is trusted > finds a company identifier that differs (count 1)
+CASE added foundation/tests/bench/refused-against-the-old-record.test.ts > the comparison — seen to find a stale entry before its silence is trusted > finds the old bench rebuilt: a newer allowed entry, written after the old one (count 1)
+CASE added foundation/tests/bench/refused-against-the-old-record.test.ts > the comparison — seen to find a stale entry before its silence is trusted > finds the old bench rebuilt: a newer allowed entry, written before it — the newest is chosen by its moment, not by its place (count 1)
+CASE added foundation/tests/bench/refused-against-the-old-record.test.ts > the comparison — seen to find a stale entry before its silence is trusted > finds an old record that names no cluster — it never passes for want of something to compare (count 1)
+CASE added foundation/tests/bench/refused-against-the-old-record.test.ts > refused.json — it says what the old system's own record says > names the company's cluster and the old bench's newest one as tools/hooks/ledger-identity.json does (count 1)
+CASE added foundation/tests/bench/removal-authority.test.ts > removal authority — a refused project is refused before anything else > refuses a container that carries the company's project as its label — even when the record lists its id (count 1)
+CASE added foundation/tests/bench/removal-authority.test.ts > removal authority — a refused project is refused before anything else > refuses a container that carries the old bench's project as its label — even when the record lists its id (count 1)
+CASE added foundation/tests/bench/removal-authority.test.ts > removal authority — a refused project is refused before anything else > refuses a container that carries the company's project in its name, under the bench's label — even when the record lists its id (count 1)
+CASE added foundation/tests/bench/removal-authority.test.ts > removal authority — a refused project is refused before anything else > refuses a container that carries the old bench's project in its name, under the bench's label — even when the record lists its id (count 1)
+CASE added foundation/tests/bench/removal-authority.test.ts > removal authority — a refused project is refused before anything else > refuses it under a pending record, however lately it was created (count 1)
+CASE added foundation/tests/bench/removal-authority.test.ts > removal authority — a refused project is refused before anything else > refuses it with no record for the project it carries — not only because no record explains it (count 1)
+CASE added foundation/tests/bench/removal-authority.test.ts > removal authority — a refused project is refused before anything else > refuses a volume whose name carries a refused project — the company's, standing in the record's volumes (count 1)
+CASE added foundation/tests/bench/removal-authority.test.ts > removal authority — a refused project is refused before anything else > refuses a volume whose name carries a refused project — the old bench's, standing in the record's volumes (count 1)
+CASE added foundation/tests/bench/removal-authority.test.ts > removal authority — a refused project is refused before anything else > refuses a volume whose name carries a refused project — the old bench's, mounted by a recorded container (count 1)
+CASE added foundation/tests/bench/removal-authority.test.ts > removal authority — a refused project is refused before anything else > refuses a volume whose name carries a refused project — the company's, carrying the bench's label since the pending make (count 1)
+CASE added foundation/tests/bench/removal-authority.test.ts > removal authority — with the record of a made instance > answers the found containers' ids, and the volumes that carry the label joined with the found containers' own (count 1)
+CASE added foundation/tests/bench/removal-authority.test.ts > removal authority — with the record of a made instance > answers only the ids that were found — not the recorded ones that are already gone (count 1)
+CASE added foundation/tests/bench/removal-authority.test.ts > removal authority — with the record of a made instance > with nothing found, answers no container and the recorded volume that still carries the label (count 1)
+CASE added foundation/tests/bench/removal-authority.test.ts > removal authority — with the record of a made instance > a name that stands only in the record's text removes nothing — with nothing found, and beside a found container (count 1)
+CASE added foundation/tests/bench/removal-authority.test.ts > removal authority — with the record of a made instance > a volume a found container mounts is removed, though it carries no label and the record does not name it (count 1)
+CASE added foundation/tests/bench/removal-authority.test.ts > removal authority — with the record of a made instance > refuses a labelled volume that the record does not name and no found container mounts (count 1)
+CASE added foundation/tests/bench/removal-authority.test.ts > removal authority — with the record of a made instance > refuses when a found container's id is not in the record, and names the stranger (count 1)
+CASE added foundation/tests/bench/removal-authority.test.ts > removal authority — with the record of a made instance > a label and a name of the bench do not make a stranger removable (count 1)
+CASE added foundation/tests/bench/removal-authority.test.ts > removal authority — with a pending record, a make that died before it wrote its record > answers the containers created at or after the make started, with their volumes (count 1)
+CASE added foundation/tests/bench/removal-authority.test.ts > removal authority — with a pending record, a make that died before it wrote its record > takes a labelled volume created in the second the make started — a volume's creation is known to the second (count 1)
+CASE added foundation/tests/bench/removal-authority.test.ts > removal authority — with a pending record, a make that died before it wrote its record > refuses a labelled volume created in a second before the make started — an earlier attempt's, not this make's (count 1)
+CASE added foundation/tests/bench/removal-authority.test.ts > removal authority — with a pending record, a make that died before it wrote its record > refuses when one container was created before the make started (count 1)
+CASE added foundation/tests/bench/removal-authority.test.ts > removal authority — with a pending record, a make that died before it wrote its record > compares the two as moments, not as texts: 00:10:00.1Z is before a make started at 00:10:00.123Z (count 1)
+CASE added foundation/tests/bench/removal-authority.test.ts > removal authority — with a pending record, a make that died before it wrote its record > with nothing found and no labelled volume, answers nothing to remove (count 1)
+CASE added foundation/tests/bench/removal-authority.test.ts > removal authority — with no record > refuses when containers were found: the label alone authorises nothing (count 1)
+CASE added foundation/tests/bench/removal-authority.test.ts > removal authority — with no record > refuses any labelled volume, though no container was found: the label alone authorises nothing (count 1)
+CASE added foundation/tests/bench/removal-authority.test.ts > removal authority — with no record > answers nothing to remove when no container was found and no volume carries the label (count 1)
+CASE added foundation/tests/bench/state-directory.test.ts > the state directory — <home>/.local/state/dxb/foundation-bench, the home read from the password database > defaultStatePath() is instances.json in it (count 1)
+CASE added foundation/tests/bench/state-directory.test.ts > the state directory — <home>/.local/state/dxb/foundation-bench, the home read from the password database > defaultLockPath() is host.lock in it, beside the list (count 1)
+CASE added foundation/tests/bench/state-directory.test.ts > the state directory — <home>/.local/state/dxb/foundation-bench, the home read from the password database > a process started with HOME pointing at another directory answers the same two paths (count 1)
+CASE added foundation/tests/bench/state-directory.test.ts > the state directory — <home>/.local/state/dxb/foundation-bench, the home read from the password database > a process started with XDG_STATE_HOME pointing at another directory answers the same two paths (count 1)
+CASE added foundation/tests/bench/state-directory.test.ts > the state directory — <home>/.local/state/dxb/foundation-bench, the home read from the password database > a process started with XDG_RUNTIME_DIR pointing at another directory answers the same two paths (count 1)
+CASE added foundation/tests/bench/state-directory.test.ts > the state directory — <home>/.local/state/dxb/foundation-bench, the home read from the password database > a process started with all three at once pointing at another directory answers the same two paths (count 1)
+CASE added foundation/tests/bench/status-of.test.ts > statusOf — absent is nothing at all > says absent with no container, no labelled volume and an empty list (count 1)
+CASE added foundation/tests/bench/status-of.test.ts > statusOf — standing is one record whose chain was applied, every recorded container running > says standing, with the record, when the chain was applied and each recorded container runs (count 1)
+CASE added foundation/tests/bench/status-of.test.ts > statusOf — standing is one record whose chain was applied, every recorded container running > says foreign for a record without chainAppliedAt, though everything it names runs — the chain did not finish (count 1)
+CASE added foundation/tests/bench/status-of.test.ts > statusOf — standing is one record whose chain was applied, every recorded container running > says foreign when a recorded container is stopped (count 1)
+CASE added foundation/tests/bench/status-of.test.ts > statusOf — standing is one record whose chain was applied, every recorded container running > says foreign when a recorded container is gone (count 1)
+CASE added foundation/tests/bench/status-of.test.ts > statusOf — standing is one record whose chain was applied, every recorded container running > says foreign when a container carries the label and is not in the record (count 1)
+CASE added foundation/tests/bench/status-of.test.ts > statusOf — standing is one record whose chain was applied, every recorded container running > says foreign when the list holds more than one record — the bench makes one instance (count 1)
+CASE added foundation/tests/bench/status-of.test.ts > statusOf — a make that has not finished, and what no record explains, are foreign > says foreign for a pending record — with the containers it started, and with none (count 1)
+CASE added foundation/tests/bench/status-of.test.ts > statusOf — a make that has not finished, and what no record explains, are foreign > says foreign for containers that carry the label when the list holds no record (count 1)
+CASE added foundation/tests/bench/status-of.test.ts > statusOf — a make that has not finished, and what no record explains, are foreign > says foreign for a labelled volume when the list holds no record — a volume stands like a container does (count 1)
+PROTECTED added foundation/lock/package.json
+PROTECTED added foundation/lock/src/cli.ts
+PROTECTED added foundation/lock/src/git.ts
+PROTECTED added foundation/lock/src/imports.ts
+PROTECTED added foundation/lock/src/index.ts
+PROTECTED added foundation/lock/src/judge.ts
+PROTECTED added foundation/lock/src/lock.ts
+PROTECTED added foundation/lock/src/lockfile.ts
+PROTECTED added foundation/lock/src/making.ts
+PROTECTED added foundation/lock/src/reporter.mjs
+PROTECTED added foundation/lock/src/run.ts
+PROTECTED added foundation/lock/src/runner.ts
+PROTECTED added foundation/lock/src/shape.ts
+PROTECTED added foundation/lock/src/structure.ts
+PROTECTED added foundation/lock/src/verify.ts
+PROTECTED added foundation/lock/src/work.ts
+PROTECTED added foundation/tests/bench/fixtures/decide-in-package.ts
+PROTECTED added foundation/tests/bench/fixtures/hold-lock.ts
+PROTECTED added foundation/tests/bench/fixtures/ordered-steps.ts
+PROTECTED added foundation/tests/bench/fixtures/real-bench.ts
+PROTECTED added foundation/tests/bench/fixtures/refusal-of.ts
+PROTECTED added foundation/tests/bench/fixtures/say-default-paths.ts
+PROTECTED added foundation/tests/bench/guard-connection.test.ts
+PROTECTED added foundation/tests/bench/guard-decision.test.ts
+PROTECTED added foundation/tests/bench/host-lock.test.ts
+PROTECTED added foundation/tests/bench/instance-unfinished.test.ts
+PROTECTED added foundation/tests/bench/instance.test.ts
+PROTECTED added foundation/tests/bench/no-old-address.test.ts
+PROTECTED added foundation/tests/bench/pure-decisions.test.ts
+PROTECTED added foundation/tests/bench/refused-against-the-old-record.test.ts
+PROTECTED added foundation/tests/bench/removal-authority.test.ts
+PROTECTED added foundation/tests/bench/state-directory.test.ts
+PROTECTED added foundation/tests/bench/status-of.test.ts
+PROTECTED added foundation/tests/package.json
+PROTECTED added foundation/tests/vitest.config.ts
+PROTECTED added foundation/tsconfig.json
+PROTECTED added pnpm-lock.yaml
+PROTECTED added pnpm-workspace.yaml
+LOCK_WRITTEN piece=piece-1 cases=177 protected=38
+
+real	0m3.809s
+user	0m5.271s
+sys	0m1.915s

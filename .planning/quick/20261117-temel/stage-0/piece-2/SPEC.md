@@ -334,3 +334,101 @@ directory on a signal.
 revision · after the run nothing of `DxB_Foundation` stands and nothing is left under
 `~/.cache/dxb/foundation-verify/` · `pnpm install --frozen-lockfile` exits 0 with the lockfile unchanged · the old
 `pnpm typecheck` still exits 0.
+
+## 10. After the blind audit (`fable-audit.md`, 2026-11-23) and the first real runs — the contract as corrected
+
+One A (the evidence of §9 was not there) and ten B. All are taken except where a line below says otherwise; where
+this section and §3–§7a differ, this section holds. The A was closed by running: `verify piece-2` ended `LOCK_GREEN`,
+and **`verify piece-1` ended `LOCK_RED`** — the lock's first real finding, item 1.
+
+Measured for this section (the lead, 03:05–03:25): a workspace package's `postinstall` **does run** under
+`pnpm install --frozen-lockfile --offline` (a marker file was written); with `--ignore-scripts --ignore-pnpmfile`
+neither it nor a root `.pnpmfile.cjs` hook runs, the whole workspace installs in 0.8 s, `supabase --version` still
+answers 2.109.0 and `packages/outbox-executor/node_modules/pg-boss` is there; with the whole install piece 1's two
+real-bench files pass in the copy (23 of 23). `git diff-tree --stdin -r -m --root --name-only -- foundation/locks/`
+prints a merge commit's id as a bare line, then the paths. No `package.json` of the repository declares a lifecycle
+script.
+
+1. **The install is the whole workspace, and runs nothing of the candidate's** (the lead's finding; F2):
+   `pnpm -C candidate install --frozen-lockfile --offline --ignore-scripts --ignore-pnpmfile` — no filter. Piece 1's
+   bench applies the old chain, which needs an old package's dependency; an install of the foundation's packages
+   alone left it out and the real bench could not be made.
+2. **The copy is compared with the candidate twice — after the install and after the run** (F2, F11.1). Every
+   protected path must still be a file with its blob's bytes → else `copy-changed <path>`; and no file may stand in a
+   closed place of the copy that the candidate's tree does not hold there (a `node_modules` segment excepted) →
+   `copy-added <path>`. A snapshot the runner writes because none was committed is caught here (F11.4).
+3. **The root's install settings** (F2): `.npmrc`, `.pnpmfile.cjs` and `.pnpmfile.mjs` at the root are protected when
+   the index holds them at lock time; one the candidate holds and the lock does not → `closed-dir-added <path>`.
+   `foundation/tests/vitest.config.ts` sets `css.postcss` inline, so the runner searches no directory for a PostCSS
+   configuration (the lead's edit).
+4. **What a lock protects is never silently less than what the tests reach** (F3).
+   - A relative specifier is resolved as the runner would: the path as spelled; else `.js`→`.ts` and `.mjs`→`.mts`;
+     else with `.ts` appended; else `<path>/index.ts`.
+   - Followed too, when the argument is a literal: `vi.mock("…")` and `vi.doMock("…")`; `import(/* a comment */ "…")`;
+     and `new URL("…", import.meta.url)` when it resolves to a file of the index under `foundation/tests/` (one that
+     does not — the repository's root, say — is no import and is passed over).
+   - A relative specifier that resolves to no file of the index is printed by `lock`, every time, as
+     `NOTE unresolved-import <from> <specifier>`. It is not a refusal: the fixtures spell imports inside strings
+     (14 today), and a text search cannot tell them apart. The lead reads the notes before committing a lock.
+   - `import.meta.glob` spelled in a protected file → refused at lock time.
+   - Every directory under `foundation/tests/` that directly holds a protected file is closed at that level: a file
+     added beside a protected helper or set-up file is `closed-dir-added`. Derived from `protected`; no new field.
+5. **`lock-commit-impure` lets a lock commit remove what the lock before it protected** (F5): a path is also allowed
+   when a lock in the commit's first parent protects it.
+6. **A merge that changes `foundation/locks/`** is `lock-commit-impure <commit> (a merge of <n> commits)` — pinned
+   by a test now (F6).
+7. **`lock` takes its baseline from HEAD** (F7): the previous lock and the reused `dirs` are HEAD's; an index whose
+   lock file for the piece differs from HEAD's → refused. The printed difference also says `DIRS added|removed <dir>`
+   and `SCRIPT added|removed|changed <name>`.
+8. **A protected path must be a regular file** (F8): an entry that is not a blob of mode 100644 or 100755 — a
+   gitlink, a link — is not a file the lock can protect → `protected-missing <path>`.
+9. **SIGHUP stops the command like SIGINT and SIGTERM** (F9). A `run-*` directory found standing when a command starts
+   is said, never removed: `NOTE stale-work-directory <path>`.
+10. **The judge is always extracted** (F11.3; the lead's decision): every `verify` writes the lock commit's tool into
+    the work directory and starts it; the first line is always `JUDGE extracted lock=<commit>`. Nothing of the working
+    tree's tool judges or reports, so nothing can be swapped between a comparison and a use. `JUDGE in-place` is gone.
+11. **On red the reader sees why** (the lead): the run carries the runner's default reporter beside the judge's; its
+    output goes to standard error with the failing assertion's message.
+12. **`NOTE runner-name` searches product paths only** (the lead): not `foundation/tests/`, not `foundation/locks/`,
+    not `package.json`, `pnpm-lock.yaml`, `pnpm-workspace.yaml`.
+13. **Tests added for what nothing pinned** (F10): each refusal of `lock` matched by a word of its reason; a module
+    that fails to collect and a declared `.only` refused; the printed difference; `--retry=0` (a locked config that
+    retries, a product that fails once → `case-not-passed`, never `case-retried`); the executable bit and a link in
+    the copy; a lock file whose `piece` is another's → `LOCK_REFUSED`; the judge's argument given by hand →
+    `LOCK_REFUSED`. Left on reading: that a child's environment is exactly `PATH` and `HOME` — piece 1's static test
+    forbids spelling a read of another variable anywhere under `foundation/`.
+
+Not built, written down (F4): a lock protects nothing outside `foundation/tests/` beside the files of §4. Piece 6's
+expected snapshot (`db/__snapshots__/`) must either lie in its subject directory or the lock be given named paths —
+decided in piece 6's contract, before its tests are signed (`../BUILD.md` §6 says so).
+
+Not taken: F10's "recomputes the way the code does" for `git write-tree` — the tests ask git, which is the oracle,
+not the tool; and its unreachable refusal in `lockAtTheBase` stays as a guard.
+
+**Limits added to §8 by the audit** (F11): code under test can rewrite the copy and put it back before the run ends —
+item 2 sees only what stays; a green verdict on the index is bound to the commit only when the lead ends with
+`verify <piece> --rev HEAD` after committing (BUILD.md §5 step 5 says so now); `.git`-level state and the home
+directory's git and pnpm configuration are trusted; **the tool cannot be judged by its own lock before it is
+committed** — a change to `foundation/lock/` turns every lock red by design, so the lead runs its tests directly,
+sees `foundation/tests/` unchanged since the tests' commit, commits, locks again and then verifies.
+
+## 10a. What the tests of the corrections pinned beyond §10 (the test hand's readings, accepted by the lead)
+
+- **A word of each new refusal's reason:** `only` (a declared `.only`), `collect` (a module that fails to collect),
+  `import.meta.glob`, `HEAD` (a staged lock file that is not HEAD's), the piece's name (a lock file that says it is
+  another's), `extracted` (the judge's argument given by hand).
+- **`NOTE stale-work-directory <path>` is said once per command** — the extracted judge does not call the directory
+  it was started in stale — and the directory stands afterwards with what was in it.
+- **A `new URL` that resolves to no file under `foundation/tests/` gives no note**; "closed at that level" is not
+  recursive: a file one level below a protected helper's directory is no offence.
+- **The difference** prints `SCRIPT changed <name>` beside `CASE added|removed`, `PROTECTED added|removed|changed`
+  and `DIRS added|removed`; a narrowed lock that is refused is not written over.
+- **A link carrying the locked blob's id** at a protected path is `protected-missing`, like a gitlink.
+- **The fixture** holds a package outside the foundation's scope (`packages/old-chain`, depending on `pg`), an
+  executable file and a link; the locked case that needs the outside package is added by the case that tests it.
+- Seen by the test hand on the uncorrected tool: the collecting pass ignores `.only`, so `lock` must look at what a
+  case declares (`options.mode`), not at what the pass ran.
+
+Still pinned by no test: SIGHUP; the comparison after the install apart from the one after the run (with scripts and
+the pnpmfile ignored no way was found for a candidate to change the copy during the install); `install-failed`;
+`lockfile-changed-by-install`.

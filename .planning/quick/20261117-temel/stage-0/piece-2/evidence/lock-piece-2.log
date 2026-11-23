@@ -1,0 +1,166 @@
+$ node foundation/lock/src/cli.ts lock piece-2 foundation/tests/lock
+Scope: 3 of 19 workspace projects
+✓ Lockfile passes supply-chain policies (verified 56m ago)
+Lockfile is up to date, resolution step is skipped
+Progress: resolved 1, reused 0, downloaded 0, added 0
+.                                        | +256 ++++++++++++++++++++++++++
+Progress: resolved 256, reused 256, downloaded 0, added 256, done
+[WARN] Failed to create bin at /home/dxb/.cache/dxb/foundation-verify/run-D339da/candidate/node_modules/.bin/dxb. ENOENT: no such file or directory, open '/home/dxb/.cache/dxb/foundation-verify/run-D339da/candidate/tools/dxb-cli/dist/index.js'
+[WARN] Failed to create bin at /home/dxb/.cache/dxb/foundation-verify/run-D339da/candidate/node_modules/.bin/video-learn. ENOENT: no such file or directory, open '/home/dxb/.cache/dxb/foundation-verify/run-D339da/candidate/tools/video-learn/dist/cli.js'
+[WARN] Failed to create bin at /home/dxb/.cache/dxb/foundation-verify/run-D339da/candidate/node_modules/.bin/dxb. ENOENT: no such file or directory, open '/home/dxb/.cache/dxb/foundation-verify/run-D339da/candidate/node_modules/@dxb/cli/dist/index.js'
+[WARN] Failed to create bin at /home/dxb/.cache/dxb/foundation-verify/run-D339da/candidate/node_modules/.bin/video-learn. ENOENT: no such file or directory, open '/home/dxb/.cache/dxb/foundation-verify/run-D339da/candidate/node_modules/@dxb/video-learn/dist/cli.js'
+Done in 566ms using pnpm v11.10.0
+CASE added foundation/tests/lock/judge-run.test.ts > judgeRun — a result that matches its lock > finds no offence when every locked case ran its count of times and passed, and the run ended with 0 (count 1)
+CASE added foundation/tests/lock/judge-run.test.ts > judgeRun — one fault planted in the cases, one offence > a locked case with no result → case-missing, naming the file and the case (count 1)
+CASE added foundation/tests/lock/judge-run.test.ts > judgeRun — one fault planted in the cases, one offence > a case that ended skipped → case-skipped, and nothing beside it (count 1)
+CASE added foundation/tests/lock/judge-run.test.ts > judgeRun — one fault planted in the cases, one offence > a case that passed on its second try — retryCount 1, state passed → case-retried (count 1)
+CASE added foundation/tests/lock/judge-run.test.ts > judgeRun — one fault planted in the cases, one offence > a case that failed → case-not-passed (count 1)
+CASE added foundation/tests/lock/judge-run.test.ts > judgeRun — one fault planted in the cases, one offence > a result the lock does not hold — a name the lock does not hold → case-unknown (count 1)
+CASE added foundation/tests/lock/judge-run.test.ts > judgeRun — one fault planted in the cases, one offence > a result the lock does not hold — a locked name under another suite path → case-unknown (count 1)
+CASE added foundation/tests/lock/judge-run.test.ts > judgeRun — one fault planted in the cases, one offence > a result the lock does not hold — a locked name in another file → case-unknown (count 1)
+CASE added foundation/tests/lock/judge-run.test.ts > judgeRun — one fault planted in the cases, one offence > a duplicate name locked with count 2 and one result → case-missing (count 1)
+CASE added foundation/tests/lock/judge-run.test.ts > judgeRun — one fault planted in the cases, one offence > a name locked with count 1 and two results → case-count (count 1)
+CASE added foundation/tests/lock/judge-run.test.ts > judgeRun — one fault planted in the cases, one offence > every fault is reported, not the first one alone (count 1)
+CASE added foundation/tests/lock/judge-run.test.ts > judgeRun — a run that is not green though every case passed > a module that did not end passed → file-failed <file> (count 1)
+CASE added foundation/tests/lock/judge-run.test.ts > judgeRun — a run that is not green though every case passed > a module that ended passed and carries an error → file-failed <file> (count 1)
+CASE added foundation/tests/lock/judge-run.test.ts > judgeRun — a run that is not green though every case passed > unhandled errors → run-errors <n> (count 1)
+CASE added foundation/tests/lock/judge-run.test.ts > judgeRun — a run that is not green though every case passed > exit code 1 with everything passed → exit-nonzero <code> (count 1)
+CASE added foundation/tests/lock/judge-run.test.ts > judgeRun — a run that is not green though every case passed > a set-up file in the result that the lock does not protect → setup-unprotected <path> (count 1)
+CASE added foundation/tests/lock/judge-run.test.ts > judgeRun — a result that cannot be this run's > no result file → result-missing, though the run ended with 0 — and no case offence is made up from nothing (count 1)
+CASE added foundation/tests/lock/judge-run.test.ts > judgeRun — a result that cannot be this run's > no result file and exit code 1 → both are said (count 1)
+CASE added foundation/tests/lock/judge-run.test.ts > judgeRun — a result that cannot be this run's > a malformed result → result-malformed (count 1)
+CASE added foundation/tests/lock/judge-run.test.ts > judgeRun — a result that cannot be this run's > a previous green result of the same suite, replayed — another nonce, everything in it passed → result-stale (count 1)
+CASE added foundation/tests/lock/judge-structure.test.ts > judgeStructure — a candidate that equals its lock > finds no offence (count 1)
+CASE added foundation/tests/lock/judge-structure.test.ts > judgeStructure — a candidate that equals its lock > finds no offence in a changed product file that no lock protects (count 1)
+CASE added foundation/tests/lock/judge-structure.test.ts > judgeStructure — a candidate that equals its lock > finds no offence in a script that is not the foundation's, changed or added (count 1)
+CASE added foundation/tests/lock/judge-structure.test.ts > judgeStructure — a protected file whose content is not the lock's > a locked test changed → protected-changed <path> (count 1)
+CASE added foundation/tests/lock/judge-structure.test.ts > judgeStructure — a protected file whose content is not the lock's > a helper outside the subject directory changed → protected-changed <path> (count 1)
+CASE added foundation/tests/lock/judge-structure.test.ts > judgeStructure — a protected file whose content is not the lock's > a file of the lock tool changed → protected-changed <path> (count 1)
+CASE added foundation/tests/lock/judge-structure.test.ts > judgeStructure — a protected file whose content is not the lock's > the lockfile changed → protected-changed <path> (count 1)
+CASE added foundation/tests/lock/judge-structure.test.ts > judgeStructure — a protected file whose content is not the lock's > a protected file gone → protected-missing <path> (count 1)
+CASE added foundation/tests/lock/judge-structure.test.ts > judgeStructure — a closed directory > a file added to a subject directory → closed-dir-added <path> (count 1)
+CASE added foundation/tests/lock/judge-structure.test.ts > judgeStructure — a closed directory > a file added to a subject directory, deeper → closed-dir-added <path> (count 1)
+CASE added foundation/tests/lock/judge-structure.test.ts > judgeStructure — a closed directory > a file added to foundation/lock/ → closed-dir-added <path> (count 1)
+CASE added foundation/tests/lock/judge-structure.test.ts > judgeStructure — a closed directory > a file added to foundation/tests/ itself → closed-dir-added <path> (count 1)
+CASE added foundation/tests/lock/judge-structure.test.ts > judgeStructure — a closed directory > a file added deeper under foundation/tests/, in a directory no lock names → no offence (count 1)
+CASE added foundation/tests/lock/judge-structure.test.ts > judgeStructure — nothing installed may come from the tree > a path with a node_modules segment at the root → candidate-carries-node-modules <path> (count 1)
+CASE added foundation/tests/lock/judge-structure.test.ts > judgeStructure — nothing installed may come from the tree > a path with a node_modules segment inside a package → candidate-carries-node-modules <path> (count 1)
+CASE added foundation/tests/lock/judge-structure.test.ts > judgeStructure — nothing installed may come from the tree > a file that only has the word in its name is not such a path (count 1)
+CASE added foundation/tests/lock/judge-structure.test.ts > judgeStructure — the foundation's scripts of the root package file > one changed → scripts-changed <name> (count 1)
+CASE added foundation/tests/lock/judge-structure.test.ts > judgeStructure — the foundation's scripts of the root package file > one added → scripts-changed <name> (count 1)
+CASE added foundation/tests/lock/judge-structure.test.ts > judgeStructure — the foundation's scripts of the root package file > one removed → scripts-changed <name> (count 1)
+CASE added foundation/tests/lock/judge-structure.test.ts > judgeStructure — all offences are collected > a changed test, a missing helper and an added file are three offences (count 1)
+CASE added foundation/tests/lock/lock-command.test.ts > lock — the cases it holds > holds every case of the locked tests with its file, its suite path and its name, and no other (count 1)
+CASE added foundation/tests/lock/lock-command.test.ts > lock — the cases it holds > holds a case inside two suites with the whole path, outer first (count 1)
+CASE added foundation/tests/lock/lock-command.test.ts > lock — the cases it holds > holds the name two cases of one suite carry once, with count 2 (count 1)
+CASE added foundation/tests/lock/lock-command.test.ts > lock — the cases it holds > holds the row alpha of the each as a case of its own (count 1)
+CASE added foundation/tests/lock/lock-command.test.ts > lock — the cases it holds > holds the row beta of the each as a case of its own (count 1)
+CASE added foundation/tests/lock/lock-command.test.ts > lock — the cases it holds > holds the row gamma of the each as a case of its own (count 1)
+CASE added foundation/tests/lock/lock-command.test.ts > lock — what it records beside the cases > names its piece, its subject directory, its config and the foundation's scripts — not the root's other script (count 1)
+CASE added foundation/tests/lock/lock-command.test.ts > lock — what it records beside the cases > protects the helper outside the subject directory, reached by a relative import, with the blob id git gives it at the lock commit (count 1)
+CASE added foundation/tests/lock/lock-command.test.ts > lock — what it records beside the cases > protects the set-up file the config names, with the blob id git gives it at the lock commit (count 1)
+CASE added foundation/tests/lock/lock-command.test.ts > lock — what it records beside the cases > protects the fixture file started by path, with the blob id git gives it at the lock commit (count 1)
+CASE added foundation/tests/lock/lock-command.test.ts > lock — what it records beside the cases > protects a locked test, with the blob id git gives it at the lock commit (count 1)
+CASE added foundation/tests/lock/lock-command.test.ts > lock — what it records beside the cases > protects the config, with the blob id git gives it at the lock commit (count 1)
+CASE added foundation/tests/lock/lock-command.test.ts > lock — what it records beside the cases > protects always: the tests' package file, with the blob id git gives it at the lock commit (count 1)
+CASE added foundation/tests/lock/lock-command.test.ts > lock — what it records beside the cases > protects always: the foundation's tsconfig, with the blob id git gives it at the lock commit (count 1)
+CASE added foundation/tests/lock/lock-command.test.ts > lock — what it records beside the cases > protects always: the lockfile, with the blob id git gives it at the lock commit (count 1)
+CASE added foundation/tests/lock/lock-command.test.ts > lock — what it records beside the cases > protects always: the workspace file, with the blob id git gives it at the lock commit (count 1)
+CASE added foundation/tests/lock/lock-command.test.ts > lock — what it records beside the cases > protects every file of the tool, each with its blob id (count 1)
+CASE added foundation/tests/lock/lock-command.test.ts > lock — what it records beside the cases > protects those and nothing else — not the product, not another piece's subject directory, not the root package file (count 1)
+CASE added foundation/tests/lock/lock-command.test.ts > lock — the same input gives the same bytes > run again, with its directory and then without one, it writes the lock it wrote before and stages nothing (count 1)
+CASE added foundation/tests/lock/lock-command.test.ts > lock — what it refuses > a locked test that declares a retry (count 1)
+CASE added foundation/tests/lock/lock-command.test.ts > lock — what it refuses > a locked test that declares a repeat (count 1)
+CASE added foundation/tests/lock/lock-command.test.ts > lock — what it refuses > a test file with no case (count 1)
+CASE added foundation/tests/lock/lock-command.test.ts > lock — what it refuses > a relative import that leaves foundation/tests/ — the test reaches the product past its package (count 1)
+CASE added foundation/tests/lock/lock-command.test.ts > lock — what it refuses > a running tool that differs from foundation/lock/ in the index (count 1)
+CASE added foundation/tests/lock/pure-texts.test.ts > relativeImports — the relative specifiers of one source text > a static import is reached (count 1)
+CASE added foundation/tests/lock/pure-texts.test.ts > relativeImports — the relative specifiers of one source text > a default import in single quotes is reached (count 1)
+CASE added foundation/tests/lock/pure-texts.test.ts > relativeImports — the relative specifiers of one source text > a type import is reached (count 1)
+CASE added foundation/tests/lock/pure-texts.test.ts > relativeImports — the relative specifiers of one source text > an import for its effect alone is reached (count 1)
+CASE added foundation/tests/lock/pure-texts.test.ts > relativeImports — the relative specifiers of one source text > an export of everything is reached (count 1)
+CASE added foundation/tests/lock/pure-texts.test.ts > relativeImports — the relative specifiers of one source text > an export of names is reached (count 1)
+CASE added foundation/tests/lock/pure-texts.test.ts > relativeImports — the relative specifiers of one source text > a dynamic import of a literal is reached (count 1)
+CASE added foundation/tests/lock/pure-texts.test.ts > relativeImports — the relative specifiers of one source text > an import spread over lines is reached (count 1)
+CASE added foundation/tests/lock/pure-texts.test.ts > relativeImports — the relative specifiers of one source text > a package is not a relative import (count 1)
+CASE added foundation/tests/lock/pure-texts.test.ts > relativeImports — the relative specifiers of one source text > a scoped package — the code under test is not a relative import (count 1)
+CASE added foundation/tests/lock/pure-texts.test.ts > relativeImports — the relative specifiers of one source text > a built-in is not a relative import (count 1)
+CASE added foundation/tests/lock/pure-texts.test.ts > relativeImports — the relative specifiers of one source text > a dynamic import of a package is not a relative import (count 1)
+CASE added foundation/tests/lock/pure-texts.test.ts > relativeImports — the relative specifiers of one source text > every relative specifier of a whole file is found, and nothing else (count 1)
+CASE added foundation/tests/lock/pure-texts.test.ts > serializeLock — the same lock gives the same bytes > does not depend on the order its keys and lists were given in (count 1)
+CASE added foundation/tests/lock/pure-texts.test.ts > serializeLock — the same lock gives the same bytes > is JSON of the same lock, indented by two spaces, ending in exactly one newline (count 1)
+CASE added foundation/tests/lock/pure-texts.test.ts > serializeLock — the same lock gives the same bytes > writes the protected paths and the directories in order (count 1)
+CASE added foundation/tests/lock/pure-texts.test.ts > serializeLock — the same lock gives the same bytes > a different lock gives different bytes (count 1)
+CASE added foundation/tests/lock/verify-all.test.ts > verify --all — every piece the inventory says is locked > one piece, present and green → LOCKS_GREEN pieces=1, exit 0 (count 1)
+CASE added foundation/tests/lock/verify-all.test.ts > verify --all — every piece the inventory says is locked > two pieces present and green, and one the inventory says is not locked → LOCKS_GREEN, each verified in the inventory's order (count 1)
+CASE added foundation/tests/lock/verify-all.test.ts > verify --all — every piece the inventory says is locked > a piece the inventory says is locked and that has no lock file → lock-owed <piece>, LOCKS_RED, exit 1 (count 1)
+CASE added foundation/tests/lock/verify-all.test.ts > verify --all — every piece the inventory says is locked > a lock file whose piece the inventory does not name → lock-unlisted <piece>, red, exit 1 (count 1)
+CASE added foundation/tests/lock/verify-all.test.ts > verify --all — every piece the inventory says is locked > no inventory → LOCK_REFUSED, exit 2 (count 1)
+CASE added foundation/tests/lock/verify-judge.test.ts > verify — a staged change that makes the candidate's own tool say LOCK_GREEN for everything > staged, the working tree's tool as it was locked, started through the fixture's own entry → still LOCK_RED, protected-changed (count 1)
+CASE added foundation/tests/lock/verify-judge.test.ts > verify — a staged change that makes the candidate's own tool say LOCK_GREEN for everything > staged and standing in the working tree, started through this repository's entry → still LOCK_RED, protected-changed (count 1)
+CASE added foundation/tests/lock/verify-judge.test.ts > verify — which tool judges > the untouched tool → first line JUDGE in-place lock=<the lock commit> (count 1)
+CASE added foundation/tests/lock/verify-judge.test.ts > verify — which tool judges > an unstaged edit of the fixture's tool, run through the fixture's own entry → first line JUDGE extracted lock=<the lock commit> (count 1)
+CASE added foundation/tests/lock/verify-judge.test.ts > verify — which tool judges > an unstaged edit that breaks the reporter → the run is judged by the lock commit's reporter, not by the edited one: LOCK_GREEN (count 1)
+CASE added foundation/tests/lock/verify-run.test.ts > verify — the candidate as it was locked > the untouched candidate → LOCK_GREEN, exit 0, naming the lock commit and the tree id of the index (count 1)
+CASE added foundation/tests/lock/verify-run.test.ts > verify — the candidate as it was locked > a staged .gitattributes that marks a locked test export-ignore and the product export-subst → still LOCK_GREEN (count 1)
+CASE added foundation/tests/lock/verify-run.test.ts > verify — the candidate as it was locked > the same two attributes committed, verified with --rev — where an archive of the commit would expand the placeholder → still LOCK_GREEN (count 1)
+CASE added foundation/tests/lock/verify-run.test.ts > verify — the search for the runner's names: a note, never an offence > a product line that spells the runner's name → NOTE runner-name <path>:<line>, and the verdict stays LOCK_GREEN (count 1)
+CASE added foundation/tests/lock/verify-run.test.ts > verify — product staged so that a locked case does not pass > the value case fails → case-not-passed for it; the file and the exit code say so too (count 1)
+CASE added foundation/tests/lock/verify-run.test.ts > verify — product staged so that a locked case does not pass > the product says unavailable and the case skips itself → case-skipped, though the run ended with 0 (count 1)
+CASE added foundation/tests/lock/verify-run.test.ts > verify — product staged so that a locked case does not pass > the product says not ready and the case returns before its assertion → case-not-passed (count 1)
+CASE added foundation/tests/lock/verify-run.test.ts > verify — product staged so that the cases are not the locked ones > a shorter list → case-missing for the row that is gone, though every case that ran passed (count 1)
+CASE added foundation/tests/lock/verify-run.test.ts > verify — product staged so that the cases are not the locked ones > a longer list → case-unknown for the row the lock does not hold (count 1)
+CASE added foundation/tests/lock/verify-run.test.ts > verify — product that ends the run its own way > product that calls process.exit(0) when imported → result-missing, red though the runner ended with 0 (count 1)
+CASE added foundation/tests/lock/verify-run.test.ts > verify — product that ends the run its own way > product that leaves an unhandled rejection → red with every case passed (count 1)
+CASE added foundation/tests/lock/verify-run.test.ts > verify — product that ends the run its own way > product that writes an earlier run's green result to the result path and exits 0 → result-stale (count 1)
+CASE added foundation/tests/lock/verify-structure.test.ts > verify — a staged change to what the lock protects > a locked test → protected-changed <path>, and the tests are not run (count 1)
+CASE added foundation/tests/lock/verify-structure.test.ts > verify — a staged change to what the lock protects > the config → protected-changed <path>, and the tests are not run (count 1)
+CASE added foundation/tests/lock/verify-structure.test.ts > verify — a staged change to what the lock protects > the set-up file → protected-changed <path>, and the tests are not run (count 1)
+CASE added foundation/tests/lock/verify-structure.test.ts > verify — a staged change to what the lock protects > the lockfile → protected-changed <path>, and the tests are not run (count 1)
+CASE added foundation/tests/lock/verify-structure.test.ts > verify — a staged change to what the lock protects > a foundation script of the root package file → scripts-changed <name> (count 1)
+CASE added foundation/tests/lock/verify-structure.test.ts > verify — a staged change to what the lock protects > a file added directly in foundation/tests/ — a workspace file beside the config → closed-dir-added <path> (count 1)
+CASE added foundation/tests/lock/verify-structure.test.ts > verify — a staged change under foundation/locks/ > an edit of the piece's own lock → locks-touched <path>; the lock that judges is the committed one (count 1)
+CASE added foundation/tests/lock/verify-structure.test.ts > verify — a staged change under foundation/locks/ > an edit of the inventory → locks-touched <path> (count 1)
+CASE added foundation/tests/lock/verify-structure.test.ts > verify — a staged change under foundation/locks/ > a lock file that is staged and not committed has no lock commit → LOCK_REFUSED, exit 2 (count 1)
+CASE added foundation/tests/lock/verify-structure.test.ts > verify — a lock that does not describe the commit it was committed with > a committed lock whose record of a helper is not that commit's blob → lock-inconsistent <path>, beside protected-changed (count 1)
+CASE added foundation/tests/lock/verify-structure.test.ts > verify --rev — a lock changed in one commit with product code > another piece's lock committed together with a product file → lock-commit-impure <commit> <path> (count 1)
+CASE added foundation/tests/lock/verify-structure.test.ts > verify --rev — a lock changed in one commit with product code > the piece's own lock made again and committed together with the product change it was made for → the lock commit itself is impure (count 1)
+CASE added foundation/tests/lock/verify-structure.test.ts > verify — what is no structural offence: the tests are run, and they are green > --rev of a later commit that adds another piece's lock alone → LOCK_GREEN by the first piece's own lock commit (count 1)
+CASE added foundation/tests/lock/verify-structure.test.ts > verify — what is no structural offence: the tests are run, and they are green > an unstaged edit of a locked test is not in the candidate → no offence from it, LOCK_GREEN (count 1)
+PROTECTED added foundation/lock/package.json
+PROTECTED added foundation/lock/src/cli.ts
+PROTECTED added foundation/lock/src/git.ts
+PROTECTED added foundation/lock/src/imports.ts
+PROTECTED added foundation/lock/src/index.ts
+PROTECTED added foundation/lock/src/judge.ts
+PROTECTED added foundation/lock/src/lock.ts
+PROTECTED added foundation/lock/src/lockfile.ts
+PROTECTED added foundation/lock/src/making.ts
+PROTECTED added foundation/lock/src/reporter.mjs
+PROTECTED added foundation/lock/src/run.ts
+PROTECTED added foundation/lock/src/runner.ts
+PROTECTED added foundation/lock/src/shape.ts
+PROTECTED added foundation/lock/src/structure.ts
+PROTECTED added foundation/lock/src/verify.ts
+PROTECTED added foundation/lock/src/work.ts
+PROTECTED added foundation/tests/lock/fixtures/expect-green.ts
+PROTECTED added foundation/tests/lock/fixtures/fixture-files.ts
+PROTECTED added foundation/tests/lock/fixtures/fixture-repo.ts
+PROTECTED added foundation/tests/lock/judge-run.test.ts
+PROTECTED added foundation/tests/lock/judge-structure.test.ts
+PROTECTED added foundation/tests/lock/lock-command.test.ts
+PROTECTED added foundation/tests/lock/pure-texts.test.ts
+PROTECTED added foundation/tests/lock/verify-all.test.ts
+PROTECTED added foundation/tests/lock/verify-judge.test.ts
+PROTECTED added foundation/tests/lock/verify-run.test.ts
+PROTECTED added foundation/tests/lock/verify-structure.test.ts
+PROTECTED added foundation/tests/package.json
+PROTECTED added foundation/tests/vitest.config.ts
+PROTECTED added foundation/tsconfig.json
+PROTECTED added pnpm-lock.yaml
+PROTECTED added pnpm-workspace.yaml
+LOCK_WRITTEN piece=piece-2 cases=117 protected=32
+
+real	0m3.231s
+user	0m4.462s
+sys	0m1.711s

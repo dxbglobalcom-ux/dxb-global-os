@@ -107,7 +107,10 @@ its own guard that no company address or key appears under `foundation/`.
 3. **The tests**, written from the contract by a hand that will not write the code; the lead reads them, sees them
    red for the right reason, commits them with their lock.
 4. **The code**, by another hand.
-5. **The lead's verdict:** the lock tool, on a clean copy of the candidate; the diff read; the commit.
+5. **The lead's verdict:** the lock tool, on a clean copy of the candidate; the diff read; the commit; then
+   `pnpm foundation:verify <piece> --rev HEAD` — the verdict on the index is bound to the commit only by this last
+   run (piece 2's audit, F11). The tests go in with their lock in one commit that holds nothing else
+   (`pnpm foundation:lock <piece> <dir>`); the code in another.
 
 A piece is sized to end inside one session before 45 % of its context. Whether it does is measured on the first
 pieces and the cut is corrected by what they show.
@@ -190,7 +193,9 @@ volatile identifier. *Proofs:* **clean** — a new instance, the chain from noth
 command, has the same snapshot and its rows; **the proofs can go red** — one body, one policy predicate, one grant
 changed, and one file left out of a copy of the chain, each turns its proof red. At stage 0 "rows kept" on the real
 schema is thin — there is little to keep; it becomes real with stage 1's first change to a populated table, and the
-proof is standing from here on.
+proof is standing from here on. *Open from piece 2's audit (F4), decided in this piece's contract before its tests
+are signed:* a lock protects nothing outside `foundation/tests/`, so the expected snapshot either lies in the piece's
+subject directory or the lock is given named paths — otherwise a writer changes a body and the snapshot in one diff.
 
 **7 — the separation, measured on the foundation's bench.** By role class — the foundation's runtime logins, the old
 system's runtime roles, the platform's administrators, the installer — and by operation: read and write on every old

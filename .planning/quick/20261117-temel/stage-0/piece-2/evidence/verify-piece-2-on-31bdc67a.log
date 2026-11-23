@@ -1,0 +1,18 @@
+$ node foundation/lock/src/cli.ts verify piece-2
+JUDGE in-place lock=31bdc67a38190979f0a420c5444af888bafbb0dc
+Scope: 3 of 19 workspace projects
+✓ Lockfile passes supply-chain policies (verified 56m ago)
+Lockfile is up to date, resolution step is skipped
+Progress: resolved 1, reused 0, downloaded 0, added 0
+.                                        | +256 ++++++++++++++++++++++++++
+Progress: resolved 256, reused 256, downloaded 0, added 256, done
+[WARN] Failed to create bin at /home/dxb/.cache/dxb/foundation-verify/run-7wRzwy/candidate/node_modules/.bin/dxb. ENOENT: no such file or directory, open '/home/dxb/.cache/dxb/foundation-verify/run-7wRzwy/candidate/tools/dxb-cli/dist/index.js'
+[WARN] Failed to create bin at /home/dxb/.cache/dxb/foundation-verify/run-7wRzwy/candidate/node_modules/.bin/video-learn. ENOENT: no such file or directory, open '/home/dxb/.cache/dxb/foundation-verify/run-7wRzwy/candidate/tools/video-learn/dist/cli.js'
+[WARN] Failed to create bin at /home/dxb/.cache/dxb/foundation-verify/run-7wRzwy/candidate/node_modules/.bin/dxb. ENOENT: no such file or directory, open '/home/dxb/.cache/dxb/foundation-verify/run-7wRzwy/candidate/node_modules/@dxb/cli/dist/index.js'
+[WARN] Failed to create bin at /home/dxb/.cache/dxb/foundation-verify/run-7wRzwy/candidate/node_modules/.bin/video-learn. ENOENT: no such file or directory, open '/home/dxb/.cache/dxb/foundation-verify/run-7wRzwy/candidate/node_modules/@dxb/video-learn/dist/cli.js'
+Done in 599ms using pnpm v11.10.0
+LOCK_GREEN piece=piece-2 lock=31bdc67a38190979f0a420c5444af888bafbb0dc candidate=8afaf78c6ebf2b89a12b44496b017bf718de4e9a cases=117
+
+real	0m51.927s
+user	2m51.118s
+sys	1m12.838s
