@@ -19,6 +19,7 @@ not in the repository — they are other people's words in full; the studies quo
 | `matt-diamante/a/` | Matt Diamante, HeyTony | 31 newest YouTube videos, 30 reels, 565 captions, his tools | B84, client-finding |
 | `matt-diamante/b/` | the same | 31 older YouTube videos (keywords, content, reporting, LLM ranking, Instagram) | B84, B28 |
 | `matt-diamante/c/` | the same | his 40 most-commented and most-liked carousels, 313 slides, with their counts | B84, B28 (the carousel line, client-finding) |
+| `matt-diamante/d/` | the same | his remaining 253 reels (249 transcripts, 4 read from the screen), 2 January – 7 October 2026, with their counts; his platform news checked at the source | B84 (the page-change guard, the AI line of the report, the platform-change ledger), B28 |
 | `harry-sanders/skills/` | Harry Sanders | his 55 public skill files and 6 packs (references, samples, one script read as text) | B84 (the register's web-office skills), B28 |
 | `alex-hormozi/offers-business/` | Alex Hormozi | 10 YouTube videos | offers, prices, money model (B83, B84, B28) |
 | `alex-hormozi/marketing-brand/` | the same | 7 YouTube videos, 30 reels, 126 captions, the channel's 531-video list | client-finding, the holding's brand |
@@ -123,12 +124,11 @@ The link rows themselves are a tab in the CEO's workbook.
 
 ## What a deeper study would read next
 
-Each folder's `OPEN-QUESTIONS.md` names its own. The skill candidates of all ten studies are merged once in
-`SKILLS.md` (69 skills, and the points where the studies disagree).
+Each folder's `OPEN-QUESTIONS.md` names its own. The skill candidates of all eleven studies are merged once in
+`SKILLS.md` (73 skills, and the points where the studies disagree).
 
-Gathered on 2026-11-23 and not yet studied — on this machine, in the job folder: the transcripts of Matt
-Diamante's remaining reels (the CEO's note on him: "all my videos … let the team work meticulously" — 283 reels,
-30 in the first study); the subtitles of 99 more of Harry's YouTube videos, 19 of Mei Man's and 2 of Matt's.
+Gathered on 2026-11-23 and not yet studied — on this machine, in the job folder: the subtitles of 99 more of
+Harry's YouTube videos, 19 of Mei Man's and 2 of Matt's. (All 283 of Matt's reels are studied: 30 in `a`, 253 in `d`.)
 
 Still to read: Hormozi's two books in their own text and his description-linked sales skills, Mei Man's
 cost-cap and testing-structure series, Matt's remaining 237 carousels.
