@@ -1,0 +1,138 @@
+## typecheck
+foundation/tests/snapshot/a-file-left-out.test.ts(4,10): error TS2305: Module '"@dxb-foundation/chain"' has no exported member 'snapshotOf'.
+foundation/tests/snapshot/cases/clean.ts(5,10): error TS2305: Module '"@dxb-foundation/chain"' has no exported member 'snapshotOf'.
+foundation/tests/snapshot/cases/the-fixture.ts(4,10): error TS2305: Module '"@dxb-foundation/chain"' has no exported member 'snapshotOf'.
+foundation/tests/snapshot/without-the-bench.test.ts(6,10): error TS2305: Module '"@dxb-foundation/chain"' has no exported member 'differenceOf'.
+exit=0
+## A — without the bench
+   × A.1 differenceOf — lines as multisets, each list sorted by bytes > equal texts: nothing on either side 2ms
+     → (0 , differenceOf) is not a function
+   × A.1 differenceOf — lines as multisets, each list sorted by bytes > one changed line: the old line on the expected side, the new on the actual side 0ms
+     → (0 , differenceOf) is not a function
+   × A.1 differenceOf — lines as multisets, each list sorted by bytes > a line twice against once: the one it holds more of, once — and the other way round 0ms
+     → (0 , differenceOf) is not a function
+   × A.1 differenceOf — lines as multisets, each list sorted by bytes > each list is sorted by UTF-8 bytes, whatever order the lines came in — U+FF01 before U+1F600, which UTF-16 order puts after it 0
+     → (0 , differenceOf) is not a function
+   × A.1 differenceOf — lines as multisets, each list sorted by bytes > a final newline missing is not equal: the difference is not empty, on either side 0ms
+     → (0 , differenceOf) is not a function
+   × A.2 the command refuses before any connection, and answers its usage lines > a file that is absent → SNAPSHOT_REFUSED no-expected, exit 2 76ms
+   × A.2 the command refuses before any connection, and answers its usage lines > a directory → SNAPSHOT_REFUSED no-expected, exit 2 71ms
+   × A.2 the command refuses before any connection, and answers its usage lines > a file that cannot be read → SNAPSHOT_REFUSED no-expected, exit 2 87ms
+   ✓ A.2 the command refuses before any connection, and answers its usage lines > the absent file is still absent after the refusal: the command never writes an expected text 95ms
+   × A.2 the command refuses before any connection, and answers its usage lines > no bytes at all → SNAPSHOT_REFUSED expected-malformed, exit 2 104ms
+   × A.2 the command refuses before any connection, and answers its usage lines > a first line that is not snapshot-format 1 → SNAPSHOT_REFUSED expected-malformed, exit 2 72ms
+   × A.2 the command refuses before any connection, and answers its usage lines > a first line missing → SNAPSHOT_REFUSED expected-malformed, exit 2 73ms
+   × A.2 the command refuses before any connection, and answers its usage lines > a line out of order → SNAPSHOT_REFUSED expected-malformed, exit 2 73ms
+   × A.2 the command refuses before any connection, and answers its usage lines > a carriage return → SNAPSHOT_REFUSED expected-malformed, exit 2 71ms
+   × A.2 the command refuses before any connection, and answers its usage lines > a carriage return inside a line → SNAPSHOT_REFUSED expected-malformed, exit 2 73ms
+   × A.2 the command refuses before any connection, and answers its usage lines > no final newline → SNAPSHOT_REFUSED expected-malformed, exit 2 71ms
+   × A.2 the command refuses before any connection, and answers its usage lines > an empty line → SNAPSHOT_REFUSED expected-malformed, exit 2 71ms
+   × A.2 the command refuses before any connection, and answers its usage lines > an empty last line → SNAPSHOT_REFUSED expected-malformed, exit 2 68ms
+   × A.2 the command refuses before any connection, and answers its usage lines > snapshot extra → its own usage line, exit 2 71ms
+   × A.2 the command refuses before any connection, and answers its usage lines > snapshot --check → its own usage line, exit 2 73ms
+   × A.2 the command refuses before any connection, and answers its usage lines > snapshot --check a b → its own usage line, exit 2 73ms
+   × A.2 the command refuses before any connection, and answers its usage lines > snapshot --check a --check b → its own usage line, exit 2 71ms
+   × A.2 the command refuses before any connection, and answers its usage lines > snapshot --root a → its own usage line, exit 2 69ms
+   × A.2 the command refuses before any connection, and answers its usage lines > snapshot --fix → its own usage line, exit 2 70ms
+   ✓ A.2 the command refuses before any connection, and answers its usage lines > no word, neither up nor snapshot → piece 3's usage line unchanged, exit 2 71ms
+   ✓ A.2 the command refuses before any connection, and answers its usage lines > down, neither up nor snapshot → piece 3's usage line unchanged, exit 2 69ms
+   ✓ A.2 the command refuses before any connection, and answers its usage lines > snapshots, neither up nor snapshot → piece 3's usage line unchanged, exit 2 72ms
+   ✓ A.2 the command refuses before any connection, and answers its usage lines > Snapshot, neither up nor snapshot → piece 3's usage line unchanged, exit 2 72ms
+   ✓ A.2 the command refuses before any connection, and answers its usage lines > check, neither up nor snapshot → piece 3's usage line unchanged, exit 2 72ms
+   ✓ A.3 both expected texts obey SPEC §4.2 and hold no line of a kind §4.3 does not name > the judge is seen to work first: it finds each offence planted in a text that is otherwise in the form 1ms
+   ✓ A.3 both expected texts obey SPEC §4.2 and hold no line of a kind §4.3 does not name > expected/real.snapshot.txt: the first line, sorted by bytes, no \r, no empty line, no double space outside a
+   ✓ A.3 both expected texts obey SPEC §4.2 and hold no line of a kind §4.3 does not name > expected/fixture.snapshot.txt: the first line, sorted by bytes, no \r, no empty line, no double space outsid
+   ✓ A.3 the texts carry the chains' ledger: each schema file's SHA-256, as the runner writes it (SPEC §7) > real: the files of db/schema, by position 1ms
+   ✓ A.3 the texts carry the chains' ledger: each schema file's SHA-256, as the runner writes it (SPEC §7) > fixture: the real two, then the fixture's own 0ms
+   ✓ A.3 the texts carry the chains' ledger: each schema file's SHA-256, as the runner writes it (SPEC §7) > the fixture chain, assembled, reads with no offence: its schema files, its function files a
+⎯⎯⎯⎯⎯⎯ Failed Tests 23 ⎯⎯⎯⎯⎯⎯⎯
+ FAIL  snapshot/without-the-bench.test.ts > A.1 differenceOf — lines as multisets, each list sorted by bytes > equal texts: nothing on either side
+TypeError: (0 , differenceOf) is not a function
+ FAIL  snapshot/without-the-bench.test.ts > A.1 differenceOf — lines as multisets, each list sorted by bytes > one changed line: the old line on the expected side, the new on the actual side
+TypeError: (0 , differenceOf) is not a function
+ FAIL  snapshot/without-the-bench.test.ts > A.1 differenceOf — lines as multisets, each list sorted by bytes > a line twice against once: the one it holds more of, once — and the other way round
+TypeError: (0 , differenceOf) is not a function
+ FAIL  snapshot/without-the-bench.test.ts > A.1 differenceOf — lines as multisets, each list sorted by bytes > each list is sorted by UTF-8 bytes, whatever order the lines came in — U+FF01 before U+1F
+TypeError: (0 , differenceOf) is not a function
+ FAIL  snapshot/without-the-bench.test.ts > A.1 differenceOf — lines as multisets, each list sorted by bytes > a final newline missing is not equal: the difference is not empty, on either side
+TypeError: (0 , differenceOf) is not a function
+ FAIL  snapshot/without-the-bench.test.ts > A.2 the command refuses before any connection, and answers its usage lines > a file that is absent → SNAPSHOT_REFUSED no-expected, exit 2
+ FAIL  snapshot/without-the-bench.test.ts > A.2 the command refuses before any connection, and answers its usage lines > a directory → SNAPSHOT_REFUSED no-expected, exit 2
+ FAIL  snapshot/without-the-bench.test.ts > A.2 the command refuses before any connection, and answers its usage lines > a file that cannot be read → SNAPSHOT_REFUSED no-expected, exit 2
+[31m+   "usage: cli.ts up [--root <dir>] [--wait <seconds>]",[39m
+ FAIL  snapshot/without-the-bench.test.ts > A.2 the command refuses before any connection, and answers its usage lines > no bytes at all → SNAPSHOT_REFUSED expected-malformed, exit 2
+ FAIL  snapshot/without-the-bench.test.ts > A.2 the command refuses before any connection, and answers its usage lines > a first line that is not snapshot-format 1 → SNAPSHOT_REFUSED expected-malforme
+ FAIL  snapshot/without-the-bench.test.ts > A.2 the command refuses before any connection, and answers its usage lines > a first line missing → SNAPSHOT_REFUSED expected-malformed, exit 2
+ FAIL  snapshot/without-the-bench.test.ts > A.2 the command refuses before any connection, and answers its usage lines > a line out of order → SNAPSHOT_REFUSED expected-malformed, exit 2
+ FAIL  snapshot/without-the-bench.test.ts > A.2 the command refuses before any connection, and answers its usage lines > a carriage return → SNAPSHOT_REFUSED expected-malformed, exit 2
+ FAIL  snapshot/without-the-bench.test.ts > A.2 the command refuses before any connection, and answers its usage lines > a carriage return inside a line → SNAPSHOT_REFUSED expected-malformed, exit 2
+ FAIL  snapshot/without-the-bench.test.ts > A.2 the command refuses before any connection, and answers its usage lines > no final newline → SNAPSHOT_REFUSED expected-malformed, exit 2
+ FAIL  snapshot/without-the-bench.test.ts > A.2 the command refuses before any connection, and answers its usage lines > an empty line → SNAPSHOT_REFUSED expected-malformed, exit 2
+ FAIL  snapshot/without-the-bench.test.ts > A.2 the command refuses before any connection, and answers its usage lines > an empty last line → SNAPSHOT_REFUSED expected-malformed, exit 2
+[31m+   "usage: cli.ts up [--root <dir>] [--wait <seconds>]",[39m
+ FAIL  snapshot/without-the-bench.test.ts > A.2 the command refuses before any connection, and answers its usage lines > snapshot extra → its own usage line, exit 2
+ FAIL  snapshot/without-the-bench.test.ts > A.2 the command refuses before any connection, and answers its usage lines > snapshot --check → its own usage line, exit 2
+ FAIL  snapshot/without-the-bench.test.ts > A.2 the command refuses before any connection, and answers its usage lines > snapshot --check a b → its own usage line, exit 2
+ FAIL  snapshot/without-the-bench.test.ts > A.2 the command refuses before any connection, and answers its usage lines > snapshot --check a --check b → its own usage line, exit 2
+ FAIL  snapshot/without-the-bench.test.ts > A.2 the command refuses before any connection, and answers its usage lines > snapshot --root a → its own usage line, exit 2
+## B — on a fresh instance
+   ✓ piece 6a — the snapshot on a fresh instance, in order: clean, and every change seen > fresh makes an instance: INSTANCE_UP with its cluster identifier, listed, and answering it  52133ms
+   × piece 6a — the snapshot on a fresh instance, in order: clean, and every change seen > B.1 clean: chain up (the real chain, no --root) → CHAIN_GREEN; snapshot --check expected/real.snapshot.txt → SNAPSHOT_EQUAL 214ms
+     → usage: cli.ts up [--root <dir>] [--wait <seconds>]
+: expected [ Array(1) ] to deeply equal [ 'SNAPSHOT_EQUAL lines=59' ]
+   × piece 6a — the snapshot on a fresh instance, in order: clean, and every change seen > B.2 read twice by the library, and once by the command's stdout: the same bytes, the committed text's 0ms
+     → not run: the step "B.1 clean: chain up (the real chain, no --root) → CHAIN_GREEN; snapshot --check expected/real.snapshot.txt → SNAPSHOT_EQUAL" failed before it
+   × piece 6a — the snapshot on a fresh instance, in order: clean, and every change seen > B.2 read through a connection whose own settings are hostile (search_path holding os, DateStyle, IntervalStyle, TimeZone, bytea_o
+     → not run: the step "B.1 clean: chain up (the real chain, no --root) → CHAIN_GREEN; snapshot --check expected/real.snapshot.txt → SNAPSHOT_EQUAL" failed before it
+   × piece 6a — the snapshot on a fresh instance, in order: clean, and every change seen > B.2 read only: through a session that cannot write (default_transaction_read_only=on) the same bytes, and nothing that stands mov
+     → not run: the step "B.1 clean: chain up (the real chain, no --root) → CHAIN_GREEN; snapshot --check expected/real.snapshot.txt → SNAPSHOT_EQUAL" failed before it
+   × piece 6a — the snapshot on a fresh instance, in order: clean, and every change seen > B.3 instance logins: LOGINS_SET; then the same bytes, holding none of the file's passwords and no SCRAM-SHA-256 0ms
+     → not run: the step "B.1 clean: chain up (the real chain, no --root) → CHAIN_GREEN; snapshot --check expected/real.snapshot.txt → SNAPSHOT_EQUAL" failed before it
+   × piece 6a — the snapshot on a fresh instance, in order: clean, and every change seen > B.4 a login gives itself settings — core and dotted, for all databases and in this one: red by exactly those role-setting lines, 
+     → not run: the step "B.1 clean: chain up (the real chain, no --root) → CHAIN_GREEN; snapshot --check expected/real.snapshot.txt → SNAPSHOT_EQUAL" failed before it
+   × piece 6a — the snapshot on a fresh instance, in order: clean, and every change seen > B.5 os given to another owner by the bench's superuser: chain up is still CHAIN_GREEN — the gap, pinned — and the check is red by
+     → not run: the step "B.1 clean: chain up (the real chain, no --root) → CHAIN_GREEN; snapshot --check expected/real.snapshot.txt → SNAPSHOT_EQUAL" failed before it
+   × piece 6a — the snapshot on a fresh instance, in order: clean, and every change seen > B.6 the fixture chain on top (chain up --root <fixture>) → CHAIN_GREEN; --check expected/fixture.snapshot.txt → SNAPSHOT_EQUAL 0m
+     → not run: the step "B.1 clean: chain up (the real chain, no --root) → CHAIN_GREEN; snapshot --check expected/real.snapshot.txt → SNAPSHOT_EQUAL" failed before it
+   × piece 6a — the snapshot on a fresh instance, in order: clean, and every change seen > B.7 nothing stands unseen: every relation, live column, routine, type, constraint, trigger, policy and index the test reads in th
+     → not run: the step "B.1 clean: chain up (the real chain, no --root) → CHAIN_GREEN; snapshot --check expected/real.snapshot.txt → SNAPSHOT_EQUAL" failed before it
+   × piece 6a — the snapshot on a fresh instance, in order: clean, and every change seen > B.8 a function's body: one function-body line out, one in 0ms
+     → not run: the step "B.1 clean: chain up (the real chain, no --root) → CHAIN_GREEN; snapshot --check expected/real.snapshot.txt → SNAPSHOT_EQUAL" failed before it
+   × piece 6a — the snapshot on a fresh instance, in order: clean, and every change seen > B.8 its definer flag: the function line, definer t out, definer f in 0ms
+     → not run: the step "B.1 clean: chain up (the real chain, no --root) → CHAIN_GREEN; snapshot --check expected/real.snapshot.txt → SNAPSHOT_EQUAL" failed before it
+   × piece 6a — the snapshot on a fresh instance, in order: clean, and every change seen > B.8 one of its settings: one function-setting line out, one in 0ms
+     → not run: the step "B.1 clean: chain up (the real chain, no --root) → CHAIN_GREEN; snapshot --check expected/real.snapshot.txt → SNAPSHOT_EQUAL" failed before it
+   × piece 6a — the snapshot on a fresh instance, in order: clean, and every change seen > B.8 **a policy's predicate**: exactly one policy-using line out, one in 0ms
+     → not run: the step "B.1 clean: chain up (the real chain, no --root) → CHAIN_GREEN; snapshot --check expected/real.snapshot.txt → SNAPSHOT_EQUAL" failed before it
+   × piece 6a — the snapshot on a fresh instance, in order: clean, and every change seen > B.8 **a grant** added to a login: one grant line in 0ms
+     → not run: the step "B.1 clean: chain up (the real chain, no --root) → CHAIN_GREEN; snapshot --check expected/real.snapshot.txt → SNAPSHOT_EQUAL" failed before it
+   × piece 6a — the snapshot on a fresh instance, in order: clean, and every change seen > B.8 **a grant** to PUBLIC: one grant line in, its grantee PUBLIC 0ms
+     → not run: the step "B.1 clean: chain up (the real chain, no --root) → CHAIN_GREEN; snapshot --check expected/real.snapshot.txt → SNAPSHOT_EQUAL" failed before it
+   × piece 6a — the snapshot on a fresh instance, in order: clean, and every change seen > B.8 **a grant** on a column: one grant column line in 0ms
+     → not run: the step "B.1 clean: chain up (the real chain, no --root) → CHAIN_GREEN; snapshot --check expected/real.snapshot.txt → SNAPSHOT_EQUAL" failed before it
+   × piece 6a — the snapshot on a fresh instance, in order: clean, and every change seen > B.8 **a grant** with grant option: the item's line, option f out, option t in 1ms
+     → not run: the step "B.1 clean: chain up (the real chain, no --root) → CHAIN_GREEN; snapshot --check expected/real.snapshot.txt → SNAPSHOT_EQUAL" failed before it
+   × piece 6a — the snapshot on a fresh instance, in order: clean, and every change seen > B.8 **a grant** removed: one grant line out 0ms
+     → not run: the step "B.1 clean: chain up (the real chain, no --root) → CHAIN_GREEN; snapshot --check expected/real.snapshot.txt → SNAPSHOT_EQUAL" failed before it
+   × piece 6a — the snapshot on a fresh instance, in order: clean, and every change seen > B.8 a grant no file says: chain up leaves it standing and is CHAIN_GREEN, the check is red by its line 0ms
+     → not run: the step "B.1 clean: chain up (the real chain, no --root) → CHAIN_GREEN; snapshot --check expected/real.snapshot.txt → SNAPSHOT_EQUAL" failed before it
+   × piece 6a — the snapshot on a fresh instance, in order: clean, and every change seen > B.8 a default privilege: one default-acl line in 0ms
+     → not run: the step "B.1 clean: chain up (the real chain, no --root) → CHAIN_GREEN; snapshot --check expected/real.snapshot.txt → SNAPSHOT_EQUAL" failed before it
+   × piece 6a — the snapshot on a fresh instance, in order: clean, and every change seen > B.8 **the owner of one object in os** (the bench's superuser): its function line and its stored grant, the owner's name in each 0
+     → not run: the step "B.1 clean: chain up (the real chain, no --root) → CHAIN_GREEN; snapshot --check expected/real.snapshot.txt → SNAPSHOT_EQUAL" failed before it
+   × piece 6a — the snapshot on a fresh instance, in order: clean, and every change seen > B.8 a role's attribute: the role line, connlimit -1 out, 3 in 0ms
+     → not run: the step "B.1 clean: chain up (the real chain, no --root) → CHAIN_GREEN; snapshot --check expected/real.snapshot.txt → SNAPSHOT_EQUAL" failed before it
+   × piece 6a — the snapshot on a fresh instance, in order: clean, and every change seen > B.8 a membership: one member line in 0ms
+     → not run: the step "B.1 clean: chain up (the real chain, no --root) → CHAIN_GREEN; snapshot --check expected/real.snapshot.txt → SNAPSHOT_EQUAL" failed before it
+   × piece 6a — the snapshot on a fresh instance, in order: clean, and every change seen > B.8 a trigger disabled: the trigger line, enabled O out, D in 0ms
+     → not run: the step "B.1 clean: chain up (the real chain, no --root) → CHAIN_GREEN; snapshot --check expected/real.snapshot.txt → SNAPSHOT_EQUAL" failed before it
+   × piece 6a — the snapshot on a fresh instance, in order: clean, and every change seen > B.8 row security off: the relation line, rowsecurity t out, f in 0ms
+     → not run: the step "B.1 clean: chain up (the real chain, no --root) → CHAIN_GREEN; snapshot --check expected/real.snapshot.txt → SNAPSHOT_EQUAL" failed before it
+   × piece 6a — the snapshot on a fresh instance, in order: clean, and every change seen > B.8 force off: the relation line, force t out, f in 0ms
+     → not run: the step "B.1 clean: chain up (the real chain, no --root) → CHAIN_GREEN; snapshot --check expected/real.snapshot.txt → SNAPSHOT_EQUAL" failed before it
+   × piece 6a — the snapshot on a fresh instance, in order: clean, and every change seen > B.8 an index dropped: its index line out 0ms
+     → not run: the step "B.1 clean: chain up (the real chain, no --root) → CHAIN_GREEN; snapshot --check expected/real.snapshot.txt → SNAPSHOT_EQUAL" failed before it
+   × piece 6a — the snapshot on a fresh instance, in order: clean, and every change seen > B.8 a constraint dropped: its constraint line out 0ms
+     → not run: the step "B.1 clean: chain up (the real chain, no --root) → CHAIN_GREEN; snapshot --check expected/real.snapshot.txt → SNAPSHOT_EQUAL" failed before it
+   × piece 6a — the snapshot on a fresh instance, in order: clean, and every change seen > B.8 a column's default: the column line, default 1 out, 2 in 0ms
+     → not run: the step "B.1 clean: chain up (the real chain, no --root) → CHAIN_GREEN; snapshot --check expected/real.snapshot.txt → SNAPSHOT_EQUAL" failed before it

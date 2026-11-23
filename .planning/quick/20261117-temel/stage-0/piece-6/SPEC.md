@@ -109,8 +109,10 @@ Raw output: `piece-6/evidence/` (the whole-catalogue inventories `inv-*.txt.gz` 
 - UTF-8; every line ends with one `\n`; the first line is `snapshot-format 1`; **every other line stands alone** —
   it begins with a kind word and carries everything needed to read it — and the lines after the first are sorted
   ascending by their UTF-8 bytes, equal lines kept. The text is therefore a multiset of lines with one spelling.
-- Fields are separated by one space. A field that may hold spaces is the last of its line. An empty value is `-`;
-  a boolean is `t` or `f`. Inside a line a backslash is written `\\` and a newline `\n`.
+- Fields are separated by one space. A line is read by its kind's row in §4.3, not by splitting at spaces: a name
+  the server spells with a space (`double precision`, a signature, `operator class`) stands where its field stands;
+  a field of free text — a definition, an expression, a line of a body, a row — is the last of its line. An empty
+  value is `-`; a boolean is `t` or `f`. Inside a line a backslash is written `\\` and a newline `\n`.
 - A text of several lines (a function's body, a view's definition, a comment) is one line of the snapshot per line
   of the text, numbered from `00001`: `<kind> <object> <number>|<the line>`, split at `\n` and nothing else.
 - Names are the server's own spelling under an empty `search_path`: `regclass`, `regprocedure`, `format_type`,
@@ -140,7 +142,7 @@ Raw output: `piece-6/evidence/` (the whole-catalogue inventories `inv-*.txt.gz` 
 | `policy-using <regclass> <name> <pg_get_expr>` · `policy-check <regclass> <name> <pg_get_expr>` | each predicate that exists — a line of its own, so one changed predicate is one changed line |
 | `view <regclass> <number>\|<line of pg_get_viewdef>` | views and materialized views |
 | `sequence <regclass> type <format_type> start <n> increment <n> min <n> max <n> cache <n> cycle <b> owned-by <regclass.column\|->` | each sequence; never `last_value` |
-| `type <type> kind <e\|d\|r\|m> owner <role>` · `enum-label <type> <position> <quoted label>` · `domain <type> base <format_type> not-null <b> collation <name\|-> default <expr\|->` · `domain-constraint <type> <name> validated <b> def <…>` · `range <type> subtype <format_type>` | each type that is neither an array nor a relation's row type |
+| `type <type> kind <typtype> owner <role>` · `enum-label <type> <position> <quoted label>` · `domain <type> base <format_type> not-null <b> collation <name\|-> default <expr\|->` · `domain-constraint <type> <name> validated <b> def <…>` · `range <type> subtype <format_type>` | each type that is neither an array nor a relation's row type |
 | `function <regprocedure> kind <prokind> owner <role> language <name> returns <pg_get_function_result\|-> definer <b> volatility <i\|s\|v> strict <b> parallel <s\|r\|u> leakproof <b> cost <n> rows <n>` | each routine |
 | `function-arguments <regprocedure> <pg_get_function_arguments>` | when it has any — defaults are meaning |
 | `function-setting <regprocedure> <name>=<value>` | each of `proconfig` |
@@ -233,21 +235,49 @@ table in `public` granted to `os_reader` with a policy naming a login, and a sch
    green, the check red; a default privilege; **the owner of one object in `os`** (the superuser); a role's
    attribute; a membership; a trigger disabled; row security off, and force off; an index dropped; a constraint
    dropped; a column's default; the vocabulary's comment; a reference value changed by hand (and `chain up` puts
-   it back: equal); a sequence's increment; the view; a table nobody's file made; a privileged extension a login
-   creates into `os` (lines of another owner appear); outside `os`: a grant to a login on a table of `public`, an
+   it back: equal); a sequence's increment; the view; a table nobody's file made; a privileged extension put into
+   `os` (lines of another owner appear); outside `os`: a grant to a login on a table of `public`, an
    object `os_owner` owns elsewhere, a policy elsewhere naming a login.
    The difference is asserted **whole** wherever the changed lines can be written down from §4 (every case in bold
    at least); elsewhere the case names the lines that must be among it and the kinds it may touch.
 
 **C — on a second fresh instance, in order: a file left out.** From nothing, a copy of the fixture chain without
 its last schema file → the check against the fixture's text is red by that file's lines; then with every schema
-file and one function file left out → red by that function's body; then with one reference file left out → the
-case pins what the pass answers and that nothing reads equal; then the whole fixture chain → `SNAPSHOT_EQUAL` — the
+file and one function file left out → the chain itself is red (an orphan, piece 4's rule) and the check is red by
+that function's body; then with one reference file left out → the case pins what the pass answers (§6a.3); then the whole fixture chain → `SNAPSHOT_EQUAL` — the
 same text a second instance reached by another road.
 
 The ordered modules stop at their first red step: before the code exists every bench case is red at B.1 or C.1, and
 the test hand shows each later case red for its own reason by neutralising the earlier ones in the working tree and
 restoring them.
+
+## 6a. What the tests pinned beyond §6 (the test hand's readings, read and accepted by the lead)
+
+82 locked cases (36 without the bench, 40 on a fresh instance, 6 on a second). A helper read both expected texts
+line by line against §4.3 and the fixture's files — no line to correct — and every case against §6; the lead read
+the real chain's text, the check's fixture and saw the files red before the code (`evidence/lead-run-on-the-tests.log`).
+
+1. `SNAPSHOT_EQUAL lines=<n>` counts every line, the first included. `*` stands for all roles and all databases.
+2. A sequence's three columns are `column` lines (the catalogue has them). `grant type` is for types that have a
+   `type` line. `enum-label`'s position is a rank from 1 and its label `quote_literal`. A domain's collation is `-`
+   unless it differs from its base type's. A body that begins and ends with a newline has an empty first and an
+   empty last numbered line.
+3. **A reference file left out on an instance that already holds the rows changes nothing:** the pass is silent
+   (`reference=0`), the rows stand and the check is `SNAPSHOT_EQUAL` — pinned, and said in §9.
+4. Outside the covered schemas an object a chain role owns is read like one inside: a NULL ACL gives `default`
+   lines. A `pg_default_acl` row is only ever `default-acl` lines. A policy on a table of `os` gives no `outside`.
+5. The real chain's two schema files are read from `db/schema` at run time, never copied: one copy, and an edit to
+   either turns both texts red through its ledger hash.
+6. Hostile settings reach the reader through the connection string's `options`. That the reader's transaction is
+   read only is shown by the same bytes under `default_transaction_read_only = on` and by nothing changed in the
+   covered schemas — **the transaction's own words are read in the code, not proven** (§9).
+7. Cases that add or take a grant, or change an owner, use objects whose ACL is already stored: a revoke on a NULL
+   ACL leaves a stored one, and the check would not come back to equal. A changed owner rewrites the object's ACL:
+   two lines out, two in.
+8. The dotted setting of B.4 is one of `plpgsql`'s (a login is refused a made-up prefix — measured). The extension
+   of B.8 is `pg_trgm`, put into `os` by the installer; its case asserts lines among the difference and the kinds.
+9. `differenceOf` on a text without its final newline is pinned only as "not empty".
+10. A.2's refusals have their force because no instance stands while they run — a case of its own says so.
 
 ## 7. F4 — what the lock protects **[lead]**
 
@@ -290,6 +320,9 @@ runner stays what piece 3's lock judges, and a red check after a green chain mus
   calendar day is not measured (6b meets it).
 - Kinds not measured on the bench and held only by §4.3's wording until a fixture meets them: ranges,
   materialized views, partitioned tables, rules, foreign tables. Each has its line; none has a case.
+- **A vocabulary's file taken out of the chain leaves its rows on a database that had them**, and nothing says so
+  (§6a.3) — piece 4's pass is silent without its file. Only a build from nothing shows it, which is what "clean" is.
+- **That the reader's transaction is `repeatable read read only` is read in the code, not proven by a case.**
 - Large objects and temporary objects are no part of the text; a large object a chain role owns is an `outside` line.
 
 ## 10. Done when
