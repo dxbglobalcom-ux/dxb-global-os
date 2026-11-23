@@ -68,8 +68,8 @@ grant database postgres to dashboard_user TEMPORARY option f by postgres stored
 grant database postgres to postgres CONNECT option f by postgres stored
 grant database postgres to postgres CREATE option f by postgres stored
 grant database postgres to postgres TEMPORARY option f by postgres stored
-grant database postgres to supabase_etl_admin CONNECT option f by postgres stored
-grant database postgres to supabase_storage_admin CONNECT option f by postgres stored
+grant database postgres to supabase_etl_admin CREATE option f by postgres stored
+grant database postgres to supabase_storage_admin CREATE option f by postgres stored
 grant function os.count_parts(integer) to os_owner EXECUTE option f by os_owner stored
 grant function os.count_parts(integer) to os_reader EXECUTE option f by os_owner stored
 grant function os.next_ticket(text,double precision) to os_owner EXECUTE option f by os_owner stored

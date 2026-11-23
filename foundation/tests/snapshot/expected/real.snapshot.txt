@@ -22,8 +22,8 @@ grant database postgres to dashboard_user TEMPORARY option f by postgres stored
 grant database postgres to postgres CONNECT option f by postgres stored
 grant database postgres to postgres CREATE option f by postgres stored
 grant database postgres to postgres TEMPORARY option f by postgres stored
-grant database postgres to supabase_etl_admin CONNECT option f by postgres stored
-grant database postgres to supabase_storage_admin CONNECT option f by postgres stored
+grant database postgres to supabase_etl_admin CREATE option f by postgres stored
+grant database postgres to supabase_storage_admin CREATE option f by postgres stored
 grant relation os_chain.ledger to postgres DELETE option f by postgres default
 grant relation os_chain.ledger to postgres INSERT option f by postgres default
 grant relation os_chain.ledger to postgres MAINTAIN option f by postgres default

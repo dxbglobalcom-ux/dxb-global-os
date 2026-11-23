@@ -25,7 +25,7 @@ export const SHAPES: Readonly<Record<string, RegExp>> = {
   "policy-check": /^policy-check \S+ \S+ .+$/,
   view: /^view \S+ \d{5}\|.*$/,
   sequence: new RegExp(`^sequence \\S+ type .+ start -?\\d+ increment -?\\d+ min -?\\d+ max -?\\d+ cache \\d+ cycle ${B} owned-by \\S+$`),
-  type: /^type \S+ kind [edrm] owner \S+$/,
+  type: /^type \S+ kind [bcdemrp] owner \S+$/,
   "enum-label": /^enum-label \S+ \d+ '.*'$/,
   domain: new RegExp(`^domain \\S+ base .+ not-null ${B} collation \\S+ default .+$`),
   "domain-constraint": new RegExp(`^domain-constraint \\S+ \\S+ validated ${B} def .+$`),
