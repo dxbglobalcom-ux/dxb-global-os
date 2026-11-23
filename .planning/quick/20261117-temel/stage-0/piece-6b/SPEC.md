@@ -85,10 +85,11 @@ pure. Both are rows' texts.
   row of `after` answers for one row of `before` at most (rows are a multiset). **Equal is "the server printed it
   the same"** (§6a.1): a row's own keys are a set, and under each key the value's text is compared as it stands —
   `12.5000` is not `12.5`, and no number passes through a double. A row that is not kept is *lost*.
-  New columns and new rows cost nothing; a column dropped or retyped, a value changed, a row deleted, a table
-  emptied, dropped or renamed lose rows — and the piece that means such a change says so (§9).
+  New columns and new rows cost nothing; a column dropped, a column retyped so that a value's text changes, a
+  value changed, a row deleted, a table emptied, dropped or renamed lose rows — and the piece that means such a change says so (§9).
 - **A sequence is kept** when `after` holds its line and it does not stand behind: by `ascending`, `last_value`
-  is not lower (not higher, descending), and at the same `last_value` `called` has not gone from `t` to `f`.
+  is not lower (not higher, descending), and at the same `last_value` `called` has not gone from `t` to `f` —
+  **and its direction is the same**: a sequence turned round gives again what it gave (§10.1).
 - `lost`: for each lost row `- row <regclass> <its JSON>`; then, **for each table that lost a row**, every row of
   `after` in that table that answered for none, whole, as `+ row <regclass> <its JSON>` — so a changed value is
   read beside what it became. `back`: `- sequence-position …` (the line of `before`) and, when `after` holds the
@@ -264,7 +265,9 @@ corrections taken tests-first; BUILD.md's piece 6 carries the Done note of 6b an
   renamed — is `ROWS_RED` here by design. The piece that makes one commits the difference it expects, and the
   bench compares what the command prints with it; no option for that is built before a piece needs it.
 - A table emptied and a table dropped read the same in `lost`; the snapshot tells them apart.
-- A row is a JSON value (6a §9): array bounds, `-0` and a `json` column's duplicate keys are not told apart.
+- A row is a JSON value (6a §9): array bounds, `-0` and a `json` column's duplicate keys are not told apart — nor a
+  `json` column's stored spelling, nor a retype under which every value prints the same (§10.2). A `json` value
+  holding `\u0000` fails the reading. `money` prints by `lc_monetary`, which is not set.
 - A sequence that cycles may stand behind by right; a large object is not read; rows of a table outside the
   covered schemas are not read, whoever owns it.
 - **That *refused-when-populated* is green on an empty database is PostgreSQL's own rule read from the file's
@@ -274,3 +277,53 @@ corrections taken tests-first; BUILD.md's piece 6 carries the Done note of 6b an
   already: a fresh instance of 2026-11-23 holds the platform's partitions `realtime.messages_2026_11_22` …
   `_26`, so two whole-catalogue readings are compared on one instance, moments apart, never across instances
   made on different days.
+
+## 10. The blind audit and its corrections (GPT-6.2 Sol, xhigh, one pass, 2026-11-23 — `SOL.md`; the lead's weighing)
+
+The verdict was REFUTED: four A, eight B. It found the proof itself sound — C.4 reaches, by the delivery command,
+the text a clean build reached on an instance of its own, and the three expected texts say what the fixture's
+files say — and the instrument around it wanting. Each finding is weighed against what the piece is for: a row
+lost, a value changed or a sequence put back must not pass as kept by an ordinary change, build or mistake; the
+same bytes for the same rows; a reader that writes nothing; `chainAt` gives the bytes the commit holds.
+
+### 10.1 Taken — tests first, then the code
+
+| # | From | The rule the piece now obeys |
+|---|---|---|
+| 1 | A2 | **A sequence whose direction changed is `back`**, whatever its `last_value`: after `100, 105, 110` an increment of `-5` gives `105` again, and both texts read `110 called t`. Both directions, and the case where nothing but `ascending` differs. |
+| 2 | A3 | Every call of git by `chainAt` says `--no-replace-objects`: a replace ref for a commit or for a blob changes nothing of what is written. |
+| 3 | A4 | A path under the three directories whose name is not UTF-8 is `not-a-file`, before the first byte is written — a chain's file is named in ASCII (piece 3), and a name read as UTF-8 would be another name. |
+| 4 | B4 | A revision that holds a `:` is `unknown-revision` and is never handed to git: `:path` reads the index, `rev:path` a tree, `:/text` searches. |
+| 5 | B5 | An `into` that is a symbolic link is `into-not-empty`, wherever it points. git is told not to fetch a missing object (`GIT_NO_LAZY_FETCH=1`). |
+| 6 | B3 | **Under a row's own key a value is compared as its text stands** — the code re-spelled nested objects and string escapes, which §5 did not say: a nested object's keys in another order, white space, or `\u00e9` for `é` is another text. A `before` file is refused as malformed when a `sequence-position`'s value is not an integer in its one spelling (`000110`, `-0`), or when a part of a name that stands unquoted is not `[a-z_][a-z0-9_]*` — what `regclass` leaves unquoted. |
+| 7 | B1 | Which table is the ledger is read from the catalogue's own rows, never by `to_regclass`: a session without USAGE on `os_chain` is not refused for a table it is not asked to read. (The snapshot's own `ledger` lines are 6a's and are read as before.) |
+| 8 | B2 | No list is spread into a call's arguments: a table of 150,000 rows is read, and 150,000 lost rows are printed (measured by the audit: the spread overflows the stack between 100,000 and 150,000). |
+| 9 | B6 | After C.2 and after C.3 the rows' text is `a.rows.txt` byte for byte — `ROWS_KEPT` alone would pass a row added or a sequence drawn. The refused variant writes a row and draws from `os.ticket_seq` before the statement the server refuses, so that "nothing left" is seen: the row is gone; **the sequence stays drawn** (PostgreSQL's rule, pinned in piece 3) and the case says so by its exact line. |
+| 10 | B7 | Cases: on the upgraded instance, after C.5, tables made by the superuser in `os` — a partitioned table with two partitions, a child that inherits, an unlogged table, a table with no column holding two rows, a table and a column whose names need quotes — each row is one line, once, written down by hand; `rowsOf` through a login that row security would filter throws and gives no text; the stdout of `ROWS_KEPT` and of `ROWS_RED` byte for byte, final newline and all. |
+
+### 10.2 Not taken — each with its reason, and named in §9 where it is a limit
+
+- **A1** — two things. *A column retyped whose values print the same* (`integer 123` to `numeric 123`): the value is
+  kept, and the snapshot holds the type; §5 promised more than it meant and now says "retyped so that a value's
+  text changes". *A `json` column rewritten in another spelling* (`payload::jsonb::json`: key order, white space,
+  a number's spelling): the JSON value is the same and `to_jsonb` reads both the same. The plan's convention is
+  `jsonb` (PLAN.md §2 A), whose text is one spelling; the stage's chain holds no `json` column. **The piece whose
+  file first makes a `json` column decides its reading in its own contract, before its tests.** Limit.
+- **B2, the rest** — a `json` value holding `\u0000` stops `to_jsonb` with an error: a failure, not a short text. Limit.
+- **`money`** (the audit's UNVERIFIED) — its text hangs on `lc_monetary`, which the reader does not set; the plan's
+  money is `numeric`. Limit.
+- **B5, the rest** — a write that fails half-way (a full disk) leaves what was written: the call throws, `into` is
+  a temporary directory of the caller's, and a thrown failure is no chain to build from. Not taken.
+- **B7, the rest** — the guard's refusal through the command (`ROWS_REFUSED target-…`) has no case of its own: it is
+  the snapshot's own path, one function, and its refusals are piece 1's cases. The neutralised runs that showed
+  each later step red for its own reason are in the test hands' reports, not in a kept log; the lead's log shows
+  the first red of each module. Named.
+- **B8** — true of what nothing here forces yet, and carried to piece 13 by name: the proof runs on the candidate
+  commit and reads `from.txt` from it; it checks that `from` is an ancestor of the candidate; it gives
+  `real/rows.sql` when it stands and checks that rows were given; it stops at the first step that fails; a moved
+  `from.txt` is accepted only with the upgrade from the *old* `from` shown red or the reason recorded; after the
+  first database that is not disposable, no move. The lead's interim script (`evidence/real-upgrade-from.sh`)
+  reads `from.txt` from `HEAD` and stops at the first failure from here on.
+- **Sequence positions are not read in the transaction's snapshot** (the audit's remark): the proofs run when
+  nothing writes, as 6a §9 says of the catalogue's functions.
+

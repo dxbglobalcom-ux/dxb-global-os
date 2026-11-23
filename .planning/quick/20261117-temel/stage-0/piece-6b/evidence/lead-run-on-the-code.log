@@ -1,0 +1,166 @@
+== at 726fb952, tree:  M foundation/chain/src/cli.ts; M foundation/chain/src/index.ts; M foundation/chain/src/snapshot/command.ts; M foundation/chain/src/snapshot/read.ts; M foundation/chain/src/snapshot/reference-and-ledger.ts; M foundation/chain/src/snapshot/text.ts;?? foundation/chain/src/revision.ts;?? foundation/chain/src/rows/;
+== typecheck
+typecheck exit=0
+== foundation/tests/upgrade/chain-at.test.ts
+ ✓ upgrade/chain-at.test.ts (24 tests) 245ms
+ Test Files  1 passed (1)
+      Tests  24 passed (24)
+   Duration  513ms (transform 121ms, setup 0ms, collect 164ms, tests 245ms, environment 0ms, prepare 29ms)
+exit=0 seconds=1
+== foundation/tests/upgrade/clean.test.ts
+ ✓ upgrade/clean.test.ts (5 tests) 54807ms
+   ✓ piece 6b — B on a fresh instance: clean > fresh makes an instance: INSTANCE_UP, listed  52329ms
+   ✓ piece 6b — B on a fresh instance: clean > B from nothing: chain up --root <B> → CHAIN_GREEN applied=5 standing=5 functions=3 reference=1; snapshot --check expected/b.snapshot.txt → SNAPSHOT_EQUAL  368ms
+   ✓ piece 6b — B on a fresh instance: clean > C on the clean instance: chain up --root <C> → CHAIN_GREEN applied=1; the check is red by 0006's ledger line alone — no index; rows as before  397ms
+   ✓ piece 6b — B on a fresh instance: clean > down → INSTANCE_DOWN  1506ms
+ Test Files  1 passed (1)
+      Tests  5 passed (5)
+   Duration  55.10s (transform 139ms, setup 0ms, collect 189ms, tests 54.81s, environment 0ms, prepare 30ms)
+exit=0 seconds=55
+== foundation/tests/upgrade/upgraded.test.ts
+ ✓ upgrade/upgraded.test.ts (8 tests) 57043ms
+   ✓ piece 6b — built at A, given rows, upgraded: on a second fresh instance, in order > fresh makes an instance: INSTANCE_UP, listed  52352ms
+   ✓ piece 6b — built at A, given rows, upgraded: on a second fresh instance, in order > C.1 chain up --root <A> → CHAIN_GREEN; equal to 6a's fixture text; the rows given — the text still equal; rows is expected/a.rows.txt, byte for byte  1080ms
+   ✓ piece 6b — built at A, given rows, upgraded: on a second fresh instance, in order > C.2 an applied file edited: chain up --root <edited> → CHAIN_RED, 0003-inside.sql changed; the snapshot still A's; rows --kept a.rows.txt → ROWS_KEPT  344ms
+   ✓ piece 6b — built at A, given rows, upgraded: on a second fresh instance, in order > C.3 a change a populated table refuses: chain up --root <refused-when-populated> is red at 0005; the snapshot still A's — no ledger row for it; the rows kept  346ms
+   ✓ piece 6b — built at A, given rows, upgraded: on a second fresh instance, in order > C.4 upgraded equals clean: chain up --root <B> → CHAIN_GREEN; SNAPSHOT_EQUAL to b.snapshot.txt; rows is b.rows.txt, byte for byte; ROWS_KEPT against a.rows.txt and against what C.1 read  595ms
+   ✓ piece 6b — built at A, given rows, upgraded: on a second fresh instance, in order > C.5 chain up --root <C> → CHAIN_GREEN; the check is red by exactly 0006's ledger line and the index; rows --kept b.rows.txt → ROWS_RED, its difference whole  401ms
+   ✓ piece 6b — built at A, given rows, upgraded: on a second fresh instance, in order > down → INSTANCE_DOWN  1750ms
+ Test Files  1 passed (1)
+      Tests  8 passed (8)
+   Duration  57.35s (transform 144ms, setup 0ms, collect 198ms, tests 57.04s, environment 0ms, prepare 31ms)
+exit=0 seconds=58
+== foundation/tests/upgrade/without-the-bench.test.ts
+ ✓ upgrade/without-the-bench.test.ts (71 tests) 2916ms
+ Test Files  1 passed (1)
+      Tests  71 passed (71)
+   Duration  3.21s (transform 133ms, setup 0ms, collect 181ms, tests 2.92s, environment 0ms, prepare 31ms)
+exit=0 seconds=4
+== foundation/tests/bench/no-old-address.test.ts
+ ✓ bench/no-old-address.test.ts (28 tests) 43ms
+ Test Files  1 passed (1)
+      Tests  28 passed (28)
+   Duration  231ms (transform 60ms, setup 0ms, collect 82ms, tests 43ms, environment 0ms, prepare 30ms)
+exit=0 seconds=1
+== foundation/tests/snapshot/without-the-bench.test.ts
+ ✓ snapshot/without-the-bench.test.ts (44 tests) 2427ms
+ Test Files  1 passed (1)
+      Tests  44 passed (44)
+   Duration  2.72s (transform 138ms, setup 0ms, collect 185ms, tests 2.43s, environment 0ms, prepare 29ms)
+exit=0 seconds=3
+== foundation/tests/snapshot/on-a-fresh-instance.test.ts
+ ✓ snapshot/on-a-fresh-instance.test.ts (57 tests) 74451ms
+   ✓ piece 6a — the snapshot on a fresh instance, in order: clean, and every change seen > fresh makes an instance: INSTANCE_UP with its cluster identifier, listed, and answering it  54052ms
+   ✓ piece 6a — the snapshot on a fresh instance, in order: clean, and every change seen > B.3 instance logins: LOGINS_SET; then the same bytes, holding none of the file's passwords and no SCRAM-SHA-256  380ms
+   ✓ piece 6a — the snapshot on a fresh instance, in order: clean, and every change seen > B.4 a login gives itself settings — core and dotted, for all databases and in this one: red by exactly those role-setting lines, a dotted value <hidden>; reset: equal  312ms
+   ✓ piece 6a — the snapshot on a fresh instance, in order: clean, and every change seen > B.5 os given to another owner by the bench's superuser: chain up is still CHAIN_GREEN — the gap, pinned — and the check is red by the schema's owner and its default grants; put back: equal  526ms
+   ✓ piece 6a — the snapshot on a fresh instance, in order: clean, and every change seen > B.6 the fixture chain on top (chain up --root <fixture>) → CHAIN_GREEN; --check expected/fixture.snapshot.txt → SNAPSHOT_EQUAL  317ms
+   ✓ piece 6a — the snapshot on a fresh instance, in order: clean, and every change seen > B.8 a function's body: one function-body line out, one in  308ms
+   ✓ piece 6a — the snapshot on a fresh instance, in order: clean, and every change seen > B.8 its definer flag: the function line, definer t out, definer f in  311ms
+   ✓ piece 6a — the snapshot on a fresh instance, in order: clean, and every change seen > B.8 one of its settings: one function-setting line out, one in  315ms
+   ✓ piece 6a — the snapshot on a fresh instance, in order: clean, and every change seen > B.8 **a policy's predicate**: exactly one policy-using line out, one in  315ms
+   ✓ piece 6a — the snapshot on a fresh instance, in order: clean, and every change seen > B.8 **a grant** added to a login: one grant line in  310ms
+   ✓ piece 6a — the snapshot on a fresh instance, in order: clean, and every change seen > B.8 **a grant** to PUBLIC: one grant line in, its grantee PUBLIC  307ms
+   ✓ piece 6a — the snapshot on a fresh instance, in order: clean, and every change seen > B.8 **a grant** on a column: one grant column line in  316ms
+   ✓ piece 6a — the snapshot on a fresh instance, in order: clean, and every change seen > B.8 **a grant** with grant option: the item's line, option f out, option t in  306ms
+   ✓ piece 6a — the snapshot on a fresh instance, in order: clean, and every change seen > B.8 **a grant** removed: one grant line out  310ms
+   ✓ piece 6a — the snapshot on a fresh instance, in order: clean, and every change seen > B.8 a grant no file says: chain up leaves it standing and is CHAIN_GREEN, the check is red by its line  459ms
+   ✓ piece 6a — the snapshot on a fresh instance, in order: clean, and every change seen > B.8 a default privilege: one default-acl line in  307ms
+   ✓ piece 6a — the snapshot on a fresh instance, in order: clean, and every change seen > B.8 **the owner of one object in os** (the bench's superuser): its function line and its stored grant, the owner's name in each  415ms
+   ✓ piece 6a — the snapshot on a fresh instance, in order: clean, and every change seen > B.8 a role's attribute: the role line, connlimit -1 out, 3 in  309ms
+   ✓ piece 6a — the snapshot on a fresh instance, in order: clean, and every change seen > B.8 a membership: one member line in  322ms
+   ✓ piece 6a — the snapshot on a fresh instance, in order: clean, and every change seen > B.8 a trigger disabled: the trigger line, enabled O out, D in  306ms
+   ✓ piece 6a — the snapshot on a fresh instance, in order: clean, and every change seen > B.8 row security off: the relation line, rowsecurity t out, f in  306ms
+   ✓ piece 6a — the snapshot on a fresh instance, in order: clean, and every change seen > B.8 force off: the relation line, force t out, f in  310ms
+   ✓ piece 6a — the snapshot on a fresh instance, in order: clean, and every change seen > B.8 an index dropped: its index line out  311ms
+   ✓ piece 6a — the snapshot on a fresh instance, in order: clean, and every change seen > B.8 a constraint dropped: its constraint line out  306ms
+   ✓ piece 6a — the snapshot on a fresh instance, in order: clean, and every change seen > B.8 a column's default: the column line, default 1 out, 2 in  306ms
+   ✓ piece 6a — the snapshot on a fresh instance, in order: clean, and every change seen > B.8 the vocabulary's comment, its mark taken away: the comment line changes and the table's reference lines go  310ms
+   ✓ piece 6a — the snapshot on a fresh instance, in order: clean, and every change seen > B.8 a sequence's increment: the sequence line, increment 5 out, 7 in  307ms
+   ✓ piece 6a — the snapshot on a fresh instance, in order: clean, and every change seen > B.8 the view: the one view line that changed, out and in  309ms
+   ✓ piece 6a — the snapshot on a fresh instance, in order: clean, and every change seen > B.8 a table nobody's file made: its relation, its column, and its grants — the owner's stored, os_reader's by the default privilege  314ms
+   ✓ piece 6a — the snapshot on a fresh instance, in order: clean, and every change seen > B.8 a reference value changed by hand: one reference line out, one in — and chain up puts it back: equal  450ms
+   ✓ piece 6a — the snapshot on a fresh instance, in order: clean, and every change seen > B.8 a privileged extension a login (the installer) creates into os: lines of another owner appear, none goes; dropped: equal  315ms
+   ✓ piece 6a — the snapshot on a fresh instance, in order: clean, and every change seen > B.8 outside os, a grant to a login on a table of public: its grant line and its outside line  309ms
+   ✓ piece 6a — the snapshot on a fresh instance, in order: clean, and every change seen > B.8 outside os, an object os_owner owns elsewhere: its outside line and the owner's default grants on it  307ms
+   ✓ piece 6a — the snapshot on a fresh instance, in order: clean, and every change seen > B.8 outside os, a policy elsewhere naming a login: its outside line, and its policy and policy-using lines (SPEC §11.1 row 3)  309ms
+   ✓ piece 6a — the snapshot on a fresh instance, in order: clean, and every change seen > §11.1 row 1 a foreign key silenced on its referencing side (the superuser: disable trigger all): its two trigger-internal lines in, the table's own trigger O out and D in — no generated name anywhere; enable trigger all: equal  557ms
+   ✓ piece 6a — the snapshot on a fresh instance, in order: clean, and every change seen > §11.1 row 1 the same foreign key silenced on its referenced side (os.kinds, no trigger of its own): its two trigger-internal lines in, nothing out; enable: equal  557ms
+   ✓ piece 6a — the snapshot on a fresh instance, in order: clean, and every change seen > §11.1 row 2 replica identity using the primary key's index: the relation line replident d → i, the index line replident f → t; default again: equal  307ms
+   ✓ piece 6a — the snapshot on a fresh instance, in order: clean, and every change seen > §11.1 row 2 cluster on the primary key's index: the index line clustered f → t; set without cluster: equal  311ms
+   ✓ piece 6a — the snapshot on a fresh instance, in order: clean, and every change seen > §11.1 row 2 the database's connection limit (its owner, the installer): the database line connlimit -1 → 1000; -1 again: equal  307ms
+   ✓ piece 6a — the snapshot on a fresh instance, in order: clean, and every change seen > §11.1 row 3 the policy in public that names a login, its predicate changed (the table's owner, the installer): exactly one policy-using line out, one in  314ms
+   ✓ piece 6a — the snapshot on a fresh instance, in order: clean, and every change seen > §11.1 row 3 a table in public that inherits a table of os (the superuser): its inherits line, and nothing else of it; dropped: equal  410ms
+   ✓ piece 6a — the snapshot on a fresh instance, in order: clean, and every change seen > §11.1 row 4 a chain role's item on a language, with grant option (the superuser): its grant language line and its outside line in; revoked: equal  408ms
+   ✓ piece 6a — the snapshot on a fresh instance, in order: clean, and every change seen > §11.1 row 4 a chain role's item on a tablespace (the superuser): its grant tablespace line and its outside line in; revoked: equal  415ms
+   ✓ piece 6a — the snapshot on a fresh instance, in order: clean, and every change seen > §11.1 row 4 a chain role's item on a parameter (the superuser): its grant parameter line and its outside line in; revoked: equal  410ms
+   ✓ piece 6a — the snapshot on a fresh instance, in order: clean, and every change seen > §11.1 row 4 a default-privilege row left with an empty ACL (os_owner revokes its own on sequences): one default-acl-none line in; granted back: equal  311ms
+   ✓ piece 6a — the snapshot on a fresh instance, in order: clean, and every change seen > §11.1 row 5 a publication with a column list and a filter: its line; the filter changed: one line out, one in; no list and no filter: * and -; dropped: equal  729ms
+   ✓ piece 6a — the snapshot on a fresh instance, in order: clean, and every change seen > §11.1 row 8 large objects os_owner owns: one → `outside owns os_owner large object -`; two → the line twice; no oid in the answer; removed: equal  621ms
+   ✓ piece 6a — the snapshot on a fresh instance, in order: clean, and every change seen > §11.1 row 6 while a login holds a session in which it made a temporary table: SNAPSHOT_EQUAL, and the printed text holds no pg_temp  453ms
+   ✓ piece 6a — the snapshot on a fresh instance, in order: clean, and every change seen > §11.1 row 7 a comment holding \r\n: the difference holds the two characters \r and no raw carriage return; snapshot prints no raw one; what it prints, as a file, is SNAPSHOT_EQUAL  597ms
+   ✓ piece 6a — the snapshot on a fresh instance, in order: clean, and every change seen > down → INSTANCE_DOWN  1525ms
+ Test Files  1 passed (1)
+      Tests  57 passed (57)
+   Duration  74.79s (transform 161ms, setup 0ms, collect 226ms, tests 74.45s, environment 0ms, prepare 31ms)
+exit=0 seconds=75
+== foundation/tests/snapshot/a-file-left-out.test.ts
+ ✓ snapshot/a-file-left-out.test.ts (6 tests) 55545ms
+   ✓ piece 6a — a file left out, on a second fresh instance, in order > fresh makes an instance: INSTANCE_UP, listed  52518ms
+   ✓ piece 6a — a file left out, on a second fresh instance, in order > C.1 from nothing, the fixture chain without its last schema file → CHAIN_GREEN; the check is red by exactly that file's lines  342ms
+   ✓ piece 6a — a file left out, on a second fresh instance, in order > C.4 the whole fixture chain → CHAIN_GREEN, SNAPSHOT_EQUAL: the committed text's bytes, which B reached on another instance by another road  365ms
+   ✓ piece 6a — a file left out, on a second fresh instance, in order > down → INSTANCE_DOWN  1645ms
+ Test Files  1 passed (1)
+      Tests  6 passed (6)
+   Duration  55.83s (transform 130ms, setup 0ms, collect 179ms, tests 55.55s, environment 0ms, prepare 30ms)
+exit=0 seconds=56
+== foundation/tests/chain
+ ✓ chain/on-the-bench.test.ts (72 tests) 86910ms
+   ✓ the harness — seen to work before a case rests on it > a throwaway database is made on the bench's cluster, the guard allows it through its own list, and it is gone afterwards  1351ms
+   ✓ the harness — seen to work before a case rests on it > a session inside pg_sleep is seen as such by another session — and no longer once it woke  1118ms
+   ✓ the caller's shell chooses nothing of a session > with PGOPTIONS, PGAPPNAME and PGCLIENTENCODING set, a file meets the search path, application name and client encoding of a run with none set  447ms
+   ✓ one runner at a time > while a run sits in a file that sleeps, a second run with no wait is refused at once: busy — and the first goes on to its end  3136ms
+   ✓ one runner at a time > a second run with a wait stands at the lock while the first sleeps, runs after it, and applies nothing  3194ms
+   ✓ one runner at a time > a file added while a run waits for the lock is applied by that run: its disk is the disk as it stands under the lock  3194ms
+   ✓ one runner at a time > a wait that runs out is the same refusal: busy, after the wait and not before  3143ms
+   ✓ the ledger moved under a run > another hand writes at the position a run's third file will want: ledger-moved, the third left nothing, the first two stay ledgered  3150ms
+   ✓ the target > a list that loses the identity while a file sleeps: the next file's connection is refused, and the first file stays ledgered  3168ms
+   ✓ the target > the caller's own target changed to a second listed database while a file sleeps: the run finishes on the first, and the second is untouched  3394ms
+ ✓ upgrade/chain-at.test.ts (24 tests) 230ms
+ ✓ chain/read-chain.test.ts (33 tests) 10ms
+ ✓ chain/answer.test.ts (15 tests) 4ms
+ ✓ chain/compare.test.ts (13 tests) 3ms
+ Test Files  5 passed (5)
+      Tests  157 passed (157)
+   Duration  88.02s (transform 172ms, setup 0ms, collect 361ms, tests 87.16s, environment 0ms, prepare 151ms)
+exit=0 seconds=89
+== foundation/tests/passes
+ ✓ passes/on-the-bench.test.ts (117 tests) 87185ms
+   ✓ the functions pass — built from nothing > a schema file that makes os and two function files: applied with functions: 2, and both answer what their files say  1403ms
+   ✓ the disk of the passes is read with the chain's > a function file changed while a run waits for the lock is applied as it stands under the lock  3220ms
+   ✓ the passes' sessions pass the guard > a list that loses the identity while the schema file sleeps: the functions pass's session is refused — the file stays ledgered, no function is made  3198ms
+   ✓ the passes' sessions pass the guard > a list that loses the identity while a function file sleeps: the reference pass's session is refused — the functions pass stays, no row is written  6260ms
+ ✓ passes/read-passes.test.ts (92 tests) 28ms
+ ✓ passes/answer.test.ts (10 tests) 3ms
+ Test Files  3 passed (3)
+      Tests  219 passed (219)
+   Duration  87.88s (transform 201ms, setup 0ms, collect 344ms, tests 87.22s, environment 0ms, prepare 93ms)
+exit=0 seconds=88
+== foundation/tests/roles
+ ✓ roles/on-a-fresh-instance.test.ts (35 tests) 69410ms
+   ✓ piece 5 — the roles and the schema os on a fresh instance, in order > fresh makes an instance: INSTANCE_UP with its cluster identifier, listed, and answering it  52882ms
+   ✓ piece 5 — the roles and the schema os on a fresh instance, in order > B.10 what the platform leaves open to every login: a temporary table, a large object made and unlinked, hstore put into os and dropped again by the login — while it stands, the chain is red by its manifest; afterwards green  360ms
+   ✓ piece 5 — the roles and the schema os on a fresh instance, in order > B.12 the step's refusals — createdb on os_intake, pg_monitor to os_reader, the host lock held by another — each leaving every stored password and the file as they were, each put back  621ms
+   ✓ piece 5 — the roles and the schema os on a fresh instance, in order > B.12 the order of SPEC §6 step 2, pinned: a login with two faults says its first reason — os_intake given createdb and made a member of pg_monitor → os_intake createdb; two faulty logins say the first login, not the first reason — os_executor a member, os_reader given createdb → os_executor member  542ms
+   ✓ piece 5 — the roles and the schema os on a fresh instance, in order > §11 item 1: connection limit 0 on os_executor → logins → LOGINS_REFUSED os_executor cannot-log-in, exit 6; the file kept, the verifiers the step's new ones of it; put back, logins green and all four come in  421ms
+   ✓ piece 5 — the roles and the schema os on a fresh instance, in order > §11 items 4, 5: another session holds os_reader's row — the last login's — and four are minted → logins ends within 20 s, exit 1, 'the server refused the verifier of os_reader (55P03)', nothing secret said, no SCRAM-SHA-256$ in the log's window, every stored verifier as it was, the file ahead; rolled back, logins green with the file as it stood and all four come in  5459ms
+   ✓ piece 5 — the roles and the schema os on a fresh instance, in order > §11 item 4, the cancel path: with the installer's own statement_timeout = '2s' (role-level, put back) and os_reader's row held as above → logins ends within 20 s, exit 1, 'the server refused the verifier of os_reader (57014)', nothing secret said, no SCRAM-SHA-256$ in the log's window, every stored verifier as it was; rolled back, logins green and all four come in  2493ms
+   ✓ piece 5 — the roles and the schema os on a fresh instance, in order > B.13 a taken name: the real root applied to a throwaway database of the same instance → file-failed at 0001-roles.sql, role "os_owner" already exists, nothing applied, the ledger's bootstrap row alone  1161ms
+   ✓ piece 5 — the roles and the schema os on a fresh instance, in order > down → INSTANCE_DOWN, and the secret file stands as it stood: down does not remove it  1551ms
+ ✓ roles/without-the-bench.test.ts (20 tests) 9ms
+ Test Files  2 passed (2)
+      Tests  55 passed (55)
+   Duration  69.91s (transform 180ms, setup 0ms, collect 282ms, tests 69.42s, environment 0ms, prepare 59ms)
+exit=0 seconds=71
+== what stands
+INSTANCE_ABSENT
