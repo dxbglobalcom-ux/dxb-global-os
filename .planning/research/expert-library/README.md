@@ -18,6 +18,8 @@ not in the repository — they are other people's words in full; the studies quo
 | `harry-sanders/` | Harry Sanders, StudioHawk | 30 YouTube videos, 30 reels, 929 captions, agency sites | the web office (B84) |
 | `matt-diamante/a/` | Matt Diamante, HeyTony | 31 newest YouTube videos, 30 reels, 565 captions, his tools | B84, client-finding |
 | `matt-diamante/b/` | the same | 31 older YouTube videos (keywords, content, reporting, LLM ranking, Instagram) | B84, B28 |
+| `matt-diamante/c/` | the same | his 40 most-commented and most-liked carousels, 313 slides, with their counts | B84, B28 (the carousel line, client-finding) |
+| `harry-sanders/skills/` | Harry Sanders | his 55 public skill files and 6 packs (references, samples, one script read as text) | B84 (the register's web-office skills), B28 |
 | `alex-hormozi/offers-business/` | Alex Hormozi | 10 YouTube videos | offers, prices, money model (B83, B84, B28) |
 | `alex-hormozi/marketing-brand/` | the same | 7 YouTube videos, 30 reels, 126 captions, the channel's 531-video list | client-finding, the holding's brand |
 | `alex-hormozi/sales-team/` | the same | one 3 h 21 min sales-team training | the sales desk (B83) |
@@ -85,7 +87,10 @@ gate before a delivery leaves, and as the first page of the proposal. That is wh
 - **The asset before the audience.** Measured on Harry's own account: 136 posts in March 2026 drew 46 comments;
   32 posts in June drew 10,435, once one concrete free list stood behind one keyword. Hormozi's most-viewed
   videos of a quarter sold nothing. So the measuring engines and the measured library exist before any reel
-  machine runs.
+  machine runs. What this measure can show is that the comment word drew replies once a concrete asset stood
+  behind it; it cannot show that the asset was valued — on Matt's 40 strongest carousels comments rose with what
+  was withheld and likes with what was given (`matt-diamante/c`, PLAYBOOK §10.3) — so value is read from saves,
+  sends and visits to our page.
 - **Proof before scale.** By Hormozi's constraint method the holding's bottleneck today is not capability; it
   is proof and an offer. The whole chain is therefore run first on the holding's own site — it is the test
   bench, case study number one, and every guarantee is run there before it is offered to anyone.
@@ -118,14 +123,12 @@ The link rows themselves are a tab in the CEO's workbook.
 
 ## What a deeper study would read next
 
-Each folder's `OPEN-QUESTIONS.md` names its own. The skill candidates of all eight studies are merged once in
-`SKILLS.md` (53 skills, and the points where the studies disagree).
+Each folder's `OPEN-QUESTIONS.md` names its own. The skill candidates of all ten studies are merged once in
+`SKILLS.md` (69 skills, and the points where the studies disagree).
 
-Gathered on 2026-11-23 and not yet studied — on this machine, in the job folder: the slides of Matt Diamante's
-40 most-commented and most-liked carousels, written out slide by slide (`notes/matt-carousels/read-0…3.md`,
-313 slides); the transcripts of his remaining reels (the CEO's note on him: "all my videos … let the team work
-meticulously" — 283 reels, 30 in the first study); Harry Sanders' public skill files (61 pages, `harry-skills/`);
-the subtitles of 99 more of Harry's YouTube videos, 19 of Mei Man's and 2 of Matt's.
+Gathered on 2026-11-23 and not yet studied — on this machine, in the job folder: the transcripts of Matt
+Diamante's remaining reels (the CEO's note on him: "all my videos … let the team work meticulously" — 283 reels,
+30 in the first study); the subtitles of 99 more of Harry's YouTube videos, 19 of Mei Man's and 2 of Matt's.
 
 Still to read: Hormozi's two books in their own text and his description-linked sales skills, Mei Man's
 cost-cap and testing-structure series, Matt's remaining 237 carousels.

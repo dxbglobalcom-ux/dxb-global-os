@@ -1,27 +1,35 @@
-# The skill register — every skill candidate of the eight studies, written once
+<!-- matt-diamante/d (being written) numbers its new rows from 60; a later merge renumbers them from 65. Numbers 58 and 62 stay unused (merged, see the note under the header). -->
+# The skill register — every skill candidate of the ten studies, written once
 
 The eight studies name 77 skill candidates between them, and many are the same skill reached from two or
 three experts. This register merges them, and takes four more from the research of the rival's unowned
-services (`local-and-profile-services/METHODS.md`, short name **LP**): **53 skills, one line each** — 48 along
-the chain of `README.md`, in its order, and 5 that bind every station. The full specification — triggers, inputs, steps, output — stays in the study named in the
+services (`local-and-profile-services/METHODS.md`, short name **LP**). Two later studies, verified first (each
+folder's `VERIFIED.md`), proposed eighteen more: MC three, HK fifteen; two of them merged into existing rows.
+**69 skills, one line each** — 62 along the chain of `README.md`, in its order, and 7 that bind every station. The full specification — triggers, inputs, steps, output — stays in the study named in the
 "Specified in" column; where two studies specify the same skill, the first one named is the fuller and the
 others are what it must absorb. Nothing here is built or tried. Written 2026-11-23 by the lead from a whole
-reading of the eight `FOR-THE-HOLDING.md` files.
+reading of the eight `FOR-THE-HOLDING.md` files; MC and HK merged the same day from their `REGISTER-CHANGES.md`.
 
-Study short names: **MA** `matt-diamante/a` · **MB** `matt-diamante/b` · **HS** `harry-sanders` · **MM**
-`mei-man` · **OF** `alex-hormozi/offers-business` · **MK** `alex-hormozi/marketing-brand` · **ST**
-`alex-hormozi/sales-team` · **SS** `alex-hormozi/sales-skill`.
+Numbers 58 and 62 are not used: HK's `repo-seo-gate` is the build-time form of 1, and MC's `ai-call-readiness`
+is 8 and 39 together — each became a phrase in those rows.
+
+Study short names: **MA** `matt-diamante/a` · **MB** `matt-diamante/b` · **MC** `matt-diamante/c` · **HS**
+`harry-sanders` · **HK** `harry-sanders/skills` · **MM** `mei-man` · **OF** `alex-hormozi/offers-business` ·
+**MK** `alex-hormozi/marketing-brand` · **ST** `alex-hormozi/sales-team` · **SS** `alex-hormozi/sales-skill`.
 
 ## 1. Measure — the engines (free tool · delivery gate · first page of a proposal)
 
 | # | Skill | What it does | Specified in | Row |
 |---|---|---|---|---|
-| 1 | `readable-first` | Words in the server HTML, bots not blocked, indexed, no chains; then every technical finding sorted serious → warning → info and fixed in that order | HS 1 · absorbs MA `tech-audit-triage` | B84 |
-| 2 | `entity-consistency` | What the web says the business is; every variant of name, address, phone and the "what we do" sentence; one canonical form and a correction list | HS 6 | B84 |
-| 3 | `ai-recommendation-test` | Ten buyer questions in the assistants, three reads on different days; who is named, in what order, which source was quoted; the sources to win | MA `ai-recommendation-field-test` · absorbs MB S7, HS 11 | B84 |
-| 4 | `why-not-ranking` | One page against the three that beat it, ten checks in order, a verdict in one sentence | MB S5 · absorbs HS 5 `page-worth-ranking`; extends the page-by-page audit (w036) | B84 |
-| 5 | `prospect-brief` | Three findings about a prospect's own site, each *fact → what a customer feels → what it costs*, every figure with its tool run; no finding without a run | SS `sales-prospect-brief` · absorbs HS idea 11, MK idea 1's three facts | B84, B83 |
+| 1 | `readable-first` | Words in the server HTML, bots not blocked (one verdict per AI agent, by its job), indexed, no chains; every finding classed blocker → equity leak → quality signal, ranked by URLs and inlinks, fixed in that order; on sites we build, the same checks on the repository before every release | HS 1 · absorbs MA `tech-audit-triage` · HK adds redirect tracing, orphans only by comparison, his sample crawl as fixture, and the build-time form (`repo-seo-gate`, weighted 40/20/20/15/5, fixes as diffs) | B84 |
+| 2 | `entity-consistency` | What the web says the business is; every variant of name, address, phone and the "what we do" sentence; one canonical form and a correction list; six layers scored, a consistency FAIL caps the rest | HS 6 · HK adds the six-layer 0–10 scale and Wikidata before Wikipedia | B84 |
+| 3 | `ai-recommendation-test` | A frozen library of 10–20 buyer prompts (head, constrained, sceptical), three fresh-session runs each, day-1 and day-8 baselines, then monthly; who is named, recommended and linked; each prompt ours / rivals' / unclaimed; the sources to win; every round names its surface | MA `ai-recommendation-field-test` · absorbs MB S7, HS 11 · HK is the fuller protocol (scoring key, four columns, counts over completed answers, Bing citation share) · MC adds the first-party citation reports (Bing AI Performance, ChatGPT Brand Insights) and the ten-most-cited against ten-never-cited loop | B84 |
+| 4 | `why-not-ranking` | One page against the three that beat it, ten checks in order, a verdict in one sentence | MB S5 · absorbs HS 5 `page-worth-ranking`; extends the page-by-page audit (w036) · HK adds the rater's card (intent, ranking set read first, O / U / R, demotion triggers that cap, re-rate) | B84 |
+| 5 | `prospect-brief` | Three findings about a prospect's own site, each *fact → what a customer feels → what it costs*, every figure with its tool run; no finding without a run | SS `sales-prospect-brief` · absorbs HS idea 11, MK idea 1's three facts · HK adds the "(estimate)" label and the five-factor score as one labelled fact | B84, B83 |
 | 6 | `ad-funnel-leak-read` | An ad account read in order — arrived, page sold, paid — each leak routed to the office that fixes it | MM C | B28 |
+| 49 | `pdp-agent-readiness` | Whether a shopping agent can read and buy from a product template: six layers from raw and rendered source, a weighted score, one fix per issue at the template | HK (agentic-product-page-auditor) | B84 |
+| 50 | `affiliate-attribution-read` | Commission paid to sources that intercepted rather than earned the sale: review candidates from GA4 and the network's payouts, the check that confirms each, never a verdict of fraud | HK (affiliate-traffic-auditor) | B84, B28 |
+| 63 | `brand-dna-preview` | From a prospect's URL: a DNA sheet with a source for every element, a one-page brand book, three ads from the business's real photos and offer in its language — a private page for that business only | MC C16 · serves 38 `first-five-outreach`, 29 `ad-format-render` | B84, B28 |
 
 Featured snippets and voice answers (LP 3) are **not a skill and not a line of sale**: a snippet cannot be
 marked up, speakable markup serves a surface Google is retiring, and no console measures a voice answer. What
@@ -30,55 +38,68 @@ is real in them is done by skills 18 (answer-first sections for questions the pa
 the assistants read).
 
 The gap tools of MA idea 2 (profile gap, link-and-listing gap, listing checker, missing money pages,
-question finder) and HS idea 4's four public tools are **surfaces of engines 1–5**, not further skills.
+question finder), HS idea 4's four public tools, HK's short AI-visibility check and five-factor score, and MC's
+topic map are **surfaces of engines 1–5 and 9**, not further skills; the public "paste the audit you were given"
+page is the face of `suggestion-triage`.
 
 ## 2. Found and build — the site and its pages
 
 | # | Skill | What it does | Specified in | Row |
 |---|---|---|---|---|
-| 7 | `presence-run` | The listing kit filled once and submitted to every measured source that fits country and trade; stops at each human gate; re-fetched after 30 days | HS 7; reads `library/backlink-sources.tsv` | B84 |
-| 8 | `gbp-optimise` | The Business Profile against the top three rivals: categories, services with descriptions, products, areas, NAP; the owner's to-do; the monthly rhythm | MA | B84 |
-| 9 | `lane-and-map` | The one-sentence lane the client signs; core pages, areas of relevance, internal links, research / compare / buy; the prune list | HS 2 | B84 |
-| 10 | `question-harvest` | The client's question bank from Search Console, Suggest, People-also-ask, rival gap and the client's own messages, in the customer's wording | MB S1 | B84 |
-| 11 | `next-article` | Two topics a week: empty Big-5 slots first, then easy-first; rejects what an existing page already targets | MB S2 | B84 |
-| 12 | `evidence-intake` | Ten minutes of the owner's voice, the client's own records mined, primary-source figures; every item a ledger row with its origin | HS 3 · absorbs MA `owner-interview-post` steps 1–4, MB S3 steps 4–5 | B84 |
-| 13 | `interview-post` | The page written from the transcript and the ledger; answer first; a claim-trace table; unmatched claims cut | MB S3 · absorbs MA `owner-interview-post` steps 5–7 | B84 |
-| 14 | `only-we-gate` | No page leaves without an evidence item a model could not have written; needs-met grade; named author | HS 4 · absorbs MB's experience gate, MA's money-page gate | B84 |
-| 15 | `money-page-audit-fix` | Service, location and category pages against the pattern table: range, tiers, drivers, caveat, the unique fact, local detail | MA | B84 |
-| 16 | `internal-links` | After every publish: 3–5 links in with the target's phrase, conflicts and orphans flagged | MB S6 | B84 |
+| 7 | `presence-run` | The listing kit filled once and submitted to every measured source that fits country and trade; stops at each human gate; re-fetched after 30 days | HS 7; reads `library/backlink-sources.tsv` · MC adds the AI surfaces (Bing import, Search Console platform properties, the ChatGPT business profile, Google's message agent); every identity step stops at the owner | B84 |
+| 8 | `gbp-optimise` | The Business Profile against the top three rivals: categories, services with descriptions, products, areas, NAP; AI-call readiness (prices and availability where Google's AI reads them, the automated-calls setting on, the line answered with a price); the owner's to-do; the monthly rhythm | MA · MC adds AI-call readiness (C1; its proposed `ai-call-readiness` lives here and in 39) and the 120-character welcome message | B84 |
+| 9 | `lane-and-map` | The central entity the client signs as the lane; core and supporting pages by intent, merged or split by volume; every page research / compare / buy; one cluster one page; the linking map; the publishing order; the prune list | HS 2 · HK is the fuller specification (the topical-authority map: six attribute sources, thresholds, linking rules, intent by the ranking pages) · MC adds the topic map from the sitemap, set against the lane, as the first finding | B84 |
+| 10 | `question-harvest` | The client's question bank from Search Console, Suggest, People-also-ask, rival gap and the client's own messages, in the customer's wording | MB S1 · HK adds the seven query families as a checklist only and the fan-out per money page | B84 |
+| 11 | `next-article` | Two topics a week: empty Big-5 slots first, then easy-first; rejects what an existing page already targets | MB S2 · HK: the format follows the result set; the pace is set by pages that pass 14, never by a count | B84 |
+| 12 | `evidence-intake` | Ten minutes of the owner's voice, the client's own records mined, primary-source figures; every item a ledger row with its origin | HS 3 · absorbs MA `owner-interview-post` steps 1–4, MB S3 steps 4–5 · HK adds the six ingredients as the intake, one question at a time, figures verified at source and graded rare / semi-rare | B84 |
+| 13 | `interview-post` | The page written from the transcript and the ledger; answer first; a claim-trace table; unmatched claims cut | MB S3 · absorbs MA `owner-interview-post` steps 5–7 · HK adds expertise-gap markers (never an invented figure) and the weave-back | B84 |
+| 14 | `only-we-gate` | No page leaves without an evidence item a model could not have written: the afternoon test, six ingredients with quoted lines, the helpful-content grade, no rater trigger, a named real author; no word-count floor | HS 4 · absorbs MB's experience gate, MA's money-page gate · HK adds the three scales and a pass rule to try · MC adds the "biggest client" question, a last-pass phrase scan, metadata reviewed as content, Merchant Center's AI labels for shops | B84 |
+| 15 | `money-page-audit-fix` | Service, location and category pages against the pattern table: range, tiers, drivers, caveat, the unique fact, local detail | MA · HK adds one skeleton with a vertical table (local, B2B, SaaS, e-commerce, hospitality without alcohol), the product page's constraint questions, category pages as decision support | B84 |
+| 16 | `internal-links` | After every publish: a dated baseline, at most five targets, donors that already get clicks, 3–5 links each with a varied descriptive anchor; conflicts and orphans flagged; checks at +14 and +28 days | MB S6 · HK `internal-linking` is the fuller specification | B84 |
 | 17 | `landing-page-gate` | Ten points before any opt-in or lead page ships; also sold as an audit | MK 3.4 | B84, B28 |
 | 45 | `gbp-chain-manage` | A chain's profiles in one business group, the client as owner and the office as manager: the bulk sheet checked against Google's field rules before upload, store codes, bulk verification where the client qualifies; then every Google-made change, duplicate and lost verification caught the same day and a nightly diff against the client's master data | LP 1 | B84 |
-| 46 | `location-page` | One page per real branch inside a browsable locator, built from that branch's own facts and media, LocalBusiness markup per page; a uniqueness gate refuses a city-swap page and a place with no presence; no self-serving review stars | LP 4 · beside 15 `money-page-audit-fix` | B84 |
+| 46 | `location-page` | One page per real branch inside a browsable locator, built from that branch's own facts and media, LocalBusiness markup per page; a uniqueness gate refuses a city-swap page and a place with no presence; no self-serving review stars | LP 4 · beside 15 `money-page-audit-fix` · HK adds the local audit's location checks and place quotes from 57 | B84 |
+| 51 | `schema-graph` | One truthful JSON-LD graph per page: existing markup graded, missing types found, values only from the page or the fact sheet, no promise of retired features, no self-serving stars | HK (schema-markup-auditor, -generator) | B84 |
+| 52 | `author-entity` | A byline turned into a verifiable person: author page, Person schema, bylines, cross-web consistency, three bios; no invented credential, no fabricated persona | HK (author-authority-builder) | B84 |
+| 53 | `migration-guard` | Dated baseline, one-to-one redirect map with confidence, nowhere-to-land decisions, launch-day checklist, check-ins at +7, +14, +28 | HK (website-migration) | B84 (decision 14) |
+| 54 | `tool-page` | A working calculator built to one page order from the client's own figures, method and sources in the HTML, five real cases run before publishing, no gate before the answer | HK (calculator-page-builder) · HS idea 9 | B84 |
+| 55 | `decision-page` | One honest comparison, alternatives, buyer-guide or how-to-choose page: criteria every option is judged on, losses written as plainly as wins, a segmented verdict; refuses programmatic pairs | HK (decision-content-builder, listicle-builder) | B84 |
+| 56 | `persona-fit-gate` | Any page scored per buyer persona (goals 30, questions 30, objections 20, level and format 20); passes at 70+ for every persona with at most one missing question; a won lead reverse-engineered | HK (does-my-page-match-my-icp) | B84, B83 |
+| 57 | `review-proof-sort` | Reviews sorted onto service and place pages as verbatim, verified proof blocks, in the review's own language; unrated held for a person; thin pages listed | HK (packs/review-proof-sorter, repaired for every language) | B84 |
 
 ## 3. Care — the monthly loop
 
 | # | Skill | What it does | Specified in | Row |
 |---|---|---|---|---|
-| 18 | `striking-distance-weekly` | Search Console queries at positions 11–20, each with the exact change; re-read after four weeks | MB S4 · absorbs MA `striking-distance-weekly` | B84 |
-| 19 | `monthly-report` | The activity ledger written by the workers, one cohort per month of work, two months of decline opens a refresh task; four gauges on one page | MB S10 · absorbs HS 12 `four-gauges` | B84 |
-| 20 | `review-flow` | One request two hours after the visit, two reminders at most, every customer asked, nothing rewarded; reply drafts; the removal request for a fake review | MA `review-request-flow` · absorbs HS 13 | B84 |
-| 21 | `trust-gap-links` | Rivals' referring domains minus the client's, each row with its action; suppliers, memberships, sponsorships; unlinked mentions | MA | B84 |
-| 22 | `link-vet` | A link is judged by whether the linking *page* ranks and is relevant; never a domain score; the banned-source list | HS 10 | B84 |
-| 23 | `data-story` | One finding from the client's own data or a scan of ours, with its table and methodology page | HS 8 | B84 |
-| 24 | `press-list-and-pitch` | Twenty to thirty journalists who wrote on it in ninety days; the pitch; one follow-up; the reactive lane | HS 9 | B84 |
-| 25 | `winner-loser` | After a Google update: which page types moved, the hypothesis; no change while it rolls | HS 14 | B84 |
+| 18 | `striking-distance-weekly` | Two lanes a week: positions 4–10 ranked by a lift score on the site's own CTR, each page with its title, one addition and one link; positions 11–20, each query with the exact change; re-read after four weeks | MB S4 · absorbs MA `striking-distance-weekly` · HK adds the lift score and position weights · MC: the money regex from the tested February text; Search Console's AI configuration builds filters only; never "the keyword a few more times" | B84 |
+| 19 | `monthly-report` | The activity ledger written by the workers, one cohort per month of work, two months of decline opens 60 `decay-triage`; four gauges on one page — eligible, chosen, arriving (a floor), paying off — under a readability line | MB S10 · absorbs HS 12 `four-gauges` · HK adds each gauge's source, how the gauges are read together, the citation × traffic 2×2 and the local-actions record | B84 |
+| 20 | `review-flow` | One request two hours after the visit, two reminders at most, every customer asked, nothing rewarded, no words supplied; reply drafts; a negative review checked against Google's eleven grounds before any removal request | MA `review-request-flow` · absorbs HS 13 · HK adds the grounds with confidence, the no-accusation reply, the inventory of unused reviews and mentions, the sentiment read | B84 |
+| 21 | `trust-gap-links` | Rivals' referring domains minus the client's, each row with its action; suppliers, memberships, sponsorships; unlinked mentions | MA · HK adds one row per linking domain, drop reasons counted, one angle per prospect, never a guessed address · MC adds four link-page search strings; a tool's "opportunities" count never reported; link-request e-mails answered on merit, never with a link | B84 |
+| 22 | `link-vet` | A link is judged by whether the linking *page* ranks and is relevant; never a domain score; the banned-source list | HS 10 · HK adds the four-rung page ladder (the rung always stated) and the desk / shelves / basement verdict | B84 |
+| 23 | `data-story` | One finding from the client's own data or a scan of ours, with its table and methodology page | HS 8 · HK adds a strength grade per finding with its sample size; no send-ready pitch below strong | B84 |
+| 24 | `press-list-and-pitch` | Twenty to thirty journalists who wrote on it in ninety days; the pitch; one follow-up; the reactive lane | HS 9 · HK adds the pitch anatomy, three tiers, one follow-up that adds something | B84 |
+| 25 | `winner-loser` | After a confirmed update, its announcement read first and its scope stated: pages classed winner / loser / flat by absolute clicks in clean windows; losers through the fit test; no change while it rolls | HS 14 · HK `winner-or-loser` is the fuller specification · MC adds the primary announcement and its scope (surface, countries, kind of site) | B84 |
 | 47 | `gbp-suspension-recovery` | The decision read in the appeals tool, the cause found at profile and account level, everything fixed and the documents matched to the profile character by character **before** the one appeal Google allows; nothing edited while it is reviewed; never a replacement profile | LP 2 | B84 |
-| 26 | `roadmap-12-month` | Baseline, low-hanging list, money-page map, link gap, twelve months of dated work — promises work, never a rank | MA | B84 |
+| 26 | `roadmap-12-month` | Baseline, low-hanging list, money-page map, link gap, twelve months of dated work — promises work, never a rank | MA · HK: his time ranges as placeholders until ours are measured; a broken core page fixed at once | B84 |
+| 59 | `cannibalisation-check` | Queries where the client's own pages compete: true / secondary drag / harmless / near-duplicate by thresholds; one fix per query; keeper named | HK (cannibalization-detector) | B84 |
+| 60 | `decay-triage` | Why a page lost traffic — freshness, displacement, intent shift, demand, seasonal — and one treatment: refresh, rewrite, consolidate, retarget, leave | HK (content-decay-detector) | B84 |
+| 61 | `feed-optimise` | A store's product feed kept approved and matched: disapprovals first, never-touch fields enforced, titles for matching, identifiers, attributes, monthly pass | HK (merchant-center-optimizer) · MC C9: generated product data labelled, IPTC on generated images | B84, B28 |
 
 ## 4. The ad office and content
 
 | # | Skill | What it does | Specified in | Row |
 |---|---|---|---|---|
-| 27 | `ad-voice-mining` | The quote bank from what customers say, coded and counted; the roadmap of about 25 concepts | MM A | B28 |
+| 27 | `ad-voice-mining` | The quote bank from what customers say, coded and counted; the roadmap of about 25 concepts | MM A · HK: the review language mine feeds it too | B28 |
 | 28 | `ad-belief-brief` | One concept into one page: belief walking in, reframe, completion thought; refuses the same ad again | MM B | B28, B43 |
-| 29 | `ad-format-render` | A passed brief into a faceless asset drawn in code | MM E | B43 |
+| 29 | `ad-format-render` | A passed brief into a faceless asset drawn in code; a client's flat image split into editable layers to update, translate and re-cut | MM E · MC adds the layer split (C17-b, an open model; licence read first) | B43 |
 | 30 | `ad-winner-read` | Why it won, with confidence and the cheapest separating test; the next briefs | MM D | B28 |
 | 31 | `hook-writer` | Fifty hooks, forty remade from proven ones; reading level; every claim backed by a ledger row; written natively per language | MK 3.1 · absorbs MB S8 steps 1–2, HS 15's hook slot | B28 |
 | 32 | `short-script` | Six lines, one sentence each, timed aloud; caption, call to action; fixed formats (tier list, teardown, blueprint, and the audit on air of a business that asked for it — LP 6) | MB S8 · absorbs HS 15 `reel-script`, MM F `ad-teardown` as one format | B28 |
-| 33 | `short-postmortem` | At 24 hours and 7 days: the numbers into the hook bank; what to make more of | MB S9 | B28 |
+| 33 | `short-postmortem` | At 24 hours and 7 days, for shorts and carousels: saves, sends and visits into the hook bank, each post with its ask class; comments never the yardstick; what to make more of | MB S9 · MC adds the ask classes and why comments cannot judge content (§10.3) | B28 |
 | 34 | `winner-kaleidoscope` | Ten variants of a winner on named axes before any new concept | MK 3.2 | B28, B43 |
-| 48 | `social-profile-setup` | Name, handle, bio, category, links and buttons per platform, written for what that platform's search documents it matches, and identical to the canonical identity of skill 2; a drift check after | LP 5 (Facebook's field rules not yet read at source) | B28 |
-| 35 | `repurposing-chain` | One long piece into clips, carousel, post, article, mail, profile posts; one call to action; a link to measure each | MK 3.6 · absorbs MA `repurpose-8x` | B28 |
+| 48 | `social-profile-setup` | Name, handle, bio, category, links and buttons per platform, written for what that platform's search documents it matches, and identical to the canonical identity of skill 2; a drift check after | LP 5 (Facebook's field rules not yet read at source) · MC adds the Search Console platform property per account, whose top queries feed 10 | B28 |
+| 35 | `repurposing-chain` | One long piece into clips, carousel, post, article, mail, profile posts; one call to action; a link to measure each | MK 3.6 · absorbs MA `repurpose-8x` · its carousels are made by 64 `carousel-maker` | B28 |
+| 64 | `carousel-maker` | One thing an owner can do or check today, complete on 5–10 slides, true on every slide, pointing to the same content on our page; the word in the comments optional and never a lock | MC §10 and its format specification · with 31 `hook-writer`, 33 `short-postmortem`, `pairing-check` | B28, B84 |
 
 ## 5. Offer and sell
 
@@ -86,32 +107,45 @@ question finder) and HS idea 4's four public tools are **surfaces of engines 1�
 |---|---|---|---|---|
 | 36 | `offer-builder` | Problems by the four levers → the stack → guarantees from the ledger only → five wordings | OF 2 · absorbs MK `lead-magnet-designer` for the free front end | B83 |
 | 37 | `money-model` | Attraction → upsell → downsell → continuity; thirty-day cash against twice the cost of winning the client; pass or fail | OF 3 · with OF 5 `price-raise-check` | B83 |
-| 38 | `first-five-outreach` | The built preview and three measured facts as the message; the free-case trade; two follow-ups; the refusal-reason log | MK 3.5 | B83, B84 |
-| 39 | `first-touch` | A reply inside a minute that says it is an AI worker, restates what was asked, offers "now" or two real slots | SS `sales-first-touch` · absorbs ST `lead-first-touch` | B83 |
+| 38 | `first-five-outreach` | The built preview and three measured facts as the message; the free-case trade; two follow-ups; the refusal-reason log | MK 3.5 · its built preview is made by 63 `brand-dna-preview` | B83, B84 |
+| 39 | `first-touch` | A reply inside a minute that says it is an AI worker, restates what was asked, offers "now" or two real slots; on a client's phone line too, quoting only the signed price sheet | SS `sales-first-touch` · absorbs ST `lead-first-touch` · MC C1's answering worker is its voice form | B83 |
 | 40 | `sales-conversation` | Intro → discovery → gate → pitch → price → at most two loops → hand-over; fifteen honesty rules bind it; the objection library answers | SS (structure, rules H1–H15, objection library) · absorbs ST `sales-conversation`, `bant-grade`, SS `sales-objection`, `sales-handshake`, OF 4 `menu-upsell` | B83 |
 | 41 | `show-rate-ladder` | Confirmations, the proof item the morning of, no-show recovery, sixty days of pipeline; one opt-out stops all | ST · absorbs SS `sales-show-up`, `sales-follow-up`, ST `pipeline-sweep` | B83 |
 | 42 | `conversation-score` and the weekly review | Every conversation scored the same night; once a week exactly one change, earned on low-value leads first; the selling worker never edits its own script | ST `conversation-score`, `sales-weekly-focus`, `sales-board-diagnose` · absorbs SS `sales-tape-review`; ST `call-note` is its record | B83 |
 | 43 | `frame-builder` | The three pieces before the talk — before opt-in, after it, before the close — each selling only the next step | ST · absorbs OF 7 `sales-video-script` | B83, B43 |
-| 44 | `business-diagnosis` | A client's own numbers read back to front — offer, conversion, buyer, traffic last — into three to five moves | OF 6 · absorbs SS `sales-process-diagnosis` | B83 |
+| 44 | `business-diagnosis` | A client's own numbers read back to front — offer, conversion, buyer, traffic last — into three to five moves | OF 6 · absorbs SS `sales-process-diagnosis` · HK adds the paid-vs-organic overlap from the client's own Ads and Search Console data | B83 |
 
 ## 6. Prove and steer — these bind every station
 
 | Skill | What it does | Specified in |
 |---|---|---|
-| `proof-capture` | A job cannot close without the before-measurement, the after-measurement, the review asked for with no reward, and the date ninety days out | OF 8 · absorbs HS idea 7's baseline and case study |
+| `proof-capture` | A job cannot close without the before-measurement, the after-measurement, the review asked for with no reward, and the date ninety days out | OF 8 · absorbs HS idea 7's baseline and case study · HK adds the dated baseline's fields |
 | `proof-sentence` | "[share] of [n] clients achieved [outcome] in [time] under [condition]", the bottom fifth beside it; refuses below a floor | MK 3.7 |
 | `referral-ask` | A true compliment, a name, the ready message, "anyone else?" — at the close and at the first measured result | ST · MK idea 9 |
-| `weekly-constraint` | One sentence a week per revenue line: the bottleneck, the one input to multiply, what is left burning | OF 1 |
+| `weekly-constraint` | One sentence a week per revenue line: the bottleneck, the one input to multiply, what is left burning | OF 1 · for search work `suggestion-triage` carries it (one constraint, 90 days) |
 | `pairing-check` | Before anything public: what the buyer will associate with us; the boundaries first | MK 3.8 |
+| `suggestion-triage` | Any list of suggestions sorted approve now / check first / approve / park / drop with the stance cited; destructive changes need evidence in the same row; anything published without a person's approval dropped; one constraint for 90 days | HK (packs/source-grounding, with our own stance file) · with `weekly-constraint` |
+| `skill-fixture` | No skill is authored without a planted-defect input and its expected output in each market language; re-run on every change of skill, model or worker | HK (the core pack's sample-input / sample-output pairs) |
 
 ## Where the studies disagree, and what the lead reads
 
 | Point | The studies | The lead's reading |
 |---|---|---|
-| "Comment a word and I'll send it" | MA 10, MB 6 and MK 5 use it; HS refuses it as a gate | The asset is public on our own page, always. The word in the comments is an optional second door, used only where it starts a conversation the person asked for. |
-| A guarantee on clicks or cost per enquiry | OF offers "non-brand clicks above the baseline in 90 days, or we work free until they are"; SS L11 has the seller say it guarantees no ranking and no cost per lead | Both hold if the wording is exact: nothing is *promised* about Google or the auction; the remedy is our own further work. The seller's sentence is rewritten to say that. Whether such a remedy is offered at all is the CEO's (terms and guarantees). |
+| "Comment a word and I'll send it" | MA 10, MB 6 and MK 5 use it; HS refuses it as a gate; MC measured it on Matt's 40 strongest carousels; HK: his skill files themselves are ungated | The asset is public on our own page, always. The word in the comments is an optional second door, used only where it starts a conversation the person asked for. MC §10.3: comments rise with what is withheld (3.83 comments per like when the slides teach nothing, 0.02 when they teach everything) and his best post gave the whole method on the slides, the word only for a link — so a comment count shows the word worked, never that the asset was valued; posts are judged on saves, sends and visits to our page. |
+| A guarantee on clicks or cost per enquiry | OF offers "non-brand clicks above the baseline in 90 days, or we work free until they are"; SS L11 has the seller say it guarantees no ranking and no cost per lead; HK: every skill forbids promising a ranking, a citation or recovery | Both hold if the wording is exact: nothing is *promised* about Google or the auction; the remedy is our own further work. The seller's sentence is rewritten to say that. Whether such a remedy is offered at all is the CEO's (terms and guarantees). |
 | The first clients | MK: five free for a stated trade. OF: three to five free in a niche. ST: pilots at a reduced price | One decision, the CEO's: how many, free or reduced, in which trade. The studies agree on the trade — a recorded case, a review if deserved, a ninety-day measurement. |
-| How many approaches | MK: a hundred built previews a day. SS: twenty in a first test. HS: cold outreach is weak without a real finding | Start at SS's twenty with a measured finding in each; volume follows a known reply rate. B84 decision 9 holds client-finding at "not now". |
-| Who appears on film | MB, HS, MK and ST each ask it | One decision, the CEO's. All four agree a synthetic presenter passed off as a person is deception. |
-| Prices | MA: his ladder $10 / $97 / $3,000. HS: the market's bands. OF: candidate prices from general knowledge | No price in the library is a price study. One is owed before the price list goes to the CEO. |
-| The reel machine's start | HS and MK: after the first asset and the first proof. MB: thirty videos in thirty days as a first test | HS's measurement decides (136 posts drew 46 comments; 32 posts behind one concrete list drew 10,435): the asset first. |
+| How many approaches | MK: a hundred built previews a day. SS: twenty in a first test. HS: cold outreach is weak without a real finding; HK: no mass template, never a guessed address | Start at SS's twenty with a measured finding in each, one draft per angle and a personal line per recipient; volume follows a known reply rate. B84 decision 9 holds client-finding at "not now". |
+| Who appears on film | MB, HS, MK and ST each ask it; HK: a fabricated author is a documented spam pattern; MC: the carousel needs no face | One decision, the CEO's — and with it whose name signs the pages. All agree a synthetic presenter or author passed off as a person is deception. The carousel line does not wait on it. |
+| Prices | MA: his ladder $10 / $97 / $3,000. HS: the market's bands. OF: candidate prices from general knowledge; HK: planning ranges only, and his audits flag hidden prices | No price in the library is a price study. One is owed before the price list goes to the CEO; our own audits will fail the holding's site until it publishes prices. |
+| The reel machine's start | HS and MK: after the first asset and the first proof. MB: thirty videos in thirty days as a first test; MC: a verified walkthrough of a platform feature needs no engine | The asset first. HS's measurement (136 posts drew 46 comments; 32 posts behind one concrete list drew 10,435) shows the word drew replies once a concrete asset stood behind it — comments measure the mechanism (MC) — and MC adds that likes follow what is given. MC's refinement: a post whose asset is a verified walkthrough of a platform feature may run early as a reach test, pointing to the same walkthrough on our page; client-finding posts wait for the engines. |
+| Content length | MC: his checklist says "minimum 1,000 words", his own caption the opposite; MB: match the winners' real body text; HK: 150, 300 or no count across his files | No floor. Coverage of what the ranking pages cover; a word count is a cue to read the page, never a finding. Google states word count is not a factor. |
+| Striking-distance range | 18 (MB S4): positions 11–20. HK: 4–15 with a lift score; his internal linking: about 5–20 | Both: 4–10 is a click job on page one, 11–20 a rank job on page two; 18 runs two lanes. |
+| Meta descriptions | HK's stance W12: never write or fix them; HK's striking-distance and map briefs write them; MC C8: 120–156 characters | Written for the top money and striking-distance pages only, never as a campaign; a length is a truncation heuristic, not a rule. |
+| Anchors and repeating the keyword | HK striking-distance: an exact-match anchor and the query twice; HK internal linking: varied anchors; MC C6: "add the keyword a few more times" | Varied descriptive anchors; one anchor phrase, one page; no instruction to repeat a query a set number of times — a high-impression, low-click query gets a better title, description or answering section. |
+| Publishing pace | HK map: 90 articles in 12 weeks; HK stances and MC C9: a useful page beats hundreds | The pace is set by pages that pass 14, never by a number in a plan. |
+| Press call-outs | 24 keeps a reactive lane; HK stance W51 rates call-out sites 4/10 | Kept for the named mention with one owned number, never as link building, low priority. |
+| Review wording | HK map sample: steer customers toward chosen product words; 20: nothing scripted | Customers are asked what was done and where; never supplied words. |
+| "Eligible" | 19 via HS 12: readable, indexed, not blocked; HK dashboard (from his book): rankings and share of voice | The later definition; readability as a precondition line above the four gauges. |
+| The SOURCE index | HK: his book says never multiply real numbers; his auditor multiplies scores into a 0–100 index | The weakest area and the starting order are reported; no index is computed or sold. |
+</content>
+</invoke>
