@@ -19,6 +19,8 @@ both, because the machine is what earns. The holding is a company and a factory:
 continuously, in every halal way — its own companies and brands, services, products, content, partners
 and sponsors, the OS itself. Every judgement of what is worth doing starts from this.
 
+**Its mission, vision and principle** (his, 2026-11-23): `.planning/board-rows/C41.md` <!-- CEO-OK: holding-mission-vision-principle-rewritten-2026-11-23 -->
+
 An AI-native operating system for one holding company. One human in it: the CEO. He states
 intent and approves what the approval gate stops at him; the OS runs the company end to end.
 That is the whole product — **anti-baby-sitting**. If everything else fails, intent →

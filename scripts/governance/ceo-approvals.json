@@ -3329,5 +3329,13 @@
     "conditions": "His answer to the first decision of the Desktop note (fable-kotasi-onerim.md): the Opus-writes arrangement is NOT made permanent. Which pieces count as important after the reset is the lead's judgement (the door's §2 and §3 as they stand). The note's second and third decisions (managing at high; a daily share) are unanswered.",
     "session": "Fable 5.2 session 8e9a56bf, read first-hand, 2026-11-23.",
     "where": ".planning/STATE.md item 000; scripts/governance/ceo-approvals.json (fable-manages-opus-writes-while-fables-week-is-short-2026-11-23)"
+  },
+  "holding-mission-vision-principle-rewritten-2026-11-23": {
+    "date": "2026-11-23",
+    "what": "The holding's own mission, vision and principle sentences are rewritten on his word; they replace the three sentences of his decision K9 (2026-11-02, Rapor 2 §1). The driving-force sentence is unchanged. The principle's old clause 'söz, sicilin taşıdığı kadar verilir' is dropped and 'bunlara benzeyen hiçbir şey' added. Of the versions put to him he chose the long one; the short pair was dropped. The mission's opening was changed after his objection that what he says and what comes out differ: it now says 'söyleneni eksiksiz ve söylendiği gibi'.",
+    "verbatim": "\"Ama gerek yok ya. Hakkıyla iş, helal kazanç, aldatma, faiz ve kumar yok. Ve benzeri hususlar yok. Buna benzer hiçbir şey yok olacak. Bunun daha güzel bir versiyonunu oluşturabiliyorsan bana söyle lütfen. Onu yazalım.\" — \"Ben genel misyon ve vizyonu söyledim. Bunu lütfen hani daha böyle vurucu, daha güzel benim anlattığım, benim ne demek istediğimi daha güzel anlatan bir versiyona çevirebilir misiniz? Misyon ve vizyonu.\" — \"Ama işte o niyeti ben söyleyeyim de siz yap niyeti ben söylerim, işi holding bitirir. Olmuyor işte öyle yani. Ben bir şey söylüyorum, başka bir şey ortaya çıkıyor vesaire falan aslında. Tamam, güzel. Hani şu ilk, yani bu uzun versiyon önerilerin güzel. Kısa bir çift, bunlara gerek yok.\" — \"Bunu gerekli yerlere Opus'a ver yazsın.\"",
+    "conditions": "The wording is the session's, written from what he said that evening and put to him; his order is to write it in the necessary places. The core (.claude/CLAUDE.md, THE PURPOSE) carries one line that points to the row: the sentences in full would pass the opening budget, and what leaves the core to make room is his to say. No sentence of the Islamic boundaries is widened or narrowed by this: the principle names what the boundaries already forbid.",
+    "session": "Fable 5.2 session fd51676c, read first-hand, 2026-11-23.",
+    "where": ".planning/board-rows/C41.md (The holding's own sentences); .planning/research/watch-links/2026-11-01-gelir/rapor2.html §1; .claude/CLAUDE.md (THE PURPOSE)"
   }
 }
