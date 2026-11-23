@@ -5,25 +5,24 @@ File: `backlink-sources.tsv`. It has 162 rows, one for each unique site or regis
 ## What was measured, and how
 
 - **Method.** Each measurement used curl with a desktop Chrome User-Agent and a 20 s timeout, with no login. It read the raw server HTML of one public listing/profile/article page on each site and recorded the `rel` of the outbound link to the listed company's own site. For a few sites a browse page was fetched first only to find a real listing URL. No JavaScript was executed. Nothing was signed up, submitted or posted.
-- **Results.** 48 sites have a measured rel value. Two of them come from earlier work. Chrome Web Store was measured in s02 and re-measured today: `ugc nofollow`. Thread Reader App was measured in k01: no rel.
-- **Count by rel value:**
+- **First pass (curl).** 48 sites gave a rel value to a plain fetch; 114 did not (403 walls, client-rendered pages, pages with no company link, sites never fetched).
+- **Second pass, the same day, through a real browser.** 99 of those 114 were taken again: the hidden research Chrome and the stealth browser, the rel read from the live page after JavaScript ran (raw HTML where a plain fetch worked), a page with a real company link chosen on each site. Nothing was signed up, submitted or posted; a paid "visit website" button was not clicked. Each row's note says which link was measured, with its exact rel string.
+- **Count by rel value, all 162 rows:**
 
 | rel_measured | sites |
 |---|---|
-| follow (no nofollow/ugc/sponsored on the link) | 25 |
-| nofollow | 20 |
-| ugc nofollow | 1 |
-| follow\|nofollow (mixed on the same site) | 2 (Tiny Startups, TinyLaunch) |
-| not-measured | 114 |
+| follow | 58 |
+| nofollow | 43 |
+| ugc nofollow | 7 |
+| ugc (no nofollow token: Behance, Product Hunt, Vocal) | 3 |
+| mixed on one site (follow beside nofollow, sponsored, a redirect or no link) | 8 |
+| through a redirect on the site's own domain (nofollow 3, follow 1, both 2) | 6 |
+| no link to the listed company at all | 14 |
+| walled on every road (GetApp, SoftwareWorld, BBB, Foursquare, SAM.gov) or server down (Slant) | 6 |
+| dead (CodeProject, parked) · not found (Milestones) | 2 |
+| not-measured — data listings and registry types that are not links (Google Business Profile, Apple, Bing Places, government and trade registers) | 15 |
 
-- **Why 114 are not measured:**
-  - 32 sites returned HTTP 403 to curl (bot wall). These include Trustpilot, Clutch, G2, Capterra, GetApp, Software Advice, TrustRadius, Crunchbase, Product Hunt, Medium, Reddit, Quora, Yelp, BBB, Behance, AlternativeTo, SourceForge, Bookshop.org and Forbes.
-  - 6 returned 429/5xx/202.
-  - About 10 are client-rendered, so the raw HTML has no anchors. Examples: Gumroad, Kaggle, Tech in Asia, SAM.gov, HackMD.
-  - About 25 pages were fetched but held no outbound link to the listed company.
-  - 2 link only through an internal redirect: Sitejabber (now SmartCustomer) and BetaList. Both redirect anchors carry `rel="nofollow"`. They are recorded as not-measured, as the brief requires.
-  - 19 were not fetched at all. These are mostly the small editorial and podcast names from s05, plus generic registry types.
-  - Local map platforms (Google Business Profile, Apple Business Connect, Bing Places) are data listings, not links.
+- **What the second pass changed.** The names the reels sell hardest do not pass a followed link: **Trustpilot, Crunchbase, DesignRush, Forbes contributor posts, Quora, Fandom, Devpost, SourceForge, Launching Next, Cylex, Pexels** are nofollow; **Clutch and The Manifest** go through a nofollow redirect; **Medium, Reddit, Pixabay** are ugc nofollow; **G2, Capterra, Software Advice, TrustRadius** carry no link to the company at all on a free listing (a form button or a paid click). Followed where measured: **AlternativeTo, StackShare, Agency Spotter, MAGNiTT, Saaspo, Stacker News, Bookshop.org, VentureBeat's own articles, Toolify (some listings), Sortlist, MapQuest, Gust, Postmake, Privacy Tools, Webwiki.de, Dribbble's showcase block, Substack, Smashing Magazine, Foundr, Mixergy, The Hustle, Niche Pursuits, First Round Review, My First Million, FinancesOnline, GrowthMentor, AllMyFaves, a Kaggle profile's website field**. Changed since the reels were made: CodeProject is parked, Webwiki.com is now a lifestyle blog, MakerPad is another product, Featured sends its expert pages elsewhere and links nofollow, Indie Bites has not published for a year.
 - **Limits.**
   - "follow" means only that the server HTML anchor has no nofollow/ugc/sponsored. It does not show whether Google indexes that page, whether JavaScript changes the rel later, or whether a newly created profile gets the same treatment as the sampled one.
   - The `dr_claimed` numbers are the creators' claims (Ahrefs). None was re-measured.
@@ -38,10 +37,10 @@ A ranking link needs a measured follow and a page a new business can actually ge
 1. **buy.NSW supplier hub** (and other Australian state supplier portals). The "Go to supplier website" link is followed, on a .gov.au page. This is the strongest link measured. It needs an Australian ABN, so for the holding it depends on the country.
 2. **ProvenExpert.** The business profile's website link is followed. The profile is free, so the reel's claim holds.
 3. **Google Business Profile.** It is not a link, but it is the strongest local and AI signal (Harry: S tier).
-4. **Trustpilot.** Not measured (403). It is cited by AI on buying queries (s22/k03 claim). Real reviews only.
-5. **G2 / Capterra.** Not measured (403). They are cited by AI for software (s22). One Capterra listing also feeds GetApp and Software Advice.
-6. **Clutch.** Not measured (403). This is the review profile for agencies, and it feeds The Manifest.
-7. **Product Hunt.** Not measured (403). It is a source of AI citations (s22, vendor case study), and its launch title can be phrased as the category search.
+4. **Trustpilot.** The "visit website" link is nofollow (measured). Its value is as a source AI answers quote on buying queries (s22/k03 claim), not as a link. Real reviews only.
+5. **G2 / Capterra.** A free listing carries no link to the company's site at all (measured: a form button on G2, a paid click on Capterra and Software Advice). They are cited by AI for software (s22). One Capterra listing also feeds GetApp and Software Advice.
+6. **Clutch.** The profile link goes through Clutch's own redirect and is nofollow (measured, on a paid-tier profile). This is the review profile for agencies, and it feeds The Manifest.
+7. **Product Hunt.** The "visit website" link carries `ugc` and no nofollow (measured). It is a source of AI citations (s22, vendor case study), and its launch title can be phrased as the category search.
 8. **DEV Community (dev.to).** The profile website link is followed.
 9. **Hashnode.** Profile and blog links are followed.
 10. **HackerNoon.** Profile links are followed. Stories go through editor review.

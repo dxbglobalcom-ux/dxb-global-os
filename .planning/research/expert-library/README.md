@@ -26,9 +26,11 @@ not in the repository — they are other people's words in full; the studies quo
 Beside the experts, from the single links of the two groups (job folder
 `.planning/research/watch-links/2026-11-23-seo-geo/`):
 - `library/backlink-sources.tsv` + `library/README.md` — 162 listing, profile and publishing sources in one
-  table; on 48 the link type was measured from the raw page on 2026-11-23 (25 follow, 20 nofollow, 1 ugc
-  nofollow, 2 mixed). The reels call many of these "backlinks"; half of what could be measured passes no
-  ranking value. 32 of the strongest names refused a plain fetch and are still unmeasured.
+  table; the link type was measured on 139 of them on 2026-11-23, the walled ones through a real browser
+  (58 follow, 43 nofollow, 10 ugc, 14 with no link to the company at all, the rest mixed or through a
+  redirect; 6 stayed walled). Most of what the reels call "backlinks" passes no ranking value: Trustpilot,
+  Crunchbase, Forbes contributor posts and Quora are nofollow, and a free G2 or Capterra listing has no
+  link to the company's site.
 - `library/service-coverage.md` — a rival agency's 94 deliverables set against the board: 0 built, 37 planned,
   40 partly, 17 missing (local SEO 6, Meta Ads 4).
 - `notes/` — the rival's full service inventory, the 50-site list with its listing kit, the ten search mind maps.
@@ -111,7 +113,14 @@ The link rows themselves are a tab in the CEO's workbook.
 
 ## What a deeper study would read next
 
-Each folder's `OPEN-QUESTIONS.md` names its own. Across them: Matt Diamante's carousels (half his posts teach
-on the image), Harry Sanders' 59 public SEO skill files, Hormozi's two books in their own text and his
-description-linked sales skills, Mei Man's cost-cap and testing-structure series, and the 32 unmeasured
-sources of the link table through a real browser.
+Each folder's `OPEN-QUESTIONS.md` names its own. The skill candidates of all eight studies are merged once in
+`SKILLS.md` (49 skills, and the points where the studies disagree).
+
+Gathered on 2026-11-23 and not yet studied — on this machine, in the job folder: the slides of Matt Diamante's
+40 most-commented and most-liked carousels, written out slide by slide (`notes/matt-carousels/read-0…3.md`,
+313 slides); the transcripts of his remaining reels (the CEO's note on him: "all my videos … let the team work
+meticulously" — 283 reels, 30 in the first study); Harry Sanders' public skill files (61 pages, `harry-skills/`);
+the subtitles of 99 more of Harry's YouTube videos, 19 of Mei Man's and 2 of Matt's.
+
+Still to read: Hormozi's two books in their own text and his description-linked sales skills, Mei Man's
+cost-cap and testing-structure series, Matt's remaining 237 carousels.
