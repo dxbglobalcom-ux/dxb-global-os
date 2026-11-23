@@ -2,6 +2,9 @@ import type { InstanceRecord } from "./instances.ts";
 
 export type ContainerFacts = { id: string; name: string; project: string; createdAt: string; volumes: string[] };
 
+/** A volume that carries the project's label now. Docker gives a volume's creation to the whole second. */
+export type VolumeFacts = { name: string; createdAt: string };
+
 export class RemovalRefused extends Error {
   name = "RemovalRefused";
 }
@@ -30,6 +33,8 @@ function refuseWhatCarriesARefusedProject(found: readonly ContainerFacts[], volu
 export function selectRemovalTargets(
   found: readonly ContainerFacts[],
   record: InstanceRecord | PendingRecord | undefined,
+  // SPEC §5b.4, not built: accepted and not read yet. Optional only while a caller still passes two arguments.
+  labelled?: readonly VolumeFacts[],
 ): { containers: string[]; volumes: string[] } {
   const recordedVolumes = record !== undefined && !("pending" in record) ? record.volumes : [];
   const volumes = [...new Set([...recordedVolumes, ...found.flatMap((container) => container.volumes)])];

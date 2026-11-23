@@ -19,8 +19,11 @@ const DOT_ENV = piece(".", "env");
 // Env files of the old system whose names carry no hyphen (the hyphenated ones are caught by their shape).
 const OLD_ENV_FILES = [piece("backup", DOT_ENV), piece("iso", DOT_ENV)];
 const ENV_OBJECT = piece("process", DOT_ENV);
-// SPEC §3: the only variables the foundation's bench reads.
-const VARIABLES_OF_THE_CONTRACT = ["HOME", "PATH", "XDG_STATE_HOME", "XDG_RUNTIME_DIR", "DXB_FOUNDATION_LOCK_WAIT"];
+// The same object by its two other spellings: asked for in brackets, and imported by its own name.
+const ENV_IN_BRACKETS = piece("process", '["env"]');
+const ENV_IMPORTED = piece("import { env } from ", '"node:process"');
+// SPEC §5b.1: the only variables the foundation's bench reads.
+const VARIABLES_OF_THE_CONTRACT = ["PATH", "DXB_FOUNDATION_LOCK_WAIT"];
 
 const oldPort = new RegExp(`(?<!\\d)(?:${OLD_PORTS.join("|")})(?!\\d)`, "g");
 const companyVariable = new RegExp(`${COMPANY_VARIABLE}\\w*`, "g");
@@ -33,6 +36,10 @@ const namedEnvFile = new RegExp(
 );
 // Any touch of the environment object, with the variable's name when it is spelled.
 const envRead = new RegExp(`${literally(ENV_OBJECT)}(?:\\.([A-Za-z_$][\\w$]*)|\\[\\s*["']([^"']*)["']\\s*\\])?`, "g");
+// The environment object reached past that spelling — whatever is read off it then, the scan above would not see it.
+const envInBrackets = /\bprocess\s*(?:\?\.)?\s*\[\s*["'`]env["'`]\s*\]/g;
+// `env` imported from the process module under any name, also when the import's list spans lines.
+const envImported = /\bimport\s+(?:[\w$]+\s*,\s*)?\{[^}]*\benv\b[^}]*\}\s*from\s*["'](?:node:)?process["']/g;
 
 /** What one text spells that the foundation must not: each finding says its kind and the spelling. */
 function oldAddressesIn(text: string): string[] {
@@ -46,9 +53,14 @@ function oldAddressesIn(text: string): string[] {
     for (const match of line.matchAll(envRead)) {
       const variable = match[1] ?? match[2];
       if (variable === undefined || !VARIABLES_OF_THE_CONTRACT.includes(variable)) {
-        findings.push(`${at}: environment read outside SPEC §3: ${match[0]}`);
+        findings.push(`${at}: environment read outside SPEC §5b.1: ${match[0]}`);
       }
     }
+    for (const match of line.matchAll(envInBrackets)) findings.push(`${at}: the environment by another spelling: ${match[0]}`);
+  }
+  for (const match of text.matchAll(envImported)) {
+    const at = `line ${text.slice(0, match.index).split("\n").length}`;
+    findings.push(`${at}: the environment by another spelling: ${match[0].replace(/\s+/g, " ")}`);
   }
   return findings;
 }
@@ -78,23 +90,31 @@ describe("the detector — seen to find each forbidden spelling before its silen
     ["a bracketed read of one", `${ENV_OBJECT}["SUPABASE_SERVICE_ROLE_KEY"]`],
     ["the whole environment handed on", `spawn(command, { env: { ...${ENV_OBJECT} } })`],
     ["a read by a computed name", `const value = ${ENV_OBJECT}[name];`],
+    ["a read of HOME, which SPEC §5b.1 took from the contract", `const home = ${ENV_OBJECT}.HOME ?? "";`],
+    ["a read of XDG_STATE_HOME, taken from it too", `join(${ENV_OBJECT}.XDG_STATE_HOME, "dxb")`],
+    ["a read of XDG_RUNTIME_DIR, taken from it too", `${ENV_OBJECT}["XDG_RUNTIME_DIR"]`],
+    ["the environment asked for in brackets, even for a variable of the contract", `${ENV_IN_BRACKETS}.PATH`],
+    ["the environment imported by its own name", `${ENV_IMPORTED};`],
+    ["that import under another name, its list on several lines", ENV_IMPORTED.replace("{ env }", "{\n  argv,\n  env as variables,\n}")],
+    ["that import from the module's bare name, beside its default", ENV_IMPORTED.replace("node:", "").replace("{", "process, {")],
   ])("finds %s", (_what, sample) => {
     expect(oldAddressesIn(sample)).toHaveLength(1);
   });
 
-  it("is silent on the foundation's own address and on the variables SPEC §3 names", () => {
+  it("is silent on the foundation's own address and on the two variables SPEC §5b.1 names", () => {
     const allowed = [
       "postgresql://postgres:postgres@127.0.0.1:54522/postgres",
       "port = 54521",
       "shadow_port = 54520",
       // an old port's digits inside a longer number are not a port
       `sysid 7700${OLD_PORTS[0]}0000000001`,
-      `const home = ${ENV_OBJECT}.HOME ?? "";`,
+      `const path = ${ENV_OBJECT}.PATH ?? "";`,
       `${ENV_OBJECT}["PATH"]`,
-      `${ENV_OBJECT}.XDG_STATE_HOME ?? join(${ENV_OBJECT}.HOME, ".local/state")`,
-      `${ENV_OBJECT}.XDG_RUNTIME_DIR`,
       `Number(${ENV_OBJECT}.DXB_FOUNDATION_LOCK_WAIT)`,
       "execFile(command, args, { env: options.env })",
+      // the process module imported for something else, and an `env` that is not the process's
+      'import { argv, exit } from "node:process";',
+      'import { env } from "./settings.ts";',
       'openai_api_key = "env(OPENAI_API_KEY)"',
     ].join("\n");
     expect(oldAddressesIn(allowed)).toEqual([]);
@@ -121,7 +141,7 @@ describe("foundation/** — nothing in it spells an address of the old system", 
     expect(files.filter((file) => file.split("/").includes("node_modules"))).toEqual([]);
   });
 
-  it("no file spells an old port, a company variable or an env file of the old system, and the environment is read only for the names of SPEC §3", () => {
+  it("no file spells an old port, a company variable or an env file of the old system, and the environment is read only for the names of SPEC §5b.1", () => {
     const findings = files.flatMap((file) =>
       oldAddressesIn(readFileSync(join(foundationDir, file), "utf8")).map((finding) => `${file} ${finding}`),
     );

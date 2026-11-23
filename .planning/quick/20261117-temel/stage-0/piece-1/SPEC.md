@@ -236,6 +236,58 @@ Not pinned by a test, because only fault injection could provoke them — these 
 code: step 1 (a config that differs), step 3's refusal, step 5's `ExposureRefused`, step 7's environment, step 9's
 cleanup, `destroyInstance`'s identity mismatch, and `TARGET_REFUSED` from the command.
 
+## 5b. After the blind audit (`fable-audit.md`, 2026-11-23) — the contract as corrected
+
+No A finding; ten B. Each is taken; where this section and §3–§5a differ, this section holds.
+
+1. **One lock path, one list path, moved by nothing** (F5). The state directory is
+   `<home>/.local/state/dxb/foundation-bench`, `<home>` read from the password database (`os.userInfo().homedir`),
+   never from a variable. The list is `instances.json` in it, the host lock `host.lock` in it. Both are resolved once
+   per process. `XDG_STATE_HOME` and `XDG_RUNTIME_DIR` are no longer read: the command reads `PATH` and
+   `DXB_FOUNDATION_LOCK_WAIT` and nothing else.
+2. **The lock outlives a killed parent while its work goes on** (F1). Every child that makes or changes the stack —
+   the CLI's start, the old chain — is given the lock's open file, so the kernel keeps the lock until the last of
+   them ends. On SIGINT or SIGTERM the command stops its child, removes what the run made under the lock, and exits
+   with 130 or 143.
+3. **A record is not yet a made instance** (F2). `InstanceRecord` gains `chainAppliedAt?: string`, written only after
+   step 8. `standing` requires it; a record without it is `foreign` ("the chain did not finish"), which `fresh`
+   removes and remakes. The guard's list is unchanged on purpose: it answers "did the bench make this database",
+   and a half-made one is still the bench's to write on and to remove.
+4. **Volumes stand under the same authority as containers** (F3, F4).
+   `selectRemovalTargets(found, record, labelled)` takes a third argument, the volumes that carry the project's
+   label now — `VolumeFacts = { name: string; createdAt: string }`.
+   - A volume is removed only when it carries the label now or is mounted by a found container; a name that stands
+     only in the list file's text removes nothing.
+   - With an `InstanceRecord`: a labelled volume that is neither in `record.volumes` nor mounted by a found container
+     → `RemovalRefused`. With a `PendingRecord`: a labelled volume created before `startedAt` (both taken to the whole
+     second — Docker gives a volume's creation to the second) → `RemovalRefused`. With no record: any labelled
+     volume → `RemovalRefused`.
+   - `makeInstance` step 2 and `statusOf` count a labelled volume as something that stands: with no record it is
+     `foreign`, and a make never adopts it.
+   - `destroyInstance` answers `"destroyed"` only after it has looked again and found no container and no volume
+     carrying the label; otherwise it throws. It removes the bench's network, when nothing is attached, on every
+     path — the `"absent"` one included.
+5. **Removal also asks the refused list** (F10): a running database container that answers the company's or the old
+   bench's cluster is refused whatever the record says.
+6. **The identity queries are schema-qualified** (F10): `pg_catalog.pg_control_system()`, `pg_catalog.pg_database`,
+   `pg_catalog.current_database()`; the columns keep their names.
+7. **What "on the connection that does the work" means in this piece** (F6). The old chain opens its own sessions
+   and may not be edited, so here the work is bound to the checked server by the database container's id and by the
+   one container that publishes the port — both paths read and compared at step 6 — not by the session. From piece 3
+   on the foundation's own runner checks in the very session that writes. A `Queryable` handed to the guard is one
+   session, never a pool.
+8. **Pure decisions are exported so that tests pin them** (F8): `statusOf(containers, labelled, list)`,
+   `exposedBeyondLoopback(containers): string[]`, `configMismatch(tomlText): string | undefined`,
+   `answerOf(failure): { line: string; exit: number }`, with the types `BenchContainer`, `VolumeFacts`, `ListFile`.
+9. **`refused.json` is compared with the old system's own record while that record lives** (F7): one test reads
+   `tools/hooks/ledger-identity.json` as data — `company.sysid` and the newest `allowed[].sysid` — and fails when
+   `refused.json` differs. It leaves with the old system at stage 5.
+
+Still pinned by no test, and why — these rest on reading: the lock asked again before each single removal call and
+the record removed last (an observer cannot stop the run between two calls); `ExposureRefused` at step 5 on a live
+stack (step 3 refuses the same cause first; the decision itself is now pinned as `exposedBeyondLoopback`); step 6's
+two-path inequality (needs a second server on the port); the list file's atomic write.
+
 ## 6. Done when
 
 `pnpm foundation:typecheck` exits 0 · `pnpm install --frozen-lockfile` exits 0 with the lockfile unchanged ·

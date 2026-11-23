@@ -1,10 +1,9 @@
 import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { afterAll, afterEach, describe, expect, it, vi } from "vitest";
+import { afterAll, describe, expect, it, vi } from "vitest";
 import {
   assertFoundationTarget,
-  defaultStatePath,
   guarded,
   readIdentity,
   readInstances,
@@ -36,7 +35,8 @@ const WORK_TEXT = "insert into anything (n) values (1)";
 /**
  * A connection that records every text it is sent and answers the two identity
  * queries of SPEC §2 — `system_identifier` from `pg_control_system()`, `oid` and
- * `datname` from `pg_database` — for the identity it was given.
+ * `datname` from `pg_database` — for the identity it was given. It answers them
+ * with or without their schema: that they are schema-qualified is one case's to say.
  */
 function stubConnection(identity: Identity): { conn: Queryable; texts: string[] } {
   const texts: string[] = [];
@@ -75,6 +75,18 @@ describe("readIdentity — the server says who it is", () => {
   it("answers the cluster's identifier, the database's oid and its name, as the connection gave them", async () => {
     const { conn } = stubConnection(MADE);
     expect(await readIdentity(conn)).toEqual({ sysid: "7700000000000000001", dboid: "5", dbname: "postgres" });
+  });
+
+  it("asks with every catalog name schema-qualified: pg_catalog.pg_control_system(), .pg_database, .current_database()", async () => {
+    const { conn, texts } = stubConnection(MADE);
+    await readIdentity(conn);
+    const asked = texts.join("\n");
+    for (const name of ["pg_control_system(", "pg_database", "current_database("]) {
+      expect(asked).toContain(`pg_catalog.${name}`);
+    }
+    // No bare spelling beside the qualified ones: a search path set on the session must not choose what answers.
+    const bare = /(?<!\bpg_catalog\.)\b(?:pg_control_system|pg_database|current_database)\b/g;
+    expect(asked.match(bare) ?? []).toEqual([]);
   });
 });
 
@@ -190,23 +202,5 @@ describe("the list file — a list that cannot be read lists nothing", () => {
     expect(readInstances(statePath)).toEqual([]);
     const refusal = await refusalOf(assertFoundationTarget(stubConnection(MADE).conn, { statePath }));
     expect(refusal.reason).toBe("not-listed");
-  });
-});
-
-describe("defaultStatePath — the list is machine state, under the user's state directory", () => {
-  const before = process.env.XDG_STATE_HOME;
-  afterEach(() => {
-    if (before === undefined) delete process.env.XDG_STATE_HOME;
-    else process.env.XDG_STATE_HOME = before;
-  });
-
-  it("stands under XDG_STATE_HOME when that is set", () => {
-    process.env.XDG_STATE_HOME = "/somewhere/state";
-    expect(defaultStatePath()).toBe("/somewhere/state/dxb/foundation-bench/instances.json");
-  });
-
-  it("stands under ~/.local/state when it is not", () => {
-    delete process.env.XDG_STATE_HOME;
-    expect(defaultStatePath()).toBe(`${process.env.HOME}/.local/state/dxb/foundation-bench/instances.json`);
   });
 });

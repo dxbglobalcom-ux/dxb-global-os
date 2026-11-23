@@ -10,6 +10,8 @@ export type InstanceRecord = Identity & {
   containers: string[];
   volumes: string[];
   madeAt: string;
+  /** Written only after the ledger was seen whole (SPEC §5b.3). A record without it is not yet a made instance. */
+  chainAppliedAt?: string;
 };
 
 /** The whole list file: the made instances, and the make that has started and not yet written its record. */

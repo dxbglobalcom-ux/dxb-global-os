@@ -1,0 +1,43 @@
+# The lead's runs on e284504c, 2026-11-23 (audit F9)
+
+$ git show --stat --format=%h%x20%s 46007fc6 e284504c | grep -v "foundation/\|planning/"
+46007fc6 test(B85 stage 0, piece 1): the frame and the bench's contract, with its tests red before the code
+
+ .../quick/20261117-temel/stage-0/piece-1/SPEC.md   | 243 ++++++++++++
+ .../tests/bench/fixtures/decide-in-package.ts      |  31 ++
+ package.json                                       |   5 +-
+ pnpm-lock.yaml                                     |  41 ++
+ pnpm-workspace.yaml                                |   1 +
+ 30 files changed, 2329 insertions(+), 1 deletion(-)
+e284504c feat(B85 stage 0, piece 1): the foundation's own bench — a guard on the working connection, one host lock, removal by record
+
+ 13 files changed, 933 insertions(+), 67 deletions(-)
+
+$ git diff --stat 46007fc6 e284504c -- foundation/tests foundation/bench/supabase foundation/bench/refused.json   (empty = the code commit left the tests untouched)
+
+$ pnpm install --frozen-lockfile
+Already up to date
+Done in 233ms using pnpm v11.10.0
+exit=0; pnpm-lock.yaml sha256 9182197dfd32556c before and after
+
+$ pnpm typecheck   (the old system)
+$ tsc --build && tsc -p tsconfig.tests.json
+exit=0
+
+$ after the foundation test run: containers / volumes / networks of the bench, listeners on 545xx
+0
+0
+0
+0
+
+$ the two other stacks
+supabase_auth_DxB_Build Up 14 hours (healthy)
+supabase_auth_DxB_Global_OS Up 14 hours (healthy)
+supabase_db_DxB_Build Up 14 hours (healthy)
+supabase_db_DxB_Global_OS Up 14 hours (healthy)
+supabase_kong_DxB_Build Up 14 hours (healthy)
+supabase_kong_DxB_Global_OS Up 14 hours (healthy)
+supabase_realtime_DxB_Build Up 14 hours (healthy)
+supabase_realtime_DxB_Global_OS Up 14 hours (healthy)
+supabase_rest_DxB_Build Up 14 hours
+supabase_rest_DxB_Global_OS Up 14 hours

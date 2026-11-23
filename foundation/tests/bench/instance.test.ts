@@ -1,9 +1,10 @@
 import { existsSync, mkdtempSync, readdirSync, renameSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { afterAll, describe, expect, it, vi } from "vitest";
+import { afterAll, describe, expect, vi } from "vitest";
 import {
   InstanceStands,
+  LockRefused,
   acquireHostLock,
   defaultStatePath,
   destroyInstance,
@@ -12,6 +13,7 @@ import {
   makeInstance,
   readIdentity,
   readInstances,
+  type HostLock,
   type InstanceRecord,
   type Queryable,
 } from "@dxb-foundation/bench";
@@ -19,15 +21,18 @@ import {
   askInsideTheContainer,
   benchContainers,
   benchNetwork,
-  benchVolumes,
   command,
+  expectNothingStands,
   identityOn,
   listenersOnTheBenchPorts,
   publishedPorts,
   repositoryRoot,
+  tail,
+  theRestOfTheHostStandsAsBefore,
   valueOf,
   withConnection,
 } from "./fixtures/real-bench.ts";
+import { orderedSteps } from "./fixtures/ordered-steps.ts";
 import { refusalOf } from "./fixtures/refusal-of.ts";
 
 // The real thing: one instance of the foundation's bench is made, looked at
@@ -44,18 +49,7 @@ const LOOK_MS = 30_000;
 
 const SET_ASIDE = ".set-aside-by-the-instance-test";
 const scratch = mkdtempSync(join(tmpdir(), "dxb-foundation-instance-"));
-const tail = (output: string): string => output.slice(-1_500);
-
-let failedStep: string | undefined;
-/** One step of the sequence. Once a step has failed, the later ones fail at once and say which — they do not wait. */
-function step(name: string, timeoutMs: number, body: () => Promise<void>): void {
-  it(name, { timeout: timeoutMs }, async () => {
-    if (failedStep !== undefined) throw new Error(`not run: the step "${failedStep}" failed before it`);
-    failedStep = name; // stays so when the body throws or never comes back
-    await body();
-    failedStep = undefined;
-  });
-}
+const step = orderedSteps();
 
 let printedSysid = "";
 let record: InstanceRecord;
@@ -70,14 +64,15 @@ async function expectTheSameInstanceStands(): Promise<void> {
   await withConnection("postgres", async (client) => expect(await identityOn(client)).toEqual(recordedIdentity()));
 }
 
-async function expectNothingStands(): Promise<void> {
-  expect(await benchContainers()).toEqual([]);
-  expect(await benchVolumes()).toEqual([]);
-  expect(await benchNetwork()).toEqual([]);
-  expect(await listenersOnTheBenchPorts()).toEqual([]);
-  expect(readInstances()).toEqual([]);
-  expect(await instanceStatus()).toEqual({ state: "absent" });
-  expect(await command("status", LOOK_MS)).toMatchObject({ code: 0, lastLine: "INSTANCE_ABSENT" });
+/** A lock this process holds on a path of the test's own — held, and not the host lock. */
+async function withAHeldLockElsewhere(work: (lock: HostLock) => Promise<void>): Promise<void> {
+  const elsewhere = acquireHostLock({ path: join(scratch, "not-the-host.lock") });
+  try {
+    expect(elsewhere.held()).toBe(true);
+    await work(elsewhere);
+  } finally {
+    elsewhere.release();
+  }
 }
 
 describe("the instance — made, looked at and destroyed, in order", () => {
@@ -106,6 +101,8 @@ describe("the instance — made, looked at and destroyed, in order", () => {
     record = listed[0] as InstanceRecord;
     expect(record.sysid).toBe(printedSysid);
     expect(record.project).toBe("DxB_Foundation");
+    // SPEC §5b.3: written once the chain was applied — a moment, and not one before the record was made.
+    expect(Date.parse(record.chainAppliedAt ?? "")).toBeGreaterThanOrEqual(Date.parse(record.madeAt));
 
     // SPEC §2: db, kong, auth, realtime and rest — every one of them is in the record, by its id.
     const standing = await benchContainers();
@@ -117,6 +114,12 @@ describe("the instance — made, looked at and destroyed, in order", () => {
     expect(await instanceStatus()).toEqual({ state: "standing", record });
     const status = await command("status", LOOK_MS);
     expect(status).toMatchObject({ code: 0, lastLine: `INSTANCE_STANDING sysid=${printedSysid}` });
+  });
+
+  step("status answers the same with a hostile DOCKER_HOST in the caller's environment — the command hands it to no child", LOOK_MS, async () => {
+    const status = await command("status", LOOK_MS, undefined, { DOCKER_HOST: "tcp://127.0.0.1:1" });
+    expect(status.lastLine, tail(status.output)).toBe(`INSTANCE_STANDING sysid=${printedSysid}`);
+    expect(status.code).toBe(0);
   });
 
   step("every published port is bound to 127.0.0.1 and nowhere else", LOOK_MS, async () => {
@@ -221,6 +224,15 @@ describe("the instance — made, looked at and destroyed, in order", () => {
     await expectTheSameInstanceStands();
   });
 
+  step("makeInstance and destroyInstance refuse a held lock that is not the host lock, and the same instance still stands", LOOK_MS * 2, async () => {
+    await withAHeldLockElsewhere(async (elsewhere) => {
+      // Without the rule, the make would answer InstanceStands and the removal would take the instance.
+      await expect(attempt(() => makeInstance(elsewhere))).rejects.toBeInstanceOf(LockRefused);
+      await expect(attempt(() => destroyInstance(elsewhere))).rejects.toBeInstanceOf(LockRefused);
+    });
+    await expectTheSameInstanceStands();
+  });
+
   step("while another holds the host lock the command says LOCK_REFUSED and exits 2 — with DXB_FOUNDATION_LOCK_WAIT, after waiting that long", LOOK_MS * 2, async () => {
     const lock = acquireHostLock();
     try {
@@ -267,11 +279,17 @@ describe("the instance — made, looked at and destroyed, in order", () => {
     }
   });
 
-  step("makeInstance and destroyInstance refuse a lock that has been released, and nothing is made", MAKE_MS, async () => {
+  step("makeInstance and destroyInstance refuse a lock that has been released, and one held elsewhere — nothing is made", MAKE_MS, async () => {
     const released = acquireHostLock();
     released.release();
     await expect(attempt(() => makeInstance(released))).rejects.toThrow();
     await expect(attempt(() => destroyInstance(released))).rejects.toThrow();
+    await withAHeldLockElsewhere(async (elsewhere) => {
+      await expect(attempt(() => makeInstance(elsewhere))).rejects.toBeInstanceOf(LockRefused);
+      await expect(attempt(() => destroyInstance(elsewhere))).rejects.toBeInstanceOf(LockRefused);
+    });
     await expectNothingStands();
   });
+
+  theRestOfTheHostStandsAsBefore();
 });

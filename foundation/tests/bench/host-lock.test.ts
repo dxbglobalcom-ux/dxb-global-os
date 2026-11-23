@@ -1,10 +1,10 @@
 import { spawn, spawnSync, type ChildProcess } from "node:child_process";
-import { existsSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
-import { tmpdir, userInfo } from "node:os";
+import { mkdtempSync, rmSync, writeFileSync } from "node:fs";
+import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
-import { LockRefused, acquireHostLock, assertHeld, defaultLockPath, type HostLock } from "@dxb-foundation/bench";
+import { LockRefused, acquireHostLock, assertHeld, type HostLock } from "@dxb-foundation/bench";
 
 const holdLock = fileURLToPath(new URL("./fixtures/hold-lock.ts", import.meta.url));
 
@@ -165,15 +165,5 @@ describe("assertHeld — asked of the kernel, not of a flag", { timeout: 30_000 
     const theirs = join(directory, "theirs.lock");
     await anotherProcessHolding(theirs);
     expect(() => assertHeld(sayingItIsHeld(theirs))).toThrow();
-  });
-});
-
-describe("defaultLockPath — one fixed place per user, moved by no variable of ours", () => {
-  it("is /run/user/<uid>/dxb-foundation-bench.lock, or /tmp/dxb-foundation-bench-<uid>.lock without that directory", () => {
-    const uid = userInfo().uid;
-    const expected = existsSync(`/run/user/${uid}`)
-      ? `/run/user/${uid}/dxb-foundation-bench.lock`
-      : `/tmp/dxb-foundation-bench-${uid}.lock`;
-    expect(defaultLockPath()).toBe(expected);
   });
 });
