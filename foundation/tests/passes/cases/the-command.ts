@@ -26,6 +26,8 @@ export function theCommand(): void {
     it.each<[string, { functions?: Files; reference?: Files }, string, string]>([
       ["functions/ holds an entry off the pattern", { functions: { "Greet.sql": greets("hello") } }, "unknown-entry", "functions/Greet.sql"],
       ["reference/ holds a file that is no array of objects", { reference: { "event_types.json": '{"name": "job.opened"}\n' } }, "malformed", "reference/event_types.json"],
+      // SPEC §12.1: started only once the library has said this offence from the disk — a runner that took the file would go on to the target.
+      ["functions/ holds a file that does not begin with its own function", { functions: { "greet.sql": "grant execute on function os.greet() to pg_monitor;\n" } }, "malformed", "functions/greet.sql"],
     ])("up --root <a root whose %s>: the OFFENCE line, then CHAIN_RED offences=1, exit 1", async (_what, passes, kind, detail) => {
       const root = passesRoot(passes);
       await inAThrowawayDatabase(async (db) => {

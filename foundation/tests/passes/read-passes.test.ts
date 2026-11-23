@@ -15,6 +15,9 @@ afterAll(removeTheChainRoots);
 const GREET = "create or replace function os.greet() returns text language sql as $f$ select 'hello'::text $f$;\n";
 const TWO_ROWS = '[\n  {"name": "job.opened", "weight": 1},\n  {"name": "job.closed", "weight": 2}\n]\n';
 
+/** A function file's text for the function of this name: a function file begins with its own function (SPEC §12.1). */
+const makes = (name: string): string => `create or replace function os.${name}() returns integer language sql as $f$ select 1 $f$;\n`;
+
 /** A name of this many characters before its ending: a letter, then the letter `n` to the length. */
 const aNameOf = (length: number): string => `a${"n".repeat(length - 1)}`;
 
@@ -52,16 +55,16 @@ describe("readPasses — the files of the two directories", () => {
   it("come back by name, by code unit, each with the entry's name and its text", () => {
     // Written out of order. By code unit a digit lies before the underscore; a locale's order has it the other way round.
     const root = passesRoot({
-      functions: { "twice.sql": "-- twice\n", "a_x.sql": "-- a_x\n", "greet.sql": GREET, "a1.sql": "-- a1\n", "a.sql": "-- a\n" },
+      functions: { "twice.sql": makes("twice"), "a_x.sql": makes("a_x"), "greet.sql": GREET, "a1.sql": makes("a1"), "a.sql": makes("a") },
       reference: { "topics.json": "[]\n", "event_types.json": TWO_ROWS },
     });
     expect(readPasses(root)).toStrictEqual({
       functions: [
-        { name: "a.sql", text: "-- a\n" },
-        { name: "a1.sql", text: "-- a1\n" },
-        { name: "a_x.sql", text: "-- a_x\n" },
+        { name: "a.sql", text: makes("a") },
+        { name: "a1.sql", text: makes("a1") },
+        { name: "a_x.sql", text: makes("a_x") },
         { name: "greet.sql", text: GREET },
-        { name: "twice.sql", text: "-- twice\n" },
+        { name: "twice.sql", text: makes("twice") },
       ],
       reference: [
         { name: "event_types.json", text: TWO_ROWS },
@@ -72,15 +75,11 @@ describe("readPasses — the files of the two directories", () => {
   });
 
   it("a name of 63 characters is a name of the pattern, in either directory", () => {
-    const root = passesRoot({ functions: { [`${aNameOf(63)}.sql`]: GREET }, reference: { [`${aNameOf(63)}.json`]: "[]" } });
+    const root = passesRoot({ functions: { [`${aNameOf(63)}.sql`]: makes(aNameOf(63)) }, reference: { [`${aNameOf(63)}.json`]: "[]" } });
     const read = readPasses(root);
     expect(read.offences).toEqual([]);
     expect(read.functions?.map((file) => file.name)).toEqual([`${aNameOf(63)}.sql`]);
     expect(read.reference?.map((file) => file.name)).toEqual([`${aNameOf(63)}.json`]);
-  });
-
-  it("a function file that is only a comment is a file: it is not empty", () => {
-    expect(readPasses(passesRoot({ functions: { "greet.sql": "-- not yet\n" } })).offences).toEqual([]);
   });
 
   it.each([
@@ -127,7 +126,7 @@ describe("readPasses — the offences of the two directories, each planted and n
     ["a name of 64 characters", `${aNameOf(64)}.sql`],
     ["a reference file's ending", "greet.json"],
   ])("unknown-entry: in functions/, a file with %s", (_what, name) => {
-    const root = passesRoot({ functions: { "twice.sql": "-- twice\n", [name]: GREET } });
+    const root = passesRoot({ functions: { "twice.sql": makes("twice"), [name]: GREET } });
     expect(readPasses(root).offences).toEqual([{ kind: "unknown-entry", detail: `functions/${name}` }]);
   });
 
@@ -243,6 +242,93 @@ describe("readPasses — the offences of the two directories, each planted and n
       { kind: "unreadable", detail: "reference/not_text.json" },
       { kind: "malformed", detail: "reference/also_broken.json" },
       { kind: "malformed", detail: "reference/broken.json" },
+    ]);
+  });
+});
+
+// What follows a function's name and its brackets in the texts below: whether the server would take it is not this reading's.
+const SAYS_HELLO = "returns text language sql as $f$ select 'hello'::text $f$;\n";
+
+describe("readPasses — a function file begins with its own function (SPEC §12.1)", () => {
+  it.each([
+    ["only a comment", "-- not yet\n"],
+    ["only a comment that spells the statement", `-- create or replace function os.greet() ${SAYS_HELLO}`],
+    ["only a grant on its function", "grant execute on function os.greet() to pg_monitor;\n"],
+    ["only an alter function", "alter function os.greet() cost 5;\n"],
+    ["a do block that makes its function if it is not there", "do $$ begin if to_regprocedure('os.greet()') is null then execute 'create function os.greet() returns integer language sql as ''select 1'''; end if; end $$;\n"],
+    ["its function named without the schema", `create or replace function greet() ${SAYS_HELLO}`],
+    ["its function in another schema", `create or replace function public.greet() ${SAYS_HELLO}`],
+    ["another function's name", `create or replace function os.salute() ${SAYS_HELLO}`],
+    ["a longer name that begins with its own", `create or replace function os.greets() ${SAYS_HELLO}`],
+    ["a shorter name that its own begins with", `create or replace function os.gree() ${SAYS_HELLO}`],
+    ["a block comment first", `/* says hello */\n${GREET}`],
+    ["create function, without or replace", `create function os.greet() ${SAYS_HELLO}`],
+    ["a statement before its function", `grant usage on schema os to pg_monitor;\n${GREET}`],
+    ["white space inside os.<name>, after the dot", `create or replace function os. greet() ${SAYS_HELLO}`],
+    ["white space inside os.<name>, before the dot", `create or replace function os .greet() ${SAYS_HELLO}`],
+    ["its name in quotes", `create or replace function "os"."greet"() ${SAYS_HELLO}`],
+    ["another kind of thing of its name", "create or replace view os.greet as select 'hello'::text as word;\n"],
+  ])("malformed: a function file with %s", (_what, text) => {
+    const root = passesRoot({ functions: { "greet.sql": text, "twice.sql": makes("twice") } });
+    expect(readPasses(root).offences).toEqual([{ kind: "malformed", detail: "functions/greet.sql" }]);
+  });
+
+  it.each([
+    ["upper case", `CREATE OR REPLACE FUNCTION OS.GREET() ${SAYS_HELLO}`],
+    ["mixed case", `Create Or Replace Function os.Greet() ${SAYS_HELLO}`],
+    ["line comments and blank lines first", `-- says hello\n\n  -- to whoever asks\r\n\t${GREET}`],
+    ["a comment of no text first, and one that spells another function", `--\n-- create or replace function os.salute()\n${GREET}`],
+    ["a procedure", "create or replace procedure os.greet() language sql as $p$ select 1 $p$;\n"],
+    ["an aggregate", "create or replace aggregate os.greet(integer) (sfunc = int4pl, stype = integer);\n"],
+    ["any white space between the words", `create\n  or\treplace   function\r\n os.greet() ${SAYS_HELLO}`],
+    ["white space before the bracket", `create or replace function os.greet (word text) ${SAYS_HELLO}`],
+    ["its own revoke and grant after it", `${GREET}revoke all on function os.greet() from public;\ngrant execute on function os.greet() to pg_monitor;\n`],
+  ])("a function file is well-formed: %s", (_what, text) => {
+    const root = passesRoot({ functions: { "greet.sql": text } });
+    expect(readPasses(root)).toStrictEqual({ functions: [{ name: "greet.sql", text }], offences: [] });
+  });
+
+  it("malformed is said of both directories' files, by detail, after the other kinds of the disk", () => {
+    const root = passesRoot({
+      functions: { "salute.sql": "-- not yet\n", "greet.sql": "grant execute on function os.greet() to pg_monitor;\n", "nothing.sql": "" },
+      reference: { "broken.json": "[{}]" },
+    });
+    expect(readPasses(root).offences).toEqual([
+      { kind: "empty", detail: "functions/nothing.sql" },
+      { kind: "malformed", detail: "functions/greet.sql" },
+      { kind: "malformed", detail: "functions/salute.sql" },
+      { kind: "malformed", detail: "reference/broken.json" },
+    ]);
+  });
+});
+
+describe("readPasses — .gitkeep (SPEC §12.12)", () => {
+  it("a regular file of that name, in either directory, is neither a file of the pass nor an offence — whatever it holds", () => {
+    const root = passesRoot({
+      functions: { ".gitkeep": "", "greet.sql": GREET },
+      reference: { ".gitkeep": Uint8Array.from([0xff]), "event_types.json": TWO_ROWS },
+    });
+    expect(readPasses(root)).toStrictEqual({
+      functions: [{ name: "greet.sql", text: GREET }],
+      reference: [{ name: "event_types.json", text: TWO_ROWS }],
+      offences: [],
+    });
+  });
+
+  it("a directory that holds nothing else stands, and is a pass of no files", () => {
+    const root = passesRoot({ functions: { ".gitkeep": "" }, reference: { ".gitkeep": "kept for git\n" } });
+    expect(readPasses(root)).toStrictEqual({ functions: [], reference: [], offences: [] });
+  });
+
+  it("unknown-entry still: a directory and a link of that name, and another file whose name begins with a dot", () => {
+    const root = passesRoot({ functions: { ".gitignore": "*.tmp\n" }, reference: {} });
+    mkdirSync(inFunctions(root, ".gitkeep"));
+    writeFileSync(join(root, "outside"), "");
+    symlinkSync(join(root, "outside"), inReference(root, ".gitkeep"));
+    expect(readPasses(root).offences).toEqual([
+      { kind: "unknown-entry", detail: "functions/.gitignore" },
+      { kind: "unknown-entry", detail: "functions/.gitkeep" },
+      { kind: "unknown-entry", detail: "reference/.gitkeep" },
     ]);
   });
 });

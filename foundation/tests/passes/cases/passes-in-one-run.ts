@@ -8,7 +8,7 @@ import { refusalOf } from "../../chain/fixtures/refusal.ts";
 import { sleepingFile, startRun, untilASessionJoins, untilASessionSleeps } from "../../chain/fixtures/running.ts";
 import { CASE_MS, inAThrowawayDatabase, type Throwaway } from "../../chain/fixtures/throwaway-database.ts";
 import { routinesInOs, rowsIn, rowsToTheInstant } from "../fixtures/looking-at-os.ts";
-import { CLOSED, EVENT_TYPES_BY_NAME, EVENT_TYPES_TABLE, MAKES_OS, OPENED, TWICE, fileOf, greets } from "../fixtures/pass-files.ts";
+import { CLOSED, EVENT_TYPES_BY_NAME, EVENT_TYPES_TABLE, MAKES_OS, OPENED, TWICE, fileOf, greets, thenSleeps } from "../fixtures/pass-files.ts";
 import { inFunctions, inReference, passesRoot, standsWith } from "../fixtures/passes-on-disk.ts";
 import { THE_THREE_EVENT_TYPES } from "../fixtures/standing.ts";
 
@@ -93,7 +93,7 @@ export function passesInOneRun(): void {
       await inAThrowawayDatabase(async (db) => {
         const root = await bothStandAndBothChanged(db);
         const before = await rowsToTheInstant(db.client, "os.event_types");
-        writeFileSync(inFunctions(root, "twice.sql"), "-- twice is not written yet\n");
+        writeFileSync(inFunctions(root, "twice.sql"), `${TWICE}select 1/0;\n`);
 
         expect(await applyChain({ target: db.target, root })).toMatchObject({ state: "pass-failed", pass: "functions", file: "twice.sql" });
         expect(await rowsToTheInstant(db.client, "os.event_types")).toEqual(before);
@@ -189,7 +189,7 @@ export function passesInOneRun(): void {
         expect(await applyChain({ target: db.target, root })).toStrictEqual({ state: "applied", applied: ["0001-os.sql"], standing: 1 });
 
         // The schema file stands ledgered; the next run opens no file's session before the functions pass's.
-        standsWith(root, "functions", { "greet.sql": sleepingFile(greets("hello").trimEnd()) });
+        standsWith(root, "functions", { "greet.sql": thenSleeps(greets("hello")) });
         standsWith(root, "reference", { "event_types.json": THE_THREE_EVENT_TYPES });
         await refusedOnceTheListLosesIt(db, root);
         expect(await valueOf(db.client, "select os.greet()")).toBe("hello");

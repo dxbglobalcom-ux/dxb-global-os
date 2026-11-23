@@ -33,20 +33,28 @@
     "foundation/tests/chain/fixtures/throwaway-database.ts": "57226327de683d5261f0b8ddbaf51e191f6ed109",
     "foundation/tests/package.json": "bd4e193ba789b2552c5d2cc6d620ace556ae951e",
     "foundation/tests/passes/answer.test.ts": "632e4d9f46bc10387a92ea256f63c8e2101175c8",
+    "foundation/tests/passes/cases/functions-begin-with-their-own.ts": "4fc5e3478ed9e90bd5b38b648394716bc66ee47e",
     "foundation/tests/passes/cases/functions-built-and-replaced.ts": "691b2c7284941b50d21a28c326bddee623ad0163",
-    "foundation/tests/passes/cases/functions-failing.ts": "9f803780e4e940bb1a75472b2cf4649c983794c6",
+    "foundation/tests/passes/cases/functions-failing.ts": "32a5d4fb7f5e9ecd71dff6c9078723ec47cb8847",
     "foundation/tests/passes/cases/functions-manifest.ts": "5d6e86fb2bfc796aa800e67f445d8005b2b8ecaf",
-    "foundation/tests/passes/cases/passes-in-one-run.ts": "dbfa0644f23328953cd3a91dd78a420776a13498",
-    "foundation/tests/passes/cases/reference-failing.ts": "011ffc7351c7a535e0551d763a4ef9a69cfef436",
-    "foundation/tests/passes/cases/reference-order.ts": "5c3310eaacfe4b7ac7afba18115aa3f2dfac50cd",
-    "foundation/tests/passes/cases/reference-reconciled.ts": "57baf9498f52fad02ef15c81f39e40f103fc4393",
-    "foundation/tests/passes/cases/the-command.ts": "fe9bc0bc939c7bddb3e81ec05ba7138bbb8d273d",
-    "foundation/tests/passes/fixtures/looking-at-os.ts": "cb98a2df659fae17c579df3b7dc8923c095b794a",
-    "foundation/tests/passes/fixtures/pass-files.ts": "e4d705b158b4528727549fecf89b580649501c9d",
+    "foundation/tests/passes/cases/functions-one-session-each.ts": "d4e8864af33a217824c9efc1b9453e03b89ae08c",
+    "foundation/tests/passes/cases/passes-in-one-run.ts": "9f3f3f4d9c63bcd1a368cce8c1c14a597ad4ca07",
+    "foundation/tests/passes/cases/reference-deferred.ts": "1150905e0cb09d958e698d968144a38fae5cc0e3",
+    "foundation/tests/passes/cases/reference-failing.ts": "fd4da943cf634a37da6c4f98c761295fd6a71496",
+    "foundation/tests/passes/cases/reference-marked-and-judged.ts": "2e5a9d88ca42306323f9c845d0f83aa14be3a414",
+    "foundation/tests/passes/cases/reference-order.ts": "4c3d1caa2d59521a350b65d126004b366f797e88",
+    "foundation/tests/passes/cases/reference-reads-the-same.ts": "c01b2fff865c70e51190e45d382427f36fa2fcda",
+    "foundation/tests/passes/cases/reference-reconciled.ts": "66524c6bccce88854b4a1835b7f837c268eb61da",
+    "foundation/tests/passes/cases/reference-two-statements.ts": "18370d673dff2dfea7ff2bd7ce0694f355904bab",
+    "foundation/tests/passes/cases/reference-writes-elsewhere.ts": "0e78db9db3915ab07120c5c464e06091af853475",
+    "foundation/tests/passes/cases/the-command.ts": "b56c199bdbdb8278aa47f39113b95f834b920a1c",
+    "foundation/tests/passes/fixtures/looking-at-os.ts": "f0b4d4a6fd1de625ffdf6a8235fb2a9d5605ff5a",
+    "foundation/tests/passes/fixtures/outcomes.ts": "05805276464a4be0d15a1db3a24c2bcd40e37602",
+    "foundation/tests/passes/fixtures/pass-files.ts": "14dd9351e612c696ccf11988bf21bd90a1a45fa7",
     "foundation/tests/passes/fixtures/passes-on-disk.ts": "6f451c09d1ab18fbc07a8cf472bed43df58a8d94",
     "foundation/tests/passes/fixtures/standing.ts": "1d3fae2df51f20763bccbed9a82e8ed8be99e392",
-    "foundation/tests/passes/on-the-bench.test.ts": "e6ef87efaba65d6ddebab1e0ff626ecdf4453880",
-    "foundation/tests/passes/read-passes.test.ts": "031e66feae346246523ea7d4db9c02228abc8d18",
+    "foundation/tests/passes/on-the-bench.test.ts": "4b020dd07fbc4f554d228ce1cad6705ad275a7fc",
+    "foundation/tests/passes/read-passes.test.ts": "fd0617719a41b5ee3d3954bce79ea1b900a1b739",
     "foundation/tests/vitest.config.ts": "c95853266badd11995fc806996a5df94ee4f1198",
     "foundation/tsconfig.json": "4eb3b5c0b63913b217384ba6edb5cf33b78c4f9e",
     "pnpm-lock.yaml": "fda8eb167c85bc00d0c176c2ccd300383968a79c",
@@ -144,9 +152,89 @@
     {
       "file": "foundation/tests/passes/on-the-bench.test.ts",
       "suite": [
+        ".gitkeep keeps a pass's directory standing"
+      ],
+      "name": "both directories holding .gitkeep alone, and nothing in os: applied, each pass with 0 files",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/passes/on-the-bench.test.ts",
+      "suite": [
+        ".gitkeep keeps a pass's directory standing"
+      ],
+      "name": "functions/ holding .gitkeep alone while os holds a function: the pass runs, and the function is an orphan",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/passes/on-the-bench.test.ts",
+      "suite": [
+        "a function file begins with its own function"
+      ],
+      "name": "a body changed by hand between two runs of the same file is the file's again: a run skips no file because it did not change",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/passes/on-the-bench.test.ts",
+      "suite": [
+        "a function file begins with its own function"
+      ],
+      "name": "a file that makes its function only if it is not there, then grants: the run ends in offences, malformed — the function, the ledger and public are as they stood",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/passes/on-the-bench.test.ts",
+      "suite": [
+        "a function file begins with its own function"
+      ],
+      "name": "a file that makes its function with no schema, then revokes on the one that stands: the run ends in offences, malformed — the function, the ledger and public are as they stood",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/passes/on-the-bench.test.ts",
+      "suite": [
+        "a function file begins with its own function"
+      ],
+      "name": "a file that only alters its function: the run ends in offences, malformed — the function, the ledger and public are as they stood",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/passes/on-the-bench.test.ts",
+      "suite": [
+        "a function file begins with its own function"
+      ],
+      "name": "a file that only grants on its function: the run ends in offences, malformed — the function, the ledger and public are as they stood",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/passes/on-the-bench.test.ts",
+      "suite": [
+        "a function file begins with its own function"
+      ],
+      "name": "it is said from the disk, before the target is asked who it is",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/passes/on-the-bench.test.ts",
+      "suite": [
+        "a function file begins with its own function"
+      ],
+      "name": "the forms a file may begin in — capitals, comments and blank lines first, a procedure, an aggregate — are applied, run after run",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/passes/on-the-bench.test.ts",
+      "suite": [
         "the command"
       ],
       "name": "after them, the instance's own postgres database is as it was found: its ledger to the instant, or none, and its schemas",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/passes/on-the-bench.test.ts",
+      "suite": [
+        "the command"
+      ],
+      "name": "up --root <a root whose functions/ holds a file that does not begin with its own function>: the OFFENCE line, then CHAIN_RED offences=1, exit 1",
       "count": 1
     },
     {
@@ -242,7 +330,31 @@
       "suite": [
         "the functions pass — a file that is not its own function's"
       ],
+      "name": "one that also grants on a function of public: pass-failed with the row said with its schema — nothing left of it in public or in os",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/passes/on-the-bench.test.ts",
+      "suite": [
+        "the functions pass — a file that is not its own function's"
+      ],
       "name": "one that also grants on another file's function: pass-failed with the message spelled, rolled back whole",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/passes/on-the-bench.test.ts",
+      "suite": [
+        "the functions pass — a file that is not its own function's"
+      ],
+      "name": "one that also makes a function with no schema: it lands in public: pass-failed with the row said with its schema — nothing left of it in public or in os",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/passes/on-the-bench.test.ts",
+      "suite": [
+        "the functions pass — a file that is not its own function's"
+      ],
+      "name": "one that drops a function of public: pass-failed with the row said with its schema — nothing left of it in public or in os",
       "count": 1
     },
     {
@@ -258,14 +370,6 @@
       "suite": [
         "the functions pass — a file that is not its own function's"
       ],
-      "name": "one that makes a function of another name: pass-failed with the message spelled, rolled back whole",
-      "count": 1
-    },
-    {
-      "file": "foundation/tests/passes/on-the-bench.test.ts",
-      "suite": [
-        "the functions pass — a file that is not its own function's"
-      ],
       "name": "one that makes its own function under two signatures — the name is said once: pass-failed with the message spelled, rolled back whole",
       "count": 1
     },
@@ -274,7 +378,7 @@
       "suite": [
         "the functions pass — a file that is not its own function's"
       ],
-      "name": "one that makes nothing — a comment: pass-failed with the message spelled, rolled back whole",
+      "name": "one that makes nothing — it drops what it made: pass-failed with the message spelled, rolled back whole",
       "count": 1
     },
     {
@@ -376,6 +480,46 @@
     {
       "file": "foundation/tests/passes/on-the-bench.test.ts",
       "suite": [
+        "the functions pass — every file meets the same session"
+      ],
+      "name": "a file that leaves a search path set for its transaction: the files after it are made by the installing role, their names read on a fresh path, their bytes as UTF-8",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/passes/on-the-bench.test.ts",
+      "suite": [
+        "the functions pass — every file meets the same session"
+      ],
+      "name": "a file that leaves another client encoding, set for its transaction: the files after it are made by the installing role, their names read on a fresh path, their bytes as UTF-8",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/passes/on-the-bench.test.ts",
+      "suite": [
+        "the functions pass — every file meets the same session"
+      ],
+      "name": "a file that leaves another role: the files after it are made by the installing role, their names read on a fresh path, their bytes as UTF-8",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/passes/on-the-bench.test.ts",
+      "suite": [
+        "the functions pass — every file meets the same session"
+      ],
+      "name": "a file that leaves another search path: the files after it are made by the installing role, their names read on a fresh path, their bytes as UTF-8",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/passes/on-the-bench.test.ts",
+      "suite": [
+        "the functions pass — every file meets the same session"
+      ],
+      "name": "an orphan's arguments are said as a fresh session reads them, though a file set the search path to os: a type of os with its schema",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/passes/on-the-bench.test.ts",
+      "suite": [
         "the functions pass — the directory decides"
       ],
       "name": "functions/ standing and empty while os holds a function: the function is an orphan",
@@ -464,6 +608,110 @@
     {
       "file": "foundation/tests/passes/on-the-bench.test.ts",
       "suite": [
+        "the reference pass — a removal cannot reach a table that has no file"
+      ],
+      "name": "a reference of no action, said still passes: a value not in use is removed, another is changed, and the referencing rows are as they stood",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/passes/on-the-bench.test.ts",
+      "suite": [
+        "the reference pass — a removal cannot reach a table that has no file"
+      ],
+      "name": "a reference of no action, unsaid still passes: a value not in use is removed, another is changed, and the referencing rows are as they stood",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/passes/on-the-bench.test.ts",
+      "suite": [
+        "the reference pass — a removal cannot reach a table that has no file"
+      ],
+      "name": "a reference of restrict still passes: a value not in use is removed, another is changed, and the referencing rows are as they stood",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/passes/on-the-bench.test.ts",
+      "suite": [
+        "the reference pass — a removal cannot reach a table that has no file"
+      ],
+      "name": "a reference on delete cascade, from a table of another schema: pass-failed at the vocabulary's file before any write — the referencing rows and the vocabulary as they stood",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/passes/on-the-bench.test.ts",
+      "suite": [
+        "the reference pass — a removal cannot reach a table that has no file"
+      ],
+      "name": "a reference on delete cascade: pass-failed at the vocabulary's file before any write — the referencing rows and the vocabulary as they stood",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/passes/on-the-bench.test.ts",
+      "suite": [
+        "the reference pass — a removal cannot reach a table that has no file"
+      ],
+      "name": "a reference on delete set default: pass-failed at the vocabulary's file before any write — the referencing rows and the vocabulary as they stood",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/passes/on-the-bench.test.ts",
+      "suite": [
+        "the reference pass — a removal cannot reach a table that has no file"
+      ],
+      "name": "a reference on delete set null: pass-failed at the vocabulary's file before any write — the referencing rows and the vocabulary as they stood",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/passes/on-the-bench.test.ts",
+      "suite": [
+        "the reference pass — a removal cannot reach a table that has no file"
+      ],
+      "name": "a reference on update cascade: pass-failed at the vocabulary's file before any write — the referencing rows and the vocabulary as they stood",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/passes/on-the-bench.test.ts",
+      "suite": [
+        "the reference pass — a removal cannot reach a table that has no file"
+      ],
+      "name": "a reference on update set null: pass-failed at the vocabulary's file before any write — the referencing rows and the vocabulary as they stood",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/passes/on-the-bench.test.ts",
+      "suite": [
+        "the reference pass — a removal cannot reach a table that has no file"
+      ],
+      "name": "a vocabulary that references itself with cascade: pass-failed at its own file, its rows as they stood",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/passes/on-the-bench.test.ts",
+      "suite": [
+        "the reference pass — a removal cannot reach a table that has no file"
+      ],
+      "name": "a vocabulary whose reference onto another vocabulary cascades: pass-failed at the referenced one's file, and neither is written",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/passes/on-the-bench.test.ts",
+      "suite": [
+        "the reference pass — a removal cannot reach a table that has no file"
+      ],
+      "name": "an empty array over a vocabulary that a cascading reference names: refused as any other file is — nothing is emptied, here or there",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/passes/on-the-bench.test.ts",
+      "suite": [
+        "the reference pass — a removal cannot reach a table that has no file"
+      ],
+      "name": "several references onto one vocabulary: the first that writes is said — by the reference's name, then by its table — not one that writes nothing",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/passes/on-the-bench.test.ts",
+      "suite": [
         "the reference pass — a row already equal is not rewritten"
       ],
       "name": "a run that changes one row writes that row alone",
@@ -488,6 +736,54 @@
     {
       "file": "foundation/tests/passes/on-the-bench.test.ts",
       "suite": [
+        "the reference pass — a table is a vocabulary because the schema says so"
+      ],
+      "name": "a comment that does not begin with the word — 'the vocabulary of topics' — is no mark, and the table is not written",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/passes/on-the-bench.test.ts",
+      "suite": [
+        "the reference pass — a table is a vocabulary because the schema says so"
+      ],
+      "name": "a comment that does not begin with the word — 'topics: a vocabulary' — is no mark, and the table is not written",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/passes/on-the-bench.test.ts",
+      "suite": [
+        "the reference pass — a table is a vocabulary because the schema says so"
+      ],
+      "name": "a file planted for a table of his policy, holding an empty array: os.<table> is not marked as a vocabulary — his rows as he left them",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/passes/on-the-bench.test.ts",
+      "suite": [
+        "the reference pass — a table is a vocabulary because the schema says so"
+      ],
+      "name": "a file planted for a table of his policy, holding rows of its own: os.<table> is not marked as a vocabulary — his rows as he left them",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/passes/on-the-bench.test.ts",
+      "suite": [
+        "the reference pass — a table is a vocabulary because the schema says so"
+      ],
+      "name": "the mark brought by a later schema file: the table that was refused is written by the run that marks it",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/passes/on-the-bench.test.ts",
+      "suite": [
+        "the reference pass — a table that already reads as its file is sent no statement"
+      ],
+      "name": "a run that changes nothing fires no trigger and draws from no sequence; a run that adds a row fires it, and draws for that row alone",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/passes/on-the-bench.test.ts",
+      "suite": [
         "the reference pass — a table that is not what a vocabulary's must be, each message spelled"
       ],
       "name": "a file that leaves out the key's columns: the first in the key's order is said — not the first by name, nor the table's first",
@@ -498,7 +794,7 @@
       "suite": [
         "the reference pass — a table that is not what a vocabulary's must be, each message spelled"
       ],
-      "name": "a key twice in one file: the server's message, and nothing is left written",
+      "name": "a key twice in one file: the file holds a key twice: <the key's values>, and nothing is left written",
       "count": 1
     },
     {
@@ -576,9 +872,113 @@
     {
       "file": "foundation/tests/passes/on-the-bench.test.ts",
       "suite": [
+        "the reference pass — an inheritance child's rows are not the vocabulary's"
+      ],
+      "name": "a pass that removes a row and changes one: the child's rows — one of a key the file does not hold, one of a key it changes — are as they stood",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/passes/on-the-bench.test.ts",
+      "suite": [
+        "the reference pass — equal means reads the same"
+      ],
+      "name": "1.1 stands and the file says 1.10: the row is written and reads 1.10 — and the run after it writes nothing",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/passes/on-the-bench.test.ts",
+      "suite": [
+        "the reference pass — equal means reads the same"
+      ],
+      "name": "a column of type json is owned: written, changed where it reads otherwise, and left where it reads the same",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/passes/on-the-bench.test.ts",
+      "suite": [
+        "the reference pass — equal means reads the same"
+      ],
+      "name": "a key the type calls equal and that reads otherwise — Alpha stands, the file says alpha — is not rewritten, and fails the proof",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/passes/on-the-bench.test.ts",
+      "suite": [
+        "the reference pass — equal means reads the same"
+      ],
+      "name": "a time the file writes without an offset is read as UTC, whatever time zone the database gives its sessions — and the run after it writes nothing",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/passes/on-the-bench.test.ts",
+      "suite": [
+        "the reference pass — rows that are there are changed, rows that are not are inserted"
+      ],
+      "name": "a deferrable primary key serves: rows written from nothing, then one changed, one added and one removed",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/passes/on-the-bench.test.ts",
+      "suite": [
+        "the reference pass — rows that are there are changed, rows that are not are inserted"
+      ],
+      "name": "a not-null column of the table's own with no default: a standing row is changed and keeps it; a new row is refused with the server's message",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/passes/on-the-bench.test.ts",
+      "suite": [
+        "the reference pass — rows that are there are changed, rows that are not are inserted"
+      ],
+      "name": "a primary key with an included column the file does not carry: the key is its key columns, and the included one keeps what stands there",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/passes/on-the-bench.test.ts",
+      "suite": [
         "the reference pass — the directory decides"
       ],
       "name": "reference/ standing with no file: applied with reference: 0, and a table of os is as it stood",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/passes/on-the-bench.test.ts",
+      "suite": [
+        "the reference pass — the judgement's order"
+      ],
+      "name": "a column named twice in a row, and that column no column of the table: the column named twice is said",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/passes/on-the-bench.test.ts",
+      "suite": [
+        "the reference pass — the judgement's order"
+      ],
+      "name": "a key twice, and a reference that writes: the key is said",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/passes/on-the-bench.test.ts",
+      "suite": [
+        "the reference pass — the judgement's order"
+      ],
+      "name": "every file is judged before any row is written: a value of the wrong type in the second file, and the first table never drew from its sequence",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/passes/on-the-bench.test.ts",
+      "suite": [
+        "the reference pass — the judgement's order"
+      ],
+      "name": "no mark, and a key of the file that is no column: the mark is said",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/passes/on-the-bench.test.ts",
+      "suite": [
+        "the reference pass — the judgement's order"
+      ],
+      "name": "the first file by name with the last of the faults, the second with the first of them: the first file's is said",
       "count": 1
     },
     {
@@ -610,7 +1010,71 @@
       "suite": [
         "the reference pass — vocabularies that reference each other"
       ],
+      "name": "two circles joined by a path: the circle that holds the first table by name is said, with its own tables only — not the table on the path, not the other circle",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/passes/on-the-bench.test.ts",
+      "suite": [
+        "the reference pass — vocabularies that reference each other"
+      ],
       "name": "two that reference each other in a circle: pass-failed, said of the first of the two by name, with both named — and nothing written",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/passes/on-the-bench.test.ts",
+      "suite": [
+        "the reference pass — what a file says twice is said before any write"
+      ],
+      "name": "a column a row names twice — in the second row alone",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/passes/on-the-bench.test.ts",
+      "suite": [
+        "the reference pass — what a file says twice is said before any write"
+      ],
+      "name": "a column a row names twice — the second time spelled with an escape",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/passes/on-the-bench.test.ts",
+      "suite": [
+        "the reference pass — what a file says twice is said before any write"
+      ],
+      "name": "a column a row names twice — two columns twice: the first by name is said",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/passes/on-the-bench.test.ts",
+      "suite": [
+        "the reference pass — what a file says twice is said before any write"
+      ],
+      "name": "a row twice in a file that carries the key alone",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/passes/on-the-bench.test.ts",
+      "suite": [
+        "the reference pass — what a file says twice is said before any write"
+      ],
+      "name": "two keys of two columns twice: the first by its values' text is said, the values in the key's order",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/passes/on-the-bench.test.ts",
+      "suite": [
+        "the reference pass — what is deferred happens inside the pass"
+      ],
+      "name": "a deferred constraint trigger that rewrites the row: it has run before the proof, so os.<table> does not equal its file — and nothing is left written",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/passes/on-the-bench.test.ts",
+      "suite": [
+        "the reference pass — what is deferred happens inside the pass"
+      ],
+      "name": "a deferred reference from a table outside the files, onto a value the file no longer holds: pass-failed at that file with the server's message — not thrown",
       "count": 1
     },
     {
@@ -627,6 +1091,246 @@
         "readChain — beside the two directories"
       ],
       "name": "still answers schema/ alone: the passes' files and their offences are not its",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/passes/read-passes.test.ts",
+      "suite": [
+        "readPasses — .gitkeep (SPEC §12.12)"
+      ],
+      "name": "a directory that holds nothing else stands, and is a pass of no files",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/passes/read-passes.test.ts",
+      "suite": [
+        "readPasses — .gitkeep (SPEC §12.12)"
+      ],
+      "name": "a regular file of that name, in either directory, is neither a file of the pass nor an offence — whatever it holds",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/passes/read-passes.test.ts",
+      "suite": [
+        "readPasses — .gitkeep (SPEC §12.12)"
+      ],
+      "name": "unknown-entry still: a directory and a link of that name, and another file whose name begins with a dot",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/passes/read-passes.test.ts",
+      "suite": [
+        "readPasses — a function file begins with its own function (SPEC §12.1)"
+      ],
+      "name": "a function file is well-formed: a comment of no text first, and one that spells another function",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/passes/read-passes.test.ts",
+      "suite": [
+        "readPasses — a function file begins with its own function (SPEC §12.1)"
+      ],
+      "name": "a function file is well-formed: a procedure",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/passes/read-passes.test.ts",
+      "suite": [
+        "readPasses — a function file begins with its own function (SPEC §12.1)"
+      ],
+      "name": "a function file is well-formed: an aggregate",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/passes/read-passes.test.ts",
+      "suite": [
+        "readPasses — a function file begins with its own function (SPEC §12.1)"
+      ],
+      "name": "a function file is well-formed: any white space between the words",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/passes/read-passes.test.ts",
+      "suite": [
+        "readPasses — a function file begins with its own function (SPEC §12.1)"
+      ],
+      "name": "a function file is well-formed: its own revoke and grant after it",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/passes/read-passes.test.ts",
+      "suite": [
+        "readPasses — a function file begins with its own function (SPEC §12.1)"
+      ],
+      "name": "a function file is well-formed: line comments and blank lines first",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/passes/read-passes.test.ts",
+      "suite": [
+        "readPasses — a function file begins with its own function (SPEC §12.1)"
+      ],
+      "name": "a function file is well-formed: mixed case",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/passes/read-passes.test.ts",
+      "suite": [
+        "readPasses — a function file begins with its own function (SPEC §12.1)"
+      ],
+      "name": "a function file is well-formed: upper case",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/passes/read-passes.test.ts",
+      "suite": [
+        "readPasses — a function file begins with its own function (SPEC §12.1)"
+      ],
+      "name": "a function file is well-formed: white space before the bracket",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/passes/read-passes.test.ts",
+      "suite": [
+        "readPasses — a function file begins with its own function (SPEC §12.1)"
+      ],
+      "name": "malformed is said of both directories' files, by detail, after the other kinds of the disk",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/passes/read-passes.test.ts",
+      "suite": [
+        "readPasses — a function file begins with its own function (SPEC §12.1)"
+      ],
+      "name": "malformed: a function file with a block comment first",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/passes/read-passes.test.ts",
+      "suite": [
+        "readPasses — a function file begins with its own function (SPEC §12.1)"
+      ],
+      "name": "malformed: a function file with a do block that makes its function if it is not there",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/passes/read-passes.test.ts",
+      "suite": [
+        "readPasses — a function file begins with its own function (SPEC §12.1)"
+      ],
+      "name": "malformed: a function file with a longer name that begins with its own",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/passes/read-passes.test.ts",
+      "suite": [
+        "readPasses — a function file begins with its own function (SPEC §12.1)"
+      ],
+      "name": "malformed: a function file with a shorter name that its own begins with",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/passes/read-passes.test.ts",
+      "suite": [
+        "readPasses — a function file begins with its own function (SPEC §12.1)"
+      ],
+      "name": "malformed: a function file with a statement before its function",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/passes/read-passes.test.ts",
+      "suite": [
+        "readPasses — a function file begins with its own function (SPEC §12.1)"
+      ],
+      "name": "malformed: a function file with another function's name",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/passes/read-passes.test.ts",
+      "suite": [
+        "readPasses — a function file begins with its own function (SPEC §12.1)"
+      ],
+      "name": "malformed: a function file with another kind of thing of its name",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/passes/read-passes.test.ts",
+      "suite": [
+        "readPasses — a function file begins with its own function (SPEC §12.1)"
+      ],
+      "name": "malformed: a function file with create function, without or replace",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/passes/read-passes.test.ts",
+      "suite": [
+        "readPasses — a function file begins with its own function (SPEC §12.1)"
+      ],
+      "name": "malformed: a function file with its function in another schema",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/passes/read-passes.test.ts",
+      "suite": [
+        "readPasses — a function file begins with its own function (SPEC §12.1)"
+      ],
+      "name": "malformed: a function file with its function named without the schema",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/passes/read-passes.test.ts",
+      "suite": [
+        "readPasses — a function file begins with its own function (SPEC §12.1)"
+      ],
+      "name": "malformed: a function file with its name in quotes",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/passes/read-passes.test.ts",
+      "suite": [
+        "readPasses — a function file begins with its own function (SPEC §12.1)"
+      ],
+      "name": "malformed: a function file with only a comment that spells the statement",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/passes/read-passes.test.ts",
+      "suite": [
+        "readPasses — a function file begins with its own function (SPEC §12.1)"
+      ],
+      "name": "malformed: a function file with only a comment",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/passes/read-passes.test.ts",
+      "suite": [
+        "readPasses — a function file begins with its own function (SPEC §12.1)"
+      ],
+      "name": "malformed: a function file with only a grant on its function",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/passes/read-passes.test.ts",
+      "suite": [
+        "readPasses — a function file begins with its own function (SPEC §12.1)"
+      ],
+      "name": "malformed: a function file with only an alter function",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/passes/read-passes.test.ts",
+      "suite": [
+        "readPasses — a function file begins with its own function (SPEC §12.1)"
+      ],
+      "name": "malformed: a function file with white space inside os.<name>, after the dot",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/passes/read-passes.test.ts",
+      "suite": [
+        "readPasses — a function file begins with its own function (SPEC §12.1)"
+      ],
+      "name": "malformed: a function file with white space inside os.<name>, before the dot",
       "count": 1
     },
     {
@@ -675,14 +1379,6 @@
         "readPasses — a pass's directory decides whether the pass is read"
       ],
       "name": "reference/ alone: its files, and no functions key",
-      "count": 1
-    },
-    {
-      "file": "foundation/tests/passes/read-passes.test.ts",
-      "suite": [
-        "readPasses — the files of the two directories"
-      ],
-      "name": "a function file that is only a comment is a file: it is not empty",
       "count": 1
     },
     {

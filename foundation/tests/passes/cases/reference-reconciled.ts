@@ -5,7 +5,7 @@ import { applyChain } from "@dxb-foundation/chain";
 import { filesLedgered, valueOf } from "../../chain/fixtures/looking.ts";
 import { CASE_MS, inAThrowawayDatabase } from "../../chain/fixtures/throwaway-database.ts";
 import { rowsIn, rowsToTheInstant } from "../fixtures/looking-at-os.ts";
-import { CLOSED, EVENT_TYPES_BY_NAME, EVENT_TYPES_TABLE, FAILED, MAKES_OS, OPENED, fileOf } from "../fixtures/pass-files.ts";
+import { CLOSED, EVENT_TYPES_BY_NAME, EVENT_TYPES_TABLE, FAILED, MAKES_OS, OPENED, RATES_TABLE, ROUTING_RULES_SEEDED, fileOf, marked } from "../fixtures/pass-files.ts";
 import { inReference, passesRoot, standsWith } from "../fixtures/passes-on-disk.ts";
 import { eventTypesStand } from "../fixtures/standing.ts";
 
@@ -13,15 +13,9 @@ import { eventTypesStand } from "../fixtures/standing.ts";
 // rows, read in the columns its file owns, are exactly the file's rows — and a table of os
 // that has no file is not touched.
 
-// His policy kind (SPEC §5, last sentence): seeded by a schema file, his from then on — no file in reference/.
-const ROUTING_RULES_SEEDED = ["create table os.routing_rules (rule text primary key, model text not null);", "insert into os.routing_rules values ('default', 'small');", ""].join("\n");
-
-const LIMITS_TABLE = "create table os.limits (name text primary key, ceiling bigint not null, ratio numeric not null, note text default 'unsaid');\n";
+const LIMITS_TABLE = `create table os.limits (name text primary key, ceiling bigint not null, ratio numeric not null, note text default 'unsaid');\n${marked("limits")}`;
 // Spelled as text: 2^53 + 1 is no number of JavaScript's, and 1.10 read as one loses its last digit.
 const LIMITS = '[\n  {"name": "wide", "ceiling": 9007199254740993, "ratio": 1.10, "note": null}\n]\n';
-
-// A key of two columns, written in another order than the table's columns.
-const RATES_TABLE = "create table os.rates (code text, region text, rate integer not null, primary key (region, code));\n";
 
 /** One event type's row as the server writes it, with the transaction that wrote it. */
 const writtenAs = async (client: Client, name: string): Promise<string | undefined> =>

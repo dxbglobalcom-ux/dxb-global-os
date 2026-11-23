@@ -2,16 +2,23 @@ import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { acquireHostLock, destroyInstance, instanceStatus, makeInstance, type HostLock } from "@dxb-foundation/bench";
 import { removeTheChainRoots } from "../chain/fixtures/chain-on-disk.ts";
 import { CASE_MS, databasesLeft, databasesMade } from "../chain/fixtures/throwaway-database.ts";
+import { functionsBeginWithTheirOwn } from "./cases/functions-begin-with-their-own.ts";
 import { functionsBuiltAndReplaced } from "./cases/functions-built-and-replaced.ts";
 import { functionsFailing } from "./cases/functions-failing.ts";
 import { functionsManifest } from "./cases/functions-manifest.ts";
+import { functionsOneSessionEach } from "./cases/functions-one-session-each.ts";
 import { passesInOneRun } from "./cases/passes-in-one-run.ts";
+import { referenceDeferred } from "./cases/reference-deferred.ts";
 import { referenceFailing } from "./cases/reference-failing.ts";
+import { referenceMarkedAndJudged } from "./cases/reference-marked-and-judged.ts";
 import { referenceOrder } from "./cases/reference-order.ts";
+import { referenceReadsTheSame } from "./cases/reference-reads-the-same.ts";
 import { referenceReconciled } from "./cases/reference-reconciled.ts";
+import { referenceTwoStatements } from "./cases/reference-two-statements.ts";
+import { referenceWritesElsewhere } from "./cases/reference-writes-elsewhere.ts";
 import { theCommand } from "./cases/the-command.ts";
 
-// SPEC §9.3: every case of the two passes that needs a server, in this one module — so
+// SPEC §9.3 and §12: every case of the two passes that needs a server, in this one module — so
 // the instance is prepared once, as piece 3's module prepares it. The module holds the
 // bench's host lock from its first case to its last: no other hand makes or removes the
 // instance meanwhile. An instance that stands is used and left standing; when none
@@ -50,10 +57,17 @@ afterAll(async () => {
 }, DESTROY_MS);
 
 functionsBuiltAndReplaced();
+functionsBeginWithTheirOwn();
 functionsManifest();
 functionsFailing();
+functionsOneSessionEach();
 referenceReconciled();
+referenceMarkedAndJudged();
+referenceReadsTheSame();
+referenceTwoStatements();
 referenceFailing();
+referenceWritesElsewhere();
+referenceDeferred();
 referenceOrder();
 passesInOneRun();
 theCommand();

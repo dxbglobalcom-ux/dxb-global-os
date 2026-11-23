@@ -3,8 +3,8 @@ import { describe, expect, it } from "vitest";
 import { applyChain, type Outcome } from "@dxb-foundation/chain";
 import { filesLedgered, valueOf } from "../../chain/fixtures/looking.ts";
 import { CASE_MS, inAThrowawayDatabase, type Throwaway } from "../../chain/fixtures/throwaway-database.ts";
-import { rowsToTheInstant } from "../fixtures/looking-at-os.ts";
-import { CLOSED, EVENT_TYPES_TABLE, MAKES_OS, OPENED, fileOf, greets } from "../fixtures/pass-files.ts";
+import { rowsIn, rowsToTheInstant } from "../fixtures/looking-at-os.ts";
+import { CLOSED, EVENT_TYPES_TABLE, MAKES_OS, OPENED, RATES_TABLE, SEVERITIES_TABLE, fileOf, greets, marked } from "../fixtures/pass-files.ts";
 import { inFunctions, inReference, passesRoot, type Files } from "../fixtures/passes-on-disk.ts";
 import { THE_THREE_EVENT_TYPES, eventTypesStand } from "../fixtures/standing.ts";
 
@@ -12,9 +12,7 @@ import { THE_THREE_EVENT_TYPES, eventTypesStand } from "../fixtures/standing.ts"
 // §5 asks, a statement the server refuses, a table that does not equal its file — each is
 // `pass-failed` with the file it failed at, and the pass is rolled back whole.
 
-const SEVERITIES_TABLE = "create table os.severities (level text primary key, rank integer not null);\n";
-
-// A table outside the files that references a vocabulary's values (NO ACTION). The constraint is named here, so the server's message is spelled whole.
+// A table outside the files — so it carries no mark — that references a vocabulary's values (NO ACTION). The constraint is named here, so the server's message is spelled whole.
 const JOBS_LOG_TABLE = "create table os.jobs_log (id integer primary key, event text not null constraint logged_event_stands references os.event_types (name));\n";
 
 // Rewrites a value on its way in. It lives in `public`: what stands in `os` is the manifest's, and this case is not about it.
@@ -98,6 +96,7 @@ export function referenceFailing(): void {
         const aView = "create view os.event_types as select 'job.opened'::text as name;\n";
         const outcome = await refusedOver(db, aView, { "event_types.json": fileOf({ name: "job.opened" }) });
         expect(outcome).toEqual(failedAt("event_types.json", "os.event_types is not a table"));
+        expect(await rowsIn(db.client, "select name from os.event_types")).toEqual([{ name: "job.opened" }]);
       });
     });
 
@@ -120,7 +119,7 @@ export function referenceFailing(): void {
 
     it("a table with no primary key, though a unique column: os.<table> has no primary key", async () => {
       await inAThrowawayDatabase(async (db) => {
-        const outcome = await refusedOver(db, "create table os.loose (name text not null unique);\n", { "loose.json": fileOf({ name: "a" }) });
+        const outcome = await refusedOver(db, `create table os.loose (name text not null unique);\n${marked("loose")}`, { "loose.json": fileOf({ name: "a" }) });
         expect(outcome).toEqual(failedAt("loose.json", "os.loose has no primary key"));
         expect(await countIn(db, "os.loose")).toBe(0);
       });
@@ -128,8 +127,7 @@ export function referenceFailing(): void {
 
     it("a file that leaves out the key's columns: the first in the key's order is said — not the first by name, nor the table's first", async () => {
       await inAThrowawayDatabase(async (db) => {
-        const rates = "create table os.rates (code text, region text, rate integer not null, primary key (region, code));\n";
-        const outcome = await refusedOver(db, rates, { "rates.json": fileOf({ rate: 1 }) });
+        const outcome = await refusedOver(db, RATES_TABLE, { "rates.json": fileOf({ rate: 1 }) });
         expect(outcome).toEqual(failedAt("rates.json", "the file does not carry the key column region of os.rates"));
         expect(await countIn(db, "os.rates")).toBe(0);
       });
@@ -143,10 +141,10 @@ export function referenceFailing(): void {
       });
     });
 
-    it("a key twice in one file: the server's message, and nothing is left written", async () => {
+    it("a key twice in one file: the file holds a key twice: <the key's values>, and nothing is left written", async () => {
       await inAThrowawayDatabase(async (db) => {
         const outcome = await refusedOver(db, EVENT_TYPES_TABLE, { "event_types.json": fileOf(OPENED, CLOSED, { ...OPENED, weight: 9 }) });
-        expect(outcome).toEqual(failedAt("event_types.json", "ON CONFLICT DO UPDATE command cannot affect row a second time"));
+        expect(outcome).toEqual(failedAt("event_types.json", "the file holds a key twice: job.opened"));
         expect(await countIn(db, "os.event_types")).toBe(0);
       });
     });
