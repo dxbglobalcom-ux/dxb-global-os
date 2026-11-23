@@ -458,3 +458,37 @@ function's body on every run. "A vocabulary cannot own a column of type `json`" 
 longer reads `os` alone (item 2). **Added:** `os` holds no range type and no extension; a unique value moves
 between rows in two deliveries; a file's time without an offset is UTC; a trigger on a vocabulary is the schema's
 own code — what it writes elsewhere is not seen by the pass.
+
+## 12a. What the corrections' tests pinned beyond §12 (read and accepted by the lead) — and what the lead decided beside them
+
+219 cases, the lock made again at the corrections' test commit; against the code as it stood 74 red for the
+behaviour not built, 145 green (`evidence/lead-run-fix-tests-on-the-old-code.log`).
+
+- **§12.1:** "any case" covers the schema and the name (`OS.GREET`); `"os"."greet"`, white space beside the dot,
+  another schema, `create or replace view`, and a comment that spells the statement are `malformed`; a malformed
+  function file ends the run as `offences` before the target is asked who it is.
+- **§12.2:** a row of another schema that a file granted on or dropped is said as one it made (`[halve,
+  public.aside]`).
+- **§12.3:** the same session is pinned for the role, the search path (also `set local`) and the client encoding.
+- **§12.4:** the judgement does not hang on what the file would do — a first build over a reference that writes
+  fails, an empty array included, and so does a reference from another vocabulary that has a file; `set default`
+  and `on update set null` write; of two references of one name the first by table is said. **So a table that
+  references a vocabulary with such an action stops every run of the pass until a schema file changes the
+  reference** — loudly, by design.
+- **§12.5:** `vocabulary` and `vocabulary: …` are marks; a comment that holds the word later is not; a mark
+  brought by a later schema file serves.
+- **§12.7:** only rows that are not there are inserted (a sequence draws once for an added row); a key's values
+  are joined in the key's order; a column repeated through an escape (`weight`) is seen.
+- **§12.11:** the circle said is the one that holds the first table by name of all the tables in circles.
+- **§12.12:** only a regular file named `.gitkeep` is passed over, its content never read.
+- **§12.13:** a first file's last fault is said before a second file's first; a value of the wrong type is
+  refused at the judgement, before any row is written.
+
+**Decided by the lead where no test pins it:**
+
+- **Text is compared byte by byte** (the test hand's measurement on its stand-in): a plain cast to text keeps the
+  column's collation, under which `Alpha` and `alpha` can be equal — the comparison says `collate "C"`.
+- "The first by those values' text" of a key held twice: by the joined text.
+- The circle is looked for after every file is judged.
+- White space before a function file's statement is the ASCII space, tab, line feed and carriage return: a
+  byte-order mark first is `malformed`.
