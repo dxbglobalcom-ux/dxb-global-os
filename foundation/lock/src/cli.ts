@@ -48,5 +48,6 @@ async function answer(call: string | undefined, args: readonly string[]): Promis
 }
 
 // From here on a signal stops the children and unwinds the command: the work directory is removed on that path too.
-for (const signal of ["SIGINT", "SIGTERM"] as const) process.on(signal, () => stopTheWork(signal));
+// SIGHUP among them: a terminal that closes on an unattended run must not leave the copy and what runs in it (SPEC §10 item 9).
+for (const signal of ["SIGINT", "SIGTERM", "SIGHUP"] as const) process.on(signal, () => stopTheWork(signal));
 process.exitCode = await answer(process.argv[2], process.argv.slice(3)).catch(refusalOf);

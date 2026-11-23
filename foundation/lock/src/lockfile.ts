@@ -90,24 +90,37 @@ export function foundationScriptsOf(packageText: string | undefined): Record<str
 export const lockedTestsOf = (dirs: readonly string[], paths: readonly string[]): string[] =>
   paths.filter((path) => path.endsWith(".test.ts") && dirs.some((dir) => path.startsWith(`${dir}/`))).sort(inOrder);
 
+/** `<what> added <name>` for every name only `after` holds, then `<what> removed <name>` for every one only `before` holds. */
+function namesDifference(what: string, before: readonly string[], after: readonly string[]): string[] {
+  const [was, is] = [new Set(before), new Set(after)];
+  return [
+    ...[...is].filter((name) => !was.has(name)).map((name) => `${what} added ${name}`),
+    ...[...was].filter((name) => !is.has(name)).map((name) => `${what} removed ${name}`),
+  ];
+}
+
+/** `<what> added|removed|changed <key>` for every key whose value is not the same in both, in the keys' order. */
+function valuesDifference(what: string, before: Readonly<Record<string, string>>, after: Readonly<Record<string, string>>): string[] {
+  const keys = [...new Set([...Object.keys(before), ...Object.keys(after)])].sort(inOrder);
+  return keys.flatMap((key) => {
+    if (before[key] === after[key]) return [];
+    if (before[key] === undefined) return [`${what} added ${key}`];
+    return [after[key] === undefined ? `${what} removed ${key}` : `${what} changed ${key}`];
+  });
+}
+
 /**
- * What `next` changes against the lock before it (SPEC §5 `lock`, step 4), one
- * line each: cases added and removed, protected paths added, removed and
- * changed. With no lock before it, everything is added.
+ * What `next` changes against the lock before it (SPEC §5 `lock`, step 4, and
+ * §10 item 7), one line each: directories added and removed, cases added and
+ * removed, protected paths and scripts added, removed and changed. With no lock
+ * before it, everything is added.
  */
 export function lockDifference(previous: LockFile | undefined, next: LockFile): string[] {
   const titleOf = (locked: LockedCase): string => `${caseTitle(locked)} (count ${locked.count})`;
-  const before = new Set((previous?.cases ?? []).map(titleOf));
-  const after = new Set(next.cases.map(titleOf));
-  const was = previous?.protected ?? {};
-  const paths = [...new Set([...Object.keys(was), ...Object.keys(next.protected)])].sort(inOrder);
   return [
-    ...[...after].filter((title) => !before.has(title)).map((title) => `CASE added ${title}`),
-    ...[...before].filter((title) => !after.has(title)).map((title) => `CASE removed ${title}`),
-    ...paths.flatMap((path) => {
-      if (was[path] === next.protected[path]) return [];
-      if (was[path] === undefined) return [`PROTECTED added ${path}`];
-      return [next.protected[path] === undefined ? `PROTECTED removed ${path}` : `PROTECTED changed ${path}`];
-    }),
+    ...namesDifference("DIRS", previous?.dirs ?? [], next.dirs),
+    ...namesDifference("CASE", (previous?.cases ?? []).map(titleOf), next.cases.map(titleOf)),
+    ...valuesDifference("PROTECTED", previous?.protected ?? {}, next.protected),
+    ...valuesDifference("SCRIPT", previous?.scripts ?? {}, next.scripts),
   ];
 }

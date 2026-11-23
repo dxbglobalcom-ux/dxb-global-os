@@ -16,6 +16,18 @@ function suitePathOf(test) {
   return path;
 }
 
+/**
+ * The messages of the errors the runner put on a case and on the suites around
+ * it. A declared `.only` is seen here and nowhere else: by the time a reporter
+ * is handed the case its mode is the interpreted one, and the runner's refusal
+ * of the `.only` is all that is left of it.
+ */
+function errorMessagesOn(test) {
+  const errors = [...(test.result().errors ?? [])];
+  for (let parent = test.parent; parent.type === "suite"; parent = parent.parent) errors.push(...parent.errors());
+  return errors.map((error) => String(error.message));
+}
+
 export default class LockReporter {
   /** The runner, as `onInit` was handed it: the result's path and the resolved configuration of every project. */
   #vitest;
@@ -44,6 +56,8 @@ export default class LockReporter {
           // What the case declares of itself — `lock` refuses either.
           retry: test.options.retry ?? 0,
           repeats: test.options.repeats ?? 0,
+          // And what the runner held against it. `lock` runs no case, so there it is the runner's own refusal — `lock` refuses that too.
+          errorMessages: errorMessagesOn(test),
         })),
       ),
       modules: modules.map((module) => ({ file: asTheLockSpells(module.moduleId), state: module.state(), errors: module.errors().length })),

@@ -1,8 +1,8 @@
 // What the lock of a piece is (SPEC §4), or why there is none (SPEC §5 `lock`,
 // step 3). Pure — the index's listing and the collecting pass's result go in.
-import { TESTS_DIRECTORY, importClosure } from "./imports.ts";
+import { TESTS_DIRECTORY, importClosure, type Spelled } from "./imports.ts";
 import type { LockFile, LockedCase } from "./index.ts";
-import { inClosedDirectory } from "./judge.ts";
+import { closedPlacesOf } from "./judge.ts";
 import { caseKey, caseTitle, lockedTestsOf } from "./lockfile.ts";
 import { Refused } from "./run.ts";
 import type { Ran } from "./runner.ts";
@@ -33,6 +33,9 @@ function collectedOf(ran: Ran, tests: readonly string[]): NonNullable<Ran["resul
   const empty = tests.find((test) => !result.cases.some((found) => found.file === test));
   if (empty !== undefined) throw new Refused(`${empty} has no case`);
   for (const found of result.cases) {
+    // The pass runs nothing, so an error on a case is the runner's own refusal of it — of a declared `.only`, in the runner's words.
+    const [refusal] = found.errorMessages ?? [];
+    if (refusal !== undefined) throw new Refused(`${caseTitle(found)} is refused by the runner: ${refusal}`);
     if ((found.retry ?? 0) > 0) throw new Refused(`${caseTitle(found)} declares a retry`);
     if ((found.repeats ?? 0) > 0) throw new Refused(`${caseTitle(found)} declares a repeat`);
   }
@@ -53,9 +56,11 @@ function countedCases(collected: NonNullable<Ran["result"]>): LockedCase[] {
 }
 
 /**
- * Pure. The lock of `piece` on `dirs`. `files` is the index's listing, path →
- * blob id; `sourceOf` answers a listed file's text. Refused when the tests
- * cannot be locked as they stand, or reach what a lock cannot protect.
+ * Pure. The lock of `piece` on `dirs`, and beside it every relative import that
+ * resolves to no file — the lock protects nothing of those. `files` is the
+ * index's listing of regular files, path → blob id; `sourceOf` answers a listed
+ * file's text. Refused when the tests cannot be locked as they stand, or reach
+ * what a lock cannot protect.
  */
 export function lockOf(input: {
   piece: string;
@@ -64,7 +69,7 @@ export function lockOf(input: {
   scripts: Record<string, string>;
   ran: Ran;
   sourceOf: (path: string) => string | undefined;
-}): LockFile {
+}): { lock: LockFile; unresolved: Spelled[] } {
   const { piece, dirs, files } = input;
   const paths = [...files.keys()];
   const collected = collectedOf(input.ran, lockedTestsOf(dirs, paths));
@@ -76,14 +81,17 @@ export function lockOf(input: {
   const closure = importClosure(pointedAt, input.sourceOf);
   const [leaving] = closure.leaving;
   if (leaving !== undefined) throw new Refused(`${leaving.from} imports ${leaving.specifier}, which leaves ${TESTS_DIRECTORY}/`);
+  const [globbing] = closure.globbing;
+  if (globbing !== undefined) throw new Refused(`${globbing} spells import.meta.glob: what it reaches cannot be listed, so it cannot be protected`);
 
-  const protectedPaths = new Set([...closure.reached, ...paths.filter((path) => inClosedDirectory(path, dirs)), ...ALWAYS_PROTECTED]);
+  // A file that stands in a closed place is protected, reached or not: unprotected there, it would be one added.
+  const protectedPaths = new Set([...closure.reached, ...paths.filter(closedPlacesOf(dirs, closure.reached)), ...ALWAYS_PROTECTED]);
   const withIds = [...protectedPaths].map((path): [string, string] => {
     const id = files.get(path);
     if (id === undefined) throw new Refused(`the index holds no ${path}`);
     return [path, id];
   });
-  return {
+  const lock: LockFile = {
     format: 1,
     piece,
     dirs: [...dirs],
@@ -92,4 +100,5 @@ export function lockOf(input: {
     scripts: input.scripts,
     cases: countedCases(collected),
   };
+  return { lock, unresolved: closure.unresolved };
 }

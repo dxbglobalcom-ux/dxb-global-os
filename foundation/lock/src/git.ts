@@ -1,6 +1,7 @@
 // What the lock tool reads from git: trees, blobs and history, always as objects
 // — never a file of the working tree (SPEC §3: the candidate is a tree).
 import { createHash } from "node:crypto";
+import { NO_FILE } from "./judge.ts";
 import { Refused, git, start } from "./run.ts";
 
 export type TreeEntry = { path: string; mode: string; type: string; id: string };
@@ -40,8 +41,12 @@ export function textAt(root: string, treeish: string, path: string): string | un
   return entry === undefined ? undefined : textOf(root, entry.id);
 }
 
-/** path → id of a listing: what the judgements compare. */
-export const idsByPath = (entries: readonly TreeEntry[]): Map<string, string> => new Map(entries.map((entry) => [entry.path, entry.id]));
+/** A regular file's entry: a blob of mode 100644 or 100755. A link or a gitlink is an entry, and no file a lock can protect (SPEC §10 item 8). */
+export const isRegularFile = (entry: TreeEntry): boolean => entry.type === "blob" && (entry.mode === "100644" || entry.mode === "100755");
+
+/** path → id of a listing: what the judgements compare. An entry that is no regular file stands in it as NO_FILE — there, and equal to no record. */
+export const idsByPath = (entries: readonly TreeEntry[]): Map<string, string> =>
+  new Map(entries.map((entry) => [entry.path, isRegularFile(entry) ? entry.id : NO_FILE]));
 
 /** The text of one blob. */
 export const textOf = (root: string, id: string): string => git(root, ["cat-file", "blob", id]);

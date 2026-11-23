@@ -13,8 +13,8 @@ const toolDirectory = resolve(fileURLToPath(new URL("..", import.meta.url)));
 /** The reporter of the tool that judges: Vitest is handed this file, never the candidate's. */
 export const reporterPath = join(toolDirectory, "src", "reporter.mjs");
 
-/** Every file under `directory` as the path it has from there; `node_modules` is not entered — git never holds it. */
-function filesUnder(directory: string, prefix = ""): string[] {
+/** Every file under `directory` as the path it has from there; `node_modules` is not entered — git never holds it. A link is a file here, followed nowhere. */
+export function filesUnder(directory: string, prefix = ""): string[] {
   return readdirSync(directory, { withFileTypes: true }).flatMap((entry) => {
     if (entry.isDirectory()) return entry.name === "node_modules" ? [] : filesUnder(join(directory, entry.name), `${prefix}${entry.name}/`);
     return [`${prefix}${entry.name}`];
@@ -76,6 +76,23 @@ function removeWorkDirectory(directory: string): void {
   madeHere.delete(directory);
 }
 
+// Whether the work directories found standing were said: once in a command, before its first one is made.
+let standingWereSaid = false;
+
+/**
+ * SPEC §10 item 9: a `NOTE stale-work-directory <path>` for every `run-*`
+ * directory that stands in `place` before this command made one — left by a
+ * run that died, or the work of a command that runs now. Said, never removed:
+ * this run did not make them.
+ */
+function sayWorkDirectoriesFoundStanding(place: string): void {
+  if (standingWereSaid) return;
+  standingWereSaid = true;
+  for (const entry of readdirSync(place, { withFileTypes: true })) {
+    if (entry.isDirectory() && entry.name.startsWith("run-")) console.log(`NOTE stale-work-directory ${join(place, entry.name)}`);
+  }
+}
+
 /**
  * Does `work` in a fresh work directory of this run and removes the directory
  * when `work` ends, however it ends — `keep` leaves it and says where it is.
@@ -83,7 +100,9 @@ function removeWorkDirectory(directory: string): void {
 export async function inAWorkDirectory<T>(keep: boolean, work: (directory: string) => Promise<T>): Promise<T> {
   mkdirSync(WORK_HOME, { recursive: true });
   // Made under the place's real path: every path handed on from here is the one a child sees too.
-  const directory = mkdtempSync(join(realpathSync(WORK_HOME), "run-"));
+  const place = realpathSync(WORK_HOME);
+  sayWorkDirectoriesFoundStanding(place);
+  const directory = mkdtempSync(join(place, "run-"));
   madeHere.add(directory);
   if (keep) console.log(`WORK_KEPT ${directory}`);
   try {

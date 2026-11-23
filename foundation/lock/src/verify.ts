@@ -7,7 +7,7 @@ import type { Offence } from "./index.ts";
 import { TOOL_DIRECTORY, judgeRun } from "./judge.ts";
 import { INVENTORY_PATH, LOCKS_DIRECTORY, caseCount, lockPathOf, lockedTestsOf, parseInventory, parseLock, pieceOfLockPath } from "./lockfile.ts";
 import { Refused, assertNotToldToStop, oneLine, refusalOf, start } from "./run.ts";
-import { copyAndInstall, runTheTests } from "./runner.ts";
+import { copyAndInstall, copyOffences, runTheTests } from "./runner.ts";
 import { runnerNameNotes, structuralOffences, type Judged } from "./structure.ts";
 import { inAWorkDirectory, judgeIn, toolStandsAs, workDirectoryOfTheExtractedJudge, writeEntries } from "./work.ts";
 
@@ -39,19 +39,24 @@ function sayVerdict({ lock, lockCommit, candidate }: Judged, offences: readonly 
   return offences.length > 0 ? 1 : 0;
 }
 
-/** SPEC §5 steps 3 to 7 by the running tool, in `work`. A structural offence ends it before anything is copied, installed or run. */
+/**
+ * SPEC §5 steps 3 to 7 by the running tool, in `work`. A structural offence
+ * ends it before anything is copied, installed or run; a copy that the install
+ * left unready, or other than the candidate's tree, before anything is run.
+ */
 async function judgeIt(judged: Judged, work: string): Promise<number> {
   const { root, lock, candidate } = judged;
   const entries = listTree(root, candidate.tree);
   const structural = structuralOffences(judged, entries);
   if (structural.length > 0) return sayVerdict(judged, structural);
 
-  const notInstalled = await copyAndInstall(root, entries, work);
-  if (notInstalled.length > 0) return sayVerdict(judged, notInstalled);
+  const notReady = [...(await copyAndInstall(root, entries, work)), ...copyOffences(work, entries, lock)];
+  if (notReady.length > 0) return sayVerdict(judged, notReady);
 
   const protectedPaths = Object.keys(lock.protected);
   const ran = await runTheTests(work, { config: lock.config, tests: lockedTestsOf(lock.dirs, protectedPaths) }, "judging");
-  const offences = judgeRun({ cases: lock.cases, protectedPaths, ...ran });
+  // The copy is compared again: what ran in it could write over the tests that judged it (SPEC §10 item 2).
+  const offences = [...judgeRun({ cases: lock.cases, protectedPaths, ...ran }), ...copyOffences(work, entries, lock)];
   for (const note of await runnerNameNotes(judged, entries)) console.log(note);
   return sayVerdict(judged, offences);
 }
@@ -83,20 +88,21 @@ function lockAtTheBase(root: string, piece: string, candidate: Candidate): Judge
 }
 
 /**
- * `verify <piece>`: says which tool judges, then the judgement. Answers the
- * exit code of SPEC §5's table; a refusal is said here, as the piece's last line.
+ * `verify <piece>`: says which tool judges — always the lock commit's,
+ * extracted (SPEC §10 item 10) — then that tool's judgement. Answers the exit
+ * code of SPEC §5's table; a refusal is said here, as the piece's last line.
  */
 export async function verifyPiece(root: string, piece: string, candidate: Candidate, options: VerifyOptions): Promise<number> {
   try {
     const judged = lockAtTheBase(root, piece, candidate);
-    const asLocked = toolStandsAs(idsByPath(listTree(root, judged.lockCommit, TOOL_DIRECTORY)));
     if (options.extractedInto !== undefined) {
-      // The judge that extracted this tool has said so; this one only judges.
+      // The judge that extracted this tool has said so; this one only judges — when it is the tool that was extracted.
+      const asLocked = toolStandsAs(idsByPath(listTree(root, judged.lockCommit, TOOL_DIRECTORY)));
       if (!asLocked) throw new Refused(`the extracted tool is not the tool of the lock commit ${judged.lockCommit}`);
       return await judgeIt(judged, workDirectoryOfTheExtractedJudge(options.extractedInto));
     }
-    console.log(`JUDGE ${asLocked ? "in-place" : "extracted"} lock=${judged.lockCommit}`);
-    return await inAWorkDirectory(options.keep, (work) => (asLocked ? judgeIt(judged, work) : handOverToTheLockCommitsTool(judged, options, work)));
+    console.log(`JUDGE extracted lock=${judged.lockCommit}`);
+    return await inAWorkDirectory(options.keep, (work) => handOverToTheLockCommitsTool(judged, options, work));
   } catch (failure) {
     return refusalOf(failure);
   }

@@ -50,7 +50,7 @@ export function git(root: string, args: readonly string[], input = ""): string {
   }
 }
 
-type StopSignal = "SIGINT" | "SIGTERM";
+type StopSignal = "SIGINT" | "SIGTERM" | "SIGHUP";
 
 // How to stop each child that runs now, and the signal the command was told to stop by, once it was.
 const stopOfEachChild = new Set<(signal: StopSignal) => void>();
