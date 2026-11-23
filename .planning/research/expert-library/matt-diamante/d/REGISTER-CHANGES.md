@@ -76,8 +76,7 @@ Where HSK replaces a row's text, the clause is appended to HSK's version.
   business), the five most-watched videos of the niche; store each group's rules. (2) Search each for the
   trade's words; keep threads from the last 30 days with an open question. (3) Draft an answer that helps without
   the business — facts from the fact sheet, no price unless signed, no link unless the asker wants one. (4) Check
-  it against the group's rules and the holding's boundaries; where an AI writes in the business's name, the
-  wording the CEO approves for that disclosure is used. (5) Post or queue for the owner's tap where the platform
+  it against the group's rules and the holding's boundaries. (5) Post or queue for the owner's tap where the platform
   requires a person. (6) Copy each question, in the asker's words, into the question bank. (7) Log replies,
   removals and warnings; a removal stops posting in that group.
 - **Output.** The week's answers with links, the questions added to the bank, the removals log. Refuses posting

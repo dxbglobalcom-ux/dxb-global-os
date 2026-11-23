@@ -155,7 +155,7 @@ three kinds:
   questions turned into pages, enquiries that mention the group.
 - **Earns / improves.** Presence where AI answers and neighbours both read, without ad spend.
 - **Needs the CEO.** The accounts (an identity step) for the holding's own brands; whether an AI worker may
-  write in the business's name, and how it says it is AI where the platform or the holding's rule requires.
+  write in the business's name.
 - **Risk.** Hidden promotion — refused by design: the name is open, the answer stands without the link.
 
 ### 8. Free first-pass keyword research in any language (NEW; D9)

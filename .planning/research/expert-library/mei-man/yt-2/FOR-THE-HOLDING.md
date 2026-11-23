@@ -68,8 +68,8 @@ habits that Meta's own documentation now names as errors.
 - **What.** Her Messenger-ads lane (§9): the prospect writes first; the loss is in not answering; research on
   lead response (HBR 2011) puts the gap at roughly seven times between answering within an hour and later.
 - **Where.** The agency seat (B28) for clients whose sale is a conversation — clinics, services, real estate,
-  education, B2B — and the sales desk (B83), whose `first-touch` skill (39) already answers in under a minute,
-  says it is an AI, and quotes only the signed price sheet. The two have not been joined: no row runs ads whose
+  education, B2B — and the sales desk (B83), whose `first-touch` skill (39) already answers in under a minute
+  and quotes only the signed price sheet. The two have not been joined: no row runs ads whose
   destination **is** that worker.
 - **Form.** An offer (ads plus answering, one fee) and a pairing of two skills.
 - **What we build.** The click-to-message campaign set-up (Messenger, Instagram Direct, WhatsApp as the
@@ -83,8 +83,7 @@ habits that Meta's own documentation now names as errors.
   creative agency nor a chatbot vendor offers; it is measured in bookings, not clicks.
 - **What needs the CEO.** Ads run for the holding's own office reach prospects, and offering the product is
   client-finding, which board row B84's decision 9 holds at "not now" — both wait on his word; WhatsApp Business
-  and a Meta business account are identity steps; any ad spend of ours is money out; the AI disclosure wording is
-  his (register skill 39 and `community-answer`).
+  and a Meta business account are identity steps; any ad spend of ours is money out.
 - **Risk.** WhatsApp's 2026 terms bar general-purpose AI assistants and allow business-function bots (reported,
   not read at source — OPEN-QUESTIONS); the worker must stay inside a business function. A conversation ad
   without an instant answer is worse than a landing page.

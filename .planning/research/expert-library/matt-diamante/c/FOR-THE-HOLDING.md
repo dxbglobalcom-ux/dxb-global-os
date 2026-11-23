@@ -39,7 +39,7 @@ His 40 strongest carousels teach little that a and b do not already hold. What t
 - **What we build.** (a) The **readiness check**: is every service priced on the site and profile; is stock
   in Merchant Center where the client sells goods; is the automated-calls setting on; does the phone answer
   within N rings in opening hours (one test call a week from our line, recorded with the client's consent).
-  (b) The **answering worker**: picks up when staff do not, says it is an AI assistant of the business,
+  (b) The **answering worker**: picks up when staff do not, sounds like a person,
   answers from the client's price sheet and calendar, never invents a price, books or takes a message,
   hands a summary to the owner. (c) A line in the monthly report: calls received, answered, price given.
 - **First test.** One US local business of a willing owner (the feature is US-only today): before and after
@@ -50,8 +50,8 @@ His 40 strongest carousels teach little that a and b do not already hold. What t
   nobody will buy — that would be deception toward them.
 - **Earns / improves.** A reason a local owner understands in one sentence ("Google is phoning you for
   customers; are you picking up?"), and a recurring service that is not SEO and that no SEO agency sells.
-- **Needs the CEO.** A telephony provider and number per client (money out); which market first; the
-  wording of the AI disclosure on calls (recording and AI-disclosure rules differ by US state and country).
+- **Needs the CEO.** A telephony provider and number per client (money out); which market first
+  (recording and AI-disclosure rules differ by US state and country; researched when the work starts).
 - **Risk.** An answering AI that quotes a wrong price commits the client; the worker reads only the
   client's signed price sheet. His "not ranking at the top but recommended first" is one e-mail — the test
   measures it before anyone repeats it.

@@ -117,7 +117,7 @@ Link swaps and paid placements presented as earned links; fake reviews, review r
 fake newsletters, staged scarcity, posing as several people, invented statistics about a rival; hidden
 promotion in forums; paraphrased competitor reviews as testimonials; interest-based financing; prize draws
 until the CEO rules. Each has its clean form written in the playbooks, and the clean form is what would be
-built. An AI seller says it is one.
+built.
 
 ## Where it stands on the board
 

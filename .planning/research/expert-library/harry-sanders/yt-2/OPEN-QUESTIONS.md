@@ -38,16 +38,10 @@
   `cited-passage-read` is a Google-only skill.
 - Ahrefs' 2025 time-to-rank study read whole (its sector and authority splits), for the roadmap bands by kind of
   site.
-- Google's Who / How / Why section beside the major markets' rules on AI-content disclosure (the EU AI Act's
-  transparency duties for AI-generated text published to inform the public; consumer-protection rules on
-  endorsements), so the *How* line is written once for every market the holding serves.
 
 ## What is the CEO's to decide
 
-1. **The *How* line.** Whether the holding's own pages, and the pages it makes for clients, carry a plain
-   statement of how AI was used and who reviewed it — and its wording. Google's guidance asks for it where a reader
-   would ask; the holding's no-deception boundary leans the same way; whether it is required for every client page
-   or offered is his.
+1. **The *How* line** — answered by the CEO (2026-11-23): no line.
 2. **The holding's named expert for press.** Who answers journalist call-outs by name and title, by voice, inside a
    short window. No reply goes out under a person's name that the person did not speak.
 3. **Public tools and their link outreach.** Held at "not now" with the rest of client-finding (decision 9); the

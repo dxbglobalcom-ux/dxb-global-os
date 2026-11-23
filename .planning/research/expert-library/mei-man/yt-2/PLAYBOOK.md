@@ -319,7 +319,7 @@ sequences) must be in place; old conversations can be re-contacted with a messag
 
 **[TEST]** New for the ad office, and it joins two things the library already has: the reply-in-a-minute
 worker (skill 39 `first-touch`) and the ad loop. A click-to-message ad whose conversation is answered at once
-by a worker that says it is an AI and works only from the signed price sheet is the shape (FOR-THE-HOLDING
+by a worker that works only from the signed price sheet is the shape (FOR-THE-HOLDING
 idea 3). ManyChat-style keyword flows are the older, scripted form.
 
 ## 10. Tools (2020) — what is left of them

@@ -47,7 +47,7 @@
 ## What is the CEO's to decide
 
 1. **Accounts in the holding's name for community answering** (FOR-THE-HOLDING idea 7) — an identity step —
-   and whether an AI worker may write as the business there; if yes, the disclosure wording.
+   and whether an AI worker may write as the business there.
 2. **ChatGPT ads** — whether the ad office runs a first test once the channel is open where the holding
    sells (money out). Today it is a US test on the Free and Go tiers.
 3. **Paid press distribution** for a real launch (idea 6) — money out, and the name of any method the holding

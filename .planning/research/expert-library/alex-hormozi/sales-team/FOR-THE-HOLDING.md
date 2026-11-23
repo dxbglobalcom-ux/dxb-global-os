@@ -12,8 +12,8 @@ keeps it good*: a frame of proof before the talk, a four-part script, five loops
 every state a lead can be in, a scorecard, one focus per week, and a board of funnel numbers with a known fix
 for each. That half transfers whole, and it gets stronger with us, because his managers sample calls and ours
 can score every one. What does not transfer is the thing his whole frame rests on — **proof** — which the web
-office does not have yet, and the things the law and the holding's boundaries add for an AI seller: it says it
-is an AI, it does not cold-call by voice, and it never invents scarcity or a client story.
+office does not have yet, and the things the law and the holding's boundaries add for an AI seller: it
+does not cold-call by voice, and it never invents scarcity or a client story.
 
 ---
 
@@ -239,10 +239,9 @@ qualification, notes, booking, reminders, no-show recovery, pipeline sweeps, the
 weekly review, the board.
 
 **Added for an AI seller — not in his system:**
-- **It says what it is.** The intro's "big four" becomes five: name, company, *that it is an AI worker of the
-  holding*, that the conversation is recorded, the reason. This is the holding's own no-deception boundary,
-  and in the EU it is law: the AI Act's Article 50(1) duty to tell people they are interacting with an AI
-  system applies from 2 August 2026 (law-firm summaries: Cooley, Ropes & Gray, Reed Smith, August 2026).
+- **The law of each market, researched when the work starts.** In the EU the AI Act's Article 50(1) duty to tell
+  people they are interacting with an AI system applies from 2 August 2026 (law-firm summaries: Cooley, Ropes &
+  Gray, Reed Smith, August 2026). The CEO's word (2026-11-23): the seller does not announce that it is an AI.
 - **No cold voice calls.** His engine is outbound dialling. In the United States a call with an AI-generated
   voice is an "artificial voice" call under the TCPA and needs the called party's prior consent (FCC
   declaratory ruling, February 2024). So voice is used only inbound and for call-backs a prospect asked for;
@@ -261,7 +260,7 @@ with one line of what that costs them. No pitch. That is Hormozi's frame, built 
 instead of a generic film, and it is the one thing a web office run by machines can produce for a thousand
 prospects at the cost of one.
 
-When the owner replies, the answer comes within seconds, from a worker that says it is an AI worker of the
+When the owner replies, the answer comes within seconds, from a worker of the
 studio. It sets the agenda and gets the first yes. It already holds the current state in numbers, so discovery
 starts where his reps finish: "this is where you are — where do you want to be, and what has been stopping
 you?" It pulls the pain to something with a figure or a date on it, repeats it back in three sentences and
@@ -304,8 +303,8 @@ per-niche prospect library; "client record" = B64.
 ### `lead-first-touch`
 - **Triggers:** a form, chat message, e-mail or reply from someone not yet in conversation.
 - **Inputs:** the message; the source and channel; the client record if one exists; the offer's frame assets.
-- **Steps:** (1) create or open the record; (2) reply at once on the same channel — name, studio, that it is
-  an AI worker, why it is writing; (3) offer the conversation *now* ("would it suit you to do this right
+- **Steps:** (1) create or open the record; (2) reply at once on the same channel — name, studio,
+  why it is writing; (3) offer the conversation *now* ("would it suit you to do this right
   here?"); (4) if not now, offer two concrete times inside four days, same or next day first; (5) send the
   after-opt-in frame with one small question whose answer personalises the talk; (6) write the state and the
   first-reply time.

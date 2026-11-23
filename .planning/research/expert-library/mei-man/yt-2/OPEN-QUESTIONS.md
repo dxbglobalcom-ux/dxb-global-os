@@ -43,7 +43,7 @@ steps, duplicating ×3, a CBO campaign of winners — PLAYBOOK §3, §5) — the
 
 | # | Decision | Why it stops at him |
 |---|---|---|
-| 1 | Whether the office offers **conversation ads answered by our worker** (idea 3) as one product, and the AI disclosure wording in chats | It joins the ad office and the sales desk; the disclosure is his (register skills 39, 65) |
+| 1 | Whether the office offers **conversation ads answered by our worker** (idea 3) as one product | It joins the ad office and the sales desk |
 | 2 | Opening **WhatsApp Business** and a Meta business account for the holding's own conversation-ad test | Identity steps |
 | 3 | A **paid seed audience** for the holding's own new brand accounts (idea 8b) — whether, and the daily budget | Money out |
 

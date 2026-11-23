@@ -22,8 +22,8 @@ Companion to `PLAYBOOK.md` and `FOR-THE-HOLDING.md` in this folder.
   confirmed per market. The holding can simply *choose* a clear withdrawal window as its own promise.
 - **AI disclosure.** Several jurisdictions require telling a person they are dealing with an AI (the EU AI Act's
   transparency duty; US state bot-disclosure laws), and AI-generated voice calls in the US fall under
-  telemarketing consent rules — from my knowledge, not re-checked today. Rule H1 satisfies the spirit everywhere;
-  the letter needs a per-market read before the voice channel.
+  telemarketing consent rules — from my knowledge, not re-checked today. It
+  needs a per-market read before the voice channel.
 - **Cold contact.** Unsolicited SMS and automated DMs are restricted or forbidden in many markets and on the
   platforms themselves; business e-mail to a published address is allowed in some countries and not others.
   The outreach skill needs a country table before any campaign.

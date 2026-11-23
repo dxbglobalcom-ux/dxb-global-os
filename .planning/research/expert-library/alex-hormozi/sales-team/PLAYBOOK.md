@@ -121,9 +121,7 @@ Name · company · recorded line · reason for the call. No weather talk. The "s
 of the call and surfaces resistance when it is cheapest to handle `[T 187:42]`.
 
 **[added]** He calls the big four "required by law, at least in the US". The honest version: telemarketing rules
-require prompt disclosure of who is calling and why; recording disclosure depends on the jurisdiction. For an AI
-worker there is a fifth item he does not have — saying it is an AI (§ "What must be added for AI" in
-`FOR-THE-HOLDING.md`).
+require prompt disclosure of who is calling and why; recording disclosure depends on the jurisdiction.
 
 ### 2.2 Disco — "the pain is the pitch" `[T 31:11–35:13, 188:43–190:43]`
 

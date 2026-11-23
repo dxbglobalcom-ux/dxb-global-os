@@ -67,20 +67,8 @@ survive and whose forecasts do not.
   with the tool. The emails go to webmasters, not prospects, but nothing is sent before the tool exists.
 - **Risk.** Template blasts. Repair: one page owner, one personal line, never a guessed address.
 
-### 4. The *How* line — an honest statement on every AI-made page
-- **What.** Google's own Who / How / Why (§4.1): pages should make it self-evident how automation or AI was used
-  where a reader would ask; authorship must not be deceptive. The register holds Who and Why; none holds How.
-- **Where.** B84 every page for clients and for the holding; B28 written content.
-- **Form.** A clause of the only-we gate (row 14); a small "how this page was made" block in the page blueprints.
-- **What we build.** The block and its variants (written with AI from the owner's interview and reviewed by
-  [named person]; tool built from [client]'s figures, checked by [named person]); the gate check.
-- **First test.** Add the block to three holding pages; check that it reads as a strength (the reviewer and the
-  evidence), not as an apology; Search Console impressions over 28 days as a sanity check, not a proof.
-- **Earns / improves.** The holding practises what it is — an AI-native company that says so — and stays on the
-  right side of Google's guidance and of its own no-deception boundary.
-- **Needs the CEO.** The wording, and where it is required (CEO's stance on AI disclosure, which row 65 already
-  leaves to him for community answers).
-- **Risk.** Clients who do not want it. Repair: the block names the human reviewer first; the client signs off.
+### 4. The *How* line — not taken
+Google's Who / How / Why (§4.1) suggests a statement of how AI was used. The CEO's word (2026-11-23): pages carry no such line. Kept from it: authorship is never deceptive.
 
 ### 5. The owner's own measure and the capacity question
 - **What.** The client film (§6.1) proves results in the business's units — consultations a week, a four-week
