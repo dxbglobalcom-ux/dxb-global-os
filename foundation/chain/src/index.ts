@@ -6,6 +6,9 @@ export { ChainRefused } from "./outcome.ts";
 export type { ChainFile } from "./disk.ts";
 export { readChain } from "./disk.ts";
 
+export type { PassFile } from "./passes.ts";
+export { readPasses } from "./passes.ts";
+
 export type { LedgerRow } from "./compare.ts";
 export { compare } from "./compare.ts";
 

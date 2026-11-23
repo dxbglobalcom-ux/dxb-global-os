@@ -1,0 +1,122 @@
+== M0 the target
+PostgreSQL 17.6 on x86_64-pc-linux-gnu, compiled by gcc (GCC) 15.2.0, 64-bit
+7711327497365176359
+NOTICE:  database "chain_measure_p4" does not exist, skipping
+== M1 a function file through the wrapper: what CREATE OR REPLACE does to pg_proc
+-- a. a new function
+     os holds: a() kind=f oid=20080 ctid=(12,13) xmin=2457
+-- b. the same text again: same oid? another ctid?
+     os holds: a() kind=f oid=20080 ctid=(17,16) xmin=2458
+-- c. a second file makes b; a's row untouched?
+     os holds: a() kind=f oid=20080 ctid=(17,16) xmin=2458
+        b(n integer) kind=f oid=20081 ctid=(19,7) xmin=2459
+-- d. a file that also revokes, grants and comments on its own function: only its own row moves?
+     os holds: a() kind=f oid=20080 ctid=(17,16) xmin=2458
+        b(n integer) kind=f oid=20081 ctid=(98,7) xmin=2460
+-- e. a file that grants on ANOTHER function: the other row moves
+     os holds: a() kind=f oid=20080 ctid=(17,34) xmin=2461
+        b(n integer) kind=f oid=20081 ctid=(98,8) xmin=2461
+-- f. changed argument types: a second signature beside the first
+     os holds: a() kind=f oid=20080 ctid=(17,34) xmin=2461
+        a(n integer) kind=f oid=20082 ctid=(17,35) xmin=2462
+        b(n integer) kind=f oid=20081 ctid=(98,8) xmin=2461
+-- g. changed return type
+     ERROR:  cannot change return type of existing function
+     HINT:  Use DROP FUNCTION os.a() first.
+     CONTEXT:  SQL statement "create or replace function os.a() returns integer language plpgsql as $f$ begin return 1; end $f$;"
+     PL/pgSQL function inline_code_block line 1 at EXECUTE
+     os holds: a() kind=f oid=20080 ctid=(17,34) xmin=2461
+        b(n integer) kind=f oid=20081 ctid=(98,8) xmin=2461
+-- h. renamed input parameter
+     ERROR:  cannot change name of input parameter "n"
+     HINT:  Use DROP FUNCTION os.b(integer) first.
+     CONTEXT:  SQL statement "create or replace function os.b(m integer) returns integer language sql begin atomic select m + 1; end;"
+     PL/pgSQL function inline_code_block line 1 at EXECUTE
+     os holds: a() kind=f oid=20080 ctid=(17,34) xmin=2461
+        b(n integer) kind=f oid=20081 ctid=(98,8) xmin=2461
+-- i. a file that drops another function
+     os holds: b(n integer) kind=f oid=20081 ctid=(98,8) xmin=2461
+        c() kind=f oid=20083 ctid=(19,9) xmin=2464
+-- j. a procedure and an aggregate are rows of pg_proc too
+     os holds: agg(integer) kind=a oid=20085 ctid=(20,33) xmin=2465
+        b(n integer) kind=f oid=20081 ctid=(98,8) xmin=2461
+        c() kind=f oid=20083 ctid=(19,9) xmin=2464
+        p() kind=p oid=20084 ctid=(20,8) xmin=2465
+-- k. two files in ONE transaction would be: (shown as one text) replace b twice — ctid moves each time?
+     os holds: agg(integer) kind=a oid=20085 ctid=(20,33) xmin=2465
+        b(n integer) kind=f oid=20081 ctid=(98,9) xmin=2466
+        c() kind=f oid=20083 ctid=(19,9) xmin=2464
+        p() kind=p oid=20084 ctid=(20,8) xmin=2465
+-- l. inside one transaction: the rows before a file and after it (what a per-file check would read)
+     xid=2467
+     t
+     moved or new: c
+     gone: (none)
+== M2 what needs a function to stand when it is made
+-- a trigger on a function that does not stand:
+ERROR:  function os.nowhere() does not exist
+-- a policy that calls one:
+ERROR:  function os.nowhere2() does not exist
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+-- a column default that calls one:
+ERROR:  function os.nowhere3() does not exist
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+-- a plpgsql function whose body calls one that does not stand:
+made
+-- a sql function with a string body that calls one that does not stand:
+ERROR:  function os.not_yet() does not exist
+LINE 1: ...ater_sql() returns int language sql as $f$ select os.not_yet...
+                                                             ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+-- CREATE OR REPLACE over a function a trigger uses keeps the trigger:
+v2
+-- DROP FUNCTION while a trigger uses it:
+ERROR:  cannot drop function os.trg() because other objects depend on it
+DETAIL:  trigger t_trg on table os.t depends on function os.trg()
+HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+== M3 a vocabulary made equal to rows that arrive as one jsonb value
+-- a. first reconcile (rows written):
+job.opened
+job.closed
+differ=0 table=2 file=2
+job.closed meta is sql null=true live=true seen_count=0
+job.opened meta is sql null=false live=true seen_count=0
+-- b. the same again (rows written — none means no row was rewritten):
+differ=0 table=2 file=2
+-- c. a column the file does not own is changed by a process, then the pass runs: kept?
+job.opened
+job.held
+job.closed
+differ=0 table=2 file=2
+job.held | held | {} | NULL | seen_count=0 seen_at=NULL
+job.opened | a job was OPENED | {job,x} | {"k": 2} | seen_count=7 seen_at=2026-01-01 00:00:00+00
+-- d. a key the table has no column for is ignored in silence by jsonb_populate_recordset:
+x|
+-- e. a value of the wrong type:
+ERROR:  invalid input syntax for type integer: "heavy"
+-- f. a key twice in one file:
+ERROR:  ON CONFLICT DO UPDATE command cannot affect row a second time
+HINT:  Ensure that no rows proposed for insertion within the same command have duplicate constrained values.
+-- g. a not-null column given null:
+ERROR:  null value in column "description" of relation "event_types" violates not-null constraint
+DETAIL:  Failing row contains (x, null, 1, {}, null, t, null, 0).
+-- h. the table's primary key columns, from the catalogue:
+name
+-- i. a json (not jsonb) column in the comparison:
+ERROR:  could not identify an equality operator for type json
+LINE 1: select * from os.j except select * from os.j
+               ^
+== M4 a vocabulary that references another: order, and what a removal in use meets
+-- removing a value that is in use (NO ACTION):
+ERROR:  update or delete on table "event_types" violates foreign key constraint "handlers_event_type_fkey" on table "handlers"
+DETAIL:  Key (name)=(job.held) is still referenced from table "handlers".
+-- child inserted before its parent stands, two statements:
+ERROR:  insert or update on table "handlers" violates foreign key constraint "handlers_event_type_fkey"
+DETAIL:  Key (event_type)=(job.new) is not present in table "event_types".
+-- both in ONE statement (data-modifying CTE), child first:
+2
+-- the references among a set of tables, from the catalogue (referencing -> referenced):
+os.handlers -> os.event_types
+-- a table with no primary key:
+0
+== done; throwaway database dropped: 0 left

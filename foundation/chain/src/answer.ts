@@ -20,5 +20,8 @@ export function answerOf(result: Outcome | ChainRefused | TargetRefused): { line
       };
     case "file-failed":
       return { lines: [`FAILED ${result.file} ${oneLine(result.message)}`, `CHAIN_RED file-failed applied=${result.applied.length}`], exit: 1 };
+    case "pass-failed":
+    case "manifest":
+      throw new Error("NOT_BUILT");
   }
 }

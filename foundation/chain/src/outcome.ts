@@ -1,6 +1,6 @@
 // How a run ends (SPEC §7): an outcome it answers, or a refusal it throws.
 
-/** The kinds in the order SPEC §4's two tables list them — the order offences are said in. */
+/** The kinds in the order piece 3's SPEC §4 lists them, then piece 4's (its §7) — the order offences are said in. */
 const KINDS = [
   "unknown-entry",
   "duplicated-number",
@@ -12,6 +12,9 @@ const KINDS = [
   "missing",
   "before-applied",
   "reordered",
+  "malformed",
+  "orphan",
+  "second-signature",
 ] as const;
 
 export type OffenceKind = (typeof KINDS)[number];
@@ -26,9 +29,13 @@ export function inOrder(offences: readonly Offence[]): Offence[] {
 
 export type Outcome =
   // applied now, in order; standing: the schema rows after the run
-  | { state: "applied"; applied: string[]; standing: number }
+  // functions, reference: the files of that pass, present only when the pass ran (piece 4's SPEC §7)
+  | { state: "applied"; applied: string[]; standing: number; functions?: number; reference?: number }
   | { state: "offences"; offences: Offence[] }
-  | { state: "file-failed"; file: string; message: string; applied: string[] };
+  | { state: "file-failed"; file: string; message: string; applied: string[] }
+  // applied: the schema files this run applied before the pass
+  | { state: "pass-failed"; pass: "functions" | "reference"; file: string; message: string; applied: string[] }
+  | { state: "manifest"; offences: Offence[]; applied: string[] };
 
 export class ChainRefused extends Error {
   readonly reason: "no-chain" | "busy" | "ledger-unknown" | "ledger-moved" | "target-moved";
