@@ -202,6 +202,28 @@ was deleted, or a second signature, is refused and rolled back; a removal or a c
 ledgered change. The reference pass makes each code-owned vocabulary equal its file, in one transaction. *Tests
 first:* a changed body replaced; a second signature, an orphan and a failing pass each rolled back whole; a
 vocabulary reconciled; a row of his policy kind left as he changed it.
+*Done 2026-11-23 (`piece-4/SPEC.md`, its two audits and evidence beside it): the two passes run after the schema
+files on every `pnpm foundation:chain up`, each when its directory stands; 219 locked cases. What the cut did not say
+was measured and decided there by the lead: **the passes write no ledger row** — the ledger's `kind` and row 0 stand,
+and a removal, a changed signature and a seed of his policy arrive as schema files; **a function file begins with its
+own function** (`create or replace function os.<name>(`), so its first statement sets the body on every run, and the
+check reads `pg_proc` in every schema; **a schema file that needs a function makes it in its first form** and the pass
+replaces the body; a vocabulary's file is a JSON array of rows that the server reads whole; **a table is a vocabulary
+because its schema file marks it** (its comment begins with `vocabulary`) — a file planted for a table of his policy
+is refused; a reference that writes on removal (cascade, set null) stops the pass; equal means reads the same, byte by
+byte; a table that already reads as its file is sent no statement. Audited blind by GPT-6.2 Sol (seven A, six B) and
+Fable 5.2 (two A, nine B) from one brief: both found that the first build could end green over a body its file never
+set and that a removal could cascade into a table with no file — thirteen corrections taken, tests first (SPEC §12);
+what is not built is written there with its reason. **For piece 5:** `db/functions/` and `db/reference/` are made with
+a `.gitkeep` each (git delivers no empty directory, and a directory gone from the checkout silences its pass); every
+vocabulary's table carries its mark; no range type and no extension inside `os`; the command's first green run on its
+real target is made there; the row-security statement gets its first real case with the roles. **For piece 6:** the
+snapshot reads floats with `extra_float_digits` said, and owners and grants that `create or replace` keeps are its to
+see. **For whoever commits beside another session:** the corrections' code stands in `88d924b2`, under that session's
+message — the two share one index, and it committed while the lead ran the lock on the staged tree; stage and commit
+in one command. Costs: a `verify` of all four pieces about 7 minutes; the piece took four Fable high hands, four
+helpers and one session — and with the pieces before it, four fifths of Fable 5.2's week in 27 hours (measured), so
+from here the hands write on Opus 5.5 on his word <!-- CEO-OK: fable-manages-opus-writes-while-fables-week-is-short-2026-11-23 -->.*
 
 **5 — the roles and the schema.** *Measured first:* what the installer must grant itself to create objects as
 `os_owner`; the login rules of the image; the `pg_catalog` grants on a fresh instance. Then the chain's first files:

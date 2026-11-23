@@ -492,3 +492,33 @@ behaviour not built, 145 green (`evidence/lead-run-fix-tests-on-the-old-code.log
 - The circle is looked for after every file is judged.
 - White space before a function file's statement is the ASCII space, tab, line feed and carriage return: a
   byte-order mark first is `malformed`.
+
+## 12b. What the corrections' code settled beyond §12 and §12a (read and accepted by the lead)
+
+- **Where the code is:** the corrections' seven files stand in commit `88d924b2`, whose message is another
+  session's ("records(watch-links) …"). The two sessions share one index: while the lead ran the lock on the
+  staged tree, that session committed and took the staged files with it. The content is what the lead read and
+  the lock judged (`LOCK_GREEN piece-4 … candidate=1a18ab2a…` on the index, then on the commit —
+  `evidence/verify-at-the-corrected-commit.log`); history is not rewritten under a working session.
+- **A function file's head:** a `--` comment ends at a line feed or a carriage return, as the server ends it;
+  only ASCII letters fold; a form feed, a vertical tab, and a comment between the words are `malformed` —
+  stricter than the server, on purpose.
+- **The mark** is spelled in lower case; `vocabulary-list` and `vocabulary.` are marks, `vocabulary2`,
+  `vocabulary_of_topics` and `Vocabulary` are not.
+- **A key held twice** is one key when the key's type calls the two equal (`1.0`, `1.00`); a null in a key is
+  left to the server's not-null refusal at the insert.
+- **The runner's own statements** — the settings, the catalogue reads, the two resets — are not the file's: a
+  failure of one is thrown on. Only a statement that reads the file's text is `pass-failed` at the file.
+- **A float reads with every digit** (the code hand's probe; the lead's line; **no locked case pins it**): the
+  bench's server says `extra_float_digits = 0`, under which `0.1 + 0.2` reads `0.3` and a table that differed
+  from its file was called equal; the pass's transaction says `extra_float_digits = 1`. **For piece 6:** a
+  snapshot that reads floats as text under the server's setting misses the same difference.
+- **Seen by the code hand's probes, pinned by no locked test:** with the lock's session ended while a function
+  file sleeps, and while a vocabulary's insert waits, the run threw `the chain's lock is lost` and left nothing
+  (§12.10); a file that drops and re-makes its own function fails; a name two rows carry and no file holds is two
+  orphans; 120 function files take 0.6 s; the head's pattern answers in under 2 ms on 200,000 characters of
+  comment.
+- **Left open, said:** another session that commits a function in any schema between a file's two readings of
+  `pg_proc` fails that file — a false red, loud, and a retry passes (not measured). Whether `reset role` and
+  `reset all` put back a `set session authorization` on a superuser target is not measured: the bench's installer
+  is no superuser and the server refuses it there.

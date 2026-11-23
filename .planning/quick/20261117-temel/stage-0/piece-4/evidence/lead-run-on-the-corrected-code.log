@@ -1,0 +1,30 @@
+== typecheck
+typecheck exit=0
+== passes/
+   ✓ a function file begins with its own function > it is said from the disk, before the target is asked who it is  311ms
+   ✓ the disk of the passes is read with the chain's > a function file changed while a run waits for the lock is applied as it stands under the lock  3203ms
+   ✓ the passes' sessions pass the guard > a list that loses the identity while the schema file sleeps: the functions pass's session is refused — the file stays ledgered, no function is made  3194ms
+   ✓ the passes' sessions pass the guard > a list that loses the identity while a function file sleeps: the reference pass's session is refused — the functions pass stays, no row is written  6215ms
+ ✓ passes/read-passes.test.ts (92 tests) 26ms
+ ✓ passes/answer.test.ts (10 tests) 3ms
+
+ Test Files  3 passed (3)
+      Tests  219 passed (219)
+   Start at  14:58:50
+   Duration  33.12s (transform 175ms, setup 0ms, collect 285ms, tests 32.50s, environment 0ms, prepare 115ms)
+
+== chain/
+ ✓ chain/answer.test.ts (15 tests) 3ms
+ ✓ chain/compare.test.ts (13 tests) 3ms
+
+ Test Files  4 passed (4)
+      Tests  133 passed (133)
+   Start at  14:59:24
+   Duration  32.40s (transform 124ms, setup 0ms, collect 248ms, tests 31.74s, environment 0ms, prepare 121ms)
+
+== bench/no-old-address
+ Test Files  1 passed (1)
+      Tests  28 passed (28)
+   Start at  14:59:57
+   Duration  220ms (transform 57ms, setup 0ms, collect 76ms, tests 33ms, environment 0ms, prepare 31ms)
+
