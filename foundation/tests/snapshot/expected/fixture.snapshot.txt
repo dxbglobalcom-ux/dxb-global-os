@@ -1,0 +1,190 @@
+snapshot-format 1
+column os.kinds 1 name type text not-null t identity - generated - collation - default -
+column os.kinds 2 label type text not-null t identity - generated - collation - default -
+column os.kinds 3 weight type double precision not-null t identity - generated - collation - default -
+column os.parts 1 id type bigint not-null t identity a generated - collation - default -
+column os.parts 2 code type text not-null t identity - generated - collation - default -
+column os.parts 3 qty type integer not-null t identity - generated - collation - default 1
+column os.parts 4 ratio4 type real not-null f identity - generated - collation - default 0.1
+column os.parts 5 ratio8 type double precision not-null f identity - generated - collation - default 0.0000001
+column os.parts 6 amount type numeric(12,4) not-null f identity - generated - collation - default (1.0 / (3)::numeric)
+column os.parts 7 kind type text not-null f identity - generated - collation - default -
+column os.parts_id_seq 1 last_value type bigint not-null t identity - generated - collation - default -
+column os.parts_id_seq 2 log_cnt type bigint not-null t identity - generated - collation - default -
+column os.parts_id_seq 3 is_called type boolean not-null t identity - generated - collation - default -
+column os.parts_view 1 id type bigint not-null f identity - generated - collation - default -
+column os.parts_view 2 twice type double precision not-null f identity - generated - collation - default -
+column os.ticket_seq 1 last_value type bigint not-null t identity - generated - collation - default -
+column os.ticket_seq 2 log_cnt type bigint not-null t identity - generated - collation - default -
+column os.ticket_seq 3 is_called type boolean not-null t identity - generated - collation - default -
+column os_chain.ledger 1 "position" type integer not-null t identity - generated - collation - default -
+column os_chain.ledger 2 file type text not-null t identity - generated - collation - default -
+column os_chain.ledger 3 kind type text not-null t identity - generated - collation - default -
+column os_chain.ledger 4 hash type text not-null t identity - generated - collation - default -
+column os_chain.ledger 5 applied_at type timestamp with time zone not-null t identity - generated - collation - default -
+column os_chain.ledger 6 applied_by type text not-null t identity - generated - collation - default -
+column os_chain.ledger 7 runner_version type text not-null t identity - generated - collation - default -
+comment table os.kinds 00001|vocabulary: kinds of parts
+comment table os.parts 00001|parts of the fixture,
+comment table os.parts 00002|in two lines
+constraint os.kinds kinds_pkey type p deferrable f deferred f validated t def PRIMARY KEY (name)
+constraint os.parts parts_kind_fkey type f deferrable f deferred f validated t def FOREIGN KEY (kind) REFERENCES os.kinds(name) ON DELETE RESTRICT
+constraint os.parts parts_pkey type p deferrable f deferred f validated t def PRIMARY KEY (id)
+constraint os.parts parts_qty_check type c deferrable f deferred f validated t def CHECK ((qty > 0))
+constraint os_chain.ledger ledger_file_key type u deferrable f deferred f validated t def UNIQUE (file)
+constraint os_chain.ledger ledger_hash_check type c deferrable f deferred f validated t def CHECK ((hash ~ '^[0-9a-f]{64}$'::text))
+constraint os_chain.ledger ledger_kind_check type c deferrable f deferred f validated t def CHECK ((kind = ANY (ARRAY['ledger'::text, 'schema'::text])))
+constraint os_chain.ledger ledger_pkey type p deferrable f deferred f validated t def PRIMARY KEY ("position")
+constraint os_chain.ledger ledger_position_check type c deferrable f deferred f validated t def CHECK (("position" >= 0))
+database postgres owner postgres encoding UTF8 collate en_US.UTF-8 ctype en_US.UTF-8
+default-acl for os_owner in * on T to os_owner USAGE option f
+default-acl for os_owner in * on f to os_owner EXECUTE option f
+default-acl for os_owner in os on r to os_reader SELECT option f
+domain os.code base text not-null f collation - default -
+domain-constraint os.code code_check validated t def CHECK ((VALUE ~ '^[A-Z]'::text))
+enum-label os.mood 1 'calm'
+enum-label os.mood 2 'busy'
+function os.count_parts(integer) kind f owner os_owner language sql returns bigint definer t volatility s strict t parallel u leakproof f cost 100 rows 0
+function os.next_ticket(text,double precision) kind f owner os_owner language sql returns text definer f volatility v strict f parallel u leakproof f cost 100 rows 0
+function os.parts_touch() kind f owner os_owner language plpgsql returns trigger definer f volatility v strict f parallel u leakproof f cost 100 rows 0
+function-arguments os.count_parts(integer) min_qty integer
+function-arguments os.next_ticket(text,double precision) prefix text DEFAULT 'T-'::text, scale double precision DEFAULT 0.1
+function-body os.count_parts(integer) 00001|select count(*) from os.parts where qty >= min_qty
+function-body os.next_ticket(text,double precision) 00001|select prefix || nextval('os.ticket_seq')::text || (scale * 1)::text
+function-body os.parts_touch() 00001|
+function-body os.parts_touch() 00002|begin
+function-body os.parts_touch() 00003|  new.qty := coalesce(new.qty, 1);
+function-body os.parts_touch() 00004|  return new;
+function-body os.parts_touch() 00005|end;
+function-body os.parts_touch() 00006|
+function-setting os.count_parts(integer) search_path=""
+function-setting os.count_parts(integer) work_mem=8MB
+grant column os.parts.qty to os_intake UPDATE option f by os_owner stored
+grant database postgres to PUBLIC CONNECT option f by postgres stored
+grant database postgres to PUBLIC TEMPORARY option f by postgres stored
+grant database postgres to dashboard_user CONNECT option f by postgres stored
+grant database postgres to dashboard_user CREATE option f by postgres stored
+grant database postgres to dashboard_user TEMPORARY option f by postgres stored
+grant database postgres to postgres CONNECT option f by postgres stored
+grant database postgres to postgres CREATE option f by postgres stored
+grant database postgres to postgres TEMPORARY option f by postgres stored
+grant database postgres to supabase_etl_admin CONNECT option f by postgres stored
+grant database postgres to supabase_storage_admin CONNECT option f by postgres stored
+grant function os.count_parts(integer) to os_owner EXECUTE option f by os_owner stored
+grant function os.count_parts(integer) to os_reader EXECUTE option f by os_owner stored
+grant function os.next_ticket(text,double precision) to os_owner EXECUTE option f by os_owner stored
+grant function os.parts_touch() to os_owner EXECUTE option f by os_owner stored
+grant relation os.kinds to os_owner DELETE option f by os_owner default
+grant relation os.kinds to os_owner INSERT option f by os_owner default
+grant relation os.kinds to os_owner MAINTAIN option f by os_owner default
+grant relation os.kinds to os_owner REFERENCES option f by os_owner default
+grant relation os.kinds to os_owner SELECT option f by os_owner default
+grant relation os.kinds to os_owner TRIGGER option f by os_owner default
+grant relation os.kinds to os_owner TRUNCATE option f by os_owner default
+grant relation os.kinds to os_owner UPDATE option f by os_owner default
+grant relation os.parts to os_engine INSERT option t by os_owner stored
+grant relation os.parts to os_owner DELETE option f by os_owner stored
+grant relation os.parts to os_owner INSERT option f by os_owner stored
+grant relation os.parts to os_owner MAINTAIN option f by os_owner stored
+grant relation os.parts to os_owner REFERENCES option f by os_owner stored
+grant relation os.parts to os_owner SELECT option f by os_owner stored
+grant relation os.parts to os_owner TRIGGER option f by os_owner stored
+grant relation os.parts to os_owner TRUNCATE option f by os_owner stored
+grant relation os.parts to os_owner UPDATE option f by os_owner stored
+grant relation os.parts to os_reader SELECT option f by os_owner stored
+grant relation os.parts_id_seq to os_owner SELECT option f by os_owner default
+grant relation os.parts_id_seq to os_owner UPDATE option f by os_owner default
+grant relation os.parts_id_seq to os_owner USAGE option f by os_owner default
+grant relation os.parts_view to os_owner DELETE option f by os_owner default
+grant relation os.parts_view to os_owner INSERT option f by os_owner default
+grant relation os.parts_view to os_owner MAINTAIN option f by os_owner default
+grant relation os.parts_view to os_owner REFERENCES option f by os_owner default
+grant relation os.parts_view to os_owner SELECT option f by os_owner default
+grant relation os.parts_view to os_owner TRIGGER option f by os_owner default
+grant relation os.parts_view to os_owner TRUNCATE option f by os_owner default
+grant relation os.parts_view to os_owner UPDATE option f by os_owner default
+grant relation os.ticket_seq to os_engine USAGE option f by os_owner stored
+grant relation os.ticket_seq to os_owner SELECT option f by os_owner stored
+grant relation os.ticket_seq to os_owner UPDATE option f by os_owner stored
+grant relation os.ticket_seq to os_owner USAGE option f by os_owner stored
+grant relation os_chain.ledger to postgres DELETE option f by postgres default
+grant relation os_chain.ledger to postgres INSERT option f by postgres default
+grant relation os_chain.ledger to postgres MAINTAIN option f by postgres default
+grant relation os_chain.ledger to postgres REFERENCES option f by postgres default
+grant relation os_chain.ledger to postgres SELECT option f by postgres default
+grant relation os_chain.ledger to postgres TRIGGER option f by postgres default
+grant relation os_chain.ledger to postgres TRUNCATE option f by postgres default
+grant relation os_chain.ledger to postgres UPDATE option f by postgres default
+grant relation public.snap_probe to os_reader SELECT option f by postgres stored
+grant relation snap_elsewhere.owned to os_owner DELETE option f by os_owner default
+grant relation snap_elsewhere.owned to os_owner INSERT option f by os_owner default
+grant relation snap_elsewhere.owned to os_owner MAINTAIN option f by os_owner default
+grant relation snap_elsewhere.owned to os_owner REFERENCES option f by os_owner default
+grant relation snap_elsewhere.owned to os_owner SELECT option f by os_owner default
+grant relation snap_elsewhere.owned to os_owner TRIGGER option f by os_owner default
+grant relation snap_elsewhere.owned to os_owner TRUNCATE option f by os_owner default
+grant relation snap_elsewhere.owned to os_owner UPDATE option f by os_owner default
+grant schema os to os_engine USAGE option f by os_owner stored
+grant schema os to os_intake USAGE option f by os_owner stored
+grant schema os to os_owner CREATE option f by os_owner stored
+grant schema os to os_owner USAGE option f by os_owner stored
+grant schema os to os_reader USAGE option f by os_owner stored
+grant schema os_chain to postgres CREATE option f by postgres default
+grant schema os_chain to postgres USAGE option f by postgres default
+grant schema snap_elsewhere to os_owner CREATE option f by postgres stored
+grant schema snap_elsewhere to os_owner USAGE option f by postgres stored
+grant type os.code to os_owner USAGE option f by os_owner stored
+grant type os.mood to os_owner USAGE option f by os_owner stored
+grant type os.mood to os_reader USAGE option f by os_owner stored
+index os.kinds valid t def CREATE UNIQUE INDEX kinds_pkey ON os.kinds USING btree (name)
+index os.parts valid t def CREATE INDEX parts_kind_idx ON os.parts USING btree (kind) WHERE (qty > 1)
+index os.parts valid t def CREATE UNIQUE INDEX parts_pkey ON os.parts USING btree (id)
+index os_chain.ledger valid t def CREATE UNIQUE INDEX ledger_file_key ON os_chain.ledger USING btree (file)
+index os_chain.ledger valid t def CREATE UNIQUE INDEX ledger_pkey ON os_chain.ledger USING btree ("position")
+ledger 0 (ledger) ledger 2179aece49242b6bde8643739f2c3bdf4939c21d5f95770b97c0debe74fced00 runner 1
+ledger 1 0001-roles.sql schema 6e4099fff7783a16856bf28b743e48beb4c44fd5ec726e9b9c16b7952a6a7dc9 runner 1
+ledger 2 0002-os.sql schema 5b814cb9fd1e86a0a7f68ae70c7938c86afc578f0964ffa2f8f0630de45a2d0f runner 1
+ledger 3 0003-inside.sql schema a4035d4978c6f4aac58fef4399cdf885688c96982d0cde00cd5a88ba26802eca runner 1
+ledger 4 0004-outside.sql schema 0662df2a2f858496760b78a70113ad9443820745cf0e11b641ba587b91cd9ebe runner 1
+member os_engine has postgres admin t inherit f set f by supabase_admin
+member os_executor has postgres admin t inherit f set f by supabase_admin
+member os_intake has postgres admin t inherit f set f by supabase_admin
+member os_owner has postgres admin f inherit f set t by postgres
+member os_owner has postgres admin t inherit f set f by supabase_admin
+member os_reader has postgres admin t inherit f set f by supabase_admin
+object collation os.bytes owner os_owner
+outside granted os_owner schema snap_elsewhere
+outside granted os_reader table public.snap_probe
+outside in-policy os_reader policy snap_probe_reader on public.snap_probe
+outside owns os_owner table snap_elsewhere.owned
+policy os.parts parts_read cmd r permissive to os_reader
+policy os.parts parts_write cmd a restrictive to os_engine
+policy-check os.parts parts_write (code <> ''::text)
+policy-using os.parts parts_read (qty > 0)
+reference os.kinds {"name": "bolt", "label": "Bolt", "weight": 0.1}
+reference os.kinds {"name": "nut", "label": "Nut", "weight": 0.0000001}
+reference os.kinds {"name": "washer", "label": "Washer", "weight": 0.30000000000000004}
+relation os.kinds kind r owner os_owner persistence p rowsecurity f force f replident d options -
+relation os.parts kind r owner os_owner persistence p rowsecurity t force t replident d options autovacuum_enabled=false,fillfactor=90
+relation os.parts_id_seq kind S owner os_owner persistence p rowsecurity f force f replident n options -
+relation os.parts_view kind v owner os_owner persistence p rowsecurity f force f replident n options -
+relation os.ticket_seq kind S owner os_owner persistence p rowsecurity f force f replident n options -
+relation os_chain.ledger kind r owner postgres persistence p rowsecurity f force f replident d options -
+role os_engine super f inherit f createrole f createdb f login t replication f bypassrls f connlimit -1 validuntil -
+role os_executor super f inherit f createrole f createdb f login t replication f bypassrls f connlimit -1 validuntil -
+role os_intake super f inherit f createrole f createdb f login t replication f bypassrls f connlimit -1 validuntil -
+role os_owner super f inherit f createrole f createdb f login f replication f bypassrls f connlimit -1 validuntil -
+role os_reader super f inherit f createrole f createdb f login t replication f bypassrls f connlimit -1 validuntil -
+role-setting * in postgres app.settings.jwt_exp=<hidden>
+role-setting * in postgres app.settings.jwt_secret=<hidden>
+schema os owner os_owner
+schema os_chain owner postgres
+sequence os.parts_id_seq type bigint start 10 increment 10 min 1 max 9223372036854775807 cache 1 cycle f owned-by os.parts.id
+sequence os.ticket_seq type bigint start 100 increment 5 min 1 max 9223372036854775807 cache 1 cycle f owned-by -
+trigger os.parts parts_touch enabled O def CREATE TRIGGER parts_touch BEFORE INSERT OR UPDATE ON os.parts FOR EACH ROW EXECUTE FUNCTION os.parts_touch()
+type os.code kind d owner os_owner
+type os.mood kind e owner os_owner
+view os.parts_view 00001| SELECT id,
+view os.parts_view 00002|    (ratio8 * (2)::double precision) AS twice
+view os.parts_view 00003|   FROM os.parts
+view os.parts_view 00004|  WHERE (qty > 0);
