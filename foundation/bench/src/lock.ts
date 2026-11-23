@@ -1,6 +1,7 @@
 import { spawnSync } from "node:child_process";
-import { closeSync, constants, existsSync, fstatSync, openSync, statSync } from "node:fs";
-import { userInfo } from "node:os";
+import { closeSync, constants, fstatSync, openSync, statSync } from "node:fs";
+import { join } from "node:path";
+import { makeTheStateDirectory, stateDirectory } from "./bench.ts";
 
 export class LockRefused extends Error {
   name = "LockRefused";
@@ -8,17 +9,16 @@ export class LockRefused extends Error {
 
 export type HostLock = { readonly path: string; held(): boolean; release(): void };
 
-/** `/run/user/<uid>/dxb-foundation-bench.lock`; without that directory, `/tmp/dxb-foundation-bench-<uid>.lock`. */
+/** `host.lock` in the bench's state directory, beside the list (SPEC §5b.1): one path, whatever the session's state. */
 export function defaultLockPath(): string {
-  const uid = userInfo().uid;
-  const runtimeDirectory = `/run/user/${uid}`;
-  return existsSync(runtimeDirectory) ? `${runtimeDirectory}/dxb-foundation-bench.lock` : `/tmp/dxb-foundation-bench-${uid}.lock`;
+  return join(stateDirectory, "host.lock");
 }
 
 // The locks this process took, each with the descriptor it holds. The kernel's
 // lock belongs to that descriptor's open file: it lasts while the descriptor is
-// open here and ends with this process, however the process ends. No pid file,
-// no flag: an object that is not in this map holds nothing.
+// open here — or in a child that was handed it — and ends with the last process
+// that has it, however that process ends. No pid file, no flag: an object that
+// is not in this map holds nothing.
 const taken = new Map<HostLock, number>();
 
 /** util-linux `flock` ends with 1 when the lock is another's — at once with `-n`, or after the wait. */
@@ -61,6 +61,8 @@ export function acquireHostLock(opts?: { path?: string; waitSeconds?: number }):
   if (waitSeconds !== undefined && !(Number.isFinite(waitSeconds) && waitSeconds >= 0)) {
     throw new RangeError(`waitSeconds must be a number of seconds, zero or more — not ${waitSeconds}`);
   }
+  // The host lock lives in the state directory, which a first run has yet to make.
+  if (opts?.path === undefined) makeTheStateDirectory();
   // Opened for reading only and never truncated or removed: what the file holds is nothing to the lock.
   const descriptor = openSync(path, constants.O_RDONLY | constants.O_CREAT | constants.O_NOFOLLOW, 0o600);
   let granted = false;
@@ -97,4 +99,16 @@ export function assertTheHostLock(lock: HostLock): void {
   if (lock.path !== defaultLockPath()) {
     throw new LockRefused(`${lock.path} is held, and it is not the host lock ${defaultLockPath()}`);
   }
+}
+
+/**
+ * The descriptor of the host lock's open file, for a child that makes or changes
+ * the stack (SPEC §5b.2): a child that has it keeps the kernel's lock until it
+ * ends, also when this process is killed first. Throws like `assertTheHostLock`.
+ */
+export function theHostLockDescriptor(lock: HostLock): number {
+  assertTheHostLock(lock);
+  const descriptor = taken.get(lock);
+  if (descriptor === undefined) throw new LockRefused(`the host lock ${lock.path} is not held by this process`);
+  return descriptor;
 }

@@ -3,20 +3,13 @@
 // Progress goes to stderr as the steps run; the last line on stdout is the
 // answer of SPEC §4's table, and the exit code is the one beside it.
 import { performance } from "node:perf_hooks";
-import {
-  BENCH,
-  InstanceStands,
-  LockRefused,
-  RemovalRefused,
-  TargetRefused,
-  acquireHostLock,
-  destroyInstance,
-  instanceStatus,
-  makeInstance,
-} from "./index.ts";
-import { oneLine } from "./run.ts";
+import { BENCH, acquireHostLock, answerOf, destroyInstance, instanceStatus, makeInstance } from "./index.ts";
+import { oneLine, stopTheWork, toldToStopBy } from "./run.ts";
 
 type Answer = { line: string; exit: number };
+
+/** Told to stop, the command ends with a plain exit code — 128 and the signal's number (SPEC §5b.2). */
+const EXIT_WHEN_STOPPED = { SIGINT: 130, SIGTERM: 143 } as const;
 
 const CALLS = ["up", "down", "fresh", "status"] as const;
 type Call = (typeof CALLS)[number];
@@ -38,10 +31,16 @@ async function status(): Promise<Answer> {
   return { line: `INSTANCE_FOREIGN ${oneLine(found.detail)}`, exit: 5 };
 }
 
-/** `up`, `down` and `fresh` under one hold of the host lock; `fresh` is a `down` and then an `up`. */
+/**
+ * `up`, `down` and `fresh` under one hold of the host lock; `fresh` is a `down` and then an `up`.
+ * From the moment it holds the lock the command is stopped in order: SIGINT or
+ * SIGTERM stops the child that makes or changes the stack, the make then removes
+ * what it made, and the lock is let go last. A removal is never cut short.
+ */
 async function underTheHostLock(call: Exclude<Call, "status">): Promise<Answer> {
   const started = performance.now();
   const lock = acquireHostLock({ waitSeconds: lockWaitSeconds() });
+  for (const signal of ["SIGINT", "SIGTERM"] as const) process.on(signal, () => stopTheWork(signal));
   try {
     if (call !== "up") {
       const removal = await destroyInstance(lock);
@@ -53,15 +52,6 @@ async function underTheHostLock(call: Exclude<Call, "status">): Promise<Answer> 
   } finally {
     lock.release();
   }
-}
-
-/** The line and the exit code of a call that did not end well. */
-function answerOf(failure: unknown): Answer {
-  if (failure instanceof LockRefused) return { line: "LOCK_REFUSED", exit: 2 };
-  if (failure instanceof InstanceStands) return { line: "INSTANCE_STANDS", exit: 3 };
-  if (failure instanceof TargetRefused) return { line: `TARGET_REFUSED reason=${failure.reason}`, exit: 4 };
-  if (failure instanceof RemovalRefused) return { line: `REMOVAL_REFUSED ${oneLine(failure.message)}`, exit: 4 };
-  return { line: oneLine(String(failure)), exit: 1 };
 }
 
 async function answer(call: string | undefined): Promise<Answer> {
@@ -79,5 +69,6 @@ async function answer(call: string | undefined): Promise<Answer> {
 }
 
 const { line, exit } = await answer(process.argv[2]);
+const stoppedBy = toldToStopBy();
 console.log(line);
-process.exitCode = exit;
+process.exitCode = stoppedBy === undefined ? exit : EXIT_WHEN_STOPPED[stoppedBy];

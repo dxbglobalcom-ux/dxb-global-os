@@ -288,6 +288,12 @@ the record removed last (an observer cannot stop the run between two calls); `Ex
 stack (step 3 refuses the same cause first; the decision itself is now pinned as `exposedBeyondLoopback`); step 6's
 two-path inequality (needs a second server on the port); the list file's atomic write.
 
+Known limits after the fixes (the code hand's probes, the lead's reading): the killed-make test passes because the
+orphaned start outlives its parent for some seconds (measured 5–11 s) — one that ended within a fraction of a second
+would turn that step red without a defect; a create the Docker daemon finishes for a killed start after the removal
+has looked again would leave a labelled container with an empty list, which `status` says as `INSTANCE_FOREIGN` and
+a hand clears (not seen in five probes); the removal's own Docker calls are not handed the lock.
+
 ## 6. Done when
 
 `pnpm foundation:typecheck` exits 0 · `pnpm install --frozen-lockfile` exits 0 with the lockfile unchanged ·

@@ -1,6 +1,6 @@
-import { chmodSync, closeSync, fsyncSync, mkdirSync, openSync, readFileSync, renameSync, writeSync } from "node:fs";
-import { homedir } from "node:os";
-import { dirname, isAbsolute, join } from "node:path";
+import { closeSync, fsyncSync, openSync, readFileSync, renameSync, writeSync } from "node:fs";
+import { join } from "node:path";
+import { makeTheStateDirectory, stateDirectory } from "./bench.ts";
 import type { Identity } from "./identity.ts";
 import type { PendingRecord } from "./removal.ts";
 
@@ -17,12 +17,9 @@ export type InstanceRecord = Identity & {
 /** The whole list file: the made instances, and the make that has started and not yet written its record. */
 export type ListFile = { instances: InstanceRecord[]; pending?: PendingRecord };
 
-/** `${XDG_STATE_HOME:-$HOME/.local/state}/dxb/foundation-bench/instances.json` — machine state, never committed. */
+/** `instances.json` in the bench's state directory (SPEC §5b.1) — machine state, never committed. */
 export function defaultStatePath(): string {
-  const configured = process.env.XDG_STATE_HOME;
-  // A relative state home would hang the list on the working directory; like an unset one, it is not used.
-  const stateHome = configured !== undefined && isAbsolute(configured) ? configured : join(homedir(), ".local/state");
-  return join(stateHome, "dxb/foundation-bench/instances.json");
+  return join(stateDirectory, "instances.json");
 }
 
 const isText = (value: unknown): value is string => typeof value === "string" && value !== "";
@@ -33,7 +30,8 @@ const isObject = (value: unknown): value is Record<string, unknown> =>
 function isInstanceRecord(value: unknown): value is InstanceRecord {
   if (!isObject(value)) return false;
   const texts = ["sysid", "dboid", "dbname", "project", "dbContainer", "madeAt"];
-  return texts.every((field) => isText(value[field])) && isTexts(value["containers"]) && isTexts(value["volumes"]);
+  const chainApplied = value["chainAppliedAt"] === undefined || isText(value["chainAppliedAt"]);
+  return texts.every((field) => isText(value[field])) && isTexts(value["containers"]) && isTexts(value["volumes"]) && chainApplied;
 }
 
 function isPendingRecord(value: unknown): value is PendingRecord {
@@ -70,9 +68,7 @@ export function readInstances(statePath?: string): InstanceRecord[] {
  */
 export function writeListFile(list: ListFile): void {
   const statePath = defaultStatePath();
-  const directory = dirname(statePath);
-  mkdirSync(directory, { recursive: true, mode: 0o700 });
-  chmodSync(directory, 0o700);
+  makeTheStateDirectory();
   const beside = `${statePath}.${process.pid}.writing`;
   const descriptor = openSync(beside, "w", 0o600);
   try {

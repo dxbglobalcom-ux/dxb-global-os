@@ -1,0 +1,44 @@
+f52d2dc0
+ M foundation/bench/src/bench.ts
+ M foundation/bench/src/cli.ts
+ M foundation/bench/src/decisions.ts
+ M foundation/bench/src/docker.ts
+ M foundation/bench/src/identity.ts
+ M foundation/bench/src/instance.ts
+ M foundation/bench/src/instances.ts
+ M foundation/bench/src/lock.ts
+ M foundation/bench/src/make.ts
+ M foundation/bench/src/removal.ts
+ M foundation/bench/src/run.ts
+$ tsc -p foundation/tsconfig.json
+$ vitest run --config foundation/tests/vitest.config.ts
+
+ RUN  v3.2.6 /home/dxb/DxB Global OS/foundation/tests
+
+ ✓ bench/instance.test.ts (17 tests) 59242ms
+   ✓ the instance — made, looked at and destroyed, in order > fresh makes an instance and says INSTANCE_UP with the cluster's identifier and the loopback address  52590ms
+   ✓ the instance — made, looked at and destroyed, in order > guarded refuses a throwaway database made in the same cluster  1316ms
+   ✓ the instance — made, looked at and destroyed, in order > while another holds the host lock the command says LOCK_REFUSED and exits 2 — with DXB_FOUNDATION_LOCK_WAIT, after waiting that long  2157ms
+   ✓ the instance — made, looked at and destroyed, in order > down says INSTANCE_DOWN and leaves no container, volume, network, listener or record  1708ms
+ ✓ bench/instance-unfinished.test.ts (6 tests) 14809ms
+   ✓ the instance — a make that does not finish, and a volume no record explains, in order > up killed with SIGKILL once a container stands: at once another up says LOCK_REFUSED, exit 2 — the start it left still holds the kernel's lock  861ms
+   ✓ the instance — a make that does not finish, and a volume no record explains, in order > down, waiting for the lock, removes what the killed make left: INSTANCE_DOWN, exit 0, and nothing stands  11565ms
+   ✓ the instance — a make that does not finish, and a volume no record explains, in order > up sent SIGTERM once a container stands stops its start, removes what it made and exits 143 — nothing stands, with no command after it  1455ms
+   ✓ the instance — a make that does not finish, and a volume no record explains, in order > a labelled volume that no record explains: status INSTANCE_FOREIGN 5, up INSTANCE_STANDS 3, down REMOVAL_REFUSED 4 — and the volume is untouched  489ms
+ ✓ bench/host-lock.test.ts (12 tests) 2900ms
+   ✓ the host lock — one holder on the machine, held by the kernel > with waitSeconds, acquires after the first lets go  1566ms
+   ✓ the host lock — one holder on the machine, held by the kernel > with waitSeconds, is refused once that time has passed and the holder has not let go  1067ms
+ ✓ bench/guard-decision.test.ts (20 tests) 596ms
+ ✓ bench/state-directory.test.ts (6 tests) 281ms
+ ✓ bench/no-old-address.test.ts (28 tests) 12ms
+ ✓ bench/pure-decisions.test.ts (21 tests) 11ms
+ ✓ bench/guard-connection.test.ts (24 tests) 8ms
+ ✓ bench/removal-authority.test.ts (27 tests) 5ms
+ ✓ bench/status-of.test.ts (10 tests) 3ms
+ ✓ bench/refused-against-the-old-record.test.ts (6 tests) 3ms
+
+ Test Files  11 passed (11)
+      Tests  177 passed (177)
+   Start at  01:45:16
+   Duration  79.32s (transform 107ms, setup 0ms, collect 320ms, tests 77.87s, environment 1ms, prepare 348ms)
+

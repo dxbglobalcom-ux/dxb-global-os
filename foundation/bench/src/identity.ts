@@ -4,8 +4,9 @@ export type Identity = { sysid: string; dboid: string; dbname: string };
 export type Queryable = { query(text: string): Promise<{ rows: Record<string, unknown>[] }> };
 
 // The two questions only the server can answer: which cluster, and which database of it.
-const CLUSTER = "select system_identifier::text from pg_control_system()";
-const DATABASE = "select oid::text, datname from pg_database where datname = current_database()";
+// Each catalog name is spelled with its schema (SPEC §5b.6): a search path set on the session does not choose what answers.
+const CLUSTER = "select system_identifier::text from pg_catalog.pg_control_system()";
+const DATABASE = "select oid::text, datname from pg_catalog.pg_database where datname = pg_catalog.current_database()";
 
 /** The one row of an identity query's answer; anything else is no answer. */
 async function oneRow(conn: Queryable, text: string): Promise<Record<string, unknown>> {

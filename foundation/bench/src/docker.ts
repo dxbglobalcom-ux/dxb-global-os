@@ -3,7 +3,7 @@
 // name it was handed — no name pattern, no prune, and never the CLI's `stop`.
 import { BENCH, PROJECT_LABEL_KEY } from "./bench.ts";
 import type { Queryable } from "./identity.ts";
-import type { ContainerFacts } from "./removal.ts";
+import type { ContainerFacts, VolumeFacts } from "./removal.ts";
 import { linesOf, run } from "./run.ts";
 
 const ASK_MS = 30_000;
@@ -58,9 +58,12 @@ export async function labelledContainers(): Promise<BenchContainer[]> {
   return inspected.map(benchContainerOf);
 }
 
-/** The names of the volumes that carry the project's label — also those no container mounts any more. */
-export async function labelledVolumes(): Promise<string[]> {
-  return linesOf(await docker(["volume", "ls", ...CARRIES_THE_LABEL, "--format", "{{.Name}}"]));
+/** The volumes that carry the project's label — also those no container mounts any more — each with its creation, which Docker gives to the second. */
+export async function labelledVolumes(): Promise<VolumeFacts[]> {
+  const names = linesOf(await docker(["volume", "ls", ...CARRIES_THE_LABEL, "--format", "{{.Name}}"]));
+  if (names.length === 0) return [];
+  const inspected = JSON.parse(await docker(["volume", "inspect", ...names])) as { Name: string; CreatedAt: string }[];
+  return inspected.map((volume) => ({ name: volume.Name, createdAt: volume.CreatedAt }));
 }
 
 /** The names of every volume Docker holds: what a removal checks a name against before it asks. */

@@ -11,9 +11,11 @@ import type { Identity, Queryable } from "./identity.ts";
 import { destroyInstance, statusOf } from "./instance.ts";
 import { readListFile, writeListFile } from "./instances.ts";
 import type { InstanceRecord } from "./instances.ts";
-import { assertTheHostLock } from "./lock.ts";
+import { assertTheHostLock, theHostLockDescriptor } from "./lock.ts";
 import type { HostLock } from "./lock.ts";
-import { oneLine, run, step } from "./run.ts";
+import { selectRemovalTargets } from "./removal.ts";
+import type { PendingRecord } from "./removal.ts";
+import { assertNotToldToStop, oneLine, run, step } from "./run.ts";
 
 export class InstanceStands extends Error {
   name = "InstanceStands";
@@ -45,19 +47,24 @@ function settingsOf(toml: string): Map<string, string> {
   return settings;
 }
 
-/** Step 1. The stack's config must say the bench's project and its two ports before anything starts. */
-function assertTheConfigIsTheBench(): void {
-  const written = settingsOf(readFileSync(CONFIG, "utf8"));
+/** Pure. What a stack config says that is not the bench — its project or one of its two ports — or undefined when it is the bench's. */
+export function configMismatch(tomlText: string): string | undefined {
+  const written = settingsOf(tomlText);
   const theBench = {
     project_id: `"${BENCH.project}"`,
     "api.port": String(BENCH.apiPort),
     "db.port": String(BENCH.dbPort),
   };
   for (const [setting, value] of Object.entries(theBench)) {
-    if (written.get(setting) !== value) {
-      throw new Error(`${CONFIG} says ${setting} = ${written.get(setting) ?? "nothing"}; the bench is ${value}`);
-    }
+    if (written.get(setting) !== value) return `${setting} = ${written.get(setting) ?? "nothing"}; the bench is ${value}`;
   }
+  return undefined;
+}
+
+/** Step 1. The stack's config must say the bench's project and its two ports before anything starts. */
+function assertTheConfigIsTheBench(): void {
+  const mismatch = configMismatch(readFileSync(CONFIG, "utf8"));
+  if (mismatch !== undefined) throw new Error(`${CONFIG} says ${mismatch}`);
 }
 
 /** Step 3. The bench's network, binding published ports to the loopback address: made when absent, refused when it binds otherwise. */
@@ -74,13 +81,18 @@ async function standOnTheLoopbackNetwork(lock: HostLock): Promise<void> {
   }
 }
 
-/** Step 5. Every published port of every container must be bound to the loopback address and nowhere else. */
-function assertNothingIsExposed(containers: readonly BenchContainer[]): void {
-  const exposed = containers.flatMap((container) =>
+/** Pure. Every published port that is bound anywhere but the loopback address, each named; empty when none is. */
+export function exposedBeyondLoopback(containers: readonly BenchContainer[]): string[] {
+  return containers.flatMap((container) =>
     container.published
       .filter((port) => port.hostAddress !== BENCH.bind)
       .map((port) => `${container.name} ${port.containerPort} -> ${port.hostAddress || "every address"}:${port.hostPort}`),
   );
+}
+
+/** Step 5. Every published port of every container must be bound to the loopback address and nowhere else. */
+function assertNothingIsExposed(containers: readonly BenchContainer[]): void {
+  const exposed = exposedBeyondLoopback(containers);
   if (exposed.length > 0) throw new ExposureRefused(`published beyond ${BENCH.bind}: ${exposed.join(", ")}`);
 }
 
@@ -130,14 +142,15 @@ async function identityOnBothPaths(database: BenchContainer, client: Queryable):
  * Step 7. `bash scripts/bootstrap-db.sh` from the repository root. Its
  * environment is PATH, HOME and the three variables below — `run` hands a child
  * nothing else of the caller's. Both psql commands address the database
- * container by its id.
+ * container by its id. It changes the stack, so it is handed the host lock.
  */
-async function runTheOldChain(databaseContainerId: string): Promise<void> {
+async function runTheOldChain(databaseContainerId: string, lock: HostLock): Promise<void> {
   // The chain splits these two commands into words: an id is hexadecimal and nothing else.
   if (!/^[0-9a-f]{64}$/.test(databaseContainerId)) throw new Error(`not a container id: ${databaseContainerId}`);
   const psqlAs = (role: string): string => `docker exec -i ${databaseContainerId} psql -U ${role} -d postgres`;
   await run("bash", [join(repositoryRoot, "scripts/bootstrap-db.sh")], {
     timeoutMs: OLD_CHAIN_MS,
+    holdingTheLock: theHostLockDescriptor(lock),
     environment: {
       DXB_DATABASE_URL: connectionString(),
       DXB_PSQL: psqlAs("postgres"),
@@ -156,37 +169,48 @@ async function assertTheLedgerIsWhole(conn: Queryable): Promise<void> {
 
 /** Steps 4 to 8: from the pending record to the old schema standing on the recorded instance. */
 async function startRecordAndBootstrap(lock: HostLock): Promise<InstanceRecord> {
-  const startedAt = new Date().toISOString();
+  const pending: PendingRecord = { project: BENCH.project, pending: true, startedAt: new Date().toISOString() };
   assertTheHostLock(lock);
-  writeListFile({ instances: [], pending: { project: BENCH.project, pending: true, startedAt } });
+  writeListFile({ instances: [], pending });
   const start = ["start", "--workdir", benchDirectory, "--network-id", BENCH.network];
-  await step("supabase start", () => run(SUPABASE, start, { timeoutMs: START_MS }));
+  // The start makes the stack, so it is handed the host lock: killed, this process leaves the lock with it.
+  await step("supabase start", () => run(SUPABASE, start, { timeoutMs: START_MS, holdingTheLock: theHostLockDescriptor(lock) }));
 
   const containers = await labelledContainers();
   assertNothingIsExposed(containers);
   const database = theDatabaseContainer(containers);
+  // The record names what a removal by the pending record would take, and no more: what was created since
+  // this make started. Anything older that carries the label is refused here — a make adopts nothing.
+  const made = selectRemovalTargets(containers, pending, await labelledVolumes());
 
-  return overTcp(async (client) => {
+  const record = await overTcp(async (client) => {
     const identity = await step("the identity, inside the container and over TCP", () => identityOnBothPaths(database, client));
-    const record: InstanceRecord = {
+    const recorded: InstanceRecord = {
       ...identity,
       project: BENCH.project,
       dbContainer: database.id,
-      containers: containers.map((container) => container.id),
-      // Every labelled volume, also one no container mounts any more: the record is what a removal may name.
-      volumes: [...new Set([...(await labelledVolumes()), ...containers.flatMap((container) => container.volumes)])],
+      containers: made.containers,
+      volumes: made.volumes,
       madeAt: new Date().toISOString(),
     };
     assertTheHostLock(lock);
-    writeListFile({ instances: [record] });
+    writeListFile({ instances: [recorded] });
 
     await guarded(client, async (conn) => {
       assertTheHostLock(lock);
-      await step("the old chain", () => runTheOldChain(database.id));
+      await step("the old chain", () => runTheOldChain(database.id, lock));
       await assertTheLedgerIsWhole(conn);
     });
-    return record;
+    return recorded;
   });
+
+  // Only now is it a made instance (SPEC §5b.3). Nothing waits between this and the answer, so a
+  // command told to stop either fails here, and step 9 removes what it made, or had already made it whole.
+  assertNotToldToStop();
+  assertTheHostLock(lock);
+  const whole: InstanceRecord = { ...record, chainAppliedAt: new Date().toISOString() };
+  writeListFile({ instances: [whole] });
+  return whole;
 }
 
 /** Step 9. Removes what this run made, by the same authority as any removal. Its own failure is said and never thrown. */
@@ -202,7 +226,8 @@ export async function makeInstance(lock: HostLock): Promise<InstanceRecord> {
   assertTheHostLock(lock);
   assertTheConfigIsTheBench();
 
-  const before = statusOf(await labelledContainers(), readListFile());
+  // Step 2. A labelled volume stands like a container does: with no record it is foreign, and the make stops here.
+  const before = statusOf(await labelledContainers(), await labelledVolumes(), readListFile());
   if (before.state === "standing") throw new InstanceStands(`the instance of cluster ${before.record.sysid} stands`);
   if (before.state === "foreign") throw new InstanceStands(before.detail);
 
