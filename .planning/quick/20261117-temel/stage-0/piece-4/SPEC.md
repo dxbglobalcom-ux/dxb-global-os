@@ -304,3 +304,51 @@ Piece 1's, 2's and 3's tests are not edited.
 `pnpm foundation:verify piece-1` … `piece-4` each end `LOCK_GREEN` on the committed revision · after the runs no
 throwaway database is left · `pnpm install --frozen-lockfile` exits 0 with the lockfile unchanged · the old `pnpm
 typecheck` still exits 0.
+
+## 9a. What the tests pinned beyond §4–§9 (the test hand's readings, read and accepted by the lead) — and what the lead decided where they pin nothing
+
+133 cases, locked as `piece-4` at `45833589`; against the frame 128 red (67 by `NOT_BUILT`, 61 because no pass
+runs) and 5 green (piece 3's behaviour and the harness) — `evidence/lead-run-on-the-stub.log`.
+
+- **An absent key is not there at all** — not `undefined`: `readPasses` and every `applied` are compared strictly.
+- **The disk:** a root entry `functions` or `reference` that is a file or a link is the offence and gives no key;
+  inside the directories a link is `unknown-entry` also when it carries a file's name, a file this user may not
+  read is `unreadable`, a comment-only function file is a file; `readPasses` reads a root that has no `schema/`;
+  "by name" is by code unit (`a1.sql` before `a_x.sql`); "the same keys" is the same set in any order, and only a
+  row's own keys are judged, not nested ones; `null` and an array as elements are no objects; a reference file of
+  white space only is `malformed`. Offences of all three directories are one outcome, said before the target is
+  asked who it is.
+- **The functions pass:** the server's message is carried as it is given (`division by zero`); a file that makes
+  its own function under two signatures fails the per-file check, the name said once; a second signature is said
+  also when a schema file made the other one; an orphan and a second signature are said together, the orphan
+  first; a functions pass that does not end green ends the run — the reference pass does not run.
+- **The reference pass:** `os.<table> is not a table` also when nothing of that name stands; the circle's message
+  names the bare tables of the circle only, and its file is the first of them by name; a key of two columns is
+  matched on both; values reach the server whole (`9007199254740993`, `1.10`, a JSON `null` over a column's
+  default); `reference/` standing with no file is `reference: 0` and touches nothing.
+- **Sessions:** each pass's session carries nothing from the last schema file's or the other pass's (role, search
+  path, temporary table) — and the checks of the functions pass still read `pg_proc` after a function file changed
+  its session's role and search path; each pass's session passes the guard (`TargetRefused` when the list loses
+  the identity, a sleep as the margin as in piece 3); a function file changed while a run waits for the lock is
+  applied as it stands under the lock.
+- **The command** is started by its case only after the library has answered the same root from the disk alone in
+  a throwaway database: a runner that did not read the directories would go on and write its ledger into the
+  instance's own database. A second call carries a malformed reference file. `answerOf` says a count of 0, and a
+  detail or a message on one line.
+
+**Decided by the lead where no test pins it** (the code is written to these; the audit reads them):
+
+- A name that two rows carry and no file holds is two `orphan`s, each with its arguments — `second-signature` is
+  said only of a name a file holds.
+- An empty array asks only that `os.<table>` is a table: with no column named there is no key to carry.
+- A table's faults are said in §6's order — not a table, a key that is no column, no primary key, a key column
+  the file leaves out — and every file is judged so, by name, before any row of any table is written.
+- "In a circle" is read from the references among the tables that have a file: a table that only leads into a
+  circle, or is only led to from one, is not named.
+- A file that drops its own function and makes it again fails the per-file check (the row is gone and another
+  is new): `create or replace` is the one way a file replaces its function.
+
+**Not tested, said:** `assertHeld` before a pass (piece 3 has no lost-lock case either; read by the lead); the
+progress lines on stderr; the command's green, `pass-failed` and `manifest` lines on a real run (they would write
+to the instance's own database — `answerOf` covers the lines, piece 5 makes the first real run); "row security
+hid a row" (the proof's comparison is the same for a hidden row as for a rewritten one, which is tested).

@@ -1,0 +1,2265 @@
+
+ RUN  v3.2.6 /home/dxb/DxB Global OS/foundation/tests
+
+ ❯ passes/on-the-bench.test.ts (60 tests | 57 failed) 34629ms
+   × the functions pass — built from nothing > a schema file that makes os and two function files: applied with functions: 2, and both answer what their files say 154ms
+     → expected { state: 'applied', …(2) } to strictly equal { state: 'applied', …(3) }
+   × the functions pass — built from nothing > no ledger row is written for a pass: the ledger holds row 0 and the schema file 140ms
+     → expected { state: 'applied', …(2) } to strictly equal { state: 'applied', …(3) }
+   × the functions pass — built from nothing > a second run answers the same with nothing applied, changes no ledger row, and the functions still answer 143ms
+     → expected { state: 'applied', …(2) } to strictly equal { state: 'applied', …(3) }
+   × the functions pass — a changed body replaced > a file's body changed: after the run the function answers the new body, and the ledger's rows are unchanged to the instant 150ms
+     → expected { state: 'applied', …(2) } to strictly equal { state: 'applied', …(3) }
+   × the functions pass — a file that carries its own revoke and grants > is applied: the grant and the comment stand, PUBLIC is revoked, and the other file's function is as it was made 138ms
+     → expected { state: 'applied', …(2) } to strictly equal { state: 'applied', …(3) }
+   × the functions pass — a trigger's function > built from nothing in one run: the schema file makes the first form and the trigger, the file holds the second — a new row meets the second 165ms
+     → expected { state: 'applied', …(2) } to strictly equal { state: 'applied', …(3) }
+   × the functions pass — a trigger's function > the schema file applied by an earlier run: the file's body changed, and the next row meets it through the trigger that stood 189ms
+     → expected { state: 'applied', …(2) } to strictly equal { state: 'applied', …(3) }
+   × the functions pass — the directory decides > functions/ standing and empty while os holds a function: the function is an orphan 161ms
+     → expected { state: 'applied', …(2) } to deeply equal { state: 'manifest', …(2) }
+   ✓ the functions pass — the directory decides > no functions/: applied with no functions key, run after run, and the function is untouched 193ms
+   × the functions pass — the directory decides > functions/ standing with no file, and no schema os: applied with functions: 0 150ms
+     → expected { state: 'applied', applied: [], …(1) } to strictly equal { state: 'applied', applied: [], …(2) }
+   × the functions pass — a second signature > a file's argument types changed and nothing dropped: manifest, one second-signature — rolled back whole 169ms
+     → expected { state: 'applied', …(2) } to strictly equal { state: 'applied', …(3) }
+   × the functions pass — a changed signature as a ledgered change > a new schema file drops the old function and the file carries the new arguments: applied — the new one answers, the old is gone 160ms
+     → expected { state: 'applied', …(2) } to strictly equal { state: 'applied', …(3) }
+   × the functions pass — an orphan > a function file deleted: manifest, the orphan said with its arguments — rolled back whole 141ms
+     → expected { state: 'applied', …(2) } to strictly equal { state: 'applied', …(3) }
+   × the functions pass — an orphan > the same removal brought by a schema file that drops the function: applied, and the function is gone 144ms
+     → expected { state: 'applied', …(2) } to strictly equal { state: 'applied', …(3) }
+   × the functions pass — an orphan > a function a schema file made and no file holds: an orphan — the schema file stays ledgered and is named, the pass leaves nothing 168ms
+     → expected { state: 'applied', …(2) } to deeply equal { state: 'manifest', …(2) }
+   × the functions pass — an orphan > a procedure and an aggregate in os with no file are orphans too, each said with its arguments 153ms
+     → expected { state: 'applied', …(2) } to deeply equal { state: 'manifest', …(2) }
+   × the functions pass — an orphan > an orphan and a second signature at once: both said, the orphan first 149ms
+     → expected { state: 'applied', …(2) } to deeply equal { state: 'manifest', …(2) }
+   × the functions pass — a failing pass > the second of three files fails: pass-failed with the pass, the file and the server's message — nothing of the pass, and the run's schema file stays 165ms
+     → expected { state: 'applied', …(2) } to strictly equal { state: 'applied', …(3) }
+   × the functions pass — a failing pass > the file corrected: the next run is green, and every file's body is in effect 168ms
+     → expected { state: 'applied', …(2) } to strictly equal { state: 'applied', …(3) }
+   × the functions pass — a file that is not its own function's > one that makes a function of another name: pass-failed with the message spelled, rolled back whole 154ms
+     → expected { state: 'applied', …(2) } to strictly equal { state: 'applied', …(3) }
+   × the functions pass — a file that is not its own function's > one that makes two: pass-failed with the message spelled, rolled back whole 148ms
+     → expected { state: 'applied', …(2) } to strictly equal { state: 'applied', …(3) }
+   × the functions pass — a file that is not its own function's > one that also grants on another file's function: pass-failed with the message spelled, rolled back whole 134ms
+     → expected { state: 'applied', …(2) } to strictly equal { state: 'applied', …(3) }
+   × the functions pass — a file that is not its own function's > one that drops another file's function: pass-failed with the message spelled, rolled back whole 143ms
+     → expected { state: 'applied', …(2) } to strictly equal { state: 'applied', …(3) }
+   × the functions pass — a file that is not its own function's > one that makes nothing — a comment: pass-failed with the message spelled, rolled back whole 136ms
+     → expected { state: 'applied', …(2) } to strictly equal { state: 'applied', …(3) }
+   × the functions pass — a file that is not its own function's > one that makes its own function under two signatures — the name is said once: pass-failed with the message spelled, rolled back whole 126ms
+     → expected { state: 'applied', …(2) } to strictly equal { state: 'applied', …(3) }
+   × the functions pass — a file that commits > commit after making its function: pass-failed with a message that says transaction, and nothing of the pass is left 145ms
+     → expected { state: 'applied', …(2) } to strictly equal { state: 'applied', …(3) }
+   × the functions pass — a file that commits > a do block that commits after making its function: pass-failed with a message that says transaction, and nothing of the pass is left 134ms
+     → expected { state: 'applied', …(2) } to strictly equal { state: 'applied', …(3) }
+   × the reference pass — a vocabulary reconciled > a row the file changes, one it does not hold, one equal, and a fourth it adds: the table equals the file in the file's columns 139ms
+     → expected { state: 'applied', applied: [], …(1) } to strictly equal { state: 'applied', applied: [], …(2) }
+   × the reference pass — a vocabulary reconciled > the values are read by the server: a number wider than JavaScript's arrives whole, a scale is kept, a JSON null is an SQL null 126ms
+     → expected { state: 'applied', …(2) } to strictly equal { state: 'applied', …(3) }
+   × the reference pass — a key of two columns > a row is known by both: one changed, one removed, one added, and the row that shares one column with each is kept 143ms
+     → expected { state: 'applied', …(2) } to strictly equal { state: 'applied', …(3) }
+   × the reference pass — a row already equal is not rewritten > a second run over the same file writes no row: every row's xmin is as the first run left it 149ms
+     → expected { state: 'applied', …(2) } to strictly equal { state: 'applied', …(3) }
+   × the reference pass — a row already equal is not rewritten > a run that changes one row writes that row alone 145ms
+     → expected { state: 'applied', …(2) } to strictly equal { state: 'applied', …(3) }
+   × the reference pass — a row of his policy kind > a table a schema file seeded, with no file in reference/, is left as he changed it by hand 157ms
+     → expected { state: 'applied', …(2) } to strictly equal { state: 'applied', …(3) }
+   × the reference pass — the directory decides > reference/ standing with no file: applied with reference: 0, and a table of os is as it stood 162ms
+     → expected { state: 'applied', …(2) } to strictly equal { state: 'applied', …(3) }
+   × the reference pass — an empty array > empties the table 139ms
+     → expected { state: 'applied', …(2) } to strictly equal { state: 'applied', …(3) }
+   × the reference pass — a failing pass is rolled back whole > two vocabularies, the second's file with a value of the wrong type: pass-failed at that file — the first table as it stood, the functions pass's work kept 153ms
+     → expected { state: 'applied', …(2) } to strictly equal { state: 'applied', …(4) }
+   × the reference pass — a value in use is not removed > a table outside the files references a value the file no longer holds: pass-failed with the server's message, the table as it stood 146ms
+     → expected { state: 'applied', …(2) } to strictly equal { state: 'applied', …(3) }
+   × the reference pass — a table that is not what a vocabulary's must be, each message spelled > a view of that name: os.<table> is not a table 178ms
+     → expected { state: 'applied', …(2) } to deeply equal { state: 'pass-failed', …(4) }
+   × the reference pass — a table that is not what a vocabulary's must be, each message spelled > nothing of that name in os: os.<table> is not a table — and the vocabulary before it by name is not written 136ms
+     → expected { state: 'applied', …(2) } to deeply equal { state: 'pass-failed', …(4) }
+   × the reference pass — a table that is not what a vocabulary's must be, each message spelled > keys of the file that are no columns: os.<table> has no column <the first by name> 154ms
+     → expected { state: 'applied', …(2) } to deeply equal { state: 'pass-failed', …(4) }
+   × the reference pass — a table that is not what a vocabulary's must be, each message spelled > a table with no primary key, though a unique column: os.<table> has no primary key 170ms
+     → expected { state: 'applied', …(2) } to deeply equal { state: 'pass-failed', …(4) }
+   × the reference pass — a table that is not what a vocabulary's must be, each message spelled > a file that leaves out the key's columns: the first in the key's order is said — not the first by name, nor the table's first 147ms
+     → expected { state: 'applied', …(2) } to deeply equal { state: 'pass-failed', …(4) }
+   × the reference pass — a table that is not what a vocabulary's must be, each message spelled > a trigger that rewrites a value on its way in: os.<table> does not equal its file after the pass, and nothing is left written 152ms
+     → expected { state: 'applied', …(2) } to deeply equal { state: 'pass-failed', …(4) }
+   × the reference pass — a table that is not what a vocabulary's must be, each message spelled > a key twice in one file: the server's message, and nothing is left written 131ms
+     → expected { state: 'applied', …(2) } to deeply equal { state: 'pass-failed', …(4) }
+   × the reference pass — vocabularies that reference each other > the referenced table before the referencing one by name: both gain rows that hang together, then both lose them — applied each time 134ms
+     → expected { state: 'applied', …(2) } to strictly equal { state: 'applied', …(3) }
+   × the reference pass — vocabularies that reference each other > the referenced table after the referencing one by name: both gain rows that hang together, then both lose them — applied each time 138ms
+     → expected { state: 'applied', …(2) } to strictly equal { state: 'applied', …(3) }
+   × the reference pass — vocabularies that reference each other > a table that references itself is ordered by nothing: its rows are written, and removed, whatever their order in the file 127ms
+     → expected { state: 'applied', …(2) } to strictly equal { state: 'applied', …(3) }
+   × the reference pass — vocabularies that reference each other > two that reference each other in a circle: pass-failed, said of the first of the two by name, with both named — and nothing written 139ms
+     → expected { state: 'applied', …(2) } to deeply equal { state: 'pass-failed', …(4) }
+   × the passes in one run > schema files and both passes: applied with both counts — the functions answer and the vocabulary holds its file's rows 131ms
+     → expected { state: 'applied', …(2) } to strictly equal { state: 'applied', …(4) }
+   × the passes in one run > a failing schema file: file-failed, and neither pass ran — the changed body is not in effect, the vocabulary is as it stood 127ms
+     → expected { state: 'applied', …(2) } to strictly equal { state: 'applied', …(4) }
+   × the passes in one run > a functions pass that does not end green ends the run: the reference pass does not run 127ms
+     → expected { state: 'applied', …(2) } to strictly equal { state: 'applied', …(4) }
+   × the passes in one run > each pass in a session of its own: what the last schema file and a function file left in theirs — a role, a search path, a temporary table — meets neither pass 132ms
+     → expected { state: 'applied', …(2) } to strictly equal { state: 'applied', …(4) }
+   × the disk of the passes is read with the chain's > offences of schema/, functions/ and reference/ are one outcome, in SPEC §7's order — said before the target is asked who it is, nothing written 105ms
+     → expected { state: 'offences', …(1) } to deeply equal { state: 'offences', …(1) }
+   × the disk of the passes is read with the chain's > a function file changed while a run waits for the lock is applied as it stands under the lock 3178ms
+     → expected { state: 'applied', …(2) } to strictly equal { state: 'applied', …(3) }
+   × the passes' sessions pass the guard > a list that loses the identity while the schema file sleeps: the functions pass's session is refused — the file stays ledgered, no function is made 3131ms
+     → the call was not refused: it answered {"state":"applied","applied":["0001-os.sql"],"standing":1}
+   × the passes' sessions pass the guard > a list that loses the identity while a function file sleeps: the reference pass's session is refused — the functions pass stays, no row is written 20154ms
+     → no session of chain_test_cb5377ffaebba840 was seen sleeping within 20000 ms
+   × the command > up --root <a root whose functions/ holds an entry off the pattern>: the OFFENCE line, then CHAIN_RED offences=1, exit 1 142ms
+     → expected { state: 'applied', applied: [], …(1) } to deeply equal { state: 'offences', …(1) }
+   × the command > up --root <a root whose reference/ holds a file that is no array of objects>: the OFFENCE line, then CHAIN_RED offences=1, exit 1 134ms
+     → expected { state: 'applied', applied: [], …(1) } to deeply equal { state: 'offences', …(1) }
+   ✓ the command > after them, the instance's own postgres database is as it was found: its ledger to the instant, or none, and its schemas 8ms
+   ✓ what the module leaves > no database that it made still stands 6ms
+ ❯ passes/read-passes.test.ts (63 tests | 62 failed) 25ms
+   × readPasses — a pass's directory decides whether the pass is read > a root that holds neither directory: no offence, and neither key 3ms
+     → NOT_BUILT
+   × readPasses — a pass's directory decides whether the pass is read > a root that does not exist: the same, and nothing is thrown 0ms
+     → NOT_BUILT
+   × readPasses — a pass's directory decides whether the pass is read > a root with no schema/ is read all the same: the chain's own directory is not this reading's 0ms
+     → NOT_BUILT
+   × readPasses — a pass's directory decides whether the pass is read > functions/ alone: its files, and no reference key 0ms
+     → NOT_BUILT
+   × readPasses — a pass's directory decides whether the pass is read > reference/ alone: its files, and no functions key 0ms
+     → NOT_BUILT
+   × readPasses — a pass's directory decides whether the pass is read > a directory that stands and holds nothing is a pass of no files 0ms
+     → NOT_BUILT
+   × readPasses — the files of the two directories > come back by name, by code unit, each with the entry's name and its text 0ms
+     → NOT_BUILT
+   × readPasses — the files of the two directories > a name of 63 characters is a name of the pattern, in either directory 0ms
+     → NOT_BUILT
+   × readPasses — the files of the two directories > a function file that is only a comment is a file: it is not empty 0ms
+     → NOT_BUILT
+   × readPasses — the files of the two directories > a reference file is well-formed: an empty array 0ms
+     → NOT_BUILT
+   × readPasses — the files of the two directories > a reference file is well-formed: an empty array with white space in and around it 0ms
+     → NOT_BUILT
+   × readPasses — the files of the two directories > a reference file is well-formed: objects that carry the same keys in another order 0ms
+     → NOT_BUILT
+   × readPasses — the files of the two directories > a reference file is well-formed: a value of any JSON kind — the server reads the values, not this reading 0ms
+     → NOT_BUILT
+   × readPasses — the offences of the two directories, each planted and named > unknown-entry: functions in the root is a file, not a directory — and the pass has no key 0ms
+     → NOT_BUILT
+   × readPasses — the offences of the two directories, each planted and named > unknown-entry: reference in the root is a file, not a directory — and the pass has no key 0ms
+     → NOT_BUILT
+   × readPasses — the offences of the two directories, each planted and named > unknown-entry: functions and reference in the root are links, though each leads to a directory of good files 0ms
+     → NOT_BUILT
+   × readPasses — the offences of the two directories, each planted and named > unknown-entry: in functions/, a file with another ending 0ms
+     → NOT_BUILT
+   × readPasses — the offences of the two directories, each planted and named > unknown-entry: in functions/, a file with the ending in capitals 0ms
+     → NOT_BUILT
+   × readPasses — the offences of the two directories, each planted and named > unknown-entry: in functions/, a file with a capital letter 0ms
+     → NOT_BUILT
+   × readPasses — the offences of the two directories, each planted and named > unknown-entry: in functions/, a file with a digit first 0ms
+     → NOT_BUILT
+   × readPasses — the offences of the two directories, each planted and named > unknown-entry: in functions/, a file with an underscore first 0ms
+     → NOT_BUILT
+   × readPasses — the offences of the two directories, each planted and named > unknown-entry: in functions/, a file with a hyphen 0ms
+     → NOT_BUILT
+   × readPasses — the offences of the two directories, each planted and named > unknown-entry: in functions/, a file with a schema file's name 0ms
+     → NOT_BUILT
+   × readPasses — the offences of the two directories, each planted and named > unknown-entry: in functions/, a file with a dot inside the name 0ms
+     → NOT_BUILT
+   × readPasses — the offences of the two directories, each planted and named > unknown-entry: in functions/, a file with no name before the ending 0ms
+     → NOT_BUILT
+   × readPasses — the offences of the two directories, each planted and named > unknown-entry: in functions/, a file with a name of 64 characters 0ms
+     → NOT_BUILT
+   × readPasses — the offences of the two directories, each planted and named > unknown-entry: in functions/, a file with a reference file's ending 0ms
+     → NOT_BUILT
+   × readPasses — the offences of the two directories, each planted and named > unknown-entry: in reference/, a file with another ending 0ms
+     → NOT_BUILT
+   × readPasses — the offences of the two directories, each planted and named > unknown-entry: in reference/, a file with the ending in capitals 0ms
+     → NOT_BUILT
+   × readPasses — the offences of the two directories, each planted and named > unknown-entry: in reference/, a file with a capital letter 0ms
+     → NOT_BUILT
+   × readPasses — the offences of the two directories, each planted and named > unknown-entry: in reference/, a file with a digit first 0ms
+     → NOT_BUILT
+   × readPasses — the offences of the two directories, each planted and named > unknown-entry: in reference/, a file with a hyphen 0ms
+     → NOT_BUILT
+   × readPasses — the offences of the two directories, each planted and named > unknown-entry: in reference/, a file with a name of 64 characters 0ms
+     → NOT_BUILT
+   × readPasses — the offences of the two directories, each planted and named > unknown-entry: in reference/, a file with a function file's ending 0ms
+     → NOT_BUILT
+   × readPasses — the offences of the two directories, each planted and named > unknown-entry: a directory, whatever its name, in either directory 0ms
+     → NOT_BUILT
+   × readPasses — the offences of the two directories, each planted and named > unknown-entry: a link, also one that carries a file's name and leads to a file 0ms
+     → NOT_BUILT
+   × readPasses — the offences of the two directories, each planted and named > empty: a function file of no bytes 0ms
+     → NOT_BUILT
+   × readPasses — the offences of the two directories, each planted and named > empty: a function file of white space only 0ms
+     → NOT_BUILT
+   × readPasses — the offences of the two directories, each planted and named > unreadable: a file that is not valid UTF-8 — a byte that begins no character — in either directory 0ms
+     → NOT_BUILT
+   × readPasses — the offences of the two directories, each planted and named > unreadable: a file that is not valid UTF-8 — a character cut off in its middle — in either directory 0ms
+     → NOT_BUILT
+   × readPasses — the offences of the two directories, each planted and named > unreadable: a file this user may not read, in either directory 1ms
+     → NOT_BUILT
+   × readPasses — the offences of the two directories, each planted and named > malformed: a reference file that is not JSON 0ms
+     → NOT_BUILT
+   × readPasses — the offences of the two directories, each planted and named > malformed: a reference file that is not JSON: a comment in it 0ms
+     → NOT_BUILT
+   × readPasses — the offences of the two directories, each planted and named > malformed: a reference file that is not an array: an object 0ms
+     → NOT_BUILT
+   × readPasses — the offences of the two directories, each planted and named > malformed: a reference file that is not an array: a number 0ms
+     → NOT_BUILT
+   × readPasses — the offences of the two directories, each planted and named > malformed: a reference file that is not an array: null 0ms
+     → NOT_BUILT
+   × readPasses — the offences of the two directories, each planted and named > malformed: a reference file that is an element that is a number 0ms
+     → NOT_BUILT
+   × readPasses — the offences of the two directories, each planted and named > malformed: a reference file that is an element that is a string 0ms
+     → NOT_BUILT
+   × readPasses — the offences of the two directories, each planted and named > malformed: a reference file that is an element that is null 0ms
+     → NOT_BUILT
+   × readPasses — the offences of the two directories, each planted and named > malformed: a reference file that is an element that is an array 0ms
+     → NOT_BUILT
+   × readPasses — the offences of the two directories, each planted and named > malformed: a reference file that is an object of no keys 0ms
+     → NOT_BUILT
+   × readPasses — the offences of the two directories, each planted and named > malformed: a reference file that is a key with a capital letter 0ms
+     → NOT_BUILT
+   × readPasses — the offences of the two directories, each planted and named > malformed: a reference file that is a key with a hyphen 0ms
+     → NOT_BUILT
+   × readPasses — the offences of the two directories, each planted and named > malformed: a reference file that is a key that begins with a digit 0ms
+     → NOT_BUILT
+   × readPasses — the offences of the two directories, each planted and named > malformed: a reference file that is a key of no characters 0ms
+     → NOT_BUILT
+   × readPasses — the offences of the two directories, each planted and named > malformed: a reference file that is a key of 64 characters 1ms
+     → NOT_BUILT
+   × readPasses — the offences of the two directories, each planted and named > malformed: a reference file that is two objects, the second with a key fewer 0ms
+     → NOT_BUILT
+   × readPasses — the offences of the two directories, each planted and named > malformed: a reference file that is two objects, the second with a key more 0ms
+     → NOT_BUILT
+   × readPasses — the offences of the two directories, each planted and named > malformed: a reference file that is two objects with as many keys, of other names 0ms
+     → NOT_BUILT
+   × readPasses — the offences of the two directories, each planted and named > malformed: a reference file that is a file of no bytes 0ms
+     → NOT_BUILT
+   × readPasses — the offences of the two directories, each planted and named > malformed: a reference file that is a file of white space only 0ms
+     → NOT_BUILT
+   × readPasses — the offences of the two directories, each planted and named > says the offences of both directories together — by kind as SPEC §7 orders them, then by detail 0ms
+     → NOT_BUILT
+   ✓ readChain — beside the two directories > still answers schema/ alone: the passes' files and their offences are not its 1ms
+ ❯ passes/answer.test.ts (10 tests | 9 failed) 10ms
+   ✓ answerOf — applied, with the passes that ran > neither pass ran: the line is piece 3's, with no count after it 1ms
+   × answerOf — applied, with the passes that ran > the functions pass ran: functions=<its files> on the same line 5ms
+     → expected { …(2) } to deeply equal { …(2) }
+   × answerOf — applied, with the passes that ran > the reference pass ran: reference=<its files> on the same line 1ms
+     → expected { …(2) } to deeply equal { …(2) }
+   × answerOf — applied, with the passes that ran > both ran: functions first, then reference 1ms
+     → expected { …(2) } to deeply equal { …(2) }
+   × answerOf — applied, with the passes that ran > a pass that ran over no file is said with its 0: it ran 0ms
+     → expected { …(2) } to deeply equal { …(2) }
+   × answerOf — a pass that failed > the functions pass: FAILED functions/<file> with the message, then CHAIN_RED functions-failed with the schema files applied before it, exit 1 0ms
+     → NOT_BUILT
+   × answerOf — a pass that failed > the reference pass: FAILED reference/<file> with the message, then CHAIN_RED reference-failed, exit 1 0ms
+     → NOT_BUILT
+   × answerOf — a pass that failed > a message of several lines is said on one 0ms
+     → NOT_BUILT
+   × answerOf — the manifest > one OFFENCE line each, as they were given, then CHAIN_RED manifest with their count and the schema files applied, exit 1 0ms
+     → NOT_BUILT
+   × answerOf — the manifest > a detail that holds a line break is said on one line 0ms
+     → NOT_BUILT
+
+⎯⎯⎯⎯⎯⎯ Failed Tests 128 ⎯⎯⎯⎯⎯⎯
+
+ FAIL  passes/answer.test.ts > answerOf — applied, with the passes that ran > the functions pass ran: functions=<its files> on the same line
+AssertionError: expected { …(2) } to deeply equal { …(2) }
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[2m  {[22m
+[2m    "exit": 0,[22m
+[2m    "lines": [[22m
+[32m-     "CHAIN_GREEN applied=2 standing=5 functions=3",[39m
+[31m+     "CHAIN_GREEN applied=2 standing=5",[39m
+[2m    ],[22m
+[2m  }[22m
+
+ ❯ passes/answer.test.ts:14:20
+     12|   it("the functions pass ran: functions=<its files> on the same line",…
+     13|     const answer = answerOf({ state: "applied", applied: ["0004-d.sql"…
+     14|     expect(answer).toEqual({ lines: ["CHAIN_GREEN applied=2 standing=5…
+       |                    ^
+     15|   });
+     16| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/128]⎯
+
+ FAIL  passes/answer.test.ts > answerOf — applied, with the passes that ran > the reference pass ran: reference=<its files> on the same line
+AssertionError: expected { …(2) } to deeply equal { …(2) }
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[2m  {[22m
+[2m    "exit": 0,[22m
+[2m    "lines": [[22m
+[32m-     "CHAIN_GREEN applied=0 standing=5 reference=4",[39m
+[31m+     "CHAIN_GREEN applied=0 standing=5",[39m
+[2m    ],[22m
+[2m  }[22m
+
+ ❯ passes/answer.test.ts:19:20
+     17|   it("the reference pass ran: reference=<its files> on the same line",…
+     18|     const answer = answerOf({ state: "applied", applied: [], standing:…
+     19|     expect(answer).toEqual({ lines: ["CHAIN_GREEN applied=0 standing=5…
+       |                    ^
+     20|   });
+     21| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/128]⎯
+
+ FAIL  passes/answer.test.ts > answerOf — applied, with the passes that ran > both ran: functions first, then reference
+AssertionError: expected { …(2) } to deeply equal { …(2) }
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[2m  {[22m
+[2m    "exit": 0,[22m
+[2m    "lines": [[22m
+[32m-     "CHAIN_GREEN applied=1 standing=6 functions=3 reference=4",[39m
+[31m+     "CHAIN_GREEN applied=1 standing=6",[39m
+[2m    ],[22m
+[2m  }[22m
+
+ ❯ passes/answer.test.ts:24:20
+     22|   it("both ran: functions first, then reference", () => {
+     23|     const answer = answerOf({ state: "applied", applied: ["0006-f.sql"…
+     24|     expect(answer).toEqual({ lines: ["CHAIN_GREEN applied=1 standing=6…
+       |                    ^
+     25|   });
+     26| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/128]⎯
+
+ FAIL  passes/answer.test.ts > answerOf — applied, with the passes that ran > a pass that ran over no file is said with its 0: it ran
+AssertionError: expected { …(2) } to deeply equal { …(2) }
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[2m  {[22m
+[2m    "exit": 0,[22m
+[2m    "lines": [[22m
+[32m-     "CHAIN_GREEN applied=0 standing=0 functions=0 reference=0",[39m
+[31m+     "CHAIN_GREEN applied=0 standing=0",[39m
+[2m    ],[22m
+[2m  }[22m
+
+ ❯ passes/answer.test.ts:29:20
+     27|   it("a pass that ran over no file is said with its 0: it ran", () => {
+     28|     const answer = answerOf({ state: "applied", applied: [], standing:…
+     29|     expect(answer).toEqual({ lines: ["CHAIN_GREEN applied=0 standing=0…
+       |                    ^
+     30|   });
+     31| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/128]⎯
+
+ FAIL  passes/answer.test.ts > answerOf — a pass that failed > the functions pass: FAILED functions/<file> with the message, then CHAIN_RED functions-failed with the schema files applied before it, exit 1
+Error: NOT_BUILT
+ ❯ answerOf ../chain/src/answer.ts:25:13
+     23|     case "pass-failed":
+     24|     case "manifest":
+     25|       throw new Error("NOT_BUILT");
+       |             ^
+     26|   }
+     27| }
+ ❯ passes/answer.test.ts:35:20
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/128]⎯
+
+ FAIL  passes/answer.test.ts > answerOf — a pass that failed > the reference pass: FAILED reference/<file> with the message, then CHAIN_RED reference-failed, exit 1
+Error: NOT_BUILT
+ ❯ answerOf ../chain/src/answer.ts:25:13
+     23|     case "pass-failed":
+     24|     case "manifest":
+     25|       throw new Error("NOT_BUILT");
+       |             ^
+     26|   }
+     27| }
+ ❯ passes/answer.test.ts:40:20
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/128]⎯
+
+ FAIL  passes/answer.test.ts > answerOf — a pass that failed > a message of several lines is said on one
+Error: NOT_BUILT
+ ❯ answerOf ../chain/src/answer.ts:25:13
+     23|     case "pass-failed":
+     24|     case "manifest":
+     25|       throw new Error("NOT_BUILT");
+       |             ^
+     26|   }
+     27| }
+ ❯ passes/answer.test.ts:55:20
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/128]⎯
+
+ FAIL  passes/answer.test.ts > answerOf — the manifest > one OFFENCE line each, as they were given, then CHAIN_RED manifest with their count and the schema files applied, exit 1
+Error: NOT_BUILT
+ ❯ answerOf ../chain/src/answer.ts:25:13
+     23|     case "pass-failed":
+     24|     case "manifest":
+     25|       throw new Error("NOT_BUILT");
+       |             ^
+     26|   }
+     27| }
+ ❯ passes/answer.test.ts:67:20
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/128]⎯
+
+ FAIL  passes/answer.test.ts > answerOf — the manifest > a detail that holds a line break is said on one line
+Error: NOT_BUILT
+ ❯ answerOf ../chain/src/answer.ts:25:13
+     23|     case "pass-failed":
+     24|     case "manifest":
+     25|       throw new Error("NOT_BUILT");
+       |             ^
+     26|   }
+     27| }
+ ❯ passes/answer.test.ts:84:20
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/128]⎯
+
+ FAIL  passes/on-the-bench.test.ts > the functions pass — built from nothing > a schema file that makes os and two function files: applied with functions: 2, and both answer what their files say
+AssertionError: expected { state: 'applied', …(2) } to strictly equal { state: 'applied', …(3) }
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[2m  {[22m
+[2m    "applied": [[22m
+[2m      "0001-os.sql",[22m
+[2m    ],[22m
+[32m-   "functions": 2,[39m
+[2m    "standing": 1,[22m
+[2m    "state": "applied",[22m
+[2m  }[22m
+
+ ❯ passes/cases/functions-built-and-replaced.ts:41:25
+     39|       await inAThrowawayDatabase(async (db) => {
+     40|         const outcome = await applyChain({ target: db.target, root: os…
+     41|         expect(outcome).toStrictEqual({ state: "applied", applied: ["0…
+       |                         ^
+     42|         expect(await routinesInOs(db.client)).toEqual(["greet()", "twi…
+     43|         expect(await valueOf(db.client, "select os.greet()")).toBe("he…
+ ❯ chain/fixtures/throwaway-database.ts:114:7
+ ❯ connected chain/fixtures/throwaway-database.ts:38:12
+ ❯ inAThrowawayDatabase chain/fixtures/throwaway-database.ts:110:5
+ ❯ passes/cases/functions-built-and-replaced.ts:39:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[10/128]⎯
+
+ FAIL  passes/on-the-bench.test.ts > the functions pass — built from nothing > no ledger row is written for a pass: the ledger holds row 0 and the schema file
+AssertionError: expected { state: 'applied', …(2) } to strictly equal { state: 'applied', …(3) }
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[2m  {[22m
+[2m    "applied": [[22m
+[2m      "0001-os.sql",[22m
+[2m    ],[22m
+[32m-   "functions": 2,[39m
+[2m    "standing": 1,[22m
+[2m    "state": "applied",[22m
+[2m  }[22m
+
+ ❯ greetAndTwiceStand passes/fixtures/standing.ts:15:57
+     13| export async function greetAndTwiceStand(db: Throwaway): Promise<strin…
+     14|   const root = osGreetAndTwice();
+     15|   expect(await applyChain({ target: db.target, root })).toStrictEqual(…
+       |                                                         ^
+     16|   return root;
+     17| }
+ ❯ passes/cases/functions-built-and-replaced.ts:50:9
+ ❯ chain/fixtures/throwaway-database.ts:114:7
+ ❯ connected chain/fixtures/throwaway-database.ts:38:12
+ ❯ inAThrowawayDatabase chain/fixtures/throwaway-database.ts:110:5
+ ❯ passes/cases/functions-built-and-replaced.ts:49:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[11/128]⎯
+
+ FAIL  passes/on-the-bench.test.ts > the functions pass — built from nothing > a second run answers the same with nothing applied, changes no ledger row, and the functions still answer
+AssertionError: expected { state: 'applied', …(2) } to strictly equal { state: 'applied', …(3) }
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[2m  {[22m
+[2m    "applied": [[22m
+[2m      "0001-os.sql",[22m
+[2m    ],[22m
+[32m-   "functions": 2,[39m
+[2m    "standing": 1,[22m
+[2m    "state": "applied",[22m
+[2m  }[22m
+
+ ❯ greetAndTwiceStand passes/fixtures/standing.ts:15:57
+     13| export async function greetAndTwiceStand(db: Throwaway): Promise<strin…
+     14|   const root = osGreetAndTwice();
+     15|   expect(await applyChain({ target: db.target, root })).toStrictEqual(…
+       |                                                         ^
+     16|   return root;
+     17| }
+ ❯ passes/cases/functions-built-and-replaced.ts:57:22
+ ❯ chain/fixtures/throwaway-database.ts:114:7
+ ❯ connected chain/fixtures/throwaway-database.ts:38:12
+ ❯ inAThrowawayDatabase chain/fixtures/throwaway-database.ts:110:5
+ ❯ passes/cases/functions-built-and-replaced.ts:56:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[12/128]⎯
+
+ FAIL  passes/on-the-bench.test.ts > the functions pass — a changed body replaced > a file's body changed: after the run the function answers the new body, and the ledger's rows are unchanged to the instant
+AssertionError: expected { state: 'applied', …(2) } to strictly equal { state: 'applied', …(3) }
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[2m  {[22m
+[2m    "applied": [[22m
+[2m      "0001-os.sql",[22m
+[2m    ],[22m
+[32m-   "functions": 2,[39m
+[2m    "standing": 1,[22m
+[2m    "state": "applied",[22m
+[2m  }[22m
+
+ ❯ greetAndTwiceStand passes/fixtures/standing.ts:15:57
+     13| export async function greetAndTwiceStand(db: Throwaway): Promise<strin…
+     14|   const root = osGreetAndTwice();
+     15|   expect(await applyChain({ target: db.target, root })).toStrictEqual(…
+       |                                                         ^
+     16|   return root;
+     17| }
+ ❯ passes/cases/functions-built-and-replaced.ts:73:22
+ ❯ chain/fixtures/throwaway-database.ts:114:7
+ ❯ connected chain/fixtures/throwaway-database.ts:38:12
+ ❯ inAThrowawayDatabase chain/fixtures/throwaway-database.ts:110:5
+ ❯ passes/cases/functions-built-and-replaced.ts:72:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[13/128]⎯
+
+ FAIL  passes/on-the-bench.test.ts > the functions pass — a file that carries its own revoke and grants > is applied: the grant and the comment stand, PUBLIC is revoked, and the other file's function is as it was made
+AssertionError: expected { state: 'applied', …(2) } to strictly equal { state: 'applied', …(3) }
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[2m  {[22m
+[2m    "applied": [[22m
+[2m      "0001-os.sql",[22m
+[2m    ],[22m
+[32m-   "functions": 2,[39m
+[2m    "standing": 1,[22m
+[2m    "state": "applied",[22m
+[2m  }[22m
+
+ ❯ passes/cases/functions-built-and-replaced.ts:90:63
+     88|         const root = passesRoot({ schema: { "0001-os.sql": MAKES_OS },…
+     89|         const applied = { state: "applied", applied: ["0001-os.sql"], …
+     90|         expect(await applyChain({ target: db.target, root })).toStrict…
+       |                                                               ^
+     91|         expect(await granteesOnFunction(db.client, "os.greet()")).toEq…
+     92|         expect(await valueOf(db.client, "select pg_catalog.obj_descrip…
+ ❯ chain/fixtures/throwaway-database.ts:114:7
+ ❯ connected chain/fixtures/throwaway-database.ts:38:12
+ ❯ inAThrowawayDatabase chain/fixtures/throwaway-database.ts:110:5
+ ❯ passes/cases/functions-built-and-replaced.ts:87:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[14/128]⎯
+
+ FAIL  passes/on-the-bench.test.ts > the functions pass — a trigger's function > built from nothing in one run: the schema file makes the first form and the trigger, the file holds the second — a new row meets the second
+AssertionError: expected { state: 'applied', …(2) } to strictly equal { state: 'applied', …(3) }
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[2m  {[22m
+[2m    "applied": [[22m
+[2m      "0001-os.sql",[22m
+[2m      "0002-entries.sql",[22m
+[2m    ],[22m
+[32m-   "functions": 1,[39m
+[2m    "standing": 2,[22m
+[2m    "state": "applied",[22m
+[2m  }[22m
+
+ ❯ passes/cases/functions-built-and-replaced.ts:110:63
+    108|           functions: { "stamp.sql": stamps("second form", "create or r…
+    109|         });
+    110|         expect(await applyChain({ target: db.target, root })).toStrict…
+       |                                                               ^
+    111|         await db.client.query("insert into os.entries (id) values (1)"…
+    112|         expect(await rowsIn(db.client, "select id, stamp from os.entri…
+ ❯ chain/fixtures/throwaway-database.ts:114:7
+ ❯ connected chain/fixtures/throwaway-database.ts:38:12
+ ❯ inAThrowawayDatabase chain/fixtures/throwaway-database.ts:110:5
+ ❯ passes/cases/functions-built-and-replaced.ts:105:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[15/128]⎯
+
+ FAIL  passes/on-the-bench.test.ts > the functions pass — a trigger's function > the schema file applied by an earlier run: the file's body changed, and the next row meets it through the trigger that stood
+AssertionError: expected { state: 'applied', …(2) } to strictly equal { state: 'applied', …(3) }
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[2m  {[22m
+[2m    "applied": [[22m
+[2m      "0001-os.sql",[22m
+[2m      "0002-entries.sql",[22m
+[2m    ],[22m
+[32m-   "functions": 1,[39m
+[2m    "standing": 2,[22m
+[2m    "state": "applied",[22m
+[2m  }[22m
+
+ ❯ passes/cases/functions-built-and-replaced.ts:122:63
+    120|           functions: { "stamp.sql": stamps("first form", "create or re…
+    121|         });
+    122|         expect(await applyChain({ target: db.target, root })).toStrict…
+       |                                                               ^
+    123|         await db.client.query("insert into os.entries (id) values (1)"…
+    124| 
+ ❯ chain/fixtures/throwaway-database.ts:114:7
+ ❯ connected chain/fixtures/throwaway-database.ts:38:12
+ ❯ inAThrowawayDatabase chain/fixtures/throwaway-database.ts:110:5
+ ❯ passes/cases/functions-built-and-replaced.ts:117:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[16/128]⎯
+
+ FAIL  passes/on-the-bench.test.ts > the functions pass — the directory decides > functions/ standing and empty while os holds a function: the function is an orphan
+AssertionError: expected { state: 'applied', …(2) } to deeply equal { state: 'manifest', …(2) }
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[2m  {[22m
+[2m    "applied": [[22m
+[2m      "0001-os.sql",[22m
+[2m    ],[22m
+[32m-   "offences": [[39m
+[32m-     {[39m
+[32m-       "detail": "stray()",[39m
+[32m-       "kind": "orphan",[39m
+[32m-     },[39m
+[32m-   ],[39m
+[32m-   "state": "manifest",[39m
+[31m+   "standing": 1,[39m
+[31m+   "state": "applied",[39m
+[2m  }[22m
+
+ ❯ passes/cases/functions-built-and-replaced.ts:140:63
+    138|       await inAThrowawayDatabase(async (db) => {
+    139|         const root = passesRoot({ schema: { "0001-os.sql": MAKES_OS + …
+    140|         expect(await applyChain({ target: db.target, root })).toEqual(…
+       |                                                               ^
+    141|         expect(await routinesInOs(db.client)).toEqual(["stray()"]);
+    142|       });
+ ❯ chain/fixtures/throwaway-database.ts:114:7
+ ❯ connected chain/fixtures/throwaway-database.ts:38:12
+ ❯ inAThrowawayDatabase chain/fixtures/throwaway-database.ts:110:5
+ ❯ passes/cases/functions-built-and-replaced.ts:138:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[17/128]⎯
+
+ FAIL  passes/on-the-bench.test.ts > the functions pass — the directory decides > functions/ standing with no file, and no schema os: applied with functions: 0
+AssertionError: expected { state: 'applied', applied: [], …(1) } to strictly equal { state: 'applied', applied: [], …(2) }
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[2m  {[22m
+[2m    "applied": [],[22m
+[32m-   "functions": 0,[39m
+[2m    "standing": 0,[22m
+[2m    "state": "applied",[22m
+[2m  }[22m
+
+ ❯ passes/cases/functions-built-and-replaced.ts:162:63
+    160|       await inAThrowawayDatabase(async (db) => {
+    161|         const root = passesRoot({ functions: {} });
+    162|         expect(await applyChain({ target: db.target, root })).toStrict…
+       |                                                               ^
+    163|         expect(await valueOf(db.client, "select to_regnamespace('os') …
+    164|       });
+ ❯ chain/fixtures/throwaway-database.ts:114:7
+ ❯ connected chain/fixtures/throwaway-database.ts:38:12
+ ❯ inAThrowawayDatabase chain/fixtures/throwaway-database.ts:110:5
+ ❯ passes/cases/functions-built-and-replaced.ts:160:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[18/128]⎯
+
+ FAIL  passes/on-the-bench.test.ts > the functions pass — a second signature > a file's argument types changed and nothing dropped: manifest, one second-signature — rolled back whole
+AssertionError: expected { state: 'applied', …(2) } to strictly equal { state: 'applied', …(3) }
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[2m  {[22m
+[2m    "applied": [[22m
+[2m      "0001-os.sql",[22m
+[2m    ],[22m
+[32m-   "functions": 2,[39m
+[2m    "standing": 1,[22m
+[2m    "state": "applied",[22m
+[2m  }[22m
+
+ ❯ greetAndTwiceStand passes/fixtures/standing.ts:15:57
+     13| export async function greetAndTwiceStand(db: Throwaway): Promise<strin…
+     14|   const root = osGreetAndTwice();
+     15|   expect(await applyChain({ target: db.target, root })).toStrictEqual(…
+       |                                                         ^
+     16|   return root;
+     17| }
+ ❯ passes/cases/functions-manifest.ts:29:22
+ ❯ chain/fixtures/throwaway-database.ts:114:7
+ ❯ connected chain/fixtures/throwaway-database.ts:38:12
+ ❯ inAThrowawayDatabase chain/fixtures/throwaway-database.ts:110:5
+ ❯ passes/cases/functions-manifest.ts:28:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[19/128]⎯
+
+ FAIL  passes/on-the-bench.test.ts > the functions pass — a changed signature as a ledgered change > a new schema file drops the old function and the file carries the new arguments: applied — the new one answers, the old is gone
+AssertionError: expected { state: 'applied', …(2) } to strictly equal { state: 'applied', …(3) }
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[2m  {[22m
+[2m    "applied": [[22m
+[2m      "0001-os.sql",[22m
+[2m    ],[22m
+[32m-   "functions": 2,[39m
+[2m    "standing": 1,[22m
+[2m    "state": "applied",[22m
+[2m  }[22m
+
+ ❯ greetAndTwiceStand passes/fixtures/standing.ts:15:57
+     13| export async function greetAndTwiceStand(db: Throwaway): Promise<strin…
+     14|   const root = osGreetAndTwice();
+     15|   expect(await applyChain({ target: db.target, root })).toStrictEqual(…
+       |                                                         ^
+     16|   return root;
+     17| }
+ ❯ passes/cases/functions-manifest.ts:45:22
+ ❯ chain/fixtures/throwaway-database.ts:114:7
+ ❯ connected chain/fixtures/throwaway-database.ts:38:12
+ ❯ inAThrowawayDatabase chain/fixtures/throwaway-database.ts:110:5
+ ❯ passes/cases/functions-manifest.ts:44:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[20/128]⎯
+
+ FAIL  passes/on-the-bench.test.ts > the functions pass — an orphan > a function file deleted: manifest, the orphan said with its arguments — rolled back whole
+AssertionError: expected { state: 'applied', …(2) } to strictly equal { state: 'applied', …(3) }
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[2m  {[22m
+[2m    "applied": [[22m
+[2m      "0001-os.sql",[22m
+[2m    ],[22m
+[32m-   "functions": 2,[39m
+[2m    "standing": 1,[22m
+[2m    "state": "applied",[22m
+[2m  }[22m
+
+ ❯ greetAndTwiceStand passes/fixtures/standing.ts:15:57
+     13| export async function greetAndTwiceStand(db: Throwaway): Promise<strin…
+     14|   const root = osGreetAndTwice();
+     15|   expect(await applyChain({ target: db.target, root })).toStrictEqual(…
+       |                                                         ^
+     16|   return root;
+     17| }
+ ❯ passes/cases/functions-manifest.ts:60:22
+ ❯ chain/fixtures/throwaway-database.ts:114:7
+ ❯ connected chain/fixtures/throwaway-database.ts:38:12
+ ❯ inAThrowawayDatabase chain/fixtures/throwaway-database.ts:110:5
+ ❯ passes/cases/functions-manifest.ts:59:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[21/128]⎯
+
+ FAIL  passes/on-the-bench.test.ts > the functions pass — an orphan > the same removal brought by a schema file that drops the function: applied, and the function is gone
+AssertionError: expected { state: 'applied', …(2) } to strictly equal { state: 'applied', …(3) }
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[2m  {[22m
+[2m    "applied": [[22m
+[2m      "0001-os.sql",[22m
+[2m    ],[22m
+[32m-   "functions": 2,[39m
+[2m    "standing": 1,[22m
+[2m    "state": "applied",[22m
+[2m  }[22m
+
+ ❯ greetAndTwiceStand passes/fixtures/standing.ts:15:57
+     13| export async function greetAndTwiceStand(db: Throwaway): Promise<strin…
+     14|   const root = osGreetAndTwice();
+     15|   expect(await applyChain({ target: db.target, root })).toStrictEqual(…
+       |                                                         ^
+     16|   return root;
+     17| }
+ ❯ passes/cases/functions-manifest.ts:73:22
+ ❯ chain/fixtures/throwaway-database.ts:114:7
+ ❯ connected chain/fixtures/throwaway-database.ts:38:12
+ ❯ inAThrowawayDatabase chain/fixtures/throwaway-database.ts:110:5
+ ❯ passes/cases/functions-manifest.ts:72:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[22/128]⎯
+
+ FAIL  passes/on-the-bench.test.ts > the functions pass — an orphan > a function a schema file made and no file holds: an orphan — the schema file stays ledgered and is named, the pass leaves nothing
+AssertionError: expected { state: 'applied', …(2) } to deeply equal { state: 'manifest', …(2) }
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[2m  {[22m
+[2m    "applied": [[22m
+[2m      "0001-os.sql",[22m
+[2m    ],[22m
+[32m-   "offences": [[39m
+[32m-     {[39m
+[32m-       "detail": "stray()",[39m
+[32m-       "kind": "orphan",[39m
+[32m-     },[39m
+[32m-   ],[39m
+[32m-   "state": "manifest",[39m
+[31m+   "standing": 1,[39m
+[31m+   "state": "applied",[39m
+[2m  }[22m
+
+ ❯ passes/cases/functions-manifest.ts:88:63
+     86|       await inAThrowawayDatabase(async (db) => {
+     87|         const root = passesRoot({ schema: { "0001-os.sql": MAKES_OS + …
+     88|         expect(await applyChain({ target: db.target, root })).toEqual(…
+       |                                                               ^
+     89|         expect(await filesLedgered(db.client)).toEqual(["(ledger)", "0…
+     90|         // greet.sql was applied before the manifest was read, and wen…
+ ❯ chain/fixtures/throwaway-database.ts:114:7
+ ❯ connected chain/fixtures/throwaway-database.ts:38:12
+ ❯ inAThrowawayDatabase chain/fixtures/throwaway-database.ts:110:5
+ ❯ passes/cases/functions-manifest.ts:86:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[23/128]⎯
+
+ FAIL  passes/on-the-bench.test.ts > the functions pass — an orphan > a procedure and an aggregate in os with no file are orphans too, each said with its arguments
+AssertionError: expected { state: 'applied', …(2) } to deeply equal { state: 'manifest', …(2) }
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[2m  {[22m
+[2m    "applied": [[22m
+[2m      "0001-os.sql",[22m
+[2m    ],[22m
+[32m-   "offences": [[39m
+[32m-     {[39m
+[32m-       "detail": "tidy()",[39m
+[32m-       "kind": "orphan",[39m
+[32m-     },[39m
+[32m-     {[39m
+[32m-       "detail": "total(integer)",[39m
+[32m-       "kind": "orphan",[39m
+[32m-     },[39m
+[32m-   ],[39m
+[32m-   "state": "manifest",[39m
+[31m+   "standing": 1,[39m
+[31m+   "state": "applied",[39m
+[2m  }[22m
+
+ ❯ passes/cases/functions-manifest.ts:98:63
+     96|       await inAThrowawayDatabase(async (db) => {
+     97|         const root = passesRoot({ schema: { "0001-os.sql": MAKES_OS + …
+     98|         expect(await applyChain({ target: db.target, root })).toEqual({
+       |                                                               ^
+     99|           state: "manifest",
+    100|           offences: [
+ ❯ chain/fixtures/throwaway-database.ts:114:7
+ ❯ connected chain/fixtures/throwaway-database.ts:38:12
+ ❯ inAThrowawayDatabase chain/fixtures/throwaway-database.ts:110:5
+ ❯ passes/cases/functions-manifest.ts:96:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[24/128]⎯
+
+ FAIL  passes/on-the-bench.test.ts > the functions pass — an orphan > an orphan and a second signature at once: both said, the orphan first
+AssertionError: expected { state: 'applied', …(2) } to deeply equal { state: 'manifest', …(2) }
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[2m  {[22m
+[2m    "applied": [[22m
+[2m      "0001-os.sql",[22m
+[2m    ],[22m
+[32m-   "offences": [[39m
+[32m-     {[39m
+[32m-       "detail": "stray()",[39m
+[32m-       "kind": "orphan",[39m
+[32m-     },[39m
+[32m-     {[39m
+[32m-       "detail": "greet",[39m
+[32m-       "kind": "second-signature",[39m
+[32m-     },[39m
+[32m-   ],[39m
+[32m-   "state": "manifest",[39m
+[31m+   "standing": 1,[39m
+[31m+   "state": "applied",[39m
+[2m  }[22m
+
+ ❯ passes/cases/functions-manifest.ts:115:63
+    113|         const makesTwo = `${MAKES_A_STRAY}create function os.greet(tim…
+    114|         const root = passesRoot({ schema: { "0001-os.sql": MAKES_OS + …
+    115|         expect(await applyChain({ target: db.target, root })).toEqual({
+       |                                                               ^
+    116|           state: "manifest",
+    117|           offences: [
+ ❯ chain/fixtures/throwaway-database.ts:114:7
+ ❯ connected chain/fixtures/throwaway-database.ts:38:12
+ ❯ inAThrowawayDatabase chain/fixtures/throwaway-database.ts:110:5
+ ❯ passes/cases/functions-manifest.ts:111:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[25/128]⎯
+
+ FAIL  passes/on-the-bench.test.ts > the functions pass — a failing pass > the second of three files fails: pass-failed with the pass, the file and the server's message — nothing of the pass, and the run's schema file stays
+AssertionError: expected { state: 'applied', …(2) } to strictly equal { state: 'applied', …(3) }
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[2m  {[22m
+[2m    "applied": [[22m
+[2m      "0001-os.sql",[22m
+[2m    ],[22m
+[32m-   "functions": 2,[39m
+[2m    "standing": 1,[22m
+[2m    "state": "applied",[22m
+[2m  }[22m
+
+ ❯ greetAndTwiceStand passes/fixtures/standing.ts:15:57
+     13| export async function greetAndTwiceStand(db: Throwaway): Promise<strin…
+     14|   const root = osGreetAndTwice();
+     15|   expect(await applyChain({ target: db.target, root })).toStrictEqual(…
+       |                                                         ^
+     16|   return root;
+     17| }
+ ❯ withHalveBetween passes/cases/functions-failing.ts:21:16
+ ❯ passes/cases/functions-failing.ts:65:22
+ ❯ chain/fixtures/throwaway-database.ts:114:7
+ ❯ connected chain/fixtures/throwaway-database.ts:38:12
+ ❯ inAThrowawayDatabase chain/fixtures/throwaway-database.ts:110:5
+ ❯ passes/cases/functions-failing.ts:64:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[26/128]⎯
+
+ FAIL  passes/on-the-bench.test.ts > the functions pass — a failing pass > the file corrected: the next run is green, and every file's body is in effect
+AssertionError: expected { state: 'applied', …(2) } to strictly equal { state: 'applied', …(3) }
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[2m  {[22m
+[2m    "applied": [[22m
+[2m      "0001-os.sql",[22m
+[2m    ],[22m
+[32m-   "functions": 2,[39m
+[2m    "standing": 1,[22m
+[2m    "state": "applied",[22m
+[2m  }[22m
+
+ ❯ greetAndTwiceStand passes/fixtures/standing.ts:15:57
+     13| export async function greetAndTwiceStand(db: Throwaway): Promise<strin…
+     14|   const root = osGreetAndTwice();
+     15|   expect(await applyChain({ target: db.target, root })).toStrictEqual(…
+       |                                                         ^
+     16|   return root;
+     17| }
+ ❯ withHalveBetween passes/cases/functions-failing.ts:21:16
+ ❯ passes/cases/functions-failing.ts:78:22
+ ❯ chain/fixtures/throwaway-database.ts:114:7
+ ❯ connected chain/fixtures/throwaway-database.ts:38:12
+ ❯ inAThrowawayDatabase chain/fixtures/throwaway-database.ts:110:5
+ ❯ passes/cases/functions-failing.ts:77:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[27/128]⎯
+
+ FAIL  passes/on-the-bench.test.ts > the functions pass — a file that is not its own function's > one that makes a function of another name: pass-failed with the message spelled, rolled back whole
+ FAIL  passes/on-the-bench.test.ts > the functions pass — a file that is not its own function's > one that makes two: pass-failed with the message spelled, rolled back whole
+ FAIL  passes/on-the-bench.test.ts > the functions pass — a file that is not its own function's > one that also grants on another file's function: pass-failed with the message spelled, rolled back whole
+ FAIL  passes/on-the-bench.test.ts > the functions pass — a file that is not its own function's > one that drops another file's function: pass-failed with the message spelled, rolled back whole
+ FAIL  passes/on-the-bench.test.ts > the functions pass — a file that is not its own function's > one that makes nothing — a comment: pass-failed with the message spelled, rolled back whole
+ FAIL  passes/on-the-bench.test.ts > the functions pass — a file that is not its own function's > one that makes its own function under two signatures — the name is said once: pass-failed with the message spelled, rolled back whole
+AssertionError: expected { state: 'applied', …(2) } to strictly equal { state: 'applied', …(3) }
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[2m  {[22m
+[2m    "applied": [[22m
+[2m      "0001-os.sql",[22m
+[2m    ],[22m
+[32m-   "functions": 2,[39m
+[2m    "standing": 1,[22m
+[2m    "state": "applied",[22m
+[2m  }[22m
+
+ ❯ greetAndTwiceStand passes/fixtures/standing.ts:15:57
+     13| export async function greetAndTwiceStand(db: Throwaway): Promise<strin…
+     14|   const root = osGreetAndTwice();
+     15|   expect(await applyChain({ target: db.target, root })).toStrictEqual(…
+       |                                                         ^
+     16|   return root;
+     17| }
+ ❯ withHalveBetween passes/cases/functions-failing.ts:21:16
+ ❯ passes/cases/functions-failing.ts:93:22
+ ❯ chain/fixtures/throwaway-database.ts:114:7
+ ❯ connected chain/fixtures/throwaway-database.ts:38:12
+ ❯ inAThrowawayDatabase chain/fixtures/throwaway-database.ts:110:5
+ ❯ passes/cases/functions-failing.ts:92:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[28/128]⎯
+
+ FAIL  passes/on-the-bench.test.ts > the functions pass — a file that commits > commit after making its function: pass-failed with a message that says transaction, and nothing of the pass is left
+ FAIL  passes/on-the-bench.test.ts > the functions pass — a file that commits > a do block that commits after making its function: pass-failed with a message that says transaction, and nothing of the pass is left
+AssertionError: expected { state: 'applied', …(2) } to strictly equal { state: 'applied', …(3) }
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[2m  {[22m
+[2m    "applied": [[22m
+[2m      "0001-os.sql",[22m
+[2m    ],[22m
+[32m-   "functions": 2,[39m
+[2m    "standing": 1,[22m
+[2m    "state": "applied",[22m
+[2m  }[22m
+
+ ❯ greetAndTwiceStand passes/fixtures/standing.ts:15:57
+     13| export async function greetAndTwiceStand(db: Throwaway): Promise<strin…
+     14|   const root = osGreetAndTwice();
+     15|   expect(await applyChain({ target: db.target, root })).toStrictEqual(…
+       |                                                         ^
+     16|   return root;
+     17| }
+ ❯ withHalveBetween passes/cases/functions-failing.ts:21:16
+ ❯ passes/cases/functions-failing.ts:106:22
+ ❯ chain/fixtures/throwaway-database.ts:114:7
+ ❯ connected chain/fixtures/throwaway-database.ts:38:12
+ ❯ inAThrowawayDatabase chain/fixtures/throwaway-database.ts:110:5
+ ❯ passes/cases/functions-failing.ts:105:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[29/128]⎯
+
+ FAIL  passes/on-the-bench.test.ts > the reference pass — a vocabulary reconciled > a row the file changes, one it does not hold, one equal, and a fourth it adds: the table equals the file in the file's columns
+AssertionError: expected { state: 'applied', applied: [], …(1) } to strictly equal { state: 'applied', applied: [], …(2) }
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[2m  {[22m
+[2m    "applied": [],[22m
+[32m-   "reference": 1,[39m
+[2m    "standing": 1,[22m
+[2m    "state": "applied",[22m
+[2m  }[22m
+
+ ❯ passes/cases/reference-reconciled.ts:44:63
+     42| 
+     43|         standsWith(root, "reference", { "event_types.json": fileOf(OPE…
+     44|         expect(await applyChain({ target: db.target, root })).toStrict…
+       |                                                               ^
+     45|         // The changed row and the equal row keep what was written in …
+     46|         expect(await rowsIn(db.client, EVENT_TYPES_BY_NAME)).toEqual([
+ ❯ chain/fixtures/throwaway-database.ts:114:7
+ ❯ connected chain/fixtures/throwaway-database.ts:38:12
+ ❯ inAThrowawayDatabase chain/fixtures/throwaway-database.ts:110:5
+ ❯ passes/cases/reference-reconciled.ts:33:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[30/128]⎯
+
+ FAIL  passes/on-the-bench.test.ts > the reference pass — a vocabulary reconciled > the values are read by the server: a number wider than JavaScript's arrives whole, a scale is kept, a JSON null is an SQL null
+AssertionError: expected { state: 'applied', …(2) } to strictly equal { state: 'applied', …(3) }
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[2m  {[22m
+[2m    "applied": [[22m
+[2m      "0001-os.sql",[22m
+[2m    ],[22m
+[32m-   "reference": 1,[39m
+[2m    "standing": 1,[22m
+[2m    "state": "applied",[22m
+[2m  }[22m
+
+ ❯ passes/cases/reference-reconciled.ts:61:63
+     59|       await inAThrowawayDatabase(async (db) => {
+     60|         const root = passesRoot({ schema: { "0001-os.sql": MAKES_OS + …
+     61|         expect(await applyChain({ target: db.target, root })).toStrict…
+       |                                                               ^
+     62|         expect(await rowsIn(db.client, "select name, ceiling::text, ra…
+     63|           { name: "wide", ceiling: "9007199254740993", ratio: "1.10", …
+ ❯ chain/fixtures/throwaway-database.ts:114:7
+ ❯ connected chain/fixtures/throwaway-database.ts:38:12
+ ❯ inAThrowawayDatabase chain/fixtures/throwaway-database.ts:110:5
+ ❯ passes/cases/reference-reconciled.ts:59:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[31/128]⎯
+
+ FAIL  passes/on-the-bench.test.ts > the reference pass — a key of two columns > a row is known by both: one changed, one removed, one added, and the row that shares one column with each is kept
+AssertionError: expected { state: 'applied', …(2) } to strictly equal { state: 'applied', …(3) }
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[2m  {[22m
+[2m    "applied": [[22m
+[2m      "0001-os.sql",[22m
+[2m    ],[22m
+[32m-   "reference": 1,[39m
+[2m    "standing": 1,[22m
+[2m    "state": "applied",[22m
+[2m  }[22m
+
+ ❯ passes/cases/reference-reconciled.ts:74:63
+     72|         const first = fileOf({ region: "eu", code: "a", rate: 1 }, { r…
+     73|         const root = passesRoot({ schema: { "0001-os.sql": MAKES_OS + …
+     74|         expect(await applyChain({ target: db.target, root })).toStrict…
+       |                                                               ^
+     75| 
+     76|         writeFileSync(inReference(root, "rates.json"), fileOf({ region…
+ ❯ chain/fixtures/throwaway-database.ts:114:7
+ ❯ connected chain/fixtures/throwaway-database.ts:38:12
+ ❯ inAThrowawayDatabase chain/fixtures/throwaway-database.ts:110:5
+ ❯ passes/cases/reference-reconciled.ts:71:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[32/128]⎯
+
+ FAIL  passes/on-the-bench.test.ts > the reference pass — a row already equal is not rewritten > a second run over the same file writes no row: every row's xmin is as the first run left it
+AssertionError: expected { state: 'applied', …(2) } to strictly equal { state: 'applied', …(3) }
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[2m  {[22m
+[2m    "applied": [[22m
+[2m      "0001-os.sql",[22m
+[2m    ],[22m
+[32m-   "reference": 1,[39m
+[2m    "standing": 1,[22m
+[2m    "state": "applied",[22m
+[2m  }[22m
+
+ ❯ eventTypesStand passes/fixtures/standing.ts:28:57
+     26| export async function eventTypesStand(db: Throwaway, more = ""): Promi…
+     27|   const root = passesRoot({ schema: { "0001-os.sql": MAKES_OS + EVENT_…
+     28|   expect(await applyChain({ target: db.target, root })).toStrictEqual(…
+       |                                                         ^
+     29|   return root;
+     30| }
+ ❯ passes/cases/reference-reconciled.ts:90:22
+ ❯ chain/fixtures/throwaway-database.ts:114:7
+ ❯ connected chain/fixtures/throwaway-database.ts:38:12
+ ❯ inAThrowawayDatabase chain/fixtures/throwaway-database.ts:110:5
+ ❯ passes/cases/reference-reconciled.ts:89:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[33/128]⎯
+
+ FAIL  passes/on-the-bench.test.ts > the reference pass — a row already equal is not rewritten > a run that changes one row writes that row alone
+AssertionError: expected { state: 'applied', …(2) } to strictly equal { state: 'applied', …(3) }
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[2m  {[22m
+[2m    "applied": [[22m
+[2m      "0001-os.sql",[22m
+[2m    ],[22m
+[32m-   "reference": 1,[39m
+[2m    "standing": 1,[22m
+[2m    "state": "applied",[22m
+[2m  }[22m
+
+ ❯ eventTypesStand passes/fixtures/standing.ts:28:57
+     26| export async function eventTypesStand(db: Throwaway, more = ""): Promi…
+     27|   const root = passesRoot({ schema: { "0001-os.sql": MAKES_OS + EVENT_…
+     28|   expect(await applyChain({ target: db.target, root })).toStrictEqual(…
+       |                                                         ^
+     29|   return root;
+     30| }
+ ❯ passes/cases/reference-reconciled.ts:101:22
+ ❯ chain/fixtures/throwaway-database.ts:114:7
+ ❯ connected chain/fixtures/throwaway-database.ts:38:12
+ ❯ inAThrowawayDatabase chain/fixtures/throwaway-database.ts:110:5
+ ❯ passes/cases/reference-reconciled.ts:100:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[34/128]⎯
+
+ FAIL  passes/on-the-bench.test.ts > the reference pass — a row of his policy kind > a table a schema file seeded, with no file in reference/, is left as he changed it by hand
+AssertionError: expected { state: 'applied', …(2) } to strictly equal { state: 'applied', …(3) }
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[2m  {[22m
+[2m    "applied": [[22m
+[2m      "0001-os.sql",[22m
+[2m    ],[22m
+[32m-   "reference": 1,[39m
+[2m    "standing": 1,[22m
+[2m    "state": "applied",[22m
+[2m  }[22m
+
+ ❯ eventTypesStand passes/fixtures/standing.ts:28:57
+     26| export async function eventTypesStand(db: Throwaway, more = ""): Promi…
+     27|   const root = passesRoot({ schema: { "0001-os.sql": MAKES_OS + EVENT_…
+     28|   expect(await applyChain({ target: db.target, root })).toStrictEqual(…
+       |                                                         ^
+     29|   return root;
+     30| }
+ ❯ passes/cases/reference-reconciled.ts:117:22
+ ❯ chain/fixtures/throwaway-database.ts:114:7
+ ❯ connected chain/fixtures/throwaway-database.ts:38:12
+ ❯ inAThrowawayDatabase chain/fixtures/throwaway-database.ts:110:5
+ ❯ passes/cases/reference-reconciled.ts:116:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[35/128]⎯
+
+ FAIL  passes/on-the-bench.test.ts > the reference pass — the directory decides > reference/ standing with no file: applied with reference: 0, and a table of os is as it stood
+AssertionError: expected { state: 'applied', …(2) } to strictly equal { state: 'applied', …(3) }
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[2m  {[22m
+[2m    "applied": [[22m
+[2m      "0001-os.sql",[22m
+[2m    ],[22m
+[32m-   "reference": 0,[39m
+[2m    "standing": 1,[22m
+[2m    "state": "applied",[22m
+[2m  }[22m
+
+ ❯ passes/cases/reference-reconciled.ts:136:63
+    134|       await inAThrowawayDatabase(async (db) => {
+    135|         const root = passesRoot({ schema: { "0001-os.sql": MAKES_OS + …
+    136|         expect(await applyChain({ target: db.target, root })).toStrict…
+       |                                                               ^
+    137|         const seeded = await rowsToTheInstant(db.client, "os.routing_r…
+    138|         expect(seeded).toHaveLength(1);
+ ❯ chain/fixtures/throwaway-database.ts:114:7
+ ❯ connected chain/fixtures/throwaway-database.ts:38:12
+ ❯ inAThrowawayDatabase chain/fixtures/throwaway-database.ts:110:5
+ ❯ passes/cases/reference-reconciled.ts:134:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[36/128]⎯
+
+ FAIL  passes/on-the-bench.test.ts > the reference pass — an empty array > empties the table
+AssertionError: expected { state: 'applied', …(2) } to strictly equal { state: 'applied', …(3) }
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[2m  {[22m
+[2m    "applied": [[22m
+[2m      "0001-os.sql",[22m
+[2m    ],[22m
+[32m-   "reference": 1,[39m
+[2m    "standing": 1,[22m
+[2m    "state": "applied",[22m
+[2m  }[22m
+
+ ❯ eventTypesStand passes/fixtures/standing.ts:28:57
+     26| export async function eventTypesStand(db: Throwaway, more = ""): Promi…
+     27|   const root = passesRoot({ schema: { "0001-os.sql": MAKES_OS + EVENT_…
+     28|   expect(await applyChain({ target: db.target, root })).toStrictEqual(…
+       |                                                         ^
+     29|   return root;
+     30| }
+ ❯ passes/cases/reference-reconciled.ts:149:22
+ ❯ chain/fixtures/throwaway-database.ts:114:7
+ ❯ connected chain/fixtures/throwaway-database.ts:38:12
+ ❯ inAThrowawayDatabase chain/fixtures/throwaway-database.ts:110:5
+ ❯ passes/cases/reference-reconciled.ts:148:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[37/128]⎯
+
+ FAIL  passes/on-the-bench.test.ts > the reference pass — a failing pass is rolled back whole > two vocabularies, the second's file with a value of the wrong type: pass-failed at that file — the first table as it stood, the functions pass's work kept
+AssertionError: expected { state: 'applied', …(2) } to strictly equal { state: 'applied', …(4) }
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[2m  {[22m
+[2m    "applied": [[22m
+[2m      "0001-os.sql",[22m
+[2m    ],[22m
+[32m-   "functions": 1,[39m
+[32m-   "reference": 2,[39m
+[2m    "standing": 1,[22m
+[2m    "state": "applied",[22m
+[2m  }[22m
+
+ ❯ passes/cases/reference-failing.ts:49:63
+     47|           reference: { "event_types.json": THE_THREE_EVENT_TYPES, "sev…
+     48|         });
+     49|         expect(await applyChain({ target: db.target, root })).toStrict…
+       |                                                               ^
+     50|         const eventTypes = await rowsToTheInstant(db.client, "os.event…
+     51|         const severities = await rowsToTheInstant(db.client, "os.sever…
+ ❯ chain/fixtures/throwaway-database.ts:114:7
+ ❯ connected chain/fixtures/throwaway-database.ts:38:12
+ ❯ inAThrowawayDatabase chain/fixtures/throwaway-database.ts:110:5
+ ❯ passes/cases/reference-failing.ts:43:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[38/128]⎯
+
+ FAIL  passes/on-the-bench.test.ts > the reference pass — a value in use is not removed > a table outside the files references a value the file no longer holds: pass-failed with the server's message, the table as it stood
+AssertionError: expected { state: 'applied', …(2) } to strictly equal { state: 'applied', …(3) }
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[2m  {[22m
+[2m    "applied": [[22m
+[2m      "0001-os.sql",[22m
+[2m    ],[22m
+[32m-   "reference": 1,[39m
+[2m    "standing": 1,[22m
+[2m    "state": "applied",[22m
+[2m  }[22m
+
+ ❯ eventTypesStand passes/fixtures/standing.ts:28:57
+     26| export async function eventTypesStand(db: Throwaway, more = ""): Promi…
+     27|   const root = passesRoot({ schema: { "0001-os.sql": MAKES_OS + EVENT_…
+     28|   expect(await applyChain({ target: db.target, root })).toStrictEqual(…
+       |                                                         ^
+     29|   return root;
+     30| }
+ ❯ passes/cases/reference-failing.ts:77:22
+ ❯ chain/fixtures/throwaway-database.ts:114:7
+ ❯ connected chain/fixtures/throwaway-database.ts:38:12
+ ❯ inAThrowawayDatabase chain/fixtures/throwaway-database.ts:110:5
+ ❯ passes/cases/reference-failing.ts:76:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[39/128]⎯
+
+ FAIL  passes/on-the-bench.test.ts > the reference pass — a table that is not what a vocabulary's must be, each message spelled > a view of that name: os.<table> is not a table
+AssertionError: expected { state: 'applied', …(2) } to deeply equal { state: 'pass-failed', …(4) }
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[2m  {[22m
+[2m    "applied": [[22m
+[2m      "0001-os.sql",[22m
+[2m    ],[22m
+[32m-   "file": "event_types.json",[39m
+[32m-   "message": "os.event_types is not a table",[39m
+[32m-   "pass": "reference",[39m
+[32m-   "state": "pass-failed",[39m
+[31m+   "standing": 1,[39m
+[31m+   "state": "applied",[39m
+[2m  }[22m
+
+ ❯ passes/cases/reference-failing.ts:100:25
+     98|         const aView = "create view os.event_types as select 'job.opene…
+     99|         const outcome = await refusedOver(db, aView, { "event_types.js…
+    100|         expect(outcome).toEqual(failedAt("event_types.json", "os.event…
+       |                         ^
+    101|       });
+    102|     });
+ ❯ chain/fixtures/throwaway-database.ts:114:7
+ ❯ connected chain/fixtures/throwaway-database.ts:38:12
+ ❯ inAThrowawayDatabase chain/fixtures/throwaway-database.ts:110:5
+ ❯ passes/cases/reference-failing.ts:97:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[40/128]⎯
+
+ FAIL  passes/on-the-bench.test.ts > the reference pass — a table that is not what a vocabulary's must be, each message spelled > nothing of that name in os: os.<table> is not a table — and the vocabulary before it by name is not written
+AssertionError: expected { state: 'applied', …(2) } to deeply equal { state: 'pass-failed', …(4) }
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[2m  {[22m
+[2m    "applied": [[22m
+[2m      "0001-os.sql",[22m
+[2m    ],[22m
+[32m-   "file": "severities.json",[39m
+[32m-   "message": "os.severities is not a table",[39m
+[32m-   "pass": "reference",[39m
+[32m-   "state": "pass-failed",[39m
+[31m+   "standing": 1,[39m
+[31m+   "state": "applied",[39m
+[2m  }[22m
+
+ ❯ passes/cases/reference-failing.ts:107:25
+    105|       await inAThrowawayDatabase(async (db) => {
+    106|         const outcome = await refusedOver(db, EVENT_TYPES_TABLE, { "ev…
+    107|         expect(outcome).toEqual(failedAt("severities.json", "os.severi…
+       |                         ^
+    108|         expect(await countIn(db, "os.event_types")).toBe(0);
+    109|       });
+ ❯ chain/fixtures/throwaway-database.ts:114:7
+ ❯ connected chain/fixtures/throwaway-database.ts:38:12
+ ❯ inAThrowawayDatabase chain/fixtures/throwaway-database.ts:110:5
+ ❯ passes/cases/reference-failing.ts:105:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[41/128]⎯
+
+ FAIL  passes/on-the-bench.test.ts > the reference pass — a table that is not what a vocabulary's must be, each message spelled > keys of the file that are no columns: os.<table> has no column <the first by name>
+AssertionError: expected { state: 'applied', …(2) } to deeply equal { state: 'pass-failed', …(4) }
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[2m  {[22m
+[2m    "applied": [[22m
+[2m      "0001-os.sql",[22m
+[2m    ],[22m
+[32m-   "file": "event_types.json",[39m
+[32m-   "message": "os.event_types has no column colour",[39m
+[32m-   "pass": "reference",[39m
+[32m-   "state": "pass-failed",[39m
+[31m+   "standing": 1,[39m
+[31m+   "state": "applied",[39m
+[2m  }[22m
+
+ ❯ passes/cases/reference-failing.ts:116:25
+    114|         // Two keys that are no columns, the later by name written fir…
+    115|         const outcome = await refusedOver(db, EVENT_TYPES_TABLE, { "ev…
+    116|         expect(outcome).toEqual(failedAt("event_types.json", "os.event…
+       |                         ^
+    117|         expect(await countIn(db, "os.event_types")).toBe(0);
+    118|       });
+ ❯ chain/fixtures/throwaway-database.ts:114:7
+ ❯ connected chain/fixtures/throwaway-database.ts:38:12
+ ❯ inAThrowawayDatabase chain/fixtures/throwaway-database.ts:110:5
+ ❯ passes/cases/reference-failing.ts:113:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[42/128]⎯
+
+ FAIL  passes/on-the-bench.test.ts > the reference pass — a table that is not what a vocabulary's must be, each message spelled > a table with no primary key, though a unique column: os.<table> has no primary key
+AssertionError: expected { state: 'applied', …(2) } to deeply equal { state: 'pass-failed', …(4) }
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[2m  {[22m
+[2m    "applied": [[22m
+[2m      "0001-os.sql",[22m
+[2m    ],[22m
+[32m-   "file": "loose.json",[39m
+[32m-   "message": "os.loose has no primary key",[39m
+[32m-   "pass": "reference",[39m
+[32m-   "state": "pass-failed",[39m
+[31m+   "standing": 1,[39m
+[31m+   "state": "applied",[39m
+[2m  }[22m
+
+ ❯ passes/cases/reference-failing.ts:124:25
+    122|       await inAThrowawayDatabase(async (db) => {
+    123|         const outcome = await refusedOver(db, "create table os.loose (…
+    124|         expect(outcome).toEqual(failedAt("loose.json", "os.loose has n…
+       |                         ^
+    125|         expect(await countIn(db, "os.loose")).toBe(0);
+    126|       });
+ ❯ chain/fixtures/throwaway-database.ts:114:7
+ ❯ connected chain/fixtures/throwaway-database.ts:38:12
+ ❯ inAThrowawayDatabase chain/fixtures/throwaway-database.ts:110:5
+ ❯ passes/cases/reference-failing.ts:122:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[43/128]⎯
+
+ FAIL  passes/on-the-bench.test.ts > the reference pass — a table that is not what a vocabulary's must be, each message spelled > a file that leaves out the key's columns: the first in the key's order is said — not the first by name, nor the table's first
+AssertionError: expected { state: 'applied', …(2) } to deeply equal { state: 'pass-failed', …(4) }
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[2m  {[22m
+[2m    "applied": [[22m
+[2m      "0001-os.sql",[22m
+[2m    ],[22m
+[32m-   "file": "rates.json",[39m
+[32m-   "message": "the file does not carry the key column region of os.rates",[39m
+[32m-   "pass": "reference",[39m
+[32m-   "state": "pass-failed",[39m
+[31m+   "standing": 1,[39m
+[31m+   "state": "applied",[39m
+[2m  }[22m
+
+ ❯ passes/cases/reference-failing.ts:133:25
+    131|         const rates = "create table os.rates (code text, region text, …
+    132|         const outcome = await refusedOver(db, rates, { "rates.json": f…
+    133|         expect(outcome).toEqual(failedAt("rates.json", "the file does …
+       |                         ^
+    134|         expect(await countIn(db, "os.rates")).toBe(0);
+    135|       });
+ ❯ chain/fixtures/throwaway-database.ts:114:7
+ ❯ connected chain/fixtures/throwaway-database.ts:38:12
+ ❯ inAThrowawayDatabase chain/fixtures/throwaway-database.ts:110:5
+ ❯ passes/cases/reference-failing.ts:130:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[44/128]⎯
+
+ FAIL  passes/on-the-bench.test.ts > the reference pass — a table that is not what a vocabulary's must be, each message spelled > a trigger that rewrites a value on its way in: os.<table> does not equal its file after the pass, and nothing is left written
+AssertionError: expected { state: 'applied', …(2) } to deeply equal { state: 'pass-failed', …(4) }
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[2m  {[22m
+[2m    "applied": [[22m
+[2m      "0001-os.sql",[22m
+[2m    ],[22m
+[32m-   "file": "event_types.json",[39m
+[32m-   "message": "os.event_types does not equal its file after the pass",[39m
+[32m-   "pass": "reference",[39m
+[32m-   "state": "pass-failed",[39m
+[31m+   "standing": 1,[39m
+[31m+   "state": "applied",[39m
+[2m  }[22m
+
+ ❯ passes/cases/reference-failing.ts:141:25
+    139|       await inAThrowawayDatabase(async (db) => {
+    140|         const outcome = await refusedOver(db, EVENT_TYPES_TABLE + SHOU…
+    141|         expect(outcome).toEqual(failedAt("event_types.json", "os.event…
+       |                         ^
+    142|         expect(await countIn(db, "os.event_types")).toBe(0);
+    143|       });
+ ❯ chain/fixtures/throwaway-database.ts:114:7
+ ❯ connected chain/fixtures/throwaway-database.ts:38:12
+ ❯ inAThrowawayDatabase chain/fixtures/throwaway-database.ts:110:5
+ ❯ passes/cases/reference-failing.ts:139:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[45/128]⎯
+
+ FAIL  passes/on-the-bench.test.ts > the reference pass — a table that is not what a vocabulary's must be, each message spelled > a key twice in one file: the server's message, and nothing is left written
+AssertionError: expected { state: 'applied', …(2) } to deeply equal { state: 'pass-failed', …(4) }
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[2m  {[22m
+[2m    "applied": [[22m
+[2m      "0001-os.sql",[22m
+[2m    ],[22m
+[32m-   "file": "event_types.json",[39m
+[32m-   "message": "ON CONFLICT DO UPDATE command cannot affect row a second time",[39m
+[32m-   "pass": "reference",[39m
+[32m-   "state": "pass-failed",[39m
+[31m+   "standing": 1,[39m
+[31m+   "state": "applied",[39m
+[2m  }[22m
+
+ ❯ passes/cases/reference-failing.ts:149:25
+    147|       await inAThrowawayDatabase(async (db) => {
+    148|         const outcome = await refusedOver(db, EVENT_TYPES_TABLE, { "ev…
+    149|         expect(outcome).toEqual(failedAt("event_types.json", "ON CONFL…
+       |                         ^
+    150|         expect(await countIn(db, "os.event_types")).toBe(0);
+    151|       });
+ ❯ chain/fixtures/throwaway-database.ts:114:7
+ ❯ connected chain/fixtures/throwaway-database.ts:38:12
+ ❯ inAThrowawayDatabase chain/fixtures/throwaway-database.ts:110:5
+ ❯ passes/cases/reference-failing.ts:147:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[46/128]⎯
+
+ FAIL  passes/on-the-bench.test.ts > the reference pass — vocabularies that reference each other > the referenced table before the referencing one by name: both gain rows that hang together, then both lose them — applied each time
+ FAIL  passes/on-the-bench.test.ts > the reference pass — vocabularies that reference each other > the referenced table after the referencing one by name: both gain rows that hang together, then both lose them — applied each time
+AssertionError: expected { state: 'applied', …(2) } to strictly equal { state: 'applied', …(3) }
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[2m  {[22m
+[2m    "applied": [[22m
+[2m      "0001-os.sql",[22m
+[2m    ],[22m
+[32m-   "reference": 2,[39m
+[2m    "standing": 1,[22m
+[2m    "state": "applied",[22m
+[2m  }[22m
+
+ ❯ passes/cases/reference-order.ts:48:63
+     46| 
+     47|         // Built from nothing: the referencing row needs the reference…
+     48|         expect(await applyChain({ target: db.target, root })).toStrict…
+       |                                                               ^
+     49|         expect(await standing()).toEqual([[{ name: "opened" }], [{ id:…
+     50| 
+ ❯ chain/fixtures/throwaway-database.ts:114:7
+ ❯ connected chain/fixtures/throwaway-database.ts:38:12
+ ❯ inAThrowawayDatabase chain/fixtures/throwaway-database.ts:110:5
+ ❯ passes/cases/reference-order.ts:35:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[47/128]⎯
+
+ FAIL  passes/on-the-bench.test.ts > the reference pass — vocabularies that reference each other > a table that references itself is ordered by nothing: its rows are written, and removed, whatever their order in the file
+AssertionError: expected { state: 'applied', …(2) } to strictly equal { state: 'applied', …(3) }
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[2m  {[22m
+[2m    "applied": [[22m
+[2m      "0001-os.sql",[22m
+[2m    ],[22m
+[32m-   "reference": 1,[39m
+[2m    "standing": 1,[22m
+[2m    "state": "applied",[22m
+[2m  }[22m
+
+ ❯ passes/cases/reference-order.ts:74:63
+     72|           reference: { "units.json": fileOf({ name: "leaf", part_of: "…
+     73|         });
+     74|         expect(await applyChain({ target: db.target, root })).toStrict…
+       |                                                               ^
+     75|         expect(await rowsIn(db.client, 'select name, part_of from os.u…
+     76|           { name: "branch", part_of: "trunk" },
+ ❯ chain/fixtures/throwaway-database.ts:114:7
+ ❯ connected chain/fixtures/throwaway-database.ts:38:12
+ ❯ inAThrowawayDatabase chain/fixtures/throwaway-database.ts:110:5
+ ❯ passes/cases/reference-order.ts:69:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[48/128]⎯
+
+ FAIL  passes/on-the-bench.test.ts > the reference pass — vocabularies that reference each other > two that reference each other in a circle: pass-failed, said of the first of the two by name, with both named — and nothing written
+AssertionError: expected { state: 'applied', …(2) } to deeply equal { state: 'pass-failed', …(4) }
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[2m  {[22m
+[2m    "applied": [[22m
+[2m      "0001-os.sql",[22m
+[2m    ],[22m
+[32m-   "file": "alpha.json",[39m
+[32m-   "message": "the vocabularies reference each other in a circle: alpha, beta",[39m
+[32m-   "pass": "reference",[39m
+[32m-   "state": "pass-failed",[39m
+[31m+   "standing": 1,[39m
+[31m+   "state": "applied",[39m
+[2m  }[22m
+
+ ❯ passes/cases/reference-order.ts:97:63
+     95|           },
+     96|         });
+     97|         expect(await applyChain({ target: db.target, root })).toEqual({
+       |                                                               ^
+     98|           state: "pass-failed",
+     99|           pass: "reference",
+ ❯ chain/fixtures/throwaway-database.ts:114:7
+ ❯ connected chain/fixtures/throwaway-database.ts:38:12
+ ❯ inAThrowawayDatabase chain/fixtures/throwaway-database.ts:110:5
+ ❯ passes/cases/reference-order.ts:88:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[49/128]⎯
+
+ FAIL  passes/on-the-bench.test.ts > the passes in one run > schema files and both passes: applied with both counts — the functions answer and the vocabulary holds its file's rows
+AssertionError: expected { state: 'applied', …(2) } to strictly equal { state: 'applied', …(4) }
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[2m  {[22m
+[2m    "applied": [[22m
+[2m      "0001-os.sql",[22m
+[2m    ],[22m
+[32m-   "functions": 2,[39m
+[32m-   "reference": 1,[39m
+[2m    "standing": 1,[22m
+[2m    "state": "applied",[22m
+[2m  }[22m
+
+ ❯ passes/cases/passes-in-one-run.ts:72:81
+     70|     it("schema files and both passes: applied with both counts — the f…
+     71|       await inAThrowawayDatabase(async (db) => {
+     72|         expect(await applyChain({ target: db.target, root: withBothPas…
+       |                                                                                 ^
+     73|         expect(await valueOf(db.client, "select os.greet()")).toBe("he…
+     74|         expect(await valueOf(db.client, "select os.twice(21)")).toBe(4…
+ ❯ chain/fixtures/throwaway-database.ts:114:7
+ ❯ connected chain/fixtures/throwaway-database.ts:38:12
+ ❯ inAThrowawayDatabase chain/fixtures/throwaway-database.ts:110:5
+ ❯ passes/cases/passes-in-one-run.ts:71:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[50/128]⎯
+
+ FAIL  passes/on-the-bench.test.ts > the passes in one run > a failing schema file: file-failed, and neither pass ran — the changed body is not in effect, the vocabulary is as it stood
+AssertionError: expected { state: 'applied', …(2) } to strictly equal { state: 'applied', …(4) }
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[2m  {[22m
+[2m    "applied": [[22m
+[2m      "0001-os.sql",[22m
+[2m    ],[22m
+[32m-   "functions": 2,[39m
+[32m-   "reference": 1,[39m
+[2m    "standing": 1,[22m
+[2m    "state": "applied",[22m
+[2m  }[22m
+
+ ❯ bothStandAndBothChanged passes/cases/passes-in-one-run.ts:38:57
+     36| async function bothStandAndBothChanged(db: Throwaway): Promise<string>…
+     37|   const root = withBothPasses();
+     38|   expect(await applyChain({ target: db.target, root })).toStrictEqual(…
+       |                                                         ^
+     39|   writeFileSync(inFunctions(root, "greet.sql"), greets("good day"));
+     40|   writeFileSync(inReference(root, "event_types.json"), fileOf(OPENED, …
+ ❯ passes/cases/passes-in-one-run.ts:82:22
+ ❯ chain/fixtures/throwaway-database.ts:114:7
+ ❯ connected chain/fixtures/throwaway-database.ts:38:12
+ ❯ inAThrowawayDatabase chain/fixtures/throwaway-database.ts:110:5
+ ❯ passes/cases/passes-in-one-run.ts:81:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[51/128]⎯
+
+ FAIL  passes/on-the-bench.test.ts > the passes in one run > a functions pass that does not end green ends the run: the reference pass does not run
+AssertionError: expected { state: 'applied', …(2) } to strictly equal { state: 'applied', …(4) }
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[2m  {[22m
+[2m    "applied": [[22m
+[2m      "0001-os.sql",[22m
+[2m    ],[22m
+[32m-   "functions": 2,[39m
+[32m-   "reference": 1,[39m
+[2m    "standing": 1,[22m
+[2m    "state": "applied",[22m
+[2m  }[22m
+
+ ❯ bothStandAndBothChanged passes/cases/passes-in-one-run.ts:38:57
+     36| async function bothStandAndBothChanged(db: Throwaway): Promise<string>…
+     37|   const root = withBothPasses();
+     38|   expect(await applyChain({ target: db.target, root })).toStrictEqual(…
+       |                                                         ^
+     39|   writeFileSync(inFunctions(root, "greet.sql"), greets("good day"));
+     40|   writeFileSync(inReference(root, "event_types.json"), fileOf(OPENED, …
+ ❯ passes/cases/passes-in-one-run.ts:94:22
+ ❯ chain/fixtures/throwaway-database.ts:114:7
+ ❯ connected chain/fixtures/throwaway-database.ts:38:12
+ ❯ inAThrowawayDatabase chain/fixtures/throwaway-database.ts:110:5
+ ❯ passes/cases/passes-in-one-run.ts:93:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[52/128]⎯
+
+ FAIL  passes/on-the-bench.test.ts > the passes in one run > each pass in a session of its own: what the last schema file and a function file left in theirs — a role, a search path, a temporary table — meets neither pass
+AssertionError: expected { state: 'applied', …(2) } to strictly equal { state: 'applied', …(4) }
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[2m  {[22m
+[2m    "applied": [[22m
+[2m      "0001-os.sql",[22m
+[2m    ],[22m
+[32m-   "functions": 1,[39m
+[32m-   "reference": 1,[39m
+[2m    "standing": 1,[22m
+[2m    "state": "applied",[22m
+[2m  }[22m
+
+ ❯ passes/cases/passes-in-one-run.ts:112:63
+    110|         });
+    111|         // In the session of either, the next pass would act as pg_mon…
+    112|         expect(await applyChain({ target: db.target, root })).toStrict…
+       |                                                               ^
+    113|         expect(await valueOf(db.client, "select os.greet()")).toBe("he…
+    114|         expect(await rowsIn(db.client, EVENT_TYPES_BY_NAME)).toEqual(T…
+ ❯ chain/fixtures/throwaway-database.ts:114:7
+ ❯ connected chain/fixtures/throwaway-database.ts:38:12
+ ❯ inAThrowawayDatabase chain/fixtures/throwaway-database.ts:110:5
+ ❯ passes/cases/passes-in-one-run.ts:105:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[53/128]⎯
+
+ FAIL  passes/on-the-bench.test.ts > the disk of the passes is read with the chain's > offences of schema/, functions/ and reference/ are one outcome, in SPEC §7's order — said before the target is asked who it is, nothing written
+AssertionError: expected { state: 'offences', …(1) } to deeply equal { state: 'offences', …(1) }
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[2m  {[22m
+[2m    "offences": [[22m
+[2m      {[22m
+[32m-       "detail": "functions/Greet.sql",[39m
+[32m-       "kind": "unknown-entry",[39m
+[32m-     },[39m
+[32m-     {[39m
+[2m        "detail": "notes.txt",[22m
+[32m-       "kind": "unknown-entry",[39m
+[32m-     },[39m
+[32m-     {[39m
+[32m-       "detail": "reference/notes.txt",[39m
+[2m        "kind": "unknown-entry",[22m
+[2m      },[22m
+[2m      {[22m
+[2m        "detail": "0002-nothing.sql",[22m
+[32m-       "kind": "empty",[39m
+[32m-     },[39m
+[32m-     {[39m
+[32m-       "detail": "functions/nothing.sql",[39m
+[2m        "kind": "empty",[22m
+[32m-     },[39m
+[32m-     {[39m
+[32m-       "detail": "reference/event_types.json",[39m
+[32m-       "kind": "malformed",[39m
+[2m      },[22m
+[2m    ],[22m
+[2m    "state": "offences",[22m
+[2m  }[22m
+
+ ❯ passes/cases/passes-in-one-run.ts:129:63
+    127|         // No list holds this database: a run that opened a connection…
+    128|         db.relist([]);
+    129|         expect(await applyChain({ target: db.target, root })).toEqual({
+       |                                                               ^
+    130|           state: "offences",
+    131|           offences: [
+ ❯ chain/fixtures/throwaway-database.ts:114:7
+ ❯ connected chain/fixtures/throwaway-database.ts:38:12
+ ❯ inAThrowawayDatabase chain/fixtures/throwaway-database.ts:110:5
+ ❯ passes/cases/passes-in-one-run.ts:121:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[54/128]⎯
+
+ FAIL  passes/on-the-bench.test.ts > the disk of the passes is read with the chain's > a function file changed while a run waits for the lock is applied as it stands under the lock
+AssertionError: expected { state: 'applied', …(2) } to strictly equal { state: 'applied', …(3) }
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[2m  {[22m
+[2m    "applied": [[22m
+[2m      "0001-os.sql",[22m
+[2m    ],[22m
+[32m-   "functions": 1,[39m
+[2m    "standing": 1,[22m
+[2m    "state": "applied",[22m
+[2m  }[22m
+
+ ❯ passes/cases/passes-in-one-run.ts:159:41
+    157|           expect([first.ended(), second.ended()]).toEqual([false, fals…
+    158| 
+    159|           expect(await first.outcome()).toStrictEqual({ state: "applie…
+       |                                         ^
+    160|           expect(await second.outcome()).toStrictEqual({ state: "appli…
+    161|         } finally {
+ ❯ chain/fixtures/throwaway-database.ts:114:7
+ ❯ connected chain/fixtures/throwaway-database.ts:38:12
+ ❯ inAThrowawayDatabase chain/fixtures/throwaway-database.ts:110:5
+ ❯ passes/cases/passes-in-one-run.ts:146:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[55/128]⎯
+
+ FAIL  passes/on-the-bench.test.ts > the passes' sessions pass the guard > a list that loses the identity while the schema file sleeps: the functions pass's session is refused — the file stays ledgered, no function is made
+Error: the call was not refused: it answered {"state":"applied","applied":["0001-os.sql"],"standing":1}
+ ❯ refusalOf chain/fixtures/refusal.ts:14:9
+     12|     throw failure;
+     13|   }
+     14|   throw new Error(`the call was not refused: it answered ${JSON.string…
+       |         ^
+     15| }
+     16| 
+ ❯ refusedOnceTheListLosesIt passes/cases/passes-in-one-run.ts:58:21
+ ❯ passes/cases/passes-in-one-run.ts:175:9
+ ❯ chain/fixtures/throwaway-database.ts:114:7
+ ❯ connected chain/fixtures/throwaway-database.ts:38:12
+ ❯ inAThrowawayDatabase chain/fixtures/throwaway-database.ts:110:5
+ ❯ passes/cases/passes-in-one-run.ts:173:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[56/128]⎯
+
+ FAIL  passes/on-the-bench.test.ts > the passes' sessions pass the guard > a list that loses the identity while a function file sleeps: the reference pass's session is refused — the functions pass stays, no row is written
+Error: no session of chain_test_cb5377ffaebba840 was seen sleeping within 20000 ms
+ ❯ seenWithin chain/fixtures/running.ts:55:38
+     53|   const deadline = Date.now() + ms;
+     54|   while (!(await shown())) {
+     55|     if (Date.now() > deadline) throw new Error(`${otherwise} within ${…
+       |                                      ^
+     56|     await new Promise((resolve) => setTimeout(resolve, 50));
+     57|   }
+ ❯ untilASessionSleeps chain/fixtures/running.ts:71:3
+ ❯ refusedOnceTheListLosesIt passes/cases/passes-in-one-run.ts:55:5
+ ❯ passes/cases/passes-in-one-run.ts:194:9
+ ❯ chain/fixtures/throwaway-database.ts:114:7
+ ❯ connected chain/fixtures/throwaway-database.ts:38:12
+ ❯ inAThrowawayDatabase chain/fixtures/throwaway-database.ts:110:5
+ ❯ passes/cases/passes-in-one-run.ts:187:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[57/128]⎯
+
+ FAIL  passes/on-the-bench.test.ts > the command > up --root <a root whose functions/ holds an entry off the pattern>: the OFFENCE line, then CHAIN_RED offences=1, exit 1
+ FAIL  passes/on-the-bench.test.ts > the command > up --root <a root whose reference/ holds a file that is no array of objects>: the OFFENCE line, then CHAIN_RED offences=1, exit 1
+AssertionError: expected { state: 'applied', applied: [], …(1) } to deeply equal { state: 'offences', …(1) }
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[2m  {[22m
+[32m-   "offences": [[39m
+[32m-     {[39m
+[32m-       "detail": "functions/Greet.sql",[39m
+[32m-       "kind": "unknown-entry",[39m
+[32m-     },[39m
+[32m-   ],[39m
+[32m-   "state": "offences",[39m
+[31m+   "applied": [],[39m
+[31m+   "standing": 0,[39m
+[31m+   "state": "applied",[39m
+[2m  }[22m
+
+ ❯ passes/cases/the-command.ts:32:63
+     30|       const root = passesRoot(passes);
+     31|       await inAThrowawayDatabase(async (db) => {
+     32|         expect(await applyChain({ target: db.target, root })).toEqual(…
+       |                                                               ^
+     33|         expect(await hasTheLedgersSchema(db.client)).toBe(false);
+     34|       });
+ ❯ chain/fixtures/throwaway-database.ts:114:7
+ ❯ connected chain/fixtures/throwaway-database.ts:38:12
+ ❯ inAThrowawayDatabase chain/fixtures/throwaway-database.ts:110:5
+ ❯ passes/cases/the-command.ts:31:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[58/128]⎯
+
+ FAIL  passes/read-passes.test.ts > readPasses — a pass's directory decides whether the pass is read > a root that holds neither directory: no offence, and neither key
+Error: NOT_BUILT
+ ❯ readPasses ../chain/src/passes.ts:12:9
+     10|  */
+     11| export function readPasses(_root: string): { functions?: PassFile[]; r…
+     12|   throw new Error("NOT_BUILT");
+       |         ^
+     13| }
+     14| 
+ ❯ passes/read-passes.test.ts:23:12
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[59/128]⎯
+
+ FAIL  passes/read-passes.test.ts > readPasses — a pass's directory decides whether the pass is read > a root that does not exist: the same, and nothing is thrown
+Error: NOT_BUILT
+ ❯ readPasses ../chain/src/passes.ts:12:9
+     10|  */
+     11| export function readPasses(_root: string): { functions?: PassFile[]; r…
+     12|   throw new Error("NOT_BUILT");
+       |         ^
+     13| }
+     14| 
+ ❯ passes/read-passes.test.ts:27:12
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[60/128]⎯
+
+ FAIL  passes/read-passes.test.ts > readPasses — a pass's directory decides whether the pass is read > a root with no schema/ is read all the same: the chain's own directory is not this reading's
+Error: NOT_BUILT
+ ❯ readPasses ../chain/src/passes.ts:12:9
+     10|  */
+     11| export function readPasses(_root: string): { functions?: PassFile[]; r…
+     12|   throw new Error("NOT_BUILT");
+       |         ^
+     13| }
+     14| 
+ ❯ passes/read-passes.test.ts:33:12
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[61/128]⎯
+
+ FAIL  passes/read-passes.test.ts > readPasses — a pass's directory decides whether the pass is read > functions/ alone: its files, and no reference key
+Error: NOT_BUILT
+ ❯ readPasses ../chain/src/passes.ts:12:9
+     10|  */
+     11| export function readPasses(_root: string): { functions?: PassFile[]; r…
+     12|   throw new Error("NOT_BUILT");
+       |         ^
+     13| }
+     14| 
+ ❯ passes/read-passes.test.ts:38:12
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[62/128]⎯
+
+ FAIL  passes/read-passes.test.ts > readPasses — a pass's directory decides whether the pass is read > reference/ alone: its files, and no functions key
+Error: NOT_BUILT
+ ❯ readPasses ../chain/src/passes.ts:12:9
+     10|  */
+     11| export function readPasses(_root: string): { functions?: PassFile[]; r…
+     12|   throw new Error("NOT_BUILT");
+       |         ^
+     13| }
+     14| 
+ ❯ passes/read-passes.test.ts:43:12
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[63/128]⎯
+
+ FAIL  passes/read-passes.test.ts > readPasses — a pass's directory decides whether the pass is read > a directory that stands and holds nothing is a pass of no files
+Error: NOT_BUILT
+ ❯ readPasses ../chain/src/passes.ts:12:9
+     10|  */
+     11| export function readPasses(_root: string): { functions?: PassFile[]; r…
+     12|   throw new Error("NOT_BUILT");
+       |         ^
+     13| }
+     14| 
+ ❯ passes/read-passes.test.ts:47:12
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[64/128]⎯
+
+ FAIL  passes/read-passes.test.ts > readPasses — the files of the two directories > come back by name, by code unit, each with the entry's name and its text
+Error: NOT_BUILT
+ ❯ readPasses ../chain/src/passes.ts:12:9
+     10|  */
+     11| export function readPasses(_root: string): { functions?: PassFile[]; r…
+     12|   throw new Error("NOT_BUILT");
+       |         ^
+     13| }
+     14| 
+ ❯ passes/read-passes.test.ts:58:12
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[65/128]⎯
+
+ FAIL  passes/read-passes.test.ts > readPasses — the files of the two directories > a name of 63 characters is a name of the pattern, in either directory
+Error: NOT_BUILT
+ ❯ readPasses ../chain/src/passes.ts:12:9
+     10|  */
+     11| export function readPasses(_root: string): { functions?: PassFile[]; r…
+     12|   throw new Error("NOT_BUILT");
+       |         ^
+     13| }
+     14| 
+ ❯ passes/read-passes.test.ts:76:18
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[66/128]⎯
+
+ FAIL  passes/read-passes.test.ts > readPasses — the files of the two directories > a function file that is only a comment is a file: it is not empty
+Error: NOT_BUILT
+ ❯ readPasses ../chain/src/passes.ts:12:9
+     10|  */
+     11| export function readPasses(_root: string): { functions?: PassFile[]; r…
+     12|   throw new Error("NOT_BUILT");
+       |         ^
+     13| }
+     14| 
+ ❯ passes/read-passes.test.ts:83:12
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[67/128]⎯
+
+ FAIL  passes/read-passes.test.ts > readPasses — the files of the two directories > a reference file is well-formed: an empty array
+ FAIL  passes/read-passes.test.ts > readPasses — the files of the two directories > a reference file is well-formed: an empty array with white space in and around it
+ FAIL  passes/read-passes.test.ts > readPasses — the files of the two directories > a reference file is well-formed: objects that carry the same keys in another order
+ FAIL  passes/read-passes.test.ts > readPasses — the files of the two directories > a reference file is well-formed: a value of any JSON kind — the server reads the values, not this reading
+Error: NOT_BUILT
+ ❯ readPasses ../chain/src/passes.ts:12:9
+     10|  */
+     11| export function readPasses(_root: string): { functions?: PassFile[]; r…
+     12|   throw new Error("NOT_BUILT");
+       |         ^
+     13| }
+     14| 
+ ❯ passes/read-passes.test.ts:93:12
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[68/128]⎯
+
+ FAIL  passes/read-passes.test.ts > readPasses — the offences of the two directories, each planted and named > unknown-entry: functions in the root is a file, not a directory — and the pass has no key
+ FAIL  passes/read-passes.test.ts > readPasses — the offences of the two directories, each planted and named > unknown-entry: reference in the root is a file, not a directory — and the pass has no key
+Error: NOT_BUILT
+ ❯ readPasses ../chain/src/passes.ts:12:9
+     10|  */
+     11| export function readPasses(_root: string): { functions?: PassFile[]; r…
+     12|   throw new Error("NOT_BUILT");
+       |         ^
+     13| }
+     14| 
+ ❯ passes/read-passes.test.ts:101:12
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[69/128]⎯
+
+ FAIL  passes/read-passes.test.ts > readPasses — the offences of the two directories, each planted and named > unknown-entry: functions and reference in the root are links, though each leads to a directory of good files
+Error: NOT_BUILT
+ ❯ readPasses ../chain/src/passes.ts:12:9
+     10|  */
+     11| export function readPasses(_root: string): { functions?: PassFile[]; r…
+     12|   throw new Error("NOT_BUILT");
+       |         ^
+     13| }
+     14| 
+ ❯ passes/read-passes.test.ts:109:12
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[70/128]⎯
+
+ FAIL  passes/read-passes.test.ts > readPasses — the offences of the two directories, each planted and named > unknown-entry: in functions/, a file with another ending
+ FAIL  passes/read-passes.test.ts > readPasses — the offences of the two directories, each planted and named > unknown-entry: in functions/, a file with the ending in capitals
+ FAIL  passes/read-passes.test.ts > readPasses — the offences of the two directories, each planted and named > unknown-entry: in functions/, a file with a capital letter
+ FAIL  passes/read-passes.test.ts > readPasses — the offences of the two directories, each planted and named > unknown-entry: in functions/, a file with a digit first
+ FAIL  passes/read-passes.test.ts > readPasses — the offences of the two directories, each planted and named > unknown-entry: in functions/, a file with an underscore first
+ FAIL  passes/read-passes.test.ts > readPasses — the offences of the two directories, each planted and named > unknown-entry: in functions/, a file with a hyphen
+ FAIL  passes/read-passes.test.ts > readPasses — the offences of the two directories, each planted and named > unknown-entry: in functions/, a file with a schema file's name
+ FAIL  passes/read-passes.test.ts > readPasses — the offences of the two directories, each planted and named > unknown-entry: in functions/, a file with a dot inside the name
+ FAIL  passes/read-passes.test.ts > readPasses — the offences of the two directories, each planted and named > unknown-entry: in functions/, a file with no name before the ending
+ FAIL  passes/read-passes.test.ts > readPasses — the offences of the two directories, each planted and named > unknown-entry: in functions/, a file with a name of 64 characters
+ FAIL  passes/read-passes.test.ts > readPasses — the offences of the two directories, each planted and named > unknown-entry: in functions/, a file with a reference file's ending
+Error: NOT_BUILT
+ ❯ readPasses ../chain/src/passes.ts:12:9
+     10|  */
+     11| export function readPasses(_root: string): { functions?: PassFile[]; r…
+     12|   throw new Error("NOT_BUILT");
+       |         ^
+     13| }
+     14| 
+ ❯ passes/read-passes.test.ts:131:12
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[71/128]⎯
+
+ FAIL  passes/read-passes.test.ts > readPasses — the offences of the two directories, each planted and named > unknown-entry: in reference/, a file with another ending
+ FAIL  passes/read-passes.test.ts > readPasses — the offences of the two directories, each planted and named > unknown-entry: in reference/, a file with the ending in capitals
+ FAIL  passes/read-passes.test.ts > readPasses — the offences of the two directories, each planted and named > unknown-entry: in reference/, a file with a capital letter
+ FAIL  passes/read-passes.test.ts > readPasses — the offences of the two directories, each planted and named > unknown-entry: in reference/, a file with a digit first
+ FAIL  passes/read-passes.test.ts > readPasses — the offences of the two directories, each planted and named > unknown-entry: in reference/, a file with a hyphen
+ FAIL  passes/read-passes.test.ts > readPasses — the offences of the two directories, each planted and named > unknown-entry: in reference/, a file with a name of 64 characters
+ FAIL  passes/read-passes.test.ts > readPasses — the offences of the two directories, each planted and named > unknown-entry: in reference/, a file with a function file's ending
+Error: NOT_BUILT
+ ❯ readPasses ../chain/src/passes.ts:12:9
+     10|  */
+     11| export function readPasses(_root: string): { functions?: PassFile[]; r…
+     12|   throw new Error("NOT_BUILT");
+       |         ^
+     13| }
+     14| 
+ ❯ passes/read-passes.test.ts:144:12
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[72/128]⎯
+
+ FAIL  passes/read-passes.test.ts > readPasses — the offences of the two directories, each planted and named > unknown-entry: a directory, whatever its name, in either directory
+Error: NOT_BUILT
+ ❯ readPasses ../chain/src/passes.ts:12:9
+     10|  */
+     11| export function readPasses(_root: string): { functions?: PassFile[]; r…
+     12|   throw new Error("NOT_BUILT");
+       |         ^
+     13| }
+     14| 
+ ❯ passes/read-passes.test.ts:152:12
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[73/128]⎯
+
+ FAIL  passes/read-passes.test.ts > readPasses — the offences of the two directories, each planted and named > unknown-entry: a link, also one that carries a file's name and leads to a file
+Error: NOT_BUILT
+ ❯ readPasses ../chain/src/passes.ts:12:9
+     10|  */
+     11| export function readPasses(_root: string): { functions?: PassFile[]; r…
+     12|   throw new Error("NOT_BUILT");
+       |         ^
+     13| }
+     14| 
+ ❯ passes/read-passes.test.ts:165:12
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[74/128]⎯
+
+ FAIL  passes/read-passes.test.ts > readPasses — the offences of the two directories, each planted and named > empty: a function file of no bytes
+ FAIL  passes/read-passes.test.ts > readPasses — the offences of the two directories, each planted and named > empty: a function file of white space only
+Error: NOT_BUILT
+ ❯ readPasses ../chain/src/passes.ts:12:9
+     10|  */
+     11| export function readPasses(_root: string): { functions?: PassFile[]; r…
+     12|   throw new Error("NOT_BUILT");
+       |         ^
+     13| }
+     14| 
+ ❯ passes/read-passes.test.ts:176:12
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[75/128]⎯
+
+ FAIL  passes/read-passes.test.ts > readPasses — the offences of the two directories, each planted and named > unreadable: a file that is not valid UTF-8 — a byte that begins no character — in either directory
+ FAIL  passes/read-passes.test.ts > readPasses — the offences of the two directories, each planted and named > unreadable: a file that is not valid UTF-8 — a character cut off in its middle — in either directory
+Error: NOT_BUILT
+ ❯ readPasses ../chain/src/passes.ts:12:9
+     10|  */
+     11| export function readPasses(_root: string): { functions?: PassFile[]; r…
+     12|   throw new Error("NOT_BUILT");
+       |         ^
+     13| }
+     14| 
+ ❯ passes/read-passes.test.ts:185:12
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[76/128]⎯
+
+ FAIL  passes/read-passes.test.ts > readPasses — the offences of the two directories, each planted and named > unreadable: a file this user may not read, in either directory
+Error: NOT_BUILT
+ ❯ readPasses ../chain/src/passes.ts:12:9
+     10|  */
+     11| export function readPasses(_root: string): { functions?: PassFile[]; r…
+     12|   throw new Error("NOT_BUILT");
+       |         ^
+     13| }
+     14| 
+ ❯ passes/read-passes.test.ts:197:12
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[77/128]⎯
+
+ FAIL  passes/read-passes.test.ts > readPasses — the offences of the two directories, each planted and named > malformed: a reference file that is not JSON
+ FAIL  passes/read-passes.test.ts > readPasses — the offences of the two directories, each planted and named > malformed: a reference file that is not JSON: a comment in it
+ FAIL  passes/read-passes.test.ts > readPasses — the offences of the two directories, each planted and named > malformed: a reference file that is not an array: an object
+ FAIL  passes/read-passes.test.ts > readPasses — the offences of the two directories, each planted and named > malformed: a reference file that is not an array: a number
+ FAIL  passes/read-passes.test.ts > readPasses — the offences of the two directories, each planted and named > malformed: a reference file that is not an array: null
+ FAIL  passes/read-passes.test.ts > readPasses — the offences of the two directories, each planted and named > malformed: a reference file that is an element that is a number
+ FAIL  passes/read-passes.test.ts > readPasses — the offences of the two directories, each planted and named > malformed: a reference file that is an element that is a string
+ FAIL  passes/read-passes.test.ts > readPasses — the offences of the two directories, each planted and named > malformed: a reference file that is an element that is null
+ FAIL  passes/read-passes.test.ts > readPasses — the offences of the two directories, each planted and named > malformed: a reference file that is an element that is an array
+ FAIL  passes/read-passes.test.ts > readPasses — the offences of the two directories, each planted and named > malformed: a reference file that is an object of no keys
+ FAIL  passes/read-passes.test.ts > readPasses — the offences of the two directories, each planted and named > malformed: a reference file that is a key with a capital letter
+ FAIL  passes/read-passes.test.ts > readPasses — the offences of the two directories, each planted and named > malformed: a reference file that is a key with a hyphen
+ FAIL  passes/read-passes.test.ts > readPasses — the offences of the two directories, each planted and named > malformed: a reference file that is a key that begins with a digit
+ FAIL  passes/read-passes.test.ts > readPasses — the offences of the two directories, each planted and named > malformed: a reference file that is a key of no characters
+ FAIL  passes/read-passes.test.ts > readPasses — the offences of the two directories, each planted and named > malformed: a reference file that is a key of 64 characters
+ FAIL  passes/read-passes.test.ts > readPasses — the offences of the two directories, each planted and named > malformed: a reference file that is two objects, the second with a key fewer
+ FAIL  passes/read-passes.test.ts > readPasses — the offences of the two directories, each planted and named > malformed: a reference file that is two objects, the second with a key more
+ FAIL  passes/read-passes.test.ts > readPasses — the offences of the two directories, each planted and named > malformed: a reference file that is two objects with as many keys, of other names
+ FAIL  passes/read-passes.test.ts > readPasses — the offences of the two directories, each planted and named > malformed: a reference file that is a file of no bytes
+ FAIL  passes/read-passes.test.ts > readPasses — the offences of the two directories, each planted and named > malformed: a reference file that is a file of white space only
+Error: NOT_BUILT
+ ❯ readPasses ../chain/src/passes.ts:12:9
+     10|  */
+     11| export function readPasses(_root: string): { functions?: PassFile[]; r…
+     12|   throw new Error("NOT_BUILT");
+       |         ^
+     13| }
+     14| 
+ ❯ passes/read-passes.test.ts:226:12
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[78/128]⎯
+
+ FAIL  passes/read-passes.test.ts > readPasses — the offences of the two directories, each planted and named > says the offences of both directories together — by kind as SPEC §7 orders them, then by detail
+Error: NOT_BUILT
+ ❯ readPasses ../chain/src/passes.ts:12:9
+     10|  */
+     11| export function readPasses(_root: string): { functions?: PassFile[]; r…
+     12|   throw new Error("NOT_BUILT");
+       |         ^
+     13| }
+     14| 
+ ❯ passes/read-passes.test.ts:239:12
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[79/128]⎯
+
+
+ Test Files  3 failed (3)
+      Tests  128 failed | 5 passed (133)
+   Start at  13:06:08
+   Duration  35.30s (transform 154ms, setup 0ms, collect 265ms, tests 34.66s, environment 0ms, prepare 106ms)
+
