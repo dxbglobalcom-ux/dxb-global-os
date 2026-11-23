@@ -1,0 +1,25 @@
+== the first run on the real target (8faf72e6), a new instance
+INSTANCE_UP sysid=7711402512382701607 db=127.0.0.1:54522 seconds=53.8
+-- pnpm foundation:chain up
+CHAIN_GREEN applied=2 standing=2 functions=0 reference=0
+exit=0
+-- pnpm foundation:instance logins
+LOGINS_SET logins=4 sysid=7711402512382701607
+-- pnpm foundation:chain up, again
+CHAIN_GREEN applied=0 standing=2 functions=0 reference=0
+-- what stands
+os_engine login=true super=false bypassrls=false password=SCRAM-SHA-256$
+os_executor login=true super=false bypassrls=false password=SCRAM-SHA-256$
+os_intake login=true super=false bypassrls=false password=SCRAM-SHA-256$
+os_owner login=false super=false bypassrls=false password=none
+os_reader login=true super=false bypassrls=false password=SCRAM-SHA-256$
+schema os owner=os_owner
+ledger: (ledger), 0001-roles.sql, 0002-os.sql
+-rw-------
+[bench] removing containers (5) …
+[bench] removing containers (5) — 1.2 s
+[bench] removing volumes (2) …
+[bench] removing volumes (2) — 0.1 s
+[bench] removing the network dxb_foundation_bench …
+[bench] removing the network dxb_foundation_bench — 0.2 s
+INSTANCE_DOWN
