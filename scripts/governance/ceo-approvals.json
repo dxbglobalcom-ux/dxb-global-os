@@ -3321,5 +3321,13 @@
     "conditions": "He asked for it to be written ('Bunu yaz. Devir şeyine yaz', 'Her zaman bu'). It ends the earlier sentence that a finished session keeps away on until his word, for the one case of a session that handed over; a session that still holds its job keeps it.",
     "session": "Fable 5.2 session f21212a9, read first-hand, 2026-11-23.",
     "where": ".claude/skills/dxb-warm-wait/SKILL.md (step 9); .claude/skills/dxb-team3/SKILL.md §7"
+  },
+  "fable-writes-again-after-the-reset-not-permanent-2026-11-23": {
+    "date": "2026-11-23",
+    "what": "Until Fable 5.2's week resets (2026-11-28 09:00) the arrangement of the day stands: Fable 5.2 manages, the writing hands run on Opus 5.5. After the reset Fable 5.2 writes again — the important work at Fable medium and Fable high, Opus 5.5 beside it for the rest — and the arrangement is looked at again then. It is not written as a permanent rule.",
+    "verbatim": "Ya 28'ine kadar bu şekilde devam edelim de. Fable yenilince tekrar Fable'da yazar olsun yani. Sonuçta yani bilmiyorum Fable'ın şeyi yani Fable'da yazarlık devam edelim yani. Kaliteli çıktı olsun, temel iyi olsun. Yani şey de yaptırabiliriz belki. Ya bence işte hani Fable Medium ve Fable High ile yazdırabiliriz önemli işleri. Diğerlerini de Opus da işin içerisine girer yani. Şimdilik bu böyle devam edelim de yani 28'inden sonra tekrar bakarız. Şimdi bunu kalıcı olarak böyle yazamayız yani.",
+    "conditions": "His answer to the first decision of the Desktop note (fable-kotasi-onerim.md): the Opus-writes arrangement is NOT made permanent. Which pieces count as important after the reset is the lead's judgement (the door's §2 and §3 as they stand). The note's second and third decisions (managing at high; a daily share) are unanswered.",
+    "session": "Fable 5.2 session 8e9a56bf, read first-hand, 2026-11-23.",
+    "where": ".planning/STATE.md item 000; scripts/governance/ceo-approvals.json (fable-manages-opus-writes-while-fables-week-is-short-2026-11-23)"
   }
 }
