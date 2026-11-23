@@ -1,0 +1,8 @@
+rows-format 1
+row os.parts {"id": 10, "qty": 1, "code": "P-1", "kind": "bolt", "amount": 0.3333, "ratio4": 0.1, "ratio8": 0.0000001}
+row os.parts {"id": 20, "qty": 2, "code": "P-2", "kind": "nut", "amount": 12.5000, "ratio4": 0.5, "ratio8": 0.30000000000000004}
+row os.parts {"id": 30, "qty": 3, "code": "P-3", "kind": null, "amount": null, "ratio4": null, "ratio8": null}
+row os.parts {"id": 40, "qty": 4, "code": "P-4 one\\ntwo\\\\three\\rfour ş", "kind": "bolt", "amount": -7.0001, "ratio4": 1.25, "ratio8": -0.000000025}
+row os.parts {"id": 50, "qty": 5, "code": "P-5", "kind": "nut", "amount": 0.0000, "ratio4": -0.75, "ratio8": 100}
+sequence-position os.parts_id_seq 50 called t ascending t
+sequence-position os.ticket_seq 110 called t ascending t

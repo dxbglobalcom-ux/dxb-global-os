@@ -2,7 +2,8 @@
   "format": 1,
   "piece": "piece-6",
   "dirs": [
-    "foundation/tests/snapshot"
+    "foundation/tests/snapshot",
+    "foundation/tests/upgrade"
   ],
   "config": "foundation/tests/vitest.config.ts",
   "protected": {
@@ -69,6 +70,29 @@
     "foundation/tests/snapshot/fixtures/the-form.ts": "5cf804cfe2e93ab0ede7a884d08fb819af01b649",
     "foundation/tests/snapshot/on-a-fresh-instance.test.ts": "646bd3887306ce049772a9ff2cb370a200e3915f",
     "foundation/tests/snapshot/without-the-bench.test.ts": "3aa217f25fee84ba3b929e0b644dc82ad60ecc0f",
+    "foundation/tests/upgrade/cases/kept.ts": "2924689c30c6bb119b0b863eb611ed4587765907",
+    "foundation/tests/upgrade/cases/refusals.ts": "69d5e036bd310c540e15089eca7139adaa34bf8c",
+    "foundation/tests/upgrade/cases/the-texts.ts": "2ddbd0db817cb0fc2a0f7b2ece088c64ce911b87",
+    "foundation/tests/upgrade/chain-at.test.ts": "79f5d54c30b15af0ce3fdeeb08e4c85b30712e0e",
+    "foundation/tests/upgrade/clean.test.ts": "e58a68b9e4e89ae6d8623e7a4fac167140b05b5b",
+    "foundation/tests/upgrade/expected/a.rows.txt": "20169ab29a802e1de03d0bd00b849c78a9a76d99",
+    "foundation/tests/upgrade/expected/b.rows.txt": "d8aa7b78c5072c7c5920e8259fea80df7c0c238f",
+    "foundation/tests/upgrade/expected/b.snapshot.txt": "3530266f3ad27c282981548ba9740c482ba80e1a",
+    "foundation/tests/upgrade/fixtures/a-repository.ts": "140b0660c63aa046aac6725ddd653d98c582f02f",
+    "foundation/tests/upgrade/fixtures/chain-b/functions/count_parts.sql": "7da048e3251b8d4f167188638bdeb59632613bc5",
+    "foundation/tests/upgrade/fixtures/chain-b/functions/next_ticket.sql": "62d913cd560ef9dbc0f50e774aa59ad82b3d738a",
+    "foundation/tests/upgrade/fixtures/chain-b/reference/kinds.json": "654359c983b931606fa65fb0e1e2d49e4902e9f2",
+    "foundation/tests/upgrade/fixtures/chain-b/schema/0005-grade-size-notes.sql": "9ff69e47cda315c737263eefd57799dc4e6e6a43",
+    "foundation/tests/upgrade/fixtures/rows.sql": "e2b9a8233bcdd50e16d9de50c5d9b441a2002a32",
+    "foundation/tests/upgrade/fixtures/the-roots.ts": "38f14e644d6f621b7043f077b516dc5b43114b2a",
+    "foundation/tests/upgrade/fixtures/the-rows-form.ts": "6ff045f60d8662aa57f0454d1e91da9952f2e0ca",
+    "foundation/tests/upgrade/fixtures/the-rows-given.ts": "4dec541124a03736e3e7329d7aa215cb645385c7",
+    "foundation/tests/upgrade/fixtures/the-rows.ts": "9697bd9194148028963f1c0163ff60f16e4f3b53",
+    "foundation/tests/upgrade/fixtures/variants/0005-not-null-no-default.sql": "db272aadc5e4aa25971298c3e3ee94c4918d8d31",
+    "foundation/tests/upgrade/fixtures/variants/0006-rows-decide.sql": "4d233b0b291e44c37f49441b219868a8dcc1653c",
+    "foundation/tests/upgrade/real/from.txt": "60a2f478d165c4c18197521b6c5ce473f6116a7f",
+    "foundation/tests/upgrade/upgraded.test.ts": "9cc5893ace3e99734ce51c5f981cb1b03ea93c77",
+    "foundation/tests/upgrade/without-the-bench.test.ts": "19ab94bc574bbc8656ce095ac8cc2c2594a83354",
     "foundation/tests/vitest.config.ts": "c95853266badd11995fc806996a5df94ee4f1198",
     "foundation/tsconfig.json": "4eb3b5c0b63913b217384ba6edb5cf33b78c4f9e",
     "pnpm-lock.yaml": "fda8eb167c85bc00d0c176c2ccd300383968a79c",
@@ -937,6 +961,870 @@
         "SPEC §11.1 rows 7 and 9 without the bench: a byte-order mark and bytes that are not UTF-8 are malformations, a line held twice is not; a carriage return does not split a line"
       ],
       "name": "no instance stands while these cases run",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/upgrade/chain-at.test.ts",
+      "suite": [
+        "A.4 chainAt refuses, each by its reason"
+      ],
+      "name": "a gitlink under functions/ → not-a-file",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/upgrade/chain-at.test.ts",
+      "suite": [
+        "A.4 chainAt refuses, each by its reason"
+      ],
+      "name": "a link outside the three directories is no refusal: the middle commit, answered above, holds two",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/upgrade/chain-at.test.ts",
+      "suite": [
+        "A.4 chainAt refuses, each by its reason"
+      ],
+      "name": "a link under schema/ → not-a-file",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/upgrade/chain-at.test.ts",
+      "suite": [
+        "A.4 chainAt refuses, each by its reason"
+      ],
+      "name": "a name no ref carries → unknown-revision",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/upgrade/chain-at.test.ts",
+      "suite": [
+        "A.4 chainAt refuses, each by its reason"
+      ],
+      "name": "a refused call (not-a-file, at gitlink) writes nothing: a missing into is still missing, an empty into still empty",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/upgrade/chain-at.test.ts",
+      "suite": [
+        "A.4 chainAt refuses, each by its reason"
+      ],
+      "name": "a refused call (not-a-file, at link) writes nothing: a missing into is still missing, an empty into still empty",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/upgrade/chain-at.test.ts",
+      "suite": [
+        "A.4 chainAt refuses, each by its reason"
+      ],
+      "name": "a refused call (unknown-revision, at no-such-branch) writes nothing: a missing into is still missing, an empty into still empty",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/upgrade/chain-at.test.ts",
+      "suite": [
+        "A.4 chainAt refuses, each by its reason"
+      ],
+      "name": "a revision past the first commit → unknown-revision",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/upgrade/chain-at.test.ts",
+      "suite": [
+        "A.4 chainAt refuses, each by its reason"
+      ],
+      "name": "a revision that begins with -: --all → unknown-revision",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/upgrade/chain-at.test.ts",
+      "suite": [
+        "A.4 chainAt refuses, each by its reason"
+      ],
+      "name": "a revision that begins with -: -h → unknown-revision",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/upgrade/chain-at.test.ts",
+      "suite": [
+        "A.4 chainAt refuses, each by its reason"
+      ],
+      "name": "a revision that begins with -: an id behind a dash → unknown-revision",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/upgrade/chain-at.test.ts",
+      "suite": [
+        "A.4 chainAt refuses, each by its reason"
+      ],
+      "name": "a revision that names a tree, not a commit → unknown-revision",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/upgrade/chain-at.test.ts",
+      "suite": [
+        "A.4 chainAt refuses, each by its reason"
+      ],
+      "name": "an id no object carries → unknown-revision",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/upgrade/chain-at.test.ts",
+      "suite": [
+        "A.4 chainAt refuses, each by its reason"
+      ],
+      "name": "an into that holds a file → into-not-empty, and the file is as it was",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/upgrade/chain-at.test.ts",
+      "suite": [
+        "A.4 chainAt refuses, each by its reason"
+      ],
+      "name": "an into that holds only an empty directory → into-not-empty",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/upgrade/chain-at.test.ts",
+      "suite": [
+        "A.4 chainAt refuses, each by its reason"
+      ],
+      "name": "an into that is a regular file → into-not-empty, and its bytes are as before",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/upgrade/chain-at.test.ts",
+      "suite": [
+        "A.4 chainAt — the chain as a commit holds it"
+      ],
+      "name": "a branch name, a short id and a full id resolve to the same commit and the same files",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/upgrade/chain-at.test.ts",
+      "suite": [
+        "A.4 chainAt — the chain as a commit holds it"
+      ],
+      "name": "an into that stands empty is written into",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/upgrade/chain-at.test.ts",
+      "suite": [
+        "A.4 chainAt — the chain as a commit holds it"
+      ],
+      "name": "the first commit holds no chain: files 0, and no directory is made in an empty into",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/upgrade/chain-at.test.ts",
+      "suite": [
+        "A.4 chainAt — the chain as a commit holds it"
+      ],
+      "name": "the first commit with into missing: files 0, and into is not made (the lead's reading)",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/upgrade/chain-at.test.ts",
+      "suite": [
+        "A.4 chainAt — the chain as a commit holds it"
+      ],
+      "name": "the fixture is what the case says: three commits on main, the working tree and the index ahead of the last",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/upgrade/chain-at.test.ts",
+      "suite": [
+        "A.4 chainAt — the chain as a commit holds it"
+      ],
+      "name": "the last commit, by HEAD and by main: its files — not the working tree's change, not the index's, not the untracked file",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/upgrade/chain-at.test.ts",
+      "suite": [
+        "A.4 chainAt — the chain as a commit holds it"
+      ],
+      "name": "the middle commit: every file of schema/, functions/ and reference/ at its path below db/, byte for byte — the CRLF, the file without a final newline, the bytes that are not UTF-8, the empty and the nested file among them — and none of db/'s other directories",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/upgrade/chain-at.test.ts",
+      "suite": [
+        "A.4 the repository is not written to"
+      ],
+      "name": "after every call above: HEAD, the index, every file of .git and of the working tree as before",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/upgrade/clean.test.ts",
+      "suite": [
+        "piece 6b — B on a fresh instance: clean"
+      ],
+      "name": "B from nothing: chain up --root <B> → CHAIN_GREEN applied=5 standing=5 functions=3 reference=1; snapshot --check expected/b.snapshot.txt → SNAPSHOT_EQUAL",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/upgrade/clean.test.ts",
+      "suite": [
+        "piece 6b — B on a fresh instance: clean"
+      ],
+      "name": "C on the clean instance: chain up --root <C> → CHAIN_GREEN applied=1; the check is red by 0006's ledger line alone — no index; rows as before",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/upgrade/clean.test.ts",
+      "suite": [
+        "piece 6b — B on a fresh instance: clean"
+      ],
+      "name": "down → INSTANCE_DOWN",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/upgrade/clean.test.ts",
+      "suite": [
+        "piece 6b — B on a fresh instance: clean"
+      ],
+      "name": "fresh makes an instance: INSTANCE_UP, listed",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/upgrade/clean.test.ts",
+      "suite": [
+        "piece 6b — B on a fresh instance: clean"
+      ],
+      "name": "rows holds the seeded row and no row of os.parts: the text written here, printed by the command and answered by the library",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/upgrade/upgraded.test.ts",
+      "suite": [
+        "piece 6b — built at A, given rows, upgraded: on a second fresh instance, in order"
+      ],
+      "name": "C.1 chain up --root <A> → CHAIN_GREEN; equal to 6a's fixture text; the rows given — the text still equal; rows is expected/a.rows.txt, byte for byte",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/upgrade/upgraded.test.ts",
+      "suite": [
+        "piece 6b — built at A, given rows, upgraded: on a second fresh instance, in order"
+      ],
+      "name": "C.1 read twice by the library, and once through a connection whose own settings are hostile: the same bytes",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/upgrade/upgraded.test.ts",
+      "suite": [
+        "piece 6b — built at A, given rows, upgraded: on a second fresh instance, in order"
+      ],
+      "name": "C.2 an applied file edited: chain up --root <edited> → CHAIN_RED, 0003-inside.sql changed; the snapshot still A's; rows --kept a.rows.txt → ROWS_KEPT",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/upgrade/upgraded.test.ts",
+      "suite": [
+        "piece 6b — built at A, given rows, upgraded: on a second fresh instance, in order"
+      ],
+      "name": "C.3 a change a populated table refuses: chain up --root <refused-when-populated> is red at 0005; the snapshot still A's — no ledger row for it; the rows kept",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/upgrade/upgraded.test.ts",
+      "suite": [
+        "piece 6b — built at A, given rows, upgraded: on a second fresh instance, in order"
+      ],
+      "name": "C.4 upgraded equals clean: chain up --root <B> → CHAIN_GREEN; SNAPSHOT_EQUAL to b.snapshot.txt; rows is b.rows.txt, byte for byte; ROWS_KEPT against a.rows.txt and against what C.1 read",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/upgrade/upgraded.test.ts",
+      "suite": [
+        "piece 6b — built at A, given rows, upgraded: on a second fresh instance, in order"
+      ],
+      "name": "C.5 chain up --root <C> → CHAIN_GREEN; the check is red by exactly 0006's ledger line and the index; rows --kept b.rows.txt → ROWS_RED, its difference whole",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/upgrade/upgraded.test.ts",
+      "suite": [
+        "piece 6b — built at A, given rows, upgraded: on a second fresh instance, in order"
+      ],
+      "name": "down → INSTANCE_DOWN",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/upgrade/upgraded.test.ts",
+      "suite": [
+        "piece 6b — built at A, given rows, upgraded: on a second fresh instance, in order"
+      ],
+      "name": "fresh makes an instance: INSTANCE_UP, listed",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/upgrade/without-the-bench.test.ts",
+      "suite": [
+        "A.1 keptOf — equal is printed the same (the lead's reading of §5)"
+      ],
+      "name": "a number's text changed with its value unchanged — 12.5000 to 12.5, 1.0 to 1, 1e-7 to 0.0000001 — loses the row, `-` and `+` printed",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/upgrade/without-the-bench.test.ts",
+      "suite": [
+        "A.1 keptOf — equal is printed the same (the lead's reading of §5)"
+      ],
+      "name": "a row's keys are a set: the same keys in another order are kept, with a key added too",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/upgrade/without-the-bench.test.ts",
+      "suite": [
+        "A.1 keptOf — equal is printed the same (the lead's reading of §5)"
+      ],
+      "name": "a string holding \\\", \\\\ and \\n escapes and an é is equal to itself",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/upgrade/without-the-bench.test.ts",
+      "suite": [
+        "A.1 keptOf — equal is printed the same (the lead's reading of §5)"
+      ],
+      "name": "a string that differs only inside an escape — \\n becomes \\t — loses its row",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/upgrade/without-the-bench.test.ts",
+      "suite": [
+        "A.1 keptOf — equal is printed the same (the lead's reading of §5)"
+      ],
+      "name": "after holds the …0001 row twice and no …0002: one row lost — a value rounded through a double would have kept it",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/upgrade/without-the-bench.test.ts",
+      "suite": [
+        "A.1 keptOf — equal is printed the same (the lead's reading of §5)"
+      ],
+      "name": "two rows that differ only in a digit a double cannot hold, unchanged while a column is added: both kept",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/upgrade/without-the-bench.test.ts",
+      "suite": [
+        "A.1 keptOf — rows"
+      ],
+      "name": "a column added costs nothing: every key of before is held, with its value",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/upgrade/without-the-bench.test.ts",
+      "suite": [
+        "A.1 keptOf — rows"
+      ],
+      "name": "a column gone loses every row of its table, each beside the row of after that answered for none",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/upgrade/without-the-bench.test.ts",
+      "suite": [
+        "A.1 keptOf — rows"
+      ],
+      "name": "a column retyped — its value's JSON changed — loses the rows whose value changed",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/upgrade/without-the-bench.test.ts",
+      "suite": [
+        "A.1 keptOf — rows"
+      ],
+      "name": "a row added, and a table added, cost nothing",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/upgrade/without-the-bench.test.ts",
+      "suite": [
+        "A.1 keptOf — rows"
+      ],
+      "name": "a row deleted: its `-` alone — every row left in its table answered for one",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/upgrade/without-the-bench.test.ts",
+      "suite": [
+        "A.1 keptOf — rows"
+      ],
+      "name": "a table gone — or emptied, or renamed — loses every row of it; the rows of another table are not named",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/upgrade/without-the-bench.test.ts",
+      "suite": [
+        "A.1 keptOf — rows"
+      ],
+      "name": "a value changed: one `-` for the row before, one `+` for what it became; the rows that answered are not named",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/upgrade/without-the-bench.test.ts",
+      "suite": [
+        "A.1 keptOf — rows"
+      ],
+      "name": "a value inside a nested JSON value that gained a key is a changed value: only a row's own keys may be added",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/upgrade/without-the-bench.test.ts",
+      "suite": [
+        "A.1 keptOf — rows"
+      ],
+      "name": "equal texts: nothing lost, nothing back, the counts of before",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/upgrade/without-the-bench.test.ts",
+      "suite": [
+        "A.1 keptOf — rows"
+      ],
+      "name": "one row of after answers for one row of before at most: two rows of before that it would each match lose one",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/upgrade/without-the-bench.test.ts",
+      "suite": [
+        "A.1 keptOf — rows"
+      ],
+      "name": "rows are a multiset: two equal rows against one lose one; two against two lose none",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/upgrade/without-the-bench.test.ts",
+      "suite": [
+        "A.1 keptOf — rows"
+      ],
+      "name": "the first line alone against the first line alone: zero rows, zero sequences",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/upgrade/without-the-bench.test.ts",
+      "suite": [
+        "A.1 keptOf — sequences"
+      ],
+      "name": "`called` gone back from t to f at the same value; sorted by the line after its sign, so the `+` comes first",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/upgrade/without-the-bench.test.ts",
+      "suite": [
+        "A.1 keptOf — sequences"
+      ],
+      "name": "a sequence gone: its line of before alone",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/upgrade/without-the-bench.test.ts",
+      "suite": [
+        "A.1 keptOf — sequences"
+      ],
+      "name": "behind, ascending: its line of before and its line of after",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/upgrade/without-the-bench.test.ts",
+      "suite": [
+        "A.1 keptOf — sequences"
+      ],
+      "name": "behind, descending: a higher last_value",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/upgrade/without-the-bench.test.ts",
+      "suite": [
+        "A.1 keptOf — sequences"
+      ],
+      "name": "further on is kept: ascending higher, descending lower, and `called` from f to t at the same value",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/upgrade/without-the-bench.test.ts",
+      "suite": [
+        "A.1 keptOf — the lists' order and the counts"
+      ],
+      "name": "lost across tables and back apart, each sorted by the line after its sign — `x\": 0` before `x\": 2`, `os.p 6` before `os.p 7` before `os.q`; the rows of a table that lost none are not named; the counts are the lines of before",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/upgrade/without-the-bench.test.ts",
+      "suite": [
+        "A.1 keptOf — the lists' order and the counts"
+      ],
+      "name": "sorted by UTF-8 bytes, not by UTF-16 code units: U+FF01 before U+1F600",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/upgrade/without-the-bench.test.ts",
+      "suite": [
+        "A.2 rows --kept refuses before any connection"
+      ],
+      "name": "a byte that is never UTF-8 (0xff) → ROWS_REFUSED before-malformed, exit 2",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/upgrade/without-the-bench.test.ts",
+      "suite": [
+        "A.2 rows --kept refuses before any connection"
+      ],
+      "name": "a byte-order mark before the first line → ROWS_REFUSED before-malformed, exit 2",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/upgrade/without-the-bench.test.ts",
+      "suite": [
+        "A.2 rows --kept refuses before any connection"
+      ],
+      "name": "a carriage return ending each line → ROWS_REFUSED before-malformed, exit 2",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/upgrade/without-the-bench.test.ts",
+      "suite": [
+        "A.2 rows --kept refuses before any connection"
+      ],
+      "name": "a carriage return inside a line → ROWS_REFUSED before-malformed, exit 2",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/upgrade/without-the-bench.test.ts",
+      "suite": [
+        "A.2 rows --kept refuses before any connection"
+      ],
+      "name": "a character cut short (0xe2 0x82) → ROWS_REFUSED before-malformed, exit 2",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/upgrade/without-the-bench.test.ts",
+      "suite": [
+        "A.2 rows --kept refuses before any connection"
+      ],
+      "name": "a continuation byte with nothing before it (0x80) → ROWS_REFUSED before-malformed, exit 2",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/upgrade/without-the-bench.test.ts",
+      "suite": [
+        "A.2 rows --kept refuses before any connection"
+      ],
+      "name": "a directory → ROWS_REFUSED no-before, exit 2",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/upgrade/without-the-bench.test.ts",
+      "suite": [
+        "A.2 rows --kept refuses before any connection"
+      ],
+      "name": "a file that cannot be read → ROWS_REFUSED no-before, exit 2",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/upgrade/without-the-bench.test.ts",
+      "suite": [
+        "A.2 rows --kept refuses before any connection"
+      ],
+      "name": "a file that is absent → ROWS_REFUSED no-before, exit 2",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/upgrade/without-the-bench.test.ts",
+      "suite": [
+        "A.2 rows --kept refuses before any connection"
+      ],
+      "name": "a first line missing → ROWS_REFUSED before-malformed, exit 2",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/upgrade/without-the-bench.test.ts",
+      "suite": [
+        "A.2 rows --kept refuses before any connection"
+      ],
+      "name": "a first line that is not rows-format 1 → ROWS_REFUSED before-malformed, exit 2",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/upgrade/without-the-bench.test.ts",
+      "suite": [
+        "A.2 rows --kept refuses before any connection"
+      ],
+      "name": "a line out of order → ROWS_REFUSED before-malformed, exit 2",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/upgrade/without-the-bench.test.ts",
+      "suite": [
+        "A.2 rows --kept refuses before any connection"
+      ],
+      "name": "a row held twice, side by side, is no malformation: answered as the file holding it once is, by the refused connection",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/upgrade/without-the-bench.test.ts",
+      "suite": [
+        "A.2 rows --kept refuses before any connection"
+      ],
+      "name": "a snapshot's text, not a rows' text → ROWS_REFUSED before-malformed, exit 2",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/upgrade/without-the-bench.test.ts",
+      "suite": [
+        "A.2 rows --kept refuses before any connection"
+      ],
+      "name": "an empty last line → ROWS_REFUSED before-malformed, exit 2",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/upgrade/without-the-bench.test.ts",
+      "suite": [
+        "A.2 rows --kept refuses before any connection"
+      ],
+      "name": "an empty line → ROWS_REFUSED before-malformed, exit 2",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/upgrade/without-the-bench.test.ts",
+      "suite": [
+        "A.2 rows --kept refuses before any connection"
+      ],
+      "name": "an overlong spelling of '/' (0xc0 0xaf) → ROWS_REFUSED before-malformed, exit 2",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/upgrade/without-the-bench.test.ts",
+      "suite": [
+        "A.2 rows --kept refuses before any connection"
+      ],
+      "name": "no bytes at all → ROWS_REFUSED before-malformed, exit 2",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/upgrade/without-the-bench.test.ts",
+      "suite": [
+        "A.2 rows --kept refuses before any connection"
+      ],
+      "name": "no final newline → ROWS_REFUSED before-malformed, exit 2",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/upgrade/without-the-bench.test.ts",
+      "suite": [
+        "A.2 rows --kept refuses before any connection"
+      ],
+      "name": "no instance stands while these cases run",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/upgrade/without-the-bench.test.ts",
+      "suite": [
+        "A.2 rows --kept refuses before any connection"
+      ],
+      "name": "out of order by UTF-8 bytes, though in order by UTF-16 code units → ROWS_REFUSED before-malformed, exit 2",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/upgrade/without-the-bench.test.ts",
+      "suite": [
+        "A.2 rows --kept refuses before any connection"
+      ],
+      "name": "the absent file is still absent after the refusal: the command never writes a file",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/upgrade/without-the-bench.test.ts",
+      "suite": [
+        "A.2 rows --kept refuses before any connection"
+      ],
+      "name": "the first line alone is a rows' text (a database with no covered schema): no refusal, the refused connection",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/upgrade/without-the-bench.test.ts",
+      "suite": [
+        "A.2 the usage lines"
+      ],
+      "name": "--kept a, none of up, snapshot or rows → piece 3's usage line unchanged, exit 2",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/upgrade/without-the-bench.test.ts",
+      "suite": [
+        "A.2 the usage lines"
+      ],
+      "name": "Rows, none of up, snapshot or rows → piece 3's usage line unchanged, exit 2",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/upgrade/without-the-bench.test.ts",
+      "suite": [
+        "A.2 the usage lines"
+      ],
+      "name": "kept, none of up, snapshot or rows → piece 3's usage line unchanged, exit 2",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/upgrade/without-the-bench.test.ts",
+      "suite": [
+        "A.2 the usage lines"
+      ],
+      "name": "no word, none of up, snapshot or rows → piece 3's usage line unchanged, exit 2",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/upgrade/without-the-bench.test.ts",
+      "suite": [
+        "A.2 the usage lines"
+      ],
+      "name": "row, none of up, snapshot or rows → piece 3's usage line unchanged, exit 2",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/upgrade/without-the-bench.test.ts",
+      "suite": [
+        "A.2 the usage lines"
+      ],
+      "name": "rows --check a → its own usage line, exit 2",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/upgrade/without-the-bench.test.ts",
+      "suite": [
+        "A.2 the usage lines"
+      ],
+      "name": "rows --kept --kept → its own usage line, exit 2",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/upgrade/without-the-bench.test.ts",
+      "suite": [
+        "A.2 the usage lines"
+      ],
+      "name": "rows --kept a --kept b → its own usage line, exit 2",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/upgrade/without-the-bench.test.ts",
+      "suite": [
+        "A.2 the usage lines"
+      ],
+      "name": "rows --kept a b → its own usage line, exit 2",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/upgrade/without-the-bench.test.ts",
+      "suite": [
+        "A.2 the usage lines"
+      ],
+      "name": "rows --kept → its own usage line, exit 2",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/upgrade/without-the-bench.test.ts",
+      "suite": [
+        "A.2 the usage lines"
+      ],
+      "name": "rows --root a → its own usage line, exit 2",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/upgrade/without-the-bench.test.ts",
+      "suite": [
+        "A.2 the usage lines"
+      ],
+      "name": "rows extra → its own usage line, exit 2",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/upgrade/without-the-bench.test.ts",
+      "suite": [
+        "A.2 the usage lines"
+      ],
+      "name": "snapshot --kept a → snapshot's usage line, unchanged, exit 2",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/upgrade/without-the-bench.test.ts",
+      "suite": [
+        "A.2 the usage lines"
+      ],
+      "name": "snapshot extra → snapshot's usage line, unchanged, exit 2",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/upgrade/without-the-bench.test.ts",
+      "suite": [
+        "A.3 b.snapshot.txt: 6a's form, and 6a's fixture text with exactly the lines B's files cause"
+      ],
+      "name": "B's root and C's, assembled, read with no offence: five and six schema files, A's three function files with B's two, B's reference file",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/upgrade/without-the-bench.test.ts",
+      "suite": [
+        "A.3 b.snapshot.txt: 6a's form, and 6a's fixture text with exactly the lines B's files cause"
+      ],
+      "name": "against 6a's committed fixture text: out the lines A's next_ticket, count_parts body and two vocabulary rows made; in the lines B's files make",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/upgrade/without-the-bench.test.ts",
+      "suite": [
+        "A.3 b.snapshot.txt: 6a's form, and 6a's fixture text with exactly the lines B's files cause"
+      ],
+      "name": "its ledger carries each schema file's SHA-256, as the runner writes it: the real two, the fixture's two, then B's 0005",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/upgrade/without-the-bench.test.ts",
+      "suite": [
+        "A.3 b.snapshot.txt: 6a's form, and 6a's fixture text with exactly the lines B's files cause"
+      ],
+      "name": "the first line, sorted by bytes, no \\r, no empty line, no double space outside a last field, a final newline, every line of 6a §4.3's kinds and shapes",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/upgrade/without-the-bench.test.ts",
+      "suite": [
+        "A.3 real/from.txt (SPEC §7)"
+      ],
+      "name": "is forty lower-case hex digits and one newline",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/upgrade/without-the-bench.test.ts",
+      "suite": [
+        "A.3 the rows' texts obey SPEC §4's form and hold only its two kinds of line"
+      ],
+      "name": "a.rows.txt holds the five rows given and the two sequences; b.rows.txt the same five, the seeded row and the same two",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/upgrade/without-the-bench.test.ts",
+      "suite": [
+        "A.3 the rows' texts obey SPEC §4's form and hold only its two kinds of line"
+      ],
+      "name": "expected/a.rows.txt: the first line, sorted by bytes, no \\r, no empty line, a final newline, only row and sequence-position lines of their shapes",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/upgrade/without-the-bench.test.ts",
+      "suite": [
+        "A.3 the rows' texts obey SPEC §4's form and hold only its two kinds of line"
+      ],
+      "name": "expected/b.rows.txt: the first line, sorted by bytes, no \\r, no empty line, a final newline, only row and sequence-position lines of their shapes",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/upgrade/without-the-bench.test.ts",
+      "suite": [
+        "A.3 the rows' texts obey SPEC §4's form and hold only its two kinds of line"
+      ],
+      "name": "the judge is seen to work first: it finds each offence planted in a text that is otherwise in the form",
       "count": 1
     }
   ]
