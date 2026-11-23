@@ -39,13 +39,14 @@
     "foundation/tests/bench/removal-authority.test.ts": "f66cd32f27121c469893a99705a813decaaa5bdc",
     "foundation/tests/bench/state-directory.test.ts": "e9d082ff103162fb722922efe08b3644b10291d8",
     "foundation/tests/bench/status-of.test.ts": "a68697f6ab4cf3e17b10d7a5cd63b84416137e55",
-    "foundation/tests/package.json": "d7936acddc4eb333e59cd4347233ae76fb887f6f",
+    "foundation/tests/package.json": "bd4e193ba789b2552c5d2cc6d620ace556ae951e",
     "foundation/tests/vitest.config.ts": "c95853266badd11995fc806996a5df94ee4f1198",
-    "foundation/tsconfig.json": "5a0f1572a4b87e7daa184eb8bac42fa632f95eaa",
-    "pnpm-lock.yaml": "27cd0e6ca5a4f48f40ef0bc689a4d81669390148",
+    "foundation/tsconfig.json": "4eb3b5c0b63913b217384ba6edb5cf33b78c4f9e",
+    "pnpm-lock.yaml": "fda8eb167c85bc00d0c176c2ccd300383968a79c",
     "pnpm-workspace.yaml": "edcaf78a424a38a729a461300023ad90bf6bf945"
   },
   "scripts": {
+    "foundation:chain": "node foundation/chain/src/cli.ts",
     "foundation:instance": "node foundation/bench/src/cli.ts",
     "foundation:lock": "node foundation/lock/src/cli.ts lock",
     "foundation:test": "vitest run --config foundation/tests/vitest.config.ts",

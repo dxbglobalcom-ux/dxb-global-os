@@ -37,13 +37,14 @@
     "foundation/tests/lock/verify-judge.test.ts": "a594b2a26a3d122ce40271d56262c15a2b4464c3",
     "foundation/tests/lock/verify-run.test.ts": "f0e6a795fce1537ef037ec8e223dc63a97f21ea9",
     "foundation/tests/lock/verify-structure.test.ts": "94a56e9f78c3cb478475d7cbf9c3d10c201465d8",
-    "foundation/tests/package.json": "d7936acddc4eb333e59cd4347233ae76fb887f6f",
+    "foundation/tests/package.json": "bd4e193ba789b2552c5d2cc6d620ace556ae951e",
     "foundation/tests/vitest.config.ts": "c95853266badd11995fc806996a5df94ee4f1198",
-    "foundation/tsconfig.json": "5a0f1572a4b87e7daa184eb8bac42fa632f95eaa",
-    "pnpm-lock.yaml": "27cd0e6ca5a4f48f40ef0bc689a4d81669390148",
+    "foundation/tsconfig.json": "4eb3b5c0b63913b217384ba6edb5cf33b78c4f9e",
+    "pnpm-lock.yaml": "fda8eb167c85bc00d0c176c2ccd300383968a79c",
     "pnpm-workspace.yaml": "edcaf78a424a38a729a461300023ad90bf6bf945"
   },
   "scripts": {
+    "foundation:chain": "node foundation/chain/src/cli.ts",
     "foundation:instance": "node foundation/bench/src/cli.ts",
     "foundation:lock": "node foundation/lock/src/cli.ts lock",
     "foundation:test": "vitest run --config foundation/tests/vitest.config.ts",
