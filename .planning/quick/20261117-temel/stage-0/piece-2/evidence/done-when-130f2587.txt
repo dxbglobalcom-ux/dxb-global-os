@@ -1,0 +1,16 @@
+== ls ~/.cache/dxb/foundation-verify
+== foundation containers / volumes
+0
+0
+== the two other stacks, containers up
+5
+5
+== pnpm install --frozen-lockfile
+Already up to date
+Done in 218ms using pnpm v11.10.0
+exit=0
+== foundation:typecheck
+$ tsc -p foundation/tsconfig.json
+== old pnpm typecheck
+exit=0
+== git status, tracked

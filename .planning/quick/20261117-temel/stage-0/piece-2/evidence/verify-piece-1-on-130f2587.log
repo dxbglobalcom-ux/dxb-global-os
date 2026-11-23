@@ -1,0 +1,67 @@
+$ node foundation/lock/src/cli.ts verify piece-1 --rev HEAD
+JUDGE extracted lock=130f2587678dca136912388ef424f3b82c8ca223
+Scope: all 19 workspace projects
+✓ Lockfile passes supply-chain policies (verified 2h ago)
+Lockfile is up to date, resolution step is skipped
+Progress: resolved 1, reused 0, downloaded 0, added 0
+Packages: +396
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Progress: resolved 396, reused 396, downloaded 0, added 396, done
+[WARN] Failed to create bin at /home/dxb/.cache/dxb/foundation-verify/run-IEgkgG/candidate/node_modules/.bin/dxb. ENOENT: no such file or directory, open '/home/dxb/.cache/dxb/foundation-verify/run-IEgkgG/candidate/tools/dxb-cli/dist/index.js'
+[WARN] Failed to create bin at /home/dxb/.cache/dxb/foundation-verify/run-IEgkgG/candidate/node_modules/.bin/video-learn. ENOENT: no such file or directory, open '/home/dxb/.cache/dxb/foundation-verify/run-IEgkgG/candidate/tools/video-learn/dist/cli.js'
+
+dependencies:
++ @playwright/mcp 0.0.78
++ @upstash/context7-mcp 3.2.4
+
+devDependencies:
++ @dxb/cli 0.0.0 <- tools/dxb-cli
++ @dxb/video-learn 0.0.0 <- tools/video-learn
++ @modelcontextprotocol/sdk 1.29.0
++ @playwright/test 1.61.1
++ @testing-library/react 16.3.2
++ @types/node 22.20.0
++ jsdom 29.1.1
++ kysely 0.29.3
++ react 19.2.7
++ react-dom 19.2.7
++ supabase 2.109.0
++ typescript 6.0.3
++ vitest 3.2.6
+
+Done in 746ms using pnpm v11.10.0
+
+ RUN  v3.2.6 /home/dxb/.cache/dxb/foundation-verify/run-IEgkgG/candidate/foundation/tests
+
+ ✓ bench/instance.test.ts (17 tests) 61559ms
+   ✓ the instance — made, looked at and destroyed, in order > fresh makes an instance and says INSTANCE_UP with the cluster's identifier and the loopback address  54916ms
+   ✓ the instance — made, looked at and destroyed, in order > guarded refuses a throwaway database made in the same cluster  1335ms
+   ✓ the instance — made, looked at and destroyed, in order > while another holds the host lock the command says LOCK_REFUSED and exits 2 — with DXB_FOUNDATION_LOCK_WAIT, after waiting that long  2160ms
+   ✓ the instance — made, looked at and destroyed, in order > down says INSTANCE_DOWN and leaves no container, volume, network, listener or record  1693ms
+ ✓ bench/removal-authority.test.ts (27 tests) 5ms
+ ✓ bench/no-old-address.test.ts (28 tests) 22ms
+ ✓ bench/guard-connection.test.ts (24 tests) 8ms
+ ✓ bench/pure-decisions.test.ts (21 tests) 9ms
+ ✓ bench/guard-decision.test.ts (20 tests) 577ms
+ ✓ bench/host-lock.test.ts (12 tests) 2897ms
+   ✓ the host lock — one holder on the machine, held by the kernel > with waitSeconds, acquires after the first lets go  1572ms
+   ✓ the host lock — one holder on the machine, held by the kernel > with waitSeconds, is refused once that time has passed and the holder has not let go  1063ms
+ ✓ bench/instance-unfinished.test.ts (6 tests) 14763ms
+   ✓ the instance — a make that does not finish, and a volume no record explains, in order > up killed with SIGKILL once a container stands: at once another up says LOCK_REFUSED, exit 2 — the start it left still holds the kernel's lock  865ms
+   ✓ the instance — a make that does not finish, and a volume no record explains, in order > down, waiting for the lock, removes what the killed make left: INSTANCE_DOWN, exit 0, and nothing stands  11541ms
+   ✓ the instance — a make that does not finish, and a volume no record explains, in order > up sent SIGTERM once a container stands stops its start, removes what it made and exits 143 — nothing stands, with no command after it  1421ms
+   ✓ the instance — a make that does not finish, and a volume no record explains, in order > a labelled volume that no record explains: status INSTANCE_FOREIGN 5, up INSTANCE_STANDS 3, down REMOVAL_REFUSED 4 — and the volume is untouched  483ms
+ ✓ bench/status-of.test.ts (10 tests) 3ms
+ ✓ bench/refused-against-the-old-record.test.ts (6 tests) 3ms
+ ✓ bench/state-directory.test.ts (6 tests) 269ms
+
+ Test Files  11 passed (11)
+      Tests  177 passed (177)
+   Start at  04:03:01
+   Duration  81.54s (transform 114ms, setup 0ms, collect 318ms, tests 80.11s, environment 1ms, prepare 339ms)
+
+LOCK_GREEN piece=piece-1 lock=130f2587678dca136912388ef424f3b82c8ca223 candidate=72fb35bd8101b31ab57064675705490ee1ff6210 cases=177
+
+real	1m24.320s
+user	0m14.312s
+sys	0m9.357s

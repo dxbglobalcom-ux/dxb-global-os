@@ -79,6 +79,23 @@ function removeWorkDirectory(directory: string): void {
 // Whether the work directories found standing were said: once in a command, before its first one is made.
 let standingWereSaid = false;
 
+/** The file a run leaves in its work directory to say which process works there. */
+const ownerIn = (work: string): string => join(work, "owner");
+
+/**
+ * True when the process that made `work` still runs: another command at work
+ * now — a verify beside this one, or the one whose tests started this one —
+ * and not a run that died. A directory that names no owner is one that died.
+ */
+function isAtWork(work: string): boolean {
+  try {
+    process.kill(Number(readFileSync(ownerIn(work), "utf8")), 0);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
 /**
  * SPEC §10 item 9: a `NOTE stale-work-directory <path>` for every `run-*`
  * directory that stands in `place` before this command made one — left by a
@@ -89,7 +106,8 @@ function sayWorkDirectoriesFoundStanding(place: string): void {
   if (standingWereSaid) return;
   standingWereSaid = true;
   for (const entry of readdirSync(place, { withFileTypes: true })) {
-    if (entry.isDirectory() && entry.name.startsWith("run-")) console.log(`NOTE stale-work-directory ${join(place, entry.name)}`);
+    const standing = join(place, entry.name);
+    if (entry.isDirectory() && entry.name.startsWith("run-") && !isAtWork(standing)) console.log(`NOTE stale-work-directory ${standing}`);
   }
 }
 
@@ -104,6 +122,7 @@ export async function inAWorkDirectory<T>(keep: boolean, work: (directory: strin
   sayWorkDirectoriesFoundStanding(place);
   const directory = mkdtempSync(join(place, "run-"));
   madeHere.add(directory);
+  writeFileSync(ownerIn(directory), String(process.pid));
   if (keep) console.log(`WORK_KEPT ${directory}`);
   try {
     return await work(directory);

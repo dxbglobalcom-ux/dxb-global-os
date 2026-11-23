@@ -1,0 +1,147 @@
+$ node foundation/lock/src/cli.ts lock piece-2
+Scope: all 19 workspace projects
+✓ Lockfile passes supply-chain policies (verified 2h ago)
+Lockfile is up to date, resolution step is skipped
+Progress: resolved 1, reused 0, downloaded 0, added 0
+Packages: +396
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Progress: resolved 396, reused 396, downloaded 0, added 396, done
+[WARN] Failed to create bin at /home/dxb/.cache/dxb/foundation-verify/run-XhW1OC/candidate/node_modules/.bin/dxb. ENOENT: no such file or directory, open '/home/dxb/.cache/dxb/foundation-verify/run-XhW1OC/candidate/tools/dxb-cli/dist/index.js'
+[WARN] Failed to create bin at /home/dxb/.cache/dxb/foundation-verify/run-XhW1OC/candidate/node_modules/.bin/video-learn. ENOENT: no such file or directory, open '/home/dxb/.cache/dxb/foundation-verify/run-XhW1OC/candidate/tools/video-learn/dist/cli.js'
+
+dependencies:
++ @playwright/mcp 0.0.78
++ @upstash/context7-mcp 3.2.4
+
+devDependencies:
++ @dxb/cli 0.0.0 <- tools/dxb-cli
++ @dxb/video-learn 0.0.0 <- tools/video-learn
++ @modelcontextprotocol/sdk 1.29.0
++ @playwright/test 1.61.1
++ @testing-library/react 16.3.2
++ @types/node 22.20.0
++ jsdom 29.1.1
++ kysely 0.29.3
++ react 19.2.7
++ react-dom 19.2.7
++ supabase 2.109.0
++ typescript 6.0.3
++ vitest 3.2.6
+
+Done in 800ms using pnpm v11.10.0
+
+ RUN  v3.2.6 /home/dxb/.cache/dxb/foundation-verify/run-XhW1OC/candidate/foundation/tests
+
+ ↓ lock/verify-structure.test.ts (19 tests | 19 skipped)
+ ↓ lock/verify-run.test.ts (14 tests | 14 skipped)
+ ↓ lock/judge-structure.test.ts (28 tests | 28 skipped)
+ ↓ lock/lock-command.test.ts (27 tests | 27 skipped)
+ ↓ lock/judge-run.test.ts (20 tests | 20 skipped)
+ ↓ lock/verify-copy.test.ts (6 tests | 6 skipped)
+ ↓ lock/lock-closure.test.ts (10 tests | 10 skipped)
+ ↓ lock/verify-judge.test.ts (6 tests | 6 skipped)
+ ↓ lock/pure-texts.test.ts (20 tests | 20 skipped)
+ ↓ lock/lock-baseline.test.ts (8 tests | 8 skipped)
+ ↓ lock/verify-all.test.ts (5 tests | 5 skipped)
+
+ Test Files  11 skipped (11)
+      Tests  163 skipped (163)
+   Start at  04:00:59
+   Duration  1.33s (transform 105ms, setup 0ms, collect 189ms, tests 0ms, environment 1ms, prepare 370ms)
+
+NOTE unresolved-import foundation/tests/lock/pure-texts.test.ts ./a.ts
+NOTE unresolved-import foundation/tests/lock/pure-texts.test.ts ../shared/b.ts
+NOTE unresolved-import foundation/tests/lock/pure-texts.test.ts ./types.ts
+NOTE unresolved-import foundation/tests/lock/pure-texts.test.ts ./side-effect.ts
+NOTE unresolved-import foundation/tests/lock/pure-texts.test.ts ./c.ts
+NOTE unresolved-import foundation/tests/lock/pure-texts.test.ts ./d.ts
+NOTE unresolved-import foundation/tests/lock/pure-texts.test.ts ./many.ts
+NOTE unresolved-import foundation/tests/lock/pure-texts.test.ts ../shared/doubled.ts
+NOTE unresolved-import foundation/tests/lock/pure-texts.test.ts ./fixtures/refusal-of.ts
+NOTE unresolved-import foundation/tests/lock/pure-texts.test.ts ./fixtures/ordered-steps.ts
+NOTE unresolved-import foundation/tests/lock/pure-texts.test.ts ./later.ts
+NOTE unresolved-import foundation/tests/lock/pure-texts.test.ts ./x.ts
+NOTE unresolved-import foundation/tests/lock/pure-texts.test.ts ./y.ts
+NOTE unresolved-import foundation/tests/lock/pure-texts.test.ts ./z.ts
+NOTE unresolved-import foundation/tests/lock/pure-texts.test.ts ./fixtures/late.ts
+NOTE unresolved-import foundation/tests/lock/lock-closure.test.ts ../shared/doubled.ts
+NOTE unresolved-import foundation/tests/lock/lock-closure.test.ts ../shared/second.js
+NOTE unresolved-import foundation/tests/lock/lock-closure.test.ts ../shared/second
+NOTE unresolved-import foundation/tests/lock/lock-closure.test.ts ../shared/third.mjs
+NOTE unresolved-import foundation/tests/lock/lock-closure.test.ts ../shared/fourth
+NOTE unresolved-import foundation/tests/lock/fixtures/fixture-files.ts ../shared/doubled.ts
+CASE added foundation/tests/lock/judge-structure.test.ts > judgeStructure — a closed directory > a file added to the directory of a protected helper → closed-dir-added <path> (count 1)
+CASE added foundation/tests/lock/judge-structure.test.ts > judgeStructure — a closed directory > a file added to the directory of the set-up file → closed-dir-added <path> (count 1)
+CASE added foundation/tests/lock/judge-structure.test.ts > judgeStructure — a closed directory > a file added one level below a protected helper's directory — that level holds no protected file → no offence (count 1)
+CASE added foundation/tests/lock/judge-structure.test.ts > judgeStructure — the root's install settings (SPEC §10 item 3) > .npmrc in the candidate, which the lock does not hold → closed-dir-added <path> (count 1)
+CASE added foundation/tests/lock/judge-structure.test.ts > judgeStructure — the root's install settings (SPEC §10 item 3) > .pnpmfile.cjs in the candidate, which the lock does not hold → closed-dir-added <path> (count 1)
+CASE added foundation/tests/lock/judge-structure.test.ts > judgeStructure — the root's install settings (SPEC §10 item 3) > .pnpmfile.mjs in the candidate, which the lock does not hold → closed-dir-added <path> (count 1)
+CASE added foundation/tests/lock/judge-structure.test.ts > judgeStructure — the root's install settings (SPEC §10 item 3) > one the lock holds, with the same id → no offence (count 1)
+CASE added foundation/tests/lock/judge-structure.test.ts > judgeStructure — the root's install settings (SPEC §10 item 3) > one the lock holds, changed → protected-changed <path> (count 1)
+CASE added foundation/tests/lock/lock-baseline.test.ts > lock — a lock file for the piece that is staged and is not HEAD's > narrowed by hand to another directory and no case → LOCK_REFUSED, exit 2, and nothing is written over it (count 1)
+CASE added foundation/tests/lock/lock-baseline.test.ts > lock — the difference it prints against HEAD's lock: a case, a helper and a script changed, all staged > the lock is written (count 1)
+CASE added foundation/tests/lock/lock-baseline.test.ts > lock — the difference it prints against HEAD's lock: a case, a helper and a script changed, all staged > CASE added <the new case>, once — and no case is said to be removed (count 1)
+CASE added foundation/tests/lock/lock-baseline.test.ts > lock — the difference it prints against HEAD's lock: a case, a helper and a script changed, all staged > PROTECTED changed <the helper>, and <the locked test> — nothing else (count 1)
+CASE added foundation/tests/lock/lock-baseline.test.ts > lock — the difference it prints against HEAD's lock: a case, a helper and a script changed, all staged > SCRIPT changed <name> (count 1)
+CASE added foundation/tests/lock/lock-baseline.test.ts > lock — the difference it prints against HEAD's lock: a case, a helper and a script changed, all staged > no directory is said to be added or removed (count 1)
+CASE added foundation/tests/lock/lock-baseline.test.ts > lock — the difference it prints when the piece is given a second directory > DIRS added <dir>, and none removed (count 1)
+CASE added foundation/tests/lock/lock-baseline.test.ts > lock — the difference it prints when the piece is given a second directory > CASE added <the case of that directory>, PROTECTED added <its test> (count 1)
+CASE added foundation/tests/lock/lock-closure.test.ts > lock — a relative specifier is resolved as the runner resolves it > a helper outside the subject directory, spelled .js while the index holds the .ts → protected (count 1)
+CASE added foundation/tests/lock/lock-closure.test.ts > lock — a relative specifier is resolved as the runner resolves it > a helper outside the subject directory, spelled without an extension → protected (count 1)
+CASE added foundation/tests/lock/lock-closure.test.ts > lock — a relative specifier is resolved as the runner resolves it > a helper outside the subject directory, spelled .mjs while the index holds the .mts → protected (count 1)
+CASE added foundation/tests/lock/lock-closure.test.ts > lock — a relative specifier is resolved as the runner resolves it > a helper outside the subject directory, that names a directory holding an index.ts → protected (count 1)
+CASE added foundation/tests/lock/lock-closure.test.ts > lock — what a locked test reaches without an import statement > a file named by new URL("…", import.meta.url), under foundation/tests/ → protected (count 1)
+CASE added foundation/tests/lock/lock-closure.test.ts > lock — what a locked test reaches without an import statement > a new URL that leaves foundation/tests/ — the repository's root — is no import → no refusal, the lock is written (count 1)
+CASE added foundation/tests/lock/lock-closure.test.ts > lock — what a locked test reaches without an import statement > import.meta.glob in a locked test — what it reaches cannot be listed → LOCK_REFUSED, the standing lock as it stood (count 1)
+CASE added foundation/tests/lock/lock-closure.test.ts > lock — a relative specifier that resolves to no file of the index > an import spelled inside a string → NOTE unresolved-import <from> <specifier>, and the lock is still written (count 1)
+CASE added foundation/tests/lock/lock-closure.test.ts > lock — a relative specifier that resolves to no file of the index > the fixture as it was built reaches nothing that is not there → no such note (count 1)
+CASE added foundation/tests/lock/lock-closure.test.ts > lock — the root's install settings (SPEC §10 item 3) > a committed .npmrc at the root → protected (count 1)
+CASE added foundation/tests/lock/lock-command.test.ts > lock — what it refuses > a locked test that declares .only — run alone it would leave the file's other cases out (count 1)
+CASE added foundation/tests/lock/lock-command.test.ts > lock — what it refuses > a locked test that does not parse — the module fails to collect (count 1)
+CASE added foundation/tests/lock/lock-command.test.ts > lock — what it refuses > a locked test that throws while it is loaded — the module fails to collect (count 1)
+CASE added foundation/tests/lock/pure-texts.test.ts > relativeImports — the relative specifiers of one source text > a module mocked by its path is reached (count 1)
+CASE added foundation/tests/lock/pure-texts.test.ts > relativeImports — the relative specifiers of one source text > a module mocked later, in single quotes is reached (count 1)
+CASE added foundation/tests/lock/pure-texts.test.ts > relativeImports — the relative specifiers of one source text > a dynamic import with a comment before its literal is reached (count 1)
+CASE added foundation/tests/lock/verify-copy.test.ts > verify — the install is the whole workspace (SPEC §10 item 1) > a locked test that needs the dependency of a package outside the foundation's scope → LOCK_GREEN (count 1)
+CASE added foundation/tests/lock/verify-copy.test.ts > verify — the install runs nothing of the candidate's (SPEC §10 item 1) > a staged postinstall of the product that would rewrite a locked test so it passes, and product that fails it → case-not-passed: the script did not run (count 1)
+CASE added foundation/tests/lock/verify-copy.test.ts > verify — the copy is still the candidate's tree after the run (SPEC §10 item 2) > product that answers 41 and writes over the locked test in the copy so it expects 41 → copy-changed <path>, red though every case passed (count 1)
+CASE added foundation/tests/lock/verify-copy.test.ts > verify — the copy is still the candidate's tree after the run (SPEC §10 item 2) > product that writes a new file into the subject directory of the copy → copy-added <path>, red though every case passed (count 1)
+CASE added foundation/tests/lock/verify-copy.test.ts > verify — the runner retries nothing, whatever the locked config says (SPEC §10 item 13) > a locked config that sets retry: 2, product whose answer is wrong once and right from then on → case-not-passed, never case-retried (count 1)
+CASE added foundation/tests/lock/verify-copy.test.ts > verify — the copy keeps what git records of a file beside its bytes (SPEC §10 item 13) > the executable file staged without its bit, the link staged as a regular file → case-not-passed for each of the two cases that assert them (count 1)
+CASE added foundation/tests/lock/verify-judge.test.ts > verify — which tool judges > the untouched tool → first line JUDGE extracted lock=<the lock commit> (count 1)
+CASE added foundation/tests/lock/verify-judge.test.ts > verify — the argument a judge hands the tool it extracted, given by hand > --extracted-judge-in <a directory no judge extracted this tool into> → LOCK_REFUSED, exit 2, nothing installed (count 1)
+CASE added foundation/tests/lock/verify-run.test.ts > verify — the search for the runner's names: a note, never an offence > the name spelled under foundation/tests/, in the root package file and in a later commit's lock file → no note (count 1)
+CASE added foundation/tests/lock/verify-run.test.ts > verify — a work directory an earlier run left standing (SPEC §10 item 9) > is said once — NOTE stale-work-directory <path> — and still stands afterwards, with what was in it; the verdict stays LOCK_GREEN (count 1)
+CASE added foundation/tests/lock/verify-structure.test.ts > verify — a staged change to what the lock protects > a protected path staged as a gitlink that carries the locked blob's id — no regular file → protected-missing <path> (count 1)
+CASE added foundation/tests/lock/verify-structure.test.ts > verify — a staged change to what the lock protects > a protected path staged as a link that carries the locked blob's id — no regular file → protected-missing <path> (count 1)
+CASE added foundation/tests/lock/verify-structure.test.ts > verify — a lock file that says it is another piece's > a committed foundation/locks/piece-b.json whose piece says piece-a → verify piece-b is LOCK_REFUSED, exit 2 (count 1)
+CASE added foundation/tests/lock/verify-structure.test.ts > verify --rev — a merge that brings a change of foundation/locks/ (SPEC §10 item 6) > a side branch that adds another piece's lock alone, merged → lock-commit-impure <the merge> (a merge of 2 commits) (count 1)
+CASE added foundation/tests/lock/verify-structure.test.ts > verify — what is no structural offence: the tests are run, and they are green > --rev of a lock commit that removes a locked test — the test gone and the lock made again, in one commit → no lock-commit-impure, LOCK_GREEN (count 1)
+CASE removed foundation/tests/lock/verify-judge.test.ts > verify — which tool judges > the untouched tool → first line JUDGE in-place lock=<the lock commit> (count 1)
+PROTECTED changed foundation/lock/src/cli.ts
+PROTECTED changed foundation/lock/src/git.ts
+PROTECTED changed foundation/lock/src/imports.ts
+PROTECTED changed foundation/lock/src/judge.ts
+PROTECTED changed foundation/lock/src/lock.ts
+PROTECTED changed foundation/lock/src/lockfile.ts
+PROTECTED changed foundation/lock/src/making.ts
+PROTECTED changed foundation/lock/src/reporter.mjs
+PROTECTED changed foundation/lock/src/run.ts
+PROTECTED changed foundation/lock/src/runner.ts
+PROTECTED changed foundation/lock/src/structure.ts
+PROTECTED changed foundation/lock/src/verify.ts
+PROTECTED changed foundation/lock/src/work.ts
+PROTECTED added foundation/tests/lock/fixtures/expectations.ts
+PROTECTED changed foundation/tests/lock/fixtures/fixture-files.ts
+PROTECTED changed foundation/tests/lock/fixtures/fixture-repo.ts
+PROTECTED changed foundation/tests/lock/judge-structure.test.ts
+PROTECTED added foundation/tests/lock/lock-baseline.test.ts
+PROTECTED added foundation/tests/lock/lock-closure.test.ts
+PROTECTED changed foundation/tests/lock/lock-command.test.ts
+PROTECTED changed foundation/tests/lock/pure-texts.test.ts
+PROTECTED added foundation/tests/lock/verify-copy.test.ts
+PROTECTED changed foundation/tests/lock/verify-judge.test.ts
+PROTECTED changed foundation/tests/lock/verify-run.test.ts
+PROTECTED changed foundation/tests/lock/verify-structure.test.ts
+PROTECTED changed foundation/tests/vitest.config.ts
+LOCK_WRITTEN piece=piece-2 cases=163 protected=36
