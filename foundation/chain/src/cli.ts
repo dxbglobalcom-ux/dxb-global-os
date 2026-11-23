@@ -1,11 +1,15 @@
 // node foundation/chain/src/cli.ts up [--root <dir>] [--wait <seconds>]
+// node foundation/chain/src/cli.ts snapshot [--check <file>]
 //
 // Progress goes to stderr as the run goes; stdout carries the answer of SPEC §8's
-// table, its last line the verdict, and the exit code is the one beside it.
+// table (piece 6a's SPEC §5 for `snapshot`), its last line the verdict, and the
+// exit code is the one beside it. `snapshot` alone prints the text and nothing else.
 import { fileURLToPath } from "node:url";
 import { TargetRefused, connectionString } from "@dxb-foundation/bench";
 import { ChainRefused, answerOf } from "./index.ts";
 import { runChain } from "./run.ts";
+import { printedLines, snapshotAnswer } from "./snapshot/command.ts";
+import type { Printed } from "./snapshot/command.ts";
 
 type Answer = { lines: string[]; exit: number };
 
@@ -53,9 +57,17 @@ async function answer(words: readonly string[]): Promise<Answer> {
   }
 }
 
+/** `snapshot …` answers its own table; every other call — `up …` or none of the command's — piece 3's. */
+async function printed(words: readonly string[]): Promise<Printed> {
+  const [call, ...rest] = words;
+  if (call === "snapshot") return snapshotAnswer(rest);
+  const { lines, exit } = await answer(words);
+  return printedLines(lines, exit);
+}
+
 try {
-  const { lines, exit } = await answer(process.argv.slice(2));
-  for (const line of lines) console.log(line);
+  const { stdout, exit } = await printed(process.argv.slice(2));
+  process.stdout.write(stdout);
   process.exitCode = exit;
 } catch (failure) {
   // None of the table's rows: shown whole to whoever reads the run, and nothing is said on stdout.

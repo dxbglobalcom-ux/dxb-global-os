@@ -51,7 +51,7 @@ select c.oid::pg_catalog.text as oid,
 type Standing = { oid: string; comment: string | null; columns: string[]; key: string[] };
 
 /** The mark of a vocabulary (SPEC §12.5): the table's comment begins with the word — alone, or followed by what is no letter, digit or underscore. */
-const MARKED = /^vocabulary(?![\p{L}\p{N}_])/u;
+export const MARKED = /^vocabulary(?![\p{L}\p{N}_])/u;
 
 // The first column, by name, that a row of the file names twice. The text is read as `json`, which keeps both
 // (SPEC §12.7, measured) — also when one of them is spelled with an escape.

@@ -19,3 +19,6 @@ export type { Target } from "./session.ts";
 export { applyChain } from "./run.ts";
 
 export { answerOf } from "./answer.ts";
+
+export { snapshotOf } from "./snapshot/read.ts";
+export { differenceOf } from "./snapshot/text.ts";
