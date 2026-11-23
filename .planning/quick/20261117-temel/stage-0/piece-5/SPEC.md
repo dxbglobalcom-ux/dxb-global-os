@@ -361,3 +361,143 @@ hand's own findings (B.4 and B.9, as §8 now says them).
 lock; the locked cases of pieces 1–4 are green, untouched; `pnpm foundation:verify --all --rev HEAD` says
 `LOCK_GREEN` for pieces 1–5 and `red=0`; the old system's typecheck and a frozen install are as before; the first
 green run on the real target is in `evidence/`.
+
+## 11. After the blind audit (`SOL.md` — GPT-6.2 Sol, xhigh) — the contract as corrected
+
+Sol: five A, five B. The roles' SQL on a clean install, the owner's default privileges, the published port, the
+passes' ordinary path, the target's separation and the lock's verdict stood after attempted refutation. What fell is
+the install step outside its ordinary path, and the tests' reach into those paths. **Each finding was weighed
+against what the piece is for** — after the chain and a green install step: the five roles are exactly §4's; `os`
+and what stands in it are the owner's; PUBLIC and the logins hold nothing there; each login comes in from outside
+the container with its own password and in no other way; and nothing secret stands anywhere but in the file and in
+the server's own store. A finding that touches that is taken, whatever its grade; one that hardens the step against
+a hand at the installer's own prompt in the same second, or against the operator's own machine, is not built, with
+the reason; one whose instrument is another piece's is carried there by name. Where this section and §3–§9 differ,
+this section holds. The mechanisms were measured first (`evidence/measure-corrections.sh`, `.out`, `m6.cjs` — a
+helper's run, 2026-11-23; C1–C6 below are its sections).
+
+**Taken — tests first, then code:**
+
+1. **`LOGINS_SET` is said only after each login came in** (Sol A4, A1, A2). After the commit the step logs in as
+   each of the four over TCP with `loginConnectionString(<role>)` — the address every later user of the file gets —
+   and asks who it is. The first, by §6's order, that does not come in or is not itself: `LOGINS_REFUSED <role>
+   cannot-log-in`, exit 6; the file and the verifiers stand as the step set them. So an expired password, a
+   connection limit of 0 (measured C5: `28P01`, `53300`), a file that parted from the server and an address that
+   reads a password otherwise than the verifier was computed from are all one refusal, proven by the act instead of
+   enumerated from the catalogue. The step's own stderr may say the SQLSTATE; never anything of the password.
+2. **A kept file is a file the step could have written** (Sol A1). The file is opened without following a link and
+   judged on the open descriptor: a regular file, this user's, mode 600 exactly; of §6's shape; each password
+   present is 43 characters of the base64url alphabet; no two alike. Anything else is a file that does not stand:
+   the step mints four and replaces it (a password that lay in an open file is not kept), and
+   `loginConnectionString` answers `no-secret`. With this, every password the step ever hands the server is one it
+   minted — §9's "a verifier of a 256-bit random password opens nothing" is true of every verifier.
+3. **The file is written whole** (Sol A2): the writing loops until every byte is taken (`writeFileSync` on the
+   descriptor), not one `writeSync` whose count nobody read. Read in the diff, not proven: a short write cannot be
+   made to happen from a test.
+4. **A failing `alter role` says nothing of the verifier** (Sol A3, B3; measured C1). The `do` block catches the
+   failure of its own `alter role` — `when query_canceled or others` (`others` does not take a cancel: measured) —
+   and raises one of its own: the same SQLSTATE, the message `the server refused the verifier of <role>`. Measured
+   for a role that is gone, a lock that times out, a row changed by another session and a statement cancelled: 0
+   lines of the server's log hold the verifier and the client's error has no context of it; in the form that stood,
+   1 line each. The step passes that message on, and its transaction says `lock_timeout = '5s'` first — it holds
+   the host lock and must not wait for ever behind an open transaction on a role's row (measured: it waits).
+5. **The transaction that carries the verifiers keeps bound values out of the log** (Sol A3; measured C4). The
+   platform lets the installer turn statement logging on (`supautils.privileged_role_allowed_configs`), and with
+   it a bound verifier is written to the log on the green path (measured: 1–2 lines). The transaction's first
+   settings are `log_parameter_max_length = 0` and `log_parameter_max_length_on_error = 0`, local to it. A server
+   that refuses the installer these settings refuses the step before a verifier is sent — loudly.
+6. **The first file fixes what a new role gives its maker** (Sol B1; measured C2). `0001-roles.sql` begins with
+   `set local createrole_self_grant to '';` — the runner applies a file in one transaction, and the setting holds
+   for the file's statements and dies with it (measured by replaying the runner's two statements). Without it, an
+   installer whose own setting is `set, inherit` — it may give itself that — becomes an inheriting member of every
+   login. For `os_owner` the file's own `grant` already narrows the row (measured: the same row is updated, Sol's
+   reading there did not hold); for the four logins nothing did. The file's bytes change now, while no ledger
+   anywhere holds them.
+7. **Where the owner of `os` is already the one who runs, no role is said** (Sol B2; measured C6: `set role` to
+   oneself changes `current_setting('role')` from `none` to the name). §5's "nothing changes" for the fixtures of
+   pieces 3 and 4 is then true to the letter, in both passes.
+8. **The tests' own faults** (Sol B4, B5): the refusal of `os_owner` is tried with a **correct** password too — only
+   then does NOLOGIN answer (`28000`; with none or a wrong one a LOGIN role answers the same `28P01`: measured C5),
+   so the case could not go red for the property it names; the expected address is spelled, not computed by the
+   function under test; a command's output is searched for the shape of any salt and any key (`[A-Za-z0-9+/]{22}==`,
+   `[A-Za-z0-9+/]{43}=`), not only for the verifiers that were stored, before any of it is shown; the extension
+   case drops only what its own `create` made.
+9. **An extension can be put into `os` by any login — pinned** (Sol's UNVERIFIED, measured C3). `create extension
+   hstore schema os`, and `alter extension … set schema os`, succeed for a login that holds neither USAGE nor
+   CREATE on `os`: 60 functions, 4 types and 20 operators of `supabase_admin` stand in `os`. The chain sees it at
+   once — `CHAIN_RED manifest offences=60 applied=0`, exit 1 — and is green again when the login drops it. It
+   cannot be closed from the chain (the list is the platform's configuration); it is pinned in B.10 with the
+   chain's red answer, said in §9, and carried to piece 7 and stage 5 with the limit it sharpens.
+
+**The tests asked for** (each asserting what stands afterwards from a session of the test's own; "red today" names
+those the code that stands must fail):
+
+- *Item 1, red today:* `connection limit 0` on `os_executor` → `LOGINS_REFUSED os_executor cannot-log-in`, exit 6;
+  put back; `logins` green and all four come in. (An expiry cannot be put back to none without the platform's
+  superuser; it meets the same refusal — C5 — and is not made a case.)
+- *Item 2, red today:* the standing file made mode 644 → `logins` is green, the file is 600 again and holds four
+  new passwords, the old are refused; the same for a symbolic link in its place (the link's target untouched), for
+  two logins holding one password, and for a password of another form (`a%41…`, 43 characters). Without the bench:
+  `loginConnectionString` on a file of mode 644, on a link, and on a file with such a password → `no-secret`.
+- *Items 4 and 5 and Sol A2, red today:* the installer holds an open transaction that altered `os_engine`, the
+  file's `sysid` is changed so that four are minted; `logins` → exit 1 within the lock's timeout, its output holds
+  no secret, **the log's window holds no `SCRAM-SHA-256$` at all**, every stored verifier is as it was (by digest),
+  and the file's passwords are refused — the file is ahead of the server; the transaction rolled back, the next
+  `logins` is green with the file as it stood and all four come in. And with statement logging turned on for the
+  installer's sessions (role-level, by the installer; put back), a green `logins` leaves no `SCRAM-SHA-256$` in
+  the log's window.
+- *Item 6, red today:* the real chain is applied by an installer whose own `createrole_self_grant` is `set,
+  inherit` (set before B.2, put back after it): B.3 pins every membership row of the five — member, grantor,
+  admin, inherit, set — exactly: one row each granted by the platform (`admin`, no `inherit`, no `set`), and for
+  `os_owner` one more, the installer's own (`set`, no `inherit`, no `admin`); nothing else.
+- *Item 7, red today:* on a fixture whose `os` is the runner's own, a vocabulary's column whose default is
+  `current_setting('role')` reads `none` after the reference pass.
+- *Item 8:* as said there. *Item 9:* B.10, for each login; the chain's red answer once.
+- *Pins (green today, kept so that a change is seen):* `set session authorization os_owner` refused each login
+  (`42501`); a second function file after one whose text ends with `reset role` is still the owner's; a schema `os`
+  whose owner the runner may not `SET ROLE` to, met by the reference pass → `pass-failed` at its first file by
+  name; the order of §6 step 2 — one login with two faults says the first reason, two faulty logins say the first
+  login.
+
+**Not built, with the reason:**
+
+- **The chain green over a wrong owner of `os` or of an object in it** (Sol A5 — a restore that drops owners, with
+  its ledger). True, and not the runner's to see: its green says that every file is applied and the passes ran; that
+  what stands is what the chain makes — owners, grants, default privileges, the roles' attributes and memberships —
+  is the snapshot's proof, piece 6, the next piece. A check of owners inside the runner would be a second, partial
+  snapshot. **Carried to piece 6 by name:** an owner changed on `os` and on one object in it is one of the changes
+  that must turn its proof red, and its contract says where the proof stands before a restored database is believed.
+- **A role or a membership changed by another session between the reading and the write** (Sol A4): every command
+  of the bench runs under the host lock; what is left is a hand at the installer's own prompt in the same second,
+  which can change the role a second after any check as well. The standing state is piece 6's and piece 7's.
+- **The step's catalogue reading widened** to memberships *of* a login, INHERIT, role settings, the installer's
+  ADMIN (Sol A4): step 2 refuses what makes a login more than a login; the roles' whole profile is pinned on the
+  fresh chain by B.3 and standing in the snapshot (6). Item 1 answers "usable".
+- **A crash between the file and the server, a lost answer to the commit, the directory's own sync, a left
+  `.writing` file** (Sol A2): the step failed or never answered, and it said so or said nothing; the next `logins`
+  heals either order — the file kept and its verifiers set again, or four minted anew (pinned above). A left
+  `.writing` file is mode 600 in a directory of mode 700 and holds passwords no server was told.
+- **The shell's `PGOPTIONS`** (Sol A2, A3): the driver takes it (measured C4.a); it can make the step fail, loudly,
+  and cannot turn logging on at start-up (`42501`); with item 5 it cannot reach a verifier either.
+- **The verifier returned by `set_config` to the client** (Sol A3): it returns to the process that computed it, on
+  the wire that carried it there.
+- **Told to stop, the step finishes** (Sol B3): its work is two writes that end within a second and agree with
+  each other; it then ends with the signal's exit code, as the bench's other commands do, after saying what is true.
+- **A role reset by a trigger inside the reference pass; a function file that alters other things as the owner**
+  (Sol B2): the chain's own files, written by an authorised hand and read in their diff; after a reset the
+  installer is refused every writing in `os` (§3), so the pass fails loudly; what a file granted or altered is the
+  snapshot's to show.
+- **The ledger's reading refused "by another rule"** (Sol B4): the case asserts the act — a login cannot read the
+  ledger; which privilege is missing is B.4's. **B.2's numbers** stay open for later pieces' files; the exact four
+  of this piece are in `evidence/first-run-on-the-real-target.log`.
+- **`down` at the module's end, whatever happened; the guard on a login's own connection** (Sol B5): the module is
+  given the one bench (it begins with `fresh`, which removes what stands), and a half-made instance is what `down`
+  is for; a login's password opens this cluster alone.
+
+**§9, corrected and added:** "a failing `alter role` writes the verifier to the log" is gone (item 4). "A login may
+change its own password" stands, and beside it: **a login may give itself a persistent setting** (`alter role
+os_engine set search_path = …` is accepted — measured C3) and may hold an advisory lock, the chain's own key among
+them, which stops an install loudly. **Any login can put a privileged extension into `os`** (item 9). All three are
+piece 7's to enumerate and stage 5's to close. **A server that logs every statement with its bound values** is
+answered by item 5 for this step; what else the platform's logging and audit extensions write is stage 5's, with
+the secret store.

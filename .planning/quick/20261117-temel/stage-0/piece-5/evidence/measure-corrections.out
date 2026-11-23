@@ -1,0 +1,230 @@
+== setup
+instance: INSTANCE_STANDING sysid=7711405395895865383
+NOTICE:  database "roles_measure_p5c" does not exist, skipping
+NOTICE:  role "m6_x" does not exist, skipping
+NOTICE:  role "m6_y" does not exist, skipping
+NOTICE:  role "m6_a" does not exist, skipping
+NOTICE:  role "m6_b" does not exist, skipping
+NOTICE:  role "m6_c" does not exist, skipping
+NOTICE:  role "m6_d" does not exist, skipping
+NOTICE:  role "m6_e" does not exist, skipping
+NOTICE:  role "m6_n" does not exist, skipping
+== C6 the installer's role setting
+role=none
+role=postgres current_user=postgres
+role=none
+== C4.b may the installer turn on statement or parameter logging?
+  set log_statement = 'all' → accepted; in this session now all 
+  set log_min_duration_statement = 0 → accepted; in this session now 0 
+  set log_parameter_max_length = -1 → accepted; in this session now -1 
+  set log_parameter_max_length_on_error = -1 → accepted; in this session now -1 
+  set log_min_error_statement = 'panic' → accepted; in this session now panic 
+  log_statement = ddl
+  log_min_duration_statement = -1
+  log_parameter_max_length = -1
+  log_parameter_max_length_on_error = 0
+  log_min_error_statement = error
+  log_lock_waits = off
+  log_min_duration_sample = -1
+  pg_parameter_acl (parname | paracl), whole:
+  rows: 0
+  why: the platform's list of settings its privileged role may set (supautils.privileged_role_allowed_configs), one per line:
+    auto_explain.*
+    deadlock_timeout
+    log_duration
+    log_lock_waits
+    log_min_duration_statement
+    log_min_error_statement
+    log_min_messages
+    log_parameter_max_length
+    log_replication_commands
+    log_statement
+    log_temp_files
+    pg_net.batch_size
+    pg_net.ttl
+    pg_stat_statements.*
+    pgaudit.log
+    pgaudit.log_catalog
+    pgaudit.log_client
+    pgaudit.log_level
+    pgaudit.log_relation
+    pgaudit.log_rows
+    pgaudit.log_statement
+    pgaudit.log_statement_once
+    pgaudit.role
+    pgrst.*
+    plan_filter.*
+    safeupdate.enabled
+    session_replication_role
+    track_functions
+    track_io_timing
+    wal_compression
+  supautils.privileged_role = supabase_privileged_role; the installer is a member of it: t
+  pg_settings.context of the five: log_min_duration_statement=superuser, log_min_error_statement=superuser, log_parameter_max_length=superuser, log_parameter_max_length_on_error=user, log_statement=superuser
+== C4.a node pg and PGOPTIONS
+  PGOPTIONS in this process's environment: -c default_transaction_read_only=on
+  connectionString only → default_transaction_read_only = on
+  options: '' → default_transaction_read_only = on
+  options: '-c default_transaction_read_only=off' → default_transaction_read_only = off
+  options: '-c application_name=m6probe' (another setting) → default_transaction_read_only = off
+  -- and PGOPTIONS asking for a logging setting the installer may not set:
+  PGOPTIONS in this process's environment: -c log_statement=all
+  connectionString only → ERROR code=42501 message="permission denied to set parameter "log_statement"" where-holds-verifier-head=false where=""
+  options: '' → ERROR code=42501 message="permission denied to set parameter "log_statement"" where-holds-verifier-head=false where=""
+  options: '-c default_transaction_read_only=off' → default_transaction_read_only = off
+  options: '-c application_name=m6probe' (another setting) → default_transaction_read_only = off
+== C1 a failing ALTER ROLE inside the DO block (node pg, parameters bound; one fresh verifier per case)
+-- C1.a today's form, role does not exist
+  [a] form=today role=m6_nobody B rolls back afterwards
+     client: ERROR code=42704 message="role "m6_nobody" does not exist" where-holds-verifier-head=true where="SQL statement "alter role m6_nobody password 'SCRAM-SHA-256$<…>'" | PL/pgSQL function inline_code_block line 1 at EXECUTE"
+     elapsed 1011 ms; at 1 s B: state=idle in transaction (aborted) wait=Client/ClientRead
+     server-log lines since the case began holding the verifier's first 40 characters: 1
+     e.g.: 172.21.0.1 2026-11-23 16:37:01.629 UTC [4772] postgres@roles_measure_p5c CONTEXT:  SQL statement "alter role m6_nobody password 'SCRAM-SHA-256$<…>'"
+-- C1.b the body wrapped (exception when others → raise using errcode = sqlstate), role does not exist
+  [b] form=wrapped_others role=m6_nobody B rolls back afterwards
+     client: ERROR code=42704 message="the server refused the verifier of m6_nobody" where-holds-verifier-head=false where="PL/pgSQL function inline_code_block line 1 at RAISE"
+     elapsed 1009 ms; at 1 s B: state=idle in transaction (aborted) wait=Client/ClientRead
+     server-log lines since the case began holding the verifier's first 40 characters: 0
+-- C1.c lock wait: A = begin; alter role m6_x connection limit 5; (open). B: set local lock_timeout = '2s'
+  [c lock_timeout] form=today role=m6_x B rolls back afterwards
+     client: ERROR code=55P03 message="canceling statement due to lock timeout" where-holds-verifier-head=true where="while updating tuple (0,65) in relation "pg_authid" | SQL statement "alter role m6_x password 'SCRAM-SHA-256$<…>'" | PL/pgSQL function inline_code_block line 1 at
+     elapsed 2003 ms; at 1 s B: state=active wait=Lock/transactionid
+     server-log lines since the case began holding the verifier's first 40 characters: 1
+     e.g.: 	SQL statement "alter role m6_x password 'SCRAM-SHA-256$<…>'"
+  [c lock_timeout] form=wrapped_others role=m6_x B rolls back afterwards
+     client: ERROR code=55P03 message="the server refused the verifier of m6_x" where-holds-verifier-head=false where="PL/pgSQL function inline_code_block line 1 at RAISE"
+     elapsed 2003 ms; at 1 s B: state=active wait=Lock/transactionid
+     server-log lines since the case began holding the verifier's first 40 characters: 0
+-- C1.c' A commits 1.5 s after B began waiting (B has no timeout)
+  [c A-commits] form=today role=m6_x B rolls back afterwards
+     client: ERROR code=XX000 message="tuple concurrently updated" where-holds-verifier-head=true where="SQL statement "alter role m6_x password 'SCRAM-SHA-256$<…>'" | PL/pgSQL function inline_code_block line 1 at EXECUTE"
+     elapsed 1503 ms; at 1 s B: state=active wait=Lock/transactionid
+     server-log lines since the case began holding the verifier's first 40 characters: 1
+     e.g.: 172.21.0.1 2026-11-23 16:37:15.328 UTC [4797] postgres@roles_measure_p5c CONTEXT:  SQL statement "alter role m6_x password 'SCRAM-SHA-256$<…>'"
+  [c A-commits] form=wrapped_others role=m6_x B rolls back afterwards
+     client: ERROR code=XX000 message="the server refused the verifier of m6_x" where-holds-verifier-head=false where="PL/pgSQL function inline_code_block line 1 at RAISE"
+     elapsed 1506 ms; at 1 s B: state=active wait=Lock/transactionid
+     server-log lines since the case began holding the verifier's first 40 characters: 0
+-- C1.c" A rolls back 1.5 s after B began waiting (B has no timeout)
+  [c A-rolls-back] form=today role=m6_x B rolls back afterwards
+     client: success
+     elapsed 1502 ms; at 1 s B: state=active wait=Lock/transactionid
+     server-log lines since the case began holding the verifier's first 40 characters: 0
+  [c A-rolls-back] form=wrapped_others role=m6_x B rolls back afterwards
+     client: success
+     elapsed 1501 ms; at 1 s B: state=active wait=Lock/transactionid
+     server-log lines since the case began holding the verifier's first 40 characters: 0
+-- C1.d statement timeout: A holds as in c; B: set local statement_timeout = '2s'
+  [d statement_timeout] form=today role=m6_x B rolls back afterwards
+     client: ERROR code=57014 message="canceling statement due to statement timeout" where-holds-verifier-head=true where="while updating tuple (0,54) in relation "pg_authid" | SQL statement "alter role m6_x password 'SCRAM-SHA-256$<…>'" | PL/pgSQL function inline_code_block line
+     elapsed 2001 ms; at 1 s B: state=active wait=Lock/transactionid
+     server-log lines since the case began holding the verifier's first 40 characters: 1
+     e.g.: 	SQL statement "alter role m6_x password 'SCRAM-SHA-256$<…>'"
+  [d statement_timeout] form=wrapped_others role=m6_x B rolls back afterwards
+     client: ERROR code=57014 message="canceling statement due to statement timeout" where-holds-verifier-head=true where="while updating tuple (0,54) in relation "pg_authid" | SQL statement "alter role m6_x password 'SCRAM-SHA-256$<…>'" | PL/pgSQL function inline_code_block line
+     elapsed 2001 ms; at 1 s B: state=active wait=Lock/transactionid
+     server-log lines since the case began holding the verifier's first 40 characters: 1
+     e.g.: 	SQL statement "alter role m6_x password 'SCRAM-SHA-256$<…>'"
+  [d statement_timeout] form=wrapped_canceled_or_others role=m6_x B rolls back afterwards
+     client: ERROR code=57014 message="the server refused the verifier of m6_x" where-holds-verifier-head=false where="PL/pgSQL function inline_code_block line 1 at RAISE"
+     elapsed 2002 ms; at 1 s B: state=active wait=Lock/transactionid
+     server-log lines since the case began holding the verifier's first 40 characters: 0
+-- C1.e the success path, b's form, bound parameters, committed (role m6_y stands)
+  [e success] form=wrapped_others role=m6_y B commits afterwards
+     client: success
+     elapsed 1007 ms; at 1 s B: state=idle in transaction wait=Client/ClientRead
+     server-log lines since the case began holding the verifier's first 40 characters: 0
+== C4.c the installer CAN set them (C4.b): each turned on for B's transaction, then the hand-over with a bound throwaway verifier (b's form, role m6_y)
+  [c4c log_statement=all] form=wrapped_others role=m6_y B rolls back afterwards
+     client: success
+     elapsed 1012 ms; at 1 s B: state=idle in transaction wait=Client/ClientRead
+     server-log lines since the case began holding the verifier's first 40 characters: 1
+     e.g.: 172.21.0.1 2026-11-23 16:37:39.217 UTC [4835] postgres@roles_measure_p5c DETAIL:  Parameters: $1 = 'm6_y', $2 = 'SCRAM-SHA-256$<…>'
+  [c4c log_min_duration_statement=0] form=wrapped_others role=m6_y B rolls back afterwards
+     client: success
+     elapsed 1009 ms; at 1 s B: state=idle in transaction wait=Client/ClientRead
+     server-log lines since the case began holding the verifier's first 40 characters: 2
+     e.g.: 172.21.0.1 2026-11-23 16:37:41.768 UTC [4837] postgres@roles_measure_p5c DETAIL:  Parameters: $1 = 'm6_y', $2 = 'SCRAM-SHA-256$<…>'
+     e.g.: 172.21.0.1 2026-11-23 16:37:41.768 UTC [4837] postgres@roles_measure_p5c DETAIL:  Parameters: $1 = 'm6_y', $2 = 'SCRAM-SHA-256$<…>'
+  [c4c log_statement=all, log_parameter_max_length=-1] form=wrapped_others role=m6_y B rolls back afterwards
+     client: success
+     elapsed 1009 ms; at 1 s B: state=idle in transaction wait=Client/ClientRead
+     server-log lines since the case began holding the verifier's first 40 characters: 1
+     e.g.: 172.21.0.1 2026-11-23 16:37:44.315 UTC [4846] postgres@roles_measure_p5c DETAIL:  Parameters: $1 = 'm6_y', $2 = 'SCRAM-SHA-256$<…>'
+== C2 createrole_self_grant
+-- C2.a
+  show (installer): ''
+  pg_db_role_setting rows for postgres before: 0:search_path="\$user", public, extensions
+  alter role postgres set createrole_self_grant = 'set, inherit' → accepted 
+  pg_db_role_setting rows for postgres in between: 0:search_path="\$user", public, extensions,createrole_self_grant=set, inherit
+  a new session's value in between: 'set, inherit'
+  alter role postgres reset createrole_self_grant → accepted 
+  pg_db_role_setting rows for postgres after: 0:search_path="\$user", public, extensions
+  a new session's value after: ''
+-- C2.b session-level set createrole_self_grant = 'set, inherit'
+  after create: postgres grantor=postgres admin=false inherit=true set=true
+  after create: postgres grantor=supabase_admin admin=true inherit=false set=false
+  after grant ... with set true, inherit false: postgres grantor=postgres admin=false inherit=false set=true
+  after grant ... with set true, inherit false: postgres grantor=supabase_admin admin=true inherit=false set=false
+-- C2.c the same session value; inside one transaction set local createrole_self_grant to ''
+  postgres grantor=postgres admin=false inherit=false set=true
+  postgres grantor=supabase_admin admin=true inherit=false set=false
+  session value after commit: set, inherit
+-- C2.d the chain runner's two statements (session.ts:98-104) in one transaction (session.ts:84-93), the file's text a set local then a create role
+  the session's own value before: inherit
+  inside the transaction after the file's text: set
+  m6_e row: {"member":"postgres","grantor":"postgres","admin_option":false,"inherit_option":false,"set_option":true}
+  m6_e row: {"member":"postgres","grantor":"supabase_admin","admin_option":true,"inherit_option":false,"set_option":false}
+  after commit: inherit
+== C5 a login that cannot be used, over TCP from the host (node pg)
+-- C5.a m6_c
+  before, correct password: came in as m6_c
+  after `alter role m6_c valid until '2000-01-01'`, correct password: ERROR code=28P01 message="password authentication failed for user "m6_c""
+  after, wrong password:   ERROR code=28P01 message="password authentication failed for user "m6_c""
+-- C5.b m6_d
+  before, correct password: came in as m6_d
+  after `alter role m6_d connection limit 0`, correct password: ERROR code=53300 message="too many connections for role "m6_d""
+  after, wrong password:   ERROR code=28P01 message="password authentication failed for user "m6_d""
+-- C5.c m6_n
+  before, correct password: came in as m6_n
+  after `alter role m6_n nologin`, correct password: ERROR code=28000 message="role "m6_n" is not permitted to log in"
+  after, wrong password:   ERROR code=28P01 message="password authentication failed for user "m6_n""
+-- C5.c' m6_n given LOGIN again but no password (null): ERROR code=28P01 message="password authentication failed for user "m6_n""
+-- C5.c" m6_n nologin and no password: ERROR code=28P01 message="password authentication failed for user "m6_n""
+== C3 a privileged extension asked into os by a plain login (real chain and logins, database postgres)
+  chain up: CHAIN_GREEN applied=0 standing=2 functions=0 reference=0 exit=0 (stdout lines: 1)
+  logins:   LOGINS_SET logins=4 sysid=7711405395895865383
+  logins file mode: 600
+  os_engine comes in: os_engine
+  privileges of os_engine on schema os: usage=f create=f
+-- C3.1 as os_engine: create extension hstore schema os
+  → made 
+  extension: hstore owner=supabase_admin schema=os
+  in os — functions by owner: supabase_admin=60
+  in os — types by owner:     supabase_admin=4
+  in os — operators by owner: supabase_admin=20
+  in os — op. classes/families: 4 / 4
+  chain up now: CHAIN_RED manifest offences=60 applied=0 exit=1 (stdout lines: 61)
+      OFFENCE orphan akeys(os.hstore)
+      OFFENCE orphan avals(os.hstore)
+  as os_engine: drop extension hstore → dropped 
+  chain up again: CHAIN_GREEN applied=0 standing=2 functions=0 reference=0 exit=0 (stdout lines: 1)
+-- C3.2 as os_engine: create extension hstore (default schema), then alter extension hstore set schema os
+  create → made in public owner=supabase_admin 
+  alter extension hstore set schema os → now in os 
+  clean-up as os_engine: dropped 
+  hstore left: 0
+-- C3.2' as os_engine: may a plain login turn on statement logging? set log_statement = 'all'
+  → ERROR:  42501: permission denied to set parameter "log_statement" LOCATION:  set_config_with_handle, guc.c:3601 ddl 
+-- C3.3 as os_engine: set session authorization os_owner
+  → ERROR:  42501: permission denied to set session authorization "os_owner" LOCATION:  call_string_check_hook, guc.c:6938 after it: current_user=os_engine session_user=os_engine 
+-- C3.4 as os_engine: alter role os_engine set search_path = 'x'
+  → accepted 
+  pg_db_role_setting for os_engine now: 0:search_path=x
+  a new os_engine session's search_path: x
+  installer: alter role os_engine reset search_path → accepted 
+  pg_db_role_setting rows for the four logins: 0
+== clean-up
+  m6 roles left: (none)
+  databases roles_measure_p5c left: 0
+  pg_db_role_setting for postgres (as before C2.a): 0:search_path="\$user", public, extensions
