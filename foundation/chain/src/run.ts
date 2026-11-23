@@ -1,13 +1,18 @@
-// The run (SPEC §6), in its order: the disk, the lock, the ledger, the comparison, the bootstrap, each pending file.
+// The run (SPEC §6), in its order: the disk, the lock, the ledger, the comparison, the bootstrap, each pending file —
+// and then the two passes (piece 4's SPEC §6), each when its directory stands.
 import { performance } from "node:perf_hooks";
 import { DatabaseError } from "pg";
 import { compare } from "./compare.ts";
 import { readChain } from "./disk.ts";
 import type { ChainFile } from "./disk.ts";
+import { functionsPass } from "./functions-pass.ts";
 import { makeTheLedger, readLedger, writeRow } from "./ledger.ts";
 import { underTheLock } from "./lock.ts";
+import { inOrder } from "./outcome.ts";
 import type { Outcome } from "./outcome.ts";
-import { inOneTransaction, sessionsOn } from "./session.ts";
+import { readPasses } from "./passes.ts";
+import { referencePass } from "./reference-pass.ts";
+import { executeText, inOneTransaction, sessionsOn } from "./session.ts";
 import type { InASession, Target } from "./session.ts";
 
 type Input = { target: Target; root: string; lockWaitSeconds?: number };
@@ -15,11 +20,21 @@ type Input = { target: Target; root: string; lockWaitSeconds?: number };
 /** Where a run says what it is doing. The library says it to nobody; the command, on stderr. */
 export type Say = (line: string) => void;
 
-// The file's text reaches the server as data and is run there by plpgsql (SPEC §3, measured): so run, a text
-// that opens or closes a transaction is refused by the server in the act and leaves nothing — the statements
-// before the offending one included. The same text sent as a plain query is not safe.
-const HAND_OVER = "select pg_catalog.set_config('os_chain.file', $1, true) is not null";
-const EXECUTE = "do $w$ begin execute pg_catalog.current_setting('os_chain.file'); end $w$";
+/** The two passes, in the order a run makes them (piece 4's SPEC §6, steps 8 and 9). */
+const PASSES = [
+  ["functions", functionsPass],
+  ["reference", referencePass],
+] as const;
+
+/**
+ * The disk as a run reads it: `schema/` and, each when it stands, the two passes' directories — the offences of
+ * all three as one list (piece 4's SPEC §6). No connection. Throws as `readChain` does.
+ */
+function readDisk(root: string) {
+  const chain = readChain(root);
+  const passes = readPasses(root);
+  return { ...chain, ...passes, offences: inOrder([...chain.offences, ...passes.offences]) };
+}
 
 /**
  * One file, in a session of its own — a session outlives a file, and what one left there the next must not
@@ -35,8 +50,7 @@ function apply(inASession: InASession, file: ChainFile, position: number): Promi
         // session — another role, a read-only transaction, a search path — can reach the writing of its
         // own row, and a file the server refuses takes the row with it.
         await writeRow(conn, { position, file: file.name, kind: "schema", hash: file.hash });
-        await conn.query(HAND_OVER, [file.text]);
-        await conn.query(EXECUTE);
+        await executeText(conn, file.text);
       });
       return "applied";
     } catch (failure) {
@@ -54,14 +68,14 @@ export async function runChain(input: Input, say: Say): Promise<Outcome> {
   const inASession = sessionsOn(input.target);
 
   // 1. The disk — before any connection is opened. This reading only answers early: a disk offence, or no chain.
-  const early = readChain(root);
+  const early = readDisk(root);
   if (early.offences.length > 0) return { state: "offences", offences: early.offences };
 
   // 2. The lock — from here to the run's end, however it ends.
   return underTheLock(inASession, lockWaitSeconds, async (assertHeld) => {
     // The disk again, as it stands under the lock (SPEC §12.5): a run may have waited here while another hand
     // changed the disk, so this reading is the one compared and applied — and it ends the run as the first would.
-    const disk = readChain(root);
+    const disk = readDisk(root);
     if (disk.offences.length > 0) return { state: "offences", offences: disk.offences };
     say(`disk: ${disk.files.length} files`);
 
@@ -99,8 +113,25 @@ export async function runChain(input: Input, say: Say): Promise<Outcome> {
       say(`${file.name} — ${seconds} s`);
       applied.push(file.name);
     }
-    // Counted, not read again: under the lock no other run writes a row.
-    return { state: "applied", applied, standing: stood + applied.length };
+
+    // 8. The functions pass, 9. the reference pass — each when its directory stands. One that does not end green
+    // ends the run: what committed before it stays — the schema files, and the functions pass before the
+    // reference pass — and a functions pass that failed is not followed by the reference pass.
+    const ran: { functions?: number; reference?: number } = {};
+    for (const [pass, make] of PASSES) {
+      const files = disk[pass];
+      if (files === undefined) continue;
+      await assertHeld();
+      say(`${pass} …`);
+      const ended = await make(inASession, files);
+      if (typeof ended !== "number") return { ...ended, applied };
+      say(`${pass}: ${ended} files`);
+      ran[pass] = ended;
+    }
+
+    // 10. The schema rows are counted, not read again: under the lock no other run writes a row. A pass's count
+    // is there only when the pass ran.
+    return { state: "applied", applied, standing: stood + applied.length, ...ran };
   });
 }
 

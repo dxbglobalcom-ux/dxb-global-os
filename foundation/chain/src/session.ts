@@ -91,3 +91,15 @@ export async function inOneTransaction(conn: Client, work: () => Promise<void>):
     throw failure;
   }
 }
+
+// A file's text reaches the server as data and is run there by plpgsql (SPEC §3, measured): so run, a text
+// that opens or closes a transaction is refused by the server in the act and leaves nothing — the statements
+// before the offending one included. The same text sent as a plain query is not safe.
+const HAND_OVER = "select pg_catalog.set_config('os_chain.file', $1, true) is not null";
+const EXECUTE = "do $w$ begin execute pg_catalog.current_setting('os_chain.file'); end $w$";
+
+/** A file's text — a schema file's, a function file's — executed on `conn`, in the transaction the runner holds there. */
+export async function executeText(conn: Client, text: string): Promise<void> {
+  await conn.query(HAND_OVER, [text]);
+  await conn.query(EXECUTE);
+}

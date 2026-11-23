@@ -17,19 +17,22 @@ export const numberOf = (name: string): number => (NAME.test(name) ? Number(name
 // and a byte-order mark stays in the text — the text is the file's bytes, none of them dropped.
 const UTF8 = new TextDecoder("utf-8", { fatal: true, ignoreBOM: true });
 
-/** A link is not a directory, and neither is what is not there. A path that cannot be looked at is an error, not an answer. */
-function isADirectory(path: string): boolean {
+/**
+ * What stands at a path: a directory, another entry — a file, or a link, which is not a directory whatever it
+ * leads to — or nothing. A path that cannot be looked at is an error, not an answer.
+ */
+export function standingAt(path: string): "directory" | "another-entry" | "nothing" {
   try {
-    return lstatSync(path).isDirectory();
+    return lstatSync(path).isDirectory() ? "directory" : "another-entry";
   } catch (failure) {
     const code = (failure as NodeJS.ErrnoException).code;
-    if (code === "ENOENT" || code === "ENOTDIR") return false;
+    if (code === "ENOENT" || code === "ENOTDIR") return "nothing";
     throw failure;
   }
 }
 
 /** What a file holds — its hash and its text — or the offence it is instead. */
-function contentOf(path: string): { hash: string; text: string } | "empty" | "unreadable" {
+export function contentOf(path: string): { hash: string; text: string } | "empty" | "unreadable" {
   let bytes: Buffer;
   let text: string;
   try {
@@ -55,7 +58,7 @@ function sharing<Named extends { name: string }>(kind: OffenceKind, files: reado
 /** Reads `<root>/schema`. Files by number; the disk's own offences (SPEC §4). Throws ChainRefused("no-chain"). */
 export function readChain(root: string): { files: ChainFile[]; offences: Offence[] } {
   const directory = join(root, "schema");
-  if (!isADirectory(directory)) throw new ChainRefused("no-chain");
+  if (standingAt(directory) !== "directory") throw new ChainRefused("no-chain");
 
   const offences: Offence[] = [];
   const named: { name: string; number: number }[] = [];
