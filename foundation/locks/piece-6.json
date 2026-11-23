@@ -60,7 +60,7 @@
     "foundation/tests/snapshot/fixtures/chain/schema/0003-inside.sql": "19a956824f866d52bb269668fbf2eec51a485e09",
     "foundation/tests/snapshot/fixtures/chain/schema/0004-outside.sql": "2c7e59c3c5e7112469151c5d8b42a8612864d1e8",
     "foundation/tests/snapshot/fixtures/changes.ts": "bc53052ae353100fe2adea472287749cb798bb02",
-    "foundation/tests/snapshot/fixtures/superuser.ts": "f0ef55bdfbcebc9762033adaf73280c6e6c4129a",
+    "foundation/tests/snapshot/fixtures/superuser.ts": "1df6ea1c04d4d9d36a4d351a4edd205aae5a286e",
     "foundation/tests/snapshot/fixtures/the-chains.ts": "4c775fe3349820be964a2cf880ddf0f901129cbf",
     "foundation/tests/snapshot/fixtures/the-check.ts": "62f9d45901721987cc3bbdfc489b568e654ed903",
     "foundation/tests/snapshot/fixtures/the-form.ts": "69d0483a523f22c13c4ae923fd8030be69ceecb5",

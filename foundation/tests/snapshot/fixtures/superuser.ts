@@ -3,6 +3,7 @@
 // `_DxB_Foundation` and is the database's, `psql` as supabase_admin. The container is first seen to be the bench's
 // database container by its name and its project label, so this can never exec into another stack's.
 import { execFile } from "node:child_process";
+import { homedir } from "node:os";
 
 const DATABASE_CONTAINER = "supabase_db_DxB_Foundation";
 const PROJECT_LABEL = "label=com.supabase.cli.project=DxB_Foundation";
@@ -11,7 +12,7 @@ type Ran = { code: number; stdout: string; stderr: string };
 
 function run(args: string[], timeoutMs = 30_000): Promise<Ran> {
   return new Promise((resolve, reject) => {
-    execFile("docker", args, { timeout: timeoutMs, env: { PATH: process.env.PATH, HOME: process.env.HOME } }, (error, stdout, stderr) => {
+    execFile("docker", args, { timeout: timeoutMs, env: { PATH: process.env.PATH, HOME: homedir() } }, (error, stdout, stderr) => {
       if (error === null) resolve({ code: 0, stdout, stderr });
       else if (typeof error.code === "number") resolve({ code: error.code, stdout, stderr });
       else reject(new Error(`docker ${args[0]} did not end by itself: ${error.message}`));
