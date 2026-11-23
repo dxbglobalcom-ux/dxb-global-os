@@ -21,7 +21,7 @@
     "foundation/lock/src/shape.ts": "e27b19d1bb9342576b9e8f9293d06c25a07c2c04",
     "foundation/lock/src/structure.ts": "2be52f774ae2801017563d4acc28363a1defab0b",
     "foundation/lock/src/verify.ts": "1f86148d1c73260e0c815b07e83818cb960dd88b",
-    "foundation/lock/src/work.ts": "9f3d72a289ca4e9664ab8636a6ff06b3d2277ea8",
+    "foundation/lock/src/work.ts": "7477aef03217178572bb1b6ef26b85409325f813",
     "foundation/tests/bench/fixtures/decide-in-package.ts": "ca811d889058e155b96d34449232d1f5fbd4f1cf",
     "foundation/tests/bench/fixtures/hold-lock.ts": "a842cd19538ae5e8cad6008ccaf9eb66939315f2",
     "foundation/tests/bench/fixtures/ordered-steps.ts": "07088bb49343ee18cdd1a061dc487cee35151b38",
