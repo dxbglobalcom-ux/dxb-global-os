@@ -309,6 +309,44 @@ bench's, so that database's expected text is decided at stage 5. Costs: one lead
 (Fable 5.2's own week 88 % → 90 %); on Opus 5.5 two code hands and one test hand at high, a helper at medium —
 about 0.85M tokens; Sol about 0.22M; the first `verify --all` after the code about 10 minutes.*
 
+*6b done 2026-11-23 (`piece-6b/SPEC.md`, its audit `SOL.md` and evidence beside it; what 6a left for 6b was cut once
+more where its parts stand alone — **6c**, the proof of what a build changes outside the snapshot's reach, has its own
+contract next): **the rows' text** — `rowsOf(target)`, read as the snapshot is, in one place: every row of every
+ordinary table of the covered schemas but the ledger and the vocabularies, and where every sequence stands;
+**"kept"** — `keptOf(before, after)`: every earlier row still held, key for key, a value compared as the server
+printed it and never through a double, and no sequence behind or turned round; `pnpm foundation:chain rows` and
+`rows --kept <file>` (`ROWS_KEPT` or every lost row and every sequence that went back); **`chainAt(repository,
+revision, into)`** — the chain's three directories as a commit holds them, from git's objects alone. **"Upgraded
+equals clean" is proven on two revisions of the fixture chain:** B built from nothing equals its committed text; A
+built, given rows, upgraded by `chain up` to B equals the same text and keeps every row; an applied file edited and a
+change a populated table refuses are red and leave the rows as they were (but a sequence a refused file drew from);
+a change that loses a row, a value and a sequence's place under a green chain, and one whose structure depends on the
+rows it meets, are seen. 161 cases in piece 6's lock, now over two directories (268 with 6a's). **Measured first, and
+an adaptation of this cut's wording [adaptation]:** the real chain could not be upgraded from "the previous committed
+revision" — piece 5's audit corrected an applied file (`piece-6b/evidence/measure-m1-real-history.out`) — so the real
+chain's upgrade is owed from ONE committed revision, `foundation/tests/upgrade/real/from.txt`, held by the lock;
+**from here on an applied schema file of the real chain is not edited — a correction is a new file — unless the lead
+moves `from.txt` in a lock commit that holds nothing else and records why; no move after the first database that is
+not disposable** (SPEC §7). The real chain's own proof ran by hand at the corrections' commit: green, equal, kept —
+thin, as said above: two files, no table. One blind pass by GPT-6.2 Sol at xhigh: REFUTED, 4 blocking and 8 must-fix
+— it found the proof sound and the instrument wanting: a sequence turned round gave its numbers again and read as
+kept; `chainAt` followed replace refs and mangled a name that is not UTF-8; ten corrections taken tests-first (SPEC
+§10.1), the rest named with reasons (§10.2: a `json` column's stored spelling, a retype under which every value prints
+the same). **For the piece that first changes a populated table (stage 1):** a versioned change that writes rows of a
+table whose row security is forced lifts the force for its own statements and puts it back in the same file; a
+changed signature is `drop function if exists`; a change that means to alter what rows hold commits the difference it
+expects (SPEC §9). **For the piece that first gives the real chain a table (piece 8):** it writes
+`foundation/tests/upgrade/real/rows.sql` in the same lock commit as its expected text. **For a piece whose file first
+makes a `json` column:** it decides that column's reading in its own contract. **For piece 13:** the bench command
+runs the real chain's upgrade on the candidate commit — `from.txt` read from it and checked to be its ancestor,
+`rows.sql` given when it stands and seen given, every step stopping the run, a moved `from.txt` accepted only with
+its reason — as `piece-6b/evidence/real-upgrade-from.sh` does by hand until then; the snapshot's own readers still
+spread a list into a call (a vocabulary of 100,000 rows would overflow), noted for whoever meets one. Costs: one lead
+session, contract to records (Fable's own week 91 % → 93 %; the 5-hour window 10 % → 20 %; the lead's context to
+about 55 %, past the 45 % a piece is cut for — the audit's corrections were the half that did not fit); on Opus 5.5
+two test hands and two code hands at high, about 0.94M tokens; Sol 0.19M, about 11 minutes; a `verify --all` about
+12 minutes.*
+
 **7 — the separation, measured on the foundation's bench.** By role class — the foundation's runtime logins, the old
 system's runtime roles, the platform's administrators, the installer — and by operation: read and write on every old
 table and sequence, execute on every old function, role membership and `SET ROLE`, in both directions. The lists are
