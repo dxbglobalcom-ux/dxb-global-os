@@ -1,0 +1,987 @@
+{
+  "format": 1,
+  "piece": "piece-2",
+  "dirs": [
+    "foundation/tests/lock"
+  ],
+  "config": "foundation/tests/vitest.config.ts",
+  "protected": {
+    "foundation/lock/package.json": "316e09cba247d64cb1cc67639817acace64873f2",
+    "foundation/lock/src/cli.ts": "76710fa60c1b54daaca982d678742ece00e05271",
+    "foundation/lock/src/git.ts": "3ba145ac143d6a38fc44fecb4c5402b842267ff1",
+    "foundation/lock/src/imports.ts": "eb59d6097cc457b71251349f2cf7cc1c3ba4c26f",
+    "foundation/lock/src/index.ts": "464e170e1dfccb08b2860f954c1b6c5b933c83ac",
+    "foundation/lock/src/judge.ts": "3f979cf83faabb72a5b905423c500c02b17972eb",
+    "foundation/lock/src/lock.ts": "e3e510927ce7386b254a77909b93f8ecea62f3ef",
+    "foundation/lock/src/lockfile.ts": "95d8f2c0496cfc0b72057ebc4b4558462d2c07ff",
+    "foundation/lock/src/making.ts": "a9f017689059a4e0e0b5bd134e793e0cd578ed9d",
+    "foundation/lock/src/reporter.mjs": "2164aafe5f32698804bf36b92dca1cca3cd0a7c1",
+    "foundation/lock/src/run.ts": "aabceda96ef5851221303ee542538f7712f3d757",
+    "foundation/lock/src/runner.ts": "ef5ce5c6c77c833a9900dd2948b7637a0f291566",
+    "foundation/lock/src/shape.ts": "e27b19d1bb9342576b9e8f9293d06c25a07c2c04",
+    "foundation/lock/src/structure.ts": "f009954cbfb24209174468782285d8a659b41e1f",
+    "foundation/lock/src/verify.ts": "ccfa7f19a509672f0b78bd15c749f5309981183c",
+    "foundation/lock/src/work.ts": "5d34a6e4a9c210cb4340833f40c2ea04baa4ba1f",
+    "foundation/tests/lock/fixtures/expect-green.ts": "f8ce1c0d381ebc7ad12c6b668870ae66fc24a630",
+    "foundation/tests/lock/fixtures/fixture-files.ts": "1aa6ec9cb9c9936651512eefe31d24d9ecfd6bca",
+    "foundation/tests/lock/fixtures/fixture-repo.ts": "38b1100e28b21c94e039f7d81ffb839e7d610184",
+    "foundation/tests/lock/judge-run.test.ts": "238d7aa5af1e5e394787a5062ce467e50d5a27ad",
+    "foundation/tests/lock/judge-structure.test.ts": "fb10b0eedfdf0be5ce977d1f97e6954fed83bb17",
+    "foundation/tests/lock/lock-command.test.ts": "fe1e6a1da57bb1e9cee95ea5a4ab9b2dcd87d0e0",
+    "foundation/tests/lock/pure-texts.test.ts": "3eefb899832a6b2a0a947593f8fd942026375249",
+    "foundation/tests/lock/verify-all.test.ts": "1de8ab780edbb8ca8a2b2c591c350db95730fdd1",
+    "foundation/tests/lock/verify-judge.test.ts": "75918cb4f15946b499e97b4e705378d8623c0f88",
+    "foundation/tests/lock/verify-run.test.ts": "0aaa0b0bfa08cfdf62d092c436cbbc2643b57fb5",
+    "foundation/tests/lock/verify-structure.test.ts": "c93e6b44c06cea23cdc59abc56af0b2995160160",
+    "foundation/tests/package.json": "d7936acddc4eb333e59cd4347233ae76fb887f6f",
+    "foundation/tests/vitest.config.ts": "4fb2556e7ce9929c4aae9f808b8be04ea622264a",
+    "foundation/tsconfig.json": "5a0f1572a4b87e7daa184eb8bac42fa632f95eaa",
+    "pnpm-lock.yaml": "27cd0e6ca5a4f48f40ef0bc689a4d81669390148",
+    "pnpm-workspace.yaml": "edcaf78a424a38a729a461300023ad90bf6bf945"
+  },
+  "scripts": {
+    "foundation:instance": "node foundation/bench/src/cli.ts",
+    "foundation:lock": "node foundation/lock/src/cli.ts lock",
+    "foundation:test": "vitest run --config foundation/tests/vitest.config.ts",
+    "foundation:typecheck": "tsc -p foundation/tsconfig.json",
+    "foundation:verify": "node foundation/lock/src/cli.ts verify"
+  },
+  "cases": [
+    {
+      "file": "foundation/tests/lock/judge-run.test.ts",
+      "suite": [
+        "judgeRun — a result that cannot be this run's"
+      ],
+      "name": "a malformed result → result-malformed",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/lock/judge-run.test.ts",
+      "suite": [
+        "judgeRun — a result that cannot be this run's"
+      ],
+      "name": "a previous green result of the same suite, replayed — another nonce, everything in it passed → result-stale",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/lock/judge-run.test.ts",
+      "suite": [
+        "judgeRun — a result that cannot be this run's"
+      ],
+      "name": "no result file and exit code 1 → both are said",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/lock/judge-run.test.ts",
+      "suite": [
+        "judgeRun — a result that cannot be this run's"
+      ],
+      "name": "no result file → result-missing, though the run ended with 0 — and no case offence is made up from nothing",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/lock/judge-run.test.ts",
+      "suite": [
+        "judgeRun — a result that matches its lock"
+      ],
+      "name": "finds no offence when every locked case ran its count of times and passed, and the run ended with 0",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/lock/judge-run.test.ts",
+      "suite": [
+        "judgeRun — a run that is not green though every case passed"
+      ],
+      "name": "a module that did not end passed → file-failed <file>",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/lock/judge-run.test.ts",
+      "suite": [
+        "judgeRun — a run that is not green though every case passed"
+      ],
+      "name": "a module that ended passed and carries an error → file-failed <file>",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/lock/judge-run.test.ts",
+      "suite": [
+        "judgeRun — a run that is not green though every case passed"
+      ],
+      "name": "a set-up file in the result that the lock does not protect → setup-unprotected <path>",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/lock/judge-run.test.ts",
+      "suite": [
+        "judgeRun — a run that is not green though every case passed"
+      ],
+      "name": "exit code 1 with everything passed → exit-nonzero <code>",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/lock/judge-run.test.ts",
+      "suite": [
+        "judgeRun — a run that is not green though every case passed"
+      ],
+      "name": "unhandled errors → run-errors <n>",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/lock/judge-run.test.ts",
+      "suite": [
+        "judgeRun — one fault planted in the cases, one offence"
+      ],
+      "name": "a case that ended skipped → case-skipped, and nothing beside it",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/lock/judge-run.test.ts",
+      "suite": [
+        "judgeRun — one fault planted in the cases, one offence"
+      ],
+      "name": "a case that failed → case-not-passed",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/lock/judge-run.test.ts",
+      "suite": [
+        "judgeRun — one fault planted in the cases, one offence"
+      ],
+      "name": "a case that passed on its second try — retryCount 1, state passed → case-retried",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/lock/judge-run.test.ts",
+      "suite": [
+        "judgeRun — one fault planted in the cases, one offence"
+      ],
+      "name": "a duplicate name locked with count 2 and one result → case-missing",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/lock/judge-run.test.ts",
+      "suite": [
+        "judgeRun — one fault planted in the cases, one offence"
+      ],
+      "name": "a locked case with no result → case-missing, naming the file and the case",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/lock/judge-run.test.ts",
+      "suite": [
+        "judgeRun — one fault planted in the cases, one offence"
+      ],
+      "name": "a name locked with count 1 and two results → case-count",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/lock/judge-run.test.ts",
+      "suite": [
+        "judgeRun — one fault planted in the cases, one offence"
+      ],
+      "name": "a result the lock does not hold — a locked name in another file → case-unknown",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/lock/judge-run.test.ts",
+      "suite": [
+        "judgeRun — one fault planted in the cases, one offence"
+      ],
+      "name": "a result the lock does not hold — a locked name under another suite path → case-unknown",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/lock/judge-run.test.ts",
+      "suite": [
+        "judgeRun — one fault planted in the cases, one offence"
+      ],
+      "name": "a result the lock does not hold — a name the lock does not hold → case-unknown",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/lock/judge-run.test.ts",
+      "suite": [
+        "judgeRun — one fault planted in the cases, one offence"
+      ],
+      "name": "every fault is reported, not the first one alone",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/lock/judge-structure.test.ts",
+      "suite": [
+        "judgeStructure — a candidate that equals its lock"
+      ],
+      "name": "finds no offence in a changed product file that no lock protects",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/lock/judge-structure.test.ts",
+      "suite": [
+        "judgeStructure — a candidate that equals its lock"
+      ],
+      "name": "finds no offence in a script that is not the foundation's, changed or added",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/lock/judge-structure.test.ts",
+      "suite": [
+        "judgeStructure — a candidate that equals its lock"
+      ],
+      "name": "finds no offence",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/lock/judge-structure.test.ts",
+      "suite": [
+        "judgeStructure — a closed directory"
+      ],
+      "name": "a file added deeper under foundation/tests/, in a directory no lock names → no offence",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/lock/judge-structure.test.ts",
+      "suite": [
+        "judgeStructure — a closed directory"
+      ],
+      "name": "a file added to a subject directory → closed-dir-added <path>",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/lock/judge-structure.test.ts",
+      "suite": [
+        "judgeStructure — a closed directory"
+      ],
+      "name": "a file added to a subject directory, deeper → closed-dir-added <path>",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/lock/judge-structure.test.ts",
+      "suite": [
+        "judgeStructure — a closed directory"
+      ],
+      "name": "a file added to foundation/lock/ → closed-dir-added <path>",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/lock/judge-structure.test.ts",
+      "suite": [
+        "judgeStructure — a closed directory"
+      ],
+      "name": "a file added to foundation/tests/ itself → closed-dir-added <path>",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/lock/judge-structure.test.ts",
+      "suite": [
+        "judgeStructure — a protected file whose content is not the lock's"
+      ],
+      "name": "a file of the lock tool changed → protected-changed <path>",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/lock/judge-structure.test.ts",
+      "suite": [
+        "judgeStructure — a protected file whose content is not the lock's"
+      ],
+      "name": "a helper outside the subject directory changed → protected-changed <path>",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/lock/judge-structure.test.ts",
+      "suite": [
+        "judgeStructure — a protected file whose content is not the lock's"
+      ],
+      "name": "a locked test changed → protected-changed <path>",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/lock/judge-structure.test.ts",
+      "suite": [
+        "judgeStructure — a protected file whose content is not the lock's"
+      ],
+      "name": "a protected file gone → protected-missing <path>",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/lock/judge-structure.test.ts",
+      "suite": [
+        "judgeStructure — a protected file whose content is not the lock's"
+      ],
+      "name": "the lockfile changed → protected-changed <path>",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/lock/judge-structure.test.ts",
+      "suite": [
+        "judgeStructure — all offences are collected"
+      ],
+      "name": "a changed test, a missing helper and an added file are three offences",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/lock/judge-structure.test.ts",
+      "suite": [
+        "judgeStructure — nothing installed may come from the tree"
+      ],
+      "name": "a file that only has the word in its name is not such a path",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/lock/judge-structure.test.ts",
+      "suite": [
+        "judgeStructure — nothing installed may come from the tree"
+      ],
+      "name": "a path with a node_modules segment at the root → candidate-carries-node-modules <path>",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/lock/judge-structure.test.ts",
+      "suite": [
+        "judgeStructure — nothing installed may come from the tree"
+      ],
+      "name": "a path with a node_modules segment inside a package → candidate-carries-node-modules <path>",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/lock/judge-structure.test.ts",
+      "suite": [
+        "judgeStructure — the foundation's scripts of the root package file"
+      ],
+      "name": "one added → scripts-changed <name>",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/lock/judge-structure.test.ts",
+      "suite": [
+        "judgeStructure — the foundation's scripts of the root package file"
+      ],
+      "name": "one changed → scripts-changed <name>",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/lock/judge-structure.test.ts",
+      "suite": [
+        "judgeStructure — the foundation's scripts of the root package file"
+      ],
+      "name": "one removed → scripts-changed <name>",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/lock/lock-command.test.ts",
+      "suite": [
+        "lock — the cases it holds"
+      ],
+      "name": "holds a case inside two suites with the whole path, outer first",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/lock/lock-command.test.ts",
+      "suite": [
+        "lock — the cases it holds"
+      ],
+      "name": "holds every case of the locked tests with its file, its suite path and its name, and no other",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/lock/lock-command.test.ts",
+      "suite": [
+        "lock — the cases it holds"
+      ],
+      "name": "holds the name two cases of one suite carry once, with count 2",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/lock/lock-command.test.ts",
+      "suite": [
+        "lock — the cases it holds"
+      ],
+      "name": "holds the row alpha of the each as a case of its own",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/lock/lock-command.test.ts",
+      "suite": [
+        "lock — the cases it holds"
+      ],
+      "name": "holds the row beta of the each as a case of its own",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/lock/lock-command.test.ts",
+      "suite": [
+        "lock — the cases it holds"
+      ],
+      "name": "holds the row gamma of the each as a case of its own",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/lock/lock-command.test.ts",
+      "suite": [
+        "lock — the same input gives the same bytes"
+      ],
+      "name": "run again, with its directory and then without one, it writes the lock it wrote before and stages nothing",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/lock/lock-command.test.ts",
+      "suite": [
+        "lock — what it records beside the cases"
+      ],
+      "name": "names its piece, its subject directory, its config and the foundation's scripts — not the root's other script",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/lock/lock-command.test.ts",
+      "suite": [
+        "lock — what it records beside the cases"
+      ],
+      "name": "protects a locked test, with the blob id git gives it at the lock commit",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/lock/lock-command.test.ts",
+      "suite": [
+        "lock — what it records beside the cases"
+      ],
+      "name": "protects always: the foundation's tsconfig, with the blob id git gives it at the lock commit",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/lock/lock-command.test.ts",
+      "suite": [
+        "lock — what it records beside the cases"
+      ],
+      "name": "protects always: the lockfile, with the blob id git gives it at the lock commit",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/lock/lock-command.test.ts",
+      "suite": [
+        "lock — what it records beside the cases"
+      ],
+      "name": "protects always: the tests' package file, with the blob id git gives it at the lock commit",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/lock/lock-command.test.ts",
+      "suite": [
+        "lock — what it records beside the cases"
+      ],
+      "name": "protects always: the workspace file, with the blob id git gives it at the lock commit",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/lock/lock-command.test.ts",
+      "suite": [
+        "lock — what it records beside the cases"
+      ],
+      "name": "protects every file of the tool, each with its blob id",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/lock/lock-command.test.ts",
+      "suite": [
+        "lock — what it records beside the cases"
+      ],
+      "name": "protects the config, with the blob id git gives it at the lock commit",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/lock/lock-command.test.ts",
+      "suite": [
+        "lock — what it records beside the cases"
+      ],
+      "name": "protects the fixture file started by path, with the blob id git gives it at the lock commit",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/lock/lock-command.test.ts",
+      "suite": [
+        "lock — what it records beside the cases"
+      ],
+      "name": "protects the helper outside the subject directory, reached by a relative import, with the blob id git gives it at the lock commit",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/lock/lock-command.test.ts",
+      "suite": [
+        "lock — what it records beside the cases"
+      ],
+      "name": "protects the set-up file the config names, with the blob id git gives it at the lock commit",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/lock/lock-command.test.ts",
+      "suite": [
+        "lock — what it records beside the cases"
+      ],
+      "name": "protects those and nothing else — not the product, not another piece's subject directory, not the root package file",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/lock/lock-command.test.ts",
+      "suite": [
+        "lock — what it refuses"
+      ],
+      "name": "a locked test that declares a repeat",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/lock/lock-command.test.ts",
+      "suite": [
+        "lock — what it refuses"
+      ],
+      "name": "a locked test that declares a retry",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/lock/lock-command.test.ts",
+      "suite": [
+        "lock — what it refuses"
+      ],
+      "name": "a relative import that leaves foundation/tests/ — the test reaches the product past its package",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/lock/lock-command.test.ts",
+      "suite": [
+        "lock — what it refuses"
+      ],
+      "name": "a running tool that differs from foundation/lock/ in the index",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/lock/lock-command.test.ts",
+      "suite": [
+        "lock — what it refuses"
+      ],
+      "name": "a test file with no case",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/lock/pure-texts.test.ts",
+      "suite": [
+        "relativeImports — the relative specifiers of one source text"
+      ],
+      "name": "a built-in is not a relative import",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/lock/pure-texts.test.ts",
+      "suite": [
+        "relativeImports — the relative specifiers of one source text"
+      ],
+      "name": "a default import in single quotes is reached",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/lock/pure-texts.test.ts",
+      "suite": [
+        "relativeImports — the relative specifiers of one source text"
+      ],
+      "name": "a dynamic import of a literal is reached",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/lock/pure-texts.test.ts",
+      "suite": [
+        "relativeImports — the relative specifiers of one source text"
+      ],
+      "name": "a dynamic import of a package is not a relative import",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/lock/pure-texts.test.ts",
+      "suite": [
+        "relativeImports — the relative specifiers of one source text"
+      ],
+      "name": "a package is not a relative import",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/lock/pure-texts.test.ts",
+      "suite": [
+        "relativeImports — the relative specifiers of one source text"
+      ],
+      "name": "a scoped package — the code under test is not a relative import",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/lock/pure-texts.test.ts",
+      "suite": [
+        "relativeImports — the relative specifiers of one source text"
+      ],
+      "name": "a static import is reached",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/lock/pure-texts.test.ts",
+      "suite": [
+        "relativeImports — the relative specifiers of one source text"
+      ],
+      "name": "a type import is reached",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/lock/pure-texts.test.ts",
+      "suite": [
+        "relativeImports — the relative specifiers of one source text"
+      ],
+      "name": "an export of everything is reached",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/lock/pure-texts.test.ts",
+      "suite": [
+        "relativeImports — the relative specifiers of one source text"
+      ],
+      "name": "an export of names is reached",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/lock/pure-texts.test.ts",
+      "suite": [
+        "relativeImports — the relative specifiers of one source text"
+      ],
+      "name": "an import for its effect alone is reached",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/lock/pure-texts.test.ts",
+      "suite": [
+        "relativeImports — the relative specifiers of one source text"
+      ],
+      "name": "an import spread over lines is reached",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/lock/pure-texts.test.ts",
+      "suite": [
+        "relativeImports — the relative specifiers of one source text"
+      ],
+      "name": "every relative specifier of a whole file is found, and nothing else",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/lock/pure-texts.test.ts",
+      "suite": [
+        "serializeLock — the same lock gives the same bytes"
+      ],
+      "name": "a different lock gives different bytes",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/lock/pure-texts.test.ts",
+      "suite": [
+        "serializeLock — the same lock gives the same bytes"
+      ],
+      "name": "does not depend on the order its keys and lists were given in",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/lock/pure-texts.test.ts",
+      "suite": [
+        "serializeLock — the same lock gives the same bytes"
+      ],
+      "name": "is JSON of the same lock, indented by two spaces, ending in exactly one newline",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/lock/pure-texts.test.ts",
+      "suite": [
+        "serializeLock — the same lock gives the same bytes"
+      ],
+      "name": "writes the protected paths and the directories in order",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/lock/verify-all.test.ts",
+      "suite": [
+        "verify --all — every piece the inventory says is locked"
+      ],
+      "name": "a lock file whose piece the inventory does not name → lock-unlisted <piece>, red, exit 1",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/lock/verify-all.test.ts",
+      "suite": [
+        "verify --all — every piece the inventory says is locked"
+      ],
+      "name": "a piece the inventory says is locked and that has no lock file → lock-owed <piece>, LOCKS_RED, exit 1",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/lock/verify-all.test.ts",
+      "suite": [
+        "verify --all — every piece the inventory says is locked"
+      ],
+      "name": "no inventory → LOCK_REFUSED, exit 2",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/lock/verify-all.test.ts",
+      "suite": [
+        "verify --all — every piece the inventory says is locked"
+      ],
+      "name": "one piece, present and green → LOCKS_GREEN pieces=1, exit 0",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/lock/verify-all.test.ts",
+      "suite": [
+        "verify --all — every piece the inventory says is locked"
+      ],
+      "name": "two pieces present and green, and one the inventory says is not locked → LOCKS_GREEN, each verified in the inventory's order",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/lock/verify-judge.test.ts",
+      "suite": [
+        "verify — a staged change that makes the candidate's own tool say LOCK_GREEN for everything"
+      ],
+      "name": "staged and standing in the working tree, started through this repository's entry → still LOCK_RED, protected-changed",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/lock/verify-judge.test.ts",
+      "suite": [
+        "verify — a staged change that makes the candidate's own tool say LOCK_GREEN for everything"
+      ],
+      "name": "staged, the working tree's tool as it was locked, started through the fixture's own entry → still LOCK_RED, protected-changed",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/lock/verify-judge.test.ts",
+      "suite": [
+        "verify — which tool judges"
+      ],
+      "name": "an unstaged edit of the fixture's tool, run through the fixture's own entry → first line JUDGE extracted lock=<the lock commit>",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/lock/verify-judge.test.ts",
+      "suite": [
+        "verify — which tool judges"
+      ],
+      "name": "an unstaged edit that breaks the reporter → the run is judged by the lock commit's reporter, not by the edited one: LOCK_GREEN",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/lock/verify-judge.test.ts",
+      "suite": [
+        "verify — which tool judges"
+      ],
+      "name": "the untouched tool → first line JUDGE in-place lock=<the lock commit>",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/lock/verify-run.test.ts",
+      "suite": [
+        "verify — product staged so that a locked case does not pass"
+      ],
+      "name": "the product says not ready and the case returns before its assertion → case-not-passed",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/lock/verify-run.test.ts",
+      "suite": [
+        "verify — product staged so that a locked case does not pass"
+      ],
+      "name": "the product says unavailable and the case skips itself → case-skipped, though the run ended with 0",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/lock/verify-run.test.ts",
+      "suite": [
+        "verify — product staged so that a locked case does not pass"
+      ],
+      "name": "the value case fails → case-not-passed for it; the file and the exit code say so too",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/lock/verify-run.test.ts",
+      "suite": [
+        "verify — product staged so that the cases are not the locked ones"
+      ],
+      "name": "a longer list → case-unknown for the row the lock does not hold",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/lock/verify-run.test.ts",
+      "suite": [
+        "verify — product staged so that the cases are not the locked ones"
+      ],
+      "name": "a shorter list → case-missing for the row that is gone, though every case that ran passed",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/lock/verify-run.test.ts",
+      "suite": [
+        "verify — product that ends the run its own way"
+      ],
+      "name": "product that calls process.exit(0) when imported → result-missing, red though the runner ended with 0",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/lock/verify-run.test.ts",
+      "suite": [
+        "verify — product that ends the run its own way"
+      ],
+      "name": "product that leaves an unhandled rejection → red with every case passed",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/lock/verify-run.test.ts",
+      "suite": [
+        "verify — product that ends the run its own way"
+      ],
+      "name": "product that writes an earlier run's green result to the result path and exits 0 → result-stale",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/lock/verify-run.test.ts",
+      "suite": [
+        "verify — the candidate as it was locked"
+      ],
+      "name": "a staged .gitattributes that marks a locked test export-ignore and the product export-subst → still LOCK_GREEN",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/lock/verify-run.test.ts",
+      "suite": [
+        "verify — the candidate as it was locked"
+      ],
+      "name": "the same two attributes committed, verified with --rev — where an archive of the commit would expand the placeholder → still LOCK_GREEN",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/lock/verify-run.test.ts",
+      "suite": [
+        "verify — the candidate as it was locked"
+      ],
+      "name": "the untouched candidate → LOCK_GREEN, exit 0, naming the lock commit and the tree id of the index",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/lock/verify-run.test.ts",
+      "suite": [
+        "verify — the search for the runner's names: a note, never an offence"
+      ],
+      "name": "a product line that spells the runner's name → NOTE runner-name <path>:<line>, and the verdict stays LOCK_GREEN",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/lock/verify-structure.test.ts",
+      "suite": [
+        "verify --rev — a lock changed in one commit with product code"
+      ],
+      "name": "another piece's lock committed together with a product file → lock-commit-impure <commit> <path>",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/lock/verify-structure.test.ts",
+      "suite": [
+        "verify --rev — a lock changed in one commit with product code"
+      ],
+      "name": "the piece's own lock made again and committed together with the product change it was made for → the lock commit itself is impure",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/lock/verify-structure.test.ts",
+      "suite": [
+        "verify — a lock that does not describe the commit it was committed with"
+      ],
+      "name": "a committed lock whose record of a helper is not that commit's blob → lock-inconsistent <path>, beside protected-changed",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/lock/verify-structure.test.ts",
+      "suite": [
+        "verify — a staged change to what the lock protects"
+      ],
+      "name": "a file added directly in foundation/tests/ — a workspace file beside the config → closed-dir-added <path>",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/lock/verify-structure.test.ts",
+      "suite": [
+        "verify — a staged change to what the lock protects"
+      ],
+      "name": "a foundation script of the root package file → scripts-changed <name>",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/lock/verify-structure.test.ts",
+      "suite": [
+        "verify — a staged change to what the lock protects"
+      ],
+      "name": "a locked test → protected-changed <path>, and the tests are not run",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/lock/verify-structure.test.ts",
+      "suite": [
+        "verify — a staged change to what the lock protects"
+      ],
+      "name": "the config → protected-changed <path>, and the tests are not run",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/lock/verify-structure.test.ts",
+      "suite": [
+        "verify — a staged change to what the lock protects"
+      ],
+      "name": "the lockfile → protected-changed <path>, and the tests are not run",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/lock/verify-structure.test.ts",
+      "suite": [
+        "verify — a staged change to what the lock protects"
+      ],
+      "name": "the set-up file → protected-changed <path>, and the tests are not run",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/lock/verify-structure.test.ts",
+      "suite": [
+        "verify — a staged change under foundation/locks/"
+      ],
+      "name": "a lock file that is staged and not committed has no lock commit → LOCK_REFUSED, exit 2",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/lock/verify-structure.test.ts",
+      "suite": [
+        "verify — a staged change under foundation/locks/"
+      ],
+      "name": "an edit of the inventory → locks-touched <path>",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/lock/verify-structure.test.ts",
+      "suite": [
+        "verify — a staged change under foundation/locks/"
+      ],
+      "name": "an edit of the piece's own lock → locks-touched <path>; the lock that judges is the committed one",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/lock/verify-structure.test.ts",
+      "suite": [
+        "verify — what is no structural offence: the tests are run, and they are green"
+      ],
+      "name": "--rev of a later commit that adds another piece's lock alone → LOCK_GREEN by the first piece's own lock commit",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/lock/verify-structure.test.ts",
+      "suite": [
+        "verify — what is no structural offence: the tests are run, and they are green"
+      ],
+      "name": "an unstaged edit of a locked test is not in the candidate → no offence from it, LOCK_GREEN",
+      "count": 1
+    }
+  ]
+}

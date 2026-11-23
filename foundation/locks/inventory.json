@@ -1,0 +1,18 @@
+{
+  "pieces": [
+    { "piece": "piece-1", "lock": true },
+    { "piece": "piece-2", "lock": true },
+    { "piece": "piece-3", "lock": true },
+    { "piece": "piece-4", "lock": true },
+    { "piece": "piece-5", "lock": true },
+    { "piece": "piece-6", "lock": true },
+    { "piece": "piece-7", "lock": true },
+    { "piece": "piece-8", "lock": true },
+    { "piece": "piece-9", "lock": true },
+    { "piece": "piece-10", "lock": true },
+    { "piece": "piece-11", "lock": true },
+    { "piece": "piece-12", "lock": false, "why": "tried live, on demand; its receipt names the revision it ran on" },
+    { "piece": "piece-13", "lock": true },
+    { "piece": "piece-14", "lock": false, "why": "the stage's verdict is an evidence set, not code" }
+  ]
+}

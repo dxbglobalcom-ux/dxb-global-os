@@ -1,0 +1,1473 @@
+{
+  "format": 1,
+  "piece": "piece-1",
+  "dirs": [
+    "foundation/tests/bench"
+  ],
+  "config": "foundation/tests/vitest.config.ts",
+  "protected": {
+    "foundation/lock/package.json": "316e09cba247d64cb1cc67639817acace64873f2",
+    "foundation/lock/src/cli.ts": "76710fa60c1b54daaca982d678742ece00e05271",
+    "foundation/lock/src/git.ts": "3ba145ac143d6a38fc44fecb4c5402b842267ff1",
+    "foundation/lock/src/imports.ts": "eb59d6097cc457b71251349f2cf7cc1c3ba4c26f",
+    "foundation/lock/src/index.ts": "464e170e1dfccb08b2860f954c1b6c5b933c83ac",
+    "foundation/lock/src/judge.ts": "3f979cf83faabb72a5b905423c500c02b17972eb",
+    "foundation/lock/src/lock.ts": "e3e510927ce7386b254a77909b93f8ecea62f3ef",
+    "foundation/lock/src/lockfile.ts": "95d8f2c0496cfc0b72057ebc4b4558462d2c07ff",
+    "foundation/lock/src/making.ts": "a9f017689059a4e0e0b5bd134e793e0cd578ed9d",
+    "foundation/lock/src/reporter.mjs": "2164aafe5f32698804bf36b92dca1cca3cd0a7c1",
+    "foundation/lock/src/run.ts": "aabceda96ef5851221303ee542538f7712f3d757",
+    "foundation/lock/src/runner.ts": "ef5ce5c6c77c833a9900dd2948b7637a0f291566",
+    "foundation/lock/src/shape.ts": "e27b19d1bb9342576b9e8f9293d06c25a07c2c04",
+    "foundation/lock/src/structure.ts": "f009954cbfb24209174468782285d8a659b41e1f",
+    "foundation/lock/src/verify.ts": "ccfa7f19a509672f0b78bd15c749f5309981183c",
+    "foundation/lock/src/work.ts": "5d34a6e4a9c210cb4340833f40c2ea04baa4ba1f",
+    "foundation/tests/bench/fixtures/decide-in-package.ts": "ca811d889058e155b96d34449232d1f5fbd4f1cf",
+    "foundation/tests/bench/fixtures/hold-lock.ts": "a842cd19538ae5e8cad6008ccaf9eb66939315f2",
+    "foundation/tests/bench/fixtures/ordered-steps.ts": "07088bb49343ee18cdd1a061dc487cee35151b38",
+    "foundation/tests/bench/fixtures/real-bench.ts": "aff35ec4048c7047ab0ebdc960d8499ae21be921",
+    "foundation/tests/bench/fixtures/refusal-of.ts": "09d4f6c05b970270559cad23d5d9d3d383a4b35d",
+    "foundation/tests/bench/fixtures/say-default-paths.ts": "2eda079d2b2ce464a5473c5b60fcd1fa223b4410",
+    "foundation/tests/bench/guard-connection.test.ts": "dde4a1f2476763bd48198b4860bc3c1810f7d3e4",
+    "foundation/tests/bench/guard-decision.test.ts": "7887e6cf667baf5fe21e9a62018c906f79f924b1",
+    "foundation/tests/bench/host-lock.test.ts": "5ddd496d588617011861286ffd51a000586df163",
+    "foundation/tests/bench/instance-unfinished.test.ts": "76029c49f406a72442098f420477e9c496ec4f0b",
+    "foundation/tests/bench/instance.test.ts": "0b331d74836a3390f6ae060e4dd53cb81c2e7e12",
+    "foundation/tests/bench/no-old-address.test.ts": "51e5e902795af512351162cdcd0c2a829919d969",
+    "foundation/tests/bench/pure-decisions.test.ts": "29db1965cf81a4ca1473286029005eaee964dfcc",
+    "foundation/tests/bench/refused-against-the-old-record.test.ts": "b00a5ae353e0d6024975e8050c8d15a6e0a8276e",
+    "foundation/tests/bench/removal-authority.test.ts": "f66cd32f27121c469893a99705a813decaaa5bdc",
+    "foundation/tests/bench/state-directory.test.ts": "e9d082ff103162fb722922efe08b3644b10291d8",
+    "foundation/tests/bench/status-of.test.ts": "a68697f6ab4cf3e17b10d7a5cd63b84416137e55",
+    "foundation/tests/package.json": "d7936acddc4eb333e59cd4347233ae76fb887f6f",
+    "foundation/tests/vitest.config.ts": "4fb2556e7ce9929c4aae9f808b8be04ea622264a",
+    "foundation/tsconfig.json": "5a0f1572a4b87e7daa184eb8bac42fa632f95eaa",
+    "pnpm-lock.yaml": "27cd0e6ca5a4f48f40ef0bc689a4d81669390148",
+    "pnpm-workspace.yaml": "edcaf78a424a38a729a461300023ad90bf6bf945"
+  },
+  "scripts": {
+    "foundation:instance": "node foundation/bench/src/cli.ts",
+    "foundation:lock": "node foundation/lock/src/cli.ts lock",
+    "foundation:test": "vitest run --config foundation/tests/vitest.config.ts",
+    "foundation:typecheck": "tsc -p foundation/tsconfig.json",
+    "foundation:verify": "node foundation/lock/src/cli.ts verify"
+  },
+  "cases": [
+    {
+      "file": "foundation/tests/bench/guard-connection.test.ts",
+      "suite": [
+        "assertFoundationTarget — the identity is read on the connection that will do the work"
+      ],
+      "name": "answers the identity it read when the list holds it",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/guard-connection.test.ts",
+      "suite": [
+        "assertFoundationTarget — the identity is read on the connection that will do the work"
+      ],
+      "name": "refuses an identity the list does not hold: not-listed",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/guard-connection.test.ts",
+      "suite": [
+        "assertFoundationTarget — the identity is read on the connection that will do the work"
+      ],
+      "name": "refuses as unreadable when the connection answers no row — even with a list that would allow",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/guard-connection.test.ts",
+      "suite": [
+        "assertFoundationTarget — the identity is read on the connection that will do the work"
+      ],
+      "name": "refuses as unreadable when the connection answers rows without the identity's columns — even with a list that would allow",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/guard-connection.test.ts",
+      "suite": [
+        "assertFoundationTarget — the identity is read on the connection that will do the work"
+      ],
+      "name": "refuses as unreadable when the connection throws — even with a list that would allow",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/guard-connection.test.ts",
+      "suite": [
+        "assertFoundationTarget — the identity is read on the connection that will do the work"
+      ],
+      "name": "refuses the company by name, even when the list file holds its identity",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/guard-connection.test.ts",
+      "suite": [
+        "assertFoundationTarget — the identity is read on the connection that will do the work"
+      ],
+      "name": "refuses the old-bench by name, even when the list file holds its identity",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/guard-connection.test.ts",
+      "suite": [
+        "assertFoundationTarget — the identity is read on the connection that will do the work"
+      ],
+      "name": "sends the connection nothing but the identity queries — it writes nothing before the decision",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/guard-connection.test.ts",
+      "suite": [
+        "assertFoundationTarget — the identity is read on the connection that will do the work"
+      ],
+      "name": "without a statePath it decides against the machine's own list, which holds no invented identity",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/guard-connection.test.ts",
+      "suite": [
+        "guarded — the work runs after the guard, on the guarded connection"
+      ],
+      "name": "hands the work the very connection it checked, after the identity queries, and returns its result",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/guard-connection.test.ts",
+      "suite": [
+        "guarded — the work runs after the guard, on the guarded connection"
+      ],
+      "name": "refuses with company and never calls the work",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/guard-connection.test.ts",
+      "suite": [
+        "guarded — the work runs after the guard, on the guarded connection"
+      ],
+      "name": "refuses with not-listed and never calls the work",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/guard-connection.test.ts",
+      "suite": [
+        "guarded — the work runs after the guard, on the guarded connection"
+      ],
+      "name": "refuses with old-bench and never calls the work",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/guard-connection.test.ts",
+      "suite": [
+        "guarded — the work runs after the guard, on the guarded connection"
+      ],
+      "name": "refuses with unreadable and never calls the work",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/guard-connection.test.ts",
+      "suite": [
+        "guarded — the work runs after the guard, on the guarded connection"
+      ],
+      "name": "sends a refused connection no text of the work",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/guard-connection.test.ts",
+      "suite": [
+        "readIdentity — the server says who it is"
+      ],
+      "name": "answers the cluster's identifier, the database's oid and its name, as the connection gave them",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/guard-connection.test.ts",
+      "suite": [
+        "readIdentity — the server says who it is"
+      ],
+      "name": "asks with every catalog name schema-qualified: pg_catalog.pg_control_system(), .pg_database, .current_database()",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/guard-connection.test.ts",
+      "suite": [
+        "the list file — a list that cannot be read lists nothing"
+      ],
+      "name": "a file that cannot be read as a file lists nothing, and the guard refuses",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/guard-connection.test.ts",
+      "suite": [
+        "the list file — a list that cannot be read lists nothing"
+      ],
+      "name": "a file that has no instances lists nothing, and the guard refuses",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/guard-connection.test.ts",
+      "suite": [
+        "the list file — a list that cannot be read lists nothing"
+      ],
+      "name": "a file that holds instances that are not a list lists nothing, and the guard refuses",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/guard-connection.test.ts",
+      "suite": [
+        "the list file — a list that cannot be read lists nothing"
+      ],
+      "name": "a file that is empty lists nothing, and the guard refuses",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/guard-connection.test.ts",
+      "suite": [
+        "the list file — a list that cannot be read lists nothing"
+      ],
+      "name": "a file that is missing lists nothing, and the guard refuses",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/guard-connection.test.ts",
+      "suite": [
+        "the list file — a list that cannot be read lists nothing"
+      ],
+      "name": "a file that is not JSON lists nothing, and the guard refuses",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/guard-connection.test.ts",
+      "suite": [
+        "the list file — a list that cannot be read lists nothing"
+      ],
+      "name": "readInstances answers the records of a well-formed file",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/guard-decision.test.ts",
+      "suite": [
+        "decide — an identity is allowed only when the list holds all three of its fields"
+      ],
+      "name": "allows an identity that equals a listed one",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/guard-decision.test.ts",
+      "suite": [
+        "decide — an identity is allowed only when the list holds all three of its fields"
+      ],
+      "name": "allows it wherever it stands in the list",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/guard-decision.test.ts",
+      "suite": [
+        "decide — an identity is allowed only when the list holds all three of its fields"
+      ],
+      "name": "answers not-listed against an empty list",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/guard-decision.test.ts",
+      "suite": [
+        "decide — an identity is allowed only when the list holds all three of its fields"
+      ],
+      "name": "answers not-listed for a cluster the list does not hold",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/guard-decision.test.ts",
+      "suite": [
+        "decide — an identity is allowed only when the list holds all three of its fields"
+      ],
+      "name": "answers not-listed for another database of a listed cluster",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/guard-decision.test.ts",
+      "suite": [
+        "decide — an identity is allowed only when the list holds all three of its fields"
+      ],
+      "name": "answers not-listed when only the database's name differs",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/guard-decision.test.ts",
+      "suite": [
+        "decide — an identity is allowed only when the list holds all three of its fields"
+      ],
+      "name": "answers not-listed when only the database's oid differs — a database dropped and made again",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/guard-decision.test.ts",
+      "suite": [
+        "decide — an identity is allowed only when the list holds all three of its fields"
+      ],
+      "name": "does not assemble a match from two listed identities",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/guard-decision.test.ts",
+      "suite": [
+        "decide — the cluster '7674907968528752679' is refused by name: 'company'"
+      ],
+      "name": "is refused against an empty list",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/guard-decision.test.ts",
+      "suite": [
+        "decide — the cluster '7674907968528752679' is refused by name: 'company'"
+      ],
+      "name": "is refused even when the list holds exactly that identity",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/guard-decision.test.ts",
+      "suite": [
+        "decide — the cluster '7674907968528752679' is refused by name: 'company'"
+      ],
+      "name": "is refused whatever the database — another name, another oid",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/guard-decision.test.ts",
+      "suite": [
+        "decide — the cluster '7690665340837392423' is refused by name: 'old-bench'"
+      ],
+      "name": "is refused against an empty list",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/guard-decision.test.ts",
+      "suite": [
+        "decide — the cluster '7690665340837392423' is refused by name: 'old-bench'"
+      ],
+      "name": "is refused even when the list holds exactly that identity",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/guard-decision.test.ts",
+      "suite": [
+        "decide — the cluster '7690665340837392423' is refused by name: 'old-bench'"
+      ],
+      "name": "is refused whatever the database — another name, another oid",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/guard-decision.test.ts",
+      "suite": [
+        "refused.json — the committed list of refused identities"
+      ],
+      "name": "is read once: an answer asked after the file is gone is the same answer",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/guard-decision.test.ts",
+      "suite": [
+        "refused.json — the committed list of refused identities"
+      ],
+      "name": "names the company and the old bench, each with its measured identifier, the date and the reason",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/guard-decision.test.ts",
+      "suite": [
+        "refused.json — the committed list of refused identities"
+      ],
+      "name": "when the file is absent, deciding throws — it never answers from an empty list",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/guard-decision.test.ts",
+      "suite": [
+        "refused.json — the committed list of refused identities"
+      ],
+      "name": "when the file is empty, deciding throws",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/guard-decision.test.ts",
+      "suite": [
+        "refused.json — the committed list of refused identities"
+      ],
+      "name": "when the file is not JSON, deciding throws",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/guard-decision.test.ts",
+      "suite": [
+        "refused.json — the committed list of refused identities"
+      ],
+      "name": "when the file names no identity, deciding throws",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/host-lock.test.ts",
+      "suite": [
+        "assertHeld — asked of the kernel, not of a flag"
+      ],
+      "name": "passes for a lock this process took and still holds",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/host-lock.test.ts",
+      "suite": [
+        "assertHeld — asked of the kernel, not of a flag"
+      ],
+      "name": "throws for an object that only says it is held, on a path another process holds",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/host-lock.test.ts",
+      "suite": [
+        "assertHeld — asked of the kernel, not of a flag"
+      ],
+      "name": "throws for an object that only says it is held, on a path nobody holds",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/host-lock.test.ts",
+      "suite": [
+        "the host lock — one holder on the machine, held by the kernel"
+      ],
+      "name": "after release() it is not held: held() is false, assertHeld throws, and the kernel gives it to the next",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/host-lock.test.ts",
+      "suite": [
+        "the host lock — one holder on the machine, held by the kernel"
+      ],
+      "name": "is freed when its holder is killed with SIGKILL",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/host-lock.test.ts",
+      "suite": [
+        "the host lock — one holder on the machine, held by the kernel"
+      ],
+      "name": "is not held by a lock file left behind — a file holds nothing, only a living process does",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/host-lock.test.ts",
+      "suite": [
+        "the host lock — one holder on the machine, held by the kernel"
+      ],
+      "name": "is taken at the path it was asked for, and says so",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/host-lock.test.ts",
+      "suite": [
+        "the host lock — one holder on the machine, held by the kernel"
+      ],
+      "name": "refuses a second acquireHostLock on the same path from the same process, and the first stays held",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/host-lock.test.ts",
+      "suite": [
+        "the host lock — one holder on the machine, held by the kernel"
+      ],
+      "name": "refuses a second process at once while the first holds",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/host-lock.test.ts",
+      "suite": [
+        "the host lock — one holder on the machine, held by the kernel"
+      ],
+      "name": "refuses while a holder that is not the bench holds the kernel's flock on the path",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/host-lock.test.ts",
+      "suite": [
+        "the host lock — one holder on the machine, held by the kernel"
+      ],
+      "name": "with waitSeconds, acquires after the first lets go",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/host-lock.test.ts",
+      "suite": [
+        "the host lock — one holder on the machine, held by the kernel"
+      ],
+      "name": "with waitSeconds, is refused once that time has passed and the holder has not let go",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/instance-unfinished.test.ts",
+      "suite": [
+        "the instance — a make that does not finish, and a volume no record explains, in order"
+      ],
+      "name": "a labelled volume that no record explains: status INSTANCE_FOREIGN 5, up INSTANCE_STANDS 3, down REMOVAL_REFUSED 4 — and the volume is untouched",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/instance-unfinished.test.ts",
+      "suite": [
+        "the instance — a make that does not finish, and a volume no record explains, in order"
+      ],
+      "name": "down, waiting for the lock, removes what the killed make left: INSTANCE_DOWN, exit 0, and nothing stands",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/instance-unfinished.test.ts",
+      "suite": [
+        "the instance — a make that does not finish, and a volume no record explains, in order"
+      ],
+      "name": "every container and volume that is not the bench's stands as it stood before the first step",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/instance-unfinished.test.ts",
+      "suite": [
+        "the instance — a make that does not finish, and a volume no record explains, in order"
+      ],
+      "name": "it begins with nothing standing",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/instance-unfinished.test.ts",
+      "suite": [
+        "the instance — a make that does not finish, and a volume no record explains, in order"
+      ],
+      "name": "up killed with SIGKILL once a container stands: at once another up says LOCK_REFUSED, exit 2 — the start it left still holds the kernel's lock",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/instance-unfinished.test.ts",
+      "suite": [
+        "the instance — a make that does not finish, and a volume no record explains, in order"
+      ],
+      "name": "up sent SIGTERM once a container stands stops its start, removes what it made and exits 143 — nothing stands, with no command after it",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/instance.test.ts",
+      "suite": [
+        "the instance — made, looked at and destroyed, in order"
+      ],
+      "name": "down again says INSTANCE_ABSENT and exits 0; destroyInstance answers absent",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/instance.test.ts",
+      "suite": [
+        "the instance — made, looked at and destroyed, in order"
+      ],
+      "name": "down says INSTANCE_DOWN and leaves no container, volume, network, listener or record",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/instance.test.ts",
+      "suite": [
+        "the instance — made, looked at and destroyed, in order"
+      ],
+      "name": "every container and volume that is not the bench's stands as it stood before the first step",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/instance.test.ts",
+      "suite": [
+        "the instance — made, looked at and destroyed, in order"
+      ],
+      "name": "every published port is bound to 127.0.0.1 and nowhere else",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/instance.test.ts",
+      "suite": [
+        "the instance — made, looked at and destroyed, in order"
+      ],
+      "name": "fresh makes an instance and says INSTANCE_UP with the cluster's identifier and the loopback address",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/instance.test.ts",
+      "suite": [
+        "the instance — made, looked at and destroyed, in order"
+      ],
+      "name": "guarded refuses a throwaway database made in the same cluster",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/instance.test.ts",
+      "suite": [
+        "the instance — made, looked at and destroyed, in order"
+      ],
+      "name": "guarded refuses the real connection against an empty list — no work, no row — and runs the work against the real list",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/instance.test.ts",
+      "suite": [
+        "the instance — made, looked at and destroyed, in order"
+      ],
+      "name": "it holds no foundation object: no schema os or os_clock, no role named os_…",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/instance.test.ts",
+      "suite": [
+        "the instance — made, looked at and destroyed, in order"
+      ],
+      "name": "makeInstance and destroyInstance refuse a held lock that is not the host lock, and the same instance still stands",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/instance.test.ts",
+      "suite": [
+        "the instance — made, looked at and destroyed, in order"
+      ],
+      "name": "makeInstance and destroyInstance refuse a lock that has been released, and one held elsewhere — nothing is made",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/instance.test.ts",
+      "suite": [
+        "the instance — made, looked at and destroyed, in order"
+      ],
+      "name": "status answers the same with a hostile DOCKER_HOST in the caller's environment — the command hands it to no child",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/instance.test.ts",
+      "suite": [
+        "the instance — made, looked at and destroyed, in order"
+      ],
+      "name": "the list holds one record of it, and status says INSTANCE_STANDING with the same identifier",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/instance.test.ts",
+      "suite": [
+        "the instance — made, looked at and destroyed, in order"
+      ],
+      "name": "the old chain stood: the ledger holds one row per file of db/migrations and the old schema is there",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/instance.test.ts",
+      "suite": [
+        "the instance — made, looked at and destroyed, in order"
+      ],
+      "name": "the recorded identity is what the server answers on TCP and inside the database container",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/instance.test.ts",
+      "suite": [
+        "the instance — made, looked at and destroyed, in order"
+      ],
+      "name": "up while it stands says INSTANCE_STANDS and exits 3; makeInstance throws InstanceStands; the same instance still answers",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/instance.test.ts",
+      "suite": [
+        "the instance — made, looked at and destroyed, in order"
+      ],
+      "name": "while another holds the host lock the command says LOCK_REFUSED and exits 2 — with DXB_FOUNDATION_LOCK_WAIT, after waiting that long",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/instance.test.ts",
+      "suite": [
+        "the instance — made, looked at and destroyed, in order"
+      ],
+      "name": "with the list emptied, status says INSTANCE_FOREIGN and exits 5, down is refused and exits 4, and the instance still stands",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/no-old-address.test.ts",
+      "suite": [
+        "foundation/** — nothing in it spells an address of the old system"
+      ],
+      "name": "no file spells an old port, a company variable or an env file of the old system, and the environment is read only for the names of SPEC §5b.1",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/no-old-address.test.ts",
+      "suite": [
+        "foundation/** — nothing in it spells an address of the old system"
+      ],
+      "name": "the scan reaches the foundation's own files and stays out of node_modules",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/no-old-address.test.ts",
+      "suite": [
+        "the detector — seen to find each forbidden spelling before its silence is trusted"
+      ],
+      "name": "finds a bracketed read of one",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/no-old-address.test.ts",
+      "suite": [
+        "the detector — seen to find each forbidden spelling before its silence is trusted"
+      ],
+      "name": "finds a company variable",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/no-old-address.test.ts",
+      "suite": [
+        "the detector — seen to find each forbidden spelling before its silence is trusted"
+      ],
+      "name": "finds a dot-env file with an ending",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/no-old-address.test.ts",
+      "suite": [
+        "the detector — seen to find each forbidden spelling before its silence is trusted"
+      ],
+      "name": "finds a named env file with a hyphen",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/no-old-address.test.ts",
+      "suite": [
+        "the detector — seen to find each forbidden spelling before its silence is trusted"
+      ],
+      "name": "finds a named env file without one",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/no-old-address.test.ts",
+      "suite": [
+        "the detector — seen to find each forbidden spelling before its silence is trusted"
+      ],
+      "name": "finds a read by a computed name",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/no-old-address.test.ts",
+      "suite": [
+        "the detector — seen to find each forbidden spelling before its silence is trusted"
+      ],
+      "name": "finds a read of HOME, which SPEC §5b.1 took from the contract",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/no-old-address.test.ts",
+      "suite": [
+        "the detector — seen to find each forbidden spelling before its silence is trusted"
+      ],
+      "name": "finds a read of XDG_RUNTIME_DIR, taken from it too",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/no-old-address.test.ts",
+      "suite": [
+        "the detector — seen to find each forbidden spelling before its silence is trusted"
+      ],
+      "name": "finds a read of XDG_STATE_HOME, taken from it too",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/no-old-address.test.ts",
+      "suite": [
+        "the detector — seen to find each forbidden spelling before its silence is trusted"
+      ],
+      "name": "finds a read of a variable the contract does not name",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/no-old-address.test.ts",
+      "suite": [
+        "the detector — seen to find each forbidden spelling before its silence is trusted"
+      ],
+      "name": "finds another company variable",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/no-old-address.test.ts",
+      "suite": [
+        "the detector — seen to find each forbidden spelling before its silence is trusted"
+      ],
+      "name": "finds that import from the module's bare name, beside its default",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/no-old-address.test.ts",
+      "suite": [
+        "the detector — seen to find each forbidden spelling before its silence is trusted"
+      ],
+      "name": "finds that import under another name, its list on several lines",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/no-old-address.test.ts",
+      "suite": [
+        "the detector — seen to find each forbidden spelling before its silence is trusted"
+      ],
+      "name": "finds the company's API port",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/no-old-address.test.ts",
+      "suite": [
+        "the detector — seen to find each forbidden spelling before its silence is trusted"
+      ],
+      "name": "finds the company's database port",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/no-old-address.test.ts",
+      "suite": [
+        "the detector — seen to find each forbidden spelling before its silence is trusted"
+      ],
+      "name": "finds the dot-env file",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/no-old-address.test.ts",
+      "suite": [
+        "the detector — seen to find each forbidden spelling before its silence is trusted"
+      ],
+      "name": "finds the environment asked for in brackets, even for a variable of the contract",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/no-old-address.test.ts",
+      "suite": [
+        "the detector — seen to find each forbidden spelling before its silence is trusted"
+      ],
+      "name": "finds the environment imported by its own name",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/no-old-address.test.ts",
+      "suite": [
+        "the detector — seen to find each forbidden spelling before its silence is trusted"
+      ],
+      "name": "finds the old bench's API port",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/no-old-address.test.ts",
+      "suite": [
+        "the detector — seen to find each forbidden spelling before its silence is trusted"
+      ],
+      "name": "finds the old bench's database port",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/no-old-address.test.ts",
+      "suite": [
+        "the detector — seen to find each forbidden spelling before its silence is trusted"
+      ],
+      "name": "finds the whole environment handed on",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/no-old-address.test.ts",
+      "suite": [
+        "the detector — seen to find each forbidden spelling before its silence is trusted"
+      ],
+      "name": "is silent on the foundation's own address and on the two variables SPEC §5b.1 names",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/no-old-address.test.ts",
+      "suite": [
+        "the foundation's own address — SPEC §3"
+      ],
+      "name": "BENCH names the project, the two ports, the network and the only address it binds",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/no-old-address.test.ts",
+      "suite": [
+        "the foundation's own address — SPEC §3"
+      ],
+      "name": "connectionString() is the bench's database on the loopback address",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/no-old-address.test.ts",
+      "suite": [
+        "the foundation's own address — SPEC §3"
+      ],
+      "name": "every port the stack's config names beside them is in the 545xx range",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/no-old-address.test.ts",
+      "suite": [
+        "the foundation's own address — SPEC §3"
+      ],
+      "name": "the stack's config says project DxB_Foundation, API 54521, database 54522, shadow 54520",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/pure-decisions.test.ts",
+      "suite": [
+        "answerOf — the line and the exit code of a call that did not end well"
+      ],
+      "name": "answers INSTANCE_STANDS and 3 for an InstanceStands",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/pure-decisions.test.ts",
+      "suite": [
+        "answerOf — the line and the exit code of a call that did not end well"
+      ],
+      "name": "answers LOCK_REFUSED and 2 for a LockRefused",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/pure-decisions.test.ts",
+      "suite": [
+        "answerOf — the line and the exit code of a call that did not end well"
+      ],
+      "name": "answers REMOVAL_REFUSED with the reason and 4 for a RemovalRefused",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/pure-decisions.test.ts",
+      "suite": [
+        "answerOf — the line and the exit code of a call that did not end well"
+      ],
+      "name": "answers TARGET_REFUSED reason=company and 4 for the guard's refusal",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/pure-decisions.test.ts",
+      "suite": [
+        "answerOf — the line and the exit code of a call that did not end well"
+      ],
+      "name": "answers TARGET_REFUSED reason=not-listed and 4 for the guard's refusal",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/pure-decisions.test.ts",
+      "suite": [
+        "answerOf — the line and the exit code of a call that did not end well"
+      ],
+      "name": "answers TARGET_REFUSED reason=old-bench and 4 for the guard's refusal",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/pure-decisions.test.ts",
+      "suite": [
+        "answerOf — the line and the exit code of a call that did not end well"
+      ],
+      "name": "answers TARGET_REFUSED reason=unreadable and 4 for the guard's refusal",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/pure-decisions.test.ts",
+      "suite": [
+        "answerOf — the line and the exit code of a call that did not end well"
+      ],
+      "name": "answers the error itself and 1 for anything else: a thrown text",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/pure-decisions.test.ts",
+      "suite": [
+        "answerOf — the line and the exit code of a call that did not end well"
+      ],
+      "name": "answers the error itself and 1 for anything else: an Error",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/pure-decisions.test.ts",
+      "suite": [
+        "answerOf — the line and the exit code of a call that did not end well"
+      ],
+      "name": "answers the error itself and 1 for anything else: an ExposureRefused — no row of the table is its own",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/pure-decisions.test.ts",
+      "suite": [
+        "answerOf — the line and the exit code of a call that did not end well"
+      ],
+      "name": "keeps the answer on one line — it is the last line the command prints",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/pure-decisions.test.ts",
+      "suite": [
+        "configMismatch — the stack's config must say the bench's project and its two ports"
+      ],
+      "name": "answers undefined for the committed foundation/bench/supabase/config.toml",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/pure-decisions.test.ts",
+      "suite": [
+        "configMismatch — the stack's config must say the bench's project and its two ports"
+      ],
+      "name": "names another API port",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/pure-decisions.test.ts",
+      "suite": [
+        "configMismatch — the stack's config must say the bench's project and its two ports"
+      ],
+      "name": "names another database port",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/pure-decisions.test.ts",
+      "suite": [
+        "configMismatch — the stack's config must say the bench's project and its two ports"
+      ],
+      "name": "names another project",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/pure-decisions.test.ts",
+      "suite": [
+        "exposedBeyondLoopback — every published port bound anywhere but 127.0.0.1, each named"
+      ],
+      "name": "answers nothing when every published port is on 127.0.0.1, and when nothing is published",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/pure-decisions.test.ts",
+      "suite": [
+        "exposedBeyondLoopback — every published port bound anywhere but 127.0.0.1, each named"
+      ],
+      "name": "names a port published on an empty address, which is every address — the container and the host port, and not its loopback neighbour",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/pure-decisions.test.ts",
+      "suite": [
+        "exposedBeyondLoopback — every published port bound anywhere but 127.0.0.1, each named"
+      ],
+      "name": "names a port published on every IPv4 address — the container and the host port, and not its loopback neighbour",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/pure-decisions.test.ts",
+      "suite": [
+        "exposedBeyondLoopback — every published port bound anywhere but 127.0.0.1, each named"
+      ],
+      "name": "names a port published on every IPv6 address — the container and the host port, and not its loopback neighbour",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/pure-decisions.test.ts",
+      "suite": [
+        "exposedBeyondLoopback — every published port bound anywhere but 127.0.0.1, each named"
+      ],
+      "name": "names a port published on the LAN address — the container and the host port, and not its loopback neighbour",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/pure-decisions.test.ts",
+      "suite": [
+        "exposedBeyondLoopback — every published port bound anywhere but 127.0.0.1, each named"
+      ],
+      "name": "names each one: a port bound on 127.0.0.1 and also on the LAN, and another container's on every address",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/refused-against-the-old-record.test.ts",
+      "suite": [
+        "refused.json — it says what the old system's own record says"
+      ],
+      "name": "names the company's cluster and the old bench's newest one as tools/hooks/ledger-identity.json does",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/refused-against-the-old-record.test.ts",
+      "suite": [
+        "the comparison — seen to find a stale entry before its silence is trusted"
+      ],
+      "name": "finds a company identifier that differs",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/refused-against-the-old-record.test.ts",
+      "suite": [
+        "the comparison — seen to find a stale entry before its silence is trusted"
+      ],
+      "name": "finds an old record that names no cluster — it never passes for want of something to compare",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/refused-against-the-old-record.test.ts",
+      "suite": [
+        "the comparison — seen to find a stale entry before its silence is trusted"
+      ],
+      "name": "finds the old bench rebuilt: a newer allowed entry, written after the old one",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/refused-against-the-old-record.test.ts",
+      "suite": [
+        "the comparison — seen to find a stale entry before its silence is trusted"
+      ],
+      "name": "finds the old bench rebuilt: a newer allowed entry, written before it — the newest is chosen by its moment, not by its place",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/refused-against-the-old-record.test.ts",
+      "suite": [
+        "the comparison — seen to find a stale entry before its silence is trusted"
+      ],
+      "name": "is silent when both identifiers agree",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/removal-authority.test.ts",
+      "suite": [
+        "removal authority — a refused project is refused before anything else"
+      ],
+      "name": "refuses a container that carries the company's project as its label — even when the record lists its id",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/removal-authority.test.ts",
+      "suite": [
+        "removal authority — a refused project is refused before anything else"
+      ],
+      "name": "refuses a container that carries the company's project in its name, under the bench's label — even when the record lists its id",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/removal-authority.test.ts",
+      "suite": [
+        "removal authority — a refused project is refused before anything else"
+      ],
+      "name": "refuses a container that carries the old bench's project as its label — even when the record lists its id",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/removal-authority.test.ts",
+      "suite": [
+        "removal authority — a refused project is refused before anything else"
+      ],
+      "name": "refuses a container that carries the old bench's project in its name, under the bench's label — even when the record lists its id",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/removal-authority.test.ts",
+      "suite": [
+        "removal authority — a refused project is refused before anything else"
+      ],
+      "name": "refuses a volume whose name carries a refused project — the company's, carrying the bench's label since the pending make",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/removal-authority.test.ts",
+      "suite": [
+        "removal authority — a refused project is refused before anything else"
+      ],
+      "name": "refuses a volume whose name carries a refused project — the company's, standing in the record's volumes",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/removal-authority.test.ts",
+      "suite": [
+        "removal authority — a refused project is refused before anything else"
+      ],
+      "name": "refuses a volume whose name carries a refused project — the old bench's, mounted by a recorded container",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/removal-authority.test.ts",
+      "suite": [
+        "removal authority — a refused project is refused before anything else"
+      ],
+      "name": "refuses a volume whose name carries a refused project — the old bench's, standing in the record's volumes",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/removal-authority.test.ts",
+      "suite": [
+        "removal authority — a refused project is refused before anything else"
+      ],
+      "name": "refuses it under a pending record, however lately it was created",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/removal-authority.test.ts",
+      "suite": [
+        "removal authority — a refused project is refused before anything else"
+      ],
+      "name": "refuses it with no record for the project it carries — not only because no record explains it",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/removal-authority.test.ts",
+      "suite": [
+        "removal authority — with a pending record, a make that died before it wrote its record"
+      ],
+      "name": "answers the containers created at or after the make started, with their volumes",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/removal-authority.test.ts",
+      "suite": [
+        "removal authority — with a pending record, a make that died before it wrote its record"
+      ],
+      "name": "compares the two as moments, not as texts: 00:10:00.1Z is before a make started at 00:10:00.123Z",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/removal-authority.test.ts",
+      "suite": [
+        "removal authority — with a pending record, a make that died before it wrote its record"
+      ],
+      "name": "refuses a labelled volume created in a second before the make started — an earlier attempt's, not this make's",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/removal-authority.test.ts",
+      "suite": [
+        "removal authority — with a pending record, a make that died before it wrote its record"
+      ],
+      "name": "refuses when one container was created before the make started",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/removal-authority.test.ts",
+      "suite": [
+        "removal authority — with a pending record, a make that died before it wrote its record"
+      ],
+      "name": "takes a labelled volume created in the second the make started — a volume's creation is known to the second",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/removal-authority.test.ts",
+      "suite": [
+        "removal authority — with a pending record, a make that died before it wrote its record"
+      ],
+      "name": "with nothing found and no labelled volume, answers nothing to remove",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/removal-authority.test.ts",
+      "suite": [
+        "removal authority — with no record"
+      ],
+      "name": "answers nothing to remove when no container was found and no volume carries the label",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/removal-authority.test.ts",
+      "suite": [
+        "removal authority — with no record"
+      ],
+      "name": "refuses any labelled volume, though no container was found: the label alone authorises nothing",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/removal-authority.test.ts",
+      "suite": [
+        "removal authority — with no record"
+      ],
+      "name": "refuses when containers were found: the label alone authorises nothing",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/removal-authority.test.ts",
+      "suite": [
+        "removal authority — with the record of a made instance"
+      ],
+      "name": "a label and a name of the bench do not make a stranger removable",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/removal-authority.test.ts",
+      "suite": [
+        "removal authority — with the record of a made instance"
+      ],
+      "name": "a name that stands only in the record's text removes nothing — with nothing found, and beside a found container",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/removal-authority.test.ts",
+      "suite": [
+        "removal authority — with the record of a made instance"
+      ],
+      "name": "a volume a found container mounts is removed, though it carries no label and the record does not name it",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/removal-authority.test.ts",
+      "suite": [
+        "removal authority — with the record of a made instance"
+      ],
+      "name": "answers only the ids that were found — not the recorded ones that are already gone",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/removal-authority.test.ts",
+      "suite": [
+        "removal authority — with the record of a made instance"
+      ],
+      "name": "answers the found containers' ids, and the volumes that carry the label joined with the found containers' own",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/removal-authority.test.ts",
+      "suite": [
+        "removal authority — with the record of a made instance"
+      ],
+      "name": "refuses a labelled volume that the record does not name and no found container mounts",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/removal-authority.test.ts",
+      "suite": [
+        "removal authority — with the record of a made instance"
+      ],
+      "name": "refuses when a found container's id is not in the record, and names the stranger",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/removal-authority.test.ts",
+      "suite": [
+        "removal authority — with the record of a made instance"
+      ],
+      "name": "with nothing found, answers no container and the recorded volume that still carries the label",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/state-directory.test.ts",
+      "suite": [
+        "the state directory — <home>/.local/state/dxb/foundation-bench, the home read from the password database"
+      ],
+      "name": "a process started with HOME pointing at another directory answers the same two paths",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/state-directory.test.ts",
+      "suite": [
+        "the state directory — <home>/.local/state/dxb/foundation-bench, the home read from the password database"
+      ],
+      "name": "a process started with XDG_RUNTIME_DIR pointing at another directory answers the same two paths",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/state-directory.test.ts",
+      "suite": [
+        "the state directory — <home>/.local/state/dxb/foundation-bench, the home read from the password database"
+      ],
+      "name": "a process started with XDG_STATE_HOME pointing at another directory answers the same two paths",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/state-directory.test.ts",
+      "suite": [
+        "the state directory — <home>/.local/state/dxb/foundation-bench, the home read from the password database"
+      ],
+      "name": "a process started with all three at once pointing at another directory answers the same two paths",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/state-directory.test.ts",
+      "suite": [
+        "the state directory — <home>/.local/state/dxb/foundation-bench, the home read from the password database"
+      ],
+      "name": "defaultLockPath() is host.lock in it, beside the list",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/state-directory.test.ts",
+      "suite": [
+        "the state directory — <home>/.local/state/dxb/foundation-bench, the home read from the password database"
+      ],
+      "name": "defaultStatePath() is instances.json in it",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/status-of.test.ts",
+      "suite": [
+        "statusOf — a make that has not finished, and what no record explains, are foreign"
+      ],
+      "name": "says foreign for a labelled volume when the list holds no record — a volume stands like a container does",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/status-of.test.ts",
+      "suite": [
+        "statusOf — a make that has not finished, and what no record explains, are foreign"
+      ],
+      "name": "says foreign for a pending record — with the containers it started, and with none",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/status-of.test.ts",
+      "suite": [
+        "statusOf — a make that has not finished, and what no record explains, are foreign"
+      ],
+      "name": "says foreign for containers that carry the label when the list holds no record",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/status-of.test.ts",
+      "suite": [
+        "statusOf — absent is nothing at all"
+      ],
+      "name": "says absent with no container, no labelled volume and an empty list",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/status-of.test.ts",
+      "suite": [
+        "statusOf — standing is one record whose chain was applied, every recorded container running"
+      ],
+      "name": "says foreign for a record without chainAppliedAt, though everything it names runs — the chain did not finish",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/status-of.test.ts",
+      "suite": [
+        "statusOf — standing is one record whose chain was applied, every recorded container running"
+      ],
+      "name": "says foreign when a container carries the label and is not in the record",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/status-of.test.ts",
+      "suite": [
+        "statusOf — standing is one record whose chain was applied, every recorded container running"
+      ],
+      "name": "says foreign when a recorded container is gone",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/status-of.test.ts",
+      "suite": [
+        "statusOf — standing is one record whose chain was applied, every recorded container running"
+      ],
+      "name": "says foreign when a recorded container is stopped",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/status-of.test.ts",
+      "suite": [
+        "statusOf — standing is one record whose chain was applied, every recorded container running"
+      ],
+      "name": "says foreign when the list holds more than one record — the bench makes one instance",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/bench/status-of.test.ts",
+      "suite": [
+        "statusOf — standing is one record whose chain was applied, every recorded container running"
+      ],
+      "name": "says standing, with the record, when the chain was applied and each recorded container runs",
+      "count": 1
+    }
+  ]
+}
