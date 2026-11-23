@@ -1,0 +1,1272 @@
+
+ RUN  v3.2.6 /home/dxb/DxB Global OS/foundation/tests
+
+ ❯ chain/on-the-bench.test.ts (52 tests | 48 failed) 6129ms
+   ✓ the harness — seen to work before a case rests on it > a throwaway database is made on the bench's cluster, the guard allows it through its own list, and it is gone afterwards 150ms
+   ✓ the harness — seen to work before a case rests on it > a session inside pg_sleep is seen as such by another session — and no longer once it woke  1151ms
+   × built from nothing — an empty database and a chain of three > applies the three in order, and their tables stand 128ms
+     → NOT_BUILT
+   × built from nothing — an empty database and a chain of three > the ledger holds row 0 and one row for each: name, kind, the file's hash, the login, the runner's version, positions 1 to 3 120ms
+     → NOT_BUILT
+   × built from nothing — an empty database and a chain of three > a second run applies nothing and changes no row 118ms
+     → NOT_BUILT
+   × the bootstrap — the ledger this runner makes > a chain of no files leaves row 0 alone 133ms
+     → NOT_BUILT
+   × the bootstrap — the ledger this runner makes > the schema and the table are the login's own, and the table has the seven columns of SPEC §5, none of them nullable 140ms
+     → NOT_BUILT
+   × the bootstrap — the ledger this runner makes > the table itself holds a position and a file to one row each, the kind to the two kinds, the hash to 64 lower-case hex digits 133ms
+     → NOT_BUILT
+   × the bootstrap — the ledger this runner makes > in a database that carries planted default privileges, the schema and the ledger have no grantee but their owner 172ms
+     → NOT_BUILT
+   × the bootstrap — a ledger this runner does not know > row 0 carries another hash: ledger-unknown, and nothing is changed 141ms
+     → NOT_BUILT
+   × the bootstrap — a ledger this runner does not know > row 0 is absent: ledger-unknown, and nothing is changed 130ms
+     → NOT_BUILT
+   × the bootstrap — a ledger this runner does not know > the schema os_chain holds no table: ledger-unknown, and nothing is changed 125ms
+     → NOT_BUILT
+   × the bootstrap — a ledger this runner does not know > the table os_chain.ledger is of another shape: ledger-unknown, and nothing is changed 143ms
+     → NOT_BUILT
+   × the disk against a real ledger — each sentence of SPEC §4's second table > changed — an applied file is rewritten 136ms
+     → NOT_BUILT
+   × the disk against a real ledger — each sentence of SPEC §4's second table > renamed — an applied file is given another name 132ms
+     → NOT_BUILT
+   × the disk against a real ledger — each sentence of SPEC §4's second table > missing — an applied file is removed 125ms
+     → NOT_BUILT
+   × the disk against a real ledger — each sentence of SPEC §4's second table > before-applied — a new file with a number lower than the last applied one 138ms
+     → NOT_BUILT
+   × the disk against a real ledger — each sentence of SPEC §4's second table > before-applied — a new file with the number of the last applied one, which is gone: both faults are said 129ms
+     → NOT_BUILT
+   × the disk against a real ledger — each sentence of SPEC §4's second table > reordered — the ledger holds a file after one of a greater number 132ms
+     → NOT_BUILT
+   × nothing before the check > an empty database and a chain with an offence of the disk's own: the offence is said, and no schema os_chain is made 125ms
+     → NOT_BUILT
+   × nothing before the check > the disk is judged before the target is asked who it is: a database no list holds, and still the disk's offence is the answer 126ms
+     → NOT_BUILT
+   × nothing before the check > a root with no schema/ is refused as no-chain, and no schema os_chain is made 130ms
+     → NOT_BUILT
+   × a failing file > the second of three fails after making a table: file-failed, the first stands ledgered, nothing of the second or third 127ms
+     → NOT_BUILT
+   × a failing file > the file corrected: the next run applies it and the one after it 150ms
+     → NOT_BUILT
+   × a file that opens or closes a transaction > commit in the middle of a file: file-failed with a message that says transaction, and the statements before it left nothing 107ms
+     → NOT_BUILT
+   × a file that opens or closes a transaction > rollback in the middle of a file: file-failed with a message that says transaction, and the statements before it left nothing 94ms
+     → NOT_BUILT
+   × a file that opens or closes a transaction > begin in the middle of a file: file-failed with a message that says transaction, and the statements before it left nothing 102ms
+     → NOT_BUILT
+   × a file that opens or closes a transaction > savepoint in the middle of a file: file-failed with a message that says transaction, and the statements before it left nothing 114ms
+     → NOT_BUILT
+   × a file that opens or closes a transaction > a do block that commits in the middle of a file: file-failed with a message that says transaction, and the statements before it left nothing 101ms
+     → NOT_BUILT
+   × a file that opens or closes a transaction > a file with a plpgsql body, and the words inside a string and a comment, is applied 95ms
+     → NOT_BUILT
+   × a session of its own > a file that sets a search path, a role and a temporary table; the next file meets the defaults, and no temporary table 95ms
+     → NOT_BUILT
+   × a populated database upgraded > a third file alters a table that holds rows and adds another: the rows are there, and the first two ledger rows are unchanged to the instant 96ms
+     → NOT_BUILT
+   × one runner at a time > while a run sits in a file that sleeps, a second run with no wait is refused at once: busy — and the first goes on to its end 110ms
+     → NOT_BUILT
+   × one runner at a time > a second run with a wait runs after the first, and applies nothing 95ms
+     → NOT_BUILT
+   × one runner at a time > a wait that runs out is the same refusal: busy, after the wait and not before 93ms
+     → NOT_BUILT
+   × one runner at a time > after a run ended — in a failed file, well, in offences — the next takes the lock at once 104ms
+     → NOT_BUILT
+   × the target > a database whose identity the list does not hold is refused: not-listed, and no schema os_chain is made in it 93ms
+     → NOT_BUILT
+   × the target > a list that loses the identity while a file sleeps: the next file's connection is refused, and the first file stays ledgered 95ms
+     → NOT_BUILT
+   × the command > up --root <a root with a disk offence>: the OFFENCE line, then CHAIN_RED, exit 1 39ms
+     → expected [ 'NOT_BUILT' ] to deeply equal [ …(2) ]
+   × the command > up --root <dir> --wait <a positive integer> is the same command: the wait is taken, and the answer is the disk's 35ms
+     → expected [ 'NOT_BUILT' ] to deeply equal [ …(2) ]
+   × the command > up --root <a directory with no schema/>: CHAIN_REFUSED no-chain, exit 2 36ms
+     → expected [ 'NOT_BUILT' ] to deeply equal [ 'CHAIN_REFUSED no-chain' ]
+   × the command > a wrong word: the usage line, exit 2 36ms
+     → expected [ 'NOT_BUILT' ] to deeply equal [ Array(1) ]
+   × the command > the word in capitals: the usage line, exit 2 35ms
+     → expected [ 'NOT_BUILT' ] to deeply equal [ Array(1) ]
+   × the command > no word at all: the usage line, exit 2 38ms
+     → expected [ 'NOT_BUILT' ] to deeply equal [ Array(1) ]
+   × the command > up --root <dir> and then a word after the options: the usage line, exit 2 34ms
+     → expected [ 'NOT_BUILT' ] to deeply equal [ Array(1) ]
+   × the command > up --root <dir> and then an option the command does not have: the usage line, exit 2 37ms
+     → expected [ 'NOT_BUILT' ] to deeply equal [ Array(1) ]
+   × the command > up --root <dir> and then --wait 0: the usage line, exit 2 37ms
+     → expected [ 'NOT_BUILT' ] to deeply equal [ Array(1) ]
+   × the command > up --root <dir> and then --wait with a fraction: the usage line, exit 2 34ms
+     → expected [ 'NOT_BUILT' ] to deeply equal [ Array(1) ]
+   × the command > up --root <dir> and then --wait with a word: the usage line, exit 2 34ms
+     → expected [ 'NOT_BUILT' ] to deeply equal [ Array(1) ]
+   × the command > up --root <dir> and then --wait with nothing after it: the usage line, exit 2 35ms
+     → expected [ 'NOT_BUILT' ] to deeply equal [ Array(1) ]
+   ✓ the command > after them, the instance's own postgres database holds no schema os_chain 6ms
+   ✓ what the module leaves > no database that it made still stands 6ms
+ ❯ chain/read-chain.test.ts (32 tests | 27 failed) 15ms
+   ✓ the fixture files — seen to be what they say before a hash is trusted > the literal beside '0001-people.sql' is the SHA-256 of its bytes 1ms
+   ✓ the fixture files — seen to be what they say before a hash is trusted > the literal beside '0002-places.sql' is the SHA-256 of its bytes 0ms
+   ✓ the fixture files — seen to be what they say before a hash is trusted > the literal beside '0003-visits.sql' is the SHA-256 of its bytes 0ms
+   ✓ the fixture files — seen to be what they say before a hash is trusted > the literal beside '0003-born-and-pets.sql' is the SHA-256 of its bytes 0ms
+   ✓ the fixture files — seen to be what they say before a hash is trusted > the literal beside '0010-remarks.sql' is the SHA-256 of its bytes 0ms
+   × readChain — the files of <root>/schema > come back by number, each with its name, its number, the SHA-256 of its bytes and its text 3ms
+     → NOT_BUILT
+   × readChain — the files of <root>/schema > a schema/ that holds nothing is a chain of no files 0ms
+     → NOT_BUILT
+   × readChain — the files of <root>/schema > a file that is only a comment is a file like any other — it is not empty 0ms
+     → NOT_BUILT
+   × readChain — the files of <root>/schema > what lies in the root beside schema/ is not the chain's: it is not read 0ms
+     → NOT_BUILT
+   × readChain — the disk's own offences, each planted and named > unknown-entry: a file with another ending 0ms
+     → NOT_BUILT
+   × readChain — the disk's own offences, each planted and named > unknown-entry: a file with a number of three digits 0ms
+     → NOT_BUILT
+   × readChain — the disk's own offences, each planted and named > unknown-entry: a file with a number of five digits 0ms
+     → NOT_BUILT
+   × readChain — the disk's own offences, each planted and named > unknown-entry: a file with a capital letter 0ms
+     → NOT_BUILT
+   × readChain — the disk's own offences, each planted and named > unknown-entry: a file with an underscore 0ms
+     → NOT_BUILT
+   × readChain — the disk's own offences, each planted and named > unknown-entry: a file with a hyphen at the end of the name 0ms
+     → NOT_BUILT
+   × readChain — the disk's own offences, each planted and named > unknown-entry: a file with two hyphens together 1ms
+     → NOT_BUILT
+   × readChain — the disk's own offences, each planted and named > unknown-entry: a file with no word after the number 0ms
+     → NOT_BUILT
+   × readChain — the disk's own offences, each planted and named > unknown-entry: a file with the ending in capitals 0ms
+     → NOT_BUILT
+   × readChain — the disk's own offences, each planted and named > unknown-entry: a file with a name that begins with a dot 0ms
+     → NOT_BUILT
+   × readChain — the disk's own offences, each planted and named > unknown-entry: a directory, whatever its name 0ms
+     → NOT_BUILT
+   × readChain — the disk's own offences, each planted and named > unknown-entry: a link, also one that carries a file's name and leads to a file — or to nothing 0ms
+     → NOT_BUILT
+   × readChain — the disk's own offences, each planted and named > duplicated-number: two files carry the same number — both named, in ascending order 0ms
+     → NOT_BUILT
+   × readChain — the disk's own offences, each planted and named > duplicated-content: two files carry the same bytes — both named, in ascending order 0ms
+     → NOT_BUILT
+   × readChain — the disk's own offences, each planted and named > empty: a file of no bytes 0ms
+     → NOT_BUILT
+   × readChain — the disk's own offences, each planted and named > empty: a file of white space only 0ms
+     → NOT_BUILT
+   × readChain — the disk's own offences, each planted and named > unreadable: a file that is not valid UTF-8 — a byte that begins no character 0ms
+     → NOT_BUILT
+   × readChain — the disk's own offences, each planted and named > unreadable: a file that is not valid UTF-8 — a character cut off in its middle 0ms
+     → NOT_BUILT
+   × readChain — the disk's own offences, each planted and named > unreadable: a file this user may not read 1ms
+     → NOT_BUILT
+   × readChain — the disk's own offences, each planted and named > says every offence, none hiding another — by kind as SPEC §4 lists them, then by detail 0ms
+     → NOT_BUILT
+   × readChain — no chain > a root that holds no schema/ is refused: no-chain 0ms
+     → NOT_BUILT
+   × readChain — no chain > a root that does not exist is refused: no-chain 0ms
+     → NOT_BUILT
+   × readChain — no chain > a root that holds a file named schema, not a directory is refused: no-chain 0ms
+     → NOT_BUILT
+ ❯ chain/answer.test.ts (12 tests | 12 failed) 5ms
+   × answerOf — a run that ended in an outcome > applied: CHAIN_GREEN with how many were applied now and how many stand, exit 0 2ms
+     → NOT_BUILT
+   × answerOf — a run that ended in an outcome > applied, with nothing to apply: CHAIN_GREEN applied=0, exit 0 0ms
+     → NOT_BUILT
+   × answerOf — a run that ended in an outcome > offences: one OFFENCE line each, as they were given, then CHAIN_RED with their count, exit 1 0ms
+     → NOT_BUILT
+   × answerOf — a run that ended in an outcome > file-failed: FAILED with the file and the server's message, then CHAIN_RED with how many were applied before it, exit 1 0ms
+     → NOT_BUILT
+   × answerOf — a run that ended in an outcome > file-failed: a message of several lines is said on one 0ms
+     → NOT_BUILT
+   × answerOf — a run that was refused > ChainRefused no-chain: CHAIN_REFUSED no-chain, exit 2 0ms
+     → NOT_BUILT
+   × answerOf — a run that was refused > ChainRefused busy: CHAIN_REFUSED busy, exit 2 0ms
+     → NOT_BUILT
+   × answerOf — a run that was refused > ChainRefused ledger-unknown: CHAIN_REFUSED ledger-unknown, exit 2 0ms
+     → NOT_BUILT
+   × answerOf — a run that was refused > the bench's TargetRefused company: CHAIN_REFUSED target-company, exit 2 0ms
+     → NOT_BUILT
+   × answerOf — a run that was refused > the bench's TargetRefused old-bench: CHAIN_REFUSED target-old-bench, exit 2 0ms
+     → NOT_BUILT
+   × answerOf — a run that was refused > the bench's TargetRefused not-listed: CHAIN_REFUSED target-not-listed, exit 2 0ms
+     → NOT_BUILT
+   × answerOf — a run that was refused > the bench's TargetRefused unreadable: CHAIN_REFUSED target-unreadable, exit 2 0ms
+     → NOT_BUILT
+ ❯ chain/compare.test.ts (13 tests | 13 failed) 6ms
+   × compare — a disk and a ledger that agree > the same files as the ledger holds: no offence, nothing pending 2ms
+     → NOT_BUILT
+   × compare — a disk and a ledger that agree > no file and no row: no offence, nothing pending 0ms
+     → NOT_BUILT
+   × compare — a disk and a ledger that agree > an empty ledger: every file is pending, by number 0ms
+     → NOT_BUILT
+   × compare — a disk and a ledger that agree > new files after the last ledgered one are pending, in order — and only they 0ms
+     → NOT_BUILT
+   × compare — each offence of the disk against the ledger > changed: a ledgered name is on the disk with another hash 0ms
+     → NOT_BUILT
+   × compare — each offence of the disk against the ledger > missing: a ledgered name is not on the disk, and no file carries its hash 0ms
+     → NOT_BUILT
+   × compare — each offence of the disk against the ledger > renamed: the ledgered name is gone and one new file carries its hash — one offence, not also missing, nor before-applied 0ms
+     → NOT_BUILT
+   × compare — each offence of the disk against the ledger > a rename whose hash two new files carry is missing — which of them it became cannot be said 0ms
+     → NOT_BUILT
+   × compare — each offence of the disk against the ledger > before-applied: a new file with a number lower than the greatest ledgered one 0ms
+     → NOT_BUILT
+   × compare — each offence of the disk against the ledger > before-applied: a new file with a number equal to the greatest ledgered one 0ms
+     → NOT_BUILT
+   × compare — each offence of the disk against the ledger > reordered: a row whose number is lower than the number of the row before it — said of that row 0ms
+     → NOT_BUILT
+   × compare — each offence of the disk against the ledger > reordered: a row whose number is equal to the number of the row before it 0ms
+     → NOT_BUILT
+   × compare — several faults at once > says every one, by kind as SPEC §4 lists them, and nothing is pending 0ms
+     → NOT_BUILT
+
+⎯⎯⎯⎯⎯⎯ Failed Tests 100 ⎯⎯⎯⎯⎯⎯
+
+ FAIL  chain/answer.test.ts > answerOf — a run that ended in an outcome > applied: CHAIN_GREEN with how many were applied now and how many stand, exit 0
+Error: NOT_BUILT
+ ❯ answerOf ../chain/src/index.ts:63:9
+     61| /** Pure. What the command prints on stdout for an outcome or a refusa…
+     62| export function answerOf(result: Outcome | ChainRefused | TargetRefuse…
+     63|   throw new Error("NOT_BUILT");
+       |         ^
+     64| }
+     65| 
+ ❯ chain/answer.test.ts:11:20
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/100]⎯
+
+ FAIL  chain/answer.test.ts > answerOf — a run that ended in an outcome > applied, with nothing to apply: CHAIN_GREEN applied=0, exit 0
+Error: NOT_BUILT
+ ❯ answerOf ../chain/src/index.ts:63:9
+     61| /** Pure. What the command prints on stdout for an outcome or a refusa…
+     62| export function answerOf(result: Outcome | ChainRefused | TargetRefuse…
+     63|   throw new Error("NOT_BUILT");
+       |         ^
+     64| }
+     65| 
+ ❯ chain/answer.test.ts:16:12
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/100]⎯
+
+ FAIL  chain/answer.test.ts > answerOf — a run that ended in an outcome > offences: one OFFENCE line each, as they were given, then CHAIN_RED with their count, exit 1
+Error: NOT_BUILT
+ ❯ answerOf ../chain/src/index.ts:63:9
+     61| /** Pure. What the command prints on stdout for an outcome or a refusa…
+     62| export function answerOf(result: Outcome | ChainRefused | TargetRefuse…
+     63|   throw new Error("NOT_BUILT");
+       |         ^
+     64| }
+     65| 
+ ❯ chain/answer.test.ts:20:20
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/100]⎯
+
+ FAIL  chain/answer.test.ts > answerOf — a run that ended in an outcome > file-failed: FAILED with the file and the server's message, then CHAIN_RED with how many were applied before it, exit 1
+Error: NOT_BUILT
+ ❯ answerOf ../chain/src/index.ts:63:9
+     61| /** Pure. What the command prints on stdout for an outcome or a refusa…
+     62| export function answerOf(result: Outcome | ChainRefused | TargetRefuse…
+     63|   throw new Error("NOT_BUILT");
+       |         ^
+     64| }
+     65| 
+ ❯ chain/answer.test.ts:35:20
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/100]⎯
+
+ FAIL  chain/answer.test.ts > answerOf — a run that ended in an outcome > file-failed: a message of several lines is said on one
+Error: NOT_BUILT
+ ❯ answerOf ../chain/src/index.ts:63:9
+     61| /** Pure. What the command prints on stdout for an outcome or a refusa…
+     62| export function answerOf(result: Outcome | ChainRefused | TargetRefuse…
+     63|   throw new Error("NOT_BUILT");
+       |         ^
+     64| }
+     65| 
+ ❯ chain/answer.test.ts:41:20
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/100]⎯
+
+ FAIL  chain/answer.test.ts > answerOf — a run that was refused > ChainRefused no-chain: CHAIN_REFUSED no-chain, exit 2
+ FAIL  chain/answer.test.ts > answerOf — a run that was refused > ChainRefused busy: CHAIN_REFUSED busy, exit 2
+ FAIL  chain/answer.test.ts > answerOf — a run that was refused > ChainRefused ledger-unknown: CHAIN_REFUSED ledger-unknown, exit 2
+Error: NOT_BUILT
+ ❯ answerOf ../chain/src/index.ts:63:9
+     61| /** Pure. What the command prints on stdout for an outcome or a refusa…
+     62| export function answerOf(result: Outcome | ChainRefused | TargetRefuse…
+     63|   throw new Error("NOT_BUILT");
+       |         ^
+     64| }
+     65| 
+ ❯ chain/answer.test.ts:57:12
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/100]⎯
+
+ FAIL  chain/answer.test.ts > answerOf — a run that was refused > the bench's TargetRefused company: CHAIN_REFUSED target-company, exit 2
+ FAIL  chain/answer.test.ts > answerOf — a run that was refused > the bench's TargetRefused old-bench: CHAIN_REFUSED target-old-bench, exit 2
+ FAIL  chain/answer.test.ts > answerOf — a run that was refused > the bench's TargetRefused not-listed: CHAIN_REFUSED target-not-listed, exit 2
+ FAIL  chain/answer.test.ts > answerOf — a run that was refused > the bench's TargetRefused unreadable: CHAIN_REFUSED target-unreadable, exit 2
+Error: NOT_BUILT
+ ❯ answerOf ../chain/src/index.ts:63:9
+     61| /** Pure. What the command prints on stdout for an outcome or a refusa…
+     62| export function answerOf(result: Outcome | ChainRefused | TargetRefuse…
+     63|   throw new Error("NOT_BUILT");
+       |         ^
+     64| }
+     65| 
+ ❯ chain/answer.test.ts:66:12
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/100]⎯
+
+ FAIL  chain/compare.test.ts > compare — a disk and a ledger that agree > the same files as the ledger holds: no offence, nothing pending
+Error: NOT_BUILT
+ ❯ compare ../chain/src/index.ts:53:9
+     51| /** Pure. SPEC §4's second table: the disk against the ledger. */
+     52| export function compare(files: readonly ChainFile[], ledger: readonly …
+     53|   throw new Error("NOT_BUILT");
+       |         ^
+     54| }
+     55| 
+ ❯ chain/compare.test.ts:31:12
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/100]⎯
+
+ FAIL  chain/compare.test.ts > compare — a disk and a ledger that agree > no file and no row: no offence, nothing pending
+Error: NOT_BUILT
+ ❯ compare ../chain/src/index.ts:53:9
+     51| /** Pure. SPEC §4's second table: the disk against the ledger. */
+     52| export function compare(files: readonly ChainFile[], ledger: readonly …
+     53|   throw new Error("NOT_BUILT");
+       |         ^
+     54| }
+     55| 
+ ❯ chain/compare.test.ts:35:12
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/100]⎯
+
+ FAIL  chain/compare.test.ts > compare — a disk and a ledger that agree > an empty ledger: every file is pending, by number
+Error: NOT_BUILT
+ ❯ compare ../chain/src/index.ts:53:9
+     51| /** Pure. SPEC §4's second table: the disk against the ledger. */
+     52| export function compare(files: readonly ChainFile[], ledger: readonly …
+     53|   throw new Error("NOT_BUILT");
+       |         ^
+     54| }
+     55| 
+ ❯ chain/compare.test.ts:39:12
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[10/100]⎯
+
+ FAIL  chain/compare.test.ts > compare — a disk and a ledger that agree > new files after the last ledgered one are pending, in order — and only they
+Error: NOT_BUILT
+ ❯ compare ../chain/src/index.ts:53:9
+     51| /** Pure. SPEC §4's second table: the disk against the ledger. */
+     52| export function compare(files: readonly ChainFile[], ledger: readonly …
+     53|   throw new Error("NOT_BUILT");
+       |         ^
+     54| }
+     55| 
+ ❯ chain/compare.test.ts:44:12
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[11/100]⎯
+
+ FAIL  chain/compare.test.ts > compare — each offence of the disk against the ledger > changed: a ledgered name is on the disk with another hash
+Error: NOT_BUILT
+ ❯ compare ../chain/src/index.ts:53:9
+     51| /** Pure. SPEC §4's second table: the disk against the ledger. */
+     52| export function compare(files: readonly ChainFile[], ledger: readonly …
+     53|   throw new Error("NOT_BUILT");
+       |         ^
+     54| }
+     55| 
+ ❯ chain/compare.test.ts:51:12
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[12/100]⎯
+
+ FAIL  chain/compare.test.ts > compare — each offence of the disk against the ledger > missing: a ledgered name is not on the disk, and no file carries its hash
+Error: NOT_BUILT
+ ❯ compare ../chain/src/index.ts:53:9
+     51| /** Pure. SPEC §4's second table: the disk against the ledger. */
+     52| export function compare(files: readonly ChainFile[], ledger: readonly …
+     53|   throw new Error("NOT_BUILT");
+       |         ^
+     54| }
+     55| 
+ ❯ chain/compare.test.ts:58:12
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[13/100]⎯
+
+ FAIL  chain/compare.test.ts > compare — each offence of the disk against the ledger > renamed: the ledgered name is gone and one new file carries its hash — one offence, not also missing, nor before-applied
+Error: NOT_BUILT
+ ❯ compare ../chain/src/index.ts:53:9
+     51| /** Pure. SPEC §4's second table: the disk against the ledger. */
+     52| export function compare(files: readonly ChainFile[], ledger: readonly …
+     53|   throw new Error("NOT_BUILT");
+       |         ^
+     54| }
+     55| 
+ ❯ chain/compare.test.ts:66:12
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[14/100]⎯
+
+ FAIL  chain/compare.test.ts > compare — each offence of the disk against the ledger > a rename whose hash two new files carry is missing — which of them it became cannot be said
+Error: NOT_BUILT
+ ❯ compare ../chain/src/index.ts:53:9
+     51| /** Pure. SPEC §4's second table: the disk against the ledger. */
+     52| export function compare(files: readonly ChainFile[], ledger: readonly …
+     53|   throw new Error("NOT_BUILT");
+       |         ^
+     54| }
+     55| 
+ ❯ chain/compare.test.ts:76:12
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[15/100]⎯
+
+ FAIL  chain/compare.test.ts > compare — each offence of the disk against the ledger > before-applied: a new file with a number lower than the greatest ledgered one
+Error: NOT_BUILT
+ ❯ compare ../chain/src/index.ts:53:9
+     51| /** Pure. SPEC §4's second table: the disk against the ledger. */
+     52| export function compare(files: readonly ChainFile[], ledger: readonly …
+     53|   throw new Error("NOT_BUILT");
+       |         ^
+     54| }
+     55| 
+ ❯ chain/compare.test.ts:84:12
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[16/100]⎯
+
+ FAIL  chain/compare.test.ts > compare — each offence of the disk against the ledger > before-applied: a new file with a number equal to the greatest ledgered one
+Error: NOT_BUILT
+ ❯ compare ../chain/src/index.ts:53:9
+     51| /** Pure. SPEC §4's second table: the disk against the ledger. */
+     52| export function compare(files: readonly ChainFile[], ledger: readonly …
+     53|   throw new Error("NOT_BUILT");
+       |         ^
+     54| }
+     55| 
+ ❯ chain/compare.test.ts:92:12
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[17/100]⎯
+
+ FAIL  chain/compare.test.ts > compare — each offence of the disk against the ledger > reordered: a row whose number is lower than the number of the row before it — said of that row
+Error: NOT_BUILT
+ ❯ compare ../chain/src/index.ts:53:9
+     51| /** Pure. SPEC §4's second table: the disk against the ledger. */
+     52| export function compare(files: readonly ChainFile[], ledger: readonly …
+     53|   throw new Error("NOT_BUILT");
+       |         ^
+     54| }
+     55| 
+ ❯ chain/compare.test.ts:100:12
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[18/100]⎯
+
+ FAIL  chain/compare.test.ts > compare — each offence of the disk against the ledger > reordered: a row whose number is equal to the number of the row before it
+Error: NOT_BUILT
+ ❯ compare ../chain/src/index.ts:53:9
+     51| /** Pure. SPEC §4's second table: the disk against the ledger. */
+     52| export function compare(files: readonly ChainFile[], ledger: readonly …
+     53|   throw new Error("NOT_BUILT");
+       |         ^
+     54| }
+     55| 
+ ❯ chain/compare.test.ts:109:12
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[19/100]⎯
+
+ FAIL  chain/compare.test.ts > compare — several faults at once > says every one, by kind as SPEC §4 lists them, and nothing is pending
+Error: NOT_BUILT
+ ❯ compare ../chain/src/index.ts:53:9
+     51| /** Pure. SPEC §4's second table: the disk against the ledger. */
+     52| export function compare(files: readonly ChainFile[], ledger: readonly …
+     53|   throw new Error("NOT_BUILT");
+       |         ^
+     54| }
+     55| 
+ ❯ chain/compare.test.ts:132:12
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[20/100]⎯
+
+ FAIL  chain/on-the-bench.test.ts > built from nothing — an empty database and a chain of three > applies the three in order, and their tables stand
+Error: NOT_BUILT
+ ❯ applyChain ../chain/src/index.ts:58:9
+     56| /** SPEC §6. */
+     57| export function applyChain(input: { target: Target; root: string; lock…
+     58|   throw new Error("NOT_BUILT");
+       |         ^
+     59| }
+     60| 
+ ❯ chain/cases/built-from-nothing.ts:17:31
+ ❯ chain/fixtures/throwaway-database.ts:106:13
+ ❯ connected chain/fixtures/throwaway-database.ts:38:12
+ ❯ inAThrowawayDatabase chain/fixtures/throwaway-database.ts:102:5
+ ❯ chain/cases/built-from-nothing.ts:16:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[21/100]⎯
+
+ FAIL  chain/on-the-bench.test.ts > built from nothing — an empty database and a chain of three > the ledger holds row 0 and one row for each: name, kind, the file's hash, the login, the runner's version, positions 1 to 3
+Error: NOT_BUILT
+ ❯ applyChain ../chain/src/index.ts:58:9
+     56| /** SPEC §6. */
+     57| export function applyChain(input: { target: Target; root: string; lock…
+     58|   throw new Error("NOT_BUILT");
+       |         ^
+     59| }
+     60| 
+ ❯ chain/cases/built-from-nothing.ts:26:15
+ ❯ chain/fixtures/throwaway-database.ts:106:7
+ ❯ connected chain/fixtures/throwaway-database.ts:38:12
+ ❯ inAThrowawayDatabase chain/fixtures/throwaway-database.ts:102:5
+ ❯ chain/cases/built-from-nothing.ts:24:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[22/100]⎯
+
+ FAIL  chain/on-the-bench.test.ts > built from nothing — an empty database and a chain of three > a second run applies nothing and changes no row
+Error: NOT_BUILT
+ ❯ applyChain ../chain/src/index.ts:58:9
+     56| /** SPEC §6. */
+     57| export function applyChain(input: { target: Target; root: string; lock…
+     58|   throw new Error("NOT_BUILT");
+       |         ^
+     59| }
+     60| 
+ ❯ chain/cases/built-from-nothing.ts:53:22
+ ❯ chain/fixtures/throwaway-database.ts:106:13
+ ❯ connected chain/fixtures/throwaway-database.ts:38:12
+ ❯ inAThrowawayDatabase chain/fixtures/throwaway-database.ts:102:5
+ ❯ chain/cases/built-from-nothing.ts:51:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[23/100]⎯
+
+ FAIL  chain/on-the-bench.test.ts > the bootstrap — the ledger this runner makes > a chain of no files leaves row 0 alone
+Error: NOT_BUILT
+ ❯ applyChain ../chain/src/index.ts:58:9
+     56| /** SPEC §6. */
+     57| export function applyChain(input: { target: Target; root: string; lock…
+     58|   throw new Error("NOT_BUILT");
+       |         ^
+     59| }
+     60| 
+ ❯ makeTheLedger chain/cases/bootstrap.ts:14:42
+ ❯ chain/cases/bootstrap.ts:70:22
+ ❯ chain/fixtures/throwaway-database.ts:106:13
+ ❯ connected chain/fixtures/throwaway-database.ts:38:12
+ ❯ inAThrowawayDatabase chain/fixtures/throwaway-database.ts:102:5
+ ❯ chain/cases/bootstrap.ts:69:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[24/100]⎯
+
+ FAIL  chain/on-the-bench.test.ts > the bootstrap — the ledger this runner makes > the schema and the table are the login's own, and the table has the seven columns of SPEC §5, none of them nullable
+Error: NOT_BUILT
+ ❯ applyChain ../chain/src/index.ts:58:9
+     56| /** SPEC §6. */
+     57| export function applyChain(input: { target: Target; root: string; lock…
+     58|   throw new Error("NOT_BUILT");
+       |         ^
+     59| }
+     60| 
+ ❯ makeTheLedger chain/cases/bootstrap.ts:14:42
+ ❯ chain/cases/bootstrap.ts:79:15
+ ❯ chain/fixtures/throwaway-database.ts:106:13
+ ❯ connected chain/fixtures/throwaway-database.ts:38:12
+ ❯ inAThrowawayDatabase chain/fixtures/throwaway-database.ts:102:5
+ ❯ chain/cases/bootstrap.ts:78:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[25/100]⎯
+
+ FAIL  chain/on-the-bench.test.ts > the bootstrap — the ledger this runner makes > the table itself holds a position and a file to one row each, the kind to the two kinds, the hash to 64 lower-case hex digits
+Error: NOT_BUILT
+ ❯ applyChain ../chain/src/index.ts:58:9
+     56| /** SPEC §6. */
+     57| export function applyChain(input: { target: Target; root: string; lock…
+     58|   throw new Error("NOT_BUILT");
+       |         ^
+     59| }
+     60| 
+ ❯ makeTheLedger chain/cases/bootstrap.ts:14:42
+ ❯ chain/cases/bootstrap.ts:107:15
+ ❯ chain/fixtures/throwaway-database.ts:106:13
+ ❯ connected chain/fixtures/throwaway-database.ts:38:12
+ ❯ inAThrowawayDatabase chain/fixtures/throwaway-database.ts:102:5
+ ❯ chain/cases/bootstrap.ts:106:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[26/100]⎯
+
+ FAIL  chain/on-the-bench.test.ts > the bootstrap — the ledger this runner makes > in a database that carries planted default privileges, the schema and the ledger have no grantee but their owner
+Error: NOT_BUILT
+ ❯ applyChain ../chain/src/index.ts:58:9
+     56| /** SPEC §6. */
+     57| export function applyChain(input: { target: Target; root: string; lock…
+     58|   throw new Error("NOT_BUILT");
+       |         ^
+     59| }
+     60| 
+ ❯ makeTheLedger chain/cases/bootstrap.ts:14:42
+ ❯ chain/cases/bootstrap.ts:134:22
+ ❯ chain/fixtures/throwaway-database.ts:106:7
+ ❯ connected chain/fixtures/throwaway-database.ts:38:12
+ ❯ inAThrowawayDatabase chain/fixtures/throwaway-database.ts:102:5
+ ❯ chain/cases/bootstrap.ts:123:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[27/100]⎯
+
+ FAIL  chain/on-the-bench.test.ts > the bootstrap — a ledger this runner does not know > row 0 carries another hash: ledger-unknown, and nothing is changed
+Error: NOT_BUILT
+ ❯ applyChain ../chain/src/index.ts:58:9
+     56| /** SPEC §6. */
+     57| export function applyChain(input: { target: Target; root: string; lock…
+     58|   throw new Error("NOT_BUILT");
+       |         ^
+     59| }
+     60| 
+ ❯ makeTheLedger chain/cases/bootstrap.ts:14:42
+ ❯ chain/cases/bootstrap.ts:45:13
+ ❯ chain/cases/bootstrap.ts:145:15
+ ❯ chain/fixtures/throwaway-database.ts:106:13
+ ❯ connected chain/fixtures/throwaway-database.ts:38:12
+ ❯ inAThrowawayDatabase chain/fixtures/throwaway-database.ts:102:5
+ ❯ chain/cases/bootstrap.ts:144:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[28/100]⎯
+
+ FAIL  chain/on-the-bench.test.ts > the bootstrap — a ledger this runner does not know > row 0 is absent: ledger-unknown, and nothing is changed
+Error: NOT_BUILT
+ ❯ applyChain ../chain/src/index.ts:58:9
+     56| /** SPEC §6. */
+     57| export function applyChain(input: { target: Target; root: string; lock…
+     58|   throw new Error("NOT_BUILT");
+       |         ^
+     59| }
+     60| 
+ ❯ makeTheLedger chain/cases/bootstrap.ts:14:42
+ ❯ chain/cases/bootstrap.ts:52:13
+ ❯ chain/cases/bootstrap.ts:145:15
+ ❯ chain/fixtures/throwaway-database.ts:106:13
+ ❯ connected chain/fixtures/throwaway-database.ts:38:12
+ ❯ inAThrowawayDatabase chain/fixtures/throwaway-database.ts:102:5
+ ❯ chain/cases/bootstrap.ts:144:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[29/100]⎯
+
+ FAIL  chain/on-the-bench.test.ts > the bootstrap — a ledger this runner does not know > the schema os_chain holds no table: ledger-unknown, and nothing is changed
+ FAIL  chain/on-the-bench.test.ts > the bootstrap — a ledger this runner does not know > the table os_chain.ledger is of another shape: ledger-unknown, and nothing is changed
+Error: NOT_BUILT
+ ❯ applyChain ../chain/src/index.ts:58:9
+     56| /** SPEC §6. */
+     57| export function applyChain(input: { target: Target; root: string; lock…
+     58|   throw new Error("NOT_BUILT");
+       |         ^
+     59| }
+     60| 
+ ❯ chain/cases/bootstrap.ts:148:61
+ ❯ refusalOf chain/fixtures/refusal.ts:9:22
+ ❯ chain/cases/bootstrap.ts:148:31
+ ❯ chain/fixtures/throwaway-database.ts:106:7
+ ❯ connected chain/fixtures/throwaway-database.ts:38:12
+ ❯ inAThrowawayDatabase chain/fixtures/throwaway-database.ts:102:5
+ ❯ chain/cases/bootstrap.ts:144:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[30/100]⎯
+
+ FAIL  chain/on-the-bench.test.ts > the disk against a real ledger — each sentence of SPEC §4's second table > changed — an applied file is rewritten
+ FAIL  chain/on-the-bench.test.ts > the disk against a real ledger — each sentence of SPEC §4's second table > renamed — an applied file is given another name
+ FAIL  chain/on-the-bench.test.ts > the disk against a real ledger — each sentence of SPEC §4's second table > missing — an applied file is removed
+ FAIL  chain/on-the-bench.test.ts > the disk against a real ledger — each sentence of SPEC §4's second table > before-applied — a new file with a number lower than the last applied one
+ FAIL  chain/on-the-bench.test.ts > the disk against a real ledger — each sentence of SPEC §4's second table > before-applied — a new file with the number of the last applied one, which is gone: both faults are said
+ FAIL  chain/on-the-bench.test.ts > the disk against a real ledger — each sentence of SPEC §4's second table > reordered — the ledger holds a file after one of a greater number
+Error: NOT_BUILT
+ ❯ applyChain ../chain/src/index.ts:58:9
+     56| /** SPEC §6. */
+     57| export function applyChain(input: { target: Target; root: string; lock…
+     58|   throw new Error("NOT_BUILT");
+       |         ^
+     59| }
+     60| 
+ ❯ chain/cases/the-check.ts:69:22
+ ❯ chain/fixtures/throwaway-database.ts:106:13
+ ❯ connected chain/fixtures/throwaway-database.ts:38:12
+ ❯ inAThrowawayDatabase chain/fixtures/throwaway-database.ts:102:5
+ ❯ chain/cases/the-check.ts:67:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[31/100]⎯
+
+ FAIL  chain/on-the-bench.test.ts > nothing before the check > an empty database and a chain with an offence of the disk's own: the offence is said, and no schema os_chain is made
+Error: NOT_BUILT
+ ❯ applyChain ../chain/src/index.ts:58:9
+     56| /** SPEC §6. */
+     57| export function applyChain(input: { target: Target; root: string; lock…
+     58|   throw new Error("NOT_BUILT");
+       |         ^
+     59| }
+     60| 
+ ❯ chain/cases/the-check.ts:85:22
+ ❯ chain/fixtures/throwaway-database.ts:106:13
+ ❯ connected chain/fixtures/throwaway-database.ts:38:12
+ ❯ inAThrowawayDatabase chain/fixtures/throwaway-database.ts:102:5
+ ❯ chain/cases/the-check.ts:83:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[32/100]⎯
+
+ FAIL  chain/on-the-bench.test.ts > nothing before the check > the disk is judged before the target is asked who it is: a database no list holds, and still the disk's offence is the answer
+Error: NOT_BUILT
+ ❯ applyChain ../chain/src/index.ts:58:9
+     56| /** SPEC §6. */
+     57| export function applyChain(input: { target: Target; root: string; lock…
+     58|   throw new Error("NOT_BUILT");
+       |         ^
+     59| }
+     60| 
+ ❯ chain/cases/the-check.ts:98:22
+ ❯ chain/fixtures/throwaway-database.ts:106:13
+ ❯ connected chain/fixtures/throwaway-database.ts:38:12
+ ❯ inAThrowawayDatabase chain/fixtures/throwaway-database.ts:102:5
+ ❯ chain/cases/the-check.ts:95:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[33/100]⎯
+
+ FAIL  chain/on-the-bench.test.ts > nothing before the check > a root with no schema/ is refused as no-chain, and no schema os_chain is made
+Error: NOT_BUILT
+ ❯ applyChain ../chain/src/index.ts:58:9
+     56| /** SPEC §6. */
+     57| export function applyChain(input: { target: Target; root: string; lock…
+     58|   throw new Error("NOT_BUILT");
+       |         ^
+     59| }
+     60| 
+ ❯ chain/cases/the-check.ts:108:61
+ ❯ refusalOf chain/fixtures/refusal.ts:9:22
+ ❯ chain/cases/the-check.ts:108:31
+ ❯ chain/fixtures/throwaway-database.ts:106:13
+ ❯ connected chain/fixtures/throwaway-database.ts:38:12
+ ❯ inAThrowawayDatabase chain/fixtures/throwaway-database.ts:102:5
+ ❯ chain/cases/the-check.ts:107:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[34/100]⎯
+
+ FAIL  chain/on-the-bench.test.ts > a failing file > the second of three fails after making a table: file-failed, the first stands ledgered, nothing of the second or third
+Error: NOT_BUILT
+ ❯ applyChain ../chain/src/index.ts:58:9
+     56| /** SPEC §6. */
+     57| export function applyChain(input: { target: Target; root: string; lock…
+     58|   throw new Error("NOT_BUILT");
+       |         ^
+     59| }
+     60| 
+ ❯ chain/cases/failing-files.ts:27:31
+ ❯ chain/fixtures/throwaway-database.ts:106:13
+ ❯ connected chain/fixtures/throwaway-database.ts:38:12
+ ❯ inAThrowawayDatabase chain/fixtures/throwaway-database.ts:102:5
+ ❯ chain/cases/failing-files.ts:26:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[35/100]⎯
+
+ FAIL  chain/on-the-bench.test.ts > a failing file > the file corrected: the next run applies it and the one after it
+Error: NOT_BUILT
+ ❯ applyChain ../chain/src/index.ts:58:9
+     56| /** SPEC §6. */
+     57| export function applyChain(input: { target: Target; root: string; lock…
+     58|   throw new Error("NOT_BUILT");
+       |         ^
+     59| }
+     60| 
+ ❯ chain/cases/failing-files.ts:37:22
+ ❯ chain/fixtures/throwaway-database.ts:106:13
+ ❯ connected chain/fixtures/throwaway-database.ts:38:12
+ ❯ inAThrowawayDatabase chain/fixtures/throwaway-database.ts:102:5
+ ❯ chain/cases/failing-files.ts:35:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[36/100]⎯
+
+ FAIL  chain/on-the-bench.test.ts > a file that opens or closes a transaction > commit in the middle of a file: file-failed with a message that says transaction, and the statements before it left nothing
+ FAIL  chain/on-the-bench.test.ts > a file that opens or closes a transaction > rollback in the middle of a file: file-failed with a message that says transaction, and the statements before it left nothing
+ FAIL  chain/on-the-bench.test.ts > a file that opens or closes a transaction > begin in the middle of a file: file-failed with a message that says transaction, and the statements before it left nothing
+ FAIL  chain/on-the-bench.test.ts > a file that opens or closes a transaction > savepoint in the middle of a file: file-failed with a message that says transaction, and the statements before it left nothing
+ FAIL  chain/on-the-bench.test.ts > a file that opens or closes a transaction > a do block that commits in the middle of a file: file-failed with a message that says transaction, and the statements before it left nothing
+Error: NOT_BUILT
+ ❯ applyChain ../chain/src/index.ts:58:9
+     56| /** SPEC §6. */
+     57| export function applyChain(input: { target: Target; root: string; lock…
+     58|   throw new Error("NOT_BUILT");
+       |         ^
+     59| }
+     60| 
+ ❯ chain/cases/failing-files.ts:57:31
+ ❯ chain/fixtures/throwaway-database.ts:106:13
+ ❯ connected chain/fixtures/throwaway-database.ts:38:12
+ ❯ inAThrowawayDatabase chain/fixtures/throwaway-database.ts:102:5
+ ❯ chain/cases/failing-files.ts:55:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[37/100]⎯
+
+ FAIL  chain/on-the-bench.test.ts > a file that opens or closes a transaction > a file with a plpgsql body, and the words inside a string and a comment, is applied
+Error: NOT_BUILT
+ ❯ applyChain ../chain/src/index.ts:58:9
+     56| /** SPEC §6. */
+     57| export function applyChain(input: { target: Target; root: string; lock…
+     58|   throw new Error("NOT_BUILT");
+       |         ^
+     59| }
+     60| 
+ ❯ chain/cases/failing-files.ts:74:22
+ ❯ chain/fixtures/throwaway-database.ts:106:13
+ ❯ connected chain/fixtures/throwaway-database.ts:38:12
+ ❯ inAThrowawayDatabase chain/fixtures/throwaway-database.ts:102:5
+ ❯ chain/cases/failing-files.ts:72:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[38/100]⎯
+
+ FAIL  chain/on-the-bench.test.ts > a session of its own > a file that sets a search path, a role and a temporary table; the next file meets the defaults, and no temporary table
+Error: NOT_BUILT
+ ❯ applyChain ../chain/src/index.ts:58:9
+     56| /** SPEC §6. */
+     57| export function applyChain(input: { target: Target; root: string; lock…
+     58|   throw new Error("NOT_BUILT");
+       |         ^
+     59| }
+     60| 
+ ❯ chain/cases/sessions-and-upgrade.ts:33:22
+ ❯ chain/fixtures/throwaway-database.ts:106:7
+ ❯ connected chain/fixtures/throwaway-database.ts:38:12
+ ❯ inAThrowawayDatabase chain/fixtures/throwaway-database.ts:102:5
+ ❯ chain/cases/sessions-and-upgrade.ts:27:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[39/100]⎯
+
+ FAIL  chain/on-the-bench.test.ts > a populated database upgraded > a third file alters a table that holds rows and adds another: the rows are there, and the first two ledger rows are unchanged to the instant
+Error: NOT_BUILT
+ ❯ applyChain ../chain/src/index.ts:58:9
+     56| /** SPEC §6. */
+     57| export function applyChain(input: { target: Target; root: string; lock…
+     58|   throw new Error("NOT_BUILT");
+       |         ^
+     59| }
+     60| 
+ ❯ chain/cases/sessions-and-upgrade.ts:48:22
+ ❯ chain/fixtures/throwaway-database.ts:106:13
+ ❯ connected chain/fixtures/throwaway-database.ts:38:12
+ ❯ inAThrowawayDatabase chain/fixtures/throwaway-database.ts:102:5
+ ❯ chain/cases/sessions-and-upgrade.ts:46:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[40/100]⎯
+
+ FAIL  chain/on-the-bench.test.ts > one runner at a time > while a run sits in a file that sleeps, a second run with no wait is refused at once: busy — and the first goes on to its end
+Error: NOT_BUILT
+ ❯ applyChain ../chain/src/index.ts:58:9
+     56| /** SPEC §6. */
+     57| export function applyChain(input: { target: Target; root: string; lock…
+     58|   throw new Error("NOT_BUILT");
+       |         ^
+     59| }
+     60| 
+ ❯ startRun chain/fixtures/running.ts:22:19
+ ❯ chain/cases/one-runner.ts:25:23
+ ❯ chain/fixtures/throwaway-database.ts:106:13
+ ❯ connected chain/fixtures/throwaway-database.ts:38:12
+ ❯ inAThrowawayDatabase chain/fixtures/throwaway-database.ts:102:5
+ ❯ chain/cases/one-runner.ts:23:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[41/100]⎯
+
+ FAIL  chain/on-the-bench.test.ts > one runner at a time > a second run with a wait runs after the first, and applies nothing
+Error: NOT_BUILT
+ ❯ applyChain ../chain/src/index.ts:58:9
+     56| /** SPEC §6. */
+     57| export function applyChain(input: { target: Target; root: string; lock…
+     58|   throw new Error("NOT_BUILT");
+       |         ^
+     59| }
+     60| 
+ ❯ startRun chain/fixtures/running.ts:22:19
+ ❯ chain/cases/one-runner.ts:41:23
+ ❯ chain/fixtures/throwaway-database.ts:106:13
+ ❯ connected chain/fixtures/throwaway-database.ts:38:12
+ ❯ inAThrowawayDatabase chain/fixtures/throwaway-database.ts:102:5
+ ❯ chain/cases/one-runner.ts:39:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[42/100]⎯
+
+ FAIL  chain/on-the-bench.test.ts > one runner at a time > a wait that runs out is the same refusal: busy, after the wait and not before
+Error: NOT_BUILT
+ ❯ applyChain ../chain/src/index.ts:58:9
+     56| /** SPEC §6. */
+     57| export function applyChain(input: { target: Target; root: string; lock…
+     58|   throw new Error("NOT_BUILT");
+       |         ^
+     59| }
+     60| 
+ ❯ startRun chain/fixtures/running.ts:22:19
+ ❯ chain/cases/one-runner.ts:56:23
+ ❯ chain/fixtures/throwaway-database.ts:106:13
+ ❯ connected chain/fixtures/throwaway-database.ts:38:12
+ ❯ inAThrowawayDatabase chain/fixtures/throwaway-database.ts:102:5
+ ❯ chain/cases/one-runner.ts:54:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[43/100]⎯
+
+ FAIL  chain/on-the-bench.test.ts > one runner at a time > after a run ended — in a failed file, well, in offences — the next takes the lock at once
+Error: NOT_BUILT
+ ❯ applyChain ../chain/src/index.ts:58:9
+     56| /** SPEC §6. */
+     57| export function applyChain(input: { target: Target; root: string; lock…
+     58|   throw new Error("NOT_BUILT");
+       |         ^
+     59| }
+     60| 
+ ❯ run chain/cases/one-runner.ts:76:27
+ ❯ chain/cases/one-runner.ts:77:22
+ ❯ chain/fixtures/throwaway-database.ts:106:13
+ ❯ connected chain/fixtures/throwaway-database.ts:38:12
+ ❯ inAThrowawayDatabase chain/fixtures/throwaway-database.ts:102:5
+ ❯ chain/cases/one-runner.ts:73:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[44/100]⎯
+
+ FAIL  chain/on-the-bench.test.ts > the target > a database whose identity the list does not hold is refused: not-listed, and no schema os_chain is made in it
+Error: NOT_BUILT
+ ❯ applyChain ../chain/src/index.ts:58:9
+     56| /** SPEC §6. */
+     57| export function applyChain(input: { target: Target; root: string; lock…
+     58|   throw new Error("NOT_BUILT");
+       |         ^
+     59| }
+     60| 
+ ❯ chain/cases/the-target.ts:25:62
+ ❯ refusalOf chain/fixtures/refusal.ts:9:22
+ ❯ chain/cases/the-target.ts:25:31
+ ❯ chain/fixtures/throwaway-database.ts:106:13
+ ❯ connected chain/fixtures/throwaway-database.ts:38:12
+ ❯ inAThrowawayDatabase chain/fixtures/throwaway-database.ts:102:5
+ ❯ chain/cases/the-target.ts:22:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[45/100]⎯
+
+ FAIL  chain/on-the-bench.test.ts > the target > a list that loses the identity while a file sleeps: the next file's connection is refused, and the first file stays ledgered
+Error: NOT_BUILT
+ ❯ applyChain ../chain/src/index.ts:58:9
+     56| /** SPEC §6. */
+     57| export function applyChain(input: { target: Target; root: string; lock…
+     58|   throw new Error("NOT_BUILT");
+       |         ^
+     59| }
+     60| 
+ ❯ startRun chain/fixtures/running.ts:22:19
+ ❯ chain/cases/the-target.ts:38:21
+ ❯ chain/fixtures/throwaway-database.ts:106:13
+ ❯ connected chain/fixtures/throwaway-database.ts:38:12
+ ❯ inAThrowawayDatabase chain/fixtures/throwaway-database.ts:102:5
+ ❯ chain/cases/the-target.ts:33:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[46/100]⎯
+
+ FAIL  chain/on-the-bench.test.ts > the command > up --root <a root with a disk offence>: the OFFENCE line, then CHAIN_RED, exit 1
+AssertionError: expected [ 'NOT_BUILT' ] to deeply equal [ …(2) ]
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[2m  [[22m
+[32m-   "OFFENCE empty 0001-nothing.sql",[39m
+[32m-   "CHAIN_RED offences=1",[39m
+[31m+   "NOT_BUILT",[39m
+[2m  ][22m
+
+ ❯ chain/cases/the-command.ts:22:39
+     20|       const root = chainRoot({ "0001-nothing.sql": "" });
+     21|       const said = await chainCommand(["up", "--root", root], COMMAND_…
+     22|       expect(said.lines, said.stderr).toEqual(["OFFENCE empty 0001-not…
+       |                                       ^
+     23|       expect(said.code).toBe(1);
+     24|     });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[47/100]⎯
+
+ FAIL  chain/on-the-bench.test.ts > the command > up --root <dir> --wait <a positive integer> is the same command: the wait is taken, and the answer is the disk's
+AssertionError: expected [ 'NOT_BUILT' ] to deeply equal [ …(2) ]
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[2m  [[22m
+[32m-   "OFFENCE empty 0001-nothing.sql",[39m
+[32m-   "CHAIN_RED offences=1",[39m
+[31m+   "NOT_BUILT",[39m
+[2m  ][22m
+
+ ❯ chain/cases/the-command.ts:29:39
+     27|       const root = chainRoot({ "0001-nothing.sql": "" });
+     28|       const said = await chainCommand(["up", "--root", root, "--wait",…
+     29|       expect(said.lines, said.stderr).toEqual(["OFFENCE empty 0001-not…
+       |                                       ^
+     30|       expect(said.code).toBe(1);
+     31|     });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[48/100]⎯
+
+ FAIL  chain/on-the-bench.test.ts > the command > up --root <a directory with no schema/>: CHAIN_REFUSED no-chain, exit 2
+AssertionError: expected [ 'NOT_BUILT' ] to deeply equal [ 'CHAIN_REFUSED no-chain' ]
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[2m  [[22m
+[32m-   "CHAIN_REFUSED no-chain",[39m
+[31m+   "NOT_BUILT",[39m
+[2m  ][22m
+
+ ❯ chain/cases/the-command.ts:35:39
+     33|     it("up --root <a directory with no schema/>: CHAIN_REFUSED no-chai…
+     34|       const said = await chainCommand(["up", "--root", emptyDirectory(…
+     35|       expect(said.lines, said.stderr).toEqual(["CHAIN_REFUSED no-chain…
+       |                                       ^
+     36|       expect(said.code).toBe(2);
+     37|     });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[49/100]⎯
+
+ FAIL  chain/on-the-bench.test.ts > the command > a wrong word: the usage line, exit 2
+ FAIL  chain/on-the-bench.test.ts > the command > the word in capitals: the usage line, exit 2
+ FAIL  chain/on-the-bench.test.ts > the command > no word at all: the usage line, exit 2
+AssertionError: expected [ 'NOT_BUILT' ] to deeply equal [ Array(1) ]
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[2m  [[22m
+[32m-   "usage: cli.ts up [--root <dir>] [--wait <seconds>]",[39m
+[31m+   "NOT_BUILT",[39m
+[2m  ][22m
+
+ ❯ chain/cases/the-command.ts:45:39
+     43|     ])("%s: the usage line, exit 2", async (_what, args) => {
+     44|       const said = await chainCommand(args, COMMAND_MS);
+     45|       expect(said.lines, said.stderr).toEqual([USAGE]);
+       |                                       ^
+     46|       expect(said.code).toBe(2);
+     47|     });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[50/100]⎯
+
+ FAIL  chain/on-the-bench.test.ts > the command > up --root <dir> and then a word after the options: the usage line, exit 2
+ FAIL  chain/on-the-bench.test.ts > the command > up --root <dir> and then an option the command does not have: the usage line, exit 2
+ FAIL  chain/on-the-bench.test.ts > the command > up --root <dir> and then --wait 0: the usage line, exit 2
+ FAIL  chain/on-the-bench.test.ts > the command > up --root <dir> and then --wait with a fraction: the usage line, exit 2
+ FAIL  chain/on-the-bench.test.ts > the command > up --root <dir> and then --wait with a word: the usage line, exit 2
+ FAIL  chain/on-the-bench.test.ts > the command > up --root <dir> and then --wait with nothing after it: the usage line, exit 2
+AssertionError: expected [ 'NOT_BUILT' ] to deeply equal [ Array(1) ]
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[2m  [[22m
+[32m-   "usage: cli.ts up [--root <dir>] [--wait <seconds>]",[39m
+[31m+   "NOT_BUILT",[39m
+[2m  ][22m
+
+ ❯ chain/cases/the-command.ts:58:39
+     56|     ])("up --root <dir> and then %s: the usage line, exit 2", async (_…
+     57|       const said = await chainCommand(["up", "--root", emptyDirectory(…
+     58|       expect(said.lines, said.stderr).toEqual([USAGE]);
+       |                                       ^
+     59|       expect(said.code).toBe(2);
+     60|     });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[51/100]⎯
+
+ FAIL  chain/read-chain.test.ts > readChain — the files of <root>/schema > come back by number, each with its name, its number, the SHA-256 of its bytes and its text
+Error: NOT_BUILT
+ ❯ readChain ../chain/src/index.ts:48:9
+     46| /** Reads `<root>/schema`. Files by number; the disk's own offences (S…
+     47| export function readChain(root: string): { files: ChainFile[]; offence…
+     48|   throw new Error("NOT_BUILT");
+       |         ^
+     49| }
+     50| 
+ ❯ chain/read-chain.test.ts:31:12
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[52/100]⎯
+
+ FAIL  chain/read-chain.test.ts > readChain — the files of <root>/schema > a schema/ that holds nothing is a chain of no files
+Error: NOT_BUILT
+ ❯ readChain ../chain/src/index.ts:48:9
+     46| /** Reads `<root>/schema`. Files by number; the disk's own offences (S…
+     47| export function readChain(root: string): { files: ChainFile[]; offence…
+     48|   throw new Error("NOT_BUILT");
+       |         ^
+     49| }
+     50| 
+ ❯ chain/read-chain.test.ts:38:12
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[53/100]⎯
+
+ FAIL  chain/read-chain.test.ts > readChain — the files of <root>/schema > a file that is only a comment is a file like any other — it is not empty
+Error: NOT_BUILT
+ ❯ readChain ../chain/src/index.ts:48:9
+     46| /** Reads `<root>/schema`. Files by number; the disk's own offences (S…
+     47| export function readChain(root: string): { files: ChainFile[]; offence…
+     48|   throw new Error("NOT_BUILT");
+       |         ^
+     49| }
+     50| 
+ ❯ chain/read-chain.test.ts:43:18
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[54/100]⎯
+
+ FAIL  chain/read-chain.test.ts > readChain — the files of <root>/schema > what lies in the root beside schema/ is not the chain's: it is not read
+Error: NOT_BUILT
+ ❯ readChain ../chain/src/index.ts:48:9
+     46| /** Reads `<root>/schema`. Files by number; the disk's own offences (S…
+     47| export function readChain(root: string): { files: ChainFile[]; offence…
+     48|   throw new Error("NOT_BUILT");
+       |         ^
+     49| }
+     50| 
+ ❯ chain/read-chain.test.ts:53:12
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[55/100]⎯
+
+ FAIL  chain/read-chain.test.ts > readChain — the disk's own offences, each planted and named > unknown-entry: a file with another ending
+ FAIL  chain/read-chain.test.ts > readChain — the disk's own offences, each planted and named > unknown-entry: a file with a number of three digits
+ FAIL  chain/read-chain.test.ts > readChain — the disk's own offences, each planted and named > unknown-entry: a file with a number of five digits
+ FAIL  chain/read-chain.test.ts > readChain — the disk's own offences, each planted and named > unknown-entry: a file with a capital letter
+ FAIL  chain/read-chain.test.ts > readChain — the disk's own offences, each planted and named > unknown-entry: a file with an underscore
+ FAIL  chain/read-chain.test.ts > readChain — the disk's own offences, each planted and named > unknown-entry: a file with a hyphen at the end of the name
+ FAIL  chain/read-chain.test.ts > readChain — the disk's own offences, each planted and named > unknown-entry: a file with two hyphens together
+ FAIL  chain/read-chain.test.ts > readChain — the disk's own offences, each planted and named > unknown-entry: a file with no word after the number
+ FAIL  chain/read-chain.test.ts > readChain — the disk's own offences, each planted and named > unknown-entry: a file with the ending in capitals
+ FAIL  chain/read-chain.test.ts > readChain — the disk's own offences, each planted and named > unknown-entry: a file with a name that begins with a dot
+Error: NOT_BUILT
+ ❯ readChain ../chain/src/index.ts:48:9
+     46| /** Reads `<root>/schema`. Files by number; the disk's own offences (S…
+     47| export function readChain(root: string): { files: ChainFile[]; offence…
+     48|   throw new Error("NOT_BUILT");
+       |         ^
+     49| }
+     50| 
+ ❯ chain/read-chain.test.ts:71:12
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[56/100]⎯
+
+ FAIL  chain/read-chain.test.ts > readChain — the disk's own offences, each planted and named > unknown-entry: a directory, whatever its name
+Error: NOT_BUILT
+ ❯ readChain ../chain/src/index.ts:48:9
+     46| /** Reads `<root>/schema`. Files by number; the disk's own offences (S…
+     47| export function readChain(root: string): { files: ChainFile[]; offence…
+     48|   throw new Error("NOT_BUILT");
+       |         ^
+     49| }
+     50| 
+ ❯ chain/read-chain.test.ts:78:12
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[57/100]⎯
+
+ FAIL  chain/read-chain.test.ts > readChain — the disk's own offences, each planted and named > unknown-entry: a link, also one that carries a file's name and leads to a file — or to nothing
+Error: NOT_BUILT
+ ❯ readChain ../chain/src/index.ts:48:9
+     46| /** Reads `<root>/schema`. Files by number; the disk's own offences (S…
+     47| export function readChain(root: string): { files: ChainFile[]; offence…
+     48|   throw new Error("NOT_BUILT");
+       |         ^
+     49| }
+     50| 
+ ❯ chain/read-chain.test.ts:89:12
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[58/100]⎯
+
+ FAIL  chain/read-chain.test.ts > readChain — the disk's own offences, each planted and named > duplicated-number: two files carry the same number — both named, in ascending order
+Error: NOT_BUILT
+ ❯ readChain ../chain/src/index.ts:48:9
+     46| /** Reads `<root>/schema`. Files by number; the disk's own offences (S…
+     47| export function readChain(root: string): { files: ChainFile[]; offence…
+     48|   throw new Error("NOT_BUILT");
+       |         ^
+     49| }
+     50| 
+ ❯ chain/read-chain.test.ts:97:12
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[59/100]⎯
+
+ FAIL  chain/read-chain.test.ts > readChain — the disk's own offences, each planted and named > duplicated-content: two files carry the same bytes — both named, in ascending order
+Error: NOT_BUILT
+ ❯ readChain ../chain/src/index.ts:48:9
+     46| /** Reads `<root>/schema`. Files by number; the disk's own offences (S…
+     47| export function readChain(root: string): { files: ChainFile[]; offence…
+     48|   throw new Error("NOT_BUILT");
+       |         ^
+     49| }
+     50| 
+ ❯ chain/read-chain.test.ts:102:12
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[60/100]⎯
+
+ FAIL  chain/read-chain.test.ts > readChain — the disk's own offences, each planted and named > empty: a file of no bytes
+ FAIL  chain/read-chain.test.ts > readChain — the disk's own offences, each planted and named > empty: a file of white space only
+Error: NOT_BUILT
+ ❯ readChain ../chain/src/index.ts:48:9
+     46| /** Reads `<root>/schema`. Files by number; the disk's own offences (S…
+     47| export function readChain(root: string): { files: ChainFile[]; offence…
+     48|   throw new Error("NOT_BUILT");
+       |         ^
+     49| }
+     50| 
+ ❯ chain/read-chain.test.ts:110:12
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[61/100]⎯
+
+ FAIL  chain/read-chain.test.ts > readChain — the disk's own offences, each planted and named > unreadable: a file that is not valid UTF-8 — a byte that begins no character
+ FAIL  chain/read-chain.test.ts > readChain — the disk's own offences, each planted and named > unreadable: a file that is not valid UTF-8 — a character cut off in its middle
+Error: NOT_BUILT
+ ❯ readChain ../chain/src/index.ts:48:9
+     46| /** Reads `<root>/schema`. Files by number; the disk's own offences (S…
+     47| export function readChain(root: string): { files: ChainFile[]; offence…
+     48|   throw new Error("NOT_BUILT");
+       |         ^
+     49| }
+     50| 
+ ❯ chain/read-chain.test.ts:119:12
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[62/100]⎯
+
+ FAIL  chain/read-chain.test.ts > readChain — the disk's own offences, each planted and named > unreadable: a file this user may not read
+Error: NOT_BUILT
+ ❯ readChain ../chain/src/index.ts:48:9
+     46| /** Reads `<root>/schema`. Files by number; the disk's own offences (S…
+     47| export function readChain(root: string): { files: ChainFile[]; offence…
+     48|   throw new Error("NOT_BUILT");
+       |         ^
+     49| }
+     50| 
+ ❯ chain/read-chain.test.ts:127:12
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[63/100]⎯
+
+ FAIL  chain/read-chain.test.ts > readChain — the disk's own offences, each planted and named > says every offence, none hiding another — by kind as SPEC §4 lists them, then by detail
+Error: NOT_BUILT
+ ❯ readChain ../chain/src/index.ts:48:9
+     46| /** Reads `<root>/schema`. Files by number; the disk's own offences (S…
+     47| export function readChain(root: string): { files: ChainFile[]; offence…
+     48|   throw new Error("NOT_BUILT");
+       |         ^
+     49| }
+     50| 
+ ❯ chain/read-chain.test.ts:139:12
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[64/100]⎯
+
+ FAIL  chain/read-chain.test.ts > readChain — no chain > a root that holds no schema/ is refused: no-chain
+ FAIL  chain/read-chain.test.ts > readChain — no chain > a root that does not exist is refused: no-chain
+ FAIL  chain/read-chain.test.ts > readChain — no chain > a root that holds a file named schema, not a directory is refused: no-chain
+Error: NOT_BUILT
+ ❯ readChain ../chain/src/index.ts:48:9
+     46| /** Reads `<root>/schema`. Files by number; the disk's own offences (S…
+     47| export function readChain(root: string): { files: ChainFile[]; offence…
+     48|   throw new Error("NOT_BUILT");
+       |         ^
+     49| }
+     50| 
+ ❯ chain/read-chain.test.ts:161:57
+ ❯ refusalOf chain/fixtures/refusal.ts:9:22
+ ❯ chain/read-chain.test.ts:161:27
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[65/100]⎯
+
+
+ Test Files  4 failed (4)
+      Tests  100 failed | 9 passed (109)
+   Start at  10:53:21
+   Duration  6.72s (transform 87ms, setup 0ms, collect 147ms, tests 6.16s, environment 1ms, prepare 121ms)
+

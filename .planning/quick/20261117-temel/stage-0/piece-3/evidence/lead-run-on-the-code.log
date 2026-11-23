@@ -1,0 +1,19 @@
+
+ RUN  v3.2.6 /home/dxb/DxB Global OS/foundation/tests
+
+ ✓ chain/on-the-bench.test.ts (52 tests) 19279ms
+   ✓ the harness — seen to work before a case rests on it > a session inside pg_sleep is seen as such by another session — and no longer once it woke  1121ms
+   ✓ one runner at a time > while a run sits in a file that sleeps, a second run with no wait is refused at once: busy — and the first goes on to its end  3142ms
+   ✓ one runner at a time > a second run with a wait runs after the first, and applies nothing  3184ms
+   ✓ one runner at a time > a wait that runs out is the same refusal: busy, after the wait and not before  3136ms
+   ✓ the target > a list that loses the identity while a file sleeps: the next file's connection is refused, and the first file stays ledgered  3160ms
+ ✓ bench/no-old-address.test.ts (28 tests) 27ms
+ ✓ chain/read-chain.test.ts (32 tests) 10ms
+ ✓ chain/compare.test.ts (13 tests) 3ms
+ ✓ chain/answer.test.ts (12 tests) 3ms
+
+ Test Files  5 passed (5)
+      Tests  137 passed (137)
+   Start at  11:16:35
+   Duration  20.09s (transform 121ms, setup 0ms, collect 253ms, tests 19.32s, environment 0ms, prepare 153ms)
+

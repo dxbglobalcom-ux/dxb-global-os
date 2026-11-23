@@ -112,6 +112,7 @@ files to apply — are the files the ledger does not hold, by number; when there
   of the bootstrap's own SQL text as the runner holds it. A ledger whose row 0 is absent or carries another hash — or
   a schema `os_chain` without a readable `ledger` table — is a ledger this runner does not know:
   `ledger-unknown`, and nothing is written. "Create if not exists" would accept a table of any shape in silence.
+  A table of other columns, and a second row of kind `ledger`, are unknown too.
 - **The bootstrap** makes the schema, the table and row 0 in one transaction, and leaves **no privilege on the schema
   or the table to anyone but their owner, whatever default privileges the database carries** (§3 measured that a
   planted default reaches both).
@@ -136,8 +137,11 @@ files to apply — are the files the ledger does not hold, by number; when there
 5. **The bootstrap**, when the ledger is absent.
 6. **Each pending file, in order, in a session of its own** **[lead]** (§3: a session outlives a file — a clean build
    would run every file in one session and an upgrade only the later ones in a fresh one, so the same chain could
-   build two different databases). In that session: `begin`; the file's text executed as §3 measured — handed to the
-   server as data, run by plpgsql `execute`; the file's ledger row; `commit`. **[lead]** BUILD.md says a file that
+   build two different databases). In that session: `begin`; the file's ledger row; the file's text executed as §3
+   measured — handed to the server as data, run by plpgsql `execute`; `commit`. **The row is written before the
+   text** (the lead, on the code hand's first red run: a file that ended in `set role` left the session unable to
+   write the ledger, which is its owner's alone) — so nothing a file does to its session reaches the writing of its
+   own row, and a refused file takes the row with it. **[lead]** BUILD.md says a file that
    opens or closes a transaction "is refused": the server refuses it, in the act, with nothing left — a search of the
    text for the words would refuse a string that spells them and miss a procedure that commits.
 7. **A file fails** → its transaction is rolled back, the run stops, the outcome is `file-failed` with the file's
