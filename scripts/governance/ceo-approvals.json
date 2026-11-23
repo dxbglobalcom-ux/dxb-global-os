@@ -3345,5 +3345,13 @@
     "conditions": "Removed by LAW A on the same day: B83's 'it says it is an AI' (two places) and its open question; the expert library's AI-announcement lines (README, SKILLS rows 14, 39 and 65, and the studies' own lines). The EU AI Act Article 50 facts stay as facts for the research İ5 orders at the work's start; this legal risk of the telephone was named to him in the reply of the same turn.",
     "session": "Opus 5.5 session 1e72cf02, heard first-hand, 2026-11-23.",
     "where": ".planning/board-rows/B83.md; .planning/board-rows/B28.md (note 2026-11-23); .planning/research/expert-library/SKILLS.md"
+  },
+  "core-ceiling-raised-for-the-mission-sentences-2026-11-23": {
+    "date": "2026-11-23",
+    "what": "The holding's mission, vision and principle stand in the always-on core in full (Turkish, his sentences); the core's size ceiling in the opening ruler is raised for them, as an exception — 13,130 to 14,000 bytes, and the total by the same 870. The choice was left to the session, which decided yes: three sentences every session must know cost about 200 tokens an opening.",
+    "verbatim": "\"Ya bir şey olmaz, genişletin o kadar yani şu kadarcık bu kadar şey sence geniş yani eklesek bir şey olur mu yani? Bunun için istisna geçsek olmaz mı? Olur mu? Sen bir kararını ver.\"",
+    "conditions": "An exception for these sentences only; the ceiling is not raised for anything else by it.",
+    "session": "Fable 5.2 session 7245408f, heard first-hand, 2026-11-23.",
+    "where": ".claude/CLAUDE.md (THE PURPOSE); tests/hooks/opening-budget.ts (maxCore, maxTotal)"
   }
 }

@@ -19,7 +19,10 @@ both, because the machine is what earns. The holding is a company and a factory:
 continuously, in every halal way — its own companies and brands, services, products, content, partners
 and sponsors, the OS itself. Every judgement of what is worth doing starts from this.
 
-**Its mission, vision and principle** (his, 2026-11-23): `.planning/board-rows/C41.md` <!-- CEO-OK: holding-mission-vision-principle-rewritten-2026-11-23 -->
+**Its mission, vision and principle** (his, 2026-11-23; English and history: `.planning/board-rows/C41.md`) <!-- CEO-OK: holding-mission-vision-principle-rewritten-2026-11-23 -->:
+- **Misyon:** "DxB Global, söyleneni eksiksiz ve söylendiği gibi bitmiş işe çeviren dijital holdingtir. Yapay zekâ çalışanlarından kurulu şirketleri ve ofisleri işi baştan sona kendileri yürütür, her gün bir öncekinden daha iyi çalışır, yerel işletmeden dünyanın en büyük markasına her müşteriye ölçülmüş iş teslim eder ve helal yoldan kesintisiz gelir üretir."
+- **Vizyon:** "Dünyada kendi alanında birinciliğe aday, Ferrari seviyesinde bir dijital holding: ileri teknolojiyi kendisi üreten, büyük şirketler kuran ve gelirini hiç durmayan bir makineyle kazanan."
+- **İlke:** "Hakkıyla iş, helal kazanç. Aldatma, faiz, kumar ve bunlara benzeyen hiçbir şey bu holdingde yoktur; yapamayacağımız işin sözünü vermeyiz." <!-- CEO-OK: core-ceiling-raised-for-the-mission-sentences-2026-11-23 -->
 
 An AI-native operating system for one holding company. One human in it: the CEO. He states
 intent and approves what the approval gate stops at him; the OS runs the company end to end.
