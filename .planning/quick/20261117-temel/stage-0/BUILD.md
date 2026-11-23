@@ -91,7 +91,7 @@ ownership and is never the authority to remove.
 | The chain's files | `db/schema/` · `db/functions/` (one door function per file) · `db/reference/` (vocabularies the code owns) |
 | The snapshot | `db/__snapshots__/os.snapshot.txt` — generated and committed by the lead, never by a writer |
 | The foundation's code | `foundation/*` — a workspace root; each subject a package (`chain`, `bench`, `tests`) |
-| The foundation's bench | its address, its identity file and its guard live in `foundation/bench` — nothing is imported from the old `tests/` or `tools/` |
+| The foundation's bench | its address, its refused identities and its guard live in `foundation/bench`; the list of made instances and the host lock are machine state (piece 1) — nothing is imported from the old `tests/` or `tools/` |
 | The test locks | `foundation/locks/` |
 
 His policy data needs no kind of its own in the runner: a seed is a versioned change, applied once.
@@ -138,6 +138,13 @@ old bench's identities by name. One host lock held from set-up through cleanup; 
 *Tests first:* a connection to an identity not on the foundation's list is refused before the first write (tried on
 throwaway identities, never on the company); two runs at once — one waits or is refused; a made instance has the old
 schema and no foundation object. *Measured first:* two stacks side by side; start time and memory.
+*Done 2026-11-23 (`piece-1/SPEC.md`, its audit and evidence beside it): a third stack starts in 32 s and holds about
+425 MiB; the old chain applies in 22 s. Two things the cut did not carry were measured and decided there by the lead —
+the CLI publishes its ports to the whole network and the kernel wall names only the old four, so the stack stands on a
+Docker network that binds 127.0.0.1; and the list of made instances and the host lock are machine state under the
+user's state directory, not files in `foundation/bench` (§4), because every make gives a new cluster identity and
+piece 2 verifies on a clean copy. Audited blind by Fable 5.2 alone — the GPT auditors were out of quota — so piece 14's
+audit by two auditors is this piece's GPT pass too.*
 
 **2 — the test lock.** `verify <piece>` takes no report: on a clean copy of the candidate with a frozen install it
 runs the piece's locked tests itself and reads its own fresh result. It fails when: a locked test file, the battery's
