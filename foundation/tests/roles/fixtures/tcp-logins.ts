@@ -3,11 +3,12 @@
 // client never sends, the driver's own refusal — never off "it threw".
 import { Client, DatabaseError, type ClientConfig } from "pg";
 import { expect } from "vitest";
-import { connectionString } from "@dxb-foundation/bench";
+import { connectionString, loginConnectionString } from "@dxb-foundation/bench";
+import { THE_FOUR } from "./catalogue.ts";
 
 const CONNECT_MS = 10_000;
 
-/** The server's SQLSTATE for a password it did not accept — also for a role that has none, or no LOGIN (measured). */
+/** The server's SQLSTATE for a password it did not accept — also for a role that has none, and for one without LOGIN asked with a wrong one (measured, C5). */
 export const AUTHENTICATION_FAILED = "28P01";
 
 /**
@@ -59,6 +60,11 @@ export async function expectComesInAs(login: Login, role: string): Promise<void>
   expect(await whoComesIn(login)).toBe(`${role} ${role}`);
 }
 
+/** Each of the four comes in with the address the secret file gives it, and is itself. */
+export async function everyLoginComesIn(): Promise<void> {
+  for (const role of THE_FOUR) await expectComesInAs(loginConnectionString(role), role);
+}
+
 /** The installer's own connection on the same address: the permitted thing a refusal is measured after. */
 export async function expectTheInstallerComesIn(): Promise<void> {
   const said = await whoComesIn(connectionString());
@@ -86,6 +92,12 @@ export async function howRefused(login: Login): Promise<string> {
 
 /** The server refused the password, as `howRefused` says it. */
 export const PASSWORD_REFUSED = `server ${AUTHENTICATION_FAILED}`;
+
+/** The password was right and the role may not log in (NOLOGIN) — answered only to a right password (SPEC §11, C5). */
+export const NOT_PERMITTED_TO_LOG_IN = "server 28000";
+
+/** The password was right and the role's connection limit is reached (C5). */
+export const TOO_MANY_CONNECTIONS = "server 53300";
 
 /** The server asked for SCRAM and the client had no password to answer with, as `howRefused` says it. */
 export const NO_PASSWORD_REFUSED = `client ${NO_PASSWORD_GIVEN}`;

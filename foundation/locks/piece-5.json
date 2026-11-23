@@ -43,22 +43,25 @@
     "foundation/tests/passes/fixtures/pass-files.ts": "14dd9351e612c696ccf11988bf21bd90a1a45fa7",
     "foundation/tests/passes/fixtures/passes-on-disk.ts": "6f451c09d1ab18fbc07a8cf472bed43df58a8d94",
     "foundation/tests/passes/fixtures/standing.ts": "1d3fae2df51f20763bccbed9a82e8ed8be99e392",
-    "foundation/tests/roles/cases/again.ts": "e217d7c1df61dfdf1f548641bb7a94fcc6be6511",
+    "foundation/tests/roles/cases/a-file-not-kept.ts": "9472b10e189e14ca1bd78e9588089908d0a03489",
+    "foundation/tests/roles/cases/a-login-that-cannot-come-in.ts": "12d9d06acf6a236f82ac8f0bff0fff6b3aa5f759",
+    "foundation/tests/roles/cases/a-refused-verifier.ts": "99ff70391d5bed6e02ff34c407771c5ea0f980c1",
+    "foundation/tests/roles/cases/again.ts": "789e71d9776558588060f0cc253b866f0c1d8929",
     "foundation/tests/roles/cases/default-privileges.ts": "fedd384aca42cb1e2dcbaba96ff7871e69057fbe",
-    "foundation/tests/roles/cases/passes-as-the-owner.ts": "2b5504a463c4e6e2a3ec59bacafe2a42eedf3e3e",
-    "foundation/tests/roles/cases/the-chain.ts": "5583e2a9e71873a5511e97a80612d41157c5ee9d",
-    "foundation/tests/roles/cases/the-install-step.ts": "0a9e9c0b18c82973791822a1be25461b74622a5a",
+    "foundation/tests/roles/cases/passes-as-the-owner.ts": "3f6746ed633f1a1eeeb14602c74c5dedf6c2a329",
+    "foundation/tests/roles/cases/the-chain.ts": "bede98ac71b72c34962ba312464e51d18c246c65",
+    "foundation/tests/roles/cases/the-install-step.ts": "a27c7a4eeee88b3c7def7c6d4e118fc444dbc842",
     "foundation/tests/roles/cases/the-real-root-elsewhere.ts": "8f446c66722f763016bc870366d159774a55fcac",
-    "foundation/tests/roles/cases/the-roles.ts": "e4307c487aa2f597b85e51a6fdebcb71f2480f84",
-    "foundation/tests/roles/cases/what-a-login-can-do.ts": "73eb794967500386d8ba00ded67f3ddbac463ad6",
-    "foundation/tests/roles/fixtures/bench-command.ts": "bfbb31bc468cb053e08186e7458a741229fd5e6c",
-    "foundation/tests/roles/fixtures/catalogue.ts": "e0519c5ba31b47c206964cab53d4efe05e8c8d5d",
-    "foundation/tests/roles/fixtures/server-log.ts": "eaf3a1f9b52125d697a42cec2913c8f9bd7adaa7",
-    "foundation/tests/roles/fixtures/tcp-logins.ts": "f3897cc207e0db7662fa1996cd914b32d983ad96",
-    "foundation/tests/roles/fixtures/the-logins-file.ts": "0051d69a7c83de2d38bd0a5333cc3e5c2d77f6f5",
+    "foundation/tests/roles/cases/the-roles.ts": "dcf9cf3bd9b318623851e84d4c5107b4b27f4aca",
+    "foundation/tests/roles/cases/what-a-login-can-do.ts": "175875bde4df4794963874fc6b502df33506d9cc",
+    "foundation/tests/roles/fixtures/bench-command.ts": "a523d09c16be78f71e517d0e9ca96520a338d070",
+    "foundation/tests/roles/fixtures/catalogue.ts": "5b2c87fec72d2626101d4558a57e735e00d8339f",
+    "foundation/tests/roles/fixtures/server-log.ts": "be9b3748ce1f2dd77500b1bb502413e146197a69",
+    "foundation/tests/roles/fixtures/tcp-logins.ts": "75fc7e102faa076159015dd1a4422de93e1528cb",
+    "foundation/tests/roles/fixtures/the-logins-file.ts": "191455e7391e08f6aaf389d4b35e55321d024c3c",
     "foundation/tests/roles/fixtures/the-run.ts": "795ac994046e8c3d35605aba550095f40087bdff",
-    "foundation/tests/roles/on-a-fresh-instance.test.ts": "4c3d3c21117dd16f8543f317719a0758dc182890",
-    "foundation/tests/roles/without-the-bench.test.ts": "6fab381b1c56b5ec8470ee08b9b42b43ed54e186",
+    "foundation/tests/roles/on-a-fresh-instance.test.ts": "c0409903cdce1dc653cc6763a78bb7e728cdbdcd",
+    "foundation/tests/roles/without-the-bench.test.ts": "bea5afd49fa24c89ad5f2976f15d4e173288438a",
     "foundation/tests/vitest.config.ts": "c95853266badd11995fc806996a5df94ee4f1198",
     "foundation/tsconfig.json": "4eb3b5c0b63913b217384ba6edb5cf33b78c4f9e",
     "pnpm-lock.yaml": "fda8eb167c85bc00d0c176c2ccd300383968a79c",
@@ -86,7 +89,7 @@
       "suite": [
         "piece 5 — the roles and the schema os on a fresh instance, in order"
       ],
-      "name": "B.10 what the platform leaves open to every login: a temporary table, a large object made and unlinked, hstore made and dropped again by the login",
+      "name": "B.10 what the platform leaves open to every login: a temporary table, a large object made and unlinked, hstore put into os and dropped again by the login — while it stands, the chain is red by its manifest; afterwards green",
       "count": 1
     },
     {
@@ -111,6 +114,14 @@
         "piece 5 — the roles and the schema os on a fresh instance, in order"
       ],
       "name": "B.11 again: with the file's sysid changed to another, logins mints four new passwords — the old are refused, the new come in",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/roles/on-a-fresh-instance.test.ts",
+      "suite": [
+        "piece 5 — the roles and the schema os on a fresh instance, in order"
+      ],
+      "name": "B.12 the order of SPEC §6 step 2, pinned: a login with two faults says its first reason — os_intake given createdb and made a member of pg_monitor → os_intake createdb; two faulty logins say the first login, not the first reason — os_executor a member, os_reader given createdb → os_executor member",
       "count": 1
     },
     {
@@ -158,6 +169,22 @@
       "suite": [
         "piece 5 — the roles and the schema os on a fresh instance, in order"
       ],
+      "name": "B.14 pin: a second function file after one whose text ends with reset role is still os_owner's",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/roles/on-a-fresh-instance.test.ts",
+      "suite": [
+        "piece 5 — the roles and the schema os on a fresh instance, in order"
+      ],
+      "name": "B.14 pin: the same met by the reference pass → pass-failed at its first file by name, permission denied to set role; no row written",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/roles/on-a-fresh-instance.test.ts",
+      "suite": [
+        "piece 5 — the roles and the schema os on a fresh instance, in order"
+      ],
       "name": "B.14 the same vocabulary with force row level security and a policy that hides its one row → pass-failed at that file, naming row-level security; the row stands as it was",
       "count": 1
     },
@@ -174,7 +201,7 @@
       "suite": [
         "piece 5 — the roles and the schema os on a fresh instance, in order"
       ],
-      "name": "B.2 the chain: foundation:chain up, no --root → exit 0, CHAIN_GREEN applied=n standing=n, n ≥ 2",
+      "name": "B.2 the chain: foundation:chain up, no --root, by an installer whose own createrole_self_grant is 'set, inherit' (put back after it) → exit 0, CHAIN_GREEN applied=n standing=n, n ≥ 2",
       "count": 1
     },
     {
@@ -182,7 +209,7 @@
       "suite": [
         "piece 5 — the roles and the schema os on a fresh instance, in order"
       ],
-      "name": "B.3 the roles: each of the five has exactly SPEC §4's attributes, no setting, no membership either way but the installer's, which may SET ROLE to os_owner alone",
+      "name": "B.3 the roles: each of the five has exactly SPEC §4's attributes, no setting, is a member of nothing, and its membership rows are exactly the platform's one and, for os_owner, the installer's SET; the installer may SET ROLE to os_owner alone",
       "count": 1
     },
     {
@@ -222,7 +249,7 @@
       "suite": [
         "piece 5 — the roles and the schema os on a fresh instance, in order"
       ],
-      "name": "B.8 after it: each login comes in with loginConnectionString(<role>) on the bench's address and is itself; a wrong password is still refused; os_owner still is",
+      "name": "B.8 after it: each login comes in with loginConnectionString(<role>) on the bench's address and is itself; a wrong password is still refused; os_owner still is — with a right password too, refused as one that may not log in (28000)",
       "count": 1
     },
     {
@@ -255,6 +282,78 @@
         "piece 5 — the roles and the schema os on a fresh instance, in order"
       ],
       "name": "what the module made, it removed: no throwaway database it made still stands",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/roles/on-a-fresh-instance.test.ts",
+      "suite": [
+        "piece 5 — the roles and the schema os on a fresh instance, in order"
+      ],
+      "name": "§11 item 1: connection limit 0 on os_executor → logins → LOGINS_REFUSED os_executor cannot-log-in, exit 6; the file kept, the verifiers the step's new ones of it; put back, logins green and all four come in",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/roles/on-a-fresh-instance.test.ts",
+      "suite": [
+        "piece 5 — the roles and the schema os on a fresh instance, in order"
+      ],
+      "name": "§11 item 2: a password of another form (os_reader's: 43 characters, %41 among them) → logins green, four new passwords, the old refused, the new come in",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/roles/on-a-fresh-instance.test.ts",
+      "suite": [
+        "piece 5 — the roles and the schema os on a fresh instance, in order"
+      ],
+      "name": "§11 item 2: a symbolic link in the file's place, to a well-formed file of mode 600 → logins green, a regular file of mode 600 in its place with four new passwords, the link's target untouched",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/roles/on-a-fresh-instance.test.ts",
+      "suite": [
+        "piece 5 — the roles and the schema os on a fresh instance, in order"
+      ],
+      "name": "§11 item 2: the file made mode 644 → logins green, the file 600 again with four new passwords; the old refused, the new come in",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/roles/on-a-fresh-instance.test.ts",
+      "suite": [
+        "piece 5 — the roles and the schema os on a fresh instance, in order"
+      ],
+      "name": "§11 item 2: two logins holding one password (os_intake holds os_engine's) → logins green, four new passwords, the old refused, the new come in",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/roles/on-a-fresh-instance.test.ts",
+      "suite": [
+        "piece 5 — the roles and the schema os on a fresh instance, in order"
+      ],
+      "name": "§11 item 4, the cancel path: with the installer's own statement_timeout = '2s' (role-level, put back) and os_reader's row held as above → logins ends within 20 s, exit 1, 'the server refused the verifier of os_reader (57014)', nothing secret said, no SCRAM-SHA-256$ in the log's window, every stored verifier as it was; rolled back, logins green and all four come in",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/roles/on-a-fresh-instance.test.ts",
+      "suite": [
+        "piece 5 — the roles and the schema os on a fresh instance, in order"
+      ],
+      "name": "§11 item 5: with statement logging on for the installer's sessions (log_min_duration_statement = 0, role-level, put back) a green logins leaves no SCRAM-SHA-256$ in the log's window",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/roles/on-a-fresh-instance.test.ts",
+      "suite": [
+        "piece 5 — the roles and the schema os on a fresh instance, in order"
+      ],
+      "name": "§11 item 7: os the runner's own → neither pass says a role: a function file meets role none, a vocabulary's column of current_setting('role') reads none",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/roles/on-a-fresh-instance.test.ts",
+      "suite": [
+        "piece 5 — the roles and the schema os on a fresh instance, in order"
+      ],
+      "name": "§11 items 4, 5: another session holds os_reader's row — the last login's — and four are minted → logins ends within 20 s, exit 1, 'the server refused the verifier of os_reader (55P03)', nothing secret said, no SCRAM-SHA-256$ in the log's window, every stored verifier as it was, the file ahead; rolled back, logins green with the file as it stood and all four come in",
       "count": 1
     },
     {
@@ -342,7 +441,7 @@
       "suite": [
         "A.4 loginConnectionString reads the secret file"
       ],
-      "name": "a file of the four gives each login the bench's own address with its role and its password",
+      "name": "a file of mode 600 holding four passwords of the minted form gives each login the bench's address — 127.0.0.1, port 54522, database postgres — with its role and its password",
       "count": 1
     },
     {
@@ -375,6 +474,46 @@
         "A.4 loginConnectionString reads the secret file"
       ],
       "name": "a file without the role → LoginsRefused, reason no-secret",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/roles/without-the-bench.test.ts",
+      "suite": [
+        "A.4 loginConnectionString reads the secret file"
+      ],
+      "name": "a well-formed file holding a password of another form — 43 characters, %41 among them → LoginsRefused, reason no-secret, for each of the four",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/roles/without-the-bench.test.ts",
+      "suite": [
+        "A.4 loginConnectionString reads the secret file"
+      ],
+      "name": "a well-formed file in which two logins hold one password → LoginsRefused, reason no-secret, for each of the four",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/roles/without-the-bench.test.ts",
+      "suite": [
+        "A.4 loginConnectionString reads the secret file"
+      ],
+      "name": "a well-formed file of mode 644 → LoginsRefused, reason no-secret, for each of the four",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/roles/without-the-bench.test.ts",
+      "suite": [
+        "A.4 loginConnectionString reads the secret file"
+      ],
+      "name": "a well-formed file that is a symbolic link to a well-formed file of mode 600 → LoginsRefused, reason no-secret, for each of the four",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/roles/without-the-bench.test.ts",
+      "suite": [
+        "A.5 the secrets guard of a command's output sees a verifier by its shape (SPEC §11 item 8)"
+      ],
+      "name": "each salt and each key of a verifier is found alone, inside a line; an answer of the step and its progress are not",
       "count": 1
     }
   ]

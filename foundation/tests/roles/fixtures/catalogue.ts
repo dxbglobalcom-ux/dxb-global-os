@@ -1,7 +1,11 @@
 // How a case reads the roles from the catalogue, as the installer (piece 5's SPEC §8 B). Everything here reads, but
-// `asTheOwnerRolledBack`, whose work is rolled back whatever it did.
+// `asTheOwnerRolledBack`, whose work is rolled back whatever it did, and `withTheInstallersSetting`, which puts back
+// what it set.
 import type { Client } from "pg";
+import { expect } from "vitest";
+import { scramVerifier } from "@dxb-foundation/bench";
 import { columnOf, valueOf } from "../../chain/fixtures/looking.ts";
+import { onTheInstance } from "../../chain/fixtures/throwaway-database.ts";
 
 /** The four logins of SPEC §4, spelled here — the test's own list, not read from the code. */
 export const THE_FOUR = ["os_engine", "os_executor", "os_intake", "os_reader"] as const;
@@ -78,4 +82,39 @@ export async function asTheOwnerRolledBack<T>(client: Client, work: () => Promis
   } finally {
     await client.query("rollback");
   }
+}
+
+/**
+ * True when `stored` is the verifier of `password` — computed again with the library's `scramVerifier` (A.1 proves it
+ * PostgreSQL's own) under the stored verifier's own salt. A boolean: a failing expectation prints neither.
+ */
+export function isTheVerifierOf(stored: string | null | undefined, password: string | undefined): boolean {
+  const salt = VERIFIER.exec(stored ?? "")?.[1];
+  if (salt === undefined || password === undefined) return false;
+  return scramVerifier(password, new Uint8Array(Buffer.from(salt, "base64"))) === stored;
+}
+
+/** The installer's own role settings, every database's row, as `<database oid> <settings>`: what a case that sets one puts back. */
+export const installersSettings = (client: Client): Promise<string[]> =>
+  columnOf(
+    client,
+    `select said from (
+       select r.setdatabase::text || ' ' || pg_catalog.array_to_string(r.setconfig, ' | ') as said
+         from pg_catalog.pg_db_role_setting r where r.setrole = pg_catalog.to_regrole(session_user::text)) s order by said collate "C"`,
+  );
+
+/** A setting of the installer's role, said `alter role <installer> set …` by the case and `reset` by it whatever happens; the rows are seen to be as before. */
+export async function withTheInstallersSetting<T>(installer: string, setting: string, value: string, work: () => Promise<T>): Promise<T> {
+  const settingsBefore = await onTheInstance(installersSettings);
+  await onTheInstance((client) => client.query(`alter role "${installer}" set ${setting} = '${value}'`));
+  let done: T;
+  try {
+    // A new session of the installer starts with it: what the command's own sessions will meet.
+    expect(await onTheInstance((client) => valueOf(client, "select pg_catalog.current_setting($1)", [setting]))).toBe(value);
+    done = await work();
+  } finally {
+    await onTheInstance((client) => client.query(`alter role "${installer}" reset ${setting}`));
+  }
+  expect(await onTheInstance(installersSettings)).toEqual(settingsBefore);
+  return done;
 }

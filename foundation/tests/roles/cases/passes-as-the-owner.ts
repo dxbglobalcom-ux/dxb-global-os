@@ -3,19 +3,20 @@ import { writeFileSync } from "node:fs";
 import type { Client } from "pg";
 import { expect } from "vitest";
 import { applyChain } from "@dxb-foundation/chain";
-import { valueOf } from "../../chain/fixtures/looking.ts";
+import { columnOf, valueOf } from "../../chain/fixtures/looking.ts";
 import { inSchema } from "../../chain/fixtures/chain-on-disk.ts";
 import { inAThrowawayDatabase, onTheInstance, type Throwaway } from "../../chain/fixtures/throwaway-database.ts";
 import { routinesInOs, routinesInPublic, rowsToTheInstant } from "../../passes/fixtures/looking-at-os.ts";
-import { CLOSED, EVENT_TYPES_TABLE, FAILED, OPENED, fileOf, greets } from "../../passes/fixtures/pass-files.ts";
+import { CLOSED, EVENT_TYPES_TABLE, FAILED, MAKES_OS, OPENED, SEVERITIES_TABLE, TWICE, fileOf, greets } from "../../passes/fixtures/pass-files.ts";
 import { inFunctions, passesRoot, standsWith } from "../../passes/fixtures/passes-on-disk.ts";
 import { asTheOwnerRolledBack } from "../fixtures/catalogue.ts";
 import { sqlstateOf } from "../fixtures/tcp-logins.ts";
 import { LOOK_MS, type Step, type TheRun } from "../fixtures/the-run.ts";
 
-// Piece 5's SPEC §8 B.14, the passes acting as the owner of `os` (§5): fixture roots applied to throwaway databases
-// of the instance, where the five roles stand cluster-wide since B.2. The installer, not saying `set role`, reaches
-// nothing in `os`; only the runner's own `set role` lets a pass make or write there.
+// Piece 5's SPEC §8 B.14, the passes acting as the owner of `os` (§5, §11 item 7 and its pins): fixture roots applied
+// to throwaway databases of the instance, where the five roles stand cluster-wide since B.2. The installer, not saying
+// `set role`, reaches nothing in `os`; only the runner's own `set role` lets a pass make or write there — and where
+// `os` is the runner's own, no role is said at all.
 
 /** The first schema file of every fixture here: `os`, the owner's. */
 const OS_OF_THE_OWNER = "create schema os authorization os_owner;\n";
@@ -103,35 +104,89 @@ async function aVocabularyItsOwnerCannotRead(db: Throwaway): Promise<void> {
   expect(await theRowAsItStands(db.client)).toEqual(before);
 }
 
-async function anOwnerTheRunnerMayNotBecome(installer: string): Promise<void> {
-  // A role of the case's own, removed by the name it was made under once its database is gone.
+/** Every routine of `os` with its owner, as `<name> <owner>`. */
+const ownersInOs = (client: Client): Promise<string[]> =>
+  columnOf(client, "select said from (select p.proname::text || ' ' || p.proowner::regrole::text as said from pg_catalog.pg_proc p where p.pronamespace = 'os'::regnamespace) s order by said collate \"C\"");
+
+/** A pin (SPEC §11): the runner says `set role` before each function file — one whose text ends with `reset role` leaves the next file the owner's. */
+async function aFileThatEndsWithResetRole(db: Throwaway): Promise<void> {
+  const root = passesRoot({ schema: { "0001-os.sql": OS_OF_THE_OWNER }, functions: { "greet.sql": `${greets("hello")}reset role;\n`, "twice.sql": TWICE } });
+  expect(await applyChain({ target: db.target, root })).toStrictEqual({ state: "applied", applied: ["0001-os.sql"], standing: 1, functions: 2 });
+  expect(await ownersInOs(db.client)).toEqual(["greet os_owner", "twice os_owner"]);
+}
+
+/**
+ * SPEC §11 item 7: where `os` is the runner's own — every fixture of pieces 3 and 4 — neither pass says a role: what a
+ * file and a row meet is `current_setting('role') = none`. The function file says so by refusing any other; the
+ * vocabulary by a column of its own whose default is the setting, which no file names.
+ */
+async function anOsTheRunnerOwns(db: Throwaway, installer: string): Promise<void> {
+  const roleSaidOfEachRow = "alter table os.event_types add column role_said text not null default pg_catalog.current_setting('role');\n";
+  const metNoRole = "do $r$ begin if pg_catalog.current_setting('role') <> 'none' then raise exception 'the file met role %', pg_catalog.current_setting('role'); end if; end $r$;\n";
+  const root = passesRoot({
+    schema: { "0001-os.sql": `${MAKES_OS}${EVENT_TYPES_TABLE}${roleSaidOfEachRow}` },
+    functions: { "greet.sql": `${greets("hello")}${metNoRole}` },
+    reference: { "event_types.json": fileOf(OPENED, CLOSED) },
+  });
+  expect(await applyChain({ target: db.target, root })).toStrictEqual({ state: "applied", applied: ["0001-os.sql"], standing: 1, functions: 1, reference: 1 });
+  expect(await valueOf(db.client, "select nspowner::regrole::text from pg_catalog.pg_namespace where nspname = 'os'")).toBe(installer);
+  expect((await db.client.query('select name, role_said from os.event_types order by name collate "C"')).rows).toEqual([
+    { name: "job.closed", role_said: "none" },
+    { name: "job.opened", role_said: "none" },
+  ]);
+}
+
+/**
+ * A schema `os` whose owner — a role of the case's own — the runner may not SET ROLE to: the first schema file
+ * (`schemaFile`) is applied while the installer holds SET, which the case then takes back; `then` meets it with a pass.
+ * The role is removed by the name it was made under once its database is gone.
+ */
+async function withAnOwnerTheRunnerMayNotBecome(installer: string, schemaFile: (owner: string) => string, then: (db: Throwaway, root: string, owner: string) => Promise<void>): Promise<void> {
   const owner = `roles_owner_${randomBytes(6).toString("hex")}`;
   await onTheInstance((instance) => instance.query(`create role ${owner} nologin`));
   try {
     await onTheInstance((instance) => instance.query(`grant ${owner} to "${installer}" with set true, inherit false`));
     await inAThrowawayDatabase(async (db) => {
-      const root = passesRoot({ schema: { "0001-os.sql": `create schema os authorization ${owner};\n` } });
+      const root = passesRoot({ schema: { "0001-os.sql": schemaFile(owner) } });
       expect(await applyChain({ target: db.target, root })).toStrictEqual({ state: "applied", applied: ["0001-os.sql"], standing: 1 });
       // The grant the case gave is taken back: the installer keeps only the row its CREATE ROLE gave it, without SET.
       await onTheInstance((instance) => instance.query(`revoke ${owner} from "${installer}"`));
       expect(await valueOf(db.client, "select pg_catalog.pg_has_role(session_user, $1, 'SET')", [owner])).toBe(false);
-
-      standsWith(root, "functions", { "greet.sql": greets("hello") });
-      expect(await applyChain({ target: db.target, root })).toStrictEqual({
-        state: "pass-failed",
-        pass: "functions",
-        file: "greet.sql",
-        message: `permission denied to set role "${owner}"`,
-        applied: [],
-      });
-      expect(await routinesInOs(db.client)).toEqual([]);
-      expect(await routinesInPublic(db.client)).toEqual([]);
+      await then(db, root, owner);
     });
   } finally {
     await onTheInstance((instance) => instance.query(`drop role if exists ${owner}`));
   }
   expect(await onTheInstance((instance) => valueOf(instance, "select count(*)::int from pg_catalog.pg_roles where rolname = $1", [owner]))).toBe(0);
 }
+
+const anOsOf = (owner: string): string => `create schema os authorization ${owner};\n`;
+
+const metByTheFunctionsPass = async (db: Throwaway, root: string, owner: string): Promise<void> => {
+  standsWith(root, "functions", { "greet.sql": greets("hello") });
+  expect(await applyChain({ target: db.target, root })).toStrictEqual({
+    state: "pass-failed",
+    pass: "functions",
+    file: "greet.sql",
+    message: `permission denied to set role "${owner}"`,
+    applied: [],
+  });
+  expect(await routinesInOs(db.client)).toEqual([]);
+  expect(await routinesInPublic(db.client)).toEqual([]);
+};
+
+/** A pin (SPEC §11): the reference pass says the refusal at its first file by name; no row is written. */
+const metByTheReferencePass = async (db: Throwaway, root: string, owner: string): Promise<void> => {
+  standsWith(root, "reference", { "severities.json": "[]\n", "event_types.json": fileOf(OPENED) });
+  expect(await applyChain({ target: db.target, root })).toStrictEqual({
+    state: "pass-failed",
+    pass: "reference",
+    file: "event_types.json",
+    message: `permission denied to set role "${owner}"`,
+    applied: [],
+  });
+  expect(await valueOf(db.client, "select count(*)::int from os.event_types")).toBe(0);
+};
 
 export function passesAsTheOwner(step: Step, run: TheRun): void {
   step("B.14 a function file → os.<name> stands, os_owner's; run again with another body → the same oid, the new body, still os_owner's", LOOK_MS, async () => {
@@ -147,6 +202,19 @@ export function passesAsTheOwner(step: Step, run: TheRun): void {
   });
 
   step("B.14 a schema os whose owner the runner may not SET ROLE to → pass-failed at the first function file, permission denied to set role; nothing is made", LOOK_MS, async () => {
-    await anOwnerTheRunnerMayNotBecome(run.installer);
+    await withAnOwnerTheRunnerMayNotBecome(run.installer, anOsOf, metByTheFunctionsPass);
+  });
+
+  step("B.14 pin: the same met by the reference pass → pass-failed at its first file by name, permission denied to set role; no row written", LOOK_MS, async () => {
+    const withTwoVocabularies = (owner: string): string => `${anOsOf(owner)}set role ${owner};\n${EVENT_TYPES_TABLE}${SEVERITIES_TABLE}`;
+    await withAnOwnerTheRunnerMayNotBecome(run.installer, withTwoVocabularies, metByTheReferencePass);
+  });
+
+  step("B.14 pin: a second function file after one whose text ends with reset role is still os_owner's", LOOK_MS, async () => {
+    await inAThrowawayDatabase(aFileThatEndsWithResetRole);
+  });
+
+  step("§11 item 7: os the runner's own → neither pass says a role: a function file meets role none, a vocabulary's column of current_setting('role') reads none", LOOK_MS, async () => {
+    await inAThrowawayDatabase((db) => anOsTheRunnerOwns(db, run.installer));
   });
 }

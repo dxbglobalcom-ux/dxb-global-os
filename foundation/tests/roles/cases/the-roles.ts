@@ -30,28 +30,34 @@ const asSpecFour = (role: string) => ({
   no_expiry: true,
 });
 
-/** The membership rows that name one of the five on either side, as `role <- member inherit=… set=…`. */
-const MEMBERSHIPS = `
-select m.roleid::regrole::text as role, m.member::regrole::text as member, m.inherit_option as inherit, m.set_option as set
-  from pg_catalog.pg_auth_members m
- where m.roleid = any($1::regrole[]) or m.member = any($1::regrole[])`;
-
 /** What `said` selects, ascending by code unit: the order a case spells must not hang on the database's collation. */
 const ascending = (said: string): string => `select said from (${said}) s order by said collate "C"`;
 
-type Membership = { role: string; member: string; inherit: boolean; set: boolean };
+/** Every membership row of one of the five — its role, its member, its grantor and its three options. */
+const MEMBERSHIPS_OF_THE_FIVE = ascending(`
+select m.roleid::regrole::text || ' <- ' || m.member::regrole::text || ' by ' || m.grantor::regrole::text
+       || ' admin=' || m.admin_option || ' inherit=' || m.inherit_option || ' set=' || m.set_option as said
+  from pg_catalog.pg_auth_members m where m.roleid = any($1::regrole[])`);
+
+/**
+ * SPEC §3 and §11 item 6: a role the installer makes gives it one row, granted by the platform's superuser — ADMIN,
+ * neither INHERIT nor SET — whatever the installer's own `createrole_self_grant` (B.2 set it to `set, inherit`); the
+ * owner's has one more, the first file's own grant: SET alone, granted by the installer.
+ */
+const membershipsAsTheChainGivesThem = (installer: string): string[] =>
+  [
+    ...THE_FIVE.map((role) => `${role} <- ${installer} by supabase_admin admin=true inherit=false set=false`),
+    `os_owner <- ${installer} by ${installer} admin=false inherit=false set=true`,
+  ].sort();
 
 async function theRolesAsTheCatalogueHasThem(installer: Client, run: TheRun): Promise<void> {
   expect((await installer.query(ATTRIBUTES, [[...THE_FIVE]])).rows).toEqual([...THE_FIVE].sort().map(asSpecFour));
   const settings = "select count(*)::int from pg_catalog.pg_db_role_setting s where s.setrole = any($1::regrole[])";
   expect(await valueOf(installer, settings, [[...THE_FIVE]])).toBe(0);
 
-  const memberships = (await installer.query<Membership>(MEMBERSHIPS, [[...THE_FIVE]])).rows;
-  // None of the five is a member of any role.
-  expect(memberships.filter((row) => (THE_FIVE as readonly string[]).includes(row.member))).toEqual([]);
-  // No role but the installer is a member of any of them, and it inherits from none.
-  expect([...new Set(memberships.map((row) => row.member))]).toEqual([run.installer]);
-  expect(memberships.filter((row) => row.inherit)).toEqual([]);
+  // None of the five is a member of any role; who is a member of each, and how, is exactly what the chain gives.
+  expect(await valueOf(installer, "select count(*)::int from pg_catalog.pg_auth_members m where m.member = any($1::regrole[])", [[...THE_FIVE]])).toBe(0);
+  expect(await columnOf(installer, MEMBERSHIPS_OF_THE_FIVE, [[...THE_FIVE]])).toEqual(membershipsAsTheChainGivesThem(run.installer));
 }
 
 async function theInstallerMaySetRoleToTheOwnerAlone(installer: Client): Promise<void> {
@@ -83,7 +89,7 @@ async function holders(client: Client, check: string, object: string, privileges
 }
 
 export function theRoles(step: Step, run: TheRun): void {
-  step("B.3 the roles: each of the five has exactly SPEC §4's attributes, no setting, no membership either way but the installer's, which may SET ROLE to os_owner alone", LOOK_MS, async () => {
+  step("B.3 the roles: each of the five has exactly SPEC §4's attributes, no setting, is a member of nothing, and its membership rows are exactly the platform's one and, for os_owner, the installer's SET; the installer may SET ROLE to os_owner alone", LOOK_MS, async () => {
     await onTheInstance(async (installer) => {
       run.oids = await roleOids(installer);
       expect(Object.keys(run.oids).sort()).toEqual([...THE_FIVE].sort());

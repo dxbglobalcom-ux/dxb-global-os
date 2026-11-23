@@ -5,6 +5,9 @@ import { valueOf } from "../chain/fixtures/looking.ts";
 import { databasesLeft, databasesMade, onTheInstance } from "../chain/fixtures/throwaway-database.ts";
 import { orderedSteps } from "../bench/fixtures/ordered-steps.ts";
 import { command, tail } from "../bench/fixtures/real-bench.ts";
+import { aFileNotKept } from "./cases/a-file-not-kept.ts";
+import { aLoginThatCannotComeIn } from "./cases/a-login-that-cannot-come-in.ts";
+import { aRefusedVerifier } from "./cases/a-refused-verifier.ts";
 import { again } from "./cases/again.ts";
 import { defaultPrivileges } from "./cases/default-privileges.ts";
 import { passesAsTheOwner } from "./cases/passes-as-the-owner.ts";
@@ -46,6 +49,9 @@ describe("piece 5 — the roles and the schema os on a fresh instance, in order"
   theInstallStep(step, run);
   whatALoginCanDo(step, run);
   again(step, run);
+  aLoginThatCannotComeIn(step, run);
+  aFileNotKept(step, run);
+  aRefusedVerifier(step, run);
   theRealRootElsewhere(step);
   passesAsTheOwner(step, run);
 
