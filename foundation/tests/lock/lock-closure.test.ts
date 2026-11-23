@@ -72,7 +72,10 @@ describe("lock — what a locked test reaches without an import statement", { ti
   });
 
   it("import.meta.glob in a locked test — what it reaches cannot be listed → LOCK_REFUSED, the standing lock as it stood", async () => {
-    const { repo, answer } = await lockedAfter((repo) => reachAlso(repo, 'const found = import.meta.glob("./fixtures/*.ts");'));
+    const { repo, answer } = await lockedAfter((repo) => {
+      // Spelled in two pieces: whole, this very line would be a glob call in a file of piece 2's own closure, and its lock refused.
+      reachAlso(repo, 'const found = import.meta' + '.glob("./fixtures/*.ts");');
+    });
     expectRefused(answer, "import.meta.glob");
     expect(read(repo, LOCK_PATH)).toBe(read((await fixture.ready()).original, LOCK_PATH));
   });
