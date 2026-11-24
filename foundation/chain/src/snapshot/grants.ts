@@ -132,6 +132,18 @@ const HOLDERS: readonly Holder[] = [
   },
 ];
 
+/**
+ * The ACL of a row `o` of `catalogue` (spelled `pg_catalog.<name>`) as this reader takes it (SPEC §3 fact 3): of a row
+ * of a holder's kind its stored items, or when they are NULL the owner's default; of any other row its stored items.
+ * Nothing for a catalogue no holder reads. Piece 6c's inventory reads its `acl` lines so (its SPEC §4.2).
+ */
+export function effectiveAclOf(catalogue: string): string | undefined {
+  const holder = HOLDERS.find((one) => one.catalogue === catalogue);
+  if (holder === undefined) return undefined;
+  const { ofTheKind, acl, defaults } = holder;
+  return defaults === null ? acl : `case when ${ofTheKind} then coalesce(${acl}, ${defaults}) else ${acl} end`;
+}
+
 /** The line of one ACL item `a` of a `grant` statement: everything after the object. */
 const ITEM = `' to ' || ${role("a.grantee")} || ' ' || a.privilege_type || ' option ' || ${flag("a.is_grantable")} || ' by ' || ${role("a.grantor")}`;
 

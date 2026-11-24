@@ -40,6 +40,15 @@ export const inATemporarySchema = (namespace: string): string => `coalesce((
 /** A role as §4.2 spells it: `quote_ident` of its name, role 0 `PUBLIC`. */
 export const role = (oid: string): string => `case when ${oid} = 0 then 'PUBLIC' else pg_catalog.quote_ident(pg_catalog.pg_get_userbyid(${oid})) end`;
 
+/**
+ * One item `<name>=<value>` of a `setconfig`, as the server says it: the value of a name that holds a dot is
+ * `<hidden>` (SPEC §4.3, fact 7) — said by the server, so it never leaves it. The snapshot's `role-setting` lines and
+ * piece 6c's inventory (its SPEC §4.2) read a setting so.
+ */
+export const settingSaid = (item: string): string => `pg_catalog.split_part(${item}, '=', 1) || '='
+       || case when pg_catalog.strpos(pg_catalog.split_part(${item}, '=', 1), '.') > 0 then '<hidden>'
+               else pg_catalog.substr(${item}, pg_catalog.strpos(${item}, '=') + 1) end`;
+
 /** A boolean as §4.2 spells it: `t` or `f`. A cast to text would say `true`. */
 export const flag = (bool: string): string => `case when ${bool} then 't' else 'f' end`;
 

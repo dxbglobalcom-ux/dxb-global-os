@@ -103,9 +103,10 @@ export function signedInOrder(minus: readonly string[], plus: readonly string[])
 }
 
 /**
- * What the check prints of a difference (SPEC §5): every line only in the file as `- <line>`, every line only in
- * the database as `+ <line>`, in `signedInOrder`; then the verdict.
+ * What a check prints of a difference (SPEC §5): every line only in the file as `- <line>`, every line only in
+ * the database as `+ <line>`, in `signedInOrder`; then the verdict, `<red> expected_only=<a> database_only=<b>` —
+ * `SNAPSHOT_RED` for the snapshot's, `OUTSIDE_RED` for piece 6c's outside text (its SPEC §5).
  */
-export function redLines({ expectedOnly, actualOnly }: { expectedOnly: string[]; actualOnly: string[] }): string[] {
-  return [...signedInOrder(expectedOnly, actualOnly), `SNAPSHOT_RED expected_only=${expectedOnly.length} database_only=${actualOnly.length}`];
+export function redLines({ expectedOnly, actualOnly }: { expectedOnly: string[]; actualOnly: string[] }, red = "SNAPSHOT_RED"): string[] {
+  return [...signedInOrder(expectedOnly, actualOnly), `${red} expected_only=${expectedOnly.length} database_only=${actualOnly.length}`];
 }

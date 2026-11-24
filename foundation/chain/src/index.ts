@@ -28,3 +28,6 @@ export type { Kept } from "./rows/text.ts";
 export { keptOf } from "./rows/text.ts";
 
 export { RevisionRefused, chainAt } from "./revision.ts";
+
+export { inventoryOf } from "./outside/read.ts";
+export { outsideOf } from "./outside/text.ts";

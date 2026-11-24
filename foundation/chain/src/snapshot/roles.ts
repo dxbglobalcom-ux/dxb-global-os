@@ -1,6 +1,6 @@
 // The snapshot's lines of the chain's roles (piece 6a's SPEC §4.3): `role`, `member`, `role-setting`.
 import type { Client } from "pg";
-import { flag, linesOf, role } from "./sql.ts";
+import { flag, linesOf, role, settingSaid } from "./sql.ts";
 import type { Covered } from "./sql.ts";
 
 // Each chain role's attributes, from `pg_roles` — never `pg_authid`: the password column is not read, nor whether one
@@ -25,9 +25,7 @@ select 'member ' || ${role("m.roleid")} || ' has ' || ${role("m.member")} || ' a
 const ROLE_SETTINGS = `
 select 'role-setting ' || case when s.setrole = 0 then '*' else ${role("s.setrole")} end
        || ' in ' || case when s.setdatabase = 0 then '*' else pg_catalog.quote_ident(d.datname) end
-       || ' ' || pg_catalog.split_part(c.item, '=', 1) || '='
-       || case when pg_catalog.strpos(pg_catalog.split_part(c.item, '=', 1), '.') > 0 then '<hidden>'
-               else pg_catalog.substr(c.item, pg_catalog.strpos(c.item, '=') + 1) end as line
+       || ' ' || ${settingSaid("c.item")} as line
   from pg_catalog.pg_db_role_setting s
   left join pg_catalog.pg_database d on d.oid = s.setdatabase
  cross join lateral pg_catalog.unnest(s.setconfig) as c (item)
