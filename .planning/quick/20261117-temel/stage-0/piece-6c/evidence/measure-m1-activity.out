@@ -1,0 +1,29 @@
+== connections by user/app (no query text)
+  authenticator | PostgREST 14.14 | client backend | idle | 1
+  postgres |  | client backend | active | 1
+  supabase_admin |  | logical replication launcher | ∅ | 1
+  supabase_admin | cluster_node_realtime@127.0.0.1 | client backend | idle | 2
+  supabase_admin | pg_cron scheduler | pg_cron launcher | ∅ | 1
+  supabase_admin | pg_net 0.20.3 | pg_net 0.20.3 worker | idle | 1
+  supabase_admin | supabase_mt_realtime | client backend | idle | 5
+  ∅ |  | autovacuum launcher | ∅ | 1
+  ∅ |  | background writer | ∅ | 1
+  ∅ |  | checkpointer | ∅ | 1
+  ∅ |  | walwriter | ∅ | 1
+== replication slots
+== cron / pg_net / pg_cron jobs present?
+  _realtime | 4
+  auth | 23
+  net | 2
+  realtime | 8
+  supabase_functions | 2
+  supabase_migrations | 1
+  vault | 1
+== extensions
+  pg_net | 0.20.3
+  pg_stat_statements | 1.11
+  pgcrypto | 1.3
+  plpgsql | 1.0
+  supabase_vault | 0.3.1
+  uuid-ossp | 1.1
+  vector | 0.8.2

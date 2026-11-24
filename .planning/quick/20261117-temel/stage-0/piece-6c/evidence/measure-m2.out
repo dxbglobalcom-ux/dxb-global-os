@@ -1,0 +1,91 @@
+== who am I
+  postgres | f | t | t | t | t
+== pg_catalog relations of kind r: readable? and row count (reltuples not used; counted)
+  pg_aggregate | t | 0 | 161
+  pg_am | t | 0 | 9
+  pg_amop | t | 0 | 981
+  pg_amproc | t | 0 | 750
+  pg_attrdef | t | 0 | 396
+  pg_attribute | t | 0 | 7233
+  pg_auth_members | t | 0 | 23
+  pg_authid | t | 0 | 31
+  pg_cast | t | 0 | 252
+  pg_class | t | 0 | 1070
+  pg_collation | t | 0 | 861
+  pg_constraint | t | 0 | 509
+  pg_conversion | t | 0 | 128
+  pg_database | t | 0 | 4
+  pg_db_role_setting | t | 0 | 10
+  pg_default_acl | t | 0 | 28
+  pg_depend | t | 0 | 7051
+  pg_description | t | 0 | 5415
+  pg_enum | t | 0 | 52
+  pg_event_trigger | t | 0 | 6
+  pg_extension | t | 0 | 7
+  pg_foreign_data_wrapper | t | 0 | 0
+  pg_foreign_server | t | 0 | 0
+  pg_foreign_table | t | 0 | 0
+  pg_index | t | 0 | 539
+  pg_inherits | t | 0 | 23
+  pg_init_privs | t | 0 | 237
+  pg_language | t | 0 | 4
+  pg_largeobject | t | 0 | 0
+  pg_largeobject_metadata | t | 0 | 0
+  pg_namespace | t | 0 | 22
+  pg_opclass | t | 0 | 201
+  pg_operator | t | 0 | 839
+  pg_opfamily | t | 0 | 170
+  pg_parameter_acl | t | 0 | 0
+  pg_partitioned_table | t | 0 | 3
+  pg_policy | t | 0 | 58
+  pg_proc | t | 0 | 3663
+  pg_publication | t | 0 | 1
+  pg_publication_namespace | t | 0 | 0
+  pg_publication_rel | t | 0 | 0
+  pg_range | t | 0 | 6
+  pg_replication_origin | t | 0 | 0
+  pg_rewrite | t | 0 | 182
+  pg_seclabel | t | 0 | 0
+  pg_sequence | t | 0 | 18
+  pg_shdepend | t | 0 | 1680
+  pg_shdescription | t | 0 | 3
+  pg_shseclabel | t | 0 | 0
+  pg_statistic | t | 0 | 496
+  pg_statistic_ext | t | 0 | 0
+  pg_statistic_ext_data | t | 0 | 0
+  pg_subscription | t | 0 | 0
+  pg_subscription_rel | t | 0 | 0
+  pg_tablespace | t | 0 | 2
+  pg_transform | t | 0 | 0
+  pg_trigger | t | 0 | 493
+  pg_ts_config | t | 0 | 29
+  pg_ts_config_map | t | 0 | 551
+  pg_ts_dict | t | 0 | 29
+  pg_ts_parser | t | 0 | 1
+  pg_ts_template | t | 0 | 5
+  pg_type | t | 0 | 967
+  pg_user_mapping | t | 0 | 0
+== the four secret columns: column privilege
+  pg_catalog.pg_authid | rolpassword | t
+  pg_catalog.pg_subscription | subconninfo | t
+  pg_catalog.pg_user_mapping | umoptions | t
+  pg_catalog.pg_foreign_server | srvoptions | t
+== rolpassword actually readable? (count of non-null only, never the value)
+  8 | 31
+== which roles have a password set (names only)
+  authenticator
+  pgbouncer
+  postgres
+  supabase_admin
+  supabase_auth_admin
+  supabase_read_only_user
+  supabase_replication_admin
+  supabase_storage_admin
+== subconninfo / umoptions / srvoptions selectable
+  0
+== umoptions
+  0
+== srvoptions
+  0
+== pg_statistic and pg_largeobject readable?
+  t | t | t

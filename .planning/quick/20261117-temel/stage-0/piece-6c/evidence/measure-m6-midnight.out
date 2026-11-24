@@ -1,0 +1,34 @@
+== fresh, then the real chain
+INSTANCE_UP sysid=7711513703835791399 db=127.0.0.1:54522 seconds=51.9
+CHAIN_GREEN applied=2 standing=2 functions=0 reference=0
+== reading at 2026-11-23T23:32:29Z
+TOTAL lines=34777 ms=394
+row_security=off accepted; relations=117 refused={} ms=32
+== reading at 2026-11-23T23:50:00Z
+TOTAL lines=34777 ms=426
+row_security=off accepted; relations=117 refused={} ms=33
+-- catalogue lines that differ from the reading at 233229: 0
+-- tables whose rows differ from the reading at 233229: 0
+== reading at 2026-11-23T23:58:30Z
+TOTAL lines=34777 ms=427
+row_security=off accepted; relations=117 refused={} ms=33
+-- catalogue lines that differ from the reading at 235000: 0
+-- tables whose rows differ from the reading at 235000: 0
+== reading at 2026-11-24T00:01:00Z
+TOTAL lines=34777 ms=424
+row_security=off accepted; relations=117 refused={} ms=32
+-- catalogue lines that differ from the reading at 235830: 0
+-- tables whose rows differ from the reading at 235830: 0
+== reading at 2026-11-24T00:05:00Z
+TOTAL lines=34777 ms=424
+row_security=off accepted; relations=117 refused={} ms=33
+-- catalogue lines that differ from the reading at 000100: 0
+-- tables whose rows differ from the reading at 000100: 0
+== reading at 2026-11-24T00:15:00Z
+TOTAL lines=34777 ms=435
+row_security=off accepted; relations=117 refused={} ms=32
+-- catalogue lines that differ from the reading at 000500: 0
+-- tables whose rows differ from the reading at 000500: 0
+== down
+INSTANCE_DOWN
+INSTANCE_ABSENT

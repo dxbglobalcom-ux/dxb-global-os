@@ -1,0 +1,15 @@
+pg_attribute: 7233 rows, 77 ms
+pg_depend: 7051 rows, 42 ms
+TOTAL lines=34699 ms=411
+pg_attribute: 7233 rows, 77 ms
+pg_depend: 7051 rows, 41 ms
+TOTAL lines=34699 ms=400
+pg_attribute: 7233 rows, 74 ms
+pg_depend: 7051 rows, 40 ms
+TOTAL lines=34699 ms=399
+pg_attribute: 7233 rows, 73 ms
+pg_depend: 7051 rows, 40 ms
+TOTAL lines=34699 ms=394
+pg_attribute: 7233 rows, 70 ms
+pg_depend: 7051 rows, 39 ms
+TOTAL lines=34699 ms=390

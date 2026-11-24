@@ -1,0 +1,18 @@
+      2 pg_depend|dep a index auth.confirmation_token_idx -> table column auth.users.confirmation_token
+      2 pg_depend|dep a index auth.email_change_token_current_idx -> table column auth.users.email_change_token_current
+      2 pg_depend|dep a index auth.email_change_token_new_idx -> table column auth.users.email_change_token_new
+      2 pg_depend|dep a index auth.mfa_factors_user_friendly_name_unique -> table column auth.mfa_factors.friendly_name
+      2 pg_depend|dep a index auth.reauthentication_token_idx -> table column auth.users.reauthentication_token
+      2 pg_depend|dep a index auth.recovery_token_idx -> table column auth.users.recovery_token
+      2 pg_depend|dep a index pgboss.job_common_i3 -> table column pgboss.job_common.state
+      2 pg_depend|dep a index pgboss.job_common_i4 -> table column pgboss.job_common.singleton_on
+      2 pg_depend|dep a index pgboss.job_common_i7 -> table column pgboss.job_common.group_id
+      2 pg_depend|dep a index public.idx_alerts_dedup_active -> table column public.alerts.dedup_key
+      2 pg_depend|dep a index public.idx_tasks_milestone -> table column public.tasks.milestone_id
+      2 pg_depend|dep a index public.idx_voice_calls_session -> table column public.voice_calls.session_id
+      2 pg_depend|dep a index public.revenue_ledger_platform_idx -> table column public.revenue_ledger.platform
+      2 pg_depend|dep a index public.routing_rules_slot_priority_dept_key -> table column public.routing_rules.role_slot
+      2 pg_depend|dep a index vault.secrets_name_idx -> table column vault.secrets.name
+      2 pg_depend|dep n rule pg_settings_u on pg_catalog.pg_settings -> view column pg_catalog.pg_settings.name
+      2 pg_depend|dep n trigger trg_alert_supersede_on_task_done on public.tasks -> table column public.tasks.status
+      2 pg_shdepend|shdep o (db _supabase) pg_namespace #0 -> role postgres
