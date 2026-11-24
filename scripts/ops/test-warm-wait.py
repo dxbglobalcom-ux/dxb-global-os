@@ -396,31 +396,37 @@ def no_wake_without_room_for_a_turn():
     code, text, slept = run_with(["--until", f"@{PING + 30 * MIN}"], empty_once_reset(99))
     check("the same after a full window: it has reset, a ping", (text.startswith("WARM_PING "), slept), (True, [PING]))
 
-    # Sol's A2: nothing to read, or a full window with no reset -- the old clock ended WARM_PING on all of these.
+    # unread is not spent: a ping is made (CEO, 2026-11-24 -- the status line held no 5-hour window from 08:01 on)
     unread = {
         "there is no quota record": {},
         "the 5-hour window was never read": dict(quota_record(40, NOW + 60 * MIN), five_hour=None),
         "the week holds no percentage": quota_record(40, NOW + 60 * MIN, week_used=None),
+    }
+    for name, record in unread.items():
+        code, text, slept = run_with(["--watch"], lambda moment: record)
+        check(f"{name}: a ping", (code, text.startswith("WARM_PING "), slept), (0, True, [PING]))
+
+    # Sol's A2: a spent window with no reset to sleep to.
+    spent = {
         "the 5-hour window is full and holds no reset": quota_record(100, None),
         "the week is full and holds no reset": quota_record(40, NOW + 60 * MIN, week_used=100, week_reset=None),
     }
-    for name, record in unread.items():
+    for name, record in spent.items():
         code, text, slept = run_with(["--watch"], lambda moment: record)
         check(f"{name}: no wake; read again every minute, and woken at the ceiling",
               (code, text.startswith("WAIT_OVER "), f"cold: the quota could not be read for {CEILING_MIN} min" in text, slept),
               (0, True, True, read_every_minute(CEILING_MIN)))
     code, text, slept = run_with(["--watch"], quota_record(None, NOW + 60 * MIN))
-    check("a window with no percentage, whose reset then passes: woken then, the window is new",
-          (text.startswith("WAIT_OVER "), "could not be read for 5 min" in text, slept), (True, True, read_every_minute(5)))
+    check("a window with no percentage: a ping", (text.startswith("WARM_PING "), slept), (True, [PING]))
     code, text, slept = run_with(["--for", "40"], {})
     check("a wait's end without a quota to read is held the same way",
           (text.startswith("WAIT_OVER "), f"could not be read for {CEILING_MIN} min" in text, len(slept), slept[-1]),
           (True, True, 1 + CEILING_MIN, NOW + (40 + CEILING_MIN) * MIN))
 
-    code, text, slept = run_with(["--watch"], lambda moment: quota_record(50, NOW + 200 * MIN) if moment >= PING + 7 * MIN else {})
+    code, text, slept = run_with(["--watch"], lambda moment: quota_record(50, NOW + 200 * MIN) if moment >= PING + 7 * MIN else quota_record(100, None))
     check("the quota can be read again after seven minutes, and has room: woken then",
           (code, text.startswith("WAIT_OVER "), "cold: the quota could not be read for 7 min" in text, slept), (0, True, True, read_every_minute(7)))
-    code, text, slept = run_with(["--watch"], lambda moment: quota_record(100, NOW + 200 * MIN) if moment >= PING + 7 * MIN else {})
+    code, text, slept = run_with(["--watch"], lambda moment: quota_record(100, NOW + 200 * MIN) if moment >= PING + 7 * MIN else quota_record(100, None))
     check("it can be read again and is full: asleep to that reset",
           (text.startswith("WAIT_OVER "), "the 5-hour window stood at 100% and had no room for a turn" in text, slept),
           (True, True, read_every_minute(7) + [NOW + 202 * MIN]))
