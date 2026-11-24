@@ -2,6 +2,7 @@
   "format": 1,
   "piece": "piece-6",
   "dirs": [
+    "foundation/tests/outside",
     "foundation/tests/snapshot",
     "foundation/tests/upgrade"
   ],
@@ -38,6 +39,20 @@
     "foundation/tests/chain/fixtures/refusal.ts": "5ebb6eaf5fe0c1d40837bd042f70388726f563b0",
     "foundation/tests/chain/fixtures/running.ts": "d8228cb810af51a841060986bb949bb07d032dfd",
     "foundation/tests/chain/fixtures/throwaway-database.ts": "57226327de683d5261f0b8ddbaf51e191f6ed109",
+    "foundation/tests/outside/cases/outside-of.ts": "9f01749e1bc635e03913f6b020fabc4a64bd7b5d",
+    "foundation/tests/outside/cases/pinned-limits.ts": "02eeb10640fdb3f58dbbd4486153a77090961160",
+    "foundation/tests/outside/cases/red-then-green.ts": "dace2df96ba38fc0ba29005dde0610ae9965d0c0",
+    "foundation/tests/outside/cases/refusals.ts": "da6682dd85890589c562dc6aae5d65c830d5b2c2",
+    "foundation/tests/outside/cases/the-build.ts": "d29f6221df41612c01115e04209ccd83f73f72c2",
+    "foundation/tests/outside/cases/the-texts.ts": "9963d93a6f61cfbca04b2cd0ae1333af00fe5de8",
+    "foundation/tests/outside/expected/fixture.outside.txt": "9f68ffee841669cb405bdaef205dca43caae43e8",
+    "foundation/tests/outside/expected/further.outside.txt": "b0c7a1807ee1ad9547708c5050dbb0e6931b4084",
+    "foundation/tests/outside/expected/real.outside.txt": "358df9a0d57fdd5df031340e67fb4d913a228672",
+    "foundation/tests/outside/fixtures/chain-further/schema/0006-further-outside.sql": "7118b10e36b9e1e459c4ad58cd70ba74f4a395b9",
+    "foundation/tests/outside/fixtures/the-outside-form.ts": "275b07c633df0d08cdec85a6ba944826d290a1ee",
+    "foundation/tests/outside/fixtures/the-outside.ts": "adfc41ff694dfbc5d38251d6a29e45a129595e1e",
+    "foundation/tests/outside/on-a-fresh-instance.test.ts": "0f9c2253e453a89c3b17c6b149a3b7066a0998be",
+    "foundation/tests/outside/without-the-bench.test.ts": "903c1a493c4986d96c31c943ebc94bfce4737000",
     "foundation/tests/package.json": "bd4e193ba789b2552c5d2cc6d620ace556ae951e",
     "foundation/tests/roles/fixtures/bench-command.ts": "a523d09c16be78f71e517d0e9ca96520a338d070",
     "foundation/tests/roles/fixtures/catalogue.ts": "5b2c87fec72d2626101d4558a57e735e00d8339f",
@@ -112,6 +127,1030 @@
     "foundation:verify": "node foundation/lock/src/cli.ts verify"
   },
   "cases": [
+    {
+      "file": "foundation/tests/outside/on-a-fresh-instance.test.ts",
+      "suite": [
+        "piece 6c — what a build changes outside os, on a fresh instance, in order"
+      ],
+      "name": "B.1 an inventory obeys its form; its read and left-out lines name every relation of kind r in pg_catalog; nothing is in before the chain; read twice, and by the library, the same bytes — kept aside",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/on-a-fresh-instance.test.ts",
+      "suite": [
+        "piece 6c — what a build changes outside os, on a fresh instance, in order"
+      ],
+      "name": "B.2 chain up (the real chain) → CHAIN_GREEN; outside --before <fresh> prints the first line alone; --check expected/real.outside.txt → OUTSIDE_EQUAL lines=1; what the chain made is read, marked in",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/on-a-fresh-instance.test.ts",
+      "suite": [
+        "piece 6c — what a build changes outside os, on a fresh instance, in order"
+      ],
+      "name": "B.3 chain up --root <the fixture chain> → CHAIN_GREEN; --check expected/fixture.outside.txt → OUTSIDE_EQUAL; what 0003 makes in os is read, marked in, and no line of the text",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/on-a-fresh-instance.test.ts",
+      "suite": [
+        "piece 6c — what a build changes outside os, on a fresh instance, in order"
+      ],
+      "name": "B.4 the rows of 6b given; chain up --root <B> → CHAIN_GREEN; --check expected/fixture.outside.txt still OUTSIDE_EQUAL: an upgrade that changes only os adds no line",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/on-a-fresh-instance.test.ts",
+      "suite": [
+        "piece 6c — what a build changes outside os, on a fresh instance, in order"
+      ],
+      "name": "B.5 chain up --root <B with 0006> → CHAIN_GREEN; --check expected/further.outside.txt → OUTSIDE_EQUAL; the built inventory kept aside, and against it nothing",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/on-a-fresh-instance.test.ts",
+      "suite": [
+        "piece 6c — what a build changes outside os, on a fresh instance, in order"
+      ],
+      "name": "B.6 a comment on a platform object (schema extensions, which had none) → added row pg_description; the comment taken away → equal",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/on-a-fresh-instance.test.ts",
+      "suite": [
+        "piece 6c — what a build changes outside os, on a fresh instance, in order"
+      ],
+      "name": "B.6 a grant on an object whose ACL was NULL (snap_elsewhere.linked) → added acl; revoked → the stored ACL differs, the meaning does not: equal",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/on-a-fresh-instance.test.ts",
+      "suite": [
+        "piece 6c — what a build changes outside os, on a fresh instance, in order"
+      ],
+      "name": "B.6 a row into a platform table (realtime.schema_migrations) → changed held rows; the row deleted → equal",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/on-a-fresh-instance.test.ts",
+      "suite": [
+        "piece 6c — what a build changes outside os, on a fresh instance, in order"
+      ],
+      "name": "B.6 disable trigger all on the table with the foreign key (the superuser) → its two internal triggers, by their spelled names, changed; against the fresh inventory nothing; enabled again → equal",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/on-a-fresh-instance.test.ts",
+      "suite": [
+        "piece 6c — what a build changes outside os, on a fresh instance, in order"
+      ],
+      "name": "B.6 the password of a role that is not the chain's (anon, which had none; the superuser) → changed row pg_authid role anon; taken away → equal",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/on-a-fresh-instance.test.ts",
+      "suite": [
+        "piece 6c — what a build changes outside os, on a fresh instance, in order"
+      ],
+      "name": "B.7 a change made and undone inside one build is not seen: chain up --root <B, 0006 and a file that makes a table and a role outside and drops both> → CHAIN_GREEN; equal against the built inventory and against the fresh one",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/on-a-fresh-instance.test.ts",
+      "suite": [
+        "piece 6c — what a build changes outside os, on a fresh instance, in order"
+      ],
+      "name": "B.7 a dotted setting's value changed alone is not seen: the row seen when it is made, then nothing for its value, then seen for a core setting beside it; reset → equal",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/on-a-fresh-instance.test.ts",
+      "suite": [
+        "piece 6c — what a build changes outside os, on a fresh instance, in order"
+      ],
+      "name": "down → INSTANCE_DOWN",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/on-a-fresh-instance.test.ts",
+      "suite": [
+        "piece 6c — what a build changes outside os, on a fresh instance, in order"
+      ],
+      "name": "fresh makes an instance: INSTANCE_UP, listed",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A outside refuses before any connection"
+      ],
+      "name": "a before that is a directory → OUTSIDE_REFUSED no-before, exit 2",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A outside refuses before any connection"
+      ],
+      "name": "a before that is a file that cannot be read → OUTSIDE_REFUSED no-before, exit 2",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A outside refuses before any connection"
+      ],
+      "name": "a before that is a file that is absent → OUTSIDE_REFUSED no-before, exit 2",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A outside refuses before any connection"
+      ],
+      "name": "a before with a byte that is never UTF-8 (0xff) → OUTSIDE_REFUSED before-malformed, exit 2",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A outside refuses before any connection"
+      ],
+      "name": "a before with a byte-order mark before the first line → OUTSIDE_REFUSED before-malformed, exit 2",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A outside refuses before any connection"
+      ],
+      "name": "a before with a carriage return ending each line → OUTSIDE_REFUSED before-malformed, exit 2",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A outside refuses before any connection"
+      ],
+      "name": "a before with a first line missing → OUTSIDE_REFUSED before-malformed, exit 2",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A outside refuses before any connection"
+      ],
+      "name": "a before with a first line that is not inventory-format 1 → OUTSIDE_REFUSED before-malformed, exit 2",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A outside refuses before any connection"
+      ],
+      "name": "a before with a line out of order → OUTSIDE_REFUSED before-malformed, exit 2",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A outside refuses before any connection"
+      ],
+      "name": "a before with a snapshot's text, not an inventory → OUTSIDE_REFUSED before-malformed, exit 2",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A outside refuses before any connection"
+      ],
+      "name": "a before with an empty last line → OUTSIDE_REFUSED before-malformed, exit 2",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A outside refuses before any connection"
+      ],
+      "name": "a before with an empty line → OUTSIDE_REFUSED before-malformed, exit 2",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A outside refuses before any connection"
+      ],
+      "name": "a before with an outside text, not an inventory → OUTSIDE_REFUSED before-malformed, exit 2",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A outside refuses before any connection"
+      ],
+      "name": "a before with no bytes at all → OUTSIDE_REFUSED before-malformed, exit 2",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A outside refuses before any connection"
+      ],
+      "name": "a before with no final newline → OUTSIDE_REFUSED before-malformed, exit 2",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A outside refuses before any connection"
+      ],
+      "name": "a before with out of order by UTF-8 bytes, though in order by UTF-16 code units → OUTSIDE_REFUSED before-malformed, exit 2",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A outside refuses before any connection"
+      ],
+      "name": "a good before, alone and with each committed expected text: no refusal of the files — the refused connection",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A outside refuses before any connection"
+      ],
+      "name": "an expected text that is a directory, beside a good before → OUTSIDE_REFUSED no-expected, exit 2",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A outside refuses before any connection"
+      ],
+      "name": "an expected text that is absent, beside a good before → OUTSIDE_REFUSED no-expected, exit 2",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A outside refuses before any connection"
+      ],
+      "name": "an expected text with a byte-order mark before the first line, beside a good before → OUTSIDE_REFUSED expected-malformed, exit 2",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A outside refuses before any connection"
+      ],
+      "name": "an expected text with a carriage return ending each line, beside a good before → OUTSIDE_REFUSED expected-malformed, exit 2",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A outside refuses before any connection"
+      ],
+      "name": "an expected text with a first line that is not outside-format 1, beside a good before → OUTSIDE_REFUSED expected-malformed, exit 2",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A outside refuses before any connection"
+      ],
+      "name": "an expected text with a line out of order, beside a good before → OUTSIDE_REFUSED expected-malformed, exit 2",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A outside refuses before any connection"
+      ],
+      "name": "an expected text with an empty line, beside a good before → OUTSIDE_REFUSED expected-malformed, exit 2",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A outside refuses before any connection"
+      ],
+      "name": "an expected text with an inventory, not an outside text, beside a good before → OUTSIDE_REFUSED expected-malformed, exit 2",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A outside refuses before any connection"
+      ],
+      "name": "an expected text with no bytes at all, beside a good before → OUTSIDE_REFUSED expected-malformed, exit 2",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A outside refuses before any connection"
+      ],
+      "name": "an expected text with no final newline, beside a good before → OUTSIDE_REFUSED expected-malformed, exit 2",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A outside refuses before any connection"
+      ],
+      "name": "inventory with no instance standing: no text at all on stdout — a text is whole or there is none — and the refused connection",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A outside refuses before any connection"
+      ],
+      "name": "no instance stands while these cases run",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A outside refuses before any connection"
+      ],
+      "name": "the before is judged first: both absent → no-before; a malformed before beside an absent expected text → before-malformed",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A outside refuses before any connection"
+      ],
+      "name": "the files are not written: an absent before and an absent expected text are still absent after the refusals",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A outside refuses before any connection"
+      ],
+      "name": "the first line alone is an inventory: no refusal, the refused connection",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A outsideOf(before, after), on inventories written by hand"
+      ],
+      "name": "a before that is not an inventory's spelling throws: a carriage return ending each line",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A outsideOf(before, after), on inventories written by hand"
+      ],
+      "name": "a before that is not an inventory's spelling throws: a first line missing",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A outsideOf(before, after), on inventories written by hand"
+      ],
+      "name": "a before that is not an inventory's spelling throws: a line of no kind §4.2 names",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A outsideOf(before, after), on inventories written by hand"
+      ],
+      "name": "a before that is not an inventory's spelling throws: a line out of order",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A outsideOf(before, after), on inventories written by hand"
+      ],
+      "name": "a before that is not an inventory's spelling throws: a row line marked neither in nor out",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A outsideOf(before, after), on inventories written by hand"
+      ],
+      "name": "a before that is not an inventory's spelling throws: a snapshot's first line",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A outsideOf(before, after), on inventories written by hand"
+      ],
+      "name": "a before that is not an inventory's spelling throws: an empty last line",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A outsideOf(before, after), on inventories written by hand"
+      ],
+      "name": "a before that is not an inventory's spelling throws: an empty line",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A outsideOf(before, after), on inventories written by hand"
+      ],
+      "name": "a before that is not an inventory's spelling throws: an outside text, not an inventory",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A outsideOf(before, after), on inventories written by hand"
+      ],
+      "name": "a before that is not an inventory's spelling throws: no bytes at all",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A outsideOf(before, after), on inventories written by hand"
+      ],
+      "name": "a before that is not an inventory's spelling throws: no final newline",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A outsideOf(before, after), on inventories written by hand"
+      ],
+      "name": "a before that is not an inventory's spelling throws: out of order by UTF-8 bytes, though in order by UTF-16 code units",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A outsideOf(before, after), on inventories written by hand"
+      ],
+      "name": "a key that holds one row before and two after → one changed row, whatever the number of rows",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A outsideOf(before, after), on inventories written by hand"
+      ],
+      "name": "a key that holds two equal rows, after once → changed row",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A outsideOf(before, after), on inventories written by hand"
+      ],
+      "name": "a key that holds two equal rows, after twice → nothing",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A outsideOf(before, after), on inventories written by hand"
+      ],
+      "name": "a key that holds two rows, one of them changed → one changed row",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A outsideOf(before, after), on inventories written by hand"
+      ],
+      "name": "a key whose out rows are the same and an in row is new beside them → nothing: each text is read by its own marks",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A outsideOf(before, after), on inventories written by hand"
+      ],
+      "name": "a privilege added to an item that stood → its old item removed, its new one added",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A outsideOf(before, after), on inventories written by hand"
+      ],
+      "name": "a row whose key stands in both with another digest → changed row",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A outsideOf(before, after), on inventories written by hand"
+      ],
+      "name": "a row whose key stands only after → added row",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A outsideOf(before, after), on inventories written by hand"
+      ],
+      "name": "a row whose key stands only before → removed row",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A outsideOf(before, after), on inventories written by hand"
+      ],
+      "name": "a thing in, then out → added",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A outsideOf(before, after), on inventories written by hand"
+      ],
+      "name": "a thing out, then in → removed",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A outsideOf(before, after), on inventories written by hand"
+      ],
+      "name": "acl lines are a multiset of whole lines: once before, twice after → added once",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A outsideOf(before, after), on inventories written by hand"
+      ],
+      "name": "an after that is not an inventory's spelling throws: a carriage return ending each line",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A outsideOf(before, after), on inventories written by hand"
+      ],
+      "name": "an after that is not an inventory's spelling throws: a first line missing",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A outsideOf(before, after), on inventories written by hand"
+      ],
+      "name": "an after that is not an inventory's spelling throws: a line of no kind §4.2 names",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A outsideOf(before, after), on inventories written by hand"
+      ],
+      "name": "an after that is not an inventory's spelling throws: a line out of order",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A outsideOf(before, after), on inventories written by hand"
+      ],
+      "name": "an after that is not an inventory's spelling throws: a row line marked neither in nor out",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A outsideOf(before, after), on inventories written by hand"
+      ],
+      "name": "an after that is not an inventory's spelling throws: a snapshot's first line",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A outsideOf(before, after), on inventories written by hand"
+      ],
+      "name": "an after that is not an inventory's spelling throws: an empty last line",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A outsideOf(before, after), on inventories written by hand"
+      ],
+      "name": "an after that is not an inventory's spelling throws: an empty line",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A outsideOf(before, after), on inventories written by hand"
+      ],
+      "name": "an after that is not an inventory's spelling throws: an outside text, not an inventory",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A outsideOf(before, after), on inventories written by hand"
+      ],
+      "name": "an after that is not an inventory's spelling throws: no bytes at all",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A outsideOf(before, after), on inventories written by hand"
+      ],
+      "name": "an after that is not an inventory's spelling throws: no final newline",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A outsideOf(before, after), on inventories written by hand"
+      ],
+      "name": "an after that is not an inventory's spelling throws: out of order by UTF-8 bytes, though in order by UTF-16 code units",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A outsideOf(before, after), on inventories written by hand"
+      ],
+      "name": "an item for PUBLIC added → added acl, its grantee empty as the server prints it",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A outsideOf(before, after), on inventories written by hand"
+      ],
+      "name": "an owner changed → its old line removed and its new one added",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A outsideOf(before, after), on inventories written by hand"
+      ],
+      "name": "an owner line out, then in → removed; an acl line in, then out → added",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A outsideOf(before, after), on inventories written by hand"
+      ],
+      "name": "held: a table's rows changed, a sequence gone, a sequence new",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A outsideOf(before, after), on inventories written by hand"
+      ],
+      "name": "held: the word is part of the key — rows and position of one name are two keys",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A outsideOf(before, after), on inventories written by hand"
+      ],
+      "name": "in lines are never read: every kind of in line changed, added and removed → the first line alone",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A outsideOf(before, after), on inventories written by hand"
+      ],
+      "name": "one of each, the lines sorted by their bytes",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A outsideOf(before, after), on inventories written by hand"
+      ],
+      "name": "owner lines are a multiset of whole lines: twice before, once after → removed once",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A outsideOf(before, after), on inventories written by hand"
+      ],
+      "name": "pure: the same two texts give the same text, and neither is changed",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A outsideOf(before, after), on inventories written by hand"
+      ],
+      "name": "read and left-out lines are not compared",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A outsideOf(before, after), on inventories written by hand"
+      ],
+      "name": "sorted by UTF-8 bytes, not by UTF-16 code units",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A outsideOf(before, after), on inventories written by hand"
+      ],
+      "name": "the hand's own texts are seen to be in the form first: every inventory and every outside text written here",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A outsideOf(before, after), on inventories written by hand"
+      ],
+      "name": "the judge is seen to work: each malformed text below is one the form refuses",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A outsideOf(before, after), on inventories written by hand"
+      ],
+      "name": "two equal inventories → the first line alone",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A outsideOf(before, after), on inventories written by hand"
+      ],
+      "name": "two first lines alone → the first line alone",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A the three expected texts obey the outside text's form"
+      ],
+      "name": "expected/fixture.outside.txt holds no line for anything inside os or os_chain, or of a chain role",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A the three expected texts obey the outside text's form"
+      ],
+      "name": "expected/fixture.outside.txt: the first line, sorted by bytes, no \\r, no empty line, a final newline, only §4.3's lines of their shapes, no digest, a key once",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A the three expected texts obey the outside text's form"
+      ],
+      "name": "expected/further.outside.txt holds no line for anything inside os or os_chain, or of a chain role",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A the three expected texts obey the outside text's form"
+      ],
+      "name": "expected/further.outside.txt: the first line, sorted by bytes, no \\r, no empty line, a final newline, only §4.3's lines of their shapes, no digest, a key once",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A the three expected texts obey the outside text's form"
+      ],
+      "name": "expected/real.outside.txt is its first line alone: the real chain changes nothing outside",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A the three expected texts obey the outside text's form"
+      ],
+      "name": "further.outside.txt is fixture.outside.txt and more: every line of the fixture's text stands in it — 0006 changes nothing 0004 made so that a line of it changes",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A the three expected texts obey the outside text's form"
+      ],
+      "name": "the further root, assembled, reads with no offence: revision B's five schema files, then 0006",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A the three expected texts obey the outside text's form"
+      ],
+      "name": "the judge of what a line is for is seen to work",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A the three expected texts obey the outside text's form"
+      ],
+      "name": "the judges are seen to work first: each finds the offence planted in a text that is otherwise in the form",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A the usage lines"
+      ],
+      "name": "--before a, none of the command's calls → piece 3's usage line unchanged, exit 2",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A the usage lines"
+      ],
+      "name": "--check a, none of the command's calls → piece 3's usage line unchanged, exit 2",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A the usage lines"
+      ],
+      "name": "Inventory, none of the command's calls → piece 3's usage line unchanged, exit 2",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A the usage lines"
+      ],
+      "name": "Outside, none of the command's calls → piece 3's usage line unchanged, exit 2",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A the usage lines"
+      ],
+      "name": "inventories, none of the command's calls → piece 3's usage line unchanged, exit 2",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A the usage lines"
+      ],
+      "name": "inventory --before a → its own usage line, exit 2",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A the usage lines"
+      ],
+      "name": "inventory --check a → its own usage line, exit 2",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A the usage lines"
+      ],
+      "name": "inventory extra → its own usage line, exit 2",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A the usage lines"
+      ],
+      "name": "outside --before --check a → its own usage line, exit 2",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A the usage lines"
+      ],
+      "name": "outside --before a --before b → its own usage line, exit 2",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A the usage lines"
+      ],
+      "name": "outside --before a --check b --check c → its own usage line, exit 2",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A the usage lines"
+      ],
+      "name": "outside --before a --check b extra → its own usage line, exit 2",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A the usage lines"
+      ],
+      "name": "outside --before a --check → its own usage line, exit 2",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A the usage lines"
+      ],
+      "name": "outside --before a extra → its own usage line, exit 2",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A the usage lines"
+      ],
+      "name": "outside --before → its own usage line, exit 2",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A the usage lines"
+      ],
+      "name": "outside --check a --before b (the options out of order) → its own usage line, exit 2",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A the usage lines"
+      ],
+      "name": "outside --check a → its own usage line, exit 2",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A the usage lines"
+      ],
+      "name": "outside --kept a → its own usage line, exit 2",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A the usage lines"
+      ],
+      "name": "outside extra → its own usage line, exit 2",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A the usage lines"
+      ],
+      "name": "outside → its own usage line, exit 2",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A the usage lines"
+      ],
+      "name": "outsides, none of the command's calls → piece 3's usage line unchanged, exit 2",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A the usage lines"
+      ],
+      "name": "snapshot's and rows' usage lines are unchanged",
+      "count": 1
+    },
     {
       "file": "foundation/tests/snapshot/a-file-left-out.test.ts",
       "suite": [

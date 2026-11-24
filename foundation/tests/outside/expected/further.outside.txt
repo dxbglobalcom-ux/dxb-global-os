@@ -1,0 +1,113 @@
+outside-format 1
+added acl pg_class table auth.schema_migrations has anon=r/postgres
+added acl pg_class table public.snap_probe has anon=Dxtm/postgres
+added acl pg_class table public.snap_probe has authenticated=Dxtm/postgres
+added acl pg_class table public.snap_probe has os_reader=r/postgres
+added acl pg_class table public.snap_probe has postgres=arwdDxtm/postgres
+added acl pg_class table public.snap_probe has service_role=Dxtm/postgres
+added acl pg_class table snap_elsewhere.linked has postgres=arwdDxtm/postgres
+added acl pg_class table snap_elsewhere.owned has os_owner=arwdDxtm/os_owner
+added acl pg_namespace schema extensions has =U/postgres
+added acl pg_namespace schema snap_elsewhere has os_owner=UC/postgres
+added acl pg_namespace schema snap_elsewhere has postgres=UC/postgres
+added acl pg_proc function snap_elsewhere.further_event() has postgres=X/postgres
+added held rows public.snap_probe
+added held rows snap_elsewhere.linked
+added held rows snap_elsewhere.owned
+added owner pg_class index public.snap_probe_pkey is postgres
+added owner pg_class table public.snap_probe is postgres
+added owner pg_class table snap_elsewhere.linked is postgres
+added owner pg_class table snap_elsewhere.owned is os_owner
+added owner pg_event_trigger event trigger further_event is postgres
+added owner pg_namespace schema snap_elsewhere is postgres
+added owner pg_proc function snap_elsewhere.further_event() is postgres
+added owner pg_publication publication further_pub is postgres
+added owner pg_type type public.snap_probe is postgres
+added owner pg_type type public.snap_probe[] is postgres
+added owner pg_type type snap_elsewhere.linked is postgres
+added owner pg_type type snap_elsewhere.linked[] is postgres
+added owner pg_type type snap_elsewhere.owned is os_owner
+added owner pg_type type snap_elsewhere.owned[] is os_owner
+added row pg_attribute index column public.snap_probe_pkey.id
+added row pg_attribute table column public.snap_probe.cmax
+added row pg_attribute table column public.snap_probe.cmin
+added row pg_attribute table column public.snap_probe.ctid
+added row pg_attribute table column public.snap_probe.id
+added row pg_attribute table column public.snap_probe.tableoid
+added row pg_attribute table column public.snap_probe.who
+added row pg_attribute table column public.snap_probe.xmax
+added row pg_attribute table column public.snap_probe.xmin
+added row pg_attribute table column snap_elsewhere.linked.cmax
+added row pg_attribute table column snap_elsewhere.linked.cmin
+added row pg_attribute table column snap_elsewhere.linked.ctid
+added row pg_attribute table column snap_elsewhere.linked.note
+added row pg_attribute table column snap_elsewhere.linked.probe
+added row pg_attribute table column snap_elsewhere.linked.tableoid
+added row pg_attribute table column snap_elsewhere.linked.xmax
+added row pg_attribute table column snap_elsewhere.linked.xmin
+added row pg_attribute table column snap_elsewhere.owned.cmax
+added row pg_attribute table column snap_elsewhere.owned.cmin
+added row pg_attribute table column snap_elsewhere.owned.ctid
+added row pg_attribute table column snap_elsewhere.owned.id
+added row pg_attribute table column snap_elsewhere.owned.qty
+added row pg_attribute table column snap_elsewhere.owned.tableoid
+added row pg_attribute table column snap_elsewhere.owned.xmax
+added row pg_attribute table column snap_elsewhere.owned.xmin
+added row pg_auth_members role membership membership of role postgres in role further_role
+added row pg_authid role further_role
+added row pg_class index public.snap_probe_pkey
+added row pg_class table public.snap_probe
+added row pg_class table snap_elsewhere.linked
+added row pg_class table snap_elsewhere.owned
+added row pg_constraint table constraint linked_probe_fkey on snap_elsewhere.linked
+added row pg_constraint table constraint snap_probe_pkey on public.snap_probe
+added row pg_depend event trigger further_event -> function snap_elsewhere.further_event() n
+added row pg_depend function snap_elsewhere.further_event() -> language plpgsql n
+added row pg_depend function snap_elsewhere.further_event() -> schema snap_elsewhere n
+added row pg_depend index public.snap_probe_pkey -> table constraint snap_probe_pkey on public.snap_probe i
+added row pg_depend internal trigger on public.snap_probe of table constraint linked_probe_fkey on snap_elsewhere.linked calling "RI_FKey_noaction_del"() -> table constraint linked_probe_fkey on snap_elsewhere.linked i
+added row pg_depend internal trigger on public.snap_probe of table constraint linked_probe_fkey on snap_elsewhere.linked calling "RI_FKey_noaction_upd"() -> table constraint linked_probe_fkey on snap_elsewhere.linked i
+added row pg_depend internal trigger on snap_elsewhere.linked of table constraint linked_probe_fkey on snap_elsewhere.linked calling "RI_FKey_check_ins"() -> table constraint linked_probe_fkey on snap_elsewhere.linked i
+added row pg_depend internal trigger on snap_elsewhere.linked of table constraint linked_probe_fkey on snap_elsewhere.linked calling "RI_FKey_check_upd"() -> table constraint linked_probe_fkey on snap_elsewhere.linked i
+added row pg_depend policy linked_read on snap_elsewhere.linked -> table snap_elsewhere.linked a
+added row pg_depend policy snap_probe_reader on public.snap_probe -> table public.snap_probe a
+added row pg_depend publication relation snap_elsewhere.linked in publication supabase_realtime -> publication supabase_realtime a
+added row pg_depend publication relation snap_elsewhere.linked in publication supabase_realtime -> table snap_elsewhere.linked a
+added row pg_depend table constraint linked_probe_fkey on snap_elsewhere.linked -> index public.snap_probe_pkey n
+added row pg_depend table constraint linked_probe_fkey on snap_elsewhere.linked -> table column public.snap_probe.id n
+added row pg_depend table constraint linked_probe_fkey on snap_elsewhere.linked -> table column snap_elsewhere.linked.probe a
+added row pg_depend table constraint snap_probe_pkey on public.snap_probe -> table column public.snap_probe.id a
+added row pg_depend table public.snap_probe -> schema public n
+added row pg_depend table snap_elsewhere.linked -> schema snap_elsewhere n
+added row pg_depend table snap_elsewhere.owned -> schema snap_elsewhere n
+added row pg_depend trigger owned_touch on snap_elsewhere.owned -> function os.parts_touch() n
+added row pg_depend trigger owned_touch on snap_elsewhere.owned -> table snap_elsewhere.owned a
+added row pg_depend type public.snap_probe -> table public.snap_probe i
+added row pg_depend type public.snap_probe[] -> type public.snap_probe i
+added row pg_depend type snap_elsewhere.linked -> table snap_elsewhere.linked i
+added row pg_depend type snap_elsewhere.linked[] -> type snap_elsewhere.linked i
+added row pg_depend type snap_elsewhere.owned -> table snap_elsewhere.owned i
+added row pg_depend type snap_elsewhere.owned[] -> type snap_elsewhere.owned i
+added row pg_event_trigger event trigger further_event
+added row pg_index index public.snap_probe_pkey
+added row pg_namespace schema snap_elsewhere
+added row pg_policy policy linked_read on snap_elsewhere.linked
+added row pg_policy policy snap_probe_reader on public.snap_probe
+added row pg_proc function snap_elsewhere.further_event()
+added row pg_publication publication further_pub
+added row pg_publication_rel publication relation snap_elsewhere.linked in publication supabase_realtime
+added row pg_trigger internal trigger on public.snap_probe of table constraint linked_probe_fkey on snap_elsewhere.linked calling "RI_FKey_noaction_del"()
+added row pg_trigger internal trigger on public.snap_probe of table constraint linked_probe_fkey on snap_elsewhere.linked calling "RI_FKey_noaction_upd"()
+added row pg_trigger internal trigger on snap_elsewhere.linked of table constraint linked_probe_fkey on snap_elsewhere.linked calling "RI_FKey_check_ins"()
+added row pg_trigger internal trigger on snap_elsewhere.linked of table constraint linked_probe_fkey on snap_elsewhere.linked calling "RI_FKey_check_upd"()
+added row pg_trigger trigger owned_touch on snap_elsewhere.owned
+added row pg_type type public.snap_probe
+added row pg_type type public.snap_probe[]
+added row pg_type type snap_elsewhere.linked
+added row pg_type type snap_elsewhere.linked[]
+added row pg_type type snap_elsewhere.owned
+added row pg_type type snap_elsewhere.owned[]
+changed held position realtime.subscription_id_seq
+changed held rows supabase_migrations.schema_migrations
+changed row pg_db_role_setting setting for authenticated in *
+changed row pg_description schema public

@@ -1,0 +1,59 @@
+outside-format 1
+added acl pg_class table public.snap_probe has anon=Dxtm/postgres
+added acl pg_class table public.snap_probe has authenticated=Dxtm/postgres
+added acl pg_class table public.snap_probe has os_reader=r/postgres
+added acl pg_class table public.snap_probe has postgres=arwdDxtm/postgres
+added acl pg_class table public.snap_probe has service_role=Dxtm/postgres
+added acl pg_class table snap_elsewhere.owned has os_owner=arwdDxtm/os_owner
+added acl pg_namespace schema snap_elsewhere has os_owner=UC/postgres
+added acl pg_namespace schema snap_elsewhere has postgres=UC/postgres
+added held rows public.snap_probe
+added held rows snap_elsewhere.owned
+added owner pg_class index public.snap_probe_pkey is postgres
+added owner pg_class table public.snap_probe is postgres
+added owner pg_class table snap_elsewhere.owned is os_owner
+added owner pg_namespace schema snap_elsewhere is postgres
+added owner pg_type type public.snap_probe is postgres
+added owner pg_type type public.snap_probe[] is postgres
+added owner pg_type type snap_elsewhere.owned is os_owner
+added owner pg_type type snap_elsewhere.owned[] is os_owner
+added row pg_attribute index column public.snap_probe_pkey.id
+added row pg_attribute table column public.snap_probe.cmax
+added row pg_attribute table column public.snap_probe.cmin
+added row pg_attribute table column public.snap_probe.ctid
+added row pg_attribute table column public.snap_probe.id
+added row pg_attribute table column public.snap_probe.tableoid
+added row pg_attribute table column public.snap_probe.who
+added row pg_attribute table column public.snap_probe.xmax
+added row pg_attribute table column public.snap_probe.xmin
+added row pg_attribute table column snap_elsewhere.owned.cmax
+added row pg_attribute table column snap_elsewhere.owned.cmin
+added row pg_attribute table column snap_elsewhere.owned.ctid
+added row pg_attribute table column snap_elsewhere.owned.id
+added row pg_attribute table column snap_elsewhere.owned.qty
+added row pg_attribute table column snap_elsewhere.owned.tableoid
+added row pg_attribute table column snap_elsewhere.owned.xmax
+added row pg_attribute table column snap_elsewhere.owned.xmin
+added row pg_class index public.snap_probe_pkey
+added row pg_class table public.snap_probe
+added row pg_class table snap_elsewhere.owned
+added row pg_constraint table constraint snap_probe_pkey on public.snap_probe
+added row pg_depend index public.snap_probe_pkey -> table constraint snap_probe_pkey on public.snap_probe i
+added row pg_depend policy snap_probe_reader on public.snap_probe -> table public.snap_probe a
+added row pg_depend table constraint snap_probe_pkey on public.snap_probe -> table column public.snap_probe.id a
+added row pg_depend table public.snap_probe -> schema public n
+added row pg_depend table snap_elsewhere.owned -> schema snap_elsewhere n
+added row pg_depend trigger owned_touch on snap_elsewhere.owned -> function os.parts_touch() n
+added row pg_depend trigger owned_touch on snap_elsewhere.owned -> table snap_elsewhere.owned a
+added row pg_depend type public.snap_probe -> table public.snap_probe i
+added row pg_depend type public.snap_probe[] -> type public.snap_probe i
+added row pg_depend type snap_elsewhere.owned -> table snap_elsewhere.owned i
+added row pg_depend type snap_elsewhere.owned[] -> type snap_elsewhere.owned i
+added row pg_index index public.snap_probe_pkey
+added row pg_namespace schema snap_elsewhere
+added row pg_policy policy snap_probe_reader on public.snap_probe
+added row pg_trigger trigger owned_touch on snap_elsewhere.owned
+added row pg_type type public.snap_probe
+added row pg_type type public.snap_probe[]
+added row pg_type type snap_elsewhere.owned
+added row pg_type type snap_elsewhere.owned[]
