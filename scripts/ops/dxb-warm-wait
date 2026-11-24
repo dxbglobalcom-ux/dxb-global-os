@@ -1,27 +1,29 @@
 #!/usr/bin/env python3
 """Keep an away session's prompt cache warm: one small turn 55 minutes after its last one, nothing else.
 
-  --away on | --away off     mark the session away, and back
-  --watch [--idle-since @t]  the clock; run it in the background, its end wakes the session with one line:
-      WARM_PING    55 minutes since the session's last turn: run the re-arm command, end the turn
+  --away on | --away off   mark the session away; off ends its clock too
+  --watch [--pings N]      the clock; run it in the background, its end wakes the session with one line:
+      WARM_PING    55 minutes since the session's last turn (N of 5): run the re-arm command, end the turn;
+                   the fifth says `close` instead: the session stood idle for five pings
       WINDOW_RESET the 5-hour window that stood near full has reset: re-arm, go on with the work
-      IDLE_OVER    ten hours with no turn but the clock's own: --away off, arm nothing
-  --status                   ARMED or NOT_ARMED, AWAY on or off
+  --status                 ARMED or NOT_ARMED, AWAY on or off
 
-A quota holds a ping in one case: a window at 100 % that has not reset, when the turn would be refused and
-nothing would be left to wake the session. A quota that is missing or unreadable holds nothing (Ultra has no
-5-hour window). dxb-away-gate.py reads the two files written here; its tests make them with this command.
+A cache that is already cold is never pinged: after a suspend, or a spent quota, the clock sleeps on without
+waking anybody until somebody's own turn has warmed the session. A quota that is missing or unreadable holds
+nothing (Ultra has no 5-hour window). dxb-away-gate.py reads the two files written here.
 """
 import datetime
 import glob
 import json
 import os
+import signal
 import sys
 import time
 
 PING_S = float(os.environ.get("DXB_WARM_WAIT_TEST_PING_AFTER_S", 55 * 60))
 STEP_S = float(os.environ.get("DXB_WARM_WAIT_TEST_STEP_S", 20))
-IDLE_S = float(os.environ.get("DXB_WARM_WAIT_TEST_IDLE_S", 10 * 3600))   # his number (CEO, 2026-11-17)
+COLD_S = float(os.environ.get("DXB_WARM_WAIT_TEST_COLD_S", 60 * 60))    # the prompt cache's life
+MOST_PINGS = 5           # his number (CEO, 2026-11-24): a session that stands idle is kept warm five pings
 NEAR_FULL = 95           # from here the session opens no new work and the clock wakes it at the reset
 RESET_MARGIN_S = float(os.environ.get("DXB_WARM_WAIT_TEST_MARGIN_S", 120))
 OWN_TURN_S = 180         # the turn that arms the clock ends within this; a later turn is somebody's
@@ -29,6 +31,7 @@ RUNTIME = os.path.join(os.environ.get("XDG_RUNTIME_DIR") or "/tmp", "claude-ctx"
 SESSION = os.environ.get("CLAUDE_CODE_SESSION_ID", "")
 CLOCK = os.path.join(RUNTIME, f"warm-wait-{SESSION}.pid")
 AWAY = os.path.join(RUNTIME, f"away-{SESSION}")
+HERE = "scripts/ops/dxb-warm-wait"
 
 
 def started(pid):
@@ -99,24 +102,25 @@ def log(event):
                                  "5h": seen.get("five_hour", (None,))[0], "7d": seen.get("seven_day", (None,))[0]}) + "\n")
 
 
-def watch(idle_since):
-    armed, reset = time.time(), None
-    idle_since = idle_since or armed
+def watch(pings):
+    armed, reset, tick = time.time(), None, time.time()
     while True:
         now, turn, seen = time.time(), last_turn(), windows()
         if turn > armed + OWN_TURN_S:
-            idle_since = max(idle_since, turn)
-        if now >= idle_since + IDLE_S:
-            return "idle_over", "IDLE_OVER — ten quiet hours | close: scripts/ops/dxb-warm-wait --away off"
+            pings = 0            # somebody's turn: the count starts again
+        if now - tick > 10 * STEP_S + 60:
+            reset = None         # the machine was suspended: the work is not waked for a reset long past
+        tick, idle = now, now - max(armed, turn)
         percent, resets_at = seen.get("five_hour", (0, 0))
         if percent >= NEAR_FULL and resets_at > now:
             reset = resets_at
-        again = f"re-arm: scripts/ops/dxb-warm-wait --watch --idle-since @{int(idle_since)}"
-        if reset and now >= reset + RESET_MARGIN_S:
-            return "window_reset", f"WINDOW_RESET {hour(now)} — the 5-hour window is new, go on with the work | {again}"
-        spent = any(used >= 100 and back + RESET_MARGIN_S > now for used, back in seen.values())
-        if now >= max(armed, turn) + PING_S and not spent:
-            return "ping", f"WARM_PING {hour(now)} | {again}"
+        if os.path.exists(AWAY):
+            if reset and now >= reset + RESET_MARGIN_S:
+                return "window_reset", f"WINDOW_RESET {hour(now)} — the 5-hour window is new, go on with the work | re-arm: {HERE} --watch"
+            spent = any(used >= 100 and back + RESET_MARGIN_S > now for used, back in seen.values())
+            if PING_S <= idle < COLD_S and not spent:
+                then = f"re-arm: {HERE} --watch --pings {pings + 1}" if pings + 1 < MOST_PINGS else f"close: {HERE} --away off"
+                return "ping", f"WARM_PING {hour(now)} ({pings + 1} of {MOST_PINGS}) | {then}"
         time.sleep(STEP_S)
 
 
@@ -129,8 +133,13 @@ def main(argv):
         if argv[1] == "on":
             with open(AWAY, "w") as handle:
                 handle.write(datetime.datetime.now().isoformat(timespec="seconds") + "\n")
-        elif os.path.exists(AWAY):
-            os.remove(AWAY)
+        else:
+            record = running_clock()
+            if record:
+                os.kill(record["pid"], signal.SIGTERM)
+            for path in (AWAY, CLOCK):
+                if os.path.exists(path):
+                    os.remove(path)
         print(f"AWAY {argv[1]}")
         return 0
     record = running_clock()
@@ -139,7 +148,7 @@ def main(argv):
         print(f"ARMED pid {record['pid']}, next ping {hour(due)}" if record else "NOT_ARMED")
         print("AWAY on" if os.path.exists(AWAY) else "AWAY off")
         return 0
-    if argv[:1] != ["--watch"] or (argv[1:] and (argv[1] != "--idle-since" or len(argv) != 3)):
+    if argv[:1] != ["--watch"] or (argv[1:] and (len(argv) != 3 or argv[1] != "--pings" or not argv[2].isdigit())):
         print(__doc__)
         return 2
     if record:
@@ -148,7 +157,7 @@ def main(argv):
     with open(CLOCK, "w") as handle:
         json.dump({"pid": os.getpid(), "session": SESSION, "started": started(os.getpid()), "armed_at": time.time()}, handle)
     log("armed")
-    event, line = watch(float(argv[2].lstrip("@")) if argv[1:] else None)
+    event, line = watch(int(argv[2]) if argv[1:] else 0)
     log(event)
     os.remove(CLOCK)
     print(line)
