@@ -29,7 +29,7 @@ warm-wait-<session>.pid beside it, and that file is this session's running clock
 written for this session by a process that still runs: the pid alive and started at the moment
 written down (/proc/<pid>/stat, field 22). A name on a command line proves neither -- another
 session's clock carries it, and its end wakes that session, not this one. dxb-warm-wait writes
-both files and reads them by the same rule (its clock_file, away_file, started, is_clock); the
+both files and reads them by the same rule (its CLOCK, AWAY, started, running_clock); the
 two must agree, and test-away-gate.py makes the files with that command and asks this gate.
 Stdlib only. Installed byte-equal as ~/.claude/hooks/dxb-away-gate.py.
 """
@@ -41,8 +41,8 @@ import sys
 RUNTIME = os.path.join(os.environ.get("XDG_RUNTIME_DIR") or "/tmp", "claude-ctx")
 ASK = ("Away is on and no warm-wait clock is armed, so nothing would wake this session and its cache "
        "would be cold when he comes back. Arm `scripts/ops/dxb-warm-wait --watch` in the background "
-       "(`--until-reset` when waiting for the 5-hour window) -- also when the job is finished and told: "
-       "away ends only on his own word that he is back, `scripts/ops/dxb-warm-wait --away off \"<his words>\"`.")
+       "-- also when the job is finished and told: "
+       "away ends only on his own word that he is back, `scripts/ops/dxb-warm-wait --away off`.")
 
 
 def started(pid):

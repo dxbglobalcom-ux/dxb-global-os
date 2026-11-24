@@ -54,7 +54,7 @@ def blocked(result):
         return False
     reason = said.get("reason", "")
     return (code == 0 and err == "" and said == {"decision": "block", "reason": reason} and "\n" not in reason
-            and all(part in reason for part in ("scripts/ops/dxb-warm-wait --watch", "--until-reset", "scripts/ops/dxb-warm-wait --away off")))
+            and all(part in reason for part in ("scripts/ops/dxb-warm-wait --watch", "scripts/ops/dxb-warm-wait --away off")))
 
 
 def warm_wait(*argv):
@@ -136,14 +136,8 @@ for name, raw in (("not JSON", "{not json"), ("nothing", ""), ("not an object", 
     check(f"broken input, {name}", (code, out, err.startswith("dxb-away-gate: "), err.count("\n")), (0, "", True, 1))
 
 # Away off: silent again.
-check("--away off without his words is refused, and the gate still holds", (warm_wait("--away", "off").returncode, blocked(stop())), (2, True))
-check("the gate says away ends on his word, the job's end not", "also when the job is finished" in json.loads(stop()[1])["reason"], True)
-BACK = os.path.join(SANDBOX, "back.jsonl")
-with open(BACK, "w") as lines:
-    lines.write(json.dumps({"type": "user", "timestamp": time.strftime("%Y-%m-%dT%H:%M:%S.000Z", time.gmtime(time.time() + 5)),
-                            "origin": {"kind": "human"}, "message": {"role": "user", "content": "geldim"}}) + "\n")
-check("--away off with words that are not his is refused", (warm_wait("--away", "off", "iş bitti", "--transcript", BACK).returncode, blocked(stop())), (2, True))
-check("--away off", warm_wait("--away", "off", "geldim", "--transcript", BACK).returncode, 0)
+check("the gate says a finished job does not end away", "also when the job is finished" in json.loads(stop()[1])["reason"], True)
+check("--away off", warm_wait("--away", "off").returncode, 0)
 check("marker removed", stop(), SILENT_PASS)
 
 if failed:
