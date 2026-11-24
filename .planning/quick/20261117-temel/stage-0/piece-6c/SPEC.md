@@ -89,9 +89,9 @@ are `evidence/inventory2.cjs` (6a's probe with keys for the catalogues it skippe
 name with the reason: `pg_statistic` and `pg_statistic_ext_data` (the planner's statistics: they move with every
 `analyze`); `pg_largeobject` (a large object's bytes; that one stands is `pg_largeobject_metadata`'s row);
 `pg_subscription_rel` (a subscription's running state); `pg_shdepend` (it restates what is read where it stands:
-an owner, an ACL item, a policy's roles, a tablespace, initial privileges). **A catalogue that is neither one of
-the five nor given a reading fails the call** — a new catalogue of a later server is decided by a person, not
-skipped.
+an owner, an ACL item, a policy's roles, a tablespace, initial privileges). A catalogue with an `oid` column is
+read as objects of it, each `out` unless its object stands in a covered schema — the side on which a row is
+compared; **a catalogue without one that is given no reading by name fails the call** (§10.2, B1).
 
 **No line is given to:** anything of a session's temporary schema, that schema itself included (6a's rule and
 its one spelling, `inATemporarySchema`); a toast relation, its index, their columns, and a `pg_depend` row with a
@@ -106,7 +106,8 @@ snapshot's own `placeOf`. No second rule is written.
 | The row | belongs to |
 |---|---|
 | of a catalogue whose rows are objects (it has an `oid` column) | that object's schema, as `placeOf` reads it — a policy, trigger, rule or default where its relation is, an extension where its schema is; an object that stands in no schema (a database, a tablespace, a language, a cast, an event trigger, a publication, a foreign-data wrapper or server, an access method, a transform, a parameter, a large object, a replication origin) is `out` |
-| `pg_attribute`, `pg_index`, `pg_sequence`, `pg_partitioned_table`, `pg_foreign_table`, `pg_inherits` (the child) | their relation's schema |
+| `pg_attribute`, `pg_index`, `pg_sequence`, `pg_partitioned_table`, `pg_foreign_table` | their relation's schema |
+| `pg_inherits` — **`in` only when the child and the parent both are** (§10.1): a table of `os` made a child or a partition of a table outside changes what that table answers | both |
 | `pg_enum`, `pg_range` · `pg_aggregate` · `pg_amop`, `pg_amproc` · `pg_ts_config_map` | their type's · their function's · their operator family's · their configuration's schema |
 | `pg_description`, `pg_seclabel`, `pg_init_privs` · `pg_depend` | where the object they speak of is · where the *dependent* object is |
 | `pg_publication_rel`, `pg_publication_namespace` · `pg_user_mapping` | `out`: a publication stands in no schema · `out` |
@@ -155,15 +156,18 @@ refuses, an identity it answers NULL, a table the session may not read — each 
   move — `reltuples`, `relpages`, `relallvisible`, `relallfrozen`, `relfilenode`, `relrewrite`; and the hints the
   server sets and clears lazily, each restating rows that are read themselves — `relhasindex`, `relhasrules`,
   `relhastriggers`, `relhassubclass`, `dathasloginevt`.
-- **No secret enters a digest that a guess could open:** `rolpassword` enters as itself only when it is a SCRAM
-  verifier (its own salt is in it), otherwise as `<set>` or nothing; in `pg_db_role_setting.setconfig` the value
+- **No secret enters a digest that a guess could open:** `rolpassword` enters as itself when it is a SCRAM
+  verifier (its own salt is in it) or nothing when there is none; **a password stored in any other form fails the
+  call**, the role named and the verifier not (§10.1 — said `<set>`, a change of it would have been unseen); in `pg_db_role_setting.setconfig` the value
   of a name that holds a dot is `<hidden>` (6a's rule); `umoptions` and `subconninfo` enter as `<set>` or nothing.
   **An inventory is never committed** and never an expected text: it is the bench's instrument, kept beside a run.
 
 ### 4.3 The outside text **[lead]**
 
 `outsideOf(before: string, after: string): string`, pure. Both are inventories; a text that is not one's spelling
-throws. Its form is the snapshot's with the first line `outside-format 1`. **Only lines marked `out` are read**, in
+throws — and **an inventory is whole or it is none** (§10.1): each `read <catalogue> <n>` line counts exactly the
+`row` lines of its catalogue, a `row` line has its catalogue's `read` line, and a text with no `read` line is no
+inventory, so that a file cut short is refused and never read as rows gone. Its form is the snapshot's with the first line `outside-format 1`. **Only lines marked `out` are read**, in
 each text by its own mark — a thing `out` before and `in` after is `removed`, and the converse `added`.
 
 | Line | When |
@@ -286,6 +290,12 @@ The test hand's readings, read and accepted by the lead (2026-11-24). 114 cases 
 
 ## 7. The lock, and the real chain's own proof **[lead]**
 
+**What a line in `real.outside.txt` costs (after the audit, A1).** A locked case holds that text to its first line
+alone, so the first piece that changes anything outside `os` must change that case in a lock commit. In that same
+commit it adds, for each line it accepts, a case that reads the thing's final state by a query of its own — the
+row's content, the function's body, the table's rows — or its lines in the snapshot; a line without its case is
+not accepted. The bench command (13) runs those cases beside the check.
+
 The tests and the three expected texts go in with piece 6's lock made again over three directories —
 `pnpm foundation:lock piece-6 foundation/tests/snapshot foundation/tests/upgrade foundation/tests/outside` — in a
 commit that holds nothing else. No new lock name, no new `foundation:*` script, no change to the lock tool.
@@ -299,6 +309,49 @@ gets a schema `os_owner` owns, where it is `in`.
 of the fresh instance is kept before `chain up --root <the chain at from.txt>`; after the upgrade
 `outside --before … --check real.outside.txt` is `OUTSIDE_EQUAL` beside `SNAPSHOT_EQUAL` and `ROWS_KEPT`.
 
+## 10. The blind audit and its corrections (GPT-6.2 Sol, xhigh, one pass, 2026-11-24 — `SOL.md`; the lead's weighing)
+
+Verdict: REFUTED — 8 blocking (A1–A8), 6 must-fix (B1–B6), one older (C1). It found the real chain's proof sound
+as far as it reaches and the instrument wanting in what it can be made to pass over. Each finding weighed against
+what the piece is for; there is no second round.
+
+### 10.1 Taken — tests first, then the code
+
+| # | Finding | Correction |
+|---|---|---|
+| 1 | **A2** a table of `os` made a child (or a partition) of a table outside changes what the outside table answers, and no line said so: `pg_inherits` was marked by its child alone | `pg_inherits` is `in` only when both ends are (§4.1) |
+| 2 | **A5** a password stored in another form than SCRAM entered as `<set>`: one such password changed for another was unseen | such a password fails the call, the role named (§4.2) |
+| 3 | **A7** a table's rows were printed by `(t.*)::text`, which takes a cast its owner defined: rows could print alike after a change, and a function of the owner's ran in the reader's session | a row is printed by the server's own output of a record (`record_out`), which asks no cast |
+| 4 | **A8** an inventory cut short at a line's end was taken whole: rows it no longer held read as never there, and a row dropped by the build passed | an inventory is whole or none (§4.3); the command refuses one as `before-malformed` |
+| 5 | **A6**, its second half: a read the server refuses was thrown with the server's own detail, which can carry a row's value | a refused read of the inventory says the relation and the SQLSTATE, nothing of the server's text |
+| 6 | **B4** B.1 counted the catalogue's rows from the product's own lines | B.1 counts five catalogues by the test's own queries |
+| 7 | **A3**, **B5** a role `os_…` standing before the chain; the real chain's run did not hold its last answer to exit 1 | §7's run stops when the fresh inventory holds a line marked `in`, and when the red control is not red (the script; §9) |
+
+### 10.2 Not taken — each with its reason, and named in §9 where it is a limit
+
+- **A1** (a line stands for whatever is done to its thing). True, and of the design: a text a hand can write holds
+  no digest. Not closed by code — closed by what a line costs (§7): the real text is empty, a locked case holds it
+  empty, and the piece that first adds a line adds the case that reads that thing's final state. §9 now says it
+  of `added` and `held` too. The auditor's two counter-examples cannot be red against a fresh inventory in any
+  text without a digest; they are red against the empty text, which is where the real chain stands.
+- **A4** (a date-named partition in a line). It fails red, not green; §9.
+- **A6**, its first half (a digest a guess could open). The inventory lives where the bench's login file lives and
+  the bench holds no secret of the company; a keyed digest needs a key kept between two processes, which is a
+  store of its own — stage 5's decision, written as a condition in §9.
+- **B1** (an unknown catalogue with an `oid` column is read by itself). Left: such a row is `out` unless its
+  object stands in a covered schema — the side that is compared — and a class `pg_identify_object` does not know
+  fails the call by itself; §4.1 now says what stands instead of "decided by a person".
+- **B2**, **C1** (what leaves no state; a subscription's tables and skipped position). Named in §9.
+- **B3** (an expected text holding one key under two verbs; a link; the moment between judging a file and
+  reading it). The first can only be red; the others are the snapshot's own command's manner (6a) and a hand that
+  already holds the operator's machine.
+- **B6** (the verdict's log named for the code commit ran one records commit later — the same tree under
+  `foundation/`; the real chain's upgrade applies nothing new and keeps no row). Said in the records as it is; the
+  thin proof is 6b's named limit until piece 8 gives the real chain a table.
+- Unverified by the auditor and left: a membership granted twice by two grantors has one identity (its two rows
+  are a multiset under it); a security label's provider is not in its identity (no provider on the bench);
+  `VACUUM FULL` and `CLUSTER` between two readings (`relfilenode` is out of the digest; not run).
+
 ## 8. Done when
 
 The tests are committed with the lock alone and seen red for the right reason; the code is committed apart;
@@ -307,9 +360,25 @@ untouched; `pnpm foundation:verify --all --rev HEAD` says `LOCK_GREEN` for piece
 on the real chain and kept its output; one blind audit pass by GPT-6.2 Sol is weighed and its corrections taken
 tests-first; BUILD.md's piece 6 carries the Done note of 6c.
 
-## 9. Known limits, said before the build
+## 9. Known limits, said before the build (and after the audit — §10)
 
-- **`changed row` says that, not how** (§7). The inventory holds a digest; the committed text holds none.
+- **A line says that and where, not what** (§7; the audit's A1). The inventory holds a digest; the committed text
+  holds none — so `changed row`, `added row` and `changed held` each stand for whatever was done to that thing: a
+  second row written into a table whose line is expected, another body for a function whose line is expected, pass
+  under the line. Only `owner` and `acl` lines say the whole of what they are. An empty text hides nothing — and
+  the real chain's is empty; what a line costs is said in §7.
+- **A line that names a day:** a row written into one of the platform's date-named partitions gives
+  `changed held rows realtime.messages_<date>` — a text that is red on another day, never green over a change
+  (A4). A file of the chain does not write there; a piece that must decides that line's spelling first.
+- **What leaves no state is not seen:** a notification sent at commit, an advisory lock, a prepared transaction,
+  a replication slot, a replication origin's progress, a subscription's skipped position (`pg_lsn`) and which
+  tables a subscription holds (`pg_subscription_rel`) — none stands in a catalogue row that is read (B2, C1).
+- **An inventory's digests are plain SHA-256** of rows the reader may read: a short unknown value among known
+  ones could be guessed from one (A6). So an inventory stays where the bench's own login file stays — the
+  operator's machine, a temporary file, never committed, never shown — and **no inventory is taken of a database
+  that holds the company's secrets until stage 5 has decided a keyed digest**.
+- A role named `os_…` that stood before the chain is read as the chain's (A3): the fresh instance must hold no
+  line marked `in` — pinned on the bench by B.1, checked by §7's run, owed by the bench command (13) and stage 5.
 - **Net effect only:** what a build does and undoes between the two readings leaves no line.
 - **One instance, moments apart.** Two inventories of different instances are not compared (their oids differ);
   what the platform itself does between the readings would be read as the build's — on an idle instance it does

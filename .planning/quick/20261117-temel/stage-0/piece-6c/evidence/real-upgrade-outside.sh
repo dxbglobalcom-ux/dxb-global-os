@@ -17,6 +17,8 @@ node --input-type=module -e '
 ' "$R/foundation/chain/src/index.ts" "$R" "$FROM" "$S" 2>&1; rc=$?; echo "exit=$rc"; [ "$rc" = 0 ] || stop "the step above"
 echo "== instance fresh"; pnpm -s -C "$R" foundation:instance fresh 2>&1 | tail -1
 echo "== inventory of the fresh instance, kept aside"; pnpm -s -C "$R" foundation:chain inventory > "$S.fresh.inventory.txt"; rc=$?; echo "exit=$rc lines=$(wc -l < "$S.fresh.inventory.txt")"; [ "$rc" = 0 ] || stop "the step above"
+# From piece 6c's audit (A3): nothing may be the chain's before the chain — a role or a schema that stood already is the platform's.
+ins=$(grep -c -E '^(row|owner|acl) in ' "$S.fresh.inventory.txt"); echo "lines marked in before the chain: $ins"; [ "$ins" = 0 ] || stop "the fresh instance holds lines marked in"
 echo "== chain up --root <from>"; pnpm -s -C "$R" foundation:chain up --root "$S" 2>/dev/null; rc=$?; echo "exit=$rc"; [ "$rc" = 0 ] || stop "the step above"
 echo "== outside, after the chain at from"; pnpm -s -C "$R" foundation:chain outside --before "$S.fresh.inventory.txt" --check "$R/foundation/tests/outside/expected/real.outside.txt"; rc=$?; echo "exit=$rc"; [ "$rc" = 0 ] || stop "the step above"
 [ -f "$R/foundation/tests/upgrade/real/rows.sql" ] && echo "rows.sql stands: NOT GIVEN by this script" || echo "== no real/rows.sql: no table of the real chain holds a row yet"
@@ -30,5 +32,5 @@ node "$R/.planning/quick/20261117-temel/stage-0/piece-6/evidence/run.cjs" /dev/s
 -- @ !comment
 comment on schema extensions is 'real-upgrade-outside: seen red';
 SQL
-pnpm -s -C "$R" foundation:chain outside --before "$S.fresh.inventory.txt" --check "$R/foundation/tests/outside/expected/real.outside.txt"; echo "exit=$? (1 is the proof that it can go red)"
+pnpm -s -C "$R" foundation:chain outside --before "$S.fresh.inventory.txt" --check "$R/foundation/tests/outside/expected/real.outside.txt"; rc=$?; echo "exit=$rc (1 is the proof that it can go red)"; [ "$rc" = 1 ] || stop "the red control was not red"
 echo "== instance down"; pnpm -s -C "$R" foundation:instance down 2>&1 | tail -1
