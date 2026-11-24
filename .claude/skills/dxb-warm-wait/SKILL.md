@@ -71,7 +71,8 @@ line, so a session he does not come back to stops costing by itself.
    spent: only a window, a week or the session model's own week at 100 % stops it, because that turn would be
    refused — then the clock sleeps to the reset and the session comes back cold on `WAIT_OVER` (CEO,
    2026-11-24: "sıcak kalsın diyorsam sıcak kalsın"; that morning Fable's week stood at 98 %, no ping was
-   made and he came back to a cold session). A wake that carries work on still needs room under 98 %. The
+   made and he came back to a cold session). His plan is Ultra and has no 5-hour window ("Ultra'da 5 saatlik kota
+   yok artık", 2026-11-24): a quota that is not there or cannot be read never stops a ping. A wake that carries work on still needs room under 98 %. The
    session model's own week is read by `scripts/ops/dxb-usage`
    <!-- CEO-OK: model-week-read-from-usage-address-2026-11-13 -->. **When a clock is armed with a quota at
    or near 100 %, the line that tells him says so**: "warm" is not said of a wait that may go cold.

@@ -229,16 +229,16 @@ def keep_resets(seen, quota):
 
 def no_room(quota, now, full=FULL_WINDOW_PCT):
     """The windows that leave a turn no room now, each as (what to say of it, the second it resets or None
-    when that cannot be told); none when a turn has room. A window with no percentage stops a turn that carries
-    work on; it never stops a ping -- unread is not spent (CEO, 2026-11-24: that day the status line held no
-    5-hour window from 08:01 on, no ping was made, and he came back to a cold session)."""
+    when that cannot be told); none when a turn has room. A window with no percentage never stops a ping -- unread
+    is not spent -- and a 5-hour window that is not there stops no turn at all: his plan, Ultra, has none (CEO,
+    2026-11-24: "Ultra'da 5 saatlik kota yok artık"). That day the clock read the missing window as no room, made no ping, and he came back cold."""
     in_the_way = []
     for window, (name, _) in WINDOWS.items():
         percent, reset = used(quota, window), reset_at(quota, window, now)
         if reset is not None and reset <= now:
             continue  # what the record holds is of a window that has reset since: the new one has room
         if percent is None:
-            if full < FULL_FOR_A_PING_PCT:
+            if window != "five_hour" and full < FULL_FOR_A_PING_PCT:
                 in_the_way.append((f"the {name} had no reading", None))
         elif percent >= full:
             in_the_way.append((f"the {name} stood at {percent:g}%" + ("" if reset else " with no reset to read"), reset))
