@@ -87,7 +87,7 @@ dm-022, dm-026–dm-029 and Erika's five transcribed reels — the hook system q
 ## Open decisions for the CEO — one list
 
 1. **The hook factory** — place the B28 leg (`PLACEMENT.md` §2.1) and choose the holding line and platform for the free four-week first run.
-2. **The open Instagram pack** (`Jakeschincariol/instagram-agent-skill`, MIT) — install it (scanned first) as the base of the four-platform skill set, or have ours written from scratch.
+2. **The open Instagram pack** (`Jakeschincariol/instagram-agent-skill`, MIT) — install it (scanned first) as the base of the four-platform skill set, or have ours written from scratch. **Answered 2026-11-24, accepted:** four open packs as the base (Instagram, YouTube, LinkedIn, X), TikTok and Facebook ours — B28 leg 2026-11-24; workbook row 67 is now Kur (Kur 7, Dene 18).
 3. **The creator-army module** for e-commerce clients (`ADS-REVENUE.md` §2) — open it or not.
 4. **Meta's Ads MCP** — the developer app and business verification (identity), for the holding's own first campaign.
 5. **Two halal questions**: a scratch-card style discount pop-up; a buy-now-pay-later installment widget with late fees.

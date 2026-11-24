@@ -199,7 +199,7 @@ function branch(dir) {
 // transcript's last assistant row (its tail is read; a subagent's requests are in its own file and do
 // not warm this cache) that is an answer of the API: for a request that failed Claude Code writes an
 // assistant row of its own (isApiErrorMessage, model "<synthetic>"), and that read and warmed nothing.
-// Nothing readable: nothing is said. last_turn_at in dxb-warm-wait must agree with this.
+// Nothing readable: nothing is said. last_turn in dxb-warm-wait must agree with this.
 const CACHE_MINUTES = 60;
 const TRANSCRIPT_TAIL_BYTES = 256 * 1024;
 
