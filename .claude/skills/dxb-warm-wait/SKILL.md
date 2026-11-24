@@ -67,12 +67,14 @@ line, so a session he does not come back to stops costing by itself.
    window's reset, two minutes past it). It is the one clock that may be armed over a running `--watch`,
    which then ends with `SUPERSEDED by --until-reset`: end that turn in one short line. On `WAIT_OVER …` read
    the quota on that line, arm `--watch` again and open a fresh hand on the brief. `cold: …` on that line
-   says the command stayed asleep through a ping on purpose, and why: from 98 % it makes no ping, because the
-   turn itself could be cut — a `--watch` that meets 98 % sleeps to the reset by itself. When the week is
-   full the clock does the same with the week: it wakes nobody, sleeps to the week's reset however far
-   that is, and the session comes back cold on `WAIT_OVER`. The clock weighs the session model's own week the
-   same way (Fable 5.2 has one, read by `scripts/ops/dxb-usage`): it never wakes a session into a full week
-   of its own model <!-- CEO-OK: model-week-read-from-usage-address-2026-11-13 -->.
+   says the command stayed asleep through a ping on purpose, and why. A ping is made until the quota is
+   spent: only a window, a week or the session model's own week at 100 % stops it, because that turn would be
+   refused — then the clock sleeps to the reset and the session comes back cold on `WAIT_OVER` (CEO,
+   2026-11-24: "sıcak kalsın diyorsam sıcak kalsın"; that morning Fable's week stood at 98 %, no ping was
+   made and he came back to a cold session). A wake that carries work on still needs room under 98 %. The
+   session model's own week is read by `scripts/ops/dxb-usage`
+   <!-- CEO-OK: model-week-read-from-usage-address-2026-11-13 -->. **When a clock is armed with a quota at
+   or near 100 %, the line that tells him says so**: "warm" is not said of a wait that may go cold.
    **The hands.** A hand's cache lasts five minutes: keeping one warm for an hour would take fifteen pings,
    more than opening it cold. No hand is kept warm; a running hand finishes and its piece is verified and
    committed before the wait, and after it a fresh hand is opened (dxb-team3 §3, §7).

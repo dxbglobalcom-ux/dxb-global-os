@@ -151,9 +151,9 @@ def run_with(argv, quota, while_asleep=None):
 def the_line_each_wait_ends_on():
     code, text, _ = run_with(["--for", "80"], 50)
     check("80 minutes with room: a ping", (code, text.startswith("WARM_PING "), "re-arm: scripts/ops/dxb-warm-wait --until @" in text), (0, True, True))
-    code, text, slept = run_with(["--for", "80"], 99)
+    code, text, slept = run_with(["--for", "80"], 100)
     check("80 minutes, window full: no ping, asleep past the reset and on to the wait's end",
-          (code, text.startswith("WAIT_OVER "), "the 5-hour window stood at 99% and had no room for a turn" in text, slept),
+          (code, text.startswith("WAIT_OVER "), "the 5-hour window stood at 100% and had no room for a turn" in text, slept),
           (0, True, True, [NOW + 55 * MIN, NOW + 62 * MIN, NOW + 80 * MIN]))
     code, text, slept = run_with(["--for", "40"], 50)
     check("40 minutes: over, nothing cold", (code, text.startswith("WAIT_OVER "), "cold" in text, slept), (0, True, False, [NOW + 40 * MIN]))
@@ -284,12 +284,13 @@ def watch_has_no_end():
     check("--watch follows a turn too", (text.startswith("WARM_PING "), slept), (True, [NOW + 55 * MIN, NOW + 105 * MIN]))
 
     # the quota here says the window resets an hour after NOW; two minutes are waited past it
-    code, text, slept = run_with(["--watch"], 98)
-    check("--watch at 98 %: no ping, asleep to the window's reset",
-          (code, text.startswith("WAIT_OVER "), "the 5-hour window stood at 98% and had no room for a turn" in text, slept),
+    # a ping is made until the quota is spent (CEO, 2026-11-24): only 100 % stops it
+    code, text, slept = run_with(["--watch"], 100)
+    check("--watch at 100 %: no ping, asleep to the window's reset",
+          (code, text.startswith("WAIT_OVER "), "the 5-hour window stood at 100% and had no room for a turn" in text, slept),
           (0, True, True, [NOW + 55 * MIN, NOW + (60 + 2) * MIN]))
-    code, text, slept = run_with(["--watch"], 97)
-    check("--watch at 97 %: a ping", (text.startswith("WARM_PING "), slept), (True, [NOW + 55 * MIN]))
+    code, text, slept = run_with(["--watch"], 99)
+    check("--watch at 99 %: a ping", (text.startswith("WARM_PING "), slept), (True, [NOW + 55 * MIN]))
 
 
 # --- Ten quiet hours end a --watch (his number, CEO 2026-11-17: "10 saat sonra kapatsın"): the quiet is counted from
@@ -373,9 +374,9 @@ def no_wake_without_room_for_a_turn():
     check("the week is full: no ping, asleep to the week's reset",
           (code, text.startswith("WAIT_OVER "), "cold: at " in text and "the week stood at 100% and had no room for a turn" in text, slept),
           (0, True, True, [PING, NOW + 2 * DAY + 2 * MIN]))
-    code, text, slept = run_with(["--watch"], quota_record(99, NOW + 60 * MIN, week_used=98, week_reset=NOW + 2 * DAY))
+    code, text, slept = run_with(["--watch"], quota_record(100, NOW + 60 * MIN, week_used=100, week_reset=NOW + 2 * DAY))
     check("both windows are full: asleep to the later reset",
-          (text.startswith("WAIT_OVER "), "the 5-hour window stood at 99% and the week stood at 98% and had no room for a turn" in text, slept),
+          (text.startswith("WAIT_OVER "), "the 5-hour window stood at 100% and the week stood at 100% and had no room for a turn" in text, slept),
           (True, True, [PING, NOW + 2 * DAY + 2 * MIN]))
     code, text, slept = run_with(["--watch"], quota_record(40, NOW + 60 * MIN, week_used=97))
     check("the week at 97 %: a ping", (text.startswith("WARM_PING "), slept), (True, [PING]))
@@ -419,9 +420,9 @@ def no_wake_without_room_for_a_turn():
     code, text, slept = run_with(["--watch"], lambda moment: quota_record(50, NOW + 200 * MIN) if moment >= PING + 7 * MIN else {})
     check("the quota can be read again after seven minutes, and has room: woken then",
           (code, text.startswith("WAIT_OVER "), "cold: the quota could not be read for 7 min" in text, slept), (0, True, True, read_every_minute(7)))
-    code, text, slept = run_with(["--watch"], lambda moment: quota_record(99, NOW + 200 * MIN) if moment >= PING + 7 * MIN else {})
+    code, text, slept = run_with(["--watch"], lambda moment: quota_record(100, NOW + 200 * MIN) if moment >= PING + 7 * MIN else {})
     check("it can be read again and is full: asleep to that reset",
-          (text.startswith("WAIT_OVER "), "the 5-hour window stood at 99% and had no room for a turn" in text, slept),
+          (text.startswith("WAIT_OVER "), "the 5-hour window stood at 100% and had no room for a turn" in text, slept),
           (True, True, read_every_minute(7) + [NOW + 202 * MIN]))
 
 
@@ -464,7 +465,7 @@ def the_reset_wait_never_ends_before_the_reset():
     code, text, slept = run_with(["--until-reset"], quota_record(96, reset))
     check("--until-reset sleeps to the record's own reset second, and two minutes on",
           (code, text.startswith("WAIT_OVER "), slept), (0, True, [reset + 2 * MIN]))
-    code, text, slept = run_with(["--watch"], quota_record(99, PING + 179))
+    code, text, slept = run_with(["--watch"], quota_record(100, PING + 179))
     check("a --watch that meets a full window does the same", slept, [PING, PING + 179 + 2 * MIN])
 
 
@@ -525,20 +526,21 @@ ROOMY = quota_record(40, NOW + 60 * MIN)  # the 5-hour window and the week both 
 @section
 def the_session_models_own_week_is_weighed_too():
     runs_on("Fable 5.2")
-    own_weeks({"fable": fable(98)})
+    own_weeks({"fable": fable(100)})
     code, text, slept = run_as_session(["--watch"], ROOMY)
-    check("Fable's own week at 98 %: no ping, asleep to that week's reset",
-          (code, text.startswith("WAIT_OVER "), "cold: at " in text and "Fable's own week stood at 98% and had no room for a turn" in text, slept),
+    check("Fable's own week at 100 %: no ping, asleep to that week's reset",
+          (code, text.startswith("WAIT_OVER "), "cold: at " in text and "Fable's own week stood at 100% and had no room for a turn" in text, slept),
           (0, True, True, [PING, NOW + 3 * 3600 + 2 * MIN]))
 
-    own_weeks({"fable": fable(97)})
+    # the morning of 2026-11-24: Fable's week stood at 98 %, the clock made no ping and he came back to a cold session
+    own_weeks({"fable": fable(98)})
     code, text, slept = run_as_session(["--watch"], ROOMY)
-    check("Fable's own week at 97 %: a ping", (text.startswith("WARM_PING "), slept), (True, [PING]))
+    check("Fable's own week at 98 %: a ping", (text.startswith("WARM_PING "), slept), (True, [PING]))
 
-    own_weeks({"fable": fable(99, resets_in_h=5.0)})
-    code, text, slept = run_as_session(["--watch"], quota_record(99, NOW + 60 * MIN))
+    own_weeks({"fable": fable(100, resets_in_h=5.0)})
+    code, text, slept = run_as_session(["--watch"], quota_record(100, NOW + 60 * MIN))
     check("the 5-hour window full too: asleep to the later reset, both named",
-          (text.startswith("WAIT_OVER "), "the 5-hour window stood at 99% and Fable's own week stood at 99% and had no room" in text, slept),
+          (text.startswith("WAIT_OVER "), "the 5-hour window stood at 100% and Fable's own week stood at 100% and had no room" in text, slept),
           (True, True, [PING, NOW + 5 * 3600 + 2 * MIN]))
 
     own_weeks({"opus": {"used": 100, "resets_at": NOW + 3 * 3600, "share": 50}, "fable": fable(40)})
@@ -609,7 +611,7 @@ def an_own_week_not_known_changes_nothing():
     own_weeks({"fable": fable(100)})
     code, text, slept = run_with(["--watch"], ROOMY)
     check("no session known: a ping, as before", (text.startswith("WARM_PING "), slept), (True, [PING]))
-    code, text, slept = run_as_session(["--watch"], quota_record(99, NOW + 60 * MIN), session="another-session")
+    code, text, slept = run_as_session(["--watch"], quota_record(100, NOW + 60 * MIN), session="another-session")
     check("and the two windows still decide as before", (text.startswith("WAIT_OVER "), "Fable" in text, slept), (True, False, [PING, NOW + 62 * MIN]))
     for name in ("usage-scoped.json", "usage-scoped.asked", f"{OWN_SESSION}.json"):
         os.remove(os.path.join(RUNTIME, name))

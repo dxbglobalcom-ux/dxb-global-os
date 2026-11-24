@@ -35,8 +35,10 @@ A wait prints one line and exits 0:
   IDLE_OVER ... | close: <cmd>   a --watch: ten hours with no turn but its own pings -- his number (CEO,
                                  2026-11-17: "10 saat sonra kapatsın"). Nothing running: run <cmd>, re-arm nothing
 It never ends on a wake the quota would cut: before either line a turn must have room -- the
-5-hour window and the week both under 98 %, and the session model's own week too when dxb-usage has
-a reading of it (one not known leaves the two windows to decide, as before). A full window is slept
+5-hour window and the week, and the session model's own week too when dxb-usage has a reading of it
+(one not known leaves the two windows to decide, as before). A wake that carries work on (WAIT_OVER)
+needs them under 98 %; a ping is one small turn and is made until they are spent, 100 % (CEO,
+2026-11-24: on 2026-11-24 Fable's week stood at 98 %, no ping was made and he came back cold). A full window is slept
 to its reset (the latest one when more are full); a quota that cannot be read is read again every
 minute, in here, and after 5 h 10 min the session is woken all the same. It also stays asleep through pings when so many
 would be needed that a cold start is cheaper. Each of these is said on WAIT_OVER as `cold: ...`.
@@ -83,7 +85,9 @@ PING_AFTER_MIN = 55     # his number (CEO, 2026-11-13): one turn at the 55th min
 PING_AFTER_S = test_knob("PING_AFTER_S", PING_AFTER_MIN * 60)
 CACHE_READ = 0.1        # what a ping costs, as a share of the context at the input price
 CACHE_WRITE_1H = 2.0    # what a cold start costs, the same way
-FULL_WINDOW_PCT = 98    # from here a window has no room for a turn: the turn could be cut
+FULL_WINDOW_PCT = 98    # from here a window has no room for a turn that carries work on: the turn could be cut
+FULL_FOR_A_PING_PCT = 100  # a ping is one small turn and is made until the quota is spent (CEO, 2026-11-24:
+                           # "sıcak kalsın diyorsam sıcak kalsın … isterse bütün kota bitsin")
 RESET_MARGIN_MIN = 2    # waited past the reset, so the status line has the new window
 WINDOWS = {"five_hour": ("5-hour window", 5 * 3600), "seven_day": ("week", 7 * 24 * 3600)}  # in the record: (its name, its length)
 QUOTA_RETRY_S = 60      # a quota that cannot be read is read again this often -- by the clock, which takes no turn
@@ -223,7 +227,7 @@ def keep_resets(seen, quota):
             for window in WINDOWS}
 
 
-def no_room(quota, now):
+def no_room(quota, now, full=FULL_WINDOW_PCT):
     """The windows that leave a turn no room now, each as (what to say of it, the second it resets or None
     when that cannot be told); none when a turn has room."""
     in_the_way = []
@@ -233,7 +237,7 @@ def no_room(quota, now):
             continue  # what the record holds is of a window that has reset since: the new one has room
         if percent is None:
             in_the_way.append((f"the {name} had no reading", None))
-        elif percent >= FULL_WINDOW_PCT:
+        elif percent >= full:
             in_the_way.append((f"the {name} stood at {percent:g}%" + ("" if reset else " with no reset to read"), reset))
     return in_the_way
 
@@ -248,7 +252,7 @@ def session_model(session):
         return None
 
 
-def own_week_in_the_way(session, now):
+def own_week_in_the_way(session, now, full=FULL_WINDOW_PCT):
     """The session model's own week when it leaves a turn no room, as no_room() says a window: [(what to say of it,
     the second it resets)]; [] when it has room or is not known. A reading that is due by dxb-usage's rule is
     fetched first, and waited for: the clock is a background process."""
@@ -267,7 +271,7 @@ def own_week_in_the_way(session, now):
         reading = usage.readings(wall_clock()).get(model)  # the moment after the refresh: its record was read after `now`
     except Exception:  # noqa: BLE001 -- an own week that cannot be had is not known, and the clock goes on as before
         return []
-    if reading is None or reading["used"] < FULL_WINDOW_PCT:
+    if reading is None or reading["used"] < full:
         return []
     return [(f"{model.capitalize()}'s own week stood at {reading['used']:g}%", reading["resets_at"])]
 
@@ -489,7 +493,7 @@ def sleep_until(when, session=None):
             raise Superseded(owner["mode"])
 
 
-def sleep_until_room(session, seen):
+def sleep_until_room(session, seen, full=FULL_WINDOW_PCT):
     """Sleep on, waking nobody, until a turn has room: (the quota then, the `cold:` note of that sleep or "").
 
     The session's last wake must not be spent on a turn the quota cuts: a turn that dies arms no clock,
@@ -502,7 +506,7 @@ def sleep_until_room(session, seen):
     while True:
         now = wall_clock()
         seen = keep_resets(seen, read_quota())
-        in_the_way = no_room(seen, now) + own_week_in_the_way(session, now)
+        in_the_way = no_room(seen, now, full) + own_week_in_the_way(session, now, full)
         if not in_the_way or (blind_since is not None and now - blind_since >= BLIND_CEILING_MIN * 60):
             return seen, note
         said = " and ".join(what for what, _ in in_the_way)
@@ -551,7 +555,8 @@ def sleep_to_wake(mode, target, armed_at, session, transcript, quota, idle_since
             warm = newer  # a turn came meanwhile and warmed the cache by itself: the ping moves with it
 
     while True:
-        quota, no_room_note = sleep_until_room(session, quota)
+        a_ping = not over and not idle_over  # a ping keeps the cache warm and opens no work: only a spent quota stops it
+        quota, no_room_note = sleep_until_room(session, quota, FULL_FOR_A_PING_PCT if a_ping else FULL_WINDOW_PCT)
         if not no_room_note:
             break
         stayed_cold, over = no_room_note, True  # it slept through the ping: what is left of the wait is slept cold
