@@ -3361,5 +3361,21 @@
     "conditions": "The ping only. At 100 % the turn is refused and no ping can be made.",
     "session": "Fable 5.2 session e1c89a1b, heard first-hand, 2026-11-24.",
     "where": "scripts/ops/dxb-warm-wait (FULL_FOR_A_PING_PCT); .claude/skills/dxb-warm-wait/SKILL.md step 5; .planning/STATE.md"
+  },
+  "social-media-skills-four-packs-tiktok-facebook-ours-2026-11-24": {
+    "date": "2026-11-24",
+    "what": "The social-media team's skills are written into B28 as to be built: the four open packs of Jake Schincariol (Instagram, YouTube, LinkedIn, X) as the base, TikTok and Facebook written by us in the same pattern; first the security scan, then a one-account trial. The workbook's row 67 is corrected (B43 → B28, 'Dene' → 'Kur').",
+    "verbatim": "\"Tamam. Önerini kabul ediyorum.\"",
+    "conditions": "Nothing is installed now; built at B28's rank. Account connection and contracts stop at him.",
+    "session": "Opus 5.5 session 61ff4cdb, heard first-hand, 2026-11-24.",
+    "where": ".planning/board-rows/B28.md (leg 2026-11-24); .planning/research/watch-links/2026-10-08-whatsapp/turbo/Excel-turbo.xlsx row 67"
+  },
+  "warm-wait-closes-when-the-work-is-done-2026-11-24": {
+    "date": "2026-11-24",
+    "what": "Warm wait is one small turn every 55 minutes while he is away and nothing else; nothing is stored in its door or program. Asleep: the clock closes when all work, the hands' too, is finished. Suspending the machine always closes the clock first, whether he named it or not. Only out: at most five pings while the session stands idle. A 5-hour plan: at 95 % no new work, the pings go on to the reset. A cold cache is never pinged.",
+    "verbatim": "\"İş bitince her zaman saat kapatılır.\" · \"senin session'a da biz maksimum 5 saat koyalım mı? Yani 5 ping yapabilirsin maksimum.\" · \"işleri bitirin dediğim zaman hani saati kapatıp bilgisayarı uyutun her zaman.\" · \"Niye bunun içine bir şeyler kaydoluyor? Hiçbir şey kaydolmaması lazım.\"",
+    "conditions": "Deletes away-ends-only-on-his-word-2026-11-17 and the 98 % / quota rules of warm-stays-warm-until-the-quota-is-spent-2026-11-24 except the spent quota.",
+    "session": "Opus 5.5 session 61ff4cdb, heard first-hand, 2026-11-24.",
+    "where": ".claude/skills/dxb-warm-wait/SKILL.md; scripts/ops/dxb-warm-wait; scripts/ops/dxb-away-gate.py"
   }
 }
