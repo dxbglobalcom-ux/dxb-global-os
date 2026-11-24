@@ -264,6 +264,26 @@ The test hand's readings, read and accepted by the lead (2026-11-24). 114 cases 
     privilege; a new function of the installer's has the stored ACL `postgres=X/postgres` — its global default
     takes PUBLIC's execute away — so it has no `=X` line.
 
+## 6b. What the code settled (read and accepted by the lead)
+
+1. A catalogue with an `oid` column is read as an object of it; the others by the readings §4.2 names; a catalogue
+   with neither fails the call. `pg_replication_origin` is `replication origin <quote_ident(roname)>`, always `out`.
+2. **Every `aclitem[]` column is the row's ACL** — lines, and out of the digest: `attacl`, `defaclacl` and
+   `pg_init_privs.initprivs` too, these three as stored. A large object's ACL is effective (`acldefault('L', …)`).
+3. What a row belongs to is `schemaOf` — the snapshot's `placeOf` with §4.1's table on top (an enum label where its
+   type is, an operator family's member where its family is, a default-privilege row in its schema; a large object,
+   a publication's member and a user mapping in none); `in`/`out` is decided in `markOf` alone, and a place that
+   cannot be decided is `out`. `placeOf` itself is unchanged: the snapshot asks it of other kinds.
+4. A `pg_depend` row with a toast relation or a temporary schema at either end has no line; `pg_inherits` and
+   `pg_ts_config_map` spell their relations and configuration as `<type> <identity>`.
+5. The digests: a catalogue row's is the SHA-256 of `array[<name>, <value as text>, …]::text` in column order; a
+   table's is of `<count> <each row's own SHA-256, sorted under "C", joined by a space>`, each row `(t.*)::text`;
+   a sequence's of `<last_value> <t|f>`. In `setconfig` the items keep their order.
+6. `--check` judges the expected file's line kinds too: a line of no kind is `expected-malformed`.
+7. The snapshot's own code moved in three places and prints what it printed (its 107 cases are green): the dotted
+   setting's rule is one function both readers use (`settingSaid`), the effective ACL of a catalogue's row is asked
+   of the snapshot's holders (`effectiveAclOf`), and `redLines` takes the verdict's word.
+
 ## 7. The lock, and the real chain's own proof **[lead]**
 
 The tests and the three expected texts go in with piece 6's lock made again over three directories —
