@@ -217,8 +217,9 @@ the hand.
 
 **B — on a fresh instance, one ordered module.**
 1. An inventory obeys its form; its `read` and `left-out` lines name every relation of kind `r` in `pg_catalog`,
-   asked of the server by the test itself; no line holds `pg_toast`, `pg_temp_` or `RI_ConstraintTrigger`; read
-   twice with nothing between, the two are the same bytes.
+   asked of the server by the test itself; no line holds `pg_toast.`, `pg_toast_<digits>`, `pg_temp_` or
+   `RI_ConstraintTrigger` (the schema `pg_toast` itself is a row like any schema); read twice with nothing
+   between, the two are the same bytes.
 2. The inventory of the fresh instance is kept aside. `chain up` on the real chain → `outside --before --check
    expected/real.outside.txt` is `OUTSIDE_EQUAL lines=1`.
 3. `chain up --root` the fixture chain → `expected/fixture.outside.txt` is equal: every line `0004` causes, and
@@ -237,7 +238,31 @@ the hand.
 
 ## 6a. What the tests pinned beyond §6
 
-*(the test hand's readings, read and accepted by the lead — written when the tests are signed)*
+The test hand's readings, read and accepted by the lead (2026-11-24). 114 cases without the bench, 14 ordered steps.
+
+1. An internal trigger's constraint is spelled `<type> <identity>` and its function as `regprocedure` prints it
+   under the empty `search_path`: `internal trigger on snap_elsewhere.linked of table constraint linked_probe_fkey
+   on snap_elsewhere.linked calling "RI_FKey_check_ins"()`.
+2. A membership's identity is the server's own (`role membership membership of role postgres in role further_role`);
+   a setting's is `setting for authenticated in *`, with no type word before it.
+3. Both `pg_depend` rows of a publication's relation are `out`: their dependent object stands in no schema.
+4. `outsideOf` throws also on a line of no named kind and on a mark that is neither `in` nor `out`.
+5. `inventory` with no instance standing prints nothing on stdout and does not exit 0 (the failure is thrown on,
+   as the snapshot's is).
+6. Before the chain a fresh instance has no line marked `in`; `os_chain.ledger` has no `held` line.
+7. **A change to what the build itself made is not seen against the fresh inventory** — its key stood only after
+   already — so each act of B.6 is checked twice, whole: against an inventory kept after the build (where nothing
+   is expected) and against the fresh one (where `further.outside.txt` is). `disable trigger all` is red only
+   against the first.
+8. B.6's acts: the installer is refused `disable trigger all` on a table with a foreign key (a system trigger), so
+   the bench's superuser does it, and gives and takes away the password — of `anon`, which has none on a fresh
+   instance; the row goes into `realtime.schema_migrations` and is deleted again.
+9. B.7: the dotted setting is set on the fixture's own role; the made-and-undone file is written by the case into
+   a temporary root.
+10. The expected texts were corrected at the catalogue twice before they were signed: the installer's default
+    privileges in `public` give `anon`, `authenticated` and `service_role` `Dxtm` on a new table, not every
+    privilege; a new function of the installer's has the stored ACL `postgres=X/postgres` — its global default
+    takes PUBLIC's execute away — so it has no `=X` line.
 
 ## 7. The lock, and the real chain's own proof **[lead]**
 
