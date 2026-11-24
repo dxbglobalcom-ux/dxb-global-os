@@ -10,14 +10,19 @@ export const INVENTORY_FIRST_LINE = "inventory-format 1";
 export const OUTSIDE_FIRST_LINE = "outside-format 1";
 
 /**
- * An inventory's line as `outsideOf` takes it: `counted` — `read` and `left-out`, which are not compared; `keyed` — a
- * `row` or `held` line, by its key and with its digest; `whole` — an `owner` or `acl` line, as a whole without its mark.
+ * An inventory's line as it is judged and as `outsideOf` takes it: `read` — a catalogue and the number of its rows, and
+ * `left-out`, neither compared; `keyed` — a `row` line, of its catalogue, or a `held` line, of none, by its key and
+ * with its digest; `whole` — an `owner` or `acl` line, as a whole without its mark.
  */
-type InventoryLine = { kind: "counted" } | { kind: "keyed"; mark: string; key: string; digest: string } | { kind: "whole"; mark: string; line: string };
+type InventoryLine =
+  | { kind: "read"; catalogue: string; count: number }
+  | { kind: "left-out" }
+  | { kind: "keyed"; mark: string; key: string; digest: string; catalogue?: string }
+  | { kind: "whole"; mark: string; line: string };
 
 // §4.2's lines, each read whole as it was before its escapes: a name, an identity and a relation may hold a space or
 // a newline, a catalogue's name and a digest do not.
-const READ = /^read \S+ (?:0|[1-9]\d*)$/;
+const READ = /^read (\S+) (0|[1-9]\d*)$/;
 const LEFT_OUT = /^left-out \S+$/;
 const ROW = /^row (in|out) (\S+) ([0-9a-f]{64}) ([\s\S]+)$/;
 const HELD = /^held (out) (rows|position) ([0-9a-f]{64}) ([\s\S]+)$/;
@@ -26,9 +31,11 @@ const ACL = /^acl (in|out) (\S+ [\s\S]+ has [\s\S]+)$/;
 
 /** An inventory's line, read as one of §4.2's kinds; nothing when it is of none. */
 function inventoryLineOf(raw: string): InventoryLine | undefined {
-  if (READ.test(raw) || LEFT_OUT.test(raw)) return { kind: "counted" };
+  const read = READ.exec(raw);
+  if (read !== null) return { kind: "read", catalogue: read[1] ?? "", count: Number(read[2]) };
+  if (LEFT_OUT.test(raw)) return { kind: "left-out" };
   const row = ROW.exec(raw);
-  if (row !== null) return { kind: "keyed", mark: row[1] ?? "", key: `row ${row[2] ?? ""} ${row[4] ?? ""}`, digest: row[3] ?? "" };
+  if (row !== null) return { kind: "keyed", mark: row[1] ?? "", key: `row ${row[2] ?? ""} ${row[4] ?? ""}`, digest: row[3] ?? "", catalogue: row[2] ?? "" };
   const held = HELD.exec(raw);
   if (held !== null) return { kind: "keyed", mark: held[1] ?? "", key: `held ${held[2] ?? ""} ${held[4] ?? ""}`, digest: held[3] ?? "" };
   for (const [word, shape] of [["owner", OWNER], ["acl", ACL]] as const) {
@@ -58,7 +65,28 @@ function rawLinesOf(first: string, text: string): string[] | undefined {
   return raw;
 }
 
-/** An inventory's lines read, or nothing when the text is not an inventory's spelling (§4.2). */
+/**
+ * Whether the lines are a whole reading (§4.3, §10.1 row 4): at least one `read` line, each catalogue read once, each
+ * `read <catalogue> <n>` counting exactly the `row` lines of that catalogue — `in` and `out` alike (§10.3.1) — and no
+ * `row` line of a catalogue with no `read` line. So a text cut short at a line's end is no inventory, never rows gone.
+ */
+function isWhole(lines: readonly InventoryLine[]): boolean {
+  const said = new Map<string, number>();
+  const rows = new Map<string, number>();
+  for (const line of lines) {
+    if (line.kind === "read") {
+      if (said.has(line.catalogue)) return false;
+      said.set(line.catalogue, line.count);
+    } else if (line.kind === "keyed" && line.catalogue !== undefined) {
+      rows.set(line.catalogue, (rows.get(line.catalogue) ?? 0) + 1);
+    }
+  }
+  if (said.size === 0) return false;
+  for (const [catalogue, count] of said) if ((rows.get(catalogue) ?? 0) !== count) return false;
+  return [...rows.keys()].every((catalogue) => said.has(catalogue));
+}
+
+/** An inventory's lines read, or nothing when the text is not an inventory's spelling (§4.2) or is not whole (§4.3). */
 function inventoryLinesOf(text: string): InventoryLine[] | undefined {
   const raw = rawLinesOf(INVENTORY_FIRST_LINE, text);
   if (raw === undefined) return undefined;
@@ -68,10 +96,13 @@ function inventoryLinesOf(text: string): InventoryLine[] | undefined {
     if (line === undefined) return undefined;
     lines.push(line);
   }
-  return lines;
+  return isWhole(lines) ? lines : undefined;
 }
 
-/** Whether `text` is an inventory's spelling (§4.2): of the form under its first line, every other line of a kind §4.2 names. */
+/**
+ * Whether `text` is an inventory's spelling (§4.2, §4.3): of the form under its first line, every other line of a
+ * kind §4.2 names, and whole. The one judgement of `outsideOf` and of the command's `before-malformed`.
+ */
 export const isAnInventory = (text: string): boolean => inventoryLinesOf(text) !== undefined;
 
 /** Whether `text` is an outside text's spelling (§4.3): of the form under its first line, every other line of a kind §4.3 names. */
@@ -89,7 +120,7 @@ function outLinesOf(text: string, which: string): OutLines {
   if (lines === undefined) throw new Error(`outsideOf: the ${which} text is not an inventory's spelling`);
   const out: OutLines = { keyed: new Map(), whole: new Map() };
   for (const line of lines) {
-    if (line.kind === "counted" || line.mark !== "out") continue;
+    if (line.kind === "read" || line.kind === "left-out" || line.mark !== "out") continue;
     if (line.kind === "whole") {
       out.whole.set(line.line, (out.whole.get(line.line) ?? 0) + 1);
       continue;

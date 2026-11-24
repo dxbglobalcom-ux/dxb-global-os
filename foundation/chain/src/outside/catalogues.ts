@@ -5,7 +5,7 @@ import type { Client } from "pg";
 import { effectiveAclOf } from "../snapshot/grants.ts";
 import { inATemporarySchema, role, settingSaid } from "../snapshot/sql.ts";
 import type { Covered } from "../snapshot/sql.ts";
-import { aToastPart, identityOf, markOf, schemaOf, theCatalogue } from "./sql.ts";
+import { aToastPart, identityOf, markOf, rowsReadOf, schemaOf, theCatalogue } from "./sql.ts";
 
 /** §4.1's five, left out by name, each with its reason there: the only list of catalogues not read. */
 const LEFT_OUT = new Set(["pg_largeobject", "pg_shdepend", "pg_statistic", "pg_statistic_ext_data", "pg_subscription_rel"]);
@@ -39,12 +39,12 @@ const MOVING_COLUMNS = new Set([
 
 /**
  * SPEC §4.2's secrets rule, by `<catalogue>.<column>`: what a column enters the digest as, said in the statement so
- * that the value never leaves the server. A password only as a SCRAM verifier — its own salt is in it —, otherwise
- * `<set>` or nothing; a dotted setting's value `<hidden>`, as the snapshot says it; options and a connection `<set>`.
+ * that the value never leaves the server. A dotted setting's value `<hidden>`, as the snapshot says it; options and a
+ * connection `<set>` or nothing. A password enters as itself: it is a SCRAM verifier — its own salt is in it — or
+ * none, since a password stored in any other form has failed the call before the first catalogue is read
+ * (`PASSWORDS_OF_ANOTHER_FORM`).
  */
 const SAID_INSTEAD: ReadonlyMap<string, string> = new Map([
-  ["pg_authid.rolpassword", `case when o.rolpassword is null then null
-        when pg_catalog.starts_with(o.rolpassword, 'SCRAM-SHA-256$') then o.rolpassword else '<set>' end`],
   ["pg_db_role_setting.setconfig", `case when o.setconfig is null then null else array(
         select ${settingSaid("setting.item")} from pg_catalog.unnest(o.setconfig) with ordinality setting (item, n) order by setting.n)::pg_catalog.text end`],
   ["pg_user_mapping.umoptions", "case when o.umoptions is null then null else '<set>' end"],
@@ -55,57 +55,59 @@ const SAID_INSTEAD: ReadonlyMap<string, string> = new Map([
 type Thing = { classid: string; objid: string };
 
 /**
- * How a catalogue's row is read (SPEC §4.2): its identity, and the objects at its ends. The first is what the row
- * belongs to (§4.1's table) — what marks it; a toast relation or a temporary schema at any end keeps the row out. No
- * end: the row stands in no schema and speaks of no role — it is `out`.
+ * How a catalogue's row is read (SPEC §4.2): its identity; what it belongs to (§4.1's table) — what marks it —; and
+ * the other objects it names, `alsoNaming`. A toast relation or a temporary schema at any of them keeps the row out
+ * (§4.1). Belonging to nothing, the row stands in no schema and speaks of no role — it is `out`.
  */
-type Reading = { identity: string; ends: Thing[] };
+type Reading = { identity: string; belongsTo: Thing[]; alsoNaming?: Thing[] };
 
 const theOne = (catalogue: string, objid: string): Thing => ({ classid: theCatalogue(catalogue), objid });
 const identityOfThe = ({ classid, objid }: Thing): string => identityOf(classid, objid, "0");
 
 /** A row that is part of one object: its identity and its place are the object's. */
-const partOf = (object: Thing): Reading => ({ identity: identityOfThe(object), ends: [object] });
+const partOf = (object: Thing): Reading => ({ identity: identityOfThe(object), belongsTo: [object] });
 
 /** A row that speaks of an object by `classoid`, `objoid` and `subid`. */
-const speakingOf = (subid: string): Reading => ({ identity: identityOf("o.classoid", "o.objoid", subid), ends: [{ classid: "o.classoid", objid: "o.objoid" }] });
+const speakingOf = (subid: string): Reading => ({ identity: identityOf("o.classoid", "o.objoid", subid), belongsTo: [{ classid: "o.classoid", objid: "o.objoid" }] });
 
 /** The catalogues with no `oid` column, each given its reading by name (§4.2). One with an `oid` is read as an object. */
 const READINGS: Readonly<Record<string, Reading>> = {
   pg_aggregate: partOf(theOne("pg_proc", "o.aggfnoid")),
   // A column, a system column too, by its relation and number.
-  pg_attribute: { identity: identityOf(theCatalogue("pg_class"), "o.attrelid", "o.attnum"), ends: [theOne("pg_class", "o.attrelid")] },
+  pg_attribute: { identity: identityOf(theCatalogue("pg_class"), "o.attrelid", "o.attnum"), belongsTo: [theOne("pg_class", "o.attrelid")] },
   pg_db_role_setting: {
     identity: `'setting for ' || case when o.setrole = 0 then '*' else ${role("o.setrole")} end || ' in '
                || case when o.setdatabase = 0 then '*'
                        else (select pg_catalog.quote_ident(d.datname) from pg_catalog.pg_database d where d.oid = o.setdatabase) end`,
-    ends: [theOne("pg_authid", "o.setrole")],
+    belongsTo: [theOne("pg_authid", "o.setrole")],
   },
   pg_depend: {
     identity: `${identityOf("o.classid", "o.objid", "o.objsubid")} || ' -> ' || ${identityOf("o.refclassid", "o.refobjid", "o.refobjsubid")}
                || ' ' || o.deptype::pg_catalog.text`,
-    ends: [{ classid: "o.classid", objid: "o.objid" }, { classid: "o.refclassid", objid: "o.refobjid" }],
+    belongsTo: [{ classid: "o.classid", objid: "o.objid" }],
+    alsoNaming: [{ classid: "o.refclassid", objid: "o.refobjid" }],
   },
   pg_description: speakingOf("o.objsubid"),
   pg_foreign_table: partOf(theOne("pg_class", "o.ftrelid")),
   pg_index: partOf(theOne("pg_class", "o.indexrelid")),
+  // Both ends (§4.1, §10.1 row 1): a child of a table outside changes what that table answers.
   pg_inherits: {
     identity: `${identityOfThe(theOne("pg_class", "o.inhrelid"))} || ' inherits ' || ${identityOfThe(theOne("pg_class", "o.inhparent"))}
                || ' ' || o.inhseqno::pg_catalog.text`,
-    ends: [theOne("pg_class", "o.inhrelid")],
+    belongsTo: [theOne("pg_class", "o.inhrelid"), theOne("pg_class", "o.inhparent")],
   },
   pg_init_privs: speakingOf("o.objsubid"),
   pg_partitioned_table: partOf(theOne("pg_class", "o.partrelid")),
   pg_range: partOf(theOne("pg_type", "o.rngtypid")),
   // An origin stands in no schema and has no identity of the server's: its name is its own.
-  pg_replication_origin: { identity: "'replication origin ' || pg_catalog.quote_ident(o.roname)", ends: [] },
+  pg_replication_origin: { identity: "'replication origin ' || pg_catalog.quote_ident(o.roname)", belongsTo: [] },
   pg_seclabel: speakingOf("o.objsubid"),
   pg_sequence: partOf(theOne("pg_class", "o.seqrelid")),
   pg_shdescription: speakingOf("0"),
   pg_shseclabel: speakingOf("0"),
   pg_ts_config_map: {
     identity: `${identityOfThe(theOne("pg_ts_config", "o.mapcfg"))} || ' token ' || o.maptokentype::pg_catalog.text || ' ' || o.mapseqno::pg_catalog.text`,
-    ends: [theOne("pg_ts_config", "o.mapcfg")],
+    belongsTo: [theOne("pg_ts_config", "o.mapcfg")],
   },
 };
 
@@ -119,11 +121,17 @@ function readingOf({ name, literal, columns }: Catalogue): Reading | undefined {
 /** The ACL of a large object, which no holder of the snapshot's reads: stored, or its owner's default (SPEC §4.2). */
 const LARGE_OBJECT_ACL = "coalesce(o.lomacl, pg_catalog.acldefault('L', o.lomowner))";
 
+/** Every object a row names: what it belongs to first, in its order, then the others. */
+const namedBy = ({ belongsTo, alsoNaming = [] }: Reading): Thing[] => [...belongsTo, ...alsoNaming];
+
 /**
  * The statement that reads every row of `catalogue` (SPEC §4.2): its mark, its digest, its identity, its owner and
- * its ACL's items as the server prints an `aclitem`. Where each end stands is read once a row, `end_<n>.place`.
+ * its ACL's items as the server prints an `aclitem`. Where each object it names stands is read once a row,
+ * `end_<n>.place` — those it belongs to first, so that their places are the first `end_`s.
  */
-function statementOf({ name, spelled, columns }: Catalogue, { identity, ends }: Reading): string {
+function statementOf({ name, spelled, columns }: Catalogue, reading: Reading): string {
+  const { identity, belongsTo } = reading;
+  const ends = namedBy(reading);
   const owner = columns.find(({ column, type }) => (type === "oid" && column.endsWith("owner")) || (name === "pg_database" && column === "datdba"));
   const acl = columns.find(({ type }) => type === "aclitem[]");
   // Every column but the owner, the ACL, and what moves with no act, by name, as text.
@@ -131,11 +139,10 @@ function statementOf({ name, spelled, columns }: Catalogue, { identity, ends }: 
   const values = digested.map(({ column, ident, columnLiteral }) => `${columnLiteral}, ${SAID_INSTEAD.get(`${name}.${column}`) ?? `o.${ident}::pg_catalog.text`}`);
   const digest = `pg_catalog.encode(pg_catalog.sha256(pg_catalog.convert_to(array[${values.join(", ")}]::pg_catalog.text[]::pg_catalog.text, 'UTF8')), 'hex')`;
   const items = acl === undefined ? "'{}'::pg_catalog.aclitem[]" : ((name === "pg_largeobject_metadata" ? LARGE_OBJECT_ACL : effectiveAclOf(spelled)) ?? `o.${acl.ident}`);
-  const [first] = ends;
   const places = ends.map(({ classid, objid }, at) => `cross join lateral (select ${schemaOf(classid, objid)} as place) end_${at}`);
   const kept = ends.flatMap(({ classid, objid }, at) => [`not ${aToastPart(classid, objid)}`, `not ${inATemporarySchema(`end_${at}.place`)}`]);
   return `
-select ${first === undefined ? "'out'" : markOf(first.classid, first.objid, "end_0.place")} as mark, ${digest} as digest, ${identity} as identity,
+select ${markOf(belongsTo.map((object, at) => ({ ...object, place: `end_${at}.place` })))} as mark, ${digest} as digest, ${identity} as identity,
        ${owner === undefined ? "null" : role(`o.${owner.ident}`)} as owner,
        array(select item::pg_catalog.text from pg_catalog.unnest(${items}) item) as acl
   from ${spelled} o ${places.join(" ")}
@@ -144,7 +151,7 @@ select ${first === undefined ? "'out'" : markOf(first.classid, first.objid, "end
 
 /** Every catalogue of the server, with its columns. */
 async function cataloguesOf(conn: Client): Promise<Catalogue[]> {
-  const { rows } = await conn.query<Column & { name: string; spelled: string; literal: string }>(CATALOGUES);
+  const rows = await rowsReadOf<Column & { name: string; spelled: string; literal: string }>(conn, "pg_catalog.pg_class and its columns", CATALOGUES);
   const byName = new Map<string, Catalogue>();
   for (const { name, spelled, literal, ...column } of rows) {
     const catalogue = byName.get(name) ?? { name, spelled, literal, columns: [] };
@@ -152,6 +159,24 @@ async function cataloguesOf(conn: Client): Promise<Catalogue[]> {
     byName.set(name, catalogue);
   }
   return [...byName.values()];
+}
+
+// SPEC §4.2 (§10.1 row 2): the roles whose password is stored in another form than a SCRAM verifier — decided here, in
+// the database, so that no such value leaves the server, in a digest or in any other text. Only the roles are answered.
+const PASSWORDS_OF_ANOTHER_FORM = `
+select ${role("a.oid")} as role from pg_catalog.pg_authid a
+ where a.rolpassword is not null and not pg_catalog.starts_with(a.rolpassword, 'SCRAM-SHA-256$')
+ order by a.rolname::pg_catalog.text collate "C"`;
+
+/**
+ * SPEC §4.2: a password stored in another form than a SCRAM verifier fails the call, before any line is made. The
+ * failure names the role and says nothing of what is stored: a digest of it would be opened by a guess, and saying it
+ * as `<set>` would leave a change of it unseen (§10.1 row 2).
+ */
+async function refuseAPasswordOfAnotherForm(conn: Client): Promise<void> {
+  const rows = await rowsReadOf<{ role: string }>(conn, "pg_catalog.pg_authid", PASSWORDS_OF_ANOTHER_FORM);
+  if (rows.length === 0) return;
+  throw new Error(`the inventory: the password of ${rows.map(({ role: named }) => named).join(", ")} is stored in another form than a SCRAM verifier — the call fails (SPEC §4.2)`);
 }
 
 type Row = { mark: string; digest: string; identity: string | null; owner: string | null; acl: string[] };
@@ -162,6 +187,7 @@ type Row = { mark: string; digest: string; identity: string | null; owner: strin
  * the server identifies as null. Each line is appended alone, never spread into a call: the catalogue is ~35,000 rows.
  */
 export async function catalogueLines(conn: Client, { schemas, roles }: Covered): Promise<string[]> {
+  await refuseAPasswordOfAnotherForm(conn);
   const lines: string[] = [];
   for (const catalogue of await cataloguesOf(conn)) {
     const { name } = catalogue;
@@ -171,8 +197,8 @@ export async function catalogueLines(conn: Client, { schemas, roles }: Covered):
     }
     const reading = readingOf(catalogue);
     if (reading === undefined) throw new Error(`the inventory: the catalogue ${name} has no reading — a person decides how it is read`);
-    // The covered sets are the mark's alone: a row with no end names neither, and the server refuses a parameter it cannot type.
-    const { rows } = await conn.query<Row>(statementOf(catalogue, reading), reading.ends.length === 0 ? [] : [schemas, roles]);
+    // The covered sets are the mark's alone: a row that belongs to nothing names neither, and the server refuses a parameter it cannot type.
+    const rows = await rowsReadOf<Row>(conn, catalogue.spelled, statementOf(catalogue, reading), reading.belongsTo.length === 0 ? [] : [schemas, roles]);
     for (const { mark, digest, identity, owner, acl } of rows) {
       if (identity === null) throw new Error(`the inventory: a row of ${name} the server identifies as null`);
       lines.push(`row ${mark} ${name} ${digest} ${identity}`);

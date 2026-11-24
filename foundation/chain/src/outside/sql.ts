@@ -1,8 +1,10 @@
 // What the inventory's statements share (piece 6c's SPEC §4.1, §4.2): what a row belongs to — its schema and so its
-// mark —, how an object is identified, and which rows are a toast relation's. Each takes the object as a catalogue and
-// an oid, spelled in SQL by the caller; no catalogue value is spliced in here. `$1` is the covered schemas and `$2` the
-// chain's roles throughout, as the snapshot's own readers pass them. Aliases begin with the helper's name, so that none
-// hides a name of the statement it stands in.
+// mark —, how an object is identified, which rows are a toast relation's, and how a statement is sent. Each takes the
+// object as a catalogue and an oid, spelled in SQL by the caller; no catalogue value is spliced in here. `$1` is the
+// covered schemas and `$2` the chain's roles throughout, as the snapshot's own readers pass them. Aliases begin with
+// the helper's name, so that none hides a name of the statement it stands in.
+import { DatabaseError } from "pg";
+import type { Client, QueryResultRow } from "pg";
 import { placeOf } from "../snapshot/sql.ts";
 
 /** A catalogue of the server as a `regclass` in SQL — the catalogues this file names itself. */
@@ -49,20 +51,47 @@ export const schemaOf = (classid: string, objid: string): string => `case ${clas
   when ${theCatalogue("pg_user_mapping")} then null
   else ${placeOf(classid, objid)} end`;
 
+/** An object a row belongs to (SPEC §4.1's table): its catalogue and oid, and the schema it stands in, all in SQL. */
+export type Belonging = { classid: string; objid: string; place: string };
+
 /**
- * SPEC §4.1, in the one place it is decided: `in` when what a row belongs to — the object `classid`/`objid`, standing
- * in the schema `place` — is in a covered schema or is one of the chain's roles: a role by itself, a membership when
- * either of its roles is, a default-privilege row when its role is or its schema is covered. Anything else, and
- * anything whose place cannot be decided (null), is `out` — never dropped.
+ * Whether one object is inside: in a covered schema or one of the chain's roles — a role by itself, a membership when
+ * either of its roles is, a default-privilege row when its role is or its schema is covered. A place that cannot be
+ * decided (null) is not inside.
  */
-export const markOf = (classid: string, objid: string, place: string): string => `case when coalesce(case ${classid}
+const inside = ({ classid, objid, place }: Belonging): string => `coalesce(case ${classid}
     when ${theCatalogue("pg_authid")} then ${objid} = any ($2::pg_catalog.oid[])
     when ${theCatalogue("pg_auth_members")} then exists (
       select 1 from pg_catalog.pg_auth_members mark_m
        where mark_m.oid = ${objid} and (mark_m.roleid = any ($2::pg_catalog.oid[]) or mark_m.member = any ($2::pg_catalog.oid[])))
     when ${theCatalogue("pg_default_acl")} then ${place} = any ($1::pg_catalog.oid[]) or exists (
       select 1 from pg_catalog.pg_default_acl mark_d where mark_d.oid = ${objid} and mark_d.defaclrole = any ($2::pg_catalog.oid[]))
-    else ${place} = any ($1::pg_catalog.oid[]) end, false) then 'in' else 'out' end`;
+    else ${place} = any ($1::pg_catalog.oid[]) end, false)`;
+
+/**
+ * SPEC §4.1, in the one place it is decided: `in` when every object the row belongs to is inside — one for most rows,
+ * the child and the parent both for `pg_inherits` (§10.1 row 1: a table of `os` made a child of a table outside
+ * changes what that table answers). A row that belongs to nothing — it stands in no schema and speaks of no role —,
+ * and anything whose place cannot be decided, is `out`: never dropped. Each object is read with `$1` and `$2`.
+ */
+export const markOf = (belongsTo: readonly Belonging[]): string =>
+  belongsTo.length === 0 ? "'out'" : `case when ${belongsTo.map(inside).join(" and ")} then 'in' else 'out' end`;
+
+/**
+ * The rows `sql` answers, read for the inventory (SPEC §4.2: a read the server refuses fails the call). The server's
+ * refusal is thrown as the inventory's own failure — the relation that was being read, `what`, and the SQLSTATE —, and
+ * nothing of the server's message, detail, hint or where, any of which can carry a row's value (§10.1 row 5); the
+ * refusal is not kept as a cause either, since a cause is printed with its error. Every statement of the inventory
+ * is sent here.
+ */
+export async function rowsReadOf<Row extends QueryResultRow>(conn: Client, what: string, sql: string, values: unknown[] = []): Promise<Row[]> {
+  try {
+    return (await conn.query<Row>(sql, values)).rows;
+  } catch (failure) {
+    if (failure instanceof DatabaseError) throw new Error(`the inventory: the server refused the read of ${what} (SQLSTATE ${failure.code ?? "-"})`);
+    throw failure;
+  }
+}
 
 /**
  * Whether the object is a toast relation or a toast relation's index — the relation's columns are rows of that
