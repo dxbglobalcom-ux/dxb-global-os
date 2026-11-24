@@ -352,6 +352,17 @@ what the piece is for; there is no second round.
   are a multiset under it); a security label's provider is not in its identity (no provider on the bench);
   `VACUUM FULL` and `CLUSTER` between two readings (`relfilenode` is out of the digest; not run).
 
+### 10.3 What the corrections' cases pinned (read and accepted by the lead)
+
+1. A `read` line counts the `in` and the `out` rows of its catalogue alike. The first line alone is no longer an
+   inventory; the smallest whole one holds one `read` line with 0.
+2. The md5-form password: `inventory` and `outside` both fail — not exit 0, nothing on stdout, the role named,
+   neither the value nor `md5` followed by hex in what is said; `inventoryOf` rejects the same way.
+3. The cast: the update needs `replica identity full` on the table first (it stands in the platform's publication,
+   which publishes updates); the case shows that `(t.*)::text` prints the owner's constant before and after.
+4. The child of a table outside is one line against the inventory kept after the build and against the fresh one.
+5. The five catalogues counted by the test's own queries were the server's numbers before any correction.
+
 ## 8. Done when
 
 The tests are committed with the lock alone and seen red for the right reason; the code is committed apart;
