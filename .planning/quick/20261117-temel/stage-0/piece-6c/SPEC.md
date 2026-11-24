@@ -309,6 +309,48 @@ gets a schema `os_owner` owns, where it is `in`.
 of the fresh instance is kept before `chain up --root <the chain at from.txt>`; after the upgrade
 `outside --before … --check real.outside.txt` is `OUTSIDE_EQUAL` beside `SNAPSHOT_EQUAL` and `ROWS_KEPT`.
 
+## 8. Done when
+
+The tests are committed with the lock alone and seen red for the right reason; the code is committed apart;
+`pnpm -s foundation:typecheck` is 0; `foundation/tests/outside` is green and the suites of pieces 3–6b are green,
+untouched; `pnpm foundation:verify --all --rev HEAD` says `LOCK_GREEN` for pieces 1–6; the lead has run §7's proof
+on the real chain and kept its output; one blind audit pass by GPT-6.2 Sol is weighed and its corrections taken
+tests-first; BUILD.md's piece 6 carries the Done note of 6c.
+
+## 9. Known limits, said before the build (and after the audit — §10)
+
+- **A line says that and where, not what** (§7; the audit's A1). The inventory holds a digest; the committed text
+  holds none — so `changed row`, `added row` and `changed held` each stand for whatever was done to that thing: a
+  second row written into a table whose line is expected, another body for a function whose line is expected, pass
+  under the line. Only `owner` and `acl` lines say the whole of what they are. An empty text hides nothing — and
+  the real chain's is empty; what a line costs is said in §7.
+- **A line that names a day:** a row written into one of the platform's date-named partitions gives
+  `changed held rows realtime.messages_<date>` — a text that is red on another day, never green over a change
+  (A4). A file of the chain does not write there; a piece that must decides that line's spelling first.
+- **What leaves no state is not seen:** a notification sent at commit, an advisory lock, a prepared transaction,
+  a replication slot, a replication origin's progress, a subscription's skipped position (`pg_lsn`) and which
+  tables a subscription holds (`pg_subscription_rel`) — none stands in a catalogue row that is read (B2, C1).
+- **An inventory's digests are plain SHA-256** of rows the reader may read: a short unknown value among known
+  ones could be guessed from one (A6). So an inventory stays where the bench's own login file stays — the
+  operator's machine, a temporary file, never committed, never shown — and **no inventory is taken of a database
+  that holds the company's secrets until stage 5 has decided a keyed digest**.
+- A role named `os_…` that stood before the chain is read as the chain's (A3): the fresh instance must hold no
+  line marked `in` — pinned on the bench by B.1, checked by §7's run, owed by the bench command (13) and stage 5.
+- **Net effect only:** what a build does and undoes between the two readings leaves no line.
+- **One instance, moments apart.** Two inventories of different instances are not compared (their oids differ);
+  what the platform itself does between the readings would be read as the build's — on an idle instance it does
+  nothing, measured over nine minutes and across midnight (§3 facts 1 and 8).
+- **Not read:** another database of the server; the server's files (`alter system` is refused to the installer —
+  fact 6); a large object's bytes; statistics; a toast relation and its options; a subscription's state; the rows
+  of a materialized view or a foreign table; the value of a dotted setting, of a user mapping's options and of a
+  subscription's connection — their presence is.
+- **A large object's identity is its oid:** a file that makes one gives a line that differs between instances.
+- **`held` lines say that a table's rows or a sequence's place differ, not which.** They are read by a session
+  that may read every table (fact 2); under a role that may not, the call fails — stage 5 decides its own reading.
+- The instrument is the bench's: it reads every table whole. It is not a monitor for a live database.
+- Kinds the bench holds no row of (foreign-data wrappers, servers, user mappings, subscriptions, transforms,
+  security labels, extended statistics) have their rule in §4 and no case.
+
 ## 10. The blind audit and its corrections (GPT-6.2 Sol, xhigh, one pass, 2026-11-24 — `SOL.md`; the lead's weighing)
 
 Verdict: REFUTED — 8 blocking (A1–A8), 6 must-fix (B1–B6), one older (C1). It found the real chain's proof sound
@@ -362,45 +404,3 @@ what the piece is for; there is no second round.
    which publishes updates); the case shows that `(t.*)::text` prints the owner's constant before and after.
 4. The child of a table outside is one line against the inventory kept after the build and against the fresh one.
 5. The five catalogues counted by the test's own queries were the server's numbers before any correction.
-
-## 8. Done when
-
-The tests are committed with the lock alone and seen red for the right reason; the code is committed apart;
-`pnpm -s foundation:typecheck` is 0; `foundation/tests/outside` is green and the suites of pieces 3–6b are green,
-untouched; `pnpm foundation:verify --all --rev HEAD` says `LOCK_GREEN` for pieces 1–6; the lead has run §7's proof
-on the real chain and kept its output; one blind audit pass by GPT-6.2 Sol is weighed and its corrections taken
-tests-first; BUILD.md's piece 6 carries the Done note of 6c.
-
-## 9. Known limits, said before the build (and after the audit — §10)
-
-- **A line says that and where, not what** (§7; the audit's A1). The inventory holds a digest; the committed text
-  holds none — so `changed row`, `added row` and `changed held` each stand for whatever was done to that thing: a
-  second row written into a table whose line is expected, another body for a function whose line is expected, pass
-  under the line. Only `owner` and `acl` lines say the whole of what they are. An empty text hides nothing — and
-  the real chain's is empty; what a line costs is said in §7.
-- **A line that names a day:** a row written into one of the platform's date-named partitions gives
-  `changed held rows realtime.messages_<date>` — a text that is red on another day, never green over a change
-  (A4). A file of the chain does not write there; a piece that must decides that line's spelling first.
-- **What leaves no state is not seen:** a notification sent at commit, an advisory lock, a prepared transaction,
-  a replication slot, a replication origin's progress, a subscription's skipped position (`pg_lsn`) and which
-  tables a subscription holds (`pg_subscription_rel`) — none stands in a catalogue row that is read (B2, C1).
-- **An inventory's digests are plain SHA-256** of rows the reader may read: a short unknown value among known
-  ones could be guessed from one (A6). So an inventory stays where the bench's own login file stays — the
-  operator's machine, a temporary file, never committed, never shown — and **no inventory is taken of a database
-  that holds the company's secrets until stage 5 has decided a keyed digest**.
-- A role named `os_…` that stood before the chain is read as the chain's (A3): the fresh instance must hold no
-  line marked `in` — pinned on the bench by B.1, checked by §7's run, owed by the bench command (13) and stage 5.
-- **Net effect only:** what a build does and undoes between the two readings leaves no line.
-- **One instance, moments apart.** Two inventories of different instances are not compared (their oids differ);
-  what the platform itself does between the readings would be read as the build's — on an idle instance it does
-  nothing, measured over nine minutes and across midnight (§3 facts 1 and 8).
-- **Not read:** another database of the server; the server's files (`alter system` is refused to the installer —
-  fact 6); a large object's bytes; statistics; a toast relation and its options; a subscription's state; the rows
-  of a materialized view or a foreign table; the value of a dotted setting, of a user mapping's options and of a
-  subscription's connection — their presence is.
-- **A large object's identity is its oid:** a file that makes one gives a line that differs between instances.
-- **`held` lines say that a table's rows or a sequence's place differ, not which.** They are read by a session
-  that may read every table (fact 2); under a role that may not, the call fails — stage 5 decides its own reading.
-- The instrument is the bench's: it reads every table whole. It is not a monitor for a live database.
-- Kinds the bench holds no row of (foreign-data wrappers, servers, user mappings, subscriptions, transforms,
-  security labels, extended statistics) have their rule in §4 and no case.

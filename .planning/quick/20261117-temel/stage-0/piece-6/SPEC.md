@@ -313,7 +313,7 @@ runner stays what piece 3's lock judges, and a red check after a green chain mus
 
 - **What a build changes outside the text's reach is not seen here** — a comment on a platform object, a
   publication, an event trigger, a grant to PUBLIC or to a platform role on a platform object, a role not named
-  `os_…`, a schema the installer owns (fact 8). It is 6c's proof (what was left for 6b was cut once more — `piece-6b/SPEC.md`), and until 6c stands "every change the chain makes
+  `os_…`, a schema the installer owns (fact 8). It is 6c's proof (`piece-6c/SPEC.md`, standing since 2026-11-24), and without it "every change the chain makes
   to an object outside `os`" is true only of what names a chain role.
 - **The text names the bench's installer and platform roles** (`postgres`, `supabase_admin`). The company's
   installing role is stage 5's, and the expected text for that database is decided there.

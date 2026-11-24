@@ -347,6 +347,40 @@ about 55 %, past the 45 % a piece is cut for — the audit's corrections were th
 two test hands and two code hands at high, about 0.94M tokens; Sol 0.19M, about 11 minutes; a `verify --all` about
 12 minutes.*
 
+*6c done 2026-11-24 (`piece-6c/SPEC.md`, its audit `SOL.md` and evidence beside it) — piece 6 is whole: **the
+inventory** — `inventoryOf(target)`, read as the snapshot is: a line for every row of every catalogue of the server
+but five named ones (statistics, a large object's bytes, a subscription's state, `pg_shdepend`), the owner and each
+effective ACL item of whatever has one, and a digest of what every table and sequence outside the covered schemas
+holds, each line marked `in` or `out` by the snapshot's own two sets; **the outside text** — the pure
+`outsideOf(before, after)`: what differs among the `out` lines of two inventories of one instance, with no digest and
+no oid, so that a hand can write it; `pnpm foundation:chain inventory` and `outside --before <file> [--check <file>]`
+(`OUTSIDE_EQUAL` or every differing line). **Proven:** a build of the real chain from nothing changes nothing
+outside `os` (`foundation/tests/outside/expected/real.outside.txt` is its first line alone); the fixture chain
+changes exactly what its hand-written text says and nothing it makes in `os` is a line; an upgrade that changes
+only `os` adds no line; an act the text does not hold — a comment, a grant, a password, a silenced foreign key, a
+row in a platform table — turns the check red and names its line, and undone it is equal again. 159 cases in piece
+6's lock, now over three directories (427 with 6a's and 6b's). **Measured first:** an idle fresh instance changes
+neither its catalogue nor a table's rows by itself, over nine minutes and across midnight UTC; the installer reads
+every catalogue and every table; and what it may do outside — among it, grant `select` on `auth.users` to `anon`
+(SPEC §3 fact 6), for piece 7's list. One blind pass by GPT-6.2 Sol at xhigh: REFUTED, 8 blocking and 6 must-fix —
+it found the real chain's proof sound as far as it reaches and the instrument able to pass over: a table of `os`
+made a child of a table outside, a password stored in another form than SCRAM, a cast the owner of a table put on
+its row type, an inventory cut short; seven corrections taken tests-first (SPEC §10.1), the rest named with reasons
+and in the limits (§10.2, §9). **The limit that stays, by design:** a line says that and where, not what — the text
+holds no digest — so **the piece that first changes anything outside `os` changes the locked case that holds the
+real text empty, in a lock commit, and adds for each line it accepts a case that reads that thing's final state**
+(SPEC §7); an object of the chain's outside `os` still gets a schema `os_owner` owns, where the snapshot reads it
+whole. **For piece 7:** the installer's reach outside as measured (fact 6). **For piece 9:** a row written into
+`realtime.messages` lands in a partition named for the day — a file of the chain does not write there. **For piece
+13:** the bench command keeps the fresh instance's inventory, refuses one that holds a line marked `in`, and runs
+`outside --check` on the real text after the build and after the real chain's upgrade, beside the snapshot's check
+and the rows' — as `piece-6c/evidence/real-upgrade-outside.sh` does by hand until then (run at the corrections'
+commit: equal twice, and red on one comment). **For stage 5:** no inventory is taken of the company's database
+before its digests are keyed (§9); a role named `os_…` that stood before the chain would be read as the chain's.
+Costs: one lead session, contract to records (Fable's own week 94 % → 96 %; the lead's context to about 52 %); on
+Opus 5.5 a measuring helper at medium and two test hands and two code hands at high, about 1.1M tokens; Sol 0.19M,
+about 10 minutes; a `verify --all` about 13 minutes.*
+
 **7 — the separation, measured on the foundation's bench.** By role class — the foundation's runtime logins, the old
 system's runtime roles, the platform's administrators, the installer — and by operation: read and write on every old
 table and sequence, execute on every old function, role membership and `SET ROLE`, in both directions. The lists are

@@ -273,7 +273,7 @@ corrections taken tests-first; BUILD.md's piece 6 carries the Done note of 6b an
 - **That *refused-when-populated* is green on an empty database is PostgreSQL's own rule read from the file's
   text, not run** — it would cost an instance. (That C's index is absent from a clean build is run — §6a.8.)
 - The real chain's upgrade is not under the lock (§7) and, until piece 13, is run by hand.
-- What a build changes outside the snapshot's reach is still unseen (6a §9's first limit) — 6c. Measured for it
+- What a build changes outside the snapshot's reach was unseen here (6a §9's first limit) — 6c's proof, standing since 2026-11-24 (`piece-6c/SPEC.md`). Measured for it
   already: a fresh instance of 2026-11-23 holds the platform's partitions `realtime.messages_2026_11_22` …
   `_26`, so two whole-catalogue readings are compared on one instance, moments apart, never across instances
   made on different days.
