@@ -3353,5 +3353,13 @@
     "conditions": "An exception for these sentences only; the ceiling is not raised for anything else by it.",
     "session": "Fable 5.2 session 7245408f, heard first-hand, 2026-11-23.",
     "where": ".claude/CLAUDE.md (THE PURPOSE); tests/hooks/opening-budget.ts (maxCore, maxTotal)"
+  },
+  "warm-stays-warm-until-the-quota-is-spent-2026-11-24": {
+    "date": "2026-11-24",
+    "what": "When he says a session stays warm, it stays warm: the warm-wait clock makes its ping until the quota is spent (100 %), no longer silent from 98 %. A wake that carries work on still needs room under 98 %.",
+    "verbatim": "\"Yani ben bir şeyde sıcak kalsın diyorsam sıcak kalsın. Bitti. Uyuyorum desem sıcak kalacak. İsterse bütün kota bitsin yani.\"",
+    "conditions": "The ping only. At 100 % the turn is refused and no ping can be made.",
+    "session": "Fable 5.2 session e1c89a1b, heard first-hand, 2026-11-24.",
+    "where": "scripts/ops/dxb-warm-wait (FULL_FOR_A_PING_PCT); .claude/skills/dxb-warm-wait/SKILL.md step 5; .planning/STATE.md"
   }
 }
