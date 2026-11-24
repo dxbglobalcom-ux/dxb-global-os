@@ -39,19 +39,20 @@
     "foundation/tests/chain/fixtures/refusal.ts": "5ebb6eaf5fe0c1d40837bd042f70388726f563b0",
     "foundation/tests/chain/fixtures/running.ts": "d8228cb810af51a841060986bb949bb07d032dfd",
     "foundation/tests/chain/fixtures/throwaway-database.ts": "57226327de683d5261f0b8ddbaf51e191f6ed109",
-    "foundation/tests/outside/cases/outside-of.ts": "9f01749e1bc635e03913f6b020fabc4a64bd7b5d",
+    "foundation/tests/outside/cases/after-the-audit.ts": "ced04b295d6cba9fd01cae96db3901c26a69cacf",
+    "foundation/tests/outside/cases/outside-of.ts": "4f0690c910a3442a36e9d00181731904b7c97fa2",
     "foundation/tests/outside/cases/pinned-limits.ts": "02eeb10640fdb3f58dbbd4486153a77090961160",
-    "foundation/tests/outside/cases/red-then-green.ts": "dace2df96ba38fc0ba29005dde0610ae9965d0c0",
-    "foundation/tests/outside/cases/refusals.ts": "da6682dd85890589c562dc6aae5d65c830d5b2c2",
-    "foundation/tests/outside/cases/the-build.ts": "d29f6221df41612c01115e04209ccd83f73f72c2",
-    "foundation/tests/outside/cases/the-texts.ts": "9963d93a6f61cfbca04b2cd0ae1333af00fe5de8",
+    "foundation/tests/outside/cases/red-then-green.ts": "689b6a0753195cce9e771e3829853aa0183b5d17",
+    "foundation/tests/outside/cases/refusals.ts": "e6daab11254d6ac1fff8997bd5da14d842181e45",
+    "foundation/tests/outside/cases/the-build.ts": "0e74e11099b09d19f33471766b936d7f3ad83df6",
+    "foundation/tests/outside/cases/the-texts.ts": "87551845adc7f17bbb789c1e2370eee33c745879",
     "foundation/tests/outside/expected/fixture.outside.txt": "9f68ffee841669cb405bdaef205dca43caae43e8",
     "foundation/tests/outside/expected/further.outside.txt": "b0c7a1807ee1ad9547708c5050dbb0e6931b4084",
     "foundation/tests/outside/expected/real.outside.txt": "358df9a0d57fdd5df031340e67fb4d913a228672",
     "foundation/tests/outside/fixtures/chain-further/schema/0006-further-outside.sql": "7118b10e36b9e1e459c4ad58cd70ba74f4a395b9",
-    "foundation/tests/outside/fixtures/the-outside-form.ts": "275b07c633df0d08cdec85a6ba944826d290a1ee",
+    "foundation/tests/outside/fixtures/the-outside-form.ts": "68256c2c6c969f0a02c5d3d8675e021edf806a6d",
     "foundation/tests/outside/fixtures/the-outside.ts": "adfc41ff694dfbc5d38251d6a29e45a129595e1e",
-    "foundation/tests/outside/on-a-fresh-instance.test.ts": "0f9c2253e453a89c3b17c6b149a3b7066a0998be",
+    "foundation/tests/outside/on-a-fresh-instance.test.ts": "be8b286104c1d290750d9593c8d3c91e91bf2272",
     "foundation/tests/outside/without-the-bench.test.ts": "903c1a493c4986d96c31c943ebc94bfce4737000",
     "foundation/tests/package.json": "bd4e193ba789b2552c5d2cc6d620ace556ae951e",
     "foundation/tests/roles/fixtures/bench-command.ts": "a523d09c16be78f71e517d0e9ca96520a338d070",
@@ -132,7 +133,7 @@
       "suite": [
         "piece 6c — what a build changes outside os, on a fresh instance, in order"
       ],
-      "name": "B.1 an inventory obeys its form; its read and left-out lines name every relation of kind r in pg_catalog; nothing is in before the chain; read twice, and by the library, the same bytes — kept aside",
+      "name": "B.1 an inventory obeys its form; its read and left-out lines name every relation of kind r in pg_catalog; five read lines are the test's own counts; nothing is in before the chain; read twice, and by the library, the same bytes — kept aside",
       "count": 1
     },
     {
@@ -165,6 +166,30 @@
         "piece 6c — what a build changes outside os, on a fresh instance, in order"
       ],
       "name": "B.5 chain up --root <B with 0006> → CHAIN_GREEN; --check expected/further.outside.txt → OUTSIDE_EQUAL; the built inventory kept aside, and against it nothing",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/on-a-fresh-instance.test.ts",
+      "suite": [
+        "piece 6c — what a build changes outside os, on a fresh instance, in order"
+      ],
+      "name": "B.6 (§10.1 row 1) a table of os made a child of a table outside (the superuser) → added row pg_inherits, out: the outside table now answers its child's rows; dropped → equal",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/on-a-fresh-instance.test.ts",
+      "suite": [
+        "piece 6c — what a build changes outside os, on a fresh instance, in order"
+      ],
+      "name": "B.6 (§10.1 row 2) a password in the md5 form on the fixture's own role (the superuser) → inventory and outside refused: not exit 0, nothing on stdout, further_role named, the value not; the library rejects; taken away → equal",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/on-a-fresh-instance.test.ts",
+      "suite": [
+        "piece 6c — what a build changes outside os, on a fresh instance, in order"
+      ],
+      "name": "B.6 (§10.1 row 3) a cast on a table's row type (the superuser): a row, a function answering one constant, the cast; an inventory kept aside; the row updated → changed held rows snap_elsewhere.linked; all undone → equal",
       "count": 1
     },
     {
@@ -292,6 +317,14 @@
       "suite": [
         "A outside refuses before any connection"
       ],
+      "name": "a before with a catalogue's rows with no read line, another's read line beside them → OUTSIDE_REFUSED before-malformed, exit 2",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A outside refuses before any connection"
+      ],
       "name": "a before with a first line missing → OUTSIDE_REFUSED before-malformed, exit 2",
       "count": 1
     },
@@ -309,6 +342,30 @@
         "A outside refuses before any connection"
       ],
       "name": "a before with a line out of order → OUTSIDE_REFUSED before-malformed, exit 2",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A outside refuses before any connection"
+      ],
+      "name": "a before with a read line that counts one row too few → OUTSIDE_REFUSED before-malformed, exit 2",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A outside refuses before any connection"
+      ],
+      "name": "a before with a read line that counts one row too many → OUTSIDE_REFUSED before-malformed, exit 2",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A outside refuses before any connection"
+      ],
+      "name": "a before with a read line that counts the out rows alone, beside an in row → OUTSIDE_REFUSED before-malformed, exit 2",
       "count": 1
     },
     {
@@ -348,6 +405,14 @@
       "suite": [
         "A outside refuses before any connection"
       ],
+      "name": "a before with cut short at a line's end: the last catalogue's row gone, its read line standing → OUTSIDE_REFUSED before-malformed, exit 2",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A outside refuses before any connection"
+      ],
       "name": "a before with no bytes at all → OUTSIDE_REFUSED before-malformed, exit 2",
       "count": 1
     },
@@ -364,7 +429,39 @@
       "suite": [
         "A outside refuses before any connection"
       ],
+      "name": "a before with no read line at all, a row line standing → OUTSIDE_REFUSED before-malformed, exit 2",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A outside refuses before any connection"
+      ],
+      "name": "a before with no read line at all, an owner, an acl and a held line standing → OUTSIDE_REFUSED before-malformed, exit 2",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A outside refuses before any connection"
+      ],
       "name": "a before with out of order by UTF-8 bytes, though in order by UTF-16 code units → OUTSIDE_REFUSED before-malformed, exit 2",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A outside refuses before any connection"
+      ],
+      "name": "a before with the auditor's: read pg_class 1 and no row line of pg_class → OUTSIDE_REFUSED before-malformed, exit 2",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A outside refuses before any connection"
+      ],
+      "name": "a before with the first line alone: no read line → OUTSIDE_REFUSED before-malformed, exit 2",
       "count": 1
     },
     {
@@ -476,6 +573,14 @@
       "suite": [
         "A outside refuses before any connection"
       ],
+      "name": "one catalogue read and no row is an inventory: no refusal, the refused connection",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A outside refuses before any connection"
+      ],
       "name": "the before is judged first: both absent → no-before; a malformed before beside an absent expected text → before-malformed",
       "count": 1
     },
@@ -490,9 +595,9 @@
     {
       "file": "foundation/tests/outside/without-the-bench.test.ts",
       "suite": [
-        "A outside refuses before any connection"
+        "A outsideOf(before, after), on inventories written by hand"
       ],
-      "name": "the first line alone is an inventory: no refusal, the refused connection",
+      "name": "a before that is not an inventory's spelling throws: a carriage return ending each line",
       "count": 1
     },
     {
@@ -500,7 +605,7 @@
       "suite": [
         "A outsideOf(before, after), on inventories written by hand"
       ],
-      "name": "a before that is not an inventory's spelling throws: a carriage return ending each line",
+      "name": "a before that is not an inventory's spelling throws: a catalogue's rows with no read line, another's read line beside them",
       "count": 1
     },
     {
@@ -525,6 +630,30 @@
         "A outsideOf(before, after), on inventories written by hand"
       ],
       "name": "a before that is not an inventory's spelling throws: a line out of order",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A outsideOf(before, after), on inventories written by hand"
+      ],
+      "name": "a before that is not an inventory's spelling throws: a read line that counts one row too few",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A outsideOf(before, after), on inventories written by hand"
+      ],
+      "name": "a before that is not an inventory's spelling throws: a read line that counts one row too many",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A outsideOf(before, after), on inventories written by hand"
+      ],
+      "name": "a before that is not an inventory's spelling throws: a read line that counts the out rows alone, beside an in row",
       "count": 1
     },
     {
@@ -572,6 +701,14 @@
       "suite": [
         "A outsideOf(before, after), on inventories written by hand"
       ],
+      "name": "a before that is not an inventory's spelling throws: cut short at a line's end: the last catalogue's row gone, its read line standing",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A outsideOf(before, after), on inventories written by hand"
+      ],
       "name": "a before that is not an inventory's spelling throws: no bytes at all",
       "count": 1
     },
@@ -588,7 +725,39 @@
       "suite": [
         "A outsideOf(before, after), on inventories written by hand"
       ],
+      "name": "a before that is not an inventory's spelling throws: no read line at all, a row line standing",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A outsideOf(before, after), on inventories written by hand"
+      ],
+      "name": "a before that is not an inventory's spelling throws: no read line at all, an owner, an acl and a held line standing",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A outsideOf(before, after), on inventories written by hand"
+      ],
       "name": "a before that is not an inventory's spelling throws: out of order by UTF-8 bytes, though in order by UTF-16 code units",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A outsideOf(before, after), on inventories written by hand"
+      ],
+      "name": "a before that is not an inventory's spelling throws: the auditor's: read pg_class 1 and no row line of pg_class",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A outsideOf(before, after), on inventories written by hand"
+      ],
+      "name": "a before that is not an inventory's spelling throws: the first line alone: no read line",
       "count": 1
     },
     {
@@ -700,6 +869,14 @@
       "suite": [
         "A outsideOf(before, after), on inventories written by hand"
       ],
+      "name": "an after that is not an inventory's spelling throws: a catalogue's rows with no read line, another's read line beside them",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A outsideOf(before, after), on inventories written by hand"
+      ],
       "name": "an after that is not an inventory's spelling throws: a first line missing",
       "count": 1
     },
@@ -717,6 +894,30 @@
         "A outsideOf(before, after), on inventories written by hand"
       ],
       "name": "an after that is not an inventory's spelling throws: a line out of order",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A outsideOf(before, after), on inventories written by hand"
+      ],
+      "name": "an after that is not an inventory's spelling throws: a read line that counts one row too few",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A outsideOf(before, after), on inventories written by hand"
+      ],
+      "name": "an after that is not an inventory's spelling throws: a read line that counts one row too many",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A outsideOf(before, after), on inventories written by hand"
+      ],
+      "name": "an after that is not an inventory's spelling throws: a read line that counts the out rows alone, beside an in row",
       "count": 1
     },
     {
@@ -764,6 +965,14 @@
       "suite": [
         "A outsideOf(before, after), on inventories written by hand"
       ],
+      "name": "an after that is not an inventory's spelling throws: cut short at a line's end: the last catalogue's row gone, its read line standing",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A outsideOf(before, after), on inventories written by hand"
+      ],
       "name": "an after that is not an inventory's spelling throws: no bytes at all",
       "count": 1
     },
@@ -780,7 +989,39 @@
       "suite": [
         "A outsideOf(before, after), on inventories written by hand"
       ],
+      "name": "an after that is not an inventory's spelling throws: no read line at all, a row line standing",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A outsideOf(before, after), on inventories written by hand"
+      ],
+      "name": "an after that is not an inventory's spelling throws: no read line at all, an owner, an acl and a held line standing",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A outsideOf(before, after), on inventories written by hand"
+      ],
       "name": "an after that is not an inventory's spelling throws: out of order by UTF-8 bytes, though in order by UTF-16 code units",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A outsideOf(before, after), on inventories written by hand"
+      ],
+      "name": "an after that is not an inventory's spelling throws: the auditor's: read pg_class 1 and no row line of pg_class",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A outsideOf(before, after), on inventories written by hand"
+      ],
+      "name": "an after that is not an inventory's spelling throws: the first line alone: no read line",
       "count": 1
     },
     {
@@ -860,7 +1101,7 @@
       "suite": [
         "A outsideOf(before, after), on inventories written by hand"
       ],
-      "name": "read and left-out lines are not compared",
+      "name": "read and left-out lines are not compared: other catalogues, another count (of in rows)",
       "count": 1
     },
     {
@@ -869,6 +1110,14 @@
         "A outsideOf(before, after), on inventories written by hand"
       ],
       "name": "sorted by UTF-8 bytes, not by UTF-16 code units",
+      "count": 1
+    },
+    {
+      "file": "foundation/tests/outside/without-the-bench.test.ts",
+      "suite": [
+        "A outsideOf(before, after), on inventories written by hand"
+      ],
+      "name": "the auditor's own pair: read pg_class 1 with no row line of pg_class, against read pg_class 0 — thrown either way",
       "count": 1
     },
     {
@@ -900,7 +1149,7 @@
       "suite": [
         "A outsideOf(before, after), on inventories written by hand"
       ],
-      "name": "two first lines alone → the first line alone",
+      "name": "two inventories that read one catalogue of no row → the first line alone",
       "count": 1
     },
     {

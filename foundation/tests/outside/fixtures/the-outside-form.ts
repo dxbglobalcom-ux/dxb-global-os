@@ -55,9 +55,38 @@ function formOffences(text: string, firstLine: string, kindOf: (line: string) =>
   return said;
 }
 
-/** Every way an inventory breaks §4.2's form and lines; none for one in the form. */
-export const inventoryOffencesOf = (text: string): string[] =>
-  formOffences(text, "inventory-format 1", (line) => line.slice(0, line.indexOf(" ")), INVENTORY_SHAPES);
+/**
+ * §4.3's "whole or none" (SPEC §10.1, row 4): each `read <catalogue> <n>` counts exactly the `row` lines of its
+ * catalogue, in and out alike; a `row` line has its catalogue's `read` line; a text with no `read` line is none.
+ * A catalogue read twice is said too: a reading names each catalogue once.
+ */
+function wholeOffences(text: string): string[] {
+  const said: string[] = [];
+  const read = new Map<string, number>();
+  const rows = new Map<string, number>();
+  for (const line of linesOfText(text).slice(1)) {
+    const words = line.split(" ");
+    if (words[0] === "read") {
+      const catalogue = words[1] ?? "";
+      if (read.has(catalogue)) said.push(`read ${catalogue} said twice`);
+      read.set(catalogue, Number(words[2]));
+    }
+    if (words[0] === "row") rows.set(words[2] ?? "", (rows.get(words[2] ?? "") ?? 0) + 1);
+  }
+  if (read.size === 0) said.push("no read line");
+  for (const [catalogue, count] of read) {
+    const held = rows.get(catalogue) ?? 0;
+    if (held !== count) said.push(`read ${catalogue} ${count} counts ${held} row lines`);
+  }
+  for (const [catalogue, held] of rows) if (!read.has(catalogue)) said.push(`${held} row lines of ${catalogue} have no read line`);
+  return said;
+}
+
+/** Every way an inventory breaks §4.2's form and lines, or is not whole (§4.3); none for one in the form. */
+export const inventoryOffencesOf = (text: string): string[] => [
+  ...formOffences(text, "inventory-format 1", (line) => line.slice(0, line.indexOf(" ")), INVENTORY_SHAPES),
+  ...wholeOffences(text),
+];
 
 /**
  * Every way an outside text breaks §4.3's form and lines; none for one in the form. Beside the shapes: no digest

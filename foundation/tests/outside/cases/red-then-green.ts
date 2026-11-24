@@ -14,14 +14,14 @@ import type { TheRun } from "./the-build.ts";
 // equal again.
 
 /** One value the installer reads. */
-const asked = (sql: string): Promise<unknown> => onTheInstance((client) => valueOf(client, sql));
+export const asked = (sql: string): Promise<unknown> => onTheInstance((client) => valueOf(client, sql));
 
 /**
  * The password a role is given here: a made-up word of this file's own, never read from anywhere. A statement that
  * holds it is sent as the superuser, and a refusal is said without it — no test prints a password.
  */
 const MADE_UP_WORD = "an-outside-act-word";
-async function asTheSuperuserSaying(sql: string, saidAs: string): Promise<void> {
+export async function asTheSuperuserSaying(sql: string, saidAs: string): Promise<void> {
   try {
     await asTheSuperuser(sql);
   } catch {
@@ -43,9 +43,9 @@ type Act = {
   undone?: () => Promise<void>;
 };
 
-const red = (count: number): string => `OUTSIDE_RED expected_only=0 database_only=${count}`;
+export const red = (count: number): string => `OUTSIDE_RED expected_only=0 database_only=${count}`;
 
-function anAct(step: Step, run: TheRun, name: string, { given, act, undo, againstTheBuilt, againstTheFresh, undone }: Act): void {
+export function anAct(step: Step, run: TheRun, name: string, { given, act, undo, againstTheBuilt, againstTheFresh, undone }: Act): void {
   step(name, 4 * COMMAND_MS, async () => {
     await given?.();
     await act();

@@ -4,6 +4,7 @@ import { removeTheChainRoots } from "../chain/fixtures/chain-on-disk.ts";
 import { orderedSteps } from "../bench/fixtures/ordered-steps.ts";
 import { command, tail } from "../bench/fixtures/real-bench.ts";
 import { DESTROY_MS, MAKE_MS } from "../roles/fixtures/the-run.ts";
+import { afterTheAudit } from "./cases/after-the-audit.ts";
 import { pinnedLimits } from "./cases/pinned-limits.ts";
 import { redThenGreen } from "./cases/red-then-green.ts";
 import { type TheRun, theBuild } from "./cases/the-build.ts";
@@ -36,6 +37,8 @@ describe("piece 6c — what a build changes outside os, on a fresh instance, in 
   theBuild(step, run);
   redThenGreen(step, run);
   pinnedLimits(step, run);
+  // The audit's corrections last (SPEC §10.1): every standing step has run before the first of them.
+  afterTheAudit(step, run);
 
   step("down → INSTANCE_DOWN", DESTROY_MS, async () => {
     const down = await command("down", DESTROY_MS - 5_000);

@@ -4,6 +4,7 @@ import { describe, expect, it } from "vitest";
 import { readInstances } from "@dxb-foundation/bench";
 import { chainCommand } from "../../chain/fixtures/command.ts";
 import { COMMAND_MS, EXPECTED_FURTHER, EXPECTED_REAL } from "../fixtures/the-outside.ts";
+import { WHOLE_OR_NONE } from "./outside-of.ts";
 
 // Piece 6c's SPEC §5 and §6 A: `outside` refuses a before or an expected text it cannot read, or that is not of its
 // spelling, before any connection — the before judged first; `inventory` and `outside` with any other words answer
@@ -24,18 +25,20 @@ const bytes = (text: string): Buffer => Buffer.from(text, "utf8");
 
 const BEFORE_MALFORMED: [string, Buffer][] = [
   ["no bytes at all", bytes("")],
-  ["a first line that is not inventory-format 1", bytes(`inventory-format 2\nrow out pg_namespace ${DIGEST} schema x\n`)],
+  ["a first line that is not inventory-format 1", bytes(`inventory-format 2\nread pg_namespace 1\nrow out pg_namespace ${DIGEST} schema x\n`)],
   ["an outside text, not an inventory", bytes("outside-format 1\nadded row pg_namespace schema x\n")],
   ["a snapshot's text, not an inventory", bytes("snapshot-format 1\nschema os owner os_owner\n")],
-  ["a first line missing", bytes(`row out pg_namespace ${DIGEST} schema x\n`)],
-  ["a line out of order", bytes(`inventory-format 1\nrow out pg_namespace ${DIGEST} schema y\nrow out pg_namespace ${DIGEST} schema x\n`)],
-  ["out of order by UTF-8 bytes, though in order by UTF-16 code units", bytes(`inventory-format 1\nrow out pg_namespace ${DIGEST} schema "\u{1F600}"\nrow out pg_namespace ${DIGEST} schema "！"\n`)],
-  ["a carriage return ending each line", bytes(`inventory-format 1\r\nrow out pg_namespace ${DIGEST} schema x\r\n`)],
-  ["no final newline", bytes(`inventory-format 1\nrow out pg_namespace ${DIGEST} schema x`)],
-  ["an empty line", bytes(`inventory-format 1\n\nrow out pg_namespace ${DIGEST} schema x\n`)],
-  ["an empty last line", bytes(`inventory-format 1\nrow out pg_namespace ${DIGEST} schema x\n\n`)],
+  ["a first line missing", bytes(`read pg_namespace 1\nrow out pg_namespace ${DIGEST} schema x\n`)],
+  ["a line out of order", bytes(`inventory-format 1\nread pg_namespace 2\nrow out pg_namespace ${DIGEST} schema y\nrow out pg_namespace ${DIGEST} schema x\n`)],
+  ["out of order by UTF-8 bytes, though in order by UTF-16 code units", bytes(`inventory-format 1\nread pg_namespace 2\nrow out pg_namespace ${DIGEST} schema "\u{1F600}"\nrow out pg_namespace ${DIGEST} schema "！"\n`)],
+  ["a carriage return ending each line", bytes(`inventory-format 1\r\nread pg_namespace 1\r\nrow out pg_namespace ${DIGEST} schema x\r\n`)],
+  ["no final newline", bytes(`inventory-format 1\nread pg_namespace 1\nrow out pg_namespace ${DIGEST} schema x`)],
+  ["an empty line", bytes(`inventory-format 1\n\nread pg_namespace 1\nrow out pg_namespace ${DIGEST} schema x\n`)],
+  ["an empty last line", bytes(`inventory-format 1\nread pg_namespace 1\nrow out pg_namespace ${DIGEST} schema x\n\n`)],
   ["a byte-order mark before the first line", Buffer.concat([Buffer.from([0xef, 0xbb, 0xbf]), bytes(AN_INVENTORY)])],
-  ["a byte that is never UTF-8 (0xff)", Buffer.concat([bytes(`inventory-format 1\nrow out pg_namespace ${DIGEST} schema "`), Buffer.from([0xff]), bytes('"\n')])],
+  ["a byte that is never UTF-8 (0xff)", Buffer.concat([bytes(`inventory-format 1\nread pg_namespace 1\nrow out pg_namespace ${DIGEST} schema "`), Buffer.from([0xff]), bytes('"\n')])],
+  // Whole or none (SPEC §4.3, §10.1 row 4): outside-of.ts's texts, cut short or miscounted — the first line alone among them.
+  ...WHOLE_OR_NONE.map(([what, text]): [string, Buffer] => [what, bytes(text)]),
 ];
 
 const EXPECTED_MALFORMED: [string, Buffer][] = [
@@ -139,8 +142,10 @@ export function refusalCases(scratch: () => string): void {
       }
     });
 
-    it("the first line alone is an inventory: no refusal, the refused connection", async () => {
-      const said = await outside("--before", written("first-line-alone.inventory.txt", "inventory-format 1\n"));
+    // The first line alone was an inventory until the audit (SPEC §10.1 row 4): it holds no read line, and is refused
+    // among BEFORE_MALFORMED. One catalogue read and no row is the smallest whole inventory.
+    it("one catalogue read and no row is an inventory: no refusal, the refused connection", async () => {
+      const said = await outside("--before", written("one-read-line.inventory.txt", "inventory-format 1\nread pg_namespace 0\n"));
       expect(said.lines.filter((line) => line.startsWith("OUTSIDE_REFUSED")), said.stderr).toEqual([]);
       expect(said.stderr).toMatch(/ECONNREFUSED/);
     });

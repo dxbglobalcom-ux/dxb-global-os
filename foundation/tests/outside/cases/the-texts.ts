@@ -47,8 +47,15 @@ export function theTextsCases(): void {
       for (const [text, offence] of planted) expect(outsideOffencesOf(text), text).toContain(offence);
       const goodInventory = `inventory-format 1\nacl out pg_namespace schema x has =U/postgres\nheld out rows ${D} public.t\nleft-out pg_largeobject\nowner in pg_namespace schema os is os_owner\nread pg_namespace 1\nrow out pg_namespace ${D} schema x\n`;
       expect(inventoryOffencesOf(goodInventory)).toEqual([]);
-      expect(inventoryOffencesOf(`inventory-format 1\nrow out pg_namespace ${D.slice(1)} schema x\n`)).toEqual([`line 2 is not of its kind's shape: row out pg_namespace ${D.slice(1)} schema x`]);
-      expect(inventoryOffencesOf(`inventory-format 1\nheld in rows ${D} public.t\n`)).toEqual([`line 2 is not of its kind's shape: held in rows ${D} public.t`]);
+      expect(inventoryOffencesOf(`inventory-format 1\nread pg_namespace 1\nrow out pg_namespace ${D.slice(1)} schema x\n`)).toEqual([`line 3 is not of its kind's shape: row out pg_namespace ${D.slice(1)} schema x`]);
+      expect(inventoryOffencesOf(`inventory-format 1\nheld in rows ${D} public.t\nread pg_namespace 0\n`)).toEqual([`line 2 is not of its kind's shape: held in rows ${D} public.t`]);
+      // Whole or none (§4.3, §10.1 row 4): each read line counts its catalogue's row lines, in and out; a row line has
+      // its catalogue's read line; a text with no read line is none.
+      expect(inventoryOffencesOf("inventory-format 1\n")).toEqual(["no read line"]);
+      expect(inventoryOffencesOf("inventory-format 1\nread pg_class 1\n")).toEqual(["read pg_class 1 counts 0 row lines"]);
+      expect(inventoryOffencesOf(`inventory-format 1\nread pg_class 1\nrow in pg_class ${D} table os.t\nrow out pg_class ${D} table public.t\n`)).toEqual(["read pg_class 1 counts 2 row lines"]);
+      expect(inventoryOffencesOf(`inventory-format 1\nread pg_class 0\nrow out pg_namespace ${D} schema x\n`)).toEqual(["1 row lines of pg_namespace have no read line"]);
+      expect(inventoryOffencesOf("inventory-format 1\nread pg_class 0\nread pg_class 0\n")).toEqual(["read pg_class said twice"]);
     });
 
     it("expected/real.outside.txt is its first line alone: the real chain changes nothing outside", () => {

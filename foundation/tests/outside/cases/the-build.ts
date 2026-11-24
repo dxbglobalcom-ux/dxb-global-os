@@ -2,7 +2,7 @@ import { expect } from "vitest";
 import { connectionString } from "@dxb-foundation/bench";
 import { inventoryOf } from "@dxb-foundation/chain";
 import { chainCommand } from "../../chain/fixtures/command.ts";
-import { columnOf } from "../../chain/fixtures/looking.ts";
+import { columnOf, valueOf } from "../../chain/fixtures/looking.ts";
 import { onTheInstance } from "../../chain/fixtures/throwaway-database.ts";
 import type { Step } from "../../roles/fixtures/the-run.ts";
 import { expectChainSaid } from "../../snapshot/fixtures/changes.ts";
@@ -47,13 +47,20 @@ const MADE_IN_OS_BY_0003 = [
   "pg_default_acl default acl for role os_owner in schema os on tables",
 ];
 
+/**
+ * Five catalogues that hold no toast or temporary row, whose read line the test holds to its own count (the audit's
+ * B4, SPEC §10.1 row 6): a product that dropped a row and its count together would pass the check of read lines
+ * against row lines above, and not this one.
+ */
+const COUNTED = ["pg_authid", "pg_database", "pg_extension", "pg_language", "pg_proc"] as const;
+
 const escaped = (text: string): string => text.replaceAll(/[.*+?^${}()|[\]\\]/g, "\\$&");
 
 /** The one line of the fixture's outside text that names os: its trigger outside calls os.parts_touch() (0004). */
 const THE_ONE_LINE_NAMING_OS = "added row pg_depend trigger owned_touch on snap_elsewhere.owned -> function os.parts_touch() n";
 
 export function theBuild(step: Step, run: TheRun): void {
-  step("B.1 an inventory obeys its form; its read and left-out lines name every relation of kind r in pg_catalog; nothing is in before the chain; read twice, and by the library, the same bytes — kept aside", 4 * COMMAND_MS, async () => {
+  step("B.1 an inventory obeys its form; its read and left-out lines name every relation of kind r in pg_catalog; five read lines are the test's own counts; nothing is in before the chain; read twice, and by the library, the same bytes — kept aside", 4 * COMMAND_MS, async () => {
     const first = await inventoryPrinted();
     expect(inventoryOffencesOf(first)).toEqual([]);
     const lines = bodyOf(first);
@@ -67,6 +74,10 @@ export function theBuild(step: Step, run: TheRun): void {
     for (const line of lines.filter((one) => one.startsWith("read "))) {
       const [, catalogue, count] = line.split(" ");
       expect(lines.filter((one) => one.startsWith(`row in ${catalogue} `) || one.startsWith(`row out ${catalogue} `)).length, line).toBe(Number(count));
+    }
+    for (const catalogue of COUNTED) {
+      const counted = await onTheInstance((client) => valueOf(client, `select pg_catalog.count(*)::text from pg_catalog.${catalogue}`));
+      expect(lines.filter((line) => line.startsWith(`read ${catalogue} `)), "the read line against the test's own count").toEqual([`read ${catalogue} ${String(counted)}`]);
     }
     // Nothing is covered before the chain: not one line is marked in.
     expect(lines.filter((line) => line.split(" ")[1] === "in")).toEqual([]);
