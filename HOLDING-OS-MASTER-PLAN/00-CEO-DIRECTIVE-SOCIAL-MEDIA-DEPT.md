@@ -9,7 +9,7 @@
 
 > Visit https://omnisocials.com and analyze what the product does.
 > Create a new "Social Media Department" inside our AI-native company OS that can do the same core
-> functions functionally, without copying their branding, text, design, or code.
+> functions functionally.
 >
 > The department must include agents for:
 > 1. **Social Media Orchestrator Agent** — the standing owner of the social-media operation (channels), with a schedule, a budget and a target; user/client requests come to it as a standing operation; it tracks status and reports results. One-off social-media jobs go to the content/social master (B64 v2). <!-- CEO-OK: b64-v2-plan-and-six-decisions-his-yes-2026-10-26 --> <!-- CEO-OK: b64-v2-heads-and-dept-budgets-go-owner-by-job-2026-10-26 -->
@@ -35,7 +35,7 @@
 - **Çekirdek modüller:** takvimli yayınlama (post/story/reel, taslak→onay→zamanlanmış→yayınlandı→hata durumları) · unified inbox (FB/IG/LinkedIn/TikTok mesaj+yorum) · analitik (takipçi, engagement, top içerik) + müşteri raporları · ajans workspace'leri (müşteri başına hesaplar/ekip/izinler) · **"Agent Skill — Give Any AI Agent Social Media Powers"**: tam AI + API erişimi dahil.
 - **Platformlar:** Facebook, Instagram, TikTok, LinkedIn, YouTube Shorts, Pinterest, Threads, Bluesky, Mastodon, X.
 - **Fiyat modeli:** $10/ay/workspace (yıllık) — düşük-maliyet, self-serve.
-- **Sonuç:** CEO'nun 12-ajan taslağı ürün işlev setini eksiksiz kapsıyor; işlevsel eşdeğerlik hedefi gerçekçi. Branding/metin/tasarım/kod kopyalanmaz — yalnız işlev sınıfları.
+- **Sonuç:** CEO'nun 12-ajan taslağı ürün işlev setini eksiksiz kapsıyor; işlevsel eşdeğerlik hedefi gerçekçi.
 
 ## 3. Fable işleme kararları (add/subtract yetkisiyle)
 
