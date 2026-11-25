@@ -3409,5 +3409,13 @@
     "conditions": "No card and no spending beyond the free $5 without his word. Trial of the same day: weakest of four doors (122 of 200; exa 183, youcom 166, parallel 146), so it stands as the spare door.",
     "session": "Opus 5.5 session 48475a1a — heard first-hand, 2026-11-25.",
     "where": ".claude/skills/dxb-research (mcpx.sh, SKILL.md); .planning/board-rows/B30.md (leg 2026-11-25)"
+  },
+  "hook-library-openings-hold-the-eye-no-agitation-english-2026-11-25": {
+    "date": "2026-11-25",
+    "what": "What the hook library is for and what an opening in it must be: the library is for making (ads, texts, sites) out of the best openings for clients, publishing ads is not its work; an opening holds people to the screen or raises curiosity, is commercial, and does not work by agitation; examples are looked at critically from several perspectives; the restaurant film goes; no Turkish in it, the holding is international.",
+    "verbatim": "\"Yani orada bir acitasyon var. Acitasyonla biz burada şey yapmıyoruz ki, lokanta işinde neden onu kullanalım? Saçmalık ya. O videoyu unut, at gitsin onu. … Ya biz niye reklam yayınlayalım ki? … Biz kütüphane oluşturuyoruz müşteriler için. En iyi hooklardan reklam üretimi, en iyi hooklardan yazı vesaire falan işte neyse artık. Web stüdyosu vesaire oralarla ilgili. İnsanları ekrana kitleyen veya merak uyandıran vesaire. … Hiç kimse gelmiyorsa zaten o berbat bir lokanta demektir. … Biraz bu tarz şeyleri kullanırken hani eleştirel şeyle bakın. Farklı perspektiflerden bakın.\" · \"Ama tabii ki bu bir hook şekli, stili.\" · \"Yani 9000 videonun yöntemleri alınmadı mı? Kütüphaneleştirilmedi mi? Raflara koyulmadı mı?\" · \"Niye Türkçe abi? Türkçe mülkçe alakası yok. Gerek yok. Biz uluslararası bir şeyiz.\" · \"Yapılanları kaydet … Komit et, her şeyi kontrol ettireceğim.\"",
+    "conditions": "He has everything checked; the shelving of the films that went round and the critical look over the films are named as open and not started.",
+    "session": "Opus 5.5 session 6f2b3fd5 — heard first-hand, 2026-11-25, about 21:50 to 22:45.",
+    "where": ".planning/research/hook-library/README.md (\"His eye on the examples\"); .planning/board-rows/B28.md (leg 2026-11-25)"
   }
 }
