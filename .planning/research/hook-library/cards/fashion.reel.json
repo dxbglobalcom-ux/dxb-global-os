@@ -1,0 +1,52 @@
+[
+ {
+  "id": "o-to7-003",
+  "mp4": "/home/dxb/.local/share/dxb/hook-lab/tt_org/vid/t7481359680539790614.mp4",
+  "start": 0,
+  "dur": 5.0,
+  "title": "Show the strange tool",
+  "line": "A hat maker lowers a measuring machine of rods on a customer's head, without a word",
+  "proof": "Seen 96.3 million times, 60.2 times its usual",
+  "audio": false
+ },
+ {
+  "id": "o-ad3-012",
+  "mp4": "/home/dxb/.local/share/dxb/hook-lab/el/ad3/vid/fishhat.mp4",
+  "start": 0,
+  "dur": 5.5,
+  "title": "The maker wears it",
+  "line": "A stranger asks an old man in a fish cap: where did you get that?",
+  "proof": "Sold: first run of 2,500 hats, the maker says",
+  "audio": true
+ },
+ {
+  "id": "o-to6-023",
+  "mp4": "/home/dxb/.local/share/dxb/hook-lab/tt_org/vid/t7709002895601044766.mp4",
+  "start": 0,
+  "dur": 4.5,
+  "title": "One reason, one movement",
+  "line": "An unknown founder folds a clear bag into a normal one",
+  "proof": "Seen 11.9 million times, 9444.4 times its usual",
+  "audio": false
+ },
+ {
+  "id": "o-to8-015",
+  "mp4": "/home/dxb/.local/share/dxb/hook-lab/tt_org/vid/t7677599361034980621.mp4",
+  "start": 0,
+  "dur": 4.8,
+  "title": "Pack one real order",
+  "line": "A small jewellery shop opens drawer after drawer for one customer's parcel",
+  "proof": "Seen 3.7 million times, 399.6 times its usual",
+  "audio": false
+ },
+ {
+  "id": "o-meta4-013",
+  "mp4": "/home/dxb/.local/share/dxb/hook-lab/meta/vid/m517835954401343.mp4",
+  "start": 0,
+  "dur": 4.2,
+  "title": "His moment in the mirror",
+  "line": "Clothes for short men: the curtain opens on a shirt far too big",
+  "proof": "Its owner kept paying for 616 days",
+  "audio": true
+ }
+]

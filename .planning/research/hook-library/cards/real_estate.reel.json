@@ -1,0 +1,52 @@
+[
+ {
+  "id": "o-sek1-018",
+  "mp4": "/home/dxb/.local/share/dxb/hook-lab/el/sek1/vid/heider.mp4",
+  "start": 0,
+  "dur": 4.8,
+  "title": "The gate that opens",
+  "line": "Estate agent: a lit house behind an iron gate at dusk, and the gate opens on time",
+  "proof": "Seen 44.4 million times, 235.8 times its usual",
+  "audio": false
+ },
+ {
+  "id": "o-ad6-005",
+  "mp4": "/home/dxb/.local/share/dxb/hook-lab/el/ad6/vid/aptop.mp4",
+  "start": 0,
+  "dur": 5.2,
+  "title": "Solemn about the ordinary",
+  "line": "A website of flats to rent is launched like a technology giant",
+  "proof": "Sold: revenue +976% since the launch",
+  "audio": true
+ },
+ {
+  "id": "o-sek1-009",
+  "mp4": "/home/dxb/.local/share/dxb/hook-lab/el/sek1/vid/trent_first.mp4",
+  "start": 0,
+  "dur": 5.0,
+  "title": "Price first, then run",
+  "line": "A 19-year-old agent says the rent, strikes a pose and bolts into the house",
+  "proof": "Seen 5.8 million times, 54 times his films before",
+  "audio": true
+ },
+ {
+  "id": "o-to2-021",
+  "mp4": "/home/dxb/.local/share/dxb/hook-lab/tt_org/vid/t7676081272065690893.mp4",
+  "start": 0,
+  "dur": 4.2,
+  "title": "Poorest corner first",
+  "line": "A New York agent: a narrow \"cozy\" kitchen, one turn, and a tall room opens below",
+  "proof": "Seen 3 million times, 206.9 times its usual",
+  "audio": false
+ },
+ {
+  "id": "o-sek1-019",
+  "mp4": "/home/dxb/.local/share/dxb/hook-lab/el/sek1/vid/tiny.mp4",
+  "start": 0,
+  "dur": 5.0,
+  "title": "Your hand on the key",
+  "line": "A letting agent walks you to the tiniest flat in Manhattan, and your hand turns the key",
+  "proof": "Seen 13.7 million times, 5092.9 times its usual",
+  "audio": false
+ }
+]

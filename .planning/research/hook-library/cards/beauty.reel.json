@@ -1,0 +1,52 @@
+[
+ {
+  "id": "o-ad5-033",
+  "mp4": "/home/dxb/.local/share/dxb/hook-lab/el/ad5/vid/vasel2.mp4",
+  "start": 0,
+  "dur": 3.8,
+  "title": "A joke that tests",
+  "line": "Vaseline asks in a hospital for bags: can it revive tired old leather?",
+  "proof": "Sold: online sales up 43 per cent, whole campaign",
+  "audio": true
+ },
+ {
+  "id": "o-ad5-030",
+  "mp4": "/home/dxb/.local/share/dxb/hook-lab/el/ad5/vid/ordinary.mp4",
+  "start": 0,
+  "dur": 4.0,
+  "title": "Three words, one colour",
+  "line": "A customer asks \"want clear skin?\" and blood-red drops run down her cheek",
+  "proof": "Sold: 52,000 units in two weeks",
+  "audio": false
+ },
+ {
+  "id": "o-to6-007",
+  "mp4": "/home/dxb/.local/share/dxb/hook-lab/tt_org/vid/t7631614637141724430.mp4",
+  "start": 0,
+  "dur": 5.0,
+  "title": "The customer's own wish",
+  "line": "A barber's customer, about forty, asks: give me 10 years back",
+  "proof": "Seen 8.4 million times, 26.7 times its usual",
+  "audio": false
+ },
+ {
+  "id": "o-meta1-001",
+  "mp4": "/home/dxb/.local/share/dxb/hook-lab/meta/vid/m1080542923322809.mp4",
+  "start": 0,
+  "dur": 4.0,
+  "title": "Bare to finished",
+  "line": "Nail polish: one bare nail, one stroke, glossy, and the next colour follows",
+  "proof": "Its owner kept paying for 1,147 days",
+  "audio": false
+ },
+ {
+  "id": "o-to4-013",
+  "mp4": "/home/dxb/.local/share/dxb/hook-lab/tt_org/vid/t7626546528479399199.mp4",
+  "start": 0,
+  "dur": 5.0,
+  "title": "An outsider judges",
+  "line": "A woman of about sixty judges a famous beard for Beardbrand",
+  "proof": "Seen 3.7 million times, 648.5 times its usual",
+  "audio": true
+ }
+]

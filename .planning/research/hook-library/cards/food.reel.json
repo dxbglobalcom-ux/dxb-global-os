@@ -1,0 +1,52 @@
+[
+ {
+  "id": "o-ad5-021",
+  "mp4": "/home/dxb/.local/share/dxb/hook-lab/el/ad5/vid/kimchi.mp4",
+  "start": 0,
+  "dur": 4.5,
+  "title": "One cut, no words",
+  "line": "A family kimchi workshop: a huge cabbage is thrown, split, and opens on a yellow heart",
+  "proof": "Sold: more than 40-fold in two months, the family says",
+  "audio": false
+ },
+ {
+  "id": "o-to7-023",
+  "mp4": "/home/dxb/.local/share/dxb/hook-lab/tt_org/vid/t7646902838588755214.mp4",
+  "start": 0,
+  "dur": 4.5,
+  "title": "Open what is closed",
+  "line": "A Brooklyn bakery: a spoon goes into a golden crust and a white core melts out",
+  "proof": "Seen 7 million times, 346.5 times its usual",
+  "audio": false
+ },
+ {
+  "id": "o-sek3-020",
+  "mp4": "/home/dxb/.local/share/dxb/hook-lab/el/sek3/vid/dawna.mp4",
+  "start": 0,
+  "dur": 5.0,
+  "title": "The empty stall",
+  "line": "A stranger buys only where nobody stands; a small jerky maker offers a sample",
+  "proof": "Sold: more than 2,200 orders, the owner says",
+  "audio": true
+ },
+ {
+  "id": "o-y2-020",
+  "mp4": "/home/dxb/.local/share/dxb/hook-lab/yt/vid/yD4k0Kb_lF7I.mp4",
+  "start": 0,
+  "dur": 5.0,
+  "title": "Your kitchen is a stage",
+  "line": "A candy shop: glowing syrup as big as a man, children staring through the glass",
+  "proof": "Seen 47 million times, 717.6 times its usual",
+  "audio": false
+ },
+ {
+  "id": "o-ad5-019",
+  "mp4": "/home/dxb/.local/share/dxb/hook-lab/el/ad5/vid/straus1.mp4",
+  "start": 0,
+  "dur": 4.0,
+  "title": "Prove it in one gesture",
+  "line": "A customer puts a spoon into the milk, and the thick cream keeps the hole",
+  "proof": "Sold: half-gallon orders doubled, the owner says",
+  "audio": true
+ }
+]

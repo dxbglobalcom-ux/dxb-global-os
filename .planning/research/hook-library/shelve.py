@@ -61,13 +61,13 @@ TT = {}
 if os.path.exists(f'{LAB}/ttcc/selection.json'):
     TT = {x['ad_id']: x for x in json.load(open(f'{LAB}/ttcc/selection.json'))}
 YT = {}
-for d in ('yt', 'tt_org'):
+for d in ('yt', 'tt_org', 'tt_org2'):
     if os.path.exists(f'{LAB}/{d}/selection.json'):
         YT.update({x['ad_id']: x for x in json.load(open(f'{LAB}/{d}/selection.json'))})
 
 
 GROW = {}
-for d in ('yt', 'tt_org'):
+for d in ('yt', 'tt_org', 'tt_org2'):
     if os.path.exists(f'{LAB}/{d}/grow.jsonl'):
         for x in open(f'{LAB}/{d}/grow.jsonl', encoding='utf-8'):
             g = json.loads(x)
@@ -90,8 +90,16 @@ def role(r):
     return R
 
 
+def kept(r):
+    """its only proof is that the owner kept paying, mailing or airing it: never told as sold (a running time, a spend tier, bought views, a control mailed for years)"""
+    if r['door'] != 'MONEY':
+        return False
+    return bool(re.match(r'(Meta Ad Library|TikTok Creative Center)', r.get('measured_by', '')) or 'Grand Control' in str(r.get('result'))
+                or re.match(r'\d+ (days live|months active)', str(r.get('result'))) or r['id'] in D.get('kept', []))
+
+
 SOUND = {}
-for d in ('yt', 'tt_org', 'meta', 'ttcc'):
+for d in ('yt', 'tt_org', 'tt_org2', 'meta', 'meta2', 'ttcc'):
     if os.path.exists(f'{LAB}/{d}/sound.jsonl'):
         for x in open(f'{LAB}/{d}/sound.jsonl', encoding='utf-8'):
             g = json.loads(x)
@@ -160,11 +168,17 @@ for r in rows:
         r.update(trait[r['id']])
     r['room'] = room_of.get(r.get('shelf', ''), '')
     r['role'] = role(r)
+    if kept(r):
+        r['kept'] = True
+        if r['id'] in D.get('kept', []):
+            r['role'] = list(dict.fromkeys('sell' if x == 'seen' else x for x in r['role']))
     if sound(r):
         r['sound'] = sound(r)
     second = verdict.get(r['id'], {})  # the second eye: may it be shown, how strongly the first seconds hold, what stops people
     if isinstance(second.get('show'), bool):
         r['clean'] = second['show']
+    if r['id'] in D.get('noshow', []):
+        r['clean'] = False
     if second.get('beauty'):
         r['beauty'] = second['beauty']
     if second.get('stops'):

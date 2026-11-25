@@ -66,8 +66,8 @@ def score(r, a):
 
 
 def paid(r):
-    """a running time or a spend tier proves that the owner kept paying, not how much was sold"""
-    return r['door'] == 'MONEY' and bool(re.match(r'(Meta Ad Library|TikTok Creative Center)', r.get('measured_by', '')))
+    """a running time, a spend tier or a control mailed for years proves that the owner kept paying, not how much was sold (shelve.py sets it)"""
+    return bool(r.get('kept'))
 
 
 def did(r):

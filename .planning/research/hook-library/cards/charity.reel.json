@@ -1,0 +1,52 @@
+[
+ {
+  "id": "o-ad6-019",
+  "mp4": "/home/dxb/.local/share/dxb/hook-lab/el/ad6/vid/porter0.mkv",
+  "start": 0,
+  "dur": 4.8,
+  "title": "Admire, do not pity",
+  "line": "An animal shelter in New Zealand puts a shelter dog at a steering wheel and gear lever",
+  "proof": "Brought names: adoption interest +590%, all adopted",
+  "audio": false
+ },
+ {
+  "id": "o-ad6-026",
+  "mp4": "/home/dxb/.local/share/dxb/hook-lab/el/ad6/vid/chok.mp4",
+  "start": 0,
+  "dur": 5.5,
+  "title": "Let the danger speak",
+  "line": "First-aid charity: a pen lid and a jelly baby complain that babies choke on them",
+  "proof": "54 babies whose parents say the film saved them",
+  "audio": true
+ },
+ {
+  "id": "o-ad6-030",
+  "mp4": "/home/dxb/.local/share/dxb/hook-lab/el/ad6/vid/spring.mp4",
+  "start": 1.0,
+  "dur": 3.9,
+  "title": "A man, not a plea",
+  "line": "A water charity: an empty chair in black, the founder sits down and laughs",
+  "proof": "Sold: 15,000 monthly givers at $30 a month on average",
+  "audio": false
+ },
+ {
+  "id": "o-meta5-023",
+  "mp4": "/home/dxb/.local/share/dxb/hook-lab/meta/vid/m1293223502691487.mp4",
+  "start": 0,
+  "dur": 4.4,
+  "title": "Show it finished",
+  "line": "A well charity: three running wells, three plaques, each with a giver's name",
+  "proof": "Its owner kept paying: 231 days, 2 copies of the ad",
+  "audio": false
+ },
+ {
+  "id": "o-meta5-025",
+  "mp4": "/home/dxb/.local/share/dxb/hook-lab/meta/vid/m1333576251967281.mp4",
+  "start": 0,
+  "dur": 4.0,
+  "title": "One being, one shot",
+  "line": "An animal rescue: an old dog with a bandaged stump smiles into the lens",
+  "proof": "Its owner kept paying: 202 days",
+  "audio": true
+ }
+]
