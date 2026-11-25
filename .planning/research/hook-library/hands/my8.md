@@ -1,0 +1,9 @@
+28 methods: 16 in, 10 narrowed, 2 out. 28 winner links dropped and 20 added; 37 people rows dropped and 13 people added.
+Check: `28 in, 28 checked; Counter({'in': 16, 'narrow': 10, 'out': 2}) … errors []` (`/home/dxb/.local/share/dxb/hook-lab/el/my8/check.py`, results in `check.jsonl` there).
+Four strongest: "His own name or town" (8 sellers, mostly clean tests) · "The button says what he will have" (7 sellers, 2 testers) · "Many openings on one film" (5 people) · "Opening sentence from the buyers' mouths" (5 people, over 400% more clicks).
+Out: "Describe him to himself" (1 clean winner, nobody with a result) · "Offer the small look before the purchase" (only Ridge, as winner and person; "learn more" lost 8 tested pairs).
+Narrowed: "Call those who already want it" (lost to a quiz by 250%) · "Topic of the day" (reach only) · "Somebody they follow" · "A real thing in the hand" (paper only, no film proof) · "Free showing" · "Different openings" (Meta ads) · "Small, silent" (not bare, keep sound) · "Short words" (spoken only) · "Won for small accounts" (Kagan film had left the library over a staged cover) · "Show to strangers" (to find faults, not to choose).
+Thin: "Hero in a known story" (3 sellers; belongs inside "Known thing, one thing changed"), "Different openings", "Won for small accounts", "Show to strangers".
+Could not judge: whether caples-079 and caples-010 are one seller (counted as one); whether Poo~Pourri and Harmon Brothers are one case (the rows do not say; the method still has four without it).
+The ways of working rest on people's records and practice; hardly any row measures the habit itself. Frank, Seed and Mei Man give no like-for-like result.
+Not for showing to clients: meta4-012, tta1-010, meta1-007 (clothes, alcohol brand), satan-069 (another firm's character).

@@ -1,0 +1,14 @@
+1. `cover.tsv` has 124 lines: 26 already in the library, 30 entered, 21 no proof, 7 failed, 6 subject, 19 opening not found, 15 not checked or other. Several lines bundle many names.
+2. Checker: `openings.jsonl ok 30 {'MONEY': 30}`, `ROWS 30 BAD 0`; no TEST or TENFOLD rows, no rules. 22 rows prove `whole`, 8 `brand`; 17 solid, 11 usable, 2 weak (4 Pure Michigan, 15 Dropbox "Get more space"; cut these first).
+3. Sectors: travel 4, b2b 4, local_shop 4, real_estate 3, pets 3, software 3, education 3, health 3, charity 2, automotive 1, **fitness 0, home_services 0**.
+4. Strongest: 1 Motel 6, `honest`, revenue $256m to $297m, then +14% and +25% · 2 WestJet Miracle, `story`, revenue +86%, bookings +77% · 6 Sun City jingle, `call_out`, 237 homes in 3 days.
+5. 5 Apartments.com, `joke`, revenue +976% over ten years (brand, agency's figure) · 8 GE Owen, `joke`, applications x8 · 9 Monster, `jolt`, 2.2m searches in 24 h against 500,000.
+6. 19 SPCA driving dog, `spectacle`, adoption interest +590% (award entry) · 22 Lee's Noodle House, `jolt`, revenue +30-40% (family's estimate).
+7. Not entered, film out of reach: FedEx "new airline" (3,000 to 10,000 parcels a night), Dropbox Digg film (5,000 to 75,000), Code.org, Pedigree 2005 (+12% in two months). Proof is saved in `web/`; the FedEx and Dropbox YouTube ids are in `cover.tsv`.
+8. Not entered, other: AT&amp;T Cost of Visit (a real TEST; ad words not found) · Slack (watched, only views) · Xerox monk (watched, only prizes) · Specsavers (one immodest lyric) · "worst house" (asked $69,000, sold $51,000) · BA 1991, Act FAST and Police "Could You?" (figures disputed).
+9. Not checked: RE/MAX, Zillow and Compass; most software seeds; most home-service chains; RNLI, Dogs Trust, Guide Dogs, St Jude; Southwest, New Zealand, India. They are marked so in `cover.tsv`. This kind needs a second hand.
+10. YouTube refused this machine ("not a bot"). 16 entered films came from archive.org, Dailymotion, Vimeo, iSpot and TikTok; their strips were looked at and words machine-transcribed (rows 11 and 26 corrected by sense).
+11. Limits: 23 rows rest on one source's figure; row 27 was watched inside its case film; row 30 only its first 70 s; row 11 has no sales number, only a five-year run and an Effie. Row 3's print ad was not seen. Rows 12 and 15 are second-hand.
+12. Not done: four independent lists gathered as lists. I used the seed names plus case archives (Encyclopedia of Major Marketing Campaigns, CASSIES, IPA abstracts, Spikes).
+13. Read whole: nearest is the Motel 6 Cornell case (searched through, exhibits 2, 4, 5 read), the NHS page, and the EDS and FedEx outcome chapters; all others only the passage with the number.
+14. Folder: `/home/dxb/.local/share/dxb/hook-lab/el/ad6` (`openings.jsonl`, `cover.tsv`, `ledger.txt`). `vid/sb33.mp4` is 260 MB and can go: the Monster film is cut out.

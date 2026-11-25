@@ -1,0 +1,827 @@
+# The methods — what many trusted makers say worked, or at least three winners show
+
+Written by `methods.py`. A method enters with at least three independent trusted people who did it in their own work, or three winners of different sellers in the library;
+each was tried to be brought down by a second reader and narrowed to where it held. Full text in `methods.jsonl`.
+
+## SHOW — he sees it with his own eyes (21)
+
+- **m-016 Open on one clear movement** — in_use; for sell, seen; 1 people, 9 winners; strong
+  - film: 0 s: one thing moves and the rest rests, and the movement shows the product: a strap snaps shut, a torch clicks into its case, a thread of gravy falls, a bed comes down from the wall. It starts in the first frame; small moves end inside one second, a slow pour or fold may last three. No second movement beside it, no black first frame.
+  - where: Things one can wear, open, fold, pour; testimonial films; talking people; cold feed, paid and organic. Dear considered services are not shown.
+  - who: Dara Denney (x-tec2-003)
+  - winners: o-meta4-009 o-tta3-007 o-meta2-008 o-tta1-007 o-ttb1-014 o-meta4-023 o-meta5-010 o-meta6-004 o-y4-005
+- **m-024 A real torture test, visible the whole time** — test; for sell, seen; 2 people, 7 winners; strong
+  - film: 0 s: the instrument of destruction and the product together in the frame (rifle, propeller, press, blender, blade). One sentence announces the test. Run it once, uncut, the proof never hidden (eggs under glass, not under a seat). At once show it was no trick (break the egg by hand). Test on a phone first: if the gasp is gone on the screen, change the rig.
+  - words: 'Will it ...?' or the test with its instrument: 'What happens when you ...?'
+  - where: Strength, hold, softness, precision that nobody can feel through a screen; cheap tool to dear truck; unknown brand, small budget (Blendtec: five films for about $50).
+  - who: George Wright (x-tec4-025); Daniel Harmon and Benton Crane (x-tec4-019)
+  - winners: o-uzman-069 o-uzman-001 o-satan-084 o-satan-114 o-y3-006 o-y5-005 o-y3-010
+- **m-034 The change inside the first three seconds** — before_after; for sell, seen; 2 people, 6 winners; strong
+  - film: 0 s: the starting state in hand or frame. By 1-2 s the change on a gesture: throw of the arm, finger on a switch, snap; hard cut in the same frame, or one move, or a time-lapse. By 3 s the finished state stands there; only then how. An exact short time only if true. Things, rooms, work, clothes - never bodies.
+  - words: 'From [state] to [state] in [exact time]'.
+  - where: Visible change of things, rooms, work, clothes; made to order; gift; also long demonstrations for buyers over 50 with many real cases (Savannah). Not for bodies.
+  - who: Jade Brown (x-tec6-023); Dara Denney (x-tec2-090)
+  - winners: o-meta3-011 o-satan-055 o-tec1-006 o-tta4-010 o-meta2-008 o-meta6-004
+- **m-035 The maker's hands at work, big and close** — in_use; for seen, followers, sell; 3 people, 5 winners; strong
+  - film: 0 s: the hot, shining or heavy material fills the frame and moves (syrup over marble, butter swirling in a pan of fudge, the pot going into the glaze). By 2 s the hands at work; by 3 s the maker's face or voice with one true small thing. Real sound. Never a still hand or a tray that lies there.
+  - words: On the shop front: 'see candy made', the process moved to where people pass.
+  - where: Sweets, ice cream, bread, pottery, jewellery, soap; cheap gift or dear piece; unknown local maker; watch, visit, order.
+  - who: Jerry Rowley and daughter (x-tec6-054); Annabelle and David King (x-tec6-031); Dylan Lemay (x-tec6-040)
+  - winners: o-y2-020 o-tec6-016 o-y4-005 o-tec6-041 o-y4-030
+- **m-047 Filth first, the cure at once, no flyer** — before_after; for seen, followers, sell; 2 people, 5 winners; strong
+  - film: 0 s: the worst job you have, close, on clean ground if possible. Within two seconds the first stroke: the jet, the nozzle, the steam leaves the first clean lane. Then each step as one short cut, real sound; days squeezed into about one minute; end on the clean whole.
+  - words: On the advert: a plain before/after photograph; the offer stands in the text underneath. No logo card, no telephone-number flyer.
+  - where: Services whose result is visible (pools, rugs, cars, roofs, carpets, dents); unknown local seller; cold people; watching, messages, orders.
+  - who: Miles Laflin (x-tec6-001); Spencer Claeys (x-tec6-004)
+  - winners: o-y4-017 o-y1-009 o-meta2-012 o-meta6-009 o-y1-015
+- **m-048 For a young, small or challenger seller in a crowded everyday category: his present thing and yours on the same spot, same light, three to five true differences. Not as the main opening of a mature, well-known brand.** — versus; for sell; 2 people, 5 winners; strong
+  - film: 0 s: his present thing on the spot; by 2 s yours on the same spot, same light (swap, two columns, one row of ten against one). Three to five plain differences, each phrase copied from reviews, nothing else in the picture.
+  - words: 'Here's why we switched from this to this.' / '10 of these = 1 of this.' / two columns.
+  - where: New or small brand, crowded category, everyday goods; cold people and the last step before buying; still picture or short film.
+  - who: Dara Denney (x-tec2-013); Mei Man (x-tec1-081)
+  - winners: o-meta5-014 o-meta3-013 o-tta3-011 o-meta1-018 o-satan-007
+- **m-076 Split the first frame only when the two halves are the same person, place or thing in two states that can be told apart at a glance (beginner/advanced, before/after, old/new), or the silent product beside the person who speaks. Never two talking halves, never as decoration, not for pure memory campaigns on TikTok.** — versus; for sell, seen; 2 people, 5 winners; fair
+  - film: Frame 0 is split: left/right or top/bottom, and the halves differ in colour and state (dead/green, tired/awake, talking/silent proof, beginner/advanced). The same person or place in both. Something moves in one half.
+  - where: Visible difference of any kind: gym, mattress, land, exercise, photography levels; cold feed; Dara uses it to go down a list of failed tries without naming a rival.
+  - who: Dara Denney (x-tec2-013); Kane Kallaway (x-tec1-009)
+  - winners: o-platform-009 o-platform-019 o-meta1-018 o-y5-006 o-tec1-001
+- **m-077 With professional writers and players and money to film it: one pleasant, striking, dream-like enlargement of the product's own truth in the first five seconds, then the product on screen. Not outrageous or disgusting, not a joke by amateurs, not as the first film of a young brand without proof.** — spectacle; for sell, seen; 4 people, 3 winners; fair
+  - film: 0-3 s: one striking, pleasant, dream-like picture of the product's own truth enlarged: a closed eye opens and a woman falls through the sky towards a bed; commentators at a giant desk watch a man work. Test: surprising AND could it stand for another product? By 5 s the product is in the picture.
+  - where: Mostly large production: furniture, chocolate, software, bathroom products; skippable video; unknown brands too (Squatty Potty).
+  - who: Squero; Kieran Bradshaw (x-tec4-079); Benton Crane (x-tec4-005); Jacques Spitzer
+  - winners: o-uzman-002 o-satan-025 o-meta6-013
+- **m-086 The finished thing first, then how or what it was** — before_after; for seen; 1 people, 5 winners; fair
+  - film: 0 s: the complete, finished effect running or standing there (the trick in a loop, the ordered cupboard, the curl of wood, the green ground). Maker's hand or eye at the edge. 2-3 s: hard cut to the raw state, or 'here is how'.
+  - words: Title names the finished wonder, the next line says it is done with ordinary means.
+  - where: Skills people think need an expert, order in the home, land, craft tools; services without an object: the result with the offer on it. Goal watch, save, buy.
+  - who: Tyler Tometich (x-tec1-031)
+  - winners: o-tec1-005 o-y4-007 o-tta1-004 o-tec3-003 o-tec3-006
+- **m-087 Within the first two seconds a real thing does what the eye does not expect of it (a coin floats on metal, a row of books lifts as one piece, a wall becomes a bed, a cane stands alone), in one shot without a visible cut, really done; the true means is seen soon after.** — spectacle; for seen, sell; 2 people, 4 winners; fair
+  - film: 0 s: a normal-looking thing, close, one steady shot. Within 2 s it does what it should not: the wall tips down and is a bed, the coin floats, the cane stays standing. No cut until it is done. Then let the true means be seen. Nothing generated, nothing speeded.
+  - where: Fragrance, cars, skill teachers, toys, reflective or moving products; known brands mostly, trick makers also; watching and sharing.
+  - who: Eric Kallman (x-tec4-030); Zach King (x-tec3-142)
+  - winners: o-y2-004 o-meta2-008 o-y6-017 o-satan-099
+- **m-088 In a still or a wordless picture ad for a thing that is bought for its look (watch, glasses, clothes, fire bowl): the thing itself is the clear subject, close and large, with no mood scene and no person modelling it; it may stand in its real place, but nothing competes with it.** — in_use; for sell; 2 people, 4 winners; fair
+  - film: 0 s: the product fills the frame, sharp, bright; no period scene, no models, no mood before it. Fine small objects on plain ground; furniture standing in a room but as the subject. A stranger shown the picture with the words covered must name what is sold.
+  - words: A line under the picture that names it.
+  - where: Beautiful or small objects, collectors, rings, watches, lamps, canes, glasses, furniture; mail order, catalogue, paid stills; first test of a new product (no faces, hands at most).
+  - who: Robert W. Bly (x-tec5-051); Andrew Faris (x-tec2-077)
+  - winners: o-tec5-006 o-meta2-017 o-meta2-019 o-platform-013
+- **m-090 Build or find the one sight people travel for, and show it first** — spectacle; for sell, seen; 3 people, 3 winners; fair
+  - film: 0 s: the one sight, framed as a visitor would take it, already happening: the cow's tongue reaching the bread, the bucket filling, the swimmer behind the window, the guide playing in the light. One take, the camera walks in or stands still; a visitor's hand or back may be in it. No sign, no tour, no speech in the first three seconds. Where it is and when: after 4 s.
+  - where: Places: stays, farms, cafés, parks, shops; local or two hours away; visits and direct bookings.
+  - who: Doug Stephan (x-tec6-069); Isaac French (x-tec6-045); Nicole McMillian (x-tec6-020)
+  - winners: o-hopkins-008 o-meta6-015 o-meta6-010
+- **m-091 Start too close, then draw back to the truth** — spectacle; for seen, sell, click; 2 people, 4 winners; fair
+  - film: 0 s: so close that one misjudges (a calm face, one pair of glasses, a wall of steel, a house door). Within two seconds one smooth move back or one step of a person shows the real size or place.
+  - words: 'At first it seems ... but then the camera zooms out.'
+  - where: Anything whose size or setting is the surprise: trucks, fire bowls, glasses, models, property; cold.
+  - who: Anders Eklind (x-tec4-059); Zach King (x-tec3-142)
+  - winners: o-satan-017 o-meta2-017 o-upw1-066 o-tta1-001
+- **m-101 Let the old way fail on camera, then yours passes the same test** — versus; for sell; 2 people, 3 winners; fair
+  - film: 0 s: the old thing close, failing at its job (blade full of hair, cheese that will not come off, tape that gives way). Say in one sentence why it fails. 2 s: same place, same movement, yours. One test both must pass, uncut. Then the price doubt.
+  - words: 'This is why your X does Y.' then the one difference in construction.
+  - where: Better design against a habit, a trade or a rival product; razors, repair tape, kitchen tools, insoles; cheap to middle price; cold.
+  - who: Daniel Harmon (x-tec4-001); Fraser Cottrell (x-tec2-107)
+  - winners: o-tta3-011 o-meta1-018 o-satan-044
+- **m-102 The same job at very different price, time or size** — versus; for seen; 2 people, 3 winners; fair
+  - film: 0 s: the whole row in one picture, smallest to largest, each with its number. Start at once with the cheapest or shortest. Each step rises; the biggest, already seen, comes last.
+  - words: Title only the steps: '10 minutes, 1 hour and 24 hours', '$10 vs $1,000'.
+  - where: Trades where the levels can be seen: photography, tools, gadgets, food; tiny accounts too; goal watch to the end.
+  - who: Jimmy Donaldson (x-tec3-005); Victor Guo (x-tec1-066)
+  - winners: o-tec3-001 o-y6-026 o-uzman-085
+- **m-103 Say the claim, promise or belief that people doubt in the first sentence, and have its test visibly running by second three; show the result whichever way it goes.** — test; for seen; 1 people, 4 winners; fair
+  - film: 0 s: you hold the thing the claim is about, or stand in the test. First sentence (spoken or on the plate): the claim ('I was told this glue holds two trucks', 'Is fast food really fast?', 'This feature will save lives'). 2-3 s: the test is already under way; a second person doubts aloud if there is one.
+  - words: 'You can't make a good X at home. Challenge accepted.'
+  - where: Everyday services with a speed, price or strength promise; gadgets; food; cold; watching. Buyers' disbelief as first line when one kind of buyer is meant.
+  - who: Jenny Hoyos (x-tec3-021)
+  - winners: o-y3-006 o-uzman-043 o-y1-003 o-tec6-035
+- **m-104 An ordinary thing everybody knows, at a size nobody has seen (giant or tiny), with the normal one or a person beside it in the first second, and then really used or eaten. 'World's largest' only with a measure; no prize tied to a purchase.** — spectacle; for seen, sell; 2 people, 3 winners; fair
+  - film: 0 s: the giant (or tiny) ordinary thing beside a person, so the eye measures it; or the small one first, then slam: the big one. Pull back until its size is seen. Then use it.
+  - words: 'The world's largest [thing everyone liked as a child]'. Only with the true measure.
+  - where: Food, drinks, toys, tools, lamps; shops that want visits; small budget works with a container ten times too big (34-ounce bucket).
+  - who: Mark Rober (x-tec3-114); Nicole McMillian (x-tec6-020)
+  - winners: o-y2-027 o-hopkins-008 o-satan-094
+- **m-105 Two at one start line: a race with the numbers on** — versus; for seen; 2 people, 3 winners; fair
+  - film: 0 s: two rivals on one line seen from behind or side by side at one table, each with its number or name; countdown already running. Go inside two seconds. Frame before the start on the cover.
+  - words: 'X vs Y' with two superlatives; never tell the end ('tries to keep up').
+  - where: Machines, tools, hand skills in a shop, delivery promises; watching.
+  - who: Paddy Galloway (x-tec3-076); Jenny Hoyos (x-tec3-021)
+  - winners: o-tec6-004 o-uzman-024 o-y6-025
+- **m-106 The product moves by itself and does its whole work** — in_use; for sell, seen; 2 people, 3 winners; fair
+  - film: 0 s: the closed or empty thing alone, steady camera, plain ground. 0.2-0.5 s: the first part moves with no hand in the picture (one photograph per step, or one cut per step); a new step every fifth of a second, no speech, no name card. By 2-3 s it stands finished; cut to the empty start and begin the next form.
+  - where: Furniture, toys, puzzles, gadgets, sweets; slow handwork and dear bespoke pieces, also cheap goods; unknown maker.
+  - who: Harry Harrison (x-tec6-026); Craig Thibodeau (x-tec6-027)
+  - winners: o-meta5-006 o-meta2-005 o-meta4-023
+- **m-107 When one hard or dirty job changes visibly under the tool: no speech, no music, no words on the film, only the sound of the work, first stroke within about two seconds, one job to the end.** — in_use; for seen, sell; 2 people, 3 winners; fair
+  - film: 0 s: the dirty or unfinished thing fills the picture and the tool is at it or coming; you hear it. By 2 s the first stroke shows the difference (first clean stripe, first curl, first water). No music, no speech, no writing on the picture; one job from start to end, 10 to 60 seconds.
+  - where: Trades, tools, cleaning, food with a sound; also dull business trades; watching.
+  - who: Miles Laflin (x-tec6-001); Leah and Yasaman (x-tec3-139)
+  - winners: o-y4-017 o-y1-009 o-meta2-012
+- **m-131 A voice tells one thing while hands do another** — in_use; for seen, sell; 0 people, 3 winners; fair
+  - film: 0 s: hands already in a quiet, repetitive, visible job (nails pulled from a heel, gel filling a mould, curls swept into a jug). Voice begins in the same second with a person, a letter, an opinion. The job ends when the story ends.
+  - where: Craft shops, groomers, makers, personal stories; small unknown sellers; watching, then orders.
+  - winners: o-tec6-020 o-tta3-012 o-y1-023
+
+## CURIOSITY — a gap stays open (28)
+
+- **m-002 Strike the greeting: begin with a hand already at work or a talk already running, so that the first second already shows what the work or the thing is.** — unfinished; for seen, click, sell; 5 people, 12 winners; strong
+  - film: Frame 1: the tool is already cutting this thing, the hand already pouring this thing, or somebody already answers somebody while the thing is in the picture ('Put this in your ear', 'More resistance', 'I'm building ...'). A stranger must be able to say after one second what is being worked on. No name, logo, rules or tour before second 3.
+  - words: Delete the first sentence of the draft; ask of each next one whether it catches, teaches, entertains, gives context or proves; begin at the first that does.
+  - where: Creator ads in B2B, beauty and clothing (Denney), making, repairing and renovating trades (Hoyos, Ramos), e-mails and articles (Shleyner), long films (Galloway); in the library beauty tools, shoes, earbuds, kitchen tests, fitness courses. Cold audience, unknown sellers too; goal stop and watch; run-time and conversion 
+  - who: Dara Denney (x-tec2-117); Jenny Hoyos (x-tec3-016); Paddy Galloway (x-tec3-043); Jacques Spitzer (x-tec2-127); Mario Joos (x-tec3-102)
+  - winners: o-tta1-005 o-meta4-015 o-meta4-010 o-platform-048 o-y3-003 o-meta1-022 o-tta3-006 o-y6-010 o-tec6-004 o-meta5-002
+- **m-005 Promise a true count of concrete things he can use, check or suffer himself (ways, signs, mistakes, stretches, oldest, worst), the first one already in the picture by second 2; a count under ten needs an odd angle or whose list it is; never bare 'reasons', 'tips' or 'elements'.** — list; for sell, click, seen; 4 people, 9 winners; strong
+  - film: 0-1 s: the number and the thing on screen, spoken by the person who does it daily; the first item is already in the picture by second 2. Short scenes, one per item.
+  - words: Exact number + 'ways' or 'reasons' + the big benefit. If short (under ten) add whose list it is or what is odd about it.
+  - where: Information, services, clothing with many articles, tours, law, pain relief; known and unknown sellers; goal read, click, buy (Pact's best ad of its year; Good Housekeeping 20 years unbeaten).
+  - who: Milt Pierce (x-tec5-071); Kaylin Parker (x-tec2-112); Jenny Hoyos (x-tec3-012); Robert W. Bly
+  - winners: o-tec5-010 o-uzman-028 o-abarsiv-007 o-meta6-019 o-y3-032 o-upw1-015 o-y6-027 o-y3-005 o-schwartz-106
+- **m-008 Let him test himself, or his own thing, on the spot** — puzzle; for sell, click, seen; 4 people, 7 winners; strong
+  - film: 0-1 s: the question whether his own is bad, as a person says it ('What's a super easy way to know if your mattress is awful?'), large on screen if there is no wild picture. 1-3 s: the test begins with something he has at hand (spoon, egg, phone screen, his own eyes).
+  - words: 'Do you recognise the seven early warning signs of ...?' / 'Does yours pass this test?' / a line written in the skill you sell.
+  - where: Dear rarely bought goods and troubles people secretly search (breath, bed, eyes, pressure), courses, software for trades; unknown sellers; cold, also people unaware of a trouble; goal click and buy.
+  - who: Daniel Bischoff (x-tec4-083); Jeff Harmon (x-tec4-088); Charles Inlander; Dr. Carly Rose (x-tec6-015)
+  - winners: o-tec4-031 o-satan-039 o-sugarman-047 o-caples-090 o-abarsiv-164 o-tec6-037 o-y1-030
+- **m-009 Show the thing that looks like no other in its trade** — odd_detail; for seen, sell; 5 people, 6 winners; strong
+  - film: 0 s: the one unusual sight of your product or craft, macro, moving: the purple grid pressed, the tool with golden pins, the cut-open marbled clay, the child's drawing beside its jewel. By 0.5-1 s three plain words say what it is. It must be a real property; if it is hidden inside, cut it open or turn it outward before filming.
+  - words: 'You've never seen a purple ice cream like this before.'
+  - where: Unusual colour, shape, tool, material; food, mattress, tinctures, dental, craft; cheap to dear; unknown seller; cold.
+  - who: Daniel Bischoff (x-tec4-085); Shizu Okusa (x-tec2-110); Dylan Lemay (x-tec6-040); Dr. Ashley (x-tec6-013); Kane Kallaway
+  - winners: o-y5-010 o-y2-004 o-y2-015 o-y4-006 o-y5-002 o-tec6-018
+- **m-015 Say in one breath what you will do and what may stand at the end** — unfinished; for seen, click; 3 people, 7 winners; strong
+  - film: 0-3 s: first person, one sentence: act, size, the thing that is open ('... until it's big enough to sit in', '... and I have no idea what's in them', '... if I mess this up the whole set is ruined'), while clips already show it. Two facts, not three. No 'let's get started'.
+  - words: One sentence: what, how much, what is not known yet.
+  - where: Challenges, commissions, renovations, craft, food; unknown sellers (potter, carpenter) to the largest; cold; goal watch, follow.
+  - who: Jenny Hoyos (x-tec3-019); Jimmy Donaldson (x-tec3-088); Paddy Galloway (x-tec3-079)
+  - winners: o-tec3-007 o-y6-031 o-uzman-084 o-y5-001 o-platform-053 o-tec3-004 o-uzman-023
+- **m-019 Say what he takes for granted, then one 'but' that turns it over** — odd_detail; for seen, click; 3 people, 6 winners; strong
+  - film: 0-1 s: show the thing he already admires or thinks he knows and say it in one short line. 1-2 s: stop, cut, 'but'. 2-3 s: the second half that kills the first (the famous part is the least of it; it looks like X and is not; it went wrong although it was the strongest). The answer comes later in the film.
+  - words: Two short sentences. First: what everybody holds true. Second: 'It is not ... / and yet ... / but it can ...'.
+  - where: Shown for tech, science and opinion shorts and history films (cold audience, goal watch), and in the library for estate agency, boots, soap-and-water trades and courses; both seen and unseen results; seller known or unknown. A sale straight from it is shown only by the piano course; Kallaway says B2B works too but inve
+  - who: Kane Kallaway (x-tec1-001); Paddy Galloway (x-tec3-080); Honia Kader (x-tec1-016)
+  - winners: o-tec1-004 o-y6-017 o-upw1-010 o-tec1-008 o-uzman-038 o-y5-006
+- **m-020 Cross two things that never meet, where one of them is the product itself, the skill it teaches, or the proof of what it does.** — odd_detail; for seen, click, sell; 4 people, 5 winners; strong
+  - film: 0-2 s: one still picture that holds the product (or its skill) and the one thing nobody puts beside it: spreadsheet cells to a dance song, beans on the breakfast biscuit, a man standing on two trucks. Straight face, nobody explains. Test before filming: take the odd thing away; if the claim loses nothing, change the pair.
+  - words: Join the two in one short line or one new word ('Build your body with your brain').
+  - where: Dull skills, food, trucks, commodity drinks, golf lessons, dental and health subjects; known and unknown sellers; cold; goal talk, watch, and in several winners sales (Weetabix +15%, Norton's courses).
+  - who: Kat Norton (x-tec6-050); Anders Eklind (x-tec4-060); Graham Goodkind (x-tec4-074); John Carlton (x-tec5-036)
+  - winners: o-satan-017 o-schwartz-045 o-tec4-029 o-upw2-033 o-schwartz-049
+- **m-030 Put the biggest moment first, then go back** — unfinished; for seen, click, sell; 4 people, 4 winners; strong
+  - film: 0-3 s: the peak or the finished thing itself (the trick works, the machine runs, the feeling is at its height, several days already passed in quick cuts). Then 'but first we go back to ...' or 'if yours does not do this ...'. Keep the how and the wobble open.
+  - words: First line is the finished fact or the hardest moment; second line goes back to where it began.
+  - where: Films over cheap everyday goods (Dr. Squatch, Native), builds and inventions (Rober), long challenges, pranks; in the library tools, filming tricks, gardens, beauty, drama. Unknown brands too; cold; goal stop, watch, and in Raindrop's films buy.
+  - who: Jacques Spitzer (x-tec2-122); Mark Rober (x-tec3-112); Jimmy Donaldson (x-tec3-003); Max Fosh (x-tec3-129)
+  - winners: o-tec1-005 o-y4-007 o-tec3-003 o-tta3-006
+- **m-044 Deal the sentence out piece by piece where the next piece comes by itself or costs nothing (next sign, sheet, slide, page, the second after the skip button); never as three dots at the end of an e-mail subject line.** — unfinished; for seen, click, sell; 1 people, 6 winners; strong
+  - film: 0-1 s: two or three words alone on the screen, sheet, sign or slide. 1-3 s: the next piece comes by a real move (sheet falls, cut, swipe, road sign). In a skippable film begin a new sentence just before the skip button shows.
+  - words: End the first screen, page, envelope or slide inside the sentence, at the word he wants; go on at once on the next. Slide one carries only the sharpest three words.
+  - where: Everyday goods dearer than usual (soap), services with a plain offer, letters and envelopes, carousels, roadside signs, charity. Cold and silent viewing; goal stop, next page, sale (soap, shaving cream).
+  - who: Dr. Squatch marketing team and Raindrop agency (x-tec4-044)
+  - winners: o-klasik-152 o-satan-080 o-uzman-067 o-upw2-002 o-tec6-005 o-klasik-066
+- **m-045 Say calmly, with the source in the picture, the one thing a trade or institution does not print: a practice, never a named rival, never 'you have been lied to'.** — insider; for click, sell, seen; 3 people, 4 winners; strong
+  - film: 0-1 s: the source itself fills the frame (label, price list, receipt), a thumb under one line. The speaker says calmly: 'This is what [the trade] does not print on the front.' 1-3 s: the first find is read from the source. Then the next one; the product is where the search ends.
+  - words: 'What [institution] does not tell you' / 'The [trade] hopes you will not see this' / take the market's proud word and say what it really means.
+  - where: Categories where buyers distrust everybody; consumer know-how, food with origin, SEO and other services, publications; cold; goal read, watch, buy. Seller unknown is enough if he shows his source.
+  - who: Mel Martin (x-tec5-088); Dara Denney (x-tec2-023); Shizu Okusa (x-tec2-109)
+  - winners: o-klasik-133 o-upw1-051 o-schwartz-053 o-schwartz-072
+- **m-046 Give a plain thing a new true name that says in itself what it is good for, how it is made, where it comes from or which day it is for (paparazzi-proof driveway, Pocket CB, Cumberland-spiced ...), and let the first picture show that meaning; never an odd name that has to be explained.** — odd_detail; for sell, seen; 1 people, 6 winners; strong
+  - film: 0-2 s: the thing in its place, in use; the maker says its new name as the plain end of a sentence: 'This is what a mud-proof hotel door looks like.' The picture shows in the same second what the name means (the mud, the hose, the dry floor). The name on screen in two to four words.
+  - words: Name the use or the unseen detail of its making ('Laser Beam Digital Watch', 'this pen burps before it drinks').
+  - where: Dull tools, house features, gadgets, pens, food; known or unknown seller; goal stop and remember, sales in print.
+  - who: Jenny Hoyos (x-tec3-020)
+  - winners: o-y6-018 o-sugarman-001 o-sugarman-088 o-hopkins-001 o-davranis-056 o-davranis-057
+- **m-052 Stop the first picture a blink before it happens** — unfinished; for seen, sell; 1 people, 5 winners; strong
+  - film: Frame 1: everything is ready and nothing has happened yet: countdown at 'one', lid half turned, blade at the edge, thumb on the button, door about to give. Hold 1-2 s, nothing else in the picture. Then it happens.
+  - words: Break the line at the word before the event ('We turned the key and').
+  - where: First frames and covers; cleaning, drains, cars, lamps, trees, toys; unknown sellers too; cold; goal stop and watch. A shop sale is shown by the lamp and the cookie ad only as long spend or run.
+  - who: Paddy Galloway (x-tec3-044)
+  - winners: o-y4-016 o-y4-022 o-tec6-010 o-tta2-006 o-y5-016
+- **m-053 Show a thing where it does not belong** — odd_detail; for seen, click; 1 people, 5 winners; strong
+  - film: 0-1 s: an everyday place, plain light; one thing in it is wrong (bees in a washing machine, a screw in a hoof, sunglasses in a bush, a tiny office under the stairs, a person wholly in foam). 1-3 s: a hand goes to it, nobody explains yet.
+  - words: Name the place and the thing in one plain sentence: 'Bees have been living in this washing machine.'
+  - where: Trades that find things (bees, hooves, drains), small visible products, dull tools, outdoor shoes; mostly cold audience and unknown sellers; goal stop; sale shown only as 'top ad for two clients' (Sanchez) and long run (NNormal).
+  - who: Savannah Sanchez (x-tec2-024)
+  - winners: o-tec6-027 o-y6-011 o-meta4-015 o-tec3-006 o-upw2-059
+- **m-054 Hold one small thing right at the lens and name it** — odd_detail; for seen, sell; 1 people, 5 winners; strong
+  - film: 0 s: the small thing fills the frame, sharp; the face behind it is a blur. 0-2 s: one plain sentence or a friend's question ('Have you seen these?', 'This was enough for a large load'). 2-3 s: what it is made of or what it did.
+  - where: Small cheap new products (rings, gum, detergent, pasta, watch), also by an unknown seller without a budget; cold; goal stop and buy (Groove Life) or watch.
+  - who: Bryant Garvin (x-tec4-048)
+  - winners: o-y5-002 o-tec6-011 o-y2-028 o-tec6-017 o-y5-016
+- **m-055 What the great ones do when they need it** — insider; for sell, click; 1 people, 5 winners; strong
+  - film: 0-2 s: the known user or the professional in his own need (dentist at the mirror, chef at his own table). Line: 'When [doctors / three names everybody knows] need ..., here is what they do'. 2-3 s: first move.
+  - words: 'When A, B and C need ..., here's what they do ...' Take the sale out of the headline.
+  - where: B2B software with real named clients, health, travel, money advice; warm and cold readers; goal read and buy.
+  - who: Conversion Rate Experts (x-tec5-101)
+  - winners: o-schwartz-029 o-abarsiv-087 o-schwartz-030 o-sugarman-071 o-klasik-080
+- **m-056 A riddle he solves by looking** — puzzle; for seen, click; 1 people, 5 winners; strong
+  - film: 0-2 s: one thing or a row of three to seven stands still and readable from frame one, label off or places empty, and one question stands on screen and is spoken: what does it cost, which is mine, what is wrong here, what is it called. The question must be solvable by looking. Two silent seconds for his answer. The answer comes inside the film. No prize for a guess.
+  - words: 'What's wrong in this picture?' / a guess with a clue ('rhymes with ...').
+  - where: Food before launch, cosmetics shades, small homes, soap, phones, cameras that film themselves, etiquette and decorating courses; cold and warm; goal comment, watch; readership and sale in print quizzes.
+  - who: Leah and Yasaman (x-tec3-138)
+  - winners: o-y6-014 o-sugarman-047 o-tta4-008 o-caples-007 o-y1-031
+- **m-057 Use the exact odd number, not the round one** — odd_fact; for sell, click, seen; 1 people, 5 winners; strong
+  - film: 0-1 s: the figure as it was counted, large and spoken (512, 7,800 percent, 97.1). 1-3 s: the thing it counts, in the hand. Test two or three true counts if there are several.
+  - words: 17 not 20, 1,226 not 1,000: in the headline, with what was counted.
+  - where: Any vague claim: gifts, building material, training, soap, opportunities; print, titles, still ads; unknown sellers; goal believe, click, order.
+  - who: Gary Bencivenga (x-tec5-011)
+  - winners: o-caples-042 o-uzman-008 o-davranis-098 o-chatgpt-013 o-davranis-010
+- **m-079 Point at the exact spot** — odd_detail; for seen; 2 people, 5 winners; fair
+  - film: 0 s: the thing or the fault large in the picture. Before 0.5 s an arrow, a finger or the mouse lands on the exact spot and stays; with it one to four words: what it is called or what to do ('Fix This', 'DON'T DO THIS', the exact name of the result). 1-2 s: the hand starts on that very spot. A speaker, if any, stands small below and points up.
+  - words: On a cover: remove the clutter, leave one thing large and a cursor on it.
+  - where: How-to, body posture, grooming, software, odd objects, other people's inventions shown by a talking head.
+  - who: Kane Kallaway (x-tec1-002); Glennda Baker (x-tec6-043)
+  - winners: o-y3-033 o-tec1-002 o-y1-032 o-tec6-032 o-tec4-011
+- **m-083 Turn the unseen effect into one object everybody knows** — odd_fact; for sell, seen; 1 people, 5 winners; fair
+  - film: 0-1 s: the stand-in object alone, doing what the product does inside the body or the machine (butter melting, a hose with a kink, a tomato under the brush, ten bags beside one). 1-3 s: the product stands beside it and one short line joins the two.
+  - words: Turn the figure into something he can picture: '5 miles of walking', 'Uber Eats for the sun'.
+  - where: Unseen results: slimming, gut, gums, vitamins, detergent power, steering, technical news; cheap and dear; unknown sellers too; cold; goal understand and buy.
+  - who: Ash Melwani (x-tec2-093)
+  - winners: o-satan-109 o-meta3-013 o-tec1-003 o-platform-049 o-davranis-067
+- **m-084 Show the true reaction first, its cause later** — odd_detail; for seen, click, sell; 1 people, 5 winners; fair
+  - film: 0-2 s: one face, close, at the first bite, look or touch; real and unrehearsed; the thing is outside the frame. One or two cuts later the cause. Brief the person to try it for the first time with the camera running.
+  - words: First person, the feeling first and the thing unnamed: 'I knew which one, and it still ...'.
+  - where: Things with an immediate effect: food, beauty, sunglasses, toys, pans, tested gadgets; emotional products; cold; goal stop, and sale in BluBlocker and Javvy.
+  - who: Dara Denney (x-tec2-086)
+  - winners: o-sugarman-011 o-satan-030 o-meta1-007 o-upw1-021 o-meta5-024
+- **m-085 Say the exact gain so plainly that it could stand as the title, and cover only the one move that brings it; never a vague 'trick' or 'secret' without the gain.** — insider; for click, sell; 2 people, 4 winners; fair
+  - film: 0 s: the gain itself as a picture that can be checked (a bottle that cannot be pulled through the lock, a dress without a crease). 0-2 s: one sentence with the exact gain and the place. 2-3 s: the hand starts the move and the body or a cut covers it. The move is shown whole in the last third. (No film in the library proves this; words do.)
+  - words: Read the product, mark a useful surprising instruction, write the gain and the place and hide the move: 'How to make your car very, very hard to steal' (page number behind it). On an envelope or thumbnail set: the four that touch four different everyday wishes
+  - where: Information, courses, guides, services with know-how, products people will ask about, case stories; mixed audiences; unknown sellers; goal open, read, watch to the end.
+  - who: Mel Martin (x-tec5-087); Gary Halbert (x-tec5-032)
+  - winners: o-klasik-132 o-upw2-021 o-sugarman-065 o-uzman-038
+- **m-096 Open a second question right after the first** — unfinished; for seen, click; 2 people, 3 winners; fair
+  - film: 0-3 s: the first hook. Then, before the first answer is finished, one line that promises a concrete second thing ('and that is not even the strangest part: wait for the drawer'), and again between value two and three. In a long film the second question stands by second 30 and a side story before the half.
+  - words: First sentence makes one point; second sentence names one more, still unseen, by a word the reader can picture ('... and the second photograph is worse').
+  - where: Teaching reels, tech shorts, long films; the people speak of watching to the end, not of selling; cold audience; every size of seller. In the library it also stands in repair, cleaning and phone-test films.
+  - who: Kane Kallaway (x-tec1-008); Honia Kader (x-tec1-014)
+  - winners: o-y2-030 o-y6-010 o-upw2-070
+- **m-099 Let one measured fact of the product speak** — odd_fact; for sell, seen; 1 people, 4 winners; fair
+  - film: 0-1 s: the measured fact stands on the thing itself and fills the frame: the dial, the scale, the stamp, the pour; a finger points and leaves. Hold it still to 3 s while one plain sentence says what it proves for him ('this engine has 389,000 miles and still runs'). Nothing else in the picture. A fact that answers no wish of the buyer is not used.
+  - words: Write the bland claim, ask 'because?', put the physical fact into the same line. Collect seven times more facts than you can use and take the one that surprises you.
+  - where: Me-too goods, price cuts, cars, soap, machines, old crafts, dog food; known and unknown sellers; goal believe and buy.
+  - who: Gary Bencivenga (x-tec5-004)
+  - winners: o-caples-042 o-sugarman-063 o-y1-018 o-sugarman-045
+- **m-100 Instead of an unknown person's name say his trade or the one trait that touches exactly what the product does or the thing that happens (the plumber before the drain, the one-legged golfer for balance); a role that changes nothing in this trade is left out.** — insider; for seen, sell, click; 1 people, 4 winners; fair
+  - film: 0-2 s: first line and title carry the role and the odd situation ('This Australian plumber was in for a surprise'); the person is at work in the frame. The name comes later, if at all.
+  - words: Replace the name by the trade or trait: 'one-legged golfer', 'I'm a forensic artist'.
+  - where: People your customers do not know by name; sport, trades, schools, golf; cold; goal stop.
+  - who: John Carlton (x-tec5-036)
+  - winners: o-tec6-010 o-satan-015 o-schwartz-045 o-upw1-008
+- **m-118 The odd means beside the trouble** — odd_detail; for seen, click, sell; 0 people, 4 winners; fair
+  - film: 0-1 s: the trouble close up (yellow tooth, gap, unplayed piano). 1-2 s: the unlikely thing comes in beside it (purple paste, yellow tape, a panel with numbers). 2-3 s: it touches the trouble. One fact why comes next.
+  - words: 'Here's a strange way to ...' / the cure's odd parts listed ('3 sticks, a nail, and a bucket').
+  - where: Visible results by unexpected means: whitening, dental work, learning music, fitness, rescue tools. Cold; goal stop, read, buy.
+  - winners: o-caples-082 o-y3-023 o-upw2-003 o-schwartz-049
+- **m-119 Open a closed thing slowly** — odd_detail; for seen; 0 people, 4 winners; fair
+  - film: 0-1 s: the closed lid, box, sleeve, door or plain block fills the frame. 1-3 s: a careful hand works at it; it gives a little; a slit. The inside stays unseen until second 3 or later.
+  - words: Name what it is closed on and for how long; the content comes in the next line.
+  - where: Drains, fridges, tool cases, furniture, parcels, phone cases, secret soaps; resale and restoration; cold; goal stop and watch; sellers unknown to large.
+  - winners: o-y4-022 o-tec6-010 o-tec6-042 o-tec6-027
+- **m-120 Stand where no customer ever stands and say in the first sentence what place it is and why it is closed to others; no guided tour of an ordinary room.** — insider; for seen, click, sell; 1 people, 3 winners; fair
+  - film: 0-1 s: either already inside, the owner walking at us with the odd place streaming behind him, or the dull outside with one dark door. First sentence names the place and whom it is closed to ('This is what a paparazzi-proof driveway looks like'). 1-3 s: one move without a cut further in.
+  - words: 'What they do to your dog when you are not there' / 'Inside ...'.
+  - where: Anyone with a workshop, vault, kitchen, plant, rare house; storage, estate agency, pet care; cold; goal watch; a lasting local ad (car storage) shown.
+  - who: Paddy Galloway (x-tec3-064)
+  - winners: o-meta6-001 o-y6-018 o-upw1-054
+- **m-122 To be seen: put the biggest true word or number into the first sentence (by its third or fourth word) and show in the same second the thing that proves it; no greeting, no 'in this film'. It does not by itself sell.** — odd_fact; for seen; 1 people, 3 winners; fair
+  - film: 0 s: the first word spoken and shown is the strongest one of the whole film (free, the sum, the record, the loss), with an act already running. Cut the modest lead-in. 2-3 s: the plain proof in the picture.
+  - words: Move the last, boldest true sentence to the front; slide one carries only its sharpest words.
+  - where: Business subjects, food shops, house tours, shorts and long films, carousels; known result and unknown face; cold; goal stop.
+  - who: Jenny Hoyos (x-tec3-015)
+  - winners: o-tec3-004 o-tec1-001 o-y5-023
+
+## TROUBLE — he recognises his own trouble (14)
+
+- **m-006 Put the commonest real doubt in the customer's own mouth (I / a comment / a person like him), never as 'you think...' reproach and not as a dull FAQ, and let the picture begin the answer within three seconds.** — objection; for sell, click, seen; 5 people, 7 winners; strong
+  - film: 0-1 s: the doubt as a person says it - a real comment on screen, an asker's voice, or 'I'd need a plumber for that' - spoken and written. Nobody points at the viewer. 1-3 s: the hands already do the first move of the answer (stopwatch starts, box opens, white mat gets wet). No argument yet.
+  - words: The gain and the biggest objection denied in the same line; or "No <time / skill / money>? Then …"; or "How do I know if …".
+  - where: Strange, dear or me-too offers; products one must choose or install; cold and warm; goal: buy, sign up.
+  - who: Conversion Rate Experts (x-tec5-102); Harry Dry (x-tec5-111); Dara Denney (x-tec2-087); Connor MacDonald; Mei Man
+  - winners: o-uzman-063 o-meta1-020 o-meta6-022 o-meta5-011 o-tec6-011 o-uzman-059 o-abarsiv-113
+- **m-007 Open with the fear or private thought he really has and the trade never says aloud (found in interviews or reviews, in his words), then the proof of care for exactly that.** — trouble; for click, sell; 7 people, 5 winners; strong
+  - film: 0-1 s: the thing he is silently afraid for, close, at the moment before it happens (the drawing on the fridge, the crutch by the bed). 1-3 s: his private sentence said quietly by one person, in his words. 3 s: the hand that takes care of exactly that.
+  - words: <Side trouble nobody names> is no joke. / Avoid <the feared thing>.
+  - where: Services with risk (moving, surgery, repair, child care), crowded problem categories, new product; cold; goal: call, buy.
+  - who: Talia Wolf (x-tec5-075); Clayton Makepeace (x-tec5-079); Joanna Wiebe; Robert W. Bly (x-tec5-048); Sarah Levinger (x-tec2-038); Alia Khan (x-tec6-048); Mei Man
+  - winners: o-abarsiv-151 o-meta1-010 o-abarsiv-091 o-tec5-001 o-satan-048
+- **m-012 Show what is wrong with the thing he uses without thinking** — mistake; for sell, seen; 6 people, 5 winners; strong
+  - film: 0-1 s: the ordinary thing itself, close, in his bathroom, kitchen or garage. 1-3 s: one half-sentence that says what it does wrong, and one picture of it. By second 5: the one decision in making yours that removes it ('different, because').
+  - words: <Ordinary thing> should be <what it should be>, not <what it is>. Then: because of this we …
+  - where: Crowded category, habit products, new kind of product; unknown brand; cold; goal: buy. Not needed for the first of its kind.
+  - who: Dr. Squatch marketing team and Raindrop agency (x-tec4-045); Eric Grunbaum (x-tec4-066); Cody Plofker (x-tec2-056); Fraser Cottrell (x-tec2-104); Mei Man (x-tec1-074); Hiroki Asai (x-tec4-080)
+  - winners: o-uzman-067 o-uzman-055 o-meta3-021 o-tec4-011 o-tta3-011
+- **m-013 One visible everyday trouble he already knows, shown in its real place in the first second and ended by the product in the same place; not for fun goods, not for a trouble he must first be taught, no script read at him.** — trouble; for sell, seen; 3 people, 8 winners; strong
+  - film: 0 s: the mess or the struggle in its real place, large. 0-2 s: the complaint in the buyer's words. 2-4 s: the product ends it in the same place.
+  - words: Tired of <one exact trouble>? / <Trouble> ruining <place>? then the thing.
+  - where: Everyday problem products, young brands, small budget; cold; goal: buy. Comedy waits until the plain ads pay.
+  - who: Davie Fogarty (x-tec2-079); Ryan Bartlett (x-tec2-121); Barry Hott (x-tec2-049)
+  - winners: o-satan-051 o-tta1-002 o-satan-054 o-meta1-021 o-y1-014 o-meta6-017 o-meta3-001 o-meta2-011
+- **m-026 Show one exact small moment of a trouble that very many share (the two seconds on the potty, the snagged stocking), seen from his own eyes; the moment is exact, the group stays wide.** — trouble; for sell, click; 3 people, 6 winners; strong
+  - film: 0-2 s: the exact small scene (the dodged high-five, the potty after two seconds), from his own eyes, words on screen as he would type them: 'POV: …', 'I hate …'. Nothing general.
+  - words: Replace the summary word by what it looks like on a Tuesday; copy it from reviews or comments.
+  - where: Embarrassing or everyday troubles, dull household goods too; feeds, pages; cold; goal: click, buy.
+  - who: Joanna Wiebe (x-tec5-059); Mei Man (x-tec1-072); Clayton Makepeace
+  - winners: o-meta5-005 o-meta4-013 o-meta3-001 o-satan-051 o-upw2-013 o-klasik-127
+- **m-037 Call one common rule or habit wrong and let the picture show the better way at once; never say how many people get it wrong as the whole point, never argue at length.** — mistake; for seen, click, sell; 2 people, 6 winners; strong
+  - film: 0-1 s: the common practice being done or read out. 1-2 s: "Don't." / a red F / a hand stops it. 2-3 s: the first proof that the opposite works.
+  - words: Forget what you know about X. / Common misconception about X. / Don't tell <people> to <usual advice>. Here's why.
+  - where: Professionals, crowded advice markets, beauty, pets, skills; cold; goal: watch, click, trust.
+  - who: Dara Denney (x-tec2-085); Cody Plofker (x-tec2-144)
+  - winners: o-klasik-060 o-uzman-009 o-upw2-046 o-abarsiv-118 o-y1-032 o-meta4-014
+- **m-061 Promise to show the (few, counted or "these") mistakes that even careful people make with a thing in which he cannot judge himself and fears the expert; never in matters of taste, and without scolding him.** — mistake; for click, sell; 0 people, 6 winners; strong
+  - film: Proof is print, mail and headlines; film not shown. 0-1 s: one of the mistakes being made by a hand, close, unnamed. 1-3 s: "These mistakes even careful <people> make with <thing>"; a number on screen counts 1 and the first one is stopped.
+  - words: Keep the skeleton, change the noun: Do You Make These Mistakes in/with <X>? The body gives the actual mistakes.
+  - where: Any product whose users make visible mistakes without it; language, vitamins, meetings, rooms, trades; cold.
+  - winners: o-klasik-124 o-schwartz-101 o-schwartz-047 o-sugarman-047 o-abarsiv-161 o-upw1-027
+- **m-065 First picture: the broken thing; then find the cause** — trouble; for seen, followers, sell; 2 people, 3 winners; strong
+  - film: 0 s: the sick part fills the frame, camera creeping in, complaint in one calm sentence ('this one was limping'). 1-3 s: the culprit is already half seen. Then hands take it apart.
+  - words: The complaint, then 'and as soon as I opened it I found out why'.
+  - where: Repair, cleaning, animals, dental, inspection; work outsiders never see; unknown; cold; goal: watch, trust, send in.
+  - who: Nate the Hoof Guy (x-tec6-052); Sherwood Cooke Jr. and III (x-tec6-010)
+  - winners: o-tec6-028 o-y5-012 o-tec6-039
+- **m-067 The tradesman himself warns of a danger** — warning; for seen, sell; 0 people, 3 winners; strong
+  - film: 0 s: owner's face at his place of work, name on the shirt, something broken in hand. 0-3 s: the danger with its small cause and its big cost; how to know the real from the copy.
+  - words: I'm <name>. <Small cause> destroys your <dear thing>.
+  - where: Cars, tools, law, money duties, copied products; known maker or local expert; cold and warm; goal: trust, buy the real one.
+  - winners: o-meta4-014 o-meta3-014 o-tec6-008
+- **m-072 In a film he may skip, hold name and pack back while one true story or one trouble stands (at most about second 15 to 37), when the aim is being watched, passed on or believed; not for a cheap thing understood at once, not where the name must be learnt (then a small mark in the corner).** — trouble; for seen, sell; 4 people, 4 winners; fair
+  - film: 0-3 s: one person and one trouble or one small true event, already under way; no name, no pack, no mark, no seller's word. Next 10-30 s: the same event goes on and gets worse or closer. Then the thing enters as its answer, shown in use, and only then the name.
+  - words: First paragraph without your name; the product enters as the answer.
+  - where: Cold audience, problem products, founder with a true event, known shop in season. Not for a cheap thing understood at once (Dubin gives price and product in the first breath).
+  - who: VP of marketing of Caraway (x-tec2-113); Barry Hott (x-tec2-049); Sarah Levinger (x-tec2-038); Les Binet (x-tec4-078)
+  - winners: o-satan-021 o-satan-003 o-klasik-150 o-meta5-018
+- **m-080 The one who doubted it is the one who tells** — objection; for sell, click; 2 people, 5 winners; fair
+  - film: 0-2 s: text or voice: the doubt in past tense ("I thought this was a scam", "my teenagers are too cool for everything"). Cut before the reason. 3 s: the moment that turned it, in the picture.
+  - words: I thought <doubt>. / <The hardest person to please> <did the surprising thing>.
+  - where: Unknown online seller, dear fun goods, food for children, crowded categories; cold; goal: buy.
+  - who: Dara Denney (x-tec2-002); Mei Man (x-tec1-075)
+  - winners: o-tec1-011 o-sugarman-026 o-uzman-019 o-caples-046 o-upw1-052
+- **m-092 For a young or unknown seller whose product replaces a known chore or disliked form: one line leaves the old thing behind while its successor is already seen at work within three seconds; name the old KIND, not a firm.** — enemy; for sell; 0 people, 6 winners; fair
+  - film: 0 s: the old thing or old chore (the pile of tools, the glue, the heater) with a line over it: NEVER … AGAIN, or a note on it: 'I don't need this because …'. 1-3 s: one move of the new way.
+  - words: Never <old chore> again. / You don't have to settle for <old way> that <its exact trouble>.
+  - where: Products that replace a chore or a disliked form; household, craft, dental, pets; unknown seller; cold; goal: buy.
+  - winners: o-meta3-021 o-tta3-015 o-meta5-014 o-uzman-060 o-tta3-011 o-meta4-011
+- **m-124 Test a rumour in front of the camera** — objection; for seen; 1 people, 3 winners; fair
+  - film: 0-1 s: the thing at the lens, the size of it clear. 1-3 s: the claim that really goes round, with its number, "I've been told …" or "is it really as … as they say?", and behind it the test already standing (crane, stopwatch, scale); the first move of the test.
+  - words: They say <claim with number>. We tried it.
+  - where: Materials, food, gadgets, places, records; low budget; cold; goal: watch.
+  - who: Jenny Hoyos
+  - winners: o-y3-006 o-y5-004 o-uzman-043
+- **m-125 In a letter, message or reminder to one person who still has a due step to do (pay, file, book, sign): the true, high, local share who have already done it, and then "you are one of the few who have not yet".** — warning; for click, sell; 0 people, 4 winners; fair
+  - film: Not shown in any film of the library. As a sent clip: 0-1 s: the row of doors (lockers, flats, shops) each with a tick; 1-3 s: the one without; text: "<true n> of <n> have done it. Yours is one of the <few> left." and the one step.
+  - words: <n> percent of <people like you> have already … You are one of the few who have not.
+  - where: Duties, filing, habits, courses, event of the week; own list or a clear group; goal: act.
+  - winners: o-davranis-022 o-davranis-026 o-davranis-010 o-davranis-041
+
+## GAIN — he sees what he gets (11)
+
+- **m-010 For people who already know you and on a true day: the concrete offer (price, bundle, struck old price) stands first and largest, next to the product itself or with half a sentence of what it does for the buyer; a picture in the feed that says only 'x% off everything' is not it (as an e-mail subject the percent first did win, o-uzman-072).** — offer; for sell; 4 people, 7 winners; strong
+  - film: 0 s: product + price or gift in the biggest type the frame holds, true old price beside it, true date under it. No list of claims, no pleading. Before the sale: 'Mark your calendars' and the date, nothing else.
+  - words: Offer in the buyer's own world as subject: '10% off comfort you can actually work in'. Start with the offer, then the occasion.
+  - where: Followers, past buyers, carts, true sale days; categories with close prices; local shop; everyday goods. Still pictures rather than film in the sale week (Mei).
+  - who: Margarita Schneider (x-tec1-045); Mei Man (x-tec1-091); Alex Trinkle (x-tec6-025); Danny Zee (x-tec2-059)
+  - winners: o-platform-012 o-platform-016 o-platform-020 o-uzman-072 o-uzman-075 o-caples-051 o-abarsiv-141
+- **m-017 A big job in an exact short time** — fast_easy; for sell, click, seen; 3 people, 7 winners; strong
+  - film: 0 s: the result or the tool, and over it the two numbers: big thing, small time ('30 days of content in 30 minutes', '5-minute makeup routine'). Clock or grid in the picture. Start at once and keep inside the time.
+  - words: '[Whole result] in [exact time]'. Odd exact numbers, no age, no sex, no platform named. For teaching: 'N years in M minutes'.
+  - where: Routines, courses, software, repairs, kits; cheap to middle price; broad cold public and own followers; click, watch, buy.
+  - who: Dara Denney (x-tec2-090); Kallaway (x-tec3-038); Alex Hormozi (x-tec1-102)
+  - winners: o-uzman-020 o-uzman-021 o-klasik-120 o-abarsiv-147 o-abarsiv-098 o-upw1-034 o-caples-076
+- **m-023 In a headline, subject line or first sentence for people who have the need: a verb and a visible or countable result first, and the thing named at once in the same line ('Effectively discipline your tween - get the free e-mail series'). Not the benefit alone in a cold ad for a free thing. For film it is not shown.** — plain_gain; for click, sell; 2 people, 7 winners; strong
+  - film: Not shown by a film winner; use it as the first plate or spoken line only together with another film opening of the library. 0 s: the result already true in the picture; plate: result and thing in one line ('4 hours back a week: hand me the shoebox').
+  - words: Verb + result + the thing: 'Get relief for your weekly migraines', 'at least one more hour of productive time each day'. Turn a resolution ('get organised') into a countable gain per day. Title and noun-phrases become a result.
+  - where: Pages and letters for people with a need, courses, tools, health, home; little-known ingredient or method; goal click, request or buy. Aagaard: for visitors who come by search the benefit line was best, loss second, question last.
+  - who: Michael Aagaard (x-tec5-062); Robert W. Bly (x-tec5-072)
+  - winners: o-abarsiv-042 o-caples-067 o-abarsiv-021 o-abarsiv-043 o-abarsiv-142 o-schwartz-051 o-chatgpt-016
+- **m-032 Name the kind of thing in plain words on the picture within the first second, over the thing already moving or in use; the words never stand over a still picture or a still speaker.** — plain_gain; for seen, sell; 2 people, 6 winners; strong
+  - film: 0 s: the thing itself, large, already moving or being used (bed comes down, buggy climbs, a pelvis rocks). By 0.5 s three to five bold words say the kind of thing, not an unknown brand name, e.g. 'DIY WALL BED KIT'. Two lines at most, thing and face left free. If a voice speaks, it says the same by 2 s. No greeting.
+  - words: First words: 'This is the X' or '[thing] for [whom]'. Delete the first two lines of the draft and start where the topic first appears. Category word before brand word when nobody knows the name.
+  - where: Unknown product, new category or anything that needs explaining; unknown seller; cold people, often with the sound off; sale and watching. Winners: heat pump, music box, portable power, dog gravy, physiotherapy, woodstain. Not shown for well-known pleasures (chocolate).
+  - who: Kane Kallaway (x-tec1-002); Andrew Faris (x-tec2-077)
+  - winners: o-meta2-013 o-satan-078 o-meta2-008 o-meta5-002 o-y5-002 o-uzman-046
+- **m-033 Where people already look for the thing or already stand on the page (search ad, page headline, menu, button, catalogue title, teaching title): say exactly what it is, for whom and where; no pun, no club name, no slogan. Not for cold feed ads or entertainment.** — plain_gain; for click, sell; 4 people, 4 winners; strong
+  - film: Cover, first frame and first sentence say exactly what is inside. Show the film five seconds to a stranger and ask what is sold; if he cannot say, take the plain second line and put it first and large.
+  - words: What it is, where, for whom, in the searcher's words; no pun, no club name, no brand promise. Swap headline and subhead when the clear one stands below.
+  - where: People already searching or already on the page: paid search, shop, menu, button, book title, teaching film, e-mail. Cold entertainment is not shown.
+  - who: Michael Aagaard (x-tec5-061); Alex Hormozi (x-tec1-106); Andrew Faris (x-tec2-077); Oli Gardner (x-tec5-109)
+  - winners: o-tec5-008 o-abarsiv-027 o-abarsiv-057 o-klasik-029
+- **m-058 Pay the click in the first seconds and stay on the promise** — plain_gain; for seen; 5 people, 1 winners; strong
+  - film: 0 s: the very picture or words that were clicked. To second 7: what this is. Then no name, biography or rules; the join is already the story. In the first half nothing that is not in the place and the trouble of the title.
+  - words: The first sentence under a headline repeats its promise in other words.
+  - where: Long films, landing pages, ads from a strong cover; every seller; goal stay.
+  - who: Paddy Galloway (x-tec3-084); Jimmy Donaldson; Chucky Appleby; Airrack (x-tec3-124); Colin Rosenblum and Samir Chaudry (x-tec3-074)
+  - winners: o-uzman-046
+- **m-064 Rename the thing so that the name alone says what he gets** — plain_gain; for sell; 0 people, 5 winners; strong
+  - film: First words on screen, sign or menu are the name: taste, place or use in it (Cuban Black Bean Soup; The Queen of Christmas Presents).
+  - words: Take the virtue or category word out, put taste, place, use or occasion in: 'Cumberland-Spiced Veggie Sausage & Mash' for 'Meat-Free Sausage and Mash'.
+  - where: Menus, shop cards, books, gifts, small services with little advertising money; everyday and cheap goods.
+  - winners: o-davranis-056 o-davranis-057 o-davranis-060 o-klasik-029 o-davranis-061
+- **m-069 When the first aim is a name, a request or a first taste (not a sale today): open with one named free thing shown or said whole (guide, list, catalogue, food sample, first wash) together with what it does; not for health and beauty goods.** — offer; for click, sell; 1 people, 8 winners; fair
+  - film: 0 s: the free thing itself in a hand, big, its cover or portion readable (list, guide, catalogue, a spoonful of the food). 1 s: one sentence: what it is, how much of it, which trouble or pleasure it brings. 2.5 s: how to get it (one word, postage, at the door). The paid product is not shown yet.
+  - words: 'Get the free ...' names the thing; subject line gives a real nugget before anything is sold.
+  - where: Cold strangers; dear or considered purchase; services; cheap product of unseen quality (tester for postage); expert's own account.
+  - who: Harry Sanders (x-tec1-122)
+  - winners: o-caples-031 o-hopkins-029 o-abarsiv-013 o-abarsiv-053 o-caples-055 o-sugarman-052 o-abarsiv-025 o-sugarman-048
+- **m-075 Say it in the buyer's word, not the trade's** — plain_gain; for click; 2 people, 5 winners; fair
+  - film: Take the first spoken sentence; replace every trade word by the word buyers type, say or write in reviews. Put that word on the plate at 0 s and show the thing under it.
+  - words: Collect one blank sentence from visitors ('I want a wallet that ____'), reviews, search counts; take the phrase of the biggest pile as headline. Replace local names by words the whole world knows. A series gets the name its viewers already use.
+  - where: New or technical products, expert services, crowded shops, global accounts; cold people and people who are searching. Cheap and dear.
+  - who: Sarah Levinger (x-tec2-053); Joanna Wiebe (x-tec5-058)
+  - winners: o-abarsiv-144 o-abarsiv-160 o-abarsiv-093 o-abarsiv-027 o-abarsiv-142
+- **m-078 A small honest condition, then the strong promise** — fast_easy; for sell; 2 people, 5 winners; fair
+  - film: 0 s: the small cost in the picture (a minute on a clock, one sheet, one tool). Sentence: 'If you've got N minutes ...' or 'Give me N minutes'. Same sentence: what he gets. Next lines: why so little is enough.
+  - words: 'If you've got 20 minutes a month, ...'; 'Spend a minute. Save an hour.'
+  - where: Promises nobody believes any more: courses, newsletters, health habits, planners; cold mail, explaining film.
+  - who: Gary Bencivenga (x-tec5-002); Dara Denney (x-tec2-004)
+  - winners: o-schwartz-025 o-schwartz-024 o-schwartz-043 o-schwartz-052 o-schwartz-063
+- **m-089 Find in your best film, reviews or best buyers the one reason they really give for buying, and put that first in plain words, before the merits of the thing; do not guess a dream.** — wish; for sell; 3 people, 3 winners; fair
+  - film: Take the best film or the best customers; find the detail that really sells (looking good, saving tax, being ready in five minutes). 0 s shows only that, on a person in use. Merits (titanium, formula) come later.
+  - words: Headline = the wish, though the product does not carry the word ('The Ultimate Tax Shelter'); or what owning it says about him ('You don't need accessories, you need gear').
+  - where: Things others see on you, dear everyday objects, books and services with a consequence; accounts that already have a winner to study.
+  - who: Jacques Spitzer (x-tec2-125); Ted Nicholas (x-tec5-054); Dara Denney (x-tec2-014)
+  - winners: o-tec5-003 o-uzman-021 o-caples-072
+
+## TRUST — he believes a person (25)
+
+- **m-011 They laughed, then they saw** — story; for sell, seen, click; 2 people, 9 winners; strong
+  - film: 0-1 s: the face or words of the one who laughs or doubts. 1-2 s: the silly-looking start. 2-3 s: a first flash of the triumph (the pavement under the grass), cut away before all is seen.
+  - words: They laughed when I … But when I … / She thought I was crazy until …
+  - where: Skills, courses, cleaning, restoring, new small shops; unknown seller; cold; goal: watch, order.
+  - who: Paddy Galloway (x-tec3-057); Spencer (x-tec3-137)
+  - winners: o-caples-101 o-caples-102 o-caples-001 o-klasik-125 o-uzman-022 o-tec3-005 o-davranis-080 o-y4-019 o-tec6-040
+- **m-022 Open with one real customer's odd, funny or begging sentence (never a plain FAQ, never an invented one) and within three seconds act it out, read it aloud or do what it asks.** — customer; for seen, sell; 4 people, 5 winners; strong
+  - film: 0 s: the comment, note or wish itself is in the picture, from a real customer (name hidden). 1-3 s: you do what it asks, act it out, or read the strangest line aloud.
+  - words: 'This showed up in our mailbox.'
+  - where: Florist, sweets, bakery, crochet kits, jewellery, sponges, orthodontist, gadgets; small sellers; warm and cold; goal watch, trust, buy.
+  - who: Dounia Faydi (x-tec6-067); Ash Melwani; Aaron Krause; Eric Baldwin
+  - winners: o-y6-032 o-meta1-013 o-tta2-010 o-tec4-008 o-upw1-057
+- **m-025 Open in the real workroom with the real person who makes or sells it** — maker; for sell, seen; 3 people, 6 winners; strong
+  - film: 0 s: the true room with the work already moving (syrup on the table, butter in the pan, parcels being taped), no set, no greeting. 0-2 s: the owner or worker stays at it and says in his own dialect what he is doing this minute. 2-3 s: hands on the product, close.
+  - words: Written from the bench: where he stands, what he is doing at this minute.
+  - where: Makers, food, gifts, shops, garages, remote sellers; unknown, small budget; cold; goal: order, follow.
+  - who: Michael Dubin (x-tec4-023); Nicola Johnston (x-tec6-030); Emma and Stuart Colclough (x-tec6-062)
+  - winners: o-satan-037 o-y2-020 o-tec6-016 o-meta2-001 o-y2-018 o-meta5-008
+- **m-036 ONE exact sentence of one real customer that names a common trouble or result, alone and short (or the decisive words marked); never rotating testimonials, general praise or an unmarked wall of text.** — customer; for click, sell; 4 people, 4 winners; strong
+  - film: Winners are stills, headlines and cards, not films; as a film: 0 s the quote stands alone in big letters over his own photo or the real place, with first name, at most three lines. 1-2 s a marker pen runs under the two or three words of the result. 3 s the product.
+  - words: Quotation marks, at most three lines, first name. Simple past 'I' sentence; or a stranger's review phrase copied word for word.
+  - where: Any product with real reviews, also shy subjects; trust-poor categories; stills and pages above all; cold; goal: click, buy.
+  - who: Joanna Wiebe (x-tec5-057); Ash Melwani (x-tec2-092); Mei Man (x-tec1-080); Ted Nicholas (x-tec5-097)
+  - winners: o-abarsiv-091 o-abarsiv-008 o-platform-015 o-caples-002
+- **m-038 Say your own weak point first** — honest; for sell, seen, click; 2 people, 6 winners; strong
+  - film: 0-1 s: the flaw in close-up or the plain sentence about it, no music trick. 1-3 s: the true cause, which is also the gain, or what you did about it.
+  - words: The awkward fact as headline (We are No. 2; our worst result; you can't … without …), then the reason it speaks for you.
+  - where: Known drawback, price, small size, warnings; sceptical buyers; services with tracked results; known and unknown; goal: trust, buy.
+  - who: Michael Corcoran (x-tec4-037); Drayton Bird (x-tec5-043)
+  - winners: o-klasik-142 o-satan-105 o-sugarman-026 o-y5-014 o-klasik-141 o-upw2-052
+- **m-039 One question a customer really asked, answered by the expert's own face** — expert; for sell, seen, followers; 3 people, 5 winners; strong
+  - film: 0 s: the expert in his real place on the way to work (chair, court, shop), coat with name, and the customer's exact question stands on his chest in a box from the first frame. 0-2 s: he reads or repeats it in her words. 2-3 s: the first half of a straight answer. One question per film, from the person's own account.
+  - words: The question itself as title, answered in the first sentence.
+  - where: Clinics, lawyers, advisers, beauty, trades; local; shameful or dear matters; cold; goal: visit, call.
+  - who: Suhail Mohiuddin; Alia Khan (x-tec6-048); Cody Plofker (x-tec2-144)
+  - winners: o-meta3-016 o-uzman-009 o-meta6-022 o-meta3-022 o-upw1-065
+- **m-040 Founder: my name, my firm, what it is, in one breath** — maker; for sell; 2 people, 6 winners; strong
+  - film: 0 s: founder already moving or with the thing in hand, real place; name and 'founder' written on screen. 0-2 s: "Hi, I'm <name>, founder of <firm>." 2-3 s: what it is, price or the one thing it does.
+  - words: I'm <name>, <title> of <firm>, and I make <thing> for <people>.
+  - where: Cheap everyday goods, inventions, local services; unknown seller; cold; goal: buy. Denney: US audience above all; other countries not shown by her.
+  - who: Michael Dubin (x-tec4-020); Dara Denney (x-tec2-022)
+  - winners: o-satan-037 o-satan-053 o-satan-057 o-satan-046 o-klasik-088 o-meta5-008
+- **m-049 The founder's one true event is the buyer's own trouble, said in one sentence with the thing or prototype in hand; for selling an unknown or dearer product, renewed when it tires.** — maker; for sell, click, seen; 4 people, 3 winners; strong
+  - film: 0-2 s: founder, plain place (kitchen, workshop): the event or the failed tries, one sentence. 2-3 s: first prototype, old photo or old footage of the making. The brand name may wait.
+  - words: Tired of <thing>? So was I. / My own true event in the first sentence, then what I made.
+  - where: Young or unknown seller, dearer than usual, health-related household goods; any sector; cold; goal: buy.
+  - who: VP of marketing of Caraway (x-tec2-113); Dara Denney (x-tec2-006); Fraser Cottrell (x-tec2-103); Daniel Bischoff (x-tec4-086)
+  - winners: o-upw1-007 o-davranis-080 o-uzman-012
+- **m-059 Show the mistake or wrong guess in your own work** — honest; for seen, followers, sell; 2 people, 4 winners; strong
+  - film: 0-1 s: the moment it goes wrong, in the hands. 1-3 s: 'we have never … well, now we have', or the first wrong guess said aloud; then the search for the cause.
+  - words: How we ruined <thing>, and what it taught us. / exact sum my mistake cost.
+  - where: Distrusted repair, crafts, dear rare purchases, advisers; local or online; unknown; cold; goal: trust, call, order.
+  - who: Sherwood Cooke Jr. and III (x-tec6-010); John Saunders (x-tec6-066)
+  - winners: o-y2-022 o-y2-012 o-y5-014 o-y1-027
+- **m-060 Do it for one named person, for a true reason** — story; for seen, followers, sell; 4 people, 2 winners; strong
+  - film: 0-2 s: who it is for and why, in one sentence, while the hands already work. 2-3 s: one flash of the end (handing over), cut before the face reacts.
+  - words: Making <thing> for <person> because <true reason>.
+  - where: Handmade, repair, local service, small stakes; unknown; cold; goal: watch, follow, order.
+  - who: Spencer (x-tec3-136); Jenny Hoyos (x-tec3-011); Garbo Zhu (x-tec6-029); Jim McFarland (x-tec6-053)
+  - winners: o-tec6-020 o-tec6-033
+- **m-062 Half a small private story in the headline, then stop** — story; for click, sell; 0 people, 6 winners; strong
+  - film: Proof is headlines, letters and print. 0-1 s: the awkward second itself, frozen just before the turn (the laughing faces, the hand on the piano lid). Text or voice: the one half sentence with its "so I …" or "but when I …". 3 s: still no end; the film tells it fully.
+  - words: My <person> <did awkward thing>, so I … / She could hear every word, so she …
+  - where: Everyday product with a private annoyance, skills, causes; unknown; cold; goal: click.
+  - winners: o-caples-101 o-upw1-075 o-klasik-136 o-caples-001 o-klasik-127 o-caples-102
+- **m-066 One true private event, told by the one who lived it** — story; for sell, seen; 4 people, 1 winners; strong
+  - film: 0 s: the one who lived it, alone, where it happened or across a table, already speaking; no music, no logo. 0-3 s: the event itself as first sentence, exact (day, sum, place), then one second of silence. If he is unknown, the thing that proves it lies in the frame.
+  - words: I have <event>. / The exact mistake and the exact sum, first line.
+  - where: Creators living the situation, advisers, family goods, things of taste; cold; goal: trust, buy.
+  - who: Dara Denney (x-tec2-011); Glennda Baker (x-tec6-042); VP of marketing of Caraway; Daniel Bischoff
+  - winners: o-davranis-080
+- **m-070 A short letter or e-mail from one real named person to people who already know him, his post or his house (customers, members, staff, people who asked); if the name is unknown, the house stands beside it in the sender line.** — maker; for click, sell; 2 people, 7 winners; fair
+  - film: Still for a feed: 0 s: a phone or paper page filling the frame: From: <real name, house>; Subject: <short, as to a colleague>; "Dear …" and the first sentence in readable size, a hand-written name below. For a film: 0-3 s: that person alone, sitting, one lens, says only the first sentence of his letter. Nothing that sells in the frame.
+  - words: Sender = a person; subject like a colleague's ('Quick question'); first line to him alone.
+  - where: Launches, sales, dear offers, causes, advisers; own customers above all; goal: open, buy, give.
+  - who: Mei Man (x-tec1-078); Gary Halbert
+  - winners: o-davranis-007 o-abarsiv-066 o-klasik-088 o-davranis-003 o-klasik-104 o-abarsiv-092 o-abarsiv-065
+- **m-073 Something everybody knows, with one thing changed** — borrowed; for sell, seen; 3 people, 5 winners; fair
+  - film: Second 0: a form everybody knows at a glance and exactly right in every detail (a car commercial at sunset, the witch's house, the carrot on Christmas night). Second 1-2: exactly one thing is wrong, and it is yours (the driver turns and says it is an ad for washing powder; a shake instead of the children). Second 3: the first sentence says the change. Nothing else is changed.
+  - where: Series, odd or new products, cold audience.
+  - who: Daniel Harmon (x-tec4-006); Mario Joos (x-tec3-097); Jamie Peate
+  - winners: o-uzman-007 o-satan-008 o-satan-020 o-satan-069 o-uzman-001
+- **m-081 When the picture itself is strong (hands at work, a find, a big act), say the first line as to a friend: low, natural, tight, no greeting, no shouting. Not for live selling and not for a talking head without anything to see.** — maker; for seen; 3 people, 4 winners; fair
+  - film: 0 s: close on the thing in the hands or the find, nothing else in the frame; the camera creeps nearer. 0-2 s: one tight sentence in the everyday voice, recorded close, that says what is wrong or what he found. No greeting, no music on top, every pause cut. 2-3 s: the first move of the hand.
+  - where: Hosts, owners, trades on camera; feeds; cold; goal: watch, trust.
+  - who: Jimmy Donaldson (x-tec3-093); Nate the Hoof Guy (x-tec6-052); Miles Laflin
+  - winners: o-tec6-028 o-y2-029 o-y4-005 o-y1-023
+- **m-093 Take one thing customers REALLY tease or rate you down for (their clip, their one-star line), show it untouched first and own it in one dry line tied to your price or product; only where the value is sure.** — honest; for seen, followers, sell; 3 people, 3 winners; fair
+  - film: 0-2 s: the complaint as customers say it, their clip or their line. 2-3 s: hard cut to the brand, its figure or its product, one dry line that owns it and is tied to the price or the product.
+  - words: Print the one-star review, or 'what you expect for <low price>'; or admit in huge letters that this is an advertisement.
+  - where: A brand with a known quirk or weak point, or a cheap new brand; social feeds; goal: reach, being liked, sales where the value is sure.
+  - who: Zaria Parvez (x-tec4-033); Michael Corcoran (x-tec4-037); Dara Denney (x-tec2-019)
+  - winners: o-tec4-001 o-satan-105 o-klasik-140
+- **m-094 The person from whom nobody expects it does the very thing that is sold, and his unlikeliness touches exactly that skill; the result is seen or provable, the how stays open.** — story; for seen, sell; 1 people, 5 winners; fair
+  - film: 0 s: the unlikely person plainly seen (age, body, place) with the tool of the skill in his hand, others watching. 1-3 s: he begins to do it and it works: first stroke, first word read, first note; a face beside him changes. One line: who he is and what he does. No explanation.
+  - words: How a <plain, unlikely person> <startling result>. / I am not a doctor …
+  - where: Markets where buyers were disappointed by experts; skills, sport, courses, home products; unknown seller; cold.
+  - who: John Carlton (x-tec5-038)
+  - winners: o-schwartz-045 o-y2-001 o-caples-101 o-caples-102 o-sugarman-082
+- **m-095 On a daily account whose goal is to be seen and followed: take the topic of the day only the same day and only if your thing does its one true job inside it in one plain line; otherwise let it pass. Not a plan for bringing customers.** — borrowed; for seen, followers; 4 people, 2 winners; fair
+  - film: The same day. Second 0: the thing everybody talks about is seen at once (two flags, the named storm, the pie behind bars). Second 1-2: your thing at its ordinary work inside it (two confectioners snapping candy for two teams). Second 3: one line in which it would have helped, or the rival's own phrase turned. Nothing ready within the hour: no film.
+  - words: One line under the news: the product would have helped, or the rival's own phrase turned.
+  - where: Airline, language app, chocolate, supermarket, soap, candy; daily accounts; known and small sellers; goals be seen and remembered.
+  - who: Michael Corcoran (x-tec4-038); Zaria Parvez (x-tec4-035); Snickers team at Mars and BBDO (x-tec4-070); Dave Price (x-tec4-072)
+  - winners: o-tec6-004 o-klasik-100
+- **m-108 Promise what he gets and, in the same breath, show ONE checkable number from your own work (years, count, meter reading); never a bare name and title, never the firm's fame alone.** — expert; for seen, click; 2 people, 3 winners; fair
+  - film: 0-1 s: the number itself fills the picture (finger on the meter, hand on the stack of finished job tickets) while the voice says what the viewer gets: 'I'll show you how to make your engine last.' 1-3 s: voice says the number once, the shot stays on it. 3 s: the first tip. No name, no greeting.
+  - words: Promise and proof in the same line: what he gets + the years, the count or the profession that makes it true. The promise is never bigger than the proof.
+  - where: Teaching and service sellers (agency, lawyer, repair, courses); unknown or known teacher; cold, distrusting audience; goal: watch on, enquire. Not shown: everyday shop goods.
+  - who: Alex Hormozi (x-tec1-105); Jen Gottlieb (x-tec1-012)
+  - winners: o-y1-018 o-chatgpt-006 o-caples-104
+- **m-109 For selling, not for reach: a real buyer's own phone film, unscripted, whose most surprising sentence about what changed is cut to the very front; then she shows the thing in use.** — customer; for sell; 4 people, 1 winners; fair
+  - film: 0 s: her own phone film, face to camera in her kitchen, car or gym, already in the middle of the strongest sentence ('My husband tied my shoes. Since March I tie them.'), same words on screen. 2-3 s: she does it in front of the lens. No greeting, no product facts; other short voices only at the end.
+  - words: Open with the then-and-now of one named person in one sentence.
+  - where: Everyday and dear goods, health, gyms, trades; unknown brand; cold; goal: buy, call.
+  - who: Ezra Firestone (x-tec2-062); Moiz Ali (x-tec2-083); Alex Hormozi (x-tec1-099); Stanford "Mr Hutchie" Hutchinson (x-tec6-068)
+  - winners: o-meta4-007
+- **m-110 How I did it, not how to do it** — story; for sell; 0 people, 5 winners; fair
+  - film: Proof is headlines; film not shown in the library. 0-1 s: the low start and the finished proof in one picture, both in the hands of the one who did it. 1-3 s: "How I <exact thing>, after <low start>".
+  - words: How I <result> / How a <odd small event> made me <result>, with the low start or odd cause.
+  - where: Courses, trades, makers, advisers with real work behind them; cold; goal: read, order.
+  - winners: o-caples-073 o-caples-084 o-caples-086 o-caples-008 o-caples-076
+- **m-115 The unknown thing said through a name everyone knows** — borrowed; for seen, sell; 2 people, 3 winners; fair
+  - film: Second 0: your strange thing in the hand, close. Second 0-1: voice and big letters say the likeness with the known name in it ('This is like an AirTag, turbocharged', 'It's like Uber Eats for the sun'). Second 2-3: the known thing is seen and shown to fall short, or yours does the one thing more (the hammer, the globe full of pins). Your own name is on the thing from second 0.
+  - words: 'X for Y' or 'the Mozart of Gen Z' in title and first sentence.
+  - where: New, technical or dull things, unknown experts; seller unknown; cold; goals watch and buy.
+  - who: Kane Kallaway (x-tec1-005); Colin Rosenblum and Samir Chaudry (x-tec3-075)
+  - winners: o-tec1-003 o-sugarman-002 o-meta6-016
+- **m-116 Your thing beside the famous shop's, in the first frame** — borrowed; for sell, seen, click; 1 people, 4 winners; fair
+  - film: Second 0: the famous thing with its name readable and yours at its side on one table or in two hands, both prices large if you are cheaper; or the famous one held out first, then a hard cut in the same pose to yours (by second 2.4). Second 0-3: one plain sentence that compares only what can be seen (thicker, 1 dollar, made at home). No face needed.
+  - words: Famous name and your price in five words.
+  - where: Food at home, drinks, perfume, boots, free meals; cheap everyday things; unknown seller; cold.
+  - who: Jenny Hoyos (x-tec3-009)
+  - winners: o-uzman-085 o-tta1-010 o-satan-007 o-meta4-012
+- **m-126 On a page head, still or title that meets people who do not know the seller yet: the exact true count of those who already bought, joined or watched, with the concrete thing; no stock photo, not as the opening of a film.** — crowd; for sell, click; 1 people, 3 winners; fair
+  - film: Not for film. Still: the thing alone on a plain ground, full width; under it the exact count and the stars with the number of reviews, nothing else. Page: the count in the first line.
+  - words: Join 172,783+ <people like you> who … / <n> sold.
+  - where: Everyday goods, sign-ups, causes with many true buyers or reviews; goal: buy, join.
+  - who: Ryan Bartlett (x-tec2-140)
+  - winners: o-chatgpt-013 o-abarsiv-167 o-upw1-059
+- **m-130 Let the mishap open the film** — honest; for seen; 0 people, 3 winners; fair
+  - film: 0-1 s: the calm work, close. First sentence already says it: 'Have we ever ... ? It just happened.' / 'My stick blender broke in the middle of a batch.' 1-3 s: the very moment or the damage itself, then the maker's face. Then how it was put right. Only a true mishap that harmed no customer.
+  - words: 'Have we ever had a ... we couldn't ...? Well, we have now.'
+  - where: Makers, sweets, soap, dress cleaning, service and street films; small sellers; cold and warm; goal watch and trust.
+  - winners: o-y2-022 o-y1-027 o-y5-014
+
+## ADDRESS — it is about him (13)
+
+- **m-004 Say the exact situation only the right one has been in** — call_out; for click, sell, seen; 4 people, 11 winners; strong
+  - film: Second 0: the situation itself is in the picture, seen at the moment it goes wrong, by the sufferer's own eyes if possible (the child slides off the bench, the endless scroll, the police light). Second 0-2, spoken and written: 'If you ...' with one exact detail (two seconds, 100 views, the sentence he says himself) - 'you', never 'I'. Second 3: the turn: 'watch this', or the calm hand that answers.
+  - words: One sentence of shared failure, so exact that others read past; for a trade: the trouble, then the usual cure and why he turned it down.
+  - where: Dentist, children's goods, software, filters, rehab, teaching; feared or technical things; cold but aware of the trouble; goals book, reply, buy.
+  - who: Robert W. Bly (x-tec5-053); Dr. Joy (x-tec6-011); Joanna Wiebe; Sarah Levinger (x-tec2-040)
+  - winners: o-meta5-005 o-abarsiv-091 o-upw2-013 o-uzman-039 o-meta3-001 o-tec5-007 o-meta3-019 o-tec6-025 o-meta5-017 o-tec5-001
+- **m-014 Put the group's own label (trade, owner of X, parents, age) first, as wide as everyone who could buy; name the town only where everybody who sees it lives there (paid local ad, letter, sign), and follow at once with what is true for that group only.** — call_out; for click, sell, seen; 4 people, 7 winners; strong
+  - film: Second 0: 'Hey Oklahoma City' / 'If you're over 40' spoken and written, in a place that proves it. Second 1-2: who speaks, in five words. Second 3: the question or the offer. Wide enough that everyone who could buy still nods.
+  - words: Begin with the label alone: 'Car owners!', 'As an accountant ...', 'Today we ask those of you in Malaysia'.
+  - where: Local services, donations, car goods, trade letters, pet food; cold and broad targeting; seller unknown; goals call, book, give, buy.
+  - who: Drayton Bird (x-tec5-044); Cody Plofker (x-tec2-084); Kit Gammell (x-tec4-043); Dara Denney (x-tec2-010)
+  - winners: o-caples-066 o-abarsiv-076 o-meta2-020 o-upw2-040 o-uzman-057 o-meta4-016 o-klasik-101
+- **m-021 Ask the small question about a thing he sees or uses every day, in his own words, never about the seller or his offer, and begin to answer it at once ('Ever wonder why ...? This explains it').** — question; for seen, click, sell; 3 people, 6 winners; strong
+  - film: 0-1 s: the everyday thing itself, close. First words the question everybody could answer and nobody has (why is ..., how long could ..., what does one coin get you ...). 1-3 s: the first step of finding out, done, not told.
+  - words: 'Why is it important that ...?' / 'Why does my cat do that?' : a why on a thing he sees daily, with no answer in the line.
+  - where: Cheap everyday goods, food shops, clothing with a known virtue and an unknown reason, pets, public services; cold; goal watch, and buy (Pact's second best ad of its year).
+  - who: Jenny Hoyos (x-tec3-018); Kaylin Parker (x-tec2-111); Airrack (x-tec3-122)
+  - winners: o-uzman-027 o-upw1-003 o-satan-072 o-klasik-079 o-klasik-071 o-uzman-043
+- **m-028 His own name or town in the first words** — personal; for sell, click; 1 people, 8 winners; strong
+  - film: To one customer (WhatsApp, e-mail video): second 0 the sender's face, first word his first name, then at once what he bought from you. To a town, as a PAID local film only: second 0 a place there, first words 'Hey <town>', the town's dot on a map pops up at second 0.5-1.5.
+  - words: Name at the start of the subject line or 'Dear David'; '[City] Community Drive'; a true fact about his surname.
+  - where: E-mails, letters, WhatsApp films, donations, fines, household goods; people who gave you their name; goals open, give, pay, click.
+  - who: Gary Halbert (x-tec5-029)
+  - winners: o-davranis-003 o-schwartz-009 o-davranis-066 o-davranis-093 o-bilimvideo-001 o-davranis-020 o-abarsiv-170 o-meta2-020
+- **m-074 One plain picture and one flat, harmless sentence against a habit everybody has an opinion on, with a straight face, said by a maker or brand whose standing people know or can see; never on suffering, faith, politics or a rival's person; tried first on the own page.** — dare; for seen, sell, followers; 3 people, 4 winners; fair
+  - film: 0-2 s: one plain picture or one flat sentence everybody will have an opinion on; nothing to understand, only to object to; straight face. Choose, of two openings, the one that makes you nervous. Look for the sentence that begins 'I was hoping we wouldn't have to go there'.
+  - words: The sensitive true fact as the headline, not the features.
+  - where: Known cheap food, learning app, herbal drinks with real origin, airline, car, a client's product when features did not bite; mostly known brands or a maker with standing; goal talk, then buy (Weetabix +15%).
+  - who: Graham Goodkind (x-tec4-074); Zaria Parvez (x-tec4-036); Shizu Okusa (x-tec2-109)
+  - winners: o-tec4-029 o-tec4-004 o-klasik-141 o-uzman-009
+- **m-082 In the first words name the wish itself to the person who already has it ('If you've wanted to ...', 'Would you like to ...', 'To X who would like Y'), the wish seen fulfilled in the picture. Where the reader can test himself on the spot, try a quiz first: it beat this shape.** — call_out; for sell, click; 2 people, 5 winners; fair
+  - film: Second 0: the wish already fulfilled fills half the picture (green raised bed, the sprayed car door), the speaker in it, hands at work. Second 0-2, into the lens: 'Would you like to <the wish, in his words>?' or 'If you've wanted to ...'. Second 3: the one thing that stood in his way (price of the tool, no room).
+  - words: 'To men and women who want ...' or 'If you've ever wanted to ..., this is for you. Here is why:' - then a true story. No warm-up, no statistic proving that the problem exists.
+  - where: Courses, paint guns, writing aids, magazines; mixed crowds; unknown seller; goals read on, order.
+  - who: Gary Halbert (x-tec5-022); John Carlton (x-tec5-039)
+  - winners: o-caples-079 o-caples-010 o-meta3-012 o-meta3-010 o-abarsiv-014
+- **m-097 Speak to him on the day it happened** — call_out; for seen, sell; 1 people, 4 winners; fair
+  - film: 0-1 s: the event of his day stands in the picture (the new car in the yard, the flashing lamp, the keys) or the maker looks into the lens, and the first words name it: 'You just closed on your house.' 1-3 s: the one thing only a fresh customer needs: 'Now listen' / 'there is really one thing you need' / 'you think it is only ...'.
+  - words: 'After you buy your [thing], there is one ...'.
+  - where: Services just begun or things just bought: braces, house, car, a police stop; seller known or not; warm-to-cold; goal save, watch, later choose; lasting paid ads in two winners.
+  - who: Dr. Ashley (x-tec6-012)
+  - winners: o-tec6-025 o-meta3-017 o-meta3-019 o-uzman-061
+- **m-098 Charge him with one true old habit or neglect, so exaggerated that he smiles, and offer the better way in the next breath; never with not having bought from you, never with his money, body or illness, and not from a seller he owes.** — dare; for sell, click; 1 people, 4 winners; fair
+  - film: 0-1 s: one face straight to the lens, or the neglected thing in close-up; first words a short command or charge about the habit ('Listen up, the soap you shower with, you probably haven't even questioned it'). 1-3 s: the charge goes over the top, something silly moves in the picture. At 3-4 s the better way stands beside it. Nothing about 'you still haven't bought'.
+  - words: 'Would you like to sit next to you at dinner?' / 'Your name has found its way into a little book on my desk.'
+  - where: Habits people have not changed, men's goods, magazines, overdue accounts; known and unknown sellers; goal answer and buy.
+  - who: Jacques Spitzer (x-tec2-123)
+  - winners: o-uzman-067 o-klasik-115 o-klasik-145 o-klasik-113
+- **m-114 Speak to the one who buys, not the one who uses** — call_out; for sell; 1 people, 4 winners; fair
+  - film: Second 0: a person looks straight into the lens and greets the payer in two words ('Hello, ladies', 'For the aunts'), or the giver's moment stands there (a child's face lit by a tablet, the mother holding the books). Second 1-3: one order or one wish that only the payer has ('look at your man, now back to me', 'the gift of the year for boys'). The user is seen, never spoken to.
+  - words: Headline addresses the giver or parent: 'gift of the year for boys'.
+  - where: Body wash, toys, children's and pet goods, gifts; goals buy.
+  - who: Craig Allen and Eric Kallman (x-tec4-029)
+  - winners: o-satan-013 o-uzman-087 o-uzman-057 o-meta4-022
+- **m-117 Begin with what he last did with you** — personal; for sell; 0 people, 5 winners; fair
+  - film: Sent to own customers only. Second 0: the maker or the receptionist at the bench, the customer's card or order in the hand. Second 0-2: 'You probably just placed your first order' / 'Your last cleaning was 23 months ago'. Second 3: what that means for his thing and the one next step.
+  - words: 'Your X is now 3 years old and ...'; 'Previous gift: <date>'; a call: your name, his, and the free thing he took.
+  - where: Watches, reference works, plans, donations, after a free download; own customers; goals come back, answer.
+  - winners: o-klasik-102 o-davranis-065 o-klasik-105 o-uzman-061 o-bilimvideo-001
+- **m-121 Stand him in one concrete scene and ask one question about himself that he can answer at once, yes, no or with one word; never a question whose answer only your text knows, and never a question that asks for the sale.** — question; for click, seen, sell; 0 people, 4 winners; fair
+  - film: 0-1 s: the situation, seen from where he would stand (somebody behind you, somebody falls, the bus step too high). 1-3 s: 'Would you notice?' / 'What do you do?' Silence of one second for his answer.
+  - words: A question with a picture in it instead of 'Tired of ...?': 'Does discomfort slow down your family adventures?'
+  - where: Security, health, travel, parenting, first aid, socks; cold; goal watch, act; order value in one client test.
+  - winners: o-satan-079 o-schwartz-033 o-davranis-005 o-klasik-145
+- **m-123 Two voices: one like him asks, the other answers** — question; for sell, click, seen; 1 people, 3 winners; fair
+  - film: 0 s: the asker, face or voice like the buyer, already in the middle of the question. 1-2 s: snap to the one who knows, or the same person in another shirt. 3 s: first word of the answer.
+  - words: "<Name>, is it really …?" as the first line, the answer as the second.
+  - where: Health, beauty, law, money matters, software, training; cold; goal: watch, enquire.
+  - who: Savannah Sanchez
+  - winners: o-meta6-022 o-meta1-013 o-meta4-021
+- **m-129 Show the very thing he owns or loves, first** — call_out; for sell, seen; 1 people, 3 winners; fair
+  - film: Second 0: one thing he owns, filling the frame and unmistakable (the red Model Y, the lens, the plane's blade, the husky), no logo of yours. Second 0-1: a hand or a tool comes to it and it moves. Second 1-3: its exact name is spoken and stands on the screen ('your Tesla Model Y', 'your hand plane'); your own thing enters only after.
+  - words: First word and first picture are his thing by its exact name ('Tesla Model Y').
+  - where: Accessories, hobby and trade goods, parenting; owners of a certain thing; cold; goal buy.
+  - who: Dan Kennedy (x-tec5-084)
+  - winners: o-meta3-017 o-y2-007 o-y4-007
+
+## PLAY — he feels something (19)
+
+- **m-001 Put a real customer's comment, clip or letter on the screen and answer it** — native; for seen, followers, sell, click; 8 people, 14 winners; strong
+  - film: 0 s: the comment bubble, her own clip or her letter fills the picture, untouched. 1-2 s: hard cut to the owner, the product or the hands answering at once. Phone quality, no greeting.
+  - words: Quote the real message as headline with the first name, then the answer as the first sentence.
+  - where: Any seller with living comments or letters; cheap and dear, unknown and known; cold; goal: trust, reach, buy.
+  - who: Michael Corcoran (x-tec4-037); Cody Plofker (x-tec2-144); Dara Denney (x-tec2-018); Aaron Krause (x-tec4-047); Ted Nicholas (x-tec5-097); Alia Khan (x-tec6-048); Terence Reilly; Mei Man (x-tec1-076)
+  - winners: o-tec4-008 o-tec4-017 o-tec4-001 o-uzman-009 o-tta3-015 o-uzman-063 o-y4-003 o-meta1-013 o-tta2-010 o-ttb1-011
+- **m-003 Act one true trouble and, in the next breath, its answer with your thing in the hand or on the screen: played by yourself as a tiny skit, or dead serious and too far by people who can act; a young firm does not make it its only ad** — joke; for seen, click, sell; 6 people, 9 winners; strong
+  - film: Second 0: we are already inside the scene - side A has the trouble or the doubt. Second 1: side B (the same person in other clothes, or a friend) answers calmly, thing in hand. Second 2-3: cut back and forth, one line each. One benefit only. Somewhere the thing lands and something visibly changes.
+  - words: Two lines of dialogue as the opening, trouble and answer, like overheard talk.
+  - where: Apps, software, services without a thing to show, bags, shirts, tax advice; phone-shot; cold; goals click and buy.
+  - who: Savannah Sanchez (x-tec2-026); Ryan Bartlett (x-tec2-135); Duke Alexander Moore (x-tec6-047); Daniel Harmon (x-tec4-011); Zach King (x-tec3-141); Fraser Cottrell
+  - winners: o-tec4-026 o-satan-054 o-meta4-010 o-ttb2-002 o-satan-035 o-meta1-021 o-davranis-021 o-meta3-005 o-satan-087
+- **m-018 Same odd figure in the first frame of every film** — character; for seen, followers, sell; 4 people, 6 winners; strong
+  - film: Second 0: the one unmistakable figure is already in the frame, doing something of the day, not lecturing on the product. Same face, same colour, every time. Second 1-3: its small trouble of today.
+  - words: The same named figure opens every post and letter.
+  - where: Apps, supermarkets, mattresses, shirts, cups, car dealers; goals be remembered, come back; needs repetition, so not a one-off ad.
+  - who: Zaria Parvez (x-tec4-032); Jamie Peate (x-tec4-073); Daniel Harmon (x-tec4-012); George Wright
+  - winners: o-satan-008 o-tec4-012 o-satan-018 o-sugarman-043 o-satan-092 o-satan-061
+- **m-027 Keep only the joke that carries the product** — joke; for sell, seen; 3 people, 6 winners; strong
+  - film: Second 0-3: the funny thing on the screen is a fact or picture of the product's own use. Check: cover the product - if the joke still works, cut the joke. Write the argument into the funny person's mouth.
+  - words: The witty headline must be untrue for any rival; if he would remember the joke and not the thing, throw it away.
+  - where: Computers, shirts, mattresses, toilet stools, pans, cat litter; known and new; goals remember and buy.
+  - who: Mike Refuerzo (x-tec4-067); Ryan Bartlett (x-tec2-135); Daniel Harmon (x-tec4-012)
+  - winners: o-satan-018 o-uzman-002 o-satan-012 o-meta5-013 o-uzman-070 o-satan-061
+- **m-029 The button says what he will have** — button; for click, sell; 2 people, 7 winners; strong
+  - words: Replace the act (sign up, order, submit) by the result, best in his own voice: 'Show me outfits I'll love', 'Get the free book', 'A clean apartment without any stress'. Change headline and button together; above a form begin with 'Get ...' and list what comes;
+  - where: Clothes finder, e-books, cleaning, gyms, office rental, newsletters; first-time visitors; last step.
+  - who: Joanna Wiebe (x-tec5-060); Michael Aagaard (x-tec5-063)
+  - winners: o-tec5-009 o-abarsiv-126 o-abarsiv-100 o-abarsiv-053 o-abarsiv-016 o-abarsiv-025 o-abarsiv-043
+- **m-031 Go to a real, unrehearsed stranger with one short question or one true offer and keep the first reaction on his face; film many, publish only a strong reaction; if he gives advice, his standing is written on the screen.** — native; for seen, sell, followers; 5 people, 3 winners; strong
+  - film: 0-1 s: your hand, voice or microphone only; one stranger's face, readable. A plain direct question or a real offer ('What's that strap?', 'I'll give you ... if ...'). 1-3 s: his answer or his doubt, uncut. On covers: the door just opening.
+  - where: Samples and street offers, food openings, phone gadgets, sunglasses, business advice, coaching; any audience; unknown sellers; goal stop and watch; two paid ads among the winners.
+  - who: Jimmy Donaldson (x-tec3-094); Spencer; Paddy Galloway (x-tec3-055); Brendan Kane for photographer Alex Stemp; Brendan Kane (x-tec3-143)
+  - winners: o-sugarman-011 o-y5-025 o-tec6-003
+- **m-041 In print, on an article page, in a column or a mailing, set your labelled advertisement in the exact look of the page it stands on and make it worth reading.** — native; for click, sell; 2 people, 6 winners; strong
+  - film: No film shows it yet: use it for print, article pages and mailings. (If a film is tried: one real photo with a plain news line, label kept; untested.)
+  - words: Set the piece in the paper's, site's or inbox's own style: report headline, upper and lower case, columns, real photo; keep every word useful; keep the word 'Advertisement'.
+  - where: Newspapers, magazines, article pages, feeds, trade press; everyday and dear goods; books, car parts, air conditioners, trade chemicals; cold audience; goals order and lead.
+  - who: Gary Bencivenga (x-tec5-016); Drayton Bird (x-tec5-045)
+  - winners: o-caples-038 o-schwartz-002 o-abarsiv-136 o-caples-064 o-caples-105 o-caples-035
+- **m-042 One person who plainly does not fit by age, dress or voice (or, for a big budget, by a truly famous face) says or does the line dead serious in a scene everybody knows, and nobody notices; use your own idea, not the much-copied young-slang script.** — joke; for seen, sell; 4 people, 4 winners; strong
+  - film: Second 0: a scene everybody knows (the manor, the office, a game, a shop). Second 0.5: in it one person who plainly does not fit by age, dress or voice - the seventy-year-old, the toddler, the lord. Second 1-3: she says the line with full poise and nobody around her notices.
+  - words: Put the plain selling line in the mouth of the one person nobody expects, named and pictured.
+  - where: Everyday goods, taboo goods, old quiet places, razors, chocolate, creams; tiny and giant budgets; cold; goals be known and buy.
+  - who: Christine and Frannie Brown (x-tec6-018); Benton Crane (x-tec4-004); Snickers team at Mars and BBDO (x-tec4-068); Wes Denney (x-tec6-064)
+  - winners: o-tec6-012 o-satan-012 o-satan-033 o-satan-069
+- **m-043 The boss is the joke** — joke; for seen, followers, sell; 4 people, 4 winners; strong
+  - film: Second 0: the real owner at his own place, shop name or label 'Owner, 22 years' in the picture. Second 0-2: he fails at the fiddly job (blindfold, wrong hand), or stands dead serious while the young ones fool about, or reads words that are not his. Second 2-3: beside him stands the one who can do it, or his unmoved face is held.
+  - where: Bakery, deli, hotel, bed and breakfast, car dealer, razors; local; cold; goals visit and be remembered.
+  - who: Phillip Kuoch (x-tec6-063); Wes Denney (x-tec6-064); Sean and Elaine Lally (x-tec6-019); Christine and Frannie Brown (x-tec6-018)
+  - winners: o-tec6-021 o-tec6-012 o-tec6-013 o-satan-092
+- **m-050 Put the oldest of the house before the camera** — character; for seen, sell; 2 people, 5 winners; strong
+  - film: Second 0: the old hands or face, at work or nose to nose with the thing, very close. Second 1-3: one gesture or one dry word of the old one; the younger stays at the edge.
+  - where: Cake shop, guest house, deli, candy maker, farm, tools, supermarket; small and local; cold; goals watch and visit.
+  - who: Christine and Frannie Brown (x-tec6-018); Wes Denney (x-tec6-064)
+  - winners: o-tec6-012 o-tec6-005 o-tec6-029 o-meta4-014 o-meta5-008
+- **m-051 In a letter, parcel or printed page: a real small thing fixed at the top that IS the product or its subject, and the first sentence says why it is there. For film it is untested: use only as an idea, not as proven.** — object; for sell; 0 people, 7 winners; strong
+  - film: NOT PROVEN IN FILM. If tried: second 0 the thing between two fingers close to the lens; second 1 the speaker says in one sentence where it comes from; second 2-3 the place on the product where it belongs.
+  - words: 'As you can see, I have attached ... Why? Two reasons:' - one to catch your eye, one that ties it to the thing sold.
+  - where: Letters, subscriptions, donations, food samples, machines, trade goods; unknown and known; goals answer and order.
+  - winners: o-schwartz-010 o-klasik-090 o-klasik-138 o-klasik-136 o-sugarman-058 o-klasik-098 o-klasik-154
+- **m-063 Staff play a small comedy of their own workplace, already under way** — joke; for seen, followers; 3 people, 3 winners; strong
+  - film: Second 0: somebody walks into the scene and says the first odd thing ('We just got a new hire and we wanted you to train him'), name of the shop in the picture. Second 2-3: cut to the face that must bear it. A real small event of the week is the plot; the same day every week.
+  - words: One line on screen tells the mishap: 'when a customer drives off with our iPad'.
+  - where: Car dealer, hotel, software, coffee stand, tea, food van; staff who like it; cold and local; goals be known, be remembered, hire.
+  - who: Chris Cunningham (x-tec2-137); Grace Kerber and Ben Bushen (x-tec6-008); Sean and Elaine Lally (x-tec6-019)
+  - winners: o-tec6-009 o-tec6-013 o-tec6-014
+- **m-068 For being seen and talked about (and for selling only when the name is already loved): play one thing of your own trade, the product in the picture from the first second, in a grave form done with real craft, nobody smiling; never as the first ad of a young seller, never in a reminder from an office or a clinic.** — joke; for seen, sell; 2 people, 7 winners; fair
+  - film: 0-2 s: the product or the trade itself in frame one, in the dress of something grave: an operation, a documentary close-up, an official warning, a battle speech, a candle-lit dinner. One subject, slow, nobody smiles, real light and sound. Example: steel table, gloved hands, a syringe already in a toy: 'Can you transplant goo from one squishy to another?' The real tool or service wins at the end.
+  - where: Loved brands with nothing new to say, toys, sandwiches, trees, plates for weights; better with a known name or good craft; goal talk and watch.
+  - who: Juan Cabral (x-tec4-057); Zaria Parvez (x-tec4-034)
+  - winners: o-satan-001 o-tec4-013 o-y5-017 o-platform-010 o-y4-010 o-meta1-021 o-satan-011
+- **m-071 For an everyday thing or service shown to people who do not know you, film it plainly by phone in the place where it is used, and run it beside the polished one; a brand that lives on a premium look keeps its polished film.** — native; for sell, seen; 3 people, 6 winners; fair
+  - film: Second 0: the phone, held in the hand, is already where the thing is used (kitchen table, garden, van); no logo, no studio light. Second 1: the thing comes in from the camera's side or is already in use. Second 2-3: one plain sentence as to your mother. Make the same message twice, polished and plain, and run both.
+  - words: A snapshot of the real thing on the workbench instead of the brochure, with one plain line.
+  - where: Everyday and household goods, food, beauty, set-up services; small and large sellers; cold feeds; goals buy and book. For a brand that lives on a premium look the polished film has its place (Fogarty).
+  - who: Suze Dowling (x-tec2-067); Davie Fogarty (x-tec2-080); Matt Diamante (x-tec1-118)
+  - winners: o-platform-062 o-platform-022 o-platform-023 o-meta2-011 o-uzman-065 o-davranis-082
+- **m-111 Begin in the middle of the speaker's real day** — native; for click, sell, seen; 2 people, 3 winners; fair
+  - film: Second 0: phone in the hand, the person is already under way: in the loaded car, walking to the job, at the airport door; the place can be read in the picture. No 'hi', no logo. Second 0-2: one sentence that says where he is going and what has just happened. Second 2-3: the thing or the one question of a customer stands in the picture.
+  - words: First sentence says where you are and what you are doing: 'I'm on my way to ...'.
+  - where: Toll badges, translators, lawyers, garages, car dealers, beauty; known and unknown speakers; cold; goals click and call.
+  - who: Cody Plofker (x-tec2-084); Dara Denney (x-tec2-007)
+  - winners: o-platform-022 o-meta3-016 o-meta6-003
+- **m-112 Say the embarrassing thing in a lovely, made-up or elegant dress** — joke; for sell, seen; 2 people, 3 winners; fair
+  - film: Second 0: the loveliest opposite of the trouble fills the picture, plainly made up or elegant: a white-gloved butler with a silver dome, a puppet creature, a lady in evening dress. Second 1-3: in the same calm voice the plain truth is said; nothing disgusting is ever seen.
+  - where: Embarrassing everyday goods (toilet stool, spray, deodorant); unknown seller; cold; goals share and buy.
+  - who: Benton Crane (x-tec4-004); Jacques Spitzer (x-tec2-129)
+  - winners: o-uzman-002 o-satan-033 o-satan-036
+- **m-113 A seller who will show many films opens every one of them with the same short, odd, sayable sentence or tune of his own that carries the name or the thing.** — character; for seen, sell; 1 people, 4 winners; fair
+  - film: Second 0-2: the same odd sentence or short jingle with the name opens every film, over a plain piece of work. Make it copyable by a father at a paddling pool.
+  - words: One short question or phrase, the same in every piece.
+  - where: Hamburgers, washing powder, toys, car dealers, plumber, pool cleaner; repeated use; goals be the one known.
+  - who: Armando Ramos (x-tec6-055)
+  - winners: o-satan-062 o-satan-104 o-satan-092 o-satan-018
+- **m-127 A bad word about your own product that turns out to be praise** — joke; for click, sell; 0 people, 4 winners; fair
+  - film: Second 0: the thing in full view, the complaint in big letters ('Why I'll never buy X again'). Second 1-3: straight face; the next line gives the reason, and the reason is praise.
+  - words: 'Lemon.' / 'WARNING: these sheets make me call in sick.' The twist stands in the very next sentence.
+  - where: Pans, sheets, cars; everyday and dear; brand with humour; goals read and buy.
+  - winners: o-uzman-070 o-klasik-141 o-uzman-065 o-sugarman-026
+- **m-128 The trouble, or the thing itself, speaks as a person** — character; for click, sell; 1 people, 3 winners; fair
+  - film: Second 0: one person dressed or labelled as the pain, the rival or the thing itself, or the worn thing held in a palm, very close. Second 0-2: he says who he is in four words ('We are aches and pains') or the voice asks 'If this could talk'. Second 2-3: his complaint: since people have this product he is out of work; or the first true memory of the thing.
+  - words: First line in the thing's voice or asked of it: 'If this coin could talk, what stories would it tell?'
+  - where: Computers, mattresses, supermarket, old coins; seen and unseen results; goals remember and buy.
+  - who: Clayton Makepeace (x-tec5-077)
+  - winners: o-satan-018 o-uzman-003 o-tec5-011
+
+## HOW THE WORK IS DONE — ways of working, not openings (14)
+
+- **m-132 Many openings on one film; money decides** — none; for sell, seen, click; 13 people, 2 winners; strong
+  - where: Paid video, mailings, crowdfunding; every sector shown.
+  - who: Alex McArthur (x-tec4-050); Jacques Spitzer (x-tec2-126); Suzy Batiz (x-tec4-051); Clayton Makepeace (x-tec5-080); Alex Hormozi (x-tec1-094); Daniel Bischoff (x-tec4-083); Milt Pierce (x-tec5-071); Nick Shackelford (x-tec2-147)
+  - winners: o-tec4-031 o-tec5-010
+- **m-133 Take an opening that already won: your own best one, or one with which SMALL accounts or unknown sellers broke out in two or three places on the same trouble and the same kind of buyer; keep its idea and first seconds, make them better and truer for your thing, and repeat your own winner; never the form alone, never the one carried by a famous face.** — borrowed; for seen, sell, click; 7 people, 0 winners; strong
+  - where: Every trade; shown for tongue cleaners, franchise advice, grocery-shop challenge, YouTube shows, herbal drinks; cold; goal all.
+  - who: Jeff Harmon (x-tec4-088); Airrack (x-tec3-122); Gary Bencivenga; Ava Jurgens (x-tec3-130); Shizu Okusa (x-tec2-109); Dara Denney (x-tec2-117); Victor Guo
+- **m-134 Take the opening sentence from the buyers' mouths** — none; for click, sell; 5 people, 1 winners; strong
+  - where: Every client with at least some buyers.
+  - who: Joanna Wiebe; Ash Melwani (x-tec2-096); Gary Halbert (x-tec5-033); Dara Denney (x-tec2-015); Barry Hott
+  - winners: o-abarsiv-091
+- **m-135 Post short films that show the very thing you sell; put the offer and the money on the one that clearly beats your own usual number, and keep paying only while calls and sales come.** — none; for sell, seen; 5 people, 0 winners; strong
+  - where: Visible services, software, own channels; also accounts with a thousand followers.
+  - who: Spencer Claeys (x-tec6-005); Chris Cunningham (x-tec2-136); Taylor Holiday; Cody Plofker; Ash Melwani (x-tec2-092)
+- **m-136 Draw the first picture before you write a word** — none; for seen; 4 people, 0 winners; strong
+  - where: Planned short and long films, series.
+  - who: Jenny Hoyos (x-tec3-008); Ryan Trahan (x-tec3-126); Zach King (x-tec3-120); Jimmy Donaldson (x-tec3-090)
+- **m-137 Judge an opening by sales, not by how many stop** — none; for sell; 3 people, 0 winners; strong
+  - where: Ad accounts, own channels, agencies, small shops.
+  - who: Alex Hormozi (x-tec1-108); Mei Man (x-tec1-092); Matt Diamante (x-tec1-121)
+- **m-138 Let them say it in their own words, no script** — native; for sell, seen; 6 people, 0 winners; fair
+  - where: Beauty, supplements, socks, cups, giving at work; larger creators and real customers; cold; goals buy and sign up. For an acted skit the opposite holds: cast people who can act (Cottrell).
+  - who: Cody Plofker (x-tec2-118); Ash Melwani (x-tec2-096); Taylor Holiday (x-tec2-066); Terence Reilly (x-tec4-052); George Wright; Dara Denney
+- **m-139 Only a page or person whose followers already come for this very thing, who really uses it, in own words and from own page; not a small paid creator, not a celebrity of another subject.** — borrowed; for sell, followers; 3 people, 1 winners; fair
+  - where: Socks, beauty, pool cleaning, pizza tools, masks, donations, software; unknown seller with a trusted go-between; cold.
+  - who: Taylor Holiday (x-tec2-066); Cody Plofker (x-tec2-084); Miles Laflin (x-tec6-003)
+  - winners: o-meta1-007
+- **m-140 Write far more first lines than you need** — none; for sell, seen; 4 people, 0 winners; fair
+  - where: Any first line.
+  - who: John Carlton (x-tec5-040); Alex Hormozi (x-tec1-094); Jenny Hoyos (x-tec3-014); Jacques Spitzer
+- **m-141 The first picture must be understood with the sound off and at phone size, with ONE thing large in the middle of its real place - not an empty ground - and the sound is made as well for those who hear.** — none; for seen, click; 4 people, 0 winners; fair
+  - where: Feeds, covers, vertical films; about 80% never turn the sound on (Harmon).
+  - who: Jenny Hoyos (x-tec3-008); Paddy Galloway; Kallaway; Daniel Harmon (x-tec4-015)
+- **m-142 Go live from the workplace with hands at work in the picture; when an order comes in, pack it before the lens and say the name. Fixed daily hours help (Bannister, Newman), they are not proved as a must.** — in_use; for sell, followers; 3 people, 0 winners; fair
+  - where: Cheap gift food by post, street food, toy shop; warm followers and passers-by; visits and orders.
+  - who: Candice Bannister (x-tec6-061); Jane Hastings (x-tec6-060); Ben Newman (x-tec6-034)
+- **m-143 Repeat the winner with one big visible change** — none; for seen, sell; 3 people, 0 winners; fair
+  - where: Any account with one clear winner.
+  - who: Paddy Galloway (x-tec3-054); Alex Hormozi (x-tec1-094); Ava Jurgens
+- **m-144 In SPOKEN openings: the first three sentences four to eight words each and only words a child knows, at most one hard word in five seconds. In writing: simple words yes, short headlines no - the longer plain headline wins more often.** — none; for seen; 3 people, 0 winners; fair
+  - where: Broad audiences, second-language viewers, tech, medicine, teaching.
+  - who: Kane Kallaway (x-tec1-007); Jenny Hoyos (x-tec3-013); Mario Joos (x-tec3-100)
+- **m-145 Put most of the work into the first seconds, and give part of the promise at once** — none; for seen; 3 people, 0 winners; fair
+  - where: Long and short films.
+  - who: Airrack (x-tec3-123); Jimmy Donaldson (x-tec3-090); Alex Hormozi (x-tec1-094)

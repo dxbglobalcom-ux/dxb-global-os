@@ -1,0 +1,7 @@
+Looked at 160 of 160 rows; 100 clean (4 at beauty 5, 36 at 4, 60 at 3), 60 out, all "ordinary"; 12 clean rows are `show` false. No row came out wrong, trouble, mixed, beaten or uncertain, and captions and pictures were compared with the frames only, not with the films' sound.
+How I looked: sheets four to a page, scaled from 1280 to 1000 px wide. The first pass kept 118; the last 18 went out in a tightening pass made from notes, without opening the sheets again.
+Check: 160 ids against 160, none missing, none extra, same order; every clean row has a `stops` of at most 12 words. Verdicts are in `/home/dxb/.local/share/dxb/hook-lab/el/kusur7/verdict.jsonl`; my montages and scripts are in `t/` beside it.
+Strongest (1–3): o-y2-027, a tiny fish cube answered by a fish longer than the frame; o-y4-005, a pale vase sinks until the red stands level with its rim; o-y4-016, the view tips over the edge to a toy-sized house under his boots.
+Strongest (4–6): o-y6-031, nested lids peeled off faster than the eye down to the tiniest; o-y1-005, a hammer beats a flawless car roof; o-y3-006, one thin line of glue must lift two trucks.
+Hardest (1–2): o-y6-013, "I have cancer" stops anyone, but only a real illness carries it (out); o-y5-003, dirt with gold, kept as a shape with `show` false because the nuggets are drawn on and the bag is a purchase by chance.
+Hardest (3): o-y3-013, "try not to say 17" is a game you play on hearing, but the wide first seconds are slow and the child carries it (out); the sentence alone may be worth keeping.

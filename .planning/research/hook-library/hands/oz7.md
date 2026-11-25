@@ -1,0 +1,5 @@
+All 260 rows are labelled in `/home/dxb/.local/share/dxb/hook-lab/el/oz7/traits.jsonl`; I wrote the file in one go, not in blocks of thirty.
+Check (`check.py`): `rows 260 260 ids same True keys True values True role {['seen']: 259, ['seen','sell']: 1}`. The only "sell" is o-uzman-022, whose row says the film brought MrBeast as a client.
+Changed: 212 rows (`sells` 41, `price` 199, `need` 212); `result_seen` and `sense` had no old labels.
+Hard: the seller sells one thing and the film shows another. I chose Red Bull = its drink, Vsauce = its boxes, Carwow = cars, Beardbrand = the barber's service shown, The Hoof GP = the shearing shown, Titans of CNC = the cutters and blocks shown, Paddy Galloway = consulting.
+Weak: most prices are the trade's usual price in my judgement (UNVERIFIED), because few rows state one. Six rows are `unknown` (Promptwise, Roger Wakefield, Essential Craftsman, School of Hard Knocks ×2, and one miscount guard: see `check.py`); teachers with no product named (Scotty Kilmer, Film Booth, Tyler Tometich, Andrew Millison) are `learning`/`free`.

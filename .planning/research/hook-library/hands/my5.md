@@ -1,0 +1,9 @@
+28 methods judged: 15 in, 11 narrow, 2 out. Written to `/home/dxb/.local/share/dxb/hook-lab/el/my5/check.jsonl`.
+Winners: 48 dropped, 22 new. People: 33 drop entries, and seven people or firms the first hand had not listed for that method added (Reilly, Claeys, Harmon, Batiz, Purple's McArthur and Bischoff, Savannah Sanchez, Mei Man on the unsaid feeling). 18 client stories rewritten.
+Check: CHECK methods 28 in check once 28 bad [] (every winner id is in the library, every given winner is judged).
+Strongest four: a real comment or clip on screen and answered (14 sellers, 7 people); the fault of the thing he uses without thinking (5 sellers, 6 people); one real question answered by the expert (6 sellers, 3 people); founder says name, firm and product (6 sellers; rivals lost as banners and headlines, not as films).
+Out: 'Say "it is expensive" before he does' – 2 people and 1 winner left, and Ridge's losing version said those very words. 'If people do not know such a thing exists' – 1 person and 1 winner left.
+Thin (on the edge of the door or of weak proof): you asked, here it is · one customer's exact figure (only 1 of 3 winners names him) · against what angers him about the trade (2 of 3 people proved it with investing or retirement letters) · joke on yourself (2 of 3 people are known brands) · what the professional does for himself (headlines only, no film).
+Ways of choosing, not openings: 'let followers choose' and 'several openings for one body' – file them apart.
+Wrong stories found: Moz's 52% belonged to another page; BOOM! 'over 40', Purple's $60m and Bottom Line 'still' were not in the linked rows.
+Could not judge: whether pinned comments are real (The Bentist; Meta cannot show it), the words of Ridge's winning film (not printed), and McCormack's 'shingle' remark (not found in the rows I searched). Upworthy rows were read in text only.

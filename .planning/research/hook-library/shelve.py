@@ -28,20 +28,24 @@ for line in text.split('\n'):
     if m and m.group(1) not in ('proves', 'fits'):
         room_of[m.group(1)] = room
         meaning[m.group(1)] = m.group(2)
+def natural(pattern):
+    return sorted(glob.glob(pattern), key=lambda f: [int(x) if x.isdigit() else x for x in re.split(r'(\d+)', f)])
+
+
 label = {}
-for f in glob.glob(f'{LAB}/el/raf*/shelf.jsonl'):
+for f in natural(f'{LAB}/el/raf*/shelf.jsonl'):
     for x in open(f, encoding='utf-8'):
         if x.strip():
             r = json.loads(x)
             label[r['id']] = r
 trait = {}
-for f in glob.glob(f'{LAB}/el/oz*/traits.jsonl'):
+for f in natural(f'{LAB}/el/oz*/traits.jsonl'):  # a later hand's label replaces an earlier one
     for x in open(f, encoding='utf-8'):
         if x.strip():
             r = json.loads(x)
             trait[r.pop('id')] = r
 verdict = {}
-for f in glob.glob(f'{LAB}/el/kusur*/verdict.jsonl'):
+for f in natural(f'{LAB}/el/kusur*/verdict.jsonl'):
     for x in open(f, encoding='utf-8'):
         if x.strip():
             r = json.loads(x)
@@ -60,6 +64,53 @@ YT = {}
 for d in ('yt', 'tt_org'):
     if os.path.exists(f'{LAB}/{d}/selection.json'):
         YT.update({x['ad_id']: x for x in json.load(open(f'{LAB}/{d}/selection.json'))})
+
+
+GROW = {}
+for d in ('yt', 'tt_org'):
+    if os.path.exists(f'{LAB}/{d}/grow.jsonl'):
+        for x in open(f'{LAB}/{d}/grow.jsonl', encoding='utf-8'):
+            g = json.loads(x)
+            GROW[g['ad_id']] = g
+ROLE = {'bought': 'sell', 'clicked': 'click', 'replied': 'click', 'watched': 'seen', 'shared': 'seen', 'stopped': 'seen', 'remembered': 'known'}
+
+
+def role(r):
+    """what the opening DID: sell, click, seen, known; followers = the films after it drew at least twice the views of the films before it (ten or more each side)"""
+    R = [ROLE.get(r.get('outcome'), 'seen')]
+    R += [x for x in (r.get('role') or []) if x not in R]
+    g = GROW.get(r.get('ad_id'))
+    if g and r['door'] == 'TENFOLD':
+        if g.get('followers') is not None:
+            r['followers'] = g['followers']
+        if g.get('grew') and g['n_before'] >= 10 and g['n_after'] >= 10:
+            r['grew'] = g['grew']
+            if g['grew'] >= 2 and 'followers' not in R:
+                R.append('followers')
+    return R
+
+
+SOUND = {}
+for d in ('yt', 'tt_org', 'meta', 'ttcc'):
+    if os.path.exists(f'{LAB}/{d}/sound.jsonl'):
+        for x in open(f'{LAB}/{d}/sound.jsonl', encoding='utf-8'):
+            g = json.loads(x)
+            SOUND[g['ad_id']] = g
+MUTE = ('no speech', 'no words', 'music only', 'no voice', 'silent', 'no spoken', '(music', 'no sound', '(song', 'song only')
+
+
+def sound(r):
+    """what is heard in the first 3 s, told only where the voice detector and the watcher's words agree"""
+    g = SOUND.get(r.get('ad_id'))
+    if not g:
+        return ''
+    said = not any(k in r['opening'].lower().split('| screen')[0] for k in MUTE)
+    det = g['speech_from'] is not None and g['speech_from'] < 3 and g['speech_share'] >= 0.1
+    if said != det:
+        return ''
+    if det:
+        return 'first word at once' if g['speech_from'] <= 0.3 else f"first word at {g['speech_from']} s"
+    return 'no word in the first 3 s' + ('' if g['sound_from'] == 0 else ', no sound at all' if g['sound_from'] is None else f", silent until {g['sound_from']} s")
 
 
 def numbers(r):
@@ -108,6 +159,18 @@ for r in rows:
     if r['id'] in trait:
         r.update(trait[r['id']])
     r['room'] = room_of.get(r.get('shelf', ''), '')
+    r['role'] = role(r)
+    if sound(r):
+        r['sound'] = sound(r)
+    second = verdict.get(r['id'], {})  # the second eye: may it be shown, how strongly the first seconds hold, what stops people
+    if isinstance(second.get('show'), bool):
+        r['clean'] = second['show']
+    if second.get('beauty'):
+        r['beauty'] = second['beauty']
+    if second.get('stops'):
+        r['stops'] = second['stops']
+    if second.get('same_as') in by and second['same_as'] != r['id']:
+        groups.append([second['same_as'], r['id']])
 
 out = []
 for i, why in D['out'].items():
@@ -120,6 +183,10 @@ for r in rows:
     v = verdict.get(r['id'], {})
     if not why and v.get('clean') is False and r['id'] not in D.get('cleared', []):
         why = f"not a clean win ({v.get('kind', '')}): {v.get('reason', '')}"
+    if not why and re.match(r'o-(ad|to)\d+-', r['id']) and r['id'] not in verdict:
+        D['out'][r['id']] = ''  # brought by a later hand, not yet seen by a second eye: waits, is not library and not left out
+        count['waiting for the second eye'] += 1
+        continue
     if not why and r.get('strength') == 'weak':
         why = 'weak proof: ' + (r.get('doubt') or 'the win is in doubt')[:160]
     if why and r['id'] not in D['out']:
@@ -176,5 +243,6 @@ for rm in dict.fromkeys(room_of.values()):
     lines.append('')
 open(f'{OUT}/INDEX.md', 'w', encoding='utf-8').write('\n'.join(lines))
 print('kept', len(keep), '|', dict(count), '| without labels', len(bad), bad[:10])
+print('role', dict(collections.Counter(x for r in live for x in r['role']).most_common()))
 for k in ('door', 'proves', 'fits', 'strength', 'room', 'channel'):
     print(k, dict(collections.Counter(r.get(k) for r in live).most_common()))

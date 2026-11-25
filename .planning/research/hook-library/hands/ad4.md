@@ -1,0 +1,13 @@
+Names listed 168: already in the library 46, entered 29, no proof 43, failed 4, subject 16, opening not found 30. The folder is `/home/dxb/.local/share/dxb/hook-lab/el/ad4`.
+Checker: `openings.jsonl ok 29 {'MONEY': 29}`, `rules.jsonl missing` (none written), `ROWS 29 BAD 0`. Proves: 19 brand, 10 whole.
+Eight greatest entered: 8 P&amp;G Best Job, jolt, $500m, P&amp;G's own estimate · 17 truth Body Bags, spectacle, ~300,000 fewer young smokers · 13 Every Cigarette (Artery), warning, 190,000 fewer smokers · 4 Felix cat, character, £17m of ads led to £108m extra sales.
+Then: 15 McDonald's Raise Your Arches, odd_detail, £43.7m · 22 Whopper Detour, offer, 1.5m downloads in nine days, ROI 37:1 · 21 Popeyes "y'all good?", dare, visits +54% · 18 Act F.A.S.T., jolt, stroke calls +55%.
+Not entered though the proof page is saved, film not reachable: Don't Mess with Texas (litter −29%, then −72%), crash-test dummies, Paul Hogan's shrimp ad, Remington 1979 (share 19.5% to ~40%), Buckley's. SK-II: figure only in a search extract; Ariel Share the Load: CNBC's "doubled sales" not saved as a page.
+Not entered because the money belongs to a series of films: McCain, Tesco Food Love Stories, Audi Clowns, Currys, BT, Cadbury 2018, Just Do It.
+Failed: Warburtons Deliverers, Levi's Flat Eric, Energizer (earlier hand's finding), Taco Bell chihuahua (UNVERIFIED). A fifth doubt, Patagonia's 14 new shops, is also UNVERIFIED and counted as no proof.
+YouTube refused every download of mine with a bot check (first seen 12:59); I used no cookies. The films came from Dailymotion, Internet Archive and award or makers' archives; the rest wait for a later try.
+Of the 29 rows, 21 carry a film with its first 4 seconds looked at. Fifteen films were also seen as 16 frames over their length, so `clean` on the other films is judged from the opening. Words come from machine transcripts, corrected by sense.
+Eight rows have no film because the opening is text, an object or radio: 21–28. Row 29 (Missing Type) is street signs, seen only in a case film.
+Weakest rows: 5 Febreze (second-hand 18.2%), 6 Dunkin' (15 years on air, no sales figure), 26 Motel 6 (search extract only), 27 Clairol (picture from description, not a scan). Tipp-Ex (11) swears: use the shape only.
+Four or more lists, all partial: Marketing Week/IPA top ten; IPA 2018 winners and 2020–2026 news; Cannes Creative Effectiveness 2024–2026; WARC 2017 number one through press; CASSIES Grand Prix articles. Lists not found or not opened: full IPA Grand Prix 1980–2024, System1, Kantar, Effie Best of the Best cases.
+Read whole: the five brief pages, the three Cannes winner lists, the Knorr case page. Everything else in part (`ledger.txt`).

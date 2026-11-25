@@ -1,0 +1,9 @@
+I checked all 22 methods (yon2, i 25–46): 11 in, 7 narrow, 4 out. I dropped 25 winners and 33 people entries, and added 10 new winners.
+Check: in 22, check 22, each once True; bad ids none; every linked winner judged; none of the entered ones fails the door.
+Strongest: 46 rename the thing (tests with only the name changed, Sainsbury's +76%) · 30 big job in an exact short time · 27 offer alone for people who know you (narrowed) · 28 free thing first (narrowed, eight winners).
+Out: 29 first one free (three different things under one name, only Newman does it) · 36 widest wish first (two people, no winner; Hormozi's broad films "made no sales. Zero.") · 38 went through all of them (two clean winners, nobody's own result) · 45 things fly into place (two winners, both already in 41).
+Narrowed: 25 live from the workplace (fixed daily hours not proved) · 26 product as clear subject in still or wordless ads (product cut out alone lost to product in a room in four tests) · 27 not a bare "x% off everything" · 28 not for health and beauty goods · 32 moment in the picture only · 33 reason found in own buyers, not guessed · 44 only when the job visibly changes.
+Thin: 32 and 34 (34 meets the door exactly). For 37, 39 and 42 only views are shown. 30, 31 and 46 rest on stills, letters and names, with no film among the winners.
+Wrong stories rewritten: 25, 26, 28, 30, 31, 32, 33 (e.g. 33 said "dolar", which the row does not say; 32's figure belonged to another method). Better film text for 25, 28, 32, 35, 41, 42, 44.
+Could not judge: the films themselves (rows only). Whether the buyers in several of 27's winners already knew the seller. Whether o-tec3-002 and o-platform-060 look as described (the rows say not watched). Whether silence or the cleaning wins in 44. Note for 46: Stanford and the five-university trial may share a team; the door holds without it.
+Files: /home/dxb/.local/share/dxb/hook-lab/el/my4/check.jsonl, verify.py and write.py beside it.

@@ -1,0 +1,9 @@
+In 17, narrow 10, out 2 (29 methods). Winners dropped 37, new 18; people entries dropped or refused 43.
+Check: `METHODS 29 CHECKED 29 BAD 0`. File: `/home/dxb/.local/share/dxb/hook-lab/el/my7/check.jsonl` (`verify.py` beside it).
+Four strongest: 1 answer one real comment on screen; 20 the boss is the joke; 13 only the joke that carries the product; 29 the exact situation only the right one knows.
+Out: 5 one handwritten line (2 people and 2 winners, so neither side reaches three; both winners are measured tests, your call); 14 scripted comedy by professionals (one person with a result, no winner, a casting rule).
+Narrow: 2 everyday goods in cold feeds · 3 print and article pages, no film proof · 8 readers who already know you; with an unknown person the firm's name won by 13.1% · 9 real strong reactions only · 10 misfit seen at once · 12 thing inside the skit, not a young firm's only ad · 16 sellers already talked about · 17 never a sales or search headline · 27 many films · 28 label as wide as the buyers; town name only where all viewers live there.
+Thin, barely inside: 4 phone note (three people without figures, one winner), 11, 16, 17, 22. Method 18's three winners all trace to one agency by name or row (Harmon Brothers).
+Sources read behind the rows: "grandma always outperforms" is told as a joke (dropped); Mei Man's notes ads are "ripping" in her clients' accounts (kept); her Post-it claim has no result of her own (dropped).
+Wrong or unprovable client stories were rewritten, e.g. 2 "cost per sale" was cost per action; 6 HMRC's jump came from the photo, not the words.
+Not judged: whether ad comments are real (o-meta1-013, o-tta3-015); the films themselves (I read rows and some transcripts, watched none). Clean=false winners are named where they count (12, 13, 29; new in 1).
