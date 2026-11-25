@@ -1,0 +1,14 @@
+The harvest is thin: 17 rows. YouTube refused every film fetch from the first attempt until I stopped ("confirm you're not a bot", all clients tried). I did not use his cookies; films came from archive.org, the Wayback Machine and Dailymotion.
+1. `cover.tsv`: 134 names. 24 already in the library, 17 entered, 35 opening not found, 31 failed, 12 subject, 15 no proof.
+2. Checker: `openings.jsonl ok 17 {'MONEY': 17}`, `ROWS 17 BAD 0`; `rules.jsonl` not written. 6 rows solid, 11 usable. Proves: whole 11, brand 6.
+3. Eight greatest: 1 Bose Wave radio (dare, $250m; same opening seen in a 1994 and a 1997 film) · 2 FoodSaver (trouble, &lt;$20m to &gt;$80m in a year) · 3 Ronco dehydrator (question, $80m by 1993) · 4 SI football phone (trouble, about 1.6m subscriptions, whole campaign).
+4. 16 Mighty Putty (plain_gain, 20m units, seller's count) · 14 Boxcar Willie (character, past 1.5m albums) · 10 Time-Life Home Repair (expert, 25m copies, whole series) · 17 Scrub Daddy pitch (maker, 12,000 sets in 6 minutes on QVC the next morning; watched without sound, words from a transcript).
+5. Not entered, film out of reach: Little Giant ladder ($18m to nearly $200m a year), K-tel Miracle Brush (28m), Didi Seven (30m), Slim Whitman (1.5m), Popeil pasta maker, Sonicare, Huggable Hangers (800m), IT Cosmetics on QVC, Victoria Jackson ($200m), Swivel Sweeper (14m).
+6. Famous but failed: Veg-O-Matic (FTC order 1971), Vitamix 1949 (FTC order 1953 naming its TV claims), Dyson (clogging claim ruled against, UK 2007), Swiffer (NAD 2015), Shark (Dyson won $16m), H2O Mop (recall), Pocket Hose (class actions), Snuggie and Topsy Turvy (Allstar $8m), Proactiv, Meaningful Beauty and Wen ($8.5m), Flowbee (false programme front). Only the two FTC orders were opened (in part); the rest rest on search results or pages read in part.
+7. Subject: Soloflex, Tempur-Pedic and Mickey Mouse Disco (seen); ThighMaster, Winsor, Zumba and others (by name only).
+8. For the lead: Ginsu's parent (o-satan-044) went into receivership in 1985 (UPI). PedEgg (o-satan-051) now reads 40m on telebrands.com against the 45m in the row. I checked complaints by name for my rows and the failed names, not for the older DRTV rows.
+9. Failed lines in `cover.tsv` resting on thin evidence (press or search result, page not opened): NutriBullet, AmberVision, Columbia House, Video Professor, Fantom.
+10. Number belongs to the product or campaign more than to the film watched: rows 5, 6, 7, 9, 10, 11, 12, 13, 15 (said in each `doubt`). `clean` false: 7 and 12.
+11. Words are the machine's (first 24–60 s), corrected by sense; pictures from strips. Most films were fetched only for their first 60 s, none watched to its end.
+12. Read whole: ABC/Forbes top ten 2002, Deseret top ten 2003, Chief Marketer 1998, LA Times 27 Feb 1994, Kärcher (Thinkbox), STS Torso Track and Oreck XL, SBN Vitamix; the rest in part (`ledger.txt`).
+13. All files are in `/home/dxb/.local/share/dxb/hook-lab/el/ad2`.
