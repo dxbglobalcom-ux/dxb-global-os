@@ -183,7 +183,7 @@ for r in rows:
     v = verdict.get(r['id'], {})
     if not why and v.get('clean') is False and r['id'] not in D.get('cleared', []):
         why = f"not a clean win ({v.get('kind', '')}): {v.get('reason', '')}"
-    if not why and re.match(r'o-(ad|to)\d+-', r['id']) and r['id'] not in verdict:
+    if not why and re.match(r'o-(ad|to|sek|mb)\d+-', r['id']) and r['id'] not in verdict:
         D['out'][r['id']] = ''  # brought by a later hand, not yet seen by a second eye: waits, is not library and not left out
         count['waiting for the second eye'] += 1
         continue

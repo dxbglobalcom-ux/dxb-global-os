@@ -57,7 +57,18 @@
   "o-ad1-010": "a state's own airline: political sender (the lead, on his word about political senders)",
   "o-ad1-008": "suggestive (the lead)",
   "o-y5-003": "a bag bought by chance (the lead)",
-  "o-ad4-009": "left by the lead: a sender the CEO would not put before a client"
+  "o-ad4-009": "left by the lead: a sender the CEO would not put before a client",
+  "o-satan-046": "paid penalties over its advertising claims, and the presenter is today a political campaigner",
+  "o-uzman-070": "the opening's own word 'non-toxic' ended in a $2.5m settlement",
+  "o-uzman-067": "the soap's 'natural' claims ended in a $9m settlement (preliminary approval)",
+  "o-sugarman-011": "FTC consent order of 1989: the television show around it was a false front",
+  "o-satan-093": "settlement over undisclosed limits on the services promised on television",
+  "o-satan-108": "the opening swears that every endorsement was free; one was withdrawn and used all the same, and it came to court",
+  "o-satan-028": "orders rose, but liking and buying intention fell in the same weeks",
+  "o-satan-044": "the opening plays Japan for knives made in Ohio: it depends on an untruth",
+  "o-satan-052": "sold by innuendo: immodest",
+  "o-satan-094": "FTC order of 1991: films of the same series showed the toy doing what it cannot do",
+  "o-schwartz-080": "subject: an investment paper"
  },
  "money": [
   "o-davranis-002",
@@ -164,6 +175,12 @@
   },
   "o-abarsiv-041": {
    "channel": "email"
+  },
+  "o-ad2-001": {
+   "proves": "brand"
+  },
+  "o-satan-013": {
+   "clean": false
   }
  },
  "out_ads": {
