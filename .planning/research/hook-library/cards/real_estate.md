@@ -1,16 +1,19 @@
 # Estate agents, letting, house tours and holiday houses — what won here (25 November 2026)
-28 winners of this trade in the library: 19 seen by strangers, unpaid · 4 brought clicks or names · 4 sold · 1 kept paying for (a winner may hold two roles); 21 films on this machine, 16 may be shown to anybody.
+32 winners of this trade in the library: 20 seen by strangers, unpaid · 7 sold · 4 brought clicks or names · 1 kept paying for (a winner may hold two roles); 23 films on this machine, 17 may be shown to anybody.
 ## What won in this trade, and why
-Read this first: what SOLD or let is print, a letter, a listing and one television campaign; almost every phone film here is **SEEN**, and the rows do not tell whether that house was sold.
-1. **SOLD** (print, listing). The plain truth nobody else in the trade tells, or a true odd name. He laughs or is curious, and then believes. First second: the fault or the odd thing, in one line.
+Read this first: what SOLD or let is print, a letter, listings, an offer page, one television campaign and one agent's series of phone films; almost every other phone film here is **SEEN**, and the rows do not tell whether that house was sold.
+1. **SOLD** (print, listing, one film series). The plain truth nobody else in the trade tells, or a true odd name. He laughs or is curious, and then believes. First second: the fault or the odd thing, in one line.
    "Seedy family house… Decor peeling, faded, floral and flyblown": the house sold in no time, the firm's business tripled after such ads, $60,000 a year in commissions by 1963 [o-sek1-003].
    "Mushroom Dome Cabin": fully booked within two weeks of listing, then for years the most booked of 5.6 million listings [o-sek1-010].
+   "WIPE YOUR FEET ON THE WAY OUT!", a wrecked flat listed with the mouldy bedroom as first photo: sold within three days at £140,000, £15,000 over the asking price (Scott & Stapleton) [o-sek4-001].
+   On film, spoken like the buyer's own cousin: a tiny $157,000 house with the man beside it almost as tall as the porch, announced as a palace: the series brought 60 leads, nine contracts and 12 pending sales in its first weeks; this film 6,300,000 views, 201 times his usual (Cesar Gutierrez; not for showing, its one word is coarse) [o-sek4-005].
    **SEEN**, same honesty on film: "This tiny apartment's a little bit strange, but here's why…", a shed door that leads down into a brick kitchen, 5,200,000 views [o-sek1-023].
 2. One true extra, named, in the form everybody else uses. The eye passes over a thousand same ads and stays at the one word more. First second: that word.
    **CLICKS**: "1 BR + DEN $340": about 60 calls the first Sunday, flat rented on the Monday; a wall had been built first [o-sek1-001]. **SEEN**: a driveway renamed "paparazzi proof", 3,800,000 views [o-y6-018].
 3. **SEEN**. The closed door, gate or corridor: he walks toward it himself and must see what is behind. First second: an obstacle in front, already being approached; it opens within about four seconds.
    Wrought-iron gate at blue hour, 44,400,000 views, 235.8 times the median, 423,200 shares [o-sek1-018]; the viewer's own hand turns the key of "the tiniest apartment in Manhattan", 13,700,000 views, 5092.9 times [o-sek1-019].
    "Just rented… without even seeing it first", 1500000 views, 4169 comments [o-to10-024]; ten students and a closed cabin door, 635,100 views, 529.2 times [o-sek1-022].
+   Looking behind as a game: a serious broker whispers "Where I would hide if I played hide and seek in my new listing", and the camera has to search every room: 3,900,000 views, 1,277 times her usual, 61,800 shares [o-sek4-006].
 4. **SEEN**. Price, size and place in the first sentence, against a house that does not look like that price. Everybody has an opinion and sends it. First second: the sum in large figures, the seller already moving to the door.
    "this is what $2,300 is going to get you": a speed tour, 5,800,000 views [o-sek1-009]; "Over 4,000 square feet, seven bedroom, for 575,000", 5300000 views, 82700 shares [o-to10-025].
    "most affordable home in LA County in less than 60 seconds", 1,800,000 views [o-to2-019]; "This is what 12 million dollars gets you" with a ball in the air, 6,000,000 views [o-sek1-024].
@@ -25,6 +28,7 @@ Read this first: what SOLD or let is print, a letter, a listing and one televisi
    **KEPT PAYING**: "are you thinking about selling your home?", 1188 days [o-mb1-008]. **SEEN**: "You just closed on your house. Congratulations! Now listen up", 280300 views [o-tec6-025].
    **SOLD** (letter to people who had asked): "What is the matter that my communication did not interest you enough to get a reply": $2,275 of business from $52 [o-klasik-105].
 8. One case, **SOLD**, big budget: one recurring odd man, a flat to rent launched with the solemnity of a technology giant; Apartments.com revenue +976% since the launch [o-ad6-005].
+   One case, **SOLD**: the flow of money turned round, the place pays the newcomer, the exact sum as headline: "$10,000 to Make Tulsa Your New Home": 4,000 people moved, 58-70% of them would not have moved without the offer, a study against rejected applicants [o-sek4-003].
    One case, **CLICKS**: an office-rental portal's button "Get" instead of "Order", 38.26% more [o-abarsiv-100].
 ## Five to show a client
 1. [o-ad6-005] **SOLD** · Apartments.com · from 2015 — a huge dark arena, thousands of heads, one tiny man on a glowing green stage; then his solemn face: "My friends. My sweet, sweet friends."
@@ -36,9 +40,9 @@ Read this first: what SOLD or let is print, a letter, a listing and one televisi
 3. [o-sek1-009] **SEEN** · Trent Miller, agent, aged 19 · 2024 — a thin young man in sunglasses poses on a drive, whips round, points, stalks to the door and bolts in: "this is what $2,300 is going to get you".
    5,800,000 views, 54 times his films before it (TikTok). The series, not this film alone: best month $1.6 million in listings traced to the films (NAR REALTOR magazine). Say: "One run, one phone, and the true price first."
    /home/dxb/.local/share/dxb/hook-lab/el/sek1/vid/trent_first.mp4 · https://www.tiktok.com/@trent_miller__/video/7363456114039459115
-4. [o-to2-021] **SEEN** · Dejan Tolmac, New York agent · 2026 — a narrow kitchen and the words "COZY little apartment"; the camera swings past a door frame, and the floor falls away into a tall, lit room.
-   3,000,000 views, 206.9 times the median, 10200 shares (TikTok). Say: "Show the poorest corner first, then give them the room."
-   /home/dxb/.local/share/dxb/hook-lab/tt_org/vid/t7676081272065690893.mp4 · https://www.tiktok.com/@dejan_tolmac/video/7676081272065690893
+4. [o-sek4-006] **SEEN** · Lisa DuBois, agent, Falls Church, Virginia · 2024-2025 — a small woman of fifty in a bright pink blouse stands quite still on the steps of a house, a tiny microphone at her lips, and whispers with a solemn face: "Where I would hide if I played hide and seek in my new listing".
+   3,900,000 views, 1,277 times her usual of 3,055, 61,800 shares (TikTok); no house traced to it. Say: "A children's game gives the buyer a reason to look into every cupboard; any listing, one phone."
+   /home/dxb/.local/share/dxb/hook-lab/el/sek4/vid/lisa1.mp4 · https://www.nar.realtor/news/real-estate-news/sales-marketing/how-this-agent-turned-real-estate-listings-into-a-game-of-hide-and-seek
 5. [o-sek1-019] **SEEN** · Yasir, New York letting agent · 2026 — the viewer walks a narrow hall, his own hand turns a brass key, the door gives: "It's tiny.. but only $1,400 a month".
    13,700,000 views, 5092.9 times the median of 2,690, 35,000 comments (TikTok). Say: "An unknown agent, a phone, and a door that stays shut four seconds."
    /home/dxb/.local/share/dxb/hook-lab/el/sek1/vid/tiny.mp4 · https://www.tiktok.com/@yasir.c.k/video/7668389738423782687
@@ -49,11 +53,12 @@ Read this first: what SOLD or let is print, a letter, a listing and one televisi
 - Isaac French, holiday houses near Waco: build the one picture people must take; a 70,000-dollar pool brought 60–70,000 dollars a year more income (his figures) [x-tec6-045].
 ## What it depends on
 - Dear house, beautiful: finding 3, dusk and a gate; ordinary or small house: findings 4 and 5, true price first, or poorest side first.
-- A house with a fault: finding 1, if the owner agrees; wit, never at a person's expense.
+- A house with a fault, or a very small one: finding 1, if the owner agrees; wit, never at a person's expense.
 - To get owners to list: findings 6 and 7 (the sold sticker, the question); tours bring viewers and renters.
 - Unknown agent with a phone: findings 3 and 4 won at tiny medians; known house with a crew: finding 8.
+- An ordinary listing with many rooms: the hide-and-seek game in finding 3. A town or a builder that can pay the buyer something: the sum in finding 8.
 - Holiday house: one odd, true name and one picture nobody has; an invitation that is sent on.
 ## What is thin
-- Only four winners of the trade carry a sale; no phone film shows that its house was sold or let.
+- Seven winners of the trade carry a sale; of the phone films only one agent's series counts contracts (o-sek4-005), and no single film shows that its house was sold or let.
 - Nothing from builders selling off plan, commercial property or markets outside the USA and Western Europe; no tested paid film.
 - Many house films are luxury and large accounts; the small agents are the exceptions named above.

@@ -1,6 +1,6 @@
 # THE OPENING CARD — what won, for the writer of openings
 
-*47 rules drawn from the 495 of `rules.jsonl`, without a failure in them (the CEO's order of 2026-11-25). What failed, contradicts or is unproven stands apart, for engineers: `../hook-evidence/rules-for-engineers.md`. Every number was laid against its row by script (327 proof numbers, 0 faults); the lead laid 14 proofs drawn by lot beside their rows: 14 of 14 as printed. The ready openings are examples of the shape, written by us, not proofs.*
+*48 rules, 47 drawn from the first 495 rows of `rules.jsonl` and one the library measured itself, without a failure in them (the CEO's order of 2026-11-25). What failed, contradicts or is unproven stands apart, for engineers: `../hook-evidence/rules-for-engineers.md`. Every number was laid against its row by script (327 proof numbers, 0 faults); the lead laid 14 proofs drawn by lot beside their rows: 14 of 14 as printed. The ready openings are examples of the shape, written by us, not proofs.*
 
 **First line of every brief:** write the one win you want. **Seen** = people stop and watch. **Click** = they press, call, answer or leave their name. **Sell** = they buy or give. **Remembered** = they know the name later. Every rule says which win it brought; use it for that win.
 **Places decide.** Read "Holds" first. A rule is proven where it says, and is a good first try elsewhere.
@@ -250,6 +250,15 @@
   - A seller with $5M of shop sales writes every film so; the three films taken apart had well over 10 million views each. (r-uzman-033)
 - **How:** picture = the thing; written line = why it matters; spoken line = what comes next.
 - **Ready (florist, film):** picture: tired roses lift in a vase. Written: "Four more days." Spoken: "I do one thing to the stem." (write the true number of days)
+
+### R48. On your own account, open on something that is already happening. [B]
+- **Holds:** short films a maker or a small shop posts on its own account; any seller; seen.
+- **Proofs:**
+  - Films that went round, each beside an ordinary film of the same account, 341 pairs of July to November 2026, every film labelled blind: an action already under way in the first second in 61 of 100, against 51; a face that talks to the lens in 23 of 100, against 30. (r-ciftler-001)
+  - The same films: the thing itself fills the first frame in 46 of 100, against 40; one uncommon thing in 23, against 17. (r-ciftler-002)
+  - Alike in both: a question left open (84 and 82 of 100), a number or price (30 and 30), a story begun (31 and 29), pace, loudness, length. (r-ciftler-003)
+- **How:** begin the film one second later: the hand already cuts, the pour already runs; the face comes after; change the first picture before you change the words.
+- **Ready (baker, film):** the loaf is already being torn open, steam over the hands; on it: "Out at [6:10], gone by [8]."
 
 ## Length, pace and after the first line
 

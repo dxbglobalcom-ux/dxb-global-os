@@ -1,5 +1,5 @@
 # Local shops (food counters, florists, jewellers, cobblers, cleaners, watch repair) — what won here (25 November 2026)
-38 winners of this trade in the library: 20 seen by strangers, unpaid · 15 sold · 3 brought clicks or names · 2 made the account grow (a winner may hold two roles); 29 films on this machine, 28 may be shown to anybody.
+41 winners of this trade in the library: 22 seen by strangers, unpaid · 16 sold · 3 brought clicks or names · 2 made the account grow (a winner may hold two roles); 32 films on this machine, 30 may be shown to anybody.
 ## What won in this trade, and why
 Roles: SOLD = a published sales result. CLICKS = answered, clicked, left a name. SEEN = strangers watched, unpaid. GREW THE ACCOUNT = later films drew twice the views. Most SOLD figures here are the owner's own, told to a newspaper.
 
@@ -9,6 +9,7 @@ Roles: SOLD = a published sales result. CLICKS = answered, clicked, left a name.
 2. **SOLD** — The surprising price over the full plate, or the price on a coupon with a last day. It is the whole offer in three words.
    First second: food and price, nothing else. "Cendol Harga RM1", a stall in Kuala Lumpur filmed by a man with a large following: about 5,000 customers a day, daily profit from RM800 to almost RM10,000 (o-ad3-022).
    Print, a bicycle in a coupon, "$68.88—Reg. $89.95 … Limit 1 per customer": all sold the first afternoon, over $14,000 from a $480 advert (o-caples-051).
+   One case: the size taken at its word, a bucket of iced coffee carried straight at the lens till it fills the picture, "When I say I want a large iced americano": that film doubled, then tripled the shop's sales by the owner's count, 1,200,000 views, 419.9 times the usual (Cowgirl Barista; not for showing; o-sek5-009).
 3. **SOLD** — The maker's own hands and one true reason. He is plainly no salesman, and the object is good to look at.
    First second: the maker and the thing in his hands. Sparta Candle Co., an old man with a soap with peach slices made in honour of his wife: 9 million views; in eight months of the series sales tripled (o-ad3-021). Hello Sweets, packing one customer's order without a word: an order every minute, the shop closed to restock (o-uzman-011).
 4. **SOLD** — A judge who pays himself tastes it. Praise is not certain, so people wait for the first bite.
@@ -21,6 +22,8 @@ Roles: SOLD = a published sales result. CLICKS = answered, clicked, left a name.
 7. **SEEN**, two of them also **GREW THE ACCOUNT** — A task with a doubt: will it be done, where is the fault? The viewer takes a side.
    First second: the damage or the verdict. Cobbler G throws a shoe, shows the hole: "Six hours … can we do it?" 16.2 million, later films x3.49 (o-to8-010). A one-car driving school, "Looks fine..... but it's a serious fault": 1.4 million, usual 6,015, later films x3.86 (o-to9-022).
    A florist's dead face over four thin peonies, "you ordered a peony bouquet for $100...": 6.6 million, usual 12,000 (o-to8-011). Jeeves NY, a pinch of powder: "If I told you that this was enough": 2.5 million (o-tec6-011).
+   A barber, the order in quotation marks over a nearly bald head, "Give Me 10 Years Back": 19.2 million, 67.5 times the usual (o-sek5-010). The same barber, the customer says aloud what he hides, "I've got that bald spot on top": 7.6 million, 26.7 times (o-sek5-011).
+   The barber, Grant Branham in a small town in Kentucky, told the radio that with such films he is booked for two months ahead and customers come from ten states; not for one film (o-sek5-010).
 8. **CLICKS** — Dear pieces: lay them out and let questions or colour do it, hands only. The owners paid for these for months.
    First second: many pieces, one lifted. Chrysella, "Do you know what shape diamond you want?", 660 days, three copies (o-meta2-016). Bookings and sales are not known.
 ## Five to show a client
@@ -48,10 +51,10 @@ Roles: SOLD = a published sales result. CLICKS = answered, clicked, left a name.
 ## What it depends on
 - In true need, new or nearly closing: finding 1, once, with enough hands for the rush (o-ad5-006). Never acted.
 - Cheap and eaten today: the price over the plate, finding 2, or a judge, finding 4. Dear and thought over: hands and choice, finding 8, or the maker, finding 3.
-- Result seen at once (repair, cleaning, dye): finding 6. Result unseen or a matter of judgement (driving, flowers, washing): finding 7.
+- Result seen at once (repair, cleaning, dye): finding 6. Result unseen or a matter of judgement (driving, flowers, washing), or seen on a person at the end (hair): finding 7.
 - Old customers on a list: an exact fact about their own thing, finding 5; it costs a message.
 - Unknown names won in findings 1, 2, 3, 6 and 7, nearly all with a phone (o-ad5-006, o-to8-009).
 ## What is thin
 - Sales figures are mostly the family's own, for the first days or weeks; newspapers printed them as told, and no test stands behind them.
-- Grocers, pharmacies, clothes shops, barbers and bookshops hardly appear; many SOLD rows are small food places.
+- Grocers, pharmacies, clothes shops and bookshops hardly appear; barbers are one seller, watched, his bookings told by himself; many SOLD rows are small food places.
 - Paid local films with a sales figure are missing; the paid ones here only show that the owner kept paying.

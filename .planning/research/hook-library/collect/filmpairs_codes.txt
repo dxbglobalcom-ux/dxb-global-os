@@ -1,0 +1,26 @@
+T  the thing itself (product, work, place, animal, food, body part) fills most of the first frame; not a talking face
+F  a face that talks to the camera within the first second
+M  an action is already under way or half done within the first second (somebody does something, something falls, pours, opens, moves by itself), not only a head or a hand waving, not only the camera moving
+X  something strange, huge, tiny, extreme, never seen, or two things that do not belong together, within the first second
+Q  a question is left open by the picture or the words: what is this, will it hold, what is under it, what happens next, what does it cost
+W0 / W1 / W2  words on the screen within the first second: none / up to six words / more than six (write exactly one of the three)
+P  the words (said or shown) promise the viewer a use: how to, a tip, what to do, what to avoid
+S  the words begin a story of somebody or of an event (a customer, a father, "POV", "the day I…")
+C  two things set against each other: before and after, wrong and right, cheap and dear, then and now, you and they
+E  a strong feeling is to be seen or is called up: fear, disgust, laughter, awe, tenderness, anger
+R  danger, breaking, mess, a mistake, loss
+N  a number or a price is said or shown
+Y  the words name a kind of person or their trouble ("if you have…", "runners", "dog owners")
+G  it begins with a greeting, a name, a logo or an introduction
+K  the scene changes within the first two seconds (another place, another shot)
+U  its subject concerns nearly everybody (food, home, money, body, family, driving), not only the trade's own customers
+V  it shows or promises what is usually hidden: the inside, behind the scenes, a secret, how it is really done
+A  an opinion, a judgement or a quarrel on which people would take sides
+L  a known brand, famous person, film, game or event of the day is named or shown
+Z  it makes the viewer test, guess, count, spot or try something himself
+D  it denies a common belief or habit ("you don't need…", "stop doing…", "it is a myth")
+J  somebody other than the maker acts or reacts (customer, passer-by, child, parent, animal)
+O  one uncommon object or result is shown whose making, inside or price one wants to know
+H  somebody gets something: a gift, a surprise, help, a rescue
+B  a little acted scene: somebody plays a part or makes fun of himself
+I  hands at work on a material: cutting, pouring, cleaning, peeling, opening, repairing

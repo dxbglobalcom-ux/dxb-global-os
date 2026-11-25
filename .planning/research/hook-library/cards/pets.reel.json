@@ -1,52 +1,7 @@
 [
- {
-  "id": "o-ad4-010",
-  "mp4": "/home/dxb/.local/share/dxb/hook-lab/el/ad4/vid/caramelob.mp4",
-  "start": 0,
-  "dur": 4.8,
-  "title": "Film him like a king",
-  "line": "Pedigree in Brazil: the street dog everybody knows turns its head like a lion",
-  "proof": "Sold: +23.3% sales, whole campaign",
-  "audio": true
- },
- {
-  "id": "o-to11-004",
-  "mp4": "/home/dxb/.local/share/dxb/hook-lab/tt_org/vid/t7655879929187421453.mp4",
-  "start": 0,
-  "dur": 4.2,
-  "title": "Look twice",
-  "line": "An unknown salon: a dog with a perfect bob turns its head and sulks",
-  "proof": "Seen 7.6 million times, 18788.6 times its usual",
-  "audio": false
- },
- {
-  "id": "o-to11-005",
-  "mp4": "/home/dxb/.local/share/dxb/hook-lab/tt_org/vid/t7201289714979327278.mp4",
-  "start": 0,
-  "dur": 5.5,
-  "title": "The new employee",
-  "line": "A vet clinic: a Labrador at reception does not answer the customer",
-  "proof": "Seen 8.2 million times, 948.9 times its usual",
-  "audio": true
- },
- {
-  "id": "o-to4-006",
-  "mp4": "/home/dxb/.local/share/dxb/hook-lab/tt_org/vid/t7679897368895999246.mp4",
-  "start": 0,
-  "dur": 4.2,
-  "title": "The hated chore, one hand",
-  "line": "A litter box like a moon: one rock and an orange ball rolls out of the sand",
-  "proof": "Seen 77.8 million times, 818.5 times its usual",
-  "audio": false
- },
- {
-  "id": "o-ad6-019",
-  "mp4": "/home/dxb/.local/share/dxb/hook-lab/el/ad6/vid/porter0.mkv",
-  "start": 0,
-  "dur": 5.2,
-  "title": "Prove it, do not plead",
-  "line": "A shelter dog sits at the wheel and shifts gear for SPCA New Zealand",
-  "proof": "Clicks: adoption interest +590%, every dog adopted",
-  "audio": true
- }
+{"id":"o-ad4-010","mp4":"/home/dxb/.local/share/dxb/hook-lab/el/ad4/vid/caramelob.mp4","start":0,"dur":4.8,"title":"Film him like a king","line":"Pedigree in Brazil: the street dog everybody knows turns its head like a lion","proof":"Sold: +23.3% sales, whole campaign","audio":true},
+{"id":"o-to11-004","mp4":"/home/dxb/.local/share/dxb/hook-lab/tt_org/vid/t7655879929187421453.mp4","start":0,"dur":4.2,"title":"Look twice","line":"An unknown salon: a dog with a perfect bob turns its head and sulks","proof":"Seen 7.6 million times, 18788.6 times its usual","audio":false},
+{"id":"o-sek5-003","mp4":"/home/dxb/.local/share/dxb/hook-lab/el/sek5/vid/hwp.mp4","start":0,"dur":4.8,"title":"Kept in a box","line":"A grey office man is filmed and spoken of like a neglected dog","proof":"Every dog was adopted","audio":true},
+{"id":"o-to4-006","mp4":"/home/dxb/.local/share/dxb/hook-lab/tt_org/vid/t7679897368895999246.mp4","start":0,"dur":4.2,"title":"The hated chore, one hand","line":"A litter box like a moon: one rock and an orange ball rolls out of the sand","proof":"Seen 77.8 million times, 818.5 times its usual","audio":false},
+{"id":"o-ad6-019","mp4":"/home/dxb/.local/share/dxb/hook-lab/el/ad6/vid/porter0.mkv","start":0,"dur":5.2,"title":"Prove it, do not plead","line":"A shelter dog sits at the wheel and shifts gear for SPCA New Zealand","proof":"Clicks: adoption interest +590%, every dog adopted","audio":true}
 ]
