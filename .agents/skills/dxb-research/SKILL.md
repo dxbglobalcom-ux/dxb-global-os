@@ -53,7 +53,7 @@ never skip it silently. Nothing of the holding's own names or unreleased work go
 | Platform | Command |
 |---|---|
 | Everything at once (40 channels, seconds) | `bash "$S/scripts/sweep.sh" "<3-6 words>" <outdir> --tier max --pages 8` |
-| Web | WebSearch · `bash "$S/scripts/mcpx.sh" exa\|tavily\|parallel\|youcom\|firecrawl "<q>" 10` |
+| Web | WebSearch · `bash "$S/scripts/mcpx.sh" exa\|tavily\|parallel\|youcom\|firecrawl "<q>" 10` · spare, by name only: `octen` (last of four doors in the 2026-11-25 blind trial: 122/200, exa 183) |
 | Google | `opencli google search "<q>" -f yaml` · `python3 "$S/scripts/hidden.py" google "<q>"` (Google itself is not read signed-in; it falls to Startpage, then Brave, by design) |
 | Google Maps (places, ratings, review counts) | `python3 "$S/scripts/maps.py" "<q>" [--limit N] [--json]` |
 | X | `opencli twitter search "<q>" -f yaml` · a thread: `opencli twitter thread <url> -f yaml` |

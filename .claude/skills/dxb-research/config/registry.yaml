@@ -2,7 +2,8 @@
 # supplies the TRUTH. Measured 2026-09-16: doctor reports reddit and twitter as
 # `warn` while both returned real results in 17-19 s. A static registry is not health.
 #
-# cost is $0 on every line in this file. A channel with a price does not belong here.
+# cost is $0 on every line in this file. A channel with a price does not belong here — except the
+# spare `octen`, put here on the CEO's order of 2026-11-25; no sweep and no stand-in list fires it.
 
 channels:
 
@@ -27,6 +28,13 @@ channels:
     tags: [search, discover]
     probe: "curl -sS -m 15 -X POST 'https://api.you.com/mcp?profile=free' -H 'Content-Type: application/json' -H 'Accept: application/json, text/event-stream' -d '{\"jsonrpc\":\"2.0\",\"id\":1,\"method\":\"tools/list\"}'"
     fallback: [exa, parallel]
+  octen:
+    tags: [search, spare]
+    probe: bash scripts/mcpx.sh octen "site reliability" 1
+    note: >-
+      SPARE, not in the sweep: keyed and paid (list price $1 per 1,000), called by name with mcpx.sh.
+      Blind trial of 2026-11-25: 122 of 200, against exa 183, youcom 166, parallel 146.
+    fallback: [exa, youcom, parallel]
   google:
     tags: [search, serp]
     probe: opencli google search "site reliability" -f yaml

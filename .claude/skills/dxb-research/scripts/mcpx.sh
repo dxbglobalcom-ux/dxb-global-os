@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
 # One call to a keyless MCP door, printed as plain text. (Exa alone uses the holding's key when
-# ~/.config/dxb/exa.env exists — see its case below.)
+# ~/.config/dxb/exa.env exists — see its case below. `octen` is a spare: keyed, paid, not MCP, and
+# fired by no sweep — it is called by name only.)
 #
-# All five doors answer `tools/call` over HTTP with no API key, no account and no
+# The five keyless doors answer `tools/call` over HTTP with no API key, no account and no
 # card — measured 2026-09-16 at 0.22-0.50 s each. They are the reason the anti-
 # concentration rule in the gate is enforceable: with one search engine it is an
 # aspiration, with five it is a rule.
@@ -12,6 +13,7 @@
 #   mcpx.sh tavily    "<query>" [n]
 #   mcpx.sh firecrawl "<query>" [n]
 #   mcpx.sh youcom    "<query>" [n]
+#   mcpx.sh octen     "<query>" [n]      (the spare)
 #   mcpx.sh fetch-tavily <url>
 #
 # The endpoints owe us nothing and none of them publishes its keyless rate limit.
@@ -20,7 +22,7 @@
 
 set -uo pipefail
 DOOR="${1:-}"; Q="${2:-}"; N="${3:-8}"
-[ -z "$DOOR" ] || [ -z "$Q" ] && { echo "usage: mcpx.sh <exa|parallel|tavily|firecrawl|youcom|fetch-tavily> \"<query|url>\" [n]" >&2; exit 2; }
+[ -z "$DOOR" ] || [ -z "$Q" ] && { echo "usage: mcpx.sh <exa|parallel|tavily|firecrawl|youcom|octen|fetch-tavily> \"<query|url>\" [n]" >&2; exit 2; }
 
 jq_esc() { python3 -c 'import json,sys; print(json.dumps(sys.argv[1]))' "$1"; }
 QJ=$(jq_esc "$Q")
@@ -52,6 +54,13 @@ case "$DOOR" in
   youcom)
     URL="https://api.you.com/mcp?profile=free"; HDR=()
     BODY="{\"jsonrpc\":\"2.0\",\"id\":1,\"method\":\"tools/call\",\"params\":{\"name\":\"you-search\",\"arguments\":{\"query\":$QJ,\"count\":$N}}}" ;;
+  octen)
+    # Ordered into the engine by the CEO on 2026-11-25; the blind trial of that day put it
+    # last of four doors, so it stands as a spare. `standard`, because `dynamic` was empty on 13 of 20.
+    URL="https://api.octen.ai/search"; OCTEN_API_KEY=""
+    OCTEN_ENV="${DXB_OCTEN_ENV:-$HOME/.config/dxb/octen.env}"
+    [ -r "$OCTEN_ENV" ] && OCTEN_API_KEY=$(sed -n 's/^OCTEN_API_KEY=//p' "$OCTEN_ENV" | head -1)
+    BODY="{\"query\":$QJ,\"count\":$N,\"result_type\":\"standard\"}" ;;
   *) echo "unknown door: $DOOR" >&2; exit 2 ;;
 esac
 
@@ -116,6 +125,42 @@ if notice:
 print(out if out else "(empty)")
 '
 }
+
+# Octen answers plain JSON. The key goes to curl as a header FILE (a shell-made descriptor), so no
+# process list shows it, and a refusal prints our own words, never the server text that may repeat it.
+# Octen says out-of-balance with 403 (its API reference), not 402; both are taken.
+call_octen() {
+[ -n "$OCTEN_API_KEY" ] || { echo "MCP ERROR (quota): octen — no key in $OCTEN_ENV"; return 1; }
+curl -sS -m 60 -X POST "$URL" \
+  -H 'Content-Type: application/json' \
+  -H @<(printf 'x-api-key: %s\n' "$OCTEN_API_KEY") \
+  -w '\n%{http_code}' -d "$BODY" \
+| python3 -c '
+import sys, json
+raw, _, status = sys.stdin.read().rpartition("\n")
+try:
+    d = json.loads(raw)
+except Exception:
+    d = {}
+code = status if status != "200" else str(d.get("code") or 0)   # a 200 can carry the refusal in its body
+refused = {"401": "key refused", "402": "out of credit", "403": "out of credit", "429": "rate limit"}.get(code)
+if refused:
+    print(f"MCP ERROR (quota): octen — {refused} (HTTP {code})"); sys.exit(1)
+if code != "0" or not isinstance(d.get("data"), dict):
+    msg = str(d.get("msg") or "no readable answer").replace("\n", " ")[:400]
+    print(f"MCP ERROR: octen — HTTP {status}, {msg}"); sys.exit(1)
+def entry(r):
+    return "\n".join([
+        "Title: " + (r.get("title") or "N/A"),
+        "URL: " + (r.get("url") or "N/A"),
+        "Published: " + (r.get("time_published") or "N/A"),
+        "Author: " + (r.get("authors") or "N/A"),
+        "Highlights:", r.get("highlight") or "",
+    ])
+print("\n\n---\n\n".join(entry(r) for r in d["data"].get("results") or []) or "(empty)")
+'
+}
+if [ "$DOOR" = octen ]; then call_octen; exit $?; fi
 
 # THE KEY RUNS OUT (his order 2026-10-13: "exa bitince haber verilsin"). A keyed Exa call that fails
 # on the key or its credit raises a flag the session opening reads (.claude/hooks/spec-bootstrap.sh)
