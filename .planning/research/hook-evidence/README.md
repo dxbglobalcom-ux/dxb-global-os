@@ -2,9 +2,9 @@
 
 Ordered by the CEO on 2026-11-25 ("testleri yapılmış, gerçekten sonuç alınmış araştırmalara dayanarak … sistemi de
 kurulmalı … teorik kalmasın"). Five hands read (Opus 5.5 and Sonnet 5.5, medium); Opus 5.5 · high weighed. ChatGPT searched
-beside them. **Nothing is built.** Full blocks, quotes and addresses: `1-words.md` (25 findings) · `2-video.md` (22) ·
+beside them. **Nothing is built. This is a first scan, not the finished study:** of 97 findings in files 1–4, 19 were read whole, 44 in part, 24 as an abstract, 10 at second hand. **His rule for the library (2026-11-25): only what succeeded enters it** — §1's "They lost" and §2's odds are for the engineers, never library rows. Full blocks, quotes and addresses: `1-words.md` (25 findings) · `2-video.md` (22) ·
 `3-platforms.md` (24) · `4-books.md` (25) · `5-practitioners.md` (20 counted studies, 17 people, 57 real openings at 10× or more
-their account's median) · `winning-openings.tsv` (82 candidates, raw) · `chatgpt.md` (to be checked) · `code/` (the measurements we ran).
+their account's median) · `winning-openings.tsv` (82 candidates, raw) · `chatgpt.md` and, finding by finding, `chatgpt-beside-ours.md` · `code/` (the measurements we ran).
 
 Outcome marks: **[STOP]** stopped/watched · **[CLICK]** · **[BUY]** orders, sales, spending. Grade: A field experiment or A/B ·
 B large observational · C lab · D platform's own · E practitioner with numbers. ✔ = the lead re-read the figure in the fetched source.
