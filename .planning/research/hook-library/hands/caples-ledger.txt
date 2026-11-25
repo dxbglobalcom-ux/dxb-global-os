@@ -1,0 +1,14 @@
+tam.txt 1-900 read: title, contents, preface, Ogilvy foreword (19-1/2 times), White introduction (piano ad story), S&S Mills caption, acknowledgments
+tam.txt 900-2650 read: ch.1 (keyed tests, Evanston Hospital, Select Comfort), ch.2 (mistakes in English, $110,000/$9,000, laugh at money worries), ch.3 first part (ten headlines)
+tam.txt 2585-4350 read: ch.3 end (14 ad clubs 50% wrong), ch.4 (ten failures, rules, Fabrikant, Toyota, Franklin Mint), ch.5 formulas 1-16 (mostly lists without results; Carnation case)
+tam.txt 4350-6100 read: ch.5 formulas 16-35 (Chemical Bank, Rand McNally, Hernia), ch.6 appeals (11-ad table, used cars x3, Smith Barney), ch.7 start
+tam.txt 6000-9250 read: ch.7 (soft drink coupons, MCI, bank posters, Pet drink), ch.8, ch.9 (Helmsley, Reader's Digest openings, Andersen), ch.10 (Barton seven years, Bell Atlantic, Cousins, news page x3, AFT), ch.11 start
+tam.txt 9250-10900 read: ch.11 (Lenox, 52.7%, Davis fish letters, Guess, Jaguar, Grizzard, salesman-will-call -75%), ch.12 start
+tam.txt 10040-12500 read: ch.11 rest, ch.12 (dull products, English course x3-4, store coupons with sales), ch.13 (32 ways; Foley-Belsaw -50%, phone 1 in 2, Thursday +39%, Sandoz), ch.14 start (Marie Antoinette x8)
+tam.txt 11650-11682 and 12498-14096 read: ch.14 (headline split runs, book titles, magazine stickers), ch.15 (readership of pictures, ICS Grace, Evans furs, Mobil, Roth memory, Times 14 years, Tecla)
+tam.txt 13269-15850 read: ch.15 rest, ch.16 (small ads, classifieds), ch.17 whole (ten brain teasers), ch.18 start (Canyon Ranch +97.4%, Pitney Bowes IQ +138%)
+tam.txt 15845-18266 read: ch.18 rest (phone test x2.5, kits, booklet +500%, split-run small tests, 36 headlines +300%), end notes, index
+NOTE: the raw tam.txt holds stray < and > that make check_rows.py delete everything between them; tam_no_angle.txt is the same file, same line numbers, with < > turned to spaces
+web/ bat.txt (OUP preview of Battistella: front matter and ch.1, whole preview) ; aaf.full.txt whole ; swipe.full.txt: lines on runs read, rest skimmed ; drcm.full.txt: Schwab part ; nyer.txt: the Soosh paragraph ; s1-s6: search results (6 searches)
+not opened: WARC article (paywall), Schwab 1939, Rowsome 1959
+OCR: figure text (headlines inside reproduced ads) partly unreadable; captions readable

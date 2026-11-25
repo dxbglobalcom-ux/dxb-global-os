@@ -1,0 +1,41 @@
+gligoric.txt (my re-extract of banerjee_urminsky_plos.pdf, which is really Gligorić et al.) lines 1-1000 = whole body, tables, figs 1 looked at as image; references not
+clickplos.txt = NOT Gligorić but Jung et al. 2022: read whole 1-1447
+negativity.txt = Robertson 2023: whole body, tables 1-3, methods; references skipped; supplement not on disk
+curiosity_backfire.txt: whole 1-585; supplement not on disk
+numerals.txt whole 1-517; supplement not on disk
+bu24.txt = only the journal landing page (abstract + references); final text NOT open
+bu_2021.txt / web/bu_home.pdf (same Jan 2021 draft, 122345 bytes): body 1-700 whole, Table 3 and interaction section; appendix word tables skimmed only
+bu_corr.txt (osf h8wvg, downloaded): whole
+causaltext.txt (Columbia, downloaded): bytes 0-88,000 of 112,606 read (through DonorsChoose and Prosper tables); rest/appendix not
+yale.txt (Why it Works, downloaded from som.yale.edu): whole incl. appendix A/B
+lola.txt: lines 1-770 and 1116-1380 read, web appendix A survey read; section 4.1-4.3 algorithm and appendices B-G proofs/tuning NOT read
+sae.txt: lines 1-600, 840-960, headline data section, appendix E; proofs and other datasets (Yelp, Congress) not
+evolution_headlines.txt: lines 1-840 read except last ~8 KB of discussion
+simple.txt (Shulman 2024): whole, plus Fig 1 as image (transcribed to figtext.txt); supplement not
+upworthy_data.txt: whole 1-302; Fig 1 looked at (no CTRs printed)
+upw_update.txt: whole; evolution_updates.txt skimmed
+whatholds.txt: lines 172-360 (data, results, 3 studies); theory part 100-170 not read line by line
+wording.txt (Tan 2014): bytes 0-38,500 of 48,277 = all except the end of section 5.2/6 and references
+tiktokhooks.txt: method, results, discussion (bytes 14,000-34,000); literature review not
+personas.txt: bytes 0-29,500 (abstract to RQ3); appendix tables not
+rj2mz.txt: method, results, discussion (lines 264-640) read; theory part not
+fang.txt: only the abstract exists on disk (paywall page); body NOT read
+bm.txt: lines 1-1667 bytes 0-59,600 of ~67,000 (all but end of discussion)
+mandler.txt: abstract, introduction, studies 1-4, discussion; hypotheses part and pilot skimmed
+molina.txt: studies 1-3 whole; introduction/related work not
+leehn.txt: introduction, section on results lines 1895-1975, 2490-2608; model sections and appendix not
+zeig.txt: abstract, table rows for resumption, discussion and summary; methods not line by line
+yaleins.txt: whole (article about the study; the SSRN paper not opened)
+packard.txt on disk: ONLY page metadata and reference list, no body
+calm.txt (leekevin.io, downloaded): bytes 0-57,000 + Appendix E; other appendices not
+2510.12049.txt (arXiv, downloaded): introduction, setting, Table 4, results, App. A/C parts on descriptions, push, Google titles; heterogeneity appendices not
+2507.21983.txt (Meta): bytes 0-29,000 (through main result); robustness appendices not
+you.txt: bytes 0-43,000 of 57,700 (studies 1-4); general discussion not
+concrete.txt (working paper May 2020): abstract, study 2, study 3 start, study 4 stimuli; rest not
+toubia.txt: whole body
+2508.20024.txt (Mercari): bytes 0-23,000; prompt appendix not
+2512.03373.txt: abstract and selected result lines only
+proceed.txt (Frontiers): method, results, discussion
+kal_abs.txt / kal_exa2.txt: abstract only; SSRN and WashU PDF refused
+lai_exa.txt: search extract only; tandfonline and academia.edu full text refused
+ushno.txt: abstract, introduction

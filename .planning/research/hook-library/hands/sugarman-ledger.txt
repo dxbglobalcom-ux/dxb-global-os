@@ -1,0 +1,13 @@
+sug.txt 1-4798 read whole (front matter, foreword, intro, ch 1-14 start)
+sug.txt 4799-7731 read whole (ch 14-19 trigger 8)
+sug.txt 7734-9147 read whole (ch 19 triggers 8-20)
+sug.txt 9148-10660 read whole (ch 19 triggers 20-31, ch 20 start)
+sug.txt 10661-12960 read whole (ch 20-28). Left out: Lingerie for Men (immodest), DC-10 and Sony ads (failures)
+sug.txt 12962-14548 read whole (ch 29-35, ch 36 start). Left out: Mail Order Mansion (loss), Gold Space Chains (won because gold price rose), Hungarian Conspiracy (only 'moderately successful')
+sug.txt 14550-15907 read whole (ch 36: catalogs...Internet). Ski-resort snowmobile ban (false front) left out
+sug.txt 15912-16930 read whole (end of ch 36, epilogue, appendices); 16930-18056 index: skimmed for ad titles only
+og.txt 1-310 (whole file: Confessions ch. VI whole; ch. VII first part up to p.31) read whole
+w/king7.txt (Roman, The King of Madison Avenue ch.7 'Big Ideas', AEF's lawful excerpt) read whole to p.107
+w/og38b.txt (O&M 38 points house ad) read whole; img/direct.txt (O&M direct-response house ad, scan read by eye + OCR) whole; img/travel.txt (travel house ad) whole; img/food.txt (food house ad) whole; w/og_ind.txt (industrial house ad) whole; w/og_secret.txt (Ogilvy film transcript) whole; w/og_dr.txt same speech; w/pr_tax, pr_series, tenday, pigeons, rr_cmo, time52, hath_damn, dove_media: read; rr_wwd, hath_cbc, dove_campaign, dove_uni, merc65: section
+w/schwab100.txt (Schwab's 100 headlines ad, all 100 with comments) read whole (comments under the blog post not read)
+w/kenroman, og_quotes, og_enc, aef_king, rr_otd, hath_site, hath_maine: only searched for figures, not read whole

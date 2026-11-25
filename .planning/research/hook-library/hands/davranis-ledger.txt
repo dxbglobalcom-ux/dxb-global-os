@@ -1,0 +1,18 @@
+bitgive.txt 1-1160 whole (trial part 692-1160 closely) — BIT charitable giving 2013
+bitfraud.txt 250-1100, 1280-2030 section — BIT fraud/error/debt 2012 trials 1-6 (Insight 4 rests on the retracted sign-at-top study)
+bit1315.txt 300-2760 (near whole) — BIT update 2013-15
+organ.txt whole — organ donation trial 2013
+biteast.txt 300-1300 section — EAST 2024 edition
+bit1516.txt 250-900, and the trial sections 1125-1160,1600-1650,2676-2724,2960-3029,3310-3330,4343-4440,4609-4712,4864-4925 — section
+bit1617.txt 120-275, 740-766, 840-872, 1505-1542, 1807-1820, 1960-2100 — section
+haynes13.txt 1-700 near whole
+goldstein08 137-567 (both experiments, whole); grant11 149-371 whole; cial06 150-354 (method+results whole); candy02 90-480 near whole; garner05 results sections; bohner14 abstract+results lines
+mega.txt, milkman21.txt near whole (supplement not opened); hallsworth15 whole; hallsworth17 539-925 + message table; dai21 section
+hershfield20, nunes06, sparkman17, gneezy14, onceanddone, karlanlist (2012), karlanlist07, sudhir, cai09, shang09, homonoff, della12, kessler18, bleich14, pleasegive, packardconc/I/rec, bergerfitz, bertrandq, dtr, rind99, turnwald19b, coolfood, edwards09 (Cochrane) — sections (method wording, results), not whole
+wfbr_bs, wfbr_globe whole; wfbr_fs (podcast) by search
+sbst15, sbst16, wiki10b, wiki11, wiki12, wiki16, blamey, poort18 — sections
+bryan11/gerber16, bacon18, pique, gonz86, reger98 (abstract), loschelder, ganzach — read in part; no row or rule only
+wikifacts_c.txt (Wikimedia test diary) 316-344 and 560-2296 read in order (tables trimmed to gifts/amount), 1-315 and 345-560 in part
+nr_* (failed replications): abstracts/first pages read: victim, ten commandments, eyes, nudge meta, Gueguen, Langer, decoy, door-in-the-face, 99-prices, anchoring
+gerberneigh, ferraro, opower, salesigns, anderson9 (abstract), karlanwood, gymmega, nudgeunits, qubitpdf, pwyw10, patel22, sahniraw — sections
+Downloaded, not read: ayres, gosnell, halperin(in part), levittjob, fryer, karlansms, bacon18(in part), schultz07, landry06(in part), opower body, tucker, damgaard, simester15, webbeves(in part), eitc

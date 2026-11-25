@@ -1,0 +1,6 @@
+report.md (ChatGPT's report) 1-191 whole.
+100 table rows: the page behind every row opened and saved in s/ (its own address, or the individual LiftArchive page behind the index address: la_index.tsv maps them).
+Whole: the article body of every page behind rows 1-100 (LiftArchive record pages: record text whole, page menus not).
+Originals opened behind a retelling: rows 16-18, 26-28, 43, 45-47, 53, 57, 60, 63, 41, 42, 66, 69, 70, 73, 74, 75, 78, 79, 81, 83 (41, 57, 66, 81 by the result lines only); 72 saved, read only as the record. Others read only as the LiftArchive record.
+Not opened: the X posts behind rows 29-37, 49-52, 54-55, 84-86; KlientBoost PDFs behind 87-99; Surefoot page saved but figures are not in its text.
+Books in its ranking: only their catalogue pages were opened (no text there); ogilvy.relayto.com returned no text.

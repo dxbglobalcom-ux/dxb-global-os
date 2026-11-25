@@ -1,0 +1,17 @@
+engagement.txt | published version (Marketing Science 44(2) 2025), all 17 lines (=86 collapsed), whole incl. endnotes | F1 tables 1-6
+engage.txt | 2022 working paper, collapsed lines 1-60 (to section 7) | tables 1-6
+engage.txt rest + online appendix H,I read (E-I.6); reference list skipped | decodehook.txt whole incl. appendix showcase
+teix2012.txt whole body to 1st appendix page (appendix = optimisation math, refs: not read)
+teix2012 appendix p49-52 read; teix2014.txt whole to references (Table, appendix list read to p.18) | tellis.txt: p.1-4 and theory 8-15 read
+tellis.txt: p.1-4, theory H2b-H6, method, studies 1-4, discussion, tables 1-8, A1-A3 read; lit review p.5-9 and reference list skipped
+jams.txt: abstract, intro, H3, design, results, discussion, limits read (c.p.2-8,16-19,29-50); theory, feature-extraction formulas p.9-15,20-28 and footnotes/references skipped
+tongfull.txt: abstract to methods start whole (SI appendix not on disk); tongpmc.txt is NOT this paper (schizophrenia)
+voices.txt: abstract, intro, study 1 data+discussion, study 2 setting, studies 3-4, discussion read (c.p.1-4,13-36,43-60); theory p.5-12, ordinal regression tables p.37-42, refs skipped
+unboxing.txt: abstract, intro, data, results 7.1-7.3 begin; model/theory/appendices (p.9-19,24-42,64-137) not read | abstracts whole: ugcshopfield, catchy, empathy, vocal
+skipface.c.txt p.7-22 whole study read; slow.txt studies 1,2a-c,3,4a,4b results + meta-analysis read (theory p.6-19, discussion end 51-56 not); rctshort.txt abstract, 2.2-6.2.1 read; linkclick: 3.1,4.1,4.2.2-4.4 read in part; kickshot: 4, 5.1 read
+tucker2.txt (author manuscript, MIT DSpace): whole to conclusion; appendix tables A1 and refs not | mitide.txt whole | downy.txt whole: no row (recall +23.3%, intent +12.9%, wording of ad not given)
+aierror (Zhang Peng Tan 2026, CEIBS copy) lines 1-21,23-47 read: whole except hypothesis text p.5-6 and refs/appendix tables (not in PDF) | spikepdf.txt abstract, pre-test, study 1, study 2 discussion, summary read; lit review and study 2 tables not | pretest.txt (Bellman 2026) intro only, no row | emovid not read
+teix2010.txt: abstract, optimisation, robustness, validation experiment, discussion read; model (p.5-44) not | second, osfhook: abstracts
+affec.txt p.2-9,13-30 read
+Williams/Hartnett/Luangrath/Bharadwaj/Chan: abstract or press only (full texts closed, except chan2023.txt on disk, unread beyond abstract) | rlive, otago press pages read | Elsen thesis OCR (p.1-120): ch.2 studies 1-3 + GD, ch.3 GD read; ch.1, 3 studies, 4 not
+tmis.txt 2.1,3.2-4 Table 2 read; dcgc 3.1-4.2 read; google blog 2021 whole; ltw, emac, energysage, presdur: abstract only; NOT READ at all: guitart, mlw, venkat, krishnan, msi (older version of unboxing), nativev body, danmaku, lmm, snapugc, thumbcult, motion, rest of TV/vendor files

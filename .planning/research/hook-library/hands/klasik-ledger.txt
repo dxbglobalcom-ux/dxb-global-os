@@ -1,0 +1,10 @@
+t/hjs.txt (Haldeman-Julius 1928): read 733-1222 (ch VII-X) whole, 1604-2084 (ch XV-XVII) whole; title changes, headings, morgue, media tables
+t/hjs.txt: ch I-IV (27-508) whole, VI (587-733) whole, XIII 1474-1555 first third; NOT read: ch V religion (509-586), XI-XII (1217-1473), XIV (1556-1603)
+t/hb/*.txt: Denny Hatch Marketing Blog, 118 of about 214 posts saved from the feed; read whole: p095,p103,p063,p022,p091,p090,p044,p055,p024(hatch190),hatch37,hatch77,hatch156,hatch89; p058 first half+paint can; parts by search: p031,p029,p046,p083,p085,p094,p096,p108
+t/lettersthatmakeg00pool.txt (Letters That Make Good, 1913): notes 468-712 read whole except 608-ish repeats; letters themselves: openings list (dl.txt) read for pp.236-300 and 311-500, eight letters read in full opening
+t/hundredpointsale00aspl.txt (Aspley 1921): 50-135, 205-220, 310-325, 345-400, 408-440 read; rest by search
+t/advertisingitspr00stariala.txt (Starch 1914): 1341-1362, 1672-1678, 1958-1967 read; rest by search
+t/mastersofadverti00fred.txt (1925): 412-436, 619-626; rest by search. t/effectivedirecta00ramsiala.txt (Ramsay 1921): 1195-1208, 1240-1252, 1628-1636; rest by search. t/advertisingselli00holliala.txt (Hollingworth 1913): 118-136, 444-470. t/advertisinghandb00hallrich.txt (Hall 1921): search only
+Web pages saved and read in the parts that carry the opening/result (t/*.txt): five, grand, blockbuster, spiders = Adweek paywall, first paragraphs only; atlascm, jaymeao, kurtzmm, unicef3s, unicef3s2, econin, avisslate, plopcbc, alkacbc, eichlermes, eichlerwiki, oxfampress read nearly whole; codywiki, atlassmith, atlasny, honest, lautman (first 4 pages), calmilk, burma, burma2, jrh, hathaway, timex, jordan by section
+Not read / no row: conroynyt, caplesnyt (NYT pages partly walled; Conroy obituary read whole as reprinted by Hatch), wendys, tiger, fedex, smash, bhopal (no result figure), barnardoipa, ginsu (invented Japanese origin: left out), Joe Karbo (page empty), American Express letter (credit: left out), Rosetta Stone farm boy (dating frame, no per-ad figure: left out)
+t/hjs.txt ch V, XI-XIV: searched for title changes and sales figures, not read line by line

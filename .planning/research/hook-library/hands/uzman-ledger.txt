@@ -1,0 +1,16 @@
+raw/kitap/mrb.txt 1-1101 whole | t/hz_bestads,adschanged,greathook,copyrule,150ads whole | t/hz_paidads30 first 29,000 of 34,584 chars | p/hb_cases,purple,unicorn,webby,sash,earthly,skull,keto,gotreads,potty whole | p/hb_secret to 'Right, so buy' (about 80%) | p/rb_108free,review,tested whole | t/ad_* openings only | t/rb_caples whole, rb_blue most
+t/hz_paidads30 29,000/34,584 chars; hz_14years, hz_1000leads: number/hook lines + [02:51-05:40],[23:44-26:21] only; hz_85 fetched, NOT read (already held by the PLAYBOOK)
+p/hz_leads2 (book read aloud by Hormozi): title/subtitle test passage lines 141-155 read, rest grepped
+t/pg_youshaei whole to 19:29; pg_open, pg_cs2025: passages on packaging/intros ([07:47-12:26],[20:21-30:16],[50:24-51:36],[63:39-69:59],[105:53-107:05]) read, rest grepped; pg_cs2027, pg_squid, pg_mrb_great not read
+t/jh_clouse whole; jh_ted whole; jh_mfm [17:01-20:31] + grep; jh_orbit grep only
+t/ci_chucky to 23:37 of 43:38; mb_full, mb_brutal, mb_lex, mb_state: grep + passages; mj_deaku, mj_fidias: grep only (no figures found); fb_silent, fb_sneaky: grep only
+t/kw_100 whole; kw_15, kw_psy not read
+t/dd_1000 most; dd_formats [00:27-02:49]; dd_easiest [05:54-10:43]; dd_10000 first screen; ss_15 whole; ss_one whole; ss_43, mo_200 grep; mo_10hooks whole; ns_best whole; ns_open, ns_fedotoff grep; cp_msg, sf_open, sf_shop, sl_cooper, ctc_cmos grep (no opening with a figure); sl_50000 whole, sl_find most (no figures); bh_dara two passages, p/bh_yt grep; rg_dara [12:14-23:32]; rg_adtopsy same event, passage
+p/mo_bench tables of styles, hooks, assets whole; per-trade tables not usable
+p/selzee hook list whole (54) ; p/fb14 10 of 14 entries; p/vt_pan, inc_650, inc_whisper, vt_mold main parts
+p/em_63, em_14, em_zee, em_ms, cd_beard whole; em_me main; cd_363, cd_design, cd_guide grep
+p/bk_beyond, bk_prac, bk_ryan passages; bk_btms, bk_li grep; t/tm_kane not read
+p/jr_tt whole; jr_yt, jr_dtc, rg_meta, rg_gaas, rg_tdc, rg_1800 passages/grep; th_cre, th_qalo grep; bdow main
+p/nsthanks, candy, bi4 (first two businesses), keithlee (head), contour (launch passages), artisan most; bmc_any, bmc_90k, bmc_steal whole; t/tt_90k whole to 16:30; t/tt_30m to 07:50; goli_*, tabcut391, mbm_sold, mandys_*, pl_*, canvas_inc main; momentiq grep; kolvant tables; live210 whole; h10_698 (580 KB) not read
+c/*.txt, *.sum: own channel counts 2026-11-25
+Not obtained: studylib/scribd copies of the paid Hormozi playbooks (unauthorised uploads, not opened); rb 108 split tests e-book (e-mail gate); Forbes Harmon article, d2c-times, sugatan.io, globeandmail, people.com, LinkedIn posts (walled/404)

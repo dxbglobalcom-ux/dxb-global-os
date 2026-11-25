@@ -1,4 +1,6 @@
-# What is proven about hooks — the base of the hook system (2026-11-25)
+# What is proven about hooks — the FIRST SCAN (2026-11-25)
+
+**The deep round replaced this file the same day: `../hook-library/README.md`. Rows whose sources failed its truth check are gone from here (its "Corrections" names them).**
 
 Ordered by the CEO on 2026-11-25 ("testleri yapılmış, gerçekten sonuç alınmış araştırmalara dayanarak … sistemi de
 kurulmalı … teorik kalmasın"). Five hands read (Opus 5.5 and Sonnet 5.5, medium); Opus 5.5 · high weighed. ChatGPT searched
@@ -15,11 +17,7 @@ B large observational · C lab · D platform's own · E practitioner with number
 | Opening | Proof | Grade | Where else / limit |
 |---|---|---|---|
 | **The striking moment IS the product** | 259 treated products on Taobao: the product's share of the engaging seconds goes with sales; likes, comments, shares do not (ρ = −0.0075, p = .90 ✔) — Yang, Zhang & Zhang, *Marketing Science* 2025 | B | impulsive, cheap goods most; explains 3 % of the variance |
-| **Price or offer first** | 1.53× sales per view, 3,340 watched TikTok Shop videos ✔; Meta ads: price anchor 10.89 %, urgency 9.73 %, offer 9.29 % winners against ~7 % in mid-table, 578,750 ads ✔; TikTok: price + demo + promotion +149 % conversion | B, D | winners only / Black Friday season / platform's claim |
 | **A bold, checkable claim** | 1.28× per view (same 3,340) ✔ | B | bold claim 7.19 % on Meta: average there |
-| **Contrast, comparison, against-the-habit** | 50 openings, 12 brands, same body: contrarian −34 %, comparison −28 %, personal story −24 % cost per sale ✔ | E | $500 per opening, no intervals |
-| **Start in the middle of an event, hold the answer back, the product is the answer** | −20 % cost per order, 1.6× hook rate (Galvor, pooled Meta data) | E | N not disclosed; a borrowed viral clip 0.76× per view — the event must be ours and end in the product |
-| **The problem acted out as a scene** | −16 % cost per order (Galvor) | E | same |
 | **Name the buyer** | "Car owners!" +20 % replies, split-run (Caples) ✔ | A, old | fewer stop, the right ones stay |
 | **The product early, the brand name later** | 312 TV ads, 5 countries, sales | B | for memory the opposite: strong brand in 2 s nearly triples recall, +196 % ✔ (memory, not sales) |
 | **A human voice** | +12 % conversions (Google, July 2026) | D | — |
@@ -33,10 +31,7 @@ B large observational · C lab · D platform's own · E practitioner with number
 | Opening | Proof | Grade |
 |---|---|---|
 | **"You are this person / you know that feeling"** (recognition) | 1.25–1.29× the account's median; beats how-to for 74.4 % of 1,199 creators, +33 % ✔ (231,626 Reels) | B |
-| **"If you …"** | ×1.29 on the same subject, 14 of 16 accounts | B |
-| **Words on the screen from the first second** | 1.79× against the same account's videos (160 accounts); 66 % of tops vs 57 % of flops (48 accounts) | B |
 | **Bad news up front · reaction · expectation vs reality** | 1.29 · 1.27 · 1.26× ✔ | B |
-| **Role: "As a dentist …"** | 3.16× (wide: 1.15–7.86, 30 videos) | B |
 | **Early surprise; then a small peak every few seconds** | reduces skipping (58 people × 28 ads; first-4-s brain response forecasts views) | C |
 | **Suspense** | +16 % watch time (TikTok/Lumen) | D |
 | **Talking to the lens, everyday person** | +14 % at 2 s; celebrity −13 % at 6 s (1,678 ads) | B |
@@ -53,8 +48,8 @@ Greeting 0.81× · talking about one's own account 0.74× · trend opening +22 %
 celebrity · "review" in a Meta headline (won 7 %) · clickbait without a subject (−48 % shares) · an unfinished teaser at a **paid** step: 18.3 % bought vs 33.3 %.
 
 ## 2. The answers to his questions
-1. **Event/danger in the first second.** A valid family, kept. It sells when the event is ours, is cut before it resolves and the product is the answer; bare shock does not. No randomised test with sales exists.
-2. **"80 % of the sale is the hook".** Ogilvy's sentence on print headlines (1963). Not measured by anyone. Measured: of 1,558 TikTok sales ads, the median keeps 46 / 28 / 21 % of viewers at 1 / 2 / 3 s, and 11 % of conversions fall in the first 3 s, 77 % after second 6. Hook rate alone explains about 1 % of the difference in cost per order ✔. So the hook is the gate: four in five leave there; the sale is made after it.
+1. **Event/danger in the first second.** A valid family, kept as experts' experience. One experiment with sales exists (Zhang, Peng & Tan 2026, small numbers): an impossible clip before the product film raised full watching and buying per view; bare oddity lost.
+2. **"80 % of the sale is the hook".** Ogilvy's sentence on print headlines (1963). Not measured by anyone. Measured: of 1,558 TikTok sales ads, the median keeps 46 / 28 / 21 % of viewers at 1 / 2 / 3 s, and 11 % of conversions fall in the first 3 s, 77 % after second 6.  So the hook is the gate: four in five leave there; the sale is made after it.
 3. **Highest view-through had 51 % lower conversion lift** (887 TikTok ads, System1) ✔. Two scores are kept, never one: *stops* and *sells*.
 4. **Topic and offer weigh more than the sentence.** Same-creator pairs of hit and typical video show nearly the same hooks (102 pairs; 1,027 vs 1,445 videos); a product × promotion cell explained 9 % of ROI where the opening line's type explained none (2,735 Douyin ads). The factory settles topic and offer first.
 5. **The winning type differs by sector** (Meta's own study): healthcare demo/product; packaged goods visual appeal and humour; car realism; shopping interactive. The library is read by sector.
@@ -75,4 +70,4 @@ celebrity · "review" in a Meta headline (won 7 %) · clickbait without a subjec
 
 ## 5. Open
 Not found by anyone: a randomised test of same-body openings with sales; spoken-first-line tests. Small vendors carry the BUY rows
-(Galvor, Hyperbeam, MediaLabs): they enter the library as "to be confirmed on our first account". Turkish and Arabic counted studies: none found.
+(checked and mostly dropped in the deep round). Turkish and Arabic counted studies: none found.

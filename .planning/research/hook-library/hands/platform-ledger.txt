@@ -1,0 +1,16 @@
+motion.txt 1-636 whole (also motion_view.txt compressed)
+sys1.txt 1-2289 whole (sys1_view.txt compressed)
+platform/p/s1long.txt 1-end whole (System1 web page incl. FAQ; NOT the gated whitepaper)
+platform/p/s1tt.txt whole; reelsperf.txt whole; margo.txt (Reels Ads Guide) whole (5 pp, tail); metasci.txt whole; ttcodes.txt whole; vidhook.txt + vidhookpdf.txt whole; toluna.txt whole; ttperf.txt whole; tthookb.txt index only
+ls.txt (System1+TikTok Long and Short (form) of It 2025 full pdf) 1-2306 whole
+google think pages via web.archive.org (business.google.com): wolt, makro, javvy, arla, video-ad-creative-experiments, mirjan24, rugvista, jysk, preply, mena creators, jimmy johns, nescafe read whole; hema, obs-bygg, aromat, dutch-winning, best-youtube-campaigns section; 28 others scanned for figures
+roasarchive.com 262 results: titles+before/after+links read for all, originals opened for ~35
+vidmob.com 124 resource pages fetched; 33 customer stories read whole
+marpipe: raymour, latico, ridge, taylor stitch, ashley, twillory, agelessrx whole
+snap 393, pinterest 433, amazon 274, reddit 358 success pages fetched and searched by rule; pages used are read whole
+tiktok inspiration: 13 pages whole by direct fetch, then HTTP 403; ~9 via jina reader
+google pdfs: us_recut, us_341, us_mond, us_clin, us_lib, us_list, us_lg, us_valio, us_loreal, us_maruti whole; us_2647 duplicate of us_341
+platform/p: vidsnap, lilab, ppctoluna whole; eyesee main text; af25/af24 section (figures), nestle section, gsup1 section; unskipyear whole; ytfive (bilim-video) whole, unskipapac whole
+facebook.com/business/success: 20 pages via web.archive.org (archive then refused); facebook.com itself 404 without login and its robots file forbids bulk reading, not bulk-read
+watched: ~75 embedded videos (first 4 s strips) in vid/s, transcripts in vid/s/w
+NOT read: YouTube ABCD page original, Pinterest/Snap/Amazon pages outside the used ones (only searched), ~200 TikTok cases (403), realeyes/adverteyes, kantar, ipsos (roc, misfits24, noise26 only searched for figures), buzz21, tts, emojis, gaze
