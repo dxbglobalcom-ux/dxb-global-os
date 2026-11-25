@@ -1,0 +1,43 @@
+{
+"what": "A ranker really trained on film pairs (25 November 2026, 17:35-21:45). Every pair is the difference of its two films' numbers from frozen free models; pairwise logistic without intercept, pair weight 1/sqrt(pairs of the account), the brake chosen inside the training accounts, ten outer folds by account: no pair is judged by a model that saw its account. Fixed before any result was seen. Exam: the 341 pairs the bare reader (Opus 5.5 at medium) judged; its bar 245.",
+"small": {
+"pairs": 1317,
+"accounts": 350,
+"blocks": "first frame, five frames, movement (SigLIP 2, V-JEPA 2), words (Qwen3 embedding), sound (AST)",
+"log": [
+"pairs 1317 accounts 350",
+"exam pairs 341 (without numbers 0 ) the bare reader right 245 | sure 100 right 89",
+"lambda chosen {0.3: 26, 1: 4}",
+"MAIN (five blocks)           all pairs out of fold 797/1317 = 60.5 [58-63] | exam alone 198/341 = 58.1 [53-63] (surest 3 of 10: 71/102 = 69.6 [60-78]) | where the reader is unsure 134/241 = 55.6 [49-62] against its 156 | together 244/341 = 71.6 [67-76]: lost 1, won 0, z=-1.0 weights [0.57 1.38 0.27]",
+"only first                   all pairs out of fold 784/1317 = 59.5 [57-62] | exam alone 203/341 = 59.5 [54-65] (surest 3 of 10: 70/102 = 68.6 [59-77]) | where the reader is unsure 144/241 = 59.8 [53-66] against its 156 | together 243/341 = 71.3 [66-76]: lost 3, won 1, z=-1.0 weights [0.58 1.36 0.27]",
+"only mean5                   all pairs out of fold 791/1317 = 60.1 [57-63] | exam alone 205/341 = 60.1 [55-65] (surest 3 of 10: 76/102 = 74.5 [65-82]) | where the reader is unsure 138/241 = 57.3 [51-63] against its 156 | together 246/341 = 72.1 [67-77]: lost 6, won 7, z=+0.3 weights [0.56 1.31 0.42]",
+"only move                    all pairs out of fold 747/1317 = 56.7 [54-59] | exam alone 187/341 = 54.8 [50-60] (surest 3 of 10: 67/102 = 65.7 [56-74]) | where the reader is unsure 134/241 = 55.6 [49-62] against its 156 | together 243/341 = 71.3 [66-76]: lost 2, won 0, z=-1.4 weights [0.6  1.39 0.17]",
+"only words                   all pairs out of fold 544/1317 = 41.3 [39-44] | exam alone 137/341 = 40.2 [35-45] (surest 3 of 10: 46/102 = 45.1 [36-55]) | where the reader is unsure 92/241 = 38.2 [32-44] against its 156 | together 245/341 = 71.8 [67-76]: lost 1, won 1, z=+0.0 weights [ 0.63  1.41 -0.19]",
+"only sound                   all pairs out of fold 680/1317 = 51.6 [49-54] | exam alone 169/341 = 49.6 [44-55] (surest 3 of 10: 52/102 = 51.0 [41-60]) | where the reader is unsure 116/241 = 48.1 [42-54] against its 156 | together 245/341 = 71.8 [67-76]: lost 0, won 0, z=+0.0 weights [ 0.61  1.41 -0.01]",
+"only caption                 all pairs out of fold 665/1317 = 50.5 [48-53] | exam alone 172/341 = 50.4 [45-56] (surest 3 of 10: 49/102 = 48.0 [39-58]) | where the reader is unsure 115/241 = 47.7 [41-54] against its 156 | together 245/341 = 71.8 [67-76]: lost 0, won 0, z=+0.0 weights [ 0.61  1.42 -0.08]",
+"five blocks and caption      all pairs out of fold 791/1317 = 60.1 [57-63] | exam alone 195/341 = 57.2 [52-62] (surest 3 of 10: 70/102 = 68.6 [59-77]) | where the reader is unsure 132/241 = 54.8 [48-61] against its 156 | together 243/341 = 71.3 [66-76]: lost 2, won 0, z=-1.4 weights [0.58 1.37 0.25]",
+"25 of 100 accounts           all pairs out of fold 766/1317 = 58.2 [55-61] | exam alone 195/341 = 57.2 [52-62] (surest 3 of 10: 57/102 = 55.9 [46-65]) | where the reader is unsure 134/241 = 55.6 [49-62] against its 156 | together 245/341 = 71.8 [67-76]: lost 0, won 0, z=+0.0 weights [0.61 1.4  0.04]",
+"50 of 100 accounts           all pairs out of fold 773/1317 = 58.7 [56-61] | exam alone 198/341 = 58.1 [53-63] (surest 3 of 10: 68/102 = 66.7 [57-75]) | where the reader is unsure 135/241 = 56.0 [50-62] against its 156 | together 246/341 = 72.1 [67-77]: lost 1, won 2, z=+0.6 weights [0.57 1.38 0.24]"
+],
+"note": "the line for words counts the 256 pairs in which neither film speaks as wrong: of the others about half, words tell nothing"
+},
+"large": {
+"pairs": 5022,
+"accounts": 554,
+"blocks": "first frame, five frames, movement",
+"log": [
+"pairs 5022 Counter({np.str_('ciftfilm4'): 3705, np.str_('ciftfilm3'): 1297, np.str_('ciftfilm'): 11, np.str_('ciftfilm2'): 9}) accounts 554",
+"first kept variance 0.968",
+"mean5 kept variance 0.973",
+"move kept variance 0.965",
+"brake chosen {1: 15, 3: 5}",
+"MAIN, all pairs        set 3 out of fold 838/1317 = 63.6 [61-66] | new pairs 2281/3705 = 61.6 [60-63] | exam alone 208/341 = 61.0 [56-66] (surest 3 of 10 78/102 = 76.5 [67-84]) | together 252/341 = 73.9 [69-78]: lost 7, won 14, z=+1.5 weights [0.55 1.3  0.51]",
+"25 of 100 accounts     set 3 out of fold 774/1317 = 58.8 [56-61] | new pairs 2168/3705 = 58.5 [57-60] | exam alone 208/341 = 61.0 [56-66] (surest 3 of 10 73/102 = 71.6 [62-79]) | together 245/341 = 71.8 [67-76]: lost 7, won 7, z=+0.0 weights [0.61 1.28 0.45]",
+"50 of 100 accounts     set 3 out of fold 779/1317 = 59.1 [56-62] | new pairs 2215/3705 = 59.8 [58-61] | exam alone 202/341 = 59.2 [54-64] (surest 3 of 10 77/102 = 75.5 [66-83]) | together 245/341 = 71.8 [67-76]: lost 9, won 9, z=+0.0 weights [0.58 1.32 0.44]",
+"only first             set 3 out of fold 809/1317 = 61.4 [59-64] | new pairs 2234/3705 = 60.3 [59-62] | exam alone 196/341 = 57.5 [52-63] (surest 3 of 10 70/102 = 68.6 [59-77]) | together 241/341 = 70.7 [66-75]: lost 4, won 0, z=-2.0 weights [0.58 1.32 0.32]",
+"only mean5             set 3 out of fold 841/1317 = 63.9 [61-66] | new pairs 2301/3705 = 62.1 [61-64] | exam alone 211/341 = 61.9 [57-67] (surest 3 of 10 79/102 = 77.5 [68-84]) | together 249/341 = 73.0 [68-77]: lost 10, won 14, z=+0.8 weights [0.54 1.28 0.55]",
+"only move              set 3 out of fold 765/1317 = 58.1 [55-61] | new pairs 2122/3705 = 57.3 [56-59] | exam alone 191/341 = 56.0 [51-61] (surest 3 of 10 65/102 = 63.7 [54-72]) | together 248/341 = 72.7 [68-77]: lost 2, won 5, z=+1.1 weights [0.59 1.39 0.37]"
+]
+},
+"reading": "the ranker grows with the pairs (25 of 100 accounts 58.8, all of them 63.6 on the 1,317 out of fold); together with the reader 252 of 341 against 245, won 14 and lost 7: may be luck. 8,893 pairs of 570 accounts lie in the lists at three times the usual."
+}

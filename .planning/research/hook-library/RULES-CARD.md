@@ -257,7 +257,8 @@
   - Films that went round, each beside an ordinary film of the same account, 341 pairs of July to November 2026, every film labelled blind: an action already under way in the first second in 61 of 100, against 51; a face that talks to the lens in 23 of 100, against 30. (r-ciftler-001)
   - The same films: the thing itself fills the first frame in 46 of 100, against 40; one uncommon thing in 23, against 17. (r-ciftler-002)
   - Alike in both: a question left open (84 and 82 of 100), a number or price (30 and 30), a story begun (31 and 29), pace, loudness, length. (r-ciftler-003)
-- **How:** begin the film one second later: the hand already cuts, the pour already runs; the face comes after; change the first picture before you change the words.
+  - On 3,203 further pairs of 526 accounts, by a picture model: the film that went round shows more of the work (something repaired, half done, just finished, before and after, dirt being cleaned, the inside cut open) and less of a selfie, a close face, a mirror, a baby in 1,825 pairs, 57 of 100. (r-ciftler2-001) In home services, food, cars and furniture 61 of 100; in beauty, fashion and fitness 53: there the person is the product. (r-ciftler2-002)
+- **How:** begin the film one second later: the hand already cuts, the pour already runs; the work stands in front of the face (a cobbler's face alone 3,044 views, the old shoe in his hand 591,200); change the first picture before you change the words.
 - **Ready (baker, film):** the loaf is already being torn open, steam over the hands; on it: "Out at [6:10], gone by [8]."
 
 ## Length, pace and after the first line
