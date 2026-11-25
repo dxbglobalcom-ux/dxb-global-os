@@ -16,7 +16,7 @@
    **SEEN** — the same on film here: Rose Anvil, a blade into black leather until red shows: 602,000 views, 54.7 times its middle film (o-y5-005).
 5. **SOLD** — The story of one garment or one maker, small and true, told before the sale. "Only 2 sales" or "people tried to buy it off my back" is believed because nobody boasts with it.
    First second: the daughter's face and the garden shed; a drawing of one long coat.
-   FunkyPeepers, hand-decorated glasses: from 2 sales to nearly 150 new orders (o-ad5-011, not for showing). J. Peterman, one coat: 160 sales, about $29,000, from $3,000 of space (o-klasik-153). BluBlocker, "what I saw I could not believe": one of his most successful ads (o-sugarman-016).
+   J. Peterman, one coat: 160 sales, about $29,000, from $3,000 of space (o-klasik-153). BluBlocker, "what I saw I could not believe": one of his most successful ads (o-sugarman-016).
 6. **SEEN** — A strange instrument or a hidden state of the thing, in a craftsman's hands, without a word. One cannot tell what it is for, and the answer is a finished hat, a clean shoe, a ring.
    First second: an iron measuring machine comes down on a living head; a shoe in a rock of mud; a bead of gold beside a filthy carpet. It works in every language; sales are not published.
    Blade-Hats: 156,800,000 views (o-to7-002) and 96,300,000 views (o-to7-003). The Shoelada: 820,600 views, 34.1 times (o-to7-012). TraxNYC, gold out of an old carpet: 5,500,000 views (o-tec6-026). NAJE, drawers of small things: 3,700,000 views, 399.6 times (o-to8-015).

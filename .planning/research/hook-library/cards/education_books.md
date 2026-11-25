@@ -6,8 +6,7 @@ Read this first: the **SOLD** winners of this trade are mostly print, letters an
    One publisher (Haldeman-Julius) only changed titles: "How to Argue Logically" went to 30,000 copies a year; "Einstein's Theory of Relativity Explained" 15,000 to 42,000 [o-schwartz-017, o-klasik-019].
    Other sellers: "How to fix cars—quickly, easily, right", orders up 20 percent with the easy word [o-caples-071]; "How to Make Anybody Like You!", repeated nineteen times with no drop [o-schwartz-002].
 2. **SOLD** (phone film). Somebody else films the unnoticed author in a true moment. The viewer wants to be the one who stops and buys. First second: a wide room, one small person alone, one line of text, quiet music.
-   "my dad spent 14 years writing a book": over 100,000 copies in about five weeks, 58.3m views [o-ad5-002]. The man nobody stops for in a bookshop: book sold out online, 81.8m views [o-ad3-010].
-   The "defeated" author in a supermarket: about 150 copies sold before the film, No. 1 on Amazon after it, 26m views [o-ad5-004]. It must be true, happen unasked, and the person filmed must be glad of it.
+   "my dad spent 14 years writing a book": over 100,000 copies in about five weeks, 58.3m views [o-ad5-002].
 3. **SOLD** (print). A small human story with a turn: first embarrassed, then admired. He stops because the line ends before the end. First second: one scene everybody fears (party, restaurant, dinner).
    "They laughed when I sat down at the piano": profitable in every size from full page to one inch [o-caples-101]; the French-course twin "They grinned when the waiter spoke to me in French" also sold [o-caples-102].
    "Again She Orders – A Chicken Salad, Please" sold an etiquette book, two million copies in all [o-klasik-127]. Film of this shape is not in the library for this trade.

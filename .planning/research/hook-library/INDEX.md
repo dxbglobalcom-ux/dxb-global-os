@@ -72,8 +72,8 @@ Written by `shelve.py`; what each shelf means is in `SHELVES.md`. `words` = only
   - I Usually Can't Stand Yearly Recap Videos, But The One You're About To See Is Kleenex-Worthy — Upworthy — social news headline · 1.83% of 2782 clicked, the 3 rivals over the same picture and story 0.67% (2.73 times, at  `o-upw1-052`
   - If You Think Only Poor People Are On Welfare, Wait Till You See What These Guys Do With It — Upworthy — social news headline · 3.39% of 2538 clicked, the 3 rivals over the same picture and story 1.43% (2.36 times, at  `o-upw1-064`
 
-## GAIN — 291
-- **offer** 59 (words 11, whole 48, brand 0; filmed 10) — price, free, discount, gift, bundle, trial or guarantee IS the opening.
+## GAIN — 290
+- **offer** 58 (words 11, whole 47, brand 0; filmed 9) — price, free, discount, gift, bundle, trial or guarantee IS the opening.
   - $50-off Coupon — Evo — sports gear shop · 170% more revenue, 72% higher conversion rate; opens 20% vs 19% and clicks 32.4% vs 33% ne `o-abarsiv-171`
   - [Columbia Record Club: choose your free records from a list of thirty-two] — Columbia Record Club (Lester Wunderman) · the response rate doubled; 1958 was the best year in the club's history `o-ad1-017`
   - 20% Off Every Order -- 12 Days of Christmas Day 9! — niche consumer web shop · revenue per thousand e-mails $24.99 against $21.84, +14.4%; order value nearly 32% higher `o-uzman-072`
@@ -102,8 +102,8 @@ Written by `shelve.py`; what each shelf means is in `SHELVES.md`. `words` = only
   - Only 4 days left in 2010 to make a tax-deductible contribution to keep Wikipedia free. Please help Wikipedia p — Wikipedia — fund-raising banner · beat the year's best banner in the last days of 2010 `o-davranis-079`
   - A must-read before Thanksgiving! — Luther Seminary — e-mail · Click Rate 2.8% -> 5.0%, +76.4% (level of confidence 100.0%) `o-abarsiv-127`
 
-## TRUST — 269
-- **story** 71 (words 12, whole 51, brand 8; filmed 41) — a scene with a person begins: they laughed, a small true story, a serial, overheard talk, two brothers.
+## TRUST — 260
+- **story** 67 (words 12, whole 47, brand 8; filmed 37) — a scene with a person begins: they laughed, a small true story, a serial, overheard talk, two brothers.
   - Wikipedia was just a dream — Wikimedia Foundation — Wikipedia donatio · the rival lost 14% (mobile large) and 17% (desktop large) of the donation rate `o-abarsiv-168`
   - I got a lot of funny looks ten years ago when I started talking to people about Wikipedia. — Wikipedia — first line of the founder's  · the most successful appeal of the launch phase `o-davranis-080`
   - The Story of a Notorious Criminal — Haldeman-Julius — Little Blue Book (Osca · sales more than tripled `o-schwartz-018`
@@ -127,11 +127,11 @@ Written by `shelve.py`; what each shelf means is in `SHELVES.md`. `words` = only
   - ... 99% of readers don’t give. — Wikimedia Foundation — Wikipedia donatio · donation rate drops when it is removed, tested dozens of times `o-abarsiv-077`
   - Every day thousands of people who see this page decide to register. — UK Government (GOV.UK, NHS Blood and Tra · registration +0.6 points over the 2.3% control without a photo; with the group photo below `o-abarsiv-084`
   - ¡GRACIAS a nuestros mas de 600,000 seguidores en Facebook! — daFlores — flower delivery, Latin Americ · 44% uplift in sales `o-abarsiv-167`
-- **honest** 38 (words 8, whole 22, brand 8; filmed 14) — the seller says the awkward truth about himself: flaw, second place, true reason of the sale, open books, worst reviews, reasons not to buy.
+- **honest** 37 (words 8, whole 21, brand 8; filmed 13) — the seller says the awkward truth about himself: flaw, second place, true reason of the sale, open books, worst reviews, reasons not to buy.
   - We Didn't Believe It. So We Fact-Checked It (Twice). Now Let's Talk About How To Make It Worldwide. — Upworthy — social news headline · 0.56% of 6101 clicked, the 2 rivals over the same picture and story 0.15% (3.81 times, at  `o-upw1-024`
   - This Video Is Equal Parts Fascinating And Horrifying, But Now I Know How Viruses Work — Upworthy — social news headline · 1.2% of 3843 clicked, the 5 rivals over the same picture and story 0.42% (2.83 times, at l `o-upw1-042`
   - Family Shares Embarrassing Perm Photos To Help Autistic Son — Upworthy — social news headline · 1.55% of 2833 clicked, the 3 rivals over the same picture and story 0.52% (2.96 times, at  `o-upw1-045`
-- **ask** 32 (words 16, whole 16, brand 0; filmed 8) — a modest human request or thanks: please, a favour, a small sum, if everyone gave a little, thank you.
+- **ask** 28 (words 16, whole 12, brand 0; filmed 4) — a modest human request or thanks: please, a favour, a small sum, if everyone gave a little, thank you.
   - If it's not too much to ask, would you consider giving today so that our Board of Directors can match your gif — CaringBridge — matching gift popup · Conv. Rate 0.10% -> 0.15%, +58.3% (level of confidence 100.0%) `o-abarsiv-018`
   - If it's not too much to ask... — Missionary Oblates — sticky bar · Conv. Rate 0.74% -> 1.4%, +88.6% (level of confidence 99.9%) `o-abarsiv-019`
   - You will receive an email containing your free devotional in just a few minutes. But before you get started, c — The Gospel Coalition — page after the si · Conv. Rate 1.6% -> 2.8%, +75.8% (level of confidence 99.5%) `o-abarsiv-047`
@@ -154,7 +154,7 @@ Written by `shelve.py`; what each shelf means is in `SHELVES.md`. `words` = only
   - I Wouldn't Even Dare You To Drink This Stuff. That's How Dangerous It Is. — Upworthy — social news headline · 3.64% of 2639 clicked, the 5 rivals over the same picture and story 1.59% (2.29 times, at  `o-upw1-063`
   - If You Are A Dad, I Dare You Not To Get Eye Water Watching This — Upworthy — social news headline · 3.02% of 5635 clicked, the 6 rivals over the same picture and story 1.77% (1.71 times, at  `o-upw2-069`
 
-## PLAY — 141
+## PLAY — 138
 - **joke** 50 (words 3, whole 37, brand 10; filmed 43) — humour, twist, absurdity, parody, pun, serious film with a silly mistake, expectation turned over.
   - “I’d rather be waiting at the DMV during the holidays”, said NO ONE EVER — City of Denver — PocketGov.com online se · 29.5% opened vs 25.9% (+14% opens); +17% clicks; 300 more sign-ups `o-davranis-021`
   - You May Want To Sit Down For This. Just Not On Your Couch. Or My Couch. Or Any Couch. — Upworthy — social news headline · 1.73% of 3988 clicked, the 5 rivals over the same picture and story 0.71% (2.42 times, at  `o-upw1-061`
@@ -163,10 +163,10 @@ Written by `shelve.py`; what each shelf means is in `SHELVES.md`. `words` = only
   - Seeing What They Do To Dogs When Their Owners Aren't Around Totally Made My Day — Upworthy — social news headline · 2.27% of 3086 clicked, the 4 rivals over the same picture and story 0.9% (2.53 times, at l `o-upw1-054`
   - A 6-Year-Old Asks ​Neil DeGrasse Tyson An Adorable Question. He Gives Her An Awesome Answer. — Upworthy — social news headline · 2.55% of 2823 clicked, the 4 rivals over the same picture and story 1.12% (2.28 times, at  `o-upw2-006`
   - A Dog Walked Into A Classroom In Switzerland. It Just Gets Better From There. — Upworthy — social news headline · 2.85% of 3090 clicked, the 2 rivals over the same picture and story 1.4% (2.03 times, at l `o-upw2-059`
-- **jolt** 27 (words 1, whole 23, brand 3; filmed 23) — fear, grief, tenderness, shock or silence comes before the message.
+- **jolt** 24 (words 1, whole 20, brand 3; filmed 20) — fear, grief, tenderness, shock or silence comes before the message.
   - Three people die every day because there are not enough organ donors — NHS Organ Donor Register — page after ca · 3.1% vs 2.9% gain frame (significant) vs 2.3% control `o-davranis-016`
   - You’ve failed many times, although you may not remember. — United Technologies — company page in Th · 123,000 reprint requests and 36,000 letters, the most letters of any in the series; the se `o-ad1-026`
-  - This sweet man is sitting at B&N with a stack of his books he wrote and my heart is breaking everytime someone — Jonathan Stanley — Purposeful Performanc · 81.8m views (75m when People wrote); the book sold out online and became an Amazon best-se `o-ad3-010`
+  - "When I grow up, I want to file all day." (a child, in all seriousness) — Monster.com — job board · almost 2,900 job searches a minute after the film; 2.2 million searches in 24 hours agains `o-ad6-009`
 - **native** 28 (words 3, whole 22, brand 3; filmed 15) — it looks like what stands around it: phone note, message, reply to a comment, news page, street interview, skit, article.
   - Banner with editor Susan Hewitt photographed in front of a tree in her garden (green leaves left in the pictur — Wikipedia — fund-raising banner · +64% clicks; green behind Jimmy's own photo also won `o-davranis-082`
   - Good morning — Jews for Jesus — e-mail · Open Rate 14.1% -> 15.7%, +11.1% (level of confidence 100.0%) `o-abarsiv-065`
