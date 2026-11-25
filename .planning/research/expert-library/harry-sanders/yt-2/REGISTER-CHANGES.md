@@ -45,7 +45,7 @@ Placed in section 1 (Measure), next to 3, in the register's form:
   passages → the protected list read by `page-change-guard`; a client passage on a page whose topic differs from
   the prompt → a page brief for 11 with the passage as the seed and the prompt as the question. (5) Prompts where
   only rivals or third parties are lifted → a shape note per prompt (length, answer-first, self-contained, list or
-  prose, numbers present) for the brief of 13; never copied wording. (6) Count per page and per engine across
+  prose, numbers present) for the brief of 13; rephrased. (6) Count per page and per engine across
   rounds; a passage cited in fewer than two of three runs is marked unstable.
 - **Refusals.** No claim about why a passage was chosen; position is reported, not prescribed (two studies
   disagree); no rival text is reused; AI Overviews and AI Mode are kept apart.

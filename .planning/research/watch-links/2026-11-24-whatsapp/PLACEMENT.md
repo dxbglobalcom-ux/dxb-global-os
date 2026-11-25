@@ -51,8 +51,8 @@ it (checked by grep of `.planning/board-rows/` on 2026-11-24); those are not pro
 ### 2.2 B43 — "The first-second drawer"
 > A kisayol drawer for visual hooks: the ~20 types (anticipation, danger, impossible, fake-out, plot twist, near-miss,
 > escalation, cliffhanger, stitch, effect hooks), each with the 77-card prompt pattern (9:16 phone look, a timed
-> single take, sound, "cut before the impact", no one hurt, no text inside the clip) and the brand at the payoff. Never
-> another's clip; a bridge line to the product within two seconds. **The trial:** three hooks for one holding product
+> single take, sound, "cut before the impact", no one hurt, no text inside the clip) and the brand at the payoff;
+> a bridge line to the product within two seconds. **The trial:** three hooks for one holding product
 > on the local engine, to his eye, minutes and cost recorded.
 
 ### 2.3 B28 — addition to the Meta Ads MCP leg (2026-11-18)

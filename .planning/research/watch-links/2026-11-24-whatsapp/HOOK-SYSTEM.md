@@ -114,9 +114,9 @@ before the impact**, no one is hurt, no on-screen text or logos inside the gener
 Realism vocabulary to add: real camera-and-lens pairs and FACS expression codes [LINK dm-044] (§3.4).
 
 **Three rules the creators do not say** — sourced:
-1. **Make it, never borrow it.** Her clips are themselves AI remakes of real viral videos; her "use these clips as
-   hooks for your own videos" would put someone else's work at the front of our ad. Only the shape is taken (the
-   holding's ruling on copying; B28's "only the structure is taken"). Instagram also stops recommending accounts that
+1. **Remake it on our own engine, as she does.** Her clips are themselves AI remakes of real viral videos; inspiration
+   and rephrasing are free <!-- CEO-OK: copying-ban-removed-inspiration-and-rephrase-free-2026-11-25 -->. The
+   practical reason to remake rather than repost: Instagram stops recommending accounts that
    mainly repost what they did not make or meaningfully transform — Reels since April 2024, extended platform-wide in
    2026 as reported. [RESEARCHED: techcrunch.com/2024/04/30/instagram-is-updating-its-ranking-systems-to-surface-more-content-from-smaller-original-creators; petapixel.com/2026/04/30/new-instagram-policies-target-reposted-content]
 2. **Bridge within 1–2 seconds.** A hook unrelated to the product buys the wrong attention: "you made a trailer, not
@@ -285,12 +285,12 @@ The CEO's image: *"menemen is delicious, it can't be without egg" — and stops;
 | "50+ hook library" (ha-001) | — | **public**: 77 full prompts on her site, extracted | LINK (r2) |
 | "21 proven hook formulas" and 11 skills (dm-047) | the skill names | the open pack's 26 formulas and 13 skills, read | RESEARCHED repo |
 | "The full prompt" (cc-013) | a summary | **public**: Parker's two pages on X, read whole (`carousel/cc-013-x/`) | LINK (r1) |
-| "How he finds the arbitrage" (cc-001) | the principle (views ÷ followers) | find accounts whose videos beat their own median by a multiple — the open pack's `/ig-viral` ranks "by multiple over each account's own median"; B28's weekly loop already uses "videos that multiply their own account's median"; record the format, never the words | RESEARCHED repo + board B28 |
+| "How he finds the arbitrage" (cc-001) | the principle (views ÷ followers) | find accounts whose videos beat their own median by a multiple — the open pack's `/ig-viral` ranks "by multiple over each account's own median"; B28's weekly loop already uses "videos that multiply their own account's median"; record the format | RESEARCHED repo + board B28 |
 | "Full TikTok Shop guide" (dm-001, dm-002) | the six steps and the brief | `ADS-REVENUE.md` §2 — the creator-army service written as a workflow | LINK + INFERENCE |
 | Library "of top ad formats with prompts" (dm-028/029) | 42 + 5 names | §2.4 F with the clean-form rule; prompts are written per format in the kisayol cupboard (B43) | LINK + HELD |
 | The VFX effects' how-to (dm-011) | the results | four effect hooks made in the studio's own edit chain (`video-use` / HyperFrames / dxb-motion-graphics): a fake cliff = a masked plate over a drop; jump-through-screen = a match cut on a phone frame; hyper speed = a speed ramp with motion blur; clone = a locked-off shot composited twice [INFERENCE — standard editing techniques; measured on our card when made] | INFERENCE |
 | "The skills that analyse creatives the way our strategists do" (dm-022) | the weekly report prompt | each creative tagged by format, angle, hook style, offer/no offer, persona, awareness stage; winners described as "a repeatable formula I can brief against" (her prompt's own rule) — this tag set is the library schema of §7.3 | LINK (prompt on screen) |
-| The tool behind "copy the viral video" (dm-012) | the output shape | our own decode step: transcript (`watch.sh`) → structure as a bracketed template → a live example on a different product → "now analyse the video provided and follow the same structure"; structure only | LINK + INFERENCE |
+| The tool behind "copy the viral video" (dm-012) | the output shape | our own decode step: transcript (`watch.sh`) → structure as a bracketed template → a live example on a different product → "now analyse the video provided and follow the same structure" | LINK + INFERENCE |
 
 ---
 
@@ -392,8 +392,8 @@ result. **Nothing is built until B28's rank; the first run below costs nothing.*
 ### 7.2 Stations (one job each; the worker in brackets)
 | # | Station | Output | Gate |
 |---|---|---|---|
-| 1 | **Research** (social-media researcher) | 10–15 reference videos/ads with their numbers; the teardown | sources recorded; no footage kept beyond study |
-| 2 | **Decode** (strategist) | each reference as a template: hook family, four channels, beats with seconds, CTA | structure only — never words, footage, faces, brand |
+| 1 | **Research** (social-media researcher) | 10–15 reference videos/ads with their numbers; the teardown | sources recorded |
+| 2 | **Decode** (strategist) | each reference as a template: hook family, four channels, beats with seconds, CTA | the template carries beats, channels and CTA |
 | 3 | **Write** (copywriter, `hook-writer`) | for one idea: **50 hooks, 40 remakes of proven winners (ours first), 10 new** [HELD: Hormozi §3]; each with spoken line, on-screen line (≤6 words), visual, caption opener | lint: the pack's dealbreakers + Kallaway's three parts + reading level; every claim backed by a proof-ledger row [#31]; halal and compliance screen (no fake review, no invented urgency, no deception) |
 | 4 | **Pick** (strategist) | 3–5 hooks × 1–3 bodies × 1–2 CTAs to make | belief brief answered; the bridge line present |
 | 5 | **Make** (studio) | the videos; visual hooks generated on our engine with the §2.2 prompt pattern; draft first, upscale after acceptance (Law D) | the ten-item pre-publish check and contact sheet [B28 leg 2026-11-18]; the CEO's eye on client work |
@@ -439,7 +439,7 @@ The commands are the workers' and the sessions' handles over the register's skil
 | `/hook-write <idea>` | §7.2 station 3: 50 hooks with four channels each | register #31; P-formulas; §2 |
 | `/hook-lint <file>` | dealbreakers, three-part check, length in seconds, claim → proof row | the pack's `hookscore.py` rules (lint only) |
 | `/viral-find <niche> <platform>` | outliers by multiple over the account's own median; the teardown | B28 research step; pack's `/ig-viral`; dm-022 teardown |
-| `/decode <url>` | a reference into a template (structure only) | `watch.sh` + dm-012 pattern |
+| `/decode <url>` | a reference into a template | `watch.sh` + dm-012 pattern |
 | `/short-script <hook>` | the §3.1 skeleton, timed (the pack's `beats.py` timing at ~165 wpm) | register #32 |
 | `/visual-hook <type> <product>` | a §2.2 generation prompt with the brand at the payoff | Erika's pattern; kisayol |
 | `/caption <platform>` | the first 125 characters first | pack's `/ig-caption` |

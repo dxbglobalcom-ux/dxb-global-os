@@ -602,7 +602,7 @@ Hormozi's open question 8 asks for it. The duration rule is the addition. **[add
 active ad's start date; duration is an inference, not a performance figure — but a vendor sample reports
 only 2.9 % of live ads had run 90 days or more on 1 November 2026, so long runners are rare and therefore
 informative ([Buffer guide](https://buffer.com/resources/meta-ad-library/); the 2.9 % is a vendor blog).
-**[test]** "Recreate that ad in Canva" (his last step) is copying; the holding reads *why* it runs
+**[test]** "Recreate that ad in Canva" (his last step): the holding reads *why* it runs
 (skill 30) and makes its own.
 
 ### D45 — Agents doing the research (SHARPER where it adds a step)
@@ -679,7 +679,7 @@ informative ([Buffer guide](https://buffer.com/resources/meta-ad-library/); the 
 | A Reddit thread of reviews sent to clients (D30); "who's the best wedding photographer in Hamilton?" asked by the owner, clients answering, the link edited in weeks later (`DUnX2DlDNGk (2026-02-11)`) | orchestrated, hidden promotion | answer in real threads under the business's own name (D31) |
 | A self-awarded title pushed by press releases (D16) | manufactured authority | a real, named method announced when it launches |
 | Match the rival's keyword count "and do the keyword one more time" (`DV3FuZHEw_K`) | stuffing; he withdrew it himself (D37) | coverage, with counts as floor and ceiling |
-| "Recreate that ad in Canva" (D44) | copying another firm's creative | read why it runs, make our own |
+| "Recreate that ad in Canva" (D44) | a remake says nothing about why it runs | read why it runs, then remake it better |
 | A prize draw for questions (§10) | held until the CEO rules (README) | — |
 
 ---

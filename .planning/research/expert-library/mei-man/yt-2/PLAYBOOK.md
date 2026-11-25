@@ -413,7 +413,7 @@ time — consistent with MeiMEDIA's founding date on LinkedIn (January 2019, fir
 - Ranking audiences by intent (engagers, viewers, savers, visitors) — §12, durable logic column.
 - The organic winner as the first ad candidate; UGC that looks organic; TikTok-style creator content — §8.13.
 - Selling the outcome and the feeling, not the feature — §7.2.
-- The Ad Library as research, never copying — §2, §11, skill 66.
+- The Ad Library as research — §2, §11, skill 66.
 - Carousels for stores with many products — §8.13, §10 (her 2021 "20% more engagement" study claim is
   unsourced).
 - Retargeting needs a new angle or offer, and budget fits pool size — §12.

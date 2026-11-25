@@ -125,7 +125,7 @@ three kinds:
   rivals send their customers" page for a prospect.
 - **Needs the CEO.** A SparkToro plan if the free tier is gone (money out, small); showing the page to a
   prospect is client-finding and waits on his word (B84 decision 9).
-- **Risk.** It stays read-only and truthful: no fake names, no fake purchases, no copying creative (D44).
+- **Risk.** It stays read-only and truthful: no fake names, no fake purchases.
 
 ### 6. The named method — a firm's real method made citable (NEW; D16, D17)
 

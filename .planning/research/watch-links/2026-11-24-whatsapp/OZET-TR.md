@@ -44,7 +44,7 @@ Ancak "Google Analytics" ifadesi yanlış: giden şey anonim kullanım verisi ve
 7. Her platformu kendi rakamı değerlendirir: Meta'da ilk 3 saniyede kalanların oranı, YouTube Shorts'ta izleyenlerin kaydırıp geçenlere oranı, Instagram'da gönderinin kaç kez paylaşıldığı. Bu rakamlar sorunu gösterir, kararı müşteri başına maliyet verir.
 8. 1.000 izlenmeyle ancak 6 puanlık bir fark görülebilir; daha küçük farklar için "henüz söylenemez" denir. Bu sayılar hesaplandı, tahmin değil.
 9. Haftalık düzen: pazartesi ölç, salı araştır, çarşamba 50 hook yaz (40'ı tutmuş kalıplardan), perşembe-cuma üret, sonra yayınla. Kazanan için tek değişkenli 10 varyasyon yapılır.
-10. Sahte yorum, uydurma aciliyet ve başkasının görüntüsü yok. Yalnız yapıyı alıyoruz.
+10. Sahte yorum ve uydurma aciliyet yok.
 
 Ayrıntı `HOOK-SYSTEM.md`'de; içerik üreticilerinin sakladığı 15 parçanın tamamlanmış hâli de orada.
 

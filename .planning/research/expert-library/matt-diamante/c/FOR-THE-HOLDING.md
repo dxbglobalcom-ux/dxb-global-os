@@ -74,7 +74,7 @@ His 40 strongest carousels teach little that a and b do not already hold. What t
 - **Earns / improves.** Reach without ad spend and without a face; the posts are by-products of work the
   office does anyway (the engines' findings, the gates' checklists, the platform features it verifies).
 - **Needs the CEO.** The account (an identity step); the language and market of the first account.
-- **Risk.** Copying his hooks. His covers say "destroyed", "killed", "BREAKING" on his own sale; ours are true
+- **Risk.** His claims. His covers say "destroyed", "killed", "BREAKING" on his own sale; ours are true
   or not posted.
 
 ### 3. Brand-DNA preview — the prospect's own brand system and ads, made before he is asked (SHARPER, C16)

@@ -3377,5 +3377,13 @@
     "conditions": "Deletes away-ends-only-on-his-word-2026-11-17 and the 98 % / quota rules of warm-stays-warm-until-the-quota-is-spent-2026-11-24 except the spent quota.",
     "session": "Opus 5.5 session 61ff4cdb, heard first-hand, 2026-11-24.",
     "where": ".claude/skills/dxb-warm-wait/SKILL.md; scripts/ops/dxb-warm-wait; scripts/ops/dxb-away-gate.py"
+  },
+  "copying-ban-removed-inspiration-and-rephrase-free-2026-11-25": {
+    "date": "2026-11-25",
+    "what": "The ban sentences on copying ('only the structure is taken', 'never another's words, footage') leave the records and are not written again. Copying is taking a thing from A to Z, one to one; inspiration and rephrasing are not copying and are free. Replaces the definition in b84-web-studio-plan-agreed-2026-11-03 (images, names and content); its 'the design itself may be identical' stands.",
+    "verbatim": "\"Ya şu başkasının işi kopyalanmayacak kısmını geçin ya. … Biz ilham almak başka, birebir kopyalamak başka. … A'dan Z'ye almak kopyalamaktır. Sen orada rephrase yapabilirsin. O kopyalamak olmuyor. … Böyle bir yasak artık hiçbir yerde görmek istemiyorum.\"",
+    "conditions": "",
+    "session": "Opus 5.5 session eae9dc30, heard first-hand, 2026-11-25.",
+    "where": ".planning/board-rows/B28.md, B83.md, B84.md; .planning/research/watch-links/2026-11-24-whatsapp/HOOK-SYSTEM.md, OZET-TR.md; .planning/research/expert-library/"
   }
 }
