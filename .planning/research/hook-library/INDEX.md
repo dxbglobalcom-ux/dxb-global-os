@@ -2,7 +2,7 @@
 
 Written by `shelve.py`; what each shelf means is in `SHELVES.md`. `words` = only the opening differed · `whole` = the whole ad won · `brand` = only the brand grew. 
 
-## SHOW — 266
+## SHOW — 267
 - **test** 51 (words 3, whole 40, brand 8; filmed 48) — the claim is tried in front of you and could fail: torture test, drop test, blind test, instrument, "try it at home", live comparison on camera. Not a finished result (→ before_after).
   - The Uncomfortable Truth That Can Only Be Seen Through These Satellite Photos — Upworthy — social news headline · 1.93% of 5180 clicked, the 3 rivals over the same picture and story 0.78% (2.47 times, at  `o-upw1-049`
   - 2 People Described The Same Person To A Forensic Artist And This Is What Happened — Upworthy — social news headline · 5.95% of 2688 clicked, the 3 rivals over the same picture and story 3.43% (1.74 times, at  `o-upw2-068`
@@ -15,7 +15,7 @@ Written by `shelve.py`; what each shelf means is in `SHELVES.md`. `words` = only
   - Children In Every Country Except Brazil Are Terrified To Have Chemotherapy. This Is Brazil's Way. — Upworthy — social news headline · 2.68% of 2763 clicked, the 4 rivals over the same picture and story 0.68% (3.92 times, at  `o-upw1-005`
   - The First Footage You See Is 50 Years Old. The Rest Was Just Shot. The Similarities Are Incredible. — Upworthy — social news headline · 1.87% of 3377 clicked, the 5 rivals over the same picture and story 0.62% (3.03 times, at  `o-upw1-019`
   - 2 Monkeys Were Paid Unequally; See What Happens Next — And Hear The Rest Of The Story — Upworthy — social news headline · 1.23% of 5920 clicked, the 6 rivals over the same picture and story 0.5% (2.47 times, at l `o-upw1-053`
-- **in_use** 89 (words 7, whole 82, brand 0; filmed 83) — the product itself, alone, in its place or at work: its sound, its motion, its making, its packing, being eaten; a satisfying process. No trial, no change, no story.
+- **in_use** 90 (words 7, whole 83, brand 0; filmed 84) — the product itself, alone, in its place or at work: its sound, its motion, its making, its packing, being eaten; a satisfying process. No trial, no change, no story.
   - The product standing in a real-looking home — IKEA Canada · 50% improvement in cost per action `o-platform-036`
   - [cup in a warm morning scene] — Dandy Blend — herbal drink, US · click-through from 0.6% to 1.1% (+83%), 2.2x conversions, ACOS 7.0% to 6.8% `o-platform-043`
   - [picture: the watch alone, large, dramatic, against a plain background] — Hamilton Watch Company — 1920s reproduct · generated three times as many sales as the other version `o-tec5-006`
@@ -24,8 +24,8 @@ Written by `shelve.py`; what each shelf means is in `SHELVES.md`. `words` = only
   - Play It From The Beginning And It's Inspiring. Play It From The End, It Breaks Your Heart. — Upworthy — social news headline · 1.63% of 3559 clicked, the 4 rivals over the same picture and story 0.63% (2.57 times, at  `o-upw1-056`
   - At First He Just Seems Like A Lone Crazy Person, But Then The Camera Zooms Out — Upworthy — social news headline · 3.18% of 3900 clicked, the 3 rivals over the same picture and story 1.42% (2.24 times, at  `o-upw1-066`
 
-## CURIOSITY — 269
-- **odd_detail** 103 (words 32, whole 62, brand 9; filmed 47) — one thing in the picture or the sentence is left unexplained: strange object, odd word, hidden product, reaction shown and its cause hidden, closed box.
+## CURIOSITY — 270
+- **odd_detail** 104 (words 32, whole 63, brand 9; filmed 48) — one thing in the picture or the sentence is left unexplained: strange object, odd word, hidden product, reaction shown and its cause hidden, closed box.
   - It’s A Special Month… — National Breast Cancer Foundation — news · open rate 17.1% against 15.5%, +10.4% `o-chatgpt-014`
   - I have hope — Media Research Center — fundraising e-ma · open rate 13.0% against 11.0%, +17.9%; visits to the website +26.5% `o-chatgpt-015`
   - When You Were a Tadpole and I Was a Fish — Haldeman-Julius — Little Blue Books (5 c · 2,000 in 1925 to nearly 7,000 in 1926; moved under the heading Humor about 21,000 in 1927 `o-klasik-012`
@@ -50,8 +50,8 @@ Written by `shelve.py`; what each shelf means is in `SHELVES.md`. `words` = only
   - 7 Ways To Figure Out When You’re Being Brainwashed — Upworthy — social news headline · 1.26% of 3094 clicked, the 3 rivals over the same picture and story 0.34% (3.7 times, at l `o-upw1-015`
   - 6 Big Things We've Been Led To Believe About Africa That Actually Aren't True — Upworthy — social news headline · 2.94% of 4313 clicked, the 3 rivals over the same picture and story 1.02% (2.88 times, at  `o-upw1-017`
 
-## TROUBLE — 155
-- **trouble** 68 (words 4, whole 59, brand 5; filmed 49) — the pain itself, shown or said in the sufferer's words: symptom, chore, embarrassing moment, damage close-up, private annoyance, "has this happened to you?"
+## TROUBLE — 157
+- **trouble** 69 (words 4, whole 60, brand 5; filmed 50) — the pain itself, shown or said in the sufferer's words: symptom, chore, embarrassing moment, damage close-up, private annoyance, "has this happened to you?"
   - If you think you need rehab you do — Beachway — rehab centre, Florida · over 400% more people click that orange button; on the next page 26% more completed leads `o-abarsiv-091`
   - Excessive licking 🚩 🚩 🚩 Know the red flags in your doggos behavior so you can act fast to treat allergic itch. — Zoetis — dog allergic itch, US · 20% higher CTR and 63% of all clicks, no change to the video `o-platform-028`
   - Have You Ever Been Told That You're Too Emotional? So Was This Scientist. Here's Her Response. — Upworthy — social news headline · 1.91% of 3763 clicked, the 7 rivals over the same picture and story 0.89% (2.16 times, at  `o-upw2-025`
@@ -63,7 +63,7 @@ Written by `shelve.py`; what each shelf means is in `SHELVES.md`. `words` = only
   - Hand hygiene prevents patients from catching diseases. — US hospital — sign above dispenser · soap and gel used 37.25% -> 54.18% (over 45% more); 'you' sign and slogan no change; secon `o-davranis-034`
   - DON'T LET ATHLETE'S FOOT "LAY YOU UP" — [foot remedy] · pulled three times better `o-sugarman-091`
   - She Wants To Be Treated Like Any Other Widow. But One Letter On Her ID Is Making It Impossible. — Upworthy — social news headline · 5.37% of 3131 clicked, the 3 rivals over the same picture and story 2.01% (2.67 times, at  `o-upw1-023`
-- **enemy** 10 (words 3, whole 6, brand 1; filmed 5) — a villain or an old way is attacked and left behind: never the old way again, throw away X, rename the rival thing, the germ.
+- **enemy** 11 (words 3, whole 7, brand 1; filmed 6) — a villain or an old way is attacked and left behind: never the old way again, throw away X, rename the rival thing, the germ.
   - My German Friend Thinks Our System Of Tipping Is Absurd. Here's Some Stuff To Back That Up. — Upworthy — social news headline · 2.73% of 3078 clicked, the 3 rivals over the same picture and story 1.05% (2.6 times, at l `o-upw1-046`
   - If These Things Happened In A Marathon, It'd Be Cheating. But In Real Life, It's Discrimination. — Upworthy — social news headline · 1.5% of 4213 clicked, the 3 rivals over the same picture and story 0.68% (2.21 times, at l `o-upw2-041`
   - The Way We Run Our Schools Is Terribly Out-Of-Date, And This Video Proves It. — Upworthy — social news headline · 1.56% of 5195 clicked, the 5 rivals over the same picture and story 0.77% (2.04 times, at  `o-upw2-047`
@@ -72,12 +72,12 @@ Written by `shelve.py`; what each shelf means is in `SHELVES.md`. `words` = only
   - I Usually Can't Stand Yearly Recap Videos, But The One You're About To See Is Kleenex-Worthy — Upworthy — social news headline · 1.83% of 2782 clicked, the 3 rivals over the same picture and story 0.67% (2.73 times, at  `o-upw1-052`
   - If You Think Only Poor People Are On Welfare, Wait Till You See What These Guys Do With It — Upworthy — social news headline · 3.39% of 2538 clicked, the 3 rivals over the same picture and story 1.43% (2.36 times, at  `o-upw1-064`
 
-## GAIN — 294
+## GAIN — 296
 - **offer** 59 (words 11, whole 48, brand 0; filmed 11) — price, free, discount, gift, bundle, trial or guarantee IS the opening.
   - $50-off Coupon — Evo — sports gear shop · 170% more revenue, 72% higher conversion rate; opens 20% vs 19% and clicks 32.4% vs 33% ne `o-abarsiv-171`
   - [Columbia Record Club: choose your free records from a list of thirty-two] — Columbia Record Club (Lester Wunderman) · the response rate doubled; 1958 was the best year in the club's history `o-ad1-017`
   - 20% Off Every Order -- 12 Days of Christmas Day 9! — niche consumer web shop · revenue per thousand e-mails $24.99 against $21.84, +14.4%; order value nearly 32% higher `o-uzman-072`
-- **plain_gain** 118 (words 62, whole 54, brand 2; filmed 15) — the benefit or the thing itself in plain words: how to …, get …, the exact name, the plain title that beat the clever one, what the click gives.
+- **plain_gain** 119 (words 62, whole 55, brand 2; filmed 16) — the benefit or the thing itself in plain words: how to …, get …, the exact name, the plain title that beat the clever one, what the click gives.
   - Start Your Survey>> — Boys Town — survey ad to its own mailing · Conv. Rate 0.16% -> 0.64%, +311.6% (level of confidence 100.0%) `o-abarsiv-003`
   - Get your FREE copy of Digital Discipleship and learn how to address the challenges of faith in the digital age — The Gospel Coalition — ebook · Conv. Rate 38.2% -> 46.7%, +22.2% (level of confidence 100.0%) `o-abarsiv-009`
   - Generate breakthrough ideas and create a culture of innovation — Stanford Graduate School of Business — e · Conv. Rate 47.2% -> 51.1%, +8.2% (level of confidence 99.0%) `o-abarsiv-021`
@@ -85,7 +85,7 @@ Written by `shelve.py`; what each shelf means is in `SHELVES.md`. `words` = only
   - How to fix cars—quickly, easily, right — car repair book, mail order · Orders increased 20 percent `o-caples-071`
   - ... at least 1 percent of your pay (e-mail naming the smallest contribution, 1%) — US Department of Defense — Thrift Saving · highest enrolment, 3.0%, for the e-mail naming 1% `o-davranis-076`
   - Build Your Own House in Two Hours — maker of knock-down summer houses · 1,000 inquiries in the first week, 3,000 in all; more than six times the inquiries of any  `o-klasik-120`
-- **news** 14 (words 4, whole 10, brand 0; filmed 5) — new, first, at last, announcing, a discovery, an event.
+- **news** 15 (words 4, whole 11, brand 0; filmed 6) — new, first, at last, announcing, a discovery, an event.
   - Brand new research on donor cultivation — NextAfter — research report e-mail · Open Rate 2.9% -> 4.6%, +57.3% (level of confidence 100.0%) `o-abarsiv-038`
   - A new early detection guide — National Breast Cancer Foundation — e-ma · Open Rate 7.9% -> 9.1%, +15.8% (level of confidence 98.7%) `o-abarsiv-069`
   - [New Data] The Science of Timing. When you should tweet, blog, email, and more — HubSpot — webinar invitation · opens 14.21% vs 12.94%; clicks 247 of 10,996 (2.25%) vs 226 of 10,928 (2.07%) `o-abarsiv-115`
@@ -102,16 +102,16 @@ Written by `shelve.py`; what each shelf means is in `SHELVES.md`. `words` = only
   - Only 4 days left in 2010 to make a tax-deductible contribution to keep Wikipedia free. Please help Wikipedia p — Wikipedia — fund-raising banner · beat the year's best banner in the last days of 2010 `o-davranis-079`
   - A must-read before Thanksgiving! — Luther Seminary — e-mail · Click Rate 2.8% -> 5.0%, +76.4% (level of confidence 100.0%) `o-abarsiv-127`
 
-## TRUST — 274
+## TRUST — 279
 - **story** 71 (words 12, whole 51, brand 8; filmed 41) — a scene with a person begins: they laughed, a small true story, a serial, overheard talk, two brothers.
   - Wikipedia was just a dream — Wikimedia Foundation — Wikipedia donatio · the rival lost 14% (mobile large) and 17% (desktop large) of the donation rate `o-abarsiv-168`
   - I got a lot of funny looks ten years ago when I started talking to people about Wikipedia. — Wikipedia — first line of the founder's  · the most successful appeal of the launch phase `o-davranis-080`
   - The Story of a Notorious Criminal — Haldeman-Julius — Little Blue Book (Osca · sales more than tripled `o-schwartz-018`
-- **customer** 28 (words 7, whole 20, brand 1; filmed 15) — a buyer's words or a buyer's result: review line, real customer to camera, a case with exact figures.
+- **customer** 29 (words 7, whole 21, brand 1; filmed 16) — a buyer's words or a buyer's result: review line, real customer to camera, a case with exact figures.
   - The best audio stories ever! The whole family loves them and we have kids from 5 to 45! — Focus on the Family — Adventures in Odys · Conv. Rate 3.8% -> 4.3%, +11.9% (level of confidence 98.1%) `o-abarsiv-008`
   - Winter-greetings e-card: a colleague's own words why he gives, inviting the reader to join, with the colleague — HMRC Southend — payroll giving · 6.4% signed up with the picture vs 2.9% without (+3.5 points, 2.2x) `o-davranis-004`
   - We had another member, they contributed $300. How much would you like to pledge today? — Public radio station — phone pledge · average $119.70 vs about $106.72 (+12%); first-time givers +29% ($25.33) `o-davranis-052`
-- **maker** 42 (words 8, whole 29, brand 5; filmed 26) — the owner, inventor or one named person speaks or writes to him: founder says name and price, signed letter, handwritten note, sender's name.
+- **maker** 44 (words 8, whole 31, brand 5; filmed 28) — the owner, inventor or one named person speaks or writes to him: founder says name and price, signed letter, handwritten note, sender's name.
   - handwritten Post-it note request on the envelope — Irish Revenue — business survey · 36.0% vs 19.2% replied after 15 working days (+16.8 points, +88%) `o-davranis-014`
   - Please take a few minutes to complete this for us. Thank you! — University survey packet · 76% returned vs 48% vs 36%; second study 69% vs 43% blank note vs 34% `o-davranis-039`
   - Please Read: An Urgent Appeal from Wikipedia Founder Jimmy Wales — Wikipedia — fund-raising banner · unbeaten all campaign until the last days of the year `o-davranis-077`
@@ -131,17 +131,17 @@ Written by `shelve.py`; what each shelf means is in `SHELVES.md`. `words` = only
   - We Didn't Believe It. So We Fact-Checked It (Twice). Now Let's Talk About How To Make It Worldwide. — Upworthy — social news headline · 0.56% of 6101 clicked, the 2 rivals over the same picture and story 0.15% (3.81 times, at  `o-upw1-024`
   - This Video Is Equal Parts Fascinating And Horrifying, But Now I Know How Viruses Work — Upworthy — social news headline · 1.2% of 3843 clicked, the 5 rivals over the same picture and story 0.42% (2.83 times, at l `o-upw1-042`
   - Family Shares Embarrassing Perm Photos To Help Autistic Son — Upworthy — social news headline · 1.55% of 2833 clicked, the 3 rivals over the same picture and story 0.52% (2.96 times, at  `o-upw1-045`
-- **ask** 31 (words 16, whole 15, brand 0; filmed 7) — a modest human request or thanks: please, a favour, a small sum, if everyone gave a little, thank you.
+- **ask** 33 (words 16, whole 17, brand 0; filmed 9) — a modest human request or thanks: please, a favour, a small sum, if everyone gave a little, thank you.
   - If it's not too much to ask, would you consider giving today so that our Board of Directors can match your gif — CaringBridge — matching gift popup · Conv. Rate 0.10% -> 0.15%, +58.3% (level of confidence 100.0%) `o-abarsiv-018`
   - If it's not too much to ask... — Missionary Oblates — sticky bar · Conv. Rate 0.74% -> 1.4%, +88.6% (level of confidence 99.9%) `o-abarsiv-019`
   - You will receive an email containing your free devotional in just a few minutes. But before you get started, c — The Gospel Coalition — page after the si · Conv. Rate 1.6% -> 2.8%, +75.8% (level of confidence 99.5%) `o-abarsiv-047`
 
-## ADDRESS — 124
-- **call_out** 41 (words 11, whole 27, brand 3; filmed 21) — says whom it is for: trade, place, age, owner of X, "to people who …", "if you …"; or the picture of his own trade, pet or street.
+## ADDRESS — 127
+- **call_out** 43 (words 11, whole 29, brand 3; filmed 23) — says whom it is for: trade, place, age, owner of X, "to people who …", "if you …"; or the picture of his own trade, pet or street.
   - Today we ask those of you in Malaysia… — Wikimedia Foundation — Wikipedia donatio · 11% more likely that a reader would decide to donate; 8 of 10 significant localized tests  `o-abarsiv-076`
   - Car owners! Save one gallon of gas in every ten — gasoline additive · pulled 20 percent more sample requests than the first version `o-caples-066`
   - Dear Wikipedia reader — Wikipedia — fund-raising banner, USA · 2,422 gifts vs 2,103 (+15%); $40,194 vs $35,500 `o-davranis-085`
-- **question** 34 (words 7, whole 22, brand 5; filmed 11) — a question whose honest answer pulls him in; not a riddle (→ puzzle), not a pain (→ trouble).
+- **question** 35 (words 7, whole 22, brand 6; filmed 12) — a question whose honest answer pulls him in; not a riddle (→ puzzle), not a pain (→ trouble).
   - Do you want to learn how to better parent your kids in a godly way? — FamilyLife — free course · Conv. Rate 0.35% -> 0.51%, +44.7% (level of confidence 100.0%) `o-abarsiv-014`
   - If you needed an organ transplant, would you have one? If so, please help others. — NHS Organ Donor Register — page shown af · 3.2% registered vs 2.3% control (+0.9 point, about +39%); 1,203 more people in five weeks, `o-davranis-005`
   - Ever Wonder Why Your Cable Guy Shows Up Whenever He Wants And Doesn't Seem Sorry? This Explains It. — Upworthy — social news headline · 2.33% of 2187 clicked, the 5 rivals over the same picture and story 0.51% (4.55 times, at  `o-upw1-003`
@@ -154,12 +154,12 @@ Written by `shelve.py`; what each shelf means is in `SHELVES.md`. `words` = only
   - I Wouldn't Even Dare You To Drink This Stuff. That's How Dangerous It Is. — Upworthy — social news headline · 3.64% of 2639 clicked, the 5 rivals over the same picture and story 1.59% (2.29 times, at  `o-upw1-063`
   - If You Are A Dad, I Dare You Not To Get Eye Water Watching This — Upworthy — social news headline · 3.02% of 5635 clicked, the 6 rivals over the same picture and story 1.77% (1.71 times, at  `o-upw2-069`
 
-## PLAY — 140
-- **joke** 50 (words 3, whole 37, brand 10; filmed 44) — humour, twist, absurdity, parody, pun, serious film with a silly mistake, expectation turned over.
+## PLAY — 143
+- **joke** 51 (words 3, whole 38, brand 10; filmed 45) — humour, twist, absurdity, parody, pun, serious film with a silly mistake, expectation turned over.
   - “I’d rather be waiting at the DMV during the holidays”, said NO ONE EVER — City of Denver — PocketGov.com online se · 29.5% opened vs 25.9% (+14% opens); +17% clicks; 300 more sign-ups `o-davranis-021`
   - You May Want To Sit Down For This. Just Not On Your Couch. Or My Couch. Or Any Couch. — Upworthy — social news headline · 1.73% of 3988 clicked, the 5 rivals over the same picture and story 0.71% (2.42 times, at  `o-upw1-061`
   - The Most One-Sided Relationship Ever Featuring A Bunch Of Water And Some T-Shirts — Upworthy — social news headline · 1.82% of 3522 clicked, the 4 rivals over the same picture and story 0.75% (2.42 times, at  `o-upw1-070`
-- **character** 34 (words 4, whole 19, brand 11; filmed 28) — a child, an animal, a mascot, a talking thing or a recurring figure is what stops him.
+- **character** 35 (words 4, whole 20, brand 11; filmed 29) — a child, an animal, a mascot, a talking thing or a recurring figure is what stops him.
   - Seeing What They Do To Dogs When Their Owners Aren't Around Totally Made My Day — Upworthy — social news headline · 2.27% of 3086 clicked, the 4 rivals over the same picture and story 0.9% (2.53 times, at l `o-upw1-054`
   - A 6-Year-Old Asks ​Neil DeGrasse Tyson An Adorable Question. He Gives Her An Awesome Answer. — Upworthy — social news headline · 2.55% of 2823 clicked, the 4 rivals over the same picture and story 1.12% (2.28 times, at  `o-upw2-006`
   - A Dog Walked Into A Classroom In Switzerland. It Just Gets Better From There. — Upworthy — social news headline · 2.85% of 3090 clicked, the 2 rivals over the same picture and story 1.4% (2.03 times, at l `o-upw2-059`
@@ -167,7 +167,7 @@ Written by `shelve.py`; what each shelf means is in `SHELVES.md`. `words` = only
   - Three people die every day because there are not enough organ donors — NHS Organ Donor Register — page after ca · 3.1% vs 2.9% gain frame (significant) vs 2.3% control `o-davranis-016`
   - You’ve failed many times, although you may not remember. — United Technologies — company page in Th · 123,000 reprint requests and 36,000 letters, the most letters of any in the series; the se `o-ad1-026`
   - This sweet man is sitting at B&N with a stack of his books he wrote and my heart is breaking everytime someone — Jonathan Stanley — Purposeful Performanc · 81.8m views (75m when People wrote); the book sold out online and became an Amazon best-se `o-ad3-010`
-- **native** 29 (words 3, whole 23, brand 3; filmed 16) — it looks like what stands around it: phone note, message, reply to a comment, news page, street interview, skit, article.
+- **native** 30 (words 3, whole 24, brand 3; filmed 17) — it looks like what stands around it: phone note, message, reply to a comment, news page, street interview, skit, article.
   - Banner with editor Susan Hewitt photographed in front of a tree in her garden (green leaves left in the pictur — Wikipedia — fund-raising banner · +64% clicks; green behind Jimmy's own photo also won `o-davranis-082`
   - Good morning — Jews for Jesus — e-mail · Open Rate 14.1% -> 15.7%, +11.1% (level of confidence 100.0%) `o-abarsiv-065`
   - Quick question — Compassion International — e-mail · Open Rate 12.0% -> 51.4%, +329.8% (level of confidence 100.0%) `o-abarsiv-066`

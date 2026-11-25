@@ -11,7 +11,8 @@ usage: python3 -I pick.py --for film|text|mail|page|any [--role sell|click|seen|
   --sells, --price, --result, --need   what KIND of thing the client sells: winners that sold the same kind of thing come first
   --known  no = the client is a seller nobody knows yet: rows that live on a famous brand, face or song are left out
   --order  the client's name: among rows that fit nearly as well, each client draws others, so that two clients of one trade do not start from the same parents
-With --role, rows that really did that job come first and fill at least two thirds of the list; the rest is there for its power to stop people.
+With --role, rows that really did that job come first and fill at least two thirds of the list; the rest is there for its power to stop people. A trade with fewer than
+five films of that role also gets up to four of its own winners in print, letters and pages at the end of the list.
 Every line carries the row id: the writer names it as the parent of what is written.
 """
 import argparse
@@ -43,7 +44,7 @@ def score(r, a):
     if a.known == 'no' and r.get('fits') == 'new':
         s += 0.8
     if a.order:
-        s += 1.5 * int(hashlib.sha256(f"{a.order}|{r['id']}".encode()).hexdigest()[:6], 16) / 0xFFFFFF
+        s += (1.2 if r['sector'] in a.sector else 3.0) * int(hashlib.sha256(f"{a.order}|{r['id']}".encode()).hexdigest()[:6], 16) / 0xFFFFFF
     if r['channel'] in ('tiktok_ad', 'meta_ad', 'youtube_ad', 'short_organic'):
         s += 0.8 if a.kind == 'film' else 0
     return s
@@ -90,6 +91,12 @@ for part, room_for in zip(BOTH, (a.n - a.n // 3 if ROLE else a.n, a.n)):
         shelf[r['shelf']] += 1
         seller[r['seller'][:14]] += 1
         out.append(r)
+# a trade with few films of the asked role: its own winners in print, letters and pages come too; their picture is for the film maker to find
+if a.kind == 'film' and a.sector and ROLE and sum(1 for r in out if r['sector'] in a.sector and ROLE & set(r.get('role') or [])) < 5:
+    more = [(score(r, a), r) for r in rows if r['sector'] in a.sector and r['channel'] not in FILM and ROLE & set(r.get('role') or []) and r['id'] not in {x['id'] for x in out}
+            and not (a.known == 'no' and r.get('fits') == 'known')]
+    for s, r in sorted(more, key=lambda x: -x[0])[:4]:
+        out.append({**r, 'picture': r.get('picture') or '[words only: the picture is for the film maker to find]'})
 M = []
 if os.path.exists(f'{HERE}/methods.jsonl') and a.methods:
     got = collections.Counter(r['shelf'] for r in out) + collections.Counter(r.get('shelf2') for r in out if r.get('shelf2'))
