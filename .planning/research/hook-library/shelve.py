@@ -2,9 +2,12 @@
 folds one opening told by several sources into one row, and writes the shelf index.
 
 usage: python3 -I shelve.py <hook-lab folder> <library folder>
-Reads  <library>/openings.jsonl (merge.py's output), <lab>/SHELVES.md, <lab>/el/raf*/shelf.jsonl (the labelling hands),
-       <lab>/raf/decisions.json (the lead's verdicts), <lab>/raf/dupgroups.json (same opening, several sources).
+Reads  <library>/openings.jsonl (merge.py's output), <library>/SHELVES.md, <lab>/el/raf*/shelf.jsonl and <lab>/el/oz*/traits.jsonl (the
+       labelling hands), <library>/decisions.json (the lead's verdicts: out, out_ads, money, fix, keep, same, notsame, split, doubt),
+       <library>/dupgroups.json (same opening, several sources), the selections of the watched films (likes, views, spend).
 Writes <library>/openings.jsonl (labelled), left-out.jsonl (with the reason), INDEX.md (per shelf: counts and strongest rows).
+The CEO's words of 2026-11-25: rows about insurance, retirement, stocks and banks and rows with a political sender leave; nothing that
+failed stays, not even in the smallest part: weak proofs and rows whose win is not clean (<lab>/el/kusur*/verdict.jsonl) leave too.
 """
 import collections
 import glob
@@ -14,7 +17,7 @@ import re
 import sys
 
 LAB, OUT = sys.argv[1], sys.argv[2]
-text = open(f'{LAB}/SHELVES.md', encoding='utf-8').read()
+text = open(f'{OUT}/SHELVES.md', encoding='utf-8').read()
 room_of, meaning, room = {}, {}, None
 for line in text.split('\n'):
     m = re.match(r'^## ([A-Z]+)', line)
@@ -31,8 +34,20 @@ for f in glob.glob(f'{LAB}/el/raf*/shelf.jsonl'):
         if x.strip():
             r = json.loads(x)
             label[r['id']] = r
-D = json.load(open(f'{LAB}/raf/decisions.json', encoding='utf-8'))
-groups = json.load(open(f'{LAB}/raf/dupgroups.json', encoding='utf-8')) if os.path.exists(f'{LAB}/raf/dupgroups.json') else []
+trait = {}
+for f in glob.glob(f'{LAB}/el/oz*/traits.jsonl'):
+    for x in open(f, encoding='utf-8'):
+        if x.strip():
+            r = json.loads(x)
+            trait[r.pop('id')] = r
+verdict = {}
+for f in glob.glob(f'{LAB}/el/kusur*/verdict.jsonl'):
+    for x in open(f, encoding='utf-8'):
+        if x.strip():
+            r = json.loads(x)
+            verdict[r['id']] = r
+D = json.load(open(f'{OUT}/decisions.json', encoding='utf-8'))
+groups = json.load(open(f'{OUT}/dupgroups.json', encoding='utf-8')) if os.path.exists(f'{OUT}/dupgroups.json') else []
 notsame = {tuple(sorted(x)) for x in D.get('notsame', [])}
 groups = [[i for i in g if i not in D.get('split', [])] for g in groups if tuple(sorted(g)) not in notsame] + D.get('same', [])
 rows = [json.loads(x) for x in open(f'{OUT}/openings.jsonl', encoding='utf-8') if x.strip()]
@@ -42,8 +57,9 @@ TT = {}
 if os.path.exists(f'{LAB}/ttcc/selection.json'):
     TT = {x['ad_id']: x for x in json.load(open(f'{LAB}/ttcc/selection.json'))}
 YT = {}
-if os.path.exists(f'{LAB}/yt/selection.json'):
-    YT = {x['ad_id']: x for x in json.load(open(f'{LAB}/yt/selection.json'))}
+for d in ('yt', 'tt_org'):
+    if os.path.exists(f'{LAB}/{d}/selection.json'):
+        YT.update({x['ad_id']: x for x in json.load(open(f'{LAB}/{d}/selection.json'))})
 
 
 def numbers(r):
@@ -61,6 +77,8 @@ def numbers(r):
         return 'solid' if (x.get('ctr_global') or 1) <= 0.03 and (x.get('r2') or 0) >= 39 else 'usable'
     if r.get('ad_id') in YT:
         x = YT[r['ad_id']]
+        if x.get('organic') == 'doubt' or (x.get('comments') is not None and x['views'] and x['comments'] / x['views'] < 0.00002):
+            return 'weak'
         return 'solid' if x['times'] >= 50 and x['views'] >= 1000000 else 'usable'
     return r.get('strength', 'usable')
 
@@ -78,12 +96,17 @@ for r in rows:
     for tag, ids in D['hold'].items():
         if r['id'] in ids:
             r['hold'] = tag
+    if r['id'] in D.get('keep', []):
+        r.pop('hold', None)
     if r['id'] in D['doubt']:
         r['doubt'] = (r.get('doubt', '') + '; ' + D['doubt'][r['id']]).strip('; ')
     if r.get('ad_id') or r.get('watched'):
         r['proves'] = r.get('proves') or 'whole'
         if not r.get('kept_strength'):
             r['strength'] = numbers(r)
+    r.update(D.get('fix', {}).get(r['id'], {}))
+    if r['id'] in trait:
+        r.update(trait[r['id']])
     r['room'] = room_of.get(r.get('shelf', ''), '')
 
 out = []
@@ -91,6 +114,18 @@ for i, why in D['out'].items():
     if i in by:
         out.append({**{k: by[i][k] for k in ('id', 'opening', 'seller', 'result', 'source', 'url')}, 'left_out': why})
         count['left out'] += 1
+WORD = {'finance': 'left on his word (2026-11-25): insurance, retirement, stocks or banks', 'politics': 'left on his word (2026-11-25): political sender'}
+for r in rows:
+    why = WORD.get(r.get('hold')) or D.get('out_ads', {}).get(r.get('ad_id', ''))
+    v = verdict.get(r['id'], {})
+    if not why and v.get('clean') is False and r['id'] not in D.get('cleared', []):
+        why = f"not a clean win ({v.get('kind', '')}): {v.get('reason', '')}"
+    if not why and r.get('strength') == 'weak':
+        why = 'weak proof: ' + (r.get('doubt') or 'the win is in doubt')[:160]
+    if why and r['id'] not in D['out']:
+        D['out'][r['id']] = why
+        out.append({**{k: r[k] for k in ('id', 'opening', 'seller', 'result', 'source', 'url')}, 'left_out': why})
+        count[why.split(':')[0]] += 1
 gone = set(D['out'])
 
 auto = collections.defaultdict(list)
@@ -123,15 +158,15 @@ with open(f'{OUT}/left-out.jsonl', 'w', encoding='utf-8') as f:
     for r in out:
         f.write(json.dumps(r, ensure_ascii=False) + '\n')
 
-live = [r for r in keep if not r.get('hold')]
+live = keep
 lines = ['# The shelves — how many winners stand on each, and the strongest', '',
-         'Written by `shelve.py`; what each shelf means is in `SHELVES.md`. `words` = only the opening differed · `whole` = the whole ad won · `brand` = only the brand grew. Rows on hold are not counted.', '']
+         'Written by `shelve.py`; what each shelf means is in `SHELVES.md`. `words` = only the opening differed · `whole` = the whole ad won · `brand` = only the brand grew. ', '']
 for rm in dict.fromkeys(room_of.values()):
     keys = [k for k in room_of if room_of[k] == rm]
-    n = sum(1 for r in live if r['shelf'] in keys)
+    n = sum(1 for r in live if r.get('shelf') in keys)
     lines.append(f'## {rm} — {n}')
     for k in keys:
-        L = [r for r in live if r['shelf'] == k]
+        L = [r for r in live if r.get('shelf') == k]
         c = collections.Counter(r['proves'] for r in L)
         film = sum(1 for r in L if r['channel'] in ('tiktok_ad', 'meta_ad', 'youtube_ad', 'short_organic', 'tv', 'youtube_long') and r.get('picture'))
         lines.append(f"- **{k}** {len(L)} (words {c['words']}, whole {c['whole']}, brand {c['brand']}; filmed {film}) — {meaning[k]}")
@@ -140,6 +175,6 @@ for rm in dict.fromkeys(room_of.values()):
             lines.append(f"  - {r['opening'][:110].strip()} — {r['seller'][:40]} · {r['result'][:90]} `{r['id']}`")
     lines.append('')
 open(f'{OUT}/INDEX.md', 'w', encoding='utf-8').write('\n'.join(lines))
-print('kept', len(keep), '| usable now', len(live), '| on hold', len(keep) - len(live), '|', dict(count), '| without labels', len(bad), bad[:10])
+print('kept', len(keep), '|', dict(count), '| without labels', len(bad), bad[:10])
 for k in ('door', 'proves', 'fits', 'strength', 'room', 'channel'):
     print(k, dict(collections.Counter(r.get(k) for r in live).most_common()))

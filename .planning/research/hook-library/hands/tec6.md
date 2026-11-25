@@ -1,0 +1,16 @@
+**Counts:** 69 experience rows (39 strong, 26 fair, 4 thin), about 51 people (a few are staff, not owners), about 30 trades; record: 27 counted by me, 21 published, 21 own word. Fullest shelves: joke 7, in_use 6, offer 5. 45 TENFOLD openings (39 TikTok, 6 YouTube).
+**Frames:** 43 TikTok films (eight frames, 0–4 s) and 8 YouTube (0–10 s). Medians are over the newest ~150 films (fewer on small accounts). The machine transcript (small model) covers 9–13 s.
+**Checkers:** `EXPERIENCE ROWS 69 BAD 0 {'strong': 39, 'fair': 26, 'thin': 4}` · `openings.jsonl ok 45 {'TENFOLD': 45}` · `rules.jsonl missing` · `ROWS 45 BAD 0`
+**Read whole:** 13 talks (incl. Pool Guy, TJ McCormack, Claeys, Dr. Joy, Logan's, Nate, Lemay/Colin &amp; Samir, America's Cobbler, Lisa Tran) and about 35 articles (incl. Royalty Auto, Mohawk, Dentologie, Butter &amp; Spice, Fyfield, Sprout, Thibodeau, Island Larder); some long pages with lines cut on screen.
+**In part:** SB Mowing, Spudman, French, Duke, Khan, Denise, Glennda, Miss Excel (one of two), Lascsak, Ramos/ServiceTitan, Netzel, Dr. Ashley, Saunders, Royalty podcast, Wakefield; only a preview or teaser of Strand and Hastings.
+**Fetched, unread:** O'Sullivan (plumber), Girl With The Dogs long film, Titan CNC, Blacktail/UpFlip, TJ/Roofr. Every source is in `/home/dxb/.local/share/dxb/hook-lab/el/tec6/ledger.txt`.
+**Five strongest; novelty judged only against the find.py listings I saw, not the whole library:**
+1. Old owner reads the young script straight-faced: Fyfield Manor B&amp;B; 12.7M views, 1,000× its median, 18.1 % likes.
+2. Customer's letter told while the hands pull the thing apart: America's Cobbler; 34.1M, 192×, 9.1 % likes.
+3. First customer free beats 10 % off for all: Spudman (own word); SpudBros Express's counted first-customer films reach 1.4M and 2.1M (20× and 30×).
+4. Founder labelled "10 years" fails blindfolded: Goldelucks bakery; 23.5M, 1,026×, 2.3 % likes.
+5. Comparison of two products he could both sell: John Strand, roofer; nearly $2.2M tracked to one film (podcast intro only; his first words not heard).
+**Paid or suspect views, out of the openings:** Plomero en Phoenix boot ads (0.0–0.1 % likes), Chuckling Cheese (0.2 %), Florian Gadsby (0.4 %); Dr. Ashley says her 60–70M films were boosted by Invisalign. Close to the line: Denise 0.7 %, Duke's "Pay your kids" 1.0 %.
+**Contradictions:** skits: Mohawk, Hotel Woodstock and Brown Dog credit them with fame or trade; Dr. Ashley's host got no patients from them. Straight to lens: Dr. Joy yes, Glennda no. How-to: Pool Guy refuses it, Trinkle, Saunders and Tran live on it. Views are not survival: Lemay's shop closed, Butter &amp; Spice shut the shop it pleaded for.
+**Checks and limits:** Dr. Ashley's surname not found; 17 rows quote sources read in section; some names and places come from account names. Left out: loan refinancing, drag-wig vet, pork, bare back, undershirt film, politics.
+**Not obtained:** no usable row from physios, vets, electricians, book shops, gyms, car detailers (a Detail Geek opening only) or accountants beyond Duke's tax firm. Blocked or empty: Forbes, Tubefilter (Jeeves), Daily Orange, Business Observer; no subtitles for BiGDUG, Real Estate Rockstars, SBS; Spudman, Dr. Joy, Khan, McCormack accounts not countable; no Reddit AMA found.

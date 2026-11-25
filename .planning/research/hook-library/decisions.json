@@ -52,18 +52,117 @@
   "o-sugarman-046": "the headline is not printed",
   "o-sugarman-057": "the headline is not printed",
   "o-klasik-130": "only the letter's nickname is printed",
-  "o-platform-052": "the opening frames are not described"
+  "o-platform-052": "the opening frames are not described",
+  "o-abarsiv-030": "two moments of one hour compared, not a split test"
  },
- "money": ["o-davranis-002", "o-davranis-019", "o-davranis-027", "o-davranis-028", "o-davranis-070", "o-klasik-045", "o-caples-041", "o-platform-006", "o-platform-019", "o-platform-020", "o-platform-033"],
+ "money": [
+  "o-davranis-002",
+  "o-davranis-019",
+  "o-davranis-027",
+  "o-davranis-028",
+  "o-davranis-070",
+  "o-klasik-045",
+  "o-caples-041",
+  "o-platform-006",
+  "o-platform-019",
+  "o-platform-020",
+  "o-platform-033"
+ ],
  "hold": {
-  "finance": ["o-davranis-073", "o-davranis-074", "o-abarsiv-145", "o-caples-006", "o-caples-015", "o-caples-029", "o-caples-068", "o-caples-069", "o-caples-081", "o-caples-023", "o-caples-032", "o-caples-027", "o-caples-083", "o-sugarman-070", "o-platform-057", "o-satan-022", "o-satan-023", "o-satan-097", "o-satan-073", "o-satan-115", "o-satan-010"]
+  "finance": [
+   "o-davranis-073",
+   "o-davranis-074",
+   "o-abarsiv-145",
+   "o-caples-006",
+   "o-caples-015",
+   "o-caples-029",
+   "o-caples-068",
+   "o-caples-069",
+   "o-caples-081",
+   "o-caples-023",
+   "o-caples-032",
+   "o-caples-027",
+   "o-caples-083",
+   "o-sugarman-070",
+   "o-platform-057",
+   "o-satan-022",
+   "o-satan-023",
+   "o-satan-097",
+   "o-satan-073",
+   "o-satan-115",
+   "o-satan-010"
+  ]
  },
- "same": [["o-satan-087", "o-klasik-149"]],
- "notsame": [["o-abarsiv-004", "o-abarsiv-126"], ["o-abarsiv-018", "o-abarsiv-019"]],
- "split": ["o-abarsiv-072", "o-davranis-097"],
+ "same": [
+  [
+   "o-satan-087",
+   "o-klasik-149"
+  ]
+ ],
+ "notsame": [
+  [
+   "o-abarsiv-004",
+   "o-abarsiv-126"
+  ],
+  [
+   "o-abarsiv-018",
+   "o-abarsiv-019"
+  ]
+ ],
+ "split": [
+  "o-abarsiv-072",
+  "o-davranis-097"
+ ],
  "doubt": {
   "o-uzman-025": "the woman of the thumbnail is an actress who is not in the film: the question is taken, the thumbnail is not",
   "o-satan-027": "the filmed customers were told an untrue thing and then told the truth: only openly and with consent",
-  "o-bilimsoz-012": "only when the reader really was chosen"
+  "o-bilimsoz-012": "only when the reader really was chosen",
+  "o-abarsiv-015": "the form's amounts also began at $10",
+  "o-abarsiv-050": "the pop-up also became two steps",
+  "o-abarsiv-060": "the letter's body changed with the subject",
+  "o-abarsiv-126": "the text also addressed the reader as a fellow",
+  "o-abarsiv-017": "clicks to the giving page; the number of givers fell by 4 %",
+  "o-abarsiv-024": "the source contradicts itself on which copy won",
+  "o-abarsiv-038": "the table says open rate, the text registrations (+57 %; opens +9 %)",
+  "o-abarsiv-054": "the source's text names Hillsdale, its heading Harvest Ministries",
+  "o-abarsiv-079": "the founder's banner brought more gifts (327 to 262)"
+ },
+ "keep": [
+  "o-sugarman-028",
+  "o-davranis-011",
+  "o-meta6-022"
+ ],
+ "fix": {
+  "o-abarsiv-015": {
+   "proves": "whole"
+  },
+  "o-abarsiv-050": {
+   "proves": "whole"
+  },
+  "o-abarsiv-060": {
+   "proves": "whole"
+  },
+  "o-abarsiv-126": {
+   "proves": "whole"
+  },
+  "o-abarsiv-017": {
+   "outcome": "clicked",
+   "strength": "usable"
+  },
+  "o-abarsiv-038": {
+   "outcome": "replied"
+  },
+  "o-abarsiv-020": {
+   "channel": "other"
+  },
+  "o-abarsiv-032": {
+   "channel": "meta_ad"
+  },
+  "o-abarsiv-041": {
+   "channel": "email"
+  }
+ },
+ "out_ads": {
+  "7633305350109118482": "taste: a bawdy shape may be what stopped people"
  }
 }

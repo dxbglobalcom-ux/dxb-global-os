@@ -1,53 +1,52 @@
-# The hook library — openings that really won (deep round and watching round, 2026-11-25)
+# The hook library — openings that really won, and nothing that failed (2026-11-25)
 
 The CEO's order (2026-11-25): only success in the library, read deeply, with its proof, every kind of opening, English
 sources, ChatGPT beside us <!-- CEO-OK: hook-system-rests-on-proven-research-2026-11-25 -->. **Nothing is built into the
 OS; this is the raw library.** It replaces the first scan (`../hook-evidence/`) wherever the two differ.
 
 ## The door
-A row enters only as **TEST** (it beat a rival in a split run, A/B or randomised experiment), **MONEY** (its owner kept
-paying for it for years or many months, or its sales result is published) or **TENFOLD** (ten times its account's median),
-and only when its proof sentence stands word for word in the saved source (`merge.py` looks every quote up). Two checks
-follow: what is no winning opening leaves (`left-out.jsonl`, each with its reason), and every row says **what its win
-proves** — `words`: only the opening differed · `whole`: the whole ad, letter or page won or kept running · `brand`: only the
-brand grew. The first telling of this library counted 1,108 rows; 86 were the same opening told by another source and are
-folded into one row (`also`), 53 left.
+A row enters only as **TEST** (it beat a rival in a split run, A/B or randomised experiment), **MONEY** (its owner kept paying for it for years or many months,
+or its sales result is published) or **TENFOLD** (ten times its own account's median, and liked: bought views are out), and only when its proof sentence stands
+word for word in the saved source (`merge.py` looks every quote up). Every row says **what its win proves**: `words` = only the opening differed · `whole` =
+the whole ad, letter, page or film won or kept running · `brand` = only the brand grew.
+**His words of 2026-11-25** <!-- CEO-OK: hook-library-takes-experience-2026-11-25 -->: (1) nothing that failed stays, not even in the smallest part; (2) what
+many experienced people say really worked enters too, as a method (`methods.jsonl`, below); (3) rows about insurance, retirement, stocks, banks and rows with a
+political sender are out; (4) what works changes by sector, subject and product, and the worker picks by them.
+So 1,784 gathered rows became **1,276**: 428 left (172 weak proofs · 158 wins that were not clean: lost on another count, beaten later, uncertain, trouble behind
+them · 43 by subject · 55 no winning opening), each with its reason in `left-out.jsonl`; 80 told the same opening from another source (`also`).
 
-## What is in it (counts of 2026-11-25, 12:00; `shelve.py` prints them)
+## What is in it (counts of 2026-11-25, 12:35; `shelve.py` prints them)
 | | |
 |---|---|
-| `openings.jsonl` | **1,313 rows, 1,270 usable now** (43 on hold): door TEST 594, MONEY 650, TENFOLD 26 · proves words 440, whole 708, brand 122 · solid 579, usable 569, weak 122 |
-| `INDEX.md`, `SHELVES.md` | **41 shelves in 7 rooms and one corner** (Show, Curiosity, Trouble, Gain, Trust, Address, Play; Places): a shelf says why the person stops; per shelf the counts and the three strongest |
+| `openings.jsonl` | **1,276 winners**: TEST 516, MONEY 500, TENFOLD 260 · proves words 386, whole 812, brand 78 · solid 642, usable 634 |
+| `INDEX.md`, `SHELVES.md` | **41 shelves in 7 rooms and one corner**: a shelf says why the person stops; per shelf the counts and the three strongest |
+| traits on every row | `sells` (thing, service, place, software, learning, cause, media) · `price` · `result_seen` (now, later, unseen, itself) · `need` (urgent, everyday, considered, impulse, giving, attention) · `sense`; organic films also `depends_on`. On organic films `price` and `need` still describe the view asked, not the business: to be relabelled |
+| `methods.jsonl` | **being made**: the methods that at least three independent trusted people say worked in their own work, or at least three clean winners show. The raw base, 685 rows of about 190 people, is `../hook-evidence/experience.jsonl` (not library) |
 | `pick.py` | picks the parents for an order (film / text / mail / page, sector, job, known or unknown seller): strongest proof first, spread over the shelves |
-| `RULES-CARD.md` | 495 rules read whole and brought down to one card: rule, numbers, rows, where it failed; then the contradictions, the famous rules that did not hold, and what nothing proves. `rules.jsonl` (516) is the base |
-| `hands/` | each hand's final word and ledger: what was read or watched, kept, left out and why |
+| `RULES-CARD.md` | 495 rules read whole and brought down to 30. It still names where each rule failed: that part goes to the engineers' folder, the card keeps where a rule held |
+| `pairs.jsonl` | 613 tested pairs, winner and loser side by side, for the scorer; **139 are clean in every way** (both wordings and both values looked up in the source, only the words different) |
+| `hands/` | each hand's final word and ledger |
 | `verdicts.jsonl` | truth check of 32 small vendors and preprints: 1 keep, 19 keep with a limit, 12 drop |
-| `chatgpt-deep.md`, `beside.jsonl` | ChatGPT's whole deep report (201 searches), its 100 openings checked one by one: 39 right, 50 weaker than told, 10 wrong, 1 ours already; 29 entered |
-| `merge.py` → `shelve.py` | gathers the hands' rows and checks each proof; then shelves, proof label, verdicts (`decisions.json`), repeats (`dupgroups.json`) |
-| `collect/` | the collecting scripts: Meta Ad Library, TikTok Top Ads, viral Shorts, Upworthy's archive, frame sheets, transcripts |
+| `chatgpt-deep.md`, `beside.jsonl` | ChatGPT's deep report (201 searches), its 100 openings checked one by one: 39 right, 50 weaker than told, 10 wrong, 1 ours; 29 entered |
+| `merge.py` → `shelve.py` | always both, in this order: gathers the hands' rows and checks each proof; then shelves, traits, strength, verdicts (`decisions.json`), repeats (`dupgroups.json`), what leaves |
+| `collect/` | the collecting scripts: Meta Ad Library, TikTok Top Ads, viral Shorts, TikTok accounts, Upworthy's archive, frame sheets, transcripts |
 
-Row fields: opening (verbatim; `[…]` = the source gives the result without printing the words) · picture · channel · seller ·
-sector · year · door · beat · result · outcome · measured_by · family · **room · shelf · shelf2 · proves · fits** (any / known
-brand only / unknown seller) · why (`[mine]` = ours) · for_client · source · url · read · strength · doubt · hold · also;
-watched ads also ad_id, beauty (1–5), clean (may the film be shown to anybody). Saved pages, books' text, films, frames and
+Row fields: opening (verbatim; `[…]` = the source gives the result without printing the words) · picture · channel · seller · sector · year · door · beat · result ·
+outcome · measured_by · family · room · shelf · shelf2 · proves · fits (any / known brand only / unknown seller) · traits · why (`[mine]` = ours) · for_client · source ·
+url · read · strength · doubt · also; watched films also ad_id, beauty (1–5), clean (may the film be shown to anybody). Saved pages, books' text, films, frames and
 quotes stay on this machine, outside git: `~/.local/share/dxb/hook-lab/` (`el/<hand>/` per hand; `file` is relative to it).
-
-**On hold until he decides** (43 rows): 32 about insurance, retirement, stocks or banks; 11 with a political sender.
-**The labels were checked:** the lead labelled 40 random rows blind before the hands' labels came back: 37 the same shelf, 39
-the same or the neighbour, 37 the same proof label.
+**The labels were checked:** 40 random rows labelled blind by the lead: 37 the same shelf, 39 the same or the neighbour, 37 the same proof label; two viral rows laid beside their frames: exact.
 
 ## The winners themselves, watched (frames of the first 4 s, card, machine transcript; sound not heard)
-- **Meta: 286 of 288 looked at, 137 entered.** Video ads active 184+ days and high in their search's order by impressions,
-  16 in each of 18 sectors, out of 8,243 read. Left out: dull openings, slow logos, false deadlines, deceiving health claims,
-  immodest, alcohol. What it proves: somebody paid for it for that long; not how much, not the opening alone.
-- **TikTok: 183 looked at so far, 60 entered, 27 of them weak.** Highest spend tier, top 5 % by clicks, sales objectives, out
-  of 61,789 (`huggingface.co/datasets/liangyuch/ttcc-v0_2_0`, the US list of May 2026). The list is dirty: about two thirds
-  are resellers with taken films, false fronts, other languages or immodest. The rest of the 287 is downloading.
-- **Organic Shorts: chosen, downloading** — 288 English Shorts of real trades and brands that reached at least ten times their
-  own channel's median (1,198 found on 128 listed channels, 391 on trades found by search); to be watched.
-- **Upworthy's archive: 730 clear headline winners read** (same picture, same story, only the words changed), 150 reusable
-  shapes entered with a fill-in pattern. Counted by code over all 843: a line about "he/she" won 144 to 68, "I/my" 99 to 64;
-  a line that ends with "?" lost 29 to 64, one that opens with Why/How 12 to 28; "you" 132 to 139, a digit 99 to 77: nothing.
+- **Meta: 286 of 288 looked at, 137 entered.** Video ads active 184+ days and high in their search's order by impressions, 16 in each of 18 sectors, out of 8,243 read.
+- **TikTok ads: all 262 that could be had looked at, 78 entered, the weak ones (43) have left again.** Highest spend tier, top 5 % by clicks, out of 61,789 (`huggingface.co/datasets/liangyuch/ttcc-v0_2_0`). The list is dirty: resellers with taken films, false fronts, other languages, immodest.
+- **Viral Shorts: 248 looked at, 201 kept.** 288 chosen from real trades and brands at ten times their own median; **30 were bought views** (Zillow 20 million views with 0.03 % likes, Wix, Airbnb, Shopify, IKEA) and went out: below 0.3 % likes = paid, 0.3–0.5 % or hardly any comment = weak, out.
+- **Viral TikTok films: collecting** (`hook-lab/tt_org/chain.log`): about 730 accounts listed with views and likes (free, no login: `yt-dlp` on the profile; search by `opencli tiktok search`), at least ten times the account's median, 300,000 views and 2 % likes; about 400 to be watched.
+- **Upworthy's archive: 730 clear headline winners read**, 150 shapes entered. Counted over all 843: "he/she" won 144 to 68, "I/my" 99 to 64; a line ending in "?" lost 29 to 64, Why/How first 12 to 28.
+- **What the viral ones share in the first second** (six hands' own counts over 201): the thing or the work itself fills the frame in 124 of 201, a plain talking face in about one of five (35 of the 171 where it was counted); something is already moving or half done; a short plain label or no words at all; a question left open in the picture (will it hold, what is under it, what does it cost). A greeting: 2 named in 201.
+
+## What a reading model can pick (measured 2026-11-25)
+Opus 5.5 at medium, blind: **126 of 150** clear headline pairs of Upworthy's held-out file (84 %; when sure 14 of 14, when unsure 39 of 53) and **67 of 81** of our clean pairs it did not recognise (83 %). People: 45–52 %, the 38-rule model 65.1 %. **Limit:** the pairs are public and the winning headline is the one that was published, so part may be memory; the pairs are clear-cut ones. The scorer's bar is this, not 65.1 %, until it is measured on pairs no model has seen.
 
 ## Read, honestly
 Whole: Caples' *Tested Advertising Methods* (18,266 lines), both Hopkins books, Sugarman's handbook, Schwartz's
@@ -69,13 +68,10 @@ Hormozi's hook playbooks, Kane's books, *Great Leads*, *Million Dollar Mailings*
 9. **Winners wear out**: the library must be refreshed; `collect/` is the tried way.
 
 ## Corrections to the first scan (`../hook-evidence/`)
-- Dropped, sources not credible or not checkable: Hyperbeam (contrast, comparison), Advize, Galvor (start in the middle, acted problem), Haven, Scrptly, Kaufman, OpusClip, Ad Radar, GenSumo, 1of10, Realeyes, Mishra.
-- "Price first 1.53×" is per view, on winners only, with a third fewer views; Motion's 10.89 % is 71 of about 650 ads. Not a rule.
-- "As a dentist 3.16×", "If you… 1.29×", "words on screen 1.79×": small cells the same evidence contradicts; not proven.
+- Figures dropped, sources not credible or not checkable: Hyperbeam (contrast, comparison), Advize, Galvor (start in the middle, acted problem), Haven, Scrptly, Kaufman, OpusClip, Ad Radar, GenSumo, 1of10, Realeyes, Mishra. The methods behind them live or die by the methods' door: comparison is told by 13 trusted people, starting in the middle or leaving it unfinished by 27, the trouble shown by 20, and each has its own winners.
+- "Price first 1.53×", "As a dentist 3.16×", "If you… 1.29×", "words on screen 1.79×": small cells the same evidence contradicts; not used.
 - Meta's paper does not show that the first three seconds drive conversions; Teixeira, Tucker, Molina, Mishra and Packard were misread (`hands/bilimvideo.md` §4, `hands/bilimsoz.md` §4).
-- Brand in two seconds: memory for leaders, a cost in sales for small brands.
 
 ## Still running and next
-1. Shorts (`hook-lab/yt`) and the rest of TikTok watched, rows merged. 2. `pairs.jsonl`: every tested row with both wordings, for the scorer.
-3. The writer's rule: **no opening leaves the house without a parent row here.** The scorer (Fable 5.2 · high) trained on tested pairs; the bar stands in `../hook-evidence/README.md` §4.
-4. To buy or get with one click, his word needed (prices seen): Caples' *How to Make Your Advertising Make Money* (used from $1.53) and *Making Ads Pay* (used from $3.17), Schwab's book ($24.99), *Great Leads* ($10–15), *Million Dollar Mailings*, *Hook Point* and *The Guide to Going Viral*, *From Poop to Gold*, *Writing for Busy Readers*; Brunson's "108 Proven Split Test Winners" and MECLABS' swipe files ask for an e-mail address.
+1. Viral TikTok films: the list, then watched by hands (`hook-lab/WATCH-ORG.md`), sifted (`KUSUR.md`), labelled (`OZ.md`), merged. 2. `methods.jsonl` from the four hands (`hook-lab/METHOD.md`, `el/yon1–4`), weighed by the lead. 3. Sector cards (18): what won there, the five strongest to show a client, the methods of that trade's owners, what it depends on. 4. The rules card without its failures. 5. The writer's rule: **no opening leaves the house without a parent row or a method of the library.** The scorer (Fable 5.2 · high) after 28 November.
+6. To buy or get with one click, his word needed (prices seen): Caples' *How to Make Your Advertising Make Money* (used from $1.53) and *Making Ads Pay* ($3.17), Schwab's book ($24.99), *Great Leads* ($10–15), *Million Dollar Mailings*, *Hook Point* and *The Guide to Going Viral*, *From Poop to Gold*, *Writing for Busy Readers*; Brunson's "108 Proven Split Test Winners" and MECLABS' swipe files ask for an e-mail address.

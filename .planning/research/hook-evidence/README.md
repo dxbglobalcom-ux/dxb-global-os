@@ -1,6 +1,6 @@
 # What is proven about hooks — the FIRST SCAN (2026-11-25)
 
-**The deep round replaced this file the same day: `../hook-library/README.md`. Rows whose sources failed its truth check are gone from here (its "Corrections" names them).**
+**The deep round replaced this file the same day: `../hook-library/README.md`. Rows whose sources failed its truth check are gone from here (its "Corrections" names them).** **`experience.jsonl`** beside this file is the raw base of what about 190 experienced people tell (685 rows, 2026-11-25): evidence for the engineers, not library; a method enters the library only when many trusted people say it worked <!-- CEO-OK: hook-library-takes-experience-2026-11-25 -->.
 
 Ordered by the CEO on 2026-11-25 ("testleri yapılmış, gerçekten sonuç alınmış araştırmalara dayanarak … sistemi de
 kurulmalı … teorik kalmasın"). Five hands read (Opus 5.5 and Sonnet 5.5, medium); Opus 5.5 · high weighed. ChatGPT searched

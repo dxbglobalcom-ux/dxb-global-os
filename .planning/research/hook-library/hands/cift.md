@@ -1,0 +1,17 @@
+**Another agent's file needs a fix.** My script name in the shared scratchpad was overwritten by another hand's `w.py`, and I ran it twice without noticing. That appended 22 stale duplicates to `/home/dxb/.local/share/dxb/hook-lab/el/tta2/openings.jsonl`, which now has 33 lines for 11 ad_ids. Lines 1–11 are the good, already corrected rows; lines 12–33 should go. The script also rewrote `el/tta2/left_out.txt` with the list hard-coded in it. I left both untouched; that hand should check them.
+
+1. **Output:** `/home/dxb/.local/share/dxb/hook-lab/cift/pairs.jsonl`. I read all 445 rows and wrote **613 pairs**; every row has at least one. The check script found 0 unknown ids, missing fields or duplicate keys, and every line parses.
+2. **Sources:** I opened the saved source for most rows. For many of the Google/Snap/Pinterest, uzman and later klasik/caples rows I had only a narrow window or the row itself, so those rest on the row's reading.
+3. **Verbatim:** the loser is verbatim in 399 pairs and described in 214. **Both sides are verbatim in 393**; in 6 more the winner's words are nowhere printed.
+4. **only_words:** 381 pairs; 295 of them are verbatim on both sides.
+5. **Both values printed:** 348 pairs (some are "+2.9 points" or vague like "almost zero"). Verbatim both sides + only_words + both values = **196, the cleanest set**.
+6. **Significant:** yes 164, no 5, not said 444. Verbatim both sides + only_words + significant = 102.
+7. **Channels:** landing 168, print 105, email 88, other 82, letter 55, meta_ad 47, youtube_ad 22, envelope 18, sales_talk 10, short_organic 9, search_ad 3, tv 3, outdoor 2, tiktok_ad 1.
+8. **Channel corrected against the source:** abarsiv-020 (Twitter, now other), abarsiv-032 (Facebook, now meta_ad), abarsiv-041 (house-file e-mail, now email).
+9. **Extra arms:** where the source printed further arms of the same test, I added them as pairs; they are mostly "not said".
+10. **Rows that overstate their source:** abarsiv-030 was not randomised (same bar, two moments); -015 (form amounts), -050, -060, -126 changed more than words; -017 measures clicks and donors fell 4%; -038 is registrations, not opens; -024 contradicts itself on which copy won; -054's source names Hillsdale, not Harvest; -079's founder banner drew more gifts (327 v 262).
+11. **Labels, not words:** NextAfter often prints only a treatment label, so those losers are "described" (001, 002, 119, 120, 123, 132). Some "verbatim" entries are only the printed phrase, such as Activate/Enroll or Get/Order.
+12. **Same words, different picture or timing:** 10 pairs have identical winner and loser text (abarsiv-084, -112, chatgpt-009 ×3, bilimvideo-003, -004, -005 ×2, davranis-039). Drop them for a text-only scorer.
+13. **Same test under two ids; keep both in one split:** abarsiv-171/uzman-077, klasik-129/schwartz-035, klasik-131–134/schwartz-044, abarsiv-074/davranis-083, abarsiv-084/davranis-005/-016. abarsiv-073 and davranis-079 share a banner, with opposite roles.
+14. **Lower is better:** cost, missed-appointment, theft and calorie pairs have lift_pct null and say so in `metric`. "Three times as many" became 200. Haldeman-Julius retitles are before/after; klasik-032–046 compare different books.
+15. **Not settled:** davranis-050 and -093 exact N and rates (the row's figures stand); davranis-044 arm rates except the winner; abarsiv-113's metric (in an image); sugarman-029 (whether the printed headline is the one that won 20%); davranis-081, sugarman-056 and sugarman-060 have no counted rival.

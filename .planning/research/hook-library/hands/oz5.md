@@ -1,0 +1,3 @@
+All 284 rows are labelled in `/home/dxb/.local/share/dxb/hook-lab/el/oz5/traits.jsonl`; the labels are one reader's judgement and nobody has checked them.
+Check line: `in 284 traits 284 ids same True unique True bad 0` (`check.py` in the same folder; `w.py`, which holds the labels, is there too).
+Hard to label: nearly all organic films ask only for a view, so price is `free` and need is `attention` by the brief's "at that step" rule and tell you little; the close calls were service against learning or media where a tradesman teaches or jokes, `result_seen` on skits, and `price` by general knowledge on rows with no stated price (e.g. medicube, Olight, Purple, Rolls-Royce).

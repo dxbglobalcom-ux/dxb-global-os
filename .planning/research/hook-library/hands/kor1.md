@@ -1,0 +1,4 @@
+139 of 139 lines are written, in order, and counted with `wc -l`: `/home/dxb/.local/share/dxb/hook-lab/cift/blind/out_a.jsonl`. I read nothing else; a script only wrote down my own picks.
+I recognised 30 (p049, p092, p094-095, p101-108, p110-120, p122-125, p134, p136-137); p094 and p095 only half. Set to `known` false: p077-p083 (I recall only a general result, that first-name subject lines won) and faint memories of p050, p089-091, p096, p121 and p128.
+Sureness: level 3 on 29, level 2 on 62, level 1 on 48. Of the 109 I did not recognise, 1 is level 3, 60 level 2 and 48 level 1, so modest overall.
+Caution for scoring: one wording repeats across neighbouring lines (e.g. p011-013, p053-059, p063-066), so those lines are not independent. I noticed this and tried not to use it, but cannot rule out an influence.

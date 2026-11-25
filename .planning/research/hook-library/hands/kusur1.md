@@ -1,0 +1,6 @@
+Rows read: all 509 of `in.jsonl`, one by one from their own text; no source pages were opened. Verdicts are in `/home/dxb/.local/share/dxb/hook-lab/el/kusur1/verdict.jsonl`.
+Not clean, 70: uncertain 39, beaten 16, mixed 9, trouble 6. Clean: 439. My `append.py` and `check.py` also stand in the folder.
+Check: `in 509 verdict 509 same ids True same order True duplicates 0 bad shape 0 Counter({'clean': 439, 'uncertain': 39, 'beaten': 16, 'mixed': 9, 'trouble': 6})`
+Hardest 1: `o-klasik-084` (the Wall Street Journal letter) is kept clean although it was beaten after 28 years. The seven Caples pairs repeated until their "effectiveness wore out" (`o-caples-079`, `082`, `084`–`088`) are also kept clean, because a long run that ends is no failure. If "later beaten, retired" is meant literally, these eight turn false, and so does `o-caples-018` (run until unprofitable).
+Hardest 2: `o-caples-037`, `049` and `103`, and `o-hopkins-037`, `038` and `039`, are false because only words vouch for the win; other Caples and Hopkins rows with "no figure" stay clean where keyed orders, sales or repeated paid runs stand behind them.
+Hardest 3: `o-meta2-018`, `o-meta5-021`, `o-meta6-020` and `o-meta6-021` are false because the row itself suggests the ad may only have been left on; other seasonal or "limited time" Meta ads without that doubt stay clean.

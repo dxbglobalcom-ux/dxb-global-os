@@ -1,0 +1,5 @@
+I read all 169 rows in `/home/dxb/.local/share/dxb/hook-lab/el/kusur3/in.jsonl`: 152 are clean and 17 are not (trouble 9, uncertain 6, mixed 2).
+Check: `CHECK OK in 169 out 169 missing 0 extra 0 clean 152 {'trouble': 9, 'mixed': 2, 'uncertain': 6}`. It covers ids and fields, not the judgements.
+I kept as clean the Grammarly and monday.com ads (o-tec4-020…026), because KUSUR.md lists bought views as clean, and the films that open on another person's stitched clip (o-tec4-002, o-tec4-003, o-tec6-039; o-y4-004 by its own "stitch coming" caption), because the account's own film counts. If your lines "views bought" or "film is someone else's" reach them, turn these 11 to false.
+Hardest calls: o-y2-005 (false, 0.73% likes on 107M, "part may be pushed"), o-y6-034 (false, a customer's film on GoPro's account), o-tec5-011 (clean, the coin flyer: whole campaign, wording from memory).
+Like shares of 0.58–0.71% stayed clean where the doubt only states the figure (o-y1-014, o-y1-021, o-y3-018, o-y3-031). I judged from the row text only and did not watch the films.

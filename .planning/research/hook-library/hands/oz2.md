@@ -1,0 +1,5 @@
+All 319 rows of `/home/dxb/.local/share/dxb/hook-lab/el/oz2/` are labelled in `traits.jsonl`. My `w.py`, `check.py` and two text views (`v_128:192.txt`, `v_192:256.txt`) are still in the folder.
+Check (`python3 -I check.py`): `in 319 traits 319 unique 319 same ids True bad []`
+Price is the weakest key. 86 rows are `unknown`, and many of the other `cheap`/`mid`/`dear` labels come from the kind of product because the row shows no price (UNVERIFIED). Old US prices and book, magazine and newsletter subscriptions were mostly set to `cheap`.
+Hard calls: all books went to `learning`, with fiction, jokes and poems as `itself`. Magazines went to `media`, newsletters to `learning`, vaccine SMS (row 2) to `service`, and the flu letter (row 38) and diet slogans to `cause`. The 5-cent book titles are `impulse`.
+Uncertain: o-klasik-123 (seller not named; set to `service`), the trade letters o-klasik-101/114/115 (`result_seen` unclear), and mind-or-heart on `sense` for text-only fundraising and book titles. Opening and picture texts are cut short in the input, so some openings were judged on a fragment.

@@ -1,0 +1,5 @@
+All 319 rows are labelled in `/home/dxb/.local/share/dxb/hook-lab/el/oz1/traits.jsonl`; `add.py` and `check.py` are in the same folder.
+`check.py` line: `in 319 traits 319 unique 319 same_ids True missing [] extra [] bad []`. It proves ids and keys only; the labels are one reader's judgement.
+Price: `unknown` when the row gives no figure, except where the class is plain (surgery dear, a single book cheap); sample or guide requests are `free`. UNVERIFIED, from general knowledge: `o-abarsiv-087` mid, `o-chatgpt-010` dear, the litigation software (`o-abarsiv-109`, `110`) dear.
+Hard: taxes, fines, hygiene and survey replies went to `cause`/`giving`; `need` for e-mails measured by opens or clicks; `result_seen` for donations (`unseen`, or `later` where a child or a concrete effect is named); articles and videos are mostly `itself`.
+Weakest rows: `o-caples-063` (seller unnamed), `o-abarsiv-136` (offer unnamed), `o-bilimsoz-010` (a comment prompt), `o-bilimvideo-002` (six products pooled), `o-abarsiv-017` (broadcast CD), `o-davranis-014` and `039` (Post-it: `heart` or `eye`).

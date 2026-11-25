@@ -3,6 +3,8 @@
 usage: python3 -I merge.py <hook-lab folder> <out folder>
 A row enters only when its quote stands in the saved source text (the same rule the hands worked by).
 The quotes themselves stay in the hook-lab folder; the repository keeps the opening, its result and its address.
+What experienced people tell (kind `experience`) is not library yet: it is gathered in ../hook-evidence/experience.jsonl, and only a method
+that several trusted people say worked enters the library (methods.jsonl).
 """
 import collections
 import html
@@ -36,9 +38,9 @@ def text(p):
 
 
 counts = collections.Counter()
-out = {'openings': [], 'rules': []}
+out = {'openings': [], 'rules': [], 'experience': []}
 for hand in sorted(os.listdir(f'{LAB}/el')):
-    for kind in ('openings', 'rules'):
+    for kind in ('openings', 'rules', 'experience'):
         p = f'{LAB}/el/{hand}/{kind}.jsonl'
         if not os.path.exists(p):
             continue
@@ -58,23 +60,23 @@ for hand in sorted(os.listdir(f'{LAB}/el')):
                     break
             r.pop('quote', None)
             r['file'] = f.replace(LAB + '/', '')
-            r = {'id': f'{"o" if kind == "openings" else "r"}-{hand}-{n:03d}', **r}
+            r = {'id': f'{dict(openings="o", rules="r", experience="x")[kind]}-{hand}-{n:03d}', **r}
             out[kind].append(r)
 for kind, rows in out.items():
     seen, keep = {}, []
     for r in rows:
-        key = (norm(r.get('opening') or r.get('rule'))[:90], norm(r.get('result', ''))[:40], r.get('ad_id', ''))
+        key = (norm(r.get('who', '') + r['method'])[:90],) if kind == 'experience' else (norm(r.get('opening') or r.get('rule'))[:90], norm(r.get('result', ''))[:40], r.get('ad_id', ''))
         if key in seen:
             counts[f'{kind} repeated'] += 1
             seen[key].setdefault('also', []).append(r['id'])
             continue
         seen[key] = r
         keep.append(r)
-    with open(f'{OUT}/{kind}.jsonl', 'w') as f:
+    with open(f'{OUT}/../hook-evidence/{kind}.jsonl' if kind == 'experience' else f'{OUT}/{kind}.jsonl', 'w') as f:
         for r in keep:
             f.write(json.dumps(r, ensure_ascii=False) + '\n')
     out[kind] = keep
 o = out['openings']
-print('openings', len(o), 'rules', len(out['rules']), dict(counts))
+print('openings', len(o), 'rules', len(out['rules']), 'experience', len(out['experience']), dict(counts))
 for k in ('door', 'outcome', 'strength', 'channel', 'sector'):
     print(k, dict(collections.Counter(r.get(k) for r in o).most_common()))

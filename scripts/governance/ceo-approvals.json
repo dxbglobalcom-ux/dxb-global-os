@@ -3393,5 +3393,21 @@
     "conditions": "Built at B28's rank; nothing is built or installed now. The scorer sentence ended as a question; the lead answered yes with a bar, and the leg carries it as to be built.",
     "session": "Opus 5.5 session eae9dc30, heard first-hand, 2026-11-25.",
     "where": ".planning/board-rows/B28.md (leg 2026-11-25); .planning/research/hook-evidence/README.md"
+  },
+  "hook-library-takes-experience-2026-11-25": {
+    "date": "2026-11-25",
+    "what": "The hook library also takes EXPERIENCE: a method that really worked in their own work according to many trusted people, with who says it, where it held and a winner of the same kind beside it, marked as experience so that no client is told it was measured. Nothing that failed enters, not even what failed in the smallest part; the seven rows the deep round took out of the first scan come back only through this door, when many experiences say they worked. Rows about insurance, retirement, stocks and banks and rows with a political sender leave the library. The library holds the most successful, most earning examples so that the ad agency has them when it presents to clients; what works changes by sector, subject, product and video, and the worker picks by them (41 shelves); the aim is advertisements whose opening makes a person say wow.",
+    "verbatim": "\"Her şey kaynakta olmayabilir. Tecrübeyle … sabittir. Viral olmuş videolar neden viral oluyor? Yani oradaki şeyler önemli, hooklar önemli. Yani o kişilerin söylediği şeyler de önemli. … İlla kitapta yazmasına gerek yok yani. … Tecrübeye dayalı şeyleri de alıyoruz. Yani gerçekleşmiş tecrübeye dayalı vesaire.\" · \"O şeyler çıksın aynen. O önerim çıkmaları dediğin şeyler çıksın.\" · \"böyle en başarılı örnekler, en kazandırıcı örnekler zaten kütüphanede olması lazım. … Holdingimizin, reklam ajansının, iş, müşterileri sunacağı zaman hani kütüphanemizde bilgilerimiz olsun.\" · \"reklamları, videoları vesaire hook wow dedirtecek şekilde reklamlar yapmak. O da çok önemli yani. … Sektörden sektöre, konudan konuya, videodan videoya her şey değişebilir\" · (12:10, to the session that carries the job) \"Tutmayanları almıyoruz zaten ya. Bak sakın tutmamış hiçbir şey başarısız veya başarısızlığı en ufak şeyde olan bile sakın istemiyoruz. … ben sadece dedim ki tecrübeyle gerçekten tutmuş. Ya birçok tecrübe bunun tuttuğunu söylüyorsa o da girebilir. … Dörtle ilgili söylediğin güzel. 41 raf var.\"",
+    "conditions": "He is not the expert and is not asked to judge the library's contents (\"bunun bilgi araştırması, bilgisi falan hepsi sizde olmalı\"). Nothing is built or installed by this.",
+    "session": "Said in the old window of session 4d638f75 on 2026-11-25 at 12:00 local time (read at its source) and to the session that carries the job, 48475a1a (Opus 5.5), at about 12:10, heard first-hand.",
+    "where": ".planning/research/hook-library/ (README.md, experience.jsonl, decisions.json); .planning/board-rows/B28.md (leg 2026-11-25); .planning/research/hook-evidence/README.md"
+  },
+  "octen-into-the-research-engine-2026-11-25": {
+    "date": "2026-11-25",
+    "what": "The search API Octen (octen.ai) goes into the research engine, for the construction's sessions and for the holding; the account is opened on our behalf with his Google sign-in; a small trial is run.",
+    "verbatim": "\"Bunu bizim araştırma kafasına bir şey olarak sokabiliriz. Girişlerini yapsın, kayıtlarını yapsın. Hem inşaat esnasında hem de holdingde de dursun. … Bir de küçük bir denettirme yaptırabilirsin. Kaydı yaptırsınlar. Yapsınlar bizim adımıza. İstiyorlarsa Google zaten Google Mail'imle giriş yapabilirler. Kayıt yapabilirler.\"",
+    "conditions": "No card and no spending beyond the free $5 without his word. Trial of the same day: weakest of four doors (122 of 200; exa 183, youcom 166, parallel 146), so it stands as the spare door.",
+    "session": "Opus 5.5 session 48475a1a — heard first-hand, 2026-11-25.",
+    "where": ".claude/skills/dxb-research (mcpx.sh, SKILL.md); .planning/board-rows/B30.md (leg 2026-11-25)"
   }
 }

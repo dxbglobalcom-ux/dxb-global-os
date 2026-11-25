@@ -1,0 +1,4 @@
+All 61 rows are labelled in `/home/dxb/.local/share/dxb/hook-lab/el/raf5/shelf.jsonl`. Checker: `rows wanted 61 labelled 61 missing 0 extra 0 bad 0`; words 5, whole 50, brand 6; any 44, known 16, new 1; no flags.
+Biggest shelves: joke 7, spectacle 5, trouble 5, before_after 4, customer 4, call_out 4. Two TEST rows do not say the rest was the same, so I judged (both noted): `o-tec5-001` `whole` (two letters met), `o-tec5-006` `words` (rival named only by its picture).
+Poor fit: `o-tec1-008` (a word given a kinder meaning; put on objection). Hard borders: `o-tec1-003` odd_fact/borrowed, `o-tec1-013` objection/offer, `o-tec4-011` mistake/warning, `o-tec4-028` odd_detail/insider, `o-tec4-020` call_out/wish.
+Judged from the row text only, no films opened; picture not seen by its own recorder in `o-tec3-001`, `-002`, `-005`, `o-tec4-029`. Rows were written in one batch at the end, not every 20–25.

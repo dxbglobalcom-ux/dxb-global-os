@@ -1,0 +1,5 @@
+All 316 rows are labelled in `/home/dxb/.local/share/dxb/hook-lab/el/oz4/traits.jsonl`, each judged by reading the row.
+Check (`python3 -I /home/dxb/.local/share/dxb/hook-lab/el/oz4/check.py`): `in 316 out 316 dup 0 missing [] extra [] bad [] OK`
+- **Unnamed sellers, weakest labels:** in sugarman-067, 068, 075, 078, 079, 080, 081 and 090, and in uzman-020, 072 and 077, `sells` or `result_seen` is an inference from the headline. Where a price is not in the row, I filled `price` by product class, or used `unknown`; treat those prices as UNVERIFIED.
+- **One rule for Upworthy and creators' own videos:** all are media / free / attention. `result_seen` is `itself` for something to watch or hear and `unseen` for a fact, story or advice; creators' growth and how-to videos are mostly `later`. Mind against heart was the closest call.
+- **Gaps in the keys:** there is no key for smell, so sugarman-085 is `mind`, and tta4-007 and uzman-086 are `heart`. Gift items are `impulse`, because `giving` means donation; uzman-073 is the only `giving` row. `price` was also unclear for uzman-008 and tta3-006.
