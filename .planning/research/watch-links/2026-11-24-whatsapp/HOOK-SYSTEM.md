@@ -84,7 +84,7 @@ impressive part is the audio." General template: *"If you want X, don't do Y, do
 ("if you want better sleep, you need to be taking magnesium"); **cult hopping** — wrap the unknown in a known brand,
 person or movement; first value within ~4 s; staccato sentences up front, longer later.
 
-### 2.2 The visual first-second hook — for every video, and the strongest for ads [LINK ha-001] [LINK dm-011]
+### 2.2 The visual first-second hook — one family among others (proof: `.planning/research/hook-evidence/README.md`) [LINK ha-001] [LINK dm-011]
 
 The reel opens on an event already in motion and **cuts before it resolves**; the brain "needs to see how it ends".
 Erika's types, each with her one-line reason (transcripts v01–v12):
@@ -394,8 +394,8 @@ result. **Nothing is built until B28's rank; the first run below costs nothing.*
 |---|---|---|---|
 | 1 | **Research** (social-media researcher) | 10–15 reference videos/ads with their numbers; the teardown | sources recorded |
 | 2 | **Decode** (strategist) | each reference as a template: hook family, four channels, beats with seconds, CTA | the template carries beats, channels and CTA |
-| 3 | **Write** (copywriter, `hook-writer`) | for one idea: **50 hooks, 40 remakes of proven winners (ours first), 10 new** [HELD: Hormozi §3]; each with spoken line, on-screen line (≤6 words), visual, caption opener | lint: the pack's dealbreakers + Kallaway's three parts + reading level; every claim backed by a proof-ledger row [#31]; halal and compliance screen (no fake review, no invented urgency, no deception) |
-| 4 | **Pick** (strategist) | 3–5 hooks × 1–3 bodies × 1–2 CTAs to make | belief brief answered; the bridge line present |
+| 3 | **Write** (copywriter, `hook-writer`) | for one idea: **50 hooks from the proven shelf (`hook-evidence/README.md` §1), the sector's running winners and, once we have them, ours; the share of new ones set by results** [HELD: Hormozi §3 gives 40/10 for a seller with years of winners]; each with spoken line, on-screen line (≤6 words), visual, caption opener | lint: the pack's dealbreakers + Kallaway's three parts + reading level; every claim backed by a proof-ledger row [#31]; halal and compliance screen (no fake review, no invented urgency, no deception) |
+| 4 | **Pick** (strategist) | hooks × bodies × CTAs to make; the count from the budget and the win rate (`hook-evidence/README.md` §2.6) | belief brief answered; the bridge line present |
 | 5 | **Make** (studio) | the videos; visual hooks generated on our engine with the §2.2 prompt pattern; draft first, upscale after acceptance (Law D) | the ten-item pre-publish check and contact sheet [B28 leg 2026-11-18]; the CEO's eye on client work |
 | 6 | **Publish** (social-media/paid-media worker) | organic: same platform, same slot, a day apart; trial reels where offered. Ads: paused drafts, launched on approval | publishing accounts and spend stop at him |
 | 7 | **Measure** (`short-postmortem`, `ad-winner-read`) | at 24 h, 48 h and 7 days: §5 numbers; verdict or "too few to say" | sample-size table §5.3 |

@@ -1,0 +1,47 @@
+CONF packages kept 85699 dropped window 19852 same-image groups 9936 headline arms 43431 impr 156542012 clicks 1824816
+  between-headline true SD of log CTR within same story+image: tau=0.254  E[max of 4]=+29.9%  best vs worst of 4: 1.69x
+EXP+HOLD packages kept 36683 dropped window 8582 same-image groups 4200 headline arms 18335 impr 66169909 clicks 752306
+  between-headline true SD of log CTR within same story+image: tau=0.255  E[max of 4]=+30.0%  best vs worst of 4: 1.69x
+feature                                       n  effect%       lo       hi |     n2    eff2%       z2
+she/her                                    1444    +12.4     +9.4    +15.4 |    638    +11.0     +7.1
+until/then/turns out                       1059    +11.4     +8.2    +14.6 |    441    +11.4     +6.4
+you won't believe / wait till                88    +10.4     -0.6    +22.5 |     49    +13.3     +2.0
+surprise/shock words                        565    +10.1     +5.9    +14.4 |    200    +11.4     +4.6
+video/photo/picture                         937     +9.7     +6.4    +13.2 |    393    +11.1     +5.6
+he/his/him                                 1992     +9.3     +6.9    +11.7 |    785    +11.2     +7.6
+a woman/man/girl/boy/guy/kid/mom/dad       2486     +9.0     +6.9    +11.1 |   1078     +7.2     +6.1
+watch/see/look                             2578     +8.2     +6.2    +10.2 |   1149     +9.0     +8.0
+never                                       700     +7.0     +3.3    +10.9 |    285     +6.4     +2.7
+secret/truth/real reason                   1106     +6.8     +3.7     +9.9 |    460     +5.5     +3.1
+this/these                                 5043     +6.6     +5.2     +8.1 |   2090     +5.6     +6.9
+what happened/happens (next)                511     +6.3     +1.9    +10.8 |    244    +14.7     +5.6
+superlative most/best/worst/ever           1985     +6.2     +3.9     +8.5 |    882     +5.8     +4.5
+has a digit                                3330     +6.1     +4.3     +7.9 |   1388     +7.6     +7.2
+I/my/me                                    3178     +5.6     +3.8     +7.4 |   1309     +5.3     +4.9
+starts If you / When you                    854     +4.6     +1.0     +8.3 |    350     +4.6     +2.3
+here's/here                                1961     +3.7     +1.4     +6.1 |    805     +6.1     +4.3
+starts with digit                           979     +3.3     -0.0     +6.6 |    451     +3.1     +1.8
+negative word                              3697     +3.2     +1.6     +4.8 |   1536     +4.3     +4.5
+but (twist)                                3492     +2.2     +0.5     +3.8 |   1475     +4.0     +4.1
+starts with If                             1268     +1.4     -1.4     +4.3 |    511     +1.3     +0.8
+you/your                                   5037     +0.4     -0.9     +1.8 |   2159     +0.7     +0.9
+two or more sentences                      6393     +0.1     -1.1     +1.3 |   2696     +0.3     +0.4
+just / only                                2236     -0.0     -2.1     +2.1 |    984     +2.1     +1.7
+positive word                              3456     -0.2     -1.8     +1.4 |   1497     -1.1     -1.2
+don't/stop/can't                           2247     -0.6     -2.6     +1.5 |    928     +0.8     +0.6
+parenthesis                                 525     -0.6     -4.8     +3.8 |    246     -4.0     -1.7
+why                                        1924     -2.7     -4.9     -0.4 |    851     +0.2     +0.2
+ellipsis ...                                937     -2.8     -5.9     +0.4 |    397     -2.0     -1.0
+quote marks                                1833     -3.2     -5.4     -1.0 |    783     -4.0     -3.0
+how                                        2478     -3.7     -5.6     -1.8 |   1106     -3.9     -3.5
+we/our/us                                  2339     -4.9     -6.8     -2.9 |   1025     -5.2     -4.4
+all-caps word (4+)                          851     -5.2     -8.1     -2.1 |    337     -5.1     -2.4
+colon                                      1308     -6.2     -8.6     -3.7 |    560     -9.3     -6.0
+money ($/dollar)                            283     -7.3    -12.6     -1.6 |    104     -8.2     -2.1
+percent                                     231     -7.3    -13.7     -0.6 |    103     -3.9     -1.0
+!                                           762     -8.2    -11.5     -4.9 |    306    -13.7     -6.4
+starts with How                             842     -9.1    -12.3     -5.8 |    374    -11.2     -5.9
+contains ?                                 4230     -9.2    -10.5     -7.8 |   1826    -10.2    -11.8
+ends with ?                                2538    -10.8    -12.6     -9.0 |   1154    -13.2    -12.1
+longest vs shortest by chars 5681 7.1% CI99 5.3..8.8
+longest vs shortest by words 6773 7.5% CI99 5.9..9.1
