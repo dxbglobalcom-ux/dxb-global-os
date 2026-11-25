@@ -63,7 +63,7 @@ for hand in sorted(os.listdir(f'{LAB}/el')):
 for kind, rows in out.items():
     seen, keep = {}, []
     for r in rows:
-        key = (norm(r.get('opening') or r.get('rule'))[:90], norm(r.get('result', ''))[:40])
+        key = (norm(r.get('opening') or r.get('rule'))[:90], norm(r.get('result', ''))[:40], r.get('ad_id', ''))
         if key in seen:
             counts[f'{kind} repeated'] += 1
             seen[key].setdefault('also', []).append(r['id'])

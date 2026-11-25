@@ -1,0 +1,66 @@
+health_dental	dentist
+health_dental	dental implants
+health_dental	invisalign
+health_dental	hearing aids
+health_dental	physical therapy
+health_dental	eye clinic
+food	restaurant
+food	olive oil
+food	meal delivery
+food	coffee
+food	bakery
+home_furniture	sofa
+home_furniture	mattress
+home_furniture	dining table
+home_furniture	rug
+home_services	roofing
+home_services	plumber
+home_services	gutter guard
+home_services	window replacement
+home_services	kitchen remodel
+home_services	carpet cleaning
+home_services	hvac
+home_services	solar panels
+home_services	lawn care
+beauty	skincare
+beauty	hair growth
+beauty	perfume
+fashion	men's shirts
+fashion	shoes
+fashion	watch
+fashion	wallet
+software	project management software
+software	accounting software
+software	crm
+software	website builder
+software	ai tool
+education_books	online course
+education_books	learn english
+education_books	math tutoring
+education_books	children's book
+toys_family	toys for kids
+toys_family	baby sleep
+automotive	car detailing
+automotive	car wash
+automotive	tires
+travel	tours
+travel	luggage
+fitness	personal trainer
+fitness	gym
+fitness	walking shoes
+pets	dog food
+pets	dog training
+pets	cat litter
+b2b	payroll
+b2b	packaging
+b2b	commercial cleaning
+real_estate	homes for sale
+real_estate	property management
+gadgets	kitchen gadget
+gadgets	flashlight
+gadgets	phone case
+charity	donate water
+charity	sponsor a child
+local_shop	jewelry store
+local_shop	optician
+local_shop	garden center
