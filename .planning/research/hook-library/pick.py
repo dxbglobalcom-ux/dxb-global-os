@@ -11,6 +11,7 @@ usage: python3 -I pick.py --for film|text|mail|page|any [--role sell|click|seen|
   --sells, --price, --result, --need   what KIND of thing the client sells: winners that sold the same kind of thing come first
   --known  no = the client is a seller nobody knows yet: rows that live on a famous brand, face or song are left out
   --order  the client's name: among rows that fit nearly as well, each client draws others, so that two clients of one trade do not start from the same parents
+A third of the list is the trade's own winners, when it has them; for the roles seen and followers the size of the win counts.
 With --role, rows that really did that job come first and fill at least two thirds of the list; the rest is there for its power to stop people. A trade with fewer than
 five films of that role also gets up to four of its own winners in print, letters and pages at the end of the list.
 Every line carries the row id: the writer names it as the parent of what is written.
@@ -19,6 +20,7 @@ import argparse
 import collections
 import hashlib
 import json
+import math
 import os
 import re
 
@@ -31,12 +33,25 @@ PROOF, HARD = {'words': 3, 'whole': 2, 'brand': 1}, {'solid': 2, 'usable': 1, 'w
 WORD = {'sell': 'SOLD', 'paid': 'ITS OWNER KEPT PAYING FOR IT TO SELL', 'click': 'GOT THE CLICK', 'seen': 'WAS SEEN (unpaid)', 'followers': 'MADE THE ACCOUNT GROW', 'known': 'WAS REMEMBERED'}
 
 
+def size(r):
+    """how large the unpaid win was, 0 to 3: the views and the times over the account's own median, in equal parts (a large account's 20 times and a tiny one's 9,000 times both count)"""
+    v = re.search(r'([\d.,]+) views', r['result'])
+    t = re.search(r'([\d.]+) times|= ?([\d.]+) times|times the[^=]*= ([\d.]+)', r['result'])
+    if r['door'] != 'TENFOLD' or not v:
+        return 0
+    views = float(v.group(1).replace(',', '') or 0)
+    times = float(next((g for g in t.groups() if g), '10')) if t else 10
+    return max(0, min(3, 0.5 * math.log10(max(times, 1)) + 0.5 * math.log10(max(views / 1e5, 1))))
+
+
 def score(r, a):
     s = PROOF.get(r.get('proves'), 1) * 1.2 + HARD.get(r.get('strength'), 1) + r.get('beauty', 3) * 0.4
+    s += 0.7 * size(r) if 'seen' in a.role or 'followers' in a.role else 0
     if a.sector:
         s += 2.5 if r['sector'] in a.sector else 1.0 if any(r['sector'] in g and set(a.sector) & g for g in NEAR) else 0
     if a.role:
         s += 2.0 if set(r.get('role') or []) & set(a.role) else 0
+        s += 1.0 if 'sell' in a.role and 'sell' in (r.get('role') or []) and not paid(r) else 0   # published sales come before 'its owner kept paying'
     s += 1.4 if a.sells and r.get('sells') in a.sells else 0
     s += 1.2 if a.result and r.get('result_seen') in a.result else 0
     s += 0.9 if a.need and r.get('need') in a.need else 0
@@ -44,16 +59,20 @@ def score(r, a):
     if a.known == 'no' and r.get('fits') == 'new':
         s += 0.8
     if a.order:
-        s += (1.2 if r['sector'] in a.sector else 3.0) * int(hashlib.sha256(f"{a.order}|{r['id']}".encode()).hexdigest()[:6], 16) / 0xFFFFFF
+        s += (0.8 if r['sector'] in a.sector else 1.8) * int(hashlib.sha256(f"{a.order}|{r['id']}".encode()).hexdigest()[:6], 16) / 0xFFFFFF
     if r['channel'] in ('tiktok_ad', 'meta_ad', 'youtube_ad', 'short_organic'):
         s += 0.8 if a.kind == 'film' else 0
     return s
 
 
+def paid(r):
+    """a running time or a spend tier proves that the owner kept paying, not how much was sold"""
+    return r['door'] == 'MONEY' and bool(re.match(r'(Meta Ad Library|TikTok Creative Center)', r.get('measured_by', '')))
+
+
 def did(r):
-    """the roles in words; a running time or a spend tier proves that the owner kept paying, not how much was sold"""
-    paid = r['door'] == 'MONEY' and re.match(r'(Meta Ad Library|TikTok Creative Center)', r.get('measured_by', ''))
-    return ' + '.join(WORD['paid' if x == 'sell' and paid else x] for x in r.get('role') or [])
+    """the roles in words"""
+    return ' + '.join(WORD['paid' if x == 'sell' and paid(r) else x] for x in r.get('role') or [])
 
 
 p = argparse.ArgumentParser()
@@ -82,11 +101,12 @@ L.sort(key=lambda x: -x[0])
 shelf, seller, out = collections.Counter(), collections.Counter(), []
 ROLE = set(a.role)
 BOTH = [[x for x in L if ROLE & set(x[1].get('role') or [])], [x for x in L if not ROLE & set(x[1].get('role') or [])]] if ROLE else [L]
-for part, room_for in zip(BOTH, (a.n - a.n // 3 if ROLE else a.n, a.n)):
+OWN = [x for x in BOTH[0] if x[1]['sector'] in a.sector] if a.sector else []
+for part, room_for in zip([OWN] + BOTH, [a.n // 3] + ([a.n - a.n // 3, a.n] if ROLE else [a.n])):
     for s, r in part:
         if len(out) >= room_for:
             break
-        if shelf[r['shelf']] >= a.per or seller[r['seller'][:14]] >= 1:
+        if shelf[r['shelf']] >= a.per or seller[r['seller'][:14]] >= 1 or r in out:
             continue
         shelf[r['shelf']] += 1
         seller[r['seller'][:14]] += 1

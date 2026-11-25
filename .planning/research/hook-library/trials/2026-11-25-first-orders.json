@@ -1,0 +1,2160 @@
+{
+"what": "Openings written for two real clients (not ours) by writers with and without the library, judged blind by three Opus 5.5 hands at medium; every hand was Opus 5.5 at medium, the lead Opus 5.5 at max. Model eyes, not the market.",
+"round1_sofa_sell_and_seen": {
+"client": "Long Eaton Sofas, Long Eaton (near Nottingham), England. A family firm since 1988: the father John, his wife Aileen and their four sons Chris, Peter, Michael and Tom. Every frame is built in their own wood mill from kiln-dried beech or birch (30-year guarantee on the frame); one upholsterer makes each sofa from the first tack to the last and signs it by hand when it is finished; the sewing machinists have been there since the first year; any size, thousands of fabrics; a seat that needs no plumping; sold straight from the factory from GBP 1,349. Outside its region hardly anybody knows it. THE ORDER: short films for Instagram, Facebook and TikTok that bring people to book a visit to the showroom; a second aim is to be seen widely for nothing.",
+"sources": [
+"https://longeatonsofas.com/family-business",
+"https://longeatonsofas.com/story",
+"https://longeatonsofas.com/sofa-manufacturers"
+],
+"openings": [
+{
+"writer": "lead, whole library known",
+"id": "s01",
+"role": "sell",
+"seen": "0 s: a bare wooden sofa frame, no springs, no cloth, alone on a factory floor; four grown men in work aprons already in the air above it. 1 s: all four land on it at once, dust, a crack of boots on wood. 2-3 s: silence. The frame has not moved. An old man with a clipboard walks round it, looks under it, and says one word.",
+"heard": "(boots, then silence) The old man: \"Again.\"",
+"screen": "Our dad gives 30 years on this frame. So he makes all four of us do this.",
+"parents": [
+"o-uzman-069",
+"o-klasik-158",
+"m-008"
+],
+"verdicts": {
+"best": 3,
+"worst": 0,
+"ordinary": 0,
+"hard": 1
+}
+},
+{
+"writer": "lead, whole library known",
+"id": "s02",
+"role": "seen",
+"seen": "0 s: close, a faded sofa lies on its back on a bench; a claw bites, a strip of black cloth tears off the underside in one long pull. 1 s: on the pale wood under it, in pencil, a man's name and '14.3.1994'. 2-3 s: the camera rises: the old man holding the claw reads it over his glasses. It is his own name.",
+"heard": "(the tearing cloth, then nothing)",
+"screen": "This sofa came back to us after 32 years. / Look who signed it.",
+"parents": [
+"o-to1-025",
+"o-to7-002",
+"m-032"
+],
+"verdicts": {
+"best": 3,
+"worst": 0,
+"ordinary": 0,
+"hard": 2
+}
+},
+{
+"writer": "lead, whole library known",
+"id": "s03",
+"role": "sell",
+"seen": "0 s: the camera lies on a living-room floor before an ordinary grey sofa; a hand comes in and lifts its left front foot a hand's width. 1 s: the camera slides along the floor to the right foot: it still stands on the floor; the front rail bends like a bow. 2-3 s: same move, another sofa, a bare workshop floor: the left foot goes up and the right one goes up with it, level.",
+"heard": "\"What's a super easy way to know your sofa is giving up? Lift one foot.\"",
+"screen": "LIFT ONE FOOT",
+"parents": [
+"o-tec4-031",
+"o-uzman-001",
+"m-008"
+],
+"verdicts": {
+"best": 3,
+"worst": 0,
+"ordinary": 0,
+"hard": 0
+}
+},
+{
+"writer": "lead, whole library known",
+"id": "s04",
+"role": "sell",
+"seen": "0 s: a finished sofa on a factory floor; on its seat a fan of notes and a card '£1,499'. 1 s: a hand with sawdust in its creases comes in and takes five notes from one end. 2 s: the hand is gone; the thick rest lies there. 3 s: the hand comes back, turns the card over: '£1,349, from us'.",
+"heard": "\"You pay fourteen hundred and ninety-nine for a sofa in a shop. This is what the man who made it may get.\"",
+"screen": "£499",
+"parents": [
+"o-hopkins-036",
+"o-sugarman-019",
+"o-mb2-007"
+],
+"verdicts": {
+"best": 1,
+"worst": 2,
+"ordinary": 0,
+"hard": 1
+}
+},
+{
+"writer": "lead, whole library known",
+"id": "s05",
+"role": "seen",
+"seen": "0 s: side view in a workshop among bare frames; a very tall man sits bolt upright on an upturned crate, staring ahead; a craftsman lays a worn wooden caliper from the back of his knee to the base of his spine, eyes narrowed. 1 s: he reads it, chalks a line on a beech plank. 2-3 s: the caliper goes from heel to knee; the saw starts on the chalk line.",
+"heard": "(no speech: caliper, chalk, saw)",
+"screen": "(nothing)",
+"parents": [
+"o-to7-002",
+"m-025"
+],
+"verdicts": {
+"best": 0,
+"worst": 3,
+"ordinary": 1,
+"hard": 0
+}
+},
+{
+"writer": "lead, whole library known",
+"id": "s06",
+"role": "sell",
+"seen": "0 s: an upholsterer with his mouth full of pins leans over the back of a sofa, very near the lens. 0-2 s: takes the pins out, looks at us, half a smile. 2 s: in one heave he rolls the sofa on its back; its wooden underside fills the picture. 3 s: silence; his finger goes to a signature on it.",
+"heard": "\"I've watched a lot of sofa adverts lately, and not one of them turns the sofa over.\"",
+"screen": "not one of them turns the sofa over",
+"parents": [
+"o-mb2-009",
+"o-meta2-001"
+],
+"verdicts": {
+"best": 0,
+"worst": 0,
+"ordinary": 0,
+"hard": 0
+}
+},
+{
+"writer": "lead, whole library known",
+"id": "s08",
+"role": "sell",
+"seen": "0 s: eye level with a sofa cushion; a blacksmith's anvil stands on it, sunk deep. 0.3 s: two hands lift the anvil out of the picture. 0.5-2 s: nobody touches it: the crater fills itself, the last crease snaps flat. 2-3 s: a hand comes in to plump it, stops in the air, and goes away again.",
+"heard": "(no speech: the cushion breathes in)",
+"screen": "Nobody plumps this one.",
+"parents": [
+"o-meta2-005",
+"m-103",
+"m-015"
+],
+"verdicts": {
+"best": 0,
+"worst": 1,
+"ordinary": 3,
+"hard": 1
+}
+},
+{
+"writer": "lead, whole library known",
+"id": "s09",
+"role": "seen",
+"seen": "0 s: very close, a needle hammers through thick mustard velvet at full speed, the cloth runs under two older hands. 1 s: the hands stop dead; needle up; silence. 2-3 s: the woman looks up over her glasses and says a number, as if it were nothing.",
+"heard": "(machine, then silence) \"Eleven thousand, four hundred and two.\"",
+"screen": "She started the day we opened. 1988. Today she counted.",
+"parents": [
+"o-sek3-015",
+"o-to7-002",
+"m-025"
+],
+"verdicts": {
+"best": 0,
+"worst": 0,
+"ordinary": 0,
+"hard": 0
+}
+},
+{
+"writer": "lead, whole library known",
+"id": "s11",
+"role": "seen",
+"seen": "One fixed phone shot from behind a sofa in a showroom: an old man in a tie stands at the glass door, hands behind his back, looking at the wet car park. He does not know he is filmed. The lines stand there from the first frame.",
+"heard": "(rain on the glass)",
+"screen": "It's Tuesday, two o'clock. My dad has opened this door to every customer himself since 1988. He says sitting down is for customers.",
+"parents": [
+"o-ad5-008",
+"o-ad5-005",
+"o-sek3-015"
+],
+"verdicts": {
+"best": 3,
+"worst": 0,
+"ordinary": 3,
+"hard": 0
+}
+},
+{
+"writer": "lead, whole library known",
+"id": "s12",
+"role": "seen",
+"seen": "0 s: three different sofas in a row; an old upholsterer, blindfolded, runs both hands along the arm of the first one. 1 s: shakes his head, gropes to the next. 2-3 s: his hand goes under the front rail, stops; he laughs.",
+"heard": "(hands on cloth) \"That one's mine.\"",
+"screen": "He made one of these three. In 2009.",
+"parents": [
+"o-tec6-021",
+"o-to10-009"
+],
+"verdicts": {
+"best": 1,
+"worst": 0,
+"ordinary": 0,
+"hard": 0
+}
+},
+{
+"writer": "hand, library first (pick list + rule card)",
+"id": "l01",
+"role": "sell",
+"seen": "0 s: a sofa alone on the factory floor: one third finished in deep green velvet, two thirds naked beech. 1 s: a brother sits on the velvet, pats the empty frame beside him. 2-3 s: his hand falls through it to the floor.",
+"heard": "Pay £1,499 in a shop, and this much may reach the firm that made it.",
+"screen": "Over the whole: £1,499. Over the velvet: £499",
+"parents": [
+"o-satan-045",
+"o-meta3-012",
+"m-046"
+],
+"verdicts": {
+"best": 0,
+"worst": 3,
+"ordinary": 0,
+"hard": 3
+}
+},
+{
+"writer": "hand, library first (pick list + rule card)",
+"id": "l02",
+"role": "sell",
+"seen": "0 s: a sofa's front foot hovers a hand above a newspaper, nobody near it. 1 s: a child's hand whips the paper out from under it. 2-3 s: pull back: one brother holds only the OTHER front corner up, one-handed.",
+"heard": "Lift one front corner of yours. If the other front foot stays down, the frame's twisting.",
+"screen": "Try it tonight",
+"parents": [
+"m-008",
+"o-tec4-031"
+],
+"verdicts": {
+"best": 0,
+"worst": 1,
+"ordinary": 0,
+"hard": 0
+}
+},
+{
+"writer": "hand, library first (pick list + rule card)",
+"id": "l03",
+"role": "sell",
+"seen": "0 s: a handsaw is already through the velvet of a finished sofa, sawdust spraying. 1 s: the last rail cracks. 2-3 s: two men pull the halves apart: beech, dowels, webbing, springs, cushion, like a cut cake.",
+"heard": "Ask a shop to do this before you pay.",
+"screen": "We sawed one in half",
+"parents": [
+"m-009",
+"o-meta2-001"
+],
+"verdicts": {
+"best": 1,
+"worst": 0,
+"ordinary": 3,
+"hard": 0
+}
+},
+{
+"writer": "hand, library first (pick list + rule card)",
+"id": "l04",
+"role": "sell",
+"seen": "0 s: eight socked feet squeezed on ONE seat cushion; camera at cushion height. 0.8 s: four grown brothers, arms locked, jump off backwards. 1-3 s: nobody in frame; the deep hollow closes by itself, unbroken shot.",
+"heard": "Off! (then silence)",
+"screen": "Four brothers. No plumping.",
+"parents": [
+"m-015",
+"o-tta3-011"
+],
+"verdicts": {
+"best": 0,
+"worst": 2,
+"ordinary": 2,
+"hard": 3
+}
+},
+{
+"writer": "hand, library first (pick list + rule card)",
+"id": "l05",
+"role": "sell",
+"seen": "0 s: low on the floor: the gap between a sofa and the wall, a hand groping in it for a remote. 1 s: hard cut, same wall, same light: a sofa glides in. 2-3 s: both arms meet both walls together, shutting out the last light.",
+"heard": "Shops sell widths. Give us your wall.",
+"screen": "Made [true width] mm wide",
+"parents": [
+"m-012",
+"m-046"
+],
+"verdicts": {
+"best": 0,
+"worst": 0,
+"ordinary": 2,
+"hard": 0
+}
+},
+{
+"writer": "hand, library first (pick list + rule card)",
+"id": "l06",
+"role": "seen",
+"seen": "0 s: a pheasant without a head, printed across half a sofa. 0.5 s: a hand slides the next cushion in, slowly. 2 s: beak, eye and neck arrive and join. 3 s: a fingertip hunts for the seam and runs straight over it.",
+"heard": "(cloth sliding on cloth, one soft thud)",
+"screen": "Cut by hand. Find the join.",
+"parents": [
+"o-y4-005",
+"m-033"
+],
+"verdicts": {
+"best": 0,
+"worst": 1,
+"ordinary": 1,
+"hard": 0
+}
+},
+{
+"writer": "hand, library first (pick list + rule card)",
+"id": "l07",
+"role": "seen",
+"seen": "0 s: a naked beech skeleton alone, locked camera. 0.2 s: webbing lashes itself across. 0.6 s: springs stand up like a crowd. 1.2 s: wadding swells. 2 s: cloth wraps the arms, tacks march along the edge. 3 s: a signature writes itself.",
+"heard": "(one real workshop sound per step)",
+"screen": "One upholsterer, first tack to last",
+"parents": [
+"m-103",
+"o-meta2-005"
+],
+"verdicts": {
+"best": 0,
+"worst": 2,
+"ordinary": 3,
+"hard": 3
+}
+},
+{
+"writer": "hand, library first (pick list + rule card)",
+"id": "l08",
+"role": "seen",
+"seen": "0 s: a knife opens the arm of a faded, worn sofa. 1 s: an old upholsterer rips the cloth away in one pull, dust in the light. 2-3 s: a name in old ink on it; he writes his own beside it: the same hand.",
+"heard": "I've not seen you since you left.",
+"screen": "He found his own signature",
+"parents": [
+"o-to1-025"
+],
+"verdicts": {
+"best": 0,
+"worst": 0,
+"ordinary": 1,
+"hard": 2
+}
+},
+{
+"writer": "hand, library first (pick list + rule card)",
+"id": "l09",
+"role": "seen",
+"seen": "0 s: a finished sofa hangs in mid-air from one strap round one arm, slowly turning. 1 s: the father below, well clear, looks up, winces at a groan of the strap. 2-3 s: the chain gives a jolt; everything swings.",
+"heard": "Higher.",
+"screen": "30-year guarantee. Day one.",
+"parents": [
+"o-to9-002",
+"o-meta2-001"
+],
+"verdicts": {
+"best": 0,
+"worst": 3,
+"ordinary": 0,
+"hard": 3
+}
+},
+{
+"writer": "hand, library first (pick list + rule card)",
+"id": "l10",
+"role": "seen",
+"seen": "0 s: needle filling the frame at full roar, velvet piping racing round a tight curve, two bare fingers a hair from the steel. 1.5 s: she looks up at us; the fabric keeps running, true. 2.5 s: dead stop, exactly on the chalk mark.",
+"heard": "(machine roar, then total silence)",
+"screen": "Sewing here since 1988",
+"parents": [
+"o-to7-002",
+"m-033"
+],
+"verdicts": {
+"best": 0,
+"worst": 3,
+"ordinary": 3,
+"hard": 1
+}
+},
+{
+"writer": "hand, no library",
+"id": "n01",
+"role": "sell",
+"seen": "0 s: A leaf blower roars into a finished velvet sofa spread with £1,499 in real notes and coins; money explodes past the lens. 1 s: The last loose note leaves. 2-3 s: Blower dies. A thin £499 stays tucked in the seat fold; a brother lifts it out, with the sofa behind him.",
+"heard": "Brother: \"You paid fourteen ninety-nine. This is what may reach the man who built it.\"",
+"screen": "Shop price £1,499. Maker's share: perhaps £499.",
+"parents": [],
+"verdicts": {
+"best": 0,
+"worst": 3,
+"ordinary": 0,
+"hard": 3
+}
+},
+{
+"writer": "hand, no library",
+"id": "n02",
+"role": "sell",
+"seen": "0 s: A power saw bites down through the arm-height back of a beautiful finished sofa. 1 s: John, the father, watches, jaw set. 2-3 s: Saw stops; the sofa falls open in two like a loaf: pale beech, dowels, springs, cushion, all bare to the lens.",
+"heard": "Saw. John: \"Keep going.\" Saw stops. Son: \"Now ask a shop to do that.\"",
+"screen": "Our own sofa. Cut this week.",
+"parents": [],
+"verdicts": {
+"best": 3,
+"worst": 0,
+"ordinary": 2,
+"hard": 0
+}
+},
+{
+"writer": "hand, no library",
+"id": "n03",
+"role": "sell",
+"seen": "0 s: A brother, sunk in a sofa, points straight down the lens. 1 s: He stands up out of frame; camera drops to the cushion he left, inches away. 2-3 s: In one uncut take the hollow lifts itself level. His finger returns, pointing at you.",
+"heard": "Brother: \"Stand up.\" Beat. \"Turn round. Look what you left behind.\"",
+"screen": "Nobody plumped this one.",
+"parents": [],
+"verdicts": {
+"best": 0,
+"worst": 2,
+"ordinary": 2,
+"hard": 1
+}
+},
+{
+"writer": "hand, no library",
+"id": "n04",
+"role": "sell",
+"seen": "0 s: Two raw eggs are stuck to the facing walls of an alcove; a huge sofa comes sliding straight at us between them. 1 s: Cloth reaches the eggs. 2-3 s: A whisker of light each side; the sofa passes, stops against the back wall. One egg trembles. Neither breaks.",
+"heard": "Feet scuffing. Brother, through his teeth: \"Left a hair. Left a hair.\" Silence.",
+"screen": "Built for this wall. Not the nearest size.",
+"parents": [],
+"verdicts": {
+"best": 1,
+"worst": 1,
+"ordinary": 0,
+"hard": 2
+}
+},
+{
+"writer": "hand, no library",
+"id": "n05",
+"role": "sell",
+"seen": "0 s: In a quiet, immaculate showroom two brothers heave a cream sofa over; it lands on its back, legs in the air. 1 s: One kneels, peels back the black underside cloth. 2-3 s: Torchlight on dowel, screw, beech, and an upholsterer's handwritten name.",
+"heard": "Thump. Brother: \"Never buy a sofa the right way up.\"",
+"screen": "Try this in any shop. Then try it here.",
+"parents": [],
+"verdicts": {
+"best": 3,
+"worst": 0,
+"ordinary": 0,
+"hard": 0
+}
+},
+{
+"writer": "hand, no library",
+"id": "n06",
+"role": "seen",
+"seen": "0 s: We lie inside a sofa, looking out through beech ribs; an upholsterer's face fills the gap, staring down at us. 1 s: He draws cloth over the hole; light narrows. 2-3 s: One slit, his eye in it. Hammer. Black.",
+"heard": "Muffled. Upholsterer: \"Say goodbye to the daylight. Guarantee says thirty years.\" One last tap, then nothing.",
+"screen": "You are the frame.",
+"parents": [],
+"verdicts": {
+"best": 0,
+"worst": 3,
+"ordinary": 0,
+"hard": 3
+}
+},
+{
+"writer": "hand, no library",
+"id": "n07",
+"role": "seen",
+"seen": "0 s: Huge shears close on the neck of a printed heron and slice it clean through. 1 s: Head and body slide apart on the bench. 2-3 s: Head on the back cushion, body on the seat below; a palm pushes them together and the neck is whole, seam gone.",
+"heard": "Shears crunching. Cutter: \"Out by a whisker, and he's got two necks.\"",
+"screen": "He gets one cut.",
+"parents": [],
+"verdicts": {
+"best": 2,
+"worst": 0,
+"ordinary": 0,
+"hard": 0
+}
+},
+{
+"writer": "hand, no library",
+"id": "n08",
+"role": "seen",
+"seen": "0 s: Extreme close: an industrial needle hammers beside a thumbnail, sofa velvet racing under. 1 s: Tilt up: a grey-haired machinist looks calmly into our eyes, not at her hands. 2-3 s: She holds our gaze; below, the seam turns a perfect corner.",
+"heard": "Machine, very loud, not stopping. She: \"Stop looking at me. Watch the thumb.\"",
+"screen": "Same firm. Same seams. Since 1988.",
+"parents": [],
+"verdicts": {
+"best": 1,
+"worst": 0,
+"ordinary": 1,
+"hard": 0
+}
+},
+{
+"writer": "hand, no library",
+"id": "n09",
+"role": "seen",
+"seen": "0 s: A man is shoulder-deep inside a stripped, faded sofa, cheek crushed to its arm, feeling for something. 1 s: He freezes. 2-3 s: His arm comes out, dusty; the closed fist rises to the lens. One finger begins to open.",
+"heard": "Cloth tearing. \"Got something.\" Pause. Softly: \"Oh. They'll have looked everywhere for that.\"",
+"screen": "This sofa came home to its makers.",
+"parents": [],
+"verdicts": {
+"best": 3,
+"worst": 0,
+"ordinary": 0,
+"hard": 1
+}
+},
+{
+"writer": "hand, no library",
+"id": "n10",
+"role": "seen",
+"seen": "0 s: Aileen sits upright on a magnificent sofa, gliding through a roaring wood mill like a queen. 1 s: Wide: four grown sons are carrying it, red-faced, knees buckling. 2-3 s: Saws fall silent as she passes; she nods left, nods right, inspecting.",
+"heard": "Saws dying one by one. Aileen: \"I carried all four of them. Their turn.\"",
+"screen": "Aileen. Chris, Peter, Michael, Tom.",
+"parents": [],
+"verdicts": {
+"best": 2,
+"worst": 0,
+"ordinary": 0,
+"hard": 2
+}
+}
+],
+"not_judged": [
+{
+"id": "s07",
+"name": "Şu tahtalardan çıktı",
+"role": "sell",
+"seen": "One still shot. 0 s: left, a stack of raw beech boards with the bark still on; right, a finished sofa in deep green velvet; six people in aprons stand between them, hands at their sides, nobody smiles. 1-4 s: the camera holds; sawdust floats through a bar of sun.",
+"heard": "\"That sofa there came out of those boards there, in this room, and only these six people ever touched it.\"",
+"screen": "(nothing)",
+"parents": [
+"o-ad3-006",
+"m-025"
+],
+"true": "The true number of hands: mill, frame, cutting, sewing, upholstery, cushions."
+},
+{
+"id": "s10",
+"name": "Kapı açılıyor",
+"role": "sell",
+"seen": "Fixed camera. 0 s: a plain factory roller door, a third open, black gap below. 0-3 s: it goes up slowly and evenly; a velvet sofa comes out of the dark towards us on a trolley, pushed by two men whose faces we do not see. A round badge carries the price, a bar the phone number.",
+"heard": "(no speech: the door)",
+"screen": "Made to your size, straight from the people who make it: from £1,349",
+"parents": [
+"o-mb2-007",
+"m-015"
+],
+"true": "The price stands on the site (read 25 Nov 2026)."
+},
+{
+"id": "s13",
+"name": "Acelesi olan gelmesin",
+"role": "click",
+"seen": "Plain words on a plain ground (a text ad for Facebook, as from a local paper).",
+"heard": "(none)",
+"screen": "For sale: one sofa, not made yet. Slow: one man builds it from the first tack to the last, and he will not be hurried. Heavy: beech. Comes with his name written where nobody will ever look. If you are in a hurry, half the high street can help you.",
+"parents": [
+"o-sek1-003",
+"o-ad6-021"
+],
+"true": "One upholsterer from start to finish, signed; hardwood frame (the site)."
+},
+{
+"id": "s14",
+"name": "Dördüncü kardeş",
+"role": "sell",
+"seen": "0 s: a man of about forty sits on a half-built sofa, springs showing, and talks to the lens. 1.5 s: gets up and walks on through the factory, past the mill, past the sewing tables, without stopping.",
+"heard": "\"Hi, I'm Tom, the youngest of four brothers. For thirteen hundred and forty-nine pounds we build you a sofa in your size, and the man who builds it signs it.\"",
+"screen": "(captions)",
+"parents": [
+"o-satan-037",
+"m-025"
+],
+"true": "Tom speaks himself; price and signature stand on the site."
+}
+]
+},
+"round2_dental_seen": {
+"client": "THE CLIENT: CrownWood Dental, Bracknell (England), a local dental practice hardly anybody outside the town knows; its own small TikTok and Instagram account. It makes a crown (a new top for a broken tooth) in ONE visit: a small camera films the tooth instead of a mouthful of paste; in seconds a 3D model of the tooth stands on the screen; a milling machine in the practice carves the crown from a small ceramic block in about five minutes under water; it is bonded on the same day, no temporary crown, no metal, the colour of the patient's own teeth. From GBP 750. Led by Dr Wong, more than 25 years a dentist; over 600 five-star Google reviews, several from people who were afraid of the dentist; open on Saturdays; free parking.",
+"openings": [
+{
+"writer": "hand, no library",
+"set": "a1",
+"id": "a1",
+"seen": "0 s: A plastic T. rex lies in a full-size dental chair, paper bib on, one front tooth snapped. 1 s: A gloved hand tilts its jaw open; the camera wand goes in. 2-3 s: The dinosaur's jaw builds in 3D on the monitor, stump included.",
+"heard": "Dr Wong, flat: \"And how long has it been broken?\"",
+"screen": "New patient. Last check-up: 66 million years ago.",
+"parent": "",
+"verdicts": {
+"best": 1,
+"worst": 0,
+"ordinary": 0,
+"unclear": 0
+}
+},
+{
+"writer": "hand, no library",
+"set": "a1",
+"id": "a2",
+"seen": "0 s: Full frame, no edges: a pale mountain range, one peak sheared off, the view flying low into a dark valley. 1 s: The view banks round the broken peak. 2-3 s: A thumb enters and spins the whole range; it is a molar on a monitor.",
+"heard": "Wind-like hiss. A man, off: \"Hang on. That's me?\"",
+"screen": "0 s: Where is this? 3 s: Upper left, second from the back.",
+"parent": "",
+"verdicts": {
+"best": 0,
+"worst": 1,
+"ordinary": 0,
+"unclear": 2
+}
+},
+{
+"writer": "hand, no library",
+"set": "a1",
+"id": "a3",
+"seen": "0 s: Macro of a woman's back teeth, held still, five numbers drawn over five teeth. 1 s: A pointer taps 1, then 2. 2-3 s: The pointer hovers between 3 and 4; numbers start vanishing one at a time.",
+"heard": "Dr Wong: \"Four of these she grew. One was a block this morning. Wrong. Wrong.\"",
+"screen": "1 2 3 4 5. Pause it and choose.",
+"parent": "",
+"verdicts": {
+"best": 0,
+"worst": 0,
+"ordinary": 0,
+"unclear": 0
+}
+},
+{
+"writer": "hand, no library",
+"set": "a1",
+"id": "a4",
+"seen": "0 s: Through a wet windscreen: a big man in work clothes, engine off, both hands clamped on the wheel, staring ahead. 1 s: He reaches for the door handle. 2-3 s: He takes the hand back and puts his seat belt on again.",
+"heard": "Rain on the roof. Him: \"Nope.\" The belt clicks.",
+"screen": "Parked 10:00. Appointment 10:15. It is 10:14.",
+"parent": "",
+"verdicts": {
+"best": 0,
+"worst": 1,
+"ordinary": 0,
+"unclear": 0
+}
+},
+{
+"writer": "hand, no library",
+"set": "a1",
+"id": "a5",
+"seen": "0 s: Split frame: an egg drops into boiling water; left, a ceramic block is clamped in the mill. 1 s: One thumb starts both; water hits the block. 2-3 s: A five-minute clock runs across both halves.",
+"heard": "Receptionist, holding an egg spoon: \"If the tooth wins, Dr Wong makes the tea for a week.\"",
+"screen": "5:00 Egg / Tooth",
+"parent": "",
+"verdicts": {
+"best": 0,
+"worst": 2,
+"ordinary": 0,
+"unclear": 3
+}
+},
+{
+"writer": "hand, no library",
+"set": "a1",
+"id": "a6",
+"seen": "0 s: Dr Wong, in scrubs, sits in the patient's chair, cheeks bulging round a tray of pink paste, eyes wide. 1 s: Tries to speak; a finger points at the clock. 2-3 s: The nurse leans back, arms folded, and starts a stopwatch.",
+"heard": "\"Mmf. Mm mmf mmf.\" Nurse: \"Sorry? Can't understand you.\"",
+"screen": "Subtitle: Twenty-five years. I did this to people.",
+"parent": "",
+"verdicts": {
+"best": 0,
+"worst": 0,
+"ordinary": 0,
+"unclear": 0
+}
+},
+{
+"writer": "hand, no library",
+"set": "a1",
+"id": "a7",
+"seen": "0 s: A gloved hand holds a dazzling white sample tooth against a man's smile; it glows like a lamp. 1 s: Dr Wong shakes head and drops it into a steel bin. 2-3 s: Next one, slightly yellower. Bin.",
+"heard": "Clang. Man: \"I liked that one.\" Dr Wong: \"Everyone would see it.\" Clang.",
+"screen": "Rejected: 1. Rejected: 2. Looking for the ugly one.",
+"parent": "",
+"verdicts": {
+"best": 0,
+"worst": 0,
+"ordinary": 0,
+"unclear": 0
+}
+},
+{
+"writer": "hand, no library",
+"set": "a1",
+"id": "a8",
+"seen": "0 s: A thumbnail-small bundle of gauze, folded like a swaddled newborn, is laid on a jeweller's scale. 1 s: A gloved fingertip opens the fold: a wet new tooth. 2-3 s: Dr Wong writes on a tiny wristband; a man in a bib cranes to see.",
+"heard": "Dr Wong, whispering: \"Congratulations. It's a molar.\" Man: \"Can I hold it?\"",
+"screen": "Born Saturday, 11:07. 0.9 grams.",
+"parent": "",
+"verdicts": {
+"best": 0,
+"worst": 3,
+"ordinary": 0,
+"unclear": 3
+}
+},
+{
+"writer": "hand, no library, told: one idea, understood in half a second with the sound off",
+"set": "a2",
+"id": "a1",
+"seen": "0 s: Close, a woman's face reflected in a dark machine window; behind the glass, two spinning burrs bite a white block exactly where her mouth is. 1 s: Water bursts across the reflection. 2-3 s: She leans closer; the block's corner has become the ridge of a tooth.",
+"heard": "Grinding and water. Woman, quietly: \"That's going in my mouth.\"",
+"screen": "She is watching her own tooth being made.",
+"parent": "",
+"verdicts": {
+"best": 0,
+"worst": 2,
+"ordinary": 0,
+"unclear": 3
+}
+},
+{
+"writer": "hand, no library, told: one idea, understood in half a second with the sound off",
+"set": "a2",
+"id": "a2",
+"seen": "0 s: A saucer of white sugar cubes beside black tea; tongs lift one. 1 s: Cube drops, splash. 2 s: Spoon stirs; it clinks hard against china. 3 s: Spoon lifts the cube out, edges still sharp; a thumb rubs it and cannot crumble it.",
+"heard": "Clink, clink, clink. Man: \"That's what we carve teeth from.\"",
+"screen": "One of these is not sugar.",
+"parent": "",
+"verdicts": {
+"best": 0,
+"worst": 1,
+"ordinary": 0,
+"unclear": 2
+}
+},
+{
+"writer": "hand, no library, told: one idea, understood in half a second with the sound off",
+"set": "a2",
+"id": "a3",
+"seen": "0 s: Camera skims low over a pale canyon, sheer walls, one jagged black crack. 1 s: It drops towards the crack like a drone. 2 s: Sudden pull-back: the canyon shrinks to one tooth turning on a monitor. 3 s: A man in the chair stares at it.",
+"heard": "Wind, cut dead by a room's silence. Man: \"I chew with that?\"",
+"screen": "Not a planet. Upper left, second from the back.",
+"parent": "",
+"verdicts": {
+"best": 0,
+"worst": 0,
+"ordinary": 0,
+"unclear": 2
+}
+},
+{
+"writer": "hand, no library, told: one idea, understood in half a second with the sound off",
+"set": "a2",
+"id": "a4",
+"seen": "0 s: Locked shot through a windscreen: a grown man in a parked car, seatbelt on, gripping the wheel. 1 s: He opens the door; one shoe touches tarmac. 2 s: The shoe goes back in. Door shuts. 3 s: He buckles the belt again. The sign behind him reads DENTAL.",
+"heard": "Door. Silence. Door. Belt click.",
+"screen": "Third try. (Acted. Some of our patients told us this fear.)",
+"parent": "",
+"verdicts": {
+"best": 1,
+"worst": 1,
+"ordinary": 0,
+"unclear": 0
+}
+},
+{
+"writer": "hand, no library, told: one idea, understood in half a second with the sound off",
+"set": "a2",
+"id": "a5",
+"seen": "0 s: A dentist in scrubs, face to camera, cheeks bulging, pink paste creeping past his lips. 1 s: He raises one finger to speak; only a hum comes. 2 s: His eyes water. 3 s: He pulls; the metal tray stays stuck.",
+"heard": "Off camera: \"Say your name, doctor.\" \"Mmm-mong.\"",
+"screen": "Dr Wong. Trying what dentists used to put in your mouth.",
+"parent": "",
+"verdicts": {
+"best": 1,
+"worst": 0,
+"ordinary": 0,
+"unclear": 0
+}
+},
+{
+"writer": "hand, no library, told: one idea, understood in half a second with the sound off",
+"set": "a2",
+"id": "a6",
+"seen": "0 s: A plaster jaw bites brown toffee; one tooth in it is bright yellow-white. 1 s: Two hands pull the jaws apart; the toffee stretches into a rope. 2 s: That tooth tilts. 3 s: Pop. It swings on the string.",
+"heard": "Creak, pop. Woman: \"And you're wearing that for two weeks.\"",
+"screen": "A temporary crown versus one toffee.",
+"parent": "",
+"verdicts": {
+"best": 1,
+"worst": 0,
+"ordinary": 0,
+"unclear": 0
+}
+},
+{
+"writer": "hand, no library, told: one idea, understood in half a second with the sound off",
+"set": "a2",
+"id": "a7",
+"seen": "0 s: A smiling mouth fills the frame; a sheet of printer paper slides up against the teeth. 1 s: The teeth suddenly look yellow. 2 s: A fan of little teeth on sticks passes along; each one looks wrong. 3 s: One stops; its edge disappears.",
+"heard": "Paper rustle. Woman: \"No. No. No. There.\"",
+"screen": "White paper. Real tooth. Now try it with yours.",
+"parent": "",
+"verdicts": {
+"best": 3,
+"worst": 0,
+"ordinary": 0,
+"unclear": 0
+}
+},
+{
+"writer": "hand, no library, told: one idea, understood in half a second with the sound off",
+"set": "a2",
+"id": "a8",
+"seen": "0 s: On a dental counter, an egg is lowered into boiling water; beside it, a square white block is clamped inside a machine. 1 s: One hand starts both. 2 s: Egg rattles; water hits the block. 3 s: Split screen: shell cracking, cusp appearing.",
+"heard": "Bubbling against grinding. Man: \"Soft boiled. Starting now.\"",
+"screen": "5:00, counting down. Breakfast or tooth: which is done first?",
+"parent": "",
+"verdicts": {
+"best": 0,
+"worst": 1,
+"ordinary": 0,
+"unclear": 2
+}
+},
+{
+"writer": "hand, carries a winner over as closely as it goes",
+"set": "b1",
+"id": "b1",
+"seen": "0 s: plain sky-blue; a cut-open drawn tooth springs up from a dot to full width. 0.4 s: whole, white, pink inside. 1 s: a grey hairline on top. 1.4-2.4 s: it turns black, longer, wider. 2.6-3 s: the black runs down through the white layer towards the red nerve; 4 s: it touches.",
+"heard": "A cracked tooth is caused by grinding and biting on hard things...",
+"screen": "none",
+"parent": "o-y3-027",
+"verdicts": {
+"best": 2,
+"worst": 0,
+"ordinary": 3,
+"unclear": 0
+}
+},
+{
+"writer": "hand, carries a winner over as closely as it goes",
+"set": "b1",
+"id": "b2",
+"seen": "0 s: a man's open mouth fills the frame, back teeth lit by the phone lamp. 0.8 s: his clean fingertip presses a dull, off-colour cap on one molar. 1-3 s: the cap rocks under the finger, one side lifting, then sits back. No blood.",
+"heard": "Does this happen to anyone else? My temporary crown comes loose, like, every week.",
+"screen": "none",
+"parent": "o-tec6-039",
+"verdicts": {
+"best": 1,
+"worst": 0,
+"ordinary": 0,
+"unclear": 0
+}
+},
+{
+"writer": "hand, carries a winner over as closely as it goes",
+"set": "b1",
+"id": "b3",
+"seen": "0 s: a stubbled mouth with a broken front tooth fills the frame; Dr Wong, cut out small, stands in front; red bar above. 1-2 s: the lips open, the break grows. 3 s: both hands show the covering.",
+"heard": "Fixing a broken tooth, rebuilding it, matching the colour, does not have to be done with a mouthful of paste.",
+"screen": "Fixing a Broken Tooth WITHOUT the Mouthful of Paste",
+"parent": "o-y3-018",
+"verdicts": {
+"best": 0,
+"worst": 2,
+"ordinary": 3,
+"unclear": 1
+}
+},
+{
+"writer": "hand, carries a winner over as closely as it goes",
+"set": "b1",
+"id": "b4",
+"seen": "0 s: a man in the chair wearing the practice's dark glasses, face filmed from above; he smiles, one front tooth broken off at a slant. 1.2 s: cut. 1.8-3 s: close: the tip of the small camera moves over the broken tooth, a gloved finger holds the lip.",
+"heard": "Tooth fixed today! Exciting.",
+"screen": "tooth fixed today!",
+"parent": "o-tec6-024",
+"verdicts": {
+"best": 0,
+"worst": 2,
+"ordinary": 3,
+"unclear": 0
+}
+},
+{
+"writer": "hand, carries a winner over as closely as it goes",
+"set": "b1",
+"id": "b5",
+"seen": "0-1.2 s: close on a row of glossy, perfect teeth in a practice jaw; a red-headed hammer taps one tooth again and again. 1.4 s: hammer gone. 1.6-3 s: the camera leans in; the light mirrored on the enamel stops at a fresh break, one corner missing.",
+"heard": "Taps. Then a flat voice: 'That'll work.'",
+"screen": "none",
+"parent": "o-y1-005",
+"verdicts": {
+"best": 0,
+"worst": 0,
+"ordinary": 0,
+"unclear": 0
+}
+},
+{
+"writer": "hand, carries a winner over as closely as it goes",
+"set": "b1",
+"id": "b6",
+"seen": "0 s: seen from behind the hand-held camera, pointed at one broken tooth. 0.4-1.6 s: with each beep a small frame flies up above it: a grey sliver, then a wider one. 2-3 s: the frames slide over one another like a fan. 4 s: they melt into one 3D tooth.",
+"heard": "Beep, beep, beep, beep, beep.",
+"screen": "POV: You're a dentist",
+"parent": "o-sek1-021",
+"verdicts": {
+"best": 0,
+"worst": 2,
+"ordinary": 2,
+"unclear": 3
+}
+},
+{
+"writer": "hand, carries a winner over as closely as it goes",
+"set": "b1",
+"id": "b7",
+"seen": "0 s: Dr Wong in scrubs with the practice's name sits still in a plain treatment room, looks at us, label overhead. 0.6 s: a square Colgate logo pops up on the chest. 1 s: a sideways look at it. 1.5-2.2 s: nose wrinkled. 2.4 s: the number pops up.",
+"heard": "Colgate. Four. Four out of ten.",
+"screen": "Dentist Rates Toothpaste / (Colgate logo) / 4/10",
+"parent": "o-to5-005",
+"verdicts": {
+"best": 2,
+"worst": 0,
+"ordinary": 3,
+"unclear": 0
+}
+},
+{
+"writer": "hand, carries a winner over as closely as it goes",
+"set": "b1",
+"id": "b8",
+"seen": "Fixed camera, treatment room. 0 s: Dr Wong holds one cream-coloured crown on a fingertip close to the lens; the other hand sweeps toward it, caption already there. 2 s: palm open. 3 s: beckons us to the patient's chair behind.",
+"heard": "Most people think this crown is too yellow. They're wrong. Come to the chair, let me explain why.",
+"screen": "Most people think this crown is too yellow / they're wrong",
+"parent": "o-to7-007",
+"verdicts": {
+"best": 0,
+"worst": 2,
+"ordinary": 2,
+"unclear": 0
+}
+},
+{
+"writer": "hand, carries a winner over as closely as it goes (pack read backwards)",
+"set": "b2",
+"id": "b1",
+"seen": "0 s: a monitor fills the frame with sixteen tooth-coloured tabs fanned like a sun, one lying across the middle; bottom left Dr Wong, cut out, points. 0-1 s: still. 1.2-4 s: the middle tooth slowly turns from flat to upright while Dr Wong speaks.",
+"heard": "With this chart in this video I can show you roughly which colour your teeth are.",
+"screen": "The same words.",
+"parent": "o-to5-014",
+"verdicts": {
+"best": 0,
+"worst": 2,
+"ordinary": 2,
+"unclear": 1
+}
+},
+{
+"writer": "hand, carries a winner over as closely as it goes (pack read backwards)",
+"set": "b2",
+"id": "b2",
+"seen": "0-0.3 s: plain sky-blue, a cut-open drawn tooth springs up from a dot to full width. 0.4-1 s: white, pink inside. 1.2 s: a grey line on top. 1.4-2.4 s: it turns black, widens, becomes a split. 2.6-3.2 s: the black runs down through the white layer. 4 s: it touches the red nerve.",
+"heard": "Cracks in teeth are caused by hard biting, grinding...",
+"screen": "None.",
+"parent": "o-y3-027",
+"verdicts": {
+"best": 1,
+"worst": 0,
+"ordinary": 3,
+"unclear": 0
+}
+},
+{
+"writer": "hand, carries a winner over as closely as it goes (pack read backwards)",
+"set": "b2",
+"id": "b3",
+"seen": "0 s: Dr Wong in scrubs with the practice's name sits still in a plain treatment room, looks at us, silent; white label overhead. 0.6 s: a Chupa Chups logo pops up on the chest. 1-1.2 s: a sideways look at it. 1.5-2.2 s: grimace, nose wrinkled. 2.4 s: the score pops up, spoken.",
+"heard": "Chupa Chups. Three. Three out of ten.",
+"screen": "Dentist Rates Sweets / (logo) / 3/10",
+"parent": "o-to5-005",
+"verdicts": {
+"best": 3,
+"worst": 0,
+"ordinary": 3,
+"unclear": 0
+}
+},
+{
+"writer": "hand, carries a winner over as closely as it goes (pack read backwards)",
+"set": "b2",
+"id": "b4",
+"seen": "0 s: a stubbled mouth with a broken front tooth fills the frame; Dr Wong cut out small, red title bar. 0.4-2 s: the lips open, the break grows. 2.4-4 s: hands show a cap closing, then point up.",
+"heard": "Fixing a broken tooth does not have to be done with paste. It could be done in one appointment.",
+"screen": "Fixing a Broken Tooth WITHOUT the Paste",
+"parent": "o-y3-018",
+"verdicts": {
+"best": 0,
+"worst": 3,
+"ordinary": 3,
+"unclear": 0
+}
+},
+{
+"writer": "hand, carries a winner over as closely as it goes (pack read backwards)",
+"set": "b2",
+"id": "b5",
+"seen": "0 s: selfie, dentist in scrubs, pink paste on the lips, finger up, live heart monitor behind. 1 s: the phone turns, monitor out. 2-3 s: red strip, a turn to a filled tray. 4 s: camera drops to the mouth.",
+"heard": "Here is the gag reflex. Here's my mouth. Here's the paste. And here's my heart rate. Listen on three.",
+"screen": "Here is the / GAG REFLEX",
+"parent": "o-y4-001",
+"verdicts": {
+"best": 0,
+"worst": 0,
+"ordinary": 0,
+"unclear": 3
+}
+},
+{
+"writer": "hand, carries a winner over as closely as it goes (pack read backwards)",
+"set": "b2",
+"id": "b6",
+"seen": "0-1.2 s: close on a shiny white tooth in a model jaw, a red-headed hammer taps it again and again, gloved arm at the edge. 1.4 s: hammer gone. 1.6-3 s: the camera leans in; the light on the tooth bends at a fresh broken corner. 4 s: hands bring the small camera to it.",
+"heard": "Tapping. \"That'll work.\"",
+"screen": "None.",
+"parent": "o-y1-005",
+"verdicts": {
+"best": 0,
+"worst": 0,
+"ordinary": 0,
+"unclear": 0
+}
+},
+{
+"writer": "hand, carries a winner over as closely as it goes (pack read backwards)",
+"set": "b2",
+"id": "b7",
+"seen": "0-1 s: looking down past one's own green sleeves, both hands hold a glass cola bottle, capped. 1.2 s: it rises to the mouth, under the lens. 1.6-2.6 s: the hands jerk; the bottle comes away, a white chip on the cap. 2.8 s: next mistake: fingers lift an ice cube to the mouth.",
+"heard": "Don't open a bottle like your tooth is the opener.",
+"screen": "The same words.",
+"parent": "o-sek2-006",
+"verdicts": {
+"best": 3,
+"worst": 0,
+"ordinary": 0,
+"unclear": 0
+}
+},
+{
+"writer": "hand, carries a winner over as closely as it goes (pack read backwards)",
+"set": "b2",
+"id": "b8",
+"seen": "0 s: seen from behind a small camera in a gloved hand, a broken tooth ahead, lips held back. 0.4-1.6 s: with each beep a piece of the tooth's picture flies up above the camera: first one edge, then more. 2-4 s: the pieces slide over one another. 4.4 s: they melt into one clear 3D tooth.",
+"heard": "Camera beeps only.",
+"screen": "POV: You're a dentist making a crown",
+"parent": "o-sek1-021",
+"verdicts": {
+"best": 0,
+"worst": 1,
+"ordinary": 1,
+"unclear": 2
+}
+},
+{
+"writer": "hand, 25 own ideas first, then the library as a sieve",
+"set": "c1",
+"id": "c1",
+"seen": "0 s: close, one white tooth in a plaster jaw on a bare bench; a red hammer taps it. 1 s: tap, tap, same spot. 1.4 s: the corner snaps off and rolls away. 2-3 s: camera leans into the jagged break; a gloved finger runs along it. 3 s: a small camera wand enters.",
+"heard": "Tap, tap, crack. \"That'll work.\"",
+"screen": "(none)",
+"parent": "o-y1-005",
+"verdicts": {
+"best": 3,
+"worst": 0,
+"ordinary": 0,
+"unclear": 0
+}
+},
+{
+"writer": "hand, 25 own ideas first, then the library as a sieve",
+"set": "c1",
+"id": "c2",
+"seen": "0 s: plain blue, a cut-open drawn tooth springs up, white, red nerve inside. 0.5 s: a hair-thin black crack on top. 1 s: one step down. 1.5 s: another step, wider. 2 s: a small corner falls off. 2.5-3 s: the crack goes on down and stops a hair above the nerve.",
+"heard": "A tiny click at each step. \"A cracked tooth doesn't heal.\"",
+"screen": "(none)",
+"parent": "o-y3-027",
+"verdicts": {
+"best": 0,
+"worst": 0,
+"ordinary": 0,
+"unclear": 0
+}
+},
+{
+"writer": "hand, 25 own ideas first, then the library as a sieve",
+"set": "c1",
+"id": "c3",
+"seen": "0 s: Dr Wong in scrubs sits still in the treatment room, looks at us; label overhead. 0.6 s: a picture of ice cubes pops up on the chest. 1-1.5 s: eyes slide down to it. 1.5-2.2 s: grimace. 2.4 s: the score pops over the ice. 3 s: next, a pen lid.",
+"heard": "\"Ice. One out of ten.\"",
+"screen": "Dentist Rates What You Chew / (ice cubes) / 1/10",
+"parent": "o-to5-005",
+"verdicts": {
+"best": 0,
+"worst": 0,
+"ordinary": 3,
+"unclear": 0
+}
+},
+{
+"writer": "hand, 25 own ideas first, then the library as a sieve",
+"set": "c1",
+"id": "c4",
+"seen": "0 s: six upper teeth in one closed-jaw smile fill the frame, numbered 1 to 6, nothing else. 0-2 s: the picture holds still; only a thin pointer moves slowly from tooth to tooth. 2-3 s: the pointer stops between two teeth and goes back.",
+"heard": "\"One of these was a block of ceramic this morning.\"",
+"screen": "1 2 3 4 5 6 / WHICH ONE IS NOT REAL?",
+"parent": "o-to5-014",
+"verdicts": {
+"best": 3,
+"worst": 0,
+"ordinary": 0,
+"unclear": 0
+}
+},
+{
+"writer": "hand, 25 own ideas first, then the library as a sieve",
+"set": "c1",
+"id": "c5",
+"seen": "0 s: from the patient's own eyes, lying back: a gloved hand lowers a metal tray heaped with pink paste straight at us. 0.6 s: it fills the picture. 1-1.6 s: pink presses over the lens, everything goes dark. 2 s: the tray pulls off with strings. 2.4-3 s: the hand returns with a small camera wand.",
+"heard": "A wet squelch, a pop.",
+"screen": "POV: the old way to copy a tooth",
+"parent": "o-sek2-006",
+"verdicts": {
+"best": 3,
+"worst": 0,
+"ordinary": 0,
+"unclear": 0
+}
+},
+{
+"writer": "hand, 25 own ideas first, then the library as a sieve",
+"set": "c1",
+"id": "c6",
+"seen": "0 s: selfie, Dr Wong lying in the practice's own chair, a finger clip on, the beeping pulse monitor right behind. 1 s: the phone swings to the number. 2-3 s: a colleague's gloved hand brings a whirring drill up beside the ear, not touching.",
+"heard": "\"Here's my chair. Here's the drill. Here's my heart rate. Listen on three.\" Beep, beep.",
+"screen": "A DENTIST IN THE CHAIR",
+"parent": "o-y4-001",
+"verdicts": {
+"best": 0,
+"worst": 1,
+"ordinary": 0,
+"unclear": 1
+}
+},
+{
+"writer": "hand, 25 own ideas first, then the library as a sieve",
+"set": "c1",
+"id": "c7",
+"seen": "0 s: locked camera, one pale block, sugar-cube size, alone against black inside the machine. 0.4 s: two thin spinning burrs come in from both sides. 0.8 s: water shoots in and fans out. 1-3 s: white dust-milk streams off, one corner of the block is gone, a curve shows; the frame never moves.",
+"heard": "Water, a high whirr, no voice.",
+"screen": "(none)",
+"parent": "o-y4-017",
+"verdicts": {
+"best": 2,
+"worst": 0,
+"ordinary": 2,
+"unclear": 0
+}
+},
+{
+"writer": "hand, 25 own ideas first, then the library as a sieve",
+"set": "c1",
+"id": "c8",
+"seen": "0 s: a smile with one broken-off front tooth fills the whole frame; Dr Wong, small, cut out in front, title bar on top. 0.5-2 s: the lips part further, the jagged edge grows larger. 2-3 s: Dr Wong's finger points up at the gap, then lifts a tiny crown beside it.",
+"heard": "\"This doesn't have to mean a temporary.\"",
+"screen": "Broken Tooth. Crown Today. NO Temporary",
+"parent": "o-y3-018",
+"verdicts": {
+"best": 0,
+"worst": 3,
+"ordinary": 3,
+"unclear": 0
+}
+}
+]
+},
+"round3_sofa_seen": {
+"client": "THE CLIENT: Long Eaton Sofas, Long Eaton (near Nottingham), England. A family firm since 1988: the father John, his wife Aileen and their four sons Chris, Peter, Michael and Tom; one of them greets you in the showroom. Every frame is built in their own wood mill from kiln-dried beech or birch, joints glued, screwed and dowelled, 30-year guarantee on the frame. One upholsterer makes each sofa from the first tack to the last and signs it by hand when it is finished; some have worked there for over 30 years, the sewing machinists since the first year. Cloth is marked and cut by hand so that the pattern matches. Any size, thousands of fabrics; a seat cushion (Octo-Core) that needs no plumping; old sofas of their own make are taken back and re-covered. Sold straight from the factory from GBP 1,349. Outside its region hardly anybody knows it; small TikTok and Instagram accounts of its own.",
+"openings": [
+{
+"writer": "hand, 25 own ideas first, then the library as a sieve",
+"set": "c2",
+"id": "c1",
+"seen": "0 s: a worn, faded sofa lies on its back on two trestles, torn underside facing us, still camera. 1 s: an upholsterer's two hands grip the loose black cloth underneath. 2-3 s: the hands pull; staples pop in a row and the cloth comes away; ink handwriting begins to show on the wood.",
+"heard": "Staples popping.",
+"screen": "Somebody signed this sofa years ago. Do they still work here?",
+"parent": "o-to1-025",
+"verdicts": {
+"best": 0,
+"worst": 0,
+"ordinary": 1,
+"unclear": 1
+}
+},
+{
+"writer": "hand, 25 own ideas first, then the library as a sieve",
+"set": "c2",
+"id": "c2",
+"seen": "0 s: straight on, two halves of a boldly striped sofa stand a hand's width apart; stripes run across both, broken by the gap. One man leans on the right half. 1 s: he pushes; the gap narrows. 2-3 s: close on the last finger of gap: it shuts and every stripe runs through unbroken.",
+"heard": "Sofa feet sliding, then a soft thud.",
+"screen": "",
+"parent": "o-to2-001",
+"verdicts": {
+"best": 0,
+"worst": 1,
+"ordinary": 0,
+"unclear": 1
+}
+},
+{
+"writer": "hand, 25 own ideas first, then the library as a sieve",
+"set": "c2",
+"id": "c3",
+"seen": "0 s: from a worker's chest camera high up in the yard, looking down past his boots: a bare wooden sofa frame hangs on a strap, concrete far below. 1 s: his hand comes to the release rope. 2-3 s: three brothers below step back, small; the hand tightens on the rope.",
+"heard": "\"Alright. Here we go.\"",
+"screen": "30-year guarantee",
+"parent": "o-y4-016",
+"verdicts": {
+"best": 0,
+"worst": 1,
+"ordinary": 0,
+"unclear": 1
+}
+},
+{
+"writer": "hand, 25 own ideas first, then the library as a sieve",
+"set": "c2",
+"id": "c4",
+"seen": "0 s: two bare seat cushions side by side on a floor, a grown man standing on each, feet sunk deep. 1 s: both men step off together. 2-3 s: still camera: two deep footprints; the left cushion lifts until the prints are gone, the right one keeps its dents.",
+"heard": "Feet on the floor, then quiet.",
+"screen": "One of these you have to plump every evening.",
+"parent": "o-to4-006",
+"verdicts": {
+"best": 0,
+"worst": 3,
+"ordinary": 3,
+"unclear": 0
+}
+},
+{
+"writer": "hand, 25 own ideas first, then the library as a sieve",
+"set": "c2",
+"id": "c5",
+"seen": "0 s: a room niche between two walls; two brothers hold a long sofa in front, its ends seeming level with both walls. 1 s: camera pushes to one corner: no room for a finger. 2-3 s: a third brother points at the corner; the two lift.",
+"heard": "Third brother: \"You're telling me that goes in there?\" \"Yes.\" \"I've got to see this.\"",
+"screen": "",
+"parent": "o-y4-019",
+"verdicts": {
+"best": 0,
+"worst": 3,
+"ordinary": 0,
+"unclear": 3
+}
+},
+{
+"writer": "hand, 25 own ideas first, then the library as a sieve",
+"set": "c2",
+"id": "c6",
+"seen": "0 s: a pen-drawn sofa, too short, between two drawn walls on cream paper; a real fingertip lands on its arm. 1 s: the finger drags; the drawn sofa stretches with it until the arm touches the wall. 2-3 s: the finger pokes the seat; it dips and rises. Cut: a real saw meets wood.",
+"heard": "Paper rub, a small squeak, saw.",
+"screen": "Can you make it longer?",
+"parent": "o-to2-008",
+"verdicts": {
+"best": 0,
+"worst": 3,
+"ordinary": 0,
+"unclear": 2
+}
+},
+{
+"writer": "hand, 25 own ideas first, then the library as a sieve",
+"set": "c2",
+"id": "c7",
+"seen": "0 s: close on a sofa arm clawed to ribbons, stuffing hanging out. 0-2 s: one slow, uncut pan right: the next cushion shredded, then the next. 3 s: the pan reaches the far arm: a small kitten sits on it, looking into the lens.",
+"heard": "Music only; at the kitten, one miaow.",
+"screen": "We got a kitten. We had NO IDEA what she would do to our sofa.",
+"parent": "o-to1-003",
+"verdicts": {
+"best": 3,
+"worst": 0,
+"ordinary": 3,
+"unclear": 0
+}
+},
+{
+"writer": "hand, 25 own ideas first, then the library as a sieve",
+"set": "c2",
+"id": "c8",
+"seen": "0 s: low side light; an old sofa frame stripped to wood and webbing; a hand reaches deep into its back corner. 1 s: fingers draw out a dusty folded cloth or tin. 2-3 s: it is set on the bench and opened; something small gleams; the hand turns it to the lens.",
+"heard": "Close rustle, a small clink.",
+"screen": "This was inside a sofa that came back. What is it?",
+"parent": "o-to8-024",
+"verdicts": {
+"best": 1,
+"worst": 0,
+"ordinary": 2,
+"unclear": 0
+}
+},
+{
+"writer": "hand, 25 own ideas first, then the library as a sieve (pack read backwards)",
+"set": "c3",
+"id": "c1",
+"seen": "0 s: white wall, sofa from the front, one big printed leopard across its back; the middle cushion is missing, so the leopard has no head. 1 s: two hands hold the missing cushion in front, head printed on it, too high. 2-3 s: the hands push it down into the gap; head meets neck, stripe meets stripe, until the join cannot be seen.",
+"heard": "(cloth sliding, one soft thump)",
+"screen": "",
+"parent": "o-to2-001",
+"verdicts": {
+"best": 0,
+"worst": 0,
+"ordinary": 0,
+"unclear": 0
+}
+},
+{
+"writer": "hand, 25 own ideas first, then the library as a sieve (pack read backwards)",
+"set": "c3",
+"id": "c2",
+"seen": "0 s: pen drawing of a small armchair on cream paper, a drawn man sitting in it; a real fingertip on its arm. 1 s: the finger drags the arm sideways; the armchair stretches into a sofa. 2 s: a drawn woman and dog drop into the new space. 3 s: dragged to the paper's edge; four people sit.",
+"heard": "(pen scratch, stretching squeak)",
+"screen": "How long do you want it?",
+"parent": "o-to2-008",
+"verdicts": {
+"best": 0,
+"worst": 0,
+"ordinary": 0,
+"unclear": 0
+}
+},
+{
+"writer": "hand, 25 own ideas first, then the library as a sieve (pack read backwards)",
+"set": "c3",
+"id": "c3",
+"seen": "0 s: side view at seat height, a big man stands in socks on one sofa cushion, feet sunk deep. 1 s: he steps off; an orange ball is set in the hollow. 2-3 s: the hollow fills by itself, the ball is lifted, rolls over the front edge and drops to the floor; the seat is level.",
+"heard": "(no speech; the ball bounces)",
+"screen": "Nobody plumped it.",
+"parent": "o-to4-006",
+"verdicts": {
+"best": 0,
+"worst": 0,
+"ordinary": 2,
+"unclear": 0
+}
+},
+{
+"writer": "hand, 25 own ideas first, then the library as a sieve (pack read backwards)",
+"set": "c3",
+"id": "c4",
+"seen": "0 s: an old sofa lies upside down on two trestles, its black bottom cloth hanging in a heavy bulge; a knife point touches it. 1 s: the knife draws one slit. 2-3 s: the bulge spills through it into a white tray: coins, a toy car, then one odd metal thing.",
+"heard": "(ripping cloth, coins clattering)",
+"screen": "30 years of a family fell in here. What is this?",
+"parent": "o-to8-024",
+"verdicts": {
+"best": 3,
+"worst": 0,
+"ordinary": 2,
+"unclear": 0
+}
+},
+{
+"writer": "hand, 25 own ideas first, then the library as a sieve (pack read backwards)",
+"set": "c3",
+"id": "c5",
+"seen": "0 s: outdoors by the workshop door, a stained, torn, sagging sofa; a grey-haired upholsterer stands over it with pliers. 1 s: he grips the torn arm cloth and pulls. 2 s: he pulls again, dust flies. 3 s: close: bare pale wood, his thumb wipes the dust from the beginning of handwriting.",
+"heard": "(tearing cloth, tacks popping)",
+"screen": "I signed this sofa 30 years ago. What's left under it?",
+"parent": "o-to1-025",
+"verdicts": {
+"best": 0,
+"worst": 0,
+"ordinary": 0,
+"unclear": 0
+}
+},
+{
+"writer": "hand, 25 own ideas first, then the library as a sieve (pack read backwards)",
+"set": "c3",
+"id": "c6",
+"seen": "0 s: house hallway, a sofa twice as wide as the front door stands across it, two brothers behind. 1 s: a tape measure is held to the opening, then to the sofa. 2-3 s: one brother steps back, hands on head; the other tips one end up and begins to turn.",
+"heard": "\"That's going through there?\" \"Yes.\" \"Go on, then.\"",
+"screen": "",
+"parent": "o-y4-019",
+"verdicts": {
+"best": 3,
+"worst": 0,
+"ordinary": 3,
+"unclear": 0
+}
+},
+{
+"writer": "hand, 25 own ideas first, then the library as a sieve (pack read backwards)",
+"set": "c3",
+"id": "c7",
+"seen": "0 s: close from the side, a smooth, fat, flat sheet of green velvet on a sofa back, one button lying on it, a string through it. 1 s: a hand behind the back pulls the string; the button sinks and the velvet is dragged in after it. 2-3 s: deep folds shoot out to four neighbouring buttons, one diamond each.",
+"heard": "(string creaking, cloth tightening)",
+"screen": "one string",
+"parent": "o-to4-002",
+"verdicts": {
+"best": 0,
+"worst": 0,
+"ordinary": 2,
+"unclear": 1
+}
+},
+{
+"writer": "hand, 25 own ideas first, then the library as a sieve (pack read backwards)",
+"set": "c3",
+"id": "c8",
+"seen": "0 s: the phone lies inside a bare sofa seat looking up between wooden rails; a man's face looks straight down at us. 1 s: he pulls a sheet of cloth over the frame; half the light goes. 2-3 s: his hand waves through the last gap; the cloth is drawn tight and tacks are hammered round the edge.",
+"heard": "\"Night, then.\" (hammer taps)",
+"screen": "POV: you are the sofa",
+"parent": "o-y4-016",
+"verdicts": {
+"best": 0,
+"worst": 1,
+"ordinary": 2,
+"unclear": 1
+}
+},
+{
+"writer": "hand, 25 own ideas, keeps 8, simplifies; no library",
+"set": "a3",
+"id": "a1",
+"seen": "0 s: close, an arm in a rolled sleeve pushes out of the gap between an empty sofa's back and seat, fingers groping. 1 s: the hand finds a loose flap of cloth and grips it. 2-3 s: it drags the cloth down into the gap; the crease snaps tight and the hand is gone.",
+"heard": "Cloth rubbing, a grunt from behind, one tug.",
+"screen": "(none)",
+"parent": "",
+"verdicts": {
+"best": 0,
+"worst": 2,
+"ordinary": 0,
+"unclear": 3
+}
+},
+{
+"writer": "hand, 25 own ideas, keeps 8, simplifies; no library",
+"set": "a3",
+"id": "a2",
+"seen": "0 s: a wall and sofa in one identical striped cloth; the picture looks like a flat striped sheet. 1 s: a man in plain navy walks in, turns and drops backwards. 2-3 s: he stops in mid-air, sitting, legs crossed; the sofa's edges show only where he dents it.",
+"heard": "Footsteps, then a soft thump.",
+"screen": "(none)",
+"parent": "",
+"verdicts": {
+"best": 2,
+"worst": 0,
+"ordinary": 0,
+"unclear": 1
+}
+},
+{
+"writer": "hand, 25 own ideas, keeps 8, simplifies; no library",
+"set": "a3",
+"id": "a3",
+"seen": "0 s: two brothers sit at either end of one sofa, a handsaw already deep through its middle between them. 1 s: a third brother draws the last stroke. 2-3 s: the sofa drops into two halves and both men tip inward; beech, springs and foam show on the cut faces.",
+"heard": "Sawing, a crack, two thuds.",
+"screen": "(none)",
+"parent": "",
+"verdicts": {
+"best": 3,
+"worst": 0,
+"ordinary": 0,
+"unclear": 0
+}
+},
+{
+"writer": "hand, 25 own ideas, keeps 8, simplifies; no library",
+"set": "a3",
+"id": "a4",
+"seen": "0 s: a bare wooden sofa frame hangs tilted from a forklift high above a concrete yard; a man in a cap holds the release rope. 1 s: he pulls; it falls. 2-3 s: it hits on one corner, bounces, lands upright. He walks in and sits on it.",
+"heard": "Wind, wood striking concrete, silence, one creak.",
+"screen": "One take. No cuts.",
+"parent": "",
+"verdicts": {
+"best": 3,
+"worst": 0,
+"ordinary": 1,
+"unclear": 0
+}
+},
+{
+"writer": "hand, 25 own ideas, keeps 8, simplifies; no library",
+"set": "a3",
+"id": "a5",
+"seen": "0 s: a dachshund stands still while a man runs a tape from its nose to its tail. 1 s: he chalks a very long, very low shape on wood; a bandsaw cuts it. 2-3 s: the dog walks onto a finished sofa, long and ankle-high, and lies down; it fits exactly.",
+"heard": "Tape clicking back, saw, paws on cloth.",
+"screen": "(none)",
+"parent": "",
+"verdicts": {
+"best": 3,
+"worst": 0,
+"ordinary": 0,
+"unclear": 0
+}
+},
+{
+"writer": "hand, 25 own ideas, keeps 8, simplifies; no library",
+"set": "a3",
+"id": "a6",
+"seen": "0 s: the underside of an old upturned sofa; a blade slits the black cloth and coins, a comb and a toy car pour out. 1 s: grey-haired hands fold the flap back. 2-3 s: a torch finds a faded signature on the wood; the same man slowly signs paper beside it.",
+"heard": "Cloth tearing, coins on concrete.",
+"screen": "(none)",
+"parent": "",
+"verdicts": {
+"best": 0,
+"worst": 0,
+"ordinary": 1,
+"unclear": 1
+}
+},
+{
+"writer": "hand, 25 own ideas, keeps 8, simplifies; no library",
+"set": "a3",
+"id": "a7",
+"seen": "0 s: a sofa seat cushion lies on concrete under a clean sheet; a delivery van's front wheel rolls up and stops on it, flattening it. 1 s: the wheel stays. 2-3 s: the van reverses off; hands pull the sheet away and the cushion rises back to its shape, untouched.",
+"heard": "Tyre crunch, engine, a slow breath of air.",
+"screen": "Real time.",
+"parent": "",
+"verdicts": {
+"best": 1,
+"worst": 0,
+"ordinary": 1,
+"unclear": 1
+}
+},
+{
+"writer": "hand, 25 own ideas, keeps 8, simplifies; no library",
+"set": "a3",
+"id": "a8",
+"seen": "0 s: close, big scissors stop one finger's width before a printed bird's neck on cloth. 1 s: the old cutter slides the sheet, and the blades close around the bird. 2-3 s: four cut pieces are pushed together on a half-covered chair; the bird's head meets its body without a gap.",
+"heard": "Scissors biting cloth, one tap of the hammer.",
+"screen": "(none)",
+"parent": "",
+"verdicts": {
+"best": 0,
+"worst": 3,
+"ordinary": 1,
+"unclear": 2
+}
+}
+],
+"also_judged": {
+"bare1": {
+"n06": {
+"best": 0,
+"worst": 3,
+"ordinary": 0,
+"unclear": 3
+},
+"n08": {
+"best": 0,
+"worst": 3,
+"ordinary": 1,
+"unclear": 0
+},
+"n07": {
+"best": 0,
+"worst": 1,
+"ordinary": 0,
+"unclear": 1
+},
+"n10": {
+"best": 0,
+"worst": 1,
+"ordinary": 0,
+"unclear": 0
+},
+"n09": {
+"best": 2,
+"worst": 0,
+"ordinary": 0,
+"unclear": 0
+}
+},
+"lead1": {
+"s11": {
+"best": 3,
+"worst": 0,
+"ordinary": 0,
+"unclear": 0
+},
+"s02": {
+"best": 3,
+"worst": 0,
+"ordinary": 0,
+"unclear": 0
+},
+"s05": {
+"best": 0,
+"worst": 3,
+"ordinary": 0,
+"unclear": 3
+},
+"s09": {
+"best": 0,
+"worst": 2,
+"ordinary": 0,
+"unclear": 0
+}
+}
+}
+},
+"judges_tested_real_film_against_written": [
+{
+"n": 1,
+"role": "sell",
+"real_row": "o-mb3-001",
+"written_instead": {
+"seen": "0 s: A saw finishes its cut through the bottom bracket of a Specialized carbon race frame; one half drops to the bench. 1 s: The cut face comes up to the lens: two separate cups, empty space between them. 2-3 s: A thumb rocks one cup; the other stays still. A one-piece metal tube is laid across the gap.",
+"heard": "Saw stops. Mechanic: \"Two cups. Nothing joins them.\" One creak as the thumb pushes.",
+"screen": "This is where it creaks"
+},
+"picks": [
+[
+"bare",
+true
+],
+[
+"bare",
+false
+],
+[
+"bare",
+true
+]
+]
+},
+{
+"n": 2,
+"role": "sell",
+"real_row": "o-meta6-001",
+"written_instead": {
+"seen": "0 s: Camera at the edge of an open steel door, frame split down the middle by the wall. Left: grey street wall, trash bin, pigeon. Right: a long white hall of sports cars. 1 s: A passer-by crosses the left half, looking at his phone, and never turns. 2-3 s: The door shuts; only plain grey wall is left.",
+"heard": "Street noise in the left ear, silence in the right. A bolt. Man: \"He walks past every day.\"",
+"screen": "Car storage. Los Angeles."
+},
+"picks": [
+[
+"real",
+false
+],
+[
+"bare",
+false
+],
+[
+"real",
+false
+]
+]
+},
+{
+"n": 3,
+"role": "sell",
+"real_row": "o-meta1-011",
+"written_instead": {
+"seen": "0 s: A woman of sixty bites a green apple, lips closed over it. 1 s: She turns the bite to the lens: a clean curve, and in the middle one thin strip of apple still standing. 2-3 s: Her fingertip touches the strip, then the same place on her closed upper lip.",
+"heard": "A loud crunch. Woman: \"That bit's still there because my tooth isn't.\"",
+"screen": "Implants from £800. Leytonstone, London."
+},
+"picks": [
+[
+"bare",
+false
+],
+[
+"bare",
+true
+],
+[
+"bare",
+false
+]
+]
+},
+{
+"n": 4,
+"role": "sell",
+"real_row": "o-meta2-001",
+"written_instead": {
+"seen": "0 s: Floor level, under a bed frame: twelve raw eggs stand in egg cups. A van tyre rolls down off a ramp onto the slats just above them. 1 s: The slats dip and stop short of the shells. 2-3 s: The founder, in goggles, crouches into view beside the bed, looks at the eggs, waves the driver forward.",
+"heard": "Timber groan, engine idling. Founder: \"Good. Now the other wheel.\"",
+"screen": "Indestruct bed base, test one"
+},
+"picks": [
+[
+"bare",
+true
+],
+[
+"bare",
+true
+],
+[
+"bare",
+true
+]
+]
+},
+{
+"n": 5,
+"role": "sell",
+"real_row": "o-meta2-012",
+"written_instead": {
+"seen": "0 s: Straight down on a brown living-room carpet. A steam wand pulls a pale stripe; it completes a figure as tall as a sofa: $157. 1 s: The cleaner steps off the 7. 2-3 s: A woman in the doorway looks at the pale figure, then at the brown all round it.",
+"heard": "Suction cuts out. Woman: \"It was that colour?\" Cleaner: \"That's the price, too. Three rooms and the hallway.\"",
+"screen": "Houston"
+},
+"picks": [
+[
+"bare",
+false
+],
+[
+"bare",
+false
+],
+[
+"bare",
+false
+]
+]
+},
+{
+"n": 6,
+"role": "sell",
+"real_row": "o-mb2-009",
+"written_instead": {
+"seen": "0 s: A man sets a marble on a rough walnut slab; it shoots sideways, drops off the edge, bounces on concrete. 1 s: The same slab, a router crossing it on rails, half the face pale and level. 2-3 s: He sets the marble down on the finished slab and lifts his hand. It stays.",
+"heard": "Glass on concrete, three bounces. Router. Silence. Customer: \"Same slab, same marble. My garage.\"",
+"screen": "Filmed by a TrueTrac customer"
+},
+"picks": [
+[
+"bare",
+true
+],
+[
+"bare",
+true
+],
+[
+"bare",
+true
+]
+]
+},
+{
+"n": 7,
+"role": "sell",
+"real_row": "o-mb1-004",
+"written_instead": {
+"seen": "0 s: A dressed couple sit facing each other in a dry hotel bathtub, lit by one phone, sharing crisps. 1 s: She bites; both freeze and look at the door. 2-3 s: Cut: two children asleep in a loft bed; camera tips over the railing to the same couple below, on a sofa by a fire, crunching.",
+"heard": "One crunch. Him, whispering: \"You'll wake them.\" Then loud crunching.",
+"screen": "Kids upstairs. You downstairs. Anaheim, near Disneyland."
+},
+"picks": [
+[
+"bare",
+false
+],
+[
+"bare",
+true
+],
+[
+"bare",
+false
+]
+]
+},
+{
+"n": 8,
+"role": "seen",
+"real_row": "o-to11-004",
+"written_instead": {
+"seen": "0 s: A shaggy dog stands side-on on the grooming table, eyes hidden by hair. 1 s: It turns round. The other side is clipped short to the exact middle line, one eye showing. 2-3 s: The groomer, dead clippers in one hand and phone at her ear, looks at one side, then walks round to the other.",
+"heard": "Clippers whine down and stop. Groomer, on the phone: \"Mrs Hall? He's half ready.\"",
+"screen": "4:52 pm. We close at five."
+},
+"picks": [
+[
+"real",
+true
+],
+[
+"real",
+true
+],
+[
+"real",
+true
+]
+]
+},
+{
+"n": 9,
+"role": "seen",
+"real_row": "o-y3-027",
+"written_instead": {
+"seen": "0 s: Macro: a real extracted tooth in tweezers, white, one brown dot on top, small as a poppy seed. 1 s: A gloved thumb parts it along a saw cut; it opens like a walnut. Inside, a brown cave fills half the tooth. 2-3 s: A drop of red dye goes in at the dot and runs down to the root.",
+"heard": "A click as it opens. Dentist: \"He came in about the dot.\"",
+"screen": "Extracted tooth. Actual hole."
+},
+"picks": [
+[
+"bare",
+false
+],
+[
+"bare",
+false
+],
+[
+"real",
+false
+]
+]
+},
+{
+"n": 10,
+"role": "seen",
+"real_row": "o-to6-023",
+"written_instead": {
+"seen": "0 s: A stadium queue. Close on a clear shoulder bag: a whole raw onion, a retainer, a letter folded open. A man's face comes in behind it, reading the letter. 1 s: His lips move with the words. 2-3 s: Her hand folds a flap down an inch from his nose; the bag is now plain tan. He straightens.",
+"heard": "Crowd hum. Man, muttering: \"'Dear tenant…'\" A snap closes. Man: \"What's the onion for?\"",
+"screen": ""
+},
+"picks": [
+[
+"real",
+true
+],
+[
+"real",
+true
+],
+[
+"real",
+true
+]
+]
+},
+{
+"n": 11,
+"role": "seen",
+"real_row": "o-to7-017",
+"written_instead": {
+"seen": "0 s: A bare hand pushes a long steel key into a wooden hive; behind a small window, the comb is thick with bees. 1 s: The key turns. Not one bee lifts. 2-3 s: A rope of honey comes out of a tube in the wall and folds onto a slice of toast held underneath.",
+"heard": "Hum. One heavy clunk. The hum does not change. Woman, very low: \"They haven't noticed.\"",
+"screen": "The box was never opened"
+},
+"picks": [
+[
+"real",
+false
+],
+[
+"real",
+false
+],
+[
+"real",
+false
+]
+]
+},
+{
+"n": 12,
+"role": "seen",
+"real_row": "o-to8-011",
+"written_instead": {
+"seen": "0 s: Close: a pen finishes a small white florist's card: \"You were right about the boat.\" 1 s: Across the counter stands a man in a soaked suit, water running from his sleeve. 2-3 s: The florist looks at his three roses, then at him, and adds a whole bucket of peonies.",
+"heard": "Dripping. Florist: \"How big was the boat?\" A pause. Man: \"It slept six.\"",
+"screen": "A flower shop, New York, 9:05 am"
+},
+"picks": [
+[
+"real",
+true
+],
+[
+"real",
+true
+],
+[
+"real",
+true
+]
+]
+},
+{
+"n": 13,
+"role": "seen",
+"real_row": "o-to4-013",
+"written_instead": {
+"seen": "0 s: A solemn man faces the lens, thirty yellow pencils standing straight out of his dry beard. A hand pushes in one more; it holds. 1 s: The hand squeezes one dropper of oil and works it in under the chin. 2-3 s: One pencil slides out, then four, then all of them. He does not blink.",
+"heard": "A single pencil hits a wooden floor, then the rest, like rain. He inhales through his nose.",
+"screen": "Pencil 31"
+},
+"picks": [
+[
+"bare",
+false
+],
+[
+"bare",
+false
+],
+[
+"bare",
+false
+]
+]
+},
+{
+"n": 14,
+"role": "seen",
+"real_row": "o-to6-012",
+"written_instead": {
+"seen": "0 s: A man sits on a park bench, blindfolded, back to the path. Behind him a stranger runs past. 1 s: He raises a finger at each footfall; the fingers come uneven. 2-3 s: He points over his shoulder at the runner's right leg. The runner stops and looks down at it.",
+"heard": "Slap, tap, slap, tap. James: \"You're protecting the right one. Since when?\" Runner: \"Who told you?\"",
+"screen": "Only the sound of their feet"
+},
+"picks": [
+[
+"bare",
+false
+],
+[
+"real",
+false
+],
+[
+"real",
+false
+]
+]
+}
+],
+"chooser_200_fresh_headline_pairs": {
+"right": {
+"without the rule card": 158,
+"with the rule card": 157
+},
+"tests": [
+"5400be2f262789cbf400005f",
+"53990fb7d5d900b82500002d",
+"53640434d2b3b8505f000018",
+"53dbada1a2833a2adc000005",
+"54e77c583131350028230000",
+"5310bcc6dc7ca705b7000048",
+"542c7d93615409973e000072",
+"5408d1bd7f3a4ff4c0000028",
+"51436080220cb80002000977",
+"546cde3abadeb5294a000030",
+"51436086220cb800020009a0",
+"53436658af7ae25d48000030",
+"544a755237d28881fc000054",
+"5367d8a38da2e55b1c000061",
+"532088a8c532cfc755000042",
+"52e181ae6f036a9c19000003",
+"535e610f786e4fdd51000043",
+"545688e23448686d93000016",
+"53ad794452a102cc55000045",
+"539d068bef46a39267000002",
+"53fcf9fb7861f09de9000046",
+"53627524d3d68209a80000a5",
+"53ffa15b6fd2bfdf9800003a",
+"542ab4643f87192d9e00005f",
+"53a8e0027bb5bc1b17000067",
+"54f499563539620026ad0000",
+"54346d70d2cea77e28000016",
+"540fb4d31aec806301000017",
+"5143606a220cb800020005c6",
+"51782c596ca0f00002001497",
+"516ec172accfd3000202fc33",
+"543350f3b2454bb9c6000009",
+"54caf7603232340011790000",
+"51a8dcd5cb082eea4e003c04",
+"5408a1cec994ef97e4000008",
+"51b6813f5821c9f14c00a391",
+"53c06e645d80f083ea00003b",
+"5449ee6c38e5aea27b000024",
+"5429c44b3f8719e42b000011",
+"5329cd26569664621700005d",
+"51436092220cb80002000a18",
+"54905e6d3335310012970000",
+"53d01159e54a0fb9bb00009f",
+"54e76454363531001a830000",
+"53b3035dd98e8a6f18000075",
+"53a2c9608a51fefdfe00002a",
+"53e8c7571fdb204023000028",
+"53ab29da67e86e3117000025",
+"5452940303b89045df000063",
+"53e4d27ace6b204a53000010",
+"537c8d39e51c400004000031",
+"537614f93a55adce41000030",
+"537b5babbd2aa46497000060",
+"5433e3b6d2cea786b800001a",
+"53ab14e40e1ea2542000000f",
+"541b4e5de906a00f4a0000ad",
+"5393fb8e73ead5898300001f",
+"532b367e027e12ae310000c0",
+"547d1d1c3230640015090000",
+"539202e89c9fb5938000004d",
+"543455b86ccdaa6c28000075",
+"51be3855a15fa764bc0002e2",
+"52d6c904a59a8c40f3000104",
+"52f5085482cabf5c9f000018",
+"52d0ad1b1229172bb2000a47",
+"533a1766782bd79b48000006",
+"51b53e3ca165f5c66a006fac",
+"532b16b08bf2b3c21d000078",
+"52e09b57106ee9f22b000008",
+"5143606e220cb800020006ba",
+"53bb8e461d9f3fccd4000027",
+"54737e84d1d9c6f452000015",
+"542626feecbb4719cb00008c",
+"5398737573acb62fca000031",
+"5193e3b62b056412a30058d6",
+"542ad7738de8acc106000037",
+"51c1f70d32e9175121004df5",
+"534e08507ac083d08300006e",
+"544a4f1337d2881d0800002f",
+"5407872b503c94da92000039",
+"541724adf0fde2ab4900007d",
+"5398de12d5d900ef08000013",
+"5367c3698da2e52fde00005d",
+"53c70155a377818377000094",
+"54d2848c313763000c2b0000",
+"542c55a534120f16c0000061",
+"533e3afdc38338ba6400001b",
+"539140754e2860f88d00000d",
+"5181a0c809677a000202aaa4",
+"540dbecac15417e0a000002e",
+"51c36316d46b8dba6f0016b0",
+"5183fe564bd0990002031722",
+"53e0fdd143eda7cf9300000e",
+"51489f6a9c79830002013bda",
+"53bd86dc2c277de0df000024",
+"538fe151aa2af346aa00007a",
+"51bb7f516bf6aaeae000b082",
+"54207b8c02c5bf386500002d",
+"53ffa1fcbd37b624c2000001",
+"53ea15e6322495712100000b",
+"5395fa8f0e0fa8f43a000001",
+"53a9a58a7bb5bc43d00000a3",
+"52f9153f1230289238000007",
+"53410529edd118365700000f",
+"51bbd002ada764ef3e0000a3",
+"51436095220cb80002000a36",
+"536bb7a7c02b17e9880000ac",
+"5423189fa7d2af84910000cf",
+"53ecca4c441a0bc7d2000017",
+"53101e7b7ffb591b7100001b",
+"531e01a2365e2ac22c000050",
+"54b7f2c16565626f65290000",
+"53fd6a68cad9c4fa8e000004",
+"54613743bf971bb804000070",
+"53aca6a329da14190c000018",
+"532c5b192fa99eb097000088",
+"533a186ba0c400d7d2000006",
+"532c9be6e12aeb98a50000de",
+"545909ec04bb8ea29e00004c",
+"547e21c46161330012150000",
+"53fb754ca637020c2600001e",
+"51c8d711234062bbdd003aa3",
+"5457fd8bad03e96a03000081",
+"52b09485a18b67486e000628",
+"54aff7fc3663330012370000",
+"5460bca6bf971b7e1000000b",
+"53a867008fb8a028cd000051",
+"5316b1ed028ee6bccb000003",
+"537b5636b698c54bf3000044",
+"54335ae5d2cea786b800000a",
+"515df0dc03099b0002005e2f",
+"51436069220cb800020005c2",
+"530cc1747683e0ee2c00001d",
+"52f2b726c0f551a110000024",
+"515926d8f8cc660002004ab7",
+"54b5ad8f326237001c000000",
+"5189dcead9710626cb000f27",
+"5445a0cc26e9a580fa000015",
+"5189df873d57a6208300105f",
+"52ea893af0ac91e3a8000005",
+"53f8ef8284a00df47d000008",
+"544ff1a80ec8f22595000067",
+"51436073220cb800020007a0",
+"536b06e24e2f5a4384000043",
+"5466afc08ac53cda0a000031",
+"53dfe1e0006f341176000074",
+"53502624b921b4234c000025",
+"53c9c434f35685ffaa0000b2",
+"544ddcaf478affbda9000014",
+"514785988367b00002000a91",
+"54107d9c1aec801f8e000099",
+"53c3f33172263ee9a2000052",
+"5446b382109edbc8d3000013",
+"54329357ae8713d9fc000011",
+"539fd583539d25c570000012",
+"542898edadfe30de19000031",
+"53a8772cf98fb2997a000008",
+"53288031aea91515e5000040",
+"530b9afcb768515dfa000029",
+"530e557606692aee0b00004d",
+"542c89c5d9a91cbccf00007d",
+"545119e3ed9693948c000012",
+"52d2dfdae8f8694d1900151f",
+"5192cdd5e6b292001700032f",
+"546f4e0387942a3efd000029",
+"5446b6ecc4f89f5388000015",
+"5410f3f05856e90c6e000074",
+"53f33cfc0eea91ee6700002a",
+"543c2a5e590a5dd8e700002c",
+"542198711afbe8c8a500001c",
+"52d6a1d7519b9329f9002188",
+"53f3702d0eea910f9f00003c",
+"544e4dbc7fb5bad557000013",
+"538e2f4e13f17f43cf00004e",
+"543bee22bcd0a9205900000f",
+"5303a55c2cc3ae867700004d",
+"546de5a784ad3834f000004a",
+"544a881b01814845e100005f",
+"5418a1d625796233c40000c7",
+"534d42b53ea663ecad000015",
+"542dc69152a3f6c93a000066",
+"532358bfe0a21ead2f00007b",
+"535420934f2a260d4700000c",
+"53fd045425bba95e0e00006d",
+"531f0aed4c90ea5ac0000030",
+"532b18d98bf2b3bea8000086",
+"52d596e113ec9b32b500062f",
+"52e6770068476eb3aa00000e",
+"52fe717571668d28e6000010",
+"545236487b1cb55555000009",
+"5143608e220cb800020009f0",
+"54d04871656631000c060000",
+"53397c9709ccd48b49000041",
+"534c8ec3a649df271500005f",
+"544a8e0b018148bf09000070",
+"546eccc187942aedcb000013",
+"539a41f9e5b96d00db000044",
+"51436098220cb80002000a5a",
+"5471e84ba3aa8f3ed100000d",
+"5417527206a19358ab00000a"
+]
+}
+}
