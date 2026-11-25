@@ -1,5 +1,5 @@
 # Food and drink: makers, restaurants, kitchens — what won here (25 November 2026)
-137 winners of this trade in the library: 75 sold · 40 seen by strangers, unpaid · 14 kept paying for · 5 brought clicks or names · 3 remembered · 3 made the account grow (a winner may hold two roles); 56 films on this machine, 47 may be shown to anybody.
+135 winners of this trade in the library: 75 sold · 40 seen by strangers, unpaid · 13 kept paying for · 4 brought clicks or names · 3 remembered · 3 made the account grow (a winner may hold two roles); 58 films on this machine, 46 may be shown to anybody.
 ## What won in this trade, and why
 1. **SOLD** — The food itself, very close, being cut, broken, spooned or poured, with few words or none. A person stops because the inside is hidden for a second and the hand is already opening it.
    First second: the whole thing fills the picture and a knife, spoon or bite is already moving; nobody greets, nobody explains; the sound is the real one. Each had one visible surprise: yellow heart, green filling, hot sauce, cream that holds a spoon.
@@ -66,5 +66,5 @@
 - Dear, made-to-order food (cakes, catering) → 7 and 8: the customer's wish and the risky step; watched widely, sales not published.
 - The methods behind: the real workroom with the real person (m-025), the taste in the name (m-064), yours beside the famous one with both prices (m-113), one real customer's sentence (m-022).
 ## What is thin
-Restaurants: the sales proofs are cards, coupons and television chains; no filmed sale of a single small restaurant. The one restaurant ad on this machine brought clicks and ran 1,063 days (o-meta1-005, CLICKS).
+Restaurants: the sales proofs are cards, coupons and television chains; no filmed sale of a single small restaurant.
 The best-selling film of the trade, the green-filled chocolate (o-ad5-018), may not be shown. Drinks: a few sales cases, few films that may be shown. Some rows counted as sold above are only years or days of running (o-satan-060, o-satan-089, o-uzman-056); none is used here. Sales in findings 1 and 3 are mostly told by the owners, without control groups.

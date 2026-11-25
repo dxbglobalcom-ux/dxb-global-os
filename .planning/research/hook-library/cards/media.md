@@ -1,5 +1,5 @@
 # News sites, magazines, newsletters, podcasts and channels — what won here (25 November 2026)
-229 winners of this trade in the library: 156 brought clicks or names · 28 sold · 25 seen by strangers, unpaid · 21 kept paying for (a winner may hold two roles); 21 films on this machine, 12 may be shown to anybody.
+228 winners of this trade in the library: 156 brought clicks or names · 28 sold · 24 seen by strangers, unpaid · 21 kept paying for (a winner may hold two roles); 29 films on this machine, 17 may be shown to anybody.
 ## What won in this trade, and why
 1. **SOLD** — To people who already half want the paper, the plain offer won: what you get, and how. They stop because it answers exactly the question in their head; no wit to work out. First second: the words alone, no picture.
    "How to get the Times delivered to your home": best puller of a number of ads tested, has been running for 14 years (The New York Times, book printed long ago; o-caples-077). "Get Free Unlimited Online Access to" (newspaper name): 181% more conversions (o-abarsiv-152). "Save 50% on home delivery": 24% more (o-abarsiv-141). The last two changed more than the line.

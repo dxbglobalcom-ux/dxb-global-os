@@ -1,5 +1,5 @@
 # Books, courses, schools and teachers — what won here (25 November 2026)
-175 winners of this trade in the library: 87 sold · 42 brought clicks or names · 38 seen by strangers, unpaid · 9 kept paying for · 1 remembered (a winner may hold two roles); 39 films on this machine, 30 may be shown to anybody.
+175 winners of this trade in the library: 88 sold · 42 brought clicks or names · 38 seen by strangers, unpaid · 8 kept paying for · 1 remembered (a winner may hold two roles); 50 films on this machine, 36 may be shown to anybody.
 ## What won in this trade, and why
 Read this first: the **SOLD** winners of this trade are mostly print, letters and envelopes; the film winners are mostly **SEEN**. Films that really sold a counted number of books exist, and they are finding 2.
 1. **SOLD** (print, mail). The title says in everyday words what the reader will get or be able to do. He stops because it is about him and needs no guessing. First second: only the words, with the gain in them.

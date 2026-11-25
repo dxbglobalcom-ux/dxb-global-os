@@ -1,5 +1,5 @@
 # Health and dental (dentist, optician, clinic, physio, remedies) — what won here (25 November 2026)
-94 winners of this trade in the library: 28 sold · 27 brought clicks or names · 21 seen by strangers, unpaid · 17 kept paying for · 3 made the account grow · 1 remembered (a winner may hold two roles); 35 films on this machine, 26 may be shown to anybody.
+91 winners of this trade in the library: 28 sold · 25 brought clicks or names · 21 seen by strangers, unpaid · 16 kept paying for · 3 made the account grow · 1 remembered (a winner may hold two roles); 33 films on this machine, 25 may be shown to anybody.
 ## What won in this trade, and why
 Roles: SOLD = a published sales or response result. KEPT PAYING = the owner paid for it for months or years, no sales figure. CLICKS = opened, clicked, left a name. SEEN = strangers watched, unpaid. GREW THE ACCOUNT = later films drew twice the views.
 

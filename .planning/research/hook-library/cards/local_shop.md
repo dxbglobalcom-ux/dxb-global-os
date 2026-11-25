@@ -1,5 +1,5 @@
 # Local shops (food counters, florists, jewellers, cobblers, cleaners, watch repair) — what won here (25 November 2026)
-41 winners of this trade in the library: 20 seen by strangers, unpaid · 15 sold · 6 brought clicks or names · 2 made the account grow (a winner may hold two roles); 32 films on this machine, 30 may be shown to anybody.
+38 winners of this trade in the library: 20 seen by strangers, unpaid · 15 sold · 3 brought clicks or names · 2 made the account grow (a winner may hold two roles); 29 films on this machine, 28 may be shown to anybody.
 ## What won in this trade, and why
 Roles: SOLD = a published sales result. CLICKS = answered, clicked, left a name. SEEN = strangers watched, unpaid. GREW THE ACCOUNT = later films drew twice the views. Most SOLD figures here are the owner's own, told to a newspaper.
 
@@ -22,7 +22,7 @@ Roles: SOLD = a published sales result. CLICKS = answered, clicked, left a name.
    First second: the damage or the verdict. Cobbler G throws a shoe, shows the hole: "Six hours … can we do it?" 16.2 million, later films x3.49 (o-to8-010). A one-car driving school, "Looks fine..... but it's a serious fault": 1.4 million, usual 6,015, later films x3.86 (o-to9-022).
    A florist's dead face over four thin peonies, "you ordered a peony bouquet for $100...": 6.6 million, usual 12,000 (o-to8-011). Jeeves NY, a pinch of powder: "If I told you that this was enough": 2.5 million (o-tec6-011).
 8. **CLICKS** — Dear pieces: lay them out and let questions or colour do it, hands only. The owners paid for these for months.
-   First second: many pieces, one lifted. Chrysella, "Do you know what shape diamond you want?", 660 days, three copies (o-meta2-016). French Optical, the same glasses on the table and on the poster, 840 days, 2nd by impressions for "optician" (o-meta2-017). Bookings and sales are not known.
+   First second: many pieces, one lifted. Chrysella, "Do you know what shape diamond you want?", 660 days, three copies (o-meta2-016). Bookings and sales are not known.
 ## Five to show a client
 1. o-ad5-006 · **SOLD** · Taco-Bout-Joy's, taco shop, Glenview, Illinois · 2022 — an empty shop at night, the phone pans to a mother's back, looking at the door; one sentence stands over it.
    From 10 to 20 customers a day to a line outside the next morning, 58.1 million views; the family, Chicago Sun-Times and Fox News. Say: "She asks for nothing; the viewer looks at the door too."

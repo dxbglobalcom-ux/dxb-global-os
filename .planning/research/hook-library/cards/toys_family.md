@@ -1,5 +1,5 @@
 # Toys and family (toys, craft kits, baby and children's goods, parenting) — what won here (25 November 2026)
-46 winners of this trade in the library: 18 seen by strangers, unpaid · 12 sold · 11 kept paying for · 5 brought clicks or names (a winner may hold two roles); 29 films on this machine, 24 may be shown to anybody.
+45 winners of this trade in the library: 18 seen by strangers, unpaid · 12 sold · 10 kept paying for · 5 brought clicks or names (a winner may hold two roles); 28 films on this machine, 23 may be shown to anybody.
 ## What won in this trade, and why
 Roles: SOLD = a published sales result. KEPT PAYING = the owner paid for it for months or years, no sales figure. CLICKS = asked, answered, left a name. SEEN = strangers watched, unpaid.
 

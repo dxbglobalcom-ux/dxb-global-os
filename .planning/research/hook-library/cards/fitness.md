@@ -1,5 +1,5 @@
 # Gyms, coaches, sports shops and sports goods — what won here (25 November 2026)
-55 winners of this trade in the library: 20 seen by strangers, unpaid · 18 kept paying for · 13 sold · 4 brought clicks or names · 3 made the account grow (a winner may hold two roles); 38 films on this machine, 29 may be shown to anybody.
+53 winners of this trade in the library: 20 seen by strangers, unpaid · 16 kept paying for · 13 sold · 4 brought clicks or names · 3 made the account grow (a winner may hold two roles); 36 films on this machine, 29 may be shown to anybody.
 ## What won in this trade, and why
 Read this first: the library holds no film with a counted number of gym members sold. What SOLD is print, page, e-mail and two pre-order films; the rest of the films were paid for long, or watched.
 1. **SOLD** (letter, still ad). The result in an exact small time. He believes he can fit it in. First second: the number of minutes and the result, nothing about age or sex.

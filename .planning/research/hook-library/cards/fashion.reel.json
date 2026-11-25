@@ -1,5 +1,15 @@
 [
  {
+  "id": "o-ad7-002",
+  "mp4": "/home/dxb/.local/share/dxb/hook-lab/el/ad7/vid/invisasox.mp4",
+  "start": 0,
+  "dur": 4.6,
+  "title": "Pull the claim",
+  "line": "A man is tied to a pickup by his socks, and the truck drives off.",
+  "proof": "Sold: $1.5m to $3m in a year, 65% from one ad",
+  "audio": true
+ },
+ {
   "id": "o-to7-003",
   "mp4": "/home/dxb/.local/share/dxb/hook-lab/tt_org/vid/t7481359680539790614.mp4",
   "start": 0,
@@ -38,15 +48,5 @@
   "line": "A small jewellery shop opens drawer after drawer for one customer's parcel",
   "proof": "Seen 3.7 million times, 399.6 times its usual",
   "audio": false
- },
- {
-  "id": "o-meta4-013",
-  "mp4": "/home/dxb/.local/share/dxb/hook-lab/meta/vid/m517835954401343.mp4",
-  "start": 0,
-  "dur": 4.2,
-  "title": "His moment in the mirror",
-  "line": "Clothes for short men: the curtain opens on a shirt far too big",
-  "proof": "Its owner kept paying for 616 days",
-  "audio": true
  }
 ]

@@ -1,5 +1,5 @@
 # Cars (makers, dealers, garages, detailing, parts) — what won here (25 November 2026)
-66 winners of this trade in the library: 29 seen by strangers, unpaid · 21 sold · 10 kept paying for · 6 brought clicks or names · 2 made the account grow · 1 remembered (a winner may hold two roles); 40 films on this machine, 32 may be shown to anybody.
+62 winners of this trade in the library: 28 seen by strangers, unpaid · 21 sold · 7 kept paying for · 6 brought clicks or names · 2 made the account grow · 1 remembered (a winner may hold two roles); 37 films on this machine, 28 may be shown to anybody.
 ## What won in this trade, and why
 Roles: SOLD = a published sales result. KEPT PAYING = the owner paid for it for months or years, no sales figure. CLICKS = asked, answered, left a name. SEEN = strangers watched, unpaid. GREW THE ACCOUNT = later films drew twice the views.
 
@@ -20,9 +20,9 @@ Roles: SOLD = a published sales result. KEPT PAYING = the owner paid for it for 
 6. **KEPT PAYING** — The change itself, in close-up, from the first frame. Nothing has to be believed, it happens under the eyes.
    First second: material moving. ExoForma's thick black line on faded grey plastic, 645 days (o-meta6-004). Platinum Carwash's steam head over a stained seat, 566 days (o-meta6-009). A man-high roll of orange film beside a bare steel car, Detailers of Naples, 606 days (o-meta6-007). Small local budgets are possible in the last two.
 7. **SEEN**, one of them also **GREW THE ACCOUNT** — Dealers: the staff laugh at their own trade, one object says the offer. The viewer expects a sales talk and gets a joke.
-   First second: banknotes on the tarmac and a man coming for them, MCS Auto Group: 1.2 million views where 471 were usual, later films x3.85; its line on financing stays out (o-to3-004). A white-haired salesman strides at us with a raised key, Vic Vaughan Toyota: 7.2 million, 107,100 shares, five seconds (o-to3-007). Mohawk Chevrolet, "we got a new hire", he is seven feet tall: 164,200, usual film 1,514 (o-tec6-009).
+   First second: banknotes on the tarmac and a man coming for them, MCS Auto Group: 1.2 million views where 471 were usual, later films x3.85; its line on financing stays out (o-to3-004). A white-haired salesman strides at us with a raised key, Vic Vaughan Toyota: 7.2 million, 107,100 shares, five seconds (o-to3-007).
 8. **KEPT PAYING** — Parts and tools: a man of the trade who does not talk like a seller.
-   First second: his face, his shop, his name on the shirt. Gale Banks "I'm gonna fact-check the guys", a $1 bolt and a $30,000 engine, 250 days (o-meta4-014). Lowbrow Customs' helpless big man, "I don't know how to use them", 1147 days (o-mb4-012). Mucar: an old mechanic who says some tools are garbage, 222 days (o-meta3-002).
+   First second: his face, his shop, his name on the shirt. Lowbrow Customs' helpless big man, "I don't know how to use them", 1147 days (o-mb4-012).
 ## Five to show a client
 1. o-ad4-014 · **SOLD** · Kia Soul, US · 2010-2011 — two hooded figures in a dark hall pull back their hoods: hamsters; then their car beside toasters and boxes on wheels.
    Year-to-date sales +50.8%, best-ever month; Kia's sales report, Effie Gold 2011; credited with the earlier hamster film too. Say: "Nobody compared engines; the eye chose between a car and a box." Show it without the song.

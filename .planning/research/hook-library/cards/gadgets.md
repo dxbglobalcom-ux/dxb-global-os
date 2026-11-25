@@ -1,5 +1,5 @@
 # Gadgets and small technology — what won here (25 November 2026)
-62 winners of this trade in the library: 23 sold · 20 kept paying for · 19 seen by strangers, unpaid · 3 made the account grow (a winner may hold two roles); 42 films on this machine, 32 may be shown to anybody.
+58 winners of this trade in the library: 23 sold · 19 seen by strangers, unpaid · 16 kept paying for · 3 made the account grow (a winner may hold two roles); 39 films on this machine, 28 may be shown to anybody.
 ## What won in this trade, and why
 1. **SOLD** — The thing does its one trick before the first sentence is over. He stops because the claim is already proved while it is being made. First second: the pen leaves raised plastic, the mask snaps round the wrist, the little radio rises and doubles itself on an empty wall; nothing else in the picture.
    3Doodler, a question answered by the hand: more than $2m pledged, $1m in three days (o-ad3-015). Slapmask: over $100,000 in 48 hours, unpaid; the makers already had over a million followers (o-ad5-023). Bose Wave, "Can your radio do this?": $250 million since 1993 (o-ad2-001). Cheap and dear; the trick must be visible.
@@ -10,7 +10,7 @@
 4. **SOLD** — A small trouble everybody has at home, played in one line, then the thing ends it on camera. First second: a couple in bed and "Honey, turn off the light"; a party with nothing to say.
    The Clapper: over 7 million sold (o-satan-054). Mr. Microphone: more than a million at $19.95, all its films together (o-ad2-007). Cheap, bought at once, often a present.
 5. **KEPT PAYING** (no sales figure) — One clear movement after another: snap, click, lift, in close-up, no speech. Each click answers the question of the one before. First second: a strap snaps shut, a plug jumps into a socket, a box lands on the counter in mid-movement.
-   Magnetic watch band: 534 days (o-meta4-009). Power station filling its own sockets: 392 days (o-meta4-023). Phone stand that ends by filming itself: shown in 30 countries, click rate in the top 3 % (o-tta3-007). Cheap to middle price, unknown sellers.
+   Magnetic watch band: 534 days (o-meta4-009). Phone stand that ends by filming itself: shown in 30 countries, click rate in the top 3 % (o-tta3-007). Cheap to middle price, unknown sellers.
 6. **KEPT PAYING** (no sales figure) — A private sentence in quotation marks over the thing, and the thing answers it by itself. He reads what was not meant for him, then sees need, use and feeling at once. First second: the line stands there and never leaves; hands bring the object in.
    Touch bracelets, "promise you'll tap it back": 759 days (o-meta2-014). Photo phone case, "The best anniversary gift doesn't exist…": click rate top 1 percent, 41% still watching at 3 s (o-tta2-001). Presents.
 7. **SEEN** — A try-out whose end nobody knows, readable in one picture. He has already guessed and must see. First second: a knife going into a stiff jar, a thin line of glue beside the truck it must carry, five torches in a row with the monster at the end.

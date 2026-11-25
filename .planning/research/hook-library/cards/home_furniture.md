@@ -1,5 +1,5 @@
 # Furniture and things for the home — what won here (25 November 2026)
-94 winners of this trade in the library: 38 seen by strangers, unpaid · 28 sold · 17 kept paying for · 11 brought clicks or names · 2 made the account grow (a winner may hold two roles); 53 films on this machine, 41 may be shown to anybody.
+93 winners of this trade in the library: 38 seen by strangers, unpaid · 30 sold · 15 kept paying for · 10 brought clicks or names · 2 made the account grow (a winner may hold two roles); 58 films on this machine, 44 may be shown to anybody.
 ## What won in this trade, and why
 1. **SOLD** — The same piece standing in a lived-in room beats the piece alone on white. People furnish rooms, not objects: they stop because they see their own corner finished. First second: a kitchen, a child's room, a bed in morning light, the thing already in it; no logo card.
    IKEA Canada: 50% better cost per action (o-platform-036). Ashley Canada, only the room behind the furniture changed: 33% higher return on ad spend, 19% lower cost per purchase (o-platform-014). Slound bedding, creators filming it in their own homes: 2X return (o-platform-062). Cheap and dear alike, known and unknown.
@@ -7,7 +7,6 @@
    FoodSaver: under $20 million in 1998 to more than $80 million in 1999 (o-ad2-002). Ove Glove: over 20 million sold, the maker's number (o-satan-098). Fits cheap and middle-priced things whose cure is seen at once.
 3. **SOLD** — For a dear thing nobody can try through a screen: say or print the one fact that removes the fear — the price, the delivery, who stands behind it. He stops because the question he would have asked is already answered. First second: that fact alone, large, on or before the product.
    "Free Next Day Mattress Delivery" on the picture: 25% more revenue, 54% higher return on ad spend (o-platform-011). "Now priced under $100", signed by the inventor: over $1 billion, his own figure (o-satan-045).
-   **KEPT PAYING**: a man at a dining set in his crowded shop, a red price tag slaps in within the first second: 645 days (o-meta2-007).
 4. **SOLD** (known names) — A feeling told in one picture, the goods later. A house everybody knows may begin with a child's face, a falling sleeper or a whisper, because the name ends the riddle. First second: an eye opens, a boy watches a penguin film, or a room where nothing moves and a woman whispers.
    John Lewis penguin: £141m of extra revenue (o-satan-004). IKEA beds, four-year campaign: £755m (o-satan-025). IKEA whispered room: student season 27% up (o-ad3-013). All films of big houses; an unknown shop has no such proof here.
 5. One case: **SOLD** — Make him doubt his own thing, then test it before his eyes. "What's a super easy way to know if your mattress is awful?", a fairy-tale girl beside a bed, raw eggs under glass: the best of about 25 spoken openings, over $60m in the first year (o-tec4-031, o-uzman-001).

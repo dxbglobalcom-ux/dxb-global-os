@@ -1,5 +1,5 @@
 # Charities and good causes — what won here (25 November 2026)
-97 winners of this trade in the library: 53 sold · 29 brought clicks or names · 7 seen by strangers, unpaid · 6 kept paying for · 2 remembered (a winner may hold two roles); 6 films on this machine, 6 may be shown to anybody.
+96 winners of this trade in the library: 53 sold · 29 brought clicks or names · 7 seen by strangers, unpaid · 5 kept paying for · 2 remembered (a winner may hold two roles); 5 films on this machine, 4 may be shown to anybody.
 ## What won in this trade, and why
 Read this first: most measured winners are the words of a page, a banner, an e-mail or a letter; films with money counted are few (finding 7).
 1. **SOLD** (page, banner). One person asks politely, like a neighbour. It is read as a request from a human, so people read on. First second: a soft half sentence or a face with "please read"; nothing sold.

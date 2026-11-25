@@ -1,5 +1,5 @@
 # Beauty, hair and skin: makers, shops, barbers — what won here (25 November 2026)
-67 winners of this trade in the library: 24 sold · 21 seen by strangers, unpaid · 17 kept paying for · 3 made the account grow · 3 remembered · 2 brought clicks or names (a winner may hold two roles); 38 films on this machine, 23 may be shown to anybody.
+64 winners of this trade in the library: 24 sold · 21 seen by strangers, unpaid · 14 kept paying for · 3 made the account grow · 3 remembered · 2 brought clicks or names (a winner may hold two roles); 35 films on this machine, 22 may be shown to anybody.
 ## What won in this trade, and why
 1. **SOLD** — Somebody who is not the seller tries it on camera and could say no. A person stops to see the verdict; the flaw is shown before any praise, so the praise is believed.
    First second: a plain face or the pack held to the lens; a true flaw, or a second person whose face will judge. No studio, no music needed.

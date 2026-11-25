@@ -1,5 +1,5 @@
 # Fashion: clothes, shoes, bags, hats, jewellery, watches — what won here (25 November 2026)
-64 winners of this trade in the library: 27 sold · 18 seen by strangers, unpaid · 12 kept paying for · 7 brought clicks or names · 3 made the account grow (a winner may hold two roles); 27 films on this machine, 23 may be shown to anybody.
+63 winners of this trade in the library: 28 sold · 17 seen by strangers, unpaid · 11 kept paying for · 7 brought clicks or names · 3 made the account grow (a winner may hold two roles); 26 films on this machine, 22 may be shown to anybody.
 ## What won in this trade, and why
 1. **SOLD** — One odd thing on the product or its wearer that nobody explains. One looks for the reason, reads or listens on, and meets the goods on the way.
    First second: an elegant man in a white shirt with a black patch over one eye; an old man in a cap shaped like a fish. The product is worn, not held up.
@@ -44,11 +44,10 @@
    Say: "Seven seconds, one reason, one movement of the hand, from an account of 2,309 followers."
    /home/dxb/.local/share/dxb/hook-lab/tt_org/vid/t7709002895601044766.mp4
    https://www.tiktok.com/@becca.sanders/video/7709002895601044766
-4. KEPT PAYING · Under510, clothes for short men · 2025 — A closed fitting-room curtain, "The struggle is real"; a man flings it open in a shirt far too big for him. [o-meta4-013]
-   Its owner kept the ad running 616 days; read in the Meta Ad Library 25 Nov 2026; no sales figure.
-   Say: "Half a second of waiting, then exactly what your buyer saw in the mirror last week."
-   /home/dxb/.local/share/dxb/hook-lab/meta/vid/m517835954401343.mp4
-   https://www.facebook.com/ads/library/?id=517835954401343
+4. SOLD · InvisaSox, socks that stay on · 2020 — A man lies on his back behind a pickup; at 1.6 s one sees that the ropes are tied to his socks, and the truck drags him by them (o-ad7-002).
+   Revenue from $1.5m to $3m in one year, 65% of it from a single ad; the agency's own count. (o-ad7-002)
+   To the client: "The claim was pulled behind a truck; nobody had to be told that the socks stay on."
+   /home/dxb/.local/share/dxb/hook-lab/el/ad7/vid/invisasox.mp4 — https://chamber.media/case-studies/invisasox/ — o-ad7-002
 5. SEEN · NAJE, small jewellery shop · 2026 — A pale drawer slides open on rows of sky-blue balls in square boxes; the hand picks one, then the next drawer: dozens of tiny lemons. [o-to8-015]
    3,700,000 views, 399.6 times the account's middle film; counted on TikTok 25 Nov 2026; packing a real order.
    Say: "The whole shop walks past without a pitch, because somebody's parcel is being packed."

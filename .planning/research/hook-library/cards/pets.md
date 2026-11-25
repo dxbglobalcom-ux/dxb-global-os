@@ -1,5 +1,5 @@
 # Pets: food, litter, groomers, vets, trainers, shelters — what won here (25 November 2026)
-35 winners of this trade in the library: 13 seen by strangers, unpaid · 12 kept paying for · 7 brought clicks or names · 3 made the account grow · 3 sold (a winner may hold two roles); 26 films on this machine, 24 may be shown to anybody.
+32 winners of this trade in the library: 13 seen by strangers, unpaid · 9 kept paying for · 7 brought clicks or names · 3 made the account grow · 3 sold (a winner may hold two roles); 23 films on this machine, 20 may be shown to anybody.
 ## What won in this trade, and why
 1. **SOLD** — The animal as a character with dignity, not as a pitiful or a perfect one. The owner sees his own animal and smiles before he hears a claim; the same figure kept for years made the brand known in the first frame.
    First second: a street dog seen from behind above a wide town; a drawn cat's eyes rise over the table beside the tin. Only the animal moves.
@@ -22,7 +22,7 @@
    The Pain-free Pet Trainer: 9,900,000 views, 74.2 times (o-to11-020). Cody Axthelm: 5,800,000 views, 750.3 times (o-to11-008; a paid push cannot be excluded).
 7. **KEPT PAYING** — The food or litter itself doing something: a thread of gravy, a hill of grain sliding, the old jug swapped for the new bag on one spot. No sales figure; their owners kept the ads running.
    First second: the pour has already begun, or the old thing stands where the new one will stand in a moment.
-   Goodboy Gravies: 1,117 days (o-meta5-010). Catalyst, "why we switched from this to this": 562 days (o-meta5-014). Dr. Harvey's, the real grains: 485 days (o-meta5-012). Paco&Pepper, smelling the litter: 759 days (o-meta5-013, not for showing).
+   Catalyst, "why we switched from this to this": 562 days (o-meta5-014). Paco&Pepper, smelling the litter: 759 days (o-meta5-013, not for showing).
 8. **CLICKS** — The owner's own words: what he saw this morning, what he types, what he asks. He recognises himself before he knows the seller.
    First second: a red flag and the symptom; a search bar typing "Pet grooming near me" over a freshly brushed dog; "Why does my cat do that?" on an envelope.
    Zoetis, headline by symptom on the same film: 20% more clicks per view and 63% of all clicks (o-platform-028). Tidy Pawz, a local groomer: ad running 1,092 days (o-mb4-001). Cat Watch letter: mailed three or more years (o-klasik-071).
