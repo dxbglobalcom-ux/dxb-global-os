@@ -1,0 +1,9 @@
+**Looked at 54: clean 30, out 24.** I saw 14 real-estate strips and all 26 Meta sheets, but full strips for only two Meta rows; of the page rows, I opened or searched the main saved page of each. I judged films from stills, not by watching, and nothing folded (no `same_as`).
+**Ordinary (13):** o-sek1-008, 012, 013, 015, 020, 028; o-mb1-002, 006, 007, 009, 011, 014; o-mb2-008. **Uncertain (5):** o-sek1-005, 011, 014, 016, 017. **Mixed (1):** o-sek1-007.
+**Trouble (5):** o-sek1-002, 004, 026; o-mb1-013; o-mb2-010. **Clean but `show` false (6):** o-sek1-022, 027; o-mb1-001, 003, 010, 015.
+**Check** (`python3 -I /home/dxb/.local/share/dxb/hook-lab/el/kusur9/check.py`): `54 54 same`; no `stops` over 12 words. Verdicts: `/home/dxb/.local/share/dxb/hook-lab/el/kusur9/verdict.jsonl`.
+**Eight strongest, 1–4:** o-mb2-002 (man tips beside a cliff, then the cliff vanishes); o-sek1-003 (agent calls his own house flyblown); o-mb2-001 (car seat swung overhead under "8 lbs"); o-sek1-001 (one extra room among 1,246 one-bedroom ads, same price).
+**Strongest, 5–8:** o-sek1-021 (beep by beep, dark frames become one bright picture); o-sek1-023 (rooftop shed hides the stairs into a flat); o-sek1-009 (stiff agent says the price and bolts); o-sek1-018 (lit house behind a gate that opens).
+**Hard 1, o-sek1-004 (€1 houses), out:** the sales are real, but `exa_Mussomeli_one_euro_house_scheme…txt` holds Slate and Telegraph pieces on thousands in fees and bids and on towns that could not sell. The row's +919% was not found in the saved files I searched.
+**Hard 2, o-sek1-002 (88 flats), out:** "not enough to go around" was said of flats the seller calls "terrible" and "nobody wanted"; CNBC says "creating the illusion" (`corc1m.txt:77-83`). One day, one price would be honest without that line.
+**Hard 3, o-sek1-019 and o-mb1-015, kept:** "tiniest" is UNVERIFIED, and "1.5 million views" is the seller's own word. Drop both if you want no unproven word in an opening.
