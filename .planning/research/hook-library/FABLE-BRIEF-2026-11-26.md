@@ -24,3 +24,8 @@ His decisions of the same evening, on how the library is used (key `hook-library
 
 ## What you do
 Run the study as its orchestrator — who reads, measures and writes is yours — and design the system: its architecture and its plan, shelves, methods and stages included. The plan comes to him once, in Turkish, before anything is built (dxb-team3 §1). Nothing is installed or published before his yes; money out is his.
+
+## Second, in the same study: `coreyhaines31/marketingskills` (his word, 2026-11-26, about 23:28)
+> "Ayrıca şu GitHub reposta aynı zamanda içinde birçok marketing skill'lar var. … bizim pazarlama şeyimiz için önemli. Holdingimizde kurulacak. Bunu da ilgili yere yaz. Bu repo incelensin. Kullanışlıysa, kullanılacaksa, … just we need to use it as best as it is, okay? … bu skill'lar tabii ki çok iyi incelenmeli, yani gerçekten gerekli mi, … bizde çok iyi kullanılabilir mi? Biz ondan faydalanıp üzerine başka bir şey inşa edebilir miyiz bizim için? … Outdated mi? … Bunu da Fable yapacak. … Çünkü sistemi baştan kurduğumuz için çok ultra zeki bir şey lazım bize. Bir model."
+
+The reel he sent: `inputs/2026-11-26-marketingskills-reel.jpg`. What the board already holds about it: `.planning/board-rows/B84.md`, leg 2026-11-18 ("marketingskills — the seats' working method"; its ads part goes to B28). Your finding, with how it is set up if it is worth it, comes to him before anything is installed.
