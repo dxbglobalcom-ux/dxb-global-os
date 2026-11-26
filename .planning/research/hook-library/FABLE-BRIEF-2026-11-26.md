@@ -16,6 +16,9 @@ The library lacks the ad formats — the kind of thing the reel he sent shows (`
 His decisions of the same evening, on how the library is used (key `hook-library-shelves-and-methods-only-five-rooms-2026-11-26`):
 > "Abi kütüphanede sadece raflar ve yöntemler durabilir. Bu kadar. Diğerini model kendisi güzelce kurgulamalı. … Çünkü örnek görünce o spesifik örneğe göre hareket etmeye çalışıyor." · "Hayır abi, tek bir şeyde olacak. Hepsi aynı anda." · "En az 4'ü burada olmalı. En az 5'i." · "İlk 10 tane şey gösterir … Onların içerisinden ben seçerim ya." · "Alman gelirse Alman, … Arap gelirse Arap."
 
+His word on the scenario (about 23:33; key `hook-scenario-brings-the-shelf-and-method-forward-2026-11-26`):
+> "Önemli olan senaryo yani. Yani yöntemler ve raflar ana şeylerdir. Senaryolar hayal gücü ve o şeyi daha güzel, o raftaki ve yöntemi daha ön plana çıkarabilmektir yani. Bunu yapılmalı. Yani raftaki ve şeyi yöntemi en mükemmel şekilde, wow dedirtecek şekilde ön plana çıkaracak bir senaryo olmalı yani. Her zaman bu en önemli şekilde."
+
 ## What exists (read at the source)
 - `README.md` here — the library: 1,536 winning openings, 138 methods, 41 shelves; what was measured on 25 November and what is open. `SHELVES.md`, `METHODS.md`, `methods.jsonl`, `RULES-CARD.md`.
 - `.planning/board-rows/B28.md` — the row: its legs of 2026-11-07 (format research, the weekly winner), 2026-11-24/25 (the hook system, the scorer, the collector) and 2026-11-26.
