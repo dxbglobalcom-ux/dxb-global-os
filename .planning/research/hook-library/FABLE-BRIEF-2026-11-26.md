@@ -19,6 +19,9 @@ His decisions of the same evening, on how the library is used (key `hook-library
 His word on the scenario (about 23:33; key `hook-scenario-brings-the-shelf-and-method-forward-2026-11-26`):
 > "Önemli olan senaryo yani. Yani yöntemler ve raflar ana şeylerdir. Senaryolar hayal gücü ve o şeyi daha güzel, o raftaki ve yöntemi daha ön plana çıkarabilmektir yani. Bunu yapılmalı. Yani raftaki ve şeyi yöntemi en mükemmel şekilde, wow dedirtecek şekilde ön plana çıkaracak bir senaryo olmalı yani. Her zaman bu en önemli şekilde."
 
+His eye on the patisserie trial (`trials/2026-11-26-pastane-library-vs-blank/`: one Opus 5.5 at high with the library, one with nothing; key `hook-trial-library-better-merge-scenarios-client-reviews-2026-11-27`):
+> "Bence kütüphaneninki daha güzel. Bu işte vitrin falan filan, onları ekleyebiliriz, içerideki görüntüleri falan filan. … Bu birinci senaryo ile o şeyin yazdığı birinci senaryoya birkaç senaryoda birleştirilebilir yani. … Bakmayayım abi. Yani kesin güzel olsun ama tabii ki müşteriye gitmesi lazım. Bir de müşteri yazması lazım. Şöyle olsun, şunu da ekleyin falan. Bir çekimini yapın, gönderin gibi."
+
 ## What exists (read at the source)
 - `README.md` here — the library: 1,536 winning openings, 138 methods, 41 shelves; what was measured on 25 November and what is open. `SHELVES.md`, `METHODS.md`, `methods.jsonl`, `RULES-CARD.md`.
 - `.planning/board-rows/B28.md` — the row: its legs of 2026-11-07 (format research, the weekly winner), 2026-11-24/25 (the hook system, the scorer, the collector) and 2026-11-26.
