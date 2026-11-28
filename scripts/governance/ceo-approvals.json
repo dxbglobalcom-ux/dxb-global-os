@@ -3465,5 +3465,13 @@
     "conditions": "Said for the week's arrangement the lead proposed on 2026-11-28; he asked the lead's view in the same message and the lead agreed. Which piece goes to which writer stays the lead's judgement.",
     "session": "Fable 5.2 session 5af9a172 — heard first-hand (dictated), 2026-11-28, about 11:30.",
     "where": ".planning/STATE.md, Next, item 000f"
+  },
+  "postiz-evaluated-for-the-holding-2026-11-28": {
+    "date": "2026-11-28",
+    "what": "He ordered an evaluation of the open-source social-media scheduler Postiz (dictated as 'postis.app'): the facts gathered by lighter hands, the judgement by the Fable 5.2 lead, read against the board's rows — whether and how the holding uses it. An order to evaluate, not a decision to install.",
+    "verbatim": "\"Postis diye bir repo var. Bunun da değerlendirmesini lütfen ya sen yap, hangisi ucuzsa, ya da başka bir Fable'a yaptırabilirsin lütfen. … İstersen Sonnet'te açtır, her şeyi sana getirsin, sen değerlendir. Değerlendir çünkü holding'de nasıl entegre edebiliriz çok önemli. Kullanabilir miyiz en güzel şekilde, en mükemmel şekilde, en pragmatik ve aynı zamanda efficient, efektif şekilde … diğer tahtalara da bakarak bu konuyla ilgili. Yani en son aşamada sen değerlendirme üzerinden geç, düşün.\"",
+    "conditions": "Nothing is installed; account connection, a paid plan and contracts stay his.",
+    "session": "Fable 5.2 session 5af9a172 — heard first-hand (dictated), 2026-11-28, about 11:45.",
+    "where": ".planning/board-rows/B28.md, leg 2026-11-28"
   }
 }
